@@ -1,70 +1,195 @@
-# PUFO_Words
+# Podcast Words
 
-Analyse der Podcast-Episoden von "Das Podcast-Ufo" als Text.
-Web App die es erlaubt nachzuschauen welche Wörter in welchen Podcast Folgen wie häufig gesagt wurden. 
-Entwickelt, weil ich eine Folge gesucht hatte aber nur noch grob wusste was gesagt wurde.
+Analyze how often words are spoken across podcast episodes. Originally built for
+the German comedy podcast *Das Podcast-Ufo* (to find an episode when you only
+half-remember what was said), it now supports **multiple podcasts** and several
+transcript sources.
 
-🚀 **[Zur Podcast Folgen Analyse](https://pufo-words.streamlit.app/)** 🎧
+🚀 **[Live demo (PUFO)](https://pufo-words.streamlit.app/)** 🎧
 
-![App Screenshot](app_example.png "Screenshot")
+![App screenshot](app_example.png "Screenshot")
 
-## Projektüberblick
+## Features
 
-Dieses Projekt lädt alle Episoden aus dem RSS-Feed des Podcasts, transkribiert sie mit Whisper und analysiert die Texte mit spaCy. Die Ergebnisse werden in CSV- und JSON-Dateien gespeichert und können mit einer Streamlit-App interaktiv ausgewertet werden.
+- **Multiple podcasts**, configured in `config/podcasts.yaml`
+- **Switch between podcasts** in the Streamlit app
+- **Per-podcast transcript sources:**
+  - RSS feed + Whisper transcription
+  - Manual import of a single episode transcript
+  - PodLove Publisher API (all episodes)
+  - Apple Podcasts by Podcast ID (all episodes, macOS)
+- **Import all existing episodes** (backfill) and **pick up newly published episodes** (incremental) with one command
+- **Common transcript formats:** WebVTT, SRT, Apple TTML, plain text, and the legacy Whisper output
 
-- **Transkription:** Whisper wandelt die Audiodateien in Text um.
-- **Textanalyse:** spaCy zerlegt die Texte in Lemmata (Wortstämme) und zählt deren Vorkommen.
-- **Stoppwörter:** Häufige Wörter wie „und“, „oder“, „das“ werden entfernt.
-- **Daten:**  
-  - `text`: Enthält die transkribierten Texte aller Episoden.
-  - `word_counts.csv`: Enthält, wie oft welches Wort in welcher Episode vorkommt.
-  - `episode_stats.json`: Statistiken zu jeder Episode (z. B. Wortanzahl, neue Wörter).
-- **Visualisierung:** Mit Streamlit können Wörter gesucht und deren Häufigkeit über die Episoden hinweg visualisiert werden.
+## How it works
 
-## Nutzung
+Each podcast keeps its own data under `data/{podcast_id}/`:
 
-Getestet mit Python 3.11
-ffmpeg muss installiert sein
+| Path | Contents |
+|------|----------|
+| `episodes.csv` | The episode catalog (every known episode + transcript state) |
+| `transcripts/` | Canonical WebVTT transcripts (`episode_{n}.vtt`) |
+| `word_counts.csv` | Word-frequency matrix (one column per episode) |
+| `episode_stats.json` | Per-episode and aggregate statistics |
 
-   ```sh
-   # Für die Streamlit App
-   pip install -r requirements.txt
-   streamlit run app.py
+Transcripts are collected from the configured source, normalized to WebVTT,
+lemmatized with spaCy (stop words removed), and aggregated into the word matrix
+that the Streamlit app visualizes.
 
-   # Für das Verarbeiten neuer Folgen 
-   cd episode_processor
-   pip install -r requirements.txt
-   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-   python -m spacy download de_core_news_lg
-   # Für das Laden und Transkribieren
-   python dpu_to_text.py
-   # Für das Zählen der Wörter
-   python word_counter.py
-   ```
+```
+config/podcasts.yaml ─▶ sync (discover ▶ import ▶ count) ─▶ data/{id}/ ─▶ app.py
+```
 
+## Installation
 
+Tested with Python 3.11+. `ffmpeg` is required for Whisper transcription.
 
-## Datenstruktur
+```sh
+# App + core tooling
+pip install -r requirements.txt
 
-- [`word_counts.csv`](word_counts.csv): Matrix mit Wortzählungen pro Episode (ohne Stoppwörter)
-- [`episode_stats.json`](episode_stats.json): Enthält für jede Episode:
-  - `total_words`: Gesamtzahl der Wörter
-  - `unique_words`: Anzahl unterschiedlicher Wörter
-  - `new_words`: Neue Wörter in dieser Episode
+# spaCy language models (per podcast language)
+python -m spacy download de_core_news_lg   # German
+python -m spacy download en_core_web_lg     # English
 
-## Beispiel-Workflow
+# Optional: Whisper transcription stack (only for the whisper_rss source)
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+```
 
-1. RSS-Feed auslesen und MP3s herunterladen
-2. Audiodateien mit Whisper transkribieren
-3. Texte mit spaCy tokenisieren und analysieren
-4. Ergebnisse in CSV/JSON speichern
-5. Streamlit-App zur Auswertung nutzen
+## Configuration
 
-## Hinweise
+Define your podcasts in `config/podcasts.yaml`:
 
-- Für GPU-Beschleunigung wird eine CUDA-fähige Grafikkarte empfohlen.
-- Das Verarbiten einer Folge mit Whisper hat ca 20 minuten gedaurt, und lässt sich sicher noch optimieren
-- Whisper hat teilweise Probleme mit der genauer Erkennung der Wörter, besonders wenn die beiden durcheinandere sprechen
-- Auch spaCy hat probleme mit der lemmatisierung und es werden nicht alle Wörter zum korrekten Wortstamm zusammengefasst 
+```yaml
+podcasts:
+  pufo:
+    name: "Das Podcast-Ufo"
+    language: de
+    episode_id:
+      type: regex          # regex | podlove_number | sequential
+      pattern: "UFO(\\d+)"
+    sources:
+      - type: whisper_rss
+        feed_url: "https://feeds.acast.com/public/shows/podcast-ufo"
+    defaults:
+      search_words: [eimer, münze, cent]
 
----
+  freakshow:
+    name: "Freak Show"
+    language: de
+    episode_id:
+      type: podlove_number
+    sources:
+      - type: podlove
+        api_base: "https://freakshow.fm/wp-json/podlove/v2"
+
+  daily:
+    name: "The Daily"
+    language: en
+    episode_id:
+      type: sequential
+    sources:
+      - type: apple
+        podcast_id: "1200361736"   # see "Apple Podcasts" below
+        country: US
+```
+
+## Command-line usage
+
+```sh
+# List configured podcasts (✓ marks ones with built data)
+python -m podcast_words list
+
+# Sync: discover episodes, import transcripts, count words.
+# First run backfills ALL existing episodes; later runs add only new ones.
+python -m podcast_words sync --podcast freakshow
+
+# Retry every pending / missing transcript across the full catalog
+python -m podcast_words sync --podcast freakshow --backfill
+
+# Re-fetch all transcripts from scratch
+python -m podcast_words sync --podcast freakshow --force
+
+# Manually import a single episode transcript (auto-detects format)
+python -m podcast_words import --podcast pufo --episode 420 --file ./episode.vtt
+
+# Import every transcript file in a folder
+python -m podcast_words import --podcast pufo --dir ./transcripts/
+
+# Recompute word counts only
+python -m podcast_words count --podcast pufo
+```
+
+### Source-specific notes
+
+- **PodLove** needs only the public `api_base` URL; transcripts are fetched read-only.
+- **RSS + Whisper** downloads each episode's audio and transcribes it locally
+  (GPU strongly recommended). Only episodes without a transcript are processed.
+- **Apple Podcasts** is described below.
+
+## Apple Podcasts by Podcast ID
+
+You configure only the **Podcast ID** (the show ID); episode discovery and
+transcript fetching are automatic.
+
+Find the Podcast ID in the show URL on
+[podcasts.apple.com](https://podcasts.apple.com): the number after `id`, e.g.
+`https://podcasts.apple.com/us/podcast/the-daily/id1200361736` → `1200361736`.
+
+Episode discovery uses the public iTunes Lookup API (no authentication).
+Fetching the actual transcript requires the vendored `FetchTranscript` helper:
+
+- **macOS 15.5 or newer only** (does not work on macOS 14.x or on Linux/CI)
+- Requires the Apple Podcasts app signed in on the machine (for the bearer token)
+- Build the helper once (see [tools/apple/README.md](tools/apple/README.md)):
+
+```sh
+cd tools/apple
+clang -Wno-objc-method-access -framework Foundation \
+  -F/System/Library/PrivateFrameworks -framework AppleMediaServices \
+  FetchTranscript.m -o FetchTranscript
+```
+
+Then `python -m podcast_words sync --podcast daily` discovers all episodes and
+downloads their transcripts (TTML), converting them to WebVTT. If you already
+have transcripts cached locally by the Apple Podcasts app, you can also export
+them with
+[apple-podcast-transcript-extractor](https://github.com/Danjohnsonnj/apple-podcast-transcript-extractor)
+and `import --dir` the resulting files.
+
+## Running the app
+
+```sh
+streamlit run app.py
+```
+
+Pick a podcast in the sidebar to load its full episode set, charts, and stats.
+Only podcasts with a built `word_counts.csv` appear in the selector.
+
+## Migrating the original PUFO data
+
+If you have the original repository layout (root `word_counts.csv`,
+`episode_stats.json`, and `episode_processor/text/`), run the one-time
+migration to populate `data/pufo/`:
+
+```sh
+python scripts/migrate_pufo.py
+```
+
+This copies the generated data, converts the legacy Whisper `.txt` transcripts
+to WebVTT, and builds the `episodes.csv` catalog.
+
+## Limitations
+
+- Whisper occasionally mis-transcribes words, especially with crosstalk.
+- spaCy lemmatization is imperfect; not every word maps to a clean stem.
+- Apple transcript fetching is macOS-only and depends on Apple's private API.
+
+## Disclaimer
+
+This fork was extended with the help of **Cursor AI**. The multi-podcast
+refactor, transcript adapters, sync pipeline, and tests were planned and
+implemented using Cursor with Anthropic Claude models (Claude Opus 4.x).
+Generated code was reviewed and validated against the live PodLove, RSS, and
+iTunes endpoints, but please double-check anything security- or
+billing-sensitive before relying on it.

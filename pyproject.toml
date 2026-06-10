@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "podcast-words"
+version = "0.2.0"
+description = "Multi-podcast transcript word-frequency analysis"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas",
+    "numpy",
+    "plotly",
+    "streamlit",
+    "pyyaml",
+    "requests",
+    "beautifulsoup4",
+    "lxml",
+    "spacy",
+]
+
+[project.optional-dependencies]
+whisper = [
+    "torch",
+    "torchaudio",
+    "transformers",
+    "accelerate",
+    "librosa",
+    "soundfile",
+]
+podlove = []
+apple = []
+dev = [
+    "pytest",
+]
+
+[project.scripts]
+podcast-words = "podcast_words.cli:main"
+
+[tool.setuptools]
+packages = ["podcast_words", "podcast_words.transcripts", "podcast_words.sources", "podcast_words.pipeline"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
