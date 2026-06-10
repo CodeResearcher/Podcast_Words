@@ -78,12 +78,13 @@ def count_words(podcast: PodcastConfig, *, rebuild: bool = False) -> dict:
     if csv_path.exists() and not rebuild:
         df = pd.read_csv(csv_path)
         df.set_index("word", inplace=True)
-        existing = {int(c) for c in df.columns if c != "is_stop"}
         if "is_stop" in df.columns:
             lemma_info = {
                 str(word): bool(stop)
                 for word, stop in df["is_stop"].items()
             }
+            df = df.drop(columns=["is_stop"])
+        existing = {int(c) for c in df.columns}
     else:
         df = pd.DataFrame()
         existing = set()
@@ -95,29 +96,31 @@ def count_words(podcast: PodcastConfig, *, rebuild: bool = False) -> dict:
 
     nlp = _load_spacy(podcast.spacy_model)
 
-    processed = 0
+    # Build each episode column independently, then merge in a single pd.concat.
+    # Joining one column at a time fragments the DataFrame and is O(n^2); a single
+    # concat aligns all word indexes at once and avoids PerformanceWarnings.
+    new_columns: list[pd.Series] = []
     for number in pending:
         transcript = load_transcript(transcripts[number])
         lemmas = _process_text(nlp, transcript.plain_text(), lemma_info)
-        column = pd.Series(Counter(lemmas), name=number)
-        df = df.join(column, how="outer") if not df.empty else column.to_frame()
-        processed += 1
+        new_columns.append(pd.Series(Counter(lemmas), name=number, dtype="float64"))
 
+    processed = len(new_columns)
     if processed == 0:
         return {"processed": 0, "skipped": skipped, "total_episodes": len(existing)}
 
-    df.fillna(0, inplace=True)
-    episode_columns = [c for c in df.columns if c != "is_stop"]
-    df = df.astype({c: "int" for c in episode_columns})
-    df["is_stop"] = df.index.map(lambda w: lemma_info.get(w, False))
+    new_df = pd.concat(new_columns, axis=1)
+    df = pd.concat([df, new_df], axis=1) if not df.empty else new_df
 
-    ordered = ["is_stop"] + sorted(
-        (c for c in df.columns if c != "is_stop"), key=lambda c: int(c)
-    )
-    df = df[ordered]
+    # The matrix is now all-numeric episode columns. concat leaves one block per
+    # source column, so consolidate with copy() before adding is_stop — otherwise
+    # the many-block frame triggers pandas' fragmentation PerformanceWarning.
+    df = df.fillna(0).astype("int64")
+    df = df[sorted(df.columns, key=lambda c: int(c))].copy()
+    df.insert(0, "is_stop", [bool(lemma_info.get(w, False)) for w in df.index])
     df.sort_index(inplace=True)
-    df.reset_index(inplace=True)
-    df.rename(columns={"index": "word"}, inplace=True)
+    df.index.name = "word"
+    df = df.reset_index()
     df.replace(0, np.nan, inplace=True)
 
     csv_path.parent.mkdir(parents=True, exist_ok=True)
@@ -128,7 +131,7 @@ def count_words(podcast: PodcastConfig, *, rebuild: bool = False) -> dict:
     return {
         "processed": processed,
         "skipped": skipped,
-        "total_episodes": len(episode_columns),
+        "total_episodes": len(existing) + processed,
     }
 
 

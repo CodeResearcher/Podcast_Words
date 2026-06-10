@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import os
+import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
+from urllib.parse import urlparse
 
 import yaml
 
@@ -20,6 +22,26 @@ SPACY_MODELS = {
 
 VALID_EPISODE_ID_TYPES = {"regex", "podlove_number", "sequential"}
 VALID_SOURCE_TYPES = {"whisper_rss", "podlove", "apple", "manual"}
+
+# Loopback/reserved hosts where cleartext HTTP is fine (local dev / tests).
+_LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1"}
+_TEST_TLDS = (".test", ".local", ".localhost", ".example", ".invalid")
+
+
+def _warn_if_insecure(url: str | None, field_name: str) -> None:
+    """Warn when a configured endpoint uses cleartext HTTP (MITM risk)."""
+    if not url:
+        return
+    parsed = urlparse(url)
+    if parsed.scheme and parsed.scheme != "https":
+        host = (parsed.hostname or "").lower()
+        if host in _LOCAL_HOSTS or host.endswith(_TEST_TLDS):
+            return
+        warnings.warn(
+            f"{field_name} uses insecure scheme '{parsed.scheme}://'. Prefer https:// "
+            "to prevent transcript/feed tampering in transit.",
+            stacklevel=3,
+        )
 
 
 @dataclass
@@ -60,6 +82,8 @@ class SourceConfig:
             raise ValueError("source 'podlove' requires 'api_base'.")
         if self.type == "apple" and not self.podcast_id:
             raise ValueError("source 'apple' requires 'podcast_id'.")
+        _warn_if_insecure(self.feed_url, "feed_url")
+        _warn_if_insecure(self.api_base, "api_base")
 
 
 @dataclass

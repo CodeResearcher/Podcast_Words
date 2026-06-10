@@ -166,6 +166,21 @@ streamlit run app.py
 Pick a podcast in the sidebar to load its full episode set, charts, and stats.
 Only podcasts with a built `word_counts.csv` appear in the selector.
 
+### Deploying the app securely
+
+The dashboard is **read-only and has no authentication** — it only displays
+already-built, public word-frequency data. If you expose it beyond your own
+machine:
+
+- Put it **behind a reverse proxy with TLS** (e.g. nginx/Caddy); do not bind
+  Streamlit directly to a public interface.
+- Keep the shipped [`.streamlit/config.toml`](.streamlit/config.toml), which
+  disables usage telemetry and CORS and keeps XSRF protection on.
+- The sync/import CLI is for trusted operators only. Transcript sources are
+  validated where practical (XML is parsed with `defusedxml`, audio downloads
+  are size-capped and blocked from non-public addresses, configured non-HTTPS
+  URLs emit a warning), but you should still only configure feeds you trust.
+
 ## Migrating the original PUFO data
 
 If you have the original repository layout (root `word_counts.csv`,

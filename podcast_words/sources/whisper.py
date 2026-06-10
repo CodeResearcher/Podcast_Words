@@ -18,9 +18,12 @@ import requests
 from podcast_words.catalog import Episode
 from podcast_words.config import PodcastConfig, SourceConfig
 from podcast_words.models import Transcript, TranscriptCue
+from podcast_words.sources._net import UnsafeURLError, assert_safe_url
 
 _MODEL_ID = "primeline/whisper-large-v3-turbo-german"
 _TIMEOUT = 120
+# Cap audio downloads so a hostile/oversized enclosure can't exhaust disk.
+_MAX_DOWNLOAD_BYTES = 500 * 1024 * 1024  # 500 MB
 _pipe = None
 
 
@@ -32,8 +35,17 @@ def _get_pipeline():
     import torch
     from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
-    device = "cuda:0" if torch.cuda.is_available() else "cpu"
-    torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
+    # Prefer CUDA, then Apple Silicon (MPS), then CPU. fp16 only helps on GPU;
+    # MPS lacks kernels for some fp16 ops, so keep fp32 there for correctness.
+    if torch.cuda.is_available():
+        device = "cuda:0"
+        torch_dtype = torch.float16
+    elif getattr(torch.backends, "mps", None) is not None and torch.backends.mps.is_available():
+        device = "mps"
+        torch_dtype = torch.float32
+    else:
+        device = "cpu"
+        torch_dtype = torch.float32
 
     model = AutoModelForSpeechSeq2Seq.from_pretrained(
         _MODEL_ID, torch_dtype=torch_dtype, low_cpu_mem_usage=True, use_safetensors=True
@@ -57,13 +69,26 @@ def _get_pipeline():
 
 def _download(url: str, dest: Path) -> bool:
     try:
+        assert_safe_url(url)
+    except UnsafeURLError as exc:
+        print(f"  refusing to download {url}: {exc}")
+        return False
+    try:
         resp = requests.get(url, stream=True, timeout=_TIMEOUT)
     except requests.RequestException:
         return False
     if resp.status_code != 200:
         return False
+    written = 0
     with open(dest, "wb") as f:
         for chunk in resp.iter_content(8192):
+            written += len(chunk)
+            if written > _MAX_DOWNLOAD_BYTES:
+                print(
+                    f"  aborting download of {url}: exceeds "
+                    f"{_MAX_DOWNLOAD_BYTES // (1024 * 1024)} MB limit."
+                )
+                return False
             f.write(chunk)
     return True
 

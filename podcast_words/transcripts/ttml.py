@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from xml.etree import ElementTree as ET
+from xml.etree import ElementTree as ET  # types only; parsing uses defusedxml
+
+from defusedxml.ElementTree import fromstring as _safe_fromstring
 
 from podcast_words.models import Transcript, TranscriptCue
 
@@ -49,7 +51,13 @@ def _parse_clock(value: str | None) -> int | None:
 
 
 def _gather_text(element: ET.Element) -> str:
-    """Collect text from an element and its inline children (e.g. <span>, <br>)."""
+    """Collect text from an element and its inline children (e.g. <span>, <br>).
+
+    Apple word-level TTML nests one <span podcasts:unit="word"> per word with no
+    separating whitespace, so child contributions are joined with a space (and
+    runs of whitespace are then collapsed). Transcripts that already include
+    explicit spacing are unaffected because the collapse removes duplicates.
+    """
     fragments: list[str] = []
     if element.text:
         fragments.append(element.text)
@@ -57,6 +65,7 @@ def _gather_text(element: ET.Element) -> str:
         if _local(child.tag) == "br":
             fragments.append(" ")
         else:
+            fragments.append(" ")
             fragments.append(_gather_text(child))
         if child.tail:
             fragments.append(child.tail)
@@ -64,7 +73,8 @@ def _gather_text(element: ET.Element) -> str:
 
 
 def parse(content: str) -> Transcript:
-    root = ET.fromstring(content)
+    # defusedxml rejects DTDs/external entities and entity-expansion attacks.
+    root = _safe_fromstring(content)
     cues: list[TranscriptCue] = []
     for elem in root.iter():
         if _local(elem.tag) != "p":

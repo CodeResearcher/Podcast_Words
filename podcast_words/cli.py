@@ -35,6 +35,8 @@ def _cmd_sync(args: argparse.Namespace) -> int:
         force=args.force,
         count=not args.no_count,
         rebuild=args.rebuild,
+        fallback=args.fallback,
+        limit=args.limit,
     )
     print(
         f"\nSynced {podcast.id}: +{summary['new_episodes']} new, "
@@ -42,6 +44,13 @@ def _cmd_sync(args: argparse.Namespace) -> int:
         f"{summary['no_transcript']} without transcript, "
         f"{summary['errors']} errors."
     )
+    if "fallback" in summary:
+        fb = summary["fallback"]
+        note = " (source unavailable)" if fb.get("unsupported") else ""
+        print(
+            f"Fallback: {fb['recovered']} recovered, "
+            f"{fb['still_missing']} still missing{note}."
+        )
     if "count" in summary:
         c = summary["count"]
         print(
@@ -98,6 +107,18 @@ def build_parser() -> argparse.ArgumentParser:
     p_sync.add_argument("--source", help="Force a specific source type (e.g. podlove).")
     p_sync.add_argument("--backfill", action="store_true", help="Retry all pending/no_transcript episodes.")
     p_sync.add_argument("--force", action="store_true", help="Re-fetch transcripts for every episode.")
+    p_sync.add_argument(
+        "--fallback",
+        action="store_true",
+        help="Recover no_transcript episodes from the podcast's other configured sources.",
+    )
+    p_sync.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Only fetch transcripts for the first N target episodes (0 = discover only). "
+        "Useful for batching slow sources like Whisper.",
+    )
     p_sync.add_argument("--no-count", action="store_true", help="Skip word counting after import.")
     p_sync.add_argument("--rebuild", action="store_true", help="Recount all episodes from scratch.")
     p_sync.set_defaults(func=_cmd_sync)

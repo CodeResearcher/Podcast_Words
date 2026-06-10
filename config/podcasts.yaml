@@ -19,6 +19,14 @@ podcasts:
     sources:
       - type: podlove
         api_base: "https://freakshow.fm/wp-json/podlove/v2"
+      # Fallback for episodes PodLove has no transcript for (run sync --fallback).
+      - type: apple
+        podcast_id: "277518737" # from podcasts.apple.com/.../id277518737
+        country: DE
+      # Last resort: transcribe audio locally with Whisper. Discovery populates the
+      # audio enclosure URLs; run e.g. `sync --source whisper_rss --backfill --limit N`.
+      - type: whisper_rss
+        feed_url: "https://freakshow.fm/feed/mp3"
     defaults:
       search_words: []
 

@@ -40,3 +40,17 @@ def test_to_vtt_conversion():
     vtt_text = ttml.parse(SAMPLE).to_vtt()
     assert vtt_text.startswith("WEBVTT")
     assert "-->" in vtt_text
+
+
+# Apple word-level TTML: each word in its own <span> with no separating space.
+WORD_LEVEL = """<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:ttm="http://www.w3.org/ns/ttml#metadata">
+  <body><div>
+    <p begin="0.5" end="3.0" ttm:agent="SPEAKER_1"><span begin="0.5" end="2.0"><span begin="0.5" end="0.8">Herzlich</span><span begin="0.9" end="1.2">Willkommen</span><span begin="1.3" end="2.0">beim</span></span></p>
+  </div></body>
+</tt>"""
+
+
+def test_word_level_spans_get_spaced():
+    cue = ttml.parse(WORD_LEVEL).cues[0]
+    assert cue.text == "Herzlich Willkommen beim"

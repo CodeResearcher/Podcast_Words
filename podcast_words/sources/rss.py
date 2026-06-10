@@ -8,15 +8,37 @@ enclosure URL) so the sync orchestrator knows what audio to transcribe.
 from __future__ import annotations
 
 import re
+from xml.etree.ElementTree import ParseError
 
 import requests
 from bs4 import BeautifulSoup
+from defusedxml.ElementTree import fromstring as _safe_fromstring
+from defusedxml.common import DefusedXmlException
 
 from podcast_words.catalog import Episode, STATE_PENDING
 from podcast_words.config import PodcastConfig, SourceConfig
 
 _TIMEOUT = 30
 _NUMBER_RE = re.compile(r"(\d+)")
+
+
+def _reject_unsafe_xml(content: bytes) -> None:
+    """Refuse feeds containing DTDs/entity declarations before lenient parsing.
+
+    BeautifulSoup's XML backend is permissive and may resolve entities. We run
+    the raw bytes through defusedxml first purely as a gate: a DefusedXmlException
+    means the feed tried something unsafe (XXE / billion-laughs) and we abort.
+    A plain ParseError is ignored so BeautifulSoup can still recover real-world
+    feeds with minor markup issues.
+    """
+    try:
+        _safe_fromstring(content)
+    except DefusedXmlException as exc:
+        raise ValueError(
+            "RSS feed contains a DTD or entity declarations; refusing to parse."
+        ) from exc
+    except ParseError:
+        pass
 
 
 def _assign_number(podcast: PodcastConfig, title: str, fallback: int) -> int | None:
@@ -30,6 +52,7 @@ def _assign_number(podcast: PodcastConfig, title: str, fallback: int) -> int | N
 def discover(podcast: PodcastConfig, source: SourceConfig) -> list[Episode]:
     resp = requests.get(source.feed_url, timeout=_TIMEOUT)
     resp.raise_for_status()
+    _reject_unsafe_xml(resp.content)
     soup = BeautifulSoup(resp.content, "xml")
 
     episodes: list[Episode] = []

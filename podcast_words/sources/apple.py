@@ -10,6 +10,7 @@ Reference: https://github.com/dado3212/apple-podcast-transcript-downloader
 from __future__ import annotations
 
 import platform
+import re
 import subprocess
 import tempfile
 from pathlib import Path
@@ -21,6 +22,11 @@ from podcast_words.sources.apple_catalog import discover  # re-exported for the 
 from podcast_words.transcripts import ttml
 
 FETCH_TRANSCRIPT_BIN = PROJECT_ROOT / "tools" / "apple" / "FetchTranscript"
+
+# Apple episode trackIds are numeric. Enforcing this prevents a crafted
+# source_id (e.g. starting with '-') from being parsed as a CLI flag by the
+# helper binary (argument injection).
+_TRACK_ID_RE = re.compile(r"^[0-9]+$")
 
 __all__ = ["discover", "fetch_transcript", "ensure_supported"]
 
@@ -62,6 +68,11 @@ def fetch_transcript(
     ensure_supported()
     if not episode.source_id:
         return None
+    if not _TRACK_ID_RE.match(episode.source_id):
+        raise ValueError(
+            f"Refusing to fetch: episode source_id {episode.source_id!r} is not a "
+            "numeric Apple trackId."
+        )
 
     with tempfile.TemporaryDirectory() as tmp:
         tmp_dir = Path(tmp)

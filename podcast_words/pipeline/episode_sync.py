@@ -8,6 +8,7 @@ up only newly published episodes). See the plan's "Dual-Mode Import" section.
 from __future__ import annotations
 
 import json
+import re
 import time
 from datetime import datetime, timezone
 
@@ -24,6 +25,7 @@ from podcast_words.transcripts import vtt
 
 # Per-source request spacing to stay polite to public APIs.
 _RATE_LIMIT_SECONDS = 0.5
+_GENERIC_NUMBER_RE = re.compile(r"(\d+)")
 
 
 def _discover_fn(source_type: str):
@@ -84,6 +86,103 @@ def _write_sync_state(podcast: PodcastConfig, episode_count: int) -> None:
         json.dump(state, f, indent=2)
 
 
+def _number_from_title(podcast: PodcastConfig, title: str) -> int | None:
+    """Extract an episode number from a title for cross-source matching.
+
+    Uses the podcast's regex pattern when configured, else the first integer in
+    the title (e.g. 'FS308 Casual Punk' -> 308). This lets a fallback source
+    (Apple) be aligned to catalog episodes numbered by the primary source.
+    """
+    if podcast.episode_id.type == "regex" and podcast.episode_id.pattern:
+        match = re.search(podcast.episode_id.pattern, title)
+        return int(match.group(1)) if match else None
+    match = _GENERIC_NUMBER_RE.search(title)
+    return int(match.group(1)) if match else None
+
+
+def _run_fallback(
+    podcast: PodcastConfig,
+    catalog: Catalog,
+    *,
+    primary_source: SourceConfig,
+) -> dict:
+    """Recover transcripts for no_transcript episodes from secondary sources.
+
+    For each non-primary source configured on the podcast, discover its episodes,
+    match them to the catalog by episode number, and try fetching a transcript
+    for episodes the primary source could not provide.
+    """
+    from podcast_words.sources.apple import AppleUnsupportedError
+
+    result = {"recovered": 0, "still_missing": 0, "unsupported": False}
+    other_sources = [s for s in podcast.sources if s is not primary_source]
+    remaining = [e for e in catalog.episodes() if e.state == STATE_NO_TRANSCRIPT]
+    if not remaining or not other_sources:
+        result["still_missing"] = len(remaining)
+        return result
+
+    for src in other_sources:
+        discover = _discover_fn(src.type)
+        fetch = _fetch_fn(src.type)
+        if discover is None or fetch is None:
+            continue
+
+        try:
+            discovered = discover(podcast, src)
+        except Exception as exc:
+            print(f"  fallback '{src.type}' discovery failed: {exc}")
+            continue
+
+        index: dict[int, str] = {}
+        for ep in discovered:
+            number = _number_from_title(podcast, ep.title)
+            if number is not None and ep.source_id:
+                index.setdefault(number, ep.source_id)
+
+        still: list[Episode] = []
+        total = len(remaining)
+        for idx, episode in enumerate(remaining, start=1):
+            source_id = index.get(episode.number)
+            if not source_id:
+                still.append(episode)
+                continue
+            probe = Episode(
+                number=episode.number, title=episode.title, source_id=source_id
+            )
+            print(
+                f"[{podcast.id}] fallback {src.type} {idx}/{total} (episode {episode.number})"
+            )
+            try:
+                transcript = fetch(podcast, src, probe)
+            except AppleUnsupportedError as exc:
+                print(f"  {src.type} unavailable, stopping fallback: {exc}")
+                result["unsupported"] = True
+                still.extend(remaining[idx - 1:])
+                break
+            except Exception as exc:
+                print(f"  error: {exc}")
+                still.append(episode)
+                continue
+
+            if transcript is None:
+                still.append(episode)
+                continue
+
+            _save_transcript(podcast, episode, transcript)
+            episode.state = STATE_DONE
+            episode.transcript_source = src.type
+            result["recovered"] += 1
+            catalog.save()
+            time.sleep(_RATE_LIMIT_SECONDS)
+
+        remaining = still
+        if result["unsupported"]:
+            break
+
+    result["still_missing"] = len(remaining)
+    return result
+
+
 def sync(
     podcast: PodcastConfig,
     *,
@@ -92,6 +191,8 @@ def sync(
     force: bool = False,
     count: bool = True,
     rebuild: bool = False,
+    fallback: bool = False,
+    limit: int | None = None,
 ) -> dict:
     """Run discover -> import -> count for a podcast.
 
@@ -125,6 +226,8 @@ def sync(
     fetch = _fetch_fn(source.type)
     if fetch is not None:
         targets = _import_targets(catalog, force=force, backfill=backfill)
+        if limit is not None and limit >= 0:
+            targets = targets[:limit]
         total = len(targets)
         for idx, episode in enumerate(targets, start=1):
             print(f"[{podcast.id}] transcript {idx}/{total} (episode {episode.number})")
@@ -146,6 +249,11 @@ def sync(
                 summary["fetched"] += 1
             catalog.save()
             time.sleep(_RATE_LIMIT_SECONDS)
+
+    # --- Fallback: recover no_transcript episodes from secondary sources ---
+    if fallback:
+        summary["fallback"] = _run_fallback(podcast, catalog, primary_source=source)
+        catalog.save()
 
     _write_sync_state(podcast, len(catalog))
 

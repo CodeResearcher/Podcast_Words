@@ -1,4 +1,5 @@
 from podcast_words.catalog import Catalog, Episode, STATE_DONE, STATE_NO_TRANSCRIPT, STATE_PENDING
+from podcast_words.config import SourceConfig
 from podcast_words.models import Transcript, TranscriptCue
 from podcast_words.pipeline import episode_sync
 
@@ -70,3 +71,60 @@ def test_transcript_saved_as_vtt(temp_podcast, monkeypatch):
     vtt_path = temp_podcast.transcripts_dir / "episode_1.vtt"
     assert vtt_path.exists()
     assert "hello world" in vtt_path.read_text()
+
+
+class TwoSourceFake:
+    """Primary source leaves episode 2 without a transcript; the fallback has it."""
+
+    def __init__(self):
+        self.primary_remote = [
+            Episode(number=1, title="FS1 One", source_id="p1", state=STATE_PENDING),
+            Episode(number=2, title="FS2 Two", source_id="p2", state=STATE_PENDING),
+        ]
+        # Fallback (Apple) episodes carry their own ids; matched by title number.
+        self.fallback_remote = [
+            Episode(number=99, title="FS2 Two", source_id="apple-2", state=STATE_PENDING),
+        ]
+
+    def discover(self, podcast, source):
+        remote = self.primary_remote if source.type == "podlove" else self.fallback_remote
+        return [Episode(**vars(e)) for e in remote]
+
+    def fetch(self, podcast, source, episode):
+        if source.type == "podlove":
+            if episode.number == 2:
+                return None
+            return Transcript([TranscriptCue(0, 1000, "primary text")])
+        # Fallback source: only serves the matched Apple id.
+        if episode.source_id == "apple-2":
+            return Transcript([TranscriptCue(0, 1000, "apple text")])
+        return None
+
+
+def test_fallback_recovers_missing_transcripts(temp_podcast, monkeypatch):
+    temp_podcast.sources.append(SourceConfig(type="apple", podcast_id="277518737"))
+    fake = TwoSourceFake()
+    _wire(monkeypatch, fake)
+
+    summary = episode_sync.sync(temp_podcast, count=False, fallback=True)
+    assert summary["fetched"] == 1
+    assert summary["no_transcript"] == 1
+    assert summary["fallback"]["recovered"] == 1
+    assert summary["fallback"]["still_missing"] == 0
+
+    catalog = Catalog.load(temp_podcast.episodes_csv)
+    assert catalog.get(2).state == STATE_DONE
+    assert catalog.get(2).transcript_source == "apple"
+    vtt_path = temp_podcast.transcripts_dir / "episode_2.vtt"
+    assert "apple text" in vtt_path.read_text()
+
+
+def test_fallback_disabled_by_default(temp_podcast, monkeypatch):
+    temp_podcast.sources.append(SourceConfig(type="apple", podcast_id="277518737"))
+    fake = TwoSourceFake()
+    _wire(monkeypatch, fake)
+
+    summary = episode_sync.sync(temp_podcast, count=False)
+    assert "fallback" not in summary
+    catalog = Catalog.load(temp_podcast.episodes_csv)
+    assert catalog.get(2).state == STATE_NO_TRANSCRIPT

@@ -35,6 +35,22 @@ def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+# Leading characters a spreadsheet may interpret as a formula (CSV injection).
+_CSV_FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r")
+
+
+def _csv_safe(value):
+    """Neutralize spreadsheet formula injection in string cells.
+
+    Episode titles/links come from remote feeds; a value like ``=HYPERLINK(...)``
+    would execute when the CSV is opened in Excel/Sheets. Prefix such values with
+    a single quote so they are treated as literal text. Non-strings pass through.
+    """
+    if isinstance(value, str) and value.startswith(_CSV_FORMULA_PREFIXES):
+        return "'" + value
+    return value
+
+
 @dataclass
 class Episode:
     number: int
@@ -47,7 +63,7 @@ class Episode:
     discovered_at: str = ""
 
     def to_row(self) -> dict:
-        return {k: ("" if v is None else v) for k, v in asdict(self).items()}
+        return {k: _csv_safe("" if v is None else v) for k, v in asdict(self).items()}
 
 
 def _coerce_number(value) -> int:
