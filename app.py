@@ -22,11 +22,7 @@ _SOURCE_LABELS = {
 }
 
 _AUDIO_SUFFIXES = (".mp3", ".m4a", ".wav", ".ogg", ".aac")
-_HOVER_WITH_LINK = (
-    "Episode %{x}<br>%{customdata[1]}"
-    "<br><a href='%{customdata[0]}'>Open episode</a><extra></extra>"
-)
-_HOVER_NO_LINK = "Episode %{x}<br>%{customdata[1]}<extra></extra>"
+_HOVER_EPISODE = "Episode %{x}<br>%{customdata[1]}<extra></extra>"
 
 
 def _is_audio_url(url: str) -> bool:
@@ -71,10 +67,6 @@ def _episode_hover_customdata(episode_numbers, meta: dict[int, dict[str, str]]):
         urls.append(row.get("url", ""))
         titles.append(row.get("title", "") or f"Episode {number}")
     return list(zip(urls, titles, strict=True))
-
-
-def _hover_template(customdata: list[tuple[str, str]]) -> str:
-    return _HOVER_WITH_LINK if any(url for url, _ in customdata) else _HOVER_NO_LINK
 
 
 def _selection_points(selection) -> list:
@@ -267,7 +259,7 @@ if selected_words:
                 stackgroup="one",
                 name=word,
                 customdata=line_customdata,
-                hovertemplate=_hover_template(line_customdata),
+                hovertemplate=_HOVER_EPISODE,
             )
         )
     fig_line.update_layout(xaxis_title="Episode", yaxis_title="Count", width=1000, height=400)
@@ -291,14 +283,7 @@ if selected_words:
                 name=word,
                 orientation="h",
                 customdata=bar_customdata,
-                hovertemplate=(
-                    "%{y}<br>%{customdata[1]}"
-                    + (
-                        "<br><a href='%{customdata[0]}'>Open episode</a><extra></extra>"
-                        if any(url for url, _ in bar_customdata)
-                        else "<extra></extra>"
-                    )
-                ),
+                hovertemplate="%{y}<br>%{customdata[1]}<extra></extra>",
             )
         )
     fig_bar.update_layout(
@@ -322,7 +307,6 @@ col2.metric("🗣️ Total words spoken", f"{stats['total_words']:,}")
 col3.metric("🔤 Distinct words", f"{stats['total_unique_words']:,}")
 
 stats_customdata = _episode_hover_customdata(episodes_stats_df["episode"], episode_meta)
-stats_hover = _hover_template(stats_customdata)
 
 st.subheader("📈 Words per episode")
 fig_total = go.Figure(
@@ -331,7 +315,7 @@ fig_total = go.Figure(
         y=episodes_stats_df["total_words"],
         mode="lines+markers",
         customdata=stats_customdata,
-        hovertemplate=stats_hover,
+        hovertemplate=_HOVER_EPISODE,
     )
 )
 fig_total.update_layout(xaxis_title="Episode", yaxis_title="Words", width=1000, height=300)
@@ -345,7 +329,7 @@ fig_unique = go.Figure(
         y=episodes_stats_df["unique_words"],
         mode="lines+markers",
         customdata=stats_customdata,
-        hovertemplate=stats_hover,
+        hovertemplate=_HOVER_EPISODE,
     )
 )
 fig_unique.update_layout(xaxis_title="Episode", yaxis_title="Count", width=1000, height=300)
@@ -359,7 +343,7 @@ fig_new = go.Figure(
         y=episodes_stats_df["new_words"],
         mode="lines+markers",
         customdata=stats_customdata,
-        hovertemplate=stats_hover,
+        hovertemplate=_HOVER_EPISODE,
     )
 )
 fig_new.update_layout(

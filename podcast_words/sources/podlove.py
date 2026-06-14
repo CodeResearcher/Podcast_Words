@@ -13,6 +13,7 @@ import requests
 from podcast_words.catalog import Episode, STATE_PENDING
 from podcast_words.config import PodcastConfig, SourceConfig
 from podcast_words.models import Transcript, TranscriptCue
+from podcast_words.progress import iter_progress
 from podcast_words.transcripts import vtt
 
 _TIMEOUT = 30
@@ -22,6 +23,18 @@ _NUMBER_RE = re.compile(r"(\d+)")
 def _api_get(url: str, params: dict | None = None) -> requests.Response:
     headers = {"Accept": "application/json"}
     return requests.get(url, params=params, headers=headers, timeout=_TIMEOUT)
+
+
+def _fetch_episode(base: str, episode_id: str) -> dict | None:
+    """Load a single episode from ``/episodes/{id}`` (includes ``link``)."""
+    if not episode_id:
+        return None
+    resp = _api_get(f"{base}/episodes/{episode_id}")
+    if resp.status_code == 404:
+        return None
+    resp.raise_for_status()
+    payload = resp.json()
+    return payload if isinstance(payload, dict) else None
 
 
 def _episode_number(item: dict, podcast: PodcastConfig, fallback: int) -> int:
@@ -59,16 +72,31 @@ def discover(podcast: PodcastConfig, source: SourceConfig) -> list[Episode]:
         items = sorted(items, key=lambda item: int(str(item.get("id", "0")).strip() or "0"))
 
     episodes: list[Episode] = []
-    for idx, item in enumerate(items, start=1):
+    for idx, item in enumerate(
+        iter_progress(items, desc="PodLove episodes", unit="ep", total=len(items)),
+        start=1,
+    ):
         episode_id = str(item.get("id", "")).strip()
+        link = str(item.get("link", "") or "").strip()
+        published_at = str(item.get("publicationDate", "") or item.get("date", "") or "")
+
+        if episode_id and not link:
+            detail = _fetch_episode(base, episode_id)
+            if detail:
+                link = str(detail.get("link", "") or "").strip()
+                if not published_at:
+                    published_at = str(detail.get("publicationDate", "") or "")
+                if item.get("number") in (None, "") and detail.get("number") not in (None, ""):
+                    item = {**item, "number": detail.get("number")}
+
         number = _episode_number(item, podcast, fallback=idx)
         episodes.append(
             Episode(
                 number=number,
                 title=str(item.get("title", "")).strip(),
-                link=str(item.get("link", "") or ""),
+                link=link,
                 source_id=episode_id,
-                published_at=str(item.get("publicationDate", "") or item.get("date", "")),
+                published_at=published_at,
                 state=STATE_PENDING,
                 transcript_source="podlove",
             )
