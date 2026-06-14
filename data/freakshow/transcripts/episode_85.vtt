@@ -1,0 +1,1216 @@
+WEBVTT
+
+00:00:07.880 --> 00:00:16.700
+<v SPEAKER_1>Beyond Peak Apple, wir sind weit hinter. Ich wollte nun mal wieder meine übliche halbjährliche, dreivierteljährliche Trotzerei vorbringen.
+
+00:00:16.720 --> 00:00:18.700
+<v SPEAKER_2>Warum haben wir da noch keinen Jingle?
+
+01:00:15.414 --> 01:00:59.734
+<v SPEAKER_3>Ist klar, wenn du das jetzt nur so als virtuelle Hardware benutzt und letztlich deine eigenen Dienste machst, klar, aber bei S3 oder so setzt du ja nicht selber einen FTP-Server auf, sondern da hast du quasi eben auch die Security-Infrastruktur von Amazon und die Fallbacks und eigene Protokolle. Also es gibt Teile, wo das eben im Prinzip nicht viel ändert, aber es gibt eben auch Teile, wo es sehr wohl sehr viel ändert, weil du einfach auf einen gekapselten Dienst aufsetzt, der jetzt so in seiner Standard-Konfiguration erstmal zumindest im Idealfall ein wenig geprüft, gecheckt, geplant und vielleicht auch mit Bedacht aufgesetzt ist. Und das gilt dann halt auch automatisch für alle.
+
+01:01:00.294 --> 01:01:25.934
+<v SPEAKER_5>Klar, es gibt natürlich eins, der Lieblingsbeispiel ist ja, wenn dann die Leute ihren Redis-Server, einfach so Bein-Sternchen irgendwie und dann kannst du halt auch ganz easy nach den Ports im Internet scannen, hier mit diesem Z-Map und so weiter. Dann findest du dann halt alle möglichen Instanzen, die dich jung, freulich und offen begrüßen, wenn du mit ihnen sprechen möchtest.
+
+01:01:25.954 --> 01:01:29.434
+<v SPEAKER_3>Ja, vor allem diese ganzen Development-Test-Server.
+
+01:01:29.454 --> 01:01:43.034
+<v SPEAKER_5>Aber andererseits, ich hab auch schon oft genug neben Leuten gesessen, die dann so ein AWS-Ding einrichten und dann so ah, jetzt geht hier SSH nicht her, müssen wir erst mal hier diese Security-Rules und so weiter. Und dann halt dann auch einfach, ja, komm, grant all, ich weiß schon, was ich tu.
+
+01:01:48.594 --> 01:04:28.234
+<v SPEAKER_3>Aber um mir gleich zu widersprechen, dass das ja immer alles so gut ist, gab es ja gleich noch einen zweiten Cloud-Fall. Ja, Cloud Fail, den sie dann gleich Cloud Bleed genannt haben. Das war ein Problem bei Cloud Flare, was ja so ein Dienstleister ist, der dir quasi die Last von deinen Web-Services nimmt und dann eben auch deine Seiten cached. Wenn dein eigener Server down ist, dann halten sie noch deine Web-Präsenz dann starten sie irgendwo hoch. Genau, solche Sachen kommen da halt auch noch mit rein und das ist irgendwie alles ganz nice. Und wäre wahrscheinlich auch irgendwie nichts passiert, allerdings haben sie halt auch so advanced Features. Und das muss ich kurz nochmal nachdenken. Jetzt hatte ich mir das eigentlich ganz gut gemerkt, aber jetzt entfällt mir gerade wieder so ein Detail. Auf jeden Fall gab es so Optionen in diesen Server-Paketen, die du da buchen kannst, wo es quasi erforderlich war, für den Cloudflare-Dienst deine Seiten auch nochmal zu parsen. Ich weiß nicht mehr ganz genau, womit das was zu tun hatte, mit irgendwelchen E-Mail-Notifications. Auf jeden Fall hat Cloudflare mit dieser Option dann eben auch noch deine Webseite geparsst, um daraus noch eine Information zu gewinnen, die sonst nicht da gewesen wäre. Also anstatt einfach nur statisch den Kram zu mirrern und nicht weiter zu interpretieren, hatten sie da eben so etwas Logik drin. Das gab es auch schon seit ein paar Jahren und lange Zeit nichts passiert. Aber jetzt trat es wohl auf, ich bin mir auch gerade nicht ganz so sicher, wodurch das jetzt getriggert wurde. Auf jeden Fall hatten sie einen Bug in diesem HTML-Parser drin, der dadurch getriggert wurde, dass in Webseiten, man höre einen Staune, Tags nicht geschlossen waren. Also ganz klassische, kann ja mal passieren, Fehler. Und obwohl sie da irgendwie ganz fancy Tools am Start hatten, wo sie quasi so ein, wie heißt das Ding, so ein Regular-Expression-Compiler haben die da genommen. Der wurde auch irgendwie ganz cool ist, das heißt, du sagst so hier, das ist das, was ich hier irgendwie parsen will, aber der interpretiert das nicht immer wieder in Echtzeit, sondern damit das irgendwie schnell läuft, erzeugt er halt so richtig Code.
+
+01:04:28.294 --> 01:04:35.114
+<v SPEAKER_5>Also ich meine, ich hab's nicht so in Detail gelesen, aber heißt das, sie haben HTML mit Regular-Expressions gepasst oder was?
+
+01:04:35.134 --> 01:04:55.054
+<v SPEAKER_3>Das kann ich jetzt nicht genau ausschließen. Ich hab mir den Code selber jetzt nicht angeschaut. Es ist natürlich auch schon mal ein Problem. Wobei ich jetzt nicht sagen würde, dass man diesen Ansatz so nicht fahren kann. Das hängt immer ganz davon ab, wie du diese Regular-Expressions einsetzt. Also du kannst ja schon...
+
+01:04:55.074 --> 01:05:00.334
+<v SPEAKER_6>Also wenn du nicht ganze Dokumente und so weiter versuchst, dann zu parsen, etc.
+
+01:05:00.354 --> 01:06:53.534
+<v SPEAKER_3>Das ist auch so ein Problem. Also Parsing, ich finde auch Parsing sollte man irgendwie schon in der Kindertagesstätte vermitteln. Später mal wirklich wichtig, dass die Programmierer das wirklich verstanden haben, was es bedeutet, da scheint noch ein Problem zu sein. Auf jeden Fall führte dieser Bug dann dazu, dass in diesem Compiler so ein Boundary-Check nicht richtig gemacht wurde, also so ein Buffer-Überlauf stattfinden konnte. Na ja, da das dann sozusagen direkt in dem Code war, der eben diese Webseiten ausgeliefert hat, passierte eben so was Ähnliches wie seinerzeit bei dem, wie hieß der, Bleed? Nicht Etherbleed, sondern der andere... Hardbleed, genau, bei diesem Hardbleed-Bug, dass eben aus dem Webserver heraus Daten übergeben wurden, die irgendwelchen Status und Zustand, also irgendwelche Informationen aus anderen Webseiten rüber gebracht haben. Das heißt, diese kaputten Webseiten hinter dem Cloudflare-Dienst haben dazu geführt, also wenn du auf die zugegriffen hast, dann haben diese Webserver dir falsche Dokumente geliefert, die halt zusammengesetzt waren aus was auch immer gerade im Hauptspeicher dieses Servers stand, was sich aber auch aus ganz anderen Seiten macht. Und da das natürlich auch die ganze Zeit von Google abgespeidert wird, landet das dann eben auch noch alles schön im Google-Index, wo dann halt irgendwie alle möglichen mehr oder weniger vertraulichen Sachen, Session-Keys und so weiter drin gelandet sind. Immerhin, muss man sagen, hat Cloudflare da extrem professionell drauf reagiert. Also das findet man jetzt auch selten, dass Unternehmen, ich meine, weiß ja, was die meisten machen, so, ne, alles gar kein Problem und überhaupt und so.
+
+01:06:53.554 --> 01:06:56.274
+<v SPEAKER_5>Es bestand zu keinem Zeitpunkt da in der Bevölkerung.
+
+01:06:56.294 --> 01:09:26.914
+<v SPEAKER_3>Gut, das haben sie jetzt am Ende auch gesagt, aber bevor sie das gesagt haben, haben sie erst mal geliefert und haben halt innerhalb kürzester Zeit da ein Team zusammengestellt, haben das dann analysiert und haben wirklich so einen mehrere Seiten langen Blogpost gemacht, wo sie so im Detail wirklich genau den Code und was der Compiler da erzeugt. Also nicht nur irgendwie so wischi waschi und da war was kaputt und jetzt ist es wieder heile und irgendjemand hat hintenrum erfahren, was Sache ist, sondern sie haben in ihrem Company-Blogpost all the technical details geliefert, dass also wirklich auch Leute, die in der Thematik drin sind, sagen können, okay, ich kann extrem gut nachvollziehen, was euer Fehler war, das war ein Fehler, ihr habt den Fehler passieren. Die Frage ist ja nicht macht man Fehler, sondern die Frage ist, wie geht man damit um, wenn man welche macht? Wie schnell wird man sie wieder los und wie professionell kommuniziert man das? Wie kritisch das jetzt war? Ich meine, wenn jetzt jemand auf eine bestimmte Webseite abgesehen hätte, dann hättest du mit diesem Bug jetzt nicht sehr viel bekommen können. Du kannst natürlich selber im Prinzip da einen Dienst anbieten, kaputte Webseite mit nicht geschlossenen Script-Tags machen und dadurch dann das triggern und darüber über den Zugriff darauf explizit dann eben random irgendwelche Dinge von irgendwelchen anderen Webseiten, die bei Cloudflare gehostet sind und das sind wohl viele, wo Cloudflare so ein Frontend quasi darstellt. Und dann hättest du halt theoretisch losgehen können und gucken können, ob du da irgendwas machen kannst. Aber jetzt ist natürlich für dich auch, wenn du jetzt randommäßig irgendeine Session ID von irgendeiner Webverbindung von irgendjemand zu irgendeiner Webseite, die du zu dem Zeitpunkt vielleicht noch gar nicht kennst, dann musst du dir ja in dem Moment überhaupt erst mal Gedanken darüber machen, was du damit machen kannst. Nichtsdestotrotz ist das natürlich eine dode Sache und hätte so nie passieren dürfen, aber passiert halt auch. Und auch da sieht man, weil Cloudflare hat wohl irgendwie auch eine Tonne von Kunden mittlerweile, dass auch hier schnell mal eine Sicherheitsschwankung dann man sich eintritt, die man sonst so eben gar nicht hätte, weil eben dieser Fall, dass eine Webseite wird zugegriffen, eine von irgendwelchen paar Millionen anderen liefert dann auf einmal Daten, was sie sonst nicht getan hätte, dass das halt überhaupt auftreten kann. Na ja, hat das nicht so einfach mit der Cloudschmerzen.
+
+01:09:26.934 --> 01:09:32.774
+<v SPEAKER_2>Vor allem die Auswirkungen sind dann auch nicht so klar, das verselbstständigt sich ja mal irgendwie so.
+
+01:09:32.794 --> 01:09:34.414
+<v SPEAKER_3>Ja, es wird auch so diffus.
+
+01:09:36.254 --> 01:09:49.614
+<v SPEAKER_2>Ja, vor allem sitzen wir auch da und denken sich, naja, der kriegt ja irgendwie nur random irgendwie ID's, aber am Ende ballert da einer keine Ahnung, tausende Request die Sekunde, damit er so möglichst alles mitkriegt, was dadurch Cloudfair durchgeht und sammelt halt fleißig ein.
+
+01:09:49.634 --> 01:09:50.894
+<v SPEAKER_3>Das hat ja Google schon gemacht.
+
+01:09:51.894 --> 01:09:56.934
+<v SPEAKER_2>Also die Ausmaße sind schon teilweise größer als man denkt. Die können da schon irgendwie was mit anfangen.
+
+01:09:57.514 --> 01:10:36.434
+<v SPEAKER_3>Ja, es ist auf jeden Fall kein schöner Zustand. Gut, ich meine, die sind groß genug, die konnten dann bei Google anrufen und sagen, hier, könnt ihr mal da ein paar Caches löschen. Aber solche Sachen sind ja auch schnell in irgendwelchen Archiven. Weiß was ich, was in internetarchive.org alles noch für Kreditkarten, Nummern gespeichert sind. Das stimmt so einiges. Wo wir gerade noch bei den ganzen Digital-Desastern sind, dann gab es ja auch diese Sha-1-Kollision. Muss ja immer alles jetzt ein fancy Namen machen.
+
+01:10:36.494 --> 01:10:37.094
+<v SPEAKER_5>Und ein Logo.
+
+01:10:37.114 --> 01:11:00.914
+<v SPEAKER_3>Genau, und eine Webseite. Wobei, da weiß ich ehrlich gesagt noch nicht so ganz genau, wie groß der unmittelbare und mittelbare Schaden jetzt eigentlich wirklich ist. Also, wenn ich das richtig mitbekomme, also vielleicht für Leute, die jetzt schon Schwierigkeiten haben, dieser Sendung zu folgen.
+
+01:11:01.614 --> 01:11:03.174
+<v SPEAKER_2>Dann legen wir jetzt noch einen drauf.
+
+01:11:03.194 --> 01:11:28.314
+<v SPEAKER_3>Genau, aber vielleicht auch immer mal ein bisschen Klärwert machen. Also, in diesem ganzen mathematisch-kryptographischen Bereich, der ja die Computertechnologie und die Programmierung doch mittlerweile enorm definiert, weil ohne geht auch gar nichts mehr. Also, man kann heute Computing ohne Krypto nicht denken. Und Krypto selber kann man halt ohne Hashing nicht denken. Und Hashing ist halt so dieser Vorgang.
+
+01:11:28.334 --> 01:11:39.794
+<v SPEAKER_5>Sowieso, alles digitale. Prüf-Sum ist ja einer der Bausteine dafür, dass du überhaupt verlustfreie Daten übertragen kannst an vielerlei Hinsicht.
+
+01:11:40.494 --> 01:12:09.154
+<v SPEAKER_3>Also, Hash-Funktionen sind ganz tolle Sachen. Und die braucht man an ganz vielen Stellen. Nicht nur für Kryptographie, aber auch von daher ist es auch ein heißes Eisen, wie Lorio sagen würde. Was ist Hashing? Hashing heißt im Prinzip, nimmst eine beliebige Menge Daten und repräsentierst sie durch eine sehr viel kleinere Zahl. Wo man ja erstmal sagen würde, hm?
+
+01:12:09.174 --> 01:12:10.914
+<v SPEAKER_2>Nicht unbedingt.
+
+01:12:10.934 --> 01:12:12.194
+<v SPEAKER_3>Wie? Nicht unbedingt?
+
+01:12:12.214 --> 01:12:32.514
+<v SPEAKER_2>Die muss nicht unbedingt kleiner sein. Wenn ich nur einen Byte hasche, dann ist bei Sha trotzdem kommender... Wie viel? 20 waren's oder was? Also der Hasch ist immer gleich groß, egal welche Daten du da reinjagst. Wenn die sehr sehr groß sind, dann kriegst du trotzdem nur dann 20 Bytesch. Du kannst aber auch nur einen Byteschen und dann kommt trotzdem 20 Bytesch raus.
+
+01:12:36.634 --> 01:13:09.614
+<v SPEAKER_3>Aber im Prinzip ist es ja auch vorstellbar. Ich meine, wenn du sagst, ich hab eine Zahl und die repräsentiert ein beliebiges Bitmuster in der Größe von 1 Megabyte Daten, dann ist ja irgendwie rein rechnerisch schon mal klar, dass das eigentlich nicht hinhauen kann. Weil es kann ja nicht sein, dass du mit einer kleineren Zahl eine größere Zahl repräsentierst, ohne dass es nicht auch eine andere Zahl geben kann, die davon...
+
+01:13:09.634 --> 01:13:18.094
+<v SPEAKER_2>Ja, eine sogenannte Kollision hat nämlich das. Ein Hash muss ja mehrere darstellen.
+
+01:13:18.114 --> 01:13:42.394
+<v SPEAKER_5>Genau, weil das, was jetzt ja dann noch bei der Erklärbar-Variante fehlt, dass der Clou bei diesen Cryptographic Hash Functions ist. Dass jeder unike Input, es darf keine zwei unterschiedlichen Inputs geben, die den gleichen Output haben, also die gleiche Prüfsumme oder die gleiche Checksumme.
+
+01:13:42.414 --> 01:13:44.694
+<v SPEAKER_3>Ja gut, aber das kann ja eigentlich technisch gar nicht sein.
+
+01:13:45.774 --> 01:13:48.314
+<v SPEAKER_5>Ist ja auch nicht so.
+
+01:13:48.334 --> 01:14:33.514
+<v SPEAKER_3>Es muss nur sehr unwahrscheinlich sein, beziehungsweise es muss sehr schwierig sein, so etwas bewusst herbeizuführen. Also wenn du jetzt sozusagen 200 Megabyte Daten-Blobs hast, dann muss die Wahrscheinlichkeit, dass sie denselben Hash haben, sehr gering sein. Wodurch auch immer sich... also für mich ist das auch ein wenig Hexenwerk. Aber viel wichtiger ist noch, dass wenn du einen Daten-Blob hast und du den änderst, dass es dann eben nicht möglich ist, mit derselben Zahl durchzukommen. Das ist die sogenannte... das, was man jetzt so als Kollision diskutiert.
+
+01:14:33.634 --> 01:15:51.354
+<v SPEAKER_2>Ja, wir können das ja kurz mal erklären. Vielleicht für Leute, die ich Hashes von früher kennen, und zwar gibt's früher so der Standard-Hash war CRC8. Den gibt's auch in verschiedenen Ausführungen irgendwie, je nachdem, wie man da den Polynomen setzt oder so ein Ding ist, keine Ahnung, wie das hieß. Und CRC8 heißt, dass der Hash ist nur halt 8-Bit groß, also ein Byte. Das heißt, der nimmt Werte zwischen 0 und 255 an. Damit kann man auch unendlich viele Daten haschen, aber der Wert, der rauskommt, ist 0 bis 255. So, wenn du jetzt in deinen Daten, also das hat man ja benutzt, zum Beispiel früher Z-Modem-Übertragung oder so, die haben, weiß nicht, ob die CRC16 benutzt haben, ist egal, aber wenn du da einen Fehler hattest, dann stimmt das CRC8 nicht, also kam dann ein anderer Wert. Und dann war aber die Chance, dass der neue Wert trotzdem richtig ist, obwohl falsche Daten übertragen wurden, war durch, weil es halt 8 bit sind, war 1 zu 255 oder 256. So, und da heißt das, jeder 256. Fehler wurde nicht erkannt als Fehler, genau. Und dann wurden die Hashes halt besser, dann gab es CRC16, dann hat es schon 1 zu 65.000 und es gibt sogar CRC32, dann war das 1 zu 4 Milliarden. Also ich glaube, hier TCP macht sogar CRC16, kann das sein. Das heißt eigentlich 1 von 65.000...
+
+01:15:51.374 --> 01:15:52.314
+<v SPEAKER_3>Paketen geht kaputt.
+
+01:15:52.494 --> 01:16:20.494
+<v SPEAKER_2>Ne, 1 von 65.000 Paketen, die einen Fehler haben, werden nicht erkannt. So, das hat glaube ich auch der Typ von... Bei BitTorrent war das ein Fehler, weil der hat nämlich da ein eigenes Hashing und macht das ja auch mit, ich weiß nicht, ob das MD5 oder Sha-1 war oder so was, aber er meinte, da werden halt so viel Daten übertragen, das kann man sich ausrechnen, wenn man so ein 10 GB FreeBSD-Image runterlädt.
+
+01:16:20.514 --> 01:16:22.014
+<v SPEAKER_5>Wikipedia-Dump, wolltest du sagen.
+
+01:16:22.334 --> 01:17:15.014
+<v SPEAKER_2>Ja, was auch immer, wenn man halt, keine Ahnung, eine TCP-Fehlerrate von 0,1% hat, das sind so und so viele Pakete, die kaputt sind. Wenn das mehr als 65.000 sind, dann ist die Wahrscheinlichkeit, dass eins davon nicht erkannt wird, relativ hoch und wenn dein Ding aber ein riesen Archiv war, was ich nicht entpacken kann, weil ein Bit nicht stimmt, dann ist das Ding im Arsch. Also hat der eigenes Prüfen eingebaut und hat sich nicht auf das von TCP verlassen. Wenn man das jetzt mal weiterspinnen, natürlich gibt es gewisse Daten, wo wir überhaupt gar nicht annähern wollen, dass da auch nur ein einziges Bit falsch ist. Deswegen gibt es nicht nur CAC32, sondern inzwischen sind die noch viel komplexer, sondern heißen erst MD5, dann Sha-1, Sha-2, demnächst kommt Sha-3 und dann gibt es noch Dutzende oder Hunderte andere Hash-Algorithmen. Einer davon wurde jetzt eigentlich schon geknackt, könnte man sagen.
+
+01:17:15.034 --> 01:17:16.854
+<v SPEAKER_5>Sie haben bewiesen, dass es eine Kollision gibt.
+
+01:17:18.394 --> 01:17:20.534
+<v SPEAKER_6>Sie haben eine geliefert.
+
+01:17:20.554 --> 01:20:08.234
+<v SPEAKER_2>Genau, sie haben sie erstellt. Sie haben sie ja nicht zufällig gefunden, weil das gab es bei den anderen ja auch schon oft, bei kleineren, aber die haben sie halt absichtlich erstellt. Bei CAC 8 ist es natürlich easy, man rechnet so lange, bis man eins und so hat. Es gibt ja nur 256 Zustände. Das macht man eine Weile und hat man den. Sha-1 ist aber... Wie viele Bits hat das Ding eigentlich? Jetzt muss ich mich vorbereiten. Wie viele Möglichkeiten das sind? War das dann 128? 2 hoch 128 Möglichkeiten? Genau. Deswegen auch nur die 20 Bits, die dann in den Hasch rauskommen. Genau das war das. Dann gab es eh schon sogenannte Angriffe, die das halt von... Wenn man das halt durchbrutforcen würde, die das nicht mehr 2 hoch 160 Versuche braucht, sondern die das halt einfacher gemacht haben. Das ging letztens dann so weit runter, dass sich da halt so ein Team aus, wie war das hier in Amsterdam, mit Google-Leuten zusammen, dass sie sich hingesetzt haben, haben gesagt, jetzt ist es schon so leicht geworden, in Anführungszeichen, dass wir das jetzt mal durchrechnen konnten. Und dann müsste man jetzt mal die Zahl vorlesen, wie lange sie da gerechnet haben. Auf der Shattered-Seite stand das nämlich. Sie haben da schon so ein paar Computerjahre für verballert mit wahrscheinlich freien Google-Rechnern. Also immer, wenn ihr gerade nicht gegoogelt habt, ja, dann hat Google gesagt, wir knacken jetzt mal schnell Hashes nebenbei. Also ich würde mal sagen, die haben die freie Google-Kapazität benutzt. Scrollen wir mal ein bisschen runter, da diese Zahl ist ja schon interessant. Wie lange sie denn jetzt eigentlich gerechnet haben. Dann ist auch so ein bisschen klar, warum das für den normalen Bürger nicht so einfach ist, das auch zu tun. Gibt das da nicht irgendwo? Das hat die gleiche Prozessivmöglichkeit aus 6500 Single-CPU-Jahren gebraucht. Oder wenn man GPUs nehmen würde, also Grafikkarten, dann hätten die 110 Jahre mit einer GPU hätte man gebraucht. Oder halt 110 GPUs und dann nur noch ein Jahr. Oder wahrscheinlich im Fall von Google, keine Ahnung, wie viele GPUs sie am Start haben, aber 1000 und dann haben sie es in ein, zwei, drei Monaten irgendwie durchgerechnet oder so. Das heißt, so der normale Typi, der kann das nicht eben mal so machen, aber andere große Vereine schon. Und da man heutzutage halt irgendwie vielleicht wichtige Dokumente auch signiert oder macht oder tut, kann man halt die, ja, fälschen. Also du denkst, du hast die richtige Signatur und das richtige Dokument, dabei hast du zwar die richtige Signatur, aber das falsche Dokument und signierst auch wieder oder irgendwie so.
+
+01:20:08.814 --> 01:20:53.634
+<v SPEAKER_5>Und für die, die jetzt nicht wissen, wofür das eigentlich jetzt noch so praktischerweise sinnvoll ist, hier für diese ganzen Sachen, wo sie, wie hieß noch mal, dieses Tales, dieses Linux, was so auf Anonymität und so setzt, wo dann halt deren Server gehackt wurden und falsche Images, also die dann so gebackt dort und rohanifiziert waren, ausgeliefert wurden, weil es so ein schöner Honeypot ist oder die bitteren Clients hier transmischen, wo dann halt auch keiner geguckt hat, ist denn, stimmt jetzt die Prüf-Summe und so weiter? Also damit könnte man dann eben noch so erstens die Daten integriert zwar feststellen, aber wenn man dann eben Kollisionen auch noch so bewusst erzeugen kann, dann kann die Prüf-Summe trotzdem stimmen und man denkt, man hätte wirklich das richtig Vanilla-Ding.
+
+01:20:53.654 --> 01:20:59.554
+<v SPEAKER_3>Wenn ich es richtig mitbekommen habe, wir haben ja auch quasi so ein PDF geliefert, sozusagen als Beispiel.
+
+01:21:00.554 --> 01:21:04.154
+<v SPEAKER_2>Also zwei PDFs, die den gleichen Sha-Struktur haben.
+
+01:21:04.174 --> 01:21:38.274
+<v SPEAKER_3>Die unterschiedliche Inhalte hatten, die sich zwar dann auch in der Darstellung ähnlich waren. Man hat quasi dasselbe PDF genommen und dann am Ende die Daten verändert. Die hatten dann glaube ich auch dieselbe Größe. Also man konnte mehr oder weniger bewusst einen Shardcode darin platzieren, aber es dann trotzdem noch so modifizieren, dass man eben bewusst denselben Hash erzeugt hat. So dass alles, was eben auf dieser Hash-Technologie, also auf Sha-1, basiert, dass man sich eben die beiden Dateien anschaut und von beiden annimmt, sie wären die gleichen, auch wenn sie nicht die gleichen sind.
+
+01:21:38.294 --> 01:21:42.834
+<v SPEAKER_5>War das nicht bei MD5 damals auch so ein Beispiel mit PDF oder so?
+
+01:21:42.854 --> 01:21:45.374
+<v SPEAKER_3>Bestimmt, ich meine PDF ist am eingänglichsten.
+
+01:21:45.394 --> 01:21:58.074
+<v SPEAKER_5>Ich hab hier übrigens auch ein schönes Beispiel, was hier letztens getwittert wurde, was irgendwie auch vom CCC Aachen irgendwie kommt, ein animiertes GIF, was seine eigene MD5 Prüf-Summe sozusagen darstellt.
+
+01:21:58.094 --> 01:21:58.754
+<v SPEAKER_2>Was heißt seine eigene?
+
+01:21:59.514 --> 01:22:05.334
+<v SPEAKER_5>Naja, wenn du dieses GIF verhält, MD5 hashed, dann kriegst du genau den GIF raus.
+
+01:22:05.354 --> 01:22:10.714
+<v SPEAKER_2>Das ist der Hash des Beers. Ich wusste nicht, was sie meinen mit eigene. Ob das das Programm ist oder die Hardware, die sie da gewasselt haben.
+
+01:22:10.734 --> 01:22:21.234
+<v SPEAKER_5>Aber es ist halt auch ein animiertes GIF, das wird jetzt hier im Slack nicht animiert dargestellt, aber sie haben sozusagen da so lange irgendwie, macht's nicht, ne? Slack kann kein animiertes GIF, es ist Webtechnologie.
+
+01:22:21.254 --> 01:22:24.434
+<v SPEAKER_3>Also er kann einmal animieren, aber danach nicht mehr.
+
+01:22:24.634 --> 01:22:30.174
+<v SPEAKER_5>Na ist ja auch okay, aber fand ich auch ein schönes Gimmick.
+
+01:22:30.194 --> 01:23:28.194
+<v SPEAKER_2>Na das Problem, wie weiter mit dem Shattered war, dass die Leute bei WebKit, dass auch für ihren Browser nutzen sie ja so einen Cache, also für Safari halt oder wie auch immer, und die werden halt die Files halt mit der, ähm, ja, mit Sha-1 checksam werden die halt verwaltet sozusagen. Und dann hatten sie halt auch, wollten sie nicht, dass das halt durcheinander kommt, wenn demnächst da zwei Dateien irgendwie die unterschiedlich sind, aber den gleichen, den gleichen, äh, den gleichen, die gleiche checksam haben. Und dann haben sie sich da einen Test geschrieben, der das halt irgendwie so checkt. Und dann hat einer auch, war so schlau, und hat die beiden PDFs halt irgendwie committed. Und sie nutzen ja GitHub, da ist das wohl nicht ein Problem, aber sie nutzen parallel anscheinend auch wie eine Subversion, wo das auch parallel dann so committed wird, weil sie irgendwie beides parallel nutzen. Und dann sind diese beiden PDFs in einem Subversion gelandet, und das Subversion nutzt halt das Sha-1 direkt für die Dateien. Und das war dann kaputt.
+
+01:23:28.214 --> 01:23:30.634
+<v SPEAKER_3>Correctly mit Fehlermeldungen und so.
+
+01:23:30.654 --> 01:26:03.634
+<v SPEAKER_2>Ja, mit unreparierbar. Also sie mussten sozusagen wieder an die Stufe zurückgehen und das rückgängig machen, den committed. Konnte man nachträglich. Also die DB war irgendwie kaputt, oder was auch immer da intern dann läuft. Und was ich auch noch kenne, ist, dass es bei ZFS, können wir ja wieder drüber reden, die haben ja diesen D-Duplicate-Modus. Und da ist es auch so, dass dort Blöcke, die doppelt, also die gleich sind, die werden ja nur einmal geschrieben. So und du kannst da einstellen, wie das gecheckt wird, ob die gleich sind. Du kannst sagen, das halt Verify, dann wird wirklich der Inhalt geprüft. Wobei man jetzt auch schon, also das geht ja dann prüfen, ist da wahrscheinlich wirklich eins zu eins, ohne Checksame, sondern wirklich die Daten miteinander vergleichen. Genau, das ist viel zu langsam. Man kann aber auch die Checksumme nehmen. Das heißt, man muss das nicht mehr von Platte laden, sondern man braucht nur diese Prüf-Summe und muss nur das, was geschrieben werden soll, kurz Checksamen, das geht flotter. Und dann hieß es auch so mal, ja, aber das ist doch nicht sicher, weil das könnte ja irgendwie, wenn es da mal Kollision gibt, und die sagen, ja nee, Kollision, das ist mathematisch ausgeschlossen. Das geht nicht, weil bevor das passiert, das kannst du dir durchrechnen, eher ist irgendwie, dass deine Platte sagt, sie ist kaputt und sie ist nicht kaputt, oder wie auch immer. Dann brechen tausend andere Sachen, bevor das irgendwie da passiert und so weiter. Und deswegen kann man das da machen. Aber sie nutzen, glaube ich, auch nicht Sha-1, sondern das ist Sha-2. So gesehen ist das okay. Aber auch, wenn ich mich jetzt richtig erinnere, haben sie der Sache doch nicht so ganz getraut. Und damit ein Attacker das nicht kaputt machen kann, weil man könnte das ja absichtlich ausnutzen, wenn man so ein Kollisions-Ding hat, oder diese beiden PDFs zum Beispiel. Und zwar wird an allen Dateien wird noch so eine Random-NUNS mit drangehangen, die nicht bekannt ist. Die kennt sozusagen nur der Pool und die muss auch keiner erkennen. Die wird beim Kreieren des Pools einmal erzeugt, an irgendeiner Stelle gespeichert. Und dann werden alle Dateien zusätzlich mit diesem Random-NUNS irgendwie gehashed. Sodass sozusagen diese Attacke, also dass sozusagen die beiden PDFs doch unterschiedlich sind. Weil, wenn ich ja nur schon an beide das Gleiche beidran hänge, sind sie schon nicht mehr gleich, richtig? Nehm ich mal an, oder? Bin mir nicht ganz sicher, wie sie das machen. Oder wahrscheinlich muss man es vorne ranhängen, keine Ahnung. Jedenfalls das machen sie so, damit das nicht geht. Aber das sind die Implikationen, die dann da noch so kommen, dass lauter Datenbanken auch, die ihre Sachen über Hashes verwalten, dass die jetzt natürlich irgendwie Schluck aufkriegen, weil plötzlich Sachen doppelt sind, die nicht doppelt sein sollten oder halt genau andersrum.
+
+01:26:06.774 --> 01:26:46.374
+<v SPEAKER_3>Ja, also das könnte potentiell böse sein. Was dann irgendwie noch aufkam im Netz war, dass die Warnung Forscher 1, das ist ja nicht neu, sondern die gibt es im Prinzip seit 2005. Und da gab es dann schon früh eine Auseinandersetzung zwischen einerseits John Gilmour, Strongsworn Typi, Cypherpunk, oder Opensworn hieß es bei dem, vierter Sun-Mitarbeiter und so weiter. Also einer der Heroen der freien Software-Systeme.
+
+01:26:46.434 --> 01:26:51.514
+<v SPEAKER_2>Ich hab heute noch so eine Mini-LED-Lampe von dem, der war ja mal auf dem Camp.
+
+01:26:51.534 --> 01:26:52.854
+<v SPEAKER_3>Genau, der hat man diese Lampe mitgebracht.
+
+01:26:53.014 --> 01:26:55.474
+<v SPEAKER_2>Genau, war ein ganz witziger Typ.
+
+01:26:55.494 --> 01:28:08.734
+<v SPEAKER_3>Auf jeden Fall ist er auch noch ein witziger Typ, lebt ja auch noch. Der ist also gleich 2005, als schon die ersten Zweifel an Sha-1 aufkamen, dass man eben, was du von ja beschrieben hast, dass man eben sagt, okay, man muss gar nicht mehr alle 160-Bit-Brewt forsten, sondern, ich weiß gar nicht, was der erste Schritt war, der hat das glaube ich schon signifikant auf jeden Fall reduziert, sodass also von der 160-Bit-Sicherheit nicht mehr viel übrig blieb und hat dann auf Linus Torwalz eingeredet, er möge doch bitte die Dependency auf Sha-1 in Git möglichst austauschbar machen. Weil zu dem damaligen Zeitpunkt gab's auch noch keine akzeptierte Alternative zu Sha-1. So hab ich den Thread verstanden, den ich da gelesen habe. Da hieß es immer mit, auch wenn wir jetzt noch keine klare Alternative haben, wir werden aber eine bekommen und man sollte sozusagen zukunftskompatibel sein. Na ja, und wir wissen ja alle, wie freundlich und zuvorkommend Linus Torwalz ist. Das war dann halt so E-Mail-Schreit-Therapie mit dem Ergebnis, dass er gesagt hat, so wie ich das einbaue, kann da gar nichts passieren.
+
+01:28:08.754 --> 01:28:10.474
+<v SPEAKER_2>Hat er auch immer noch gesagt, sagt er jetzt immer noch?
+
+01:28:10.494 --> 01:28:26.334
+<v SPEAKER_3>Das sagt er jetzt auch immer noch und vielleicht hat er da auch Recht, aber ich glaube, eine der Annahmen war halt, dass er ja auch die Länge noch mit einbezieht. Das scheint ja hier nicht der Fall zu sein, dass es sich in eine andere Länge handelt. Und ein Detail, was ich nicht verstanden habe in dem Moment...
+
+01:28:26.354 --> 01:28:46.314
+<v SPEAKER_2>Ich glaube auch, dass da halt noch... Also die haschen halt eben nicht nur die Datei, sondern noch irgendwie andere Sachen, so Git-spezielle Sachen. Und dadurch geht die Attacke auch wieder nicht so einfach. Aber wenn natürlich der Attacker das mit berücksichtigt, was da rangehangen wird, dann kriegt das vielleicht doch hin. Aber deswegen ja bei diesem ZFS, deswegen ist das ja ein Random Nones und man weiß eben nicht, was da angehangen wird.
+
+01:28:46.454 --> 01:29:18.394
+<v SPEAKER_3>Ja gut, aber auf dieser Shattered.io-Seite, also auf dieser Doku von dem Sha-1-Kollisions-Attacke, steht ja explizit nochmal ein Artikel in Absatz zu Git drin, dass es halt theoretisch möglich wäre, jetzt mit dieser Attacke zwei Repositories zu machen, die halt identisch rüberkommen, aber nicht sind. Also ungefährdet erscheint mir das alles nicht. Es ist jetzt nicht so, dass morgen GitHub zu machen kann, aber es ist jetzt auch nicht so, dass man das jetzt einfach auf die lange Bank schieben soll.
+
+01:29:18.414 --> 01:29:28.654
+<v SPEAKER_5>Es gibt da einen Artikel auf dem Register, wo der Linus sozusagen und diese GrimWall-Geschichte hast du den. Ich pack den mal hier rein.
+
+01:29:28.674 --> 01:29:32.854
+<v SPEAKER_3>Ich hab einen Link auf diesen E-Mails-Red von damals.
+
+01:29:32.874 --> 01:29:58.714
+<v SPEAKER_5>Also hier bei dem Register gibt es jetzt nochmal sozusagen die updated Version, wo so ein bisschen darauf eingegangen wird, was jetzt Linus Standpunkt ist und ob da nochmal ein anderer Algorithmus dann reinkommt und so weiter und so fort. Und es ist jetzt aber ein bisschen zu lang, um das jetzt hier in der Sendung zu lesen und zu verstehen, würde ich mal sagen. Aber kann man auf jeden Fall mal lesen. Klingt nicht total blöd, was er da sagt.
+
+01:30:02.194 --> 01:30:16.134
+<v SPEAKER_3>Ja gut, kann ja alles sein. Trotzdem finde ich seine Art und Weise zu kommunizieren ohnehin sehr zweifelhaft.
+
+01:30:20.834 --> 01:30:32.414
+<v SPEAKER_5>Ja, er hat einfach sehr oft recht. Mit seinen Thesen und Äußerungen und was er so zusammencoded. Das ist ja nicht so, dass er so ein... Das ist technisch.
+
+01:30:33.254 --> 01:30:42.654
+<v SPEAKER_3>Ja klar, ich würde seine technische Expertise auch nicht unbedingt anzweifeln. Ich zweifel aber seine soziale Expertise in einem hohen Maße.
+
+01:30:42.834 --> 01:31:14.114
+<v SPEAKER_5>Ja klar, aber das... Nein, so möchte ich das nicht stehen lassen, aber... wie soll ich sagen? Also diverse Alpha-Geeks in meinem Umfeld habe ich auch schon mit sozialem Umgang erlebt, was jetzt auch vielleicht nicht die allerfeinste Benimmstube ist. Und trotzdem mag ich die Leute ganz gerne.
+
+01:31:14.134 --> 01:31:18.294
+<v SPEAKER_3>Ja, kann man ja auch machen, aber...
+
+01:31:18.314 --> 01:31:20.994
+<v SPEAKER_5>Meinst du, weil er jetzt so eine besonders öffentliche Rolle hat?
+
+01:31:21.014 --> 01:32:56.574
+<v SPEAKER_3>Erstens das, der wird ja halt überhaupt nicht gerecht und er findet das vor allem total richtig, andere Leute, weil er Recht hat, in einem Maße zusammen zu verhalten. Die meiner Wahrnehmung einfach Grenzen überschreiten. Also man kann ja Recht haben, man kann auch gerne Recht behalten, man kann auch gerne Rat ablehnen, kann man alles machen. Aber sich daraus so ein Recht abzuleiten, andere Leute beliebig Namen zu nennen, finde ich überhaupt nicht in Ordnung. Und das schon gar nicht in seiner Rolle, wo er doch in dem ganzen Open Source da so einen Godlike-Status hat. Ich meine, mit gewachsenen Aufgaben wächst auch die Verantwortung und den muss man sich stellen. Das tut er meiner Meinung nach nicht. Aber müssen wir jetzt gleich weiter ausdiskutieren. Tatsache ist, diese ganze Sha-1-Geschichte kam jetzt nicht so überraschend. Ist jetzt nicht so, dass alle gesagt haben, so aaaah, boah, aaaah, sondern es hat sich so über zehn Jahre langsam angekündigt. Man wusste jetzt nicht, wann das halt dann mal passiert. Und jetzt ist es halt passiert. Und jetzt ist es sozusagen, jetzt muss man diese Diskussion nicht führen, ob es irgendwie sicher ist oder nicht, sondern es ist sehr offensichtlich, dass die Fehler in dem Algorithmus oder die falschen Annahmen, können wir ja auch sagen, oder die nicht ganz so zuverlässigen Annahmen in diesem Algorithmus ausgewählt wurden.
+
+01:32:57.234 --> 01:33:02.434
+<v SPEAKER_5>die fortschreitende Performance von Hardware, um so eine Kollision zu erzeugen.
+
+01:33:02.574 --> 01:33:58.734
+<v SPEAKER_3>Ja klar, aber wäre jetzt das Ding immer noch so auf seine 160 Bits, müsstest du es irgendwie rumkranchen, dann hätte es eben einfach eine gewisse Stabilität. Also die Empfehlung, glaube ich, ist halt auf die neueren Standards, Sha-2 und demnächst irgendwie 3 zu wechseln, die dann eben Hash-Werte in beliebigen Längen bieten. Was heutzutage, glaube ich, so gängigerweise angenommen wird, ist Sha-256, was so Sha-2 mit eben 256 Bits ist. Da stecke ich nicht drin. Das ist mir auch zu viel Voodoo und viel zu viel Mathematik. Muss man aber auch alles nicht verstehen. Nur, dass man... Deswegen haben wir das hier auch, glaube ich, mal erwähnt. Also, Hash-Funktionen sind jetzt nicht irgendwie nur so ein Sport von Mathematikern, so mit irgendwie nochmal mehr Primzahlen finden oder so. Sondern das ist halt die Basis von einer ganzen Menge Scheiß, die uns echt eine Menge Wert wichtig ist.
+
+01:33:58.754 --> 01:34:00.514
+<v SPEAKER_5>Bis hin zu TCP und dem Internet.
+
+01:34:00.534 --> 01:35:01.774
+<v SPEAKER_3>Genau, also Internet, Daten, Integrität, Sicherheit, alles. Alles. Ja, so viel zu den technologischen Fails der letzten zwei Wochen, da war ja einiges dabei. Ähm, kommen wir zu den schönen Sachen. Ähm, tja, womit machen wir weiter? Vielleicht nochmal so eine kurze Meldung, die ich auch ganz geil fand. Und zwar, man liest ja jetzt so in letzter Zeit immer von neuen Akkutechnologien. Die ganze Zeit, jede Woche kommt irgendwie so einer an und so Ah, Luftakkus und diese Akkus und wir sind da was dran. Graf 5 und die ganze Zeit werden irgendwelche Materialien gepriesen, mit denen man theoretisch vielleicht in 5 bis 10 Jahren wenn man da nochmal 100 Millionen Euro reinsteckt und wir sind uns auch total sicher.
+
+01:35:02.034 --> 01:35:14.914
+<v SPEAKER_2>Hat im Labor funktioniert, die müssen jetzt nur noch die Million Dollar Fab irgendwie oder Billion Dollar Fab hinstellen und produzieren und in 5 Jahren kommen die dann. Das lese ich schon seit 20 Jahren, ist nix gekommen. Ja doch, Lithium Ionen und Lithium Dingens und Zeug und so.
+
+01:35:14.934 --> 01:35:28.874
+<v SPEAKER_3>Es ist ja nicht so, dass jetzt nichts passiert wäre. Wenn man sich so die heutige Leistungsfähigkeit von Lithium Ionen Akkus, die so gegengigerweise am Start sind, anschaut und das mal vergleicht mit der Realität Anfang der 90er Jahre, we've come a long way.
+
+01:35:29.354 --> 01:35:36.374
+<v SPEAKER_5>Aber es fühlt sich immer noch so an, wie die Evolution der Festplatte und nicht wie von Festplatte auf SSD.
+
+01:35:38.114 --> 01:35:39.834
+<v SPEAKER_2>Es hat eine Evolution und keine Revolution.
+
+01:35:39.854 --> 01:36:07.354
+<v SPEAKER_5>Genau, du hast halt so am Anfang deine 10 Megabyte Festplatte gehabt und dann waren es irgendwie 100 Megabyte und dann war es irgendwann hast du mal das erste Gigabyte und dann wurden die Bits irgendwie vertikal allein und dann wurden es Terabyte und jetzt sind wir bei 4 oder 5 oder 6 Terabyte. 12? Echt schon? Es geht halt schon immer noch weiter. Es wird immer noch mehr so da rausgebrungen aus diesem Ding. Aber eigentlich will man halt so diesen SSD-Sprung, wo du dieses Gefühl hast, ah!
+
+01:36:07.374 --> 01:36:09.134
+<v SPEAKER_2>Wobei, da gibt es dann wieder weniger sogar.
+
+01:36:13.174 --> 01:36:22.094
+<v SPEAKER_5>Aber ich meine das Gefühl, das technologischen Fortschritt, also dass du nicht nur so eine ah ja, ist jetzt wieder ein bisschen mehr, sondern so ein richtiger Bruch, so ein...
+
+01:36:22.114 --> 01:36:23.914
+<v SPEAKER_3>Du möchtest einen One Giant Leap vor mir machen.
+
+01:36:23.934 --> 01:36:27.134
+<v SPEAKER_5>Ja, wo das Tor aufgeht, die Vögel singen und wissen schon, ne?
+
+01:36:27.374 --> 01:36:31.254
+<v SPEAKER_3>Ja, das wollen wir alle haben.
+
+01:36:31.274 --> 01:36:35.774
+<v SPEAKER_5>Welcher von diesen tollen Ankündigungen verspricht uns das denn jetzt?
+
+01:36:35.794 --> 01:37:11.374
+<v SPEAKER_3>Naja, das Ding ist, es gibt da, also das Akkumodell, was ja vorerst gewonnen hat, sind Lithium-Ionen-Akkus. Ich glaub, das kann man mal so festhalten. Es gibt für bestimmte Fälle bestimmte Akkus, aber so in dem elektronischen Bereich, den wir so im Blick haben. Und jetzt gibt es ja einen Haufen Springlings-Fälle und neue Wissenschaftler, die ganz neue Ansätze liefern und überhaupt. Aber wer jetzt irgendwie gekommen ist, ist der Typ, der den Lithium-Ionen-Akku erfunden hat. Der ist nämlich mittlerweile 92 Jahre alt.
+
+01:37:11.394 --> 01:37:12.254
+<v SPEAKER_2>93, oder?
+
+01:37:12.734 --> 01:37:13.594
+<v SPEAKER_3>93.
+
+01:37:14.794 --> 01:37:21.054
+<v SPEAKER_2>Ist doch egal, alt. Über 90 so.
+
+01:37:21.074 --> 01:37:24.454
+<v SPEAKER_3>94 ist er. 94.
+
+01:37:24.474 --> 01:37:26.854
+<v SPEAKER_2>Warte mal mehr.
+
+01:37:26.874 --> 01:40:03.894
+<v SPEAKER_3>John Goodenough ist auch ein geiler Name. Das trifft es auch ganz gut. Ja, und der hat jetzt mal so neue Forschungsarbeiten vorgestellt. Und zwar hat er quasi auf Basis seiner Lithium-Ionen-Arbeit weiter gearbeitet. Ich kenne mich jetzt mit Akku, Chemie und so weiter überhaupt nicht gut aus, aber wir kennen ja die Probleme, die Lithium-Ionen-Akkus haben. Also Entladung und wie oft kann man den neu laden und natürlich dann dieses große Problem der Entzündlichkeit. Und das sind alles so Dinge, die wohl jetzt hier mit seiner neuen Arbeit angegangen wurden. Und zwar sind in den normalen Akkus wohl so flüssige Elektrolyte drin und er ersetzt halt diese flüssigen Stoffe durch Glas. Und das hat wohl zahlreiche Vorteile, unter anderem, dass sich da halt keine Kanäle bilden können, die zu Kurzschüssen und damit zu Explosionen und Feuer führen kann. Das heißt, wenn denn das stimmt, ja, könnte sein, Akku quasi alle Probleme lösen. Na dieses Problem auf jeden Fall schon mal lösen, weil da sozusagen nichts mehr im Balance sein kann, weil das Ding irgendwie sehr viel statischer ist und wohl auch noch einfacher zu bauen ist und eine höhere Energiedichte hat und eine höhere Lebensdauer hat und sich irgendwie auch bei extrem niedrigen Temperaturen auch noch problemlos betreiben lässt. Also normalerweise haben ja die Lithium-Ionen-Akkus schon bei, was wir so als kalt empfinden, schon Probleme und wenn es dann richtig in diese Minusgrade geht, ist irgendwann dann mal komplett Schicht im Schacht und diese Akkus hätten wohl auch noch bei minus 20 Grad keine Probleme, was sagen wir mal jetzt für die meisten Regionen ja ausreichend ist. Ja, außerdem würde sich wohl das Lithium auch noch ersetzen lassen durch Natrium, das auch schon mal ganz gut ist, weil so auf der einen Seite hast du diese ganzen Lithium-Minen und die damit verbundenen auch sozialen Probleme weltweit und Natrium ist halt einfach Salz und ist halt irgendwie einfach überall. Ja und jetzt müssen wir mal schauen, dass er noch lange noch lebt, dass er diese Idee dann auch ausspielen kann. Ich würd die kaufen. Fänd ich gut.
+
+01:40:08.674 --> 01:40:09.654
+<v SPEAKER_5>Nochmal 94.
+
+01:40:09.674 --> 01:40:28.414
+<v SPEAKER_2>Schade ist, dass man sich dann, wenn die dann mal kommen in fünf Jahren, wir uns irgendwie an diesen Artikel leider nicht mehr erinnern können und man das dann nicht so, ja das war der damals, alles klar, das fehlt immer noch so ein bisschen. Das sah auch so ein bisschen aus wie Q aus dem James Bond Film, oder?
+
+01:40:28.434 --> 01:40:41.014
+<v SPEAKER_3>Haben sie bestimmt nach ihm modelliert. Ja, weiß nicht, wollt ihr mal ein Thema aufbringen, bevor ich mich mit Podcast-Technologie hier nochmal profiliere?
+
+01:40:41.034 --> 01:40:43.054
+<v SPEAKER_5>Klar.
+
+01:40:43.074 --> 01:40:48.694
+<v SPEAKER_2>Was haben wir denn noch so da auf dem ZD? Spiele, wollen wir mal Spiele machen?
+
+01:40:54.454 --> 01:46:04.194
+<v SPEAKER_5>Es gibt wieder eins von diesen neuen Alpha Release Games auf Steam, was gerade große Wellen schlägt. Momentan gibt es nur einen Windows-Release davon, aber Mac-Versionen soll kommen und es läuft auch in einem Parallels aktueller Bauart. Es ist ein 2D-Spiel, sodass auch die grafische Anforderung da nicht so hoch ist und man das eben auch relativ bequem in so einem Parallels spielen kann. Das Spiel heißt Oxygen Not Included. Es geht darum, dass da so drei Männer wachen in der Mitte von einem Asteroiden auf, sind umgeben von Gasen und Flüssigkeiten. Es geht darum, das Überleben dieser Leute so lange wie möglich zu gewährleisten. Dazu zählt eben auch Wasser, Essen, Luftversorgung, die Grundbausteine. Das Spiel wirkt auf den ersten Blick sehr simpel und niedlich, aber es ist unfassbar detailreich. Du kannst da deine Basis bauen und jedes Material hat eine Wärmeleitfähigkeit oder Capacity. Das heißt, auch die Gaskonzentration, wie viel Oxygen, CO2, Hydrogen in der Luft drin sind, das spielt alles eine Rolle. Pflanzenwachstum, wie gut deine Leute arbeiten, wie effektiv sie sind oder wie gestresst sie werden. Auch das Wasser hat natürlich eine Wärmeleitfähigkeit und es ist halt ultra detailreich. Du kommst vom Hölzchen aufs Stöckchen, wie man so schön sagt. Wenn du euch jetzt irgendwie die Screenshots anguckst, vermutet man dieses Detail-Level nicht. Du hast zum Beispiel auch Maschinen, zum Beispiel einen Stromgenerator. Der erzeugt halt Hitze und gibt sozusagen Hitze in Watt ab und verschmutzt die Luft mit CO2. Das heißt, du hast für jedes Gerät, für jedes Ding steht da, wie viel Ressourcen verbraucht ist, wie viel Watt Hitze generiert ist, wie viel Gas CO2 produziert ist. Du musst dann eben auch das Layout von deiner Basis dementsprechend herrichten, damit da alles flutscht. Zum Beispiel auch Hydrogen ist halt das leichteste Gas. Das heißt, es sammelt sich immer am oberen Ende deiner Basis an. CO2 ist das Schwerste, es kriecht immer so nach unten. Du musst dann halt auch den Airflow einfach so designen, dass da, wo deine Männer kicken, die ganze Zeit ihre Arbeit leisten, dass da die Temperatur stimmt und der Sauerstoffgehalt und dass die ganzen Gase und schmutzigen Flüssigkeiten irgendwie entsprechend behandelt werden. Und das ist, das macht mir total Spaß. Das ist ein unglaublich geiles Spiel, um richtig viel Zeit richtig schnell zu verbrennen. Und kann ich wirklich sehr empfehlen. Und wenn ihr auf YouTube mal guckt, da gibt es so einige Leute, die dann halt Oxygen Not Included spielen. Und ich kann empfehlen, die Kanäle von Generic B heißt der eine. Und ja, guckt euch den mal an, der weiß schon, was er tut. Da kann man mal einen guten Eindruck gewinnen. Also das macht mir gerade auf jeden Fall sehr viel Spaß. Ich glaube, der wird mit, ja, genau, genau. Das ist so einer der Oldschool YouTube Let's Play Leute. Genau, mit K wird der geschrieben. Und der hat jetzt schon einige Episoden zu dem Spiel gemacht. Und dann kann man mal sehen, was das für ein Ausmaß halt nimmt. Der spielt auch noch andere Spiele, müsst ihr dann eben auf dem Kanal mal bei den Videos nach Oxygen angucken. Und gibt's gerade, wenn ihr danach googelt, auch einen Link. Also wie gesagt, ich spiele das jetzt ja auch in der VM. Auf Steam kann man das jetzt gerade noch nicht direkt kaufen. Aber die Entwickler, die haben auch Don't Staff gemacht. Hatten wir das auch schon mal besprochen? Hattest du das nicht mal gesagt? Don't Staff war halt auch so ein Indie-Hit-Game. Und das gleiche Studio hat ja sozusagen dieses Spiel gemacht. Ich such mal gerade noch den Links für den Alpha-Access raus, damit ihr das sozusagen euch klicken könnt, falls ihr wollt. Das gibt es jetzt hier im Chat gleich und in den Show Notes dann hoffentlich auch. Ja, das war eigentlich schon mein kleiner Tipp. Ich kann jetzt da stundenlang noch weiter drüber erzählen, weil es wirklich einfach komplex ist. Wie gesagt, jetzt Tim guckt gerade hier so ein Video und die ganzen Maschinen, die dann halt Flüssigkeiten, also schmutziges Wasser oder Gase produzieren, dann kannst du halt eine Gas-Stromleitung, Wasserleitung hin und her routen und es gibt Maschinen, die schmutziges Wasser reinigen, aber dafür Energie brauchen oder andere Rohstoffe, Filtration Medium, du brauchst halt Sand für die ganzen Filtermaschinen, um das verseuchte Wasser oder die schmutzige Luft zu reinigen. Das heißt, du bist auch gezwungen, in diesen Asteroiden reinzumeinen, um Sand und andere Ressourcen zu finden, um deine Maschinen zu betreiben. Und das ultimative Ziel ist sozusagen, dass alles, diese ganzen Sachen so in Balance zu bringen, dass du halt selbstsufficient und erst mal vergleichsweise unendlich überlebensfähig bist.
+
+01:46:04.274 --> 01:46:05.734
+<v SPEAKER_3>Das heißt, das Spiel endet auch nie?
+
+01:46:06.254 --> 01:46:11.374
+<v SPEAKER_5>Naja, doch, am Anfang endet es eher öfter als seltener.
+
+01:46:11.394 --> 01:46:14.454
+<v SPEAKER_3>Aber man hat gewonnen, wenn es nicht mehr aufhört sozusagen.
+
+01:46:14.474 --> 01:48:34.574
+<v SPEAKER_5>Genau, wenn du so das Gefühl hast, okay, läuft. Aber das ist wirklich relativ anspruchsvoll, weil, wie gesagt, am Anfang, weil das eben noch ein Alpha ist, es gibt noch nicht so viel Tutorial oder so, sondern du wirst einfach in das Spiel erst mal reingeworfen und musst dann erst mal so, oh, warum haben die jetzt alle ein Problem? Oh, den ist zu heiß. Ah ja, es gibt so einen Temperatur-Overlay und dann siehst du plötzlich die Heatmap von deiner Basis und welche Sachen Hitze erzeugen. Und das Geile ist, so ein bisschen wie bei Minecraft, wo der Entwickler Hedder Notch, der hat ja in Minecraft Mechaniken eingebaut, die dann die Leute, die den Leuten genug Freiraum gelassen haben oder die genug Bugs hatte, womit man so kreativ neue Maschinen und so weiter bauen konnte oder diese Monster fallen, die dann Leute angefangen haben zu bauen, was überhaupt gar nicht der Plan war, dass Leute maschinell quasi diese Monster töten, um an die Ressourcen in Massen zu kommen und so. Und jetzt hat da zum Beispiel einer herausgefunden, die Batterien, die man halt so bauen kann, um über Nacht auch Strom zu haben, die produzieren halt Hitze. Und wenn man alle Batterien in einen kleinen Raum steckt, dann wird dieser Raum sehr heiß. Und wenn man da jetzt schmutziges Wasser reinleitet und es wird in dem Raum über 100 Grad Celsius, dann verdampft dieses schmutzige Wasser, also wird es steamen, dann kannst du das in einen kühleren Raum pumpen und dann kondensiert es da. Und dann kannst du sozusagen Wasser reinigen ohne Sand oder anderes Filtration Medium zu brauchen. Das heißt, die Leute fangen jetzt schon an mit diesen Mechaniken und diesen ganzen physischen Aspekten eben auch so versuchen, okay, wie kriegen wir jetzt Wasserdampf? Okay, wir stecken das jetzt alles in den Raum mit den Batterien und so. Deswegen macht es irgendwie voll Bock, dieses Spiel da so rumzudaddeln. Ja, hat auch einen schönen Soundtrack, klickt sich echt schön und auch den Leuten da so ein bisschen bei den Videos zuzugucken ist und wie die das entdecken, weil da gibt es jetzt auch noch nicht so die Oberprofis, weil das gerade erst rausgekommen ist. da sieht man viele Fehler und viele verschiedene Ansätze, wie man das so lösen kann. Ja, das ist ja irgendein Video mittendrin, ne? Stimmt, hat er vielleicht ausgemacht, das kann sein.
+
+01:48:35.274 --> 01:48:36.174
+<v SPEAKER_3>Dann lassen wir das raus.
+
+01:48:36.194 --> 01:49:01.454
+<v SPEAKER_5>Ja, aber es ist halt so eine sehr schöne, gut gemachte Ambient-Musik. Und wenn dann halt wirklich auch mal die Kacke am Dampfen ist, wenn dein Sauerstoff nicht ausreicht, dann geht das ganze Spiel in Red Alert, also deine kleine Kolonie, und dann bist du auch total gestresst plötzlich. Zu viel zu Oxygen Not Included.
+
+01:49:03.614 --> 01:50:15.474
+<v SPEAKER_2>Ja, ich hab hier auch ein Game. Spiel ich jetzt schon seit zwei Wochen fast. Das gibt's auf dem iPhone, wahrscheinlich auch auf dem iPad irgendwie, in groß dann. Aber man kann es auf jeden Fall auf dem Phone spielen. Das ist so kleine Puzzles, die man lösen muss. Und zwar ist es wieder so ein bisschen, na, soko-bahn nicht, aber so ein bisschen ansatzweise. Man hat hier, muss man klicken auf so ein Game hier, man hat hier so ein Feld mit siebenmal neuen Kacheln. Da muss man so eine Art Ball von A nach B bringen. Und man hat dafür so kleine Gerätschaften, die das machen können. Also zum Beispiel ein Teil, was schieben kann. Man kann davon die Polarität ändern, dass der auch zieht. Dann gibt es welche, die können den Ball so um sich schwenken. Dann gibt es Sachen, die können, ja, die könnten den Ball im Kreis drehen, was bei dem Ball keinen Sinn macht. Aber bei einem Gerät, was schiebt, macht das schon Sinn, dass man das gedreht, sozusagen dreht. Also die können sich auch alle gegenseitig beeinflussen, die Geräte. Hier, da musst du mal klicken, genau. Gibt es da nicht? Vielleicht auch ein Video, dann könnt ihr da schnell reingucken. Genau, das Spiel kostet einen Euro, ist also auch ziemlich billig. Hat 96 Level, also ziemlich viele.
+
+01:50:15.494 --> 01:50:17.214
+<v SPEAKER_5>Und 25-Sterne-Bewertung.
+
+01:50:17.714 --> 01:54:16.034
+<v SPEAKER_2>Ja, also ich spiele seit zwei Wochen begeistert. Also für einen Euro ist es wirklich geil. Und am Anfang ist es auch so ein bisschen so Introduction Levels, wo halt die einzelnen Geräte, die man so verteilen kann, wo die auch ein bisschen erklärt werden. Also dass man so Dreher und Schieber hat und so einen Teleporter, der so ein Gerät, wenn es irgendwo ankommt, wieder zurück teleportiert, oder immer hin und her, besser gesagt. Denn so On-Off-Button und Reverse Polarity gibt es auch, einen Button, und dann hat man so eine Sequenz. Und wenn man seinen Aufbau hat, dann drückt man Start, dann wird die abgelaufen. Und wenn das fünfmal hintereinander funktioniert, dass der Ball im Ziel ankommt, dann hat man den Level fertig. Oder ja, das Ding. Und dann kann man halt den nächsten spielen. Die Level sind nicht nummeriert, man kann sich das einfach so aussuchen bei den ersten 48. Wenn man glaube ich 30 fertig hat, dann gibt es hier so eine Sandbox, die freigeschaltet wird. Da sind nochmal weitere 24 Level. Und wenn man die ersten 48 Level komplett durchgespielt hat, dann kommen auch nochmal 24 andere Level dazu. Und die sind dann auch wirklich schwer. Ich bin jetzt hier bei den letzten 24. Und mir fehlen noch vier, sechs, acht Stück. Und ich schaff's schon seit Tagen nicht mehr, so ein Level zu lösen. Also inzwischen brauch ich schon so eine halbe, ein Stunde pro Level. Also weil sie wirklich schwierig sind. Und das ist wirklich, das macht total Spaß, weil man da sehr viel kombinieren muss, weil es ganz viele verschiedene Lösungsansätze gibt. Und das Interessante ist, dass am Anfang, die ersten Level, dann hast du als Auswahl von diesen Geräten, hast du genau die, die du auch brauchst. Das heißt, du hast dann auch schon, dann guckst du dir das an, wenn du nicht weißt, wie du das machen sollst, dann guckst du auf deine Geräte und dann ist klar, du musst es hier mit dem Dreh und mit dem Schieber machen. Und irgendwie, so muss ich es ja irgendwie hinkriegen. Bei dieser Sandbox ist es aber anders. Da hast du von jedem Gerät einfach 40 Stück. Das heißt, da wird dir sozusagen tippmäßig nicht vorgegeben, womit du das Problem dann lösen sollst, sondern du musst dir selbst einverlassen. Der andere Vorteil ist aber, dafür kannst du natürlich wieder so viele Geräte benutzen, wie du willst. Du hast keine Vorgabe. Also sozusagen hat es beide seine Nach- und Vorteile. Und der Extra-Level, der danach dazu geschaltet wird, der ist dann wieder mit Vorgabe, aber der ist so scheiße schwer. Und da sind die, wo das A und B sozusagen, wo man den Ball hinbringen muss, ist dann auch wirklich ein bisschen weiter weg. Und du musst, und dann sind natürlich auch, wie sagt man hier, so Felder, die man nicht benutzen darf, um die du so drum rumschiff musst. Davon gibt es dann immer mehr, die sozusagen im Weg liegen und die stören bei deiner Arbeit. Und dann gibt es auch ganz viele Sachen, wo du eigentlich denkst, ja, alles klar, so und so geht es. Und dann sagst du, ja, nee, der letzte Schritt geht nicht, weil das geht ja deswegen nicht. Und dann machst du es anders. Und ja, nee, verdammt, der geht ja auch nicht, weil deswegen. Und dann probierst du ein nach dem anderen durch und alles funktioniert nicht, weil der hat sein Level schon genau so designt, dass genau das halt nicht so einfach ist, wie es erstmal aussieht. Und dann brauchst du halt noch so die letzte Idee, wie es dann halt doch geht. Und man lernt auch mit der Zeit immer neue Tricks, wie du diese Geräte halt einsetzt. Also, dass die Geräte sich ja auch gegenseitig beeinflussen können. Also, der den Ball irgendwie nach vorne schiebt, dass er zum Ziel kommt, der kann natürlich auch was anderes nach vorne schieben. Oder der Dreher, der den Ball sozusagen um sich schwenkt, der kann auch, was ist ein anderes Gerät, um sich schwenken und so weiter. Und dann entstehen echt verdammt viele Möglichkeiten, wie man da diese Puzzle lösen kann. Und so eine Spiele wie Sokoban haben mir ja schon immer Spaß gemacht, wo es halt möglichst wenig Regeln gibt, aber halt trotzdem eigentlich unendlich viele Möglichkeiten davon. Deswegen bin ich ja auch so ein Loadrunner-Fan. Eigentlich easy, simple, aber da sind Level dabei, da hat man zu tun. Und dieses Spiel, das ist auch was. Und ich mag es auch, 96 Level, da ist echt... Also man zahlt eigentlich fast einen Cent pro Level, könnte man sagen. Das ist schon ziemlich cool. Also ist auf jeden Fall mein heißer Favorit. Preis-Leistungs-Verhältnis ist auf jeden Fall top notch. Und noch hab ich es nicht geschafft. Also ich dachte am Anfang, ja, ist ja schnell durch. Weil die ersten Level gehen ganz flott, aber jetzt irgendwie komm ich grad nicht vorwärts. Meinen letzten Level hab ich glaube ich vorgestern gelöst.
+
+01:54:16.054 --> 01:54:31.014
+<v SPEAKER_5>Ja, aber der Human Resource Machine bin ich ja dann auch irgendwie irgendwann an den Punkt gekommen, wo es schon fast sich angefühlt hat, als hätte man einen halben Tag in so ein Level investieren müssen. Dann hab ich es irgendwann aufgehört.
+
+01:54:31.354 --> 01:54:35.994
+<v SPEAKER_2>Ja, das liegt aber an der blöden Bedienung. Man muss ja irgendwie mit der Maus immer ziehen. Oder wie war das?
+
+01:54:36.014 --> 01:54:44.934
+<v SPEAKER_5>Das lag jetzt nicht an der Bedienung, das lag eher daran, dass ich echt lange drüber nachdenken und puzzeln musste.
+
+01:54:44.954 --> 01:55:38.214
+<v SPEAKER_2>Ich bin ja Assembler-Coder eigentlich. Deswegen ist das Game eigentlich alles total klar. Eine Optimierung in dem Game fiel mir auch wieder ein, dass ich das früher auch schon so gemacht habe beim Coden. Aber der letzte Level ist ja, glaube ich, du sollst ja sortieren oder so was. Ich glaube, das letzte ist das, was ich nicht gemacht habe, weil ich soll ein Feld sortieren, weil ich schon wüsste, wie ich es genau mache. Aber man kann halt nicht mit der Tastatur tippen und Cursor hoch runter, sondern alles so mit der Maus. Das war mir zu nervig, das sozusagen mit der Maus zu programmieren. Das war mir zu blöde. Ich habe den letzten auch noch nicht gemacht, aber sonst habe ich das schon ordentlich losgelegt. Ich finde das ja auch sehr cool. Für Kids so, die lernen da mehr oder weniger, lernen Kids bei Human Resource Machine. Das ist jetzt ein anderes Game, falls die Hörer nicht aufgepasst haben. So lernt man Assembler eigentlich fast.
+
+01:55:38.234 --> 01:55:44.394
+<v SPEAKER_3>Hatten wir hier vor einigen Dekaden, vor einigen Folgen, vor einigen Monden.
+
+01:55:44.414 --> 01:56:20.854
+<v SPEAKER_2>Und wäre dieses Spiel von The Sequence noch besser als ich und das noch vor der nächsten Sendung gleich direkt durchgezockt haben sollte, wobei ich nicht glaube, dass ich das hier schon in der nächsten Sendung fertig habe, wenn das jetzt so langsam weitergeht, weil es so schwer ist. Der Typ hat auch noch ein zweites Spiel gemacht, das heißt, nicht Hardcore, sondern Hard irgendwas. Jetzt habe ich es natürlich vergessen. Jedenfalls hat er noch ein zweites und... Hard Logic, genau. Und ich habe es noch nicht, aber ich will das erst mir angucken, wenn ich das fertig habe, aber das ist bestimmt auch cool.
+
+01:56:20.874 --> 01:56:21.774
+<v SPEAKER_3>Schöne viele Spiele.
+
+01:56:24.434 --> 01:56:29.954
+<v SPEAKER_5>Für die verbleibenden kalten Tage, bevor der Sommer uns richtig schön durchbrutzelt.
+
+01:56:29.974 --> 01:56:31.934
+<v SPEAKER_3>Weil die Podcasts mal wieder zu kurz waren.
+
+01:56:32.994 --> 01:56:34.894
+<v SPEAKER_2>Unwahrscheinlich.
+
+01:56:34.914 --> 01:56:37.894
+<v SPEAKER_5>Kann man ja während des Podcasts hören spielen.
+
+01:56:39.834 --> 01:56:53.594
+<v SPEAKER_3>Ja, da habe ich so ein bisschen meine Schwierigkeiten. Wenn man da zu viel drüber nachdenken muss, dann belegt das die Hirnhälften, die ich eigentlich auf den Podcast lege. Deswegen bin ich immer sehr froh mit so Games, die mir möglichst intellektuell wirklich wenig abverlangen.
+
+01:56:59.034 --> 01:57:02.834
+<v SPEAKER_5>Na, man hat noch irgendwas zu tun halt, ne?
+
+01:57:02.854 --> 01:57:09.054
+<v SPEAKER_3>Weiß nicht, also diese Puzzle-Games, wo du das dann schon so internalisiert hast, aber schon...
+
+01:57:09.074 --> 01:57:11.094
+<v SPEAKER_2>Wo man so aus dem Unterbewusstsein spielt.
+
+01:57:11.114 --> 01:57:55.394
+<v SPEAKER_3>Ja, genau, du musst schon da kreativ sein oder deinen Timing drauf haben oder so, aber es ist jetzt nicht so ein Grübel, Grübel, Grübel, was könnte die Lösung sein? Weil dann bin ich irgendwie aus dem Podcast raus. Ich brauch einfach so Begleitspiele zum Podcast. Das macht sich irgendwie ganz gut. Dann kann ich mich voll auf den Inhalt konzentrieren. Ich denke über das Spiel nicht selber nach, aber irgendwie hält mich das dann... Weiß ich nicht, am Laufen keine Ahnung, was ich eigentlich davon verspreche, dass ich das dann in dem Moment mache. Sonst würde man ja dann vielleicht noch die Augen zumachen und einschlafen oder so was. Also die Spiele halten einen sozusagen wach. Wenn sie Podcasts schon nicht schaffen...
+
+01:57:55.414 --> 02:02:10.474
+<v SPEAKER_5>Ich hätte ja noch so ein Topic, was dich vielleicht begeistern könnte. Vielleicht auch nicht. Gucken wir mal. Und zwar, ich bin ja auch so fortgeschrittener Audio-Nerd im Sinne von Gear Acquisition Syndrome und so weiter. Alles voll ausgefahren. Ich habe ja jetzt so für Band und Podcasts ja schon so einiges an Aufnahme, Equipment und Mikros angeschafft. Und irgendwie vor einiger Zeit habe ich so ein Video gesehen von einem deutschen YouTuber, der auf die amerikanische Musikmesse NAMM fahren wollte und so auch da bloggen und vloggen wollte und hat so vorgestellt, wie er sich so sein Equipment da vorstellt. Also wie kriegt er seine Kameras, sein Mikro, seine Tasche irgendwie bequem über dieses Konferenzzentrum da geschoben, ohne die ganze Zeit irgendwie noch sperrige Stative und sonst irgendwas mitzuschleppen. Und dann erwähnte er halt die Firma Triad Orbit, also Triad-Orbit geschrieben, die hab ich schon ein paar Mal auf Thomann gesehen, als ich so nach irgendwie so etwas schwereren oder belastbaren Mikrofonständern gesucht hab. Und da haben die halt so die Premium, kostet so zwischen 100 und ein bisschen bis zu 350 kann man für so einen Mikrofonständer ausgeben. Und es gibt einen, ich glaube der heißt T2 oder so, keine Ahnung, da kann man dann auch so mit drei blauen Rollen unten dran. Und er hatte dann so einen Ständer von Triad Orbit, die Variante mit den drei Rollen unten dran und meinte, naja, also diese Triad Orbit Ständer, die haben halt so ein geiles System für alle möglichen Verbindungen und Anbauten und so weiter. Und er baut sich jetzt diesen Ständer mal auf. Und es gibt ein YouTube-Video. Wie gesagt, der Typ ist, also naja, manchmal ist es so ein bisschen schwierig, dem zuzuhören und zuzugucken. Ich poste das Video trotzdem mal, weil wenn er da mal so durchskippt und guckt, wie er da diesen Ständer bestückt mit seiner Kamera, mit Mikros, mit allem möglichen Schissl, am Ende schiebt er sozusagen diesen Ständer mit seinem ganzen Equipment einfach über den Floor von der Konferenz und hat da eben noch seine Tasche dran gebammelt. Und dann hat mich das irgendwie so ein bisschen interessiert, weil bei so Band-Mikrofonierungen da ist halt auch ganz oft so das Problem, manchmal ist das Mikro zu schwer und der Ständer kippelt und dann musste dieses ständige Mikro an- und abschrauben, das nervt dann halt auch irgendwann tierisch. Und da musste man so ein bisschen rein noch weiter, irgendwann müsste das hier so, genau, jetzt hat er die Kamera dran, links oben hat er jetzt den Screen, wo er den Livefeed von der Kamera sieht. Das heißt, wenn er das Stativ dann irgendwo hinstellt und irgendjemand interviewt, kann er dann auch gleich live monitoren, was er da so tut. Und es gibt halt so einen Adapter, den steckst du auf das Stativ und er hat dann oben nochmal zwei Abgablungen mit so Kugelköpfen, wo du dann wiederum mit diesem Stecksystem von Triad Orbit einfach weitere Sachen heranstecken kannst. Und ich hab jetzt heute einen Triad Orbit Adapter für herkömmliche Stative bekommen vom guten Thomann. Das kannst du sozusagen auf dein herkömmliches, was ich, Königlich-Meier-Stativ raufstecken. Und dann habe ich mir jetzt so einen kleinen Satz von diesen Adaptern sozusagen besorgt. Sozusagen dieses Stück, was ich jetzt gerade in den Händen halte und die Hörer nicht sehen, aber das ist das, was man ans Mikro selber schrauben würde. Und auf der anderen Seite ist einfach so ein Sechskant. Also, wie nennt man das? Ein Dicker-Sechskant-Stift. Und im Prinzip ist das das ganze System. Dann ziehst du hier an diesem Ding jetzt, ihr könnt es leider nicht sehen, aber wenn ihr auf dem Video guckt, werdet ihr es sehen. Das flutscht dann einfach so in diese Halterung rein. Und ich dachte so, das soll halten. Da ist auch keine Rifflung oder irgendwas. Das wird hier einfach so rein. Und das sitzt einfach mega bombend fest. Das geht überhaupt nicht raus. Warum nicht?
+
+02:02:10.494 --> 02:02:11.754
+<v SPEAKER_2>Magnet oder was?
+
+02:02:11.774 --> 02:06:37.694
+<v SPEAKER_5>Du kannst so ein bisschen reingucken. Ich kann es dir jetzt nicht beschreiben. Du ziehst halt bei diesen Dingern einfach hier diesen Ring nach unten. Und mein Traum ist jetzt halt eigentlich auch für so diverse Aufnahmeszenarien, dass ich eigentlich erstmal meine herkommentlichen Mikrofon-Ständer mit diesem Adapter ausrüste. Und dann alle meine Mikros kriegen so einen Triad Orbit Adapter dran. Und dann fällt dieses blöde Schrauben weg. Und das ist jetzt das große Gewinde oder das amerikanische oder das europäische. Sondern es ist einfach nur so Schnick, Schnick, Schnack, Schnick, Schnack, Schnuck, genau. Und dann diese Kugel, diese Ball-Heads oder wie auch immer man das nennt, Kugelköpfe, die sie halt noch dazu haben. Damit kriegst du halt auch eine viel größere Stativ-Flexibilität als mit dem klassischen Galgenarm, der immer nur eine Achse hat. So, ich hab halt dieses Video gesehen, was ich da verlinkt habe und war irgendwie total begeistert und dann dachte ich mir so, ok, ich will mir das aber vorher nochmal angucken. Und das ist jetzt der zweite Teil der Geschichte. Denn der einzige Laden in Berlin, wo man das sich angucken kann, na, welcher ist es? Unser Hassladen schlechthin. Just Music, genau. So, ich geh also zu Just Music eines Tages und dachte mir, ich guck mir das jetzt mal an, falls du auch mal hier schnacken willst. Ich will auch mal schnacken. Hat es? Ok, ich geh mal vorbei. Dann geh ich so in diese Mikrofon-Ständerecke und dann steht tatsächlich so ein Tried Orbit-Stand da und es ist nicht so wie in dem Video. Also alles hat, also diese ganzen, wie sagt man, Kugel, Kopf, ist das das deutsche Wort? Nichts hat die Position gehalten, da war eigentlich fast nichts dran. Also der Ständer hing einfach mit so seinen paar Ärmchen da so rum, war auch einiges angebaut, ein iPad-Halter, iPhone-Halter, sonst irgendwas. Und ich hab die Schrauben noch festgezogen oder irgendwie versucht, irgendwas zu machen und es schlackerte einfach nur so vor sich hin. Bin ich so zum Just Music-Mention gegangen und meinte so, ja ich interessiere mich jetzt so für diese Triad Orbit Sachen und bevor ich überhaupt was sagen konnte, hatte er schon so seine Rede gehalten, meinte, das ist das überhaupt geilste von der Welt und die geilsten Ständer und dann meinte ich so, ja aber der da hinten, also entweder ich stell mich gerade blöd an oder der ist dann doch nicht so geil, weil das schlackert ja alles. Er so, hä, guck mal mal an, so und dann Just Music. Also die Ständerecke war halt sowieso so ein trauriges Kollektiv von Ständerleichen. Also wirklich, wo du dir denkst, Leute, ihr wollt doch was verkaufen, guckt doch einfach einmal um die Ecke, ihr könnt doch nicht einfach, also wirklich alle Ständer, die nicht bei drei auf den Bäumen waren, die sie wahrscheinlich schon drei Jahre im Bestand haben, einfach so in einen Haufen so und dazwischen stand dieser 300-Euro-Ständer. Und dann spielte er auch sehr aus und war ja schon komisch. Dann kam ein Kollege dazu, ja, also dieser Ständer, der ist schon seitdem wir den haben irgendwie fast kaputt und keine Ahnung, was damit los ist und hat ihn wieder weggestellt. Und ich war erstmal, bin dann erstmal wieder von dann gezogen, dachte mir, okay, Triad Orbit vielleicht doch nicht so geil. Aber irgendwie dachte ich mir, so richtig kann das ja auch nicht sein und hab dann gemacht, was ich so ab und zu mal mache, ich hab das Internet benutzt und einfach die Leute mal kontaktiert und ihnen geschrieben, so von meiner Experience so, dass ich jetzt bei Just Music war und ihr tollen, teuren Ständer mir angeguckt hab und der mich so überhaupt gar nicht überzeugt hat. Und ich hätte jetzt das auch einfach dabei belassen, wenn da jetzt nichts weitergekommen wär, aber zwei Tage später antwortet halt der Typ dann von Triad Orbit, also der Chef oder was auch immer. Also klang auf jeden Fall so, als wäre der Chef meinte, ja, als wir dieses Produkt rausgebracht haben, da hatten wir in der ersten Version tatsächlich Materialprobleme bei diesen Ballheads oder diesen Kugelköpfen. Also nur die haben nicht die Position da auch gehalten, das andere war bombig, aber das ist ja genau das Feature, was er in dem Video halt auch zeigt, wo die fette Kamera und das Display und so dran hängen. Und er meinte, ja, wir haben allen Kunden, die sozusagen Triad Orbit irgendwo registriert oder gekauft haben, wo wir die Vertriebswege kennen, wir haben denen allen kostenlos die zweite Version geschickt, die nicht mehr dieses Problem hat, aber wir wussten nicht, dass zum Beispiel JustMusic, also die müssen das ins Programm genommen haben, bevor wir einen offiziellen Europa-Distributor hatten. Ich war total sorry für diese scheiß Experience und ob ich ihm jetzt mal den Shop sagen könnte.
+
+02:06:37.834 --> 02:06:43.674
+<v SPEAKER_2>Huckel, Huckel, warte, warte. Du bist doch gleich zu JustMusic, hast du gesagt, ey, ich kaufe euren kaputten Ständer für billig, billig.
+
+02:06:43.694 --> 02:06:44.794
+<v SPEAKER_6>Nee, das war scheiße, scheiße.
+
+02:06:47.114 --> 02:06:48.514
+<v SPEAKER_2>Alter, was, hasse nicht?
+
+02:06:50.514 --> 02:07:07.554
+<v SPEAKER_5>Ey, die meinen, es dauert noch zwei Wochen. Vielleicht, okay, ich geh, guter Tipp, Dennis. Dennis, du bist echt so ein Profi in solchen Dingen. Ich werde nächste Freak Show berichten, ob das geklappt hat.
+
+02:07:07.574 --> 02:07:12.974
+<v SPEAKER_2>Das Witzige ist, das könnt ihr ja nicht sehen, der Hucke sitzt hier und das knallrote Gesicht, war das nicht wirklich ärgert?
+
+02:07:18.874 --> 02:08:40.814
+<v SPEAKER_5>Auf jeden Fall hat mich dann der europäische Vertrieb kontaktiert und meinte, ob ich mal auf, weiß gar nicht mehr wie, ob er mich mal anrufen könnte. Und dann habe ich ihm das noch mal so telefonisch geschildert und dann hat er mir das auch noch mal gesagt und meinte, Sie haben jetzt Just Music, werden Sie gleich kontaktieren und denen auch alles kostenlos tauschen. Und wenn ich jetzt irgendwas von Triad Orbit kaufen würde, was nicht meinen Erwartungen entspricht, dann soll ich mich nochmal melden und kriege von denen das Geld zurück. Aber sie sind sich sehr sicher, dass das mit der aktuellen Produktreihe halt nicht mehr funktioniert. Wie gesagt, ich fange jetzt mal an mit diesen Konvertierungsadaptern. Ich habe mir jetzt auch einen für Foto- und Videokamera sozusagen. Da gibt es hier dann eben auch so verschiedene Adapter geschoppt und bin jetzt erstmal... Genau, den kann ich jetzt auf normale Mikrofonständer heraufschrauben. Aber deren Hauptständer-System sind halt auch sehr viel, die halten ein bisschen mehr aus einfach. Selbst die K und M-Ständer, die sind vergleichsweise... Furchtbar... .wackelig. Also näher wackelig ist auch das falsche Wort, aber zu... Ja, also ich würde da nicht so Sachen dranhängen wie der Typ in dem Video gerade. Sagen wir mal so.
+
+02:08:41.154 --> 02:09:02.534
+<v SPEAKER_3>Ja, erstens das und dann das mit diesem Kugelkopf ist eigentlich eine super Idee an der Stelle. Ich habe jetzt nicht so einen super mega Stativbedarf. Ich habe zwar immer noch so, ich hatte mir mal so zwei Verwiesensständer gekauft, obwohl ich die kaum benutzt habe, dann haben sie es irgendwie geschafft, sich doch selber zu zerstören. Also ich habe es natürlich schon selber gemacht. Klassischer Fehler.
+
+02:09:02.554 --> 02:09:03.974
+<v SPEAKER_5>Also welche, die K und M-Ständer oder was?
+
+02:09:04.454 --> 02:10:25.414
+<v SPEAKER_3>Ja genau, also du hast dann so Stative, das heißt, wenn du die kompakt zusammenschieben willst, schiebst du so die eine Stange in die andere. Und um das dann zu fixieren, wenn du es auseinandergezogen hast, musst du ja dann noch mal so einen Plaste-Wulst festdrehen. Und diese Elemente sind immer sehr sparsam designed. Das heißt, das ist halt irgendwie so Plastik-Gewinde und dann willst du es halt mal richtig festmachen und nach zu kommt ab. So habe ich mir die Dinger irgendwie ohne sie viel zu benutzen schon mal halb ruiniert. Und dann finde ich halt auch gerade diese Einstellungen genau an dem wichtigen Trägerpunkt einfach nicht gelungen. Mit diesen komischen Hebelchen und dann machst du mal los, machst wieder an, machst wieder los, machst wieder an, die ganze Zeit bist du irgendwie am ausprobieren und kannst nicht einfach mal irgendwie so eine Position finden und zack fest. Das scheint mir hier tatsächlich so zu funktionieren. Und das Beispiel mit dem Video, was du gerade gezeigt hast, fand ich eigentlich auch sehr cool, weil so hab ich da noch nie drüber nachgedacht, dass du einen Ständer hast auf Rollen, an dem du wie an so einem Baum quasi alles an der richtigen Stelle machst. Und der rennt ja dann quasi über den Floor, schiebt die ganze Zeit wie so ein Dialyse-Patient dieses Teil irgendwie vor sich her.
+
+02:10:25.434 --> 02:10:28.234
+<v SPEAKER_5>Und hat noch seine Tasche drüber gehangen über dieses Dreieckstück.
+
+02:10:28.694 --> 02:10:35.694
+<v SPEAKER_3>Also wie so ein Garderoben-Ständer, den du immer irgendwo hinstellst, aber du hast quasi immer so ein fertiges Audio-Video-Setup, wo alles an der richtigen Stelle ist.
+
+02:10:35.714 --> 02:10:39.814
+<v SPEAKER_2>Kannst du auch noch so ein Brett machen und dann gleich mit so Skatemäßig mit...
+
+02:10:39.834 --> 02:10:41.814
+<v SPEAKER_3>Elektromotor, Elektromotor.
+
+02:10:43.794 --> 02:10:52.734
+<v SPEAKER_5>Ja, also insofern... Weil es jetzt auch nicht das preisgünstigste ist natürlich diese Ständer an sich, aber einen würde ich mir mal schon so aus Interesse...
+
+02:10:52.754 --> 02:10:53.414
+<v SPEAKER_3>Mit dem mit den Rollen?
+
+02:10:56.554 --> 02:11:08.474
+<v SPEAKER_5>Ich glaube, der muss man bei Tumman gucken, aber ich glaube, der ist dann mit Rollen schon bei 300 Euro. Aber löst halt auch...
+
+02:11:08.494 --> 02:11:11.734
+<v SPEAKER_3>Löst Probleme, 320.
+
+02:11:11.754 --> 02:12:44.034
+<v SPEAKER_5>Also gerade diese Rollen finde ich schon auch sehr charmant und du kannst halt auch, wenn du diese Beine, die kann man halt auf verschiedenen Winkeln halt auch fest arretieren, also das ist nicht wie bei normalen Mikrofonständen, dass die halt nur zusammengeklappt oder auseinander gespreit sind, sondern diese Zwischenstellungen sind da auch definierte Punkte sozusagen. Ja, genau und auch noch einzeln. Zum Beispiel, wenn man Schlagzeug mikrofoniert oder auch gelegentlich mal bei anderen Instrumenten, wenn man Stereomikrofon hat, also gerade so beim Schlagzeug gibt es ja diese Overhead-Mikros, die halt links und rechts das Schlagzeug von oben mikrofonieren, damit man halt ein schönes Stereo-Bild hat. Dafür nimmt man dann halt auch üblicherweise immer so zwei Ständer, dann müssen es auch so fette Ständer sein, weil der Auslegerarm relativ weit rausfährt, damit du halt wirklich übers Schlagzeug kommst. Und da geben halt die meisten normalen Ständer auf, da braucht man eh schon die schwereren Ständer. Und da einzuhaben mit so einer Aufgabelung um, wo du genau diese zwei Arme hast, das wär ein Traum! Das war so, also ich fand's halt nur auch an der Stelle interessant, dass viele Leute würden jetzt vielleicht nicht dem dann gleich noch eine Mail schreiben, wie scheiße ihre Erfahrung war, aber die waren dann echt total dankbar und so, das fand ich mal wieder so eine schöne Power auf die Internet, einfach mal Bescheid sagen und dann so richtig Feedback bekommen und nicht mutmaßen unter ja.
+
+02:12:44.794 --> 02:13:02.914
+<v SPEAKER_3>Ich find das ja irgendwie immer bedrückend, wenn die stabilen Produkte auf einmal aus den USA kommen. Was weiß ich meine, also das ist so oft. Haben die es so mit der Qualität in der Hardware, aber in manchen Bereichen, naja.
+
+02:13:03.174 --> 02:13:28.594
+<v SPEAKER_5>Ich meine K&M ist ja natürlich immer noch tausendmal besser als alle diese No-Name-branded Ständer, die dann wirklich beim ersten Angucken schon in den Geist aufgeben. Das muss man ihm schon lassen, dass auch diese Hebelfeststellschrauben die halten auf jeden Fall viel besser und die verzeihen es auch einmal, wenn man doch trotz angezogener Feststellschraube den Arm noch ein bisschen runter neigt und so, was man ja alles nicht machen soll.
+
+02:13:29.334 --> 02:13:33.794
+<v SPEAKER_3>Aber auch diese Stativschrauben, die sind halt einfach unpraktisch.
+
+02:13:34.054 --> 02:13:49.454
+<v SPEAKER_5>Ja, die sind einfach sehr einfache Mechanik, wo der Lack dann auch einfach beim ersten Mal festziehen schon abbröselt, weil da einfach Metall auf Metall so richtig stumpf drauf schraubt, wo man sich denkt, naja, Leute, also...
+
+02:13:49.474 --> 02:14:22.134
+<v SPEAKER_3>Ja, und auch so die Zeit ist ja so ein Punkt. Ich meine, du baust ja halt dieses Basestativ, wie du es jetzt gerade war da beschrieben, was in diesem Video auch zu sehen war. Und die wertvollen Dinge, die du da dranhängst, die machst du halt mit Klack, Klack, Klack, Klack, Klack, Klack, ab, zack, Brumm, rein, Koffer, Stativ, irgendwo hinlegen, fertig. Versus abschrauben, abschrauben, mit irgendwie Doppelring, oder es war jetzt fest, und ich kriege hier nicht ab, und dann irgendwie, wo fasse ich das teure Mikrofon an, um jetzt hier wirklich Kraft auszuüben und so.
+
+02:14:22.154 --> 02:14:38.474
+<v SPEAKER_5>Genau, und dann diese Adapterschrauben von 5,8 auf 3,8 Zoll, und die dann auch sich manchmal festfressen und die man einfach nicht mehr abbekommt. Also ich habe wirklich schon Ständer, die nur noch für eine Größe funktionieren, weil ich diese blöde Adapterschraube, die hat sich so fest gefressen.
+
+02:14:38.494 --> 02:15:14.834
+<v SPEAKER_3>Und da sind dann einfach auch mal so proprietäre Lösungen völlig okay. Weil dann kauft man halt einfach genug davon, dann hat man irgendwie ausgesorgt, dann passt das schon. Das ist der selbe Grund, warum ich ja hier im Studio mit meinen fünfpoligen XLR-Kabeln arbeite, mit denen halt normalerweise auch keiner arbeitet. Aber ich habe mir halt einfach gesagt, ich will einfach einen reinstecken geht Modus haben und mit der besonderen Freiheit, dass ich mir eben für jede andere Situation einfach die passenden Adapter baue. Das ist dann so eine einmalige Investition. Aber irgendwann habe ich es dann halt auch.
+
+02:15:14.854 --> 02:16:03.994
+<v SPEAKER_5>Und diese Stecker, die man an die Mikros machen, die kosten auch nur acht Euro. Das ist noch nicht mal teuer. Genau, also eigentlich auch dieser Konverter, der hat jetzt 30 Euro gekostet. Da sind aber dann eben auch ein Kameraadapter, ein 3,8 Zoll Adapter und einmal dieses 5,8 Zoll-Ding dabei. Und was auch schön ist, wenn du den an deinen Mikroständer schraubst, dann wird das halt nicht einfach so festgeballert durch pure Kraft, sondern das wird mit einer Imbus-Schraube von der Seite festgemacht, dass sich das dann auch nicht nochmal wieder löst am Stativ, sondern du hast dann einen festen definierten Punkt, wo du dann reinklicken kannst. Die Apotheken-Preise haben sich jetzt glücklicherweise nicht noch für den Rest der Hardware sozusagen durchgezogen, sondern die Ständer sind das, was am teuersten ist, und das ganze Zubehör, das ist doch tatsächlich sehr bezahlbar.
+
+02:16:04.014 --> 02:16:11.454
+<v SPEAKER_2>Na ja, dein kleines Kisten hat jetzt 40 Euro gekostet, wo da die Ständer 60 kosten. 30 plus die 8.
+
+02:16:11.474 --> 02:16:13.974
+<v SPEAKER_5>Achso, nee, das ist jetzt alles 30, dieser ganze.
+
+02:16:13.994 --> 02:16:14.714
+<v SPEAKER_2>Der ganze Kasten zusammen.
+
+02:16:14.734 --> 02:16:16.814
+<v SPEAKER_5>Aber ich hab mir noch ein paar extra bestellt, weil ich...
+
+02:16:16.834 --> 02:16:17.874
+<v SPEAKER_2>Schon klar.
+
+02:16:17.894 --> 02:16:34.454
+<v SPEAKER_5>Das ist einer von diesen K und M-Ständern, die halt die ganzen Probleme haben, die wir gerade besprochen haben. Das war jetzt so meine Entdeckung aus kürzerer Vergangenheit.
+
+02:16:34.474 --> 02:16:47.354
+<v SPEAKER_3>Sehr schön. Ich würde dann mal es wieder mit Technologie aus Deutschland probieren. Ich hab den Eindruck, dass wir da in der nächsten Sendung ohnehin noch mal ein bisschen mehr drüber reden werden.
+
+02:16:47.374 --> 02:16:48.314
+<v SPEAKER_5>Technologie aus Deutschland?
+
+02:16:51.294 --> 02:18:28.154
+<v SPEAKER_3>Aber, da es jetzt gerade ganz frisch ist, will ich mal kurz darauf hinweisen. Wir hatten ja hier auch schon den Ralf Stockmann zweimal, glaube ich, sogar schon zu Gast, wenn ich mich richtig erinnere. Oder war es erst einmal? Wiss ich nicht. Der ja das schöne Projekt Ultraschall angestoßen hat. Und das ist jetzt quasi for the Podcasters unter euch und solche Wies werden wollen. Er hat mich da ja auch selber bekehrt. Ich weiß ja, meine Widerstände gegen Reaper als Basissoftware waren ja sehr groß und das hatte viel mit dem User-Interface zu tun. Weil, ist ja auch so. Da kann einfach der Motor noch so geil sein, wenn man nicht weiß, wo das Gaspedal ist. Hilft dir das natürlich herzlich wenig. Und so war das halt so ein bisschen. Na ja, und Ultraschall ist halt das Projekt, das schon seit ein paar Jahren jetzt versucht, Reaper da einen anderen Zaum aufzulegen. Und das ist ja schon durch einige interessante Iterationen durchgegangen. Jetzt nach längerer Ankündigung und noch längerer Arbeit da dran, ist die Version 3.0 rausgekommen. Ultraschall vielleicht nochmal in den Nutshell. Was ist das? Also das Ganze ist quasi so eine Art Add-on plus Seeming für die Software Reaper. Das heißt, man muss, wenn man das benutzen will, nach wie vor Reaper laden. Reader ist eine Digital Audio Workstation, die aber relativ günstig ist. Das kostet 60, 70 Euro.
+
+02:18:28.174 --> 02:18:34.834
+<v SPEAKER_5>60 Euro und du kannst ja als Nag, also so Shareware-mäßig mit dem Nag-Screen nach 30 Sekunden weiter auch ewig benutzen.
+
+02:18:34.854 --> 02:19:46.974
+<v SPEAKER_3>Das kannst du auch so damit arbeiten, genau. Also das ist alles sehr fair. Man lädt sich halt einfach die Software herunter. In diesem Fall braucht man die aller, aller, aller neueste Version. Die muss man halt runterladen, die 535. Das hat diverse und auch gute Gründe. Und dann lädt man sich eben dazu noch diesen Ultraschall-Installer herunter. Da ist diese ganze Installation auch sehr viel einfacher geworden. Da macht man so ein Paket-Install-Durchlauf, startet das Ding, zieht nochmal eine Datei in das Hauptfenster und fertig ist die Laube. Und was Ultraschall ja bisher schon gemacht hat, ist aus Reaper, was halt so ein universelles Musik-Recording- und Composing-Programm war, im Prinzip so eine Art Podcast-Recording-Maschine zu machen. Da kann man also wunderbar Multitrack-Aufnahmen machen, man konnte das wunderbar rausrendern. Es gab einen Kapitelmarken, es gibt auch nach wie vor einen Kapitelmarken-Interface. All diese ganzen Sachen, die man so für Advanced Podcasts machen möchte, die waren da gut zu machen. Und ich muss jetzt auch einfach sagen, wie lange arbeite ich da jetzt mit? Zwei Jahre? Länger? Ich weiß gar nicht. Schon so dran gewöhnt.
+
+02:19:48.134 --> 02:19:52.394
+<v SPEAKER_5>Also es ist schon lange her, dass wir Ableton-Recordings hatten hier.
+
+02:19:52.414 --> 02:22:00.074
+<v SPEAKER_3>Ja, wo es einfach aufhörte. Ich kann einfach sagen, ich kenne nicht viel Software, die so schnell ist und so unkompliziert ist. Software, die performt wie Hölle und die auch einfach stabil ist wie Hölle. Das kriegen die echt hin. Und das, obwohl die am laufenden Meter neue Releases raushauen, auch immer extrem lange Change-Logs haben und obwohl das Ganze ja auch, was mir ja auch nicht so liegt eigentlich, obwohl das halt auch so eine Cross-Platform-Geschichte ist, kriegen die halt trotzdem beide Plattformen. Also offenbar, ich weiß nicht, unter Windows habe ich jetzt keine Erfahrung, aber auf Mac läuft es einfach mal Rock-Solid und viele Probleme, die aus dieser ganzen Cross-Platform-Entwicklung hervorstechen, sollen demnächst wohl auch angegangen werden. Unter anderem gibt es dann Reaper demnächst auch mal in Retina. Heißt es. Ich weiß jetzt nicht ganz genau, was da der Zeitrahmen ist, aber jetzt haben sie wohl dann doch mal eingesehen, dass man vielleicht mal akzeptieren sollte, dass die Bildschirme mittlerweile eine andere Auflösung haben. Wäre für mich ja auch mal ein Grund, darüber nachzudenken, weil bisher habe ich ja noch keinen Retina, wobei ich glaube, Reaper wird mir dazu vorkommen. Ja, das war also soweit schon immer alles toll. Und ganz ehrlich, wenn ihr euch mit was rumschlagt, wie Garageband oder Audacity oder so, und ihr macht das, weil ihr da auf dünnen Etat arbeitet, ladet euch mal Reaper und Ultraschall runter. Wie schon erwähnt, das kann man auch für einen dünnen Strumpf benutzen. Und wenn man sich da nachlegalisieren will, dann kostet es auch nicht viel. Und ich halte das auch für sehr angemessen. Aber das ist einfach was anderes. Man arbeitet damit einfach viel, viel, viel professioneller. Man hat viel mehr Möglichkeiten. Das Schöne an Ultraschall ist, dass es diese ganze Flexibilität von Reaper auch sehr gut zugänglich macht.
+
+02:22:00.094 --> 02:22:01.854
+<v SPEAKER_5>Die Webseite sieht auch fancy aus.
+
+02:22:01.874 --> 02:26:55.674
+<v SPEAKER_3>Die Webseite ist extrem fancy. Das ist schon immer mein größter Neid gewesen. Vielleicht mal dazu, was hier eigentlich das Ding ist. Die neue Version, abgesehen natürlich von dem Üblichen an Stabilität und Detailpflege, gibt es halt diverse neue Features, die jetzt vielleicht nicht jedem unbedingt immer was sagen. Es gibt jetzt so einen schicken Colour Picker, mit dem man halt mal schnell seine Spuren besser einfärben kann. Das ist halt immer so, wenn man so Multitrack hat mit mehreren Sachen. Farbe schafft einfach Übersicht. Und das kann ganz hilfreich sein. Halt ich jetzt aber nicht für ganz so mega wichtig. Was aber auch schon seit längerer Zeit dabei ist, ist dieses Studio Link, was jetzt auch in einer neuen Version rausgekommen ist. Und was jetzt ganz neu ist in der 3.0 Version. Studio Link on Air. Und das heißt, dass man jetzt nicht nur mit Reaper aufnehmen, schneiden und releasen kann, sondern man kann direkt aus seiner Recording-Software auch streamen. Und das könnte auch kaum einfacher sein. Also man lädt sich Reaper runter, man installiert Ultraschall. Macht mal sein Dokument auf, drückt Record, quatscht in seine Mikrofone rein und dann ist in diesem User-Interface einfach noch so ein Button links. So ein Streaming-Button. Klickst du drauf, geht Webseite auf, da ist deine URL, Streaming-Server läuft. Das Ganze ist quasi als Plugin in Reaper eingebaut, liegt dann auf dem Master-Track drauf. Ist quasi so ein Effekt, der eingebaut wird. Schnappt sich den Output von dem Master, also das, was man quasi in seiner Software da virtuell zusammenmixst, und schickt das direkt zu dem Streaming-Server von Studio Link. Und da geht es dann derzeit einfach als normaler mp3 128kbit Stream raus. Und das ist derzeit auch alles noch irgendwie kostenlos benutzbar. Da kann ich jetzt auch ehrlich gesagt gerade gar nicht so viel zu sagen, wie da so die Pläne sind. Ich weiß nur, dass der Sebastian, der das hier macht, noch eine ganze Menge Pläne hat, auch für diesen Streaming-Dienst. Jetzt ist hier erstmal so das Minimum angesagt, aber in absehbarer Zeit soll dann eben hier auch das ganze Streaming mal auf eine neue Basis gehoben werden. Also mit flexiblen Formaten, mit HLS und anderen Climbim. Jetzt schon in der aktuellen Form geht so eine Webseite auf, und dann hast du da noch so einen einfachen Webchat drin, den man einfach mitbenutzen kann. Also man hat sozusagen mit einem Download irgendwie alles, was man so als Live-Podcaster braucht. Das finde ich schon irgendwie ziemlich geil, weil wenn man sich immer überlegt, was das für Climbzüge ist mit Ja, und dann habe ich hier irgendwie mein virtuelles Device und Capture und hast nicht gesehen und Nicecast und so weiter. Und noch mal ein anderes Programm damit zu streamen. Jetzt hat man das quasi alles mit drin. Was auch mit drin ist, ist, dass man jetzt auch direkt MP3 herausmachen kann. Und zwar mit Metadaten. Das heißt, du kannst jetzt mit dem Ultraschall quasi fertige MP3-Podcast-Dateien mit Kapitelmarken erzeugen. Und Episodenbild, also the full Monty. Und, ta ta ta ta, es gibt jetzt richtige Dynamics drin. Das heißt, man hat quasi auf Phonik diesen Dienst. In klein auch noch gleich mit drin. Das heißt, man nimmt nicht nur auf und rendert raus, sondern das, was man da rausrendert, hat eben auch noch eine einheitliche Lautstärke. Also eine einheitige Lautheit, um genau zu sein. Es gibt ja diesen Loudness Unit-Standard, gemessen in der Einheit LUFS. Der Wert minus 18, minus 16, ist das, was hier gemeinhin im Podcastland verwendet wird. Und man kann jetzt hier mit, ich hab's ehrlich gesagt noch nicht ausprobiert, aber mit relativ geringem bis keinem Aufwand einfach beim Fertigstellen seines Podcasts einen Pfeil erzeugen, was einfach komplett ist. Also man hat auch über 2-3 Stunden Aufnahme eine einheitliche Lautheit. Das heißt, Leute müssen nicht lauter oder leiser drehen, nur weil jetzt Leute schreien oder Leute schweigen. Und das kommt hier quasi auch auf Basis von Plugins gelöst, einfach bei Ultraschall mit dazu. Tja, und jetzt hätte ich fast gesagt, rufen sie jetzt die Nummer neben ihrer Landesflagge an, aber es ist ja ganz unglaublich, Hucke. Also was würdest du sagen, was das kostet?
+
+02:26:56.774 --> 02:27:00.194
+<v SPEAKER_5>Also, ja, 199 Euro.
+
+02:27:00.214 --> 02:27:03.694
+<v SPEAKER_3>Nein, nein, ganz weit gefehlt.
+
+02:27:03.714 --> 02:27:05.934
+<v SPEAKER_5>Aber sicherlich doch 120 Euro.
+
+02:27:10.494 --> 02:27:12.394
+<v SPEAKER_3>Es ist kostenlos!
+
+02:27:12.414 --> 02:27:12.914
+<v SPEAKER_5>Nein!
+
+02:27:12.934 --> 02:27:16.854
+<v SPEAKER_2>Doch! Wie, das Ultraschall oder das Reaper auch?
+
+02:27:16.874 --> 02:27:41.954
+<v SPEAKER_3>Das Ultraschall. Man zahlt für Reaper, Ultraschall ist nach wie vor ein Community-Projekt. Und ich find's bemerkenswert, was da Ralf und Heiko vor allem, der jetzt hier an der 3.0 einfach den Großteil der Arbeit geleistet hat, was die sich A ausdenken, was überhaupt rein soll, und B was sie halt auch immer wieder umgesetzt bekommen.
+
+02:27:43.034 --> 02:27:54.814
+<v SPEAKER_5>Jetzt hab ich mal eine Frage. Diese Webseite erscheint mir sehr deutsch. Gibt's da auch einen Englisch-Button, um das ganze Spektakel in Englisch genießen zu können?
+
+02:27:56.454 --> 02:28:51.254
+<v SPEAKER_3>Ja, guter Punkt. Ich glaube, da fehlt's noch ein bisschen an den Ressourcen. Das Projekt kann auf jeden Fall auch noch Mithilfe gebrauchen. Es ist ja schon alles, das ist intern alles auf Englisch. Nur die Webseite ist halt noch nicht auf Englisch. Und auch die Tutorials sind in dem Sinne nicht auf Englisch. Also Reif hat allein für dieses Release nicht nur, also normalerweise gab's immer so ein Video mit die neuen Features von. Und da die Features diesmal so vielfältig sind, gibt's für Ultraschall 3 gleich fünf Videos. Und dann gibt's auch noch ein Video, wo man sich die Features, Installation, Übersicht, dann die ONR-Geschichte, die Dynamics-Geschichte und der Export-Assistent alles noch mal ausführlich erläutert. Ja, und wenn sich jemand berufen fühlt, die nachzusprechen...
+
+02:28:51.274 --> 02:28:52.974
+<v SPEAKER_5>Weil das ja ein Produkt für die ganze Welt.
+
+02:28:53.774 --> 02:29:39.194
+<v SPEAKER_3>Es ist ein Produkt für die ganze Welt, gar keine Frage. Die Software war ja am Anfang auch auf Deutsch, da hab ich schon mal etwas drauf eingewirkt. Die Software selber ist auf Englisch, aber man weiß ja, wie das ist. Man kann ja am besten, wie einem der eigene Schnabel gewachsen ist. Und wenn sich hier ein Native Speaker berufen fühlt, zum Beispiel einfach mal die Texte zu übersetzen, die Website Englisch zu machen. Oder so. Ich meine, das ist ja auch noch kein World Product in dem Sinne und wir bauen hier natürlich vor allem auf die deutsche Community, ist ja ganz klar. Aber andererseits gibt es auch keinen Grund, warum das nicht auch andere Leute interessieren sollte.
+
+02:29:39.354 --> 02:29:40.694
+<v SPEAKER_5>Also keine Frage.
+
+02:29:40.714 --> 02:29:42.414
+<v SPEAKER_3>Aber es ist halt einfach nur Arbeit.
+
+02:29:49.794 --> 02:30:23.454
+<v SPEAKER_5>Ich lehne mich mal relativ weit aus dem Fenster und würde sagen, das ist jetzt schon einer der abgefahrenen Mods oder Plugins für Reaper. Also das, was man sonst so da so sieht, ist halt mal ein nettes Theme oder so. Aber so eine umfassende Änderung des Ganzen. Änderung und auch Verbesserung für einen spezifischen Anwendungsfall und dann auch noch so schick und wohl dargeboten. Also könnte ich mir vorstellen, dass die Reaper-Leute das halt auch irgendwie ganz schön flashen.
+
+02:30:23.474 --> 02:30:26.174
+<v SPEAKER_3>Es ist einfach unglaublich!
+
+02:30:26.194 --> 02:30:30.994
+<v SPEAKER_5>Allerdings, wenn das dann halt alles auf Deutsch ist, so beschrieben und so weiter, ist das dann auch erstmal wieder so eine kleine...
+
+02:30:31.274 --> 02:32:06.134
+<v SPEAKER_3>Ja klar, aber ich meine, hier sind schon alle sehr an ihre Grenzen der freien Zeitverfügbarkeit gegangen. Deswegen, also ich weiß, dass Übersetzungsdienste aller Art, ja, also auch wenn sich vielleicht ein Native Speaker einfinden würde, oder einer, der ausreichend bilingual ist, der zum Beispiel die Videos nachplappern könnte oder auch nur untertitelt auf Englisch, das würde ja auch schon eine Menge bringen, ja. Dann, ja, wäre schon ein großer Schritt gemacht, aber das heißt ja dann auch, man macht das ja dann nicht einmal auf Englisch, dann ist es schon, es ändern sich Dinge, man muss das eben auch nachpflegen, etc., Also das ist auf jeden Fall, glaube ich, eine Vakanz, was auch noch eine Vakanz ist und das können wir vielleicht hier auch mal nochmal bekannt geben. Es ist wohl viel Mühe, diese Doppelplattform aufrecht zu erhalten und vor allem diese ganzen Installer-Geschichten sind wohl extrem aufwendig und der Heiko wollte sich jetzt wohl so ein bisschen mehr wieder auf die Windows-Welt zurückziehen, weil das irgendwie sein Home-Turf ist. Sollte sich also jemanden finden, der so mit Mac-Installern wenig Schmerzen hat und quasi so an der Stelle gerne mal auch den Hebel ansetzt, vielleicht mit gewissen Basis-Programmierkenntnissen, sollte man bei Ultraschall anklopfen. So viel zu diesem Werbeblock. Aber ich bin einfach begeistert.
+
+02:32:06.674 --> 02:32:08.134
+<v SPEAKER_5>Das ist ja unglaublich, Bob.
+
+02:32:08.154 --> 02:32:46.814
+<v SPEAKER_3>Ja, also ich hab jetzt ehrlich gesagt, ich hab's jetzt gerade mal auch seit zwei, drei Tagen erst so ein bisschen im Test und muss mal gucken, was für mich dabei ist. Ein paar Kleinigkeiten, weil ich ja die ganze Dynamic- und Exportgeschichte nicht benutze, weil ich das halt auf Funic mache. Und für Streaming hab ich ja auch schon eine Lösung. Aber wenn das mit Studio Link besser wird und mir hier auch mehr Flexibilität bietet im Anbieten dieses Streams, insbesondere wenn mal HLS-Streaming dabei rausfällt, dann wird's halt spannend, weil dann ist einfach der Stream besser, weil man eben nicht so sehr davon abhängig ist.
+
+02:32:46.834 --> 02:32:48.554
+<v SPEAKER_5>Was war nochmal HLS?
+
+02:32:48.574 --> 02:33:34.114
+<v SPEAKER_3>Das ist das HTTP-Live-Streaming von, wie Apple das definiert hat. Das geht ja demnächst in diesem MPEG-Dash auf. Also im neuen W3C-Live-Stream über das Internetstandard, der sich im Wesentlichen an HLS und auch eben an den verwandten Methoden von Adobe in Flash und Microsoft orientiert. Man hat sich da jetzt quasi auf so einem Standard geeinigt, das ist MPEG-Dash. Das ist aber jetzt noch nicht so universell verfügbar. Ich weiß gar nicht, ob heute iPhones, Out of the Box mit Dash klarkommen, aber in dem Moment, wo die iOS-Welt und die Mac-Welt Dash macht statt HLS oder zusätzlich dazu, kann man glaube ich auch auf Dash setzen. Und ich glaube FireFox hat es irgendwie schon drin und so eine Sachen.
+
+02:33:34.134 --> 02:33:59.714
+<v SPEAKER_5>Was mir zu diesem Thema einfällt, und das ist jetzt ein gewisser Kontextsprung, aber er hat etwas damit zu tun. Du weist ja auf berlin.ccc.de-tim-diskordische-bibel-Stunde. Ist ja noch immer die von mir hochverehrte Aufzeichnung deiner diskordischen Bibel-Stunde. Und es gibt eine mp3-Version und eine m4a-Version mit visuellen Kapitelmarken.
+
+02:33:59.734 --> 02:34:01.674
+<v SPEAKER_3>Warte mal, auf was? Auf www.ccc.de?
+
+02:34:01.694 --> 02:34:23.174
+<v SPEAKER_5>Berlin.ccc.de-tim-diskordische-bibel-Stunde. Echt, davon habe ich noch eine Seite? Dann machen wir nur Bibel-Stunde oder so. Die ist ja schon immer da. Nur über diese Seite konsumiere ich, wenn ich es mal wieder...
+
+02:34:23.194 --> 02:34:23.954
+<v SPEAKER_3>Ach so, tim....
+
+02:34:24.454 --> 02:35:08.374
+<v SPEAKER_5>Ja, ich weiß, du hast das auch auf deinem Blog. Aber im Moment, du weißt ja noch gar nicht, worauf ich hinaus will. Wenn du jetzt noch mal auf diese bedienstete CD-E-Seite gehst und das M4A anklickst, früher spielte das einfach sofort ab und hatte die Slides da zu sehen. Jetzt sagt QuickTime im Browser als auch im normalen Betrieb irgendwie, er könne dieses M4A irgendwie nicht mehr abspielen. Ich weiß nicht, ob das jetzt daran liegt, dass das File gar nicht mehr da liegt, aber irgendwie dann würde er sagen, File not found. Und ich dachte mir, haben die jetzt irgendwie M4A dann diesen Kapitelmarken rausgeschmissen oder so? Das war nämlich eigentlich voll cool, dass man die Slides da drin sehen konnte.
+
+02:35:09.894 --> 02:35:51.134
+<v SPEAKER_3>Ja, die haben, ne, der Teister. Ja, Apple hat mehrfach dieses Kapitelformat geändert. Das ist ja zum Beispiel auch der Grund, dass M4A, was ich jetzt hier von dieser Sendung veröffentliche, bringt zum Beispiel iPod Shuffles zum nicht abspielen. Weil über die Zeit Änderungen vorgenommen werden mussten, wie diese Kapitel eingebaut sind, damit es mit den iPhones richtig läuft, weil das alte Format da wiederum so nicht funktioniert hat. Das ist so Re-Engineering, was auch von Nick gemacht hat. Ich kann mir gerne mal diese Datei annehmen und die mal in die Neuzeit bringen.
+
+02:35:51.894 --> 02:36:12.154
+<v SPEAKER_5>Ja, das fände ich cool, weil ich empfehle die immer mal wieder. So alle paar Monate lang gibt es mal wieder irgendjemanden, der fragt, was ist denn eigentlich dieser Fnord, der bei dir alle drei Wörter über die Lippen kommt. Und dann verweise ich gelegentlich auf die diskordische Bibel schon. Und dann ist es halt irgendwie doof, wenn dann diese Slides gar nicht mehr dabei sind.
+
+02:36:12.554 --> 02:36:16.574
+<v SPEAKER_3>Ja, da hast du ja sehr recht, weil jetzt hier noch nicht mal das Video auftaucht.
+
+02:36:18.094 --> 02:36:21.434
+<v SPEAKER_5>Da finde ich ja den, was war denn bei diesem Video, da war der Sound nicht so geil, ne?
+
+02:36:23.974 --> 02:36:28.114
+<v SPEAKER_6>Es gibt eigentlich nur eine Aufnahme.
+
+02:36:28.134 --> 02:36:30.054
+<v SPEAKER_3>Ich schaue mir das nochmal an.
+
+02:36:30.074 --> 02:36:30.454
+<v SPEAKER_5>Genau.
+
+02:36:30.474 --> 02:36:31.454
+<v SPEAKER_6>Ich schaue mir das nochmal an.
+
+02:36:31.554 --> 02:36:47.954
+<v SPEAKER_5>Anyway, also da war ich halt zum Thema hier, Formate, die gehen oder nicht gehen, ob ein iPhone das abspielen kann oder nicht. Genau, da bin ich auch wieder über so ein Format, was mal ging und jetzt nicht mehr geht, stolpert sozusagen.
+
+02:36:47.974 --> 02:36:54.094
+<v SPEAKER_3>Das ist ja auch ein Drama. Ein totales Drama.
+
+02:36:54.114 --> 02:38:03.874
+<v SPEAKER_5>Streichzart. Denn ist ein Thema. Kann ich ja noch kurz einwerfen, hier diesen einen Link genau. Irgendwie kam so ein Tweet in meine Timeline Internet Solved. Und da drunter diese kleine Meldung, dass eine norwegische Nachrichtenseite in der Kommentarsektion, bevor man überhaupt einen Kommentar schreiben kann, erstmal so inhaltliche Fragen zum Artikel stellt. Du musst dann so zwei bis drei Fragen beantworten. Das ist echt eine gute Idee. Um sicherzustellen, dass du auch den ganzen Artikel gelesen hast, bevor du deinen Senf dazu abgeben kannst. Ich fand das auch einfach wirklich so eine einfache Lösung für so ein großes Problem, weil die Menge an Kommentaren wird damit einfach drastisch reduziert, also der Noise-Level. Und dann weißt du halt auch, okay, die Leute, die jetzt da was schreiben, die haben es auch wirklich mal so zumindest grob verstanden, worum es da geht und zu Ende gelesen.
+
+02:38:04.534 --> 02:38:12.114
+<v SPEAKER_3>Und haben auch ausreichend Drang, auch wirklich einen Kommentar-Inhalt zu geben.
+
+02:38:12.134 --> 02:38:40.594
+<v SPEAKER_5>Und nicht einfach nur so rein zu furzen. Also das erfordert natürlich auch, angenommen würde es jetzt für ein populäres Blog oder sowas, das oder dann würde es ein bisschen, zum Beispiel bei der Freak-Show, wenn ihr es da sicherstellen würdet, wollen würdet es, dass sie bis zum Ende gehört haben. Alles ein bisschen schwierig oder ein bisschen aufwendiger vielleicht, aber für News-Sites zum Beispiel Spiegel oder alle oder Heise, alle, die so eine riesen Kommentar-Troll-Härten haben, wäre das schon irgendwie geil.
+
+02:38:40.614 --> 02:39:09.234
+<v SPEAKER_3>Ja, ist natürlich die Frage, wie lange es dauern würde, wenn Spiegel Online sowas hätte. Ja, also ich meine, die Fragen werden dann einmal von jemandem beantwortet und dann hast du schon ein entsprechendes Plugin, was dir quasi die Fragen, die du beantworten musst, um da kommentieren zu können, einfach aus dem Netz zieht. Machen wir uns nichts vor. Ja, Capture, Blah, Katze Maus, Virus, ja auch bei den Virus zu nutzen.
+
+02:39:09.254 --> 02:39:19.474
+<v SPEAKER_5>Genau, aber du willst ja erstmal so, dass die grobe Masse erstmal so eine Eintrittshölle machen und die, die sich dann so technisch da noch reinfuchsen, geschenkt, ja.
+
+02:39:19.494 --> 02:39:23.974
+<v SPEAKER_3>Die wichtigen Schreihälse, die hast du halt gleich erstmal aus und vor.
+
+02:39:23.994 --> 02:39:28.014
+<v SPEAKER_5>Ja, fand ich auf jeden Fall einen echt sympathischen Ansatz.
+
+02:39:28.494 --> 02:39:32.594
+<v SPEAKER_3>Die wollen uns den Rand wegnehmen. Den kleinen Rand.
+
+02:39:32.614 --> 02:39:39.174
+<v SPEAKER_5>Ja, den kann man ja immer noch auf seiner eigenen Timeline veröffentlichen dann. Wo alle auf ignore stellen können.
+
+02:39:39.214 --> 02:39:42.494
+<v SPEAKER_3>Die haben doch überhaupt nicht gerantet heute, ne?
+
+02:39:42.514 --> 02:39:42.954
+<v SPEAKER_5>Haben wir nicht?
+
+02:39:44.674 --> 02:39:57.974
+<v SPEAKER_3>Und ehrlich gesagt, ich wüsste auch gerade nicht, worüber. Also, schon, aber da haben wir schon so viel darüber gerantet, dass es sich gerade irgendwie überhaupt nicht lohnt, da irgendwie groß nach hinterher zu ran.
+
+02:39:58.274 --> 02:40:06.054
+<v SPEAKER_5>Nee, das ist... Du kommst mal jetzt wieder schön dein Thema hier noch zum Schluss.
+
+02:40:06.074 --> 02:40:15.774
+<v SPEAKER_3>Was ist denn hier der eigentliche Ding? Ja, das ist natürlich ganz...
+
+02:40:15.794 --> 02:40:22.734
+<v SPEAKER_5>Nein, das ist halt auch nicht nur so... Es sind schon drei Fragen mit multiple choice und so. Ich finde das echt cool.
+
+02:40:24.874 --> 02:40:26.154
+<v SPEAKER_3>Manchmal kannst du einfach sein.
+
+02:40:27.694 --> 02:40:30.694
+<v SPEAKER_5>Amoristisch nachgedacht. So.
+
+02:40:30.714 --> 02:40:36.854
+<v SPEAKER_3>Anstatt da gleich wieder irgendwelche AI-Bots drauf zu werfen.
+
+02:40:36.874 --> 02:40:41.474
+<v SPEAKER_5>Dann kann man nämlich auch gleich überprüfen, dass die Redakteure verstanden haben, was sie geschrieben haben.
+
+02:40:41.834 --> 02:40:49.994
+<v SPEAKER_3>Na, das bitte mal Twitter mal dem Donald Trump irgendwie vor sein Twitter-Fenster packen.
+
+02:40:50.014 --> 02:40:50.734
+<v SPEAKER_5>Auch schön, ja.
+
+02:40:50.754 --> 02:40:58.034
+<v SPEAKER_3>Ja, beantworten sie folgende Fragen zur amerikanischen Verfassung, bevor sie den nächsten Tweet schreiben.
+
+02:41:03.654 --> 02:41:04.194
+<v SPEAKER_5>Wer abgesungen.
+
+02:41:06.114 --> 02:41:07.394
+<v SPEAKER_2>Wie? Verfassung?
+
+02:41:11.234 --> 02:41:11.974
+<v SPEAKER_5>Dein Thema.
+
+02:41:11.994 --> 02:41:13.714
+<v SPEAKER_3>Du wolltest noch was loswerden.
+
+02:41:13.734 --> 02:43:31.754
+<v SPEAKER_2>Dann gib mal die Liste. Ohne Liste kann ich hier nicht arbeiten. Ach so, ja, kurzer Bastelprojekt wieder. Theoretisch. Mir ist da auf der Tankstelle was zugelaufen. Na, nicht ganz. Sondern bei den letzten Club-Aufräumarbeiten habe ich gesehen, dass da ein X-Surf Dual G5 irgendwie mehr oder weniger neben dem Mill-Container stand. Also wirklich draußen im Regen, wenn es geregnet hätte. Und den habe ich gleich einkassiert. Hab dann auch von dem Besitzer gleich noch die Festplatten-Cases bekommen und den passenden Rem, weil der war ausgebaut, habe ich dann aber bekommen. Und dachte mir, das ist ja so G5, der letzte Power-PC, weil G5, danach gab es ja keine anderen Power-PC-CPUs mehr, jedenfalls nicht von Apple. Ich weiß nicht, wie das mit anderen Herstellern aussieht. Und ich dachte mir so nach meinen Retro-Bastel-Erfahrungen, dass eigentlich so die letzte CPU oder die letzte Plattform von irgendeiner Hardware oder Generation irgendwie, die will man ja mal irgendwie behalten und ein bisschen pflegen. Und mein Plan war natürlich da nicht, das letzte Mac OS da drauf zu fahren, weil das wäre eine 10.5 gewesen. Da habe ich jetzt nicht so Ambitionen, weil da geht ja dann doch irgendwie nie so Fälle. Das interessiert nicht so richtig. Aber FreeBSD support ist halt Power-PC. Und der G5 ist ja auch schon Power-PC 64-Bit. Also ist jetzt auch nicht, dass das noch so alter 32-Bit-Scheiß ist, sondern der kann 64-Bit. Und dann habe ich ein bisschen gebastelt letztens und habe es dann hinbekommen, da ein FreeBSD zu booten und war auch stabil, weil der Besitzer meint, das Netzteil wackelt, aber bisher hat da nichts gewackelt. Es könnte ja sein, dass da ein Speicher ein bisschen komisch ist, bin ich mir noch nicht so sicher. Aber eigentlich abgekackt ist es bisher noch nicht und das baut und installiert und tut und macht und alles. LLVM gibt es jetzt noch nicht so richtig, da sind sie aber gerade dabei, noch so die letzten Bugs zu fixen. Also ich muss mich noch mit GCC 4.2 rumkämpfen. Das ist noch nie so schön, das ist ein bisschen alt. Weil irgendwie wegen GPL 3 und so, das mögen die ja nicht. Das neuere GCC dabei, FreeBSD. Aber ansonsten tut das Ding und das ist schon geile Hardware. Also ich hab die ja nie gehabt. Und brauch das ja auch eigentlich nicht und das soll auch nicht laufen. Also ich werd das nur pflegen für ab und zu mal Sachen in Big-Endian testen.
+
+02:43:31.774 --> 02:43:36.594
+<v SPEAKER_5>Du setzt hier den Prom, ja?
+
+02:43:36.614 --> 02:43:37.954
+<v SPEAKER_2>Wieso hat der auch immer alte Hardware gesammelt?
+
+02:43:39.014 --> 02:43:50.134
+<v SPEAKER_5>Ich erinnere es mich, was im Club unter den Tischen stand. Und der ist doch noch gut und wenn man das noch mal braucht. Und es ist doch dann gut, wenn man so eine Hardware hat, die man noch mal anschalten kann.
+
+02:43:50.154 --> 02:44:47.174
+<v SPEAKER_2>Aber man sollte nicht irgendwie den Keller von anderen Leuten dafür benutzen, sondern wenigstens seinen eigenen. Und man muss halt immer wieder sich kümmern, dass man ihn pflegt. Und ja, ich hab ja auch hier letztes Jahr auf diesem Vintage Computing Festival, da hab ich ja mein Quadra 840 AV Macintosh Motherboard, hab ich ja da niemanden gegeben. Ich hätte das niemals rausgerückt, weil das ist auch so eine Sache, die gibt man nicht weg. Aber das war halt voll der Ultra-Nötter. Und dem dachte ich, wenn ich dem das gebe, dann ist das bei dem besser aufgehoben als bei mir, weil der pflegt das und liebt sein Zeug. Und dann konnte ich das sozusagen weggeben. Also wenn man schon Kinder zur Adoption freigibt, dann will man doch gute Eltern haben. Naja, jedenfalls ist das mein neues Spielzeug. Ich meine, das ist der einzige Apple-Computer auf dieser Welt, der eine serielle Schnittstelle hat. Es gibt sonst keinen. Die haben eine serielle Schnittstelle.
+
+02:44:49.494 --> 02:44:51.274
+<v SPEAKER_3>Nahezu alle Macs hatten eine serielle Schnittstelle.
+
+02:44:51.294 --> 02:44:52.354
+<v SPEAKER_2>Ja, aber nicht DB9.
+
+02:44:53.734 --> 02:44:56.554
+<v SPEAKER_3>Ah, du redest von einer reinen V24.
+
+02:44:56.574 --> 02:45:02.694
+<v SPEAKER_2>Von der seriellen Schnittstelle, genau. Er ist 232, meine ich.
+
+02:45:03.634 --> 02:45:16.094
+<v SPEAKER_3>Also technisch, also... Na ja, eigentlich hatten auch die alten Macs eine. Es war halt bloß RS422, das war quasi abwärtskompatibel.
+
+02:45:17.414 --> 02:45:21.694
+<v SPEAKER_2>Verstehe, mit Adapter dann. Passivadapter. Oder aktiv?
+
+02:45:21.974 --> 02:45:24.334
+<v SPEAKER_3>Nee, tiefer Adapter gab es damals noch.
+
+02:45:24.374 --> 02:45:26.134
+<v SPEAKER_2>Ich weiß jetzt nicht, was 422 ist.
+
+02:45:30.214 --> 02:45:35.434
+<v SPEAKER_3>Er wischt mich jetzt ein bisschen auf dem linken Fuß, wenn ich dir jetzt das wie verhält.
+
+02:45:37.154 --> 02:45:41.034
+<v SPEAKER_2>Also ich weiß schon auch, dass ich einen Modem an meinem Mac damals anhatte, so ist nicht, das ist schon klar.
+
+02:45:41.054 --> 02:46:00.394
+<v SPEAKER_3>Na ja, das waren alle Pins da. Da musste nichts irgendwie emuliert werden, sondern RS422 war halt eine Schnittstelle, die noch mehr Kram hatte. Aber ich kann dir grad das Pinout da nicht direkt in Verbindung setzen.
+
+02:46:01.634 --> 02:46:56.794
+<v SPEAKER_5>Aber ich hatte ja auch in der Uni auch so einen XSurf stehen, der steht auch immer noch mit X-Rate und Fiber Channel Karte. Und ich würde sagen, nach dem Mac Pro, den wir alle hier so schätzen und lobe, hudeln und lieben, ist das so mit die zweitgeilste Hardware auch nicht bisher so. Also so vom Aufbau, wenn du das Ding so aufmachst und wieder alles, also sie spüren ja auch keine Kabel drum, alles hat so seinen Platz, alles ist super clean, alles ist genauso gelayoutet, wie man das einfach haben will. Es ist natürlich alles laut, aber ich fand das auch mega leckere Hardware. Also vor allen Dingen in Sachen, wenn du andere so, wenn Leute früher wie Thomas Krenn oder so, da die Server diese 0815 PC-Schrabbelkisten bestellt haben, das ist schon was anderes gewesen.
+
+02:46:58.034 --> 02:47:24.354
+<v SPEAKER_2>Aber da ist wirklich tatsächlich kein Stromkabel vom Netzteil zum Board, weil das Netzteil irgendwie so ein Stecker hat, der so Buchsen nach unten zeigen und auf dem Board ist so das Gegenstück und das schnappt sozusagen so ein ohne Kabel, sondern das liegt so drauf und verbindet sich dadurch und wenn du es rausziehst, dann löst es sich halt von da wieder. Also das ist schon cool. Das ist aber jetzt nicht G5, das müsste jetzt ein X, also hier mit...
+
+02:47:24.374 --> 02:47:26.054
+<v SPEAKER_3>Das ist dann 2006er.
+
+02:47:26.074 --> 02:47:28.254
+<v SPEAKER_2>Ja, das ist dann schon der Intel, das ist der Nachfolger.
+
+02:47:28.274 --> 02:47:32.414
+<v SPEAKER_5>2005 war der letzte G5.
+
+02:47:32.434 --> 02:49:22.874
+<v SPEAKER_2>Die X-Surf mit Intel wären eigentlich geil gewesen, aber die haben leider halt nur diese Nehalem-CPUs und nicht diese West, mehr diese neueren, die wir jetzt an unserem Mac Pro haben. Also da gibt es leider diesen Patch nicht, dass man wie mit den Mac Pros aus einem 4.1 an einen 5.1 machen kann, weil der unterstützt dann die neuen CPUs. Das geht mit dem X-Surf nicht. Haben sie irgendwie nie rausgefunden und hat der App ja auch nie gemacht. Und da haben wir Leute probiert, ob sie das vom 5.1, weil da wohl der Mikrokod für die CPUs drin ist, ob sie das irgendwie in den X-Surf, irgendwie in die Firmware rein operiert kriegen. Aber irgendwie, das wurde irgendwie nix. Und das wäre noch mal schick eigentlich. Aber ja, aber das ist jedenfalls der letzte, der letzte G5 in Server-Hardware. Und ich dachte mir, das hebt man einfach mal auf. Und dann habe ich auch noch rausgefunden, den gibt es ja mit 2 Gigahertz und 2,3, also klein und groß. Ich habe günstigerweise die große Version mit 2,3 Gigahertz. Davon gibt es dann auch eine alte Motherboard-Version und eine neue Motherboard-Version, weil die neue Motherboard-Version kann 2 Gigabyte RAM-Module und davon 8 Stück. Und ich habe zum Glück die, die 2 Gigabyte-Module kann, auch wenn ich keine habe, aber ist sozusagen das neuere Board. Also ist alles schick. Das ist wirklich das letzte. Danach gab es, also PowerPC erst mal Server-Board-mäßig nichts Besseres mehr. Und der Power Mac, der war basierend so auf dem, also es war nicht das gleiche Motherboard, aber die haben das so, das ist sehr, sehr ähnlich. Und das ist schon ein schickes Zeug. Vor allem halt auch oben, also vorne am Gold sind ja diese zwei Reihen mit jeweils acht so blaue, leider, aber so LEDs, die auf dem Mac zu müssen, zeigen sie an, wie viel die CPU gerade so macht. Und auf FreeBSD, das ist jetzt meine Aufgabe, demnächst das rauszufinden. Die werden bestimmt irgendwie über Itozebus angesteuert und ich werde dann mal irgendwie da gucken, ob ich das hinkriege. Und wenn nicht, dann ist er schon schmal. Also er verbraucht jetzt nicht so viel Platz. Den kann man ja prima...
+
+02:49:22.894 --> 02:49:35.834
+<v SPEAKER_5>Ja, ist relativ lang, ne? Also das ist... Als ich den da ins Rack neben den ganzen PC-Dingern reingeschraubt hab, da ragte der doch ein ganzes Stück hinten raus.
+
+02:49:35.854 --> 02:50:29.634
+<v SPEAKER_2>Ich hab ja heute Nacht... Weil ich dachte, ich mach... Hatte gerade so vom Letzten noch, als ich irgendwie Wärmeleitpaste wegmachen musste, so noch so eine Klopapierrolle auf meinem Basteltisch stehen. Und nachdem der X-Surf da so lief, der hat ja hier vorne diese zwei Lobe-Eingänge, dann dachte ich, die verstauben immer so schnell die Rechner und ich gucke mal, meine Bude ist jetzt auch nicht gerade so die sauberste. Wo muss der erst erst staubsaugen? Jedenfalls hab ich das Klopapier einmal so rumgemacht, dass das so ansaugt, dass es dann da so fest ist. Weil ich guck mal, wenn ich wieder aufstehe, so ein Tag später. Also das war gestern, ob dann auch schon so ein bisschen so grau wurde, weil der ganze Dreck aus meiner Bude da dran kleben bleibt. Als ich heute Morgen gekommen bin, war er wahrscheinlich irgendwann mal schneller, der Rechner, und hat das so eingesaugt. Und dreckig waren sie aber nicht und alles gut. Jedenfalls nicht nach einem halben Tag, da muss man das wahrscheinlich schon länger machen. Aber ich dachte mir, so ein Ding kann man noch eigentlich als indirekt als Staubsauger benutzen. Da macht man so einen Filter rein und dann...
+
+02:50:29.654 --> 02:50:31.294
+<v SPEAKER_5>Einmal diesen HEPA-Filter.
+
+02:50:31.314 --> 02:50:31.994
+<v SPEAKER_2>Der Rechner bleibt...
+
+02:50:32.014 --> 02:50:34.414
+<v SPEAKER_3>Manche ist es ein High-End-PC.
+
+02:50:38.554 --> 02:50:46.694
+<v SPEAKER_2>Naja, ich finde es immer schade, wenn die so krass verstauben, die Rechner. Das wäre einfach ein Filter davor. Immer mal wechseln und dann ist gut.
+
+02:50:47.414 --> 02:50:58.774
+<v SPEAKER_5>Man muss hier in diesen Staubsaugerbeuteln von, wie heißen das, diese gelben Packungen, oder was auch immer, da sind auch für manche Staubsauger zumindest immer noch so extra diese Filter dabei.
+
+02:50:58.794 --> 02:51:12.014
+<v SPEAKER_2>Die Feinstaubfilter, ja, irgendwie sowas. Das würde ich jetzt nicht so schlecht finden. Da so ein kleines, mit einem 3D-Drucker so ein kleines Körbchen machen, wo man da so ein Filter reinlegt und dann wechselt man den alle paar Monate immer. Das machst du ja beim Beamer auch so.
+
+02:51:12.034 --> 02:51:16.134
+<v SPEAKER_3>Ja, kannst du auch einfach Dickel aufmachen ab und zu, einfach mal das ganze Teil...
+
+02:51:16.154 --> 02:51:19.614
+<v SPEAKER_2>Naja, dieser Feinstaub, der ist so, das kriegst du mit dem Staubsauger auch nicht weg.
+
+02:51:19.634 --> 02:51:23.214
+<v SPEAKER_3>Ja, dann gehst du halt einfach mit so einem Staubtuch einfach mal rüber.
+
+02:51:23.234 --> 02:51:32.374
+<v SPEAKER_2>Über die Motherboard? Das war alles voll mit Zeugs und so. Das kannst du nicht mit einem Tuch. Widerstände.
+
+02:51:32.394 --> 02:51:33.574
+<v SPEAKER_5>Nimmst du Druckluft?
+
+02:51:33.594 --> 02:51:39.394
+<v SPEAKER_2>Der Speicher, also das ist doch ein Berg und Tal, da kannst du doch nicht mit einem Tuch rüber. Die Motherboard sowieso nicht.
+
+02:51:39.414 --> 02:51:46.574
+<v SPEAKER_3>So ein antistatisches Tuch zieht dann den Staub da auch raus. Muss einfach ganz zärtlich sein.
+
+02:51:46.594 --> 02:51:47.634
+<v SPEAKER_2>Ihr könnt das ja so machen.
+
+02:51:47.654 --> 02:51:49.314
+<v SPEAKER_3>Muss ganz zärtlich sein.
+
+02:51:49.334 --> 02:51:51.854
+<v SPEAKER_2>In meinen Rechner kommt kein Wasser und keine CD.
+
+02:51:56.814 --> 02:52:02.334
+<v SPEAKER_3>Puh, die Witz-Referenzen in die 80er Jahre.
+
+02:52:02.354 --> 02:53:27.214
+<v SPEAKER_2>Und was noch geil ist, das wusste ich auch nicht. Das Ding ist ja so dafür da gedacht, dass man das ja so wie bei dieser Virginia Tech, die Unidee, das war so als Riesencluster hatte, du erinnerst dich an die Geschichte, dass man den halt auch so bedient ohne Monitor und damit der halt auch verschiedene Sachen machen kann, ohne dass du da irgendwie was an, also auch keine Tastatur anschließen musst. Der hat ja hier irgendwie vorne zwei Buttons, einmal den Power-Button und dann so ein ID-Button, dass wenn du den ID-Button leuchtest, dann leuchtet auf der Rückseite auch ein Button, mit dem du 30 Meter zur Seite, auf die andere Seite und 30 Meter zurück, also auf die andere Seite vom Rack gehst, damit du deinen Rechner noch wieder findest, weil der leuchtet dann. Oder der Administrator an der Software kann das setzen, damit der Tonschuh-Techie dann findet, wo er irgendwie eine Platte ziehen muss oder so. Jedenfalls mit dem Button kann man beim Starten auch, den kann man länger festhalten. Und dann geht von dieser Achterreihe von diesen Leuchten, geht dann eine an und dann kann man da so durchsteppen und hat alle, also jede Position sozusagen, geht es immer ein weiter. Und jede von diesen Positionen, dann macht der Rechner was anderes. Und eine ist auch komplett von DVD installieren und alles fertig machen ohne Keyboard-Interaction. Das heißt, der schmeißt dann erstmal die DVD raus, die drin ist. Falls eine drin ist, dann kannst du die einlegen, von der installiert und dann fertig ist, schmeißt du sie wieder aus. Oder du gehst auf eine andere LED und das ist dann, du kommst in die Open-Firmware, dass die auf der Serielle kommt. Oder du bootest nicht von einem Default-Laufwerk, sondern von einem anderen. Oder du bootest über Netzwerk. Das kann man alles da vorne mit diesem einen Button über diese LEDs machen. Da muss man keine Tastatur, keinen gar nichts.
+
+02:53:28.354 --> 02:53:32.234
+<v SPEAKER_3>Das war jetzt nur bei dem G5 drin? Das war später auch bei dem Intel XServe, oder?
+
+02:53:32.254 --> 02:54:00.614
+<v SPEAKER_2>Das kann sein, dass es bei denen auch war. Aber der hat ja keine Open-Firmware. Das müsste ja dann so ein EFI-Ding sein. Das weiß ich nicht genau. Und ich kann mich erinnern noch, ich sag's mal, es müsste 2003 oder 2005, welches Holland-Ding war in der Uni? Achso, 2001. 2001, da saß ich so irgendwie mit meinem Pissenboh oder was irgendwie da in dieser Uni und war da irgendwie mit Bitpull irgendwie Zeug schieben ohne Ende.
+
+02:54:00.654 --> 02:54:04.074
+<v SPEAKER_3>Also redest du jetzt von dem holländischen Hackercamp, das vielleicht auch andere Leute dir folgen können?
+
+02:54:04.294 --> 02:55:00.534
+<v SPEAKER_2>Ja, schuldigung, schuldigung. Von, was war das denn, Hal? Genau, jedenfalls sitzt da so ein Typ neben mir und meint, ach hier, du hast hier so ein Mac, ja? Meint er, ja, da ist doch, diese Apples hier, die haben noch so Open Firmware, ne? Und ich so, ja? Na, zeig mal. Ich so, ja, okay, Firmware. Irgendwie wusste, wie ich da reinkomme. So Apple, Apple, alt, O, OF oder irgendwie so. So Open Firmware. War mal so drin. Meint der, ja, hier Open Firmware. Das ist ja in Force irgendwie. Du kannst ja da Force machen. Ich so, ja? Meint der, er könnte Force. Und hat dann da losgelegt und hat dann in diese Open Firmware, in diesem Ding, da kleine Programme geschrieben und hat gezeigt, guck, hier so geht das. Und dann kannst du hier Funktionen machen und dann ruft die die auf und diese Open Firmware stellt auch ganz schön viele Funktionen bereit. Die kannst du benutzen. Das sind eigentlich alle Kommandos, die du tippst, sind eigentlich Funktionen. Und ich so, ui. Also da, der hat mir gezeigt, da geht was. Also diese Open Firmware, die konnte was. Das war nicht so schlecht. Bisschen anders, als man das so gewohnt ist, aber fand ich auf jeden Fall witzig.
+
+02:55:01.254 --> 02:55:15.134
+<v SPEAKER_3>Ja, ich wollte gerade sagen, ja damals die Zeiten, als Apple noch Server baute, aber die fangen ja jetzt wieder damit an. Tun sie? Ja, die hatten doch ein oder vielleicht sogar mehrere Security-Incidents mit ihren China-Servern.
+
+02:55:15.154 --> 02:55:16.354
+<v SPEAKER_2>Stimmt, da gab es so eine Geschichte.
+
+02:55:16.374 --> 02:55:19.074
+<v SPEAKER_3>Und die Bude haben sie jetzt irgendwie rausgeschmessen.
+
+02:55:19.094 --> 02:55:20.774
+<v SPEAKER_2>Das war super micro.
+
+02:55:20.794 --> 02:55:48.034
+<v SPEAKER_3>Genau. Und die haben also ebenso Firmware aus China nachgeladen in ihre Serverfarm. Und das wohl gerade nachvollziehbarerweise nicht mehr so richtig der Blues. Und ich hab ehrlich gesagt die Geschichte auch schon länger im Kopf gehabt, dass Apple da wo Interesse hat, was sie da jetzt konkret machen, weiß ich nicht so ganz genau. Aber es hieß, dass sie jetzt ihre Dinger selber bauen wollen.
+
+02:55:48.194 --> 02:55:50.174
+<v SPEAKER_5>Aber fahren die Mac OS noch wieder in den Server?
+
+02:55:50.194 --> 02:55:58.374
+<v SPEAKER_3>Bestimmt nicht. Ne, die fahren da bestimmt...
+
+02:55:58.394 --> 02:56:00.834
+<v SPEAKER_5>Was betreibt System ohne Asthma?
+
+02:56:00.854 --> 02:56:19.774
+<v SPEAKER_3>Keine Ahnung, also dass sie da OS X drauf fahren, wage ich zu bezweifeln. Ich glaube auch nicht, dass sie FreeBSD zum Einsatz bringen, weiß ich aber nicht. Ich würde mal davon ausgehen, dass sie entweder irgendeine Linux-basierte Geschichte haben oder auch irgendeinen anderen abgefahrenen Scheiß.
+
+02:56:19.974 --> 02:56:22.834
+<v SPEAKER_5>Also Nintendo fährt jetzt auf ihrer Switch auch FreeBSD, ne?
+
+02:56:23.154 --> 02:56:26.634
+<v SPEAKER_2>Ja, und Sony war ja auf der Playstation 3 auch schon FreeBSD, oder war das die 3er?
+
+02:56:27.634 --> 02:56:28.274
+<v SPEAKER_3>Ernsthaft?
+
+02:56:30.694 --> 02:56:43.674
+<v SPEAKER_5>Also hier gab es noch dieses Twitter-Bild von, weiß nicht, war das das Handbuch oder der Bootscreen, wo dann eben die Copyright-Notes irgendwie auch den FreeBSD-Könnel beinhaltet und die Autoren...
+
+02:56:43.854 --> 02:57:12.474
+<v SPEAKER_2>Das müssen sie ja machen. Sie müssen halt nur den Sourcecode nicht rausrücken. Das ist der Unterschied. Ich wollte beinahe sagen Vorteil, aber mich würde schon interessieren, machen sie das aus Lizenzgründen, damit sie den Sourcecode nicht rausrücken müssen, was sie ja beim Linux-Könnel, wenn sie Änderungen machen, tun müssten, oder machen sie das aus technischen Gründen, weil sie meinen FreeBSD ist aus irgendeinem Grund cooler als Linux. Das ist mir nicht so klar. Ich würde ja schon eher behaupten, das sind diese Lizenzgeschichten.
+
+02:57:14.314 --> 02:59:41.574
+<v SPEAKER_3>Ich denke auch, dass es viel mit der Lizenz zu tun hat. Und zwar wahrscheinlich weniger, dass sie sich so groß dafür... Also das weiß man nicht so ganz genau. Ich könnte mir vorstellen, dass beides eine Rolle spielt. Dass sie einerseits sagen, wir wollen es jetzt den Leuten, die jetzt unbedingt hier unsere Hardware übernehmen wollen, auch nicht zu leicht machen, indem wir das sozusagen auch noch mit den ganzen angepassten Treibern etc. einfach so bereitstellen. Am Ende lassen sich die Leute aber dann doch irgendwie eh nicht aufhalten. Ich glaube, das Hauptproblem ist eher, dass wenn du jetzt so ein System baust, im Sinne von du baust da ein komplett abgeschlossenes System, das soll eine opaque Oberfläche haben, ein GUI, das soll immer zuverlässig funktionieren, du baust ein System. Das heißt, du musst eigentlich auch überall im Zweifelsfall ran. Du wirfst ja jetzt nicht einen Standard-Linux-Prompt irgendwie erstmal vor den User. So ein ganzer Flow vom Bootstrapping bis zum Shutdown muss deinen Qualitätsansprüchen genügen. Das bedeutet, du musst halt auch überall unter Umständen eingreifen und Modifikationen vornehmen. Und in gewisser Hinsicht wollen, und es kann ja auch bedeuten, dass du dann deine eigenen Bibliotheken aufsetzt, deinen eigenen proprietären Kram, den du jetzt auch einfach gar nicht veröffentlichen willst, weil das dein kompetitiver Vorteil ist auf dem Markt. Und dich dann aber eben diese Lizenz entweder dazu zwingt, das dann zu tun, oder dich theoretisch davon abhält, es auf eine bestimmte Art und Weise mit bestimmten Teilen zu kombinieren. Und da kann ich mir schon vorstellen, dass das bei Apple letztlich auch nicht anders ist. Es basiert auch alles auf der ganzen BSD-Geschichte. Und BSD hat halt einfach den anderen Freiheitsbegriff, der eben sagt, macht doch was ihr wollt. Weil dafür ist es ja da. Und die These, dass es eben diese restriktive Lizenz benötigt, um ein freies System am Laufen zu halten. Ich meine, FreeBSD ist immer noch da. Ohne, dass es...
+
+02:59:41.594 --> 02:59:43.574
+<v SPEAKER_5>Hat aber auch so seine Probleme.
+
+02:59:43.594 --> 02:59:46.534
+<v SPEAKER_3>Seine Probleme, aber es ist halt nicht weg. Und es ist eben auch...
+
+02:59:46.534 --> 02:59:47.514
+<v SPEAKER_2>Was für Probleme?
+
+02:59:47.534 --> 02:59:56.494
+<v SPEAKER_3>Im Vergleich. Also ich meine dafür, dass es so dermaßen viel weniger benutzt wird als Linux. Finde ich...
+
+02:59:56.514 --> 02:59:57.494
+<v SPEAKER_5>Also ich bin ja auch...
+
+02:59:57.514 --> 03:00:02.854
+<v SPEAKER_2>Er sein Überleben einfach ganz gut vorangetrieben.
+
+03:00:02.994 --> 03:00:32.254
+<v SPEAKER_2>Es gab hier letztens so einen Artikel von einem der Oberfrühe FreeBSD-Muftis. Ich glaube, bei einer Konferenz so quasi mal gesagt hat, was so ihre Probleme so sind, organisatorisch halt und so weiter und so fort. Und... Ja, jetzt müsste ich ihn mal finden. Der war eigentlich ganz interessant zu lesen, weil das so eine schöne Selbstreflektion mal war und was da so die Challenges sind und... Kann sein.
+
+03:00:32.274 --> 03:00:33.394
+<v SPEAKER_1>Der mal bei Apple war?
+
+03:00:33.414 --> 03:01:02.474
+<v SPEAKER_2>Kann sein. Es ging auf jeden Fall darum, dass halt auch ihre Committer Base Sets halt, also das so Nachwuchsgewinnung wird halt irgendwie ein bisschen schwieriger und... Ja, irgendwie muss ich mal noch mal raussuchen. Der war ganz cool zu lesen. Also es war jetzt nicht so von wegen Oh Gott, FreeBSD stimmt aus, aber sie sind sich so auch durchaus bewusst, dass sie da die ganze Zeit aktiv halt immer noch auch weiter werben und kämpfen müssen, damit das auch so bleibt.
+
+03:01:02.674 --> 03:01:04.894
+<v SPEAKER_1>Ja, das kann ich mir gut vorstellen. Zumal ja auch Linux...
+
+03:01:04.914 --> 03:01:07.054
+<v SPEAKER_2>Ist halt nicht so ein Selbstverläufer wie Linux....
+
+03:01:07.054 --> 03:02:02.554
+<v SPEAKER_1>macht und sich modernisiert an vielen Stellen, wo FreeBSD vielleicht noch Nachholbedarf hat. Auf der anderen Seite haben sie halt auch extrem von ihrem System auch profitiert und mit sowas wie ZFS schon immer wiederum die Nase auch ganz weit vorne gehabt. So, wir sind jetzt da hingekommen. Switch, Software und die Frage war, warum nehmen die FreeBSD? Ist das wegen des Dinges? Also ich denke, die Lizenzgeschichte spielt da eine große Rolle, aber es hat auch was damit zu tun, dass FreeBSD halt einfach auch da ist und im Prinzip gut funktioniert. Und eine gute Basis ist, um darauf ein Custom OS drauf hochzuziehen, ohne sich den ganzen Tag mit Lizenzstreitereien rumschlagen zu müssen.
+
+03:02:02.574 --> 03:02:49.274
+<v SPEAKER_2>Dann werden wir mal gespannt. Das gibt es ja bei der FreeBSD Foundation. Die machen ja jedes Jahr so ihren Spenden-Run. Und man kann ja auf der Website dann immer so gucken, wer da so die Donors sind. Und ganz oft war es zum Beispiel auch Google ganz oben mit dabei. Jetzt, warte mal. Ach, 2017 gibt es noch nicht so viel. 2016, mal sehen, was gab es da so als Top-Sponsors? Lädt noch. Uranium-Donor, 250.000 Anonymous-Donor und die Comfamily. Was ist das denn? Ja, aber dann sind da halt so zum Beispiel Facebook, Netflix, Arm, Juniper Networks und so. Die sind dann halt auch bei den, auf dieser Donorsliste mit bei Google ist auch eigentlich immer dabei.
+
+03:02:49.294 --> 03:03:02.034
+<v SPEAKER_3>Na, der Typ von WhatsApp hat doch da fette Millionen gespendet. Der weiß, wem er was zu verdanken hat.
+
+03:03:02.054 --> 03:03:05.194
+<v SPEAKER_2>Und hast du deine Bitcoin-Millionen auch schon in FreeBSD-Donation?
+
+03:03:05.214 --> 03:03:06.214
+<v SPEAKER_3>Na, die können ja nichts dafür.
+
+03:03:07.474 --> 03:03:14.554
+<v SPEAKER_2>Na ja, aber das alles, was FreeBSD für dich getan hat, was hast du für FreeBSD getan?
+
+03:03:14.574 --> 03:03:17.274
+<v SPEAKER_1>Was hat FreeBSD jemals für dich getan?
+
+03:03:17.294 --> 03:03:17.894
+<v SPEAKER_3>Einiges.
+
+03:03:19.694 --> 03:03:21.354
+<v SPEAKER_1>Und zeig auch mal Dankbarkeit.
+
+03:03:21.374 --> 03:03:25.234
+<v SPEAKER_3>Ja, wenn ich mal ein Bitcoin-Millionär werde, mach ich das mal.
+
+03:03:25.254 --> 03:03:36.674
+<v SPEAKER_1>Und was hat die Freak Show jemals für dich getan? Einiges heißt die Antwort. Wenn du dann Bitcoin-Millionär bist.
+
+03:03:45.034 --> 03:03:48.294
+<v SPEAKER_2>Dropbox donatet auch. Interessant.
+
+03:03:48.314 --> 03:04:52.794
+<v SPEAKER_1>Ich denke nämlich, es gibt im stillen Kämmerlein, aber auch an vielen Stellen, die wir zwar täglich sehen, aber eben nicht von hinten, einfach eine Menge Software, die an der Stelle, die wir hier sehen, die wir hier sehen, die wir hier sehen, die wir hier sehen, die wir hier sehen. Die alte Garde der klassischen 70er-Jahre Unix-Grau-Bärte, die ja im Prinzip dieses Projekt angestoßen hat und in den 90ern auch nochmal so richtig beseelt hat, dass die auch ihre Nachfolger finden. Weil manchmal zweifeln die halt auch so, gibt es eigentlich noch genug Unix-Grau-Bärte?
+
+03:04:52.814 --> 03:05:20.834
+<v SPEAKER_3>Es gibt immer so eine Anziehungskraft und das, was am größten ist, zieht natürlich am meisten an und von den kleinen Projekten natürlich auch die User weg. Deswegen kann ich das schon verstehen, dass die bei FreeBSD natürlich schon noch die ganzen alten Leute oder Älteren noch alle am Start haben, aber die Kids machen halt einfach Linux. Und dann wächst natürlich auch wirklich keine Programmierer mehr nach und dann fehlt ja das irgendwann. Dann ist das so ein Kreislauf und weiß schon, dann wird irgendwann gar keiner mehr und dann ist vorbei.
+
+03:05:20.854 --> 03:05:25.274
+<v SPEAKER_2>Und dann hosten alle noch in der Cloud und wissen überhaupt gar nicht mehr, wie...
+
+03:05:25.294 --> 03:05:38.214
+<v SPEAKER_1>Ja, aber es gibt ja jetzt auch irgendwie so tausend Millionen von Programmierern auf diesem Planeten. Da werden vielleicht noch mal so zehn bei abfallen, die irgendwie wissen, was ein Betriebssystem ist und die mit der Kommandozeit klarkommen.
+
+03:05:38.234 --> 03:06:29.254
+<v SPEAKER_3>Ja, aber so US-Programmierer und Kernel und so ist schon nochmal eine andere Liege, als da irgendwas hinzufrickeln. Da haben die schon auch ihre Ansprüche. Also da muss das schon auch wirklich gut sein. Da ist nichts mit Bugs und Fuschen oder Performen nicht oder irgendwie schlechte Algorithmen nehmen. Das muss alles, das muss sitzen. Jetzt liegt dir aber im kleinsten Fehler alles um die Ohren. Und da muss auch noch der Style stimmen. Und dann muss der Commit richtig aussehen, sonst kriegst du auch gleich wieder auf die Nase. Also ist nicht so, glaube ich, nicht ganz so easy. Aber nochmal zurück zu diesen Apple-Servern, wenn du meinst, ob die jetzt da was Eigenes machen. Was ja Apple da, also was denen ja anscheinend bei Supermico nicht gefallen hat, ist, dass die was ins BIOS nachladen. Oder wie soll ich das verstehen? Ins IPMI, oder was ist das? Das muss ja dann das IPMI sein, oder wie?
+
+03:06:31.454 --> 03:06:39.214
+<v SPEAKER_2>Das Remote Management, also das zu sozusagen... Du hast da noch so ein Ethernet-Port, wo du so ein Webinterface hast, wo du... und so weiter, ne?
+
+03:06:39.234 --> 03:06:39.534
+<v SPEAKER_3>Genau.
+
+03:06:39.554 --> 03:06:41.814
+<v SPEAKER_1>Ich frag mich, keine Ahnung, aber...
+
+03:06:41.834 --> 03:06:42.714
+<v SPEAKER_3>Weil eigentlich sollte ich...
+
+03:06:42.734 --> 03:07:02.334
+<v SPEAKER_1>Sie werden ja Gründe gehabt haben, die Bude vor die Tür zu setzen. Und es macht ja eigentlich auch aus verschiedenen anderen Gründen Sinn für Apple. Ich meine, hast du irgendwie eine Ahnung, Vorstellungen, wie viele Server Apple betreibt in ihren eigenen Rechenzentren?
+
+03:07:02.974 --> 03:07:06.274
+<v SPEAKER_3>Nee, aber es müssen viele sein, wenn die so riesen Rechenzentren bauen.
+
+03:07:08.154 --> 03:07:49.074
+<v SPEAKER_1>Also ich hab jetzt auch keine Zahlen am Start, aber die bauen da halt mehrere Fabrikhallen, so, und das wird jetzt auch nicht die letzte sein, die sie jetzt gerade gebaut haben. Und die war schon sehr groß und die wird jetzt noch mal doppelt so groß und das bauen sie an vielen Stellen und sie werden auch letzten Endes, ich glaube sie sind so around the planet noch nicht so verbreitet. Es gibt glaube ich was, auch in Europa nehme ich mal an, in Irland, aber jetzt nicht so eine fette Nummer, aber das werden wir dann halt auch sehen. Also wir werden jetzt nicht die ganze iCloud nur aus den USA liefern können langfristig. So, und da stehen bestimmt ein paar tausend Dinge rum. Vielleicht auch ein paar mehr noch. Was brauchen sie denn dafür?
+
+03:07:49.714 --> 03:07:52.494
+<v SPEAKER_3>Na, ein Board und Strom und ein BIOS.
+
+03:07:53.014 --> 03:08:24.394
+<v SPEAKER_1>Ja, sie brauchen einen Computer, der irgendwie einen Unix fährt. Da sind die sonstigen Anforderungen, da musst du nicht groß Grafikkarte und Integration und Pipapo und dieser ganze Kram, der bei Macs eigentlich wichtig ist, spielt da nur nebenbei eine Rolle, weil du halt keinen Kassma hast, sondern du hast einfach Bear Metal und es geht darum, dass die Dinger zwei Anforderungen, drei Anforderungen haben. Die müssen halt stabil laufen, die müssen irgendwie die notwendige Performance bringen und sie sollten vor allem so wenig Strom verbrauchen, wie irgendwie geht.
+
+03:08:24.414 --> 03:08:26.234
+<v SPEAKER_3>Die müssen halt ökonomisch sein.
+
+03:08:26.254 --> 03:08:58.634
+<v SPEAKER_1>Genau, weil sie ja auch ökologisch sein wollen aber das bedeutet ja de facto halt auch Geld. So, fällt dir eine Firma ein, die in der Lage ist, ihre eigenen Prozessor und Mainboard-Designs zu machen, die besonders im Bereich Performance und Energieeffizienz besonders gut ist? Könnte man so sagen, natürlich nicht.
+
+03:08:58.654 --> 03:09:03.974
+<v SPEAKER_3>Alles per V-Line, einfach hingelegt, tausend Stück so nebeneinander.
+
+03:09:03.994 --> 03:09:30.094
+<v SPEAKER_1>Ich weiß gar nichts darüber. Und ich hab jetzt auch ehrlich gesagt gar keine Details, auch nur irgendwelche Andeutungen gelesen. Aber ich will überhaupt nicht die Spur, nicht die Bohne überrascht, wenn Sie sagen, wir bauen uns jetzt hier unsere eigenen Arm-Server. Weil erstens können wir das, zweitens können wir die selber bauen. Da haben wir dann auch die vollständige Kontrolle über den Die. Und wir wissen genau, dass da nicht irgendeiner uns irgendeine fucking...
+
+03:09:30.114 --> 03:09:35.054
+<v SPEAKER_3>Und vor allem haben Sie ja da das, mit dem Signieren können Sie ja alles übernehmen. Also...
+
+03:09:35.074 --> 03:09:36.734
+<v SPEAKER_1>Ja, gut, das... Ja...
+
+03:09:36.754 --> 03:09:41.774
+<v SPEAKER_3>Wenn Sie das nicht wollen, dass auch einer eine Hardware rumfuscht?
+
+03:09:41.794 --> 03:09:45.614
+<v SPEAKER_1>Ja... Ja, mit Ihren Hardware-Logs...
+
+03:09:45.634 --> 03:09:48.074
+<v SPEAKER_3>Also können Sie machen, das ist natürlich nicht 1 zu 1, aber so...
+
+03:09:48.094 --> 03:09:55.874
+<v SPEAKER_1>Ja, aber es geht jetzt erstmal darum, dass das Mainboard selber, dass Sie dem vertrauen können. Weil das können Sie ja wohl derzeit offenbar nicht.
+
+03:09:57.894 --> 03:10:00.334
+<v SPEAKER_3>Ich glaube, da geht es schon immer ums BIOS und nicht um die Hardware.
+
+03:10:01.594 --> 03:10:08.614
+<v SPEAKER_1>Ja, es geht aber auch um zunehmende Maße um die Hardware. Eine Hardware kann alles machen.
+
+03:10:08.694 --> 03:10:14.554
+<v SPEAKER_3>Ja gut, die Instalchips haben auch dieses Management. Die Management-Jugend.
+
+03:10:14.574 --> 03:11:34.774
+<v SPEAKER_1>Die können ja auch nicht nur über das Netzwerk rausfunkten. Die können ja auch irgendwie dicke Antennenschleifen in ihren Mainboards haben und die benutzen, um da irgendwas rauszupulsen. Also wir haben ja jetzt genug Snowden gehabt, um uns in etwa vorstellen zu können, dass im Prinzip jedes auch nur irgendwie technisch denkbare Angriffsszenario wird erwogen und unter Umständen auch deployed. Wenn die jeden Switch abfangen, den du bestellst und da irgendwie ihre eigenen Kifferchen reinstecken, dann ist einfach der Schritt zu, wir gucken nochmal, wo die ganzen großen Clouds ihre Büchsen kaufen und schauen mal, was da so geht. Und wenn es nur darum geht, potenzielle Sicherheitslücken überhaupt es entstehen zu lassen, die man dann nochmal separat nutzt, das ist etwas, was Apple sicherlich verhindern möchte. Das heißt, hier kommen eigentlich mehrere Sachen zusammen, wo sie einerseits ein großes Interesse haben und andererseits auch eine extreme Expertise haben. Apple könnte mühelos diese Rechner für sich selber herstellen. Sie könnten sie komplett selber designen, auf ihren Bedarf hin auch zuschneiden und zwar genau. Und sie könnten sich die auch produzieren lassen.
+
+03:11:34.794 --> 03:11:37.834
+<v SPEAKER_2>Die stellen sich bestimmt ganz viele Mac Pros ein.
+
+03:11:37.974 --> 03:11:44.414
+<v SPEAKER_1>Da stehen die ganz Mac Pros, deswegen gibt es noch die neuen Mac Pros, weil die da schon alle in den Racks eingebaut sind. Jetzt haben wir das geklärt.
+
+03:11:44.634 --> 03:11:54.374
+<v SPEAKER_2>In zirkulären. Übrigens habe ich jetzt in der Zwischenzeit, während ihr das hier alles so interessant besprochen habt, diesen Artikel gefunden, der wurde tatsächlich auf LWN-Net gepostet.
+
+03:11:55.754 --> 03:12:13.054
+<v SPEAKER_1>Weil das im Chat gerade aufkommt hier, die Backdoor baue ich doch beim Maskenhersteller ein. Ja, der ist ja dann auch Apple. Also macht euch klar, Apple ist under full control of their own hardware. Bis auf den Prozessor runter. Was hast du gefunden?
+
+03:12:13.074 --> 03:13:04.034
+<v SPEAKER_2>Diesen Artikel hier, Beno Rice, a member of the FreeBSD Core Team, der auf LWN-Net, wofür steht das eigentlich, aber dieser Linux, so ein News-Dienst, der hat da eben so the trouble with FreeBSD sozusagen mal so ein bisschen reflektiert, was so die Probleme sind. Und da geht er halt eben auch auf das Subversion Repository ein und lauter so kleine Sachen. Ist schon relativ ausführlich auf jeden Fall. Also ja, so lang ist der Artikel nicht, aber es ist voll mit so kleinen, interessanten Aspekten, womit die sich dann vielleicht so auseinandersetzen.
+
+03:13:04.054 --> 03:13:08.554
+<v SPEAKER_1>November 93, das heißt, FreeBSD wird im November nächsten Jahres 25.
+
+03:13:19.494 --> 03:13:25.274
+<v SPEAKER_2>Da muss man mal in Ruhe lesen. Ist aber ganz gut.
+
+03:13:25.294 --> 03:13:26.994
+<v SPEAKER_3>Von wem war der Vortrag jetzt?
+
+03:13:28.594 --> 03:13:35.894
+<v SPEAKER_1>Ja, da steht es ganz am Anfang. Kann ich hier auch noch nicht. Nerd. Hier ist ein Nerd-Foto von ihm.
+
+03:13:41.074 --> 03:13:49.614
+<v SPEAKER_2>Ja, sieht nach Nerd aus, kann man sagen. Kann Spuren von Nerd enthalten.
+
+03:13:52.514 --> 03:16:28.874
+<v SPEAKER_1>Bist du schon durch oder was? Hier fällt noch vielleicht zwei kleine Sachen hinterher schmeißen, die ich noch bemerkenswert fand. Und zwar wurde auf Heise gemeldet, dass WebAssembly so ein bisschen in den Zielgeraden einbiegt. Und das ist irgendwie wenig diskutiert worden bisher. Wir hatten das ja hier schon mal diskutiert, so ganz allgemein, so die Ubiquity von JavaScript und das sich dauerhaft ableitende Elend im Web. Und wenn ich das jetzt hier alles richtig interpretiere, sind sich Apple und die anderen Browser-Hersteller mehr oder weniger einig geworden über ein Binärformat und eine API für etwas, was WebAssembly oder W-ASM heißt, was im Prinzip nichts anderes ist, als die Möglichkeit, beliebige Programmersprachen in den Browser zu taggen. Das heißt, anstatt dass du Javascript erzeugst, der dann von dem Browser in Echtzeit nochmal von Source Code in Running Code übersetzt wird, lieferst du jetzt einfach direkt den Running Code. Genau, also im Prinzip, so wie die Java-VM auch gesagt hat, hier ist eine Virtual Machine und mit Java könnt ihr das befüllen und man konnte ja im Prinzip auch andere Programmersprachen nehmen, um das zu befüllen. Nur, dass einfach diese VM nicht unbedingt jetzt so geeignet war für den Browser und sich dadurch ja nie so richtig durchgesetzt hat, läuft das jetzt eben eher so auf dieser selben Ebene, wie JavaScript eben derzeit auf diese ganze Browserinfrastruktur zugreift. Nur, dass sie eben jetzt auch im Prinzip aus anderem Code heraus erzeugt werden kann. Sodass wir eben auch andere Programmiersprachen sehen könnten, die speziell den Browser anpeilen und mühelos dahin übersetzt werden können. Was in leichter zu pflegenem Code, vielleicht auch potenziell schneller laufendem Code, resultieren könnte, vielleicht oder vielleicht auch ganz sicher. Ich wäre noch nicht mal überrascht, wenn wir Swift im Browser sehen würden. Ehrlich gesagt wäre ich überrascht, wenn wir das nicht sehen würden. Was sollte sie bitte davon abhalten?
+
+03:16:32.714 --> 03:16:33.554
+<v SPEAKER_2>Schauen wir mal.
+
+03:16:34.214 --> 03:16:36.634
+<v SPEAKER_1>Kann man sich das gar nicht anders vorstellen.
+
+03:16:36.654 --> 03:16:41.294
+<v SPEAKER_3>Ich dachte aber, im Browser landet dann nur noch das Assembly davon.
+
+03:16:41.314 --> 03:16:47.074
+<v SPEAKER_1>Na ja, ist ja egal, aber du kannst halt in Swift Code schreiben, der im Browser läuft.
+
+03:16:47.094 --> 03:16:52.154
+<v SPEAKER_3>Ja gut, das wird mit allen Programmiersprachen denn so sein, weil es ist ja Assembler.
+
+03:16:53.274 --> 03:16:54.914
+<v SPEAKER_1>Ja, also alle Programmiersprachen.
+
+03:16:54.934 --> 03:16:59.174
+<v SPEAKER_3>Muss ich da etwas bauen, was halt dieses WebAssembly da draus macht?
+
+03:16:59.194 --> 03:17:01.274
+<v SPEAKER_1>Im Prinzip steht das jeder Programmiersprache offen.
+
+03:17:01.294 --> 03:17:09.914
+<v SPEAKER_3>Und dann gibt es die WebAssembler-Coder, die direkt coden natürlich. Weil die coden dann Assembler.
+
+03:17:09.934 --> 03:17:13.294
+<v SPEAKER_1>Das könnte man sich auch vorstellen. Ob das so schön ist, weiß ich nicht.
+
+03:17:13.314 --> 03:17:20.114
+<v SPEAKER_3>Klar, Assembler ist geil.
+
+03:17:20.134 --> 03:17:51.274
+<v SPEAKER_2>Ja, okay, aber das werde ich mir auch morgen in Ruhe noch mal durchlesen. Hab ich jetzt auch noch nicht weiter studiert. Ich meine, am Ende ist es aber auch so was wie Erlang. Oder so würde man dann wahrscheinlich nicht da laufen lassen. Weil dann irgendwie vielleicht, also ich meine, nur weil es Assembly ist, also du musst ja, du hast ja dann halt, oder das hängt ja vom Instructionset sozusagen ab, was man dann da auch wirklich tun kann. Und wenn dann so bestimmte Sprachen, bestimmte Features brauchen, die dann vielleicht in WebAssembly nicht zur Verfügung stehen, dann sind es vielleicht dann doch wieder...
+
+03:17:51.294 --> 03:18:01.294
+<v SPEAKER_1>Genau, also gerade bei Erlang könnte ich mir das durchaus schwierig vorstellen, weil das halt einfach von einer gewissen, von einem gewissen Potenzial einer VM ausgeht. Muss man mal sehen.
+
+03:18:01.314 --> 03:18:08.274
+<v SPEAKER_2>Vor allen Dingen so, was wahrscheinlich dann auch so Ram oder so Ressourcen und so weiter angeht. Höchstwahrscheinlich, also ich muss mich mal durchlesen, wie das jetzt...
+
+03:18:08.554 --> 03:19:32.594
+<v SPEAKER_1>Aber es gibt ja auch Poemir-Sprachen, die jetzt schon Java-Skript quasi als ihren Assembler benutzen und dann eben im Browser deswegen laufen können, so wie Clojure-Skript oder so etwas. Und die hätten es dann natürlich wiederum recht einfach, aber gar kein Problem mit dieser Denke, weil sie im Prinzip API- und Environment-mäßig schon im Browser zu Hause sind. Okay, das wollte ich nochmal kurz erwähnt haben. Du hast Durst, bring mir auch mal was mit. So eine Mate wäre ganz gut. Schmeiß doch noch alles runter vorher. Probierst du mal im Kühlschrank. Gläser, Schnick Schnack. Wird aus der Flasche getrunken. Der hier nicht bei feinen Leuten. Okay, letzter Punkt. Oh, das ist ja mal nice. Flora-Power in der Haus. Ich wollte nochmal ganz zum Ausklagen hier nochmal den aktuellen Space-Wahnsinn von SpaceX thematisieren. Hast du gelesen?
+
+03:19:34.374 --> 03:19:36.654
+<v SPEAKER_2>Ich hab das irgendwie gelesen, ja.
+
+03:19:36.674 --> 03:19:37.894
+<v SPEAKER_3>Ja, hab ich auch gelesen.
+
+03:19:37.914 --> 03:19:44.494
+<v SPEAKER_1>Die wollen mal so eben die Zahl der Satelliten verdoppeln und irgendwie überall ein Gigabit Internet runter regnen lassen.
+
+03:19:44.514 --> 03:19:46.954
+<v SPEAKER_2>Ja, geil.
+
+03:19:46.974 --> 03:19:48.114
+<v SPEAKER_1>Ist das cool?
+
+03:19:50.314 --> 03:19:53.494
+<v SPEAKER_2>Ich weiß nicht, ehrlich gesagt.
+
+03:20:00.054 --> 03:20:07.014
+<v SPEAKER_1>Interessant ist ja, wenn sie so viele Satelliten, 11.000 Satelliten wollen die irgendwie ins System.
+
+03:20:07.034 --> 03:20:09.694
+<v SPEAKER_3>Das sind dann mal so kleine Mikro-Dinger, oder?
+
+03:20:09.714 --> 03:20:13.034
+<v SPEAKER_1>Das sind bestimmt keine besonders großen Satelliten.
+
+03:20:13.934 --> 03:20:21.294
+<v SPEAKER_3>Scheiße, sind so viele, du musst die nicht mal steuern, sondern das sind so viele, die sind einfach immer überall, das heißt, die können sich auch nicht mehr nachpositionieren.
+
+03:20:21.314 --> 03:20:29.314
+<v SPEAKER_1>Das bezweifle ich, dass die sich nicht nachpositionieren können, weil wenn die sich nicht nachpositionieren können, dann sind die in der Komma nix wieder auf der Erde.
+
+03:20:29.334 --> 03:20:32.934
+<v SPEAKER_3>Das heißt, die müssen sich immer wieder anheben.
+
+03:20:32.954 --> 03:20:39.174
+<v SPEAKER_1>Die müssen sich anheben, damit sie einfach nicht auf Erde fallen.
+
+03:20:39.634 --> 03:21:10.094
+<v SPEAKER_3>Ja, aber ich meine, um 11.000 Dinger da hochzukriegen, wenn du jetzt nicht 11.000 Raketen-Starts machen willst, dann müsstest du, selbst wenn du zehn Stück, wie viele waren letztens bei dem Iridium drin? Acht waren's, ne, das waren zehn, ne, genau. Der hat zehn Dinger ausgelöst. Aber dann musst du mal noch 1100 Raketen starten, das schaffen die in ihrem Leben nicht mehr. Das heißt, da müssen mehr als zehn pro Rakete deployed werden, eher so im Bereich von 50 oder 100. Also selbst bei 100 müssten die noch 100 Raketen hochschicken.
+
+03:21:12.394 --> 03:21:40.474
+<v SPEAKER_1>Also, ich weiß ja nicht genau, wie groß die sind, aber ich nehme mal nicht an, dass die besonders groß sein werden, weil die ja eigentlich nicht sehr viel mehr machen müssen, als so ein bisschen ab und zu mal ein bisschen Power geben, um nicht runterzufallen. Und so halbwegs auf Kurs zu bleiben, weil die fliegen ja niedrig. Das werden ja so Low Earth Orbit Satelliten sein, weil wenn die für die Erde Internet anbieten sollen...
+
+03:21:41.174 --> 03:21:43.194
+<v SPEAKER_3>Ja, dürfen die nicht so weit weg sein wegen der Lantens?
+
+03:21:45.054 --> 03:22:19.834
+<v SPEAKER_1>Ja, Lantens und Sendestärke spielt ja da auch alles eine Rolle. Gut, die werden Strom brauchen, die werden irgendwie Solarpanele haben. Also die sind jetzt auch nicht super mini kleine Cube-Sats oder so, aber das sind jetzt auch nicht solche Monstren, die eine Million Instrumente drin haben, sondern die wollen eigentlich im Wesentlichen nur miteinander und mit der Erde kommunizieren. Was ich damit sagen will, ist, ich könnte mir vorstellen, dass da deutlich mehr als zehn in einer Rakete hochgehen können.
+
+03:22:19.854 --> 03:22:21.334
+<v SPEAKER_3>Muss so, sonst schaffen die das nicht.
+
+03:22:21.354 --> 03:22:30.534
+<v SPEAKER_1>Ja, das ist das eine. Und das andere ist, dass sie natürlich die Kosten auch dadurch senken, dass es viele sind.
+
+03:22:31.454 --> 03:22:34.194
+<v SPEAKER_3>Ja, für die Herstellung der Satelliten, aber fürs Hochkriegen?
+
+03:22:34.214 --> 03:24:48.894
+<v SPEAKER_1>Nee, auch für die Herstellung der Raketen. Also du skalierst, teuer sind ja die Raketen, die Satelliten kosten eigentlich einen Scheiß. Also die kosten auch ein bisschen was, aber im Prinzip ist der Preis, das Geld, das du in die Satelliten reinsteckst, ist im Vergleich zu den Raketen, die du dafür bauen musst, um sie irgendwie hochzuschicken. Außer jetzt bei mega ambitionierten Teleskop-Projekten und so weiter. Das ist eine andere Sache. Also die generischen, einfachen Kommunikationssatelliten, wie es sich schon fast von der Stange gibt, die jeder mal so haben will und die nur an leichter Modifikation gebaut werden, das ist jetzt nicht der wirklich teure Teil. Aber die Scheiße irgendwie effizient hochzubekommen. Dafür musst du halt immer noch diese Monstren an Apparaten bauen mit viel Sprit. Und natürlich werden die dadurch billiger, dass du viel baust. Jetzt ist natürlich der besondere Deal bei SpaceX, dass sie natürlich ihre Raketen auch noch landen lassen können. Wo sich die Katze so ein bisschen in den Schwanz beißt. Weil dadurch, dass sie ihre Raketen wieder landen können, müssen sie nicht so viele davon bauen. Und dann werden sie wieder teurer, weil sie weniger brauchen. Sprich, keine Ahnung, was sie das kostet, aber sehr ambitioniert. So muss man erstmal über Raumfahrt nachdenken. Ja, wir schicken 11.000 Satelliten um die Welt. 11.000 Satelliten ist echt eine ganze Menge. 11.000, das muss man mal vorstellen. Das heißt, die Dinger, weiß nicht, wahrscheinlich wenn du so, wie viele GPS-Satelliten kann man sehen, wenn man jetzt so maximal acht vielleicht gleichzeitig. Und da sind aber eben beileibe nicht so viele oben. Sind das 100 insgesamt? Weiß ich nicht. Also quasi die hundertfache Menge, dementsprechend siehst du halt auch sehr viel mehr und hast halt auch sehr viel kürzere Distanzen zu einem Satelliten und von daher eben auch sehr viel aktiveren Handover. Andererseits ist das auch ein ganz hübscher Schrottwall, der da so um die Erde herum...
+
+03:24:48.914 --> 03:24:53.774
+<v SPEAKER_2>32 GPS-Satelliten gibt's laut Wikipedia.
+
+03:24:53.794 --> 03:25:19.734
+<v SPEAKER_1>32, das ist immer... Aber die sind auch natürlich auch höher. Weil die halt niedriger sind, brosse eben auch mehr davon. 336 bis 346 Kilometer ist nicht viel. Ja, aber ich find das gut, so irgendwie Gigabit überall. Kann man schon mal machen.
+
+03:25:19.754 --> 03:25:55.954
+<v SPEAKER_3>Und Telefonen dann? Werner von Braun und Zwitler. Ich gestehe es nicht von mir. Trotzdem lustig. Ja, fand ich auch.
+
+03:25:55.954 --> 03:26:05.034
+<v SPEAKER_1>Oh Mann. So, ich denke wir sind durch, oder?
+
+03:26:05.054 --> 03:26:08.334
+<v SPEAKER_2>Oh, ich bin richtig gut durch sogar.
+
+03:26:08.354 --> 03:26:11.954
+<v SPEAKER_1>Ja, reicht auch. Man kann auch mal Schluss machen.
+
+03:26:12.374 --> 03:26:18.694
+<v SPEAKER_2>Ja, also ich finde dafür, dass wir hier in so richtig kleinem Team hier unterwegs waren heute, haben wir uns auch gut geschlagen.
+
+03:26:18.714 --> 03:27:02.854
+<v SPEAKER_1>Ja, denke ich auch. Passt schon. Insofern, liebe Hörer, geht es heute mal nicht bis Mitternacht. Sondern wir machen mal ein bisschen früher Schluss. Ist auch nötig, wenn wir nicht so viel geschlafen haben. Und nächste Mal gucken wir mal, dass wir wieder eine interessante Konstellation hier an den Start kriegen. Bleibt uns treu und gewogen. Wir rufen hiermit explizit nicht zu dem ganzen Social Media-Besternung, Bewerbung, Bedingtungen und was man nicht heutzutage alles so in Netzen machen und von seinen Hörern fordern kann. Ihr wisst schon, was zu tun ist.
+
+03:27:02.874 --> 03:27:09.034
+<v SPEAKER_2>Genau, ruft uns ein Bier, wenn ihr uns seht und wenn nicht, oh, nicht so schlimm.
+
+03:27:09.054 --> 03:27:24.194
+<v SPEAKER_1>Darf schon die eine oder andere Spende dabei abfallen, aber wir machen das mal nicht so laut. Also gehen wir mal langsam mal raus. Das war's, die Freak Show 194. Bis bald. Ciao.

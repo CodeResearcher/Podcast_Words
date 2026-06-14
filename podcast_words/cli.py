@@ -5,15 +5,15 @@ from __future__ import annotations
 import argparse
 import sys
 
-from podcast_words.config import get_podcast, load_config
+from podcast_words.config import get_podcast, load_config, sorted_podcasts
 
 
 def _cmd_list(args: argparse.Namespace) -> int:
     config = load_config(args.config)
-    for pid, podcast in config.items():
+    for podcast in sorted_podcasts(config):
         sources = ", ".join(s.type for s in podcast.sources) or "none"
         marker = "✓" if podcast.has_data() else " "
-        print(f"[{marker}] {pid}: {podcast.name} ({podcast.language}) — sources: {sources}")
+        print(f"[{marker}] {podcast.id}: {podcast.name} ({podcast.language}) — sources: {sources}")
     return 0
 
 

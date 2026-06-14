@@ -68,3 +68,32 @@ podcasts:
     )
     with pytest.raises(ValueError):
         load_config(path)
+
+
+def test_sorted_podcast_ids_respects_order(tmp_path):
+    path = _write_config(
+        tmp_path,
+        """
+podcasts:
+  second:
+    name: Second
+    order: 20
+    sources:
+      - type: apple
+        podcast_id: "1"
+  first:
+    name: First
+    order: 10
+    sources:
+      - type: apple
+        podcast_id: "2"
+  third:
+    name: Third
+    sources:
+      - type: apple
+        podcast_id: "3"
+""",
+    )
+    from podcast_words.config import sorted_podcast_ids
+
+    assert sorted_podcast_ids(load_config(path)) == ["first", "second", "third"]

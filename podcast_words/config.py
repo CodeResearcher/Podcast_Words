@@ -94,6 +94,8 @@ class PodcastConfig:
     episode_id: EpisodeIdConfig = field(default_factory=EpisodeIdConfig)
     sources: list[SourceConfig] = field(default_factory=list)
     search_words: list[str] = field(default_factory=list)
+    order: int | None = None
+    _yaml_index: int = 0
 
     @property
     def data_dir(self) -> Path:
@@ -144,7 +146,7 @@ class PodcastConfig:
         return self.word_counts_csv.exists() and self.episode_stats_json.exists()
 
 
-def _parse_podcast(podcast_id: str, raw: dict) -> PodcastConfig:
+def _parse_podcast(podcast_id: str, raw: dict, *, yaml_index: int) -> PodcastConfig:
     if "name" not in raw:
         raise ValueError(f"Podcast '{podcast_id}' is missing required field 'name'.")
 
@@ -157,6 +159,9 @@ def _parse_podcast(podcast_id: str, raw: dict) -> PodcastConfig:
     sources = [SourceConfig(**src) for src in raw.get("sources", [])]
 
     defaults = raw.get("defaults", {}) or {}
+    order = raw.get("order")
+    if order is not None:
+        order = int(order)
 
     return PodcastConfig(
         id=podcast_id,
@@ -165,7 +170,25 @@ def _parse_podcast(podcast_id: str, raw: dict) -> PodcastConfig:
         episode_id=episode_id,
         sources=sources,
         search_words=list(defaults.get("search_words", [])),
+        order=order,
+        _yaml_index=yaml_index,
     )
+
+
+def _sort_key(podcast: PodcastConfig) -> tuple[int, int, str]:
+    """Sort podcasts for UI lists: explicit order, then yaml order, then id."""
+    order = podcast.order if podcast.order is not None else 1_000_000 + podcast._yaml_index
+    return order, podcast._yaml_index, podcast.id
+
+
+def sorted_podcasts(config: dict[str, PodcastConfig]) -> list[PodcastConfig]:
+    """Return podcasts in configured display order."""
+    return sorted(config.values(), key=_sort_key)
+
+
+def sorted_podcast_ids(config: dict[str, PodcastConfig]) -> list[str]:
+    """Return podcast ids in configured display order."""
+    return [podcast.id for podcast in sorted_podcasts(config)]
 
 
 def load_config(path: str | os.PathLike | None = None) -> dict[str, PodcastConfig]:
@@ -181,7 +204,10 @@ def load_config(path: str | os.PathLike | None = None) -> dict[str, PodcastConfi
     if not podcasts_raw:
         raise ValueError(f"No podcasts defined in {config_path}.")
 
-    return {pid: _parse_podcast(pid, body) for pid, body in podcasts_raw.items()}
+    return {
+        pid: _parse_podcast(pid, body, yaml_index=index)
+        for index, (pid, body) in enumerate(podcasts_raw.items())
+    }
 
 
 def get_podcast(podcast_id: str, path: str | os.PathLike | None = None) -> PodcastConfig:

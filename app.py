@@ -7,7 +7,7 @@ import plotly.graph_objs as go
 import streamlit as st
 
 from podcast_words.catalog import STATE_DONE, Catalog
-from podcast_words.config import load_config
+from podcast_words.config import load_config, sorted_podcast_ids
 
 st.set_page_config(layout="wide")
 
@@ -194,7 +194,8 @@ def load_coverage(podcast_id: str):
 
 
 config = get_config()
-available = {pid: p for pid, p in config.items() if p.has_data()}
+available_ids = sorted_podcast_ids({pid: p for pid, p in config.items() if p.has_data()})
+available = {pid: config[pid] for pid in available_ids}
 
 st.sidebar.title("🎙️ Podcast Words")
 if not available:
@@ -207,7 +208,7 @@ if not available:
 
 podcast_id = st.sidebar.selectbox(
     "Podcast",
-    options=list(available),
+    options=available_ids,
     format_func=lambda pid: available[pid].name,
 )
 
