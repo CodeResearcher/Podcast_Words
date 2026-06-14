@@ -10,7 +10,7 @@ extend this project with following features:
     - import transcripts from Apple Podcasts by Podcast ID
 - import all existing episodes
 - import new published episodes
-- replace existing transcripts from other sources
+- replace existing transcripts with transcript from other sources
 - support all common transcript formats
 - show progressbar when fetching transcripts
 - optimize lemmatisation and counting where reasonable
@@ -47,4 +47,4 @@ extend this project with following features:
 - date when latest fetched transcript
 - episode for last transcript
 - show number of transcripts by source
-- link to episodes in diagram
+- link to episodes in diagrams
