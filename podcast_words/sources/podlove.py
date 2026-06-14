@@ -24,13 +24,19 @@ def _api_get(url: str, params: dict | None = None) -> requests.Response:
     return requests.get(url, params=params, headers=headers, timeout=_TIMEOUT)
 
 
-def _episode_number(item: dict, fallback: int) -> int:
+def _episode_number(item: dict, podcast: PodcastConfig, fallback: int) -> int:
+    if podcast.episode_id.type == "sequential":
+        return fallback
     number = item.get("number")
     if number not in (None, ""):
         try:
             return int(number)
         except (TypeError, ValueError):
             pass
+    if podcast.episode_id.type == "regex" and podcast.episode_id.pattern:
+        match = re.search(podcast.episode_id.pattern, str(item.get("title", "")))
+        if match:
+            return int(match.group(1))
     match = _NUMBER_RE.search(str(item.get("title", "")))
     if match:
         return int(match.group(1))
@@ -49,10 +55,13 @@ def discover(podcast: PodcastConfig, source: SourceConfig) -> list[Episode]:
     if isinstance(payload, list):
         items = payload
 
+    if podcast.episode_id.type == "sequential":
+        items = sorted(items, key=lambda item: int(str(item.get("id", "0")).strip() or "0"))
+
     episodes: list[Episode] = []
     for idx, item in enumerate(items, start=1):
         episode_id = str(item.get("id", "")).strip()
-        number = _episode_number(item, fallback=idx)
+        number = _episode_number(item, podcast, fallback=idx)
         episodes.append(
             Episode(
                 number=number,
