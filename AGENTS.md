@@ -12,7 +12,7 @@ extend this project with following features:
 - import new published episodes
 - replace existing transcripts with transcript from other sources
 - support all common transcript formats
-- show progressbar when fetching transcripts
+- show progressbar when fetching transcripts and counting words
 - optimize lemmatisation and counting where reasonable
 - update README.md to consider latest changes and translate into English
 - add disclaimer that this fork was adjusted with Cursor AI and mention the LLM versions which were used
@@ -44,6 +44,7 @@ extend this project with following features:
 ## Streamlit
 
 - select between available podcasts
+- specify order of podcasts in config
 - date when latest fetched transcript
 - episode for last transcript
 - show number of transcripts by source

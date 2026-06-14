@@ -17,6 +17,7 @@ import numpy as np
 import pandas as pd
 
 from podcast_words.config import PodcastConfig
+from podcast_words.progress import iter_progress
 from podcast_words.transcripts.loader import load_transcript
 
 _EPISODE_FILE_RE = re.compile(r"episode_(\d+)\.(vtt|txt)$", re.IGNORECASE)
@@ -100,7 +101,15 @@ def count_words(podcast: PodcastConfig, *, rebuild: bool = False) -> dict:
     # Joining one column at a time fragments the DataFrame and is O(n^2); a single
     # concat aligns all word indexes at once and avoids PerformanceWarnings.
     new_columns: list[pd.Series] = []
-    for number in pending:
+    bar = iter_progress(
+        pending,
+        desc=f"[{podcast.id}] word count",
+        unit="ep",
+        total=len(pending),
+    )
+    for number in bar:
+        if hasattr(bar, "set_postfix_str"):
+            bar.set_postfix_str(f"#{number}")
         transcript = load_transcript(transcripts[number])
         lemmas = _process_text(nlp, transcript.plain_text(), lemma_info)
         new_columns.append(pd.Series(Counter(lemmas), name=number, dtype="float64"))
