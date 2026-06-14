@@ -21,6 +21,7 @@ from podcast_words.catalog import (
 )
 from podcast_words.config import PodcastConfig, SourceConfig
 from podcast_words.models import Transcript
+from podcast_words.progress import iter_progress, write
 from podcast_words.transcripts import vtt
 
 # Per-source request spacing to stay polite to public APIs.
@@ -100,6 +101,129 @@ def _number_from_title(podcast: PodcastConfig, title: str) -> int | None:
     return int(match.group(1)) if match else None
 
 
+def _catalog_number(podcast: PodcastConfig, episode: Episode) -> int | None:
+    """Map a remote episode row to the catalog's episode number."""
+    number = _number_from_title(podcast, episode.title)
+    return number if number is not None else episode.number
+
+
+def _discover_and_index(
+    podcast: PodcastConfig,
+    catalog: Catalog,
+    source: SourceConfig,
+) -> tuple[int, dict[int, Episode]]:
+    """Discover from *source*, upsert the catalog, return (new_count, number -> remote)."""
+    discover = _discover_fn(source.type)
+    if discover is None:
+        return 0, {}
+    discovered = discover(podcast, source)
+    index: dict[int, Episode] = {}
+    for ep in discovered:
+        number = _catalog_number(podcast, ep)
+        if number is not None:
+            index.setdefault(number, ep)
+    new_count = _merge_discovered(catalog, discovered)
+    return new_count, index
+
+
+def _probe_episode(catalog_ep: Episode, remote: Episode | None) -> Episode:
+    """Build a fetch probe with ids/urls from the remote source when needed."""
+    if remote is None:
+        return catalog_ep
+    return Episode(
+        number=catalog_ep.number,
+        title=catalog_ep.title or remote.title,
+        link=remote.link or catalog_ep.link,
+        source_id=remote.source_id or catalog_ep.source_id,
+    )
+
+
+def _apply_transcript(
+    podcast: PodcastConfig,
+    episode: Episode,
+    transcript: Transcript | None,
+    source: SourceConfig,
+) -> str:
+    """Persist a fetched transcript and return outcome: fetched | no_transcript."""
+    if transcript is None:
+        episode.state = STATE_NO_TRANSCRIPT
+        return "no_transcript"
+    _save_transcript(podcast, episode, transcript)
+    episode.state = STATE_DONE
+    episode.transcript_source = source.type
+    return "fetched"
+
+
+def _run_replace(
+    podcast: PodcastConfig,
+    catalog: Catalog,
+    source: SourceConfig,
+    *,
+    replace_if_from: tuple[str, ...] | None = None,
+    limit: int | None = None,
+) -> dict:
+    """Replace existing transcripts by re-fetching from another configured source."""
+    from podcast_words.sources.apple import AppleUnsupportedError
+
+    result = {
+        "replaced": 0,
+        "no_transcript": 0,
+        "skipped": 0,
+        "errors": 0,
+        "unsupported": False,
+    }
+    _, index = _discover_and_index(podcast, catalog, source)
+    catalog.save()
+
+    targets = _replace_targets(
+        catalog, source_type=source.type, replace_if_from=replace_if_from
+    )
+    if limit is not None and limit >= 0:
+        targets = targets[:limit]
+
+    bar = iter_progress(
+        targets,
+        desc=f"[{podcast.id}] replace ({source.type})",
+        unit="ep",
+        total=len(targets),
+    )
+    for idx, episode in enumerate(bar, start=1):
+        remote = index.get(episode.number)
+        if remote is None:
+            result["skipped"] += 1
+            continue
+        probe = _probe_episode(episode, remote)
+        if hasattr(bar, "set_postfix_str"):
+            bar.set_postfix_str(f"#{episode.number}")
+        try:
+            fetch = _fetch_fn(source.type)
+            if fetch is None:
+                result["skipped"] += len(targets) - idx + 1
+                break
+            transcript = fetch(podcast, source, probe)
+        except AppleUnsupportedError as exc:
+            write(f"  {source.type} unavailable, stopping replace: {exc}")
+            result["unsupported"] = True
+            result["skipped"] += len(targets) - idx + 1
+            break
+        except Exception as exc:
+            write(f"  episode {episode.number} error: {exc}")
+            episode.state = STATE_ERROR
+            result["errors"] += 1
+            catalog.save()
+            continue
+
+        outcome = _apply_transcript(podcast, episode, transcript, source)
+        if outcome == "fetched":
+            result["replaced"] += 1
+        else:
+            result["no_transcript"] += 1
+        catalog.save()
+        time.sleep(_RATE_LIMIT_SECONDS)
+
+    return result
+
+
 def _run_fallback(
     podcast: PodcastConfig,
     catalog: Catalog,
@@ -122,45 +246,41 @@ def _run_fallback(
         return result
 
     for src in other_sources:
-        discover = _discover_fn(src.type)
         fetch = _fetch_fn(src.type)
-        if discover is None or fetch is None:
+        if fetch is None:
             continue
 
         try:
-            discovered = discover(podcast, src)
+            _, index = _discover_and_index(podcast, catalog, src)
         except Exception as exc:
-            print(f"  fallback '{src.type}' discovery failed: {exc}")
+            write(f"  fallback '{src.type}' discovery failed: {exc}")
             continue
-
-        index: dict[int, str] = {}
-        for ep in discovered:
-            number = _number_from_title(podcast, ep.title)
-            if number is not None and ep.source_id:
-                index.setdefault(number, ep.source_id)
 
         still: list[Episode] = []
         total = len(remaining)
-        for idx, episode in enumerate(remaining, start=1):
-            source_id = index.get(episode.number)
-            if not source_id:
+        bar = iter_progress(
+            remaining,
+            desc=f"[{podcast.id}] fallback {src.type}",
+            unit="ep",
+            total=total,
+        )
+        for idx, episode in enumerate(bar, start=1):
+            remote = index.get(episode.number)
+            if not remote or not remote.source_id:
                 still.append(episode)
                 continue
-            probe = Episode(
-                number=episode.number, title=episode.title, source_id=source_id
-            )
-            print(
-                f"[{podcast.id}] fallback {src.type} {idx}/{total} (episode {episode.number})"
-            )
+            probe = _probe_episode(episode, remote)
+            if hasattr(bar, "set_postfix_str"):
+                bar.set_postfix_str(f"#{episode.number}")
             try:
                 transcript = fetch(podcast, src, probe)
             except AppleUnsupportedError as exc:
-                print(f"  {src.type} unavailable, stopping fallback: {exc}")
+                write(f"  {src.type} unavailable, stopping fallback: {exc}")
                 result["unsupported"] = True
                 still.extend(remaining[idx - 1:])
                 break
             except Exception as exc:
-                print(f"  error: {exc}")
+                write(f"  error: {exc}")
                 still.append(episode)
                 continue
 
@@ -168,9 +288,7 @@ def _run_fallback(
                 still.append(episode)
                 continue
 
-            _save_transcript(podcast, episode, transcript)
-            episode.state = STATE_DONE
-            episode.transcript_source = src.type
+            _apply_transcript(podcast, episode, transcript, src)
             result["recovered"] += 1
             catalog.save()
             time.sleep(_RATE_LIMIT_SECONDS)
@@ -192,6 +310,8 @@ def sync(
     count: bool = True,
     rebuild: bool = False,
     fallback: bool = False,
+    replace_from: SourceConfig | None = None,
+    replace_if_from: tuple[str, ...] | None = None,
     limit: int | None = None,
 ) -> dict:
     """Run discover -> import -> count for a podcast.
@@ -200,7 +320,11 @@ def sync(
     difference is which catalog episodes are considered "to fetch".
     """
     podcast.ensure_dirs()
-    source = source or podcast.primary_source()
+    if replace_from is not None and source is not None and source is not replace_from:
+        raise ValueError(
+            "Use either --source or --replace-from, not both with different sources."
+        )
+    source = replace_from or source or podcast.primary_source()
     if source is None:
         raise ValueError(f"Podcast '{podcast.id}' has no configured sources.")
 
@@ -214,6 +338,21 @@ def sync(
         "no_transcript": 0,
         "errors": 0,
     }
+
+    if replace_from is not None:
+        summary["replace"] = _run_replace(
+            podcast,
+            catalog,
+            replace_from,
+            replace_if_from=replace_if_from,
+            limit=limit,
+        )
+        _write_sync_state(podcast, len(catalog))
+        if count:
+            from podcast_words.pipeline.word_counter import count_words
+
+            summary["count"] = count_words(podcast, rebuild=rebuild)
+        return summary
 
     # --- Discover ---
     discover = _discover_fn(source.type)
@@ -229,24 +368,29 @@ def sync(
         if limit is not None and limit >= 0:
             targets = targets[:limit]
         total = len(targets)
-        for idx, episode in enumerate(targets, start=1):
-            print(f"[{podcast.id}] transcript {idx}/{total} (episode {episode.number})")
+        bar = iter_progress(
+            targets,
+            desc=f"[{podcast.id}] transcripts ({source.type})",
+            unit="ep",
+            total=total,
+        )
+        for episode in bar:
+            if hasattr(bar, "set_postfix_str"):
+                bar.set_postfix_str(f"#{episode.number}")
             try:
                 transcript = fetch(podcast, source, episode)
             except Exception as exc:  # network/tooling errors should not abort the run
-                print(f"  error: {exc}")
+                write(f"  episode {episode.number} error: {exc}")
                 episode.state = STATE_ERROR
                 summary["errors"] += 1
                 catalog.save()
                 continue
 
-            if transcript is None:
-                episode.state = STATE_NO_TRANSCRIPT
-                summary["no_transcript"] += 1
-            else:
-                _save_transcript(podcast, episode, transcript)
-                episode.state = STATE_DONE
+            outcome = _apply_transcript(podcast, episode, transcript, source)
+            if outcome == "fetched":
                 summary["fetched"] += 1
+            else:
+                summary["no_transcript"] += 1
             catalog.save()
             time.sleep(_RATE_LIMIT_SECONDS)
 
@@ -264,6 +408,25 @@ def sync(
         summary["count"] = count_words(podcast, rebuild=rebuild)
 
     return summary
+
+
+def _replace_targets(
+    catalog: Catalog,
+    *,
+    source_type: str,
+    replace_if_from: tuple[str, ...] | None = None,
+) -> list[Episode]:
+    """Episodes with an existing transcript that should be overwritten."""
+    targets: list[Episode] = []
+    for ep in catalog.episodes():
+        if ep.state != STATE_DONE:
+            continue
+        if ep.transcript_source == source_type:
+            continue
+        if replace_if_from and ep.transcript_source not in replace_if_from:
+            continue
+        targets.append(ep)
+    return targets
 
 
 def _import_targets(catalog: Catalog, *, force: bool, backfill: bool) -> list[Episode]:

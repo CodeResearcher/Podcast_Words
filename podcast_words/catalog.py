@@ -122,10 +122,11 @@ class Catalog:
         """
         existing = self._by_number.get(episode.number)
         if existing is None:
-            if not episode.discovered_at:
-                episode.discovered_at = _now_iso()
-            self._by_number[episode.number] = episode
-            return episode
+            stored = Episode(**vars(episode))
+            if not stored.discovered_at:
+                stored.discovered_at = _now_iso()
+            self._by_number[stored.number] = stored
+            return stored
 
         # Merge metadata, preserve transcript state unless told otherwise.
         existing.title = episode.title or existing.title

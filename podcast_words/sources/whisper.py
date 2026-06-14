@@ -28,6 +28,7 @@ import requests
 from podcast_words.catalog import Episode
 from podcast_words.config import PodcastConfig, SourceConfig
 from podcast_words.models import Transcript, TranscriptCue
+from podcast_words.progress import iter_progress
 from podcast_words.sources._net import UnsafeURLError, assert_safe_url
 from podcast_words.transcripts import vtt
 
@@ -212,8 +213,14 @@ def fetch_transcript(
 
         pipe = _get_pipeline()
         cues: list[TranscriptCue] = []
-        total = len(segments)
-        for index, segment in enumerate(segments):
+        seg_bar = iter_progress(
+            enumerate(segments),
+            desc=f"whisper ep {episode.number}",
+            unit="seg",
+            total=len(segments),
+            leave=False,
+        )
+        for index, segment in seg_bar:
             offset_ms = index * _SEGMENT_SECONDS * 1000
             result = pipe(
                 str(segment),
@@ -228,7 +235,8 @@ def fetch_transcript(
             if cues:
                 podcast.transcripts_dir.mkdir(parents=True, exist_ok=True)
                 vtt.write_file(Transcript(cues=cues), out_vtt)
-            print(f"    segment {index + 1}/{total} done ({len(cues)} cues)", flush=True)
+            if hasattr(seg_bar, "set_postfix_str"):
+                seg_bar.set_postfix_str(f"{len(cues)} cues")
             _free_memory()
 
         return Transcript(cues=cues) if cues else None

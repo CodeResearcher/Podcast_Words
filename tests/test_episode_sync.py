@@ -83,6 +83,7 @@ class TwoSourceFake:
         ]
         # Fallback (Apple) episodes carry their own ids; matched by title number.
         self.fallback_remote = [
+            Episode(number=99, title="FS1 One", source_id="apple-1", state=STATE_PENDING),
             Episode(number=99, title="FS2 Two", source_id="apple-2", state=STATE_PENDING),
         ]
 
@@ -98,6 +99,8 @@ class TwoSourceFake:
         # Fallback source: only serves the matched Apple id.
         if episode.source_id == "apple-2":
             return Transcript([TranscriptCue(0, 1000, "apple text")])
+        if episode.source_id == "apple-1":
+            return Transcript([TranscriptCue(0, 1000, "apple one text")])
         return None
 
 
@@ -128,3 +131,65 @@ def test_fallback_disabled_by_default(temp_podcast, monkeypatch):
     assert "fallback" not in summary
     catalog = Catalog.load(temp_podcast.episodes_csv)
     assert catalog.get(2).state == STATE_NO_TRANSCRIPT
+
+
+def test_replace_from_alternate_source(temp_podcast, monkeypatch):
+    temp_podcast.sources.append(SourceConfig(type="apple", podcast_id="277518737"))
+    fake = TwoSourceFake()
+    _wire(monkeypatch, fake)
+
+    episode_sync.sync(temp_podcast, count=False)
+    apple = temp_podcast.source_of_type("apple")
+    summary = episode_sync.sync(
+        temp_podcast,
+        replace_from=apple,
+        count=False,
+    )
+    assert summary["replace"]["replaced"] == 1
+    assert summary["replace"]["skipped"] == 0
+
+    catalog = Catalog.load(temp_podcast.episodes_csv)
+    assert catalog.get(1).transcript_source == "apple"
+    assert "apple one text" in (temp_podcast.transcripts_dir / "episode_1.vtt").read_text()
+
+
+def test_replace_if_from_filters_targets(temp_podcast, monkeypatch):
+    temp_podcast.sources.append(SourceConfig(type="apple", podcast_id="277518737"))
+    fake = TwoSourceFake()
+    _wire(monkeypatch, fake)
+
+    episode_sync.sync(temp_podcast, count=False)
+    catalog = Catalog.load(temp_podcast.episodes_csv)
+    catalog.get(1).transcript_source = "whisper"
+    catalog.save()
+
+    apple = temp_podcast.source_of_type("apple")
+    summary = episode_sync.sync(
+        temp_podcast,
+        replace_from=apple,
+        replace_if_from=("podlove",),
+        count=False,
+    )
+    assert summary["replace"]["replaced"] == 0
+
+    catalog = Catalog.load(temp_podcast.episodes_csv)
+    assert catalog.get(1).transcript_source == "whisper"
+
+
+def test_replace_skips_same_source(temp_podcast, monkeypatch):
+    temp_podcast.sources.append(SourceConfig(type="apple", podcast_id="277518737"))
+    fake = TwoSourceFake()
+    _wire(monkeypatch, fake)
+
+    episode_sync.sync(temp_podcast, count=False, fallback=True)
+    catalog = Catalog.load(temp_podcast.episodes_csv)
+    assert catalog.get(2).transcript_source == "apple"
+
+    apple = temp_podcast.source_of_type("apple")
+    summary = episode_sync.sync(
+        temp_podcast,
+        replace_from=apple,
+        count=False,
+    )
+    assert summary["replace"]["replaced"] == 1
+    assert summary["replace"]["skipped"] == 0

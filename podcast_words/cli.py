@@ -28,6 +28,23 @@ def _cmd_sync(args: argparse.Namespace) -> int:
             print(f"Podcast '{podcast.id}' has no '{args.source}' source.", file=sys.stderr)
             return 1
 
+    if args.replace_from and args.source and args.replace_from != args.source:
+        print(
+            "Use either --source or --replace-from, not both with different sources.",
+            file=sys.stderr,
+        )
+        return 1
+
+    replace_from = None
+    if args.replace_from:
+        replace_from = podcast.source_of_type(args.replace_from)
+        if replace_from is None:
+            print(
+                f"Podcast '{podcast.id}' has no '{args.replace_from}' source.",
+                file=sys.stderr,
+            )
+            return 1
+
     summary = sync(
         podcast,
         source=source,
@@ -36,6 +53,8 @@ def _cmd_sync(args: argparse.Namespace) -> int:
         count=not args.no_count,
         rebuild=args.rebuild,
         fallback=args.fallback,
+        replace_from=replace_from,
+        replace_if_from=tuple(args.replace_if_from) if args.replace_if_from else None,
         limit=args.limit,
     )
     print(
@@ -44,6 +63,15 @@ def _cmd_sync(args: argparse.Namespace) -> int:
         f"{summary['no_transcript']} without transcript, "
         f"{summary['errors']} errors."
     )
+    if "replace" in summary:
+        rep = summary["replace"]
+        note = " (source unavailable)" if rep.get("unsupported") else ""
+        print(
+            f"Replace: {rep['replaced']} replaced, "
+            f"{rep['skipped']} skipped (no remote match), "
+            f"{rep['no_transcript']} without transcript, "
+            f"{rep['errors']} errors{note}."
+        )
     if "fallback" in summary:
         fb = summary["fallback"]
         note = " (source unavailable)" if fb.get("unsupported") else ""
@@ -111,6 +139,20 @@ def build_parser() -> argparse.ArgumentParser:
         "--fallback",
         action="store_true",
         help="Recover no_transcript episodes from the podcast's other configured sources.",
+    )
+    p_sync.add_argument(
+        "--replace-from",
+        metavar="SOURCE",
+        help="Replace existing transcripts by re-fetching from SOURCE "
+        "(e.g. apple, whisper_rss). Only episodes whose transcript came from "
+        "a different source are overwritten.",
+    )
+    p_sync.add_argument(
+        "--replace-if-from",
+        metavar="SOURCE",
+        action="append",
+        help="With --replace-from, only replace transcripts currently from SOURCE "
+        "(repeatable, e.g. --replace-if-from podlove).",
     )
     p_sync.add_argument(
         "--limit",
