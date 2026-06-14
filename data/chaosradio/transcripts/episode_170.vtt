@@ -1,0 +1,220 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:23.480
+<v SPEAKER_1>Hallo und herzlich willkommen zum letzten Chaosradio im Jahr 2021. Es ist die Nummer 274 und wir beschäftigen uns heute mit Reverse Engineering. Was das ist, wofür man das braucht und ob man es auch selber machen soll, das klären wir heute und dazu begrüße ich recht herzlich meine Gäste heute Abend. Das sind einmal Jiska, hallo.
+
+00:00:28.680 --> 00:00:30.160
+<v SPEAKER_2>Hallo.
+
+00:00:30.180 --> 00:00:53.040
+<v SPEAKER_1>Alles drei Menschen, die das Chaosradio-Team eingeladen hat, weil sie irgendwas mit Reverse Engineering zu tun haben. Und ich würde sozusagen dann eine Frage gleich mit der anderen verbinden wollen, nämlich was ist eigentlich Reverse Engineering für euch, wofür braucht man das und wie seid ihr damit in Kontakt gekommen und warum seid ihr heute hier? Fangen wir mal mit Barbie an.
+
+00:00:54.340 --> 00:00:54.340
+<v SPEAKER_3>Ui, ja hallo, ich habe damit angefangen, weil ich einfach Dinge zu Hause kaputt gemacht habe als Kinder. Und ich habe ein paar Dinge zusammen irgendwie so aufgemacht und dann konnte ich das nicht zurückbauen. Und das war schon irgendwie so Reverse Engineering, weil ich das zurückbauen musste, sonst wurde mein Vater sehr sauer. Und ja, heutzutage arbeite ich auch mit Vulnerability Research und Exploit Writing und so was. Und da benutzen wir das sehr, sehr viel.
+
+01:00:21.600 --> 01:00:30.840
+<v SPEAKER_4>Also, Inputs kannst du halt trotzdem generieren. Aber klar, die Analyse und das Harnessing und ganz viele Sachen sind einfach immer selten.
+
+01:00:31.780 --> 01:00:33.080
+<v SPEAKER_1>Du hast es gesagt, du musst es erklären.
+
+01:00:39.140 --> 01:00:53.020
+<v SPEAKER_4>Also quasi der Weg, wie ich Inputs in ein Programm gebe und wie ich es dabei dann auch beobachten kann und sowas. Also ich muss es ja irgendwie kontrollieren. Deswegen Harness aus dem Englischen.
+
+01:00:53.040 --> 01:00:55.460
+<v SPEAKER_1>Das ist sozusagen einfacher, wenn ich den Quellcode auch zur Verfügung habe.
+
+01:00:55.480 --> 01:00:55.540
+<v SPEAKER_3>Genau.
+
+01:01:06.920 --> 01:01:39.520
+<v SPEAKER_2>Ja, ich glaube, ich wollte eigentlich nur sagen, dass der Source-Arbeiten auf Sicherheitsanalysen häufig größere Möglichkeiten gibt, schneller voranzukommen. Das ist eben der wichtige Punkt, als wenn man nur auf Bites arbeitet. Klar, man findet einige Bugs nicht, aber man kommt schon bindenüblich in vielen Bug-Klassen sehr viel schneller voran, wenn man nicht erst Reverse Engineering muss, als wenn man eben nur ein Binary vor sich hat und den ganzen Prozess irgendwie antreten muss.
+
+01:01:40.080 --> 01:03:15.240
+<v SPEAKER_1>Also ich höre, was ihr sagt und nehme mal mit, dass es praktisch ist, ist es immer auch sozusagen eine Budgetierungsfrage. Also wenn Barbie sagt, man muss, die Wahrheit liegt in den Bits und Bites, dann ist das richtig. Aber es hat sehr viel Aufwand und was Bibor, was du gesagt hast, also höre ich als, man kommt halt schneller zu einem Ziel, wenn man das macht. Aber jetzt mal sozusagen von Idealwelt-Voraussetzungen angesprochen. Es gibt ja sozusagen Bestrebungen, ich glaube das ist noch lange alles nicht alltagstauglich, Programmiercode beweisbar zu machen, also wirklich mathematisch zu beweisen, dass er wirklich nur das tut, was man meint, was man dahingeschrieben hat. Und wenn man das konsequent zu Ende denkt, könnte man das auch mit den Programmen machen, die das übersetzen, also den Kompilierern, und auch mit den CPUs, die den Code verarbeiten. Wenn man dann sozusagen so eine vollständige Kette hätte, dann müsste man, wenn ich es richtig verstanden habe, nicht mehr Reverse Engineering, weil man es dann ja sozusagen mathematisch bewiesen hat, aber so sieht es eben nicht aus. Und wenn ich euch jetzt richtig verstehe und das zusammenfasse ist, wenn ich sozusagen möglichst sicher gehen will, also unabhängig von dem, von dem habe ich das Budget, um das zu tun, nur theoretisch, wenn ich möglichst sicher gehen will, muss ich eigentlich beides machen. Ich muss sowohl den Quellcode analysieren und verstehen, als auch einen Reverse Engineering machen, um zu gucken, ob all das, was ich im Quellcode gelesen und gesehen habe, auch wirklich so passiert.
+
+01:03:16.920 --> 01:03:59.940
+<v SPEAKER_3>Ja, ich glaube, es geht auch darum, die Sachen, die im Quellcode sind und in der Binary sind, die passieren, die man nicht erwartet. Und wegen Formal Verification, das ist eigentlich nicht möglich, mathematisch gesehen. Es gibt auch irgendwie so von der theoretischen Informatik, es ist schon bewiesen, dass es nicht geht. Es gibt ein Theorem, das sagt so was wie, es geht nicht, dass ein Programm ein oder andere Programm verifiziert. Nicht irgendwie 100% mit Sound und Kompleteness und blablabla.
+
+01:04:02.300 --> 01:04:05.720
+<v SPEAKER_1>Das heißt sozusagen, die Reverse Engineering wird uns noch sehr lange erhalten bleiben?
+
+01:04:06.560 --> 01:04:33.680
+<v SPEAKER_3>Ja, wahrscheinlich. Weil diese Proof zum Beispiel, es gibt keine Algorithm, die das machen kann, die nicht irgendwie in P-Komplett ist. Das bedeutet, es gibt keine Algorithm, die das schnell genug macht, irgendwie, für alle mögliche Eingaben, wie bei Fursink zum Beispiel. Man kann nur eine begrenzte Anzahl von Eingaben testen. Und das ist das gleiche mathematisch bewiesen auch.
+
+01:04:34.380 --> 01:06:23.300
+<v SPEAKER_1>Okay, da sind wir jetzt an einem Punkt, wo ich gleich das nächste Thema anfangen möchte. Weil es ist nicht mal theoretisch möglich, das zu machen. Und das ginge ja auch nur, wenn man den Quellcode hätte. Und das haben wir ja aber ganz oft nicht. Und deswegen ist jetzt meine nächste Frage, all das, was ihr erzählt habt, es geht, glaube ich, davon aus, dass die Binaries, haben wir heute gelernt, was das ist, dass die Binaries nicht aktiv dagegen vorgehen, dass man sie beobachtet bei dem, was sie tun. Also entweder im Speicher oder sagen die Datei selber. Jetzt kann ich mir vorstellen, dass im Zeitalter der ich verkaufe euch eine Software für teuer Geld, möglicherweise Leute auf die Idee kommen und wissen, was ihr tut und das gar nicht wollen. Das finde ich eine ganz spannende Frage, weil eigentlich, wenn ich es richtig verstehe, letztlich wenn das Programm im Prozessor Dinge tut, dann tut das Programm im Prozessor Dinge und dabei kann man es auch beobachten. Aber dann wiederum kann ich mir schon vorstellen, wenn man weiß, dass es Reverse Engineering gibt und man nicht will, dass da jemand reinguckt, dass man das beliebig schwer machen kann. Und da wäre mein Verdacht, das ist sozusagen vielleicht einfacher in der Laufzeit zu beobachten. Oder es ist schwieriger zu verhindern, dass man in der Laufzeit Beobachtung anstellt. Und es ist wahrscheinlich aber einfacher, die Datei, also das Binary, was ja letztlich nur eine Datei auf dem Computer ist, so zu, ich weiß nicht, verschlüsseln, komisch zu machen oder so, dass es schwieriger ist mit einem Disassembler einfach reinzugehen. Also, lange Rede, kurzer Sinn, gibt es Gegenmaßnahmen gegen Software Reverse Engineering? Und wenn ja, welche sind das?
+
+01:06:25.860 --> 01:06:28.000
+<v SPEAKER_2>Ja, es ist eigentlich Barbies Thema, würde ich sagen.
+
+01:06:30.420 --> 01:08:50.820
+<v SPEAKER_3>Ok, ja, es gibt ganz viele. Und es gibt auch irgendwie ganz viele akademische Forschungen. Ich glaube, was wir vorher aufgelistet haben, war so obfuscation und für Schlüsseln. Obfuscation ist irgendwie einfach Dinge schwer zu lesen machen. Wie wir vorher geredet haben, normalerweise warten wir in einen Quercode, dass alles irgendwie Namen hat und dass die Variable auch Namen haben, die etwas sagen, was die machen und nicht nur irgendwie so Variable 1, Variable 2, Variable 3 ist. Und was man mit obfuscation macht, ist einfach irgendwie so ganz komische, so handomisierte Namen für Funktionen zum Beispiel oder Variablenamen zu geben, damit es schwieriger ist zu lesen. Es gibt irgendwie von sowas, das ganz einfach zu machen ist, bis zu ganz vielen komplizierten Sachen. Wie zum Beispiel man kann den Control Flow Graph, das ist irgendwie so wie eine Art von einer Karte, wie dieser Programm ausgeführt wird, in welcher Heimfolge und so weiter, kann man das einfach kaputt machen. Und dann kann der Disassembler zum Beispiel das nicht mehr richtig lesen und interpretieren, wohin geht dieser nächste Jump oder sowas. Man kann auch ganz viele Code irgendwie in das Programm hinzufügen, die gar nichts machen. Und nur da sind, damit das Binary größer aussieht, wenn man irgendwie einen Disassembler hat. Und da hat man irgendwie keine Ahnung, wo man anfangen soll, weil so viel Code. Es gibt auch irgendwie so Backpredicates und Tokens und ganz viele verschiedene Art von Obfuscation. Die wollen immer das gleiche einfacht, das irgendwie komplizierter oder schwieriger manchmal nur ein bisschen so scary machen, wenn man das in einen Disassembler schmeißt.
+
+01:08:53.060 --> 01:09:06.240
+<v SPEAKER_1>Und funktioniert das auch beim Debugging, also zur Laufzeitumgebung? Weil ich dachte gerade verschüsseln wird wahrscheinlich schwierig, aber irgendwie haufenweise Quatschcode ausführen, das kann man wahrscheinlich schon machen, oder?
+
+01:09:06.260 --> 01:10:20.580
+<v SPEAKER_3>Ja, das kann man auch schon machen. Aber wenn man das zum Beispiel für den Debugger mit dem dynamischen Analyse, kann man zum Beispiel diese dynamische Library-Calls machen. Das heißt, man hat irgendwie nicht die Namen von den Funktionen, die normalerweise aufgehufen werden in deinem Betriebssystem. Normalerweise kann man diese Breakpoints in der Nähe tun, weil man weiß, was die machen. Die gehören ja zu dem Betriebssystem. Und was man macht, ist diese Namen zu haschen, damit man das nicht mehr benutzen kann, um zu lesen, was da passiert. Oder man implementiert selbst solche Sachen, und dann hat man das gar nicht mehr. Man hat keine Standard Libraries. Zum Beispiel diese Printf von deinem Hello World, kann man selbst implementieren und nicht mehr diese Printf-Funktion benutzen. Und dann sieht man das nicht mehr. Man sieht nur irgendwie so wieder diese obfuskierte Code. Und da muss man sogar solche kleine Funktionen reversen, um zu verstehen, was da passiert.
+
+01:10:20.600 --> 01:10:30.380
+<v SPEAKER_1>Okay, das heißt, macht das Ganze dann komplizierter, oder macht es das tatsächlich manchmal auch unmöglich?
+
+01:10:30.400 --> 01:11:14.940
+<v SPEAKER_3>Das macht das nur nervig. Irgendwann lernt man solche Techniken. Und dann hat man einfach ein paar Scripts, die irgendwie alles fixen. Und wenn man genug Binares gelesen hat, dann weiß man, wie diese Strukturen aussehen, diese Mustern, und man reversiert sowieso nicht mehr alles. Und irgendwann bist du auch in einem Bereich, wo du nicht mehr so viel an diese Strings, diese ASCII-Wörter, lesbare Wörter irgendwie, man verletzt sich nicht mehr drauf. Und dann ist es nicht mehr so wichtig, dass die Funktionen richtige Namen haben.
+
+01:11:15.500 --> 01:11:41.620
+<v SPEAKER_1>Kann ich mir das so ein bisschen vorstellen wie Schlösser. Man kann es komplizierter machen. Und je komplizierter man es macht, desto mehr muss auf der anderen Seite eine Expertise vorliegen, um das Reverse Engineering doch noch durchzuführen. Aber es gibt kein Schloss, das man nicht aufmachen kann. Also es gibt kein Programm, das man nicht Reverse Engineering kann. Es wird halt nur, wie du gesagt hast, nerviger.
+
+01:11:43.180 --> 01:12:47.300
+<v SPEAKER_3>Nicht ganz. Wenn das zum Beispiel eine verschlüsselte Binary ist, die man nur mit einem Key irgendwie ausführen kann und diese Key liegt irgendwo anders und so eine Art Signatur funktioniert, statt dass diese Private Key zu dem Client geschickt wird, zum Beispiel, dann kann man schlecht was reversen, weil ich kann das nicht entklippen, ich kann das nicht wieder aufmachen, ich kann nichts lesen. Oder zum Beispiel, ich glaube ganz modern, ist das nicht, aber was ganz viele Leute da machen, ist einfach so Runtime-Keys-Generierung, das heißt die Verschlussung des Binary und die haben keinen Schlüssel per se, die haben einen Algorithm, die einen Schlüssel generiert und das so umverschlissen. Und das ist irgendwie, ich glaube, so ein bisschen ein neuer Trend.
+
+01:12:48.860 --> 01:13:05.400
+<v SPEAKER_1>Aber wenn ich es richtig verstehe, ist das doch sozusagen nur problematisch, wenn ich die Binary-Datei disassemblieren will? Oder geht das auch zur Laufzeit? Also dass sich Dinge, die im Prozessor laufen, sozusagen so verschlüsseln, dass man sie nicht mehr mit dem Debugger auslesen kann?
+
+01:13:07.180 --> 01:13:29.920
+<v SPEAKER_3>Es kommt drauf an, aber normalerweise, für ganz normale User sind normalerweise die Programme unverschlusset in der Memory. So in dieser Speicher. Und dann konnte man zum Beispiel einfach einen Memory-Dump machen und dann hat man diese unverschlossene Binary da.
+
+01:13:29.940 --> 01:14:02.300
+<v SPEAKER_4>Aber das ist jetzt wiederum was, deswegen gibt es Binary, die merken, wenn sie beobachtet werden. Die lassen sich nicht ausführen, wenn man ein Debugger dran macht. Oder die merken zum Beispiel, dein iPhone ist jailbroken und führen sich dann nicht mehr aus. Oder die merken, das Programm läuft gerade in der virtuellen Maschine. Und in der virtuellen Maschine kann man halt auch sehr einfach den kompletten Speicher rauskopieren. Von allem, nicht nur im einzelnen Prozess. Und dann starten die halt gar nicht erst. Oder sie starten und verhalten sich anders.
+
+01:14:05.100 --> 01:14:13.660
+<v SPEAKER_1>Aber jetzt theoretisch gesprochen, macht es das unmöglich oder macht es das nur komplizierter?
+
+01:14:13.680 --> 01:14:48.420
+<v SPEAKER_2>Also es macht es eigentlich quasi nie unmöglich, solange man alle Informationen hat. Also ich kann zum Beispiel meinen Key auch von einem Web-Server ziehen zur Laufzeit, um mich zu entschlüsseln. Und wenn der Web-Server nicht mehr da ist, dann hab ich den Key halt nicht mehr. Aber ich muss, solange ich mich selber ausführen kann, alle Informationen mitführen, die für einen Reverse Engineer interessant sein könnten. Es ist nur manchmal sehr schwierig, an diese Informationen zu kommen.
+
+01:14:49.640 --> 01:16:10.120
+<v SPEAKER_1>Also nur die theoretische Frage. Es ist eine Frage des Aufwandes. Und der kann sozusagen zu hoch sein, dass man irgendwann sagt, fuck this shit, ich werfe das Handtuch. Aber theoretisch gesehen gäbe es einen Weg. Mit unendlichen Ressourcen gäbe es immer einen Weg. Kann man das sagen? Okay. Jetzt haben wir ganz viel über Software gesprochen. Weil das der Punkt ist, wo man am ehesten anfängt. Aber jetzt ist es ja so, diese Software läuft ja auf Hardware. Und wie diese Hardware aufgebaut ist, ist auch nicht ganz uninteressant. Jetzt frage ich mich, gibt es also Reverse Engineering auch für Hardware? Ich denke jetzt gerade an Spiele auch. Weil es gibt ja Retro Gaming, also ältere Konsolen, die es mittlerweile gar nicht mehr gibt. Und da will man wissen, wie die funktioniert hat. Und da muss man jetzt stellenweise tatsächlich wissen, wie die Technik aussah. Gibt es auch Hardware Reverse Engineering? Also ich vermute die Frage ist ja. Aber ist es von Relevanz, ist es von Interesse?
+
+01:16:10.860 --> 01:17:54.460
+<v SPEAKER_4>Also mit Hardware Reverse selbst habe ich jetzt noch nicht so viel gemacht. Aber selbst wenn du halt eine Firmware anschauen willst, also die Firmware liegt ja irgendwo auf der Hardware. Und meistens ist die halt in einem Flash Speicher oder sowas drin. Und ich habe genau dasselbe Problem. Ich möchte halt irgendwie diese Firmware da draus rauskriegen, damit ich sie dann disassemblieren, dekompilieren kann. Und jetzt gibt es zum Beispiel die Möglichkeit, dass ich einen Chip abschleife oder als Schichten abtrage oder chemisch wie auch immer. Und dann mit einem Mikroskop vergrößere. Und teilweise kann man sogar dann sehen, was in den Speicherzellen drin steht. Also die sehen dann unterschiedlich aus. So 1 und 0. Auf dem Level kann man sich das vorstellen. Oder man macht die Hardware halt an und dann hat die manchmal so Debug-Ports. Weil irgendwie muss ja auch der Hersteller die Firmware draufkriegen. Und manchmal schützen die den Chip nicht gegen's Auslesen. Dann kann man die einfach so auslesen. Oder es gibt einen Bug da drin. Also was sehr häufig funktioniert, ist das sogenannte Glitching. Das ist im Detail erklärt. Aber man gaukelt dem Chip halt vor. Oder man spielt mit der Stromversorgung zum Beispiel vorm Chip. Oder mit der Clock, die der kriegt. Und dann führt der Chip manchmal falsche Befehle aus. Aber läuft weiter. Also kann man sich wirklich vorstellen, wie ein Assemblerbefehl wird nicht ausgeführt oder wird anders ausgeführt. Und dann kann man auf einmal doch die Firmware auslesen.
+
+01:17:54.480 --> 01:18:07.360
+<v SPEAKER_1>Verstehe, verstehe. Könnt ihr vielleicht doch irgendwie ein oder zwei Wortwünsche verlieren? Dieses, weil du gerade auch gesagt hast, man kann da wirklich die Zellen sehen und Nullen und Einsen. Wie genau macht man das?
+
+01:18:09.100 --> 01:18:11.040
+<v SPEAKER_4>Also ich hab es selbst noch nicht gemacht.
+
+01:18:11.060 --> 01:18:12.700
+<v SPEAKER_1>Aber ihr habt bestimmt schon davon gehört.
+
+01:18:14.800 --> 01:20:33.200
+<v SPEAKER_2>Also das ist auch irgendwie ongoing research ganz viel. Und es ändert sich viel. Aber was die Basics sind, eigentlich das, was Jiska schon beschrieben hat. Also man versucht diesen, im Falle eines Chips jetzt so, was wirklich kleine Strukturen sind, da versucht man halt erst mal dieses, also der ist irgendwie auf einem Gerät, auf einer Platine drauf. Und dann hat der so ein Packaging. Das heißt schwarzer Tropfen aus Kram, der da außenrum ist. Und das ist ja nicht der eigene Chip, sondern das ist nur irgendwie das Packaging außenrum. Und das möchte man jetzt erstmal entfernen. Und dann lasert man das auf oder schmeißt es in ätzende Flüssigkeiten, Schrägstrich Gase und versucht das irgendwie wegzubekommen. Und dann guckt man eben mit Messinstrumenten drauf. Messinstrumente können halt beliebig komplex werden. Für ganz alten Kram würde jetzt ein Lichtmikroskop reichen. Und bei den modernen Chips können wir glaube ich schon an Probleme mit Elektronenmikroskopen sinnvoll zu sehen teilweise. Aber so funktioniert dieser Prozess. Dann versuche ich eben darüber Dinge über die Hardware-Beschaffenheit herauszufinden. Das kann zum Beispiel sein, dass irgendwie, also früher gab es noch so hart vertratete Krypto-Algorithmen auf Chips drauf selber, die ich dann dadurch reverse engineern kann. Oder ein Beispiel, ich versuche irgendwie den ROM auszulesen. Also da ist irgendwo in diesem Chip ein Speicher mit Programmcode, der zuerst ausgeführt wird, wenn der Chip gestartet wird, immer. Und der ist tatsächlich hardwired da drin. Und dann kann ich den eventuell schon auslesen und reverse engineern, mit den ganzen Methodiken zu reverse engineern, die wir schon besprochen haben, um herauszufinden, was er tut, ob da Sicherheitslücken drin sind, was es eigentlich macht.
+
+01:20:33.220 --> 01:20:48.900
+<v SPEAKER_1>Aber das klingt sozusagen sehr nach, also während ich beim Debugger zwischendurch dachte, Mensch, das kannst du doch mal selber ausprobieren. Das klingt so wie, da braucht man eher sozusagen eine große Hexenküche, Magielabor, um da überhaupt irgendwie drüber nachzudenken, da Sachen anzufangen.
+
+01:20:50.220 --> 01:21:05.920
+<v SPEAKER_3>Es gibt auch ganz viele Hacker-Spaces, die solche Sachen haben, so man kann immer dahingehen und kriegt auch irgendwie Leute, die das erklären, wie die ganzen Werkzeuge funktionieren. Die sind normalerweise sehr teuer. Deswegen ist es besser, wenn man jemanden dabei hat, der weiß, wie das geht.
+
+01:21:07.180 --> 01:21:51.180
+<v SPEAKER_1>Okay, also ich kann mir vorstellen, das ist natürlich aus einer Nerd-Perspektive total interessant, weil die Neugier will, dass ich ja alles mal gesehen habe. Das kann ich mir schon spannend vorstellen. Aber im praktischen Alltag, stelle ich mir vor, versucht man Hardware-Reverse Engineering eher zu vermeiden, weil das hört sich mega aufwendig an. Und lieber, vor allen Dingen, die sozusagen konkret in den Chip reingucken und versucht, lieber sozusagen Software-Reverse Engineering zu machen oder sozusagen an den, wie du jetzt gerade gesagt hast, den, na, Dingsport. Wie ist der Port, wo man Sachen auslesen kann, was der Hersteller manchmal benutzt und dann vergisst zuzumachen?
+
+01:21:51.200 --> 01:22:12.140
+<v SPEAKER_4>Ja, eigentlich genau. Also man kann damit sogar zur Laufzeit sogar debuggen, wenn das freigeschaltet ist. Das heißt, der Chip hat je nachdem, ob er ein Interface zum Auslesen oder der Chip, der den Code ausführt, hat vielleicht sogar ein Interface, mit dem man auch wieder Breakpoints setzen kann und schauen kann, was passiert.
+
+01:22:12.160 --> 01:22:16.340
+<v SPEAKER_1>Genau, und man will wahrscheinlich lieber das machen, als tatsächlich eine Chip aufzuschleifen, vermute ich mal.
+
+01:22:17.020 --> 01:23:17.980
+<v SPEAKER_2>Es gibt auch noch das Zwischending. Und das ist irgendwie so, vor allem wenn man irgendwie sehr hardwarenah Software Reverse Engineering möchte, braucht man manchmal ein bisschen die Umgebung, was denn auf dem, was in dem Gerät sonst noch so drin ist. Um herauszufinden, um irgendeinen Sinn da rauszumachen, warum jetzt genau auf dem Port, das irgendwie alle 50 Sekunden auf High gesetzt wird. Das sagt einem ja erstmal nicht. Das hat man jetzt irgendwie rausgefunden. Da muss man doch irgendwie noch gucken, was ist bei dem Port eigentlich? Und dann nimmt man sich eben so eine PCB, also so eine Platine von irgendwie dem Gerät, guckt sich an, was ist denn da auf der anderen Seite und stellt sich vielleicht fest, dass da ein bestimmter Sensor ist, der in einem gewissen Intervall dann ausgelesen wird und kann dann mehr Sinn aus dem machen, was man vorher irgendwie in der Software gesehen hat.
+
+01:23:17.980 --> 01:24:17.280
+<v SPEAKER_1>Okay, so, wir haben vorhin ja drüber gesprochen, was man machen kann, um Reverse Engineering in Software schwer zu machen. Ich vermute, es gibt bei Hardware dann einfach sozusagen den Debugport zumachen und vielleicht irgendwie extra schwer ätzende Gehäuse anzubauen. Ich freu mich die ganze Zeit. Bei vielen Dingen, die mit Digitaltechnik und Gesellschaft zu tun haben, wird es dann irgendwann juristisch. Und ich könnte mir vorstellen, dass es Bestrebungen gibt, dass man Reverse Engineering sozusagen, wenn man denkt, aha, ich kann das technisch nicht unterbinden, vielleicht kann ich es verbieten. Am besten per Gesetz. Gibt es rechtliche Rahmenbedingungen, wenn man Reverse Engineering beachten muss? Also ihr seid alles keine JuristInnen, aber kommt ihr in Kontakt mit dem Gesetz, wenn ihr Reverse Engineering? Ist das Betretenesschweigen? Oder soll ich sagen, Barbie, fang noch mal an.
+
+01:24:23.040 --> 01:26:04.460
+<v SPEAKER_3>Wie gesagt, es ist einfacher, wenn man einfach mit Malware anfängt, weil Malware keine Copyright hat. Dann kann man das einfach reversen und man ist auf der sicheren Seite. Alles anders wird kompliziert. Es gibt Dinge wie Hechtlinien in der EU und in der EU ist es komplizierter, weil es hier nicht so wirklich solche Sachen gibt, wie Richtlinien, sondern irgendwann entscheidet jemand, dass es so ist und dann machen die alle nach. Und jemand hat auch hier schon irgendwann mal entschieden, dass das okay wäre, wenn man das für Kompatibilität oder zum Beispiel die wollten einfach, dass ein Spiel weiter gespielt werden kann und jemand wollte, dass ein Bug gepatcht würde, aber der Maintainer, der eigentlich den Besitz von dieser Software hatte, ist gestorben. Und deswegen war das okay zu Reverse Engineering zum Beispiel. Aber das ist sehr kompliziert und deswegen, normalerweise, wenn man das bei einer Firma macht, ist es einfacher, weil man ganz viele Hechtsanwärter hat und die sich darum kümmern, dass man das kann. Aber wenn man das zu Hause macht, würde ich eher irgendwie mit solchen Sachen anfangen, die keiner keiner wird sich beschweren, wenn man eine Malware reverse oder irgendwie Bescheid gibt. Aber wenn man etwas sehr teuer reverse und das Open Source macht, vielleicht schon.
+
+01:26:04.480 --> 01:26:17.220
+<v SPEAKER_1>Das ist dann ein wichtiger Punkt, das will ich nochmal nachfragen wollen. Ist es rechtlich gefährlich zu Reverse Engineering? Oder ist es rechtlich gefährlich zu Reverse Engineering und dann die Ergebnisse anderer Leute sehen zu lassen?
+
+01:26:19.700 --> 01:26:27.020
+<v SPEAKER_3>Ich meine, was du zu Hause machst, interessiert keiner, solange du nicht laut wirst.
+
+01:26:31.160 --> 01:26:34.440
+<v SPEAKER_1>Jiska, hast du auch noch sozusagen Anekdoten oder Gefühle dazu?
+
+01:26:35.440 --> 01:28:26.520
+<v SPEAKER_4>Ja, also der rechtlich schwierige Part ist vor allem das Copyright. Und das heißt, jemand hat eben ein Recht oder da drauf, also der hat halt diese Sachen erstellt. Und dann ist es halt Firmeigentum oder gehört einer Person. Und da sind vielleicht sogar noch Patente dran gebunden und so weiter und so fort. Und dann kann man es halt nicht einfach nachbauen. Und spätestens wenn man es halt nachbaut, kann es eben passieren, dass man verklagt wird oder je nachdem, was man nachbaut, kann es nicht nur passieren, sondern ist es sehr sicher, dass es passiert in dem Moment, wo man was veröffentlicht. Ja, aber es ist eben wichtig, dass man ja Kompatibilität zu anderer Software hat. Das heißt, das ist eine Sache, wo das mitunter gut gehen kann. Also es gibt schon, also man sollte sich relativ gut damit auseinandersetzen, was man reverse engineered. Und dann im Zweifelsfall noch, was ist es dann konkret für eine Firma? Weil es gibt halt Firmen, die relativ schnell einen verklagen. Und gerade im Bereich Security Reverse Engineering, wenn man Reverse Engineering nur macht, um zu sagen, ja und jetzt habt ihr dann Lücke. Und dann können die halt sagen, okay, das ist kein legaler Anwendungsfall jetzt für Reverse Engineering. Also es ist illegal, was ihr gemacht habt. Ihr habt gegen unser Copyright verstoßen. Auch wenn ihr reverse engineered habt, ohne Sicherheitslücke zu finden, ihr habt halt analysiert, wie funktioniert unsere Software und öffentlich darüber geredet. Also es passiert selten, aber es kann passieren. Und es wurde halt bisher noch nicht bis ins letzte Detail vor Gericht ausgefochten, was in solchen Fällen passiert. Das heißt, man hat da auch eine gewisse Rechtsunsicherheit.
+
+01:28:27.960 --> 01:29:02.720
+<v SPEAKER_1>Das klingt mir so ein bisschen, also dieses ganze Problem irgendwie, Sicherheitslücken aufdecken und dann juristischen Stress bekommen, ist ja noch mal ein ganz eigenes Thema, das gibt es auch in anderen Fällen. Aber so generell für den Hausgebrauch kommt es so ein bisschen vor wie Musiksampling. Was ich zu Hause mache, da kann ich erst mal machen, was ich will, aber es wird halt in dem Moment schwierig, wo man es irgendwie an die Öffentlichkeit trägt. Da sollte man, also da scheint man nicht darum zu kommen, sich wenigstens mit dem Thema mal beschäftigt zu haben, weil man dann sonst in das ein oder andere Fettnäpfchen treten kann. Bibor, hast du auch noch etwas dazu?
+
+01:29:04.180 --> 01:29:45.500
+<v SPEAKER_2>Ja, also das mit der Veröffentlichung ist halt wirklich ein wichtiger Punkt. Und da sind die Rechtslagen halt in den unterschiedlichen Ländern auch sehr stark unterschiedlich. Also es ist, die viele, viele Leute laden, zum Beispiel Reverse Engineer oder ihre Reversing Ergebnisse für irgendwelche proprietäre Software auf irgendwie beliebte Plattformen wie GitHub hoch. Und wundern sich dann, dass irgendwie zwei Tage später ihr Repo down ist, weil es eine DMCA-Takedown-Notice gab an GitHub wegen genau dem gebrochenen Copyright. Und daran muss man halt einfach denken, wenn man die Ergebnisse veröffentlicht, ob das irgendwer auf die Füße treten könnte.
+
+01:29:50.320 --> 01:30:19.540
+<v SPEAKER_1>Okay, jetzt sind wir glaube ich zu sagen einmal sehr, und ich bedanke mich wirklich sehr für eure Geduld, sehr niedrigschwellig in das Thema Reverse Engineering durchgegangen. Ich würde zum Schluss noch zwei Fragen stellen. Vielleicht drei Fragen stellen wollen. Die eine ist, habt ihr persönlich irgendwelche Reverse Engineering-Anekdoten oder Erfolgserlebnisse, die ihr noch mit der Welt dort draußen teilen wollt?
+
+01:30:19.560 --> 01:30:24.320
+<v SPEAKER_2>Bibor. Wir haben ja schon gerade gesagt, dass es manchmal sehr schwierig ist, darüber zu reden.
+
+01:30:32.500 --> 01:33:09.900
+<v SPEAKER_3>Ja. Ich glaube, ich kann nur sagen, es gibt Sachen, die sehr interessant sind zur Reversion. Vor allem, weil man daraus viel lernen kann. Bei Malware Reversions zum Beispiel habe ich eigentlich viel mehr gelernt, als ich jetzt irgendwie in dieser Exploit Writing Welt feiere, weil ich ganz viele sehr interessante Malware hatte. Ich habe erstmal mit Crimeware gearbeitet, d.h. diese ganzen kleinen Hemsommer oder Sachen, die eher private Menschen betrifft. Und dann merkt man z.B. bei den Binaries, in den Binaries und nicht unbedingt in der Quellcode, wie schlecht der Code geschrieben ist. Dass wirklich irgendwelche Empfänger das geschrieben haben. Und dann bin ich nachher zu einem Intero-Team gewechselt. Und da habe ich irgendwie so diese APT-Welt kennengelernt. Und dort habe ich gemerkt z.B. dass man wirklich diese Attribution nur von dem Code machen kann. Weil man merkt irgendwie, wie jeder Gruppe Code schreibt und die unterschiedliche Weise, wie die zusammenarbeiten. Nur von einem Binary. Und ich habe das nicht vorher gemerkt, nur von Sachen lesen. Und Politik verstehen ist ganz anders aus, wenn du irgendwie eine Software siehst. Und ich habe auch gemerkt, wenn man den Unterschied von Codequalität, wenn man zum Beispiel diese Crimeware anschaut und die wirklich einmal rausgeht, eine Kreditkarte klaut und das war's. Zu Code, die über jahrelang da ist und nicht unbedingt wirtschaftlich motiviert ist. Aber muss nur irgendwie für eine sehr lange Zeit maintainable sein. Wie schön die sind. Das ist wirklich irgendwie so wow. Irgendwann würde ich auch Code so gut schreiben können. Ich finde das ist sehr interessant, irgendwie zu wissen, dass man das von einem Binary lernen kann.
+
+01:33:09.920 --> 01:33:16.460
+<v SPEAKER_1>Kannst du ganz kurz noch sagen, die APT-Welt, in der du dich befindest, was ist das?
+
+01:33:16.480 --> 01:33:28.220
+<v SPEAKER_3>Die sagen Nation-State-Mauer. Die sind eher diese komplexe politische Wertpolitik-Bereich.
+
+01:33:31.660 --> 01:34:02.340
+<v SPEAKER_1>Ich stehe gerade ein bisschen auf dem Schlauch. Das heißt sozusagen, mal wer die von Staaten verwendet wird, im Gegensatz zu irgendjemanden, will mein Rechner verschlüsseln, damit ich ihm Bitcoin überweise. Was bedeutet das? Zu Attribution, also der Frage, wie findet man eigentlich raus, wer hinter einer Sache steckt? Hatten wir auch schon mal einen Chaosradio, Nummer 268. Ihr könnt auch gerne noch mal reinhören, wenn ihr euch für dieses Thema genauer interessiert. Und dann bleibt noch Jiska.
+
+01:34:02.360 --> 01:35:00.280
+<v SPEAKER_4>Ja, also ich muss sagen, inzwischen schreibe ich, glaube ich, mehr oder ich reverse engineer mehr, ist, dass ich entwicke. Und eine Sache, die ich total gerne mache, ist, dass ich Sachen, also bestehende Firmware oder auch Applikationen zur Laufzeit instrumentiere. Das heißt, ich reverse engineer sie und ändere dann genau die Sachen, die ich halt anders haben will. Also zum Beispiel, dass ich eine Sache, eine Firmware-Downgrade anstatt eine Firmware-Upgrade macht. Oder dass irgendwo in einem System Messwerte geschickt werden und ich aber die Messwerte zwischendrin austausche und gucke, wie verhält sich halt das restliche System. Und das mache ich inzwischen ganz, ganz, ganz viel. Und ich glaube, ich mache eben mehr Reverse Engineering als Forward Engineering und bin damit sehr, sehr schnell geworden. Ja, also kann auch so rumlaufen.
+
+01:35:00.300 --> 01:35:27.680
+<v SPEAKER_1>Ist das auch so ein bisschen Empowerment? Also ich stelle mir gerade vor, ich fühle mich ja manchmal der Maschine gegenüber sehr ohnmächtig. Irgendjemand hat mir mal versprochen, also im Prinzip sind Computer deterministisch. Das scheint mir nicht so. Die machen manchmal, was sie wollen und ist sozusagen Reverse Engineering so ein bisschen zumindest auch ein selbstwertdienliches Gefühl des Empowerment. Man kann halt sozusagen sehr viel mehr machen als es zum ersten Einstieg den Anschein hat.
+
+01:35:27.700 --> 01:35:39.220
+<v SPEAKER_4>Ein bisschen. Auf der anderen Seite kriegt man natürlich noch mehr Probleme. Ich glaube, das ist halt, ne? Also je besser man sich mit Computern auskennt, desto mehr Computerprobleme hat man.
+
+01:35:40.100 --> 01:35:42.760
+<v SPEAKER_1>Aber zumindest hat man sie dann selber verursacht oder so.
+
+01:35:42.860 --> 01:36:14.440
+<v SPEAKER_2>Ja, aber bezüglich des Empowerments fällt mir dann doch noch etwas ein. Und zwar es lohnt sich definitiv mal sowohl bei Apps, die man auf seinem Telefon installiert hat, als auch bei irgendwie den ganzen IoT-Geräten, die heute so in einer normalen Wohnung herumfleucht, nachzugucken, was sie denn für Daten aufnehmen und wo sie sie hinsenden. Das ist durchaus ein Teil, den man unter Empowerment sehen kann. Dann weiß man nämlich ungefähr, ob das stimmt, was in der Packungsbeilage steht oder nicht.
+
+01:36:16.280 --> 01:36:29.080
+<v SPEAKER_1>Aber macht man das direkt auf dem Gerät oder würde da der Heimann, wenn er nicht eher seinen Netzwerkverkehr beobachten? Oder fällt mir jetzt am Ende der Sendung erst auf, dass Netzwerkverkehr beobachten auch Reverse Engineering ist?
+
+01:36:29.100 --> 01:36:32.940
+<v SPEAKER_4>Das kommt ein bisschen drauf an.
+
+01:36:32.960 --> 01:36:35.340
+<v SPEAKER_2>Also das ist zum Ende der Sendung ein großes Thema.
+
+01:36:36.420 --> 01:36:42.080
+<v SPEAKER_1>Ja, aber dann können wir das ja aufmachen. Dann nehmen wir es vielleicht beim nächsten Mal irgendwie noch zu einer eigenen Sendung.
+
+01:36:42.100 --> 01:37:07.940
+<v SPEAKER_4>Wir haben so Hardware und Firmware gemacht. Aber häufig hat man halt Protokolle und die werden vielleicht sogar kombiniert von Hardware, Firmware, Betriebssysteme, allen möglichen gesprochen. Und auch die kann man halt Reverse Engineering und neu implementieren. Und das ist ein richtig großes Thema, weil es dabei eben auch um Schnittstellen häufig geht und damit tatsächlich in diesen Bereich fallen kann, der eventuell legal ist.
+
+01:37:10.100 --> 01:37:49.380
+<v SPEAKER_1>Okay, aber lass uns sagen, sag dir wahrscheinlich noch mal ein Thema für eine eigene Sendung. Also es geht da auch, aber lassen wir es jetzt dabei. Und jetzt kommt wirklich die letzte Frage. Wenn man jetzt diese Sendung gehört hat und möglicherweise fragt man sich auch auf ein Interesse auch und sich denkt so, ja Mensch, das hört sich ja schon an, als könnte man das einmal ausprobieren. Es sind doch zwei Fragen. Erste Frage, was ist ein guter Einstieg? Also könnt ihr vielleicht wirklich ein konkretes Programm oder eine Ressource empfehlen, wo man sich mal sozusagen den ersten Schritt in die Tiefe begeben kann? Und zweite Frage, nicht unwichtig, kann ich damit was kaputt machen?
+
+01:37:50.100 --> 01:38:48.620
+<v SPEAKER_2>Also das Beispiel, was ich gerade genannt habe mit den Apps, ist glaube ich ganz gut zum Einstieg. Also wenn man irgendwie mal, gerade wenn man mal ein Android-Telefon hat, dann sind das auch irgendwie häufig irgendwie, ist das Java-Bytecode, der ist auch, da braucht man ein bisschen einfacher zu lesen als jetzt ein normaler Assembler. Dann kann man mal irgendwie gucken von so einer App, wie man irgendwie vor fünf Jahren aus dem Playstore runtergeladen hat und sich fragt, macht dieses irgendwie Candy Crush-Derivat wirklich nur Candy Crush? Dann kann man sich genau solche Dinge mal angucken, auf Basis, das sind welche Kommunikation macht das eigentlich nach außen, welche Sinks gibt's, also welche, ja ich merk's selbst, also welche Daten kommen von wo, das wären dann die Data Sources, gehen in welche Data Sinks, also zum Beispiel werden zum Server zurückgeschickt, oder werden auf Platte geschrieben, oder solche Sachen sich da mal anzugucken.
+
+01:38:48.640 --> 01:38:54.620
+<v SPEAKER_1>Aber hast du da auch eine konkrete Empfehlung, womit man das macht?
+
+01:38:54.640 --> 01:39:03.240
+<v SPEAKER_2>Ja, das kann man gut googeln, also wenn man Android App und Reverse Engineering in seine Suchmaschine seiner Wahl eingibt, dann findet man doch relativ viele Ressourcen dazu.
+
+01:39:07.780 --> 01:39:30.740
+<v SPEAKER_3>Ja, ich würde sagen, ein guter Einstieg ist eigentlich diese CTFs. Die haben normalerweise ganz viele so Challenges, die unter Reverse Engineering sind. Und dann haben die sehr einfache Sachen, die auch irgendwie so Android-Apps, aber genau für den Zweck, irgendwie etwas zu lernen, gebaut werden.
+
+01:39:32.780 --> 01:39:46.360
+<v SPEAKER_1>Also CTF, es kommt ja glaube ich von Capture the Flag, das sind ja Wettbewerbe. Ich würde jetzt sozusagen meinen ersten Schritt ungern unter dem Druck eines Wettbewerbs machen, aber du meinst, man kann diese Aufgaben auch sozusagen im Nachhinein finden und dann im stillen Kämmerlein versuchen nachzuvollziehen?
+
+01:39:46.380 --> 01:39:54.440
+<v SPEAKER_3>Genau. Normalerweise, wenn die Wettbewerb zu Ende ist, lassen die das alles online für Leute, die einfach was lernen wollen.
+
+01:39:56.760 --> 01:40:03.360
+<v SPEAKER_4>Und außerdem gibt es Leute, die schreiben hinterher ein Write-up drüber, wo drin steht, wie die es gelöst haben.
+
+01:40:07.220 --> 01:40:52.720
+<v SPEAKER_1>Sehr gut. Dann haben wir sozusagen ein paar Einstiegspunkte. Vielleicht könnt ihr die Behörerinnen nochmal in die Show Notes linsen. Vielleicht, ich weiß nicht, ob ihr drei uns nochmal, vielleicht einen Link irgendwie zukommen lassen könnt. Was vielleicht eine gute Anfangslektüre ist für solche Fälle. So, das soll es aber wirklich für heute gewesen sein. Liebe Jiska, liebe Barbie, lieber Bibor, vielen Dank, dass ihr so geduldig mit mir wart. Und das auch wirklich ganz kleinteilig erklärt hat, was ist eigentlich diese Reverse Engineering? Was kann man damit kaputt machen? Das war wirklich sehr, sehr, sehr spannend. Das soll es für heute auch gewesen sein. Und auch für dieses Jahr. Das war das letzte Chaosradio in 2021. Mir bleibt deshalb tatsächlich nur noch eine Sache zu sagen. Lasst euch nicht überwachen. Und verschlüsselt immer schön eure Backups.

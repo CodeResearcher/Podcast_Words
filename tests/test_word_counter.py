@@ -45,3 +45,41 @@ def test_count_and_skip(temp_podcast, monkeypatch):
 
     stats = json.loads(temp_podcast.episode_stats_json.read_text())
     assert stats["total_episodes"] == 2
+
+
+def test_count_tolerates_invalid_word_rows(temp_podcast, monkeypatch):
+    import pandas as pd
+
+    monkeypatch.setattr(word_counter, "_load_spacy", lambda name: spacy.load(MODEL))
+
+    csv_path = temp_podcast.word_counts_csv
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(
+        {
+            "word": [float("nan"), float("nan"), "eimer"],
+            "is_stop": [False, False, False],
+            "1": [None, 1.0, 2.0],
+        }
+    ).to_csv(csv_path, index=False)
+
+    _write(temp_podcast, 2, "Die Münze und der Cent.")
+
+    result = word_counter.count_words(temp_podcast)
+    assert result["processed"] == 1
+
+    df = word_counter._read_word_counts_csv(csv_path)
+    assert df["word"].notna().all()
+    assert not df["word"].duplicated().any()
+
+
+def test_read_word_counts_preserves_null_lemma(temp_podcast):
+    import pandas as pd
+
+    csv_path = temp_podcast.word_counts_csv
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame({"word": ["null", "eimer"], "is_stop": [False, False], "1": [3, 2]}).to_csv(
+        csv_path, index=False
+    )
+
+    df = word_counter._read_word_counts_csv(csv_path)
+    assert df["word"].tolist() == ["null", "eimer"]

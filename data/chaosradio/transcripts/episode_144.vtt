@@ -1,0 +1,661 @@
+WEBVTT
+
+01:00:17.973 --> 01:00:39.793
+<v SPEAKER_2>Okay, also es gibt eine total komplizierte Struktur, die dafür sorgt, dass Zertifikate abgenickt werden von den Browser-Herstellern und die wiederum sagen dir als Nutzer, hallo, diese Webseite ist eine, der du vertrauen kannst. Dahinter steckt wirklich zum Beispiel fritz.de oder irgendeinen Anbieter von Zahlungsdiensten oder andere Geschichten, wo es wirklich um kritische Daten geht.
+
+01:00:39.813 --> 01:00:46.193
+<v SPEAKER_3>Genau, und irgendeiner von den Big Fours, also KPMG, Pricewaterhouse, Cooper, Anseln Young, die Leute, die haben irgendwann mal draufgeguckt.
+
+01:00:46.213 --> 01:00:47.433
+<v SPEAKER_2>Das sind jetzt Zertifikate oder was?
+
+01:00:47.453 --> 01:00:55.693
+<v SPEAKER_3>Nein, das sind Wirtschaftsprüfer. Die stellen den CAs diesen Persilschein aus und sagen, jawohl, eure Prozesse sind in Ordnung.
+
+01:00:55.713 --> 01:01:00.173
+<v SPEAKER_2>Und die sind einfach solche Player, denen vertraut dann auch zum Beispiel Firefox?
+
+01:01:00.193 --> 01:01:02.573
+<v SPEAKER_3>Mozilla in dem Fall, ja genau.
+
+01:01:02.593 --> 01:02:03.453
+<v SPEAKER_2>Okay, ich glaube, wir haben verstanden, was Zertifikate sind und damit schon mal einen großen Schritt gemacht. Ihr seid im Blue Moon auf Fritz. Das ist Chaosradio. Wie alle zwei Monate hier auf Fritz, wir reden mit Leuten vom Chaos Computer Club. Heute Anna-Lena, Mutax, Nibbler und Danimo über ein Thema aus der großen Welt des Internets. Der Computer, der Technik des digitalen Lebens, der Netzpolitik. Heute reden wir über Https, also die Technik, die dafür sorgt, dass ihr Webseiten besuchen könnt, ohne dass Menschen mitlesen, was ihr auf diesen Webseiten tut und zum Beispiel eure Kreditkartendaten aussperren können. Also voll die wichtige Sache für euren Alltag im Netz. Gleich in der zweiten Stunde dieses Blumens geht es dann um die nicht so schönen Dinge, nämlich darum, dass es durchaus auch Probleme gibt, wenn wir über Https reden und dass es nicht alles immer so sicher ist, wie wir es als Nutzer vielleicht gerne hätten. Ihr seid im Chaosradio, da gibt es die Nerd-News und die werden heute präsentiert von Linus Busch.
+
+01:02:03.473 --> 01:03:34.533
+<v SPEAKER_9>Die Polizei hat Ende Juni Räume des Vereins Zwiebelfreunde und Wohnungen von Vorstandsmitgliedern durchsucht. Der Verein hatte Spenden für den E-Mail-Anbieter Rise abgesammelt, der bei Datenschutzaktivisten beliebt ist. Der Chaos Computer Club kritisiert die Polizei und sagt, die Durchsuchungen seien schwere Eingriffe in die Grundrechte. Wer ein offenes WLAN anbietet, kann nicht mehr abgemahnt werden, wenn darüber illegale Inhalte bereitgestellt werden. Das hat der Bundesgerichtshof in einem Grundsatzurteil entschieden und damit das neue Telemediengesetz bestätigt. Das war 2017 geändert worden, um die Risiken für WLAN-Betreiber wie zum Beispiel Freifunk zu reduzieren. So sollte die Versorgung mit freien Netzen in Deutschland verbessert werden. Allerdings können WLAN-Anbieter dazu verpflichtet werden, bestimmte Inhalte zu sperren. Die EU-Kommission überlegt, die Umstellung zwischen Sommer- und Winterzeit abzuschaffen. Deshalb können alle EU-Bürger online abstimmen und ihre Meinung zur Zeitumstellung sagen. Abgefragt wird auch, ob danach dauerhaft Sommer- oder Winterzeit beibehalten werden sollte. Wer mitreden will, findet die Abstimmung auf der Seite der Kommission unter ec.europa.eu. Die Internet Engineering Task Force hat einen Standard beschlossen, mit dem Anfragen an das Domain Name System zukünftig verschlüsselt übertragen werden sollen. Das DNS ist so was wie das Telefonbuch des Internets und war bisher ungeschützt. Damit waren Rückschlüsse auf die besuchten Seiten möglich oder Nutzer konnten umgeleitet werden. Beide Lücken sollen mit dem sogenannten DNS over Https-Standard geschlossen werden.
+
+01:03:34.733 --> 01:03:40.233
+<v SPEAKER_2>Da sind wir doch wieder beim Thema, oder was? Das waren die NerdNews mit Linus Busch im Chaosradio auf Fritz.
+
+01:03:41.633 --> 01:03:45.553
+<v SPEAKER_11>Radio hat einen Namen.
+
+01:04:49.138 --> 01:06:20.038
+<v SPEAKER_2>Tachchen, hier ist das Chaosradio auf Fritz der Blue Moon, den wir zusammen mit dem Chaos Computer Club machen, um über dieses Internet zu sprechen und die Dinge, die damit zu tun haben. Geht auch viel um Technik, viel um Netzpolitik. Das sind die Themen, die wir hier alle zwei Monate auf Fritz im Blue Moon mit dem Chaos Radio besprechen. Heute anwesend sind in Skype quasi, also irgendwo weit draußen Anna-Lena und Mutax. Tach normal. Nibbler und Danimo hier bei mir im Studio in Potsdam. Und wir reden über Https. Gerade in den Nerd News waren ja eigentlich zwei Meldungen dabei, die für uns heute sowieso relevant sind vom Thema her auch. Einmal die Nummer mit der abgeschafften WLAN-Störerhaftung. Jetzt dürfen Leute, die in ihren Cafés zum Beispiel WLANs offen anbieten, das ohne Bedenken machen, dass sie abgemahnt werden dafür, dass irgendwelche Leute bei denen im Café sitzen und böse illegale Filme runterladen oder Filme hochladen. Oder solche Geschichten machen. Das bedeutet, es ist auf jeden Fall viel sicherer, für Leute öffentliche WLANs anzubieten. Es wird also in Zukunft vielleicht mehr davon geben. Umso wichtiger ist es, dass alles, was ihr macht in diesen öffentlichen Café WLANs, während ihr euren Latte Macchiato schlürft, per Https abgewickelt wird. Weil nur dann ihr euch sicher sein könnt, dass nicht andere Menschen, die gerade ihren Mokkalatte schlürfen, mitlesen können, was ihr gerade in eurem Café auf dem hippen Notebook macht. Das ist die eine Meldung, die andere ist absurd. Erzähl kurz bitte die Geschichte dahinter, Danimo.
+
+01:06:20.058 --> 01:06:22.078
+<v SPEAKER_3>Du meinst, welche meinst du jetzt konkret?
+
+01:06:22.098 --> 01:06:22.798
+<v SPEAKER_2>Du hast mir gerade gesagt...
+
+01:06:25.118 --> 01:06:30.938
+<v SPEAKER_3>Du warst noch bei der Chaosradio-Meldung, aber die andere Geschichte kann ich dir auch noch erzählen.
+
+01:06:30.958 --> 01:06:32.318
+<v SPEAKER_2>Ich hab irgendwas vertauscht, glaub ich.
+
+01:06:32.338 --> 01:06:40.738
+<v SPEAKER_3>Jaja, kein Problem. Also das eine ist, dass wir Dns-Anfragen kriegen, die auch verschlüsselt sind zukünftig.
+
+01:06:40.758 --> 01:06:43.198
+<v SPEAKER_2>Stimmt, genau. Also auch Dns-Anfragen.
+
+01:06:45.018 --> 01:06:53.838
+<v SPEAKER_3>Also Dns ist ganz einfach. Dns ist das Telefonbuch fürs Internet. Ich sag, ich hätte gerne fritz.de und...
+
+01:06:53.858 --> 01:06:55.658
+<v SPEAKER_2>Und das Domain-Namesystem sagt...
+
+01:06:55.678 --> 01:07:06.598
+<v SPEAKER_3>Genau, der Computer kann damit erst mal nichts anfangen. Aber wenn wir dann mal den Computer fragen, wer steht dann eigentlich hinter fritz.de, dann sagt er mir ne Zahl mit...
+
+01:07:06.618 --> 01:07:07.358
+<v SPEAKER_2>Also ne IP-Adresse.
+
+01:07:07.798 --> 01:07:13.458
+<v SPEAKER_3>ne IP-Adresse und damit kann er dann Kontakt aufnehmen.
+
+01:07:13.478 --> 01:07:17.898
+<v SPEAKER_2>Okay, und auch diese Zahlen werden in Zukunft per Https verschlüsselt übertragen, stimmt's?
+
+01:07:17.918 --> 01:07:25.138
+<v SPEAKER_3>Genau, weil Beispiel von Nibbler eben gerade, ich geh auf ne Seite, um mich zu informieren über irgendwelche Krankheiten oder so.
+
+01:07:25.158 --> 01:07:32.978
+<v SPEAKER_2>Ach, jetzt kann doch nicht mal der Provider oder irgendjemand anderes rausfinden, welche Websites ich besuche im Sinne von die URL-Mitlesung.
+
+01:07:32.998 --> 01:07:38.918
+<v SPEAKER_3>Fast, es gibt noch einen kleinen Hintertür. Wir sind verdammt dicht dran.
+
+01:07:38.938 --> 01:07:40.458
+<v SPEAKER_2>Okay, sag.
+
+01:07:40.478 --> 01:07:46.758
+<v SPEAKER_3>Also, wenn du die SSL- oder TLS-Verbindung aufbaust.
+
+01:07:46.778 --> 01:07:47.738
+<v SPEAKER_2>Also die sichere Verbindung.
+
+01:07:47.758 --> 01:07:48.718
+<v SPEAKER_3>Genau, die sichere Verbindung.
+
+01:07:48.738 --> 01:07:49.958
+<v SPEAKER_2>Mit der Https funktioniert.
+
+01:07:49.978 --> 01:08:04.918
+<v SPEAKER_3>Genau, da gibt es nämlich das Problem, dass der Server mehrere Seiten hosten kann. Und dann musst du dem Server erstmal sagen, ich würde aber gerne ne Verbindung zu fritz.de aufbauen. Und nicht zu Antenne Brandenburg oder so.
+
+01:08:04.938 --> 01:08:07.038
+<v SPEAKER_2>Auf einer IP-Adresse sind verschiedene Websites.
+
+01:08:07.058 --> 01:08:08.698
+<v SPEAKER_3>Genau.
+
+01:08:08.718 --> 01:08:15.238
+<v SPEAKER_2>Und wenn ich das machen muss, dann kann aber doch wieder der Provider rausfinden, bei welchem Server ich gerade anklopfe.
+
+01:08:15.258 --> 01:08:25.038
+<v SPEAKER_3>Ganz genau. Und da gibt es jetzt, da haben sich quasi die Elders of the Internet, die IETF, die hat sich jetzt getroffen in Mutax, Anna-Lena, wo?
+
+01:08:25.058 --> 01:08:25.778
+<v SPEAKER_4>Montreal.
+
+01:08:25.798 --> 01:08:29.818
+<v SPEAKER_3>In Montreal. Und die haben sich jetzt was ausgedacht, wie sie auch das noch wegkriegen.
+
+01:08:31.018 --> 01:08:42.698
+<v SPEAKER_2>Aber wir sind fast da, dass jetzt noch nicht mal jemand rausfinden kann, dass ich zum Beispiel eine Website von irgendeinem Spezialarzt besuche, worüber man dann vielleicht schließen könnte auf meine Erkrankung.
+
+01:08:43.938 --> 01:08:51.238
+<v SPEAKER_5>Du musst halt noch das Zertifikat dann nur verschlüsselt übertragen. Weil im Zertifikat steht ja auch drin, für welcher Host das Zertifikat gültig ist.
+
+01:08:51.798 --> 01:08:57.038
+<v SPEAKER_2>Ach so, also ich muss noch nicht mal die IP-Adresse an sich extra verschlüsseln.
+
+01:08:57.058 --> 01:08:59.618
+<v SPEAKER_1>Wie meinst du das?
+
+01:08:59.798 --> 01:09:01.098
+<v SPEAKER_2>Ich hab dich nicht verstanden.
+
+01:09:01.118 --> 01:09:04.078
+<v SPEAKER_4>Jetzt haben wir uns glaube ich ein bisschen verlaufen.
+
+01:09:06.038 --> 01:09:21.078
+<v SPEAKER_6>Du fragst verschlüsselt, den nimmst du aber nach dem Namen. Bekommst du einen Namen, quatsch nach der Adresse. Verbindet sich zu der IP-Adresse, sagst dir erst mal momentan noch unverschlüsselt, ich hätte gerne diesen Host nehmen und dann kriegst du ein Zertifikat und eine sichere Verbindung.
+
+01:09:21.098 --> 01:09:42.578
+<v SPEAKER_2>Und genau den Punkt, wo du ein einziges Mal diesen einen Host nach dem Namen fragen musst, das ist die Meldung aus den NerdNews gewesen, die auch toll ist und für uns relevant, weil Https jetzt noch weitreichender eingesetzt wird, also noch mehr Privatsphäre für uns im Internet gilt, wenn wir über Https surfen und dann ist noch was passiert, wo Danimo gerade kurz einen Lachanfall bekommen hat.
+
+01:09:43.158 --> 01:09:46.698
+<v SPEAKER_3>Genau, wir haben eben gerade über die RU-Zertifikate gesprochen.
+
+01:09:46.758 --> 01:09:56.598
+<v SPEAKER_2>Aha, also die Zertifikate, denen alle vertrauen, also die, die ganz unten sind und wenn die irgendwas unterzeichnen, dann ist es auf jeden Fall vertrauenswürdig.
+
+01:09:56.618 --> 01:09:59.698
+<v SPEAKER_6>Und die Frage ist, warum ist da noch nicht jemand hingegangen und wollte einfach sowas haben?
+
+01:09:59.718 --> 01:10:00.858
+<v SPEAKER_2>Na ist da bestimmt passiert.
+
+01:10:00.878 --> 01:10:17.658
+<v SPEAKER_3>Genau und jemand hat sich bei Mozilla gemeldet, die Leute hinter Firefox und hat gesagt, ich habe hier den offiziellen Antrag und der beantragt, dass die Firma Honest Ahmets used cars and certificates.
+
+01:10:21.638 --> 01:10:27.078
+<v SPEAKER_2>Also ehrlich, Herr Achmed, gebrauchte Ausschrauben und Zertifikate.
+
+01:10:27.098 --> 01:11:14.818
+<v SPEAKER_3>Genau, gehostet unter www.honestachmed.dünn.dns.org. Doch bitte auch in der Lage sein sollte, Zertifikate auszustellen. Und eigentlich wäre das alles ganz cool. Es würde nur er Zertifikate ausstellen und vielleicht noch irgendwie seine Cousins. Die sind auch alle ganz vertrauenswürdig. Und das ist natürlich ganz klar eine Parodie von jedem jemandem, der die bittere Realität zu diesem Zeitpunkt zeigen wollte. Nämlich, dass man einfach, wenn man genug Marktmacht hat, da geht es dann auch irgendwann so, wenn wir too big to fail sind, dann habt ihr eh keine Chance mehr und dann könnt ihr uns nicht mehr abrasieren.
+
+01:11:15.618 --> 01:11:22.218
+<v SPEAKER_6>Also die Alternative wäre halt, wenn man eine große CA einfach ausschaltet, dass 20 Prozent der Internetseiten plötzlich ein rotes Fenster geben.
+
+01:11:22.238 --> 01:11:29.958
+<v SPEAKER_3>Genau, das ist dann wie bei Banken, dann müssen die irgendwie gestützt werden oder man muss sie halt drinnen halten im System, sonst werden alle ganz unglücklich.
+
+01:11:29.978 --> 01:11:31.418
+<v SPEAKER_2>Okay, aber warte, warte, warte, also Ornest Achmed.
+
+01:11:31.438 --> 01:11:32.418
+<v SPEAKER_5>Aber, aber, aber, aber, aber?
+
+01:11:32.438 --> 01:11:32.718
+<v SPEAKER_3>Ja.
+
+01:11:32.738 --> 01:11:50.518
+<v SPEAKER_2>Ornest Achmed, der Typ, der gesagt hat, ich verkaufe Gebrauchtwagen und gebrauchtes Handy, ich finde das so geil, der hat bei Mozilla gesagt, bitte nehmt mich auf in die Riege der Leute, wo euer Root-Zertifikat sagt, ja, den trauen wir. Und Mozilla hat gesagt, machen wir, oder was?
+
+01:11:50.538 --> 01:12:40.478
+<v SPEAKER_3>Nein, Mozilla hat natürlich sofort gesagt, Issue closed, natürlich nicht. Aber darauf meldeten sich dann ganz viele Leute und sagten, wieso? Also, andere Leute sind jetzt auch nicht sehr viel vertrauenswürdiger und die werden bei euch aufgenommen. Und das war natürlich genau Ziel der Übung, dass man gesagt hat, ok, solange man nur irgendwie genug Geld auf diese Sache drauf wirft und irgendwie genug argumentiert und vielleicht einen Wirtschaftsprüfer an der Hand hat, der einem irgendwie das Seal of Approval, also den Stempel dafür gibt, dann ist das letztendlich alles nur eine Frage des Geldes. Und das kann ja irgendwie nicht sein. Und vor allen Dingen diese Argumentation, wenn ich einmal groß genug bin, dann kann ich tun und lassen, was ich möchte. Dann kann ich Zertifikate ausstellen mit schlechter Verschlüsselung nach nicht mehr gemäß der Standards, die mal vereinbart wurden.
+
+01:12:40.498 --> 01:13:01.218
+<v SPEAKER_6>Als kleine Hausaufgabe vielleicht mal in diese Liste der Zertifikatsstellen rein zu gucken, was da alles für Firmen drin sind und die persönliche Abwägung. Wird ich diese Entität jetzt trauen oder nicht? Denn viele sind auch staatlich, teilweise von kleineren Staaten oder von Firmen, von denen man noch nie was gehört hat. Ist spannend, da mal durchzugucken und sich eben diese Frage zu stellen.
+
+01:13:01.238 --> 01:13:02.738
+<v SPEAKER_2>Mutax?
+
+01:13:02.758 --> 01:13:12.218
+<v SPEAKER_5>Genau, also da sind halt irgendwelche chinesischen Behördenseiten drin, genauso wie irgendwie türkische und ähnliches. Und die dürfen halt, wie wir vorhin gesagt haben, für jede beliebige Seite ein Zertifikat ausstellen.
+
+01:13:12.478 --> 01:13:27.218
+<v SPEAKER_2>Und eure Sorge ist sozusagen, dass es unter diesen vielen, vielen Betreibern welche gibt, die sich da quasi reingeschlichen haben, weil sie Geld auf den Tisch gelegt haben und sich dadurch vertrauenswürdiges Aussehen erkauft haben zum Beispiel, obwohl die eigentlich nicht vertrauenswürdig sind.
+
+01:13:27.218 --> 01:14:10.978
+<v SPEAKER_5>Naja nun, wir haben, also a, wissen wir das, wir haben mittlerweile rausbekommen, Google hat rausbekommen, dass eben Zertifizierungsstellen, Zertifikate für Domains, die Google intern benutzt oder auch die Google extern benutzt, ausgestellt hat, weil sie mal was testen wollten. Und diese internen Testzertifikate sind dann irgendwie im Internet gelandet. Und dann gab es vor ein paar Jahren den Fall von, ich glaube, Digi Notar war das in den Niederlanden, was dann dazu geführt hat, dass diese Zertifikate sehr schnell, sehr unvertrauenswürdig waren und man in den Behörden in Holland, weil sie sehr, sehr viel E-Government hatten, wieder zu Papier und Bleistift gegangen ist, weil die ganzen Server nicht mehr funktioniert haben, weil die Zertifikate plötzlich abgelaufen bzw. zurückgezogen worden waren.
+
+01:14:10.998 --> 01:14:20.558
+<v SPEAKER_3>Digi Notar muss man noch mal ganz klar sagen, das ist eine Zertifizierungsstelle in den Niederlanden, die so komplett kaputt waren, dass man quasi alles zurückziehen mussten, die mussten zumachen.
+
+01:14:20.878 --> 01:14:21.798
+<v SPEAKER_2>Ach krass.
+
+01:14:22.518 --> 01:14:27.658
+<v SPEAKER_5>Ich glaube, man konnte sich beliebige Zertifikate ausstellen oder so als Kunde über irgendeine Lücke oder so. Ich weiß es nicht mehr genau.
+
+01:14:27.678 --> 01:14:41.158
+<v SPEAKER_3>Also das war schon wirklich krass, wo man sich dann fragen muss, okay, ihr seid doch auditiert worden und ihr werdet regelmäßig auditiert, wie kann sowas durchkommen, kommt natürlich daher, dass da vor allen Dingen Prozesse dokumentiert werden und nicht nach Sicherheitslücken gesucht wird.
+
+01:14:41.718 --> 01:15:00.838
+<v SPEAKER_2>Also es ist Problem, dass es auch heute noch relativ simple Systeme gibt oder Möglichkeiten für Leute, die sich auskennen, in diese Zertifizierungsstellen, in deren Root-Zertifikate, die Vertrauenswürdigkeit von sich selber reinzubasteln, obwohl da gar keine Vertrauenswürdigkeit da ist.
+
+01:15:00.858 --> 01:15:28.218
+<v SPEAKER_5>Also einfach zum Beispiel die gesamten Prüfungsprozesse umzugehen. Also selbst wenn eben der private Schlüssel in diesem Hardware Security Module weggeschlossen ist, wenn ich die IT-Systeme von der Zertifizierungsstelle so weit unter meiner Kontrolle habe, dass sie sagen kann, na ja, mach mir doch mal ein Zertifikat für diese Webseite von mir. Und die das dann machen, weil das sind ja alles automatisierte Prozesse. Da sitzt ja kein Mensch mehr und prüft jetzt mit Papier und Siegel und ruft da an und macht irgendwas. Das sind ja alles geschlossene IT-Systeme.
+
+01:15:29.258 --> 01:15:34.078
+<v SPEAKER_2>Und es gibt eben die Möglichkeit als Fazit darunter, diese IT-Systeme zu überlisten.
+
+01:15:34.098 --> 01:15:36.978
+<v SPEAKER_10>Punkt.
+
+01:15:36.998 --> 01:15:49.918
+<v SPEAKER_3>Jedes hinreichend komplexe System ist auf die eine oder andere Weise angreifbar. Und da ist halt die Frage, wie viel Mühe gibt man sich, das zu verhindern? Und das ist halt ein laufender Prozess und laufende Prozesse kosten halt besonders viel Geld.
+
+01:15:50.578 --> 01:16:01.278
+<v SPEAKER_2>Das bedeutet, einer der zentralen Knackpunkte, die Https unsicher machen können, ist der Schritt, wo einem Anbieter das Vertrauen ausgesprochen wird.
+
+01:16:02.338 --> 01:16:15.018
+<v SPEAKER_6>Genau, und halt einfach die hohe Anzahl an Zertifizierungsstellen, die es gibt. Und bei jeder Zertifizierungsstelle gibt es eine bestimmte Wahrscheinlichkeit, dass sie kompromittiert ist. Wenn man dann hunderte davon hat, dann multipliziert sich natürlich auch diese Wahrscheinlichkeit.
+
+01:16:15.298 --> 01:16:16.618
+<v SPEAKER_2>Nehmen wir mal ein Beispiel.
+
+01:16:16.638 --> 01:16:24.038
+<v SPEAKER_6>Und es reicht eine Zertifikatsstelle, um ein grünes Schlösschen zu bekommen. Also eine Beliebige, was es in Hunderten reicht aus, kompromittiert zu sein.
+
+01:16:24.058 --> 01:17:12.738
+<v SPEAKER_2>Man muss halt die Richtige finden, quasi als jemand, der betrügen möchte. Mal ein Beispiel. Ich möchte mir online einen Fernseher kaufen und ich bezahle diesen Fernseher per Paypal beispielsweise. Und dann werde ich über irgendwelche dubiosen Umleitungslinks auf eine Webseite geschickt. Die sieht zwar original aus wie Paypal und funktioniert auch ganz toll und hat tolle Eingabefelder. Bitte geben Sie hier Ihre Kreditkartennummer ein und hat auch einen Service-Knopf unten dran, wo ich denke, ach Mensch, da kann ich auch mich hinwinden, Service und so. Und dann ist aber die Wahrheit dahinter, das sind Betrüger, die haben die Webseite nachgebaut und sie wollen damit nur meine Kreditkartendaten abgreifen. Und die Möglichkeit besteht aber, wenn ich euch richtig verstehe, dass trotzdem ich oben links in meinem Browser ein grünes Schlösschen angezeigt bekomme. Und deswegen dachte ich bisher mit Recht davon ausgehe, dies ist wirklich Paypal.
+
+01:17:15.538 --> 01:17:23.498
+<v SPEAKER_6>Ach so, also das kann man auch mit einem illegal ausgestellten Zertifikat machen, aber dafür sind die in der Regel zu wertvoll, aber Mutax ja.
+
+01:17:23.518 --> 01:17:39.578
+<v SPEAKER_5>Genau, also das was wir eben besprochen haben war, ich bin zum Beispiel Betreiber von einem bösartigen Internet-Café oder habe gerade mit einem offenen Accesspoint durch die Gegend und spiele vor ich sei die Paypal-Seite. Das heißt, jemand geht per Hand paypal.com in seinen Browser ein.
+
+01:17:39.598 --> 01:17:41.958
+<v SPEAKER_2>Ach und mein Café tut so, ah.
+
+01:17:41.978 --> 01:18:06.678
+<v SPEAKER_5>Genau, und dadurch, dass ich mir eben ein Zertifikat für meinen privaten Schlüssel von meinem privaten Web-Server habe ausstellen können, kann ich dann so tun, als sei ich Paypal. Und der Browser vertraut mir dann und das sieht dann so aus, als wäre ich eben der legitime Betreiber von paypal.com. Das, was du gerade beschrieben hast, ist, dass ich zum Beispiel so ein Vertipperdomain habe mit paypal.com, wo das A dann wie ein A aussieht, aber ein kyrillischer Buchstabe ist, der in der Möglichkeit gar kein A ist.
+
+01:18:07.598 --> 01:18:14.438
+<v SPEAKER_2>Und das aber vom Prinzip desgleichen. Also auch da hätte jemand sich reingesneakt bei irgendeiner Zertifizierungsschale oder nicht?
+
+01:18:15.318 --> 01:18:42.458
+<v SPEAKER_5>Ne, das ist relativ trivial, weil die, wie gesagt, zum einen sind die Prozesse ja alle automatisiert. Das heißt, das prüft niemand. Solange ich dann eine Firma nachweisen kann, die einen plausiblen Namen hat, kriege ich halt ein Zertifikat dafür. Viele Zertifizierungsstellen prüfen auch tatsächlich nur, ob ich diese Domain kontrolliere. Das heißt, wenn ich eine Webseite betreibe, prüfen sie, ob sie unter dieser Webseite mich erreichen. Und dann bekomme ich ein Zertifikat für diese Webseite.
+
+01:18:43.478 --> 01:18:47.698
+<v SPEAKER_2>Toll, und dann habe ich eine Webseite mit einem kyrillischen A drin und werde aber Problems durchgewunken.
+
+01:18:48.698 --> 01:19:26.978
+<v SPEAKER_5>Ganz genau, deswegen muss man tatsächlich als Anwender auch an der Stelle nicht nur gucken, ob das ein grünes Schloss ist, was uns seit Jahren alle Leute predigen, sondern eben leider auch, ob das wirklich die richtige Domain ist. Und da machen es sehr, sehr viele Anbieter einem wirklich, wirklich sehr, sehr schwer, weil sie für alle möglichen Aktionen oder verschiedene Funktionen immer komisch lustige, andere Domains benutzen, die nicht ein Subdomain von ihrer Hauptdomain zum Beispiel sind. Das heißt, nicht sowas wie blumen.fritz.de oder promotion.fritz.de, sondern promotion-sommer018-fritz.de, was ein völlig anderes Domain sein kann, das nichts mit fritz.de zu tun hat.
+
+01:19:27.278 --> 01:19:37.298
+<v SPEAKER_2>Okay, und was auch natürlich ein guter Trick ist dann einfach, so eine Domain, die so aussieht, als wäre sie zugehörig zu irgendeinem großen Player irgendwie, und die ist aber in Wahrheit eine ganz andere.
+
+01:19:37.618 --> 01:19:44.398
+<v SPEAKER_6>In dem Moment, wo so ein Newsletter von der Phishing-Mail nicht mehr zu unterscheiden ist, sollte man fragen, ob man dem Anbieter noch vertrauen möchte.
+
+01:19:48.878 --> 01:20:04.818
+<v SPEAKER_2>Na gut, also es heißt jetzt aber, ich müsste, wenn ich ganz sicher gehen will, dass meine Zahlungsdaten gerade sicher übertragen werden, immer nachdem ich das Schloss gesehen habe noch in die Adressleiste reinklicken und ganz genau mir jeden Buchstaben angucken, ob das nicht vielleicht irgendein ähnlich aussehendes Zeichen ist.
+
+01:20:05.578 --> 01:20:16.938
+<v SPEAKER_5>Ja und von links gucken, ob das wirklich auf paypal.com in dem Fall endet und nicht auf schnurziputz.paypal.com. Ich hab jetzt hier noch irgendwas.ru.
+
+01:20:16.958 --> 01:20:20.678
+<v SPEAKER_2>Hä, man, das finde ich gerade richtig enttäuschend. Also es gibt quasi...
+
+01:20:20.698 --> 01:20:28.638
+<v SPEAKER_6>In Zweifel so Alltagstipp hilft das, wenn man für so Seiten, die man häufiger benutzt, zumindest bei den Benutzernamen, sich vom Browser autocompleten lässt, also dass man den Browser sagt hier...
+
+01:20:28.658 --> 01:20:43.398
+<v SPEAKER_2>Ah, weil der Browser nur auf jeden Fall die richtige Website dann nimmt. Ah, ich verstehe. Weil der Browser genau checkt, ob diese eine Zeichenkette in der Adressleiste steht. Und wenn nicht, dann bekomme ich da nicht mein autocomplete oder wenn ich zum Beispiel...
+
+01:20:43.898 --> 01:20:46.138
+<v SPEAKER_5>Passwortmanager sind generell gut.
+
+01:20:46.598 --> 01:20:48.238
+<v SPEAKER_2>Ja, okay, das verstehe ich.
+
+01:20:48.498 --> 01:20:58.058
+<v SPEAKER_5>Passwortmanager sind ja generell gut, weil dann kann man für jede Seite ein eigenes, sehr kompliziertes Passwort nehmen, was man sich selber nicht merken muss. Der Browser merkt sich das und kann es auch automatisch erzeugen und alles ist gut.
+
+01:20:58.078 --> 01:21:15.958
+<v SPEAKER_2>Aber ich bin trotzdem gerade ein bisschen desillusioniert jetzt, weil ich habe das Gefühl, man sagt immer so, ja, wenn Webseiten sich ausweisen können und dann ist da ein grünes Schloss und dann kann ich davon ausgehen, was ich hier eingebe, das ist sicher. Und ihr sagt jetzt aber, Konrad, einfach nein.
+
+01:21:15.978 --> 01:21:16.438
+<v SPEAKER_3>Einfach nein.
+
+01:21:17.898 --> 01:21:56.178
+<v SPEAKER_5>Es erfüllt ja diese drei Punkte. Ich habe eine verschlüsselte Verbindung zu diesem Web-Server. Es kann also niemand anderes angucken. Ich habe eine Integrität der Daten, niemand kann sie auf den Weg ändern und ich habe die Authentizität zu der Adresse, die da angezeigt wird. Dass diese Adresse, die angezeigt wird, jetzt das Paypal mit dem kyrillischen sozusagen A ist, das ist halt das Problem des Anwenders. Und das ist genau die Schnittstelle, der es eben schwierig ist, weswegen Social Engineering und weswegen Phishing halt funktionieren, weil es immer noch diesen Schritt gibt, wo der Mensch, der da vorsitzt, sich selbst und der Techniküberlassene ist, zu prüfen, ob das alles so seine Richtigkeit hat.
+
+01:21:57.058 --> 01:22:08.798
+<v SPEAKER_2>Okay, dann nehme ich nur mit als Praxistipp, so viele Passwörter wie möglich einfach über einen Passwortmanager ausfüllen lassen, automatisch, weil der ist nicht so leicht auszutricksen, wie ich als Mensch es bin mit meinen Augen.
+
+01:22:08.818 --> 01:22:19.998
+<v SPEAKER_3>Und seit die zwei Faktoren und Handifikation unterstützen, da dann den zweiten Faktor einschalten, weil selbst wenn sie dann ein Passwort haben, den zweiten Faktor kriegen sie halt nicht.
+
+01:22:20.018 --> 01:22:46.518
+<v SPEAKER_2>Also Beispiel Facebook kann man einstellen, dass du immer ein Code bekommst auf dein Handy, bevor du dich einloggen kannst, wenn du es an einem neuen Browser machst, sodass du nicht nur mit deinem Passwort sich irgendjemand bei Facebook für dich einloggen kann. Okay, das sind die zwei Praxistipps. Aber die Botschaft ist, Https ist toll und super, aber es schützt nicht davor, dass deine Daten geklaut werden, selbst wenn du darauf achtest, dass Zertifikat und Verschlüsselung Topi sind.
+
+01:22:46.538 --> 01:23:30.538
+<v SPEAKER_3>Genau. Und noch eine andere Sache, nur weil eine Seite verschlüsselt ist, und das ist auch eine ganz wichtige Komponente, heißt das nicht, dass die Daten, die du über die Verbindung bekommst, in irgendeiner Weise seriös sind oder keinen Chint-Ruder treiben. Also stell dir vor, du bist auf einer Schlüssel-Webseite, wir sind jetzt hier beim Beitragsfinanzierten Rundfunk. Das ist schön, da wo es keine Beitragsfinanzierung gibt, muss sich jemand über Werbung finanzieren. Werbung wird über, wird zum besten Preis von Drittanbietern auf dieser Seite geschaltet. Und an der Stelle kann ich halt auch Schadcode ausliefern, wenn ich so einen Werbeplatz buche. Und dass dieser Schadcode über Https verschlüsselt ist, ja mei.
+
+01:23:30.558 --> 01:24:07.618
+<v SPEAKER_6>Und jemand, der Schadcode hat, möchte den natürlich an möglichst viele Leute ausspielen. Und da sind Werbeanzeigen ein prima Weg, denn die sind so günstig pro Person. Also du erreichst so viele Personen damit pro Geldeinheit, dass es sich einfach lohnt, die da zu schalten. Weil es bringt dir als Angreifer sehr viel mehr als dem Werbetreibenden. Das heißt, du kannst da das Doppelte oder Dreifache zahlen und erreichst eben sehr viele Leute, die dann deinen Schadcode ausführen. Deswegen ist das mit den Werbeanzeigen halt. Also ohne Adblocker im Internet unterwegs sein, hat halt so deinen eigenen Risiken.
+
+01:24:07.638 --> 01:24:19.998
+<v SPEAKER_2>Genau, darum merke, auch wenn sich Zeitungswebsites darüber beschweren, dass du denen ihr Geld klaust, weil du deinen Adblocker anhast. Den Adblocker solltest du auch anhaben, einfach nur um dich selber zu schützen.
+
+01:24:20.018 --> 01:24:23.618
+<v SPEAKER_3>Das ist eigentlich grundlegende Verteidigungsstrategie im Internet.
+
+01:24:25.018 --> 01:24:32.438
+<v SPEAKER_2>Und wir merken uns auch, man kann auch Müll verschlüsseln. Und der kommt dann auch an, weil er entschlüsselt wird.
+
+01:24:32.458 --> 01:24:33.998
+<v SPEAKER_5>Das ist dann sicherer Müll.
+
+01:24:34.018 --> 01:24:50.818
+<v SPEAKER_2>Das ist sicherer Müll. Dieser Schadencode ist definitiv nicht weniger schädlich geworden auf dem Weg zu meinem Rechner. Hey, hey, schön. Okay, weiß der ernüchternde Teil und ich hab fast das Gefühl, es geht noch weiter. Also wir haben jetzt mal gerade eine Schwachstelle gesagt. Komm, sag noch eine Mutax.
+
+01:24:51.718 --> 01:25:48.018
+<v SPEAKER_5>Na, das andere Problem ist, wenn jetzt so ein Missgeschick passiert, dass so ein Server mal gehackt wurde und dieser private Schlüssel und das Zertifikat abhandengekommen sind, dann möchte man ja irgendwie möglichst schnell alle informieren, dass dieses Zertifikat jetzt nicht mehr vertrauenswürdig ist, weil es da im Internet irgendwie frei rumgeistert oder jemand mitgenommen haben könnte. Da hat man sich auch Gedanken zugemacht. Das nennt sich zum Beispiel Certification Location List. Das ist also im Prinzip eine große Liste, wo dann eine Certifizierungsstelle reinschreiben kann. Meine Kunden haben mir gesagt, dass folgende eigentlich zurzeit noch gültigen Zertifikate leider kompromittiert sind und jetzt nicht mehr vertrauenswürdig sind. Das Problem daran ist, dass diese Listen mitunter sehr, sehr groß werden. Ich hatte das auch gestern mal geguckt. Ich glaube von Commodo war das. Ja, von Commodo war diese eine Liste gestern bei 3, 3 Megabyte. Und im Prinzip müsste man die sehr regelmäßig runterladen. Das heißt, jedes Handy auf der Welt müsste eigentlich diese 3 Megabyte runterladen.
+
+01:25:48.398 --> 01:25:57.278
+<v SPEAKER_2>Ach, der Browser muss man natürlich selber Bescheid wissen. Also jeder Browser muss quasi immer checken, sind irgendwelche Zertifikate gemobst worden und deswegen nicht mehr vertrauenswürdig.
+
+01:25:57.638 --> 01:27:03.438
+<v SPEAKER_5>So, und dann hat man gemerkt, diese Zertifikation List, diese großen Listen, die bringen ja nicht viel. Machen wir das mal anders. Wenn der Browser so ein Zertifikat präsentiert bekommt, dann kann er doch mal bei der Zertifizierungsstelle nachfragen, ob diese Zertifikatin jetzt noch gültig und vertrauenswürdig ist. Das Ganze ernte sich OCSP, das war die Online Certification S, ich weiß nicht mehr was, Protokoll? Anna-Lena, du weißt das? Also OCSP war dann die Idee, dann haben aber die Zertifizierungsstellen gesagt, das ist so viel zu viel Aufwand. Wenn ich jetzt hier ein Zertifikat ausstelle für Google, dann kommen ja alle Leute, die auf Google zugreifen, dauernd zu mir und fragen mich nach, gilt das Zertifikat noch, gilt das Zertifikat noch, das kann ich nicht leisten. Ich habe gar nicht so viel Server, vor allem kostet mich das zu viel Geld. Also gibt es da draußen ganz viele Zertifizierungsstellen, die dann diese OCSP-Endpunkte, diese Server ausgeschaltet haben. Oder wenn sie das nicht gemacht haben, regelmäßig überlastete Server haben, was dann dazu führt, dass manchmal solche Browser sagen, ja die OCSP-Anfrage ist fehlgeschlagen, ich zeig dir jetzt die Webseite nicht an, dann klicken die Leute das weg. Oder es wird halt gar nicht geprüft.
+
+01:27:03.958 --> 01:27:17.538
+<v SPEAKER_2>Also Fazit, der Browser weiß eigentlich nicht, ob die Seite vielleicht geklaut worden ist, wenn er nicht sich quasi jedes Mal, bevor eine Webseite aufruft, all diese Listen runterlädt, um sie zu checken.
+
+01:27:17.558 --> 01:28:11.318
+<v SPEAKER_5>Oder es eben online prüft und da ist jetzt eine Hoffnung, dass es da bald ein neues System gibt, dass das über ein mathematisches Verfahren mit Blumenfiltern, ich sage jetzt nur den Namen, ich erkläre es nicht, dafür sorgt, dass man wirklich nur noch einmal 10 Megabyte drunter laden muss und danach jeden Tag 500 Kilobyte. Und das ist auch auf dem Handy machbar. Das ist aber noch ein langer Weg, bis das funktioniert, weil viele von diesen Alternativen und Techniken gerade einfach nicht skalieren. Und es gibt eine Untersuchung von einem Kollegen, dass tatsächlich auf den mobilen Endgeräten nicht ein einziger Browser wirklich alles richtig prüft. Also auf Mobile ist da gar nichts, nur auf den Desktop Rechnen haben wir einen ganz interessanten Effekt. Es gibt ja die normalen Zertifikate und diese Extended Validated EV Gold Zertifikate. Wenn man dann mehr Geld für bezahlt, die Browser da auch die Listen regelmäßig aktualisieren und runterladen. Und wie die normalen Zertifikate halt nicht.
+
+01:28:11.338 --> 01:28:17.058
+<v SPEAKER_4>Auf die wollte ich eigentlich auch noch mal zu sprechen kommen, weil die sehen auch im Browser anders aus.
+
+01:28:17.798 --> 01:28:29.378
+<v SPEAKER_2>Das ist also einer der Punkte, warum es sich doch noch lohnt, für Zertifikate Geld auszugeben als Webseitenbetreiber. Denn du kannst dir zum Beispiel über so eine Technik eben doch noch mehr Vertrauen erkaufen oder Vertrauenswürdigkeit.
+
+01:28:29.638 --> 01:28:31.918
+<v SPEAKER_3>Und was es wert ist, gucken wir uns gleich an.
+
+01:28:31.938 --> 01:29:03.038
+<v SPEAKER_2>Machen wir gleich, okay. Ich will noch ganz kurz, um den Punkt abzuschließen, sagen, das Problem ist also quasi, wenn mein Handy, was es lüblicherweise tut, verhindern will, dass ich ganz viel Datenvolumen, was kostbar ist, auf dem Handy verbrauche, dann lädt es sich nicht diese Listen runter. Und das führt dazu, dass mein Handy nicht Bescheid weiß, ob ein Zertifikat geklaut worden ist, missbraucht wird. Und das ist der Grund, warum Https auf dem Handy noch mal unsicherer ist als auf dem Computer.
+
+01:29:03.058 --> 01:29:29.258
+<v SPEAKER_5>Und das betrifft eben leider auch die Apps, weil die ganzen Apps natürlich mit ihren Anbietern per Https kommunizieren und Daten austauschen. Banken reagieren zum Beispiel darauf, indem sie in die Applikation selber reinschreiben, wie das Zertifikat oder wie die Zertifizierungsstelle heißt. Und man die App oder die App updaten muss, wenn das Zertifikat sich ändert. Das nennt sich dann Certificate Pinning. Das heißt, das ist da wirklich fest reingeschraubt. Und sie vertrauen nur dieser Einzeltivisierungsstelle von der Bank selber.
+
+01:29:29.278 --> 01:29:34.698
+<v SPEAKER_2>Genau, das machen dann Banken. Aber das macht halt nicht jede andere App und schon gar nicht das Handy selber für alle Websites, die besucht werden.
+
+01:29:34.718 --> 01:29:37.558
+<v SPEAKER_5>Skaliert halt auch gar nicht. Ich will ja nicht regeln, dass sich alle Apps updaten.
+
+01:29:37.578 --> 01:29:57.858
+<v SPEAKER_2>Genau, würde ja auch viel zu viel Datenvolumen verbrauchen, wenn du unterwegs mal eben irgendwas abrufen willst. Gut, haben wir jetzt zwei gravierende Probleme mit der Https-Verschlüsselung hier besprochen. Wie und ob ihr trotzdem sicher und sinnvoll Https für zum Beispiel eure eigene Webseite einbauen könnt und solltet, das besprechen wir nach den Nachrichten mit Wetter und Verkehr.
+
+01:29:59.298 --> 01:30:11.678
+<v SPEAKER_7>Bonn, nach dem peinlichen Ausscheiden der deutschen Elf bei der Weltmeisterschaft hat die Regierung beschlossen, dass wir das von nun an mit dem Fußball bleiben lassen und die Stadien für etwas nutzen, was wir besser können. Zum Beispiel feiern.
+
+01:30:17.758 --> 01:30:58.258
+<v SPEAKER_1>Mit dabei... Und das sind längst noch nicht alle. Lollapalooza. Samstag 8. und Sonntag 9. Im Olympiastadion. Und drumrum. Das komplette Line-Up und alle Infos. fritz.de slash Lolla. Das Lollapalooza-Festival. Lollapar ist enttiert von... Nachrichten.
+
+01:31:01.758 --> 01:33:49.198
+<v SPEAKER_9>Bei Fichtenwalde im Landkreis Potsdam-Mittelmark kämpft die Feuerwehr weiter gegen einen großen Waldbrand. Anders als befürchtet muss Fichtenwalde aber erst mal nicht evakuiert werden. Das hat der stellvertretende Landrat Stein dem RBB gesagt. Das Feuer sei so weit unter Kontrolle, dass aktuell keine Gefahr besteht, dass es auf den Ort übergreift. Etwa 150 Feuerwehrleute werden voraussichtlich noch die ganze Nacht im Einsatz sein. Den Vereinten Nationen geht das Geld aus. Das hat Generalsekretär Guterres bekanntgegeben und die Mitgliedsstaaten aufgefordert, ihre Beiträge zu bezahlen. Von 193 Staaten haben erst 112 ihren Anteil bezahlt, darunter auch Deutschland. 22 Prozent des UN-Haushalts werden von den USA getragen, die immer erst später im Jahr zahlen. Guterres hat angekündigt, dass die UN jetzt Kosten sparen muss, das soll aber nicht die Mitarbeiter treffen. Die BVG und Siemens haben ihren monatelangen Streit um eine U-Bahn-Bestellung beendet. Beide Unternehmen haben am Abend bestätigt, dass sie nicht vor Gericht ziehen. Damit kann die BVG beim Siemens-Konkurrenten Statler erst mal 56 neue U-Bahn-Wagen bestellen, in einem zweiten Schritt dann bis zu 24 weitere. Die BVG hatte die Bestellung nicht ausgeschrieben und das mit einer Notlage begründet. Dagegen hatte Siemens geklagt. Der Integrationsbeauftragte des DFB Kakao hat die Rassismusvorwürfe gegen den DFB zurückgewiesen. Kakao sagte der BILD-Zeitung, der Vorwurf sei einfach falsch. Kritik sei nicht gleich Diskriminierung oder Rassismus. Nationalspieler Mesut Özil war am Wochenende aus der deutschen Fußballnationalmannschaft zurückgetreten. In einer Erklärung kritisierte er DFB-Präsident Grindel scharf und warf der DFB-Spitze Rassismus vor. Auch Grindel hat das zurückgewiesen und will nicht zurücktreten. Wetter Mit den aktuellen Temperaturen in Berlin-Marzahn 22°C und in Schöneberg 25°C, Prenzlau meldet 21°C, Neuglobso 25°C, Ludwigsfelde 26°C und Königsbrusterhausen 27°C. Die Nacht wird wieder trocken und warm 16°C bis 20°C sind das Minimum. Morgen wird es dann wieder richtig heiß. Es gibt viel Sonne und dazu 30°C bis 33°C. Nur im Osten von Brandenburg können auch mal Wolken aufziehen. Da kann es dann auch mal kurz regnen oder gewittern. Vorsicht auf der B1, B5 Berlin Richtung Küsterin Kiez. Zwischen Hoppegarten und Münchberg West sind Bäume umgestürzt. Vorsicht auf der neuen Berlin Richtung Leipzig. Die ist zwischen Dreieck Potsdam und Brück wegen des Brandes gesperrt. Außerdem gesperrt die A10 der westliche Berliner Ring Richtung Dreieck Werder zwischen Dreieck Potsdam und Glindo. Und auch gesperrt ist die A10 der südliche Berliner Ring Richtung Dreieck Spreeau zwischen den Dreiecken Werder und Potsdam und in die Gegenrichtung zwischen Dreieck Nutetal und Dreieck Potsdam. Und auf der A12 Berlin Richtung Frankfurt Oder ist zwischen Storkow und Fürstenwalde West nach einem Unfall die rechte Spur gesperrt. Es ist allen unterwegs, eine gute Fahrt.
+
+01:33:50.698 --> 01:33:54.718
+<v SPEAKER_10>Fritz ist eine Produktion des AirBB.
+
+01:33:57.518 --> 01:34:03.038
+<v SPEAKER_11>oder Musikstream hören wollt, dann geht doch mal auf fritz.de slash Streambox.
+
+01:34:16.548 --> 01:34:27.468
+<v SPEAKER_2>Fritz Das Chaosradio im Blue Moon auf Ritz mit mir Konrad Spremberg und mit vier Gästen vom Chaos Computer Club Mutax, Nibbler, Danimo und Anna-Lena.
+
+01:34:27.488 --> 01:34:28.308
+<v SPEAKER_9>Hallo.
+
+01:34:29.008 --> 01:35:44.428
+<v SPEAKER_2>Jetzt muss ich hier die Skype-Menschen wieder auf meinem Pult aufmachen. Hallo Skype. Jetzt hören wir euch auch wieder. Hey, wir reden heute im Chaos Radio über Https. Wir haben schon gelernt heute, Https vielmal unter das US-Kriegswaffengesetz ist mittlerweile zum Glück exportiert in alle Welt und alle möglichen Websites kommunizieren mit euch im Browser, auf dem Computer, auf dem Handy verschlüsselt über Https. Probleme hat die Sache auch. Es ist nicht so, dass alles, was mit einem grünen Schloss im Browser angezeigt wird, vertrauenswürdig ist. Es gibt da leider viele, viele Möglichkeiten, euch und die Browser auszutricksen und so zu tun, als wäre ein Anbieter seriös. Dabei ist das gar nicht. Trotzdem wollen wir jetzt darüber sprechen, ob und inwieweit es sinnvoll ist, Https für eure eigene Webseite, wenn ihr keine Ahnung, ein selber gehostetes Webblog anbietet oder wenn ihr eine Seite habt, wo ihr selber gehäkelte Deckchen verkauft, ob es sinnvoll ist, da Https zu implementieren. Und ich würde gerne diese Frage einmal ganz offen stellen. Wir haben gerade darüber gesprochen, was für Probleme das machen kann, Https, und vor allem an welchen Stellen es einfach wirklich nicht vertrauenswürdig ist. Ist es dann überhaupt sinnvoll, Https einzubauen, Anna-Lena?
+
+01:35:45.948 --> 01:36:14.208
+<v SPEAKER_4>Oh, ich glaube, die Frage haben wir eigentlich schon relativ am Anfang der Sendung mal beantwortet. Also ja, es ist in jedem Fall sinnvoll. Es ist in jedem Fall sinnvoll, um schon mal zu verhindern, dass komplett mitgelesen wird und dass das alles irgendwie offen rumschwirrt, dass man da immer noch Lücken findet. Ja, das ist schon so. Aber im Großen und Ganzen haben wir eine ganze Menge in Sicherheit gewonnen, dadurch dass wir über Https verschlüsseln können.
+
+01:36:14.248 --> 01:36:39.128
+<v SPEAKER_2>Also das ist gar keine Frage. Mein Denkfehler ist ja gerade gewesen, dass alles nur schlecht wäre, wenn da jemand mit mir auf eine getrickstes Zertifikat zum Beispiel als Basis hatte, mit mir zu kommunizieren. Aber trotzdem habe ich ja immer noch den Vorteil, dass zum Beispiel, wenn ich im Café sitze, die Daten, die ich übers Café WLAN rausschicke, verschlüsselt sind. Und deswegen habe ich ja so oder so einen großen Vorteil durch Https.
+
+01:36:40.288 --> 01:36:42.488
+<v SPEAKER_4>Und auch auf allen Wegen dazwischen auch.
+
+01:36:43.628 --> 01:36:53.188
+<v SPEAKER_5>Und wie gesagt, es kann halt sein, dass du gesetzlich verpflichtet bist, mittlerweile das eben zu machen, weil du Daten eben nur noch verschlüsselt übertragen darfst, sobald das das Personenbezogenes ist.
+
+01:36:53.208 --> 01:36:57.008
+<v SPEAKER_2>Wer ist denn verpflichtet eigentlich gesetzlich wegen der Datenschutzrundverordnung?
+
+01:36:57.028 --> 01:36:59.148
+<v SPEAKER_3>Jeder, der personenbezogene Daten verarbeitet.
+
+01:36:59.488 --> 01:37:33.628
+<v SPEAKER_4>Ja, jedem, dem es wirtschaftlich zumutbar ist. Also ich glaube, das ist so ein bisschen die Formulierung. Also es muss schon echt verflucht gute Gründe geben, dass du es nicht machen musst. Also der Grundsatz ist erst mal, ja, du musst auf jeden Fall Https verschlüsseln, das ist Mindeste. Und jeder, der irgendwie einen Shop betreibt oder sonst irgendwie Dinge tut, dem ist das auch wirtschaftlich zuzumuten, das zu tun. Oder insgesamt technisch wirtschaftlich zuzumuten. Es gibt ganz, ganz harte Ausnahmen, glaube ich. Da muss man aber schon sehr gut begründen können. Also, ihr dürft mich jetzt gerne korrigieren.
+
+01:37:33.648 --> 01:37:55.208
+<v SPEAKER_3>Also zum Beispiel, wenn du die Bayerische Staatsregierung bist oder das Land Niedersachsen und ein Kontaktformular auf deiner Seite angetestest. Du meinst auf www.bayern.de oder auf www.niedersachsen.de. Dann, das haben wir auch nämlich auch im Zuge dieser Recherche, die Mutax da angestoßen hatte.
+
+01:37:55.228 --> 01:37:59.608
+<v SPEAKER_2>Bayern.de und Niedersachsen.de Oh, da steht echt kein Https, Leute.
+
+01:37:59.628 --> 01:38:16.228
+<v SPEAKER_3>Nein, also das Ding ist, beide können Https. Wenn du das explizit einigst, dann können die das. Sie tun es nur nicht per Default. Und wenn du zum Beispiel auf das Kontaktformular gehst, dann gibt es zwei Dinge. Niedersachsen schickt es standardmäßig einfach Plain Text rüber, was so DSGVO-mäßig schon hui ist.
+
+01:38:16.248 --> 01:38:17.868
+<v SPEAKER_2>Also jeder kann mitlesen im Plattext?
+
+01:38:17.888 --> 01:38:20.428
+<v SPEAKER_3>Naja, jeder, der halt auf der Leitung mitlesen kann. Genau.
+
+01:38:20.448 --> 01:38:21.468
+<v SPEAKER_6>Also halt ohne Https.
+
+01:38:21.488 --> 01:38:40.568
+<v SPEAKER_3>Ohne Https, genau. Bayern.de versucht, also die Bayerische Staatsregierung versucht an der Stelle auf ihrer Seite, wenn du auf das Kontaktformular gehst. Und nur dann, die Daten dann per Https zu verschlüsseln. Das war so eine Technik, die hat man in den 90ern zuletzt gesehen. Also nur ganz spezielle Teile der Seite zu...
+
+01:38:40.588 --> 01:38:41.368
+<v SPEAKER_6>Aber hey, immerhin.
+
+01:38:42.708 --> 01:38:46.288
+<v SPEAKER_4>Aber entschuldigt mal, spiegel.de ist bis heute nicht Https verschlüsselt.
+
+01:38:46.308 --> 01:39:14.048
+<v SPEAKER_6>Https spiegel.de Also man muss dazu sagen, dass das früher einfach teuer war im Sinne von, das waren komplexe Rechenoperationen. Irgendwann haben dann einfach mal die Prozessoren, die wir in unseren PCs drin haben, diese Verschlüsselungsalgorithmen abbilden können. Und das war der Schritt, wo das einfach im Faktor 100 einfacher wurde, Dinge zu verschlüsseln. Und seitdem gibt es eigentlich keine Entschuldigung mehr dafür, das nicht zu tun.
+
+01:39:14.068 --> 01:39:23.008
+<v SPEAKER_2>Und warum, wenn ich hier gerade in meinen Browser eingebe, Https//spiegel.de leitet nicht dieser Server um auf Httpspiegel.de?
+
+01:39:28.628 --> 01:39:52.168
+<v SPEAKER_3>Ich nehme an, der Spiegelflagg hat eine ähnliche Ausrede wie alle anderen Verlage, die es aber mittlerweile größtenteils auf die Kette bekommen haben. Und das ist, dass die natürlich Verträge mit Drittanbietern haben, unter anderem die Werbenetzwerke. Und die sagen halt einfach, naja, wenn du jetzt Https machst, das kannst du machen. Aber dann ist irgendwie in unserem Backend alles langsamer und dann sind die Werbepreise nicht so cool, die man erzählen kann. Also so eine Begründung gab es da irgendwie.
+
+01:39:56.528 --> 01:39:56.988
+<v SPEAKER_2>Wie was?
+
+01:39:57.208 --> 01:40:05.568
+<v SPEAKER_3>Das Stück Hardware, was du dazwischen schaltest, das nur Http, also das nur diese SSL Verschlüsselung dazwischen macht, aber massiv schnell für verschiedene...
+
+01:40:05.588 --> 01:40:24.948
+<v SPEAKER_6>Also wenn du so eine große Seite wie Spiegel.de hast, da hast du ja nicht nur einen Server stehen, du hast viele Server stehen. Und du musst diese Anfragen ja irgendwie auf diese vielen Server verteilen. Und die Hersteller von so Verteilern, die eben die Last auf mehrere Server verteilen, sagen halt, oh ja, na Https, ja das kostet nochmal extra, weil das ist ja ein Premium-Feature.
+
+01:40:25.768 --> 01:41:22.708
+<v SPEAKER_2>Okay, ich wollte nämlich gerade fragen, Anna-Lena hat so was gesagt, wie es muss, damit das Pflicht ist, für eine Firma wirtschaftlich zumutbar sein. So, da hab ich gedacht, ich hab nämlich tatsächlich vor wenigen Wochen erst eine private Webseite selber auf Https umgestellt. Und es war das einfachste auf der Welt. Ich bin zu meinem Webbrowser gegangen, hab gesagt, Keule, ich möchte in Zukunft bitte ein Https-Zertifikat haben. Hat der gesagt, bitte wählen Sie aus. Let's Encrypt Zertifikat, kostenlos, dazu buchen, klick, klick, ist drauf. Und zack, hab ich eingestellt, noch über meine VRT-Datei im Dings, HT-Access, dass alles umgeleitet wird, was über Http, diese Webseite aufrufen will, auf Https. Und fertig war der Keks. Also ich fand's so dermaßen zumutbar, dass ich gerade mich gefragt habe, ob es überhaupt den Fall geben kann, wenn wir heute schon Zertifikate haben, die nichts mehr kosten, dass es für irgendjemanden wirtschaftlich unzumutbar wäre.
+
+01:41:23.368 --> 01:41:26.568
+<v SPEAKER_3>Fun fact, gib mal www.ard.de ein.
+
+01:41:26.648 --> 01:41:45.468
+<v SPEAKER_2>Oh, das ist peinlich. Aber kann ich wenigstens da Https davor schreiben? Auch die leiten zurück. Fuck ey.
+
+01:41:45.468 --> 01:41:49.428
+<v SPEAKER_3>Der ABW betreibt übrigens seine eigene Zertifikatsautorität.
+
+01:41:49.448 --> 01:41:53.068
+<v SPEAKER_5>Ist das gut oder schlecht? Nee, Moment. Das ist eine Sub-CA vom DFN.
+
+01:41:53.088 --> 01:41:54.308
+<v SPEAKER_3>Also genau.
+
+01:41:54.328 --> 01:41:59.148
+<v SPEAKER_6>Die Telekom betreibt für den DFN eine CA, die für den BB eine CA betreibt.
+
+01:41:59.168 --> 01:42:05.668
+<v SPEAKER_2>Ihr könnt uns Fritzen trauen, was wir vernünftige Zertifikat benutzen.
+
+01:42:05.708 --> 01:42:06.448
+<v SPEAKER_4>Ihr habt ein Schlösschen.
+
+01:42:09.528 --> 01:42:12.828
+<v SPEAKER_5>Immerhin. Ihr leitet auch noch um auf Https.
+
+01:42:12.868 --> 01:42:16.268
+<v SPEAKER_2>Sehr gut.
+
+01:42:16.968 --> 01:42:21.228
+<v SPEAKER_5>Aber kein HSTS.
+
+01:42:21.248 --> 01:42:27.648
+<v SPEAKER_6>Wenn Konrad das mit seiner privaten Webseite kann und auch der LBB das auf einer großen Webseite hinbekommt, es gibt einfach keine Ausrede mehr.
+
+01:42:28.088 --> 01:42:36.348
+<v SPEAKER_2>Okay, das wollte ich mich fragen. Gibt es einen Fall, wo jemand sagen kann, liebe Freunde DSGVO schön und gut, ich kann es nicht leisten?
+
+01:42:36.368 --> 01:42:59.408
+<v SPEAKER_3>Es gibt einen einzigen Grund. Es gibt eine einzige Webseite, die das darf. Das ist neverssl.com. Und die tut genau das. Die wird niemals über Https erreichbar sein. Das brauchst du für ganz spezielle Sachen wie mega abgefragte Portale, WLAN-Portale, die man erst mal per Http ansteuern muss, damit überhaupt irgendwas geht. Die sollen hoffentlich irgendwann auch alle verschwinden.
+
+01:43:02.268 --> 01:43:10.748
+<v SPEAKER_4>Ich bin dir gerade sehr dankbar für diesen Tipp, weil wenn Spiegel nämlich verschlüsselt, dann fällt mir nämlich keine mehr ein, die man dann so nehmen kann.
+
+01:43:10.768 --> 01:43:17.008
+<v SPEAKER_5>Ich gehe immer auf Http 8.8.8.8, den Google DNS, weil die ganzen Portale leiten alles um was wie Http.
+
+01:43:17.028 --> 01:43:26.588
+<v SPEAKER_2>Jeder Mensch, der gerade im Blue Moon zu Gast ist, hat das Bedürfnis, Https nicht, also Http-Websites zu benutzen. Warum?
+
+01:43:26.608 --> 01:43:39.388
+<v SPEAKER_6>Weil man manchmal rausfinden möchte, ob es irgendwas im Pfad gibt Richtung Internet, was an dem Verkehr herumfuscht. Und das spricht halt oft kein Https.
+
+01:43:41.828 --> 01:45:07.728
+<v SPEAKER_4>Es gibt einen sehr plausiblen Grund dafür, weil wenn man in einem öffentlichen WLAN hängt oder in einem Telekom-Hotspot oder irgendwie solchen Geschichten, was ja auch ein öffentliches WLAN ist, dann gibt es ja eben diese Startseiten, wo man halt irgendwie sagen muss, ja, ich möchte dieses WLAN benutzen und ja, ich möchte da gerne jetzt darauf klicken, um zu sagen, ja, das ist die akzeptierende Nutzungsbedingung und so weiter. Wenn die Endgeräte das nicht automatisch machen, also die meisten machen das sofort automatisch, dass dann irgendwie so ein Fenster hochkommt und mir sagt, hier, und da musst du dann klicken. Wenn das nicht passiert, das ist so ein Spezialmechanismus, dann muss man, also im Windows zum Beispiel, wenn man mit einem Windows-Rechner unterwegs ist, muss man auf eine Seite versuchen zu gehen, die Https nicht hat, sondern ein Https, die noch nicht verschlüsselt ist, um überhaupt auf diese Seite zu kommen, die quasi sich dazwischen hängt. Und eben wenn die verschlüsselte Verbindung einmal versucht wird aufzubauen, kann sich diese Seite nicht mehr dazwischen hängen. Das heißt, ich komme überhaupt nicht mehr dahin, zu klicken auf, ja, ich möchte dieses Internet, dieses komische jetzt benutzen und ich möchte da meine Nutzungsbedingungen abklicken. Deswegen ist es immer noch hilfreich zu wissen, wo es eine Seite gibt, die noch nicht Https macht, weil sonst kommt man da nämlich nicht hin.
+
+01:45:07.748 --> 01:45:16.528
+<v SPEAKER_2>Also es gibt den Fall, dass man das möchte, irgendwo in so einer Kette, zum Beispiel, von solchen Login-Prozessen, dass man eine Webseite braucht, die unverschlüsselt ist.
+
+01:45:16.548 --> 01:45:35.308
+<v SPEAKER_6>Genau. Das bleibt dazu zu sagen, dass mit weiterer Verbreitung von Https einfach solche Seiten, nicht nur überflüssig, sondern einfach unmöglich werden. Denn wenn ich ein freies Internet irgendwo nutzen möchte, dann will ich da nicht noch mal eine Seite dazwischen haben, die mir irgendwas erklärt, dass ich auf einen ich möchte gerne button, also das kaputt.
+
+01:45:35.328 --> 01:45:46.948
+<v SPEAKER_5>Vor allem, wie sie es technisch machen, sie hijacken halt den ersten Http-Request, den du machst, und leiten das um auf ihr Portal und hijacken halt deinen ersten Request, den du machst.
+
+01:45:47.428 --> 01:45:53.328
+<v SPEAKER_6>Ich möchte mich auch in so einem Netz einbuchen können, ohne einen Browser auf meinem Gerät benutzen zu müssen.
+
+01:45:53.348 --> 01:45:54.808
+<v SPEAKER_3>Nur mal E-Mails checken oder so.
+
+01:45:54.828 --> 01:46:10.888
+<v SPEAKER_2>Okay, okay, also wir halten fest, wir müssen da gar nicht tiefer einsteigen, glaube ich. Es gibt doch noch den Fall, dass man das haben möchte. Aber eigentlich hast du gerade gesagt, Danimo, gibt es ansonsten überhaupt keine Ausrede, Https nicht zu implementieren.
+
+01:46:10.908 --> 01:46:19.228
+<v SPEAKER_3>Genau. Alles andere sind nur Ausreden, die entweder dauert Zeit oder es kostet Geld. Und das sind beides heutzutage keine validen Ausreden mehr.
+
+01:46:19.628 --> 01:46:25.128
+<v SPEAKER_2>Dann sagen wir abschließend noch, wie bekomme ich es dann hin? Es ist super einfach.
+
+01:46:25.148 --> 01:46:45.768
+<v SPEAKER_3>Genau. Wenn du so eine kleine Webseite hast, das hat Konrad gerade gesagt, da hast du in der Regel den Hostart eines Vertrauens. Der hat normalerweise so eine FAQ, wo meistens drin steht, wie kriege ich mein Zertifikat. Und die meisten Hoster machen das für einen mehr oder weniger automatisch. Da muss man sich gar nichts mehr kümmern.
+
+01:46:45.788 --> 01:46:46.368
+<v SPEAKER_2>Ja, wie bei mir, genau.
+
+01:46:47.268 --> 01:47:09.988
+<v SPEAKER_3>Wenn man selber Server betreibt, da gibt es verschiedene Kleinprogramme, Certboard, Diadrated und wie sie nicht alle heißen. Das ist ein Stück Software, das quasi dem Let's Encrypt sagt, hier pass mal auf, übrigens, ich beweise dir jetzt mal, wie müssen wir jetzt nicht diskutieren, dass ich die Seite hier unter Kontrolle habe.
+
+01:47:10.008 --> 01:47:15.288
+<v SPEAKER_2>Warte ganz kurz, Let's Encrypt ist ein Anbieter von kostenlosen Https-Zertifikat.
+
+01:47:15.588 --> 01:47:41.508
+<v SPEAKER_3>Genau, das haben wir, glaube ich, noch gar nicht genau besprochen. Genau, da ist das Wichtige, dass irgendwann, nach diesem Honest Achmed, sich Leute gedacht haben, naja, okay, also eigentlich ist das ja wirklich nur Geldmacherei mit den Zertifikaten, weil, worum es eigentlich geht, ist, jemand muss beweisen können, dass er den Web-Server oder die Infrastruktur in irgendeiner Form kontrolliert, um dieses Zertifikat ausgestellt zu bekommen.
+
+01:47:41.648 --> 01:47:55.608
+<v SPEAKER_6>Und ferner noch, das ist ein automatisierbarer Prozess, also da braucht es keine, keine, nicht viele Menschen, um Zertifikate auszustellen. Wenn man das einmal kann, dann kann man im Prinzip beliebig Zertifikate ausstellen und das einzige, was man dafür machen muss, ist diese Verifikation zu automatisieren.
+
+01:47:55.688 --> 01:48:13.748
+<v SPEAKER_2>Und die Menschen hinter diesem Service, Let's Encrypt, die haben das einmal hinbekommen und sagen jetzt, Leute, wir lieben ein Internet, was sicher ist, deswegen kommt zu uns und holt euch bei uns Zertifikate, die nichts kosten. Das habe ich gemacht, das kann jeder machen einfach. Sind die genauso sicher wie andere Zertifikate, obwohl die nichts kosten?
+
+01:48:13.768 --> 01:48:42.068
+<v SPEAKER_5>Die sind sogar eventuell sicherer, weil diese Zertifikate immer nur einen begrenzten Zeitraum gültig sind und regelmäßig erneuert werden müssen. Üblicherweise haben Zertifikate bisher immer so eine Laufzeit von ein oder zwei Jahren, manchmal auch mal fünf, was halt bedeutet, innerhalb dieses Gültigkeitszeitraums darf da nie irgendwas mit passieren. Das darf nie in den Server eingebrochen werden. Und bei Let's Encrypt ist es so, dass die glaube ich aktuell 60 Tage oder sowas um den Dreh gültig sind und ich dann halt vor Ablauf, bitte?
+
+01:48:42.088 --> 01:48:44.788
+<v SPEAKER_4>90 Tage habe ich im Kopf gerade.
+
+01:48:44.808 --> 01:49:04.488
+<v SPEAKER_5>Und dass sie regelmäßig erneuert werden müssen. Ich muss also regelmäßig nachweisen, ja, ich bin immer noch unter Kontrolle dieses, ich kontrolliere immer noch diesen Server, ich bin immer noch derselbe. Und das machen die aber automatisch, oder? Das passiert automatisch und deswegen möchte man jetzt auch automatisieren, weil ich möchte mich nicht alle drei Monate hinsetzen und per Hand für meine 20 Domains da Zertifikate neu klicken oder so.
+
+01:49:04.848 --> 01:49:09.508
+<v SPEAKER_2>Warum sollte ich trotzdem noch Geld ausgeben für Https Zertifikate?
+
+01:49:09.528 --> 01:49:47.988
+<v SPEAKER_3>Es gibt nur einen einzigen Grund, also ob du das solltest, ist noch eine andere Frage, aber es gibt halt diese eine Art von Zertifikaten, die Let's Encrypt ausstellt, das sind die sogenannten Domain Validated Zertifikate, die sagen halt wirklich nur www.fritz.de, da ist wirklich jemand dahinter, der www.fritz.de kontrolliert. Du weißt nicht, ob das der RBB ist oder sonst irgendwas, das tut auch überhaupt nichts zur Sache, das heißt, da geht es nicht um Identität, da geht es nur um, ist der Endpunkt, das andere Ende, wirklich derjenige, den ich vermute, dass er das ist? Also ist es wirklich die Domain?
+
+01:49:48.008 --> 01:50:13.808
+<v SPEAKER_6>Was am Hintergrund passiert ist, der Server geht zu Let's Encrypt und sagt, hallo, ich hätte gerne für diese Domain ein Zertifikat. Let's Encrypt sagt, jo, dann sag mir mal hier Högenflügen, dann legst du eben Högenflügen auf deinen Webserver und sie rufen das ab und sehen, naja, der hat jetzt diese Datei Högenflügende angelegt und das muss wohl der sein. Und dann kriegst du für ein paar Tage eben dein Zertifikat oder nachweisen könntest, du kannst unter fritz.de Dinge veröffentlichen.
+
+01:50:13.828 --> 01:50:18.828
+<v SPEAKER_3>Genau und letztendlich so ähnlich hat das früher auch schon funktioniert, nur nicht automatisiert.
+
+01:50:19.368 --> 01:50:23.028
+<v SPEAKER_6>Du kannst eben nur nachweisen, dass eben das fritz.de ist, aber?
+
+01:50:23.048 --> 01:51:07.668
+<v SPEAKER_3>Genau, aber es gibt dann auch noch die in Anführungszeichen besseren Zertifikate. Das sind die sogenannten e.V. also Extended Validation Zertifikate. Wenn ihr euch schon mal gewundert habt, bei Apple Browser hast du üblicherweise dann ein grünes Schlösschen. Und bei anderen Browsern, also statt grau, bei anderen Browsern steht auch nochmal explizit der Name da. Also der Name zum Beispiel, was weiß ich, Bankhaus XY AG steht dann extra noch davor oder so. Da ist dann auch tatsächlich überprüft worden, dass diese Firma so existiert an der Stelle.
+
+01:51:07.688 --> 01:51:26.628
+<v SPEAKER_2>Okay, also man kann sich da schonen, was dann vielleicht gerade interessant ist für Banken zum Beispiel, wo es vielleicht nochmal ein höheres Risiko gibt, die wirklich dem Nutzer zeigen wollen, ich bin nicht nur der berechtigte Benutzer dieser Domain, hinter mir steht auch diese Firma und zwar nachgewiesen.
+
+01:51:26.648 --> 01:51:29.868
+<v SPEAKER_3>Ganz genau.
+
+01:51:29.888 --> 01:51:40.828
+<v SPEAKER_5>Und es kann natürlich noch speciale Anwendungen geben, wo ein normales Webseitenzertifikat für mich geht, was technisch nichts anderes ist, aber zum Beispiel zum Codesignieren von Treibern muss ich nach wie vor eine andere Art von Zertifikat haben.
+
+01:51:40.848 --> 01:51:55.428
+<v SPEAKER_2>Okay, also alles so Sachen, die für bestimmte Nutzergruppen wichtig sind, aber für mich erstmal jetzt nicht, wenn ich nur eine Webseite über mich oder einen Blog oder einen Mini-Online-Shop anbiete oder meinen Mail-Server zum Beispiel. Ganz kurz.
+
+01:51:55.448 --> 01:52:01.668
+<v SPEAKER_3>Und man sollte auch diesen Zertifikaten nicht zu viel vertrauen.
+
+01:52:01.688 --> 01:52:02.528
+<v SPEAKER_2>Den teuren meinst du?
+
+01:52:02.548 --> 01:52:32.388
+<v SPEAKER_3>Den teuren, genau. Weil erstens, die Browser setzen das alles unterschiedlich um und das ändert sich auch ständig. Das führt zu Verwirrungen. Ich meine, auf deinem Seite ist es gut, weil sie optimieren das ständig, aber je nach Browser wird das halt komplett anders dargestellt. Und wenn du Leute auf der Straße fragst, was heißt das eigentlich, was ihr da seht, dass der Browser das anders darstellt. Die meisten Leute wissen überhaupt nicht, was das heißt, wenn da jetzt ein Name davor steht oder nicht. Und das andere ist...
+
+01:52:32.408 --> 01:52:45.068
+<v SPEAKER_5>Wenn du auf Ikea.de gehst, da steht als Firmenname plötzlich Ikea BV Holding irgendwas da. Und du registrierst dir halt irgendwo eine Firma, die heißt Ikea BV Holding irgendwas in einem anderen Land. Das sieht dann auch so aus, da steht auch Ikea drin.
+
+01:52:45.088 --> 01:52:50.248
+<v SPEAKER_2>Also die gleichen Probleme, die gleichen Risiken wie bei anderen Zertifikaten, die wir vorhin besprochen haben, auch eigentlich.
+
+01:52:52.288 --> 01:53:07.288
+<v SPEAKER_3>Ja, in dem Fall wird halt noch dieser Extravalidierungsschritt umgangen, weil ich kann mir halt für ein Euro in UK in eine Limited-Firma klicken und hab quasi für einen Euro diesen ganzen Stunt umgangen.
+
+01:53:07.308 --> 01:53:20.508
+<v SPEAKER_2>Okay, das bedeutet, um einen Schlussstrich drunter zu ziehen, wenn ich eine Webseite habe, dann gibt es eigentlich keinen Grund, dass ich da nicht, wenn mein Hoster mir das immer eben kostenlos anbietet, mir Https für klicke.
+
+01:53:20.528 --> 01:53:25.788
+<v SPEAKER_3>Genau, und diese Domain-Vale-Date-Zertifikate reichen vollkommen aus für 99,999 Prozent.
+
+01:53:25.808 --> 01:53:52.948
+<v SPEAKER_2>Also jeder Mensch unter euch, der eine Webseite aus irgendeinem Grund betreibt, Mail-Server, weil ihr gerne eine Mail-Adresse mit eurem Namen haben wollt oder einen Blog oder euren Hackeldecken-Shop, irgendwas, ihr könnt bitte jetzt nachgucken, wo geht das bei euch in der Administrationsüberfläche und klickt euch ganz simpel und für kein Geld Https-Sicherheit für eure Webseite. Und wenn ihr ein Kontaktformular habt, macht es unbedingt und sofort.
+
+01:53:52.968 --> 01:53:57.748
+<v SPEAKER_3>Genau. Geht zu eurem Hoster oder ansonsten letsencrypt.org ist eure Anlaufstelle.
+
+01:53:57.868 --> 01:55:28.088
+<v SPEAKER_2>Geil. Ey, man, ich glaube, wir haben es geschafft. Das war jetzt quasi der Do-it-yourself-Part am Ende der Sendung und aber alle anderen von euch, die selber keine Webseite betreiben, haben hoffentlich noch ein bisschen besser gecheckt, warum Https eine gute Sache ist und wo aber auch die Macken und Tücken liegen in dieser Technik. Wir fassen nochmal kurz zusammen. Https fiel nicht nur einmal unter das US-Kriegswaffen-Kontrollgesetz. Ich finde das aber noch so eine geile Geschichte. Https ist auf jeden Fall ein Standard, der schon vor einer ganzen Weile etabliert worden ist als Protokoll, um Websites aufzurufen und Daten zu übertragen. Das Ding ist heute immer noch gern gesehener Gast bei euch im Browser, weil es super sicher ist. Und trotzdem aber auch die eine oder andere Magcard in Auskriegs werden kann. Deshalb, wenn ihr irgendwo eure Kreditkartendaten zum Beispiel angebt, checkt sicherheitshalber lieber nochmal, ob ihr auch wirklich auf der richtig geschriebenen Website seid, auf die ihr gehen wollt. Und lasst am besten Kreditkartendaten und Passwörter von eurem Browser oder eurem Passwortmanager ausfüllen. Dann kann gar nicht mehr so viel schiefgehen. Waren das die wichtigen Tipps? Dann möchte ich mich sehr bedanken bei den Gästen im heutigen Chaosradio vom Chaos Computer Club aus Berlin hier im Studio Danimo und Nibbler. Und per Skype zugeschaltet aus anderen Teilen dieses Landes. Anna-Lena und Mutax, tschüss ihr zwei. So, wichtig zum Schluss, Abkündigung.
+
+01:55:28.448 --> 01:56:05.488
+<v SPEAKER_3>Genau, denn morgen ist Cissatmen Day. Das heißt, wenn ihr morgen in der Firma oder irgendwo anders Leute seht, die für eure Technik und dafür verantwortlich sind, dass irgendwas, sei es euer privater Rechner, sei es der Rechner in der Arbeit, irgendwas läuft und auch weiterhin so ist, dass es weiter läuft. Sagt ihnen Dankeschön, zeigt euch erkenntlich, das sind die Leute, die im Hintergrund sind, die man immer nur dann sieht, wenn irgendwas furchtbar brennt oder nicht geht. Die haben echt selten positives Feedback.
+
+01:56:05.508 --> 01:56:09.708
+<v SPEAKER_6>Insbesondere, wenn es nicht geht, kriegt man von ihnen nichts mit und das sind die Besten.
+
+01:56:09.728 --> 01:56:10.308
+<v SPEAKER_3>Genau.
+
+01:56:10.328 --> 01:56:21.908
+<v SPEAKER_2>Dir morgen Ihren Tag und aber, wenn eure Firmen, Webseid noch kein Https hat, dann nutzt den morgigen Tag, da mal hinzugehen und zu sagen, Freundchen, da fehlt aber noch was, oder?
+
+01:56:21.928 --> 01:56:22.888
+<v SPEAKER_3>Aber immer lieb bleiben.
+
+01:56:22.908 --> 01:56:32.288
+<v SPEAKER_2>Immer lieb bleiben dabei. Nutzt Https, liebe Leute und bombardiert die Landesregierung von Bayern, wenn ihr da wohnt, mit E-Mails. Leute, es wird Zeit.
+
+01:56:32.308 --> 01:56:35.288
+<v SPEAKER_3>Und Bayern hat es ja fast richtig gemacht. Sie haben nur falsch konfiguriert.
+
+01:56:35.888 --> 01:57:01.948
+<v SPEAKER_2>Es ist so einfach. Wir merken uns nach dieser Sendung Https. Es ist doch so einfach. Wir hören die gute alte Chaosradio Abschlussmusik Trekkie Birthday mit Webseid. Und der Podcast geht noch heute Nacht oder demnächst morgen online. Die nächste Ausgabe des Chaosradio, dann nächsten Monat wieder aus dem Chaos Computer Club in Berlin und in zwei Monaten wieder hier auf Fritz.

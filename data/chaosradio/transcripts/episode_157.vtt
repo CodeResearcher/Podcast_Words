@@ -1,0 +1,310 @@
+WEBVTT
+
+00:00:00.460 --> 00:00:00.460
+<v SPEAKER_1>Hallo und herzlich willkommen zum Chaosradio 261, wo wir uns über ein Thema telefonieren, fast unterhalten wollen, das uns die letzte Zeit beschäftigt hat und das ist das Thema Videotelefonie. Da kann man natürlich sagen Moment mal, das ist doch jetzt alles vorbei. Das brauchen wir doch nicht mehr. Corona gibt es nicht mehr. Es sind Sommerferien und die Sendung dient heute. Also für mein Gefühl so zwei Sachen. Das eine ist, ich sag's mal so die zweite Welle kommt bestimmt oder möglicherweise vielleicht. Also wir brauchen vielleicht nochmal dafür. Wir brauchen generell vielleicht ein bisschen mehr Videokonferenz in unserem Leben. Und das andere ist, es gibt ja wie bei so vielen digitalen Dingen die Unterscheidung zwischen, es gibt große professionelle Angebote von großen Konzernen, die man nutzen kann und die dann Nachteile haben, die man immer hat, wenn man digitale Produkte von großen Konzernen benutzt. Zum Beispiel, dass da Daten anfallen, die irgendwo sind, die da nicht sein sollten und dass man nicht so richtig die Wahl hat, was das alles kann. Und die andere Seite ist dann eben immer, hey, das kann man auch selber auch, dann gibt es auch noch Open Source-Lösungen. Und das haben auch ganz viele Leute gemacht und sich damit beschäftigt. Und wir sind also insofern hinten dran von, dass es jetzt schon tatsächlich relativ lange gemacht wird. Aber das ist auch ein guter Zeitpunkt, um mal zu fragen, wie läuft das denn eigentlich, welche Erfahrungen hat man damit gemacht, was muss man da vielleicht beachten und was hat man rausgefunden, was vielleicht für die, die diese Open Source-Angebote benutzen und denken, hey, das ist ja was Gutes, das wird schon alles gut laufen. Was genau bedeutet das eigentlich, wenn die das benutzen? Welche Verantwortung treten die da ab? Und auch wenn man es betreibt, fallen ja vielleicht möglicherweise auch Dinge an, die man gerne vorher gewusst hätte und das haben Leute ausprobiert. Und solche Menschen sind heute hier. Herzlich willkommen Basisbit, Hallo, Lukas, Hallo und Steini. Ihr habt alle drei in verschiedenen Versionen mit Videokonferenzen zu tun gehabt. Könnt ihr kurz erklären, an welchen Stellen ihr damit tätig wart? Steini, vielleicht kannst du einfach kurz anfangen.
+
+01:00:33.900 --> 01:00:37.620
+<v SPEAKER_1>Lukas, hast du auch noch Anekdoten oder Weisheiten zum Updaten?
+
+01:00:38.720 --> 01:00:44.460
+<v SPEAKER_3>Ja, Jitsi hat auch noch so eine kleine Besonderheit. Die sind aktuell...
+
+01:00:44.480 --> 01:00:46.500
+<v SPEAKER_1>Mir scheint diese Welt voller kleiner Besonderheiten.
+
+01:00:47.180 --> 01:01:23.980
+<v SPEAKER_3>Ja, die sind im Wandel der unterliegenden Technologie für das Loadbalancing, also dass mehrere Server gleichzeitig sich um eine Konferenz kümmern können. Und in dem Zuge haben die letztens zum Beispiel in einem großen Update jede Menge Code rausgeworfen, der von vielen Leuten produktiv eingesetzt wurde. Und generell ist da viel an den APIs und so was im Wandel. Das heißt, wenn man da Updates installiert, muss man wirklich gründlich testen, dass alle Funktionen, auf die man angewiesen sind, noch genauso funktionieren.
+
+01:01:25.260 --> 01:01:40.860
+<v SPEAKER_1>Also es scheint auf jeden Fall so, dass man, wenn man sozusagen eine Nummer größer betreibt, also macht man wahrscheinlich sowieso, aber dass man dieses Ding, man muss eigentlich noch mal eine weitere Instanz vorhalten, wo man diese ganzen Updates erstmal ausspielt und guckt, was dann irgendwie einem um die Ohren fliegen kann.
+
+01:01:40.880 --> 01:01:41.260
+<v SPEAKER_3>Unbedingt.
+
+01:01:41.280 --> 01:01:54.460
+<v SPEAKER_1>Dass das auf jeden Fall der Witz ist. So, und jetzt kommen wir gleich zum nächsten Punkt. Dann macht er die Updates, damit man nicht die Sicherheitslücken mitnimmt, die möglicherweise Leute entdeckt haben. Und Lukas hat da eine kleine Geschichte zu erzählen, wurde mir zugetragen.
+
+01:01:56.020 --> 01:03:14.100
+<v SPEAKER_3>Ja, es gab jemand anderen, der hat eine Sicherheitslücke bei Big Blue Button eingereicht, mit der konnte man beliebige Dateien von einem System lesen. Das wurde auch gefixt und das ging irgendwie groß durchs Netz. Und irgendwie alle haben dieses Update installiert und danach hat sich irgendwie niemand mehr drum gekümmert. Ich habe mich auch nicht mehr drum gekümmert. Bis ich dann irgendwann noch mal diesen Link zugeschickt bekommen habe und mir dann mal den Patch dazu durchgelesen habe und festgestellt habe, ja, aber der löst doch gar nicht das eigentliche Problem. Dann habe ich angefangen, mir das alles noch ein bisschen genauer anzugucken und habe festgestellt, das Problem ist tatsächlich nicht gelöst. Es gab eine zweite Sicherheitsankündigung, dass das Problem jetzt wirklich gelöst sei. Und kurz darauf habe ich dann noch einen Weg gefunden, mit dem man billige Dateien schreiben konnte. Und naja, das hat irgendwie dazu geführt, dass die bei BigBlueButton irgendwie panisch den kompletten Filehandling-Code irgendwie einmal umgeschrieben haben. Und naja, das war dann halt irgendwie so einmal die Woche mindestens ein Update.
+
+01:03:14.200 --> 01:03:16.820
+<v SPEAKER_2>Du warst das.
+
+01:03:16.840 --> 01:03:34.960
+<v SPEAKER_1>Aber ich muss nur kurz fragen, also beliebige Dateien lesen und schreiben. Das ist ja bei öffentlichen Videokonferenzen jetzt erst mal nicht so wild, aber jetzt muss ich mal fragen, wer kann denn diese Dateien lesen oder konnte diese Dateien lesen und schreiben? Teilnehmer dieser Videokonferenz oder jeder, der wusste, wo unter welcher Adresse der Server zu erreichen ist?
+
+01:03:34.980 --> 01:03:55.600
+<v SPEAKER_3>Jep, jeder, der wusste, wo dieser Server zu erreichen ist. Und das eine Datei, die man zum Beispiel auslesen kann, ist die, in der der API-Key von BigBlueButton drin steht. Und wenn man den hat, kann man sich auch ganz einfach zum Moderator machen, kann Aufzeichnungen runterladen, löschen, alles Mögliche trennen.
+
+01:03:55.620 --> 01:03:58.080
+<v SPEAKER_1>Das klingt aber gar nicht gut.
+
+01:03:58.100 --> 01:04:00.840
+<v SPEAKER_3>Genau, deshalb wurde das auch schnell gefixt.
+
+01:04:01.180 --> 01:04:39.340
+<v SPEAKER_1>Das wäre meine nächste Frage gewesen zu sagen. Weil Software ist nahezu beliebig komplex und Fehler können passieren. Natürlich ist es schön, wenn es gar nicht passiert, aber die Realität ist halt so, es passieren solche Fehler. Die Qualität eines Unternehmens oder einer Software macht man an zwei Dingen fest. Die eine Frage ist, ist der Code so fürchterlich, dass der voll dieser Dinge ist? Also wahrscheinlich. Und wie schnell, wie gut und wie Transparenz haben die Leute, die den Code maintainen, die sich darum kümmern, hauptsächlich sind damit umgegangen. Was ist da euer Eindruck?
+
+01:04:41.900 --> 01:05:24.300
+<v SPEAKER_3>Also mein Eindruck generell war eigentlich ganz gut. Also ich habe den Projektleiter von denen angeschrieben und habe irgendwie am selben Tag, irgendwie eine Stunde später oder so, schon eine Antwort gehabt mit, oh Mist. Dann haben die sich auch direkt angeguckt und kurze Zeit später kam dann der erste Fix. Dann hatte ich den nochmal geschrieben mit dem Schreiben von Dateien. Und daraufhin haben sie sich dann halt angenommen, dass sie halt nicht nur hingehen und diese eine Lücke schließen, sondern dass sie sich den kompletten Code angucken, der da drum herum gebaut ist und das halt alles sauber neu schreiben, sodass es jetzt an jeder Stelle validiert, was eigentlich angefordert wird.
+
+01:05:25.100 --> 01:05:57.840
+<v SPEAKER_1>Okay, das ist dann für den konkreten Fall ganz gut. Ich würde von euch dreien aber ganz generell nochmal sozusagen eine, ich weiß, wir können das hier nicht in die Tiefe diskutieren, aber als ganz genereller Eindruck bei Jitsi und BigBooButton, wie gut, nicht im Sinne der konkreten Lösung, sondern handwerklich, es gibt jetzt sagen, wie man Code schreibt, sauber kommentiert, ist das kompliziert, also wie gut ist der Code, dieser beiden Dinge, ist das sozusagen schon okay, dafür, dass es ein Open Source Gemeinschaftsprojekt ist, oder ist es eher so, mal gucken, wie lange das brennt?
+
+01:05:57.860 --> 01:07:20.480
+<v SPEAKER_2>Ich sag mal so, zunächst mal ist das wesentliche Kriterium, dass man überhaupt reinschauen kann. Darum geht es ja auch bei Open Source Software. Natürlich kann man auch bei nicht Open Source Software Fehler finden und Probleme, und einbrechen und so. Es wird nur mit Open Source deutlich einfacher gemacht. Und vor allem kann man sich dann auch hinterher anschauen, was haben sie denn nun getan? Also wie ist denn jetzt das Ergebnis? Beziehungsweise man kann auch selber mithelfen daran, Probleme zu beheben, wenn man sie denn ja entdeckt hat, weil man in den Source Code schaut und so weiter. Bei Big Blue Button ist so, das besteht aus vielen Komponenten an Open Source Software, die auch eigentlich für andere Sachen erstellt wurde. Free Switch zum Beispiel ist eigentlich eher eine Telefonen-Anlagen-Software für Voice-over-IP-Telefone, die da mit drinsteckt. Und ebenso andere Komponenten. Das besteht im Prinzip aus von verschiedenen Teams programmierten Komponenten und hat dementsprechend auch unterschiedliche Softwarequalität. Aber der wesentliche Vorteil gegenüber aller, sag ich mal, Closed Source Software ist, dass man das eben kann. Dass man reinschauen kann und auch partizipieren kann, an dem Prozess das dann heile zu machen.
+
+01:07:21.240 --> 01:07:41.040
+<v SPEAKER_1>Aber das muss ja auch passieren. Und deswegen daher die Frage, also klar sozusagen vom politisch Ideellen ist das auf jeden Fall die bessere Lösung. Aber trotzdem die Frage, wenn man dann mal reinguckt, was guckt einem dann zurück, Basisbit?
+
+01:07:41.060 --> 01:09:09.900
+<v SPEAKER_4>Generell sieht man bei Big Blue Button so ein bisschen, dass das über die letzten zehn Jahre hauptsächlich von so ungefähr 15 bis 20 Entwicklern immer wieder in der Freizeit und dann teilweise später auch als Beruf weiterentwickelt wurde. Da ist jetzt so ein bisschen das Glück, dass viele von diesen Komponenten, die ja schon erwähnt wurden, zum Beispiel Corento und FreeSwitch, das sind mehr oder weniger so Standardsoftwaren, die da wiederverwendet werden. Und da kümmern sich andere Leute und andere Communities hauptsächlich drum. Allerdings muss man Software ja nicht nur einbinden, sondern man muss dann das Gesamtsystem mit Installationstools und so weiter so anpassen, dass das Ganze auch ein bisschen sinnvoll abdichtet. Und das war sehr lange Zeit bei BigBlueButton so ein bisschen ins Hinterlicht geraten, sag ich mal so, aber jetzt, wo quasi der Covid-19-Sturm war und plötzlich auf die 20 Leute so ungefähr tausende Anfragen kamen, gab es dabei natürlich auch einige Leute, die so ein bisschen geguckt haben, was wird denn da überhaupt im Kurze gemacht und wo gibt es Sicherheitsprobleme. Da gibt es auch einige Stellen, die noch immer ziemlich problematisch sind, besonders bei BigBlueButton, aber es wird zumindest daran gearbeitet und da ist mittlerweile ja auch eine ganze Community an Leuten, die da zusammenarbeiten und das ist, glaube ich, einer der Stärken von Open Source, dass man da die Möglichkeit hat, reinzugucken und sie selber beizutragen, wenn man sich damit auskennt. Und das passiert gerade.
+
+01:09:10.660 --> 01:09:17.360
+<v SPEAKER_1>Okay, gut. Lukas, würdest du auch noch einen Satz verlieren zur grundsätzlichen Qualität von Jitsi und BigBlueButton?
+
+01:09:17.380 --> 01:09:56.860
+<v SPEAKER_3>Also letztendlich muss man halt sich immer vor Augen halten, wie viel komplexer eigentlich BigBlueButton ist, weil es halt diese extrem vielen Komponenten vereint. Und meine persönliche Erfahrung war halt, ich habe bisher immer, wenn ich im Jitsi-Code irgendwas gesucht habe, das in drei Schritten gefunden. Und wenn ich in BigBlueButton irgendwas gesucht habe, dann ging das irgendwo noch in eine Datenbank rein. Dann wurde das irgendwo wieder rausgeholt. Dann ging das in eine andere Software und wieder zurück. Und das muss man alles nachvollziehen. Das heißt, wenn man sich da irgendwie zurechtfinden will, dann ist das eine gewisse Einarbeitungszeit, die man auf jeden Fall für diesen Code braucht.
+
+01:09:59.260 --> 01:10:04.720
+<v SPEAKER_1>Aber die Qualität ist schon zufriedenstellend.
+
+01:10:04.740 --> 01:10:07.160
+<v SPEAKER_3>Bis auf diese Stellen, die da so ein bisschen kaputt waren.
+
+01:10:07.620 --> 01:10:55.420
+<v SPEAKER_1>Nee, aber wie gesagt, die gibt es ja immer. Oder lass mich die Frage noch mal anders formulieren. Ich habe mal einen Radiobeitrag über Zoom gemacht und habe mit einem IT-Experten gesprochen, der da mal reingeguckt hat. Und er meinte so, also, die haben jetzt angeguckt, also das ist schon eine Woche her, ich weiß nicht, wie der aktuelle Stand ist, aber er meinte damals, als das alles losging, er meinte so, also ich hab da mal reingeguckt und das Ding ist einfach von der Architektur so schlimm, egal was jetzt daran machen, ich kann nicht daran glauben, dass diese Software gut wird. So, und das ist ja das eine. Und das andere ist, das ist halt Software, die ist im Prinzip sozusagen folgt dir einem okayen Gerüst, aber es gibt natürlich immer wieder Stellen, die verbesserungswürdig sind. So, das ist eigentlich die Frage, die ich glaube ich stellen wollte. Basisbit, du hebst die Hand.
+
+01:10:55.860 --> 01:11:07.660
+<v SPEAKER_4>Also da muss man sich so ein bisschen prinzipbedingt angucken, was kriegt man überhaupt als Endanwender? Zum Beispiel auf dem Desktop kriegt man bei Zoom einen Desktop Client, den man sich installiert.
+
+01:11:10.240 --> 01:11:13.440
+<v SPEAKER_1>Ich will gar nicht über Zoom reden. Ich will heute hier gar nicht über Zoom reden.
+
+01:11:13.460 --> 01:11:14.800
+<v SPEAKER_4>Dann reden wir über BigBlueButton.
+
+01:11:14.820 --> 01:11:22.860
+<v SPEAKER_1>Genau, ich wollte das sagen. Ich habe den Vergleich nur gezogen, um die Frage nochmal zu stellen, wie ist das grundsätzlich?
+
+01:11:22.940 --> 01:12:08.380
+<v SPEAKER_4>Also ich persönlich würde mal sagen, dass das schon okay ist BigBlueButton oder Jitsi zu verwenden. Vor allem, weil sich da in den letzten Monaten noch mal ziemlich viel getan hat und auch, weil das ganze WebRTC-Standard z.B. im Webbrowser benutzt, was dann dazu führt, dass das Ganze zumindest beim Desktopclient und auch auf dem Handy usw. gar keine Rechte hat, für auf irgendwelche Sachen von den Endgeräten zuzugreifen. Das läuft eingesperrt im Webbrowser und ansonsten ist der Client zumindest da recht unproblematisch. Die Server-Software muss man sich angucken, aber die ist an sich auch okay, würde ich persönlich einschätzen.
+
+01:12:09.520 --> 01:13:33.740
+<v SPEAKER_1>Okay, gut, also ich nehme mal mit, das ist im Grunde genommen ein guter Ansatz und dank Open Source kann man ein Ding, das nicht in Ordnung ist, auch arbeiten. Aber muss es auch, das heißt, wenn man nicht selber daran arbeitet, man sollte immer die Updates auch erst angucken, ob sie das kaputt machen und dann auf jeden Fall einspielen, damit Dinge wie jeder, der die Adresse vom Server kennt, kann auch Dateien auslesen und schreiben, nicht passieren können. Ich würde jetzt zu dem Punkt kommen, den wir sozusagen vorhin angekündigt haben, wo ich versprochen habe, den machen wir auf jeden Fall noch, das ist die rechtliche Seite. Und die rechtliche Seite, also ich will es jetzt nicht nur sozusagen rein juristisch machen, sondern wenn wir über Videochat reden, über Videochat für geschlossene Nutzergruppen, gerade in Schulen, da geht es an besonders Schutzbedürftige, so heißen die Heranwachster auch in juristischen Kontexten. Da gibt es bestimmte, also man muss einfach bestimmte Regelungen einhalten. Es gibt die Datenschutzgrundverordnungen, von der alle schon gehört haben. Und zumindest in Hackerkreisen will man das auch. Man will ja sozusagen gar keine Daten sammeln. Über die technische Seite wollen wir gleich noch mal sprechen, also wenn man das vielleicht doch will. Aber jetzt erstmal die, ich betreibe so eine Plattform und habe also eine Datenverantwortung gegenüber meinen Leuten, die das benutzen. Was ist mit, du hast dir das ja sozusagen anscheinend mal genauer angeguckt. Was sind denn die Herausforderungen, vor denen man da steht oder anders? Brauche ich, wenn ich so ein Ding betreibe, eine Datenschutzerklärung? Wenn ja, was muss da drinstehen?
+
+01:13:35.820 --> 01:15:15.820
+<v SPEAKER_4>Ja, du brauchst sie definitiv. Du brauchst eine Datenschutzerklärung, da muss verdammt viel drinstehen, weil zumindest BigBlueButton standardmäßig so ungefähr alles mitlockt, alles wegspeichert und das auch für einen recht langen Zeitraum. Die Defaults sind da ausgelegt, damit wenn irgendjemand, der keine Ahnung hat, das installiert und dann Buck Report macht, damit man aus diesem Buck Report und den Logs möglichst alles, was man braucht, herausfindet, um das Buck zu fixen. Das ist nicht auf normalen Betrieb ausgelegt mit den Defaults, zumindest nicht für in der EU. Aber mittlerweile gibt es seit zwei Monaten ein bisschen was an Dokumentationen, wo so ein bisschen Best Practices gerade für in Richtung DSGVO auch drinstehen. Dazu gehört natürlich, dass man Logging an diversen Stellen entweder ausschaltet, was die einfachste Möglichkeit ist, oder eben, damit man schon ein bisschen wichtige Informationen und Fehler mitkriegt, dass man das so anpasst, dass zumindest keine personenbezogenen Daten da drin mitgeloggt werden. Dann muss man sich auch noch angucken. BigBlueButton bietet eine Funktion, wo man dann, nachdem, wenn man eine Session erstellt, also eine neue Konferenz, dann kann das Frontend einen Parameter mitgeben, wo es sagt, die Sitzung soll aufnehmbar sein oder nicht. Wenn die aufnehmbar sein soll, dann wird allerdings die komplette Sitzung aufgenommen. Und das ist den Anwendern eventuell nicht klar, weil die UI da so ein bisschen vorgeaukelt, dass der Benutzer das Starten und Stoppen kann. Eigentlich kann der Benutzer aber nur Start und Stopp, Zeitmarken für den späteren Nachschnitt nachträglich.
+
+01:15:15.940 --> 01:15:24.320
+<v SPEAKER_1>Also wenn dieser Raum gesetzt ist, heißt das, es wird auf jeden Fall aufgenommen?
+
+01:15:24.340 --> 01:16:08.320
+<v SPEAKER_4>Korrekt. Wenn der Aufnehmen-Button oben neben dem Titel vom Raum zu sehen ist, dann weißt du, du wirst gerade aufgenommen. Auch wenn da eigentlich steht, dass du nicht aufgenommen wirst. Dazu gibt es natürlich die einfachste Möglichkeit, das abzuschalten. Die Alternative, womit man das zumindest dann auch das GVO konform betreiben kann, wenn man das denn richtig argumentiert, ist, dass man ein anderes Frontend verwendet, also nicht dieses standardmäßige Greenlight, sondern irgendwas Eigenes oder eben ein modifiziertes Frontend, wo man dann in den Einstellungen sagen kann, ja, ich möchte jetzt, dass dieser Raum aufgenommen wird oder nein, ich möchte, dass der nicht aufgenommen wird.
+
+01:16:08.680 --> 01:16:20.680
+<v SPEAKER_1>Und dann muss man wahrscheinlich auch jedem, jeder Nutzer innen, die da sozusagen hereinkommt, das sofort am Anfang oder eigentlich vorher noch sagen, pass mal auf, wo du bist. Das ist nicht nur in dem Videochat, sondern das wird auch aufgenommen worden.
+
+01:16:20.700 --> 01:16:57.380
+<v SPEAKER_2>Du musst sogar noch eigentlich, also du solltest einen Schritt weitergehen im Sinne des verantwortungsvollen Umgangs und auch alle Teilnehmerinnen darauf hinweisen, dass es natürlich ein leichtes ist für jeden, der anderen, die in der Videokonferenz sind, das bei sich aufzuzeichnen. Sei es, dass sie es mit dem Handy abfilmen oder mit einem Screen-Recording einfach wegspeichern. Und dann kann das veröffentlicht werden, selbstverständlich. Also das lässt sich einfach physisch gar nicht verhindern, dass jemand das aufzeichnen kann. Und darauf sollte man zumindest noch mal auf jeden Fall hinweisen.
+
+01:16:59.200 --> 01:17:32.540
+<v SPEAKER_1>Wie ist das denn eigentlich mit, also in dieser Sendung wurde da ab und zu mal darüber geredet, über die Verschlüsselung von Kommunikation. Wir wissen, dass bei Jitsi und Big Pro Button ist die Kommunikation verschlüsselt zwischen, also ist der Datenverkehr verschlüsselt, dass jemand, der zwischendurch im Internet sozusagen die Pakete beobachtet, nicht sehen kann, was da drin ist. Und ist es vielleicht sogar Ende zu Ende verschlüsselt, dass also nicht mal der Server sehen kann, was da drin ist. Zumindest Letzteres stelle ich mir schwierig vor, wenn irgendwie Dinge verteilt werden sollen. Aber sagt mir, wie es ist, Lukas.
+
+01:17:32.560 --> 01:18:00.460
+<v SPEAKER_3>Also letztendlich sind beide nur zwischen dem Client und dem Server verschlüsselt, sodass niemand von Netzbetreiber Sicht oder irgendwer im Internet-Café, oder was auch immer, das mitlesen kann. Der Betreiber des Servers kann aber auf das Video-Signal zugreifen. Bei Jitsi gibt es mittlerweile experimentelle Features, die funktionieren aktuell leider auch nur unter Chrome. Bei denen kann man tatsächlich sogar eine Ende-zu-Ende-Verschlüsselung aktivieren.
+
+01:18:00.480 --> 01:18:06.820
+<v SPEAKER_1>Das heißt, nur die TeilnehmerInnen eines Videochats können tatsächlich die Video-Signale auch benutzen?
+
+01:18:07.500 --> 01:18:10.260
+<v SPEAKER_2>Genau, es muss halt den Schlüssel austauschen.
+
+01:18:10.280 --> 01:18:23.700
+<v SPEAKER_3>Genau, es muss auf externem Weg ein Schlüssel ausgetauscht werden. Der wird auch nicht über diese Software übertragen. Der muss wirklich über einen separaten Chat oder sonst wie in den Browser eingetippt werden.
+
+01:18:27.900 --> 01:19:43.960
+<v SPEAKER_4>BigBlueButton bietet genau diese Ende-zu-Ende-Verschlüsselung bisher noch nicht. Was Jitsi macht, wenn Chrome genutzt wird, ist, dass die da einen Standard, bzw. etwas, was gerade im Standard-Diesierungsprozess drin ist, dass man Videos, bevor die weggeschickt werden, dass man diese einzelnen Bilder noch nachträglich als Stream verändern kann. Das ist bisher von Google vorgeschlagen, dass es irgendwann mal zum Standard wird. Aber das Ganze hatte auch erst vor zwei, drei Monaten angefangen. Und das wird noch länger dauern, bis das wirklich auch mal in allen Browsern und zum Beispiel auch in Apple-Geräten ist. Also ein Jahr ist bei so was schnell vorbei. Und allgemein ist es aber sehr schwierig, performant Video-Plattformen zu betreiben, die Ende-zu-Ende-Verschlüsselungen haben. Wir hatten ja eben schon diese Techniken, also das SfU oder MCU genannt und genauso auch dieser Peer-to-Peer-Ansatz. Wenn man jetzt Ende-zu-Ende-Verschlüsselungen macht, dann kann der Server nicht mehr auf diese Daten zugreifen. Das heißt, einerseits kann der nicht mehr die Sachen aufnehmen. Andererseits sorgt das aber auch dafür, dass der nicht wie in diesem MCU-Ansatz alle Teilnehmervideos zu einem Video umrechnen kann.
+
+01:19:43.980 --> 01:20:04.020
+<v SPEAKER_1>Aber das ist doch dann letztendlich nur ein weiteres Argument dafür, dass wir in Deutschland endlich alle dicke symmetrische Glasfaseranschlüsse brauchen, oder? Das ist also schon alleine, weil man dann einfach auch Video-Chat Ende zu Ende verschlüsseln kann. Das ist doch die einzige logische Konsequenz, die man aussehen kann. Hätten wir das geklärt.
+
+01:20:04.040 --> 01:20:06.760
+<v SPEAKER_4>Und dann bitte auch schnelle Rechner für alle.
+
+01:20:06.780 --> 01:20:18.140
+<v SPEAKER_1>Und dann auch noch natürlich sozusagen. Also ich sage, ich mache gleich einen Großwurf, Grundeinkommen für alle und dazu natürlich digitale Infrastruktur für jedermann. Anders kann es gehen.
+
+01:20:18.160 --> 01:20:19.620
+<v SPEAKER_3>Eine Grunddatenrate.
+
+01:20:19.640 --> 01:20:22.420
+<v SPEAKER_1>Eine Grunddatenrate, genau.
+
+01:20:22.440 --> 01:20:24.420
+<v SPEAKER_2>Bedingungslose Grunddatenrate.
+
+01:20:24.420 --> 01:21:16.140
+<v SPEAKER_1>Sehr gut. Steini, was ich dich noch fragen würde. Die Sache mit der DSGVO ist ja auch dieses Ding, also eine Idee, die da drin steckt, die wird natürlich mal mehr oder weniger umgesetzt, ist dieses, eigentlich soll immer ganz klar sein, wer meine Daten verarbeitet. Jetzt ist ja dieses Cyberphoedio, ist also ein Verein, der sich darum kümmert, dass Schulen Infrastruktur kriegen. Was bedeutet, dass die Kinder, die wiederum Eltern haben, die gesetzliche Vertreter sind, in digitalen Infrastruktur sind, die aber gar nicht von der Schule betrieben werden, sondern von jemandem dritten, nämlich ihr. War das irgendwie kompliziert, oder gibt es da sozusagen einen juristischen Kniff, falls jetzt jemand zuhört und sagt, hey geil, ich will das für meine Schulen hier auch machen. Wie habt ihr das geklärt?
+
+01:21:16.160 --> 01:23:12.180
+<v SPEAKER_2>Da gibt es keinen juristischen Kniff, sondern tatsächlich eine ganz klare juristische Vorgabe. Deswegen gibt es bei Cyber4Edo auch professionelle Datenschützer und Juristen im Team, die sich genau darum kümmern. Ein Vertragswerk nennt sich dann Auftragsdatenverarbeitung. Und dann gibt es dann Berge von Papier, wo drin steht was, auf welche Art und Weise, wie, wo und von wem und warum verarbeitet wird. Das ist also tatsächlich noch viel mehr Text als das, was man als Datenschutzerklärung den User abverlangen müsste. Meistens lesen sie es nicht, deswegen müsste. Und insbesondere bei Schulen und Schulkindern haben wir uns auf einen Zettel geschrieben und das auch bei einer Schule vorab exemplarisch entwickelt, sozusagen prototypisch eine Erweiterung und Ergänzung der DSGVO, die jetzt speziell an dieser Schule und andere Schulen adaptieren, das jetzt sozusagen akzeptieren als Verschärfung der Privatsphärenregelung, nenne ich das mal für Schülerinnen und Schüler. Und in dem Kontext, ich will jetzt das böse Wort nicht nochmal sagen, aber kommt es natürlich überhaupt nicht in Frage, also überhaupt nicht, nicht im Entferntesten, dass man irgendein Stück Software auf Kinder von Schul, auf Computern von Kindern installiert, die das Mikrofon anmachen kann, die Kamera anmachen kann und auf den kompletten Computer der Kinder zugreifen, die da im Kinderzimmer stehen. Das kommt einfach sowas von nicht in Frage. Das ist der Datenschutz-Super-GAU, wenn man sowas macht. Ganz egal, ob das jetzt datenschutzkonform nach DSGVU wäre oder nicht. Das muss man doch nochmal ganz klar sagen. Und deswegen ist es auch so wichtig, dass man da nochmal das besondere Schutzbedürfnis der Kinder ganz nach vorne stellt.
+
+01:23:12.620 --> 01:23:27.060
+<v SPEAKER_1>Aber nochmal die Frage, ihr habt also diese Auftragsdatenverarbeitung, so heißt der Begriff eben, umgesetzt und diese Papiere, stellt ihr die auch zur Verfügung, dass man diese sagen, wenn man das jetzt selber machen will, ist das quasi Open-Source-Juristerei?
+
+01:23:27.080 --> 01:23:34.340
+<v SPEAKER_2>Aus Gründen dürfen wir das nicht. Ich hab noch nicht verstanden, warum nicht, aber wir helfen dabei.
+
+01:23:34.620 --> 01:23:37.900
+<v SPEAKER_1>Also wenn man so ein Projekt startet, kann man fragen?
+
+01:23:38.860 --> 01:23:56.780
+<v SPEAKER_2>Ja, wir dürfen es nicht einfach online stellen, wieder aus Gründen. Aber da wissen unsere Juristen weit mehr als ich. Da möchte ich mich auch bitte, bitte nicht drum kümmern. Ich bin der Meinung, es ist komplex.
+
+01:23:56.800 --> 01:24:00.200
+<v SPEAKER_1>Lukas hat sich kurz gemeldet, dann wollte Basisbit auch noch was dazu sagen.
+
+01:24:00.220 --> 01:24:28.900
+<v SPEAKER_3>Ja, konkret zu dem Thema Software, die bei den Kindern auf dem Computer läuft und die Webcam aktivieren kann, ist jetzt gerade vor wenigen Tagen Cisco WebEx Meetings in so eine kleine Sicherheitslücke reingelaufen, die es halt ermöglicht hat, dass der Updater der Software remote exploitbar war und jemand beliebige Software nachinstallieren konnte. Und das ist halt genau das, was an dieser Stelle auf jeden Fall vermieden werden sollte.
+
+01:24:28.920 --> 01:25:25.780
+<v SPEAKER_1>Das ist, sagen, WebEx ist eine weitere Software, die proprietär ist und auch verwendet und nicht ganz so weit verbreitet, zumindest in meinen Kreisen. Aber okay, also man will eigentlich sozusagen, ich finde das aber ganz interessant, weil was man hier auch mitnehmen kann, ist, dass es natürlich sozusagen schick ist, wenn man Jitsi in der Open Source verwendet. Aber man hat ja nicht immer die Wahl, wenn jetzt irgendjemand kommt und sagt, du musst jetzt aber und dein Arbeitgeber willst du vielleicht agitieren. Aber vielleicht das geht ja auch nicht immer, dass man das macht. Und es gibt ja aber viele diese Angebote oder nicht viele, aber manche haben ja die Wahl. Also willst du das im Browser machen oder installiere doch unseren tollen Client? Und von allem, was ich jetzt höre, sozusagen ist die bessere Wahl also nicht in der Komfortabilität wahrscheinlich, aber vom Sicherheitsaspekt her ist die bessere Wahl, sozusagen wir machen das im Browser, weil wenn er zu ist, ist es vorbei. Und ich hab mir nicht Software-Farm Rechner installiert, die komische Dinge im Zweifelsfall macht. Basisbit wollte sowieso noch was sagen.
+
+01:25:27.120 --> 01:26:24.740
+<v SPEAKER_4>Genau, jetzt antworte ich erst mal auf deine Frage. Und dann mein anderes Thema. Ja, generell ist es sicherheitstechnisch besser, wenn das Ganze im Webbrowser läuft, denn das sorgt dafür, dass das Ganze so ein bisschen Sandboxed ist. Man muss über bestimmte APIs gehen, damit man zum Beispiel Webcam-Freigabe bekommt und so weiter. Und das wird dann auch standardisiert, den Benutzer angezeigt. Wenn jetzt tatsächlich auf die Webcam zugegriffen wird, macht man den Browser zu, war es das. Allerdings gibt es jetzt mehrere Anbieter, bei denen momentan aus diversen Gründen absichtlich die Desktop-App sehr stark gepusht wird und die Webversion oft zu Problemen und so weiter führt. Das heißt, die wollen natürlich einerseits ein besseres Benutzererlebnis haben, damit argumentieren die, dass die Benutzer sich den Desktop-Client installieren soll. Andererseits kommen die damit aber auch an deutlich mehr für Werbung zum Beispiel verwendbare Daten.
+
+01:26:28.860 --> 01:26:34.380
+<v SPEAKER_1>Naja klar, aber wenn man die Wahl hat, kann man sich dann sozusagen dafür trinken.
+
+01:26:34.400 --> 01:26:47.120
+<v SPEAKER_2>Ja, unter dem Aspekt sollen wir auch nochmal an den Senat appellieren. Ich möchte nämlich gerade für sehr, sehr viele Schulen in Berlin WebEx ausrollen. Das ist eine ganz schlechte Idee. Also das ist einfach eine ganz schlechte Idee.
+
+01:26:48.180 --> 01:26:52.300
+<v SPEAKER_1>So, aber was, du wolltest noch was zur Aufragsdatenverarbeitung und Schulen sagen.
+
+01:26:52.320 --> 01:28:24.960
+<v SPEAKER_4>Genau, was ja gerade jetzt im März und April passiert ist in den Schulen war, dass die Schüler und die Lehrer irgendwie das Problem hatten, dass die alleine standen, keiner denen erzählt hat, was sie machen dürfen und wie das rechtlich ist und welche Tool zu verwenden können. Die haben dann einfach das, was sie auch privat nutzen, für die Schule verwendet. Der Klassiker war dann, ach, machen wir in WhatsApp mal einfach eine Gruppe und da schickt der Lehrer ab und zu neue Hausaufgaben rein. Das führt zu diversen Problemen. Andererseits ist damit nicht sichergestellt, wer jetzt da die Datenhoheit hat. Also die Daten werden bei WhatsApp vielleicht teilweise Ende zu Ende verschlüsselt, auf den einzelnen Handys gespeichert, aber die Schule hat keine Kontrolle mehr, darüber zu gucken, was wird jetzt in diesen Schätz geschrieben, was zu Problemen führt. Andererseits hat die Schule aber auch als Nutzer da jetzt keinen Vertrag für die Nutzung mit zum Beispiel dem Betreiber WhatsApp, was in dem Fall Facebook ist, abgeschlossen. Das heißt, nach DSGVO darfst du als Schule zum Beispiel kein Produkt nutzen für den Lehrunterricht, wo du keinen Auftragsdatenverarbeitungsvertrag hast. Die komplette Nutzung von WhatsApp, Zoom usw. war, wenn das nicht von der Schule irgendwie extra bestellt wurde, dann war das quasi nicht gesetzeskonform.
+
+01:28:24.980 --> 01:29:09.260
+<v SPEAKER_1>Also ich verstehe den Punkt, den du machen willst, aber wir verlassen jetzt gerade ein bisschen das Gebiet dieser Sendung und da möchte ich an dieser Stelle dazusagen, das muss, also das kann passiert sein und gerade was sozusagen WhatsApp angeht, ist es wahrscheinlicher, dass es so ist als andersrum, aber gerade was Zoom angeht, ist es mittlerweile auch anders. Also ich habe zum Beispiel mal selber mit einer Professorin ein Interview gehabt, die sozusagen an der Uni auch Zoom benutzt haben und das auch für das Interview benutzt hat und meinte sie, naja, also bei uns ist das extra eingerichtet worden, wir haben einen Vertrag abgeschlossen und das geht auch. Also das ist sozusagen, das ist eine politische Argumentation und die können wir heute sozusagen hier nicht zu Ende führen, die sozusagen sehr, also sehr weit ist und das, also ja, das kann schief gelaufen sein und die Wahrscheinlichkeit, dass es so ist, auch, aber muss nicht unbedingt.
+
+01:29:10.800 --> 01:29:21.100
+<v SPEAKER_4>Dann noch ein abschließender Satz dazu, du hast das Wichtige schon genannt, diese Schule hat mit so einem Vertrag abgeschlossen, dann war das zumindest so, dass die Schule da aus dem Schneide raus ist.
+
+01:29:21.120 --> 01:29:54.180
+<v SPEAKER_1>Genau, ich wollte es nur verhindern, dass sozusagen alle sofort in helle Panik verfallen oder noch besser oder noch schlimmer sozusagen mit Mistgabeln und Fackeln zur Schule laufen, kann auch eine gute Idee sein, aber fragt vorher, ob es nicht vielleicht doch passiert ist, das ist auch möglich. Aber natürlich, ich wollte das nur der Vollständigkeit halber sagen, natürlich ist es immer besser sozusagen, das zu ermöglichen, Infrastruktur selber zu betreiben oder Infrastruktur von jemand betreiben zu lassen, der kein US-Konzern ist, der nicht das eigene sozusagen Wohlergehen im Sinn hat. So möchte ich das mal zusammenfassen.
+
+01:29:54.200 --> 01:30:23.460
+<v SPEAKER_2>Ganz wichtig ist auch einfach da nicht auf den großen Haufen sich zu werfen, also das schafft ja auch Begehrlichkeiten, wenn ich einen der größten Anbieter nehme, weil wer interessiert sich dann für irgendeinen Server, der in irgendeinem Regal von einem Hosting Provider steht, der jetzt für diese eine Schule ist. Also da ist die Angriffsbreite einfach auch wesentlich geringer. Jetzt nicht nur für den Missbrauch der Daten durch den Anbieter selbst, sondern auch Angriffe, wo Daten sind, kommen Daten weg.
+
+01:30:23.480 --> 01:31:00.800
+<v SPEAKER_1>Also ich würde die Diskussion jetzt ungern sozusagen auf dieser Ebene weiterführen, weil da kommt man immer in Teufels Küche, weil man kann sagen, also im Prinzip hast du recht, aber andererseits, wenn es sozusagen so eine Open-Source-Software gibt, wo eine Sicherheitslücke bekannt geworden ist, dann kann ich ja relativ automatisiert verschiedene Server-Adressen und so weiter und so fort, also das hat alles Vor- und Nachteile. Ich finde es immer schwierig, sozusagen an einer Stelle zu sagen, aber das ist dann das aller aller allerbeste für alle Umstände, weil so ist es ja dann doch auch manchmal wieder nicht. Ich will jetzt sagen, also Basis bitte jetzt zu sagen, letzte Wortmeldung zu diesem Thema, dann würde ich gerne noch hinter die Technik gucken, nämlich was machen wir eigentlich damit.
+
+01:31:02.800 --> 01:31:18.580
+<v SPEAKER_4>Unabhängig davon, welchen Anbieter man jetzt mag oder ob man das selber hostet oder nicht, ist das wichtige für einen als Verein, als Schule oder als Unternehmen, dass man, sobald man das nicht privat nutzt, einen Auftragsverarbeitungsvertrag braucht. Hat man den nicht, ist das sehr problematisch.
+
+01:31:22.480 --> 01:31:42.960
+<v SPEAKER_2>Ganz ganz interessant, staatliche Schulen brauchen den zwar auch, sind aber nicht strafbewehrt, wenn sie es nicht haben. Das ist ganz seltsam, in der Rechtsprechung haben wir herausgefunden, die wären da nicht belangt, wenn sie dagegen verstoßen haben. Bei privaten Schulen ist das anders, da ist die Schulleitung tatsächlich quasi haftbar, bei staatlichen Schulen ist das nicht so.
+
+01:31:42.980 --> 01:32:20.900
+<v SPEAKER_1>Okay, die wilden Dinge der Juristerei. Aber verlassen wir dieses Feld und begeben uns noch mal eine letzte Runde. Und das ist ja, jetzt gibt es diesen schönen Videochat. Und dann muss man was damit machen. Wie habt ihr das denn sozusagen in eurer Arbeit? Also verstehe ich vielleicht mal bei euch an. Also obwohl ich wollte zu diesem Datenschutz noch tatsächlich fragen, gab es da von den Schulen, mit denen ihr gearbeitet habt, auch Bedenken, die ihr erstmal aus dem Weg räumen musstet? Also nicht unbedingt Datenschutz, aber generell Verwendung von dieser Software oder von solcher Software?
+
+01:32:22.860 --> 01:33:10.100
+<v SPEAKER_2>Also die größte Kritik, und die hängt jetzt auch ein bisschen mit der Benutzung dann zusammen, ist ja, das ist doch Open-Source-Software, das funktioniert doch bestimmt nicht. Also es ist ganz interessant, es wird dann auch zur selbsterfüllenden Prophezeiung, auf eine Art haben wir gesehen, dass die Erwartungshaltung, dass da was nicht funktioniert, so groß ist, dass die meisten dann schon gar nicht mehr Bescheid sagen, wenn was nicht funktioniert, weil sie das abkanzeln, als ist halt Open-Source-Software. Und dann, da braucht nur irgendwas nicht zu funktionieren, selbst wenn jetzt der Anwender, die Anwenderin zu doof war, die Kamera anzuknipsen, dann ist es die Open-Software-Source-Software, die schuld ist. Und lass mal lieber dieses andere Tool da nehmen von diesem Hersteller.
+
+01:33:10.120 --> 01:33:12.840
+<v SPEAKER_1>Okay, aber so sagen, aber das war's.
+
+01:33:14.820 --> 01:33:47.440
+<v SPEAKER_3>Also, meine Erfahrung, was dieses Thema angeht, das ist doch Open-Source, das funktioniert doch nicht, ist vielleicht sogar ganz gut, dass die Erwartungshaltung etwas niedriger war, weil kleine Probleme, da hat sich dann keiner mehr groß drüber beschwert. Aber wenn dann bei WebEx oder bei Zoom was schiefgegangen ist, da wurde sich breit drüber ausgeklagt und es wurden Empfehlungen ausgesprochen, dass man doch besser unsere offenen Alternativen benutzen soll. Und die Nutzer waren damit am Ende auch noch zufrieden.
+
+01:33:47.920 --> 01:34:23.260
+<v SPEAKER_1>Nice, sehr, sehr gut. Okay, jetzt will ich aber noch zu den Konzepten dahinter kommen. Also gerade in der Schule, also ich kann noch ein bisschen anekdotische Evidenz, war es ja so, dass man dann die digitalen Werkzeuge hatte, aber dann manchmal versucht hat, einfach dasselbe zu machen, was man sonst macht. Und das ist ja dann eher sozusagen nicht so geil. Wie ist denn der Umgang, also im Sinne von, man macht halt irgendwie eine halbe Stunde Frontalunterricht, das ist natürlich als Videokonferenz extrem langweilig. Wie ist denn oder wie schnell sind Konzepte entstanden und welche sind vielleicht besonders aufgefallen?
+
+01:34:24.620 --> 01:35:35.800
+<v SPEAKER_2>Ich glaube, es gibt einen riesen Unterschied zwischen Grundschule und weiterführende Schule, einfach weil das Level, inwieweit man Menschen da alleine lassen kann, einfach wahnsinnig unterschiedlich ist. Das fängt an, erste, zweite Klasse, da können die ja noch nicht mal wirklich lesen in vielen Fällen. Und da ist schon die Bedienung schwierig, da müssen Eltern daneben sitzen und erst mal erklären und so weiter. Da würde ich sagen, muss ganz viel über das Visuelle gehen. Und deswegen wird in der Grundschule auch weit mehr als doppelt so viel Video benutzt, als in den weiterführenden Schulen. Da ist es eher so, dass die Kids lieber nicht das haben wollen, dass alle sehen, dass sie da noch nachtem sitzen, morgens um neun. So, aber bei den Jüngeren ist das definitiv so. Und da steht natürlich der Spielcharakter im Vordergrund. Und es gibt ganz unterschiedliche Rangehensweisen bei Schulen. Am besten geklappt hat es da, wo die Gruppen von Anfang an verkleinert wurden, weil es über Videokonferencing wahnsinnig schwer ist, 25 oder gar 30 Kinder gleichzeitig irgendwie zu interessieren für irgendwas.
+
+01:35:37.100 --> 01:35:42.440
+<v SPEAKER_1>Hat sich da sozusagen so eine Daumenregel rausgestellt? Also acht Leute, zehn, zwölf, was auch immer?
+
+01:35:42.460 --> 01:37:29.140
+<v SPEAKER_2>Das ist so, meistens wurden die Gruppen gedrittelt. Und dann eben in, das gibt es ja bei Big Blue Button auch Breakout-Rooms verschoben. Da kann man die einfach, da kann man eine Gruppe von Leuten in einen Raum tun und sagen in einer Viertelstunde kommt ihr wieder. Und dann kommen die automatisch in einer Viertelstunde zurück oder in irgendeiner Zeit. Das hat gut funktioniert, auch da muss man natürlich dann auch noch Menschen haben, die das dann da jeweils moderieren. Das ist also sehr viel personalaufwendiger auf eine Art. Dafür wurde jetzt aber auch nicht in gleichem Maße, in der gleichen Intensität unterrichtet. Also am erfolgreichsten war es meiner Wahrnehmung nach, wenn die Gruppen verteilt wurden, verkleinert wurden. Und ansonsten hängt aber das Gesamtkonzept dran. Also einfach nur Videokonferencing löst das Problem nicht. Das fängt damit an, dass die Kinder ja wissen müssen, wann sie in welchem Raum sein sollen. Und dass die Kinder dann auch das Material brauchen, an dem sie arbeiten sollen. Weil du kommst nicht drum rum, dass die halt mit Arbeitsblättern, mit Konzepten, mit Links zu Videos, die sie anschauen sollen, mit Aufgaben, die sie machen sollen, versorgen musst, über die du dann reden willst. Und das geht nur, haben wir gelernt, wenn sich ein, zwei Personen an so einer Schule wirklich dediziert dafür verantwortlich klären, nicht, dass sich da technisch oder mit uns gemeinsam, sondern ihnen halt nicht drum zu kümmern. Die größte Aufgabe ist nicht, die Kinder zu überzeugen. Die größte Aufgabe ist, Lehrerinnen und Lehrer zu überzeugen, damit überhaupt klarzukommen. Weil die haben normalerweise die größten Berührungsängste vor dieser Technik und auch die größten Probleme, in so einen Computer reinzureden.
+
+01:37:29.160 --> 01:37:55.300
+<v SPEAKER_1>Ach so, das ist die eine Sache. Aber jetzt hab ich so zwischen den Zeilen verstanden, dass es also reicht eben nicht, einen Videochat aufzusetzen und zu sagen, hier, das Klassenzimmer ist jetzt virtuell. Sondern man muss halt sowas wie, also wie funktioniert eigentlich Kommunikation im Digitalen? Auf welcher Plattform werden die Aufgaben verteilt? Wie kommen wir zueinander? Also da braucht es sozusagen, also es hilft nicht, ein virtuelles Klassenzimmer zu haben, sondern man braucht auch ein Konzept fürs Digitale.
+
+01:37:55.320 --> 01:39:03.480
+<v SPEAKER_2>Und es dauert, ich würde sagen, eine Woche tägliche Arbeit mit den Kindern. So haben wir das wahrgenommen, aber sowohl in der Grundschule als auch weiterführend, um gemeinsam mit den Kindern erst mal zu lernen, wie funktioniert das hier? Wo drücke ich, wo mache ich was? Es geht nicht in Ordnung, wenn ich die ganze Zeit im Chat, im Private Chat irgendwas dengele. Dann müssen die LehrerInnen auch ihre Tools kennen. Die müssen wissen, wie schalte ich denn das ab? Wie kann ich denn das unterbinden? Wie kann ich jetzt hier Chat verbieten? Wie kann ich Public Notes und so weiter verbieten, damit die im Fokus bleiben? Wie kriege ich... Wie kann ich auch einschätzen, ist jetzt jemand noch da oder ist jetzt jemand aus technischen Gründen rausgeflogen oder was? Das sehen die nicht. Also ich habe das live beobachtet, klassische Keule. Ja, da wird jemand, also meine Tochter wurde gefragt, sag mal, sag doch auch mal was dazu und sie hatte keinen Bock. Dann sagt sie nichts. Und das kommt auf der anderen Seite sofort an, hm, die ist wohl rausgeflogen, naja, die Source-Software. Und ich ist die angeschritten, jetzt los, mach was. Du musst jetzt was sagen, sonst denken alle, die Software funktioniert nicht.
+
+01:39:03.500 --> 01:39:12.280
+<v SPEAKER_1>Aber positiv gesehen, die Kinder lernen sozusagen an Medienkompetenz auch einfach ein paar Dinge, weil einfach stillhalten, weil, naja, das ist auch gut.
+
+01:39:13.500 --> 01:40:19.840
+<v SPEAKER_2>Aber sie lernen auch unheimlich viel. Also das, was am meisten Spaß macht, gerade Mittelstufe, Oberstufe, dafür ist Jitsi ja auch wirklich sehr gut geeignet. Aber BigBloodBatman kann das genauso gut sich eben schnell treffen. Also es gibt etliche Schüler, wir hatten an dieser Einschule jetzt, stand heute eine Umfrage unter allen Schülerinnen und Lehrerinnen, wie denn die Akzeptanz war. Und die war bei deutlich über 80 Prozent, wurde das als sehr positiv empfunden. Was aber auch damit zusammenhängt, dass das Kollegium sich einfach irre Kopf gemacht hat. Also von, die haben morgens jeden Morgen einen Podcast produziert, um die einzusammeln. Die haben sich Konzepte überlegt, auch mit uns gemeinsam. Wie erreichen sie die Schülerinnen und Schüler? Wie liefern sie die Materialien? Wie holen sie Feedback ein? Die haben Räume eingerichtet, wo man einfach vorbeigehen konnte. Zu jedem Zeitpunkt war da jemand von den Lehrkräften und hat sich der Probleme angenommen und so weiter. Das ist einfach irre gut gelaufen. Ich kann mal auch nennen, war die ESBZ hier in Berlin, Evangelische Schule, Berlin Zentrum.
+
+01:40:19.860 --> 01:40:22.260
+<v SPEAKER_1>Ich bin ehrlich gesagt ein bisschen neidisch.
+
+01:40:22.280 --> 01:41:02.180
+<v SPEAKER_2>Die haben das extrem gut hingekriegt. Das war jetzt nicht allein unser Verdienst, wäre zu einfach zu sagen, wir haben da Videokonferenzen gemacht. Das hat das Kollegium auch hingekriegt, mit allen Schülerinnen und Schülern gemeinsam, die ESBF, also auch eine Schule aus dem Konglomerat hat das auch gemacht. Und jetzt inzwischen viele weiteren Schulen. Man merkt, es funktioniert überall da nicht so gut, wo die Lehrerinnen und Lehrer selbst Berührungsängste haben und niemand sich dieses Themas wirklich so richtig annehmen mag, sondern das eher alle als leid empfinden. Da ist es dann schwierig.
+
+01:41:03.620 --> 01:41:57.520
+<v SPEAKER_1>Wie siehst du eigentlich jetzt eure Aufgabe? Ich drücke ja Daumen und bete und trage mal brav meine Maske, aber die Befürchtung, dass eine zweite Welle so oder so kommt, kann ich nicht ganz ablegen. Das ist die eine Sache. Und die andere Sache ist, ich habe mit einem Bildungsexperten mal gesprochen, als das losging, und er meinte, eigentlich ist die Hoffnung ja auch, dass dieses klassische Schulding, das irgendwie Ende 19. Jahrhundert entstanden ist, dass wir das vielleicht mal langsam ablösen und dass das durch diese Krise jetzt vielleicht ein bisschen schneller geht. Also vielleicht gibt es nicht nur noch Präsenzlernen, sondern vielleicht wird Videolernen auch mehr oder weniger zum Alltag. Dieses Cyber4EDU, was ihr da gerade macht, ist das für dich so ein Ding, du hoffst, dass das irgendwann überflüssig wird, weil sich Staat, Politik und Gesellschaft auch mal ausdenken, wie digitale Infrastruktur an Schulen aussehen kann, ohne dass das ein Verein williger Eltern macht.
+
+01:41:58.220 --> 01:42:00.120
+<v SPEAKER_2>Ein Träumchen, ne?
+
+01:42:00.140 --> 01:42:10.040
+<v SPEAKER_1>Aber ist das euer Ziel, oder sagt ihr so, ne, wir bauen das jetzt weiter aus und dann werden wir halt irgendwann zur Bildungsinfrastruktur, die dann halt zur Verfügung steht? Oder die der Staat dann halt bezahlen muss, oder wie auch immer?
+
+01:42:10.060 --> 01:43:31.300
+<v SPEAKER_2>Ja, also in Wirklichkeit machen wir gerade was, was eigentlich das Kultusministerium machen muss, müsste. Wir erarbeiten Konzepte, es geht ja nicht um Digitalunterricht im Sinne von Informatik oder so, sondern es geht darum, wie fühlen wir die Kinder in eine digitale Welt, die ihr Leben so viel mehr beeinträchtigt. Ich vergleiche das immer mit der Klimakatastrophe. Was wir hier gerade an Vernachlässigung dieser Themen produzieren, ist mindestens genauso episch. Auf einem ganz anderen Gebiet, aber genauso fatal für zukünftige Generationen, deren Daten jetzt sich irgendwo stapeln, die irgendwann sich um einen Job bewerben, abgelehnt werden und nicht mal der Personaler, der gegenüber sitzt, weiß, warum. Weil das hat die Maschine entschieden, aus irgendeinem Datensatz, der irgendwann mal vor zehn Jahren aufgefallen ist. Diese Kompetenz, damit umzugehen, es wird einfach in fünf, zehn Jahren oder eigentlich jetzt schon und immer zunehmend viel wichtiger, damit umgehen zu können, Alternativen zu diesen Mainstream-Daten-Kraken zu kennen und zu beherrschen. Führerschein brauchst du in zehn Jahren nicht mehr, da fahren die alle alleine. Aber du musst dich auskennen, wie du die Daten deines Unternehmens schützt, wie du Privatsphäre warst, wie du damit umgehen, wie du auch Tools bedienen kannst, die nicht Standard-normal sind.
+
+01:43:32.000 --> 01:43:37.000
+<v SPEAKER_1>Also ich stelle im Verlauf der Sendung fest, ich stelle konkrete Fragen und es geht immer aus ganz politischer und...
+
+01:43:37.020 --> 01:43:38.520
+<v SPEAKER_2>Aber du hast gefragt.
+
+01:43:38.540 --> 01:43:48.620
+<v SPEAKER_1>Nee, aber ich habe gefragt, ob du das weitermachen willst ganz persönlich oder ob du eigentlich insgeheim hoffst, dass es reicht, so zu sagen, okay, so macht man es eigentlich, und dann diese Aufgabe sozusagen abgibst.
+
+01:43:49.420 --> 01:44:38.980
+<v SPEAKER_2>Ja, ich glaube nicht, dass es in Kürze getan ist. In Terms of den nächsten 20 Jahren sind wir da nicht. Das wäre für mich schon kürzer. Also nein, also was ich erlebe an Schulen, auch mit den EntscheidungsträgerInnen und Verantwortlichen, das ist, wir sind so hoffnungslos am Anfang und wir sind es aber auch leid, immer nur zu sagen, das geht so nicht und so können wir das nicht machen, du bist immer, also ich für mich jetzt der Buhmann, wenn ich sage, Leute, das geht nicht und wir werden dann auch teilweise schon auch, wir werden auch beleidigend wahrgenommen, weil wir scheinbar Verhinderer sind und irgendwann hast du keine Lust mehr zu verhindern und dann fängst du halt an zu sagen, okay, jetzt beantworten wir die Frage, was wäre denn in Ordnung und dann ist halt viel Arbeit und die machen wir jetzt.
+
+01:44:39.000 --> 01:45:01.220
+<v SPEAKER_1>Sehr gut, vielen Dank, sag ich mal, vor allen Dingen, stellvertretend für alle Eltern, die den Genuss kommen, ihre Kinder so eine total tolle Infrastruktur am Start haben und würde das auch schon als Schlusswort gelten lassen und würde aber Lukas und Basisbit auch noch die Gelegenheit geben für ein letztes, was wir aus dem Betrieb von Videochat-Konferenz-Software gelernt haben und wie wir damit umgehen.
+
+01:45:05.340 --> 01:45:39.900
+<v SPEAKER_4>Man muss auf jeden Fall gucken, dass man sich nicht einfach von irgendeinem Trittbett-Fahrer einen Server hinstellen lässt, der nur sehr schlecht funktioniert, aber zwar auf dem Papier toll ist, vielleicht auch Big Group Button oder sonst was Open Source ist, sondern irgendwas, womit die Schüler und Lehrer wirklich gut klarkommen. Das muss man verwenden und das ist Arbeit und das ist Zeit. Sowas kann man nicht eben als Lehrer nebenbei, neben der Schule noch für die komplette Schule betreiben. Sondern da braucht man Leute, die sich wirklich damit auskennen und die das ein bisschen professioneller betreiben oder als Hobby betreiben.
+
+01:45:39.920 --> 01:45:55.500
+<v SPEAKER_1>Was du sagen, was nicht heißt, dass es nicht Lehrerinnen geben kann, die das können, aber es ist halt sozusagen falsch, die Erwartung zu haben, hey, lern das jetzt mal schnell und mach das mal eben bei. So, dann Lukas.
+
+01:45:55.520 --> 01:47:14.280
+<v SPEAKER_3>Ja, vielleicht einfach noch zum Abschluss kurz, was ich bei uns sehe. Wie es aussieht, einfach anfangs waren viele Veranstaltungen komplett präsent, also vor Corona-Zeiten und man musste zu den Vorlesungen hin und die Professoren haben ihr Tempo hingelegt und haben viele Studenten zurückgelassen. Jetzt gibt es für fast alles eine Aufzeichnung und man kann sich im Nachhinein den Kram noch mal angucken. Jetzt merken die Dozenten selber, dass das eine gute Idee ist. Es gibt jetzt auch einige richtig gut produzierte Vorlesungen mit ordentlich lesbaren Folien und so weiter und es geht jetzt in eine Grundkonzeption, wie man denn so Remote-Vorlesungen langfristig auch anbieten kann und dass auch alles schön einheitlich ist und nicht irgendwie jeder seinen eigenen Kram macht, der eine streamt auf Twitch, der andere auf YouTube und einer hat eine Zoom-Session, sondern dass irgendwie ein System existiert, in dem alles gesammelt wird, auch das Scheduling-Problem gelöst wird. Ja und da läuft es bei uns hoffentlich in nicht zu ferner Zukunft hinaus.
+
+01:47:14.300 --> 01:48:22.280
+<v SPEAKER_1>Also die Welt ist nicht ganz verloren und es gibt noch Hoffnung. Ich würde jetzt gerne noch zwei Sachen sagen wollen, die mir gerade noch eingefallen sind. Basisbit, weil du arbeitest ja mit bei Senfcall.de und das ist nicht, das ist vor allen Dingen auch deshalb spannend, weil wenn ihr jetzt die Sendung gehört habt und euch aufgefallen ist, Moment mal, es gibt diese beiden Dinge und die kann man auch benutzen, warum hat mir davon noch niemand erzählt? Ich möchte das auch mal ausprobieren. Senfcall.de ist halt eben eine Instanz von Studierenden, glaube ich, hauptsächlich, die die aufgesetzt haben, wo man einfach Big Blue Button mal benutzen kann. Also da kann man sich das mal angucken, wie diese Software ist als Videochat. Und für Jitsi gibt es sowas auch, jitsi.rocks ist so ein, ich weiß, ich hab schon wieder vergessen, wer genau dahinter ist, aber das ist sowas, das wird in zumindest meinem sozialen Umfeld auch empfohlen, als wenn du mal was brauchst, das sind vertrauenswürdig Leute, die das betreiben. Das ist zumindest das, was ich in den letzten Tagen und Wochen gelernt habe. Entweder korrigiert mich jetzt bitte oder gibt noch weitere Empfehlungen ab für, wenn diese Art und Weise von Videokonferenz-Software mal als Nutzer innen ausprobieren wollt, dann tut das an folgender Stelle.
+
+01:48:24.680 --> 01:48:27.860
+<v SPEAKER_2>Ja, zum Beispiel auch bbb.cyber von edu.org.
+
+01:48:27.880 --> 01:48:30.160
+<v SPEAKER_1>Ah, ihr habt auch einen öffentlichen sozusagen.
+
+01:48:30.180 --> 01:48:34.840
+<v SPEAKER_2>Wir haben auch einen öffentlichen Server, der kann auch noch ein bisschen.
+
+01:48:34.860 --> 01:48:44.400
+<v SPEAKER_4>Es gibt ein Etherpad, wo eine ganze Liste an BigBlueButton und an Jitsi-Servern drin sind, die können wir später auch als Link zu der Aufnahme bereitstellen.
+
+01:48:45.480 --> 01:48:54.080
+<v SPEAKER_1>Genau, also alle Angebote, die jetzt noch mal gerannt werden, die kommen auch in die Show Notes von Chaosradio.de. Lukas, hast du auch noch eine Empfehlung?
+
+01:48:54.100 --> 01:48:56.980
+<v SPEAKER_3>Eigentlich nicht, ich nehme die Plattformen, die angeboten werden.
+
+01:48:59.720 --> 01:50:00.400
+<v SPEAKER_1>Alles klar. Cool, dann also Basisbild Lukas Steini, schönen Dank, dass ihr da wart und uns teilhaben, teil gehabt haben lassen an euren Erfahrungen und Weisheiten beim Betrieb von Videokonferenz-Software. Ich fand das ganz witzig und ich freue mich auch sehr, dass meine Erwartung so ein bisschen erfüllt wurde, dass wir drüber geredet haben, was hat man jetzt schon gelernt aus der Art und Weise und was kann man vielleicht daraus lernen für die Zukunft, für die vielleicht nähere, wo man es nochmal wirklich dringend braucht, aber vielleicht auch für die weitere, wo sowas zunehmend auch Alltag werden kann und dann nicht die persönliche Ergegnung, weil das ja auch immer irgendwie die Angst ist, nicht die persönliche Begegnung entsetzen soll, aber das menschliche Miteinander auf eine digitale Art und Weise erweitern kann. Und damit möchte ich das heutige Chaosradio 261 abschließen. Bedanke mich beim Chaosradio-Team, dass diese Sendung ganz hervorragend vorbereitet hat und die tollen Gäste herbeigesucht hat. Und mir bleibt dann nur noch eine Sache zu sagen. Lasst euch nicht überwachen, auch nicht im Videochat und verschlüsselt immer schön eure Backups.

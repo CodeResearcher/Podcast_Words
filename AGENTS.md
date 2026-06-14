@@ -48,4 +48,4 @@ extend this project with following features:
 - date when latest fetched transcript
 - episode for last transcript
 - show number of transcripts by source
-- link to episodes in diagrams
+- link to episodes from PodLove API response

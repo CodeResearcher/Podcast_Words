@@ -23,6 +23,38 @@ from podcast_words.transcripts.loader import load_transcript
 _EPISODE_FILE_RE = re.compile(r"episode_(\d+)\.(vtt|txt)$", re.IGNORECASE)
 
 
+def _read_word_counts_csv(csv_path: Path) -> pd.DataFrame:
+    """Load word_counts.csv without treating lemmas like ``null`` as NaN."""
+    df = pd.read_csv(csv_path, keep_default_na=False)
+    df["word"] = df["word"].astype(str)
+    episode_cols = [c for c in df.columns if c not in ("word", "is_stop")]
+    if episode_cols:
+        df[episode_cols] = (
+            df[episode_cols].replace("", np.nan).apply(pd.to_numeric, errors="coerce")
+        )
+    return df
+
+
+def _valid_word_label(word) -> bool:
+    if word is None or (isinstance(word, float) and pd.isna(word)):
+        return False
+    text = str(word).strip()
+    return bool(text) and text.lower() != "nan"
+
+
+def _sanitize_word_matrix(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop invalid word labels and merge duplicate rows."""
+    if df.empty:
+        return df
+    labels = pd.Series(df.index, index=df.index)
+    valid = labels.apply(_valid_word_label)
+    df = df.loc[valid]
+    df.index = df.index.astype(str).str.strip()
+    if not df.index.is_unique:
+        df = df.groupby(level=0, sort=True).sum()
+    return df
+
+
 def _load_spacy(model_name: str):
     import spacy
 
@@ -54,8 +86,8 @@ def _transcript_files(transcripts_dir: Path) -> dict[int, Path]:
 def _process_text(nlp, text: str, lemma_info: dict[str, bool]) -> list[str]:
     lemmas: list[str] = []
     for token in nlp(text):
-        lemma = token.lemma_.lower()
-        if not lemma.isalpha():
+        lemma = token.lemma_.lower().strip()
+        if not lemma or not lemma.isalpha():
             continue
         lemmas.append(lemma)
         if lemma not in lemma_info:
@@ -77,14 +109,17 @@ def count_words(podcast: PodcastConfig, *, rebuild: bool = False) -> dict:
     lemma_info: dict[str, bool] = {}
 
     if csv_path.exists() and not rebuild:
-        df = pd.read_csv(csv_path)
+        df = _read_word_counts_csv(csv_path)
+        df = df.loc[df["word"].apply(_valid_word_label)]
         df.set_index("word", inplace=True)
         if "is_stop" in df.columns:
             lemma_info = {
                 str(word): bool(stop)
                 for word, stop in df["is_stop"].items()
+                if _valid_word_label(word)
             }
             df = df.drop(columns=["is_stop"])
+        df = _sanitize_word_matrix(df)
         existing = {int(c) for c in df.columns}
     else:
         df = pd.DataFrame()
@@ -112,7 +147,9 @@ def count_words(podcast: PodcastConfig, *, rebuild: bool = False) -> dict:
             bar.set_postfix_str(f"#{number}")
         transcript = load_transcript(transcripts[number])
         lemmas = _process_text(nlp, transcript.plain_text(), lemma_info)
-        new_columns.append(pd.Series(Counter(lemmas), name=number, dtype="float64"))
+        counts = Counter(lemmas)
+        counts = Counter({k: v for k, v in counts.items() if _valid_word_label(k)})
+        new_columns.append(pd.Series(counts, name=number, dtype="float64"))
 
     processed = len(new_columns)
     if processed == 0:
@@ -120,6 +157,7 @@ def count_words(podcast: PodcastConfig, *, rebuild: bool = False) -> dict:
 
     new_df = pd.concat(new_columns, axis=1)
     df = pd.concat([df, new_df], axis=1) if not df.empty else new_df
+    df = _sanitize_word_matrix(df)
 
     # The matrix is now all-numeric episode columns. concat leaves one block per
     # source column, so consolidate with copy() before adding is_stop — otherwise
@@ -130,6 +168,7 @@ def count_words(podcast: PodcastConfig, *, rebuild: bool = False) -> dict:
     df.sort_index(inplace=True)
     df.index.name = "word"
     df = df.reset_index()
+    df = df.loc[df["word"].apply(_valid_word_label)].copy()
     df.replace(0, np.nan, inplace=True)
 
     csv_path.parent.mkdir(parents=True, exist_ok=True)
@@ -146,7 +185,8 @@ def count_words(podcast: PodcastConfig, *, rebuild: bool = False) -> dict:
 
 def _write_stats(podcast: PodcastConfig) -> None:
     """Recompute episode_stats.json from the word matrix."""
-    df = pd.read_csv(podcast.word_counts_csv)
+    df = _read_word_counts_csv(podcast.word_counts_csv)
+    df = df.loc[df["word"].apply(_valid_word_label)]
     episode_cols = sorted(
         (c for c in df.columns if c not in ("word", "is_stop")),
         key=lambda c: int(c),

@@ -11,6 +11,18 @@ from podcast_words.config import load_config, sorted_podcast_ids
 
 st.set_page_config(layout="wide")
 
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] [data-baseweb="select"] input {
+        caret-color: transparent !important;
+        cursor: pointer !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 _SOURCE_LABELS = {
     "podlove": "PodLove",
     "apple": "Apple Podcasts",
@@ -22,7 +34,8 @@ _SOURCE_LABELS = {
 }
 
 _AUDIO_SUFFIXES = (".mp3", ".m4a", ".wav", ".ogg", ".aac")
-_HOVER_EPISODE = "Episode %{x}<br>%{customdata[1]}<extra></extra>"
+_HOVER_EPISODE_COUNT = "Episode %{x}<br>%{y}<extra></extra>"
+_HOVER_BAR_COUNT = "%{y}<br>%{x}<extra></extra>"
 
 
 def _is_audio_url(url: str) -> bool:
@@ -57,16 +70,6 @@ def _episode_url(episode, podcast) -> str:
         )
 
     return link
-
-
-def _episode_hover_customdata(episode_numbers, meta: dict[int, dict[str, str]]):
-    urls: list[str] = []
-    titles: list[str] = []
-    for number in episode_numbers:
-        row = meta.get(int(number), {})
-        urls.append(row.get("url", ""))
-        titles.append(row.get("title", "") or f"Episode {number}")
-    return list(zip(urls, titles, strict=True))
 
 
 def _selection_points(selection) -> list:
@@ -123,7 +126,7 @@ def get_config():
 def load_data(podcast_id: str):
     config = get_config()
     podcast = config[podcast_id]
-    df = pd.read_csv(podcast.word_counts_csv, index_col=0)
+    df = pd.read_csv(podcast.word_counts_csv, index_col=0, keep_default_na=False)
     df.fillna(0, inplace=True)
     df = df[df["is_stop"] == False]  # only relevant words
     df = df.drop(columns=["is_stop"])
@@ -246,7 +249,6 @@ selected_words = st.multiselect("🔍 Choose words", word_columns, default=defau
 
 if selected_words:
     df_selected = df[["Episode"] + selected_words]
-    line_customdata = _episode_hover_customdata(df_selected["Episode"], episode_meta)
 
     st.subheader("📊 Frequency of selected words across all episodes")
     fig_line = go.Figure()
@@ -258,8 +260,7 @@ if selected_words:
                 mode="lines",
                 stackgroup="one",
                 name=word,
-                customdata=line_customdata,
-                hovertemplate=_HOVER_EPISODE,
+                hovertemplate=_HOVER_EPISODE_COUNT,
             )
         )
     fig_line.update_layout(xaxis_title="Episode", yaxis_title="Count", width=1000, height=400)
@@ -272,7 +273,6 @@ if selected_words:
     top10 = df_selected.sort_values("total_selected", ascending=False).head(10)
     top10["Episode_str"] = "Episode " + top10["Episode"].astype(str)
     top10_sorted = top10.sort_values("total_selected", ascending=True)
-    bar_customdata = _episode_hover_customdata(top10_sorted["Episode"], episode_meta)
 
     fig_bar = go.Figure()
     for word in selected_words:
@@ -282,8 +282,7 @@ if selected_words:
                 y=top10_sorted["Episode_str"],
                 name=word,
                 orientation="h",
-                customdata=bar_customdata,
-                hovertemplate="%{y}<br>%{customdata[1]}<extra></extra>",
+                hovertemplate=_HOVER_BAR_COUNT,
             )
         )
     fig_bar.update_layout(
@@ -306,16 +305,13 @@ col1.metric("🎧 Episodes", stats["total_episodes"])
 col2.metric("🗣️ Total words spoken", f"{stats['total_words']:,}")
 col3.metric("🔤 Distinct words", f"{stats['total_unique_words']:,}")
 
-stats_customdata = _episode_hover_customdata(episodes_stats_df["episode"], episode_meta)
-
 st.subheader("📈 Words per episode")
 fig_total = go.Figure(
     go.Scatter(
         x=episodes_stats_df["episode"],
         y=episodes_stats_df["total_words"],
         mode="lines+markers",
-        customdata=stats_customdata,
-        hovertemplate=_HOVER_EPISODE,
+        hovertemplate=_HOVER_EPISODE_COUNT,
     )
 )
 fig_total.update_layout(xaxis_title="Episode", yaxis_title="Words", width=1000, height=300)
@@ -328,8 +324,7 @@ fig_unique = go.Figure(
         x=episodes_stats_df["episode"],
         y=episodes_stats_df["unique_words"],
         mode="lines+markers",
-        customdata=stats_customdata,
-        hovertemplate=_HOVER_EPISODE,
+        hovertemplate=_HOVER_EPISODE_COUNT,
     )
 )
 fig_unique.update_layout(xaxis_title="Episode", yaxis_title="Count", width=1000, height=300)
@@ -342,8 +337,7 @@ fig_new = go.Figure(
         x=episodes_stats_df["episode"],
         y=episodes_stats_df["new_words"],
         mode="lines+markers",
-        customdata=stats_customdata,
-        hovertemplate=_HOVER_EPISODE,
+        hovertemplate=_HOVER_EPISODE_COUNT,
     )
 )
 fig_new.update_layout(

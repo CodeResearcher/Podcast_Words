@@ -1,0 +1,541 @@
+WEBVTT
+
+01:00:22.843 --> 01:00:23.783
+<v SPEAKER_3>Einen schönen guten Abend.
+
+01:00:23.803 --> 01:00:29.183
+<v SPEAKER_2>Einen schönen guten Abend. So BEAST, wir haben vorhin schon gehört, es ist eine Abkürzung 4.
+
+01:00:42.683 --> 01:01:08.763
+<v SPEAKER_3>Also ich muss dazu sagen, dass das ja noch nicht im Detail veröffentlicht ist. Das heißt, was existiert sind Andeutungen aus welchen Schwachstellen das beruht. Und ich kann mir ungefähr zusammenreinen, wie es funktioniert. Ich habe mit anderen Leuten darüber geredet, die auch sich mit Crypto aufkennen, die sind derselben Meinung. Ich könnte es noch nicht ganz programmieren, aber zumindest habe ich das grundlegende Prinzip, verstanden. Und zwar handelt es sich um einen Chosen Plantext-Attack, mit dem der Initialization Vector vorhergesagt werden kann durch das Erreichene von 6.5 CBC. Ja, schön.
+
+01:01:11.943 --> 01:01:25.183
+<v SPEAKER_2>Also das Nerd-Bullshit-Bingo geht heute ganz klar an Herrn Bogg. Vielen Dank dafür. Ich finde es ja super, dass normalerweise bin ich ja in der Sendung, der irgendwie so eher keinen Plan hat und nachfragt. Jetzt haben die anderen drei auch gerade alle so Augen bekommen.
+
+01:01:25.203 --> 01:01:25.883
+<v SPEAKER_3>Ich habe das schon verstanden.
+
+01:01:28.083 --> 01:01:30.303
+<v SPEAKER_2>Erklär doch mal. Und Andreas korrigiert.
+
+01:01:33.303 --> 01:01:36.283
+<v SPEAKER_3>Das geht schnell, wenn ich das erkläre.
+
+01:01:36.303 --> 01:01:40.023
+<v SPEAKER_2>Ich glaube auch, dass es schnell geht, wenn du es erklärst. Aber kannst du es so erklären, dass ich es auch verstehe?
+
+01:01:42.563 --> 01:02:09.163
+<v SPEAKER_3>Also, wir fangen mal ganz vorne an. Verschlüsselung. Es gibt zwei verschiedene Verschlüsselungsverfahren, wenn man Daten verschlüsseln will, sogenannte Stream-Cypher, wo Byte für Byte verschlüsselt wird, und sogenannte Block-Cypher, wo immer 8 oder 16 Byte auf einmal verschlüsselt werden. Üblicherweise für eine Verbindung per SSL oder TLS wird sowas wie AIS verwendet. Was ein Block-Cypher ist, mit 16 Byte Blockgröße.
+
+01:02:09.183 --> 01:02:17.423
+<v SPEAKER_2>Also ich will nur sagen, um es kurz noch ein bisschen klar zu machen, es geht um kleinere oder größere Datenmengen, die am Stück verschlüsselt werden. Genau. Und man nimmt da die größeren Datenmengen.
+
+01:02:18.103 --> 01:02:49.343
+<v SPEAKER_3>Und wenn man das jetzt so Blockweise macht, hat man das Problem, dass wenn du zweimal dasselbe verschlüsselst, immer dieselben 16 Byte rauskommen. Weil also dieselben 16 Byte werden immer zu den selben 16 Byte verschlüsselt. Das heißt, man sieht an dem Verschlüsselten, man kann Muster wieder erkennen. Deswegen wird erst etwas gemacht, das nennt sich Cypher-Block-Chaining. Da wird der letzte verschlüsselte Block genommen und in den neuen verschlüsselten Block mit reingerechnet. Sodass wenn du zweimal dasselbe verschlüsselst, was anderes rauskommt, weil es wurde ja in dem Block vorher was anderes gesendet und es wird mit reingerechnet. Und es setzt sich fort von Block zu Block zu Block zu Block.
+
+01:02:49.363 --> 01:02:57.803
+<v SPEAKER_2>Dann hast du sagen, keine zwei gleichen Blöcke? Ist das denn, du schickst mehrfach die gleichen Blöcke hintereinander?
+
+01:02:57.823 --> 01:05:12.943
+<v SPEAKER_3>Genau, man bekommt nie denselben Block raus, weil immer das von dem davor mit reingerechnet wird. Und jetzt gibt es dagegen aber einen Angriff dafür zu sorgen, dass doch wieder etwas rauskommt, was man kennt. Und das ist ein so genannten Chosen-Planetext-Attack. In der Praxis läuft also dieser BEAST-Angriff darauf hinaus und zu dem Server, zu dem ich eine verschlüsselte Verbindung habe, Daten sendet. Und zwar sendet der immer das Gleiche. Jetzt ändert sich das zwar von Block zu Block zu Block, aber wenn du vielleicht früher in der Schule mal gelangweilt mit deinem Taschenrechner umgespielt hast, irgendwas eingegeben hast, dann immer ist gleich gedrückt, dann kommen da verschiedene Zahlen raus und wenn man lange genug drückt, kommt immer wieder dieselbe Zahl raus. Das nennt man einen Fixpunkt dieser Funktion. Und nur hat dieses Zweifelblock-Chaining auch einen Fixpunkt. Also wenn man das Beruf lange genug macht, kommen irgendwann immer wieder dieselben Werte raus. Und das, was aus dem Block davor in den nächsten Reihen verschlüsselt wird, wird damit vorhersagbar. Jetzt so meine Theorie. In der verschlüsselten Verbindung von meinem Browser zum Server, das ist ja HTTP mit Keep Alive, das heißt, ich schicke ein HTTP-Request hin, kriege Daten zurück, schicke ein HTTP-Request hin, kriege Daten zurück. In dem HTTP-Request überträgt der Nutzer sein Cookie für die Webseite zu dem gesicherten Server. Das JavaScript kann jetzt dadurch, dass es irgendwelche Abfragen auch zu diesem Server generiert, da Daten einfügen. Das heißt, die schicken da Daten, ganz viel, immer dasselbe und dasselbe, bis ein Wert drauf kommt, der vorhersagbar wird und immer gleich. Und dann hören sie auf zu senden. Und dann klickt der User nochmal und schickt sein Cookie, dass es dann auch wieder CBC verschlüsselt. Aber der initiale Wert, der mit reingerechnet wird, der sogenannte Initialization Vector, den hat jetzt der Angreifer kontrolliert, weil er glaubt, dass er diese Chosen-Planetax-Attacke gemacht hat. Das heißt, er kann jetzt die verschlüsselten Daten nehmen. Und wenn er es schafft, in seiner verschlüsselten Verbindung zum Server, und das ist das Detail, was ich noch nicht ganz verstanden habe, auch zu demselben Wert zu kommen, dann kann er einfach meine verschlüsselten Daten senden, ohne dass er sie entschlüsseln können muss und mein Cookie landet beim Server in seiner Verbindung. Der Cookie repräsentiert die Nutzerrechte. Also wenn man sich auf einer Seite einloggt, dann bekommt man den Cookie zurück und man weist sich als der eingeloggte Nutzer ausdrücklich, dass man das Cookie zurückgibt. Das heißt, dadurch kann die laufende Session des Users übernommen werden.
+
+01:05:12.963 --> 01:05:17.183
+<v SPEAKER_2>Das heißt, das ist wie diese Fire-Ship-Attacke nur sozusagen kompliziert?
+
+01:05:17.203 --> 01:05:27.823
+<v SPEAKER_3>Nur kompliziert, weil das Cookie halt verschlüsselt ist und man muss halt ringsum so ein bisschen Mumbo Jumbo machen, damit man diesen verschlüsselten Block über eine sogenannte Replay-Attacke, also einspielen eines verschlüsselten Blockes, den man eigentlich gar nicht entschlüsseln kann.
+
+01:05:28.683 --> 01:06:00.943
+<v SPEAKER_2>Okay, warte mal, ich versuche mal zusammenzufassen, was du gesagt hast in Worten, die ich verstehe. Und du sagst, ob es richtig war. Also, und sozusagen nur grob, nur das grobe Konzept. Also, ich habe eine verschlüsselte Verbindung aufgebaut zu einem Server, den ich dann letztendlich sage, zu dem ich die Kommunikation abhören will. Ich schicke dem immer dasselbe, immer dasselbe, immer dasselbe, immer dasselbe, bis ich voraussagen kann, was als nächstes die Verschlüsselung tun wird. Dann nehme ich das Cookie des Users, dass er da gerade hinschicken will, und das schon verschlüsselt ist, schicke es aber sozusagen von mir aus dahin. Und dann denkt der Server, alles klar, ich bin der eigentliche User.
+
+01:06:04.683 --> 01:06:05.623
+<v SPEAKER_3>Total abgefahren.
+
+01:06:05.663 --> 01:06:08.243
+<v SPEAKER_2>Und wie kann man das jetzt lösen?
+
+01:06:08.263 --> 01:06:11.243
+<v SPEAKER_3>Also ich meine, du sagst am Anfang, da gibt es zwei Verfahren.
+
+01:06:12.823 --> 01:06:39.183
+<v SPEAKER_2>Halt, bevor wir das lösen, würde mich noch interessieren, dieser JavaScript, der musste, wenn ich es richtig verstanden habe, auf dem Rechner des Users sitzen. Genau. Wie kommt der da hin? Heißt, unterschieben, dass es reicht, ich sage, guck mal, User, hier gibt es Nacktbilder von Heino und alle klicken wie verrückt. Der ist dann irgendwann mal auf dieser Seite gewesen oder muss die Seite dann gleichzeitig offen sein, während er auf seiner Bank surft?
+
+01:06:39.203 --> 01:06:50.223
+<v SPEAKER_3>Die muss gleichzeitig offen sein, wahrscheinlich muss er sogar einen Bug finden, mit dem er in die andere Session reinkommt, damit dieser User, vielleicht auch nicht, also das hängt so ein bisschen vom Brose ab, wie das da mit den Sandboxingschranken ist.
+
+01:06:50.463 --> 01:07:01.663
+<v SPEAKER_2>Okay, also da ist schon noch mal ein bisschen Aufwand dahinter, um das sozusagen, um den Brose sozusagen so zum Absturz zu bringen, sage ich jetzt mal, dass das dann auch so ausgeführt wird, dass das alles klappt. Also ist es kompliziert?
+
+01:07:01.823 --> 01:07:10.303
+<v SPEAKER_3>Es ist auf jeden Fall kompliziert, das haben Leute vorgeführt, also wird es gehen. Wenn du mich vorher gefragt hättest, ob es geht, das hättest du gesagt, na, das ist zwar schon ein unschöner Angriff, aber der ist eher theoretisch.
+
+01:07:10.303 --> 01:07:13.123
+<v SPEAKER_2>Okay, und dieser Meinung bist du jetzt nicht mehr?
+
+01:07:13.143 --> 01:07:15.703
+<v SPEAKER_3>Nee, nachdem die es vorgeführt haben, ist völlig offensichtlich, dass es geht, ja.
+
+01:07:16.163 --> 01:07:24.383
+<v SPEAKER_2>Okay, was meinst du, wie lange wird das noch dauern, bis das, ich sag mal, allgemein gut ist und es auch im Aldi-Mahlwerk-Kit mit am Start ist?
+
+01:07:24.403 --> 01:07:25.343
+<v SPEAKER_3>Nicht länger als drei Monate.
+
+01:07:26.743 --> 01:07:30.303
+<v SPEAKER_2>Okay, was machen wir dann? Also ich meine, das ist ja ein bisschen unschön.
+
+01:07:30.323 --> 01:07:54.583
+<v SPEAKER_3>Also das Problem ist bekannt, also schon seit Längerem bekannt, dass es eine Schwachstelle dieses Cipher-Feedback-Modes ist und TLS 1.1 und TLS 2, also die neueren Versionen dieses Verschlüsselungsprotokolls, haben sie nicht was ausgedacht. Ich weiß jetzt nicht, ich hab's ehrlich gesagt nicht nachgeguckt, was sie getan haben. Was man zum Beispiel tun könnte, ist Counter-Mode verwenden, also sozusagen eine Zahl immer hoch zu zählen und die als Initialisierungsvektor für die Verschlüsselung zu nehmen, statt den Verschlüsselungblock davor.
+
+01:07:54.603 --> 01:08:20.163
+<v SPEAKER_2>Also es geht immer wieder darum, dass die Informationen, die ich übertrage, sich nicht gleichen und ich muss auf irgendeine Art und Weise dafür sorgen, dass sie immer unterschiedlich sind. Genau, so ein Counter tut das total problemlos. Und das zu sagen, es gibt also schon diese neuen Versionen dieser Verschlüsselung, aber die hat noch keiner benutzt oder wie? Das ist das Problem, also die Infrastruktur da draußen spricht zu 90 Prozent nur TLS 1.0.
+
+01:08:20.183 --> 01:08:24.143
+<v SPEAKER_3>Und das muss halt alles ausgetauscht werden, das heißt alle Server, alle Browser auf dem Planeten.
+
+01:08:24.683 --> 01:08:58.463
+<v SPEAKER_2>Aber das stelle ich mir jetzt sozusagen, also ich meine, okay, das sind halt viele Rechner, aber dann sagen halt irgendwie alle Serverbetreiber irgendwie hier, wir spielen das Update ein, Firefox, Opera, Chrome, weiss ja gar was, geben auch ein Update draus, alles gut. Hast du schon mal probiert in der Bank, den Produktivbetrieb davon zu überdenen, Patch einzuspielen auf dem System? Nein, aber ich bin ja auch Radiomoderator. Herr Urbach möchte an dieser Stelle etwas einfügen. Ich hab das mal probiert, das hat zweieinhalb Jahre gedauert. Hier behauptet einer im Chat, der Opera-Browser würde schon TLS 1.2 sprechen.
+
+01:08:58.783 --> 01:09:01.623
+<v SPEAKER_3>Ja, das sind die anderen zehn Prozent, die schon fertig sind.
+
+01:09:02.903 --> 01:09:19.423
+<v SPEAKER_2>So, das heißt also, bis das passiert ist, okay, die Frage ist ganz einfach. Du hast gerade gesagt, nach deiner Schätzung wird es drei Monate dauern, bis das Zeug so weit ist, dass es jeder benutzen kann, der nur halbwegs einen Plan hat. Wie lange wird es dauern, bis wir bei TLS 1.1 und 1.2 angekommen sind?
+
+01:09:20.903 --> 01:09:44.383
+<v SPEAKER_3>Da werden sich die Leute hoffentlich sputen. Also ich denke, auf der kleinen Seite wird es relativ schnell gehen. Also sowohl Firefox als auch Internet Explorer werden regelmäßig geupdatet und die haben einfach das Problem, dass die alle Naso an irgendwelche Bugs fixen müssen. Sind halt dazu übergegangen, dass es halt nicht mehr die Version des Browses gibt, sondern du kriegst ein wöchentliches Sicherheitsupdate. Die kleinen Seite wird vermutlich schnell gehen, auf der Serverseite könnte es ein bisschen länger dauern.
+
+01:09:44.903 --> 01:09:49.283
+<v SPEAKER_2>Was heißt ein bisschen länger, wo du gerade die Banken gesprochen hast? Also irgendwie so ein Jahr, fünf Jahre, zehn Jahre?
+
+01:09:51.583 --> 01:09:54.303
+<v SPEAKER_3>Es wird wohl bei manchen nur ein Jahr dauern oder zwei.
+
+01:09:54.323 --> 01:09:55.403
+<v SPEAKER_2>Oh, naja, ein bisschen Zeit.
+
+01:09:55.423 --> 01:10:12.203
+<v SPEAKER_3>Und die werden vor allem wohl wieder von den Klassiker haben, dass sie so Fallbacks haben, also Fallback-Modus, weil man das halt nicht deployen kann aus irgendwelchen Gründen. Und aus dem Grund dann halt in den alten Modus zurückgefallen wird, damit nicht das Web komplett zerbricht.
+
+01:10:12.223 --> 01:10:36.043
+<v SPEAKER_2>Und das ist ja auch immer eine Angriffsstelle. Ob ich es richtig verstanden habe, sagen wir, man spielt eine neue Technologie ein. Es gibt aber gleichzeitig ein Modus, wo man an einer Stelle sagen kann, ey, es ist cool, dass du eine neue Technologie hast, aber ich verstehe es noch nicht, mach mal bitte die alte. Und das lässt sich dann wiederum aussetzen für einen Angriff, okay? Ich meine, wenn jetzt alle Server sagen, wir machen jetzt nur noch eins, zwei, dann müssen auch alle, die mit diesen Server reden wollen, einen entsprechenden modernen Browser haben.
+
+01:10:36.063 --> 01:10:46.803
+<v SPEAKER_3>Wenn ich mich recht erinnere, enthält TLS tatsächlich einen Protokollschutz gegen Downgrade-Attacks. Also bei SSL ging das noch, bei TLS geht es nicht mehr. Das merkst du, wenn einer dazwischen ist und versucht dir zu erzählen, dass er kein 1.1 spricht.
+
+01:10:46.803 --> 01:10:59.623
+<v SPEAKER_2>Also es ist sozusagen, wie schon als das Problem aufgetreten ist, theoretisch ist die Lösung bekannter, das macht einfach noch keiner. Okay, noch die letzte Frage zum BEAST, es ist ja irgendwie, das ist schon seit Längerem bekannt. Wie lange weiß man denn schon, dass das theoretisch geht?
+
+01:11:00.143 --> 01:11:03.643
+<v SPEAKER_3>Ja ungefähr seitdem TLS 1.1 geschrieben wurde, also so was wie 5 oder 6 Jahre.
+
+01:11:04.683 --> 01:11:06.703
+<v SPEAKER_2>Und warum kommt das jetzt erst hoch?
+
+01:11:07.303 --> 01:11:13.483
+<v SPEAKER_3>Na weil alle dachten, es sei theoretisch und 1.1 ist ja jetzt definiert als Standard und es wird halt irgendwann deployed und ist ja keine Eile und so.
+
+01:11:13.503 --> 01:11:18.003
+<v SPEAKER_2>Aber das heißt, wir wissen auch nicht, wie viele Leute das praktisch, vielleicht heimlich schon mal umgesetzt und angewandt haben.
+
+01:11:18.203 --> 01:11:30.463
+<v SPEAKER_3>Das weiß man nie, also so ähnlich ist es ja bei den Regierungen, also jede Regierung, die was auf sich hält, hat ihre eigene CA im Lande, die auch Staatsdinge tut und die stellen natürlich auch für die Laufe Interception-Zertifikate aus, da muss man sich gar keine Gedanken machen.
+
+01:11:30.483 --> 01:11:42.003
+<v SPEAKER_2>Das heißt, wenn man ganz sicher gehen will, eine gute Idee ist einen Browser in seinen Rechner zu untersuchen, um mal die ganzen Länderregierungen ausgestellten Zertifikate zu löschen? Ich halte dieses CA-Modell sowieso für kompletten Unsinn.
+
+01:11:42.023 --> 01:11:54.283
+<v SPEAKER_3>Also was funktioniert ist, it's only the trust and first use, und ich sehe jedes Mal denselben, persistente Pseudonyme sind eigentlich das Ding. Wenn ich jedes Mal denselben Key sehe, rede ich jedes Mal mit demselben.
+
+01:11:56.783 --> 01:12:10.623
+<v SPEAKER_2>Also wir signieren nicht mehr, sondern wir bauen einmal eine Kommunikation auf, nehmen das Zertifikat erstmal an, gucken, was da so passiert, und beim zweiten Mal gucken wir, ist es dasselbe wie beim ersten Mal, und wie hat er sich bis jetzt verhalten, und dann geht man davon weiter?
+
+01:12:10.643 --> 01:12:26.043
+<v SPEAKER_3>Ungefähr genau das. Also bei Banken wird es sicherlich eine gute Idee sein, wie das die Sparkasse gemacht hat, den Kunden einen Brief zu schicken, wo er hat der Fingerprint drin, steht bei der ersten Verbindung zur Seite, poppt dann halt das Fenster hoch, da steht der Fingerprint, den verbrechen wir mit seinem Ausdruck und sagt, jo, den glaube ich, und sag mir bitte Bescheid, falls ich das hier ändern sollte.
+
+01:12:26.063 --> 01:12:31.503
+<v SPEAKER_2>Okay, Andreas, an dieser Stelle vielen Dank dafür, dass du den Telefonjoker für die drei Verpeilten hier gemacht hast.
+
+01:12:31.523 --> 01:12:35.903
+<v SPEAKER_3>Ja, danke.
+
+01:12:35.923 --> 01:13:21.483
+<v SPEAKER_2>Und viel Spaß noch. So, sehr schön. Ach, wunderbar. Habt ihr eine 50-Prozentige, gibt's aber heute nicht mehr. Ich sag mal. Wir hatten ja schon mit Sigrid und Friedrich Kauder. Okay, wir haben jetzt, es ist schon häufiger aufgetaucht, dieses Ding mit dem Fingerprint. Also noch mal, wenn diese Verschüttung aufgebaut wird, werden Informationen ausgetauscht und die Richtigkeit dieser Informationen kann man mit einem sogenannten Fingerprint überprüfen. Heißt, es wird sozusagen eine Zahl durch wilde Mathematik ausgerechnet. Und wenn man diese Zahl von der anderen Seite schon bekommen hat, kann man nachprüfen, ob die übereinstimmt. Jetzt habt ihr schon mehrfach gesagt, und die Sparkasse hat es auch gemacht, wir drucken die Dinge einfach in einen Brief und schicken das an alle Leute. Was ist denn daran so schwer? Also warum wird das nicht gemacht?
+
+01:13:21.503 --> 01:13:24.103
+<v SPEAKER_3>Also das prinzipielle Problem ist ja...
+
+01:13:24.123 --> 01:13:26.603
+<v SPEAKER_2>Du, Funkami, ich nabrech dich ungern, aber das Mikro ist echt wichtig.
+
+01:13:28.063 --> 01:14:12.043
+<v SPEAKER_3>Und zwar ist das grundsätzliche Problem ja nicht, wenn wir beide zum Beispiel kommunizieren wollen, dann haben wir die Möglichkeit, uns auf ein Geheimnis zu einigen und wir wissen halt beide, wie das Geheimnis ist, um unsere Kommunikation zu verschlüsseln. Also das ist in dem Kontext eigentlich kein Problem. Das ist eigentlich kein Problem, weil Sie im Brief schicken können, ich bin Ihr Kunde und so weiter, das geht also ohne Probleme. Aber das eigentliche Problem ist, was tue ich mit Seiten, die jetzt mal hart gesprochen in China sind oder in Japan oder in den USA, also Seiten oder eben sozusagen Entitäten, zu denen ich eigentlich keinen Kontakt habe, wo ich keine Ahnung habe, wer das ist und so weiter.
+
+01:14:12.243 --> 01:14:35.403
+<v SPEAKER_2>Das ist schon das zweite Problem, das erste ist, warum machen die Banken das denn nicht? Also ich habe tatsächlich noch nie von irgendjemandem Papier gekriegt, also das ist doch irgendwie relativ billig, warum wird es nicht gemacht? Also ich bin ja Banker, gelernter. Oh Gott, wer hat dich hier rein gelassen? Ich bin ja Sparkassenkaufmann. Der Junge hat was Ordentliches geklärt.
+
+01:14:35.983 --> 01:14:38.023
+<v SPEAKER_3>Ja, durch Zufall.
+
+01:14:38.043 --> 01:15:18.203
+<v SPEAKER_2>Die Sache ist, die, wenn du jetzt eine Sparkasse oder eine andere Bank ihren Kunden einen Brief schickt mit diesem Fingerpen drinnen, die werden es nicht verstehen. Dann können wir noch eine Erklärung dazu schreiben, die Leute nehmen den Brief und packen ihn dann zur Seite. Und wenn die nie wieder auspacken, also die paar wenige, die es tun werden, das sind die, die es eh schon verstanden haben. Und das Problem liegt viel weiter vorgelagert schon. Das ist einfach ausgeschmissenes Geld für die Banken. Okay, also zwei Fragen dazu. A, könnte man es ja durchaus sagen, einfach so bauen, also softwaremäßig das sagen, dass das Ding abgefragt wird. Und B, selbst die Leute, die Bescheid wissen, also wo kriegen die denn dieses Ding her?
+
+01:15:18.223 --> 01:15:19.383
+<v SPEAKER_1>Das ist hier ein anderes Problem.
+
+01:15:19.563 --> 01:16:14.103
+<v SPEAKER_2>Naja, aber ist es denn möglich, kann ich zu meiner Bankin sagen, so Leute, ich hätte gerne auf einem Seitenkanal meine Fingerprint, wissen die überhaupt von der Rede? Probier das mal aus, es gibt Banken, die können das. Ich habe es bei meiner probiert, bin ich sowohl angerufen, bin aber auch mal in die Fiale und habe mal nach dem Fingerprint gefragt. Große Fragezeichen. Also da ist kein Problembewusstsein an der Stelle vorhanden, aber ich möchte ja auch widersprechen, eine Bank ist eine Sicherheit eklatant. So und wir könnten das jetzt gerade deinen Ex-Kollegen und anderen Banken auch erklären, dass das mit den Fingerprints eine gute Sache ist und schärft da weiter das Problembewusstsein bei euren Kunden. Ich meine, die Bank geht ja auch hin und sagt, oh jetzt machen wir keine Papiertanz mehr, jetzt müsstet ihr euch so ein komisches Gerät holen und da eure Karte reinstecken, dann könnt ihr wieder Online-Manking machen. So ja, die überreden jeden Kunden 10 Euro auszugeben, um sich ihr Gerät zu holen. Da können sie den Leuten auch mal so einen pädagogischen Auftrag erfüllen. Es ist unglaublich viel einfacher, den Leuten zu erklären, nimm dieses Gerät mit der Plastikkarte, als... Das ist nicht einfach.
+
+01:16:14.163 --> 01:16:16.403
+<v SPEAKER_3>Das ist für die Banker einfacher.
+
+01:16:16.423 --> 01:16:32.223
+<v SPEAKER_2>Ich hab das ja selbst erlebt, als ihnen zu erklären, dass sie auf ihren Fingerprint achten sollen. Was macht denn dieses Gerät eigentlich grundsätzlich anders? Das ist doch auch nur ein kleiner Computer, der eine verschlüsselte Verbindung aufbaut, oder nicht? Okay, der macht nichts anderes, oder wie?
+
+01:16:32.243 --> 01:16:34.523
+<v SPEAKER_3>Dieses kleine Gerät, von dem ich sprach, das war sozusagen eine ganz andere Ebene.
+
+01:16:34.543 --> 01:16:47.143
+<v SPEAKER_2>Man hat ja immer diese sechsstelligen Nummern von der Bank, mit denen man bestätigt, dass ich jetzt hier sozusagen eine TAN wegstreiche, eine Überweisung ausführe, dass man als Angreifer schon so eine TAN, und zwar genau die, die die Bank jetzt abstragt, dann auch abfischen muss.
+
+01:16:47.203 --> 01:16:58.043
+<v SPEAKER_3>Was ja kein Problem ist, wenn ich da gehe zu meinem Selben Kanal. Ich habe also sozusagen eine Information, die mir nicht über den selben Kanal gegeben wird, wie das, worüber ich gerade kommuniziere.
+
+01:16:58.063 --> 01:17:00.243
+<v SPEAKER_2>Naja, aber in dem Moment, wo der... Also klar, ich habe...
+
+01:17:00.263 --> 01:17:03.243
+<v SPEAKER_3>Eine Filiale ist ein Seitenkanal, ein Brief ist ein Seitenkanal.
+
+01:17:03.263 --> 01:17:44.483
+<v SPEAKER_2>Genau, aber mit den TANs, das funktioniert auch nicht. Sobald jemand diese verschlüsselte Verbindung abhört, kann er mir sozusagen vorspiegeln, okay, gib mal die TAN ein, dann mach ich das brav, dann hat er die richtige TAN und die so. Genau, das kann er tun. Ich habe übrigens damals den Fingerprint bekommen, als ich dann als Banker bei der Sparkasse Informatik angerufen habe und nach zweieinhalb Stunden Warteschleifen und Nachfrage habe ich dann die Fingerprints bekommen. Okay, für die Banken ist es anscheinend einfach billiger, die Ausfälle in Kauf zu nehmen, die es ja möglicherweise dadurch gibt und das sozusagen nicht zu kommunizieren. Ja, zumal auch einfach die Information für die selbstfahrende Bank nicht leicht zu bekommen, weil sie haben Dienstleister, die Portale betreiben, zum Beispiel bei den Sparkassen, da war es damals die Sparkasse Informatik, die gibt es so nicht mehr.
+
+01:17:44.503 --> 01:17:48.883
+<v SPEAKER_1>Und da jemanden zu erwischen, der einem das sagen kann, ist unglaublich schwer.
+
+01:17:48.963 --> 01:18:23.643
+<v SPEAKER_2>Versuch mal von Google die Fingerprints zu bekommen oder von Facebook oder von anderen großen Unternehmen die Fingerprints für ihre verschlüsselten Seiten. Das ist ein Riesenakt, das zu bekommen. Jetzt haben wir also sagen, zumindest für so große Sachen, die bekannt sind, das ist also eigentlich eine Lösung, nämlich gebt uns die Fingerprint über einen anderen Kanal, so ruft uns an, schreibt uns Briefe, weiß ja geier was. Mit Hasfokami, du hast jetzt gerade noch das andere Problem, nämlich möglicherweise möchte ich ja manchmal auch mit Leuten Informationen verschlüsselt austauschen, die aber jetzt nicht in der Nähe sind im Sinne von erreichbar bei einem anderen Kanal. Was ist denn da der Lösungsvorschlag?
+
+01:18:23.663 --> 01:19:27.583
+<v SPEAKER_3>Also eigentlich gibt es nicht wirklich eine Lösung. Es gibt nur eine Möglichkeit, die, ja, oder es gibt halt sozusagen mehrere Ansätze, bestimmte Teilprobleme zu lösen. Also ein Ansatz ist zum Beispiel zu sagen, also nehme ein Szenario, wie im Iran, wo ich sage, oder ok, Iran ist vielleicht ein bisschen zu groß, aber also irgendwas, wo ich sage, ich habe ein Zertifikat, was ich prüfen will und ich vertraue oder aber ich will erstmal sozusagen dem nicht blind vertrauen, sondern möchte gerne noch eine andere Möglichkeit haben, zu gucken, ob das vertrauenswürdig ist. Dann gibt es einen Ansatz, der mit Conversions nennt sich das, so eine Art, ja so Crowdsourcing betreibt, also sprich, man hat mehrere Services, die alle dieselbe Anfrage stellen und als Antwort eben sozusagen die Antwort zurückgeben, die sie bekommen haben. Und jetzt kann man anhand dessen sehen, ob sie alle dasselbe sehen. Das ist die eine Möglichkeit. Die andere Möglichkeit, wie das die IFF jetzt gerade machen will.
+
+01:19:27.603 --> 01:19:38.683
+<v SPEAKER_2>Darf ich kurz bei der schon mal anfangen? Also im Prinzip ist die Idee dahinter, ich frage die verschlüsselte Verbindung zu einem Server an. Der schickt mir ein Zertifikat, ich weiß nicht genau, ob das stimmt oder nicht, aber gleichzeitig fragen noch 10 andere Leute an.
+
+01:19:38.703 --> 01:19:39.143
+<v SPEAKER_3>Genau.
+
+01:19:39.163 --> 01:19:43.443
+<v SPEAKER_2>Und ich gehe davon aus, wenn jemand angegriffen wird, ist es nur einer oder zwei vielleicht?
+
+01:19:43.463 --> 01:20:03.423
+<v SPEAKER_3>Genau, weil wir über Netzwerke reden, das heißt, es gibt mehrere Wege, die zu dem Server führen. Und da könnte er irgendwo in diesem Netzwerk sein. Wenn er zum Beispiel in meinem Netzwerk ist und in den anderen Netzwerken nicht, dann können die anderen genauer sagen, hier, wir sehen ein anderes Zertifikat. Das heißt, deins muss irgendwie kaputt sein.
+
+01:20:03.683 --> 01:20:05.383
+<v SPEAKER_2>Auf jeden Fall ist irgendwas komisch so.
+
+01:20:05.403 --> 01:20:11.283
+<v SPEAKER_3>Genau, und das funktioniert halt in vielen, vielen Situationen, auch nicht in allen. Also es gibt Situationen, wo das halt nicht funktioniert.
+
+01:20:11.523 --> 01:20:27.643
+<v SPEAKER_2>Aber das würde zum Beispiel, ein bestimmter Zertifikat zur Stelle wurde gehackt, das könnte man damit auffangen, weil alle anderen sagen, ich habe hier von Equinox irgendwas, ein Zertifikat, du hast eins von Diginotar, das ist komisch. Genau. Was ist der Punkt, wo es nicht funktioniert?
+
+01:20:29.703 --> 01:20:49.843
+<v SPEAKER_3>Es funktioniert genau dann nicht, wenn zum Beispiel, ich vorher noch nie gesehen habe, ob es dieses Zertifikat auch irgendwo anders gibt. Das heißt, wenn, also es ist ein Extremfall, wenn jemand in dem Rechenzentrum, wo der Server ist, dort halt die Verbindung kontrolliert und er sozusagen, also jeder, der darauf zugreift, immer das Zertifikat sieht.
+
+01:20:50.723 --> 01:21:26.623
+<v SPEAKER_2>Und es gibt noch einen weiteren Fall, wo es nicht funktioniert, wenn zum Beispiel ein Anbieter, der mehrere Serverfarben hat, in den verschiedenen Rechenzentrums verschiedene Zertifikate von verschiedenen CAs verwendet. Ich bekomme unter Umständen immer ein anderes Zertifikat als derjenige, der in England sitzt oder in Brasilien. Und zwar immer. Aber dann trifft das ja auf alle Leute in Brasilien zu. Also ich meine, da ist die Frage, wie organisierst du so ein Netz? Das geht aber meistens schief, da gab es schon Versuche, die sind echt schiefgegangen. Aber ist der Ansatz sozusagen so zum Teil ein Vorteil, dass jemand gar nicht probieren müsste oder wäre es zumindest ein kleiner Sicherheitsgewinn?
+
+01:21:26.643 --> 01:21:40.203
+<v SPEAKER_3>Es ist ein kleiner Sicherheitsgewinn. Eine andere Möglichkeit, die es noch gibt, das wollte ich gerade ansetzen, das ist die Idee des IFF, zu sagen, man macht einfach eine Art Monitoring.
+
+01:21:40.223 --> 01:21:43.923
+<v SPEAKER_2>Du weißt, du weißt, wenn du mir erstmal was sagst, was keiner versteht, musst du erklären. Was ist der IFF?
+
+01:21:44.283 --> 01:22:00.223
+<v SPEAKER_3>Die IFF ist die Electronic Frontier Foundation. Das ist in den USA so eine Bürgerrechtsorganisation, die unter anderem so Dinge herausgibt wie SSL-Plugin, wer ist das nochmal? SSL-Anywhere.
+
+01:22:00.243 --> 01:22:01.163
+<v SPEAKER_2>Das erzwingt uns.
+
+01:22:03.063 --> 01:22:19.823
+<v SPEAKER_3>Genau, und sie wollen außerdem tracken, welche Domänen eigentlich welche Zertifikate haben. Weil man dann in dem Augenblick halt sieht, wenn sich irgendwas ändert und kann entsprechend sagen, Achtung, das Zertifikat ist halt irgendwie anders.
+
+01:22:19.843 --> 01:22:28.083
+<v SPEAKER_2>Die Frage ist auch, wie man dieses Tracking macht, dass man eben dann nicht nur auf die IFF vertrauen muss, dass das auch schön zentral funktioniert. Auch das ist schon mal gehörig schiefgegangen.
+
+01:22:28.103 --> 01:22:32.223
+<v SPEAKER_3>Da hat ein großer Dienst im Netz die Zertifikate getauscht.
+
+01:22:35.943 --> 01:22:41.583
+<v SPEAKER_2>Nein, das war das große G. Das kann mal passieren, man kann die Schlüsse sich ändern.
+
+01:22:41.603 --> 01:22:45.223
+<v SPEAKER_3>Und dann war plötzlich ein großer Alarm, Google sei gehackt.
+
+01:22:45.983 --> 01:22:53.203
+<v SPEAKER_2>Aber wenn das auf einmal bei allen auftritt, ist die Wahrscheinlichkeit hoch, dass genau diese Zertifikate vorliegt? Nein, sie haben die Zertifikate über mehrere Wochen ausgetauscht in verschiedenen Rechenzentren.
+
+01:22:53.223 --> 01:22:54.363
+<v SPEAKER_1>Da muss Google auch mal loben.
+
+01:22:54.383 --> 01:23:14.163
+<v SPEAKER_2>Diese Sicherheit ist ja alles eine soziale Ebene. Das sind ja wirklich Verhaltensweisen von Administratoren, Nutzern und solchen Zwischenhändlern und Dienstleistern. Okay, dann würde ich sagen, es gibt auch dieses zweite Ding. Noch kurze Einschätzung von euch. Ist auch das was, was es lohnt auszuprobieren? Oder kann man das vom Tisch wischen?
+
+01:23:14.183 --> 01:23:23.523
+<v SPEAKER_3>Das ist schon okay. Das sind ja sozusagen viele Detailsachen, die halt so insgesamt das Problem nicht lösen, sondern halt Wolkeraus sind, im klassischen Sinne.
+
+01:23:23.543 --> 01:23:31.623
+<v SPEAKER_2>Okay, dann klären wir doch gleich nachher mal, ob wir das Problem überhaupt irgendwie gelöst kriegen. Vorher aber das Fritz-Info mit Nachrichten, Wetter und Datenverkehr.
+
+01:23:33.603 --> 01:23:53.963
+<v SPEAKER_3>In letzter Zeit ist ja so einiges bei ihnen passiert. Sie haben ein neues Album rausgebracht, Urlaub fürs Gehirn. Sie haben ein spezielles Konzert gespielt, nur für Frauen. Und sind mit ihrer Partei, die Partei, mich ins Abgeordnetenhaus gekommen. Aber manche Dinge, hallo du Trailersprecher du, alter F***er, ändern sich einfach nie.
+
+01:24:24.423 --> 01:28:19.043
+<v SPEAKER_2>Und das um ganz kurz vor halb 12. Nachrichten mit Philipp Borger. Die EU-Kommission hat Erleichter auf die deutliche Zustimmung des Bundestags zum erweiterten Euro-Rettungsschirm reagiert. EU-Parlamentspräsident Butzek sprach von einem wichtigen Schritt zur Wiederherstellung von Vertrauen in der Eurozone. Im Bundestag hatten heute 523 von 611 angewesenen Abgeordneten für den erweiterten Euro-Rettungsschirm gestimmt. Dabei wurde die symbolisch wichtige Kanzlermehrheit mit den Stimmen von Union und FDP erreicht. SPD und Grüne in Berlin streiten weiter über die angedachte Verlängerung der Autobahn 100 von Neukölln nach Treptow. Laut Kompromiss beider Parteien soll in Verhandlungen mit dem Bund untersucht werden, das Geld für die A100 in andere Verkehrsprojekte umzulenken. Wenn das aber nicht gelingt, wird der Autobahnabschnitt gebaut, so erklärt es die SPD. Die Grünen beharren darauf, dass sie keinen Koalitionsvertrag unterschreiben, in dem der Ausbau der A100 vereinbart wird. Ob die Grünen neuer Regierungspartner der SPD in Berlin werden und Koalitionsverhandlungen beginnen wollen, entscheiden sie morgen auf einem Parteitag. Nach der tödlichen Hetzjagd auf einen 23-Jährigen in Berlin sitzt nur noch ein Verdächtiger in Untersuchungshaft. Der Haftbefehl gegen einen 22-Jährigen sei aufgehoben worden, teilte die Staatsanwaltschaft mit. Diesem Mann könne nach der Rekonstruktion des Falles auf dem Kaiserdamm keine Beteiligung an der Jagd auf das getötete Opfer nachgewiesen werden. Es werde aber weiter wegen gefährlicher Körperverletzung gegen ihn ermittelt. Vor knapp zwei Wochen war ein junger Mann auf der Flucht vor Schlägern aus dem U-Bahnhof Kaiserdamm auf die Straße gerannt, wo er von einem Auto erfasst und tödlich verletzt wurde. Die Zahl der Arbeitslosen ist im September auf den niedrigsten Stand seit 20 Jahren gesunken. Wie zuletzt 1991 waren nach Angaben der Bundesagentur für Arbeit knapp 2, 8 Millionen Menschen als erwerbslos registriert. Bundesarbeitsagentur Chef Weise sagte, die Finanzmarktkrise sei noch nicht am Arbeitsmarkt angekommen. Bundesarbeitsministerin von der Leyen warnte angesichts der positiven Entwicklung vor zu viel Optimismus. In der Fußball Europa League hat Schalke 04 das erste Spiel unter der Leitung seines neuen Trainers Hyb Stevens gewonnen. Gegen den israelischen Meister Makabi Haifa siegte Schalke 3 zu 1 und Hannover 96 hat am Abend auch gewonnen und zwar gegen den ukrainischen Club Vorsklap Poltava mit 2 zu 1. Der Zeittemperatur an zwischen 11 und 15 Grad in Berlin und Brandenburg. Keine Wolken, überall trocken. Tiefst werde heute Nacht noch möglich 9 bis 6 Grad. Morgen gibt es wieder weiter schönen Sonnenschein bei Temperaturen von bis zu 26 Grad. Auch Samstag und Sonntag soll gutes Wetter sein. A10, westlicher Berliner Regen Richtung Drei-Eck-Hamburg, zwischen Spandau und Drei-Eck-Hafe-Land fährt ein Schwertransport, den könnt ihr nicht überholen und deswegen gibt es Stau. Bitte fahrt vorsichtig an das Stauende heran. A10, südlicher Regen Richtung Schönefelder Kreuz, zwischen Dreieck Nutetal und Ludwigsfelde West ist auf der A10 bis 6 Uhr früh nur eine Spur frei. A10, westlicher Berliner Regen Richtung Dreieck-Potztamm, zwischen Großkreuz und Dreieck Werder ist die rechte Spur gesperrt wegen eines defekten Fahrzeugs. A24, Berlin Richtung Hamburg, zwischen Dreieck-Hafe-Land und dem Dreieck-Wittstockdosse fährt ein Schwertransport, LKW, könnt ihr nicht überholen. Berlin, A100, der Stadtring Richtung Wedding, zwischen Buschkrugallee und Gradestraße ist die rechte Spur gesperrt und in Richtung Neukölln ist der Tunnel Innsbrucker Platz gesperrt, noch bis morgen früh. Berlin Tiergartenstraße des 17. Juni, zwischen Großem Stern und Brandenburger Tor noch bis zum 5. Oktober Vollsperrung in beiden Richtungen. Auch die Iza Gravienstraße ist gesperrt sowie teilweise die Ebertstraße. Zur Berliner S-Bahn bis Betriebsschluss sind zwischen Grünau und Adlershof Busse im Einsatz.
+
+01:28:21.503 --> 01:28:25.443
+<v SPEAKER_3>Fritz ist eine Produktion des Airbaby.
+
+01:28:25.463 --> 01:29:36.903
+<v SPEAKER_2>Und wir machen weiter mit den Datenverkehr. EU-Kommissarin fordert mehr Einfluss von Regierungen auf Internetinfrastrukturen. Aus dem Internet Governance Forum in Nairobi forderte Nelly Groß erneut, dass die sogenannte Internetverwaltung ICAN besser mit Regierungen zusammenarbeiten soll. Die ICAN ist zuständig für Namens- und Adressräume und hatte zuvor die Domainendung.xxx für Rotlichtinhalte beschlossen. Microsoft hat mit Samsung einen Patentdeal abgeschlossen, ähnlich wie mit HTC schon vor einem Jahr. Endlich kann der Riese aus Redmond an den Verkäufen der beiden größten Android-Telefonhersteller in den USA mitverdienen. Um welche Teile es des Microsoftschen Patentportfolios sich handelt, ist zur Stunde noch unklar. Und Nordafrika, bei Verwendung von Internet ist hier besondere Vorsicht geboten. Denn der Datenverkehr wird durch Überwachungstechnologie stark eingeschränkt. Auch SSL-Verbindungen sind betroffen. So werden neben klassischer Abhörtechnologie wie Wanzen- und Telefonüberwachung auch Datenverkehrsfilter eingesetzt. Meiden Sie diesen Datenverkehrsbereich am besten großräumig. Philipp Orga mit dem Datenverkehr, vielen Dank.
+
+01:29:37.103 --> 01:29:53.323
+<v SPEAKER_1>Und wenn ihr mal ganz anders Radio hören wollt, mit jeder Menge Live-Bands und schrägen Aktionen zum Mitdenken und Machen, dann hört doch mal ganz anders Radio bei KenFM. Immer sonntags ab 14 Uhr auf RETT.
+
+01:30:06.702 --> 01:30:19.082
+<v SPEAKER_2>Heute Chaos Radio, mein Name ist Markus Richter und zu Gast sind Leute mit und um den Chaos Computer Club in Gestalt von einem Herren, der sich Wetterfrosch nennt und sein Mikrofon gerade erst angemacht hat. Fukami?
+
+01:30:19.102 --> 01:30:20.042
+<v SPEAKER_3>Hallo.
+
+01:30:20.062 --> 01:30:21.342
+<v SPEAKER_2>Und der Herr Obach.
+
+01:30:21.362 --> 01:30:22.462
+<v SPEAKER_3>Hallo.
+
+01:30:22.482 --> 01:31:20.822
+<v SPEAKER_2>So, wir reden heute hier über SSL, über Verschlüsselt Internetverbindung und wir haben jetzt den Zeitpunkt überschritten, wo es Sinn macht, dass ich noch mal erkläre, was wir schon alles gemacht haben. Das heißt, ich empfehle euch, wenn ihr es gerade einschaltet und denkt so, ah, dieser Prowler irgendwie, der macht normalerweise diese Verschlüsselt-Verbindung zu meiner Onlinebank und mich würde es interessieren, aber ich verstehe nicht ganz, was sie da reden. Hört euch den Podcast zu dieser Sendung an, den gibt es unter fritz.de relativ bald nach der Sendung oder unter chaosradio.ccc.de dann ein bisschen später oder ihr bleibt jetzt dran und vielleicht kriegt es ja doch irgendwie noch einen Sinn, was ja alles besprochen wird. Wir kommen jetzt zu der Ebene, die sehr spannend ist. Wir haben die ganze Zeit darüber gesprochen, dass es Probleme gibt und wir haben gerade ein bisschen darüber gesprochen, dass man diese Probleme im Einzelnen lösen kann, indem man sozusagen so kleine Dinge tut, wo Leute vielleicht noch ein bisschen mehr mit zugucken, dass das irgendwie alles seine Richtigkeit hat. Gibt es sonst noch Lösungen, die irgendwie ansetzt sind, wo ihr sagt, das ist interessant, das könnte SSL noch sicherer machen? Oder?
+
+01:31:20.842 --> 01:31:50.102
+<v SPEAKER_3>Also wir hatten noch eine Sache schon angesprochen und das wurde auch vorhin schon mal erwähnt im Kontext mit einem Plugin und zwar Https bzw. Public Key Pilling. Die Idee dahinter ist, wenn ich das erste Mal zu einer Seite komme und sage, das ist die Domain, die ich auch haben will, vertraue dann dem Zertifikat und tracke nur noch, ob es Änderungen gibt.
+
+01:31:50.122 --> 01:31:57.762
+<v SPEAKER_2>Okay, dann klammert man das Problem aus, wie ich beim ersten Mal feststelle, ob es die richtige Seite ist, aber ich kann zumindest feststellen, ob sich dann irgendwas ändert.
+
+01:31:57.782 --> 01:32:29.742
+<v SPEAKER_3>Und ich kann natürlich als Betriebssystem oder Softwarehersteller, der dort die Verbindung selbst kontrolliert, ja fest hinterlegen, welche CA für welche Domäne zuständig ist. Das heißt, ich kann dort bestimmte Angriffe einfach aus dem Weg gehen, weil ich immer sagen kann, ich weiß, was ich hier zu erwarten habe. Das heißt für Google, für Apple, für Microsoft und so sind das halt auf jeden Fall gangbare Wege, um zumindest diese Art der Kommunikation abzusichern.
+
+01:32:29.762 --> 01:32:31.942
+<v SPEAKER_2>Und das würde das Problem komplett klären oder?
+
+01:32:31.962 --> 01:32:56.442
+<v SPEAKER_3>Das klärt es für bestimmte Sachen, also für sozusagen Updates. Das wäre eine Sache, die ja schon wichtig ist. Wenn ich sage, ich will zum Beispiel CRs rausschmeißen, die halt nicht vertrauenswürdig sind oder die gehackt wurden, dann habe ich immer einen Kanal, über den ich das machen kann, wo ich sicher sein kann, dass dort halt tatsächlich die Daten rübergehen, die...
+
+01:32:56.462 --> 01:33:01.162
+<v SPEAKER_2>Da stellt quasi der Google-Browser fest, dass diese Aussage nur von Google getätigt werden.
+
+01:33:01.182 --> 01:33:25.822
+<v SPEAKER_3>Genau, das ist auch der Grund, warum es überhaupt im Iran aufgefallen ist, weil Google, weil Chrome tatsächlich dieses HTTPS-Pinningen hat und dort festgestellt hat, na, huch, hier wird irgendwie ein anderes Zertifikat benutzt als das, was eigentlich in dem Browser fest hinterlegt ist. Und da hat dann jemand gesagt, okay, hat sich das genau angeguckt und hat geguckt, wie dann eigentlich die CA und diese ganze Trust Chain eigentlich aussieht.
+
+01:33:26.062 --> 01:33:36.002
+<v SPEAKER_2>Jetzt hast du gerade irgendwie Updates erwähnt, spielt, also für die Leute, die das vielleicht noch gar nicht wissen, spielt bei Softwareupdate, also die sich die meisten Programme automatisch zum Netz ziehen, spielt ja dieses SSL und diese verschlüsselte Verbindung auch eine Rolle?
+
+01:33:36.022 --> 01:33:48.622
+<v SPEAKER_3>Ja, wir haben ja schon mal gesagt, dass es ja nicht nur um Verschlüsselung geht, sondern auch um Integrität. Das heißt, dass man auf der anderen Seite den Server hat, den man halt auch wirklich haben will.
+
+01:33:48.642 --> 01:34:18.182
+<v SPEAKER_2>Stell dir vor, jeder kann behaupten, du müsstest jetzt mal dein Firefox updaten, am besten hier, gleich sofort von mir. Dann hole ich dir alles in dein Firefox unter, was ich an deinem Computer anstellen will. Das heißt, du sagst, das ist ein weiteres Feld, wo das eine wichtige Rolle spielt. Also wir haben nicht nur die Verbindung beim Websurfen, sondern auch wenn unsere Programme sich updaten. Das ist auch wichtig. Was gibt es noch für Felder? Bei Mails. Bei Mails? Also zum Beispiel E-Mail-Zugang, hier Pop3, SMTP sind da die Schlagwörter, die man als Protokolle benutzt, um seine E-Mails mit Mail-Programmen abzurufen.
+
+01:34:18.202 --> 01:34:22.122
+<v SPEAKER_3>Da kann man auch sagen, ich möchte eine gesicherte Verbindung mit meinem Mailserver, was zu empfehlen ist.
+
+01:34:22.142 --> 01:34:33.442
+<v SPEAKER_2>Dann sind zumindest die E-Mails auf dem Weg von meinem Computer zu meinem Mailserver, nicht darüber hinaus zu den anderen verschlüsselt. Und das funktioniert auch mit SSL. Und da haben wir natürlich genau dieselben Probleme, wie wir jetzt schon erwarten haben.
+
+01:34:34.082 --> 01:34:48.002
+<v SPEAKER_3>Der Mojava zum Beispiel oder IHC über SSL. Also es ist schon eine sehr, sehr, sehr fundamentale Technik. Also sehr viel in diesem Netz. Also an irgendwie treffig, der verschlüsselt ist, nutzt SSL.
+
+01:34:48.802 --> 01:35:02.662
+<v SPEAKER_2>Herr Obach hat noch? Nicht zu vergessen, die ganzen Webmail-Programme. Also, wir haben hier natürlich GMX, Web.de und wie sie alle heißen, gibt es natürlich auch noch im Ausland verschiedene Dienste. Auch die funktionieren mit SSL.
+
+01:35:02.682 --> 01:35:08.242
+<v SPEAKER_3>Genau, also es gibt sozusagen das ZwangssSSL, sozusagen wenn eine Website dich dazu zwingt, die Verschlüsselung zu nutzen, das tut deine Bank.
+
+01:35:08.882 --> 01:35:42.562
+<v SPEAKER_2>Klar, weil die sagt irgendwie hier, unverschlüsselt einloggen, geht mal gar nicht. Und auch die ganzen Webmailer, wie du sagst, erzwingen auch immer diese SSL-Verbindung mittlerweile. Und da, der Kurzabriss sieht es halt so aus, jeder, der so eine Zertifizierungsstelle ist, kann behaupten sozusagen für deinen Mailprovider zuständig zu sein. Und da wäre dieses Pending, was vor kam, gesagt, naja, vielleicht nur bestimmte Stellen für bestimmte Bereiche im Netz. Und ich hatte vor dem Vorschlag gesagt, ja Gott, wir könnten bei CCC auch so eine Zertifizierungsstelle irgendwie aufmachen, aber würdest du dir für alte Webseiten vertrauen? Nee, also würde ich persönlich selbst nur für CCC-Domains vertrauen.
+
+01:35:42.582 --> 01:35:55.502
+<v SPEAKER_3>Und da hatte ich gerade eine Raucherpause, die den philosophischen Ausblick, ja das Vertrauen im Internet kann nur dem Vertrauen in real life, im echten Leben folgen. Aber das geht halt nicht in dem Internet. Ja, in dem Internet ist das schwierig.
+
+01:35:55.522 --> 01:36:31.042
+<v SPEAKER_2>Wir haben da 200 Stellen in unserem Browser und da wäre die radikale Ansage, schmeißt alle raus und stellt nur die einen, die ihr haben wollt und dann könnt ihr mit eurer Bank erstmal nicht reden. Dann kann ich aber auch nicht mit dem lustigen Dinge aus Bangladesch versenden, Online-Shop reden. Aber nein, du kannst halt immer sagen, okay, das war sozusagen die Philosophie eben, wir vertrauen auf den ersten Angebot, auf den ersten Angebot, den Schlüssel, beim ersten Aufruf der Webseite, ohne sozusagen Seitenkanal zu nutzen, um ihn zu verifizieren, ins Blaue hinein, wir glauben an das Gut der Menschen, die erste Verbindung wird schon stimmen, Hauptsache ich merke, sobald sich der Schlüssel ändert. Insofern ist halt dieses ins Blaue hinein, das klingt nicht gut, wenn es um Sicherheit geht.
+
+01:36:33.602 --> 01:36:35.622
+<v SPEAKER_3>Ich bin ja immer Freund vom Papier.
+
+01:36:35.642 --> 01:36:46.822
+<v SPEAKER_2>Bei Mails hat man das gleiche Problem mit dem Schlüsselaustausch, wenn man die Mail als solches verschlüsseln will. Da gehen viele Leute dazu, über ihren Fingerprint, diese Prüfziffer, die man mit dem Schlüssel überprüfen will, auf ihre Visitenkarten zu drucken.
+
+01:36:47.682 --> 01:36:51.082
+<v SPEAKER_3>Eine Zeitung wäre da nur ein Beispiel, Drucksachen, Visitenkarten.
+
+01:36:51.102 --> 01:37:00.722
+<v SPEAKER_2>Wenn eine Firma Interesse hat, dass ihre Kunden oder Interessierten wirklich auch mit der Firma sicher den Kontakt aufnehmen, dann sollte sie ihren Fingerprint auch auf Drucksachen schreiben.
+
+01:37:00.742 --> 01:37:02.502
+<v SPEAKER_3>Und jetzt ist das pädagogisch sehr ausklangend.
+
+01:37:02.522 --> 01:37:33.262
+<v SPEAKER_2>Achtet mehr auf die Keys, die euch untergegült werden. Und lasst das nicht diese Zertifizierung stellen. Also reden wir jetzt irgendwie davon, dass es in der Kleineranzeigenabteilung der großen Tageszeigen, demnächst zu sagen, eine Fingerprint-Abteilung gibt, wo irgendwie alle Banken... Wenn sie Bock drauf haben, aber sie drucken noch nicht mal die Lottozahlen mit Gewehr ab. Insofern weiß ich nicht, ob sie Fingerabdrücke mit Gewehr abdrücken wollen. Also juristisch würde er wahrscheinlich da auch stehen ohne Gewehr, weil Bebel das schon verantworten. Aber wenn in der Morgenpost dasselbe steht, wie im Tagesspiegel, dann kannst du davon ausgehen, so viele Druckereien. Das ist die Rettung des Verlagswesens.
+
+01:37:33.282 --> 01:37:37.322
+<v SPEAKER_3>Endlich haben sie einen Grund zum Leben.
+
+01:37:37.342 --> 01:39:17.042
+<v SPEAKER_2>Sehr schön. Im Verlauf der Sendung, ich habe euch auch immer ein bisschen gebremst, und auch jetzt mit Twitter und im Chat klang immer so an, also eigentlich kann man ein bisschen was machen, aber im Prinzip ist das ganze System broken. Es ist technisch eigentlich ziemlich gut. Ihr seid doch keine Juristen, wieso denn jetzt jaen? Kannst du einmal eine klare Antwort bekommen? Da husche ich nochmal kurz den Ohr vor. Technisch, wie SSL an sich funktioniert, ist ganz gut durchdacht. Wir haben da diese eine Lücke, die Andreas am Telefon vorhin ausgeführt hat, die ist reparierbar. Die ist zwar eklatant, aber an sich SSL ist gut. Das ganze Drumherum, wie diese Zasifizierungsstellen agieren, das ist der Bereich, wo wir sagen, da mussten wir irgendwie vorankommen. Und ja, welche Lösung haben wir da? Lösung gibt es dann auch wie in einem kleinen eigentlich. Das haben wir jetzt auch in Nordafrika festgestellt. Wir haben da ein Land, gerade eine Revolution laufen, und die hatten plötzlich halt diese kaputten SSL-Zertifikate. Und wir haben ihnen jetzt ein Plugin geschrieben, für ihren Firefox und ihren Chrome, dass sie, wenn sie auf eine verschlüsselte Verbindung gehen, das Zertifikat, das sie präsentieren wird, erstmal bei uns anfragen, also bei uns als Aktivistengruppe, ob das das ist, dass es auch sein soll. Das wird also überprüft. Aber auch da ist hier eine Vertrauensfrage. Diese Menschen vertrauen uns, dass wir da jetzt nicht die falsche Zertifikate draufschieben. Das ist also auch nur eine temporäre Insellösung. Aber auch da folgt das Vertrauen des Real-Lives wieder, weil die kennen sich aus irgendwelchen anderen Zusammenhängen. Die kennen uns aus anderen Zusammenhängen, weil wir Dinge getan haben für sie oder mit ihnen zusammen. Und da haben wir das Vertrauen gewonnen.
+
+01:39:17.062 --> 01:39:23.542
+<v SPEAKER_3>Und sie vertrauen da dieser Instanz, wie momentan ja auch die Browser einer Instanz vertrauen.
+
+01:39:23.562 --> 01:40:19.142
+<v SPEAKER_2>Ich wollte gerade sagen, das Problem wird einfach verschoben. Auch ihr seid natürlich auf die ganze Art und Weise angreifbar. Auch bei euch könnte man sich einschleichen, auch euch könnte man hacken. Also wie gesagt, das heißt letztendlich, gibt es keine Sicherheit, oder wie? Es ist halt das Vertrauen. Ich meine, du setzt gerade beim Webbrowser an, du setzt darauf, dass die Microsoft, die du in der Internet Explorer benutzt, oder diese Mozilla Community, diese freie Softwarejungs, die ja auch so ein bisschen chaotisch sind, schon das Richtige tun. Also erst einmal, dass die da keine Scheiße einpatchen und zum anderen, dass die sozusagen diese Vertrauensinstanzen auch wirklich Vertrauenswürdige akzeptieren und dass das da auch alles sozusagen technisch koscher abläuft. Und ja, also es funktioniert ja gerade irgendwie und die Frage ist, ist es den Leuten gewahr, wie es funktioniert? Das ist genau die Frage, die ich gerade habe. Also normalerweise sind ihr vom guten an am Computer gewöhnt, also ja oder nee. Aber das heißt, entnehme ich euren Worten, sozusagen im Großen und Ganzen, gibt es keinen Punkt, wo man sagen kann, das ist wirklich, wirklich sicher?
+
+01:40:19.162 --> 01:40:22.982
+<v SPEAKER_3>Nein, also genau diesen Punkt ist es nicht.
+
+01:40:23.002 --> 01:40:24.542
+<v SPEAKER_2>Was denn ihr sagt, Gott?
+
+01:40:24.562 --> 01:40:27.242
+<v SPEAKER_3>Nein, es gibt keinen Punkt, wo man sagen kann, alles ist sicher.
+
+01:40:27.262 --> 01:40:29.422
+<v SPEAKER_2>Jeder Innenminister wird ihnen das bestätigen.
+
+01:40:29.442 --> 01:40:41.522
+<v SPEAKER_3>Also weil man an dem Punkt, gibt es keine einfache Lösung. Das ist einfach die Sache. Und die Konsequenz ist tatsächlich zu sagen, dass wir uns daran gewöhnen müssen, an diesem Punkt mit einer gewissen Unsicherheit zu leben.
+
+01:40:42.242 --> 01:40:48.082
+<v SPEAKER_2>Okay, also heißt das dann im Umkehrschluss auch zu sagen, wir können es einfach gleich lassen?
+
+01:40:48.102 --> 01:41:18.402
+<v SPEAKER_3>Nein, also es gibt schon Möglichkeiten, spezielle Bereiche wirklich gut abzusichern. Das heißt, wenn ich zum Beispiel eine Kommunikation innerhalb einer Firma habe, ist das eigentlich nicht problematisch. Weil da kann ich halt, ich habe dort ein Vertrauensverhältnis, was dem entspricht, was ich eben tatsächlich auch habe. Das heißt, ich habe einen Admin, der mir irgendwie ein Zertifikat baut für eine Seite, auf die greife ich zu. Die ist in meinem Browser oder in einer anderen Software drinnen und kann sicher sein, dass das das Zertifikat für den Dienst ist. Punkt.
+
+01:41:18.562 --> 01:41:43.302
+<v SPEAKER_2>Also ich möchte dann wieder zu dieser Fahrradschlossmetapher zurückkehren. Das ist ja auch so, da sagt man so, okay, wenn du ein Fahrrad kaufst, legst du irgendwie zu 10 Prozent des Kaufpreises in Fahrradschloss an. Besser zwei von Herstellern und so. Und dann ist immer noch klar, auch da gibt es Leute, die das aufkriegen, aber man macht es halt einfach ein bisschen schwerer, das zu machen, ist es dann trotzdem, wobei man im Klaren das Fahrrad kann trotzdem geklaut werden, aber unternimmt halt alles, damit es nicht passiert. Ist das sozusagen ungefähr das, wie man auch in Zukunft im Websurf?
+
+01:41:43.702 --> 01:42:20.442
+<v SPEAKER_3>Ja, also vor allem für die Leute, die normal User sind, sage ich mal, weil die Möglichkeiten, das zu kontrollieren, was man dort eigentlich wissen muss, um das ordentlich zu machen, das ist schon etwas, was man in so einfachen Interfaces eigentlich nicht unterbringen kann. Und das ist eigentlich das Problem. Also man kann als Profi, sage ich mal, in einem Umfeld, was man sehr gut kennt, kann man ein sehr hohes Maß an Sicherheit herstellen. Aber es geht halt nicht ohne weiteres für den Alltag im Web, sage ich mal.
+
+01:42:20.462 --> 01:43:07.002
+<v SPEAKER_2>Also okay, das heißt, wir als Normal User, wir kriegen das auf jeden Fall nicht hin, dass du das alles genau kontrollierst, dass es eben ganz stark kommt. Das heißt, okay, Punkt eins, wir müssen damit leben, es gibt keine Garantie, dass die verschlüsselte Verbindung tatsächlich verschlüsselt ist. Aber, sagt ihr, trotzdem ist es eine gute Idee, die anzumachen, weil das schon mal schwerer abzuhören, als wenn sie gar nicht verschlüsselt ist. Und ich überlege gerade noch, diese Klischee-Situation ist ja irgendwie, mit euch ein Normal User sitzt vor dem Bildschirm, macht Online-Banking und der Hausnacht sagt so, bitte guck, dass es verschlüsselt ist. Beim Banking sagt man auch immer so, okay, guck immer mal deinen Kontostand an, damit du irgendwie weißt, ob da jemand komische Dinge abbucht. Das heißt, wir kommen niemals, zumindest mit diesem SSL-System, an einen Punkt, wo das nicht mehr nötig ist. Denn die Kontrolle, ob in meiner Umwelt irgendwas schief läuft, ist immer eine gute Idee.
+
+01:43:07.502 --> 01:43:08.962
+<v SPEAKER_3>Ja, genau.
+
+01:43:08.982 --> 01:43:51.502
+<v SPEAKER_2>Es ist aktuell im System halt so, dass jeder der Zertifizierungsstellen jeden anderen unterschreiben kann. Und ich meine, da hat jeder dieser Zertifizierungsstellen, ich habe jetzt hier gerade mal den Kommentar, es sind über 700 und nicht 200, wenn man Firefox und Interexplorers zusammenzählt, in der Lage, gerade für jeden andere Domain irgendwie was auszustellen. Ich glaube, wenn das rauskommt oder sie das tun, dann verspielen sie sich das. Aber ich glaube, das ist gerade der Punkt, an dem man da steht. Das heißt aber auch zu sagen, dass man sich Gedanken macht an Stellen, wo es wichtig ist. Aber man hat ja immer zu sagen, als Gegenstück, wenn man sagt, okay, diese Technologie ist grundsätzlich kaputt. Das heißt, sie müssen sich die ganze Zeit mit dem Handy über dem Kopf rumsetzen und sagen, nein, meine Facebook-Verbindung wird abgehört und mein Mail wird abgehört. Das ist aber auch nicht der Fall.
+
+01:43:51.522 --> 01:43:53.742
+<v SPEAKER_1>Nein, also im richtigen Fall.
+
+01:43:55.562 --> 01:44:00.762
+<v SPEAKER_3>Kommt auch ein welcher. Kommt auch, in welchem Land du gerade lebst.
+
+01:44:00.782 --> 01:44:23.602
+<v SPEAKER_2>Das ist auch dabei glaube ich ganz wichtig. Ich glaube, dass in Deutschland das Abhören relativ gering ausfällt. Während gerade in China oder Iran als krasses Beispiel einfach nichts mehr sicher ist. Das heißt aber, diese ganzen Angriffe, das ist schon auch noch technischer Aufwand. Wir sind noch nicht bei dem Stadium. Mehr oder weniger.
+
+01:44:27.002 --> 01:44:46.082
+<v SPEAKER_3>Solange man noch sowas machen kann wie, ich habe einen Faff-Icon im Browser, was aussieht wie ein Schlüssel, der zeigt, die Seite ist sicher und ein User lässt sich davon austricksen, ist das Ganze zum Thema Zertifikat und sowieso hinfällig.
+
+01:44:46.102 --> 01:44:56.022
+<v SPEAKER_2>Also wenn man es will, geht es. Aber man muss es zumindest noch wollen. Das heißt, es ist nicht so, dass das komplette System vollautomatisch offen ist. Und zu sagen, sowieso nichts funktioniert.
+
+01:44:56.902 --> 01:45:18.942
+<v SPEAKER_3>Wie gesagt, man kann ein gewisses Maß an Sicherheit herstellen. Und die Frage ist immer, was man eigentlich erreichen will. Das ist ja ohnehin bei elektronischer Kommunikation immer so, dass man eigentlich genau sagen muss und genau erkennen muss, mit welchem Aufwand man welche Art von Sicherheit erreicht.
+
+01:45:19.562 --> 01:45:32.642
+<v SPEAKER_2>Okay, man muss sagen, beliebe schwer und hofft dann, dass das reicht. Gibt es denn einen Ausblick oder eine Vision, ob dieses System mal gänzlich abgelöst wird? Oder wird das sozusagen ein Rumdoktern und Verbessern von den Sachen, die da jetzt schon existieren?
+
+01:45:32.822 --> 01:46:24.462
+<v SPEAKER_3>Also ich bin vorhin auf einen Blogpost aufmerksam gemacht worden von Sweatpost. Da geht es um ein Interview mit Ron Rives, das R&RSA. Und er wird gefragt, wie er denn das sieht, von jetzt an in zwei Jahren, bzw. was er sieht, wie das sich entwickelt. Und Ron Rives sagt, fragen Sie mich einfach in zwei Jahren nochmal. Weil dort die Diskussion halt sehr, sehr groß ist sozusagen in der Krypto-Community. Und wir hier und da eben Lösungen sehen werden, die bestimmte Probleme lösen und bestimmte Trust-Modelle werden auch sicherlich ausprobiert usw. Und es wird dort eine ganze Menge passieren. Wir werden aber so schnell keinen Ersatz für dieses ganze System haben.
+
+01:46:26.262 --> 01:46:28.082
+<v SPEAKER_1>Also muss ich überlegen, wenn man es ersetzen will.
+
+01:46:28.102 --> 01:46:35.402
+<v SPEAKER_2>Selbst wenn wir eine Lösung gefunden haben, haben wir das gleiche Problem wie mit TLS. Es muss ersetzt werden, es muss deployed werden überall.
+
+01:46:35.422 --> 01:46:36.762
+<v SPEAKER_3>Das ist ein Riesenaufwand.
+
+01:46:38.062 --> 01:48:26.522
+<v SPEAKER_2>Das Problem ist ja nicht SSL an sich, sondern das Drumherum. Das Soziale wird mit den ganzen Schlüsseln umgegangen. Und auch wenn du dir ein neues, perfektes technisches System ausdenkst, hast du wieder dasselbe Problem. Woher kommt das Vertrauen? An wen? An wen wird es gerichtet und gesteckt? Das sind halt die Dinge, über die du das unterhalten musst. Und wenn jetzt jeder einfach den Computer benutzt, als würde es schon klappen, dass er es tut, und dann macht man was Komisches und redet mit niemandem darüber, dann gibst du dich in die Abhängigkeit. Aber wenn ich merke, bei mir ist das Zertifikat plötzlich anders und das erwarte ich da nicht. Und ich kenne einen anderen Nutzer, nämlich dich von derselben Webseite. Und ich frage dich, ob es bei dir auch anders ist. Dann haben wir die Chance, solche Sachen aufzudecken. Klar, für einen Autonomal-User ist das nichts. Deswegen hatten wir jetzt die Ansätze mit Plugins, Convergence IO hieß das eine oder Certifikat Patrol, was sich zumindest über Änderungen warnt. Und wo man halt so einen Austausch zwischen Nutzern schafft und eben Ungereimtheiten schneller auffallen. Das ist glaube ich schon die Stoßrichtung, in die wir jetzt am ehesten übergehen können. Warte mal, wollt ihr mir jetzt ernsthaft erklären, wir haben zwei Stunden über ein technisches Problem diskutiert und die Lösung ist nachdenken und miteinander reden? Das hätten wir auch schneller haben können, verehrte Damen und Herren. Okay, aber sehr schön. Wenn ihr diese Sendung also jetzt gerade eingeschaltet habt, kann ich euch nur empfehlen, hört nochmal den Podcast, der wird sehr gut erklärt, naja, hoffe ich zumindest, ohne mich selber genug loben zu wollen, wie SSL im groben Konzept funktioniert und was die Probleme damit sind. Zu Gast waren der Herr Wetterfrosch, der Herr Fuqam und der Herr Obach. Vielen Dank dafür nochmal. Und wir wollen das Ende nochmal benutzen, um ein bisschen Werbung zu machen für die Dinge, die der Chaos Computer Club so tut in näherer Zukunft. Da stehen zwei Dinge an, habe ich mir sagen lassen, eins bald und eins recht bald. Also ganz bald, sehr bald, der Kongress, Ende des Jahres wieder zwischen Weihnachten und Neujahr im BCC in Berlin.
+
+01:48:29.722 --> 01:48:30.702
+<v SPEAKER_3>Vier Tage, zum 28.
+
+01:48:30.722 --> 01:48:34.422
+<v SPEAKER_2>Mal, 27. bis 30. Dezember. Wie werden dieses Mal die Tickets verlost?
+
+01:48:34.442 --> 01:48:35.842
+<v SPEAKER_3>Das ist eine gute Frage.
+
+01:48:35.862 --> 01:49:16.482
+<v SPEAKER_2>Aber wenn ihr auf jeden Fall eins haben wollt, dann müsstet ihr mit einem richtig guten inhaltlichen Beitrag euch einfach in den nächsten zwölf Tagen noch als Referent melden. Und wenn der wirklich richtig gut ist, dann habt ihr damit euer Ticket sicher. Was heißt eigentlich richtig gut? Also die Beiträge, mit denen man sich da anmeldet zum Kongress, muss das irgendwas mit meinem Rechner zu tun haben? Nö, wir sind da relativ offen, auch in künstlerischen Ambitionen und auch mal ganz andere Disziplinen kennenzulernen. Da musst du jetzt nicht nur der Obernerd, aber Hauptsache ist es halt für die Teilnehmer irgendwie interessant und wir haben da meist doppelt so viele Einreichungen, Plätze frei. Deswegen, wenn es abgelehnt wird, dürft ihr uns das nicht überlegen. Okay, das geht also, noch 12 Tage hat man Zeit, dass wir events.ccc.de machen.
+
+01:49:16.502 --> 01:49:29.682
+<v SPEAKER_3>Genau, da gibt es die Info und dann gibt es halt ein System zum Anmelden. Die zweite Veranstaltung ist übermorgen am Samstag im Stadtbad Wedding. Da ist 30 Jahre.CCC. Party.
+
+01:49:29.802 --> 01:49:38.222
+<v SPEAKER_2>Wir hatten Geburtstag vor zwei Wochen. Sieht man euch gar nicht an, das Alter? Was wird da passieren auf der Party?
+
+01:49:38.242 --> 01:49:40.922
+<v SPEAKER_3>Musik, Getränke, Musik.
+
+01:49:40.942 --> 01:49:42.282
+<v SPEAKER_2>Wird es Chunk geben oder ist das irrelevant?
+
+01:49:42.302 --> 01:49:45.962
+<v SPEAKER_3>Es wird Chunk geben. Das ist selbstverständlich.
+
+01:49:45.982 --> 01:50:20.062
+<v SPEAKER_2>Alles klar, sehr schön. Das war dann wirklich alles, was wir heute mit euch zu teilen hatten. Es war mein Vergnügen. Vielen Dank auch an die Leute im Chat, Twitter, Netz, was auch immer, wo ihr kommentiert habt. Und wie gesagt, den Podcast gibt es dann demnächst auf fritz.de. Und ich stelle gerade fest... Wie muss das für die Leute klingen, die den Podcast hören? Das unglaubliche... Oh Gott, Inception! Es sind jetzt noch mehr Minuten Zeit als der letzte Track, den wir normalerweise haben. Wollen wir noch so lange Unsinn reden? Oder soll ich zwei Musiken spielen? Ja, Mühe!
+
+01:50:20.082 --> 01:50:22.382
+<v SPEAKER_1>Wollen wir noch über den Kauder oder zu den Piraten? Nicht über die Piraten.
+
+01:50:22.422 --> 01:50:24.542
+<v SPEAKER_2>Nein, nicht über deine Arbeit.
+
+01:50:26.582 --> 01:50:28.602
+<v SPEAKER_3>Über die reden wir ja nicht.
+
+01:50:28.602 --> 01:50:31.082
+<v SPEAKER_2>Über welchen Kauder denn? Siegfried oder Volker?
+
+01:50:31.102 --> 01:50:32.302
+<v SPEAKER_1>Beide.
+
+01:50:34.402 --> 01:50:37.542
+<v SPEAKER_3>Siegfried, das ist schon echt eine harte Nummer. Man muss überlegen, dass der Mann...
+
+01:50:43.802 --> 01:50:45.762
+<v SPEAKER_2>Ich weiß gar nicht, was seine Position ist in Sachen Urheberrechte.
+
+01:50:45.782 --> 01:50:56.302
+<v SPEAKER_3>Ich glaube, der ist beim Innenausschuss. Wenn er dann mit so Ansagen kommt, wie ich habe Urheberrechte erworben, dann ist das halt schon ganz schön schräg. Das will ich aber auch mal machen.
+
+01:50:57.062 --> 01:51:36.782
+<v SPEAKER_2>Ich will auch mal Urheberrechte kaufen. Es wurde ja gesagt, ich habe auf Twitter irgendwann gelesen, er zählt jetzt quasi schon die Zeit runter, bis ein Wiki entsteht, wo die Leute mal gucken, ob die akademischen Arbeiten von Herrn Kauder nicht vielleicht... Ich dachte, wir machen erst mal das Wiki auf, Urheberrechte von allen Politiker-Websites zu checken. Das kann man natürlich auch gerne machen. Der Herr Guttenberg ist ja auch, ne? Ja genau, der ist jetzt Staatsmann. In verantwortungsvoller Diskussion. Er ist an einem Army-Think-Tank als Distinguished Statesman. Also ein angesehener Staatsmann. Dings nach Atlantikbrücke. Genau, oder Council for Formulation, Atlantikbrücke.
+
+01:51:38.202 --> 01:51:39.442
+<v SPEAKER_1>Wunder, Wunder.
+
+01:51:39.462 --> 01:51:40.962
+<v SPEAKER_3>Checkt mal diese komischen Politiker.
+
+01:51:40.982 --> 01:52:15.462
+<v SPEAKER_2>Und die sind ja froh über alles, was sie kriegen können aus dem Ausland. Okay, dann beschließen wir die Sendung damit. Wir haben jetzt noch zum Schluss gelernt. Wenn ihr euch für Technik interessiert und wisst, was SSL ist, und gerne an den Computer herumschraubt, dann kommt ihr möglicherweise ins Radio. Und wenn ihr eure Doktor-Abwart abschreibt, dann kommt ihr nach amerikanen Singtanks. Damit möchte ich dann noch Flo Heiler übergeben, der euch den Rest der Nacht mit Punk-Musik erfreuen wird. Und ich verabschiede mich von den drei Gästen nochmal. Vielen Dank, dass ihr da wart. Gerne. Und dann bleibt mir nur noch eins zu sagen, und das ist, lasst euch nicht überwachen. Und macht immer schön eure Backups.
