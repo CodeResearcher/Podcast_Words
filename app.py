@@ -1,5 +1,6 @@
 import json
 import re
+import time
 from datetime import datetime, timezone
 
 import pandas as pd
@@ -16,6 +17,13 @@ from podcast_words.catalog import (
 )
 from podcast_words.config import load_config, sorted_podcast_ids
 from podcast_words.pipeline.word_counter import _read_word_counts_csv
+from podcast_words.word_search import (
+    SEARCH_MIN_LEN,
+    active_search_term,
+    default_selected_words,
+    format_selected_display,
+    search_vocabulary,
+)
 
 st.set_page_config(layout="wide")
 
@@ -125,7 +133,7 @@ def _chart_layout(fig: go.Figure, *, height: int, uirevision: str, **extra) -> g
 def _plotly_chart(fig: go.Figure, *, key: str) -> object:
     return st.plotly_chart(
         fig,
-        use_container_width=True,
+        width="stretch",
         on_select="rerun",
         selection_mode="points",
         key=key,
@@ -209,7 +217,7 @@ def _show_selected_episode_link(selection, meta: dict[int, dict[str, str]], *, a
     url = row.get("url", "")
     title = row.get("title", "") or f"Episode {number}"
     if url:
-        st.link_button(f"Open episode {number}: {title}", url, use_container_width=False)
+        st.link_button(f"Open episode {number}: {title}", url, width="content")
 
 
 @st.cache_data
@@ -234,6 +242,90 @@ def load_episode_meta(podcast_id: str) -> dict[int, dict[str, str]]:
 @st.cache_data
 def get_config():
     return {pid: p for pid, p in load_config().items()}
+
+
+@st.cache_data
+def load_word_vocab_sorted(podcast_id: str) -> tuple[str, ...]:
+    """Sorted non-stop lemmas for instant prefix search."""
+    config = get_config()
+    podcast = config[podcast_id]
+    df = _read_word_counts_csv(podcast.word_counts_csv)
+    df = df[df["is_stop"].astype(str).str.lower() != "true"]
+    words = df["word"].astype(str).str.strip()
+    return tuple(sorted(w for w in words if w))
+
+
+@st.fragment
+def _word_search_picker(
+    podcast_id: str,
+    podcast,
+    sorted_vocab: tuple[str, ...],
+) -> list[str]:
+    """Single combobox: type to search, pick to add or remove words."""
+    from streamlit_searchbox import st_searchbox
+
+    vocab = frozenset(sorted_vocab)
+    words_key = f"words_{podcast_id}"
+    searchbox_key = f"word_searchbox_{podcast_id}"
+    if words_key not in st.session_state:
+        st.session_state[words_key] = default_selected_words(podcast.search_words, vocab)
+
+    selected: list[str] = list(st.session_state[words_key])
+    selected_display = format_selected_display(selected)
+
+    def _format_option(word: str) -> tuple[str, str]:
+        mark = "✓ " if word in st.session_state[words_key] else ""
+        return (f"{mark}{word}", word)
+
+    def _sync_searchbox_display() -> None:
+        display = format_selected_display(st.session_state[words_key])
+        box = st.session_state[searchbox_key]
+        box["search"] = display
+        box["key_react"] = f"{searchbox_key}_react_{time.time()}"
+
+    def search_fn(term: str) -> list[tuple[str, str]]:
+        query = active_search_term(term)
+        selected_now = list(st.session_state[words_key])
+        if len(query) < SEARCH_MIN_LEN:
+            return [_format_option(w) for w in selected_now]
+        seen: set[str] = set()
+        results: list[tuple[str, str]] = []
+        for word in search_vocabulary(sorted_vocab, query):
+            if word in seen:
+                continue
+            seen.add(word)
+            results.append(_format_option(word))
+        return results
+
+    def toggle_word(word: str) -> None:
+        w = str(word).strip().lower()
+        if w not in vocab:
+            return
+        current = st.session_state[words_key]
+        if w in current:
+            current.remove(w)
+        else:
+            current.append(w)
+        if searchbox_key in st.session_state:
+            _sync_searchbox_display()
+
+    st_searchbox(
+        search_fn,
+        label="🔍 Words for charts",
+        placeholder=f"Type at least {SEARCH_MIN_LEN} characters…",
+        help=(
+            f"{len(selected)} selected. "
+            "Pick a word to add it; pick a checked word again to remove it."
+        ),
+        submit_function=toggle_word,
+        default_searchterm=selected_display,
+        default_options=[_format_option(w) for w in selected],
+        rerun_scope="fragment",
+        clear_on_submit=False,
+        key=searchbox_key,
+    )
+
+    return list(st.session_state[words_key])
 
 
 @st.cache_data
@@ -416,7 +508,6 @@ if coverage:
         ]
         st.sidebar.caption("Transcripts by source: " + " · ".join(parts))
 
-df = load_data(podcast_id)
 stats, _ = load_stats(podcast_id)
 
 st.title(f"🎙️ {podcast.name} — Word Analysis")
@@ -427,10 +518,9 @@ if coverage:
     with_transcript = coverage["states"].get("done", 0)
     st.caption(f"{with_transcript}/{coverage['total']} episodes with transcripts")
 
-# Word selection
-word_columns = df.columns.drop("Episode")
-default_words = [w for w in podcast.search_words if w in set(word_columns)]
-selected_words = st.multiselect("🔍 Choose words", word_columns, default=default_words)
+# Word search picker (server-side lookup over cached vocabulary)
+sorted_vocab = load_word_vocab_sorted(podcast_id)
+selected_words = _word_search_picker(podcast_id, podcast, sorted_vocab)
 
 
 @st.fragment
@@ -637,7 +727,7 @@ else:
     st.caption(f"{len(missing_df)} episodes in the catalog without a transcript.")
     st.dataframe(
         missing_df,
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
         column_config={
             "Episode": st.column_config.NumberColumn("Episode", format="%d"),
