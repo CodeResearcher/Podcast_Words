@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 import pandas as pd
 import plotly.graph_objs as go
 import streamlit as st
+from streamlit_searchbox import st_searchbox
 
 from podcast_words.catalog import (
     STATE_DONE,
@@ -262,8 +263,6 @@ def _word_search_picker(
     sorted_vocab: tuple[str, ...],
 ) -> list[str]:
     """Single combobox: type to search, pick to add or remove words."""
-    from streamlit_searchbox import st_searchbox
-
     vocab = frozenset(sorted_vocab)
     words_key = f"words_{podcast_id}"
     searchbox_key = f"word_searchbox_{podcast_id}"
