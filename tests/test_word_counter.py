@@ -83,3 +83,40 @@ def test_read_word_counts_preserves_null_lemma(temp_podcast):
 
     df = word_counter._read_word_counts_csv(csv_path)
     assert df["word"].tolist() == ["null", "eimer"]
+
+
+def test_read_word_vocab(temp_podcast):
+    import pandas as pd
+
+    csv_path = temp_podcast.word_counts_csv
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(
+        {
+            "word": ["der", "eimer", "münze"],
+            "is_stop": [True, False, False],
+            "1": [9, 2, 1],
+            "2": [0, 1, 3],
+        }
+    ).to_csv(csv_path, index=False)
+
+    assert word_counter.read_word_vocab(csv_path) == ("eimer", "münze")
+
+
+def test_read_word_counts_for_words(temp_podcast):
+    import pandas as pd
+
+    csv_path = temp_podcast.word_counts_csv
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(
+        {
+            "word": ["der", "eimer", "münze"],
+            "is_stop": [True, False, False],
+            "1": [9, 2, 1],
+            "2": [0, 1, 3],
+        }
+    ).to_csv(csv_path, index=False)
+
+    df = word_counter.read_word_counts_for_words(csv_path, {"eimer", "münze"})
+    assert df["Episode"].tolist() == [1, 2]
+    assert df["eimer"].tolist() == [2, 1]
+    assert df["münze"].tolist() == [1, 3]

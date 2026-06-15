@@ -17,7 +17,10 @@ from podcast_words.catalog import (
     Catalog,
 )
 from podcast_words.config import load_config, sorted_podcast_ids
-from podcast_words.pipeline.word_counter import _read_word_counts_csv
+from podcast_words.pipeline.word_counter import (
+    read_word_counts_for_words,
+    read_word_vocab,
+)
 from podcast_words.word_search import (
     SEARCH_MIN_LEN,
     active_search_term,
@@ -250,10 +253,17 @@ def load_word_vocab_sorted(podcast_id: str) -> tuple[str, ...]:
     """Sorted non-stop lemmas for instant prefix search."""
     config = get_config()
     podcast = config[podcast_id]
-    df = _read_word_counts_csv(podcast.word_counts_csv)
-    df = df[df["is_stop"].astype(str).str.lower() != "true"]
-    words = df["word"].astype(str).str.strip()
-    return tuple(sorted(w for w in words if w))
+    return read_word_vocab(podcast.word_counts_csv)
+
+
+@st.cache_data
+def load_word_series(podcast_id: str, words: tuple[str, ...]) -> pd.DataFrame:
+    """Episode × selected word counts (does not load the full vocabulary matrix)."""
+    if not words:
+        return pd.DataFrame(columns=["Episode"])
+    config = get_config()
+    podcast = config[podcast_id]
+    return read_word_counts_for_words(podcast.word_counts_csv, frozenset(words))
 
 
 @st.fragment
@@ -325,22 +335,6 @@ def _word_search_picker(
     )
 
     return list(st.session_state[words_key])
-
-
-@st.cache_data
-def load_data(podcast_id: str):
-    config = get_config()
-    podcast = config[podcast_id]
-    df = _read_word_counts_csv(podcast.word_counts_csv)
-    df.set_index("word", inplace=True)
-    df.fillna(0, inplace=True)
-    df = df[df["is_stop"].astype(str).str.lower() != "true"]
-    df = df.drop(columns=["is_stop"])
-    df = df.astype("uint32")
-    df = df.T  # episodes become rows
-    df.index.name = "Episode"
-    df.reset_index(inplace=True)
-    return df
 
 
 @st.cache_data
@@ -527,8 +521,9 @@ def _word_line_chart(podcast_id: str, selected: list[str]) -> None:
     if not selected:
         return
     meta = load_episode_meta(podcast_id)
-    data = load_data(podcast_id)
-    df_selected = data[["Episode"] + selected]
+    words = tuple(selected)
+    data = load_word_series(podcast_id, words)
+    df_selected = data[["Episode"] + list(selected)]
 
     st.subheader("📊 Frequency of selected words across all episodes")
     df_plot = df_selected.copy()
@@ -567,8 +562,9 @@ def _word_bar_chart(podcast_id: str, selected: list[str]) -> None:
     if not selected:
         return
     meta = load_episode_meta(podcast_id)
-    data = load_data(podcast_id)
-    df_selected = data[["Episode"] + selected]
+    words = tuple(selected)
+    data = load_word_series(podcast_id, words)
+    df_selected = data[["Episode"] + list(selected)]
 
     st.subheader("🏅 Top 10 episodes for the selected words")
     ranked = df_selected.copy()

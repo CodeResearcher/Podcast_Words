@@ -35,6 +35,50 @@ def _read_word_counts_csv(csv_path: Path) -> pd.DataFrame:
     return df
 
 
+def read_word_vocab(csv_path: Path) -> tuple[str, ...]:
+    """Non-stop lemmas from word_counts.csv (reads word/is_stop columns only)."""
+    df = pd.read_csv(csv_path, usecols=["word", "is_stop"], keep_default_na=False)
+    df["word"] = df["word"].astype(str).str.strip()
+    df = df[df["is_stop"].astype(str).str.lower() != "true"]
+    return tuple(sorted(w for w in df["word"] if _valid_word_label(w)))
+
+
+def read_word_counts_for_words(
+    csv_path: Path,
+    words: frozenset[str] | set[str],
+    *,
+    chunk_size: int = 20_000,
+) -> pd.DataFrame:
+    """Episode × word counts for selected lemmas (streams the CSV in chunks)."""
+    if not words:
+        return pd.DataFrame(columns=["Episode"])
+
+    rows: list[pd.DataFrame] = []
+    for chunk in pd.read_csv(csv_path, chunksize=chunk_size, keep_default_na=False):
+        hit = chunk["word"].astype(str).isin(words)
+        if hit.any():
+            rows.append(chunk.loc[hit])
+
+    if not rows:
+        return pd.DataFrame(columns=["Episode", *sorted(words)])
+
+    df = pd.concat(rows, ignore_index=True)
+    df["word"] = df["word"].astype(str).str.strip()
+    df = df[df["is_stop"].astype(str).str.lower() != "true"]
+    df = df.drop(columns=["is_stop"])
+    episode_cols = [c for c in df.columns if c != "word"]
+    if episode_cols:
+        df[episode_cols] = (
+            df[episode_cols].replace("", np.nan).apply(pd.to_numeric, errors="coerce").fillna(0)
+        )
+    df = df.astype({c: "uint32" for c in episode_cols})
+    wide = df.set_index("word").T
+    wide.index.name = "Episode"
+    wide = wide.reset_index()
+    wide["Episode"] = pd.to_numeric(wide["Episode"], errors="coerce")
+    return wide.dropna(subset=["Episode"])
+
+
 def _valid_word_label(word) -> bool:
     if word is None or (isinstance(word, float) and pd.isna(word)):
         return False
