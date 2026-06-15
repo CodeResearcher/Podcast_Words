@@ -1,97 +1,1138 @@
 WEBVTT
 
-00:00:00.200 --> 00:00:49.840
-<v SPEAKER_1>Willkommen zum chaosradio 293. Und wir haben heute eine schwierige situation, denn unser Moderator, Markus Richter, ist tatsächlich in seinen natürlich wohl verdienten Urlaub abgeschwört und hat uns hier ganz alleine gelassen. Wir haben aber beschlossen, dass wir keine Sommerpause machen, denn wir haben wichtige Themen, da müssen wir drüber sprechen und müssen wir ohne Markus irgendwie hinkriegen. Aber ich habe zwei unfassbar gute Gäste, die auch eloquent sind, technische Ahnung haben und diese chaosradio trotzdem ohne Markus rocken werden. Wir haben zum einen zu meiner Linken kein Taukel, der extra für uns angereist ist aus Berlin, naja, war nicht so weit. Und dann haben wir Erdgeist, ein häufiger Gast im chaosradio. Hallo Erdgeist.
+00:00:54.368 --> 00:00:54.928
+<v SPEAKER_2>Und ich bin schon dran.
 
-00:00:50.380 --> 00:00:51.880
-<v SPEAKER_2>Hallo Konz.
+00:00:54.948 --> 00:00:55.768
+<v SPEAKER_3>Und ich bin schon dran.
 
-00:00:51.880 --> 00:00:51.880
-<v SPEAKER_1>Das bin ich. Wir haben heute eigentlich so ein bisschen klassische Folge vom chaosradio, würde ich sagen, weil wir ein bisschen über natürlich Technik reden wollen, auch ein bisschen erklär werden, aber wir haben auch einen Hack, den wir als konkreten Anlass haben. Also eigentlich ist es eine gute Mischung letztlich. Denn wir haben am ACCC kürzlich eine Pressemitteilung rausgegeben, die betraf die Zwei-Faktor-Authentifizierung mit SMS. Und da wollen wir ein bisschen drüber sprechen. Was ist eigentlich dieser Hack gewesen? Was wurde da technisch gemacht? Aber wir wollen vor allen Dingen auch darüber sprechen, warum wir Zwei-Faktor-Authentifizierung haben. Wo wir da Kritik haben. Wo sich was ändern müsste. Vielleicht sogar ein bisschen, was wir raten würden dem geneigten Computer-Benutzer. Und deswegen wollen wir, glaube ich, ein bisschen einsteigen mit der Geschichte. Also warum brauchen wir die sogenannten Trust Anchors? Warum müssen wir irgendwie ein bisschen mehr Mühe haben als früher? Wir können nicht immer nur einfach nur eine E-Mail-Adresse und ein Passwort eingeben. Und da wollen wir so ein bisschen mit anfangen und dann zu dem eigentlichen Hack kommen und ein bisschen darüber sprechen, was wir da technisch eigentlich vorliegen haben. Okay, Erdgeist wird zum Anfang. Wozu haben wir diese Trust Anchors? Warum ist die situation heute anders als vor 15 Jahren?
+00:00:56.468 --> 00:00:57.068
+<v SPEAKER_4>Und ich bin schon dran.
 
-01:00:25.520 --> 01:00:37.660
-<v SPEAKER_1>Was schon viele, glaube ich, auch technisch überfördert. Also generell glaube ich, das Backup vor dem Mobiltelefon ist weniger verbreitet als bei Computern, die so auf dem Schreibtisch stehen, ist mein Eindruck.
+00:01:00.948 --> 00:01:01.968
+<v SPEAKER_5>Und ich bin schon dran.
 
-01:00:37.660 --> 01:00:42.080
-<v SPEAKER_2>Einige Dienste verbieten dir auch schlicht, das von deinem Telefon woanders nochmal hinzuspeichern.
+00:01:02.608 --> 00:01:03.208
+<v SPEAKER_6>Und ich bin schon dran.
 
-01:00:42.080 --> 01:00:45.760
-<v SPEAKER_1>Das, oh ja, tatsächlich. Aber Apple, ich hab den Apple.
+00:04:01.609 --> 00:04:15.669
+<v SPEAKER_3>Zum Beispiel hier zu Gast ist Erdgeist, hallo, guten Tag. Das ist nämlich jemand vom Chaos Computer Club, weil der Chaos Computer Club schmeißt das Chaos Radio seit 200 Sendungen. Auch zu Gast ist Steini, guten Tag. Und auch zu Gast ist der Test-Dager, guten Tag.
 
-01:00:46.060 --> 01:00:47.780
-<v SPEAKER_2>Nein, nicht nur Apple. Auch er?
+00:04:15.689 --> 00:04:16.309
+<v SPEAKER_4>Test.
 
-01:00:47.780 --> 01:00:48.820
-<v SPEAKER_1>Echt? Also du wirst den gar nicht.
+00:04:16.329 --> 00:05:13.689
+<v SPEAKER_3>Ja, sehr gut, sehr gut. Tim Pritlauf. Oder Tim Prit-Lorwe, dazu wird es in der Sendung noch ein kleines Detail geben. Vielleicht hat auch das Mikrofon Nummer 3 eine Fehlfunktion, das könnte auch sein, müssen wir vielleicht austauschen. Aber gut, wir werden sehen. Herzlich willkommen zum Chaos Radio. Falls ihr den Opener gerade gehört habt und euch fragt, was ist denn da los? Das hört sich ja an wie früher. Das war tatsächlich so ein bisschen der Plan, weil im Chaos Radio Nummer 1 wurde gesagt, der Chaos Computer Club stellt sich vor. Und wir hatten gedacht, so zur Zerzornetzensendung könnte man das vielleicht einfach, eigenfach so wiederholen. Dann hat sich herausgestellt, naja, es gibt diese Sendung nicht mehr. Also das gibt, also im Archiv, im ganzen Internet hat niemand mehr Chaos Radio Nummer 1. Das ist ganz, ganz, ganz, ganz, ganz seltsam. Und außerdem sagte dann jemand, möglicherweise haben sich seitdem ja ein paar Dinge geändert. Unter Umständen, eventuell. Und auch das werden wir heute hier genauer erzählen. Wir haben außerdem, bitte was?
 
-01:00:48.820 --> 01:00:55.820
-<v SPEAKER_2>Also einige Dinge, die in der Secure Enclave oder dann im TNT EE vom Android drin sind, kannst du nicht rausholen.
+00:05:13.709 --> 00:05:14.549
+<v SPEAKER_7>Das Quatsch.
 
-01:00:56.360 --> 01:00:59.120
-<v SPEAKER_1>Das heißt, Backup ist auch nicht trivial.
+00:05:14.569 --> 00:05:15.089
+<v SPEAKER_3>Das Quatsch?
 
-01:00:59.120 --> 01:01:08.820
-<v SPEAKER_3>Also ich nutze so eine Zwei-Faktor-App unter Android. Da kann ich was exportieren, das kann ich irgendwann wegspeichern. Und wenn mein Handy flöten geht, kann ich das woanders hin.
+00:05:15.109 --> 00:05:16.869
+<v SPEAKER_7>Die erste Sendung hat es nie gegeben.
 
-01:01:08.820 --> 01:01:24.880
-<v SPEAKER_1>Aber ist das eine allgemeinkompatible Lösung? Schwerlich, oder? Ja, okay. Zumal man ja auch davon ausgehen muss, dass die Lösungen, die man in der Praxis jeden Tag benutzt für die verschiedenen Dienstleistungen eben nicht alle gleich sind und man unterschiedliche technische Wege gehen muss, nicht wahr?
+00:05:17.929 --> 00:05:20.289
+<v SPEAKER_4>Ist ein totaler Mythos. Steht nur im Internet.
 
-01:01:24.880 --> 01:01:31.140
-<v SPEAKER_3>Das auf jeden Fall. Also es ist manchmal auch nervig, schon wieder so einen zweiten Token eingehen zu müssen.
+00:05:20.349 --> 00:06:04.589
+<v SPEAKER_3>Wir werden dann gleich mal nachprüfen, wie gut ihr sozusagen darauf vorbereitet sind, diesen Mythos aufrecht zu halten, indem ihr so tut, als ob ihr erzählt, wie das war in der ersten Sendung, die es nie gegeben hat. Was wir heute auch machen möchten, ist die Gelegenheit zu nutzen, um ein paar der Moderatoren zu Wort kommen zu lassen, die diese Sendung früher gemacht haben. Das sind Johnny Häusler, Holger Klein, Jakob Kranz und Max von Malotky, die vor mir, mein Name ist Marcus Richter übrigens, ich glaube, das habe ich noch nicht gesagt, diese Sendung bestritten haben. Also zumindest mehrere Sendungen. Es gab dann auch noch ein paar Kandidaten, die eine oder zwei Sendungen gemacht haben. Und ich habe die alle mal so ein bisschen verhaftet und gefragt, wie war denn das mit dem Chaosradio? Und ganz zuerst wollte ich für dich natürlich wissen, wie sind sie überhaupt zu der Moderation dieser Sendung gekommen, wo der Chaos Computer Club immer einmal im Monat Dinge erzählt?
 
-01:01:31.140 --> 01:02:27.360
-<v SPEAKER_2>Dann auch noch die ganzen Kon... Wir haben ja von dieses Ausnachrichten kopieren, von wo dann gleich du in der eigenen App bist und dich dann der Betriebsdienst fragt, ob du nicht gleich aus der jüngst angegangenen SMS den 6-Ziffern-Code da rein kopieren möchtest. Ist total convenient, aber kann auch nach hinten losgehen. Auf der anderen Seite, wenn auf deinem Sperrbildschirm, ohne, dass du dich gegenüber deinem Telefon überhaupt authentifizieren musst, wenn dort gleich der Inhalt der SMS angezeigt wird, oder wenn andere Nachrichten angezeigt werden, hast du auch quasi kein Schutzniveau. Dann jeder, der dein Telefon mitnimmt, kann sich dann diese SMS zustellen und gleich anzeigen lassen. Das heißt, dort könnte man vielleicht nochmal in seinen Einstellungen nachschauen, ob man die Vorschau von den eingehenden Nachrichten nicht vielleicht für SMS zumindest. Die meisten Menschen benutzen ja ernsthaft SMS nicht mehr als Messenger. Das ist ja so die ganzen jungen Leute nehmen ja Signal, Fremar, Wemwatt.
+00:06:04.609 --> 00:06:47.689
+<v SPEAKER_8>Den Chaos Computer Club kannte ich schon sehr viel länger als von der Zeit, in der wir das Chaos Radio gemacht haben. Und hatte ein, zwei, drei, vier, fünf Bekannte im Club. Und ich glaube, ich hoffe, ich erzähle jetzt keinen Unsinn, aber ich glaube, es war Tim Pritloff, der auf mich zukam und gesagt hat, Mann, man müsste eigentlich eine Radiosendung zum Thema Online, Medien und Technologien, Digitaltechnologien machen. Und dann haben wir uns ein paar Mal getroffen mit einigen anderen Leuten auch haben so ein bisschen überlegt und haben das dann in die Chefetagen getragen und versucht daraus ein Sendungskonzept zu machen. Und irgendwann haben die dann gesagt, ja, dann legt mal los. Und dann haben wir losgelegt mit dem Chaos Radio.
 
-01:02:27.360 --> 01:02:36.040
-<v SPEAKER_3>Und damit verschieben wir das Problem wieder zur Nutzerin. Und schöner wäre es, wenn Betriebssystemhersteller das dann so bauen würden.
+00:06:47.709 --> 00:07:24.029
+<v SPEAKER_9>Übergeholfen wurde mir die Moderation damals als Johnny Häusler. Johnny Häusler hat Fritz verlassen, um, ich glaube, seine eigene Internetbude zu machen oder sowas. Das muss so 99 2000 gewesen sein. Und wir saßen bei MC Lücke im Garten beim Grillen und haben irgendwie gequatscht. Und ich meine, da hätte Johnny gesagt, hier sag mal, hast du nicht Lust, ein Chaos Radio zu übernehmen, wenn ich da aufhöre? Also zumindest kann es auch nicht sein, dass ich mir das zusammenfantasiere, weil Erinnerung ist ja immer so eine Sache. Aber irgendwie ist beim Grüllen bei MC Lücke diese Sendung für mich rausgefallen.
 
-01:02:36.040 --> 01:02:40.340
-<v SPEAKER_2>Genau, das Zwei-Faktor-Auth. SMS vielleicht gar nicht erst angezeigt werden auf dem Sperrbildschirm.
+00:07:24.049 --> 00:07:45.429
+<v SPEAKER_2>Das war glaube ich im Frühjahr 2007, weil Holger Klein, der das bis dahin gemacht hat, irgendwie nicht mehr konnte oder zu einem anderen Sender ging oder so. Auf jeden Fall war die Moderation frei. Und dann kam der Chef zu mir und sagte, Kranz, du kennst dich mit Internet aus und kannst mit komischen Leuten reden. Chaos Radio, hast du Bock? Ich sag klar, auf jeden Fall. Und ja, so war es dann. Ich glaube, so 2007, Mai, so was muss es gewesen sein.
 
-01:02:40.560 --> 01:02:53.800
-<v SPEAKER_1>Na ja, bloß, aber dann hast du wieder, also ich möchte diese komische Duopol auch nicht in der Zukunft weiter haben. Also dann damit stärkst du ja diese beiden Platze schon weiter. Das ist ja eigentlich auch nicht, was wir wünschen. Also ja, vielleicht nicht.
+00:07:45.469 --> 00:08:03.209
+<v SPEAKER_10>Ich glaube, das war eine reine Panikreaktion auf Nerds, die damals dazu geführt hat. Das war irgendwie so was wie, Max, hör zu, Max, hey, du sprichst deren Sprache oder du verstehst, du verstehst ansatzweise, was die sagen. Kannst du das moderieren? Das wäre toll, echt, wirklich. Du hast doch keine Angst vor denen, oder?
 
-01:02:53.800 --> 01:03:01.360
-<v SPEAKER_2>Aber wenn die erst mal Dinge noch für ihre Kundschaft, die sie gerade haben, nicht schlimmer macht, ist auch schon mal was gewonnen.
+00:08:03.229 --> 00:08:20.109
+<v SPEAKER_3>Du hast doch keine Angst vor denen. Vor denen, das ist der Chaos Computer Club. Und wir wollen, wie gesagt, die Anfänge mal ein bisschen genau beleuchtet. Die, die da Angst davor, vor denen man Angst haben muss, wenn man im Radio arbeitet, wer ist denn das überhaupt? Wer war denn das überhaupt zu dieser Zeit? Also das war 95.
 
-01:03:01.400 --> 01:03:15.220
-<v SPEAKER_1>Ja, das stimmt. Aber also sich zu verlassen auf diese beiden großen Konzerne, dass sie die Betriebssysteme da hingegen anfassen, das finde ich als Empfehlung. Damit bin ich auch nicht happy. Einfach, also fühle ich mich auch nicht wohl mit.
+00:08:20.129 --> 00:08:21.769
+<v SPEAKER_4>Wie meinst du das?
 
-01:03:15.220 --> 01:03:29.080
-<v SPEAKER_2>Nein, nein, nein. Noch mal wieder, wer sind deine Vertrauensanker? Wenn dein Vertrauensanker der Studenten dein Telefon ist, mit dem du dich da draußen ausweist, faktisch, musst du sie auch pflegen.
+00:08:21.789 --> 00:08:30.389
+<v SPEAKER_3>Dieser Chaos Computer Club, der auf einmal diese Radioszene macht, wer war das? Eine unbekannte...
 
-01:03:29.080 --> 01:03:33.680
-<v SPEAKER_1>Na ja, damals meinst du aber, damals meinst du den Betriebssystemhersteller, der bei dir identisch mit dem Hersteller ist.
+00:08:30.409 --> 00:09:21.529
+<v SPEAKER_7>Ich glaube, da muss man ein bisschen ausholen. Das hilft immer. Ihr müsst euch das so vorstellen, dass wir damals in einer Situation war, wo viele von uns in derselben Firma arbeiteten, ansonsten aber eigentlich mehr Chaos Computer Club waren als Firma. Oder das pendelte immer so hin und her. Wir waren also völlig in diesem Computernetzding, so mega drin. Das klingt für heute, klingt es total, was mit denen los? Damals gab es diesen ganzen Scheiß noch nicht. Wir erinnern mal 1995, als wir angefangen haben, wie viele Domains gab es da in Deutschland? 137 oder so. Habe ich eine angemeldet, in 1994 oder 1995. Das Internet war WLAN. Wow, das war der heißeste Scheiß ever. In dieser Situation, wo wir uns also mit abgefahrenen Fragen umgebracht haben...
 
-01:03:33.680 --> 01:03:50.180
-<v SPEAKER_2>Ich meine jetzt unsere Hörerinnen da draußen. Wenn eure Mobiltelefone, eure Vertrauensanker sind, mit denen ihr euch da draußen in der Welt, guckt ob vielleicht noch ein einziger zusätzlicher Vertrauensanker, mit dem ihr später wieder Bootstrappen könnt, noch irgendwo im Kästchen liegt.
+00:09:21.549 --> 00:09:22.849
+<v SPEAKER_4>Steini, da gab es noch keinen WLAN.
 
-01:03:50.180 --> 01:03:51.880
-<v SPEAKER_1>Das ist vielleicht ein guter Tipp, das stimmt.
+00:09:23.009 --> 00:09:23.909
+<v SPEAKER_7>Oh, das kam später, ne?
 
-01:03:51.880 --> 01:03:59.900
-<v SPEAKER_2>Dass ihr dann nicht total aufgeschmissen seid, weil jeder kennt das, Telefon ist irgendwo rausgefallen, verloren gegangen.
+00:09:23.929 --> 00:09:27.709
+<v SPEAKER_6>Ja, das war meine erste Sendung um Chaos Radio. Am 30. Mai 2001, da habe ich mit...
 
-01:03:59.920 --> 01:04:00.740
-<v SPEAKER_1>In See geblumst.
+00:09:29.389 --> 00:09:30.849
+<v SPEAKER_3>Das ist ja schon sehr weit fortgeführt.
 
-01:04:00.740 --> 01:04:20.500
-<v SPEAKER_2>Man kommt nicht mehr dran. Das sind so diese Schwarzstart-Fähigkeiten, einmal in sich zu gehen, zu üben. Was würde wohl passieren? Klar, ich mache Backups, aber hab da mal Restore gemacht. Hab da mal geguckt, wie ihr euch dann wieder an den Harren aus den Sumpf ziehen könnt, wenn euer Endgerät hops gegangen ist.
+00:09:30.869 --> 00:10:41.589
+<v SPEAKER_7>Boah, jetzt mach mal nicht so schnell. Okay, aber stellt euch das so vor, wir waren also in einer Situation, in der Internet, da waren wir total crazy. Was erzählt ihr dann von Scheiß, von vernetzt und komisch und warnt jetzt auch noch vor irgendwelchen Situationen und Dingen, die entstehen könnten, von denen also niemand auch nur irgendeine Vorstellung hatte. Insofern auch solche Äußerungen nachvollziehbar, so versteht man überhaupt, was die reden? Kann ich jetzt aus heutiger Sicht gut nachvollziehen, dass das für viele völlig esoterisches Zeug gewiesen sein muss? In dieser Situation haben wir uns halt überlegt, und das war die Motivation, ich weiß auch nicht mehr, wer es war, zu sagen, eigentlich müssten wir diese Themen, die tatsächlich jeder von uns in dieser Gruppe, Chaos Computer Club damals, gesehen haben, die auch international und auch bundesweit vernetzt war zu dem Zeitpunkt schon, irgendwie müssten wir das mal nach draußen tragen, aus diesem normalen Klüngel in sich selbst, die Süppchen kochen, sondern mal klar machen, Leute, da rollt was auf uns zu. Das ist mega. Das ist fetter als alles, was es bis dahin vorher gegeben hat.
 
-01:04:20.520 --> 01:04:39.640
-<v SPEAKER_1>Ja, wir können da keine gute Lösung präsentieren. Aber zumindest ein paar dieser Hinweise, ja, das stimmt. Das lässt mich natürlich auch ein bisschen unzupredend zurück. Wollen wir nicht doch nochmal mit einem positiven Ende haben über die gute Utopie, wie es denn sein sollte, reden?
+00:10:41.849 --> 00:11:12.529
+<v SPEAKER_3>Aber Steini, noch vielleicht noch eine Zwischenmermerkung. Wenn ihr euch angucken wollt, wer der Mann ist, der jetzt gerade geredet hat, das ist nämlich Steini. Ich weiß nicht, ob das auf VU-Gestein steht. Dann könnt ihr das entweder tun unter streaming.media.ccc.de oder ihr könnt in Berlin vorbeikommen, in der Marienstraße 11 und euch dort auf das großes Gelächter. Hier sind schon ein paar Leute. Macht mal bitte Geräusch, Leute. Also das heißt, wenn ihr hier vorbeikommt und euch das Chaos Radio angucken und nicht nur anhören wollt, dann ist da wirklich ganz viel Platz dazu.
 
-01:04:40.940 --> 01:04:43.080
-<v SPEAKER_2>Alle Menschen sind nett zueinander.
+00:11:12.549 --> 00:11:14.009
+<v SPEAKER_4>Genau, jetzt auch zum Anfassen.
 
-01:04:43.080 --> 01:04:44.860
-<v SPEAKER_3>Wir brauchen keine Passwörter.
+00:11:14.029 --> 00:11:14.589
+<v SPEAKER_3>Jetzt auch zum Anfassen.
 
-01:04:46.160 --> 01:05:25.360
-<v SPEAKER_1>Also, okay, das ist auch nicht... Also das Problem wird uns ganz sicherlich viele Jahre begleiten. Da hab ich glaube keine Zweifel dran. Dann muss ich dieses chaosradio leider auf dieser Note beenden. Wir müssen Markus Richter hier in dieser Stelle grüßen, von dem wir gehofft hätten, dass er ein anderes Ende findet. Markus Richter ist sonst der Moderator des chaosradio, den wir hier aufgrund seiner Urlaubstätigkeit heute vermissen. Aber ich glaube, so richtig werden wir keinen technischen Weg gefunden, einen positiven Ende zu finden. Ja, dann können wir nur sagen...
+00:11:14.609 --> 00:11:18.849
+<v SPEAKER_6>Also zum Angucken gibt es das auch. Es gibt den Livestream hier, Video aus dem Chaos Computer Club.
 
-01:05:25.360 --> 01:05:37.340
-<v SPEAKER_2>Dann danken wir an der Stelle mal Konstanze Kurz für die moderation. Dem Cantorkel, dass er es aus dem weiten Berlin hierher geschafft hat. Und dem Danimo, der heute für uns die Regler geschubst hat.
+00:11:18.869 --> 00:11:29.109
+<v SPEAKER_3>Du meinst unter streaming.media.ccc.de, was ich gerade gesagt habe? Aber Steini, was du jetzt gerade unterschlagen hast, ist ja, wer war denn dieser Chaos Computer Club?
 
-01:05:37.340 --> 01:05:57.520
-<v SPEAKER_1>Und der ganzen chaosradio Crew, die sich hoffentlich in den nächsten Wochen sogar noch erweitert. Denn wir werden vielleicht ein paar mehr mal gucken. Und das nächste Mal wartet euch, wenn wir im Wechsel vom chaosradio immer die dicken Bretter haben. Eine Folge von Dicke Bretter. Und damit beenden wir mit lieben Grüßen das chaosradio 293.
+00:11:29.709 --> 00:11:38.429
+<v SPEAKER_7>Ja Gott, aber das ist so eine Frage wie, wer ist ein Radio Fritz? Ja wer ist denn das? Das ist ja nicht eine Person.
+
+00:11:38.449 --> 00:11:44.389
+<v SPEAKER_3>Ja, das stimmt, aber bei Radio Fritz weiß man, das ist ein Jugendradiosender, der macht so ein Programm, da kann man einmal Monat Chaos Radio hören.
+
+00:11:44.409 --> 00:11:48.049
+<v SPEAKER_7>Ah, jetzt weiß ich, was er will.
+
+00:11:48.069 --> 00:13:02.489
+<v SPEAKER_4>Du willst jetzt den Chaos Computer Club erklärt bekommen. Du hast aber eigentlich nach den Personen gefragt. Den Club gibt es ja schon lange, das ist ja keine Neuigkeit. Den gibt es seit, je nachdem, welcher Geschichtsschreibung man glauben möchte, seit 1981 oder 1984. Wir waren ja, und sind es auch immer noch, der Chaos Computer Club Berlin, der insofern damals eine besondere Zusammenhängung war, nicht weil so viele in einer Firma zusammengearbeitet haben, sondern weil wir uns hier im Prinzip alle relativ frisch zusammengefunden haben und eigentlich vom Start weg so eine Ost-West-Fusion ersten Grades waren. Ich glaube, das war relativ ausgeglichen, auch so 50-50. Das heißt, alle Leute, die auch damals im Osten sich schon früh mit dem ganzen Kram beschäftigt haben, fanden hier zusammen und das hat sehr, auch glaube ich so unseren Weg, doch sehr geprägt. Und das war alles sehr aufregend damals. Und ich kann auch gleich noch den anderen Mythos hier wieder legen, also ich war es nicht, ich war nämlich im Urlaub und ich kam zurück und ihr habt mir dann irgendwie erzählt, übrigens du bist jetzt im Radio. Ich denke Frank Krieger hat das im Wesentlichen ausgeheckt mit Johnny, weil die auch irgendwie in irgendeinem Projekt aneinander gedockt waren mit Fritz und so. Und dann wurde ich quasi vor vollendete Tatsachen gestellt.
+
+00:13:03.769 --> 00:13:08.669
+<v SPEAKER_3>Das erklärt wahrscheinlich auch, warum Frank Krieger heute nicht da ist.
+
+00:13:08.689 --> 00:13:09.149
+<v SPEAKER_4>Weiß ich nicht.
+
+00:13:09.469 --> 00:13:17.489
+<v SPEAKER_7>Nee, das war tatsächlich so, wir hatten damals Projekte am Laufen, multimediale Projekte. Das Wort gab es damals noch nicht.
+
+00:13:17.509 --> 00:13:18.809
+<v SPEAKER_4>Oh ja, dieses komische Labyrinth.
+
+00:13:18.829 --> 00:13:32.169
+<v SPEAKER_7>Ja, das Labyrinth und dann gab es irgendwie Tommy Rent gab es irgendwann. Und dann gab es den Love Scout und so. Also da waren so Projekte, die waren multimedial. Oder damals hieß es doch...
+
+00:13:32.189 --> 00:13:34.729
+<v SPEAKER_4>Wenn du nochmal Multimedia sagst Stein, die fliegst du raus.
+
+00:13:34.749 --> 00:13:36.509
+<v SPEAKER_3>Multimedia.
+
+00:13:36.529 --> 00:13:58.029
+<v SPEAKER_7>Damals hieß es Trimedial, weil wir hatten ja drei Medien. Ja, wir hatten ja Radio, Fernsehen und Internet. Ja, das war so der Hintergrund. Darüber gab es also erste Kontakte auch zu Radio Fritz. Und unser Bedürfnis, das, was wir hier in dieser Suppe kochen, mal nach außen zu tragen. Das war die Ur-Idee dabei.
+
+00:13:58.049 --> 00:14:12.569
+<v SPEAKER_3>Tatsächlich war der Club damals noch nicht so ein Ding, was auch schon auf dem Schiff hatte irgendwie. Wir wollen unbedingt das, was wir hier machen, auch nach außen tragen an eine breite Öffentlichkeit, Bildungsauftrag etc. Sowas gab es damals noch nicht.
+
+00:14:12.589 --> 00:14:24.229
+<v SPEAKER_4>Das hat aber der CCC zu dem Zeitpunkt schon immer getan. Also von Tag eins an hat eigentlich der Club versucht, die Themen an die Öffentlichkeit zu bringen. Nur bis dahin nicht unbedingt in einer eigenen Radiosendung.
+
+00:14:24.249 --> 00:14:25.109
+<v SPEAKER_3>Wie ist das da vorgeschehen?
+
+00:14:26.469 --> 00:14:56.889
+<v SPEAKER_4>Na, das ist ja im Prinzip der Urknall. Die Urknallgeschichte des CCC ist halt die Aktion, die damals Wau und Steffen und einige andere, die da mitgeholfen haben, losgetreten haben, haben halt dieser sagenumwobene Haspa-Hack, wo halt da durch Bufferoverflows Passwörter generiert wurden, wo halt nebenbei auch eine Zugangskennung, so eine BTX-Zugangskennung der Hamburger Sparkasse bei abfiel und die dann per Return-Tasten-Roboter übertragenden Kosten des Anschauens der CCC-BTX-Seite, die sich auf 130.000...
+
+00:14:56.909 --> 00:15:01.329
+<v SPEAKER_6>So, Tim, das ist ein Jugendradio, was ist ein BTX?
+
+00:15:01.329 --> 00:15:03.729
+<v SPEAKER_4>Es ist so wie web plus langsamer und früher.
+
+00:15:04.029 --> 00:15:13.989
+<v SPEAKER_3>Tatsächlich wollte ich gerade sagen, das ist auch gerade so ein typisches Chaosradio. Ja, da gibt es diesen Buffer-Overflow, das ist natürlich völlig normal, dass man dann irgendwie und die und so weiter und so fort... Ist natürlich alles ein bisschen schwierig zu erklären, ne?
+
+00:15:14.009 --> 00:15:18.249
+<v SPEAKER_4>Ja, genau, wir waren der totale Kulturschock und ich wäre froh, wenn wir es immer noch wären.
+
+00:15:18.269 --> 00:15:21.409
+<v SPEAKER_3>Warum, was habt ihr denn damals gemacht, was euch so zum Kulturschock gemacht hat?
+
+00:15:21.429 --> 00:16:14.309
+<v SPEAKER_4>Na, ich denke, was, glaube ich, so ein bisschen frappierend war für viele Leute, war, dass wir da einfach dahin gegangen gesagt haben, ja, es gibt jetzt irgendwie Internet, Zukunft fängt jetzt an, macht euch mal klar. Und niemandem war das irgendwie in irgendeiner Form bewusst. Aber ich möchte uns unterstellen, dass das uns schon wirklich extrem bewusst war, welche Auswirkungen das alles haben wird. Also das ist, sagen wir mal, auch glaube ich ein bisschen die Geschichte des CCC, dass dort Leute zusammengekommen sind, die das schon sehr früh gespürt haben. Ich sag nicht, die haben in allen Details alles vorhergesagt, weil dann werden sie wahrscheinlich mit Microsoft-Aktien alle super reich geworden. Aber man hatte einfach dieses untrügerische Gefühl, da kommt was und das wird eine sehr große Rolle spielen für alle Leute. Und wir müssen uns damit jetzt auseinandersetzen. Und ich denke, mit dem selben Credo sind wir dann auch in diese Sendung gegangen.
+
+00:16:14.329 --> 00:16:57.349
+<v SPEAKER_7>Mehr als das, nicht nur damit müssen wir uns auseinandersetzen, sondern da hatten wir auch richtig doll Bock drauf. Das muss man schon so sagen. Die Möglichkeiten, nicht nur die Ängste davor, was passieren könnte, sondern auch die Chancen, die blühenden Landschaften, die daraus entstehen könnten. Die Faszination, auch geparrert mit diesem Technikinteresse und diesem Willen, im Prinzip wie Punk Rock Dogmen zu durchbrechen und Regeln zu überschreiten, indem man einfach tut, was im Handbuch nicht steht. Und diese Dinge einfach, ja, so eine Platine da Kabel ran hält an Beinchen von Chips. Das war für den Normalsterblichen damals völlig undenkbar. Das war Geheimwissen.
+
+00:16:57.369 --> 00:17:06.069
+<v SPEAKER_3>Was manchmal benutzt wird, Dinge zerforschen und so herausfinden, was sie noch können oder was sie eigentlich nicht können sollten. Warum Radio und warum Fritz?
+
+00:17:06.089 --> 00:17:06.969
+<v SPEAKER_7>Weil es da war.
+
+00:17:06.989 --> 00:17:10.169
+<v SPEAKER_3>Okay, also es war wirklich sozusagen, gute Gelegenheit, wir springen da drauf.
+
+00:17:11.569 --> 00:17:19.089
+<v SPEAKER_7>Ja, wir haben uns überlegt, wir wollen irgendwie was machen, Fernsehen. Das war uns irgendwie nicht geheuer, weil da kann man uns ja sehen.
+
+00:17:19.109 --> 00:17:19.969
+<v SPEAKER_3>Man kann uns heute sehen.
+
+00:17:22.089 --> 00:17:37.709
+<v SPEAKER_7>Wir sind ja auch älter geworden. Nee, das war uns nicht geheuer und vor allem musste dann auch irgendwie irgendwas optisch darstellen, was du vielleicht nicht bist oder nicht willst. Aber im Radio, so die Stimme und fokussiert auf so, das kam uns total plausibel vor.
+
+00:17:37.849 --> 00:17:46.329
+<v SPEAKER_3>Was habt ihr denn, also ihr habt beim, okay, bei einer ersten Sendung der Chaos Computer Club, das ist ja sozusagen ein Thema, das kann man dann mal machen. Wie schnell seid ihr denn dann auf Themen gekommen?
+
+00:17:48.169 --> 00:18:23.289
+<v SPEAKER_7>Das Problem war, wie viel Mühe war es, sich zu fokussieren auf jeweils nur ein Thema. Wir hatten damals hunderte Themen, hunderte, wo wir uns bremsen mussten und sagen mussten, ne, lass mal die nicht gleich am Tag zwei sozusagen komplett überfordern, sondern lass mal immer auch ausgewogen zwischen Technikthemen, zwischen sozialen Themen, zwischen politischen Themen auch mal differenzieren und nicht immer nur Dinge raushauen, wo wir 99 Prozent der Zuhörerschaft verlieren, weil es wieder um irgendwelche Bugs und Bufferoverflows und Spezialtechniken gibt.
+
+00:18:23.309 --> 00:18:28.949
+<v SPEAKER_4>Also im offiziellen Chaosradioarchiv sind die ersten acht Sendungen mit Thema nicht mehr bekannt markiert.
+
+00:18:28.969 --> 00:18:30.309
+<v SPEAKER_7>Die hat es nie gegeben.
+
+00:18:30.329 --> 00:18:52.649
+<v SPEAKER_4>Das fand ich übrigens auch ganz schön. Also wir sind damals irgendwie nicht auf die Idee gekommen, die Sendungen aufzuzeichnen. Einerseits, weil wir irgendwie automatisch davon ausgegangen sind, dass Fritz das wohl schon selber tun würde. Aber auch, weil wir irgendwie glaube ich überhaupt noch gar nicht so richtig, also ich glaube keiner von uns hat irgendwie gedacht, dass wir 17 Jahre später als Format immer noch in der Form eigentlich immer noch existieren würden. Niemand.
+
+00:18:52.669 --> 00:18:58.489
+<v SPEAKER_6>Aber ich glaube, irgendwer wird bestimmt auch Sendungen aufgenommen haben. Vielleicht kann man hier im Radio nochmal fragen, ob es...
+
+00:18:58.509 --> 00:18:59.749
+<v SPEAKER_4>Ich hab da schon ganz oft nachgeforscht.
+
+00:18:59.769 --> 00:19:03.109
+<v SPEAKER_3>Ich wollte gerade sagen, wenn man das fragt, dann macht Tim immer diese abwertende Handbügel und sagt...
+
+00:19:03.129 --> 00:19:04.089
+<v SPEAKER_6>Aber nicht über UKW.
+
+00:19:04.109 --> 00:19:15.869
+<v SPEAKER_3>Ich hab alles schon probiert. Also hier der letztmalige Aufruf. Wenn ihr alte Chaosradiosendungen habt, insbesondere mit Sendungsnummern, dann schickt die uns die bitte an chaosradio.ccc.de.
+
+00:19:15.889 --> 00:19:17.929
+<v SPEAKER_6>Die sind bestimmt auf Kassette.
+
+00:19:17.949 --> 00:19:19.049
+<v SPEAKER_3>Dann schickt sie an wo?
+
+00:19:19.069 --> 00:19:20.509
+<v SPEAKER_11>Wie ist die Postadresse?
+
+00:19:20.529 --> 00:19:23.729
+<v SPEAKER_6>Marienstraße 11 in 10117 Berlin.
+
+00:19:23.749 --> 00:19:52.949
+<v SPEAKER_3>Sehr gut. Hauptsache, die Sendungen kommen hierher. Jetzt ist ja das, wenn man Chaos Computer Club hört, dann weiß man jetzt, okay, das ist halt diese Vereinigung von Leuten, die Dinge zerforschen und dann auch darüber Radio machen wollen und die so eine Technikvision haben, die manchmal ganz schlimm ist und manchmal ganz toll. Und es gibt auch dieses Klischeebild des Hackers. Und das habe ich natürlich die Moderatoren auch gefragt, die die Sendung mal moderiert haben. Da wird auch während der Sendung mal reinaliert. Das ist so was ganz Typisches. Und wollte von denen zum Beispiel wissen, also so dieses Hackerbild, war das für euch irgendwie? Hat sich das bestätigt?
+
+00:19:53.709 --> 00:21:17.049
+<v SPEAKER_8>Also man muss ja schon sagen, dass so dieses Klischeebild, das Nurse, das kommt ja nicht von ungefähr und tatsächlich waren viele Klischeevorstellungen schon erfüllt. Also so dieses doch eher Introvertierte und dieses... Na ja, Nerds sind ja eigentlich Menschen, die von bestimmten Themen richtig, richtig Ahnung haben und darüber so sehr reden und philosophieren können, dass eigentlich niemand anders mehr mitkommt, der diese Ahnung nicht hat. Und das war natürlich auch die große Herausforderung beim Chaosradio. Und das habe ich immer als meine Aufgabe gesehen, dieses wahnsinnige Fachwissen, das halt so zu filtern, dass das für jemanden, der da draußen am Radio sitzt und sich prinzipiell für das Thema interessiert, aber jetzt nicht die wahnsinnige Fachkenntnis hat, trotzdem verständlich bleibt oder wird oder ist. Und insofern, so ein paar Klischees haben sich natürlich schon erfüllt. Man musste dann manchmal so ein bisschen filtern, wenn es zu viele Fachbegriffe waren und zu viel Wissen vorausgesetzt wurde. Andererseits sagte man ja auch immer, dass Nerds so ein bisschen kommunikationsgeschädigt sind. Und das kann ich zumindest bei den meisten Leuten nicht bestätigen. Ganz im Gegenteil, ich hatte immer den Eindruck, dass speziell im CCC doch auch eine Menge Menschen sind, die einfach auch Lust und Spaß daran haben, ihr Wissen zu vermitteln und denen das in erster Linie um Kommunikation und auch um Aufklärung geht. Und insofern war das immer eine hübsche Mischung.
+
+00:21:17.069 --> 00:21:32.029
+<v SPEAKER_10>Ja, das waren total freundliche, sehr zugängliche Typen, die als erstes Mal die Bodenklappen aufgerissen haben, um an die Netzzugänge zu kommen und sich irgendwelche VPNs zu tunneln. So hab ich das, glaub ich, in Erinnerung.
+
+00:21:32.049 --> 00:22:08.909
+<v SPEAKER_2>Also es gibt sehr viele Klischees, ob jetzt über Hacker oder über Rocker oder über sonstige Leute, die von der Außenwelt immer wieder rumgetragen werden, die niemals stimmen, wenn man sich das genauer anguckt. Das Einzige, und das ist jetzt kein Klischee, sondern ich hab's nicht anders erwartet, war, dass sie ins Studio kamen und jeder ein Laptop aufklappte. Und die erste Frage war immer, haben wir Internet? Weil man im Studio natürlich, wir haben keinen WLAN im Studio, du brauchst ein Kabel, und dieses Kabel musste extra von der RBW-Technik immer freigeschaltet werden, damit man da irgendwie rankam. Und das war immer ein bisschen fummelig, weil die Kollegen meistens relativ knapp vor der Sendung kamen und dann Sendung anfangen, schon anfangen zu moderieren. In der Zwischenzeit mussten aber noch die Rechner hochgefahren werden. Das war immer ein Lust, sehr Spaß.
+
+00:22:08.929 --> 00:22:49.889
+<v SPEAKER_9>Es war schon bizarr, die kamen halt rein. Wir waren noch in unserem alten Studio, also das alte, räudige Studio, in dem noch geraucht wurde, während Radio gemacht wurde. Die kamen halt rein, haben erstmal sämtliche Netzwerkkabel von allen Druckern abgezogen, weil sie irgendwoher Internet haben mussten. Weil schon damals dieses Haus nicht willens oder in der Lage war, vernünftiges Internet zur Verfügung zu stellen. Und haben sich da halt breit gemacht und erstmal irgendwie angefangen. Es war schon ein etwas verblüffend bizarres Ereignis. Aber das war es eigentlich immer, weil wir arbeiten hier halt in einer Bürokratie. Also die Sendung findet halt unter dem Dach einer Bürokratie statt. Und Hacker und Bürokratie, das geht halt nicht. Weil Bürokratie ist halt nicht effizient. Jedenfalls nicht, wenn du Hacker bist.
+
+00:22:49.909 --> 00:22:54.769
+<v SPEAKER_3>Ich erkenne da ein Muster. Ohne Internet geht es nicht.
+
+00:22:54.789 --> 00:23:14.249
+<v SPEAKER_4>Das war ja wirklich ein untragbarer Zustand. Das wurde von uns jahrelang beklagt. Es gab keine Streams, es gab nix. Wir mussten ja alles selber machen. Haben wir aber nicht immer richtig gut hinbekommen, bis dann so die Hörer angefangen haben, eigene Strukturen aufzubauen, um diese Sendung zu streamen. Das gibt es heute noch, dieses Xenim-Netzwerk. Das kommt da zum Beispiel her.
+
+00:23:14.269 --> 00:23:20.729
+<v SPEAKER_3>Aber findet ihr euch da wieder, also sagen dieses sehr starke Fokussierung auf ohne Netz geht nicht. Man ist freundlich, aber doch auch ein bisschen komisch.
+
+00:23:21.189 --> 00:23:28.329
+<v SPEAKER_4>Sehr starke Fokussierung auf... Es geht nicht ohne Netz. Ich meine, das müssten doch jetzt alle verstanden haben, oder?
+
+00:23:28.349 --> 00:23:35.429
+<v SPEAKER_3>Also, was mich hier überraschert, ist, dass wir, wir senden ja heute hier aus dem Chaos Computer Club Berlin und wir haben schon auch eine Stunde zugebracht, um das Netz zum Laufen zu kriegen.
+
+00:23:35.449 --> 00:23:37.669
+<v SPEAKER_4>Ja, aber es läuft dann halt auch immer.
+
+00:23:38.669 --> 00:23:40.709
+<v SPEAKER_3>Ja, das tut es ja dann eine Möhe. Aber egal.
+
+00:23:40.729 --> 00:23:56.849
+<v SPEAKER_6>Aber der Sender hat uns ja nicht mal für so sehr zugetraut, dass wir unser Internet stabil hinbekommen, dass jetzt der Ü-Wagen, der draußen steht, uns vom Fernsehturm über eine Funkstrecke einspielt. Und das ist schon das Vertrauen, was die in unsere Netzfähigkeiten haben noch bei dem Sender.
+
+00:23:56.869 --> 00:23:59.149
+<v SPEAKER_3>Naja, also ob man das wirklich so sagen kann.
+
+00:23:59.169 --> 00:24:05.949
+<v SPEAKER_4>Also wenn der Club irgendwas kann, dann kann er wirklich Internet herstellen. Du kannst irgendwo auf der Deutschlandkarte eine Nadel fallen lassen und dann tritt ein Netzwerk.
+
+00:24:05.969 --> 00:24:37.569
+<v SPEAKER_3>Herr Trittloff, wir werden das mal probieren. Das nächste Chaosradio kommt dann irgendwo, wo eine Nadel runtergefallen ist. Nein, aber was ich fragen wollte, dieser Punkt, dieses konkrete Beispiel, das ist ja tatsächlich hinweist auf das, was Heuge gesagt hat. Eigentlich passt das ja nicht zusammen. Also ein öffentlich-rechtliches Radio, was halt Teil einer Institution ist, anders geht es halt nicht. Und so dieser Hacker Club, der sich als galaktische Vereinigung von Lebewesen zeigte. Wie gab es da? Ihr wolltet ja an die Öffentlichkeit und Dinge transportieren. Habt ihr das Gefühl, das hat geklappt oder war es dann zu schlimm mit der Institution?
+
+00:24:37.589 --> 00:25:21.369
+<v SPEAKER_7>Nein, die Institution war insofern sehr hilfreich, als dass sie nicht im Wesentlichen im Wege stand, auf den Weg das zu tun. Das war damals so. Es war für uns eine probate Möglichkeit, mit Menschen in Kontakt zu treten. Auch bidirektional, es war ja eine Sendung, wo gerne und dringend angerufen werden sollte, in Kontakt zu treten, mit denen das normalerweise so ohne Weiteres, die wären nicht auf den Kongress gekommen, die hätten unsere Publikationen nicht gelesen. Wir haben damit Menschen erreichen können, die hätten wir anders nicht erreicht. Diese Gemeinde von Menschen ist zusehends gewachsen. Das war ein gutes Mittel, das zu tun. Wir durften das, also haben wir es gemacht.
+
+00:25:22.269 --> 00:25:31.249
+<v SPEAKER_3>Jetzt ist ja die andere Sache, was sie auch schon anklang, was Johnny gesagt hat, ist, man muss immer übersetzen, man muss euch quasi im Zaum halten. Hat euch das so ausgebremst?
+
+00:25:31.289 --> 00:26:04.809
+<v SPEAKER_7>Nein, ich habe das auch so nicht empfunden. Johnny hat das hervorragend kanalisiert, würde ich mal sagen. Das ist schon extrem wichtig, weil wir ja von dem, was an der anderen Seite an Menschen sitzt, nicht besonders viel Ahnung hätten. Und ein Moderator, der das Tag ausmacht, der auch häufig Sendungen macht, wo er mit Leuten telefoniert, der weiß ungefähr, wer sitzt jetzt auf der anderen Seite und der kann das kanalisieren. Der kann einfach da ein Sprachrohr mit uns oder durch uns bündeln, damit wir auch eine Sprache sprechen, die verstehbar ist. Und das ist ja sinnvoll.
+
+00:26:04.969 --> 00:27:08.929
+<v SPEAKER_4>Ich glaube, wir haben aber auch intuitiv auch schon so ein bisschen zu unseres Gleichen gesprochen, weil wir wussten, die sind da draußen auch irgendwo. Ich denke nicht, dass wir uns der Illusion hingegeben haben, uns da jetzt hinzusetzen von unseren Themenwettern und auf einmal gehen alle CSU-Wähler irgendwie zur Telekom und sagen, da muss mal ein bisschen mehr Internet hin. Sondern das ist natürlich ein sehr langsamer Prozess gewesen. Aber es hat sich dann sehr schnell nach den ersten Sendungen diese Aktivierung der potentiellen Mitstreiter eingestellt. Also es sind sehr viele Leute zum CCCB gekommen. Wir sind dann recht schnell gewachsen. Wir waren ja vorher eine sehr überschaubare, ich weiß nicht wie viel waren wir, vielleicht so 10, 15 Leute. Und dann kam irgendwie jede Woche immer wieder einer angetrollt, der halt irgendwie Chaosradio gehört hat und mal gucken wollte, wie die Leute eigentlich so im echten Leben drauf sind. Und das hat dann eben auch dazu geführt, dass der CCCB so in den nächsten 10 Jahren dann auch enorm gewachsen ist und ja auch den ganzen Club ein bisschen mitgenommen hat. Also den Club, den es ja nicht nur in Berlin gibt.
+
+00:27:08.949 --> 00:27:09.489
+<v SPEAKER_3>Wo gibt es denn noch?
+
+00:27:09.509 --> 00:28:30.569
+<v SPEAKER_4>Na den gibt es eigentlich überall in Deutschland. Damals, ursprünglich ist ja der Club in Hamburg groß geworden, dann sind halt relativ viele Leute nach Berlin gegangen, vor allem auch Andi, der damals eigentlich so eine extrem zentrale Rolle im Club gespielt hat. So in der Zeit Anfang der 90er Jahre war er eigentlich derjenige, der so ein bisschen das Second Coming vom CCC mitgeführt hat und auch dadurch, dass er eben nach Berlin gegangen ist und hier den CCCB aufgebaut hat, dem wir uns dann angeschlossen haben. Und dann wuchs es wieder und dann nach ein paar Jahren hatte das so eine absurde Wirkung, nicht wahr? Womit ging es dann los? Mit Hannover und dann kamen also so Köln, verschiedenste Städte, die alle irgendwie auch gesagt haben, wir sind jetzt aber auch mal CCC. Und heute ist das halt eine interessante, neue Realität. Also der CCC ist mitnichten nur an einem Ort präsent. Ich hab überhaupt keine Ahnung, wie viele R-Verkreise wir haben, wie das bei uns so schön elegant heißt. Aber es sind locker 20, lügig, ich weiß es jetzt nicht. Bitte? 26 lautet die offizielle Zahl. Plus zahlreiche, sagen wir mal in demselben Kulturkreis, sich befindende Hacker-Spaces, sonstige Gruppen, die sich eben nicht so jetzt CCC nennen, aber eigentlich aus demselben Urschleim.
+
+00:28:30.589 --> 00:28:34.609
+<v SPEAKER_3>Aber man könnte quasi sagen, für all das war das Chaosradio auch ein kleiner Samen, der es angetrieben hat.
+
+00:28:34.629 --> 00:28:39.149
+<v SPEAKER_4>Das war so ein Inkubator, das kann man echt sagen. Also das hat wirklich eine ganze Menge nach sich gezogen.
+
+00:28:39.229 --> 00:28:48.849
+<v SPEAKER_3>Wir werden dann gleich mal uns damit beschäftigen, wo der Club überall zu finden ist. Es gibt natürlich viel große Vereinigungen, die sich gehört auch bei Auftragte, die sowas wie Airfahrsachen machen. Das hört sich schon ganz gut an.
+
+00:28:48.869 --> 00:28:52.089
+<v SPEAKER_4>Airfahr musste mal erklären, das ist echt ein geiles Wort.
+
+00:28:52.109 --> 00:29:05.629
+<v SPEAKER_3>Das machen wir gleich. Vorher gibt es nämlich noch das Nachrichten, Wetter und Verkehr. Wir sind dann kurz raus, ihr hört die Nachrichten und dann sind wir gleich wieder da. Und wenn ihr wollt, könnt ihr vorbeikommen in der Marienstraße 11 in Berlin beim Chaosradio 200, das werden wir live von hier aus senden.
+
+00:29:05.649 --> 00:29:08.909
+<v SPEAKER_6>Und es gibt eine Bar und schon nette Atmosphäre.
+
+00:29:09.169 --> 00:29:11.049
+<v SPEAKER_3>Das klären wir alles nach den Nachrichten.
+
+00:29:12.889 --> 00:29:45.729
+<v SPEAKER_12>Der folgende Künstler hat sooo'n Bart. Und darin verstecken sich ein breites Grinsen, zwei Flamingos, drei Sonnenbrillen und jede Menge Party Tracks. Samstag, 24. MC Fitti, das wird garantiert ganz schön rein.
+
+00:29:45.849 --> 00:29:49.729
+<v SPEAKER_1>Und Fritz, immer gute neue Musik.
+
+00:29:50.869 --> 00:29:52.029
+<v SPEAKER_13>Es ist 22 für 30.
+
+00:29:55.029 --> 00:29:57.529
+<v SPEAKER_11>Mit Philipp Burger.
+
+00:29:57.549 --> 00:32:53.009
+<v SPEAKER_13>UN-Generalsekretär Ban Ki-moon hat vor einer militärischen Eskalation in der Ukraine gewarnt. Diese müsse um jeden Preis vermieden werden. Er sei besorgt, dass die Situation jederzeit außer Kontrolle geraten kann, mit Folgen, die niemand absehen könne. Es herrsche ein Klima der Angst und Furcht in der Ostukraine, sagte Ban. Alle Seiten müssten sich strikt an den in Genf vereinbarten Friedensplan halten. Die ukrainische Armee hat heute während eines Angriffs in einem Gefecht fünf prorussische Separatisten erschossen. Russland reagierte mit einem Militärmanöver an der ukrainischen Grenze. Die Armutsquote in Deutschland hat nach Ansicht des paritätischen Gesamtverbandes einen Höchststand erreicht. Jeder Sechste müsse mit weniger als 950 Euro im Monat auskommen. Besonders Armuts gefährdet seinen Erwerbslose und Alleinerziehende, so der Wohlfahrtsverband. Es habe noch nie so viel Privatvermögen in Deutschland gegeben wie heute, aber auch noch nie so viele überschuldete Menschen. Jeder zehnte Erwachsene gelte mittlerweile als überschuldet. Auf dem deutschen Arbeitsmarkt gibt es nach Einschätzung des Verbandes immer weniger klassische, sozialversicherungspflichtige Vollzeitarbeitsplätze. Ein Jahr nach dem Einsturz einer Textilfabrik in Bangladesch haben Gewerkschaften und Hilfsorganisationen weitere Konsequenzen gefordert. Von der Gewerkschaft Verdi hieß es, Modefirmen müssten mehr Verantwortung übernehmen und transparenter arbeiten. Diskutiert wird außerdem gerade über ein neues Textilsiegel, das Kunden beim Kauf von Kleidung mehr Infos über die Herkunft geben soll. Bei dem Fabrik und Glück in Bangladesch vor einem Jahr kamen über 1000 Menschen ums Leben. Auch deutsche Modefirmen ließen in der Fabrik produzieren. Die deutsche Schullandschaft hat sich in den vergangenen zehn Jahren stark verändert. Es gibt inzwischen ein Drittel weniger Hauptschulen, dafür aber 22 Prozent mehr Waldorfschulen, teilte das Statistische Bundesamt mit. Es gäbe auch rund doppelt so viele integrierte Gesamtschulen wie noch vor zehn Jahren. Deutschlandweit ist die Zahl der allgemeinbildenden Schulen um etwa 6.000 gesunken. Der Grund ist, es gibt weniger Schüler als früher. Hier die aktuellen Temperaturen in Berlin zählen doch 14 Grad, Mitte 15, Wittstock und Wiesenburg 12, Forst und Rangsdorf 14 Grad. Dunstig ist es vielerorts, die Luft also feucht, regnen soll es in den kommenden Stunden jedoch nicht mehr. Wie schon in den vergangenen Tagen startete im Morgen in Berlin und Brandenburg dann fast überall sonnig, später können wieder einige kurze Regenschauer fallen. 20 bis 23 Grad sind vorausgesagt. Autobahn 13 Dresden Richtung Berlin. Bitte Vorsicht zwischen Schwarzheide und Klettwitz. Liegen Gegenstände auf der Fahrbahn. Zur S-Bahn. In Berlin bis Betriebsschluss fahren die Ringbahnlinien S 41 und 42 zwischen Treptower Park und Südkreuz nur im 20-Minuten-Takt. Die S 45 fährt nur zwischen Flughafen Schönefeld und Schöneweide. Und die S 46 fährt nur zwischen Königswusterhausen und Hermannstraße und nicht bis Westend.
+
+00:32:54.129 --> 00:32:54.569
+<v SPEAKER_3>Gute Fahrt.
+
+00:32:56.249 --> 00:33:01.189
+<v SPEAKER_5>Ja, das war's. Fritz ist eine Produktion des RBW.
+
+00:33:01.209 --> 00:33:11.749
+<v SPEAKER_1>Und wenn ihr Fritz als App auf eurem Handy wollt, dann holt euch jetzt die Fritz App. Kostenlos jetzt in eurem Google Play und App Store.
+
+00:33:32.291 --> 00:34:34.751
+<v SPEAKER_3>Hallo und herzlich willkommen im Blue Moon, im Chaos Radio, und zwar in Folge 200, dass wir heute live aus dem Marienstraße 11 senden mit ganz vielen Leuten, die schon hier sind. Könnt ihr mal bitte ein Geräusch machen? Falls ihr fragt, warum sind da Leute, das ist der Chaos Computer Club Berlin. Also tatsächlich, den gibt es auch als Ort und da kann man auch sitzen und Radio machen. Das wird auch gefilmt, ihr könnt es euch live auch anschauen unter streaming.media.ccc.de Und wir reden heute im Chaos Radio 200 anlässlich des Jubiläums mal wieder darüber, was zur Hölle soll das eigentlich alles und wer sind diese Leute? Diese Leute sind zum Beispiel Tim Pritloff, der immer noch hier auf dem grünen Sofa sitzt, was ihr euch anschauen könnt, wenn ihr vorbeikommt in der Marienstraße 11. Maha, hallo, guten Tag. Hallo. Und Felix von Leitner, auch bekannt als Fefe. Guten Abend. So und wir hatten jetzt gerade in der letzten halben Stunde schon gelernt, wie das alles anfing mit dem Chaos Radio und dass das Chaos Radio jetzt ein kleiner Inkubator war, der auch dafür gesorgt hat, dass der Club sich dann so ein bisschen über die ganze Republik ausgeweitet hat und wie Fefe gerade betont hat, darüber hinaus. Wo gibt es den denn noch?
+
+00:34:34.771 --> 00:34:37.151
+<v SPEAKER_13>Also zumindest in der Schweiz, Mar hat hier gerade...
+
+00:34:37.171 --> 00:34:48.651
+<v SPEAKER_14>Ja, also den gibt es ziemlich viele. Also außerhalb Deutschlands gibt es ihn auf jeden Fall in Österreich, in Wien eben und in der Schweiz, in Zürich und in Basel.
+
+00:34:48.671 --> 00:35:15.571
+<v SPEAKER_3>Also man kann überall Chaoten treffen. Das hört sich komisch an. Egal, es war auch schon die Rede von einem sogenannten Airfar. Jetzt hatten wir gerade schon in der ersten halben Stunde auch gelernt, dass also eigentlich zwischen Hacker und Bürokratie ein kleiner Unterschied besteht. Jetzt gibt es einen Airfar. Mar, du bist auch ein Airfar beauftragt, das heißt wahrscheinlich offiziell so, aber es klingt für mich immer so. Du bist der Airfar beauftragt. Ah, der Airfar-Repräsentant. Was ist denn genau ein Airfar und warum braucht ein Club einen Airfar?
+
+00:35:15.591 --> 00:35:49.771
+<v SPEAKER_14>Naja, also am Anfang war das ja immer der Chaos Computer Club Hamburg und dann war das immer alles in Hamburg und dann hat ja Tim schon erzählt, gab es ja in Berlin auch Aktivitäten und es gab auch schon ziemlich früh Aktivitäten in Ulm, das sollte also auch unbedingt erwähnt werden, noch bevor es dieses Airfar-Konzept gab. Ja und was macht man nun? Da hat man irgendwann gedacht, naja, wir müssen dezentralisieren, das kommt ja auch aus der Hackerethik und dann wurde gesagt, ja wir tauschen einfach so dezentrale Erfahrungen aus. Und aus diesem etwa sperrigen Wort, Erfahrungsaustauschkreis, wurde dann der Airfar.
+
+00:35:51.031 --> 00:35:54.331
+<v SPEAKER_3>Und wenn man nicht mehr weiter weiß, dann gibt es ein Erfahrungsaustauschkreis.
+
+00:35:54.351 --> 00:35:55.771
+<v SPEAKER_4>Genau, das ist ein Airfar-Kreis.
+
+00:35:55.791 --> 00:36:07.051
+<v SPEAKER_3>Das ist ja ganz großartig. Ist der Club jetzt eigentlich wirklich auch ein Verein? Also im Sinne von, auf der Webseite steht es ja lustig, dass er so, ja der Chaos Computer Club ist vor allem deshalb ein Verein, damit er nicht als terroristische Vereinigung verfolgt wird.
+
+00:36:07.071 --> 00:36:09.971
+<v SPEAKER_13>Ne, ne, kriminelle Vereinigung, terroristische Vereinigung gab es noch nicht.
+
+00:36:09.991 --> 00:36:14.191
+<v SPEAKER_3>Das gab es ja später. Ich meine, das heute da so gelesen zu haben.
+
+00:36:14.431 --> 00:36:16.391
+<v SPEAKER_4>Man muss auch grundsätzlich unterscheiden.
+
+00:36:16.411 --> 00:36:17.831
+<v SPEAKER_3>Du musst vor allen Dingen ins Mikrofon reinsprechen.
+
+00:36:17.851 --> 00:36:47.671
+<v SPEAKER_4>Genau näher ranhalten, alles das Zauberwort. Also man muss immer unterscheiden, es gibt den Chaos Computer Club und es gibt den Chaos Computer Club e.V. Letzterer wurde sozusagen gegründet aus Gründen, weil das sich einfach ganz gut macht in so einem Staat mit Regeln und Gesetzen und Finanzen und so weiter. Aber man unterscheidet schon so ein bisschen und man kann auch irgendwie zum Chaos Computer Club gehören, ohne e.V. Mitglied zu sein. Wir machen das nicht so sehr an diesem Vereinsding fest.
+
+00:36:48.411 --> 00:36:53.471
+<v SPEAKER_3>Aha, okay, jetzt weiß ich noch weniger, warum es überhaupt den Verein gibt. Warum gibt es den Verein?
+
+00:36:53.491 --> 00:36:57.791
+<v SPEAKER_4>Damit wir nicht als terroristische Vereinigung, das war wirklich der Grund. Ja, das war der Grund.
+
+00:36:58.291 --> 00:37:17.251
+<v SPEAKER_3>Okay, was kann man denn machen? Wir haben gerade gelernt, überall in Deutschland und in Österreich und der Schweiz gibt es einen Chaos Computer Club. Kann man dem, also wenn ich jetzt denke, das klingt irgendwie interessant, soll ich da hingehen? Was passiert da? Was kann ich da machen, als jemand, der jetzt vielleicht heute hier in die Marienstraße 11 kommt und eine Radiosendung live sieht? Aber was macht man da?
+
+00:37:17.271 --> 00:37:56.871
+<v SPEAKER_14>Vor Ort gibt es Leute, die was machen, die basteln, die kreativ mit Technik umgehen oder einfach nur diskutieren über solche Themen. Und da kann man natürlich auf jeden Fall, oder sollte man natürlich auch hingehen. Die gibt es jetzt nicht nur in diesen 26 R-Verkreisen, sondern es gibt dazu noch Chaos-Treffs. Das sind die nicht organisierten, also man kann sich auch ganz spontan treffen, dann ist man ein Chaos-Treff, kann man sich auch irgendwie auf die Webseite setzen lassen und dann kann man sich auch noch in sehr vielen anderen Städten treffen. Also einfach vor Ort mit der Suchmaschine der Wahl nach Chaos Computer Club oder Chaos suchen oder Chaos mit Computern irgendwie, dann findet man eben auch diese Chaos-Treffs.
+
+00:37:57.631 --> 00:38:07.291
+<v SPEAKER_3>Okay, also das ist schon so, es gibt diese Strukturen, aber die sind eigentlich oben drauf gesetzt auf dieses Ding. Leute interessieren sich für Technik und machen da was zusammen.
+
+00:38:07.311 --> 00:38:40.591
+<v SPEAKER_14>Genau und die machen sehr viele unterschiedliche Dinge. Eben auch inspiriert von Chaos-Radio gibt es halt noch mehr Leute, die Radio machen, auch schon seit langer Zeit, also schon vor der Erfindung des Podcasts. Also auch wieder Ulm hat schon FM-Radio gemacht, also vor Uhrzeiten. Und später haben sie natürlich dann alle auch Podcasts gemacht. Inzwischen gibt es halt ganz, ganz viele, die man als Podcast auch hören kann. Darmstadt macht C-Radar, ist auch FM und Podcast, Nordfunk in Mainz, Radio Chaotica, Penta-Radio in Dresden und so weiter. Also es wird auch überall Radio gemacht.
+
+00:38:40.591 --> 00:38:58.111
+<v SPEAKER_3>Also der Chaos Computer Club ist überall, man kann hingehen, wenn man will und es gibt auch überall Radio. Der wichtige Unterschied, glaube ich, zwischen dem Chaos Radio, was sie hier hört und allen anderen Chaos Radios ist, dass die alle anderen Sachen vom Club komplett gemacht werden. Also das macht der Club für sich selber, mit sich selber, mit den Leuten auf der T-Shirt?
+
+00:38:58.371 --> 00:39:21.191
+<v SPEAKER_14>Also C-Radar ist eigentlich Radio Darmstadt, das heißt das irgendwie. Das ist so eine Gruppe, die Radio macht. Die sind dann in Kontakt gekommen mit den Hörkern und haben gesagt, lass uns doch mal auch hier Radio machen. Und in Ulm ist das ganz ähnlich. Das ist Radio Free FM, war unabhängig und dann haben die da mitgemacht. Also es ist kein öffentlich-rechtlicher Rundfunk. Das ist vielleicht der Unterschied, aber schon irgendwie Rundfunk.
+
+00:39:21.751 --> 00:39:27.211
+<v SPEAKER_3>Es ist Rundfunk, aber ich will ja auf das Gefälle zwischen Moderator und ich nenne sie jetzt mal diplomatisch Studiogäste hier hinaus.
+
+00:39:29.931 --> 00:39:32.051
+<v SPEAKER_4>Da bist du total obssessed mit dem Thema.
+
+00:39:33.271 --> 00:39:52.611
+<v SPEAKER_3>Naja, es hat sich in dem Interview mit den alten Moderatoren, also Johnny Häusler, Max von Malodki, Holger Klein und Jakob Kranz, ergeben, dass das zur Sprache kam. Und es gibt tatsächlich sozusagen eine gewisse Art der Moderatorenhilflosigkeit, die ist bezeichnend fürs Chaosradio. Und da hat wirklich jeder von denen auch eine kleine Geschichte zu erzählen gehabt.
+
+00:39:53.351 --> 00:40:24.811
+<v SPEAKER_10>Ich glaube, mein hilflosester Moment war, weil er so unerwartet kam, der Moment mit Tim Pritloff, weil ich habe Tim Pritloff immer Tim Pritlove genannt. Und zwar hatte ich das schon mehrere Sendungen gemacht. Und irgendwann meinte er dann, er sprach mich oft, er, also außerhalb des Radios, nie darauf an, meinte er in der Sendung, aber warum nennst du mich eigentlich die ganze Zeit Pritlove? Und ich so, ja, das habe ich doch immer schon gemacht. Ja, das hat mir immer schon genervt. Dann dachte ich so, okay, Kommunikation, aber gut.
+
+00:40:24.831 --> 00:41:06.031
+<v SPEAKER_2>Ich erinnere mich an eine Sendung mit Tim Pritloff. Da ging es um Mac OS 10, neues Betriebssystem. Und die Ansage, die ich von der Chefredaktion von Fritz bekam, war, wenn du mit den Nerds im Studio stehst, deine Aufgabe ist es, für den Hörer zu übersetzen, was die reden. Oder aber die Fragen zu stellen, die die Hörer sich fragen. Weil ansonsten ist das natürlich ein in sich geschlossener Kosmos mit einer großen Brandmauer unten im Graben vor der Tür, wo man als Außenstehender keine Chance hat, reinzukommen. Also ich hab immer probiert, das so ein bisschen zu öffnen. Und habe dann den naiv-hilflosen Versuch gestartet, in einer Sendung, die sich monothematisch mit Mac OS X beschäftigt, immer wieder das Thema Windows auch einzubringen, wie das mit Windows-Systemen ist. Weil ich dachte, okay, wir müssen ja auch die Windows-User, dürfen wir nicht vergessen. Und bin fürchterlich für die Nase fallen damit. Und ich glaube, Tim war irgendwann ziemlich sauer.
+
+00:41:06.051 --> 00:41:38.671
+<v SPEAKER_9>Es ging um freie Lizenzen oder irgendwie sowas. Und Andi Müller-Magun stand da, hatte so eine roter Sternfellmütze auf. Und Andi fing halt an zu schwadronieren und regte sich dann auf und sagte, vergiss das dann mit Amseln und sagte, das wäre ganz schlimm. Das wäre ja ungefähr so, als müssten die jungen Amseln dafür bezahlen, dass sie das Lied ihrer Eltern singen dürfen. Wo kämen wir denn da hin? Und ich hab so sehr meine Hand-Auge-Koordination verloren gehabt, in dem Moment, dass ich nicht in der Lage war, Musik einzublenden und die Mikrophone runter zu blenden. Und er konnte dann, ich musste ihn gewähren lassen.
+
+00:41:40.791 --> 00:42:26.411
+<v SPEAKER_8>Ja, völlig hilflos als Moderator war ich natürlich immer, wenn es Streitgespräche gab, bei denen es um so fachliche Dinge ging, von denen ich dann auch keine Ahnung hatte. Und ich konnte dann auch diese Streit oder zumindest diesen Despot nicht lösen. Also es gab schon so den einen oder anderen Moment, wo man merkte, da geraten jetzt zwei der Anwesen so ein bisschen aneinander. Sie wussten natürlich, sie sind jetzt gerade im Radio und sollten sich jetzt nicht öffentlich streiten. Aber man hat dann schon gemerkt, da gibt es doch eine Meinungsverschiedenheit. Und wenn ich die dann nicht inhaltlich klären konnte und sagen konnte, naja Person A hat doch Recht oder so, dann musste man das halt so auf die elegante diplomatische Moderatorenart versuchen und sagen, oh die Zeit rennt uns weg, dann spielen wir doch mal ein bisschen Musik.
+
+00:42:31.051 --> 00:42:31.951
+<v SPEAKER_3>Was ich spannend finde an diesen...
+
+00:42:32.291 --> 00:42:41.811
+<v SPEAKER_6>Entschuldige, darf ich dich kurz überrechnen, was ich spannend finde ist, du bist der einzige, der hier noch nicht reden und Antwort stehen muss. Was war eigentlich dein hilflosester Moment?
+
+00:42:41.831 --> 00:42:52.671
+<v SPEAKER_3>Ich guck mal kurz auf die Uhr, 22.45, das hat ganz lange gedauert. Ich hab ein bisschen gehofft, ich komm hier durch, ohne das sagen zu müssen. Aber ich hab tatsächlich...
+
+00:42:52.691 --> 00:42:53.871
+<v SPEAKER_13>Da guckst du nämlich so an, Jens.
+
+00:42:53.891 --> 00:44:08.771
+<v SPEAKER_3>Ja tatsächlich immer, wenn Fefe nicht dabei ist, bin ich relativ hilflos. Es ist ab und zu mal passiert, ich hab jetzt kein konkretes Thema mehr, aber es gibt manchmal so, also auch wenn man das nicht glaubt, und der Mythos geht ja, das Chaosradio wird nicht vorbereitet. Also man fährt irgendwie so fünf Minuten vor der Sendung, worum es geht, und dann geht es los. Das stimmt nicht ganz. Es gibt tatsächlich manchmal Vorbereitungen, die manchmal sogar Tage im Voraus stattfindet. Und das Ding ist so, du denkst als Moderator, du denkst immer, okay, wir machen dieses schwere Thema, ich bau jetzt so eine Brücke da rein. Also wir fangen bei irgendwas schön Einfachen an, dann erzählen die Leute so ein paar Anekdoten, und dann geht man da rein und so. Und was dann manchmal passiert, ist, dass einer von den Gästen sozusagen eine Sache hat, die er total wichtig findet. Also er sagt, das muss in der Sendung vorkommen. Und du sagst so, okay, machen wir. Lass mich da hinführen, aber machen wir. Und dann ist so fünf Minuten in die Sendung rein, die Anmoderation ist gerade vorbei, du bist so gerade richtig im Reden. Und dann geht das los. Ja und außerdem wollte ich noch sagen, dass Katago zerstört werden musste. Und dann stehst du da und denkst so, fuck. Ich müsste, um das jetzt alles zu erklären, musste ich eine halbe Stunde am Stück reden, aber das geht ja nicht. Und das ist sozusagen, da fühlt man sich so ein bisschen hilfreich. Da denkt man so, jetzt Musik, bitte.
+
+00:44:08.791 --> 00:44:52.491
+<v SPEAKER_13>Das geht aber in beide Richtungen, wenn ich das mal kurz einwerfen darf. Okay, also ich erinnere mich noch meine erste Sendung Chaosradio, da habe ich das Gefühl gehabt, das ist auch meine Theorie, warum wir keine Aufzeichnung haben, habe ich das Gefühl gehabt, gleich merkt einer, dass das hier ein Fehler ist. Ja und dann kommt hier die Security und trägt uns raus. Und ich glaube, wir wollten da auch einfach keine Beweise hinterlassen. Deswegen gibt es von uns keine Aufzeichnung. Aber das ist natürlich im Talkradio immer so ein Problem, dass da auch einfach Leute dann anrufen. Und da gab es ja auch teilweise Anrufe, wo dann alle sich im Studio so ein bisschen fragend angucken, wie kommen wir denn da jetzt wieder raus? Kann man irgendwie eine Leitungsstörung simulieren oder so, aber das geht ja nicht. Erzähl doch mal, wie du aus sowas am besten rauskommst.
+
+00:44:54.251 --> 00:45:55.971
+<v SPEAKER_3>Das ist tatsächlich, also das ist als Moderator wiederum sehr entspannt, weil man, also entweder sind die Leute ganz, ganz, ganz weit hinaus, da kann man wirklich sagen, ja, das ist interessant, was du sagst, aber das ist jetzt nicht Thema und dann macht man den Regler zu. Aber ansonsten kann man es immer weitergeben, man ist Experten. Man sagt immer so, ja, Pfeffer, was meinst du denn dazu? Ne, tatsächlich habe ich aber die ganz, ganz schlimmen Dinge, kenne ich tatsächlich auch nur aus Legenden. Also es gibt, es gab natürlich sozusagen, dass wir gesagt haben, okay, wir machen jetzt irgendwie ein Netzpolitik-Chaos-Radio, Thema Vorratsdatenspeicherung und dann rief jemand an und wollte halt wissen, wie man den Viren-Scanner in seinem Ding einrichtet und dann kann man halt sagen, und das ist tatsächlich eine Zwickmühle, weil es ist natürlich total einfach dann zu sagen, ha, bist du doof, da geht es heute gar nicht rum. Aber andererseits denke ich immer, das ist doch auch der Moment, wo man sagt, also thematisch im weitesten Sinne richtig, aber gerade die falsche Frage, aber hör doch weiter zu, vielleicht kommt man aus den Rannis raus und das ist immer so ein bisschen schwierig. Aber ich habe gehört, es gibt den Fachbegriff Wavies für einige Anrufer, was ist das denn?
+
+00:45:55.991 --> 00:46:16.131
+<v SPEAKER_13>Ein Wavies, jemand der glaubt, dass er von den Mikrowellen, Strahlen der Außerirdischen, die unsere Regierung infiltriert haben und überall Handymasten aufstellen, in seinem Leben beeinträchtigt wird. Und das ist häufiger vorgekommen? Na, als Anrufer weniger, aber das gibt es schon. Gelegentlich gibt es es und wir im Grunde, wovor wir Hacker alle Angst haben, ist, dass irgendwann rauskommt, dass die Recht haben.
+
+00:46:16.911 --> 00:46:26.351
+<v SPEAKER_3>Naja, ich wollte gerade sagen, es gibt doch dieses Ding mit der NSA, dass die jetzt über Mikrowellenstrahlen kleine Geräte an Monitorkabeln anpeilen, um da Daten auszulesen?
+
+00:46:26.771 --> 00:46:51.711
+<v SPEAKER_13>Ja, das stimmt schon, aber Wavies haben eher Angst vor dem Strommast vor der Tür und der Handymast. Also inzwischen gibt es ja Handymasten, die als Bäume getarnt werden, damit die Anwohner das nicht merken. Völlig bescheuert, aber diese Art von Bedenkenträger sind es, dass sie sich mit ihren Nachbarn auch gegenseitig verklagen. Wir haben auch gelegentlich Leute, die hier reinlaufen und uns erklären, dass wir gefährdet sind.
+
+00:46:51.731 --> 00:46:52.831
+<v SPEAKER_3>Wegen des ganzen WLAN-Fraktionen?
+
+00:46:52.851 --> 00:46:54.251
+<v SPEAKER_13>Genau, wegen der WLAN-Fraktionen.
+
+00:46:54.271 --> 00:46:57.471
+<v SPEAKER_3>Was war denn der verrückte Anrufer, den ihr jetzt nicht mal in der Leitung hattet?
+
+00:46:58.351 --> 00:47:01.091
+<v SPEAKER_4>Chaosradio 23.
+
+00:47:01.111 --> 00:47:05.651
+<v SPEAKER_3>Also die 23, das kann man vielleicht ganz kurz sagen, ist eine besondere Zahl.
+
+00:47:05.671 --> 00:47:07.091
+<v SPEAKER_4>Das war auch eine ganz besondere Sendung.
+
+00:47:07.111 --> 00:47:11.471
+<v SPEAKER_3>Das war glaube ich auch. Da ging es um Verschwörungstheorien vermutlich. Nur so ein Verdacht?
+
+00:47:11.491 --> 00:48:19.611
+<v SPEAKER_4>Da waren wir gar nicht vor Ort. Da war die Legion des Dynamischen Discords an unserer Stelle vor Ort und hat da eine umfangreichere Lesung durchgeführt. Das hat zu einiger Verwirrung geführt. Ich möchte das jetzt auch im Detail nicht so wiedergeben, aber es war schon bemerkenswert zu sehen, wie so von Anrufer zu Anrufer der Verwirrungsgrad wirklich anstieg, bis wirklich einer in einem Zustand, den ich so recht nicht mehr nachvollziehen kann, vollkommen außer sich irgendwie nur noch schrie, jetzt fällt es mir gerade nicht ein, Christian, es tut mir leid, ich liebe dich. Und dann kam Johnny, wirklich, also wir waren alle schockiert, völlig schockstark gefroren, keiner wusste mehr, was man jetzt noch tun konnte, es war einfach alles vorbei. Und Johnny war einfach in dem Moment, ich möchte dir auch das Loblied auf die Moderatoren eröffnen, einfach vollkommen wach und klar dabei und meinte nur so, ja, ich würde sagen, alles rübergebracht, oder? Die Sendung lohnt sich sehr anzuschauen.
+
+00:48:19.631 --> 00:48:21.451
+<v SPEAKER_3>Da gibt es noch eine Aufzeichnung.
+
+00:48:21.471 --> 00:48:23.791
+<v SPEAKER_4>Ja, davon gibt es eine Aufzeichnung, die ist wirklich grandios.
+
+00:48:23.811 --> 00:48:37.731
+<v SPEAKER_3>Was ist denn jetzt, ich habe es auch bemerkt, manche Sendungen rufen Leute an und erzählen Dinge, wo ihr dann zumindest so anerkennt, wird im Kopf nickt und sagt, das stimmt schon alles so. Gab es etwas, was euch überrascht hat? Also an Anrufern, wo ihr noch Dinge selber gelernt habt oder wo ihr dachtet, okay, alles klar?
+
+00:48:37.751 --> 00:49:01.591
+<v SPEAKER_14>Naja, als damals die Sache da war mit der WhatsApp, und dann hat uns doch eine Erhörerin angerufen und gesagt, ja, WhatsApp ist so toll wegen der Bilder. Und wir wüssten gar nicht, was das für Bilder sind. Da irgendwie, ich weiß nicht, hat irgendjemand dann noch was über, dass man ja auch bei Java irgendwie Medien austauschen kann. Und das waren diese kleinen Icons, die sie machen. Was uns hinterher nach der Sendung aufgefallen ist.
+
+00:49:02.791 --> 00:49:13.811
+<v SPEAKER_3>Ich meinte eigentlich nicht im Sinne, dass da jemand was erzählt hat, über einen Hack, den er gemacht hat oder eine Technik, die er ausgeruht hat, oder dass er Hintergrundwissen aus dem Bereich weiß, das ihr noch nicht hattet.
+
+00:49:13.831 --> 00:49:18.251
+<v SPEAKER_4>Da Pfeffer hat mal angerufen und uns von Google erzählt.
+
+00:49:18.951 --> 00:49:23.471
+<v SPEAKER_3>Was ist das denn? Das möchte ich jetzt bitte noch am Detail wissen, was ist da passiert?
+
+00:49:23.511 --> 00:49:27.311
+<v SPEAKER_4>Pfeffer war ja sehr früh mit Suchmaschinen unterwegs. Was kannst du besser selber erzählen?
+
+00:49:27.511 --> 00:50:36.151
+<v SPEAKER_13>Ja, ich hab damals an der Uni in einem Seminar teilgenommen und hab mich informiert, wie die alle funktionieren und hab also auch Google gesehen, die damals noch ein Standford Projekt waren und nicht mal eine Comdomain hatten. Und dann gab es ein Chaos Radio über Suchmaschinen, glaube ich. Oder das kam irgendwie, das Gespräch auf Suchmaschinen. Ich weiß nicht mehr genau, aber dann ging es halt los. Ja, es gibt ja Alta Vista und was es damals sogar gab, irgendwie Yahoo, keine Ahnung, dann rief ich an und meinte, ja es gibt auch noch Google, das ist auch ganz interessant. Und also ich hab das ja schon wieder völlig vergessen, weil das ist jetzt was, 15 Jahre her oder so. Aber vor einem Jahr oder so tauchte plötzlich so eine Audioschnipsel auf und ging irgendwie durchs Internet vor diesem Anruf und da dachte ich auch so, was denn hier los? Also es gibt dann schon Hörer, die auch tatsächlich sowas dann archivieren und dann, also in der digitalen Zeit muss man einfach sagen, in der wir jetzt leben, gibt es von allem, was du im Radio sagst, irgendwo einen Mitschnitt, aber nicht in der Form, die du gerne hättest. Also wenn wir gerne so ein archivierbares, rufbares Archiv her, sowas gibt es da nicht, außer du machst es halt selber. Aber so, wenn du einmal irgendwo einen Fehltritt hattest, das wird dir dann an unglaublichen Stellen hinterhergetragen von irgendwelchen Leuten.
+
+00:50:36.911 --> 00:50:41.971
+<v SPEAKER_3>Jetzt Fefe, ich würde gerne noch mal dich besonders fragen, warum du eigentlich nicht mehr im Chaosradio bist.
+
+00:50:41.991 --> 00:50:44.551
+<v SPEAKER_13>Warum ich nicht? Ich bin doch gerade im Chaosradio.
+
+00:50:44.571 --> 00:51:06.831
+<v SPEAKER_3>Ja, also wir mussten die Sendetechnik, wir mussten die Marienstraße L fahren, wir mussten eine Runde Zahl abwarten, dann müssen wir wieder vorbeigekommen. Aber du machst ja dieses, es gibt ja diesen komischen Podcast da, der nicht, also das wird auch immer betont, der nicht wirklich vom Club ist, aber der natürlich irgendwie wahrgenommen wird, als der kommt da aus dem Umfeld. Was ist denn für dich der Unterschied zwischen Podcast und Radio? Und warum machst du das eine lieber als das andere?
+
+00:51:06.851 --> 00:51:52.611
+<v SPEAKER_13>Na, das ist ein bisschen schwierig. Also ich, mein Eindruck ist nicht, dass es als CCC nah wahrgenommen wird, nicht jedenfalls so viel wie die Podcast von Tim. Aber den Unterschied, wenn ich den runterbrechen müsste, dann wäre es so was wie, dass du dich im Podcast eben auch in Ruhe streiten kannst. Was du gerade angesprochen hast, wenn du da drei Gäste hast und zwei haben irgendeine Meinungsverschiedenheit, dann musst du als Moderator dir überlegen, wie du das jetzt wegkriegst. Aber in einem Podcast ist das nicht nur erwünscht, sondern das ist auch richtig der Höhepunkt. Wenn sich zwei Leute auf hohem Niveau über irgendeinen Scheiß streiten, der aber mit dem Thema zu tun hat, dann kann das mehr vorantreiben, als wenn du da so einen Vortrag hast. Und das finde ich persönlich wichtig und gut, auch dass du keine Zeitbegrenzung hast natürlich. Radio ist halt irgendwann Schluss, da kommt dann halt der Hausmeister.
+
+00:51:53.491 --> 00:52:03.571
+<v SPEAKER_3>Und kehr dich aus, aber du gibst dafür gerne auf, dass du beim Radio der Laufkundschaft hast, also Leute, die Podcast nicht hören wollen. Podcast ist ja mehr oder weniger der Predigen vor Bekehrten.
+
+00:52:04.451 --> 00:52:19.871
+<v SPEAKER_13>Ja, na das hab ich auch gedacht, ehrlich gesagt, aber es hat sich nicht so rausgestellt. Also es hören sehr viele mehr Leute, auch aus Kreisen, die ich nicht erwartet hätte, und schicken dann Kommentare. Also das hab ich am Anfang auch geglaubt, aber das ist eine Fehleinschätzung.
+
+00:52:20.931 --> 00:52:28.831
+<v SPEAKER_3>Okay, bei Tim ist ja das selbe. Der ist ja ab und zu auch noch im Radio zu hören, wenn ich richtig informiert bin, aber macht ganz, ganz viele tausend Podcasts. Warum?
+
+00:52:30.631 --> 00:53:35.491
+<v SPEAKER_4>Na, weil das Internet ist die Zukunft. Ich mein, das reden wir jetzt schon seit 17 Jahren. Na, das ist doch einfach klar. Es geht da alles drin auf und jedes klassische Medium, was derzeit noch über Nicht-Internet-Technologie funktioniert, wird halt irgendwann mit Internet-Technologie funktionieren. Und an dem Tag, als dieses Enclosure-Tech eingeführt wurde und das Wort Podcast dadurch definiert wurde, das war ja sozusagen dieser Kniff, dass man Blogs um eine angehängte Audiodatei erweitert. Und auf einmal hatte man abonnierbares Radio. Und das erschien mir dann doch sehr schlüssig, weil für mich war das irgendwie vollkommen klar, dass man selbstverständlich in der Zukunft, damals lag die ja noch so ein bisschen vor uns, natürlich auch seine Audience über das Netz finden kann. Und diese Alte Meer, dass man bei UKW da eine bessere Streuung hat, wie FIFA das schon eben gesagt hat. Das mag mal so gewesen sein, aber die Zeiten sind jetzt doch echt vorbei.
+
+00:53:35.511 --> 00:53:43.251
+<v SPEAKER_13>Der eigentliche Grund, wenn ich das kurz nachtragen darf, wenn ich einen Podcast aufnehme, habe ich Internet. Und dann muss ich nicht verhandeln und irgendwelche Druckerkabel abziehen.
+
+00:53:46.171 --> 00:54:15.451
+<v SPEAKER_3>Ich würde gerne noch auf einen Punkt zu sprechen kommen, der gerade so ein bisschen anklangt. Das war dieses mit den verschiedenen Meinungen. Das ist ja für Außenstehende, jetzt reden wir über den Chaos Computer Club, natürlich interessant, weil der Club wird ja als so ein homogenes Ding wahrgenommen. Unter anderem auch mit so was wie einer Meinung des Clubs. Aber das klingt ja jetzt in diesem Ding schon an. Das ist gar nicht so. Ist es generell so, dass es zu gar keinem Thema eine einheitliche Meinung gibt? Oder gibt es das noch manchmal? Oder wie gibt es so eine Meinungsbildung in diesem Verein, wenn überhaupt?
+
+00:54:16.751 --> 00:55:12.771
+<v SPEAKER_13>Also an der Stelle sollten wir mal Konstanze grüßen, die leider nicht da sein kann heute, weil sie erkältet ist. Die ist Sprecherin des CCC und hat häufig das Problem, dass sie zu Themen gefragt wird und dann erstmal feststellen muss, gibt es da überhaupt eine Club-Meinung zu? Ja, gibt es so was wie einen Konsens zu dem Thema und wenn ja, dann sagen unsere Sprecher was dazu. Aber es gibt auch Themen, wo sich kein Konsens findet oder wo sich noch keiner abgezeichnet hat. Und das kannst du ja auch nicht auf Zuruf mal eben dann ändern. Da muss eben diskutiert werden. Und da sagen die Sprecher dann eben nichts zu. Ich finde das übrigens wichtig und notwendig, dass es verschiedene Meinungen gibt. Denn anders kannst du ja gar nicht wachsen als Person. Du musst ja ab und zu, bis du halt liegst, falsch. Und ohne Diskussionen kannst du gar nicht feststellen, ob du gerade falsch liegst und lernen und besser werden. Insofern würde ich mir auch keine Situation wünschen, wo es irgendwie Club oder Radio nicht gibt. Man muss alles ansprechen und diskutieren können.
+
+00:55:13.591 --> 00:55:20.771
+<v SPEAKER_3>Das ist natürlich noch eine besondere Herausforderung, wenn man ein Thema hat, wo man denkt, da müsste man vielleicht mal diskutieren, aber es gibt keine eindeutige Meinung. Wie stellt man das dann da in der Öffentlichkeit?
+
+00:55:22.451 --> 00:57:17.611
+<v SPEAKER_4>Wenn man keine Ahnung hat, einfach mal die Schnauze halten. Das ist auf jeden Fall schon mal sehr hilfreich. Und man muss nicht unbedingt immer zu allem eine Meinung haben. Das ist glaube ich so eine Krankheit in unserer Mediendemokratie, dass alle immer der Meinung sind, sie müssten zu allem auch irgendwie eine Position definieren können, auch wenn sie eigentlich davon keine Ahnung haben. Und es würde sicherlich manchmal ganz hilfreich sein, einfach mal da mehr Zurückhaltung zu zeigen. Aber um da noch mal dran anzuschließen, ich habe den Club schon auch immer so als einen Ort wahrgenommen, wo viel Streitkultur herrscht und wo sie aber auch, wie soll ich sagen, also nicht als etwas Negatives gesehen wird. Wenn so die Außenwelt immer ins Schmunzeln gerät, weil ja, wir haben ja Chaos im Namen und die Chaoten und die Hacker und Hehehe und so. Gut, das ist ja ganz lustig am Anfang, aber man muss sich auch mal klar machen, dass das was aussagt. Also Chaos ist einfach der Zustand, in dem alles sich frei bewegt und so in maximaler Thermik sich neu ordnen kann. Das ist der Zustand, in dem man überhaupt erst mal einen klaren Gedanken neu finden kann, während der Rest sich häufig irgendwie in einem vollkommen erkalteten, vergreisten, verkalkten Zustand befindet, in dem einfach keiner um die Ecke denken kann. Und das Chaos ist einfach was Gutes. Und ich finde, das hat dieser CCC gut gelebt so in den 30 Jahren, so gut das eben geht. Das heißt nicht, dass man immer auch auf tolle Ideen kommt, aber es wird generell wertgeschätzt, dass man eine Atmosphäre vorhält, in der das möglich ist. Und das zeigt sich auf unseren Veranstaltungen, das zeigt sich in unseren Spaces, in den Clubs, das zeigt sich in den Publikationen, das zeigt sich auch teilweise in dem Wahnsinn der einzelnen Aktionen, egal ob sie jetzt politisch oder kulturell gemeint sind. Und das wird auch extrem gewertschätzt. Also es ist einfach ein hohes Gut und Chaos ist gut.
+
+00:57:17.631 --> 00:57:47.331
+<v SPEAKER_13>Es ist ja auch so, dass wir absichtlich versuchen, Leute ranzuziehen, die auch mal eine andere Meinung haben als wir. Also gerade beim Kongress kann man das gut sehen. Da laden wir nicht nur Leute ein, die eh unsere Meinung sind, sondern wir gucken, dass wir auch andere Meinungen kriegen. Und eine der Folgen von dem Chaos als Zustand ist, dass es möglich ist, in so einen Club rein zu laufen und eine Meinung zu vertreten, die da kein anderer hat. Aber wenn die Argumente auf deiner Seite sind, kannst du dich trotzdem überzeugen. Und das ist eine Sache, die finde ich ausgesprochen schön am Club.
+
+00:57:47.351 --> 00:57:59.851
+<v SPEAKER_3>Das heißt, man kann ja diskutieren, aber man ist auf jeden Fall auch willkommen. Ich würde trotzdem gerne noch mal fragen, gibt es so Grundsätze, wo ihr sagt, wenn man sich mit dem Club annähern möchte, wenn man hier vorbeikommen möchte, dann sind das so die Standards, auf die man sich einigt?
+
+00:58:00.511 --> 00:58:03.291
+<v SPEAKER_13>Na du darfst kein Baby sein.
+
+00:58:04.691 --> 00:58:27.511
+<v SPEAKER_14>Es gibt die Hacker-Ethik, da gibt es natürlich schon Vorstellungen. Also ein paar Grundsätze, die auch glaube ich immer gelebt werden. Zum Beispiel Misstrauerautoritäten. Das ist glaube ich ganz ganz wichtig fürs Clubleben. Das ist auch wahrscheinlich der Grund, warum das alles mit diesen klassischen Vereinsstrukturen nur so als Überbau funktioniert.
+
+00:58:27.531 --> 00:58:32.071
+<v SPEAKER_3>Misstrauerautoritäten, was gibt es da noch in der Hacker-Ethik? Die Dezentralität wurde auch schon kurz angesprochen.
+
+00:58:32.091 --> 00:58:51.471
+<v SPEAKER_14>Die Dezentralität haben wir genannt, dass man Leute beurteilen soll nach ihren Handlungen und nicht nach ihrem Aussehen oder sonst irgendwas. Ich glaube das ist auch ganz wichtig. Das sieht man ja auch, wenn man in den Club reinkommt. Das sieht man nun im Radio nicht so. Also die Leute laufen da nicht mit Schlips oder so rum.
+
+00:58:51.491 --> 00:58:52.651
+<v SPEAKER_3>Man kann das aber auch machen.
+
+00:58:52.671 --> 00:59:03.211
+<v SPEAKER_14>Man kann das auch machen. Es gibt sogar Leute, die typischer was in meinem Hemd haben, ist auch besser vielleicht als die Zwischenlösung. Diese Kompromisslösung, die sind irgendwie nicht so gut angesehen.
+
+00:59:03.231 --> 01:04:31.878
+<v SPEAKER_3>Aha, verstehe, verstehe. Wir haben gelernt, dass der Club verschiedene Meinungen zulässt. Das ist ja ganz interessant. Wir haben auch gelernt, dass nicht alle Leute, die mit dem Club zu tun haben, noch an diese Radiosendung oder Radio generell glauben, werden gleich mal darüber reden, wie das möglicherweise in Zukunft aussehen kann. Wir haben auch gelernt, dass man jederzeit gerne vorbeikommen kann. Und das gilt insbesondere heute Abend, denn das Chaos Radio sendet live aus dem Chaos Computer Club Berlin. Und ihr könnt da mit dabei sein. Ihr könnt euch im Videostream angucken unter streaming.media.ccc.de oder ihr kommt einfach her. Kommt vorbei in der Marienstraße 11 in Berlin. Ja. Und damit herzlich willkommen zurück im Chaos Radio. Das Chaos Radio im Blue Moon auf Fritz. Das ist heute ein ganz besonderes Chaos Radio. Das Chaos Radio ist nicht nur deswegen besonders, weil der Chaos Computer Club dann quasi immer den gesamten Sender übernimmt, sondern es ist auch die Folge 200 und es war 199 Folgen so, dass der Computer Club in das Fritz Studio gekommen ist. Und heute ist es so, Fritz ist zum Computer Club gekommen. Der Chaos Computer Club Berlin befindet sich in der Marienstraße 11. Da kann man heute vorbeikommen, sich das angucken. Wir senden von hier, es wird auch live per Video gestreamt. Und das streaming.media.ccc.de Und wir sprechen heute ein bisschen über die Geschichte des Chaos Radios, über den Chaos Computer Club selber und das, was man da so lernen kann und was man da eigentlich so will. Und das ist auch eine Frage, die die Moderatoren gestellt haben, den ehemaligen Moderatoren dieser Sendung, Johnny Häusler, Max von Malotki, Jakob Kranz und Holger Klein. Von denen wollte ich wissen, was haben sie denn tatsächlich, sozusagen in dieser ganzen Zeit, die sie Chaos Radio gemacht haben, in dieser Sendung auch wirklich mitgenommen und gelernt?
+
+01:04:32.358 --> 01:05:09.498
+<v SPEAKER_10>Wir haben mal eine Sendung gemacht über RFID-Chips und wo die überall schon drin sind. Und da rief, und das fand ich damals total cool, und da fand ich es auch cool, dass wir solche Hörer haben, da rief ein Hörer an und sagte so, naja, also ich will euch ja jetzt nicht beunruhigen, aber diese RFID-Chips, also wir nähen die seit Jahren in unsere Klamotten ein. Wir machen nämlich so hochqualitative Klamotten beziehungsweise Sachen, die einfach viel kosten, so Designerzeug und wir packen das in unsere Jackets, und zwar in jedes einzelne. Und da waren alle ziemlich überrascht und das war eine ziemlich coole Geschichte. Daran erinnere ich mich immer gerne zurück.
+
+01:05:10.418 --> 01:06:15.298
+<v SPEAKER_2>Wir haben sehr viel gesprochen über Bundestrojaner, über Überwachung und solche Geschichten und da habe ich viel auch noch dazugelernt, was ich nicht wusste. Ich kannte zwar so von der Oberfläche, was da so passiert, aber wir sind in den Sendungen natürlich sehr intensiv eingestiegen. Zum Beispiel, wo es um RFID-Chips ging und RFID-Funktechnik, wie weit so ein Ding auslesbar ist. Und dass ich theoretisch, wenn ich ein Lesegerät in der Tasche habe und du stehst fünf Meter von mir weg, dass ich eigentlich auslesen könnte, was du in der Tasche hast. Das fand ich schon ganz schön spooky in einer gewissen Weise. Ich fand auch die Sendung zum Big Brother Awards immer wieder spannend, weil man also gucken kann, welche Firmen Schindluder treiben mit Daten. Das taucht ja immer wieder auf. Und das, was wir damals so besprochen hatten und was so ein bisschen als Zukunftsmusik damals galt, hat sich ja in den letzten Jahren durchaus als Realität und nur ein Bruchteil dessen, was wahrscheinlich wirklich da ist, gezeigt. Snowden, solche Geschichten sind ja nur der Anfang. Wir hatten eine sehr spannende Sendung zu Wikileaks, die ich sehr interessant fand, wo Leute berichtet haben, wie sie an diese Daten rankommen und wie unter welchen auch persönlichen Repressalen in solche Geschichten an das Netz gestellt werden, um diese freie Information der Öffentlichkeit zugänglich zu machen. Das fand ich sehr spannend.
+
+01:06:15.438 --> 01:07:13.418
+<v SPEAKER_8>Speziell in der nach Snowden Zeit ist es natürlich schon immer wieder faszinierend zurückzudenken an die ganzen Gespräche mit den Mitgliedern vom Chaos Computer Club, die teilweise doch ein bisschen paranoid wirkten, also die ja schon vor vielen, vielen Jahren schon ganz häufig dazu geraten haben, Mails zu verschlüsseln, auf Sicherheit im Internet zu achten, was man wie wann, wo von sich gibt, ob man das unter Klarnamen machen sollte oder nicht. Also diese ganzen Debatten hatten wir ja. Und das war alles lange vor Twitter, lange vor Facebook und lange, lange, lange vor Snowden. Und interessant von heute aus zu sehen ist natürlich schon, dass vieles von dem, was Außenstehende vielleicht als paranoid bezeichnet hätten oder auch so angesehen haben, alles andere als paranoid war, sondern dass an dem doch eine Menge dran war und ist und bleibt.
+
+01:07:13.698 --> 01:07:47.258
+<v SPEAKER_9>Der Club hat, und damit halt auch die Sendung, im Grunde zu einer Haltungsänderung bei mir geführt. Ich kann auch gar nicht immer so genau sagen, welche Haltung ich vorher hatte und welche ich danach hatte, aber es ist sicherlich ein Gutteil Skeptizismus in mich hineingekommen durch den Club. Ja, ich sehe mit Sicherheit die Welt auf eine andere Weise, als ich sie gesehen habe, bevor ich mit dem Club involviert war. Aber ich könnte nicht an Detail benennen, auf welche Weise das ist. Es ist eine bessere Weise, als ich es vorher gesehen habe. Also ich gehe mit anderen Augen durch die Welt, mit ein bisschen wacheren Augen.
+
+01:07:47.278 --> 01:08:04.378
+<v SPEAKER_3>Ziemlich große Dinge, die hier bewegt worden sind durch das Chaosradio, was ihr gerade hier hört. Chaosradio Folge 200 aus der Marienstraße 11 in Berlin, aus dem Chaos Computer Club Berlin. Und zu Gast auf dem Gastsofa, das ihr euch noch angucken könnt, sind jetzt zusätzlich zu FIFA auch noch THS. Hallo und guten Abend. Und Artort.
+
+01:08:04.398 --> 01:08:05.558
+<v SPEAKER_15>Schönen guten Abend.
+
+01:08:05.578 --> 01:08:10.238
+<v SPEAKER_3>So ihr beiden, was war denn eigentlich eure erste Sendung, Artort? Was war denn deine erste Sendung, Chaosradio?
+
+01:08:10.818 --> 01:09:01.878
+<v SPEAKER_15>Das muss die 43 gewesen sein, zu E-Mail. Ja genau, das war ja in der damaligen Zeit, wie Steini und Tim auch schon ein bisschen angesprochen hatten, da gab es halt diesen, was man heute Think Tank nennen würde, da gab es also diese Berliner Firma, die aus einem Verein hervorgegangen ist und da saßen die halt die ganze Zeit und sprachen über Techniken und ihre gesellschaftspolitischen Auswirkungen. Und einer der Aspekte, der im Club immer auch aufs Tapir gebracht wurde, war, im Verhältnis zum Staat und zur Wirtschaft sind das ja Infrastrukturen, die ich als Bürger, die ich als Individu umnutze. Kann man diese Infrastrukturen nicht verstehen und gegebenenfalls selber betreiben. Und vor dem Hintergrund haben wir damals gesagt, wir erklären mal, was das mit dieser E-Mail ist, die ja, das muss so 97 gewesen sein, noch nicht in dem Maße in der Gesellschaft angekommen war, wie es heute ist.
+
+01:09:01.898 --> 01:09:04.458
+<v SPEAKER_3>Und glaubst du, man müsste das heute eigentlich noch mal genauso erklären?
+
+01:09:05.698 --> 01:09:07.938
+<v SPEAKER_13>Na machen wir doch.
+
+01:09:07.958 --> 01:09:11.018
+<v SPEAKER_3>Okay, Chaosradio 201 E-Mail.
+
+01:09:11.038 --> 01:09:14.778
+<v SPEAKER_13>Nö, nicht mit mir, was du jetzt hier schreibst.
+
+01:09:14.798 --> 01:09:22.838
+<v SPEAKER_3>Nein, was ich meine ist, ob ihr, das ist sozusagen die Technologie, ist zwar in der Mitte der Gesellschaft angekommen, aber ist auch das Verständnis dafür da mittlerweile?
+
+01:09:22.878 --> 01:10:38.218
+<v SPEAKER_15>Das hat sich auf jeden Fall gewandelt. Was für mich den Club immer ausgemacht hat und dann letztlich auch die Motivation war, mitzugehen ins Chaos Radio, als Tim mich eingepackt hat, war immer auch so ein Anspruch, aus dieser Eco-Chamber rauszukommen. Das Tolle am Club war, man konnte über alles diskutieren, aber dazu musste man an einen physischen Ort in Berlin kommen und an diesem physischen Ort mit Leuten diskutieren. Und relativ langsam hat sich dann gezeigt, man kann diese Diskussion natürlich auch auf das Internet führen. Aber was für Meinungsfindungsinstrumente gab es denn zum damaligen Zeitpunkt und die gab es nicht in dem Maße wie heute mit Liquid Feedback, wo ganze Parteien versuchen, ihre Willensbildung darüber abzuwickeln. Das waren ja alles eher so im Entstehen begriffen. Und vor dem Hintergrund scheint es mir schon wichtig, dass wir über das sprechen. Aber der Vorteil am Medium Rundfunk im Vergleich zum Podcast ist sicherlich die Reichweite. Der Vorteil am Podcast ist, dass die Sendezeit nicht begrenzt ist. Also das Schöne am Internet ist, der Platz geht nicht aus. Die Regale sind nie voll. Und insofern glaube ich, dass es für so spezifische Themen, um das in so eine vierstündige Sendung zu machen, eher in einem Podcast sinnvoll ist, während die gesellschaftspolitische Dimension mehr Sinn macht in der Rundfunksendung, weil einfach die Klientel eine ganz andere ist.
+
+01:10:42.798 --> 01:11:10.178
+<v SPEAKER_16>Ich habe mit Earthgeist zusammen eine Sendung gemacht über Wi-Fi, über WEP-Verschlüsselungen. Ich weiß nicht mehr den genauen Titel, aber es ging darum, dass diese ganzen WLAN-Hotspots, die überall aufpoppten, alle ziemlich offen und kaputt sind und dass man da ziemlich viel Unfug treiben kann. Und auch mit dem WEP, diese Verschlüsselung, die es damals gab, dass die nicht so besonders brauchbar ist.
+
+01:11:12.058 --> 01:11:40.718
+<v SPEAKER_13>Da haben wir uns ja heute richtig Vorwürfe, dass wir das damals erzählt haben. Übrigens, weil jetzt ist Deutschland so eines der letzten Länder, wo es keine offenen WLANs gibt, wo du, wenn du irgendwo Internet brauchst, hast du verloren. Meistens ist dein Handy dabei mit Internet. Und in anderen Ländern gibt es einfach offene WLANs und bei uns sind die alle zu, wegen Störerhaftung und Scheiße. Aber wenn wir das nicht erklärt hätten damals, wie man seine WLANs zu macht, hätten wir jetzt überall kostenlos Internet. Also rückblickend war das immer so zweisteinig mit der Aufklärung.
+
+01:11:40.738 --> 01:11:48.258
+<v SPEAKER_3>Gibt es denn noch andere Themen, wo ihr euch ernsthaft im Nachhinein denkt, so, ah, das hätte man vielleicht anders machen müssen? Also sowohl vom Club aus als auch vom Chaosradio vielleicht?
+
+01:11:50.838 --> 01:11:57.038
+<v SPEAKER_6>Ja, natürlich die Wahlcomputer einfach zu erzählen, dass die unsicher sind. Wir könnten jetzt die ganze Republik übernehmen.
+
+01:11:57.058 --> 01:11:58.838
+<v SPEAKER_16>Und die Störerhaftung abschaffen.
+
+01:12:00.658 --> 01:12:07.838
+<v SPEAKER_3>Ja gut, eine verpasste Chance in der Tat. Wir haben ja gerade gehört, was die anderen Moderatoren so gelernt haben in der Sendung. Ist das für euch was Positives?
+
+01:12:07.858 --> 01:12:10.718
+<v SPEAKER_15>Was hast du denn gelernt?
+
+01:12:10.738 --> 01:12:17.878
+<v SPEAKER_3>Eine Frage und eine Gegenfrage zu einer ganz schlechter Stilart. Und sag doch erstmal, ob dich das zufriedenstellt, was die anderen gelernt haben. Dann bewahrt ihr euch gerne auch diese Frage.
+
+01:12:17.898 --> 01:12:30.878
+<v SPEAKER_15>Ja, auf jeden Fall. Also diese pessimistische Haltung, die wir hier mal an den Tag tragen und die Paranoia, die ist sicherlich nicht unbegründet. Aber wenn ich nach draußen gucke, dann hat sich so viel getan die letzten 20 Jahre. Das ist großartig.
+
+01:12:30.898 --> 01:12:35.618
+<v SPEAKER_3>Okay. Und auch hier die Frage, ist das noch nötig sozusagen weiterhin das zu machen?
+
+01:12:35.638 --> 01:13:01.418
+<v SPEAKER_15>Ja, das hört ja nicht auf. Gesellschaft ist ja nie statisch, Technik ist nie statisch. Wir machen bestimmt auch noch, also Andi hat mal auf einem der ersten Kongresse, auf denen ich war, gesagt, alle Veranstaltungen beginnen mindestens eine Stunde später als angekündigt, aber der Club wird länger leben als die Republik. Und ich war von dieser Aussage einfach so dermaßen geflasht und dachte mir, wovon faselt der Kerl denn da? Aber so im Nachgang würde ich sagen, klar, machen wir auch noch die Sendung 423.
+
+01:13:01.438 --> 01:13:17.078
+<v SPEAKER_3>Da bin ich sehr gespannt. Chaosradio live, ob du zufrieden bist mit dem, was bis jetzt aus dem Chaosradio sozusagen rausgekommen ist? Und was auch die Moderatoren, die ja sozusagen jetzt am meisten Zeit in den Berliner verbringen mussten.
+
+01:13:17.418 --> 01:13:29.918
+<v SPEAKER_16>Ich finde das auf jeden Fall total toll. Also ich finde, ich habe auch, ich weiß gar nicht, wie viele Sendungen ich überhaupt mitgemacht habe, aber ich fand jeder einzelne auf jeden Fall ein Gewinn für alle, auch für mich als Mitquatscher.
+
+01:13:32.678 --> 01:13:35.878
+<v SPEAKER_15>Okay, aber bevor du dich jetzt hier aus der Gegenfrage schaffst.
+
+01:13:38.958 --> 01:14:36.618
+<v SPEAKER_3>Was für mich tatsächlich das spannendste war, ist, wenn man dem Club auf so eine Art und Weise näher kommen kann, da ist Moderat natürlich eine sehr privilegierte Position, weil man einfach sozusagen eine klare Aufgabe hat und sich trotzdem sehr genau das angucken kann, was da passiert, dann lernt man, dass das auch Leute sind, die mit Wasser kochen. Und das ist sehr beruhigend, weil ich finde, dass der Club von außen schon so eine Ausstrahlung manchmal hat, die sehr ehrfurchtgebietend oder arrogant wirken kann, also uneindringbar. Was Jakob vorhin auch meinte, also die hohe Mauer mit dem Graben davor, so und dahinter ist dann irgendwo der Club, diese Eindrucken steht schon manchmal. Wenn man sozusagen einfach eine Weile dabei ist, dann lernt man, okay, das sind halt Leute, das ist schon mal gut, es gibt keine Clubmeinung und man kann natürlich auch hingehen und was fragen und das fand ich sehr, sehr, sehr lehrreich. Das finde ich jedes Mal lehrreich, wenn man in irgendwas Großes reinkommt, wo es dann herauszieht, okay, das sind Menschen. Verrückt, wer hätte das gedacht, das ist dann irgendwie so eine Binsenwahrheit, aber das lernt man auch da auch hier im Chaosradio und das finde ich halt sehr, sehr, sehr gut.
+
+01:14:37.078 --> 01:15:30.238
+<v SPEAKER_13>Da muss ich gleich mal widersprechen. Wir kochen natürlich nicht nur mit Wasser, wir kochen auch mit Termit, wenn es sein muss. Also wir legen uns da jetzt nicht so fest. Und wir haben schon auch Zauberer im Club, die man erst Jahre später versteht, was sie eigentlich gerade sagen wollten. Und es ist auch wichtig, dass man solchen Leuten Forum bietet und ich habe mich auch immer gefreut, dass Fritz das sich getraut hat. Weil das ist ja durchaus für so eine Radiostation ein Risiko. Das hätte ja voll nach hinten losgehen können. Und was uns glaube ich so ein bisschen gerettet hat, ist, dass immer die Messung ein bisschen schwierig ist, wie viel höher man jetzt eigentlich konkret hat gerade. Aber also ich kann mich da nur wiederholen, ich habe zumindest in den Anfangsjahren immer das Gefühl gehabt, so das war jetzt die letzte Sendung, jetzt gehst du hier nochmal hin, nimmst es nochmal mit. Ja und wenn es sich abzeichnet, das geht immer weiter, dann kann es auch immer anders machen.
+
+01:15:30.258 --> 01:15:41.778
+<v SPEAKER_15>Mir ging es eins zu eins genauso und offensichtlich auch den Moderatoren, denn eine der beliebtesten Fragen, die in den ersten Folgen aufkam, war nicht, haben wir noch Anrufer, sondern haben wir noch Hörer.
+
+01:15:41.798 --> 01:15:43.878
+<v SPEAKER_3>Es scheint noch welche zu geben in der Tat.
+
+01:15:43.898 --> 01:15:55.458
+<v SPEAKER_15>Und man darf halt auch nicht vergessen, auf welchem Platz wir damals waren, das war immer Mittwochs von 22 bis 1 Uhr und wir waren eingeklemmt zwischen Paul van Dyck mit irgendwie komischen Techno DJs in Platin Blond, die irgendwie so Stampfmusik spielten.
+
+01:15:55.478 --> 01:15:57.358
+<v SPEAKER_3>Quasi auch elektronische Technik.
+
+01:15:57.598 --> 01:16:02.098
+<v SPEAKER_15>Ist auch elektronische Technik, Stiefel, Monoton. Genau.
+
+01:16:02.118 --> 01:16:05.978
+<v SPEAKER_3>Fühlst du dich jetzt nach den Stahlgitarren besser?
+
+01:16:05.998 --> 01:16:20.338
+<v SPEAKER_16>Ja, es gab Stahlgitarren, wo ich kann mich noch an die Chaosradio Sendung erinnern, wo ich Musik mitbringen durfte, da gab es häufiger. Da warst du noch gar nicht da.
+
+01:16:20.358 --> 01:16:21.758
+<v SPEAKER_13>Das probieren wir genau einmal.
+
+01:16:21.778 --> 01:16:27.358
+<v SPEAKER_16>Das war häufiger, ich hab ein paar Mal Musik mitgebracht.
+
+01:16:27.378 --> 01:16:52.838
+<v SPEAKER_3>Jetzt ist der Chaos Computer Club nicht ein Ort, wo man hingehen kann zu diskutieren. Es ist auch nicht so, dass wir diese Wissen in die Welt in eine Radiosendung tragen. Sondern er bietet den betriebtechnischen Infrastruktur. Der Club macht ja auch Internet, wenn man das so sagen will. Was genau passiert da? Was gibt es da alles und warum wird das gemacht?
+
+01:16:52.858 --> 01:18:45.158
+<v SPEAKER_15>Was ich vorhin kurz skizziert hatte, wir haben immer versucht zu sagen, wo befinden wir uns in diesem gesellschaftlichen Spannungsfeld? Und was ist die Bedeutung dieser Hochtechnologie? Aus der politischen Linken war das ja eine lange Auseinandersetzung, zum Beispiel mit Atomkraft, um zu verstehen, was passiert denn da, um diese Technik kritisieren zu können. Vor dem Hintergrund willst du dir natürlich RFID auch erstmal angucken, bevor du es verdammst, um nicht so ein pauschalisiertes das ist alles böse und wir wollen es nicht. Der CCC hat in den frühen 80ern die Grünen im Deutschen Bundestag beraten zur Einführung von Computern und die hatten eine klare vorgefertigte Meinung, die sie gerne bestätigt sehen wollten, dass Computern böse sind, das Teufelswerkzeug von 1984 in der Großstaat. Ja, blöd jetzt. Und wenn du dir diese Techniken anguckst, stellst du fest, Technik an und für sich ist zwar nie im eigentlichen Sinne policy-neutral, aber die Art und Weise der Policy hängt davon ab, wer sie definiert. Und diese Kontrolle zu erlangen, diese Wirkmächtigkeit über diese Regelsätze zu erlangen, funktioniert in der Regel nur, indem du die Technik selber betreibst. Wenn du das an dritte Auslage hast, bist du auf Gedeih und Verderb auf deren Implementierung dieser Richtlinien und Regelsätze angewiesen. Was jetzt dank Snowden ganz viele Leute festgestellt haben, dass es eine blöde Idee ist, die Mail bei Google zu halten, weil dann liest Google die Mail halt mit, zwar automatisiert, aber sie lesen sie ständig mit. Und um dem zu entgehen und auch vor dem Hintergrund, dass Infrastruktur damals einfach nicht verfügbar war, dass neue Technologien kamen und niemand einen Streaming-Server betrieben hätte für dich. Du hättest nicht zu einem Anbieter gehen können und sagen können, bau mir doch mal einen Web-Server und einen Streaming-Dienst, weil es diese Angebote schlichtweg nicht gab. Da waren wir eigentlich von Anfang an immer drauf aus und auch dazu verdammt, diese Technik selber zu betreiben. Und natürlich hat es auch so ein emanzipatorisches Moment zu sagen, ich betreibe meine Infrastruktur selber, ich halte die Kontrolle darüber.
+
+01:18:45.178 --> 01:19:14.078
+<v SPEAKER_3>Also ihr betreibt jetzt also E-Mail-Server, Jabber-Server, verschiedene Web-Server und diese ganzen Sachen. Und was sich da abzeichnet ist ja, wir haben ja gehört, in Architektik ist Dezentralisierung eigentlich sozusagen so ein Gebot. Das heißt eigentlich, also im extrem theoretischen Idealfall, sollte das jeder für sich selber machen. Jetzt macht der Club das und der Club ist natürlich auch so ein wow, der Club macht das, dann kann ich auch das benutzen. Werdet ihr dann nicht irgendwann einfach zu einer weiteren Instanz die Technik anbieten, der man blind vertraut? Also ist das tatsächlich emanzipatorisch?
+
+01:19:14.098 --> 01:20:34.438
+<v SPEAKER_13>Da kämpfen wir auf allen Fronten gegen, denn es gibt auch, es gibt ja gute Argumente dagegen, so was nicht den Club zu geben, selbst wenn der Club das komplette Vertrauen genießt. Denn wir haben die gesetzliche Situation, wenn du einen E-Mail Server betreibst oder ein Internet Provider bist, dass von der Anzahl deiner User abhängt, ob du eine Abhörschnittstelle anbieten musst oder nicht den sogenannten Bedarfsträgern, also der Polizei. Das heißt, wenn der Club jetzt so was betreibt, wie sagen wir einen Jabber Server oder einen E-Mail Server, dann ist das zwar nett, den benutzen zu können und wahrscheinlich vertrauenswürdiger als so die anderen, die es da halt freigibt, aber es ist immer noch besser, selbst einzubetreiben und nicht nur aus Dezentralisierungs- und dogmatischen Gründen, sondern aus handfesten juristischen Gründen und natürlich, weil man dabei was lernt. Rückblicken muss man sagen, das hat uns sehr geholfen, dieser Ansatz, dass wir erst mal selber bauen und daraus dann lernen, wie schlimm irgendwas ist, weil inzwischen ist diese Expertise ja auch gefragt. Also wir sind Gutachter vom Bundesverfassungsgericht gewesen, das ist ja nicht von ungefähr gekommen, sondern weil wir eben diesen Anspruch immer gehabt haben, auch vorher, dass wir das gerne alles verstehen möchten, bevor wir dagegen sind, oder dafür, und häufiger dagegen. Das muss man vielleicht einräumen an der Stelle.
+
+01:20:34.458 --> 01:20:35.578
+<v SPEAKER_3>Das soll ab und zu passiert sein.
+
+01:20:35.638 --> 01:20:53.578
+<v SPEAKER_13>Ja, aber das ist ein Modell, das funktioniert und das kann ich auch nur allen empfehlen, einfach Sachen selber mal aufzubauen, um zu sehen, wie das denn jetzt eigentlich zusammenspielt. Das ist ein Erfolgserlebnis, was man anders kaum kriegen kann. Selbst irgendwie einen Server gebaut zu haben und den können dann Leute benutzen. Das ist total geil.
+
+01:20:54.558 --> 01:21:09.018
+<v SPEAKER_16>Und am Ende stehst du selber da und versuchst die Leute zu motivieren, sich vielleicht doch auch noch mal einen Account bei einem anderen Java-Server zu organisieren, weil sich das mittlerweile alles viel zu sehr auf den CCC betriebenen Server konzentriert. Das ist auch negativ.
+
+01:21:09.038 --> 01:21:40.658
+<v SPEAKER_13>Das ist ein echtes Problem. Wir sehen es auch durchaus nicht nur positiv. Also es kam jetzt zum Beispiel bei Wikileaks raus, dass die unseren Java-Server benutzt haben und den dann auch weiter empfohlen haben. Und wenn sowas einmal in der Presse steht, dann kann man sich ja überlegen, ob die Polizei dazusieht oder ob die auch versuchen, eine Leitung hinzulegen. Und das sehen wir nicht nur positiv, wenn die gesamte Republik und alle Dissidenten über unsere Java-Server gehen, sondern das ist schon, Leute macht eure eigenen Java-Server und lernt, wie das funktioniert. Dann ist das Wissen, das werdet ihr irgendwann brauchen.
+
+01:21:40.978 --> 01:22:04.738
+<v SPEAKER_3>Jetzt sind wir hier an dem Punkt, wo möglicherweise jemand draußen sitzt und diese Sendung hat, sich da irgendwie zu mahnen. Das wäre eigentlich gar nicht so doof, das vielleicht wirklich mal auszuprobieren. Dann guckt irgendwie im Internet, findet irgendwie vielleicht eine Hilfeanleitung und das funktioniert natürlich nicht genauso, weil Hilfeanleitungen nie genau den Fall beschreiben, den man selber gerade machen will. Ist das dann so ein Punkt, wo man sagen kann, okay jetzt geh ich mal zum Club und frag, ob mir vielleicht jemand hilft? Oder ist das dann sozusagen, ist das zu einfach?
+
+01:22:06.018 --> 01:22:23.458
+<v SPEAKER_13>Nee, also genau dafür gibt es Hackerspaces, damit du da reinlaufen kannst mit deinem technischen Problem und dabei was lernen kannst. Oder wenn noch jemand anders da ist, der irgendwas noch weniger verstanden hat, was du verstanden hast, dass du anderen hilfst. Also das ist genau der Grund, warum wir ein Hackerspace haben in Berlin und anderswo.
+
+01:22:23.478 --> 01:23:50.098
+<v SPEAKER_15>Aber das ist natürlich auch ein emanzipatorisches Moment und darum ging es auch immer in dieser Situation zu sagen, wir befähigen uns selbst Diskussionen zu dem Thema zu führen und dort Wissen zu verbreiten. Und die Intensität und die Tiefe, hatte ich ja vorhin auch kurz erwähnt, unterscheidet sich dann eben vom Medium. Denn die Anleitung auf einer Website ist eine andere, als du erzählst es in einem Podcast, als du erzählst es auf einer Konferenz, als du erzählst es in einem UKW-Sender für normale Leute. Oder halt auch sagen, eins zu eins in sowas wie dem Chaos Computer Club. Genau, aber das Problem ist die Bequemlichkeit, aber die ist immer unser Feind. Dass man grundsätzlich erstmal faul ist, die Welt ist furchtbar komplex, wie kann ich Komplexität reduzieren und wie kann ich mir Zeit ersparen? Und wenn ich es irgendwie outsourcing kann und sagen kann, jemand anderes macht das für mich, dann habe ich ein Problem los. Nur muss ich mir zunächst mal bewusst werden, was für andere Probleme ich mir damit einhandle. Hatten wir gerade schon erwähnt. Ich muss mir bewusst werden, was für Aufwände erzeugt ist, wenn ich selber mache und welche Vorteile habe ich davon. Und das ist das gleiche, ob ich jetzt irgendwie sage, ich kann ja mein Banking von irgendeinem ausländischen Großkonzern machen lassen oder ich gründe halt eine Genossenschaftsbank oder werde da Mitglied. Oder ich mache einen lokalen Bio-Bauernhof und ziehe mir mein Gemüse selber im Garten. Natürlich machst du das nicht alles selber. Und Brot backen machst du auch nur irgendwie mal so als Lektion. Ist schön, dass du es gelernt hast, aber es nervt, wenn du das jeden Morgen machen musst, bevor du ins Büro gehst. Und funktional ausdifferenzierte Gesellschaften funktionieren so. Aber du musst halt verstehen, was sind deine Kosten? Was sind die Probleme, die du dir ins Haus holst, wenn du nicht drüber nachdenkst?
+
+01:23:51.138 --> 01:23:52.478
+<v SPEAKER_3>Und das kann man hier auch lernen.
+
+01:23:52.498 --> 01:23:54.718
+<v SPEAKER_15>Das kann man natürlich hier lernen, klar.
+
+01:23:54.738 --> 01:24:10.958
+<v SPEAKER_13>Nicht alles zu jedem Zeitpunkt sollten wir gleich dazu sagen. Das ist auch Glückssache, wer gerade hier ist. Und es kann sein, dass jemand mit seinem Problem herkommt und es ist gerade niemand in den Örtlichkeiten, der genau diese Probleme lösen kann. Aber das heißt ja nicht, dass sich der Besuch nicht trotzdem lohnen kann.
+
+01:24:10.978 --> 01:24:20.898
+<v SPEAKER_15>Und darüber hinaus haben wir eine Jahresendveranstaltung, auf der sind 10.000 spannende Menschen. Und die Wahrscheinlichkeit, dass da jemand, was zu deinem Thema weiß, ist relativ hoch.
+
+01:24:20.918 --> 01:24:39.738
+<v SPEAKER_3>Okay, ja, seht ihr eigentlich, also der Club ist ja sozusagen eine Vereinigung von Leuten, die irgendwie technische Dinge machen. Die ist auch immer alles erklärnd, wenn man sie fragt und die mittlerweile auch von großen Gerichten befragt werden. Aber seht ihr eine Aufgabe, die man als Clubmitglied hat? Oder die ihr als mehr oder weniger exponierte Mitglieder des Chaos Computer Clubs habt?
+
+01:24:41.378 --> 01:25:05.238
+<v SPEAKER_13>Na erstmal ist es eine Vereinigung, die auf gegenseitigem Vorteil basiert. Also du gehst nicht nur hin, weil du dann Aufgaben hast, anderen Leuten gegenüber, sondern am Ende soll jeder einen Gewinn davon haben, dass er im Club ist. Du erklärst anderen Leuten was und andere Leute erklären dir was. Allerdings wird natürlich schon erwartet, dass wenn jemand eine Frage hat und du kannst sie beantworten, dass du es dann auch tust.
+
+01:25:07.018 --> 01:25:21.198
+<v SPEAKER_3>Ich meine, der Club hat ja mittlerweile in der Auswirkung eine Position, wo man sagen kann, das ist gewichtig. Erwächst daraus eine gesellschaftliche Verantwortung, wo ihr glaubt, die müsst ihr wahrnehmen? Oder weißt ihr das im Zweifel von euch? Sagt ihr, das geht uns nicht an, dafür bezahlt uns tatsächlich keiner?
+
+01:25:21.498 --> 01:26:01.058
+<v SPEAKER_15>Also die hatten wir von Anfang an und das ist ja auch unser Selbstverständnis, aber das beruht auf Freiwilligkeit und das ist das konstitutive Merkmal des Clubs. Wenn du Lust hast, etwas zu tun, dann machst du das und wir haben alle einen gewissen Antrieb dafür sicherzustellen, dass es uns gut geht und unserem erweiterten Umfeld und das funktioniert in der Demokratie halt so, dass du die anderen überzeugen musstest, dass was du als Idee hast, als politische Idee und als Anspruch hast, die richtige Option ist und für das kämpfen wir. Aber natürlich sind wir alle hier freiwillig ehrenamtlich und unbezahlt und das schränkt erheblich unsere Fähigkeiten, einen das zu tun und damit solltest du dir aber auch diese Verantwortung nicht aufbürden, denn sonst gehst du daran kaputt, weil alleine kann man die Welt nicht retten.
+
+01:26:01.438 --> 01:26:27.238
+<v SPEAKER_3>Aber das stellt sich natürlich sozusagen die Frage, jetzt gibt es diesen Club, der Club ist nicht wirklich klein, der Club kriegt so eine Großveranstaltung gestemmt, wie im Kongress, wenn ich es richtig verstehe, hohe vierstellige oder kleine fünfstellige Zahl an Leuten da ist. Das ist doch sozusagen zumindest ein Konstrukt, wo man auch ein bisschen Geld hat und sagt, okay, dann stellen wir einfach jetzt jemanden an, der sich um keine Ahnung Pressearbeit kümmert, der diese Server macht. Aber wenn ich es richtig verstehe, ist alles alles ehrenamtlich. Warum? Warum nicht einfach sagen, okay, hier, du machst es jetzt?
+
+01:26:27.258 --> 01:26:43.578
+<v SPEAKER_15>Weil das der Charakter des Clubs ist. Du veränderst fundamental deine politische Aufgabe mit Hauptamtlichen. Und das ist das, was wir an allen politischen Organisationen im In- und Ausland sehen. Wenn du Hauptamtliche beschäftigst, haben die ein Eigeninteresse daran, organisationssoziologisch betrachtet, dass der Apparat wächst und stabil bleibt.
+
+01:26:43.598 --> 01:26:46.718
+<v SPEAKER_3>Okay, warte, kannst du nochmal erklären, ohne das Wort organisationssoziologisch zu verwenden?
+
+01:26:47.718 --> 01:26:49.438
+<v SPEAKER_14>Weil es gibt keine Schere im Kopf.
+
+01:26:49.458 --> 01:26:55.038
+<v SPEAKER_3>Weil so hört sich das so ein bisschen an, wie das ist so. Wir machen das so, weil es ist so. Aber warum?
+
+01:26:55.138 --> 01:26:57.278
+<v SPEAKER_13>Nein, es gibt wichtige Gründe, aber die können wir jetzt nicht erklären.
+
+01:26:57.698 --> 01:26:58.538
+<v SPEAKER_3>Das ist doch Quatsch.
+
+01:26:58.558 --> 01:26:59.998
+<v SPEAKER_16>Da müssen wir nicht leider erschießen.
+
+01:27:02.898 --> 01:27:03.158
+<v SPEAKER_3>Das kann...
+
+01:27:03.178 --> 01:27:04.858
+<v SPEAKER_13>Nein, also das ist eine lange Diskussion.
+
+01:27:04.878 --> 01:27:12.638
+<v SPEAKER_6>Also grundsätzlich ist es so, wenn dein Einkommen davon abhängt, dass du, dass dieses Problem da draußen existiert, dann hast du kein Interesse daran, dieses Problem zu lösen.
+
+01:27:13.238 --> 01:27:30.178
+<v SPEAKER_3>Ah, aber okay, sagen, das kann man für politische Arbeit sagen, also keine Ahnung, wir kämpfen gegen Vorratsratenspeicherung. Wenn ich dafür bezahlt werde, gegen Vorratsratenspeicherung zu kämpfen, bin ich nicht daran interessiert, dass sie jemals abgeschafft wird, weil dann werde ich nicht mehr bezahlt, dagegen zu kämpfen. Aber der Betrieb einer technischen Infrastruktur könnte doch so eine Aufgabe sein.
+
+01:27:30.198 --> 01:27:39.718
+<v SPEAKER_15>Aber es ist doch genauso, wenn ich Geld dafür bekomme, dass Leute mir im Monat, was weiß ich, einen Honi in die Hand drücken, um eine Mailadresse bei mir zu haben, dann habe ich kein Interesse, dass sie das selber lernen.
+
+01:27:39.798 --> 01:27:43.098
+<v SPEAKER_3>Ah, nun wird mir einiges klarer.
+
+01:27:43.118 --> 01:27:47.238
+<v SPEAKER_13>Das ist wie mit den Grünen und der Atomkraft.
+
+01:27:47.258 --> 01:27:54.758
+<v SPEAKER_3>Das musst du jetzt nochmal genauer erklären.
+
+01:27:54.778 --> 01:28:02.418
+<v SPEAKER_13>Ja, naja, die Grünen waren ja immer für die Abschaffung der Atomkraftwerke, bis die CDU dann dafür war, dann waren sie plötzlich dagegen. Und das ist genau der Effekt, den wir ganz vermeiden versuchen.
+
+01:28:02.438 --> 01:28:16.438
+<v SPEAKER_3>Gut, wir haben jetzt also schon gelernt, was der Chaos Computer Club mit den Atomkraftwerken der Grünen zu tun hat. Ich muss das erstmal noch ein bisschen sacken lassen, ihr vielleicht auch, wir machen deswegen kurz Nachrichten mit Wetter und Verkehr und sind dann gleich wieder für euch da hier im Chaos Radio.
+
+01:28:18.878 --> 01:28:50.718
+<v SPEAKER_12>Was gibt's besseres als ein geiles Spiel auf deinem eigenen Sofa, mit deinen besten Freunden und 12.000 anderen Fußballfans alle zusammen in einem Wohnzimmer? Na passt mal auf. Zur Fußball-Weltmeisterschaft verwandelt Fritz zusammen mit euch das Stadion an der Alten Försterei zum größten Wohnzimmer der Welt und von Berlin. Und mit ein bisschen Glück steht euer eigenes Sofa mittendrin. Vier Wochen lang und nur für euch reserviert wird.
+
+01:28:50.738 --> 01:28:57.778
+<v SPEAKER_8>Wenn ihr also dabei sein wollt und euer Sofa einverstanden ist, dann klickt doch mal auf fritz.de slash Wohnzimmer.
+
+01:28:57.798 --> 01:29:01.478
+<v SPEAKER_1>Das WM Wohnzimmer im Stadion an der Alten Försterei.
+
+01:29:01.498 --> 01:29:04.338
+<v SPEAKER_12>Klingt ganz schön abgefahren, wird ganz schön abgefahren, sind wir dabei.
+
+01:29:06.438 --> 01:29:08.098
+<v SPEAKER_3>Um 23.29.
+
+01:29:15.918 --> 01:31:58.578
+<v SPEAKER_13>UN-Generalsekretär Ban Ki-moon hat vor einer militärischen Eskalation in der Ukraine gewarnt. Diese müsse um jeden Preis vermieden werden. Er sei besorgt, dass die Situation jederzeit außer Kontrolle geraten kann, mit Folgen, die niemand absehen könne. Es herrsche ein Klima der Angst und Furcht in der Ostukraine, sagte Ban. Alle Seiten müssten sich strikt an den in Genf vereinbarten Friedensplan halten. Die ukrainische Armee hat heute während eines Angriffs fünf pro-russische Separatisten erschossen. Russland reagierte mit einem Militärmanöver an der ukrainischen Grenze. Die Armutsquote in Deutschland hat nach Ansicht des paritätischen Wohlfahrtverbandes einen Höchststand erreicht. Jeder Sechste müsse mit weniger als 950 Euro im Monat auskommen. Besonders armutsgefährdet seien Erwerbslose und Alleinerziehende, so der Wohlfahrtsverband. Es habe noch nie so viel Privatvermögen in Deutschland gegeben wie heute, aber auch noch nie so viele überschuldete Menschen. Jeder zehnte Erwachsene gelte mittlerweile als überschuldet. Auf dem deutschen Arbeitsmarkt gibt es nach Einschätzung des Paritätischen immer weniger klassische sozialversicherungspflichtige Vollzeitarbeitsplätze. Ein Jahr nach dem Einsturz einer Textilfabrik in Bangladesch haben Gewerkschaften und Hilfsorganisationen weitere Konsequenzen gefordert. Von der Gewerkschaft Verdi hieß es, Modefirmen müssten mehr Verantwortung übernehmen und transparenter arbeiten. Diskutiert wird außerdem über ein neues Textilsiegel, das Kunden beim Kauf von Kleidung mehr Informationen über die Herkunft geben soll. Bei dem Fabrikunglück in Bangladesch vor über einem Jahr kamen rund 1000 Menschen ums Leben. Auch deutsche Modefirmen haben in der Fabrik produzieren lassen. Die deutsche Schullandschaft hat sich in den vergangenen zehn Jahren stark verändert. Es gibt inzwischen ein Drittel weniger Hauptschulen, dafür aber 22 Prozent mehr Waldorfschulen, teilte das Statistische Bundesamt mit. Es gäbe auch rund doppelt so viele integrierte Gesamtschulen wie noch vor zehn Jahren. Deutschlandweit ist die Zahl der allgemein bildenden Schulen um etwa 6000 gesunken. Der Grund ist, es gibt weniger Schüler als früher. Derzeit Temperaturen zwischen 11 und 15 Grad in Berlin und Brandenburg. Die Luft ist überall recht feucht, dunstig sozusagen. Regnen soll es in den kommenden Stunden aber nicht mehr. Wie schon in den vergangenen Tagen startet der Morgen in Berlin und Brandenburg fast überall sonnig. Später können dann wieder einige kurze Regenschauer runterkommen. 20 bis 23 Grad sind angesagt. Mit einer Meldung zur Berliner S-Bahn. Bis Betriebsschluss fahren die Regenbahnlinien S41 und S42 zwischen Treptower Park und Südkreuz nur im 20-Minuten-Takt. Die S45 fährt heute Nacht verkürzt, und zwar nur zwischen Schöneweide und Flughafen Schönefeld. Und die S46 fährt nur zwischen Königs-Wusterhausen und Hermannstraße und nicht weiter bis Westend.
+
+01:31:59.078 --> 01:31:59.538
+<v SPEAKER_3>Gute Fahrt.
+
+01:32:00.418 --> 01:32:04.578
+<v SPEAKER_5>Fritz ist eine Produktion des RBW.
+
+01:32:04.598 --> 01:32:13.558
+<v SPEAKER_1>Und wenn ihr bei Fritz mitmachen wollt, dann macht doch mit. Auf fritz.de slash mitmachen.
+
+01:32:32.331 --> 01:33:15.451
+<v SPEAKER_3>Eine halbe Stunde haben wir noch hier im Chaos Radio im Blumen, heute live aus der Marienstraße 11 aus dem Chaos Computer Club Berlin. Und wir haben während dieser Sendung, der 200. schon sehr viel darüber gelernt, wie der Chaos Computer Club funktioniert und wie das Chaos Radio funktioniert. Und bei letzterem haben wir auch gelernt, dass es eine große Schwierigkeit ist, die Leute vom Chaos Computer Club so zu bremsen und das so in Form zu bringen, dass man es auch als normaler Mensch versteht, der versucht, dieser Radiosendung zu folgen. Und genau das wollen wir aber jetzt mal probieren. Also ob sich das in den letzten 200 Sendungen tatsächlich so gestaltet hat, dass da ein Lerneffekt eingetreten ist bei den Leuten, die das Chaos Radio häufiger besuchen. Und dazu haben wir jetzt die Nerd News. Das sind sozusagen vier einzelne Meldungen, die wir erst verlesen werden und dann...
+
+01:33:15.471 --> 01:33:17.831
+<v SPEAKER_13>Und du erklärst sie dann mit dem in der Sendung gewonnenen Wissen?
+
+01:33:17.851 --> 01:33:24.891
+<v SPEAKER_3>Und dann erklärt ihr die, und zwar so, dass es jeder versteht. Wir beginnen jetzt mit den Nerd News und wir heißen herzlich willkommen Nachrichtensprecher Heuer Klein.
+
+01:33:25.931 --> 01:33:51.071
+<v SPEAKER_9>Falsche Post vom Amt. Das sogenannte Bundesamt für Sicherheit in der Informationstechnik BSI hat vor Fishing-Mails gewarnt. Sie geben vor, vom BSI selbst zu stammen und unterstellen dem Empfänger, Zitat, vermehrte illegale Aktivitäten. Weiter fordern sie zum Herunterladen eines Erklärungsformulars auf. In Wirklichkeit wartet hinter dem Link jedoch sehr wahrscheinlich ein Trojaner. Das BSI rät dringend, entsprechende E-Mails sofort zu löschen.
+
+01:33:54.851 --> 01:33:59.291
+<v SPEAKER_3>Warum ist das schlimm? Was ist da los?
+
+01:33:59.311 --> 01:34:28.351
+<v SPEAKER_13>Ich finde das gar nicht schlimm. Ich finde das eine tolle Meldung, weil die kam nämlich genau in der Zeit, als wir gesagt haben, wenn ihr hier Trojaner macht als Regierung, dann wird euch keiner mehr glauben, dass die normalen Mails vom Finanzamt vertrauenswürdig sind. Und das war so ein bisschen ein Argument, was in der Luft hing und dann kam diese Geschichte und damit war das auch für den Netzen illustriert, dass nur wenn eine Mail kommt, wo drauf steht, das ist vom BSI oder vom BKA, gab es später auch mal so eine Welle. Das heißt noch lange nicht, dass das nicht eine Mail ist, die deinen Computer kaputt macht, wenn du sie aufmachst.
+
+01:34:28.371 --> 01:34:37.191
+<v SPEAKER_3>Aber damit fängt man sofort... Mit D-Mail wäre das nicht... Ja, das wollte ich gerade sagen. Ja, also jetzt doch die E-Mail benutzen, ja?
+
+01:34:37.211 --> 01:34:37.871
+<v SPEAKER_13>Um Gottes Willen.
+
+01:34:38.311 --> 01:34:39.551
+<v SPEAKER_3>Wieso nicht? Das schützt uns doch davor.
+
+01:34:39.971 --> 01:34:42.911
+<v SPEAKER_13>Ja, nee, tut es überhaupt nicht. Wie kommst du denn darauf, dass es uns schützt?
+
+01:34:42.931 --> 01:34:44.251
+<v SPEAKER_3>Nee, das wurde doch gesagt, dass es sicher ist.
+
+01:34:44.551 --> 01:34:45.531
+<v SPEAKER_13>Ja, ja, das ist...
+
+01:34:45.611 --> 01:34:46.391
+<v SPEAKER_16>Ist sicher.
+
+01:34:46.411 --> 01:34:51.751
+<v SPEAKER_13>Was sollen die auch sonst sagen? Nein, das wurde nicht gesagt. Das haben die ins Gesetz geschrieben, weil sie es nicht sagen können.
+
+01:34:51.771 --> 01:34:52.631
+<v SPEAKER_16>Das ist Open SSL gesichert.
+
+01:34:54.551 --> 01:34:58.251
+<v SPEAKER_3>Du hast... THS, vielen Dank. Was ist das?
+
+01:34:58.271 --> 01:34:59.511
+<v SPEAKER_16>Open SSL gesichert.
+
+01:34:59.531 --> 01:35:00.191
+<v SPEAKER_3>Was bedeutet das denn?
+
+01:35:00.211 --> 01:35:06.151
+<v SPEAKER_16>Das ist besonders sicher. Weil es ist Open Source. Sicherheit.
+
+01:35:08.791 --> 01:35:16.971
+<v SPEAKER_3>Also, man sieht also... Ich fürchte, ich kann das jetzt tatsächlich nicht in aller Ausführlichkeit erklären, aber ich sage mal, NerdNews 1 gescheitert. Kommen wir zur nächsten Nachricht.
+
+01:35:17.711 --> 01:35:52.031
+<v SPEAKER_9>Routine Hintertür nur scheinbar behoben. Eine Reihe von Netgear-Routern ist trotz eines Sicherheitsupdates weiter verwundbar. Schickt ein Angreifer ein spezielles Paket an ein aktualisiertes Modell, so wird die angeblich entfernte Hintertür wieder geöffnet. Sie erlaubt weitreichenden Zugriff auf alle Routerfunktionen. Warum diese offenkundig absichtlich eingebaute Funktion nicht komplett entfernt wurde, überprüft Netgear derzeit. Die Firmware stammt vom Unternehmen ZERCOM, das auch für andere Routerhersteller produziert. Um die Router nach dem Update anzugreifen, muss der Angreifer allerdings im gleichen WLAN sich im gleichen WLAN befinden oder Kunde beim gleichen Provider sein.
+
+01:35:56.731 --> 01:36:55.751
+<v SPEAKER_6>Du arbeitest bei einem Routerhersteller als Programmierer. Was ist ein Router? Ein Router ist die kleine Plastebox, die dafür sorgt, dass du zu Hause Internet hast. Die spricht mit deiner Telefonfirma, vielleicht mit der Telekom oder so. Und macht dann, dass bei dir zu Hause alle Geräte Internet haben und auf der anderen Seite spricht es mit deinem Internetanbieter und vermittelt zwischen euch. Ist also aus dem Internet erreichbar. Und was die Programmierer dieses Betriebssystems darauf gemacht haben, ist eine Hintertür einzubauen, mit der sie dann aus dem Internet auf alle Geräte voll zugreifen können. Das war ganz offensichtlich so jetzt nachträglich erst klar geworden, dass es wohl absichtlich war, weil als sie versprochen haben, diese Hintertür zu entfernen, wurden dieselben Funktionen immer noch in dem Betriebssystem gefunden. Allerdings wurden sie so geschützt, dass man vorher an ganz bestimmte Ports geheime Pakete schicken musste, damit diese Funktion wieder angeschaltet wird. Also der Programmierer, der sie ursprünglich reingetragen hatte, hatte kein Interesse daran, seine tolle Hintertür da wieder rauszunehmen.
+
+01:36:55.771 --> 01:36:59.791
+<v SPEAKER_3>Das heißt, wer jetzt so einen Router zu Hause stehen hat, der hat ein kleines Überwachungsgerät, das man von außen abfragen kann.
+
+01:37:00.291 --> 01:37:01.691
+<v SPEAKER_6>Ich kauf keine Netgear-Hardware mehr.
+
+01:37:02.371 --> 01:37:08.791
+<v SPEAKER_3>Okay, also ich glaube, Port und Pakete, das hätte man noch genauer, aber ich vergebe mal einen Punkt. Kommen wir zur nächsten Nachricht.
+
+01:37:08.811 --> 01:37:51.971
+<v SPEAKER_9>Indonesischer Provider leitet Internet um. Falsche Routing-Informationen des Internetanbieters Indosat haben Anfang April den weltweiten Internetverkehr gestört. Verantwortlich war vermutlich ein Konfigurationsfehler. Dadurch behaupteten Indosats Router gegenüber anderen Netzanbietern, den Weg zu wichtigen Firmen wie etwa Akamai bereitzustellen. Möglich ist dies durch das Routing-Protokoll BGP. Mit BGP verständigen sich die wichtigsten Router im Internet über die Zustellung von Daten. So können Sie im Falle von Umstrukturierungen oder Leitungsausfällen schnell andere Zustellwege verhandeln. Wer einen solchen Router betreibt, kann allerdings per bloßer Behauptung Internetverkehr umleiten. 2010 war dies dem chinesischen Provider passiert, einem chinesischen Provider passiert, ebenfalls als Folge eines Konfigurationsfehlers.
+
+01:37:52.871 --> 01:37:58.991
+<v SPEAKER_13>Erst mal 100 Punkte für Holgi, finde ich. Wenn diese Bewertung so derart professionell vorträgt.
+
+01:37:59.011 --> 01:38:01.551
+<v SPEAKER_3>In der Tat, aber THS bitte was?
+
+01:38:02.371 --> 01:38:11.911
+<v SPEAKER_16>Ja, genau. Über BGP kann ich wahrscheinlich genauso viel erzählen aber worum geht es hier im Grunde genommen?
+
+01:38:11.931 --> 01:38:13.011
+<v SPEAKER_3>Also ich habe keine Ahnung.
+
+01:38:14.251 --> 01:38:33.051
+<v SPEAKER_16>Ja, über Internetbequemlichkeitsprotokolle, die mal konzipiert wurden zu Zeiten, da gab es halt noch nicht so viele Feinde. Ich gebe einfach weiter an den BGP-Spezialisten. Da habe ich eben gerade schon daran gedacht.
+
+01:38:33.071 --> 01:38:34.891
+<v SPEAKER_13>Das Problem ist ja, du hast ja ein Plastik-Computer.
+
+01:38:36.271 --> 01:38:38.011
+<v SPEAKER_3>Grüß dich, Spezialisten Nibbler, hallo, guten Tag.
+
+01:38:38.031 --> 01:38:39.971
+<v SPEAKER_11>Ich würde jetzt nicht Spezialist sagen, aber...
+
+01:38:39.991 --> 01:38:41.331
+<v SPEAKER_3>Super Spezialexperte?
+
+01:38:41.351 --> 01:38:44.771
+<v SPEAKER_11>Spezialexperte. Okay, Spezialexperte.
+
+01:38:44.791 --> 01:39:10.111
+<v SPEAKER_15>Was da passiert ist, ist, dass der Router von diesem Netzbetreiber behauptet hat, dass er für bestimmte IP-Adressen zuständig sei, für die er gar nicht zuständig war. Das funktioniert deswegen, weil so Router im Internet sich über das BGP-Protokoll austauschen und dem anderen Router sagen, hallo, die und die IP-Adressen, die kannst du bei mir erreichen. Der sagt dann, ok, weiß ich Bescheid und gibt das weiter an den nächsten Router. Und so kann sich sowas dann im Internet propagieren.
+
+01:39:10.711 --> 01:39:11.411
+<v SPEAKER_11>Das Problem ist...
+
+01:39:11.431 --> 01:39:11.951
+<v SPEAKER_15>Darf ich kurz fragen?
+
+01:39:17.671 --> 01:39:20.111
+<v SPEAKER_11>Na dein Computer zu Hause hat eine IP-Adresse.
+
+01:39:20.131 --> 01:39:31.951
+<v SPEAKER_15>Aber die ganzen anderen Computer im Internet müssen ja irgendwo wissen, wo sie das Paket hinschicken sollen. Die schicken das erstmal zu ihrem Provider. Da stehen dann weitere Router und die wissen Bescheid, wo welche Internet-IP im Internet zu Hause ist.
+
+01:39:33.691 --> 01:39:36.451
+<v SPEAKER_11>Und das wissen sie, weil sie miteinander BGP sprechen.
+
+01:39:37.571 --> 01:39:40.171
+<v SPEAKER_9>Das ist aber nicht das, was ich eben vorgelesen habe.
+
+01:39:40.191 --> 01:39:57.991
+<v SPEAKER_11>Doch, doch, doch. Na ja, doch, doch, doch, doch. Das steht da nicht. Das Problem ist jetzt, wenn jetzt irgendeiner dieser Router da draußen im Internet behauptet, hallo, ich hab hier die IP-Adresse vom Holgi, dann schicken die halt Pakete, die an die IP-Adresse vom Holgi gehen, an diesen Router.
+
+01:39:58.011 --> 01:40:21.511
+<v SPEAKER_15>Man kann zwar verifizieren, ob das stimmt, aber das funktioniert nicht im ganzen Internet. Viel ist da durch Vertrauen, gerade zwischen großen Providern. Wenn zwischen zwei großen Providern sowas passiert, dann ist die Tendenz im Internet trotzdem noch, dass man dem großen Provider glaubt, weil die würden ja nicht irgendwelche falschen Routen schicken. Da gibt es inzwischen Mechanismen, aber das ist weltweit noch nicht so richtig.
+
+01:40:21.531 --> 01:40:24.511
+<v SPEAKER_3>Im Prinzip könnte ich sagen, hey hallo, ich bin eine Sparkasse.
+
+01:40:24.531 --> 01:40:40.931
+<v SPEAKER_15>Genau. Cool, gib mir dein Geld. Das Lustige ist, du kannst die Pakete von der Sparkasse auch zu der Sparkasse weiter schicken, wenn du einen sehr kurzen Fahrt zu der Sparkasse hast. Das kannst du meinetwegen den ganzen Tag machen, das fällt keinem so richtig doll schnell aus.
+
+01:40:41.111 --> 01:40:43.291
+<v SPEAKER_3>Kann man schon mit dem Ding überwachen?
+
+01:40:43.311 --> 01:41:11.171
+<v SPEAKER_13>Nee, es geht nicht nur überwachen. Also pass auf, ich gebe dir ein Paket an dich. Gibt es meiner Post? Und meine Post hat eine Tabelle und weiß, Pakete an denen gehen hier lang. So gehen über Hamburg, weiß ich. Das ist eine Route, sowas gibt es auch im Internet. Was jetzt passiert ist, ist, dass ein Paket an Holgi nicht direkt über diese Route geht, sondern da fragt man erstmal, weiß jemand, wo geht es zu Holgi? Über einen Protokoll, also man redet miteinander und da kam ja die Telekom Singapore. Du fragst mich, wo muss das hin?
+
+01:41:15.091 --> 01:41:17.011
+<v SPEAKER_3>Hört ihr die Musik?
+
+01:41:17.551 --> 01:41:21.131
+<v SPEAKER_13>Im Wesentlichen kommt die Telekom Singapore und sagt, ich weiß, wo es zu Holgi geht, und zwar bei mir.
+
+01:41:21.571 --> 01:41:25.991
+<v SPEAKER_3>Also ich muss an dieser Stelle keinen Punkt vergeben. Aber wir haben ja noch eine Nachricht, vielleicht kommt es noch zu einem Ausgleich.
+
+01:41:27.651 --> 01:42:05.831
+<v SPEAKER_9>TrueCrypt nimmt nächste Hürde. Nach den NSA-Enthüllungen von Edward Snowden hat das Open Crypto Audit Project den Code des Verschlüsselungsprogramms TrueCrypt untersuchen lassen. Ein entsprechender Prüfbericht liegt nun vor. Mithilfe von Spendengeldern sollen nun eine formale Krypto-Analyse sowie ein Bug-Bounty-Programm sicherstellen, dass das Open Source-Programm keine Hintertüren enthält. Außerdem sollen Probleme im Zusammenhang mit der Lizenz von TrueCrypt ausgeräumt. Das Open Crypto-Audit Project wurde von international bekannten Kryptografen gegründet, darunter dem Security-Autor Bruce Schneier.
+
+01:42:07.251 --> 01:42:19.151
+<v SPEAKER_3>Vielen Dank. Nachrichtsprecher Holger Klein. Einen Applaus bitte. Aber trotzdem möchte ich an dieser Stelle Arthur fragen, Entschuldigung, wie?
+
+01:42:23.571 --> 01:43:50.031
+<v SPEAKER_15>Ja, ich versuch das mal auf zwei Ebenen. Das eine ist die Ebene, was dieses Programm tut. Dieses Programm verschlüsselt Festplatten und andere Speichermedien, sodass, wenn dieses Speichermedium verloren geht oder eine dritte Person drauf Zugriff hat, diese Person ohne den Kenntnis eines Schlüssels die Inhalte nicht auslesen kann. Wenn du also deine Urlaubsfotos auf einem USB-Stick speicherst, um sie deiner Mutter zu schicken und der geht unterwegs in der Post verloren, dann sieht jeder deine Urlaubsfotos. Wenn du sie verschlüsselst, kann sie nur jemand sehen, der Kenntnis von diesem Schlüssel hat. Das ist zumindest das, was das Programm tun soll. Bei einem Programm gibt es also einen Menschen, der sagt, das ist eine Zielsetzung. Und dann muss ein anderer Mensch, wir nennen ihn Programmierer, versuchen diese Anweisungen, Anweisungen für die Maschine umzusetzen, indem er sie programmiert. Und das macht er nicht in einer Menschensprache, sondern in einer Computersprache. Das heißt, er macht eine Übersetzungsleistung zwischen dieser menschlichen Sprache. Da darf kein anderer darauf zugreifen. Mach mal den folgenden Funktionsaufruf. Bei einer Software, die nicht open source ist, hast du keine Möglichkeit nachzuvollziehen, ob das Programm das tut, was behauptet, dass es tut. Geschweige denn kannst du nachvollziehen, ob es nicht auch noch andere Dinge tut. Sehr viel schwerer ist es negativ, um zu beweisen. Das kannst du allerdings tun, wenn du den Quellcode dazu hast, wenn du diese Maschinenanweisungen hast, in einer Computersprache, in der steht Tue das Folgende, kannst du prüfen, ob das Programm tatsächlich das Folgende tut.
+
+01:43:50.051 --> 01:43:52.551
+<v SPEAKER_16>Sehe OpenSSL.
+
+01:43:57.531 --> 01:44:03.291
+<v SPEAKER_15>Seht darum Censio OpenSSL, esche die Länder!
+
+01:44:03.311 --> 01:44:19.331
+<v SPEAKER_3>Ich möchte an dieser Stelle kurz unterbrechen, die Erklärung von Arthur, die ich bis jetzt sehr gelungen fand, und möchte schon mal ankündigen, Chaosradio 201, Thema OpenSSL, Gast THS. Doch, doch, doch, so wird es kommen. So Arthur, bitte weiter, fahre fort.
+
+01:44:19.351 --> 01:45:18.691
+<v SPEAKER_15>Fahre fort, fahre er fort, aber nicht überlos. Um das zu verifizieren, brauchst du aber eine andere Person, die qualifiziert ist, diese Sprache zu verstehen. Also wieder ein Übersetzer, diesmal aus der Maschinensprache zurück in die menschliche Anweisung. Das heißt, ein weiterer Programmierer oder mehrere lesen dann diesen Quelltext, den sie im Fall von sogenannten Open Source offenen Quellen einsehen können und versuchen herauszufinden, was dieses Programm alles macht und ob die Anweisungen, die dieses Programm der Maschine gibt, die sind, die die ursprünglichen Menschen sich ausgedacht haben, dass es das tun soll. Also es ist eine Prüfung, macht das Programm das, was es vorgibt zu tun und macht es nur das, was es vorgibt zu tun. Und Klassenkontrolle für die Software? Genau, und das nennt man Audit aus dem englischen Auditieren. Also es ist eine Prüfung, ob das Programm tatsächlich das tut. Also eine Rückübersetzung, wo ein zweiter Programmierer prüft, ob der erste Programmierer seine Aufgabe richtig gemacht hat. Dieser fremdsprachemächtiger Mensch prüft, ob der andere Mensch dieser fremdsprachemächtige ist.
+
+01:45:18.711 --> 01:45:23.891
+<v SPEAKER_3>Bonusfrage, was ist ein Bug Bounty Programm?
+
+01:45:23.911 --> 01:46:07.191
+<v SPEAKER_15>Eben funktional ausdifferenzierten kapitalistischen Gesellschaften. Gibt es intrinsische Anreize? Die Anreize im Chaos Computer Club sind so, ich finde das toll, ich will das haben. Und das ermüdet irgendwann. Irgendwann denkst du, ich hätte jetzt gerne mal einen Schnitzel. Oder ich würde gerne mal eine Woche Urlaub machen. Und dafür musst du diese kleinen kapitalistischen Währungseinheiten auf den Tisch legen, weil hier alles mit Geld geregelt wird. Da haben wir ja Andi. Warum sollen die jungen Andelen dafür Geld geben, dass sie das Lied ihre Eltern singen dürfen? Weswegen gibt es zwei Modelle. Eine Modell ist eine Lizenz. Das kommt dann gleich weiter unten. Ich nehme es schon mal vorweg. Wenn ich ein Programm schreibe, habe ich ein Werk geschaffen, wie ein Autor, der ein Buch schreibt und eine Geschichte erzählt.
+
+01:46:08.911 --> 01:46:10.011
+<v SPEAKER_13>Ich geh mal kurz ein Bier holen.
+
+01:46:10.031 --> 01:46:13.531
+<v SPEAKER_3>Ich wollte gerade sagen. Also im Ansatz sehr gut, aber zu lang.
+
+01:46:13.551 --> 01:46:49.891
+<v SPEAKER_15>Okay, ich kürze es jetzt auf die letzten 30 Sekunden runter. Dann haben wir glaube ich keinen Hörer mehr. Du schreibst eine Geschichte. Und diese Geschichte darf von allen anderen verbreitet, verändert, genutzt werden, weil diese Geschichte unter einer offenen Lizenz steht. Und der Vorteil an dieser Software ist, jeder kann Veränderungen einbringen, aber es können nur qualifizierte Personen tun. Und um solche Fehler zu finden, um solche Audits zu tun, musst du einen Preis ausloben. Und ein Bug Bounty Programm ist die Auslobung eines Preises für jemanden, der sich diese Geschichte von vorne bis hinten liest und sagt, das ist ein Kommafehler. Also ich red dir für das Lektorat.
+
+01:46:50.831 --> 01:46:55.291
+<v SPEAKER_3>Ich glaube, dieser Satz hätte gereicht. Tatsächlich. Danke, danke Arthorz. Auch ein Beifall für Arthorz.
+
+01:46:55.311 --> 01:46:58.591
+<v SPEAKER_16>Ich finde, Arthorz sollte auf jeden Fall sehr viel häufiger Chaosradio machen.
+
+01:46:59.791 --> 01:47:24.491
+<v SPEAKER_3>Ja, also ich vergebe mal zwei von vier Punkten. Das ist schon nicht schlecht. Und man könnte vielleicht denken, 200 Sendungen, das ist schon puh. Aber gut, es gibt ja vielleicht nochmal schon. Die Frage ist, was wird denn jetzt eigentlich aus dem Chaosradio in Zukunft? Und ich habe das auch die alten Moderatoren gefragt, also Johnny Häusler, Max von Malodki, Jakob Kranz und Holger Klein. Und die haben dazu Folgendes gesagt.
+
+01:47:24.511 --> 01:47:28.591
+<v SPEAKER_10>Ich wünsche mir, dass die weiter so avantgarde sind in Sachen Themen.
+
+01:47:30.451 --> 01:48:31.151
+<v SPEAKER_8>Ich wünsche mir das, was ich mir von allen klugen Menschen wünsche, nämlich Aufklärung und Debatte, Kommunikation, das Reden darüber, wie sich unser Leben, unsere Gesellschaft entwickelt und verändert. Ich glaube, das tut das Chaosradio sehr, sehr gut. Es ist natürlich eine Sendung für Menschen, die sich prinzipiell für das dahinter interessieren, also die nicht nur oberflächliches Wissen vermittelt bekommen wollen. Und davon gibt es ja zum Glück genug Menschen, die das so haben wollen. Und ich erwarte mir, deswegen kommt vom Chaosradio nach wie vor, dass es versucht aufzuklären, zu informieren, zu debattieren und auch eine gute Zeit zu haben mit diesem ganzen Technikkram da draußen, mit dem wir irgendwie umgehen müssen. Jetzt nochmal ganz anders, wo wir wissen, dass wir einerseits was ganz Großartiges da vor uns haben und andererseits aber auch eine Maschinerie, die es halt möglich macht, uns alle, die ganze Welt draußen in irgendeiner Form zu kontrollieren und zu überwachen. Und wie das jetzt weitergeht, liegt glaube ich in unser allen Händen.
+
+01:48:31.171 --> 01:49:19.311
+<v SPEAKER_2>Dass es mindestens 400 gibt. Nein, es muss natürlich 666 geben. Nein, es muss natürlich... Also ich würde mir wünschen, dass das Chaosradio weiterhin überraschend bleibt, weiterhin auch von Seiten des CCC immer wieder auf Leuten auf die Füße tritt und sagt so nicht. Und wenn es nur der ganz kleine Satz ist, von wegen macht bitte eure Backups auf dem Telefon. Weil man kann in einer Welt, die so digital vernetzt ist wie die unsere, und das ist wahrscheinlich nur der Anfang, wenn wir in 2000 Jahren mal in die Geschichtsbücher gucken, werden die noch lachen, weil die hatten Telefone da, das ist ja lustig. Ich finde, man kann auch ganz viel für seinen Alltag dazulernen. Und man muss auch als Normalsterblicher, zum letzten Mal dieses Wort gebraucht, ein bisschen die Scheuklappen ablegen und sagen, ja, das sind eben keine Nerds. Das sind einfach Typen, die sich mit Dingen beschäftigen, die mein Leben auch betreffen. Und ich bin ganz froh, dass die sich damit beschäftigen, da muss ich nämlich nicht machen. Aber es wäre schön, wenn die mir das so erklären, dass ich es verstehe.
+
+01:49:19.411 --> 01:49:21.631
+<v SPEAKER_9>Ich wünsche mir vom Chaosradio, dass es nicht aufhört.
+
+01:49:28.671 --> 01:49:39.891
+<v SPEAKER_3>Einer machen wir noch. Tatsächlich scheint das bei den Moderatoren ganz gut angekommen zu sein. Und das klingt so ein bisschen so, mach das weiter so.
+
+01:49:40.091 --> 01:49:42.411
+<v SPEAKER_13>Ein Moderator fehlt ja noch.
+
+01:49:42.431 --> 01:50:10.891
+<v SPEAKER_3>Was ist das, dass ihr immer so drauf rumreiten müsst? Du bist unser Moderator, sagt denn Herr Richter eigentlich. Aber an dieser Stelle kann ich nicht antworten. Weil ihr habt ja vorhin ganz selber ganz gut erklärt, dass man in gewissen Jobs hat man ja einfach sozusagen per se kein Interesse daran, dass die aufhören, weil, naja, es sind total geile Jobs. So sieht es aus. Ich will natürlich, dass es immer weiter geht, aber das zählt überhaupt gar nicht, wie ihr selber ausführlich in der Sendung erklärt habt.
+
+01:50:10.911 --> 01:50:11.511
+<v SPEAKER_13>Wer war das nochmal?
+
+01:50:11.531 --> 01:50:17.371
+<v SPEAKER_3>Er erklärt es. Was wünscht ihr euch denn von Chaosradio in Zukunft?
+
+01:50:17.391 --> 01:50:44.191
+<v SPEAKER_15>Ich würde mir wünschen, dass es weiter stattfindet, dass Fritz uns diese Gelegenheit weitergibt. Herzlichen Dank an dieser Stelle. Und ich würde mir auf jeden Fall wünschen, dass es da draußen genügend interessierte Personen als Hörer gibt, die uns immer wieder zeigen, dass es sich lohnt, das zu tun und die die Diskussion am Laufen halten und die sich für ihre gesellschaftspolitischen Themen interessieren und für die Welt, in der sie leben. Und ich wünsche mir, dass es weiterhin Spaß macht, denn es ist immer auch ein Faktor, das Ding hat einfach ihre Spaß gemacht, sonst wären wir da nicht rausgefahren.
+
+01:50:44.211 --> 01:50:49.291
+<v SPEAKER_3>Sehr gut. FIFA hat ja eigentlich schon gesagt, Radio ist eh doof und so, aber hast du noch Erwartungen ans Chaosradio?
+
+01:50:50.751 --> 01:51:39.651
+<v SPEAKER_13>Ja klar, also Chaosradio hat, wir haben schon aufgezählt, was es alles erreicht hat über die Jahre. Und ich sehe keinen Grund, warum es aufhören sollte, damit Dinge zu erreichen. Man muss es natürlich weitermachen, klar. Was ich mir wünschen würde, ist, dass wir es in höherem Maße als bisher schaffen, ein bisschen Variationen in die CCC-Leute zu schicken, die wir da hinschicken. Weil das ist immer die Gefahr, wenn man sowas macht und sich das über 20 Jahre eintritt, dass es dann so eine Echo-Kammer wieder wird. Das ist genau das Gegenteil dessen, was wir erreichen wollen. Wir möchten eine offene Debatte haben. Das ist natürlich gut, wenn Leute anrufen und da Varianz einbringen. Aber es ist auch wichtig, dass wir frisches Blut kriegen. Das wäre einer meiner Wünsche, dass wir es noch mehr schaffen, nicht nur dieselben Leute immer hinzuschicken.
+
+01:51:39.671 --> 01:51:43.991
+<v SPEAKER_3>Liebe Chaos Computer Club Leute aus Berlin und Brandenburg, kommt vorbei, macht mit.
+
+01:51:48.591 --> 01:51:51.471
+<v SPEAKER_16>Ich war erst plötzlich wieder da.
+
+01:51:51.471 --> 01:51:56.751
+<v SPEAKER_3>THS mal abgesehen davon, dass wir dich in der nächsten Sendung begrüßen. Worauf ich mich schon sehr freue. Was wünscht ihr noch vom Chaos Radio?
+
+01:51:56.771 --> 01:51:58.491
+<v SPEAKER_16>Ich bin da glaube ich gar nicht in Deutschland.
+
+01:51:58.511 --> 01:52:03.411
+<v SPEAKER_3>Dafür werden wir schon sorgen, mit den Füßen am Boden festgenagelt.
+
+01:52:03.431 --> 01:52:04.711
+<v SPEAKER_11>Aber egal.
+
+01:52:04.731 --> 01:52:05.691
+<v SPEAKER_3>Ansonsten vom Chaos Radio?
+
+01:52:09.911 --> 01:52:33.551
+<v SPEAKER_16>Wie gesagt, ich habe meine erste Sendung ungefähr vor 13 Jahren gemacht zusammen mit Erdgeist und ich hatte den Eindruck, da gab es ein paar mehr Anrufer. Also Leute, die halt wirklich auch gefragt haben, Sachen gefragt haben und sich für die Themen interessiert haben und da diskutieren wollten. Das ist heute nicht mehr so. Das finde ich eigentlich ein bisschen blöd. Ich wünschte mir, das wäre ein bisschen, so würde wir so ein bisschen in die Richtung gehen, dass Leute auch anrufen.
+
+01:52:33.931 --> 01:52:44.791
+<v SPEAKER_3>Okay, also falls ihr das nächste Mal Chaosradio hört und wir nicht direkt zu Viermillion unterwegs sind, dann könnt ihr gerne anrufen. Die Nummer ist, könnt ihr euch jetzt schon mal aufschreiben, 0331 77 97 110. Wenn man es gelernt hat, hat man es gelernt. Dann kommt es auch gleich mal ansagen.
+
+01:52:44.811 --> 01:52:47.411
+<v SPEAKER_11>Erdgeist, Chaosradio und du.
+
+01:52:47.431 --> 01:53:32.331
+<v SPEAKER_6>Ich würde mir wünschen, dass es genau den Impact hat, den ich da gerade aus Bernau gelesen habe, das hier im Sendegebiet und im Chat wurde mir gerade mitgeteilt, dass der Chaos-Traff Bernau sich genau zusammengefunden hat, weil sie alle Chaosradio gehört haben und in der Meinung waren, zu Zeiten, als es mit den Foren noch nicht so richtig gang und gäbe war, dass man sozusagen Nischeninteresse dort gleichgesinnte gefunden hat, hat man Chaosradio gehört und gesagt, da sind Nerds, da sind Nerds wie ich, und die kann man treffen und anfassen. Dieser Treffen in Bernau hat sich dort so konstituiert und so sind die Leute zusammengefunden. Dieses positive Erlebnis würde ich mir auch immer wieder, dieses Feedback würde ich mir wünschen, von noch mehr Leuten hören zu können. Und deswegen gehen wir auch mal wieder über UKW nach ganz Brandenburg raus.
+
+01:53:33.491 --> 01:53:44.831
+<v SPEAKER_3>Und sogar übers Internet in die ganze Welt. Aber du hast mal was gesagt, dass das mit der Themensuche über die Jahre schwieriger wurde, weil früher gab es mehr niedrig hängendere Früchte. Wie hat sich das verändert und wie wird sich das weiter verändern?
+
+01:53:45.491 --> 01:54:38.351
+<v SPEAKER_6>Na es war natürlich, wenn man sich so anguckt in den Jahren, dass dort Sendungen über Wi-Fi gab, über Microsoft, wo Google der große heiße Scheiß gewesen ist, der da gerade jetzt kommt, war das natürlich, damals konnte man mit dem, was man sich dort im Club da so zugeworfen hatte, mit den spannenden Bits ins Radio gehen und war dann irgendwie noch der Oberchecker. Inzwischen ist es im Vergleich zu damals, wo, wenn man was mit Computern macht, war das was Besonderes. Heutzutage ist man, wenn man nichts mit Computern macht, was Besonderes. So dass es deutlich schwieriger ist, einfach nur irgendwelche Anekdoten fallen zu lassen, so eine ganze Sendung zu bestreiten, wo man noch ernsthaft Wissen vermittelte. Da hat man, oder ich zumindest, jetzt doch noch Anspruch, mich intensiver vorzubereiten, bevor ich da reingehe. Und ich hab irgendwie bis heute noch jedes Mal einen fiesen Lampenfieber, bevor ich mich in die Sendung reinsetze. Weil ich denke, irgendwann kriegen sie raus, dass wir hier einfach nur alles Hochstapler sind. Und dann tragen sie uns raus.
+
+01:54:39.351 --> 01:54:48.231
+<v SPEAKER_3>Ich denke, das wird bis auf weiteres nicht passieren. Kannst du ein Thema sagen, wo du glaubst, das wird in näherer Zukunft mal Chaosradio eine Rolle spielen? Also außer Open SSL, weil das macht THS ja nächstes Mal?
+
+01:54:49.031 --> 01:54:51.451
+<v SPEAKER_16>Ich bin gar nicht da, glaube ich.
+
+01:54:51.471 --> 01:54:51.651
+<v SPEAKER_6>Nein.
+
+01:54:52.731 --> 01:54:59.451
+<v SPEAKER_3>Ok, Arthur, hast du was, wo du sagst, ok, das ist wahrscheinlich ein Thema, was uns die nächste Zeit bewegen wird?
+
+01:54:59.471 --> 01:55:08.151
+<v SPEAKER_15>Mir fallen so unglaublich viele Sachen ein, die demnächst passieren werden. Ich kann da kein Einzelnes rausholen. Und leider ist meine Kristallkugel gerade schmutzig. Ich weiß nicht, was uns als nächstes auf die Füße fällt.
+
+01:55:08.171 --> 01:55:31.751
+<v SPEAKER_3>Aha, hast du ein Verdacht? Okay, wir müssen jetzt noch mal ganz zum Schluss, wir müssen wirklich gleich Schluss machen. Aber ihr habt jetzt eine Minute Zeit, um nochmal eure Fähigkeiten beizustellen und zu erklären, warum dieses Thema Open SSL in dieser Sendung der Insider war, die man nicht erklären konnte, weil es zu kompliziert ist. Aber was ist mit diesem Thema los, warum ist es so wichtig und warum werden wir in der nächsten Sendung drüber reden?
+
+01:55:31.771 --> 01:55:57.911
+<v SPEAKER_15>Die Erde ist voll überwacht, alle elektronische Kommunikation wird abgefangen und vermutlich für immer gespeichert. Das einzige Mittel, was wir aus den Snowden Enthüllungen gelernt haben, ist starke Verschlüsselung, Kryptographie. In der Open-Source-Welt hat man sich darauf geeinigt, dass man die Anstrengungen, die ja unbezahlt sind, bündelt. Und deswegen gibt es eine einzige, weitverbreitete Bibliothek, die das tut und die heißt OpenSSL. Und die ist so was von verrottet und stinkt zum Himmel.
+
+01:55:57.931 --> 01:55:59.971
+<v SPEAKER_16>Und das weiß keiner und das ist das Problem.
+
+01:56:00.151 --> 01:56:01.611
+<v SPEAKER_13>Na jetzt weiß es schon jemand.
+
+01:56:02.211 --> 01:56:04.951
+<v SPEAKER_16>Es gibt immer noch Leute, die wissen das immer noch nicht.
+
+01:56:04.971 --> 01:56:07.551
+<v SPEAKER_3>Und deswegen werden wir in der nächsten Chaosradio senden.
+
+01:56:08.211 --> 01:56:46.931
+<v SPEAKER_6>Akut ist rausgekommen, dass dieses OpenSSL eine so schwerwiegende Softwarelücke hat, dass im schlimmsten Fall sogar die geheimen Schlüssel der im Internet befindlichen Server und Web-Server Angreifern in die Hände gefallen sind. Was bedeutet, dass ein Angreifer, der allen Datenverkehr mitgeschnitten hat, rückwirkend mit diesen geheimen Schlüsseln den Datenverkehr wieder entschlüsseln kann. Und damit die gesamte kryptografische Sicherung dieser Verbindung hinfällig geworden ist. Und das ist durch einen Programmierfehler eines deutschen Programmierers passiert, der einfach dort seinen Programmcode in dieses Projekt...
+
+01:56:46.951 --> 01:56:48.231
+<v SPEAKER_11>Oh guck mal, schon so spät?
+
+01:56:48.251 --> 01:57:28.031
+<v SPEAKER_3>Gut, also ich sehe hier zusammengezogene Gesichter, wilde Handwerker. Und ich denke, im nächsten Chaosradio werden wir uns mal genauer mit diesem komischen Open-Messes-L-Ding beschäftigen. Ich danke allen Leuten, die mitgemacht haben. Ihr könnt gerne auch mal Krach machen, diesmal für euch selbst. Das war das Chaosradio 200 aus der Marienstraße 11 in Berlin aus dem Chaos Computer Club Berlin. Wenn ihr gerade jetzt unterwegs seid, könnt ihr gerne noch vorbeikommen. Hier gibt es nämlich noch ein bisschen Party mit Musik und sogar Getränken, die möglicherweise unter Umständen auch alkoholisch sind, hat man mir zumindest zugemunkelt. Auf Fritz geht es jetzt aus Potsdam weiter mit dem Night Flight mit Flo Heiler. Mein Name ist Marcus Richter und ich hab zum Schluss wie immer nur eins zu sagen. Lasst euch nicht überwachen und verschlüsselt immer schön eure Backups.

@@ -1,0 +1,916 @@
+WEBVTT
+
+00:00:14.748 --> 00:05:10.319
+<v SPEAKER_2>Die zwei Sprechstunden. Und damit herzlich willkommen zum Chaos Radio im Blue Moon. Dem Blue Moon, wo alle zwei Monate der Chaos Computer Club zu Fritz kommt und das Studio besetzt und dann Dinge erzählt über das komische Internet oder diese seltsame Digitaltechnologie, die mittlerweile so alltäglich für uns geworden ist, dass wir gar nicht mehr darüber nachdenken, dass das irgendwie was extra oder Besonderes sein könnte. Und heute soll es ums Internet gehen, also genauer genommen, was da ganz weit oben passiert, weil was man nicht weiß, ist, dass Internet besteht oder funktioniert, so wie es funktioniert, vor allem deshalb, weil da unglaublich viele Regeln bestehen. Also es ist schon auch ganz viel Technik, aber es ist auch so, dass da ganz viel geregelt werden muss. Da tun die Leute zusammen und erfinden Dinge, wie Datenverkehr gelenkt wird, wo der überhaupt ankommt, wie man den austauscht und lauter fürchterliche Sachen. Wir haben das von der anderen Seite schon mal versucht, anzugehen im Chaosradio 182. Da wurde erklärt, was eigentlich passiert, wenn man da sozusagen das Routerkabel in die Wand steckt und was dann direkt dahinter passiert. Und heute gehen wir quasi an die andere Seite, ganz nach oben, um mal zu gucken, wer bestimmt eigentlich, wie das Internet funktioniert und was für Konsequenzen hat das für uns. Dazu sind im Studio Clemens. Hallo, hallo. Und Mutags, hallo, hallo.
+
+00:05:10.339 --> 00:05:11.099
+<v SPEAKER_3>Na, bind.
+
+00:05:11.119 --> 00:05:15.699
+<v SPEAKER_2>Der ist vom Chaos Computer Club und Clemens ist, das wurde mir gar nicht erklärt, der war auf einmal da. Stell dich doch mal genauer vor.
+
+00:05:17.919 --> 00:05:36.499
+<v SPEAKER_4>Ich bin Internet-Opa, bin sozusagen seit Anbeginn des Internets in Deutschland mit dabei und wurde hier eingeladen, um mal über so ein paar Sachen zu berichten, wie das vielleicht wieder angefangen hat, so Opa erzählt vom Krieg mäßig, oder wie sich das Internet heute in Teilen noch selber verwaltet.
+
+00:05:37.139 --> 00:08:17.039
+<v SPEAKER_2>Darüber werden wir ganz genau sprechen in den nächsten zwei Stunden. Wenn ihr Fragen habt, könnt ihr gerne anrufen unter 0331 70 97 110 oder wenn ihr auch zu den vielen Dingen, über die wir reden werden, es wird noch ganz viel im Abkürzen gehen, IETF und RIPE und so Dinge, wenn ihr da auch was erzählen könnt, könnt ihr auch gerne anrufen unter 0331 70 97 110. Und dann hab ich mich aber noch gefragt, wie kommt man jetzt eigentlich hin, dass man drüber redet, wie kann man das nochmal genau erklären, was denn da passiert? Und möchte an einer Stelle anfangen, die euch allen wahrscheinlich irgendwie bekannt vorkommt. Das ist eine Fehlermeldung im Internet. Es gibt nämlich den Fehler 404. Das ist, wenn ihr auf einer Webseite geht und dort versucht, eine Seite aufzurufen, die es gar nicht gibt. Dann kriegt ihr quasi von einem Webserver, also dem Computer, der am anderen Ende der Leitung sitzt, die Antwort 404. 404, file not found. Das heißt einfach, die Seite ist nicht da. Das ist so die bekannteste Fehlermeldung, die es überhaupt gibt. Und das ist nicht nur so eine Fehlermeldung. Es wird auch oft sehr ausgeschmückt, wenn man da hinkommt, weil das für viele, also gerade so Online Agenturen, dann so eine Art Werbung ist. Okay, wenn die Leute auf eine Fehlermeldung kommen, müssen sie sehen, dass wir trotzdem toll sind. Es gibt sogar eine Firma, die macht es ganz clever. Wenn man da auf eine Fehlersite kommt, kann man nicht Pac-Man spielen, Blue Fountain Media, wenn ihr mal googeln wollt. Das ist eine sehr clevere Art und Weise, mit dieser Fehlersite umzugehen. Aber jetzt hat dieser Fehler ja diese Nummer 404 und das heißt, es gibt noch ganz, ganz viele andere Fehler. Und erst neulich ist ein weiterer dazugekommen. Und diese Fehlermeldung, die man bekommen kann, hat die Nummer 451. Und die bedeutet, dass die Seite, die man versucht, aufzurufen, aus juristischen Gründen gesperrt ist. Also man kann sich das so ähnlich vorstellen, wie wenn ihr auf YouTube geht und dort versucht, ein Musikvideo aufzurufen, dann steht da, ja, können wir leider nicht zeigen, weil wir uns mit der G-Mann nicht einigen können. Das ist so, also in dieselbe Richtung geht, dass der Web-Server gibt, also eine Fehlermeldung raus, 451, hier ist was verboten worden von Juristen. Und ich hab mit, das wurde von einem Mann vorgeschlagen, das ist schon der erste Punkt, über den wir heute reden wollen, von wem kommen diese ganze Regelung. Und manchmal ist es halt ein einzelner Typ, der sagt, das könnte man doch mal ändern. Tim Bray heißt der. Der hat eine Idee aufgegriffen, die gab es schon, nämlich, dass man halt mal vielleicht Bescheid sagt, wenn man juristisch eine Seite sperren muss. Und der sagte, lasst uns doch eine eigene Fehlermeldung einführen. Und dann, ich hab mit ihm mal gesprochen, wollte als erstes von ihm wissen, so, okay, wenn man jetzt so einen Fehlercode einführt, ist das so ein Nerd-Erbsen-Zehler-Ding, dass man sagt, okay, also technisch gesehen ist es ja gar nicht so, dass die Seite gar nicht da ist, deswegen muss es eine eigene Fehlermeldung geben. Oder ist es so, dass er sagt, naja, das ist halt so ein politisches Ding, weil im Web werden halt Dinge gesperrt aufgrund von Juristerei und das ist ja eigentlich, das geht ja eigentlich gar nicht.
+
+00:08:44.419 --> 00:09:55.459
+<v SPEAKER_5>And if you look at the Internet protocols, there are a large number of different error types to describe different kinds of network problems, hardware problems, software problems. But there was no error code for legal problems, and yet we encounter lots of them on the Internet. And so really the design of the network is not complete until we have an ambiguous signal that some content is inaccessible for legal reasons. So there's a good engineering argument for that. On the other hand, from the political point of view, we live in a world in which sometimes there is censorship. And we all have opinions about when that's appropriate and when that's not appropriate. But sometimes it happens. That when there is a legal obstacle to seeing something, well, okay, if it's done in a reasonable democratic fashion, but it shouldn't be secret.
+
+00:10:06.159 --> 00:10:58.579
+<v SPEAKER_2>Also sagt hier der Tim Bray, naja, das ist schon so zweifach. Einerseits will man tatsächlich einfach eine richtige Fehlermeldung. Man will halt die konkrete Ansage haben, also auch technisch gesehen, diese Seite ist jetzt gesperrt, weil juristisches Problem. Andererseits geht es tatsächlich auch so ein bisschen um die Politik, dass der User das überhaupt mitkriegt, dass der nicht denkt, okay, da ist halt irgendwie so ein Fehler, sondern dass er halt genau weiß, nee, das ist juristisch gesperrt worden. Und dann wollte ich von ihm wissen, okay, es gibt jetzt also diese Fehlermeldung, die der Webserver ausliefert und das kann man ja auf verschiedene Arten und Weisen tun. Also man kann tatsächlich, das sieht man sehr selten heutzutage, aber das passiert manchmal noch, meistens wenn ein Server überlastet ist, wenn man wirklich nur so ganz stumpf so eine Fehlernummer sieht und dann irgendwie so einen ganz kurzen Halbsatz, der so also nicht mal erklärt, sondern eigentlich den Fehler nur ansagt. Dann wollte ich von ihm wissen, naja, okay, jetzt gibt es diesen Fehler 451, Webseite gesperrt wegen Juristerei. Willst du, dass es nur die blanke Fehlermeldung ist oder soll da doch schon irgendwie mehr erklärt werden, damit die Leute wirklich begreifen, worum es geht?
+
+00:10:59.639 --> 00:13:03.099
+<v SPEAKER_5>Das ist absolut korrekt. Also nicht in Frankreich, sondern in Frankreich oder in Deutschland. But for example, Reddit, the well-known Internet discussion site and Medium, the well-known online publication are already using this code. So is the Mozilla organization and a bunch of smaller ones.
+
+00:13:13.739 --> 00:14:05.059
+<v SPEAKER_2>Also bevor diese neue Fehlermeldung schon offiziell etabliert war, haben das schon Leute benutzt. Also bei Reddit gab es das, bei Medium und Mozilla hat das auch benutzt. Und das ist sozusagen gut in der Anwendung. Und der hat ja gesagt, auch gerade, ja, das wurde schon benutzt, bevor es offiziell ist. Und das ist tatsächlich ein Punkt, auf den wir heute auch zu sprechen kommen, nämlich die Frage, wie schnell flexibel und dynamisch ist denn diese Internetverwaltung, wenn da Dinge passieren? Denn diesen Vorschlag, diese Fehlermeldung einzuführen, die stammt aus dem Jahr 2012. Das ist also internettechnisch gesehen irgendwie so zwei Apokalypsen und noch eine kleine Sündflut und es gibt ein Gremium, das heißt IETF und Internet Engineering Task Force, wenn ich richtig informiert bin. Und die haben halt so lange gebraucht. Dann wollte ich mal wissen, so Tim, sag mal, irgendwie, das ist doch wirklich ganz schön viele Jahre. Warum hat das so lange gedauert?
+
+00:14:05.519 --> 00:15:10.999
+<v SPEAKER_5>Well, the IETF, Internet Engineering Task Force, is really quite a conservative organization. We don't add new protocols or codes to the Internet quickly and lightly. You have to think about these things. And then also on technical criteria, believe it or not, it makes a big difference whether the code begins with 4 or 5. They have quite different meanings. So maybe it should have been 551 as opposed to 451. There were some people there who thought that because of the political dimension, the IETF should not be involved.
+
+00:15:24.819 --> 00:20:33.937
+<v SPEAKER_2>So, es hat also lang gedauert, weil wenn man so eine neue Fehlermeldung im Internet einführt, dann muss man erst mal ganz ausführlich drüber reden. Und die Gremien, die das machen, also das IETF in diesem Fall, die sind halt auch so, dass man da sich die Zeit lassen will und das ganz genau bespricht. Und genau darüber wollen wir heute sprechen. Also wenn man das Interview jetzt nochmal, wenn es da nicht nur um dieses Thema, wenn man sich nicht nur das in Erinnerung ruft, wo es um diese Fehlermeldung geht, sondern man hat ja sozusagen jetzt auch so ein bisschen gelernt, wie das funktioniert in dem Internet, diese ganzen Regelungen, die da getroffen werden. Es gibt also RFCs. Das sind also Papiere, wo eine einzelne Sache geklärt wird. Da gibt es unheimlich viele von. Es gibt das IETF, also ein Gremium. Und wir wollen heute hier in der Sendung klären, wer ist denn das eigentlich? Wie kommt man dahin? Wie erklären die das genau? Und was passiert und wie beeinflusst uns das? Das machen wir gleich. Vorher haben wir aber noch eine kleine Musik. Und die kommt heute, wie alle Musik aus der letzten Saison in der Sendung, der ist traditionell eine andere, von Broke for Free, ein Netzmusikkünstler, den ich neulich erst entdeckt habe. Und der erste Track ist Night Owl. Night All von Broke for Free gibt es im Free Music Archive von dieser TM Chaos Radio in Blue Moon, wo wir heute mal ins Backstage des Internet gucken. Also weil diese Dinge, die funktionieren, so wie sie funktionieren, funktionieren nur so, wie sie funktionieren, weil sich Leute da sehr lange drüber Gedanken gemacht haben und dann untereinander Vereinbarungen geschlossen haben. Und wir wollen heute mal klären, wie das funktioniert, damit ihr das auch wisst, weil das Internet ist ja nicht so ganz unwichtig für uns. Zur Gast sind wie gesagt vom Chaos Computer Club, Chaos Computer Club, Montags. Und Clemens, der von der IETF unter anderem kommt, eine Organisation, die für das Internet irgendwie zuständig ist. Jetzt würde ich sozusagen von vorne anfangen. Wir haben gerade im Interview gehört, es gibt da draußen anscheinend ein Gremium, das regelt bestimmte Dinge, die wichtig für uns sind. Jetzt würde ich erst mal fragen, dieses Gremium, wer ist es denn überhaupt? Ist das ein staatliches Gremium? Ist das ein Gremium, wo die dicken Firmen, also Microsoft und Apple, ihre Leute drinsitzen haben? Oder die Telekom oder wer genau ist dieses Internet Engineering Taskforce, die da Dinge beschließen dürfen, die uns ja alle angehen schließlich?
+
+00:20:35.957 --> 00:22:34.657
+<v SPEAKER_4>Das sind, würde ich sagen, inzwischen vielleicht so zweieinhalbtausend Leute oder sowas auf der Welt, vielleicht auch mehr, die von überall herkommen. Das sind Privatleute, das sind auch werden von Firmenleute dort insandt, von Universitäten kommen viele Leute, auch von den Telcos. Und die setzen sich zusammen, das ganze Jahr über arbeiten an Standards. Da kann zum Beispiel jemand wie Tim Bray einfach mal so einen Vorschlag einbringen, einreichen als sogenannten Internet-Draft. Das heißt, er reicht einfach da so einen Zettel mal ein, wo seine Idee drauf steht. Das wird das ganze Jahr über so elektronisch gemacht, per E-Mail und Mailing-Listen und so weiter und so fort. Und die treffen sich dann auch dreimal im Jahr. Und bei diesen Treffen, da werden halt Details besprochen, da sucht man sich Verbündete, also Leute, die einen da unterstützen und dann wird auch am Ende darüber abgestimmt, übrigens auf eine sehr interessante Methode. Das heißt, es gibt immer für, das teilt sich auf in sogenannte Working Groups, weil das Internet ist ja total breit gefecht, da gibt es ja sehr viele Sachen, die man da besprechen kann. Und es gibt für jedes Feld, zum Beispiel jetzt für HTTP oder Web-Status-Codes, gibt es eine bestimmte Working Group, weiß ich jetzt gar nicht, welche das ist, aber ich könnte das mal nachgucken. Und da gibt es dann für jede Working Group, gibt es sogenannte Chairs. Das sind Lots of Chairmen oder Chairwomen. Deswegen, weil sie die Unterscheidung nicht machen wollen, sagen sie einfach nur Chairs. Die steuern sozusagen ihren Zoo von Leuten. Da darf jeder mitmachen. Jeder, der sich aktiv daran beteiligt an der Diskussion, macht da automatisch mit. Da gibt es also keine Beschränkungen. Man muss sich da auch nicht anmelden oder Mitgliedsgebühren bezahlen oder so was. Und wenn es dann bei so einem ITF-Meeting zu einer Abstimmung kommt, dann sagt der Chair so, jetzt haben wir hier zwei Vorschläge auf dem Tisch. Wenn ihr gerne Vorschlag A wollt, dann zoomt jetzt. Und dann macht die Leute so. Okay, und dann sagt der, und wer für Vorschlag B ist, zoomt jetzt und macht die Leute so. Und dann entscheidet der sozusagen nach der Lautstärke des Lums.
+
+00:22:34.677 --> 00:22:37.217
+<v SPEAKER_2>Gibt es einen Dezibelometer?
+
+00:22:38.557 --> 00:22:46.197
+<v SPEAKER_4>In der Regel ist das schon relativ deutlich erkennbar. Und wenn es nicht ist, dann wird halt so lange laut und leise hin und her gehumpt, bis das deutlich ist.
+
+00:22:46.217 --> 00:22:51.637
+<v SPEAKER_2>Okay, Mutag, du warst neulich, will ich nicht sagen, aber sozusagen zum ersten Mal neulich da.
+
+00:22:52.477 --> 00:23:10.837
+<v SPEAKER_3>Das war 2013 hat sich das ergeben. Und wenn man da so hinkommt, ist das halt schon doch ziemlich überwältigend. Allein von der Menge der Leute und der technischen Tiefe dieser Arbeitsgruppen. Und noch mal ganz kurz dieses mit dem Backstage, das liegt mir so ein ganz, ganz, ganz kleines bisschen quer im Magen.
+
+00:23:11.337 --> 00:23:17.917
+<v SPEAKER_2>Das war ja so klar. Ich versuche eine leicht verständliche Metapher zu finden, aber die stimmt natürlich nicht hundertprozentig. Was stört dich denn?
+
+00:23:17.937 --> 00:23:43.757
+<v SPEAKER_3>Na ja, es gibt keine Security. Also es hält dich niemand davon ab, in den Backstage-Bereich zu gehen und mitzumachen. Die ITF-Meetings werden gestreamt im Netz. Kann man mit teilnehmen. Es gibt auch ein Chat dabei. Und da kann man sich halt auch durchaus einmischen so ein bisschen und Kommentare geben, was halt wichtig ist. Die wollen halt wissen, wer man ist, beziehungsweise ob man für eine Firma arbeitet. Das muss man immer ganz klar sagen. Damit nicht irgendwelche proprietären Erweiterungen plötzlich standardisiert werden.
+
+00:23:43.777 --> 00:23:44.457
+<v SPEAKER_2>Bitte was?
+
+00:23:44.477 --> 00:23:57.537
+<v SPEAKER_3>Naja, also wenn ich jetzt so ein Protokoll entwickle, so ein HTTP-Status-Code zum Beispiel, da irgendwie einbringe und das patentiere ich, während das standardisiert wird, dann kann ich ja hinterher Lizenzgebühren von allen verlangen für so ein Standard. Und das wollen sie halt vermeiden.
+
+00:23:57.557 --> 00:24:34.677
+<v SPEAKER_4>Da gibt es ja jetzt einen Trick, wie sie das machen. Es gibt die sogenannten Blue Sheets. Wenn man in so einer Working Group sitzt, dann werden am Anfang Schreibbretter rumgereicht, da sind Blue Sheets drauf, sind einfach nur Unterschriftlisten auf blauem Papier. Die dienen genau dafür, um festzustellen, wer war alles in diesem Meeting, nicht um irgendwelche Leute hinterher anzupinkeln, sondern falls es irgendwann mal einen Patent Claim gibt. Also, wenn irgendjemand kommt und sagt, ich patentiere hier was, dann kann die ITF oder die anderen höheren Organisationen hingehen und sagen, Moment mal, das haben wir aber vor deinem Patentversuch, schon zwei Jahre vorher, auf diesem und jedem Meeting besprochen. Und hier haben wir drei Dutzend Zeugen, die da waren. Das war so nichts mit deinem Patentversuch.
+
+00:24:34.697 --> 00:24:44.897
+<v SPEAKER_3>Und die ganzen Teilnehmerlisten sind auch öffentlich im Internet einsehbar. Also man kann halt nachgucken, wer war vor 22 Jahren bei diesem IETF-Meeting beteiligt?
+
+00:24:44.917 --> 00:24:45.937
+<v SPEAKER_2>Da darf wirklich jeder hin?
+
+00:24:46.117 --> 00:24:46.497
+<v SPEAKER_4>Ja.
+
+00:24:46.517 --> 00:24:53.217
+<v SPEAKER_2>Also ich könnte jetzt, wenn das nächste IETF-Meeting ansteht, könnte ich sagen, so hier, mein Name ist Markus Richter, ich komme vom Radio und möchte gerne an diesem Treffen teilnehmen.
+
+00:24:53.337 --> 00:24:55.857
+<v SPEAKER_4>Ja, du kannst gerne Ende März mitkommen, Nachbarn aus Ayres.
+
+00:24:56.557 --> 00:24:57.437
+<v SPEAKER_3>Ich glaube, man muss ein bisschen...
+
+00:24:57.457 --> 00:24:59.737
+<v SPEAKER_2>Okay, das ist schon so ein bisschen......gebühren zahlen, ne?
+
+00:24:59.757 --> 00:25:27.717
+<v SPEAKER_4>Ja, es ist so, es gibt eine Teilnehmergebühr, das ist aber vom Prinzip so, man schmeißt mit in den Topf, dass sie das organisieren können. Ich kann was dazu erzählen, ich gehöre mit zu diesem technischen Organisationskomitee, was diese Dinge auch baut. Das hängt davon ab, wo du herkommst. Das kann auch, das kann eine Uni sein, das kann eine Firma sein, oder ich müsste jetzt mal nachgucken. Ich zahl's selber nicht, da ich zu dem Volunteerteam gehöre, also zu dem Freiwilligenteam, die das technisch mit organisieren. Aber vom Prinzip hält dich da niemand auf, da einfach hinzugehen. Oder dein Uni delegiert dich zum Beispiel mit.
+
+00:25:27.817 --> 00:25:29.757
+<v SPEAKER_2>Aber es ist, man muss es sich halt schon leisten können.
+
+00:25:29.777 --> 00:25:34.217
+<v SPEAKER_4>Ja, aber es ist im Vergleich zu anderen Industriekonferenzen unglaublich billig. Das ist total billig, genau.
+
+00:25:35.817 --> 00:25:42.897
+<v SPEAKER_2>Ich rede ja nicht aus der Industrieperspektive, sondern ich rede aus der Perspektive des Nutzers, über dessen Internet damit bestimmt wird. Da kann also nicht jeder hin, weil...
+
+00:25:42.917 --> 00:26:45.097
+<v SPEAKER_3>Es gibt noch so ein Ding, was ich früher schon so michschen sagte, diese technische Tiefe da ist schon sehr krass. Weil ich da jetzt so direkt keinen Auftrag hatte für irgendwas, hab ich mich in ein paar Working Groups einfach mal reingesetzt und zugeguckt und zugehört. Und bin dann in eine reingestolpert, wo es um die Standardisierung von dem E-Call in den Autos ging, die, wenn sie einen Unfall bauen, automatisch da die Rettungskräfte anrufen sollen. Und dann ging die Diskussion los. Na ja, die rufen halt einfach 112 an in Europa. Und dann meldete sich halt jemand aus den USA an. Na, das ist nicht so einfach. Also eigentlich ist das bei uns ja auch 911. Außer es ist eine Straße durch einen Park, weil da sind dann eventuell Park Ranger zuständig. Aber wenn du in Washington bist, musst du eventuell den Secret Service anrufen, weil das ja vielleicht ein Bundesgebäude ist, wo der Unfall ist. Und es könnte auch sein, dass es ein Highway ist. Da brauchst du dann die Highway Patrol. Und dann wurde es da etwas unübersichtlich, wen man da eigentlich anrufen muss und wie das dann weiterzuleiten ist. Das war also echt sehr, sehr spannend zu sehen, was es da so weltweit alles so für Nebenbedingungen gibt. Und das ist eine der Gründe, warum es halt einfach so lange dauert.
+
+00:26:45.117 --> 00:27:01.717
+<v SPEAKER_4>Du kannst zumindest auch remote teilnehmen. Also wenn du nichts bezahlen willst, dann hängst du dich ein, guckst dir die Streams an. Und die Fragen oder Beiträge, die du dir da beibringen willst, die tippst du in den Chat ein. Es gibt jemand in dem Raum, der ist explizit dafür zuständig, die Kommentare aus dem Chat vorzulesen und einzubringen in die in die Working Group.
+
+00:27:01.737 --> 00:27:23.117
+<v SPEAKER_2>Okay, also wir halten mal fest. Wir haben anhand eines bestimmten neuen Fehlercodes im Internet gelernt. Es gibt ein Gremium, wo theoretisch jeder mitmachen darf. Und das ist noch nicht so ganz klar, aber übers Wohl und Wehe im Internet entscheidet, was genau da entschieden wird und wie wichtig das ist. Für das funktionierende Internet, ob es vielleicht auch ohne geben würde, das klären wir gleich. Vorher würden wir mal die Nachrichten machen mit Wetter und Verkehr.
+
+00:27:31.617 --> 00:27:36.157
+<v SPEAKER_1>Das sind doch alles schöne Länder. Die wollen doch alle mal gesehen werden.
+
+00:27:36.177 --> 00:27:38.317
+<v SPEAKER_5>Weltweit weg mit Fritz.
+
+00:27:49.817 --> 00:28:15.757
+<v SPEAKER_1>Immer um 17 Uhr bei den Radio-Fritzen gewinnt ein High-Class-Tracking-Rucksack und vielleicht sogar einen Universal-Fluggutschein im Wert von 500 Euro, der euch weltweit wegbringt. Mehr Infos fritz.de High-Class-Rucksack und Fluggutschein gibt's von uns. Euren Traumurlaub müsst ihr dann schon selbst erleben. Ab kommenden Montag, immer Montag bis Freitag, um 17 Uhr bei den Radio-Fritzen.
+
+00:28:25.357 --> 00:31:06.937
+<v SPEAKER_2>Fritz Nachrichten. Die Große Koalition hat ihren Streit um Änderungen beim Asylrecht beendet. SPD-Chef Gabgelsackte am Abend nach einem Treffen mit Bundeskanzlerin Merkel und dem CSU-Vorsitzenden Seehofer, dass strittige Punkte geklärt wurden. Dazu gehört, dass bei nicht unmittelbar verfolgten Flüchtlingen der Familiennachzug für zwei Jahre ausgesetzt wird. Gerade bespricht die Kanzlerin Einzelheiten mit den Länderchefs. Die geplanten Flüchtlingsunterkünfte auf dem Tempelhofer Feld in Berlin können gebaut werden. Eigentlich sind Bauten dort verboten, aber das Abgeordnetenhaus hat das durch einen Volksentscheid entstandene Gesetz dazu heute geändert. Der Senat will an der Nordwestseite des Feldes bis zu 7.000 Flüchtlinge unterbringen, in Hallen oder Containern. Die Opposition ist dagegen. Berlin bekommt ein eigenständiges Landesamt für Flüchtlingsangelegenheiten. Das hat das Abgeordnetenhaus beschlossen. Wann es losgeht, wie viel Personal dort arbeiten soll und was genau das Konzept des neuen Landesamtes ist, ist noch unklar. Die neue Behörde wird aus dem bisherigen Landesamt für Gesundheit und Soziales ausgegliedert. Das Lageso wird kritisiert. Es sei überfordert. Flüchtlinge würden oft tagelang draußen warten und würden schlecht betreut. Einem 20-jährigen Kölner ist die E-Zigarette beim Rauchen explodiert. Laut Polizei verlor er mehrere Zähne, außerdem erlitt er Schnitt- und Brandwunden im Gesicht. Der Mann hat sich demnach kurz vorher in einem Geschäft Ersatzteile für die E-Zigarette besorgt, unter anderem einen neuen Akku. Mit den aktuellen Temperaturen in Berlin-Steglitz sind es 3 Grad und in Friedrichshain 4 Grad. Brandenburg an der Havel und Eberswalde melden 3 Grad und in Beelitz und Königsfuss zu Hause sind es 2 Grad. In der Nacht bleibt es wolkenlos und weitgehend trocken und die Temperaturen gehen runter auf plus 2 bis minus 2 Grad. Morgen ist es im Norden von Brandenburg etwas wolkiger. Im Süden ist es freundlicher und trocken, das ganze bei Höchstwerten zwischen 8 und 11 Grad. Verkehr Statt Verkehr Berlin-Moabit nach einem Wasserrohrbruch ist die Fennstraße in Höhe Tegeler Straße weiterhin in beiden Richtungen gesperrt. Die Busse der Linie M27 fahren bereits wieder durch. Und nach Brandenburg? Vorsicht auf der A15 Dreieck Spreewald Richtung Übergang Forst. Zwischen Cottbus Süd und Roggersund steht ein unbeleuchtetes Auto auf der rechten Spur. Vorsicht auch auf der A24 Hamburg Richtung Berlin. Zwischen Färbelin und Kreml steht ein kaputter Laster auf der Standspur. Und B112 Richtung A12, A, S, Frankfurt oder Süd zwischen Abzweig nach Pulitz und Zildendorf gibt's stocken im Verkehr nach einem Unfall.
+
+00:31:07.477 --> 00:31:08.697
+<v SPEAKER_4>Davos geht euch eine gute Fahrt.
+
+00:31:09.647 --> 00:31:29.627
+<v SPEAKER_1>Fritz ist eine Produktion des RBB. Und wenn ihr am Sonntagnachmittag zocken und lachen wollt, dann macht das doch bei den Sonntags Fritzen mit Kathrin Thüring und Jakob Lund und mit mir, dem Stimulator. Immer sonntags ab 14 Uhr auf Fritz.
+
+00:31:46.745 --> 00:31:54.315
+<v SPEAKER_2>Ja Heute Chaos Radio im Blue Moon. Das heißt, wir sprechen über das komische Internet, das uns alle umgibt. Und zu Gast ist Mutags vom Chaos Computer Club. Hallo.
+
+00:31:54.335 --> 00:31:55.155
+<v SPEAKER_3>Hallo.
+
+00:31:55.175 --> 00:31:59.655
+<v SPEAKER_2>Und Clemens, der vor allen Dingen seine Eigenschaft als IETF Mitglied hier ist. Hallo und guten Abend.
+
+00:31:59.675 --> 00:32:00.355
+<v SPEAKER_4>Hallo.
+
+00:32:00.375 --> 00:33:31.695
+<v SPEAKER_2>Und das haben wir heute schon gelernt. Wir wollen nämlich mal so ein bisschen in den Backstage Bereich des Internets gucken, was nur heißt hinter die Kulissen, nicht dass da Security davor steht, die ihr euch raushalten will. Das haben wir auch schon geklärt, aber sozusagen ein bisschen mal wie, wie so funktioniert das Internet so, wie es funktioniert. Und wir haben gelernt in der ersten halben Stunde, es gibt ein Gremium, wo theoretisch, wenn er es sich leisten kann und genug Ahnung davon hat, jeder mitmachen kann. Das heißt IETF Internet Engineering Task Force. Und das beschließt unter anderem die Fehlercodes, die oder die Statuscodes. Also wenn Computer miteinander kommunizieren, ist immer so, dass der ihr ruft eine Webseite auf, dann sagt der Web Server so Ja, ist in Ordnung oder ist nicht in Ordnung? Und das tut er mit Hilfe von Zahlencodes und wie die aufgeschrieben werden. Das wird da zum Beispiel geschlossen. Oder wir haben gehört, es wurde über den E-Call dort auch geredet. Also das, dass wenn Autos anrufen. Das würde ich jetzt tatsächlich von euch beiden gerne mal ein bisschen genauer wissen. Ach so, was wir auch noch gelernt haben ist, dort wird nicht abgestimmt bei den Sitzungen, die dieses Gremium macht, sondern da wird gesummt. So es gibt also ein Gremium, da kann eigentlich jeder mitmachen. Was dürfen die überhaupt beschließen? Also ich finde das gerade so komisch, weil das Internet ist riesengroß. Da hängen mittlerweile alle dran. Und es gibt so, also es sind zweieinhalbtausend Leute, da sind sicherlich viele von der Industrie auch dabei, die Ahnung haben. Aber theoretisch ist es ein Haufen dahergelaufener Leute, die sich zusammensetzen und sagen, wir machen das jetzt. Und die haben eigentlich keine sozusagen staatliche Legitimation oder sowas. Das ist schon so ein freiwilliges Ding. Also quasi das Internet hat gesagt, okay, ihr macht das und wir halten uns auch dran.
+
+00:33:32.075 --> 00:33:35.335
+<v SPEAKER_4>Ja, das ist sehr zum sehr zum Bedauern einiger Staaten.
+
+00:33:35.335 --> 00:33:36.655
+<v SPEAKER_2>Kann ich mir vorstellen.
+
+00:33:36.675 --> 00:33:54.775
+<v SPEAKER_4>Dass das eben nicht staatlicher Kontrolle unterliegt. Das ärgert auch andere Organisationen, nämlich staatliche Institutionen wie die ITU. Das sind welche, die so früher im alten Telefonen- und Telegrafen-Business sich um diese Standardisierung gekümmert haben. Das waren immer staatliche Institutionen und das ärgert die Staaten doch sehr, dass sie da wenig den Finger drin haben.
+
+00:33:54.795 --> 00:33:57.575
+<v SPEAKER_3>Die International Telecommunications Union, glaube ich, heißt die.
+
+00:33:57.595 --> 00:33:58.575
+<v SPEAKER_4>Genau.
+
+00:33:58.595 --> 00:34:06.055
+<v SPEAKER_3>Die wollen nämlich immer irgendwie. Wir haben ja so Telefonleitungen im Boden und so und wir sind die Telcos. Und deswegen ist das Internet eigentlich uns.
+
+00:34:06.115 --> 00:34:06.575
+<v SPEAKER_4>Sagen die.
+
+00:34:07.275 --> 00:34:13.195
+<v SPEAKER_3>Und das ist so der Konflikt immer mit den schönen Seitenhieblinern von der ITF manchmal so ein bisschen so kommen.
+
+00:34:14.355 --> 00:35:06.035
+<v SPEAKER_4>Ja, aber trotzdem. Du wolltest wissen, wieso das sein kann, dass jetzt einfach Leute hingehen, das machen. Das Internet ist so entstanden. Und die Leute, die das bisher gemacht haben, so die letzten 30, 40 Jahre, fanden das gut und geben das weiter. Und die Leute, die das heute auch noch machen, finden das auch gut. Dass das eine sozusagen Graswurzel, demokratische Bewegung ist. Man muss dazu sagen, diese Standards, die die dort beschließen, sind nicht zwingend. Also niemand hält jetzt ein Google davon ab oder ein Apple, was ganz anderes zu machen. Das machen die gelegentlich auch. Da die aber selber auch ITF-Mitglieder sind, versuchen sie natürlich erst, ihre Ideen dort zu verkaufen und andere Leute zu überzeugen, dass das, was sie machen, gut ist. Und erst, wenn es da kommerziellen Druck gibt von irgendeiner Seite, von ihren Chefs, dass sie sagen, ist da scheißegal, was die ITF jetzt sagt, wir machen das trotzdem. Dann machen sie das halt trotzdem, wenn sie die Marktmacht haben, wie so ein Microsoft oder so ein Apple.
+
+00:35:06.055 --> 00:35:24.255
+<v SPEAKER_2>Aber da müssen wir jetzt an dieser Stelle nicht mal sprechen, was genau da passiert. Also das Einzige, was ich jetzt sicher weiß, ist, diese Fehlercodes werden gesprochen. Und da kann man natürlich sagen, okay, das ist halt nicht unpraktisch, wenn irgendwie alle Web-Server dieselben Fehlercodes ausgeben, weil man dann sozusagen schneller nachschlagen kann, was da jetzt gerade los ist oder nicht. Aber es wäre jetzt auch kein Weltuntergang, wenn es sie da einzeln macht.
+
+00:35:24.595 --> 00:35:38.835
+<v SPEAKER_4>Das hast du ja von selber erwähnt. Der Tim Bray hat ja, nachdem er seine Idee präsentiert hat, haben ein paar Leute gesagt, oh, das ist so geil. Das führen wir einfach mal ein. Das machen wir einfach mal. Obwohl es sozusagen noch gar keinen formellen Beschluss darüber gab, diesen Fehlercode aufzunehmen. Das passiert sehr häufig so.
+
+00:35:38.855 --> 00:35:43.395
+<v SPEAKER_3>Was dabei wichtig war, der Fehlercode, den sie benutzt haben, war vorher für nichts anderes benutzt. Der war also frei.
+
+00:35:43.415 --> 00:35:50.935
+<v SPEAKER_2>Ja. Aber so lange die Frage ist, wird da auch, ich sag mal jetzt, gezielt dramatisch irgendwas Wichtiges beschlossen?
+
+00:35:52.015 --> 00:35:52.935
+<v SPEAKER_4>Oh ja.
+
+00:35:52.955 --> 00:35:53.595
+<v SPEAKER_2>Nämlich?
+
+00:35:53.615 --> 00:36:28.675
+<v SPEAKER_4>In technischer Hinsicht schon. Es gibt manchmal immer so Sachen, wo es dann auch um Politik geht. Die ITF versucht sich extrem mit eigenen, mit Händen und Füßen aus allem rauszuhalten, was politisch ist. Manchmal lässt es sich nicht abwenden, zum Beispiel in der Interaktion mit einer anderen Organisation, die ICANN heißt, I-C-A-N-N, da kommen wir vielleicht nachher noch drauf. Aber vom Prinzip ist das, was die dort machen, das setzt die technischen Standards. Ohne die könnte das Internet weltweit gar nicht funktionieren. Ohne die könntest du mit deinem Microsoft Internet Explorer oder mit deinem Homebrowser gar nicht auf alle Webseiten dieser Welt drauf gehen.
+
+00:36:28.695 --> 00:36:30.615
+<v SPEAKER_2>Aber was heißt denn genau technische Standard?
+
+00:36:30.635 --> 00:37:36.635
+<v SPEAKER_3>Stell dir vor, du willst deine E-Mails abholen, weil du Telekom-Kunde bist und bist auf diesen blöden Telekom Windows-Client angewiesen, um an diese E-Mails anzukommen. Du musst also eine Software installieren für deine Telekom E-Mails. Jetzt hast du irgendwo anders noch ein anderes Postfach und musst dir eine neue Software installieren, nur um mit deren Servern zu reden, weil die wieder ihre eigenen Suppe gekocht haben. Und das hätten wir halt mit allen Anbietern. Das heißt, es gäbe keinerlei Standards und ohne Standards gibt es keine Interoperabilität zwischen den verschiedenen Programmen und Servern. Das heißt, das Internet, was auf diesen Standards aufbaut, weil jeder mit jedem reden können soll, würde so nicht mehr funktionieren. Das kannst du dir einfach so vorstellen. Ganz unten haben wir im Internet Router, die Pakete von A nach B weiterleiten sollen, damit ein Server mit einem anderen Server reden kann oder du deine E-Mails abholen kannst. Und wenn jetzt diese Router nicht miteinander reden könnten, weil alle ihre eigene Standard haben, dann würde halt das gesamte Internet als solche zusammenbrechen. Und wie schwierig das ist, einen Standard, den es gibt, neu einzuführen, das merken wir bei so was wie IPv6, also diesen neuen längeren IP-Adressen, das dauert irgendwie 15, 20 Jahre. Und wenn du dir jetzt vorstellst...
+
+00:37:36.655 --> 00:37:40.795
+<v SPEAKER_4>Vor wenigen Tagen ist gerade der 20-jährige Datum des Vorschlags.
+
+00:37:40.815 --> 00:37:46.195
+<v SPEAKER_3>Und jetzt stell dir vor, du hättest irgendwie nicht nur einen Standard, sondern irgendwie so 20.000, 30.000, weil dir sein eigenes Süppchen kocht.
+
+00:37:47.115 --> 00:38:02.315
+<v SPEAKER_2>Okay, und die IETF ist ja eins von vielen Gremien, auf die anderen kommt vielleicht tatsächlich noch zu sprechen. Und die kümmern sich um diese Standards. Also quasi das, genau das sozusagen, dass irgendjemand festlegt, okay, die und dieses und dieses Ding, das kommunizieren wir auf die und die Weise.
+
+00:38:02.335 --> 00:39:03.135
+<v SPEAKER_3>Genau, das nennt sich dann RFC, Request for Commons. Und ist halt ein Textdokument nach einem ganz bestimmten Standard auch wieder aufgebaut. Also es gibt ein RFC, wie man RFCs schreiben soll. Wo da auch z.B. definiert ist, was das Wort may und should und must bedeuten, dass man sich nicht rausreden kann, ich hab das hier falsch verstanden, ich wusste gar nicht, dass ich jetzt hier auch Krypto implementieren musste, ich dachte, das wäre optional oder so. Und diese RFCs entstehen, davon gibt es halt mehrere tausend mittlerweile, der eine löst dann den anderen ab und da wird man ja spezifiziert. Und so kann man eigentlich alles, was es an Standards gibt im Internet, in irgendeinem RFC nachlesen. Da gibt es dann Datenbanken zu, das kann man durchsuchen, das sind einfach große Textdateien, die relativ verständlich sind, wenn man Techniker ist. Es gibt aber durchaus RFCs, die einfach so komplex sind, dass man da wirklich Wochen braucht, um das alles zu verstehen. Das ist so einer der Gründe, warum es zum Beispiel keine guten Kalender-Applikationen gibt. Das ist alles sehr, sehr unübersichtlich da.
+
+00:39:03.155 --> 00:39:19.315
+<v SPEAKER_2>Das würde mich sehr interessieren, denn ich suche schon lange etwas Gutes, um selber einen Kalender zu betreiben online, das was fehlschlägt. Und dann frage ich Freunde, die sich ein bisschen besser auskennen mit dieser ganzen Server-Technologie und die richten das dann einschlagen, aber letztlich auch die Hände über den Kopf zusammen, weil es so kompliziert ist. Woran liegt das?
+
+00:39:19.335 --> 00:39:55.775
+<v SPEAKER_3>Bei Kalendern ist das ein Sonderfall. Ich weiß nicht, ob wir den jetzt so komplett ausbreiten wollen. Es gibt da irgendwie zig konkurrierende Standards und es gibt halt kaum Anreize für eine Firma, sich an diese Standards komplett zu halten, weil die meistens einen Kalenderserver mit der passenden Software auf den Markt bringen. Das funktioniert dann zusammen. Aber es gibt jetzt nicht so richtig den Markt zu sagen, wie bei E-Mail, wir wollen jetzt hier einen Standard haben und alle sollen damit reden können. Und dann bauen die halt auch Erweiterungen ein, die dann nur mit ihrem Server und ihrem Client gehen, weil sie merken, dass der Standard ein bisschen kaputt ist und dann ist das wieder inkompatibel. Und deswegen ist das eigentlich ein sehr gutes Negativbeispiel, was passiert, wenn man zu viele Standards hat, die nicht ganz kompatibel zueinander sind.
+
+00:39:55.935 --> 00:39:58.635
+<v SPEAKER_4>Oder sich nicht alle Leute dran halten. Weil sie müssen ja nicht.
+
+00:40:00.035 --> 00:40:06.235
+<v SPEAKER_2>Aber wie ist es, wenn du sagen, da sind jetzt irgendwie 2.500 Leute, die treffen sich was, 2-mal im Jahr, 3-mal im Jahr?
+
+00:40:06.255 --> 00:41:00.155
+<v SPEAKER_4>Das treffen sich nicht immer alle. Also die ITF arbeitet das ganze Jahr über. Wie ich schon sagte, Mailing-Listen. Und jede Working Group hat auch noch so ihre eigene Webseite und ihre Software-Repositoris. Und was man so hat, kannst du dir vorstellen, wie verteilte Entwickler. Weiß nicht, hattet ihr hier schon mal GitHub oder sowas besprochen oder schon mal erwähnt? Aber jedenfalls so für verteiltes Arbeiten, die üblichen Mechanismen, die man da so benutzt, nutzen die auch. Sie treffen sich halt nur dreimal im Jahr und da kommen nicht immer alle Leute. Wir haben je nachdem, wo es stattfindet, haben wir mal 1000 Leute, wenn es ein teurer Ort ist. Zum Beispiel waren wir jetzt im November in Yokohama. Yokohama ist verhältnismäßig billig, ist aber trotzdem Japan, ist also nicht ganz billig für alle Leute da hinzureisen. Dafür haben wir glaube ich nur so 1000 oder knapp über 1000 Leute in Standorten, wo es sozusagen sehr günstig ist, hinzukommen und auch da zu bleiben. Ein paar Tage wie Prag oder in Berlin oder so weit sind es auch gerne mal 1300 oder 1400 Leute, kommt aufwachen.
+
+00:41:02.155 --> 00:41:31.855
+<v SPEAKER_2>Und jetzt muss ich trotzdem fragen, wer, ich weiß gar nicht, wie das formuliert wird. Also da kommen die Leute, da kann im Prinzip jeder hinkommen. Ich vermute aber, dass da vor allen Dingen Leute aus der Industrie arbeiten. Wer bezahlt die denn? Also dass die diese Arbeit machen. Also weil die Arbeiten, das ganze Jahr, treffen da relativ wichtige Entscheidungen. Und es gibt ja auch sozusagen so hin und her mit den, also werden die dann, wie gesagt halt, sagen halt große Internetfirmen, okay, das Thema ist so wichtig. Wir bezahlen einfach einen festen Mitarbeiter und der soll sich auch darum kümmern.
+
+00:41:31.875 --> 00:42:16.375
+<v SPEAKER_4>Die machen das nicht nur, die arbeiten in ihrem Feld. Also wir haben da zum Beispiel, ich kann das ja mal sagen, kann man öffentlich auch nachlesen, wir haben, sagen wir mal, so ein halbes Dutzend Leute von Google da, von Apple zum Beispiel, das weiß ich, und Googler ungefähr auch genauso viel, vielleicht sogar noch mehr. Die kommen natürlich aus unterschiedlichen Feldern, weil ich sagte, es gibt da Dutzende von Working Groups, die sich mit verschiedenen technischen Themen befassen. Und aus den jeweiligen Abteilungen der Firmen, die aktiv damit arbeiten, die also diese Standards implementieren oder die weiter voranbringen, sind dann Leute, die haben einen gewissen Teil ihrer Arbeitszeit, wird ihnen dafür freigegeben von ihrem Arbeitgeber oder die werden extra sozusagen dafür angeheuert, um zu sagen, vertritt mal bitte jetzt die Interessen von einem Apple, von einem Microsoft, von einem Google auf den ITF Meetings.
+
+00:42:17.255 --> 00:42:52.715
+<v SPEAKER_2>Dann stelle ich mich jetzt wieder herum so vor. Bei uns wird die Politik redet in Deutschland. Da wird ja mal beklagt, die große Industrie hat diese ganzen Lobbyisten, die irgendwie viel Geld haben, um den ganzen Tag nichts anderes zu machen, um den Politikern einzureden. Hier machen wir so und so und Aktivistengruppen, die sind eher so, naja, das ist schon schwierig, wir machen das ehrenamtlich und sind auf Spenden angewiesen. Das stelle ich mir jetzt da auch so vor. Es gibt halt Firmen, die haben halt irgendwie ein Interesse und schicken dann ihre Leute dahin. Und dann gibt es so vielleicht, keine Ahnung, die mit den Heeren Idealen, also Chaos Computer Club oder weiß der Geier. Und die können aber auch mit gar nicht die Manpower.
+
+00:42:52.735 --> 00:44:21.195
+<v SPEAKER_4>Das ist sehr technisch, das funktioniert dort. Das ist sehr, sehr kooperativ. Ich war mehr als einmal dabei, wenn Google und Apple Leute von der jeweiligen Mobile Division, also die, die für die Mobiltelefonen zuständig sind, in einer Working Group sitzen und an einem Strang ziehen. Weil denen geht es darum, schon das Internet voranzubringen und Standardisierung ist auch für deren Produkte wichtig. Abgesehen davon, der Unterschied zu deinem Beispiel ist, Lobbyisten am Bundestag haben zum Beispiel einen Bundestagsausweis und können da rein und rauslaufen. Und der normale Aktivist hat sowas nicht. ITF ist offen, die haben alle dieselbe Stimme, die wiegt genauso viel. Und jeder Student, der dorthin kommt, wenn es ein Student im ersten Semester ist, kann sich neben den Appelmann stellen und sagen, du hast aber einen Knall, komm mal her. Und es gibt auch Leute, die zum Beispiel da hingehen. Ein interessantes Beispiel ist, es gibt so eine amerikanische Bürgerrechtsorganisation. Die schicken regelmäßig immer wieder Leute dorthin. Einer ist auch sehr bekannt, der hört sich immer diese ganzen technischen Diskussionen an und steht dann irgendwann mal auf und sagt, es ist ja toll, was ihr hier alles besprecht, aber ihr habt den Datenschutz vergessen. Wenn ihr das so macht, wie ihr das jetzt vorschlagt, sammelt ihr lauter Daten, die ihr nicht haben wollt. Dann gehen alle so grübel, grübel, oh ja, Mist, mh. Also es ist schon sehr interessant. Und ja, die großen Leute sind auch da, auch die Telcos sind da, sind auch Vertreter der Deutschen Telekom immer da. Aber die benehmen sich da sehr anständig. Jetzt nicht nur die Telekom, ich sag nur die großen Lobbyisten, wie du sie gerade beschrieben hast, die benehmen sich da sehr anständig. Es ist sehr, sehr kooperativ und jede Stimme zählt gleich viel.
+
+00:44:21.715 --> 00:45:07.415
+<v SPEAKER_3>Und auch sehr offen. Du hast es oft so, dass Leute ans Mikro gehen und sagen, also in meiner Eigenschaft als Vertreter von, ist meine Meinung die und die. Jetzt zieh ich den Hut aber mal ab und bin jetzt dieser Meinung, wenn man mich privat fragt oder so. Oder so ein Working Group Chair sitzt halt vorne und sagt, ich leg jetzt mal meinen Hut als Working Group Chair ab und sagt dann halt seine Meinung. Und letztlich ist halt jeder darauf angewiesen, dass man auch da miteinander kooperiert, damit das Internet als Ganzes funktioniert. Und das ist eine ziemlich coole Sache da. Die Leute sind alle extrem entspannt. Sagen auch offen, was ihre Filmentreffen sind zum Teil, wenn es darum geht. Und letztlich kann es auch nur so funktionieren, weil wenn jemand da eine geheime Agenda irgendwie fahren würde und versuchen würde, Dinge in eine bestimmte Richtung zu kriegen, fliegt das Röder später auf und dann fliegt er raus.
+
+00:45:08.895 --> 00:46:08.315
+<v SPEAKER_2>Das klingt schon sozusagen so sehr ideal. Wir machen halt nur die Technik und lassen die Politik draußen und sind doch alle total reflektiert und können immer sozusagen unsere Meinungen von Firma und Privat miteinander trennen. Aber wie gut funktioniert das wirklich? Oder andersrum gefragt, der Fehlercode vom Anfang dieser Sendung, diese 451, das ist ja tatsächlich eine politische Nummer. Weil, wer das nicht weiß, der Fehlercode 451 ist ein Zitat oder eine Metapher. Es gibt ein Buch, das heißt Fahrenheit 451 von Ray Bradbury. Und das ist so eine düstere Zukunftsvision, wo die Gesellschaft Bücher verbrennt, weil die gefährliches Wissen und dann die Leute zur Revolution anstacheln. Und das 451, die angenommene Temperatur zur Selbstentzündung des Papiers. Das ist also eine Metapher, eine ganz harte Metapher sogar auf Zensur, die jetzt sozusagen da Niederschlag gefunden hat in diesem Ding. Also so ganz unpolitisch ist das ja nicht anscheinend. Oder ist das sozusagen, da haben sich jetzt alle Leute immer drauf geeinigt, dass es in dieser Stelle okay ist, politisch zu sein?
+
+00:46:08.335 --> 00:46:19.595
+<v SPEAKER_4>Es gibt schon mal Sachen, da wird halt sowas gerne mit Schmunzeln entgegen genommen. Du kannst auch mal gucken, wie häufig Zahlen wie 23 oder 42 da an welchen Standards auftauchen. Es sind halt am Ende des Tages schon Nerds, die da sitzen.
+
+00:46:19.635 --> 00:46:27.415
+<v SPEAKER_2>Naja, aber sozusagen 23, 42, das ist halt sozusagen, das ist halt so ein Inside. Das ist halt ein Gag. 450 ist halt eine handfeste politische Aussage.
+
+00:46:27.435 --> 00:46:54.575
+<v SPEAKER_3>Du kannst auch argumentieren, wenn da so ein Web-Server einen undefinierten Statuscode wie 403 oder 401 zurückgibt oder einen 404-Fall-Not-Found, obwohl es eigentlich da ist, ist das halt technisch kaputt. Weil, wenn du aus unterschiedlichen Ländern versuchst, darauf zuzugreifen, geht das mal, und mal geht es nicht, und dann weißt du nicht, was los ist, und kannst halt diese Technik nicht debaggen. Und deswegen ist es halt eine rein technische Voraussetzung, dass du da einen Statuscode haben möchtest, der dir sagt, das geht jetzt nicht aus politischen Gründen.
+
+00:46:55.255 --> 00:46:57.955
+<v SPEAKER_2>Ja, aber der müsste ja nicht 451 heißen.
+
+00:46:58.515 --> 00:46:59.155
+<v SPEAKER_3>Aber der war halt frei.
+
+00:47:03.215 --> 00:47:33.075
+<v SPEAKER_4>Du kannst dir die Dinger nicht einfach so ausdenken. Es gibt das schon, man muss sich schon in die Gruppe einordnen. Und die 400er Gruppe sind alles temporäre Fehler. Das heißt, das ist was, wo man sagt, das ist kein unbedingter Fehler. Sondern es ist so was, ja, theoretisch hätte ich die Seite vielleicht, aber ich kann sie dir nur nicht zeigen. Komm doch morgen vielleicht nochmal wieder. Vielleicht haben unsere Lawyers das denn geregelt oder so. Im Gegensatz zu zum Beispiel 500er Statuscodes, das ist ultimativ. Wenn 500 irgendwas Code kommt, heißt es immer, ja, so ist es jetzt und brauchst gar nicht wieder nochmal probieren.
+
+00:47:33.095 --> 00:47:34.315
+<v SPEAKER_3>Und auf dem Server ist irgendwas kaputt.
+
+00:47:35.115 --> 00:47:41.735
+<v SPEAKER_4>Sie haben sich halt eine schöne 400er Zahl gesucht und warum nicht 451? Das kann man ja augenzwinklernd durchaus machen. Warum nicht?
+
+00:47:41.755 --> 00:47:54.935
+<v SPEAKER_2>Okay, aber ist es denn wirklich so, dass es ganz unpolitisch ist und auch immer bleibt? Ich kann mir das gar nicht vorstellen, zu sagen, wenn irgendwie 1.500 Leute aneinander zusammenkommen, dann gibt es natürlich auch verschiedene politische Anschauungen, die natürlich irgendwann auch die Technik färben.
+
+00:47:54.955 --> 00:48:28.455
+<v SPEAKER_3>Du hast auf verschiedenen Ebenen immer wieder Politik. Also die eine Sache war jetzt, dass sie gesagt haben, Internet ohne IPv6 ist kein echtes Internet und kaputt. Da haben sie den RFC zugeschrieben. Das ist schon politischen Druck aufbauen auf ISPs und Anbieter von Hard- und Software, dass sie IPv6 jetzt endlich mal vernünftig unterstützen sollen. Du hast aber auch solche Sachen, dass es eine starke Bewegung gab, dass man Verschlüsselung als Standard fordert. Und da gab es auch bei der ITF, beim vorletzten Meeting oder so was, ein paar Sachen zu, weiß ich allerdings die Details nicht mehr ganz genau.
+
+00:48:29.155 --> 00:48:55.295
+<v SPEAKER_4>Ja, ich meine, wir haben natürlich auch Vertreter dort aus Russland, aus China. Ich weiß nicht, Nordkoreaner habe ich noch nicht entdeckt. Aber natürlich werden da auch Ideen eingebracht oder Ideologien eingebracht. Die Frage ist, ob die aufgenommen werden. Oder es gibt natürlich auch Typen, wo jeder im Raum weiß, der Knabe arbeitet eh für die NSA, lass ihn mal reden. Aber das sind so Sachen, das reguliert sich selbst.
+
+00:48:57.095 --> 00:49:04.175
+<v SPEAKER_2>Na gut, das ist also ein Gräbel. Könnt ihr zum Schluss noch mal sagen, was die wichtigsten Entscheidungen sind, die da jetzt gerade anstehen?
+
+00:49:05.835 --> 00:49:11.055
+<v SPEAKER_4>Für jede Leute in der Grube einzeln, müsste ich gucken, was da auf der Agenda steht.
+
+00:49:11.075 --> 00:50:09.075
+<v SPEAKER_2>Das wäre meine Frage zu sagen, ob die konkrete Entscheidung immer so kleintechnisch und detailliert ist, dass man das nicht mehr genau sagen kann. Oder ob es jetzt wirklich was gibt, wo man sagt, okay, das ist nicht nur, wir regeln jetzt mal den Titschandard im Detail, sondern das ist schon wirklich nochmal was ganz Neues. Also dieses IPv6 zum Beispiel, wo quasi jedes Gerät, also ich überlege gerade, wie man das nochmal einfacher erklären kann. Vielleicht am einfachsten so, Geräte in einem Netzwerk haben eine bestimmte Nummer wie eine Telefonnummer. Davon gibt es im Prinzip so wenig, dass man immer so Zwischenschaltungen vornehmen muss. Also bei euch zu Hause haben Geräte eine bestimmte Nummer. Aber wenn ihr da nach draußen quasi telefoniert, dann gibt es eine andere Nummer, die euer Zuhause bezeichnet. Dann wird es sozusagen so schrittweise aufgelöst. Also aus dem Internet kommt es zu der einen Nummer und dann gibt das Gerät nämlich den Router. Und der sagt, an welches muss ich das hier verteilen? Und IPv6 ermöglicht, dass jedes Gerät immer direkt im Internet ist. Und das scheint ja so ein großes Ding zu sein. Aber das ist ja jetzt durchgeklebt.
+
+00:50:09.095 --> 00:50:40.835
+<v SPEAKER_4>Aber es gibt jetzt nicht pro Meeting immer so die Knallerentscheidung. Es kommt natürlich immer darauf an, was so die Presse und so aufnimmt davon. Ich guck gleich mal drüber. Ich muss dazu sagen, diese Meetings finden dreimal im Jahr statt. Einmal in den Americas. Jetzt zum ersten Mal in Südamerika. Einmal in Europa und einmal in Asien. Oder Asia Pacific, wie sie es nennen. Und das nächste Meeting ist jetzt in Buenos Aires. Ende März, Anfang April. Das Nachfolgende dann in Berlin. Im Juni. Und dann sind wir im November nochmal in Seoul.
+
+00:50:41.395 --> 00:50:53.835
+<v SPEAKER_2>Ja, aber ich mein jetzt nicht unbedingt beim nächsten Treffen, sondern so generell, was da jetzt im Schwang ist. Also keine Ahnung, wir reden jetzt zum Beispiel seit einem Jahr über das Internet der Dinge, ob das überhaupt kommt. Spielt sowas da, so einen großen gesellschaftlichen...
+
+00:50:53.855 --> 00:50:55.515
+<v SPEAKER_3>Das ist Buzzword Bingo.
+
+00:50:55.535 --> 00:51:09.015
+<v SPEAKER_4>Das ist Buzzword Bingo. Da sind wir technisch lange dran vorbei. Das ist alles beschlossen, wie das technisch funktioniert. Da hat die ITF jetzt keine Finger mehr dran. Aber braucht nicht, notwendigerweise. Also ihr könnt das Internet der Dinge jetzt bauen. Alles, was ihr da verbraucht, ist da. Ihr müsstet jetzt nur noch wollen.
+
+00:51:09.275 --> 00:51:18.695
+<v SPEAKER_2>Ich muss sagen, wir haben jetzt eine Stunde drüber geredet, aber mir erscheint das Ganze immer noch so ein bisschen nebulös. Es gibt so viele Leute, die entscheiden halt irgendwelche Dinge, aber eigentlich ist schon alles festgesetzt. Na gut.
+
+00:51:18.715 --> 00:51:26.795
+<v SPEAKER_4>Das ist schon mal entschieden worden, nicht von irgendwem, sondern das ist schon mal auf ITF Meetings vor zehn Jahren. Sind die dafür notwendigen Standards oder so was schon mal beschlossen worden?
+
+00:51:27.075 --> 00:51:36.095
+<v SPEAKER_2>Ach so, das heißt, man kann eigentlich immer sagen, entweder sind Dinge schon lange beschlossen worden, das ITF ist sozusagen sehr weit vorne, aber andererseits dauert es wahrscheinlich lange, wenn man spontan was ändern will, oder?
+
+00:51:37.835 --> 00:52:21.295
+<v SPEAKER_3>Ja, das Problem an diesem spontan mal eben was ändern ist halt, es kann dir passieren, dass du irgendwas änderst, so einen neuen Status Code einführst zum Beispiel, und dann feststellst du, Mist, das haben Leute irgendwo schon mal benutzt, das ist schon belegt von irgendjemandem, obwohl es nicht standardisiert ist, da gehen Dinge kaputt, das wollen wir vielleicht nicht, oder es hat irgendwelche Nebenwirkungen, die wir jetzt noch nicht absehen können. Deswegen wollen wir erstmal mit allen Leuten drüber reden, die sich auskennen, ob da irgendwas kaputt geht, ob es irgendwelche Nebenwirkungen gibt, und dann gucken wir, ob wir das zum Standard weiterverarbeiten können. Ein Beispiel ist zum Beispiel, dass jetzt Google vorgeschlagen hat, dass wir HTTP, also Webseiten, nicht mehr über das TCP-Protokoll, sondern über das UDP-Protokoll ausliefern sollen. Das ist dann irgendwie schneller und besser und performanter. Hat aber wieder andere Nachteile. Deswegen ist dann natürlich eine Riesendiskussion.
+
+00:52:21.315 --> 00:52:22.675
+<v SPEAKER_2>Würde ich als Nutzer einen Unterschied merken?
+
+00:52:25.335 --> 00:52:45.435
+<v SPEAKER_3>Also als Endnutzer nicht. Höchstens vielleicht, dass deine Leitung irgendwie anders funktioniert. Das heißt, dass die Webseiten schneller geladen werden, zum Beispiel. Und dass da Sachen performanter werden im Vergleich zu früher. Aber das sind halt alles sehr viele Detailentscheidungen, die aber für einen Internetprovider oder für jemanden, der Technik macht, sehr, sehr große Auswirkungen haben können.
+
+00:52:45.455 --> 00:53:14.135
+<v SPEAKER_4>Diese Nö war jetzt so halb richtig. Du, eigentlich merkst du nichts davon. Du tippst weiter Facebook in deinen Browser ein und dann blinkt dich da diese Seite an. Vielleicht merkst du was davon, weil es halt eben schneller wird. Weil es insgesamt, und deine Nachbarn auch nicht mehr dich dann morgens im Café anmauern und sagen, letzte Nacht war YouTube wieder scheiße. Das sind so Sachen, an denen merkst du, aber eigentlich wird das alles so designt, dass du als Benutzer jetzt nichts machen musst dafür. Du musst jetzt nicht Facebook anders nennen oder rückwärts schreiben oder sowas.
+
+00:53:16.655 --> 00:53:36.055
+<v SPEAKER_2>So, jetzt würde ich denken, es gibt also ein großes Gremium, das beschließt die verschiedenen Technischen Standards im Internet. Das reicht ja dann auch. Also jetzt so ein großes Gremium im Internet, aber ich vermute weit gefehlt, es gibt noch viele andere. Es fiel schon den Namen ICANN. Bevor wir noch mal eine kurze Pause machen, was es noch so gibt. Also es gibt das ICANN. In einem Satz, was macht das?
+
+00:53:36.915 --> 00:54:06.955
+<v SPEAKER_4>Ui, das kann man nicht in einem Satz sagen. Das macht man nach der Pause. Aber es gibt sowas wie IANA. Ist die Internet Assigned Numbers Authority. Das sind die Leute, die Bewahrer der Protokollnummern und Adressen. Das heißt, wenn zum Beispiel jemand sagt, wir haben jetzt hier einen neuen HTTP-Status-Code, nämlich diesen 451, und gewisse Gremien haben das beschlossen. Und andere Gremien haben das abgesegnet. Das ist die ITF nämlich beschließt, muss erst nachher abgesegnet werden von der Internet Engineering Steering Group, IESG.
+
+00:54:06.975 --> 00:54:08.895
+<v SPEAKER_2>Ist das auch was freiwilliges?
+
+00:54:08.915 --> 00:54:28.195
+<v SPEAKER_4>Das ist ein Subteil des ITF-Buddies. Die werden auch daher gewählt. Und zwar von dem NOMCOM. Es gibt einen Nomination Committee, die dann wieder Leute... Es ist ein ziemlicher Buchstabensalat. Und diese IANA, die bewahren das dann auf. Die führen die offiziellen Listen, wo alle HTTP-Statuscodes drin sind.
+
+00:54:28.215 --> 00:54:37.775
+<v SPEAKER_2>Ich stelle mir so langbärtige Dinge, die langbärtige alte Männer und weiße, weißhaarige Frauen, die dich so säulen mit so Papyrusregalen.
+
+00:54:37.795 --> 00:54:52.975
+<v SPEAKER_3>Es ist total einfach. Es gibt auch so was wie OIDs, das sind Object Identifier, also eindeutige Zahlen für Dinge. Und man kann einfach ein Webformular ausfüllen und sagen, ich hätte gern jetzt ein OID-Subtree, also so einen Unterraum von Zahlen, dann kriegt man den.
+
+00:54:52.995 --> 00:55:01.835
+<v SPEAKER_2>Hätten wir die zwei Stunden Chaosradio heute auch damit zubringen können, einfach nur Abkürzungen aufzuzählen? Okay, also es gibt das Icon, es gibt das IANA, gibt es noch was?
+
+00:55:01.855 --> 00:55:09.915
+<v SPEAKER_3>Internet Society, ISOC. Genau, und unterhalb von der ISOC ist das Internet Architecture Board und darunter ist nämlich dann die IETF.
+
+00:55:12.055 --> 00:55:14.715
+<v SPEAKER_2>Ist da irgendwo ganz oben, sind das alles so freiwillige Dinge?
+
+00:55:15.855 --> 00:55:22.795
+<v SPEAKER_4>Relativ weit oben ist die ISOC, die Internet Society und Icon. Das sind im Prinzip Schwester-Augen.
+
+00:55:22.895 --> 00:55:25.875
+<v SPEAKER_2>Aber sind die denn irgendwie staatlich?
+
+00:55:25.895 --> 00:55:57.995
+<v SPEAKER_4>ISOC nicht, die Internet Society ist definitiv nicht staatlich. Die Icon ist jeinstaatlich, sie hingen lange, lange, lange Zeit unter dem US Department of Commerce, also aus dem US Wirtschaftsministerium. Die haben zwar offiziell, glaube ich 2009 oder so was, ihre Finger da mal rausgenommen, aber das ist der kommerzielle Arm der Internetverwaltung. Das sind die Leute, die zum Beispiel Top-Level-Domains vergeben, also Domains, die so ganz rechts stehen, wenn du irgendeinen O-Line gibst, wie zum Beispiel.de und.adac.
+
+00:55:58.015 --> 00:56:04.335
+<v SPEAKER_2>Bitte was?.adac. Okay, darüber müssen wir natürlich noch genau reden. Irgendwie hab ich noch im Ohr, wir wollen noch über einen RIPE reden.
+
+00:56:04.355 --> 00:56:40.035
+<v SPEAKER_3>Genau, wir wollen noch über die Regional Internet Registries reden. Reden, das ist zum Beispiel das RIPE. Das ist aber auch so was wie ARIN oder APNIC oder LACNIC oder AFRINIC. Was machen die? Das sind die Leute, die in einer bestimmten Region der Welt die IP-Adressen verwalten. So ganz grob gesagt. Und auch ein paar Sachen nebenbei mehr machen. Dann wollen wir wahrscheinlich noch ganz kurz auf die NICs eingehen, auf die Network Information Centers. Das sind dann zum Beispiel so wie DENIC, die verwalten die.de-Top-Level-Domain. Es gibt auch noch so was wie.berlin, weil wir haben jetzt auch Punkt Berlin oder eben dieses Punkt ADAC.
+
+00:56:40.395 --> 00:56:41.995
+<v SPEAKER_4>Oder Punkt Volkswagen.
+
+00:56:42.015 --> 00:56:50.575
+<v SPEAKER_3>Genau, das sind dann die neuen Top-Level-Domains, die wir haben. Und wie das da so alles funktioniert, das Domain-Name-System, das ist nämlich auch mittlerweile sehr unübersichtlich geworden.
+
+00:56:50.595 --> 00:56:51.595
+<v SPEAKER_4>Abgründe.
+
+00:56:51.615 --> 00:56:57.035
+<v SPEAKER_3>Tun sich da auf. Also das ist, das ist, nee, das... Genau.
+
+00:56:57.055 --> 00:57:01.055
+<v SPEAKER_2>Das scheint mir alles noch ganz schön viel. Da müssen wir anscheinend nochmal ausführlicher drüber reden.
+
+00:57:01.615 --> 00:57:02.175
+<v SPEAKER_3>Gerne.
+
+00:57:02.195 --> 00:57:03.035
+<v SPEAKER_2>War es das dann aber jetzt?
+
+00:57:05.095 --> 00:57:07.575
+<v SPEAKER_4>Nö. Wir haben uns das nicht ausgedacht.
+
+00:57:07.595 --> 00:57:10.595
+<v SPEAKER_2>Will ich den Rest noch wissen oder? Gut, dann lassen wir es erstmal dabei.
+
+00:57:14.675 --> 00:57:16.075
+<v SPEAKER_1>Radio hat einen Namen.
+
+00:58:26.916 --> 01:01:00.898
+<v SPEAKER_2>Und damit herzlich willkommen zurück im Chaos Radio im Blue Moon. In dem Blue Moon, wo der Chaos Computer Club einmal alle zwei Monate das Studio stürmt und Dinge über das Internet erklärt. Und heute erklärt er, welche bürokratischen Strukturen sich ergeben haben, um das Internet zu verwalten, damit es für uns so funktioniert, wie es funktioniert. Und es ist fürchterlich, aber wir versuchen es trotzdem noch zu klären. Außerdem gibt es jetzt zur Auffrischung und Abwechslung die Nerd News, das sind die anderen Nachrichten, die sonst auch so passiert sind, geschrieben vom Chaos Computer Club, präsentiert von Emily Ulbricht. Der Handelskonzern Aldi hat im Jahr 2015 Überwachungskameras verkauft, die ab Werk sehr unsicher sind. Dies hat ein Mitglied des Vereins Digitale Gesellschaft herausgefunden. Mehrere Kameras der Marke Marginon kommen ab Werk ohne Passwort und beantragen beim heimischen Router eine sogenannte Port-Weiterleitung. Das führt dazu, dass die Geräte direkt aus dem Internet erreichbar sind. Angreifer können so nicht nur direkt auf die Kameras zugreifen, sondern auch die Passwörter für E-Mail, FTP und für das lokale WLAN auslesen. Trotz verfügbarem Update sind laut Heise Online immer noch hunderte Kameras ungeschützt, was nicht zuletzt an Aldis verhaltener Kommunikationspolitik und einer komplizierten Update-Methode liegen dürfte. Zahlreiche Banken haben damit begonnen, einem Teil ihrer Kunden neue Kreditkarten auszustellen. Dies erfolge vorsorglich und aus Sicherheitsgründen. Die Commerzbank sagte dazu auf Twitter, dass ein Dienstleister Hinweise auf Missbrauch geliefert habe. Hinweise zu verursachendes Datenlex nannte die Bank nicht. Die Hotline einer Bank teilte auf Nachfrager mit, dass Visa ihnen den konkreten Händler auch nicht mitteile und dieser ja auch nichts dafür könne, wenn er gehackt werde. Ebenfalls reagiert haben die Commerzbank-Tochter Comdirect, die Postbank, die Hypovereinsbank, die Landesbank Berlin, die DKB sowie die Volksbanken. Auch wenn für Schäden aus Kreditkartenmissbrauch in der Regel die Banken haften, lohnt sich der regelmäßige und frühzeitige Blick auf die Kreditkarten-Abrechnung, um Ärger zu vermeiden. Die Initiatoren der Webseite fragt-den-staat.de haben zusammen mit Abgeordneten Watsch die Initiative fragt-den-Bundestag gestartet. Damit sollen Ausarbeitungen, die der Wissenschaftliche Dienst des Bundestages für Abgeordnete angefertigt hat, für alle verfügbar werden. Eine Liste von Ausarbeitungen hatten die Macher zuvor nach dem Informationsfreiheitsgesetz erstritten. Wer sich für ein bestimmtes Thema interessiert, kann jetzt eine Ausarbeitung mit zwei Klicks anfordern.
+
+01:01:00.918 --> 01:01:07.198
+<v SPEAKER_3>Später sollen alle so angefragten Dokumente in einer Online-Bibliothek für die Öffentlichkeit verfügbar gemacht werden.
+
+01:01:07.218 --> 01:05:52.337
+<v SPEAKER_2>Wer also wissen will, ob ein vereinfachter Zugang zum Medizinstudium dem Gesundheitssystem helfen würde oder wie sich die Abgeordneten das komplexe Steuersystem erklären lassen, kann auf fragdenstaat.de oder frag den Bundestag all das jetzt nachlesen oder einfach über die Website selber anfragen. Bei der VBB-Fahrkarte wurden trotz gegenteiliger Angaben in den Broschüren des VBB offenbar doch eindeutige Standort-Ides beim Benutzen der Karte gespeichert, sodass sich Bewegungsprofile der Benutzer erstellen lassen. Besonders brisant, ein normales Mobiltelefon reicht, um den Karteninhalt auszulesen, auch bei fremden oder geteilten Karten. Der VBB spricht von einem Fehler des Lieferanten und hat die Entwärter in den Bussen und Bahnen bis auf Weiteres abgeschaltet. Man habe sich auf die Aussage des Herstellers verlassen, dass eine Profilbildung nicht möglich sei. Vielen Dank, Emily Ulbricht, für die Nerd-News und ein fast unverlehentliches Studio. Wie dramatisch. Wir machen gleich weiter hier beim Chaosradio vor, aber broke for free mit My Luck. So ist das, wenn man Musik aus dem Internet runterlegt. Auf einmal ist sie zu Ende, obwohl sie eigentlich noch läuft. Was kann der Künstler damit sagen, dass er zwei Minuten still an diesem Track dran gemacht hat? Wir wissen es nicht. Herzlich willkommen zurück im Chaos Radio im Blue Moon, wo wir heute besprechen wollen, wer eigentlich die Leute sind, die weißen alten Männer und Frauen, die hinter den Kulissen des Internets sitzen und dort beschließen, wie das Ganze funktioniert. Dazu sind Clemens und Montags zu Gast. Hallo und guten Abend nochmal.
+
+01:05:52.357 --> 01:05:53.737
+<v SPEAKER_3>Nachbint, Mahlzeit.
+
+01:05:53.757 --> 01:06:46.257
+<v SPEAKER_2>Und außerdem haben wir noch den Alex zugeschaltet. Hallo, schönen guten Abend. So, weil wir haben jetzt in der ersten Stunde geklärt, was das IETF ist. Das ist ein Gremium, bei dem jeder mitmachen kann, das beschließt, wie die Standards im Internet sind. Das heißt, ganz grob gesagt, bitte nicht schlagen, falls das nicht ganz korrekt ist, wie Dinge, Computer, Protokolle, technische Angelegenheiten miteinander reden. So, und dann gibt es ja im Internet sozusagen noch zwei wichtige Dinge, nämlich die Adressen und die Nummern, die dahinter stecken. Das ist also einmal sozusagen die Domains, also, keine Ahnung, fritz.de. Die Namen. Die Namen. Und dann sozusagen werden die, wie heißt es, aufgelöst auf eine IP-Adresse. Und jetzt würde ich ja, ich weiß nicht, ob sagen, wenn jetzt hier noch jemand zuhört und denkt so IP-Adressen, ich habe immer nicht genau verstanden, was das ist. Montags. Kannst du mal erklären, was eine IP-Adresse ist?
+
+01:06:47.477 --> 01:08:22.117
+<v SPEAKER_3>Ich kann es versuchen. Zum einen versucht es, eine Struktur hinzubekommen, dass man von der Adresse sehen kann, wo der Rechner ist. Aber ich fange mal vorne an. Also wenn ich jetzt auf eine Webseite zugreifen möchte, von mir aus Google oder Facebook oder Fritz.de, dann kann so ein Rechner mit so einem Namen Fritz.de erstmal nicht viel anfangen. Weil in so einer großen Tabelle nachzugucken, das würde einfach zu lange dauern, die Daten zu durchsuchen. Und damit das ganze im Internet mit dem Routing einfacher geht, sprich damit ich weiß, von wo nach wo ich Pakete weiterleiten muss, wenn nichts anderes passiert, wenn ich auf eine Webseite zugreifen möchte, ich mache so einen Request, der wird in ein Paket verschickt oder in einem Datenpaket verschickt an den Server von Fritz.de. Und dazu brauche ich eine IP-Adresse. Das heißt jeder Rechner, der im Internet erreichbar sein soll, braucht eine eindeutige, nur einmal vorhandene numerische Adresse. Und bei IPv4 sieht man das, dass die irgendwie so aus drei, aus vier Oktets besteht. Zum Beispiel so eine private Adresse, wie man sie zu Hause hat, ist so 192.168.0.5 oder so was. Aber es gibt auch öffentliche IP-Adressen, das ist dann so was wie 8.8.8.8 oder 130.149.17.5. Das ist zum Beispiel eine von der TU Berlin und das erkennt man daran, dass die mit 130.149 anfängt. Diese IP-Adressen, alle die mit 130.149 anfangen, gehören zur TU Berlin, weil die TU Berlin hat unter anderem ein sogenanntes Slash-16-Netzwerk. Das heißt...
+
+01:08:22.137 --> 01:08:23.957
+<v SPEAKER_2>Okay, jetzt hast du alle verloren.
+
+01:08:23.977 --> 01:08:24.197
+<v SPEAKER_3>Genau.
+
+01:08:24.217 --> 01:08:28.397
+<v SPEAKER_2>Der Anfang war wirklich sehr verständlich. Aber was hast du die letzten zwei Minuten geredet?
+
+01:08:28.797 --> 01:08:42.317
+<v SPEAKER_3>Ich kann diese IP-Adressen aufteilen, die sind mit Punkten getrennt. Und nach bestimmten Regeln kann ich Unter-Adressräume, also Unter-Bereiche, daraus schneiden. Und so ein Slash 16 zum Beispiel ist genau die Hälfte von dieser Quotation.
+
+01:08:42.317 --> 01:08:44.877
+<v SPEAKER_2>Slash 16, was soll denn das heißen?
+
+01:08:44.897 --> 01:08:57.077
+<v SPEAKER_3>So eine IP-Adresse besteht aus vier Zahlen. Jeder dieser Zahlen hat 8 Bit und das macht insgesamt 32 Bit. Das heißt, ich habe viermal 8 Bit, 130 Punkten.
+
+01:08:57.097 --> 01:08:58.437
+<v SPEAKER_2>Das wird zu kompliziert.
+
+01:08:58.457 --> 01:09:01.397
+<v SPEAKER_4>Vor allen Dingen ist das auch e-outdated.
+
+01:09:01.417 --> 01:09:02.337
+<v SPEAKER_3>Nein, in dem Fall ja.
+
+01:09:04.517 --> 01:09:08.337
+<v SPEAKER_2>Also nicht über Dinge diskutieren, die man nicht erklären kann und dann noch sagen, man kann es.
+
+01:09:08.357 --> 01:09:09.737
+<v SPEAKER_3>Also ich kann die unterteilen.
+
+01:09:10.197 --> 01:09:19.037
+<v SPEAKER_2>Warte, ganz kurz. Es gibt also so eine IP-Adresse. Das ist also eine lange Zahl, die durch Punkte getrennt ist und aus vier einzelnen Blöcken besteht.
+
+01:09:19.057 --> 01:09:19.857
+<v SPEAKER_3>Bei IPv4?
+
+01:09:20.477 --> 01:09:37.657
+<v SPEAKER_2>Okay, und wenn man sich mal angucken will, wie man selber im Internet ist, kann man zum Beispiel auf geo.iptool.com gehen, da wird das angezeigt, die eigene IP-Adresse angezeigt. So und wenn man diese vier Zahlen kann man quasi unterteilen und wenn ich es richtig verstanden habe, je weiter vorne die Zahl, desto allgemeiner.
+
+01:09:37.677 --> 01:09:38.597
+<v SPEAKER_3>Das ist unruhbar, ist das.
+
+01:09:38.617 --> 01:09:54.317
+<v SPEAKER_2>Wenn es eine Adresse wäre, wäre ganz vorne sozusagen die Stadt. Dann käme die Straße und dann, naja, aber es wird halt immer feiner nach hinten. Okay, das heißt sozusagen, du sagst, wenn man der Anfang, sozusagen der Anfang, eine Nummer, die am Anfang steht, eine bestimmte Nummer, kann für was stehen, zum Beispiel für die TU.
+
+01:09:54.937 --> 01:10:38.017
+<v SPEAKER_3>Genau, 130.49 wäre die TU Berlin. Das heißt, ich weiß schon mal, dass alle diese Rechner, die hinter diesen IP-Adressen, die mit dieser Zahl anfangen sind, an der TU Berlin stehen. Das heißt, in diese Richtung muss ich meine IP-Pakete weiterleiten. Und jeder Router hat eine Tabelle, wo das eben drin steht, welche Adressanfänge, also welche Präfixe, so heißt das, er wohin routen soll. Und er erkennt anhand dieses Beginns und eben dieser Slash 16, die ich vorhin gesagt habe, das ist die Länge von diesem Bereich, wohin er das routen muss. Das heißt, das ist so was wie so ein Straßenverzeichnis im Prinzip. Ich kann ein Straßenverzeichnis nachschlagen und bekomme den Planquadraten A23 auf der Karte, weil es deswegen, wo ich dann mein Paket hinschicken muss.
+
+01:10:38.037 --> 01:10:46.517
+<v SPEAKER_2>Natürlich, dann weiß ich es ganz genau. So, und jetzt gibt es aber ein weiteres Gremium, was irgendwie mit diesen IP-Adressen zu tun hat. Das ist RIPE. Richtig?
+
+01:10:46.537 --> 01:10:54.657
+<v SPEAKER_3>Genau, RIPE wäre ein Gremium, das hier so in der europäisch, Europa...
+
+01:10:54.677 --> 01:11:00.857
+<v SPEAKER_4>Europa, Nordamerika, also Europa, Mittelmeer, Mittelmeer, Andereinerstaaten und Nahost.
+
+01:11:00.877 --> 01:11:06.757
+<v SPEAKER_2>Deswegen haben wir auch Alex in der Leitung, oder? Alex, erklär doch mal, was das RIPE ist.
+
+01:11:06.777 --> 01:11:39.497
+<v SPEAKER_3>Das RIPE selber ist eigentlich ein Losatzen am Schluss von Menschen, die die Regeln für die Adressvergabe in Europa, Großraum Europa, bestimmen. Und dahinter oder die beschließen praktisch die Regeln für das RIPE NCC. Da liegen sie sehr, sehr drauf, dass das getrennt wird. Das RIPE NCC ist eigentlich ein Verein in den Niederlanden, genauer in Amsterdam. Und der beugt sich sozusagen dem Beschlüssen der RIPE Community.
+
+01:11:39.517 --> 01:11:45.737
+<v SPEAKER_2>Und was genau machen die dann? Das heißt, wenn ich hingehe und sage, ich brauche eine IP-Adresse fürs Internet, dann verteilen die die oder was genau passiert ist?
+
+01:11:47.377 --> 01:11:50.197
+<v SPEAKER_3>Ja genau, erstmal lachen sie, wenn du sagst, du willst eine IPv4-Adresse haben.
+
+01:11:50.937 --> 01:12:02.097
+<v SPEAKER_2>Okay, Leute, können wir uns bitte darauf einigen, dass dieser ganze Komplex heute eine Nummer zu kompliziert ist und dass wir einfach dabei bleiben, es gibt IP-Adressen und die müssen verteilt werden. Okay, ganz einfach.
+
+01:12:02.117 --> 01:12:16.157
+<v SPEAKER_3>Also du möchtest jetzt am Internet teilnehmen, brauchst IP-Adressen, dann gehst du zur RIPE NCC und du bist dort Mitglied. Wie gesagt, das ist ein Verein. Dann zahlst du deine Aufnahmegebühr, dann wirst du Mitglied und dann hast du die Möglichkeit, Adressen zu beantragen.
+
+01:12:16.177 --> 01:12:28.497
+<v SPEAKER_2>Warte, da muss ich gleich nochmal nachfragen. Die beim IETF haben ja gelernt, da kann halt jeder mitmachen. Jetzt sagst du ja Aufnahmegebühr, ist das so eine symbolische Aufnahmegebühr? Oder ist das so, legen sie 5000 Euro auf den Tisch, wenn sie mitmachen wollen?
+
+01:12:29.297 --> 01:13:12.257
+<v SPEAKER_3>Wenn ich IP-Adressen haben möchte, also nicht bei den Regeln bestimmt, du hast ja gefragt IP-Adressen. Dann geh ich hin, leg da 2000 Euro auf den Tisch, für den Mitglied, und dann gibt es noch so eine Jahresgebühr, die wird irgendwie fertig, die musst du auch noch bezahlen. Aber dann kannst du halt hingehen und sagen, ich brauche IP-Adressen, dann gucken sie in den Regeln nach. Die Regeln macht nämlich diese Community, ähnlich wie das beschrieben wurde fürs EETF. Das heißt, wenn wir über Meldung müssten, dann besprochen, okay, wir vergeben die IP-Adressen nach folgenden Regeln. Dann gibt es eine Diskussion darüber, dann streiten sich die Kampffiele oder streiten sich auch nicht, sind sich einig. Am Ende gibt es auch wieder Working Group Shares, die so ein bisschen aufpassen, dass die Leute sich benehmen und dass das nicht unfreundlich wird.
+
+01:13:12.277 --> 01:13:15.577
+<v SPEAKER_1>Wird von der Regel auch nicht, aber falls doch, streiten die ein.
+
+01:13:15.597 --> 01:13:20.537
+<v SPEAKER_3>Und dann sagen die, okay, ich entnehme der Diskussion folgendes Meinungsbild.
+
+01:13:20.557 --> 01:13:27.197
+<v SPEAKER_1>Und dann wird daraus am Ende ein Regularium, wie Adressen zum Beispiel vergeben werden.
+
+01:13:27.217 --> 01:13:34.457
+<v SPEAKER_3>Und wenn du Adressen beantragst, dann gucken die heute mit diesem Beschluss der Gemeinschaft rein und sagen, okay, ja, du kriegst jetzt noch Adressen.
+
+01:13:35.737 --> 01:13:44.517
+<v SPEAKER_2>Ah, ich frage mich jetzt gerade, wie man überhaupt, also worüber dann diskutiert, also was sind denn da Streitfälle?
+
+01:13:44.537 --> 01:13:58.037
+<v SPEAKER_3>Zum Beispiel die Situation, die wir mit den älteren IP-Adressen haben, also IPv4-Adressen haben, die sind jetzt langsam am Ende. Also es gibt mathematisch gesehen eine gewisse Menge an IP-Adressen. Die wurden jetzt verteilt zum größten Teil.
+
+01:13:58.057 --> 01:14:02.417
+<v SPEAKER_1>Und dann gab es natürlich Firmen, die gesagt haben, ich will jetzt noch ein paar IP-Adressen haben.
+
+01:14:02.437 --> 01:14:25.117
+<v SPEAKER_3>Andere haben gesagt, oh, den müssen wir kasselhaft oder IP-Adressen üblich lassen für neue Firmen, die ganz coole Ideen haben. Und dann gibt es riesige Diskussionen darüber, nach welchen Regeln wird entschieden, wer wie viele IP-Adressen jetzt bekommt. Ob das neue Mitglieder sind, ob das alte Mitglieder sind. Also wie viele IP-Adressen kriegt derjenige? Und da wird schon sehr intensiv diskutiert, was ich meine.
+
+01:14:25.937 --> 01:14:35.217
+<v SPEAKER_2>Okay, und gibt es einen richtig handfesten Streit, ist das nur so, ich will aber auch drei IP-Adressen, nein, gib sie mir. Oder hat das wirklich ernsthafte Konsequenzen?
+
+01:14:35.757 --> 01:14:37.777
+<v SPEAKER_5>Na ja, was heißt ernsthafte Konsequenzen?
+
+01:14:37.797 --> 01:15:01.717
+<v SPEAKER_3>Also wenn ich jetzt als neues Mitglied in der Raibe irgendwie aufschlage und sage, Schönen guten Tag, ich hab dir die super Idee, ich möchte irgendwie, keine Ahnung, einen ASCII gründen oder einen ganz großen Internet- Hosting-Provider oder sonst irgendwas und sag, ich brauch halt ein riesiges Netzwerk von IPv4-Adressen, und die sagen, dass du uns leid, die Community hat beschlossen, dass du nur noch ein kleines Scheibchen bekommst.
+
+01:15:01.717 --> 01:15:03.017
+<v SPEAKER_5>Und dann stehst du da.
+
+01:15:03.037 --> 01:15:49.197
+<v SPEAKER_3>Und dann gibt's natürlich vier Geweine, sag ich mal, aber dann gibt's Vorschläge, dass man diese Vergabelichtlinien doch bitte ändern soll. Also jeder, da kommt wieder die Allgemeinheit rein. Jeder, der zu Hause ist, der einen Internet-Anschluss hat und eine E-Mail-Adresse hat, kann sich aus diesen Mailing-Listen abonnieren und kann Änderungsvorschläge einbringen. Das machen auch immer mal wieder welche. Also da gibt es aktuell drei Vorschläge, die bearbeitet werden und dann wird darüber diskutiert. Das kann halt jeder machen, aber ja, oftmals wird dann die Mehrheit dann, ne, wir lassen das so wie es ist. Also das handfesten Streit gibt es ja nicht. Es gibt immer wieder Leute, die schlagen immer wieder das Gleiche vor, wobei der Vorschlag schon drei Mal abgelehnt wurde, aber das darf man halt machen.
+
+01:15:49.217 --> 01:15:52.637
+<v SPEAKER_2>Und was genau machst du da? Bist du da mit Mitglied oder interessierst du dich nur dafür?
+
+01:15:53.657 --> 01:17:03.277
+<v SPEAKER_3>Ich komme tatsächlich aus dem CCT-Umsale, bin aber beruflich dabei, dass ich in Firmen gearbeitet habe und arbeite, die, ich sag mal, Mitgliedsleute überreibt sind und versuche halt, ja, ein bisschen die Interessen dieser Firma auch zu vertreten. Dazu gibt es zum Beispiel zweimal im Jahr das Ride-Meeting. Da kann jeder hinfahren, der möchte. Also man muss da nicht Mitglied für sein, nicht wieder bei ETS. Man dachte einfach, hey, da ist jetzt jetzt mal, das nächste Ride-Meeting ist im Mai in Kopenhagen zum Beispiel, dann kann man sagen, okay, ich trage irgendwie meine Gebühr, meine Eintrittskarte, die, ich glaub, 300 Euro oder was die ist und zwei mal Hotel und mal einen Zug oder mal einen Zug dahin. Dann kann ich dahin fahren und kann mich mit den Leuten zusammenwitten und diskutieren. Also auch mit den Working Groups und anderen Leuten, die da rumlaufen. Und das mach ich unter anderem. Also ich besuchte so Ride-Meeting oder ich, so eine Firma, die Mitglied wird oder eine Organisation, es mussten gerne Firma sein. Das nennt sich dann, da haben wir die nächste Abkürzung, LIR, Local Internet Registry. Das sind sozusagen die Mitglieder dieses Ride-Vereins.
+
+01:17:07.697 --> 01:17:21.117
+<v SPEAKER_1>Mein Teil ist, ich bin Mitarbeiter in so einer LIR, treu das Netzwerk da oder man baut halt, ich hab auch schon fünf Begleiter, die sich da beworben haben und Mitglied geworden sind.
+
+01:17:21.137 --> 01:17:25.817
+<v SPEAKER_3>Aber ansonsten ist es halt, ich verfolge das, ich nehm daran teil, ich diskutiere mit den Leuten.
+
+01:17:25.837 --> 01:17:27.817
+<v SPEAKER_4>Es ist eine große Gemeinschaft.
+
+01:17:27.837 --> 01:17:28.977
+<v SPEAKER_2>Wird man da nicht wahnsinnig?
+
+01:17:31.297 --> 01:17:40.677
+<v SPEAKER_3>Nee, es ist eigentlich sehr angenehm, weil, wie in der ersten Stunde schon gehört, es ist halt frei von politischen Zwingen.
+
+01:17:40.697 --> 01:17:41.677
+<v SPEAKER_1>Zumindest für mich gefühlt.
+
+01:17:42.577 --> 01:17:54.957
+<v SPEAKER_3>Die Leute sind intelligent, die machen Spaß, das gibt Lust in den Menschen. Man kann mit denen auch ganz nett mal ein Bierchen trinken gehen und nächsten Tag kann man sich trotzdem angeregt über Adressvergabe zum Beispiel unterhalten.
+
+01:17:54.977 --> 01:17:56.357
+<v SPEAKER_4>Sehr zivil.
+
+01:17:56.377 --> 01:18:18.737
+<v SPEAKER_3>Das ist auch ähnlich wie beim IOTF. Es gibt halt immer unterschiedliche Working Groups, die sich dann wieder treffen, weil das natürlich alles gleichzeitig zu viel wäre. Es ist tatsächlich, kann ich auch bestätigen, eine extrem angenehme Community wieder für Studenten. Zum Beispiel kostet das nur 50 Euro die gesamte Woche mit Vollverpflegung und Willkommenspaket.
+
+01:18:19.177 --> 01:18:22.117
+<v SPEAKER_4>Bei IOTF ist es über und zu 150 Dollar. Ich hab's inzwischen nochmal nachgeguckt.
+
+01:18:23.477 --> 01:18:32.997
+<v SPEAKER_3>Die versuchen auch wirklich die Einstiegshürden auch finanziell so niedrig wie möglich zu halten. Aber allein schon das Mittagsbuffet an fünf Tagen ist da eigentlich mehr wert als diese 50 Euro, die man da zahlt.
+
+01:18:33.017 --> 01:18:44.037
+<v SPEAKER_2>Sollte man als Informatikstudent mal hinfahren? Also jetzt egal, ob man sich dann später dafür wirklich so krass interessiert, am einen das Magazin zu haben oder sagt dir so, nee, lieber nicht da rumhängen und Plätze wegnehmen?
+
+01:18:44.057 --> 01:18:51.057
+<v SPEAKER_3>Also wenn man sich für die Technik oder für das Internet, wie das funktioniert, wie das zusammenhängt, interessiert, ist das auf jeden Fall eine Reise wert, denke ich schon.
+
+01:18:51.077 --> 01:19:14.977
+<v SPEAKER_4>Ja, auch für IOTF. Die sind übrigens auch immer mal wieder woanders. Jetzt, wie gesagt, das nächste in Kopenhagen. Die machen zwei nur im Jahr. ITF macht ja drei. Reib macht zwei im Jahr. Eins immer in Amsterdam, in ihrem Stammsitz. Und das zweite halt woanders, in Europa oder Nahost oder wo auch immer sie halt vertreten sind.
+
+01:19:18.157 --> 01:19:31.017
+<v SPEAKER_3>Vielleicht noch was anmerkenswert, genau wie bei ITF, für die Leute, die jetzt sagen, ich kann mir das nicht leisten, nicht interessiert das. Aber man kann an diesen Diskussionen, wie gesagt, auch per Mating teilnehmen. Oder es wird alt auch teilweise gespeakt.
+
+01:19:32.917 --> 01:19:52.477
+<v SPEAKER_4>Ich kann auch mal was sagen, vielleicht wenn jetzt nicht jeder Hörer da gleich hinrennt, es gibt da nicht ernsthafte Einlasskontrollen. Da steht nicht vor jeder Working Group ein Typ mit Sonnenbrille und schwarzen Anzug und einer Knarre im Sacko, der kontrolliert, ob du da dein Ticket um den Hals hast. Das heißt, man kann auch einfach mal so hintapsen. Man darf nicht vergessen, die meisten kennen dich auch noch.
+
+01:19:52.497 --> 01:20:02.537
+<v SPEAKER_3>Das ist ein sehr großes Vertrauenverhältnis. Wenn da jetzt einer irgendwie aufschläuft, ich glaube, da wird kein großes Drama geben. Wenn da nicht das ganze Befehle her ist, glaube ich.
+
+01:20:02.557 --> 01:20:25.597
+<v SPEAKER_2>Dann werden die Internetnummernvergeber aber sehr eigen. Was ich mich gerade frage ist, auch weil es so kompliziert ist zu erklären hier, wir haben ja jetzt nicht allzu wenig Zeit, diese Gremien funktionieren aber in sich selber und die betreiben keine Art von Öffentlichkeitsarbeit. Oder das bleibt schon alles in dieser Technik?
+
+01:20:25.617 --> 01:20:28.897
+<v SPEAKER_4>Nee, das ist alles offen. Du kannst das alles nachlesen. Aber sie machen keine Werbung dafür.
+
+01:20:28.917 --> 01:20:55.157
+<v SPEAKER_2>Genau, das meine ich. Das Angebot ist sozusagen, jeder kann, wenn er nur klug genug ist oder genug weiß. Aber es ist nicht so, dass aktiv darum geworben wird, dass auch andere Menschen das verstehen, die nicht das ganze Wissen haben. Also sowas wie, keine Ahnung, EFF machen oder halt CCC. Dass man das Thema auch immer nach außen trägt und sagt, so hier, das Thema ist wichtig.
+
+01:20:55.177 --> 01:21:37.337
+<v SPEAKER_3>Beim RIPE gibt es zum Beispiel solche Sachen, dass man schon versucht, Studenten zu gewinnen, da mitzuarbeiten. Es gibt irgendwelche Hackathons, die dann so Messdaten, die da erfasst werden, zum Beispiel visualisieren sollen, also Programmierwettbewerbe. Wo man sich dafür qualifiziert hat, auch durchaus die Anreise zum RIPE-Meeting bezahlt wird und auch der Aufenthalt in Amsterdam bei RIPE, um an diesem Ding teilzunehmen. Sofern versucht man schon ja so ein bisschen, auch eine neue Generation natürlich reinzubekommen und da Werbung für zu machen, das bekannt zu machen. Aber es ist jetzt nicht so, dass das RIPE oder andere Organisationen da jetzt Werbebroschüren drucken und verschicken, dass man da Mitglied werden muss, weil es eine technische Notwendigkeit ist, zum Beispiel MIP-Adressen zu bekommen. Da muss man sowieso Mitglied werden.
+
+01:21:37.757 --> 01:21:44.997
+<v SPEAKER_2>Ich meine gar nicht mal, dass man Mitglied wird, sondern einfach, dass auf eine allgemeinverständliche Art kommuniziert wird, was da passiert.
+
+01:21:49.017 --> 01:22:08.057
+<v SPEAKER_4>Also es gibt bei ITF auch so Stipendiengeschichten. Die werden aber eben auch nur in einer Research Community, also im universitären Umfeld werden die auch publiziert und sowas gemacht. Aber keine dieser Organisationen hat zum Beispiel Geld, um bei großen Medien oder sonst irgendwas vorstellig zu werden oder eine PR-Agentur zu bezahlen, damit sie abends in der Tagesschau auftauchen.
+
+01:22:08.797 --> 01:22:32.717
+<v SPEAKER_2>Nee, das meine ich alles nicht. Aber es würde ja reichen, wenn auf deren Website zu sagen, es gibt hier, keine Ahnung, Nachrichten für Noob sozusagen. Also der Punkt ist, warum ich das gerade frage, es gibt dieses Gremium und da kann zwar theoretisch jeder hin, aber es findet halt innerhalb dieser Technikgemeinde statt. Das heißt also, wir als normale User müssen euch darauf verlassen, dass ihr, ich mache jetzt mal die Grenzen ein bisschen plakativ, dass ihr da keinen Scheiß baut.
+
+01:22:36.957 --> 01:22:40.457
+<v SPEAKER_3>Es wird ja nicht jeden zum Hirnchirurgenkrankreis gehen und sagen, erklär mir das mal ganz einfach.
+
+01:22:40.537 --> 01:22:49.537
+<v SPEAKER_2>Also sicherlich wird das versucht. Nee, aber da gibt es einen Ärztekammer und da gibt es irgendwann den Staat und dann gibt es Gesetze und sowas. Das wird halt alles irgendwie geregelt.
+
+01:22:49.557 --> 01:22:53.677
+<v SPEAKER_4>Die Ärztekammer ist viel geheimnisvoller als REIB und ITF zusammen.
+
+01:22:53.697 --> 01:22:56.617
+<v SPEAKER_2>Vielleicht, aber es gibt ja sozusagen Gesetze.
+
+01:22:56.637 --> 01:23:32.697
+<v SPEAKER_3>Okay, das vergleiche ich mit dir. Ja, also ich sage mal so, die Erfahrung, die ich jetzt mit der REIB zum Beispiel habe, ist, wenn werden, wo du jetzt schon gesagt hast, es zwingt nur, wenn ich manchmal einfach da Mitglied zu werden, wenn ich gewisse Dinge im Internet machen möchte. Und da zum Beispiel machen die schon, dass sie, es gibt so, ich sag mal, Einsteigerkurse für bestimmte Thematiken bereitgetreffend. Die haben so eine hübsche Datenbank, wo alle möglichen Informationen zu verschiedenen IP-Adressen, Adressblöcken oder sonstigen Nummern, die die halt vergeben, hinterlegt sind.
+
+01:23:32.717 --> 01:23:36.157
+<v SPEAKER_1>Und da scheitern ganz viele auch da dran, solche Dinge zu bedienen.
+
+01:23:36.177 --> 01:23:44.817
+<v SPEAKER_3>Da gehen die wie schonmühe an die Mitglieder, kommunizieren die schon hier, wir machen wieder einen Workshop, kannst kostenlos vorbeikommen und nimm mal daran teil.
+
+01:23:44.837 --> 01:23:49.817
+<v SPEAKER_1>Die setzen sich auch mit dir hin und gehen das eine Stunde mit dir zusammen durch, wenn du es nicht verstanden hast.
+
+01:23:49.837 --> 01:23:50.917
+<v SPEAKER_5>Das tun sie schon.
+
+01:23:51.037 --> 01:23:57.497
+<v SPEAKER_3>Es gibt halt viele, die müssen da Mitglied sein, weil die Firma jetzt irgendwas im Internet machen will, aber die wissen gar nicht genau so richtig, wie es funktioniert.
+
+01:23:58.317 --> 01:24:04.397
+<v SPEAKER_2>Und für die gibt es schon so ein bisschen Schulung, aber halt nicht, dass sie irgendwie rausgehen und irgendwie ein Handbook schreiben.
+
+01:24:05.157 --> 01:24:19.937
+<v SPEAKER_3>Also es ist ja auch nicht so, dass du als Endanwender unbedingt Kontakt direkt mit dem RIPE hast, weil zu Hause bekommst du eine IP-Adresse eben von deinem Provider automatisch zugewiesen und hast eigentlich gar keinen Kontakt in diese technischen Untiefen da.
+
+01:24:19.957 --> 01:24:24.017
+<v SPEAKER_2>Ja klar, die Frage ist halt, wie lange das gut geht. Aber das geht gut.
+
+01:24:24.377 --> 01:24:36.557
+<v SPEAKER_4>Du kannst dich, wie gesagt, die verheimlichen nichts. Du kannst einfach danach googeln. Du findest die auch. Die stehen auch beide Organisationen stehen. Google ganz oben. Aber du musst halt danach suchen. Sie drängen sich dir nicht auf. Aber das tut die Ärztekammer auch nicht.
+
+01:24:39.137 --> 01:25:30.297
+<v SPEAKER_2>Ich weiß nicht, ob diese Ärztekammer vielleicht nicht doch ein bisschen hängt. Na gut, Alex, dir auf jeden Fall vielen Dank für die vielen Erklärungen. Und viel Spaß beim nächsten RIPEen. Nennt man das so? Dann viel Spaß beim Besuch des nächsten RIPE-Meetings. Danke, bis dann. Tschüss. Jetzt haben wir ja auf einer abstrakten Ebene, aber ich glaube, das ist heute nicht die abstrakte Ebene. Wir haben jetzt geklärt, wer sich darum kümmert, dass alle Teilnehmer des Internets dieselbe Sprache sprechen. Wir haben erklärt, wer sich darum kümmert, dass jeder Teilnehmer im Internet eine Nummer hat, unter der er erreicht werden kann. Und müssen dann noch klären, dass jeder Teilnehmer im Internet einen Namen hat, damit man sich diese komischen Nummern nicht merken muss. Das machen wir nachher. Jetzt haben wir erstmal noch eine Musik von Broke For Free und die heißt Mel's Parade. Ich hoffe, sie läuft durch.
+
+01:29:25.955 --> 01:29:28.455
+<v SPEAKER_1>P Der Hip Hop Hochrader spielt auf.
+
+01:29:28.595 --> 01:30:50.155
+<v SPEAKER_2>Präsentiert von Fritz. Mit Emily Ulbricht. Die Große Koalition hat ihren Streit um Änderungen beim Asylrecht beendet. SPD-Chef Garbgel sagte am Abend nach einem Treffen mit Bundeskanzlerin Merkel und dem CSU-Vorsitzenden Seehofer, dass strittige Punkte geklärt wurden. Dazu gehört, dass bei nicht unmittelbar verfolgten Flüchtlingen der Familiennachzug für zwei Jahre ausgesetzt wird. Gerade bespricht die Kanzlerin Einzelheiten mit den Länderchefs. Elektronische Zigaretten und E-Schischas dürfen in Zukunft nicht mehr an unter 18-Jährige verkauft werden. Mit der Entscheidung schloss der Bundestag am Abend eine Gesetzeslücke. Bisher waren elektronische Zigaretten vom Verkaufsverbot an Jugendliche ausgenommen, weil sie keinen Tabak enthalten. Experten waren jedoch vor den gefährlichen Inhaltsstoffen. Verbraucherschutzminister Schmidt sagte, Rauchen sei nicht harmlos, auch wenn es nach Kaugummischmecke oder nach Melone rieche. Die geplanten Flüchtlingsunterkünfte auf dem Tempelhofer Feld in Berlin können gebaut werden. Eigentlich sind Bauten dort verboten, aber das Abgeordnetenhaus hat das durch einen Volksentscheid entstandene Gesetz dazu heute geändert. Der Senat will an der Nordwestseite des Feldes bis zu 7.000 Flüchtlinge unterbringen, in Hallen oder Containern.
+
+01:30:50.175 --> 01:30:53.075
+<v SPEAKER_3>Die Opposition ist dagegen.
+
+01:30:53.095 --> 01:32:01.155
+<v SPEAKER_2>Berlin bekommt ein eigenständiges Landesamt für Flüchtlingsangelegenheiten. Das hat das Abgeordnetenhaus beschlossen. Wann es losgeht, wie viel Personal dort arbeiten soll und was genau das Konzept des neuen Landesamtes ist, ist noch unklar. Die neue Behörde wird aus dem bisherigen Landesamt für Gesundheit und Soziales ausgegliedert. Das Lagiso wird kritisiert, es sei überfordert. Flüchtlinge würden oft tagelang draußen warten und würden schlecht betreut. Das Wetter Mit den aktuellen Temperaturen in Berlin Triebdose sind es 0 Grad und in Charlottenburg 5 Grad, in Flüthigsfelde und Frankfurt an der Oder melden 2 Grad, in Wittstock-Dosse 3 Grad und in Joachimsthal sind es 4 Grad. In der Nacht bleibt es wolkenlos und weitgehend trocken und die Temperaturen gehen runter auf plus 2 bis minus 2 Grad. Morgen ist es im Norden von Brandenburg etwas wolkiger, im Süden ist es freundlicher und trocken und das Ganze bei Höchstwerten zwischen 8 und 11 Grad. Da hab ich nur eine Meldung aus Berlin und zwar aus Moabit. Nach einem Wasserrohrbruch ist die Fennstraße in Höhe Tegeler Straße weiterhin in beiden Richtungen gesperrt. Die Busse der Linie M27 fahren bereits wieder durch. Da wo es geht, euch eine gute Fahrt.
+
+01:32:02.095 --> 01:32:22.395
+<v SPEAKER_1>Fritz ist eine Produktion des RBB. Und wenn ihr eine Frage oder Kritik oder Lob oder ein schönes Foto, Video oder eine Sprachnachricht oder einfach mal Grüße ins Fritz-Studio schicken wollt, dann macht das doch. Und schon seid ihr mittendrin und im Radio mit der Studio Message in eurer Fritz-App.
+
+01:32:39.062 --> 01:32:46.662
+<v SPEAKER_2>Tschüss Heute Chaos Radio im Blue Moon mit mir, Markus Richter und den Gästen vom Chaos Computer Club oder dem näheren Umfeld. Zum Beispiel Mutag, Salon Guten Tag.
+
+01:32:46.682 --> 01:32:47.342
+<v SPEAKER_3>Abend.
+
+01:32:47.362 --> 01:32:48.322
+<v SPEAKER_2>Und Clemens, Salon Guten Tag.
+
+01:32:48.342 --> 01:32:49.182
+<v SPEAKER_4>Guten Abend.
+
+01:32:49.202 --> 01:33:32.062
+<v SPEAKER_2>Und es geht heute darum zu erklären, wie das Internet, nicht wie das Internet funktioniert, sondern wer dafür sorgt, dass das Internet funktioniert. Und das ist gar nicht so einfach, liebe Hörerinnen und Hörer. Das ist eher kompliziert. Wir haben schon gelernt in den letzten anderthalb Stunden, dass es ein Organ gibt, das heißt IETF. Und das sorgt dafür, dass die Teilnehmer des Internets, also die verschiedenen Maschinen, dieselbe Sprache sprechen, nur dieselben Sprachen. Es gibt ein Gremium, das dafür sorgt, dass jeder eine Nummer bekommt im Internet, damit er auch erreichbar ist. Und damit wir uns nicht diese Nummern merken müssen, sondern einfach Namen in unsere Browser und sonstigen Kommunikationsprogramme eingeben können, gibt es ein weiteres Gremium. Das sind längst nicht alle, aber wir schaffen heute einfach nicht alle. Wir beschäftigen uns also jetzt mit dem?
+
+01:33:33.362 --> 01:33:38.302
+<v SPEAKER_3>Mit den NICs, mit den Network Information Centers.
+
+01:33:38.322 --> 01:33:42.882
+<v SPEAKER_2>Hört sich gut an. Habe ich auch schon mal gehört, nämlich DENIC.
+
+01:33:42.902 --> 01:33:52.262
+<v SPEAKER_3>Genau, DENIC sind die Leute, die in Deutschland alles verwalten, was auf punkt.de endet im Browser. Das heißt sowas wie fritz.de.
+
+01:33:52.282 --> 01:34:04.802
+<v SPEAKER_2>Und die sozusagen, wie ist das eigentlich? Da muss, also wenn ich eine Webseite, ich habe, ich habe ein paar Webseite, egal, ich bin einer von Leuten, die immer eine neue URL kaufen, weil sie eine fesche Idee haben.
+
+01:34:04.822 --> 01:34:07.362
+<v SPEAKER_3>Das nennt sich Horder.
+
+01:34:07.382 --> 01:34:15.182
+<v SPEAKER_2>Und wenn es eine DE-Domain ist, dann wird immer eine Adresse da eingetragen. Was ist die DENIC? Ist es ein Verein, ist es eine Firma, ist es eine staatliche Stelle?
+
+01:34:15.202 --> 01:34:33.902
+<v SPEAKER_3>Die DENIC ist eine Genossenschaft. Genau, das heißt dein Provider ist wahrscheinlich, ist mit hoher Wahrscheinlichkeit Mitglied in der DENIC, in dieser Genossenschaft und ist damit in der Lage, DE-Domains zu registrieren in deinem Namen. Das heißt, du kannst die beauftragen, für dich diese DE-Domain auf deinen Namen da registrieren zu lassen.
+
+01:34:34.522 --> 01:34:39.062
+<v SPEAKER_2>Okay, und was passiert dann, wenn das passiert? Was machen die da eigentlich?
+
+01:34:39.202 --> 01:35:31.882
+<v SPEAKER_3>Die gucken erstmal natürlich, ob die frei ist. Und sofern sie dann frei ist, wird sie über den in der Datenbank eingetragen. Und ab dem Moment werden alle Anfragen, die für eine Punkt-DE-Domain, also für deine Punkt-DE-Domain, an die DENIC Name Server gestellt werden, weitergeleitet an die dafür zuständigen Name Server. Von deinem Provider oder deinem eigenen. Das heißt, es gibt Server im Internet, die übersetzen von diesen Namen in diese Adressen. Also in die IP-Adressen, die wir ja vorhin schon hatten. Und wenn wir jetzt so etwas wie fritz.de nehmen, dann sieht man halt, das endet auf Punkt.de. Das heißt, ich gucke erstmal, welche Name Server sind denn für Punkt.de zuständig. Und das sind dann die, die die DENIC betreibt. Und dann fragt man einen von denen, wer ist denn für fritz.de zuständig? Und dann sagt einem ein DENIC Name Server, geh doch mal hier zu diesem Name Server hin und frag den, wie die IP-Adresse von fritz.de oder www.fritz.de ist. Und dann kann man eben mit dieser IP-Adresse Kontakt aufnehmen und die Webseite abrufen.
+
+01:35:32.862 --> 01:35:42.302
+<v SPEAKER_2>Und warum brauchen wir dazu eine extra Genossenschaft? Die kümmert sich wirklich nur um diese Vergabe. Also schreibt in eine lange Liste rein, hierzu IP-Adresse so und so gehört diese Adresse.
+
+01:35:42.322 --> 01:36:27.302
+<v SPEAKER_4>Sie betreibt eine relativ aufwendige Infrastruktur, um sicherzustellen, dass das auch klappt. Es gibt nämlich sehr, sehr viele Domains, die millionenfach am Tag vielleicht sogar milliardenfach abgefragt werden und die Infrastruktur dafür zu betreiben, damit das auch funktioniert. Die DE-Zone, wie wir das nennen, oder Top-Level-Domain ist mit eine der größten in der Welt, nach so.com und so, aber wir stehen relativ weit oben in dieser Hitliste. Und da sind, wie gesagt, sehr viele Domains und es gibt sehr, sehr viele Anfragen. Und die betreiben sogenannte Name-Server. Das sind Rechner, die auch teuer sind, die man erst mal kaufen und betreiben und warten muss. Und davon auch relativ viele, die auf der ganzen Welt verteilt sind, die dafür sorgen, dass wenn jemand fritz.de ein tippt, auch in Südamerika, dass er eine ordentliche Antwort dafür bekommt, eine IP-Adresse, wo er in der Browser drauf zugreifen kann.
+
+01:36:29.102 --> 01:36:30.382
+<v SPEAKER_2>Und wer bezahlt das alles?
+
+01:36:30.402 --> 01:36:48.602
+<v SPEAKER_4>Die Genossenschaft. So funktioniert das. Die Leute, die sozusagen davon profitieren, dass sie diese Domains machen, nämlich diese Provider, die sie dir vergeben oder verkaufen, du musst dir was für deine Domains bezahlen. Die schmeißen halt alle Geld in einen Topf, in diesen Genossenschaftstopf. Und aus diesem Topf bedient sich sozusagen das DE-NIC und finanziert seine Infrastruktur.
+
+01:36:48.982 --> 01:37:06.762
+<v SPEAKER_2>Jetzt hab ich den Verdacht bei den anderen beiden Dingen, da hieß es ja immer, naja, das ist alles irgendwie total unpolitisch und eigentlich wollen ja alle nur das Gute und so weiter und so fort. Und jetzt ist ja so, Adressvergabe im Internet ist ja nicht ganz ohne. Also ein Beispiel, was mir da einfällt ist, ich hab irgendwann mal gehört, zwei buchstabige Domains sind eigentlich nicht zulässig.
+
+01:37:06.782 --> 01:37:09.702
+<v SPEAKER_4>Zwei buchstabige Top-Level-Domains. Also wenn sie ganz rechts stehen.
+
+01:37:10.222 --> 01:38:12.722
+<v SPEAKER_3>Also auch in Deutschland. In Deutschland waren die lange nicht... Die DENIG-Vergaberichtlinien haben halt lange festgelegt, dass man so zwei buchstabige Domains, so ab.de oder cd.de nicht vergeben, also nicht registrieren kann, um z.B. Markenstreitigkeiten zu verhindern. Weil halt klar ist, bei zwei Buchstaben habe ich nicht so viele davon. D.h. es wird nämlich einen Run darauf geben. Und was halt jetzt da reinspielt ist, dass die DENIG natürlich eine deutsche Genossenschaft ist. die untersteht natürlich komplett deutschem Recht. Das will man ja eigentlich auch so als ländertopleveldomain.de. Und es gab dann einen, jetzt auch in letzter Zeit durch die Medien gegangenen Automobilhersteller aus Deutschland, der gerne seinen Markennamen unter der.de-Domain eingetragen hätte, nämlich vw.de. Und die DENIG hat gesagt, na unsere Vergaberichtlinien sagen, aber geht nicht. Sucht ihr auch was anderes Schönes raus. Und dann sind die vor Gericht gezogen und haben Recht bekommen. Und damit dann es halt eben nicht nur so eine Einzelfallentscheidung ist, hat die DENIG in dem Moment dann gesagt, gut, wenn die Gerichte jetzt entscheiden, wir müssen das VW erlauben, dann erlauben wir das jetzt halt einfach allen.
+
+01:38:13.102 --> 01:39:08.142
+<v SPEAKER_4>Man muss das auch unter dem Aspekt betrachten, dass es schon vor dieser Vergaberichtlinie schon zwei Buchstabe-Domains gab. Nämlich z.B. CT für die Computerzeitschrift oder DB für die Deutsche Bahn. Die hatten ihre DE-Domains schon beantragt und auch bekommen, bevor sozusagen diese Spielregeln mit, wir vergeben keine zweistelligen, dann ein Kraftgrad. Das muss man natürlich auch mal sagen. Sowas gibt es auch immer noch. So Legacy-Geschichten. Gibt es zumindest auch bei IP-Adressen. Gibt zum Beispiel IP-Adressen, die nicht vom Raib vergeben wurden. Auch von keinem, von keiner anderen. Von einer der Vorläufer-Organisationen. Oder noch von dem Ur-Opa von der ganzen Geschichte, einem Knaben namens John Postel, der der übrigens sehr ähnlich sieht. Das war ein Forscher in den USA, der ganz so an Internet-Anfangszeiten, derjenige war, der die IP-Adressen vergeben hat. Den konnte man anrufen oder eine E-Mail schreiben oder einen Brief und sagen, hallo, ich brauch mal IP-Adressen. Und hat der zurückgeschrieben, ja, hier nimm doch die Adressen. Hat sie dir da für einen Zettel geschrieben oder eine Datei rein und dann war gut. So funktionierte das.
+
+01:39:08.782 --> 01:39:10.062
+<v SPEAKER_2>Okay. Aber zurück zum...
+
+01:39:10.082 --> 01:39:11.962
+<v SPEAKER_4>Die gibt's immer noch, wollte ich nur sagen, die Adressen.
+
+01:39:11.982 --> 01:39:26.222
+<v SPEAKER_2>Zurück zum Nick. Also in DE ist es so geklärt, dass es halt diese eine Genossenschaft hat. Jetzt frage ich mich ja erstmal, wer hat denn der DENIC überhaupt das übertragen? Also wer hat denn die Macht zu sagen, okay, du bist der, der sich um die DE-Adressen kümmert?
+
+01:39:27.102 --> 01:40:02.602
+<v SPEAKER_4>Tja, das hat sich wieder mal so einfach ergeben aus der Zeit heraus, wo das Internet noch nicht staatlich, keine Aufmerksamkeit hatte staatlich. Inzwischen gibt es diverse Organisationen, auch zum Beispiel solche Läden, die sich sonst um sowas kümmern, wie zum Beispiel unsere Bundesnetzagentur, die sich um die Vergabe von Telefondummern oder Vorwahlen oder sowas kümmert, die da sehr, sehr gerne ihre Finger drin hätten. Aber nun ist der Zug abgefahren und haben halt seit Jahrzehnten diese privaten Organisationen oder diese Genossenschaften oder diese halböffentlichen Organisationen gemacht. Und da ist jetzt nicht mehr so leicht dran kommen.
+
+01:40:03.562 --> 01:40:37.822
+<v SPEAKER_3>Eine schöne Sache als Conor Truss dazu ist zum Beispiel Punkt EU. Also wer sich so mit der EU so ein bisschen auskennt, wird sich wahrscheinlich jetzt schon denken, wie das gelaufen ist. Weil die EU dachte sich, wir wollen auch für ganz Europa einen Top-Level-Domain Punkt EU haben und hat dann eben eine EU-Verordnung 2002 verabschiedet, dass das jetzt so sein soll. Und hat dann eben über einige Jahre kam es dann dazu, dass die sogenannte EURIT entstanden ist, die dann für die Punkt-EU-Top-Level-Domain die ganzen Domains verwaltet. Und dann gab es dann irgendwie auch noch Stress mit einer Organisation. Und zwar war das die ICANN.
+
+01:40:39.582 --> 01:40:42.222
+<v SPEAKER_2>Wer ist das jetzt schon wieder?
+
+01:40:42.242 --> 01:40:54.262
+<v SPEAKER_4>Ja, die ICANN ist jetzt der aktuelle Nachfolger von den Leuten, die über den Namensraum wachen. Allerdings so ein bisschen, naja, okay, lass mal mal. Es gibt auch eine Interaktion mit der ITF.
+
+01:40:54.282 --> 01:41:00.642
+<v SPEAKER_2>Warte mal, also die ICANN sozusagen, das sind dann schon die, die auch gesagt haben, okay, ihr dürft euch um die DE kümmern, oder wie? Das sind die, die quasi das ganze Internet verwalten.
+
+01:41:00.662 --> 01:41:10.082
+<v SPEAKER_4>DE gab es schon, bevor es ICANN gab. Das muss man als sozusagen altes Zeug sagen. Aber es gibt ja jetzt Top-Level-Domains wie zum Beispiel Punkt Volkswagen oder Punkt Berlin.
+
+01:41:10.102 --> 01:41:11.402
+<v SPEAKER_3>Oder Punkt ADAC.
+
+01:41:11.422 --> 01:41:50.502
+<v SPEAKER_4>Oder Punkt ADAC. Und diese Namen, die wurden von ICANN vergeben. Und ICANN ist eine, hatte ich vorhin schon mal erwähnt, ist auch so eine Geschichte, so die US Department of Commerce hatte da mal seine fingerlange Zeit drin. Ist auch eine sehr umstrittene Organisation. Und die verkaufen jetzt sozusagen diese Top-Level-Domains. Kann man übrigens nur mal nebenbei sagen, interessant, allein sich um eine solche zu bewerben, muss man diverses Papierkram ausfüllen und einen Application-Fee von 185.000 Dollar raus tun. Das heißt, der ADAC hat seine Mitgliedsgelder ganz toll angelegt, indem er sich allein, um sich für Punkt ADAC zu bewerben, einfach mal 185.000 Dollar bei der ICANN auf den Tisch gelegt hat.
+
+01:41:50.522 --> 01:41:52.162
+<v SPEAKER_2>Bewerben heißt, der kriegt die dann nicht automatisch.
+
+01:41:52.182 --> 01:41:55.742
+<v SPEAKER_4>Nein, du kriegst es nicht garantiert. Es kann ja noch jemand anders geben, der auch ADAC haben will.
+
+01:41:56.042 --> 01:41:59.222
+<v SPEAKER_3>Der auch so viel Geld dafür bezahlt hat, sich zu bewerben.
+
+01:41:59.242 --> 01:42:00.562
+<v SPEAKER_4>Nur einer von denen kriegt es dann.
+
+01:42:00.582 --> 01:42:22.642
+<v SPEAKER_2>Verbrecher. Kapitalisten. Das verwirrt mich jetzt aber hoch gerade sozusagen. Dass einerseits die DE-Domänen sozusagen so, ja das war halt schon immer so und deswegen machen wir es so. Und andererseits jetzt eine Firma anscheinend über den ganzen Rest des Internets. Also wer gibt denn denen die Macht, dass sie jetzt jede neue Top-Level-Domänen bestimmen können?
+
+01:42:23.222 --> 01:42:59.202
+<v SPEAKER_4>Das ist die Interaktion, die ich eben erwähnte, mit ITF. ITF hat gesagt, pass auf, lieber iCAN, ihr könnt alles möglich verkaufen, außer folgende. Da haben wir den Finger drauf. Zum Beispiel die zwei Buchstabigen wieder. Das sind mich für diese Länder Top-Level-Domains. Für DE, für Deutschland und NL, für Niederland und so weiter und so fort. Da haben sie gesagt, iCAN Finger weg. Die gehören den jeweiligen Länder-Registries. Oder welchen Organisation auch mal in dem Land, der dafür zuständig ist. Und es gibt auch noch andere Sachen, die von der ITF, ich sag jetzt mal, gesperrt sind, die iCAN nicht verkaufen kann. Aber den Rest verkauft, nee, verkauft ist das falsche Wort, verleiht. Verleiht iCAN.
+
+01:42:59.662 --> 01:43:07.422
+<v SPEAKER_2>Ja, das verstehe ich trotzdem nicht, wie sie sagen, wieso sie sich das Recht nehmen können. Also, warum, bzw. warum dann nicht andere Leute aufstehen und sagen, ne, das ist doch Quatsch, wir wollen das anders.
+
+01:43:07.442 --> 01:43:16.122
+<v SPEAKER_4>iCAN ist wieder keine Firma. iCAN ist sowas wieder wie eine Stiftung oder Genossenschaft, nur auf internationale Ebene und unterliegt amerikanischen Recht und so weiter.
+
+01:43:16.142 --> 01:43:21.182
+<v SPEAKER_2>Ja, aber komm, da muss doch aber irgend einer extrem dran profitieren, wenn man sozusagen 185.000 Dollar...
+
+01:43:21.202 --> 01:44:00.702
+<v SPEAKER_4>Wissen wir, wissen wir? Anwaltsfirmen. Diese ganze Geschichte mit dem ganzen Internet, da es da herkommt und das steht, extrem amerikanisch im Recht. Das heißt, die ganzen Copyright-Themen, die da diskutiert werden, da verklagt ja jeder jeden zu jeder Zeit andauernd. Und deswegen ist der Aufwand auch so hoch. Wenn du jetzt mit irgendeinem Namen ankommst, wie Punkt Fritz oder sowas, dann könnte es ja zum Beispiel sein, dass hier in Deutschland dich schon die Firma AVM verklagt, weil sie sagt, wir haben aber hier ein Produkt, das heißt Fricks. Und dann gibt es irgendwelche Dänen, die sagen, wir haben aber hier eine Brause, die heißt Fritz oder was weiß ich. Und allein um diese legalen Dispute oder sowas auch nur einigermaßen in Zorn zu halten, beschäftigen die Herrscher von Anwälten und die saugen die ganze Kohle auf.
+
+01:44:01.882 --> 01:44:56.162
+<v SPEAKER_3>Und das merkt man auch schon daran, wie so eine Top-Level-Domain in eine neue eingeführt wird. Also sowas wie Punkt Shoes oder Punkt EU, die werden nicht einfach so freigeschaltet, sondern wenn man sich da registrieren möchte, wenn die neu auf den Markt kommen, gibt es eine Sunrise-Periode, wo jeder, der irgendwelche Markenrechtsansprüche hat, sich erst mal melden kann und sagen kann, die Domain aber bitte sperren, weil da hab ich meinen Markenschutz drauf, oder ich möchte die aber für mich registrieren. Und erst wenn das vorbei ist, dann kann man sich insgesamt bewerben. Und das ist eigentlich nur eine riesengroße Geldschneiderei, weil nämlich alle denken, dass sie jetzt auch auf diesen ganzen neuen Top-Level-Domains sich ihre Domains registrieren müssen. So ein Schuhhändler zum Beispiel, der denkt sich, oh Mist, jetzt gibt es Punkt Schuhe. Damit ich jetzt keinen Nachteil habe, muss ich da aber auch jetzt für 80 Euro in meine Punkt Schuhe-Domain registrieren. Oder irgendwelche Restaurants haben jetzt den Zugzwang, es gibt jetzt Punkt Restaurant als Top-Level-Domain. Ich muss jetzt ganz dringend als Berliner Restaurant auch irgendwie Müller.Restaurant registrieren, damit die Leute mich da in dieser Restaurant-Domain trobbeln.
+
+01:44:56.182 --> 01:44:58.342
+<v SPEAKER_2>Und ich muss auch Restaurant Müller.Berlin.
+
+01:44:58.362 --> 01:45:01.762
+<v SPEAKER_3>Genau, Punkt Berlin natürlich auch und so weiter.
+
+01:45:01.782 --> 01:45:08.642
+<v SPEAKER_4>Das absurdeste Beispiel aus dem deutschen Sprachraum, der letzten Jahre war Punkt Kinder. Kannst du mal überlegen, wer das registriert hat.
+
+01:45:08.662 --> 01:45:09.302
+<v SPEAKER_2>Ferrero.
+
+01:45:09.322 --> 01:45:09.842
+<v SPEAKER_4>Ja, genau.
+
+01:45:10.142 --> 01:45:25.522
+<v SPEAKER_2>Das ist tatsächlich zu sagen, da hab ich mich auch gefragt, wie das geht. Also vor wem haben die wie durchgesetzt, dass jetzt Kinder sozusagen eine Top-Level-Lumine für den Hersteller, also ein Markenname ist und nicht das deutsche Wort.
+
+01:45:25.542 --> 01:45:51.002
+<v SPEAKER_4>Mussten sie nicht durchsetzen, sind halt hingegangen zu iKen, haben gesagt, hallo, hier habt ihr 185.000 Dollar, wir hätten das gerne. Und dann haben die geprüft und gemacht und getan. Und kein anderer hat den Finger gewoben, hat gesagt, das will aber ich haben. Es gab diverse, die gesagt haben, das ist aber blöd, weil es ein normales deutsches Wort, das kann man doch nicht einfach irgendeiner Firma geben. Aber das hast du ja auch mit anderen Dingen, wo sich Firmen einfach normale deutsche Worte nehmen als Produktname oder so. Und da dem keiner widersprochen hat lange Zeit, haben sie den Ding halt eben vergeben. Fertig.
+
+01:45:51.022 --> 01:45:54.262
+<v SPEAKER_3>Übrigens auch nicht die deutsche Bundesregierung, die da irgendwie mal gefragt wurde.
+
+01:45:54.282 --> 01:45:55.362
+<v SPEAKER_4>Nö.
+
+01:45:55.382 --> 01:45:59.262
+<v SPEAKER_2>Das ist doch alles fürchterlich. Warum sind wir denn so depressiv am Ende?
+
+01:45:59.282 --> 01:46:03.062
+<v SPEAKER_4>Das sind die Abgründe. Wir hätten den Abgrund zum Anfang machen müssen, dann hätten wir jetzt die hübscheren Sachen verrechnen.
+
+01:46:06.842 --> 01:46:13.602
+<v SPEAKER_2>Was ich mich jetzt aber frage, wird schon an so einer Art Alternativsystem für diese Namensvergabe gearbeitet, damit man dem ein Stift geschlagen hat?
+
+01:46:13.622 --> 01:46:14.862
+<v SPEAKER_4>Ja, gab es auch schon lange.
+
+01:46:14.882 --> 01:46:16.022
+<v SPEAKER_2>Was dann? Wie denn?
+
+01:46:16.042 --> 01:47:21.842
+<v SPEAKER_4>Es gibt so verschiedene Leute, die einen alternativen Route Tree oder DNS Route Tree betreiben, also einen alternativen Namensraum betreiben wollen. Es gibt auch Leute, die das immer wieder machen. Das Problem ist, da hast du als normaler Benutzer nichts davon, weil die Systeme, so wie sie ausgeliefert werden, egal ob von Microsoft, Apple oder sonst wem, kommen von Hause erst mal eingestellt mit dem Zugriff auf den normalen Namensraum, damit auch das passiert, was man erwartet, was passiert. Du rennst halt auf der Straße rum, siehst ein Schild, da steht halt fritz.de drauf, zückst dein Handy, tippst es ein, erwartest, dass du dann auch bei Fritz ankommst. Weil wenn es jetzt einen alternativen Namensraum gäbe, müsstest du jetzt versuchen, auch dort wieder deinen Namen zu registrieren oder reinzukriegen. Sonst würde das da wieder nicht funktionieren. Die Technik lässt dazu, dass man einfach alternative Namensräume macht und da auch eigene Nameserver-Strukturen macht. Aber solange die keiner benutzt, hat es halt keinen Sinn. Kennst du diese Telefonbücher, die so rausgegeben werden von irgendwelchen alternativen Adressbuchverlagen? Gab es früher mal, ich weiß nicht, ob es sie immer noch gibt, die dich dann anschreiben, sagen, ja, kommen sie doch in unser tolles, aber wenn keiner diese Telefonbücher liest, dann ist es auch egal.
+
+01:47:23.402 --> 01:48:14.922
+<v SPEAKER_2>Ach ja, man könnte sagen, bei den Domains ist es noch irgendwie verkraftbar, weil es ja noch die Länder-Domains gibt, wo man halt, also irgendeine Webseite wird man schon kriegen. Das ist dann halt vielleicht nicht die schönste, aber irgendeine wird schon irgendwie am Start sein. Wie ist denn das jetzt, es gibt jetzt, sagen wir, dieses System, das ist auch historisch alles gewachsen, dass es halt diese ganzen Gremien gibt, die sich selber kümmern. Wird sich das in Zukunft mal irgendwie ändern? Also wenn man so ein bisschen guckt, kann ich mir vorstellen, dass einerseits schon Staaten irgendwie also ein langanhaltendes und auch langfristiges Interesse daran haben, natürlich mal ein bisschen mehr Kontrolle zu kriegen. Und andererseits, wenn man sich so ein bisschen Science-Fiction durchliest, dann gibt es immer sozusagen so Ideen von so einem weltweit umspannenden Netz, was dann komplett von Firmen kontrolliert wird. Wie wird das in Zukunft aussehen mit den Gremien, die unser Internet irgendwie kontrollieren und standardisieren und beschließen?
+
+01:48:16.022 --> 01:48:34.142
+<v SPEAKER_3>Na, ich hoffe, dass es erst mal so bleibt, wie es ist. Sehr konservativ so diese Gremien, weil es eigentlich bisher ziemlich gut funktioniert hat. Wir sehen Diskussionen, die wir jetzt bei dieser ganzen Kryptodebatte hatten, wo die NSA eben in diese Gremien reingegangen ist und bestimmte Algorithmen versucht hat zu ändern in ihrem Sinn, dass sie die knacken können.
+
+01:48:34.162 --> 01:48:38.102
+<v SPEAKER_2>Das sagst du jetzt, zehn Minuten vor Senderende. Das sind die NSA in diesen Gremien, Dirnis?
+
+01:48:38.122 --> 01:48:38.522
+<v SPEAKER_4>Klar.
+
+01:48:38.542 --> 01:49:12.622
+<v SPEAKER_3>Na klar, also jeder kann ja mitmachen, als es auch die NSA denn und die NSA machte auch gute Arbeit, weil sie natürlich Ahnung haben von Krypto-Algorithmen. Aber gleichzeitig versuchen die natürlich auch ein bisschen zu schwächen die Standards, damit sie die besser entschlüsseln können. Das ist natürlich diese Abwägung und die haben schon sehr, sehr viel Gutes da auch getan. Aber in den letzten Jahren hat man gemerkt, dass sie da eben auch nicht so gute Dinge mit reingeschmuggelt haben. Weswegen die natürlich jetzt extrem kritisch begutachtet werden, alles, was die da so eingebracht haben. Das Schöne ist, da das alles so offen ist, kann man jetzt gucken, was hat denn, was haben den Vertreter der NSA in den letzten Jahren alles so vorgeschlagen und kann sich alles das kritisch angucken.
+
+01:49:15.502 --> 01:50:24.262
+<v SPEAKER_4>Ja, die anderen Sachen, also der Namensraum, da sind schon die Begehrlichkeiten groß. Weil wer den Namensraum kontrolliert, kann natürlich auch super zensieren. Wenn es jetzt eine staatliche Behörde gibt, die jetzt irgendwann mal DE kontrolliert und wir sagen hier auf Fritz Dinge, die dem Staat nicht mehr gefallen, dann kann man natürlich einfach die Fritz-DE-Domain killen. Und so was. Und das hängt halt schon immer von den Ländern ab. Man sieht auch da Versuche entweder in totalitären Staaten, es ist eh schon längst in staatlicher Hand, aber man sieht auch Versuche eben in anderen Ländern, die so gerade mal wieder auf der Schwelle stehen, dass man auch da an diese Dinger dran langt. Bei anderen Sachen geht es technisch nicht. Sie können nicht einfach irgendwie IP-Adressen vergeben, die ihnen nicht gehören. Das können sie machen, aber das funktioniert dann halt nicht. Auch bei technischen Standards können sie das machen. Das machen zum Beispiel die Chinesen, die machen sehr viel Sachen inhouse, wo sie Sachen machen, die nur in China funktionieren oder Nordkorea zum Beispiel. Die technischen Standards beschließen, die nur in ihrem Land gelten, die auch nur dort implementiert werden. Aber das hilft ihnen halt nicht im weltweiten Internet. Das heißt, da ist es schwierig. Aber bei den Namensräumen sehe ich in der Tat Potenzial, dass da über kurz oder lang gerade staatliche Stellen mal ihre Finger drauf legen.
+
+01:50:24.862 --> 01:50:27.862
+<v SPEAKER_2>Und gibt es da eine Gegensstrategie?
+
+01:50:27.882 --> 01:50:43.822
+<v SPEAKER_4>Protest, User-Protest, wie es immer so ist. Aber das Interessante ist ja, niemand zwingt da jemanden bei fritz.de. Wenn der DDE-Leute auf den Sack gehen mit ihren Anforderungen, dann gehst du halt, weiß ich, auf die doppelte Domain-Punkt Radio, die halt nicht mehr von der deutschen Regierung kontrolliert wird.
+
+01:50:45.482 --> 01:50:45.882
+<v SPEAKER_2>Tatsächlich.
+
+01:50:46.042 --> 01:50:55.302
+<v SPEAKER_4>Aber das ist dein Weg aus. Das heißt, du kannst halt eben hingehen, einfach einen anderen Domain nehmen, die unter einer anderen Jurisdiktion steht. Das geht schon.
+
+01:50:55.322 --> 01:50:57.822
+<v SPEAKER_2>Wo werdet ihr in Zukunft mitarbeiten?
+
+01:50:57.842 --> 01:51:09.282
+<v SPEAKER_4>Ich mach weiter ITF. Ich fahr jetzt im März nach Buenos Aires. Und wenn das ITF, wenn mal so ein RIPE-Meeting mal in der Nähe ist, dann spring ich auch da gerne mal rein.
+
+01:51:09.302 --> 01:51:11.802
+<v SPEAKER_2>Woran arbeitest du jetzt konkret beim ITF?
+
+01:51:11.822 --> 01:51:33.302
+<v SPEAKER_4>Ich gehöre auch mit zu dem Team, was die Infrastruktur aufbaut. Wenn da so ein Meeting stattfindet, das hält ja kein Kongresszentrum oder kein Hotel aus. Wenn da mal 1500 Leute einfallen, die das Internet nutzen. Und zwar richtig. Das heißt, da schwirren dann mal so 4.000, 5.000 Geräte im WLAN rum. Und das hält kein Hotelnetz aus. Und das sind so Sachen, die ich da zusammen mit anderen Helferleinern aus aller Welt aufbaue.
+
+01:51:35.822 --> 01:51:50.722
+<v SPEAKER_3>Ich werde wieder bei den Drive Meetings aufschlagen. Das ist eine ziemlich gute Möglichkeit, um da Leute kennenzulernen. Und so als Wissenschaftler ist es halt ganz praktisch, an den Leuten nahe dran zu sein, um im Austausch zu sein und die nächsten heißen Themen frühzeitig kennenzulernen.
+
+01:51:51.202 --> 01:52:07.402
+<v SPEAKER_2>Jetzt bin ich vielleicht jemand, der irgendwie so ein, sagen wir, ein Systemadministrator ist. Und so Web-Server-Administrator schon so ein bisschen Ahnung hat, aber die eben das Ganze, was ja heute so doch ein bisschen zu groß ist. Gibt es da so einen leichten Einstieg rein, dass man irgendwie so oder?
+
+01:52:07.422 --> 01:52:08.042
+<v SPEAKER_4>Hingehen.
+
+01:52:08.082 --> 01:52:08.602
+<v SPEAKER_3>Ja, hingehen.
+
+01:52:08.622 --> 01:52:11.522
+<v SPEAKER_4>Es gibt immer so Einführungsveranstaltungen bei beiden.
+
+01:52:11.542 --> 01:52:44.822
+<v SPEAKER_3>Das ist das eine. Und ansonsten gibt es halt oft auch lokale Gruppen. Also in Berlin haben wir irgendwie einen Admin-Stammtisch, den es da irgendwie gibt. Der nennt sich irgendwie FLAB. Es gibt irgendwie FLAB. Das ist so was wie FU und BAR, so eine random Variable, die einfach keine Bedeutung hatten. Die war halt frei die Domain. Natürlich. Also haben wir uns an FLAB.de genannt. Es gibt die Gug, die Germany Unix User Group. Und es gibt so deutschlandweit so was wie die DNOG oder so was. Also ein loser Zusammenschluss von Admins, die da irgendwie im Netzwerkbereich sehr aktiv sind. Und das sind alles Gruppen, die man irgendwie finden kann, wo man Leute treffen kann.
+
+01:52:45.182 --> 01:52:50.662
+<v SPEAKER_2>Das heißt also, dass du sagen, dass wenn ich nicht gleich ganz oben einsteigen will, wo ich mich mal langsam rantasten kann.
+
+01:52:51.742 --> 01:53:04.042
+<v SPEAKER_3>Und die Leute überschneiden sich auch. Also bei den Admin-Stammtischen findet man Leute, die im Rhype irgendwie aktiv sind und bei denen auch natürlich sowieso. Und das ist alles im Grunde irgendwann eine einzige große Familie. Man trifft irgendwie immer dieselben Gesichter.
+
+01:53:06.602 --> 01:54:16.742
+<v SPEAKER_2>Ich danke euch vielmals, dass ihr mir versucht habt und mir und den Hörern und Hörerinnen im vergangenen zwei Stunden versucht habt, zu erklären, wie das mit dem Internet hinter den Kulissen funktioniert. Ich glaube, mir reicht das jetzt. Also ich finde es gut, dass ihr das macht. Und ich glaube aber auch, ich habe jetzt genug davon. Vielen Dank. Das war das Chaosradio. Wir können das nochmal nachhören, falls ihr es nicht genau verstanden habt. Diese eine Stelle würde ich gerne nochmal. Es wird als Podcast erscheinen im Laufe der Nacht auf fritz.de und dann im weiteren Verlauf auch auf chaosradio.ccc.de Dort auch mit Bild, das aufgenommen wurde. Und ansonsten... Nein, nein, das Bild war... Bildklammer hat funktioniert und der Streaming nicht. Es gab kein Live-Bild, aber es gibt auf jeden Fall ein aufgezeichnetes Bild. Also, wenn jetzt nicht noch der Chip abstürzt oder sowas. Außerdem könnt ihr im nächsten Monat mit dabei sein, wenn das Chaos Radio nicht hier bei Fritz passiert, sondern live im Chaos Computer Club Berlin in der Marienstraße 11. Da wird die Sendung auch fast genauso gemacht wie hier. Nur mit dem Unterschied, dass es nicht im Radio läuft, sondern nur in diesem komischen, weltweiten Internet. In zwei Monaten gibt es das dann wieder hier auf Fritz zu hören. Jetzt kommt danach der Nightfly mit Jan Schwarzkamp, der euch mit Musik bewerfen wird. Ich bedanke mich bei Clemens. Und bei Mootox, vielen Dank.
+
+01:54:16.762 --> 01:54:17.302
+<v SPEAKER_3>Bitte, bitte.
+
+01:54:17.322 --> 01:54:22.322
+<v SPEAKER_2>Und wir hatten nur noch zu sagen, mein Name ist Markus Richter. Lasst euch nicht überwachen und verschlüsselt immer schön eure Backups.

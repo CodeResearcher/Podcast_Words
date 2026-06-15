@@ -1,220 +1,979 @@
 WEBVTT
 
-00:00:00.000 --> 00:00:23.480
-<v SPEAKER_1>Hallo und herzlich willkommen zum letzten Chaosradio im Jahr 2021. Es ist die Nummer 274 und wir beschäftigen uns heute mit Reverse Engineering. Was das ist, wofür man das braucht und ob man es auch selber machen soll, das klären wir heute und dazu begrüße ich recht herzlich meine Gäste heute Abend. Das sind einmal Jiska, hallo.
+00:00:14.883 --> 00:00:55.097
+<v SPEAKER_2>Die zwei Sprechstunden. Ich bin ein Hackergedankens, Störende und Chaos Computer Club Berlin.
 
-00:00:28.680 --> 00:00:30.160
+00:04:05.190 --> 00:04:24.270
+<v SPEAKER_3>Mal nach Zahlen im Radio. Wir leben letzten Donnerstag im Monat. Und das bedeutet nichts anderes, als dass der Chaos Computer Club zu Gast ist und hier das Chaos Radio zwei Stunden lang über den Äther geht. Und ich eigentlich nur die Knöpfe drücken darf, während euch Leute vom Club Dinge über die Welt erzählen, die nur mit Strom funktioniert. Zu Gast sind heute der Herr Erdgeist. Hallo und guten Abend.
+
+00:04:24.290 --> 00:04:25.050
+<v SPEAKER_4>Wunderschönen guten Abend.
+
+00:04:25.410 --> 00:04:56.610
+<v SPEAKER_3>Herr Erdgeist ist CCC-Mitglied, allgemeines Spektakulum und seltsamer Typ. Die Bea ebenfalls. Hallo, guten Abend. Äh, nochmal bitte, das war ein technisches Problem. Sehr schön. Bea ist, so hab ich mir das vorher sagen lassen, der korrekte Fachbegriff lautet studierte Rechtsvertreterin. Es wird also heute auch den einen oder anderen juristischen Aspekt geben und da wird sie uns aushelfen und aufklären. Und dann ist Kai noch zu Gast. Hallo und guten Abend.
+
+00:04:56.630 --> 00:04:57.470
+<v SPEAKER_5>Hallo.
+
+00:04:57.490 --> 00:05:38.290
+<v SPEAKER_3>Kai ist auch vom CCC und kennt sich mit dem Internet, mit der anderen Seite des Internetanschlusses aus, könnte man quasi sagen. Also, hab ich es richtig formuliert? Also quasi der, der dafür sorgt, dass ihr auch Internet habt. Zum Beispiel auf sowas wie dem Kongress oder so. Worum geht es heute? Es geht heute tatsächlich um dieses seltsame Internet, von dem wir alle reden, das aber noch nicht alle haben. Ja, die meisten von euch, aber nicht alle. Und nicht nur beim Internet selbst, auch bei den ganzen Technologien, die wir darin nutzen, also Chats oder Dateiübertragungen oder Web-Server oder weiß-der-geiler-was. Gibt es im Club, korrigiert mich, wenn ich jetzt falsche Dinge sage, die Vorstellung, dass es eigentlich geil wäre, wenn wir das so dezentral wie möglich betreiben? Also im Prinzip jeder kann's.
+
+00:05:38.310 --> 00:05:55.990
+<v SPEAKER_4>Natürlich soll Netze jedem zur Verfügung stehen und das geht natürlich am besten, wenn es nicht eine große zentrale Instanz gibt, die als Central Services Netz nach Hause gibt, sondern wenn Leute auch untereinander sich vernetzen und Datenaustauschen auf Wegen, die die Telekom zum Beispiel nicht so vorgesehen hat.
+
+00:05:57.690 --> 00:07:59.850
+<v SPEAKER_3>Das ist erlaubt? Das ist ja unglaublich. Jetzt ist es aber so, wenn, also egal, welche Technologie man jemand anders zur Verfügung stellt, weil darin läuft es ja noch oft. Natürlich wäre es eigentlich am allerpraktischsten, wenn wir alle dasselbe, also alles selber zur Verfügung stellen, aber es wird immer so sein, ein paar Leute machen sich die Mühe, haben auch das technologische Wissen und da Bock drauf und stellen anderen Leuten etwas zur Verfügung, aber die können sich damit böse, böse, böse in die Nesseln setzen, indem zum Beispiel jemand dann ankommt und einen, nehmen wir mal einen völlig fiktiven Fall, er macht seinen WLAN auch für andere. Sagt so, hier, ich hab einen dicken Internetanschluss und ich möchte, dass ihr auch alle Netz habt, bitte nutzt das. Dann kommt jemand an und lädt sich, weiß der Geier, gerade 60 geworden, David Hesselhoff runter, das alle aktuelle Best-of-Album und das kriegt dann irgendjemand mit und sagt dann, das geht aber nicht hier, da müssen wir mal rechtliche Schritte einleiten und dann kriegt aber nicht der Typ den Ärger, der das offene WLAN benutzt hat, weil der ist ja schon längst über alle Berge, sondern der Anschlussinhaber. Er ist nicht direkt dafür verantwortlich, sondern ist dann ein sogenannter, in sogenannter Störungshaftung. Und dieses Konstrukt, das also derjenige, der einen technischen Service im Internet betreibt, auch immer einen Teil der Mitschuld haben könnte, möglicherweise also juristische Komplikationen zu befürchten hat, weil er etwas anbietet, der steht diesem Ganzen, eigentlich sollten wir auch alle die Möglichkeit haben, solche Dinge zu tun, ein bisschen im Weg. Und genau darüber wollen wir uns heute Abend unterhalten, um über die sogenannte Störerhaftung, also über das Bereitstellen von Technologie und die möglichen juristischen Konsequenzen, die uns hier in Deutschland erwarten, wenn wir das machen, und wie man das umgeht. Da gibt es natürlich dann wieder die politischen Wege und die juristischen Wege und die technischen Wege. Und all das wollen wir heute erklären. Und auch ein bisschen, hoffe ich zumindest, ein paar Geschichten aus dem Nähkästchen zu hören bekommen, denn die Damen und Herren CCC-Mitglieder betreiben ja den ein oder anderen Service. Nur um sich das mal vorzustellen, weil der Club, den kennt ihr vielleicht irgendwie aus den Nachrichten oder weil wieder irgendein Elektronenscheib-Personalausweis auseinandergenommen wurde. Aber die betreiben auch tatsächlich jede Menge Dienste. Was alles macht ihr denn eigentlich?
+
+00:07:59.870 --> 00:08:39.190
+<v SPEAKER_5>Wir betreiben zum Beispiel einen Jumper-Server, wo sich die ganze Welt drauf anmelden kann, zum Kommunizieren mit XMPP. Wir betreiben auch noch jetzt seit neuestem, seit einem halben Jahr, ungefähr einen Bittoren-Trecker. Der ist glaube ich jetzt der einzige große in Deutschland bisher, der so richtig offen ist für alles. Und sonst bieten wir halt eigentlich auch auf unseren gesamten Events, zum Beispiel den Besuchern, ein freies anonymes Netz an. Und dazu betreiben wir diverse Anonymisierungsnodes, zum Beispiel von dem Service Tor. Da haben wir auch eine Handvoll Server und betreuen die und schauen, dass da immer schön viele Leute draufgehen können.
+
+00:08:40.630 --> 00:09:12.490
+<v SPEAKER_3>Dass da Leute draufgehen können, das hört jetzt komisch aus. Aber es geht also bei Tor darum, dass man anonym surfen kann und das funktioniert nur, wenn es möglichst viele Computer gibt, die das machen. So, das aktuelle, ganz klassische Beispiel, über das wir heute reden, also nicht das klassische Beispiel, sondern das Beispiel, an dem man es sehr einfach erklären kann und zu dem es auch einen aktuellen Anlass gibt, ist halt diese Störerhaftung im WLAN. Und was sich genau dahinter verbirgt, damit müssen wir jetzt erstmal anfangen. Aber bevor ich das tue, gibt es noch einen Aufruf an euch. Ihr könnt gerne anrufen, 0331 77 97 110 ist die Nummer. Erdgeist hat die, glaube ich, auch schon gelernt?
+
+00:09:16.950 --> 00:09:17.930
+<v SPEAKER_4>Die zweite Hälfte muss du.
+
+00:09:17.950 --> 00:09:57.750
+<v SPEAKER_3>70 97 110, das ist die höhere Hotline. Und falls ihr zum Beispiel schon mal Störer gehaftet worden seid, also falls ihr eine Nachricht bekommen habt zu Alter hier, bezahl mal bitte den Download und Abmahnung. Und überhaupt, obwohl ihr euch super und hundertprozentig sicher seid, dass ihr das gar nicht wart, könnt ihr gerne hier anrufen und mal eure Geschichte erzählen. Einfach, damit man auch mal sieht, dass das tatsächlich eine praktische Relevanz hat und jetzt hier nicht irgendwie vom theoretischen Pferd erzählt wird. Und natürlich würde es heute auch um jede Menge Dinge gehen, die noch diskursionswürdig sind. Also gerade so was wie brauchen wir so eine Störerhaftung vielleicht oder ist das eher doof? Braucht man die überhaupt gar nicht? Was macht man dann mit solchen Fällen, wo man das aber dann doch irgendwie rausfinden will? All das kann heute auch diskutiert werden. Und die Nummer dafür ist...
+
+00:09:57.770 --> 00:09:59.210
+<v SPEAKER_4>031-4-Potsdam.
+
+00:09:59.230 --> 00:10:14.090
+<v SPEAKER_3>7097110. Genau. So, Bea, ausgebildete Rechtsvertreterin mit Abschluss. Kannst du uns bitte mal erklären, was genau, also jetzt sagen, juristische Leihen. Was ist denn genau jetzt eine Störerhaftung? Was passiert da? Warum gibt es das überhaupt?
+
+00:10:17.450 --> 00:10:33.110
+<v SPEAKER_6>Der Normalfa und den kennen wir. Wir haben etwas getan. Und damit in Rechte von Dritten eingegriffen. Und die normale Reaktion ist, dass der Beschädigte zu uns kommt und Schadensersatz geltend macht. Das kennen wir.
+
+00:10:33.850 --> 00:10:42.970
+<v SPEAKER_3>Also, ich übersetz das gleich mal klassisch. Also, ich habe ein Album runtergeladen. Richtig. Dann kommt der Albumbesitzer im Zweifelsfall an und sagt so, alter Schadensersatz.
+
+00:10:42.990 --> 00:13:27.090
+<v SPEAKER_6>Genau, das ist der Normalfall. Und wir haben seit ein paar Jahren das Problem, dass derjenige, dem dieses Recht gehört, nicht herausfinden kann, wer jetzt tatsächlich am PC saß und dieses Album runtergeladen hat. Und man bewusste jetzt zu der Situation oder zu dem Ende kommen, dass wir zwar einen Geschädigten haben, aber den Schädiger halt nicht finden. Und das ist ein bisschen unbefriedigend. Also diese Störerhaftung ist nicht klassisches Internetrecht nur. Also das ist eine sehr alte Geschichte, die kommt aus dem 19. Also wenn mein Nachbar auf seinem Grundstück einen Baum hat und nach dem Gewitter dieser Baum umkippt und auf mein Grundstück fällt, dann muss er dafür sorgen, dass es beseitigt wird. Also somit hat es ungefähr angefangen. Das sind so die Beginne von der Störerhaftung. Und da kommen wir ja alle noch mit, das ist ja noch in Ordnung. Im Internet haben wir die Situation leider, dass der Geschädigte oder bzw. der, der die Rechte geltend macht, das Geschädigte nur an die Information herankommt, wer Anschlussinhaber ist. Also nicht derjenige, der Nutzer war, sondern der sozusagen dieses Internet zur Verfügung gestellt hat. Wenn der nachweisen kann, bzw. das glaubhaft darlegen kann vor Gericht, dass er nicht selber dieses Album runtergeladen hat, fällt er diese ganze Haftung auf Schadensersatz weg. Und man kommt in die sogenannte Störerhaftung. Also man geht davon aus, dass wenn ich jemand anderem, also meines übrigens, sind die Gerichte. Also es ist alles Rechtsprechung, was ich jetzt erzähle. Wir haben das nur irgendwo kodifiziert, aber darüber können wir später nochmal sprechen. Erstmal die Gerichte sagen, das ist eine Eröffnung von einer Gefahrenquelle, wenn ich jemand anderem mein Internet zur Verfügung stelle. Und wenn ich eine Gefahrenquelle eröffne, habe ich bestimmte Pflichten. Die nennt man Prüfpflichten. Und wenn ich diese Prüfpflichten nicht einhalte, also nicht umsetze, komme ich in die Haftung als Störer. Also ich bin sozusagen kausal daran beteiligt, dass jemand anderes einem Dritten einen Schaden zufügt.
+
+00:13:27.110 --> 00:13:41.710
+<v SPEAKER_3>Also möglicherweise hinkt das Beispiel, aber in meinem Kopf formt sich gerade, ich betreibe eine Straße, also ich habe eine Straße, und darauf passiert ein Unfall. Der Fahrer beginnt aber Fahrerflucht. Weil ich da aber eine Mautstation auf der Straße betreibe, könnte ich möglicherweise wissen, wer das war.
+
+00:13:42.630 --> 00:14:15.990
+<v SPEAKER_6>Naja, wenn du kannst, dieses Beispiel vom Fiktiven, die Realität, also die Sache ist, ich habe ein Auto. Und das ist auch eine Gefahrenquelle. Damit kann man Menschen umbringen oder sehr intensiv verletzen. Das ist genau das Gleiche. Also hier bin ich auch verpflichtet, eine Haftpflichtversicherung zu haben. Also irgendwas abzusichern, weil man davon ausgeht, dass Schäden entstehen, damit die kompensiert werden können. Also deshalb, wir haben alle die Haftpflichtversicherung.
+
+00:14:20.050 --> 00:14:32.430
+<v SPEAKER_4>Und wenn nicht ganz klar ist, wer das Auto gefahren hat, dann muss man ab dem zweiten Mal ein Fahrtenbuch führen, damit wieder derjenige, der mit meinem Kraftfahrzeug, was nur mit meinem Namen assoziiert ist, dann auch zurückverfolgt werden kann.
+
+00:14:35.110 --> 00:14:50.630
+<v SPEAKER_6>Der Knackpunkt bei der Störerhaftung sind aber diese Prüflichen. Ist wahrscheinlich ein bisschen schwer, sich wirklich darüber zu streiten, ob es eine Störerhaftung gibt, ja oder nein. Weil das ist einfach Rechtsgeschichte schon mittlerweile.
+
+00:14:51.110 --> 00:14:55.330
+<v SPEAKER_3>Das hört sich jetzt an nach einer wissenschaftlichen Diskussion. Die Störerhaftung gibt es in Deutschland.
+
+00:14:55.510 --> 00:16:26.550
+<v SPEAKER_6>Ja, richtig. Für alle Bereiche außerhalb Internetrechte wird man da auch nicht wahnsinnig darüber diskutieren können. Das hat sich ins Internet rein entwickelt. Die Problematik ist aber, wie viele Pflichten und auch wie sehen die dann konkret aus, muss derjenige haben oder muss ihm übertragen werden, der eben Internet für Dritte zur Verfügung stellt. Also da gibt es Nummer eins, dass ich diejenigen, die meinen Internetzugang nutzen, dass ich die belehre, was weiß ich, eine Splashpage oder bündlich protokolliere. Inhaltlich darauf hinweisen, was man im Internet nicht machen darf. Also Kinderpornos, Urheberrechtsverletzung, Straftaten, Volksverhetzung. Die es nicht gibt, ja genau. Das ist Nummer eins. Nummer zwei ist, ich muss... Also das ist Rechtsprechung. Das ist umstritten und das sind auch die unteren Instanzen. Also jeder Jurist weiß, was ich damit meine. Also das ist keine herrschende Meinung. Wir haben aber keine höchstrichterlichen Rechtsprechung in dem Bereich. Man muss, also sagen, Landgerichte, den Nutzer dann auch kontrollieren. Also wenn es jetzt ein WG-Mitbewohner ist, muss ich in das Zimmer von demjenigen reingehen, muss an den PC ran und müsste kontrollieren, dass er keine UEFA-Rechtsverletzung zum Beispiel machen.
+
+00:16:26.570 --> 00:16:29.790
+<v SPEAKER_3>Immer oder wenn es zu einem Schadensfall gekommen ist?
+
+00:16:29.810 --> 00:17:01.750
+<v SPEAKER_6>Ja, wird um das umstritten. Also, dass ich überhaupt... Also, gehen wir mal von dem Fall aus, dass jetzt noch nie irgendwas passiert. Ich muss damit gar nicht rechnen, dass ein WG-Mitbewohner UEFA-Rechtsverletzung begeht. Da gibt es Stimmen, und das sind auch die berühmten Gerichte in Hamburg, die sagen, ja, ich muss kontrollieren, auch wenn ich nicht davon ausgehen muss, dass derjenige das tut. Weil es ist allgemein bekannt, dass es UEFA-Rechtsverletzung im Internet gibt und dass die Wahrscheinlichkeit ist einfach hoch, dass es gemacht wird.
+
+00:17:02.150 --> 00:17:05.630
+<v SPEAKER_3>Das heißt sozusagen, im Internet gilt die Unschuldsvermutung eigentlich nicht?
+
+00:17:06.010 --> 00:17:42.470
+<v SPEAKER_6>Das ist wunderbar zusammengefasst. Das ist eine sehr harte Kritik. Genau. Also das sind einzelne Gerichte, die das in Deutschland sagen. Das sind nicht viele. Und wir haben viel zu wenig Rechtsprechung in dem Bereich. Und eben auch keine BGH-Rechtsprechung. Oberlandesgerichtsrechtsrechnung wird auch schon sehr dünn. Aber du hast es richtig zusammengefasst. Im Prinzip geht es darum, dass es so einen Generalverdacht gibt. Also jeder, der ins Internet geht, ist dann potenziell ein Straftäter. Also wir müssen kontrollieren.
+
+00:17:44.230 --> 00:17:55.850
+<v SPEAKER_3>Das bringt mich zurück zu einer Sache, die du gesagt hast, die mir gerade auffiel. Du hast gesagt, wenn es dazu kommt, und ich als Betreiber sozusagen abgemahnt werde, dann muss ich glaubwürdig machen, dass ich es nicht selber war. Wie soll ich denn das machen?
+
+00:17:55.870 --> 00:18:04.310
+<v SPEAKER_6>Ja, das sicherste ist, man war im Urlaub. Also man kann wirklich darlegen, dass man nicht zu dem Zeitpunkt zu Hause war und den Router benutzt hat.
+
+00:18:04.330 --> 00:18:09.250
+<v SPEAKER_3>Das heißt, wenn ich tatsächlich zu dem Zeitpunkt möglicherweise in der Nähe meines Internets gewesen sei, dann war ich es auch.
+
+00:18:09.270 --> 00:18:40.090
+<v SPEAKER_6>Naja, das ist, also es wird dann schwieriger. Man muss dann das schon eröffnen und dem Richter glaubhaft darlegen, dass es noch andere gibt, die in Betracht kommen, die das auch gemacht haben. Also höchstwahrscheinlich auch. Also wenn ich jetzt alleine lebe und einen verschlüsselten WLAN habe und nur ich eben darauf Zugriff habe, dann wird es schwer fallen, nachzuweisen bzw. das glaubhaft vor Gericht zu machen, dass ich eben derjenige nicht war, der...
+
+00:18:40.110 --> 00:18:44.910
+<v SPEAKER_3>Aber ich muss aber fragen, soweit ich mich vermitteln, ist es ja technisch, heißt da verschlüsseltes WLAN nicht, dass da keiner rein kann?
+
+00:18:47.330 --> 00:18:50.470
+<v SPEAKER_6>Ähm, ja, also ich glaube rechts und links von mir, die könnten da...
+
+00:18:53.630 --> 00:19:04.110
+<v SPEAKER_4>Sie sagen, dass man nach dem aktuellen Stand der Technik sein Netzwerk verschlüsseln soll. Und das heißt dann gerade WPA2 und das ist schon doch sicher genug gegen fremde Eindringlinge.
+
+00:19:04.130 --> 00:19:13.910
+<v SPEAKER_3>Naja, wir reden jetzt aber nicht sozusagen über das Vorbeifahren und ins Internet rein, sondern die Frage ist, wenn ich mein WLAN WPA2 verschlüsseln, ist das dann hundertprozentig sicher?
+
+00:19:13.930 --> 00:19:16.650
+<v SPEAKER_6>Nein, es gibt gar keine hundertprozentige Sicherheit.
+
+00:19:16.670 --> 00:19:23.870
+<v SPEAKER_4>Also es ist gegen Brutforce-Attacken, gegen schwache Passwörter natürlich nicht sicher. Dann wird dir aber unterstellt, dass du es nicht nach Stand der Technik abgesichert hast.
+
+00:19:25.390 --> 00:19:30.510
+<v SPEAKER_6>Nee, wenn ich WPA2 verschlüsselt habe, dann kann mir das nicht unterstellt werden.
+
+00:19:31.150 --> 00:19:34.490
+<v SPEAKER_4>Na doch, wenn du ein schwaches Passwort nimmst.
+
+00:19:34.510 --> 00:19:45.910
+<v SPEAKER_3>Also ich halte mal fest, ich wohne alleine, habe mein WLAN mit WPA2 verschlüsselt und trotzdem ist jemand bei mir eingebrochen und hat illegal Musik runtergeladen. Ich war es dann aber trotzdem.
+
+00:19:45.930 --> 00:19:49.290
+<v SPEAKER_6>Weil alles dafür spricht, dass du das warst.
+
+00:19:49.310 --> 00:20:07.270
+<v SPEAKER_4>Du kannst natürlich am Ende hingehen den Sachverständigen holen, der deinen Rechner forensisch analysiert und dann versuchen das Gerichte davon zu überzeugen, dass dein Rechner überhaupt nicht dazu in der Lage ist. Wie teuer ist das? Den IT-Sachverständigen, die nehmen da so 6000 Euro aufwärts.
+
+00:20:07.290 --> 00:20:15.010
+<v SPEAKER_3>Okay, also wir halten mal fest, es scheint tatsächlich so zu sein. Also wenn ich einen Internetanschluss habe, dann bin ich erstmal schuld.
+
+00:20:15.030 --> 00:20:17.790
+<v SPEAKER_4>Wie mit dem Auto im Straßenverkehr.
+
+00:20:17.810 --> 00:20:19.930
+<v SPEAKER_3>Gibt es Haftpflichtversicherungen für Internetanschlussbetreiber?
+
+00:20:20.610 --> 00:20:21.930
+<v SPEAKER_6>Eine gute Frage.
+
+00:20:21.950 --> 00:20:27.650
+<v SPEAKER_3>Gibt es das schon? Die Versicherungsindustrie kommt doch auf aller möglichen Ideen. Da könnte man nochmal so ein...
+
+00:20:27.670 --> 00:20:35.790
+<v SPEAKER_6>Ja, die jaulen aber auch um, dass sie immer plus minus, wenn es gut läuft, rauskommen. Also ich hab noch nicht davon gehört. Vielleicht ist es eine Marktlücke.
+
+00:20:35.810 --> 00:20:38.510
+<v SPEAKER_3>Liebe Versicherer, ich würde mir da was geben.
+
+00:20:40.930 --> 00:21:11.690
+<v SPEAKER_6>Ich will noch mal kurz eine Sache sagen. Also ich hab das jetzt einfach so dargelegt, nicht dass irgendjemand denkt, dass ich das hier vertrete. Mein Problem ist, das nachvollziehen zu können, dass das Internet überhaupt eine Gefahrenquelle ist. Das verstehe ich nicht, woher das kommt. Ich nehme an, dass das einfach eine zielgerichtete Argumentation ist. Also man möchte zu einem bestimmten Ziel kommen. Aber klare Argumente, warum das Internet jetzt eine Gefahrenzone sein soll, kenn ich nicht.
+
+00:21:11.850 --> 00:21:15.210
+<v SPEAKER_7>Also wenn wir alle mal auf unser...
+
+00:21:15.230 --> 00:21:23.190
+<v SPEAKER_3>Wenn ein Jurist sagt, das ist etwas seine Gefahrenzone, dann heißt das in Normalsprache übersetzt, da ist es wahrscheinlicher, dass was Böses passiert, als was Gutes.
+
+00:21:23.650 --> 00:21:52.710
+<v SPEAKER_6>Also man muss unterscheiden zwischen Risiko und Gefahrenzone. Also wenn ich ein technisches Hilfsmittel, Arbeitsmittel nutze, da ist immer ein Risiko dabei. Gefahr bedeutet aber, wenn ich nicht einschreite, das heißt, wenn der Safo halt einfach bis zum Ende so durchläuft, dann entsteht am Ende ein Schaden. Und ich bin so oft im Internet. Und da entsteht überhaupt kein Schaden. Obwohl dritte nicht eingereicht wird.
+
+00:21:52.730 --> 00:21:57.110
+<v SPEAKER_4>Du bist nicht mehr jung und du machst keine Facebook-Partys.
+
+00:21:57.130 --> 00:22:01.230
+<v SPEAKER_8>Erdgeist, ich glaub, das wird es zurücknehmen.
+
+00:22:01.250 --> 00:22:14.510
+<v SPEAKER_3>Bevor es jetzt hier zu emotionalen Differenzen der Beteiligten kommt, möchte ich das gerne noch mal auf den sachlichen Stand zurückheben und fragen, also die Juristen sagen, das Internet ist ein Ort, wo es zu hundertprozentiger Sicherheit zu Schaden kommen wird, also eine Gefahrenzone.
+
+00:22:14.890 --> 00:22:22.370
+<v SPEAKER_6>Also nicht die Juristen, also die Gerichte, von denen ich jetzt gerade gesprochen habe, also ein Paar.
+
+00:22:22.390 --> 00:22:30.630
+<v SPEAKER_3>Da möchte ich sagen, der juristische Begriff Gefahrenzone bedeutet, wenn etwas eine Gefahrenzone ist, dann wird daraus Schaden entstehen.
+
+00:22:30.650 --> 00:22:36.110
+<v SPEAKER_6>Richtig, wenn ich nicht eingreife, dann entsteht ein Schaden.
+
+00:22:36.130 --> 00:22:44.470
+<v SPEAKER_3>Und die Störerhaftung bedeutet also, weil es in der Zeit eine Gefahrenzone ist, bin ich verpflichtet einzugreifen, damit dieser Schaden, der auf jeden Fall entstehen wird, wenn ich nicht eingreife, abgewendet wird.
+
+00:22:44.490 --> 00:22:45.310
+<v SPEAKER_6>So sieht es aus.
+
+00:22:45.330 --> 00:22:55.370
+<v SPEAKER_3>Und wenn etwas Böses passiert, habe ich, als der den Internetanschluss betreibt, nicht eingegriffen und habe deswegen dazu beigetragen, dass die Gefahrenzone das machen kann, was ihr natürliches Wesen ist, nämlich Schaden.
+
+00:22:55.770 --> 00:22:59.870
+<v SPEAKER_6>Richtig, ich habe kausal dazu beigetragen, dass dieser Schaden entstanden ist.
+
+00:23:00.890 --> 00:23:08.450
+<v SPEAKER_3>Okay, ich möchte jetzt mein Internet nicht mehr aufmachen an dieser Stelle und ich vermute, das geht vielen anderen Leuten bei euch auch so.
+
+00:23:08.470 --> 00:23:12.630
+<v SPEAKER_6>Nein, nein, man muss nein. Diese Rechtsmachung ist hochgradig angreifbar.
+
+00:23:12.650 --> 00:24:05.370
+<v SPEAKER_3>Entschuldigung, dazu möchte ich auch heute noch kommen, aber wenn man das gehört hat, und das ist ja auch das, was in den Medien meiner Meinung nach eher kommuniziert wird, oder nicht in den Medien, das ist Quatsch, was halt einfach kommuniziert wird. Also was ankommt bei den Leuten, die sich nicht mit diesem Thema auseinander beschäftigen und die keine Juristen sind und sagen so, ja, das ist doch aber angreifbar, sondern Leute einfach wie du und ich, die jetzt hören, okay, das ist eine reelle Chance, dass dir das passiert. So. Also möglicherweise geht das auch anders und möglicherweise habe ich auch 6000 Euro auf der Kante, um den IT Sachverständigen für meine Rechneruntersuchung zu bezahlen. Aber tendenziell setze ich mich dem Risiko aus, böse sexuell im Hinterteil belästigt zu werden, um mal das Diplomatisch auszudrücken, wenn ich einen WLAN aufmache. Und dann vergeht mir natürlich die Lust. Also dann sage ich tatsächlich, ja, also möglicherweise für eine bessere Welt könnte man das machen, aber ich habe im Zweifel keinen Bock, keine Zeit und keine Kohle und keinen Stress, um mich damit auseinanderzusetzen.
+
+00:24:05.390 --> 00:24:27.290
+<v SPEAKER_6>Genau das, was du sagst. Deshalb muss man sich politisch und gesellschaftlich mit dem Thema auseinandersetzen. Im Prinzip ist es unsere Entscheidung, wie wir mit dem Internet umgehen. Also ist es jetzt halt frei, also kann ich frei kommunizieren, kann ich frei Informationen bekommen etc. Oder nicht.
+
+00:24:27.310 --> 00:24:30.230
+<v SPEAKER_3>Also ist die Frage, ist das Internet eine Gefahrenzone?
+
+00:24:32.210 --> 00:24:47.610
+<v SPEAKER_4>Natürlich ist es es nicht. Aber wenn wir dank des fliegenden Gerichtsstandes alle diese Fälle in Hamburg vor diesem berüchtigten Landgericht Hamburg verhandeln lassen, dann wird das wahrscheinlich irgendwann mal zur ständigen Rechtsprechung werden. Und das ist glaube ich so einer der Punkte, die wir demnächst mal angehen müssen.
+
+00:24:48.670 --> 00:25:07.090
+<v SPEAKER_3>So jetzt hast du schon gesagt und fangen wir nochmal wieder oben bei den Juristen an, dass diese Argumentation, die jetzt für den normalen Menschen das ist, was Realität ist, dass die juristisch angreifbar ist. Was sind denn dann die Punkte, wo man als Jurist jetzt sagen könnte, entschuldigen Sie mal, aber da geht es doch anders.
+
+00:25:07.110 --> 00:25:49.390
+<v SPEAKER_6>Nummer eins ist, dass diese Rechtsprechung von Hamburg überprüft wird von höheren Instanzen. Also ich spreche vom BGH, darüber würde man sich freuen. Oder von anderen Oberlandesgerichten, also dass man eben Verfahren nicht vor Hamburg hat. Und inhaltlich, wenn ich etwas juristisch behaupte, muss ich das begründen. Brauche ich Argumente. In Hamburg gehen Sie einfach von dem Fakt aus, in den Medien gibt es die Information, dass Urheberrechtsverletzungen erfolgen. Und Schlussfolgerung ist, das ist eine Gefahrenzone.
+
+00:25:51.390 --> 00:26:06.950
+<v SPEAKER_4>Ist das dieses Müllmann-Syndrom, dass wenn alle Fälle, die das Urheberrecht betreffen, bei einem angeschüttet werden, dass man dann irgendwann nicht mehr glaubt, dass es Leute gibt, die das Internet für irgendwas anderes benutzen als Filesharing, sodass die da irgendwie eine ganz eigene Fehlwahrnehmung über das Internet im Laufe der Zeit entwickeln?
+
+00:26:06.970 --> 00:26:45.030
+<v SPEAKER_6>Das ist etwas, was Richtern generell schon seit Jahrtausenden vorgeworfen wird. Die Perspektive, die sie haben, über die sie urteilen, sie lernen halt immer nur diese eine Geschichte. Sie haben es immer mit Leuten zu tun, die sich falsch verhalten haben. Sie sehen nicht das gesamte Bild. Sie sehen jetzt nicht 80 Millionen Einwohner in Deutschland, sondern sie sehen halt 20, die bei ihnen vorm Gerichtsstand stehen und dort verurteilt werden.
+
+00:26:45.050 --> 00:27:42.870
+<v SPEAKER_3>Das heißt, wir haben jetzt schon mal geklärt, was die Störerhaftung ist und haben, das finde ich nicht unspannend, auch die Denkweise des juristischen Apparats aufgezeigt ein bisschen und werden dann gleich mal dazu kommen, was man dagegen tun kann, warum ihr was dagegen tun wollt, haben wir jetzt schon gerade besprochen. Mich würde dann auch mal interessieren, dass wir ganz praktisch vorgehen. Ihr betreibt diese ganzen Dienste und dass ihr mal möglicherweise eine kleine Einschätzung geben könnt, wie hoch denn so in eurer praktischen, konkreten Erfahrung die Fälle sind, wo dann Leute tatsächlich Unsinn treiben. Und dann können wir auch machen noch dazu kommen, was genau in so einem Störerhaftungsfall passiert. Also wie es dazu kommt, dass auf einmal bei euch ein Briefkasten im Brief ist, wo drin steht 1200 Euro oder 40 Fantastildiaden, je nachdem, was sich die Abmahnanmelde gerade ausgedacht haben. Wir hören vorher eine kleine Musik noch, die kommt, die komplette Musik in dieser Sendung heute vom Sampler Chiptunes For The Win. Sehr gutes Stück und wir hören jetzt den ersten Track. Best Girl At A Party heißt das glaube ich danach.
+
+00:30:37.173 --> 00:30:53.493
+<v SPEAKER_9>Die neuen Deutschpoeten dieses Jahr sind Mia, Max Herre, Hekuleskis, Imo Hauer, Masimo, Vierkernrehlager und Imbensko. Was denn? Stimmt ja. Tees ist ja jetzt auch mit dabei.
+
+00:30:53.513 --> 00:30:55.133
+<v SPEAKER_10>Die neuen Deutschpoeten.
+
+00:30:55.153 --> 00:31:20.093
+<v SPEAKER_9>Jetzt auch mit Tees Ullmann. Und natürlich Masimoto, Vierkantretlager und Max Herre. Mia, Timo Hauer, Secoleckis und Tim Bensko. Samstag, 1. September. Live von Open Air im IFA Sommergarten auf dem Messegelände Berlin.
+
+00:31:20.113 --> 00:31:25.553
+<v SPEAKER_10>Solang es noch Karten gibt, gibt es Karten auch bei Fritz im Netz. Die neuen Deutschpoeten.
+
+00:31:41.253 --> 00:31:42.333
+<v SPEAKER_3>Mit Liane Groß.
+
+00:31:42.353 --> 00:33:47.973
+<v SPEAKER_1>EU-Kommissionschef Barroso hat Griechenland versichert, dass es auf die Hilfe der anderen EU-Länder zählen kann. Allerdings müsse Athen auch seine Verpflichtungen gegenüber den Gläubigern erfüllen, sagte Barroso nach einem Gespräch mit Ministerpräsident Samaras. Barroso betonte, der Verbleib Griechenlands in der Eurozone sei der einzige Weg, den Schwächeren zu helfen. In Potsdam hat am Abend wieder eine Ratze im Vereinsheim der Hells Angels stattgefunden. Gleichzeitig durchsuchte die Polizei 16 Wohnungen von Vereinsmitgliedern in Berlin, Brandenburg und Sachsen-Anhalt. An den Durchsuchungen waren 300 Beamte beteiligt. Festnahmen habe es nicht gegeben, teilte die Polizei mit. Bei den Razzien der letzten Wochen waren wiederholt waffen- und waffenähnliche Gegenstände gefunden worden. In Deutschland gibt es so viele ausländische Studenten wie noch nie. 2011 waren hier erstmals über eine vierte Million eingeschrieben. Nach einer Studie des Deutschen Akademischen Austauschdienstes studieren vor allem Chinesen häufig hierzulande. In westlichen Ländern bleibt Deutschland als Gastland bei Studenten dagegen weiter unbeliebt. In Moskau hat die Opposition friedlich gegen den zunehmenden Druck auf Andersdenkende in Russland demonstriert. Die rund 3000 Teilnehmer forderten vor allem die Freilassung von Oppositionellen, die nach einer Kundgebung am 6. Mai festgenommen worden waren. Das berichtete der Radiosender Echo Moskwy. Damals hatten zehntausende Menschen gegen die dritte Amtszeit von Präsident Putin demonstriert. Mit den aktuellen Temperaturen in Berlin gerade zwischen 22 und 25 Grad, in Angermünde 21, Wittenberge 22, Frankfurt 23, in Potsdam und Neuruppin 24 Grad und in Cottbus 26 Grad. Es gibt immer noch ein paar Wolken am Himmel. Im Osten und im Süden Brandenburgs, da kann es auch mal krachender Kleines, kleine Wärmegewitter geben und die Temperaturen, die sinken in der Nacht weiter auf bis zu 13 Grad. Tagsüber dann wieder viel, viel Sonne und Temperaturen bis 32 Grad. Nach Brandenburg A12, Berlin Richtung Frankfurt oder zwischen Raststätte Biegner-Hellensüd und Frankfurt oder Wester steht auf der rechten Spur ein kaputter Laster. Passt hier auf und ansonsten gute Fahrt.
+
+00:33:49.573 --> 00:33:51.713
+<v SPEAKER_9>Fritz ist eine Produktion des RBB.
+
+00:34:18.260 --> 00:35:04.120
+<v SPEAKER_3>Der Chaos Computer Club ist in Gestalt von Erdgeist, Bea und Kai zu Gast und es geht um die Störerhaftung, also das juristische Konstrukt, das euch dafür verantwortlich macht, dass ihr mit dafür verantwortlich seid, wenn über euer WLAN, das ihr möglicherweise aus Freundlichkeit aufgemacht hat, Unsinn getrieben wird. Wir haben in der ersten halben Stunde genauer erklärt, wie dieses juristische Konstrukt funktioniert und gelernt, dass die, na nicht die, manche Juristen davon ausgehen, dass Internet seine Gefahrenzone heißt, da kann es nur zu schlimmen Sachen kommen. Jetzt haben wir zufälligerweise auch Leute am Start, die für den Club bei großen Veranstaltungen, wie zum Beispiel im Chaos Communication Kongress, riesige Netzwerke betreiben. Und da würde mich jetzt doch einmal das Verhältnis interessieren. Also man betreibt so ein Netzwerk. Ich weiß nicht, ist Kongress ein gutes Beispiel, Kai?
+
+00:35:04.140 --> 00:35:32.840
+<v SPEAKER_5>Auf dem Kongress passiert inzwischen relativ wenig, mag einerseits daran liegen, dass zum Beispiel viele im Weihnachtsurlaub sind und es gar nicht mitbekommen, dass irgendwie ihre Server aufgemacht werden. Andererseits Blacklisten, das ganz viele, also die sperren zum Beispiel den Kongress vorne rein, weil sie wissen, dass da immer nur Böses rauskommt, nicht Nützliches. Und es gibt natürlich auch Leute, die das einfach nutzen, dass sie mal endlich performantes Internet haben, das auch anonym ist und gehen da halt ganz ungehemmt vor.
+
+00:35:32.960 --> 00:35:44.360
+<v SPEAKER_3>Also das heißt, die Rate an Leuten, die, ich sage mal, justiziablen Unsinn treiben, ist schon höher als normal in so einem Netzwerk, in so einem Veranstaltungsnetzwerk vom Club.
+
+00:35:44.380 --> 00:35:55.260
+<v SPEAKER_5>Zu anderen Veranstaltungen auf jeden Fall, aber das hält sich, also jetzt um mal Zahl zu sagen, auf die, glaube ich, 3000 Besucher letztes Jahr, kamen wir auf drei bis vier Abuse-Calls.
+
+00:35:55.260 --> 00:35:59.820
+<v SPEAKER_3>Abuse-Calls sind also Leute, die, die in irgendwas gehackt worden ist, aus dem Netz vom Kongress.
+
+00:35:59.840 --> 00:36:28.800
+<v SPEAKER_5>Genau, die sich dann melden, dass da was passiert ist und wir da mal was gegen unternehmen sollen. Also viele werden wahrscheinlich auch gehackt und merken das überhaupt nicht, beziehungsweise ignorieren es einfach und machen es neu oder reparieren es. Aber es gibt natürlich auch die kleine Anzahl der Leute, die sich dann halt meldet bei uns, anruft und dann mit uns eine Lösung sucht, wo wir ihnen einerseits zum Beispiel helfen, Schadensbegrenzungen zu machen oder zum Beispiel einfach, dass wir ihr Netz sichern und man vom Kongress aus nicht mehr zugreifen kann, dass da nicht weiter Unsinn getrieben wird.
+
+00:36:29.560 --> 00:36:39.380
+<v SPEAKER_3>Aber so Verhältnismäßigkeit, wie viel Unsinn, wie viel Leute, die das einfach nur normal nutzen, kann man das irgendwie sagen?
+
+00:36:39.400 --> 00:36:53.100
+<v SPEAKER_5>Ich würde sagen, inzwischen der Großteil des Kongress benutzt es einfach nur, um halt irgendwie Twitter zu klicken, Internet zu rousen und der kleinste Teil davon benutzt es wirklich, um Schaden zu verursachen.
+
+00:36:53.120 --> 00:37:28.720
+<v SPEAKER_3>Jetzt ist ja sozusagen der Kongress auch so, also eine geballte Ladung Hacker an einem Platz, jetzt betreibt ja vom Club auch ein paar Dienste, die Leute im alltäglichen Gebrauch benutzen. Gibt es da auch, also was hatten wir, irgendwie Java hatten wir, einen BitTorrent Tracker, was gibt es noch? Tor Nodes. So, und da gibt es ja, also Tor hat man zum Beispiel immer wieder, irgendjemand betreibt so, also okay, andersrum, wir müssen noch ganz kurz erklären, was es ist. Tor ist ein Netzwerk, das der Anonymisierung dient und das ganz grob erklärt funktioniert so, dass man in einem Rechner seine Anfrage raus schickt, dann geht es durch ein ganzes Netzwerk und dann kommt das auf der anderen Seite wieder raus.
+
+00:37:28.740 --> 00:37:31.640
+<v SPEAKER_4>Und die andere Seite kann irgendwo sein, unter anderem in Deutschland.
+
+00:37:31.660 --> 00:37:48.780
+<v SPEAKER_3>Genau und wenn dann sozusagen und wenn irgendwo irgendwas böses passiert, dann ist dieser Tor-Exit-Not, also der Ausstiegspunkt aus diesem Tor-Netzwerk quasi für die Leute, die das Internet als Gefahrenzone ansehen, der Angriffspunkt, dann sagen die so, der Computer steht bei dir, du bist schuld. So ihr betreibt jetzt vom Club einen oder mehrere?
+
+00:37:48.800 --> 00:38:23.680
+<v SPEAKER_4>Wir betreiben mehrere Exit-Notes, verteilt auf mehrere Rechenzentren und dort einfach dafür, dass wir eine der größten Exit-Notes mit sind, hält sich dort auch die Abuse-Anfragen echt in echt engen Grenzen. Also die Polizei kommen bei uns ab und zu mal vorbei, wenn es dort Fälle von Verhetzung gab oder jemand kinderponographische Bilder hochgeladen hat, aber das ist so so viele Anfragen, wie wir da durchleiten, dazu ist es im Vergleich einfach verschwindend gering, was dann bei uns vorbeikommt. Üblicherweise können wir die dann auch beschwichtigen mit einem, ja wir behalten keine Logs und dann nehmen die das zu den Akten und dann ist es damit meistens auch erledigt.
+
+00:38:24.200 --> 00:39:08.360
+<v SPEAKER_5>Also die Polizei, die versteht es inzwischen sogar, wenn man sagt, dass das ein Tor Exit Note ist und man ihnen dann zum Beispiel aus dem Tor Directory zeigt, dass die wie ein eingetragener Exit Note sind und dann wissen sie dort inzwischen einfach schon, dass sie da nicht mehr weiter ermitteln können. Andererseits kriegen wir da aber auch eine ganze Menge Anfragen von zum Beispiel Forenbetreibern oder irgendwelchen Leuten. Ja, mein E-Mail Account wurde von eurer Adresse aus gehackt, aber dann kann man inzwischen so eine Standard-E-Mail hinten dran schreiben, die einfach nur aussagt, was ein Exit Note ist, dass es ein Anonymisierungsdienst ist und wir da nichts unternehmen können, außer ihn jetzt zu filtern und sagen, man kann nicht mehr von dem Exit Note darauf zugreifen. Aber selbst das heißt dann auch nur, dass der Angreifer dann rein theoretisch ein anderes Netzwerke, einen anderen Exit Note nehmen würde und einen anderen Weg rausfindet.
+
+00:39:08.380 --> 00:39:17.220
+<v SPEAKER_4>Und wenn Kai sagt sowas wie, da kommt ziemlich viele vorbei, dann heißt das auch nicht, dass die im Minutendakt ein Trudeln, was man erwarten sollte, wenn man wirklich das Internet als Gefahrenzone einfach nur betrachtet.
+
+00:39:17.240 --> 00:39:33.200
+<v SPEAKER_5>Also von den automatisierten Anfragen kriegen wir am Tag so 20 Stück circa, aber von den individuellen, wo es dann wirklich eine Person hinter befindet, die dann sagt, so hier ist was passiert, das sind vielleicht zwei die Woche, wenn es viele sind. Also es ist sehr, sehr wenig.
+
+00:39:33.220 --> 00:39:39.520
+<v SPEAKER_3>Habt ihr auch eine Zahl zu sagen, wie viele, keine Ahnung, wie man das sagt, wie viele User aus dem Exit Note da rauskommen?
+
+00:39:39.640 --> 00:40:03.960
+<v SPEAKER_5>Nee, das können wir so nicht sagen. Also wir sehen halt einfach, wie viel Traffic die machen. Aber ob da jetzt irgendwie ein User dahinter hängt, der einfach nur ganz viel Falschring macht oder ob da jetzt 40.000 Leute dahinter sind, die irgendwie bitweise kleine Nachrichten rausschicken, das können wir nicht sehen bzw. also technisch könnte man das sehen, aber wir erheben diese Daten gar nicht, weil in dem Moment, wo sie anfallen würden, könnten sie wieder irgendwo Schaden verursachen.
+
+00:40:04.240 --> 00:40:25.140
+<v SPEAKER_3>Okay, jetzt sagen, da ist technisch verhindert, dass ihr Störer haftungsgehaftet werdet, weil ihr könnt einfach nicht sagen, wer es war. Jetzt ist es beim BitTorrent Tracker, würde ich ja so mal annehmen. Also ja, man kann auch große Linux-Distributionen per BitTorrent verteilen, aber ich würde ja trotzdem mal tippen, dass der Großteil da möglicherweise Raubmordkopien sind.
+
+00:40:25.560 --> 00:40:49.820
+<v SPEAKER_4>Das würde ich so auch nicht sagen. Also wir schauen da auch wieder nicht rein. Aber nachdem, was wir jetzt von Anwälten die ersten Faxe bekommen, wo sie uns darum gebeten haben, die Justin Bieber CD, da kam wohl eine neue raus, die war ein paar Tage vorher schon im Internet geleakt. Und da wurden wir freundlich auch erst gebeten von der Anwaltskanzlei, wir sollten da die Info-Hashes sperren und das haben wir auch gemacht und so.
+
+00:40:49.960 --> 00:40:52.120
+<v SPEAKER_3>Entschuldigung, die Info-Hashes sperren?
+
+00:40:52.140 --> 00:41:24.480
+<v SPEAKER_4>Das sind digitale Fingerabdrücke von den Dateien, die benutzt werden, um sich beim Tracker eine bestimmte Datei abzuholen. Aber wir sehen halt immer nur die Fingerabdrücke und können aus diesen kurzen Zahlenketten, das sind so 40 Hexadezimalzahlen, können wir nicht sehen, was es ist. Deswegen müssen wir mal darauf warten, dass irgendjemand daherkommt und sagt, hm, diese Zahlenkette, da ist der Fingerabdruck eines Werks von uns und das wird da über euren Tracker verteilt. Und bitte filtert das doch mal, dass die Leute, die diese Datei da tauschen möchten, sich über den Tracker nicht mehr finden.
+
+00:41:25.980 --> 00:41:54.660
+<v SPEAKER_5>Also wobei man anmerken muss auf dem Tracker, das Austauschen, das sagen jetzt, also denken viele, dass wir da wirklich auch die Datei nehmen, reinschieben und zu Leuten verteilen. Aber so ein Tracker macht nichts anderes, das ist wie ein schwarzes Brett, wo oben irgendwie der Info-Hash steht, halt die Überschrift. Und Leute, die diese Dateien haben, kleben dann ihre Adresse drunter. Und wir tauschen im Endeffekt nur die A und B Punkte aus, um eine direkte Kommunikation herzustellen. Aber an den Dateien hat so ein Tracker sieht er überhaupt nichts von.
+
+00:41:54.680 --> 00:42:51.400
+<v SPEAKER_3>Also das ist schon mal ein interessanter Unterschied zu dem Tor-Exit-Note, weil da könnt ihr tatsächlich nichts machen. Ihr könnt auch keine User sperren oder sowas, weil ihr gar nicht wisst, wer da unterwegs ist und was der da macht. Hier ist es schon so, da können halt Leute kommen und sagen, okay, diese bestimmte Information, die macht gerade Schaden, das heißt, sperrt die mal und das müsst ihr dann auch machen. Weil wenn ihr das nicht macht, werdet ihr dann verantwortlich. Okay, das ist auch das, was sie tut. Aber technisch gesehen gibt es da keine weitere Eingriffsmöglichkeit oder Möglichkeit, euch verantwortbar zu machen. Jetzt kommen wir zurück zu dem WLAN. Weil diese beiden Fälle sind ja technisch so, dass der Betreiber dieser Infrastruktur sozusagen relativ wenig belangt werden kann, wenn er beim Tracker Beispiel hat, sagen immer, brav mitspielt. Bei dem WLAN ist es so, ich mache meinen WLAN auf und dann lädt irgendwer was da runter und dann bekomme ich irgendwann den Abmannbrief. Da ist ja auch mal erstmal die spannende Frage, wie geht das eigentlich? Also wie kommt diese Information überhaupt dahingehend, dass ich dann auf einmal der Schuldige bin?
+
+00:42:51.420 --> 00:44:22.100
+<v SPEAKER_4>Da gibt es zurzeit ein paar Anwaltskanzleien, ein paar größere Anwaltskanzleien in Deutschland, die sich darauf spezialisiert haben, die Urheber und Verwertungsrechte von bestimmten größeren Firmen, der Musikindustrie, des Adult-Entertainments und der Filmindustrie wahrzunehmen. Und wenn es dort jetzt neue Filme gibt, neues Album gibt, dann geht da zum Beispiel Universal dahin und sagt, da gibt es demnächst ein neues Album von meiner Band, von der ich gerade nicht möchte, dass das gefeilschert wird. Du liebe Kanzlei, bitte kümmere dich mal darum. Und diese Kanzleien haben jetzt mehrere Wege. Zum einen wenden sie sich dann an die Betreiber, zum Beispiel den BitTorrent-Tracker-Betreiber, das sind wir. Und haben auch Infrastruktur stehen, das sind Rechner, die so wie Honeypots funktionieren, also so Fliegenfallen sozusagen, die einfach da mitspielen, als ob sie ganz normale Filesharer mit wären. Und verbinden sich dann immer zu den anderen Piers, zu den anderen Filesharern. Und dann sagen sie, ich hab gehört, du möchtest diese Datei tauschen. Ist das korrekt? Ja, dann gibt man ein bisschen was davon her. Und in dem Moment, wo sie das dann in ihr Netzwerk, die Dateien oder die Teile der Dateien, die sie jetzt da besonders im Auge haben, reinbekommen, wird das mitgeschnitten und wird dann ein automatisiertem Brief an den Internetprovider des Kunden oder des dort gefundenen, der gefundenen IP-Adresse weitergeleitet.
+
+00:44:22.160 --> 00:44:42.900
+<v SPEAKER_3>Okay, also es gibt da ein Computer-Netzwerk, das spielt bei bitterend mit und tauscht halt ein Teil dieses Tauschrings, könnte man sagen, dieses Tauschnetzwerkes. Und jedes Mal, wenn jemand vorbeikommt, der nicht zu diesem Netzwerk gehört und auch an eine bestimmte Datei tauschen will, schreiben die sich die IP-Adressen aus. Die IP-Adressen des Internetanschlusses, wo diese Tauschanfrage herkommt.
+
+00:44:42.920 --> 00:45:25.720
+<v SPEAKER_4>Dann muss man verstehen, dass wenn du ein Provider bist, also wenn du jetzt nicht nur deine eine IP-Adresse hast, die du zu Hause bekommst, wenn du Glück hast, ist es eine echte IP-Adresse. Meistens sind es ja so nicht echte NAT-Adressen. Also wenn du eine richtige IP-Adresse hast, dann hast du als Provider ja meistens ganz viele. So ganze Netzwerke von so, keine Ahnung, 65.000 oder vielfacher davon. Und an diesen Adressen klebt so in einem sogenannten Whois-Record klebt eine Abuse-Adresse dran. Das ist eine E-Mail-Adresse, wo man sich hinwenden soll, wenn man dort aus diesem Netzwerk ungewöhnlichen Datenverkehr erlebt. Zum Beispiel, wenn man gehackt wird oder wenn man...
+
+00:45:25.740 --> 00:45:33.440
+<v SPEAKER_3>Das heißt, man kann also, wenn jemand meine IP im Internet sieht, dann kann er daran erkennen, sagen, von welchem Internetprovider ich komme.
+
+00:45:33.460 --> 00:45:36.420
+<v SPEAKER_4>Ja, so ganz pauschal gesagt kann man das aber...
+
+00:45:36.440 --> 00:45:58.080
+<v SPEAKER_5>Zumindest der nächsten größeren Institution, die in deinem Fall zum Beispiel der Provider ist. Wenn wir jetzt von dem Fall ausgehen, dass es ein Event vom CCC ist, wie zum Beispiel der Chaos Communication Congress, da haben wir auch unseren eigenen Eintrag drinne und da steht auch ganz speziell immer eine Handy-Nummer dran, die für das Event gilt, die auf Leute weitergeleitet wird, die dann vor Ort sind und dann entsprechend intervenieren.
+
+00:45:58.100 --> 00:46:11.820
+<v SPEAKER_3>Du sprachst ja gerade von diesem Nummern-Blog. Ich sehe eine einzelne IP im Internet, dann weiß ich, aus welchem Blog die kommt und damit verbunden ist auch immer eine irgendwie geartete Institution oder irgendein Eintrag, an den ich mich wenden kann und sagen kann, okay, da ist ein Typ aus seinem Netzwerk.
+
+00:46:12.180 --> 00:46:48.160
+<v SPEAKER_4>Ja, also üblicherweise wird jetzt bei Urheberrechts- oder Verwertungsrechtsverletzung kein Anruf stattfinden, sondern das ist inzwischen dann so automatisiert, dass die Anwaltskanzleien, die jetzt so bestimmte Listen von IP-Adressen und den getauschten Dateien und einer Uhrzeit haben, gehen jetzt zu deinem ISP hin, lass es die Telekom sein und sagen, in schon einer ziemlich standardisierten Form, hier gib mal bitte die Stammdaten dieses Kunden heraus, wir würden uns total gerne an den wenden und ihn mal fragen, fragen. Ja, atme ganz tief durch.
+
+00:46:48.180 --> 00:47:14.040
+<v SPEAKER_6>Das ist richtig. Also wir haben, bei dieser Vorgehensweise biegen sich meine juristischen Finger nach oben, Fingernägel nach oben. So ungefähr. Also Nummer eins, IP-Adressen, die Erhebung von IP-Adressen ist ein Verstoß gegen das Fernmeldegeheimnis. Also ich gehe in die Kommunikation rein. Und ziehe mir diese Daten raus. Nummer eins, ja, das ist schon ganz übel.
+
+00:47:14.060 --> 00:47:16.960
+<v SPEAKER_3>Also ist das jetzt deine Meinung oder ist das sozusagen?
+
+00:47:16.980 --> 00:47:18.420
+<v SPEAKER_6>Nein, das ist so.
+
+00:47:18.440 --> 00:47:19.780
+<v SPEAKER_7>Das ist Rechtsprechung.
+
+00:47:19.800 --> 00:48:00.320
+<v SPEAKER_6>Das ist Rechtsprechung. Das Problem ist bloß, dass das Bundesverfassungsgericht nicht gesagt hat, so wie die Praxis zurzeit ist, ist es unhaltbar. Sondern, also das ist ja im Telekommunikationsgesetz festgelegt, dass zumindest wird es halt so ausgelegt, es steht nicht wirklich drinnen, dass IP-Adressen erhoben werden dürfen. Ich will das nicht zu kompliziert machen. Das Bundesverfassungsgericht hat gesagt, dass diese Praxis darf so lange weiter gemacht werden. Ich glaube 2013 gibt es die Frist, bis das Parlament sich da rangezetzt hat und den Bundesgesetz, eben das Telekommunikationsgesetz, dementsprechend novelliert hat.
+
+00:48:01.460 --> 00:48:06.820
+<v SPEAKER_7>Die arbeiten jetzt quasi in so einer Art Zwischenlimbo.
+
+00:48:06.840 --> 00:48:16.180
+<v SPEAKER_6>Ja, wir sind rechts Zwischenraum. Das liegt natürlich daran, dass wir hier eine riesen Lobby haben.
+
+00:48:16.200 --> 00:48:17.700
+<v SPEAKER_3>Ich würde dann dazu gleich noch kommen wollen.
+
+00:48:17.720 --> 00:48:49.020
+<v SPEAKER_6>Aber ich wollte vorher noch was anderes sagen. Das ist die eine Sache dieses Fernmeldegeheimnis, das ja schon ein dickes Ding ist. Und die zweite Sache ist aber, was Erdgeist angesprochen hat, dieses automatisierte Erheben und Übermitteln. Nach dem Bundesdatenschutzgesetz ist das überhaupt nicht zuglässig. Sondern hier muss also dieses automatisierte Bereitstellen von personenbezogene Daten und IP-Adressen sind personenbezogene Daten. Wollen wir uns darüber noch mal unterhalten?
+
+00:48:49.040 --> 00:48:54.100
+<v SPEAKER_3>Das ist immer nur die Frage, ist das eine Meinung oder ist das auch Rechtsprechung?
+
+00:48:54.120 --> 00:49:12.520
+<v SPEAKER_6>Also es gibt keinen Datenschützer, also niemand, der sich mit personenbezogene Daten auseinandersetzt, der behauptet, dass IP-Adressen ob statisch oder dynamisch, ob die personenbezogen sind. Es gibt aber Zivilgerichte, die keine Ahnung von der ganzen Geschichte haben und sagen, Moment mal, IP-Adressen sind doch überhaupt nicht da, dass jemand identifiziert wird, sondern nur, dass eben die Geräte untereinander kommunizieren.
+
+00:49:12.540 --> 00:49:17.460
+<v SPEAKER_3>Okay, das ist aber sozusagen, das ist nicht allgemeiner Konsens.
+
+00:49:17.480 --> 00:49:17.620
+<v SPEAKER_6>Doch.
+
+00:49:17.640 --> 00:49:19.000
+<v SPEAKER_3>Jetzt wird es kompliziert, habe ich das Gefühl.
+
+00:49:19.020 --> 00:49:26.740
+<v SPEAKER_6>Ja, das sind die Juristen. Richtig, aber die herrschende Meinung, die absolute herrschende Meinung sagt, IP-Adressen, ob statisch oder dynamisch, sind personenbezogene Daten.
+
+00:49:26.760 --> 00:49:30.960
+<v SPEAKER_3>Aber im Zweifelsfall nützt mir die herrschende Meinung nicht, weil ich an ein Zivilgericht gerate, dass andere Ansicht ist.
+
+00:49:30.980 --> 00:49:33.360
+<v SPEAKER_6>Ja, dann brauche ich ein bisschen Kleingeld, um mich dagegen zu wehren.
+
+00:49:33.380 --> 00:49:35.580
+<v SPEAKER_3>Ja, das haben wir ja eh schon angelegt für den IT-Sachverständigen.
+
+00:49:37.600 --> 00:49:55.520
+<v SPEAKER_5>Das geht zum Beispiel gerade so weit, dass jetzt mit der Einführung von IPv6, was eigentlich einfach heißt, es gibt mehr Adressen, dass Politiker so weit gehen und sagen, dass jeder Bürger seine personalisierte Adresse hat. Also wie eine Telefonnummer, nur dass man es nicht mehr wechseln kann und jeder Bürger eine bestimmte Adresse hat.
+
+00:49:55.540 --> 00:50:00.040
+<v SPEAKER_4>Und am besten noch nach Vorlage deines Personalausweises wird dir deine IP-Adresse zugrundigt.
+
+00:50:00.060 --> 00:50:11.560
+<v SPEAKER_6>Noch schlimmer, noch schlimmer. Also das Internet der Dinge kommt jetzt. Also nicht nur, nicht nur, dass ich eine feste IP-Adresse habe, sondern alle Geräte, die ich verwende. Das heißt, dass man genau nachvollziehen kann, was ich den ganzen Tag, wie lange, wo mache.
+
+00:50:12.100 --> 00:50:13.300
+<v SPEAKER_4>Aber das Faszinierende ist, dass...
+
+00:50:13.320 --> 00:50:50.380
+<v SPEAKER_3>Halt halt, Leute, Leute, wir müssen eine Runde zurück. Wir waren gerade noch dabei, festzustellen, wie es passiert, dass Sie eine Abmahnung im Briefkasten haben. Das hat weitreichende Konsequenzen. Ich würde das jetzt aber gerne noch mal zu Ende bringen. Also, die Firma hat jetzt rausgefunden, welchem Betreiber dieser IP gehört. Hat dort mehr oder weniger vollautomatisch nachgefragt, sagt man, wer ist denn das? Und dann bekommen Sie von dem Betreiber die Nachricht, also zu der und der Zeit war mit dieser IP jener Kunde online. Der Betreiber sagt, zu dieser Zeit war der Kunde online. Das wäre jetzt meine nächste Frage gewesen. Wie sicher ist diese Information? Also man würde jetzt denken, technische Systeme, das funktioniert alles und dann ist das schon richtig so.
+
+00:50:51.460 --> 00:51:19.000
+<v SPEAKER_4>Ich glaube, da kann keine Anekdote erzählen über die Qualität der Adressen und der Zeitpunkte, die er da so mal reinbekommt. So mit IP-Adressen, die mit 300 irgendwas beginnen, von denen angeblich aus den Netzwerken was passiert ist. Also die Leute, die dort nachfragen sind, dann auch natürlich Tippfehler unterlegen. Es gibt bei der Telekom zum Beispiel Reconnects, die da täglich veranstaltet werden, wo da so überlappend IP-Adressen erst dir und in fünf Minuten jemand anders gehören.
+
+00:51:19.180 --> 00:51:40.640
+<v SPEAKER_3>Der Gag, den könnte man wirklich erklären, weil daran erklärt sich das wirklich schön. IP-Adressen sind ja Nummern, die fliehen aus sechs Teilen und einer dieser Blöcke, da geht eine Nummer von 0 bis 254, 255. Das heißt, wenn da eine 3 vorne dransteht, ist das schon mal unmöglich. Das wäre glaube ich jetzt interessant zu wissen gewesen, deswegen habe ich es nochmal ausgeführt. Okay, also da passieren Fehler.
+
+00:51:40.660 --> 00:51:52.180
+<v SPEAKER_4>Ja, da passieren Fehler alle möglichen Arten. Die Telekom zum Beispiel hat ja selber wenig Interesse daran, außer zu Abrechnungszwecken sich zu merken, wer wann sich verbindet.
+
+00:51:52.200 --> 00:51:58.360
+<v SPEAKER_3>Das ist ja bei Vodafone anders, habe ich gelesen. Da läuft doch jetzt gerade eine Klage, weil die freiwillige Vorratsdaten-Speicherung machen.
+
+00:51:59.060 --> 00:52:33.320
+<v SPEAKER_4>Ja, die wollten vielleicht Data-Minding drauf machen, keine Ahnung, aber solange du die Daten nicht wirklich verwerten kannst, ist es erstmal technischer Aufwand, den du betreiben müsstest, um so Kram wegzuschreiben. Natürlich sind so Daten dann irgendwann auch spannend, aber solange es noch kein legales Verwertungsmodell dafür gibt, wie du mit deinen User-Daten dann auch zusätzlich Geld machst, bist du natürlich dazu angehalten, also sogar verpflichtet, die Daten zu löschen und innerhalb einer sinnvollen Frist. Und da gibt es ja immer wieder Streit darüber, was diese Frist ist, wenn du die Daten zu Abrechnungszwecken überhaupt nicht brauchst.
+
+00:52:34.260 --> 00:52:43.100
+<v SPEAKER_3>Da wird gerade eine 7, eine 8 hochgehalten. Okay, also jetzt sind also Leute, haben jetzt diesen Brief in Briefkasten.
+
+00:52:45.560 --> 00:53:47.580
+<v SPEAKER_4>Na, in diesem Brief wirst du darauf hingewiesen, dass dir eine Urheberrechtsverletzung unterstellt wird und dass du eine beigefügte Unterlassungserklärung unterzeichnen sollst. Ziemlich schnell, meistens mit einer Frist so übers Wochenende. Du kriegst den Brief am Freitag und am Montag soll es da sein, dass du auch keine Möglichkeit hast, mehr einen Anwalt zu kontaktieren. Und eine Kostennote und diese Kostennote beläuft sich meistens auf irgendwelche vierstelligen Beträge. Und funktioniert jetzt so, dass viele Leute kurz überschlagen, was es kostet, einen eigenen Anwalt einzuschalten, der sich auf Urheberrechts spezialisiert hat. Und dann schauen, dass wenn der jetzt da hergeht, wenn ich den bezahlen muss, dass der dann erst mal drüberschaut, ob das dann wieder seine Richtigkeit hat. Und kann ja sein, dass mein Kind das gewesen ist, kann sein, dass irgendjemand anders in dem WLAN gewesen ist. Ach, egal, wenn ich den Ärger beseitigen kann, indem ich da was überweise. Dann ist gut und ziemlich viele Menschen tun das dann einfach so gleich auf das erste Schreiben hin, ohne irgendwas zu tun, überweisen und dann hoffen, dass da nach Ruhe ist.
+
+00:53:47.600 --> 00:53:51.920
+<v SPEAKER_3>Man muss dann auch noch irgendeine Unterlassungserklärung erdingseln.
+
+00:53:51.980 --> 00:53:57.780
+<v SPEAKER_4>Ich glaube, da legen die Anwaltskanzleien auch nicht so viel Wert drauf. Das reicht, wenn das Geld angegangen ist, dann freuen die sich und lassen einen in Ruhe.
+
+00:53:57.800 --> 00:54:26.880
+<v SPEAKER_3>Okay, dann würde ich jetzt die ausgebildete Rechtsverdreherin, die sagt das heute so schön, ich hab offiziell Erlaubnis bekommen, das zu sagen. Bea, was ist denn, also gibt es sozusagen für die, also falls jetzt gerade ein Hörer da vor dem Radio sitzt und denkt so, oh Gott, das ist mir heute passiert. Ist im Internet kursierend auch sozusagen so Anweisungen, hey, mach das so und so, oder schicke diese vorgefertigte Unterlassungserklärung dahin oder diese modifizierte. Gibt es jetzt etwas, was du, ja, die Juristen sagen, es ist dein Einzelfall, aber gibt es sagen, einen allgemeinen Ratschlag, den du mir geben kannst, der betroffen ist von so einer Abmahnung?
+
+00:54:33.520 --> 00:55:39.000
+<v SPEAKER_6>Ich muss leider starten mit diesem berühmten Satz. Es kommt drauf an, aber ich nehme mal einen Fall, damit wir in die Störerhaftung reinkommen. Also wenn derjenige zumindest glaubhaft machen kann, dass er das nicht selber war, dann kommt erst mal die ganze Geschichte von Schadensersatz weg. Das versuchen sie ja von Anfang an. Also sie gehen ja nicht sofort in die Störerhaftung rein, sondern sie möchten erst mal Schadensersatz haben. Schadensersatz, das hat der Erdgeist jetzt diese Summe genannt, das ist unfassbar, also die behaupten ja, dass man, wenn man das jetzt nicht runtergeladen hätte, hätte man eine Lizenz gekauft, um dieses Album oder den Film zu vermarkten. So, hallo. Deshalb kommen wir in diese riesen Summen rein. Um eben aus diesem Schadensersatz Geschichte rauszukommen, muss ich glaubhaft darlegen, dass ich es eben nicht selber war, sondern dass es eben irgendjemand anderes war, der darüber hängen ist. Und dann, ja, mein Rat ist, sich dagegen zu wehren.
+
+00:55:39.020 --> 00:55:47.080
+<v SPEAKER_4>Man muss es ja nicht mal einfach nur selber in seinem Netzwerk nicht gewesen sein, sondern es kann einfach sein, stimmt nicht, war ich nicht, war irgendwie nicht mehr aus meinem Netzwerk, beweis mal. Das finde ich irgendwie.
+
+00:55:47.100 --> 00:55:55.040
+<v SPEAKER_3>Aber wir hatten ja am Anfang der Sendung gehört, dass man das selber glaubwürdig machen muss. Also wenn ich jetzt da hinschreibe und sage so, nee, war ich nicht.
+
+00:55:55.060 --> 00:55:58.640
+<v SPEAKER_4>Das ist ja erst mal nur eine Forderung eines Anwalts, das ist ja noch nicht ein schreibendes Gericht.
+
+00:55:59.020 --> 00:56:04.180
+<v SPEAKER_3>Ich würde jetzt aber sozusagen gerne von der, wir könnten uns theoretisch werden, zum ganz Praktischen kommen.
+
+00:56:04.340 --> 00:57:25.920
+<v SPEAKER_6>Also die Beweislass hat normalerweise oder hat derjenige, der von jemand anderem etwas will. Also man muss beweisen, dass man den Anspruch hat. Hier gibt es diesen sogenannten Prima Fratia, Beweis, also der Beweis nach dem ersten Anschein. Also wenn ich der Anschlussunterhaber bin und über diesen Anschluss eine Urheberrechtsverletzung begangen wurde, ist es der erste Anschein, dass ich das auch war. Und dann gibt es die zweite Beweislast, die sich auf denjenigen überträgt, der jetzt Schuldner sein soll. Also er ist dann in der Pflicht, zu beweisen oder wenigstens ihm glaubhaft darzulegen, dass er das nicht war. Es gibt mehrere Möglichkeiten. Also auf jeden Fall die Unterlassungserklärung modifizieren, aber da sind sie ja mittlerweile schon dahin. Also die waren immer sehr offen gewesen, sodass man sich für etwas verpflichtet. Ja, das kann man auch nicht überblicken. Und das Recht haben sie auch nicht. Sondern das muss halt sehr konkret auf den Rechtsverstoß sein. Na gut, also ich kann einfach nicht sagen, bezahlen und fertig. Also es machen einfach viele, ich weiß es. Es müssen sich einfach welche wehren. Also es gibt die Punkte, wo man angreift. Ist es überhaupt die IP-Adresse? Ist es die richtige?
+
+00:57:26.640 --> 00:57:30.220
+<v SPEAKER_3>Okay, aber das ist dann immer sozusagen auch mit Aufwand verboten und nicht zuletzt finanziell.
+
+00:57:30.240 --> 00:57:35.560
+<v SPEAKER_6>Richtig, aber das ist einfach so in allen Bereichen. Ich muss um meine Rechte kämpfen. Also die kriege ich nicht geschenkt.
+
+00:57:35.900 --> 00:57:48.940
+<v SPEAKER_3>Okay, das heißt aber, also ich nochmal so sagen, um es für die Leute zusammenzufassen, die sich möglicherweise nicht berufen fühlen, den Kampf zu führen. Auf jeden Fall nicht einfach das machen, was da drin steht, sondern sich Hilfe suchen, auch wenn die ein bisschen was kostet.
+
+00:57:49.020 --> 00:57:58.420
+<v SPEAKER_6>Nein, nein, das muss gar nicht. Also das reicht auch im Internet zu gucken. Also sich eine modifizierte Unterlassungserklärung heißt, das kommt nicht.
+
+00:57:58.440 --> 00:58:04.300
+<v SPEAKER_4>Das ist schon mal ein prima Suchwort, auch auf Google. Ich glaube, wenn man das eingebt, ist das der erste. Vielleicht noch gleich mit der Anwärtskanzlei, die einen angeschrieben hat.
+
+00:58:05.280 --> 00:58:07.340
+<v SPEAKER_7>Ja, das stimmt.
+
+00:58:07.360 --> 00:58:27.840
+<v SPEAKER_4>Dann hat man gleich inzwischen einen Vordruck, den man dann einfach benutzen kann. Und was ich noch aus dem Freundeskreis gehört hab, ist, wenn man einfach irgendeiner Widerung schreibt, die sich nach ein bisschen Arbeit anhört und mit kollegialen Grüßen drunterschreibt, dann hört man auch in einigen Fällen. Also in vielen Fällen hört man auch, wenn man überhaupt mal was zurückschreibt, was der Kanzlei noch mehr Arbeit macht, als einfach zu bezahlen, hört man von denen auch nichts.
+
+00:58:28.600 --> 00:58:40.980
+<v SPEAKER_3>Okay, ich habe jetzt in der ersten Stunde auf jeden Fall gelernt, so einen WLAN aufzumachen, ist schon eher anstrengend im Zweifel. Und jetzt kommt ihr und sagt, mach mal einen WLAN auf, das ist super, so gesellschaftlich gesehen, weil dann haben wir alle Internet.
+
+00:58:41.400 --> 00:59:43.820
+<v SPEAKER_4>Ich mach das auch. Das liegt wahrscheinlich an meinem ISP. Also ich hab da auch gemerkt, dass es Unterschiede gibt zwischen den ISPs. Es gibt welche, die die eigenen Kunden verraten und es gibt welche, die das nicht tun. Weil einen Auskunftsanspruch ohne Gerichtsbeschluss gibt es erst mal ja gar nicht. Das heißt, das was einige ISPs, also einige Internetprovider, dort machen, ihre Kunden zu verpetzen und dann auch noch automatisch ihre Kunden zu verpetzen, ist ohne Gerichtsbeschluss gar nicht legal. Und andere tun das überhaupt nicht. Und früher war das ja so, dass dann die Verwerter dahingegangen sind und für jeden einzelnen Fall bei den Staatsanwaltschaften einen wirklichen Fall aufgemacht haben. Und dann wollten, dass die Staatsanwaltschaft anweist, dass die Adresse rausgegeben wird. Und irgendwann, so vor zwei oder drei Jahren war das glaube ich, haben die gesagt, nö, bei uns stapelt sich der Kram, findet man irgendeinen anderen Weg. Und stellt sich raus, dass der ISP, bei dem ich bin, trotz meines offenen WLANs noch nie dafür gesorgt hat, dass ich ein Schreiben bekommen habe.
+
+00:59:48.020 --> 01:05:31.440
+<v SPEAKER_3>Gut, jetzt haben wir aber nicht alle so einen Internetprovider, der das so macht und es gibt trotzdem den Vorschlag, also der kam vor ein bisschen länger her, der Digitalen Gesellschaft, die sagt, ja, wir müssen jetzt mal politisch und juristisch klären, dass nämlich das nicht mehr gefährlich ist, wenn man es wieder aufmacht, sondern dass das einfach jeder machen kann. Und was es damit auf sich hat und ob das wirklich wirklich in Zukunft hat, das klären wir dann gleich. Wir sehen uns gleich. Breakthrough von Ben Ladys von Chiptoons gleich Win, einem sehr schönen Chiptoons Album. Und das hört ihr heute hier im Chaos Radio, wo wir über Störerhaftung reden. Und wir haben, glaube ich, jetzt den Punkt überschritten, wo Erdgeist, Bea und Kai, die vom Chaos Computer Club hier sind, nicht nochmal von vorne erklären können, was Störerhaftung ist. Nur ganz kurz, wenn ihr euren WLAN aufmacht und jemand darüber böses Zeug unterlegt, dann seid ihr dran und zwar juristisch. Kurzfassung, wie gesagt, wenn ihr es genauer wissen wollt, hört ihr es noch mal, gibt es als Podcast auf Chaosradio.de oder Fritz.de heute noch im Lauf der Nacht. Und wir haben jetzt gerade schon erklärt, wie das theoretisch alles funktioniert, dass da Leute irgendwie in eure IP-Adresse kommen und dann irgendwie Zeug runterladen und dann euch eine Abmahnung schicken und so weiter und so fort. Und es ist nicht nur theoretisch, es ist auch praktisch passiert und zwar dem Hörer, der jetzt in diesem Moment aufgelegt hat. Schade. Gut. Wie gesagt, wir haben geklärt, dass es schwierig ist, mit so einem WLAN öffentlich zu betreiben und wir haben schon vom Club gehört, dass er andere Dienste anbietet, die es technisch unmöglich machen, dass man als Störer verhaftet wird, um das mal so zu sagen. Trotzdem gibt es jetzt Leute, die sagen, ja, macht doch mal bitte alle euer Internet auf. Und dann hat man natürlich so ein paar Bedenken. Betroffen sind davon natürlich auch so Cafés zum Beispiel. In Berlin kennt man das. Der Hipster Latte Macchiato mit YouTube-Beutel und WLAN-Maschine muss dann natürlich in so einem WLAN auch unterwegs sein im Café. Und das Café ist dann im Zweifelsfall dran. Und wer weiß, was da passiert. Um dagegen etwas zu unternehmen, dass sozusagen die Betreiber eines solchen öffentlichen WLANs drankommen, haben die Freifunker, das sind auch so Leute, die sich mit diesem ganzen Thema beschäftigt, etwas unternommen. Sie haben nämlich Freedom Fighter Boxen verschenkt. Und was das genau ist und warum das nur eine technische, aber nicht politische Lösung des Problems ist, das wird uns jetzt Jürgen Neumann erzählen, den wir mal ins Telefon gehalten haben und der auch von den Freifunkern ist. Hallo und guten Abend.
+
+01:05:32.180 --> 01:05:33.080
 <v SPEAKER_2>Hallo.
 
-00:00:30.180 --> 00:00:53.040
-<v SPEAKER_1>Alles drei Menschen, die das Chaosradio-Team eingeladen hat, weil sie irgendwas mit Reverse Engineering zu tun haben. Und ich würde sozusagen dann eine Frage gleich mit der anderen verbinden wollen, nämlich was ist eigentlich Reverse Engineering für euch, wofür braucht man das und wie seid ihr damit in Kontakt gekommen und warum seid ihr heute hier? Fangen wir mal mit Barbie an.
+01:05:33.100 --> 01:05:39.980
+<v SPEAKER_3>So, habe ich jetzt den Namen richtig gesagt? Freifunk, Freifunk, Freedom Fighters. Wie heißt es?
 
-00:00:54.340 --> 00:00:54.340
-<v SPEAKER_3>Ui, ja hallo, ich habe damit angefangen, weil ich einfach Dinge zu Hause kaputt gemacht habe als Kinder. Und ich habe ein paar Dinge zusammen irgendwie so aufgemacht und dann konnte ich das nicht zurückbauen. Und das war schon irgendwie so Reverse Engineering, weil ich das zurückbauen musste, sonst wurde mein Vater sehr sauer. Und ja, heutzutage arbeite ich auch mit Vulnerability Research und Exploit Writing und so was. Und da benutzen wir das sehr, sehr viel.
+01:05:40.000 --> 01:05:43.240
+<v SPEAKER_2>Ja, also ohne Lachen heißt es Freifunk Freedom Fighter Box.
 
-01:00:21.600 --> 01:00:30.840
-<v SPEAKER_4>Also, Inputs kannst du halt trotzdem generieren. Aber klar, die Analyse und das Harnessing und ganz viele Sachen sind einfach immer selten.
+01:05:43.260 --> 01:05:51.220
+<v SPEAKER_3>Okay, so, könnt ihr dreimal hintereinander sagen, wer es zum Freistift kriegt einen Gummipunkt. Was genau ist das und was wollt ihr damit erreichen?
 
-01:00:31.780 --> 01:00:33.080
-<v SPEAKER_1>Du hast es gesagt, du musst es erklären.
+01:05:51.240 --> 01:06:47.380
+<v SPEAKER_2>Die Freifunk Freedom Fighter Box ist erstmal ein Access Point, also ein WLAN Router, der mit einem offenen Betriebssystem läuft, das heißt OpenWRT, und der den Datenverkehr, der jetzt aus dem öffentlichen WLAN oder aus dem unverschlüsselten öffentlichen WLAN kommt, über einen sogenannten VPN-Tunnel zu einem Provider nach Schweden schickt. Der Provider hat uns für diese Kampagne 100 VPN-Tunnel-Endpunkte gespendet. Und das heißt also, der öffentliche WLAN-Verkehr purzelt jetzt nicht mehr bei einem deutschen Provider ins Internet. Ihr habt ja vorhin schon erklärt, was dann passieren könnte, sondern eben über diesen Provider in Schweden. Und damit ist sowohl der Anschlussinhaber, also der DSL-Inhaber, als auch die Personen, natürlich die über WLAN surften, bleiben anonym. Und die Störerhaftung greift nicht oder kann da gar nicht greifen.
 
-01:00:39.140 --> 01:00:53.020
-<v SPEAKER_4>Also quasi der Weg, wie ich Inputs in ein Programm gebe und wie ich es dabei dann auch beobachten kann und sowas. Also ich muss es ja irgendwie kontrollieren. Deswegen Harness aus dem Englischen.
+01:06:47.800 --> 01:06:52.480
+<v SPEAKER_3>Also anonym bleibt es insofern, dass dann nur der Typ in Schweden weiß, wer da gerade surft.
 
-01:00:53.040 --> 01:00:55.460
-<v SPEAKER_1>Das ist sozusagen einfacher, wenn ich den Quellcode auch zur Verfügung habe.
+01:06:53.260 --> 01:07:00.480
+<v SPEAKER_2>Das weiß er ja auch nicht. Er könnte eventuell wissen, wer der Anschlussinhaber ist, und es wird ihn aber nicht.
 
-01:00:55.480 --> 01:00:55.540
-<v SPEAKER_3>Genau.
+01:07:00.720 --> 01:07:15.660
+<v SPEAKER_3>Okay. Das heißt also, wenn jetzt jemand da abmahnen will, dann kriegt er diese IP-Adresse, die in Schweden irgendwo ist, und da kriegt er nichts gesagt. Ihr habt das jetzt irgendwie eingerichtet, so ein Ding. Ihr habt diesen VPN-Tunnel geschenkt bekommen. Wie teuer wäre denn sowas, wenn man sich das selber einrichtet?
 
-01:01:06.920 --> 01:01:39.520
-<v SPEAKER_2>Ja, ich glaube, ich wollte eigentlich nur sagen, dass der Source-Arbeiten auf Sicherheitsanalysen häufig größere Möglichkeiten gibt, schneller voranzukommen. Das ist eben der wichtige Punkt, als wenn man nur auf Bites arbeitet. Klar, man findet einige Bugs nicht, aber man kommt schon bindenüblich in vielen Bug-Klassen sehr viel schneller voran, wenn man nicht erst Reverse Engineering muss, als wenn man eben nur ein Binary vor sich hat und den ganzen Prozess irgendwie antreten muss.
+01:07:16.800 --> 01:07:24.580
+<v SPEAKER_2>Also solche Angebote gibt es überall im Internet. Der Preis ist ungefähr 5 Euro im Monat für so einen VPN-Tunnel-Endpunkt.
 
-01:01:40.080 --> 01:03:15.240
-<v SPEAKER_1>Also ich höre, was ihr sagt und nehme mal mit, dass es praktisch ist, ist es immer auch sozusagen eine Budgetierungsfrage. Also wenn Barbie sagt, man muss, die Wahrheit liegt in den Bits und Bites, dann ist das richtig. Aber es hat sehr viel Aufwand und was Bibor, was du gesagt hast, also höre ich als, man kommt halt schneller zu einem Ziel, wenn man das macht. Aber jetzt mal sozusagen von Idealwelt-Voraussetzungen angesprochen. Es gibt ja sozusagen Bestrebungen, ich glaube das ist noch lange alles nicht alltagstauglich, Programmiercode beweisbar zu machen, also wirklich mathematisch zu beweisen, dass er wirklich nur das tut, was man meint, was man dahingeschrieben hat. Und wenn man das konsequent zu Ende denkt, könnte man das auch mit den Programmen machen, die das übersetzen, also den Kompilierern, und auch mit den CPUs, die den Code verarbeiten. Wenn man dann sozusagen so eine vollständige Kette hätte, dann müsste man, wenn ich es richtig verstanden habe, nicht mehr Reverse Engineering, weil man es dann ja sozusagen mathematisch bewiesen hat, aber so sieht es eben nicht aus. Und wenn ich euch jetzt richtig verstehe und das zusammenfasse ist, wenn ich sozusagen möglichst sicher gehen will, also unabhängig von dem, von dem habe ich das Budget, um das zu tun, nur theoretisch, wenn ich möglichst sicher gehen will, muss ich eigentlich beides machen. Ich muss sowohl den Quellcode analysieren und verstehen, als auch einen Reverse Engineering machen, um zu gucken, ob all das, was ich im Quellcode gelesen und gesehen habe, auch wirklich so passiert.
+01:07:24.600 --> 01:07:26.840
+<v SPEAKER_3>Hat das irgendwelche Nachteile, so einen VPN zu benutzen?
 
-01:03:16.920 --> 01:03:59.940
-<v SPEAKER_3>Ja, ich glaube, es geht auch darum, die Sachen, die im Quellcode sind und in der Binary sind, die passieren, die man nicht erwartet. Und wegen Formal Verification, das ist eigentlich nicht möglich, mathematisch gesehen. Es gibt auch irgendwie so von der theoretischen Informatik, es ist schon bewiesen, dass es nicht geht. Es gibt ein Theorem, das sagt so was wie, es geht nicht, dass ein Programm ein oder andere Programm verifiziert. Nicht irgendwie 100% mit Sound und Kompleteness und blablabla.
+01:07:28.220 --> 01:07:40.940
+<v SPEAKER_2>Na ja, zum einen kostet es Geld zusätzlich zu meinem Internetanschluss, den ich ja sowieso schon habe. Und zum anderen habe ich in der Regel auch nicht die Bandbreite, die mein Internetzugang eben theoretisch bieten würde.
 
-01:04:02.300 --> 01:04:05.720
-<v SPEAKER_1>Das heißt sozusagen, die Reverse Engineering wird uns noch sehr lange erhalten bleiben?
+01:07:40.960 --> 01:07:44.520
+<v SPEAKER_3>Also ist das ein bisschen schmaler, weil es nochmal ein extra Weg ist?
 
-01:04:06.560 --> 01:04:33.680
-<v SPEAKER_3>Ja, wahrscheinlich. Weil diese Proof zum Beispiel, es gibt keine Algorithm, die das machen kann, die nicht irgendwie in P-Komplett ist. Das bedeutet, es gibt keine Algorithm, die das schnell genug macht, irgendwie, für alle mögliche Eingaben, wie bei Fursink zum Beispiel. Man kann nur eine begrenzte Anzahl von Eingaben testen. Und das ist das gleiche mathematisch bewiesen auch.
+01:07:44.540 --> 01:07:51.440
+<v SPEAKER_2>Ja, oder auch weil der Provider eben die Bandbreite innen über diesen Tunnel von sich aus einschränkt.
 
-01:04:34.380 --> 01:06:23.300
-<v SPEAKER_1>Okay, da sind wir jetzt an einem Punkt, wo ich gleich das nächste Thema anfangen möchte. Weil es ist nicht mal theoretisch möglich, das zu machen. Und das ginge ja auch nur, wenn man den Quellcode hätte. Und das haben wir ja aber ganz oft nicht. Und deswegen ist jetzt meine nächste Frage, all das, was ihr erzählt habt, es geht, glaube ich, davon aus, dass die Binaries, haben wir heute gelernt, was das ist, dass die Binaries nicht aktiv dagegen vorgehen, dass man sie beobachtet bei dem, was sie tun. Also entweder im Speicher oder sagen die Datei selber. Jetzt kann ich mir vorstellen, dass im Zeitalter der ich verkaufe euch eine Software für teuer Geld, möglicherweise Leute auf die Idee kommen und wissen, was ihr tut und das gar nicht wollen. Das finde ich eine ganz spannende Frage, weil eigentlich, wenn ich es richtig verstehe, letztlich wenn das Programm im Prozessor Dinge tut, dann tut das Programm im Prozessor Dinge und dabei kann man es auch beobachten. Aber dann wiederum kann ich mir schon vorstellen, wenn man weiß, dass es Reverse Engineering gibt und man nicht will, dass da jemand reinguckt, dass man das beliebig schwer machen kann. Und da wäre mein Verdacht, das ist sozusagen vielleicht einfacher in der Laufzeit zu beobachten. Oder es ist schwieriger zu verhindern, dass man in der Laufzeit Beobachtung anstellt. Und es ist wahrscheinlich aber einfacher, die Datei, also das Binary, was ja letztlich nur eine Datei auf dem Computer ist, so zu, ich weiß nicht, verschlüsseln, komisch zu machen oder so, dass es schwieriger ist mit einem Disassembler einfach reinzugehen. Also, lange Rede, kurzer Sinn, gibt es Gegenmaßnahmen gegen Software Reverse Engineering? Und wenn ja, welche sind das?
+01:07:51.460 --> 01:07:55.460
+<v SPEAKER_3>Achso, also mein Internetprovider kann erkennen, dass ich so einen VPN-Tunnel benutze und sagt dann...
 
-01:06:25.860 --> 01:06:28.000
-<v SPEAKER_2>Ja, es ist eigentlich Barbies Thema, würde ich sagen.
+01:07:55.480 --> 01:07:58.180
+<v SPEAKER_2>Achso, nee, nee, nicht deiner, sondern der VPN-Betreiber.
 
-01:06:30.420 --> 01:08:50.820
-<v SPEAKER_3>Ok, ja, es gibt ganz viele. Und es gibt auch irgendwie ganz viele akademische Forschungen. Ich glaube, was wir vorher aufgelistet haben, war so obfuscation und für Schlüsseln. Obfuscation ist irgendwie einfach Dinge schwer zu lesen machen. Wie wir vorher geredet haben, normalerweise warten wir in einen Quercode, dass alles irgendwie Namen hat und dass die Variable auch Namen haben, die etwas sagen, was die machen und nicht nur irgendwie so Variable 1, Variable 2, Variable 3 ist. Und was man mit obfuscation macht, ist einfach irgendwie so ganz komische, so handomisierte Namen für Funktionen zum Beispiel oder Variablenamen zu geben, damit es schwieriger ist zu lesen. Es gibt irgendwie von sowas, das ganz einfach zu machen ist, bis zu ganz vielen komplizierten Sachen. Wie zum Beispiel man kann den Control Flow Graph, das ist irgendwie so wie eine Art von einer Karte, wie dieser Programm ausgeführt wird, in welcher Heimfolge und so weiter, kann man das einfach kaputt machen. Und dann kann der Disassembler zum Beispiel das nicht mehr richtig lesen und interpretieren, wohin geht dieser nächste Jump oder sowas. Man kann auch ganz viele Code irgendwie in das Programm hinzufügen, die gar nichts machen. Und nur da sind, damit das Binary größer aussieht, wenn man irgendwie einen Disassembler hat. Und da hat man irgendwie keine Ahnung, wo man anfangen soll, weil so viel Code. Es gibt auch irgendwie so Backpredicates und Tokens und ganz viele verschiedene Art von Obfuscation. Die wollen immer das gleiche einfacht, das irgendwie komplizierter oder schwieriger manchmal nur ein bisschen so scary machen, wenn man das in einen Disassembler schmeißt.
+01:07:59.240 --> 01:08:02.620
+<v SPEAKER_3>Der sagt so, hier, du kannst bei mir schon anonym surfen, dann muss es nicht auch noch breitbandig sein.
 
-01:08:53.060 --> 01:09:06.240
-<v SPEAKER_1>Und funktioniert das auch beim Debugging, also zur Laufzeitumgebung? Weil ich dachte gerade verschüsseln wird wahrscheinlich schwierig, aber irgendwie haufenweise Quatschcode ausführen, das kann man wahrscheinlich schon machen, oder?
+01:08:03.000 --> 01:08:03.320
+<v SPEAKER_2>Genau.
 
-01:09:06.260 --> 01:10:20.580
-<v SPEAKER_3>Ja, das kann man auch schon machen. Aber wenn man das zum Beispiel für den Debugger mit dem dynamischen Analyse, kann man zum Beispiel diese dynamische Library-Calls machen. Das heißt, man hat irgendwie nicht die Namen von den Funktionen, die normalerweise aufgehufen werden in deinem Betriebssystem. Normalerweise kann man diese Breakpoints in der Nähe tun, weil man weiß, was die machen. Die gehören ja zu dem Betriebssystem. Und was man macht, ist diese Namen zu haschen, damit man das nicht mehr benutzen kann, um zu lesen, was da passiert. Oder man implementiert selbst solche Sachen, und dann hat man das gar nicht mehr. Man hat keine Standard Libraries. Zum Beispiel diese Printf von deinem Hello World, kann man selbst implementieren und nicht mehr diese Printf-Funktion benutzen. Und dann sieht man das nicht mehr. Man sieht nur irgendwie so wieder diese obfuskierte Code. Und da muss man sogar solche kleine Funktionen reversen, um zu verstehen, was da passiert.
+01:08:04.100 --> 01:08:10.840
+<v SPEAKER_3>Okay, das heißt also, es ist eine technische Lösung für dieses Problem. Wie gut ist die angenommen worden? Also ich habe so eine Teile ja verschenkt, wenn ich es richtig verstanden habe.
 
-01:10:20.600 --> 01:10:30.380
-<v SPEAKER_1>Okay, das heißt, macht das Ganze dann komplizierter, oder macht es das tatsächlich manchmal auch unmöglich?
+01:08:11.620 --> 01:08:52.080
+<v SPEAKER_2>Ja, ich bin jetzt auch unter anderem in den letzten Tagen durch verschiedene Cafés gezogen und habe mit den Eigentümern dieser Läden gesprochen. Ich war wahnsinnig überrascht und schockiert, wie viele Abmahnungen die schon erhalten haben. Und es ist bei einigen sogar so weit, dass die dann ihr Internet abgeschaltet haben. Und naja, wenn man erst mal erklärt hat, dass es tatsächlich legal ist, ein ganz wichtiger Punkt und dass man halt auch in Deutschland nach wie vor anonym ins Internet darf, und dann vielleicht auch noch auf die Medienberichte, die es jetzt eben schon gegeben hat, verweist, dann ist die Bereitschaft sehr groß, das Angebot auch anzunehmen.
 
-01:10:30.400 --> 01:11:14.940
-<v SPEAKER_3>Das macht das nur nervig. Irgendwann lernt man solche Techniken. Und dann hat man einfach ein paar Scripts, die irgendwie alles fixen. Und wenn man genug Binares gelesen hat, dann weiß man, wie diese Strukturen aussehen, diese Mustern, und man reversiert sowieso nicht mehr alles. Und irgendwann bist du auch in einem Bereich, wo du nicht mehr so viel an diese Strings, diese ASCII-Wörter, lesbare Wörter irgendwie, man verletzt sich nicht mehr drauf. Und dann ist es nicht mehr so wichtig, dass die Funktionen richtige Namen haben.
+01:08:52.440 --> 01:08:58.440
+<v SPEAKER_3>Das ist aber tatsächlich die erste Angst, also dass sozusagen, wir haben hier eine Box, die lässt sich anonym surfen. Ist denn das überhaupt erlaubt?
 
-01:11:15.500 --> 01:11:41.620
-<v SPEAKER_1>Kann ich mir das so ein bisschen vorstellen wie Schlösser. Man kann es komplizierter machen. Und je komplizierter man es macht, desto mehr muss auf der anderen Seite eine Expertise vorliegen, um das Reverse Engineering doch noch durchzuführen. Aber es gibt kein Schloss, das man nicht aufmachen kann. Also es gibt kein Programm, das man nicht Reverse Engineering kann. Es wird halt nur, wie du gesagt hast, nerviger.
+01:08:58.460 --> 01:09:25.800
+<v SPEAKER_2>Ja, das ist tatsächlich so die öffentliche Meinung mittlerweile so weit degradiert, dass schon viele Leute so ein Gefühl haben, so anonym ins Internet, das kann doch gar nicht legal sein. Ich habe auch gleich noch mal eine Frage an euch, vielleicht passt das gerade noch nicht, aber vielleicht, dass wir es noch mal diskutieren. Es ging immer um Hochladen oder Runterladen von Musik. Meiner Meinung nach ist nur das Hochladen wirklich ein Problem, aber da können wir nachher auch noch mal drüber reden.
 
-01:11:43.180 --> 01:12:47.300
-<v SPEAKER_3>Nicht ganz. Wenn das zum Beispiel eine verschlüsselte Binary ist, die man nur mit einem Key irgendwie ausführen kann und diese Key liegt irgendwo anders und so eine Art Signatur funktioniert, statt dass diese Private Key zu dem Client geschickt wird, zum Beispiel, dann kann man schlecht was reversen, weil ich kann das nicht entklippen, ich kann das nicht wieder aufmachen, ich kann nichts lesen. Oder zum Beispiel, ich glaube ganz modern, ist das nicht, aber was ganz viele Leute da machen, ist einfach so Runtime-Keys-Generierung, das heißt die Verschlussung des Binary und die haben keinen Schlüssel per se, die haben einen Algorithm, die einen Schlüssel generiert und das so umverschlissen. Und das ist irgendwie, ich glaube, so ein bisschen ein neuer Trend.
+01:09:26.480 --> 01:09:57.540
+<v SPEAKER_3>Oh, okay, das ist ja, glaube ich, eine andere Diskussion, kann man vielleicht noch mal kurz anschauen nachher. Ich würde jetzt gerne noch eine Sache fragen, und das ist dieses Gerät, das ihr verschenkt, diese Freedom Fighter Box. Das ist ja sagen, ein Router, der das komplette Internet dann nach Schweden lenkt. Jetzt würde ich das möglicherweise denken, okay, ich würde mir das für zu Hause nachbauen, aber eigentlich finde ich es nicht so geil, dass ich dann sozusagen, wenn ich zu Hause an meinem dicken Internetanschluss sitze, dass ich dann auch irgendwie dieses Schwedending nutze, kann man das auch irgendwie teilen? Dass man sagt, okay, hier, dieser Teil meines WLANs ist öffentlich und geht nach Schweden, und der andere Teil, der ist für mich privat, der darf ich schön dick sein.
 
-01:12:48.860 --> 01:13:05.400
-<v SPEAKER_1>Aber wenn ich es richtig verstehe, ist das doch sozusagen nur problematisch, wenn ich die Binary-Datei disassemblieren will? Oder geht das auch zur Laufzeit? Also dass sich Dinge, die im Prozessor laufen, sozusagen so verschlüsseln, dass man sie nicht mehr mit dem Debugger auslesen kann?
+01:09:58.440 --> 01:10:52.880
+<v SPEAKER_2>Ja, das kann man, also meistens ausgesetzt, man kann's, dann kann man's. Also der erste Schritt ist mit Sicherheit, ein offenes Betriebssystem auf den Router zuflaschen, also die Firmware auszutauschen, zum Beispiel OpenWRT, ganz hervorragend, und dann einen AccessPoint zu verwenden, dessen WLAN-Chip mir ermöglicht, mehrere virtuelle WLAN-AccessPoints einzurichten. Also das heißt, ich hab da vielleicht nur einen WLAN-Chip in meinem AccessPoint, aber softwaregesteuert kann ich den eben in verschiedene virtuelle Netze aufteilen. Und eins davon kann dann mein verschlüsseltes WLAN-Netz sein, was ich privat nutze, und das andere kann ein offenes WLAN-Netz sein. Und durch entsprechende Routing-Einträge könnte ich dann den einen Teil über meinen normalen Internetzugang routen und den anderen Teil eben über den VPN-Tunnel routen.
 
-01:13:07.180 --> 01:13:29.920
-<v SPEAKER_3>Es kommt drauf an, aber normalerweise, für ganz normale User sind normalerweise die Programme unverschlusset in der Memory. So in dieser Speicher. Und dann konnte man zum Beispiel einfach einen Memory-Dump machen und dann hat man diese unverschlossene Binary da.
+01:10:52.900 --> 01:11:04.420
+<v SPEAKER_3>So, jetzt hast du gerade schon gesagt, das könnte man, wenn man das kann, mit dem OPEN-WRT und so. Das gibt aber sozusagen, es gibt noch keinen Markt dafür. Das heißt, ich kann nicht hingehen und sagen, so, könnten sie mir bitte so einen Router geben, der das kann.
 
-01:13:29.940 --> 01:14:02.300
-<v SPEAKER_4>Aber das ist jetzt wiederum was, deswegen gibt es Binary, die merken, wenn sie beobachtet werden. Die lassen sich nicht ausführen, wenn man ein Debugger dran macht. Oder die merken zum Beispiel, dein iPhone ist jailbroken und führen sich dann nicht mehr aus. Oder die merken, das Programm läuft gerade in der virtuellen Maschine. Und in der virtuellen Maschine kann man halt auch sehr einfach den kompletten Speicher rauskopieren. Von allem, nicht nur im einzelnen Prozess. Und dann starten die halt gar nicht erst. Oder sie starten und verhalten sich anders.
+01:11:04.440 --> 01:11:55.060
+<v SPEAKER_2>Naja, also das Skandal ist, dass es dafür einen wachsenden, und zwar explosionsartig wachsenden Markt gibt, weil nämlich den professionellen Mobilfunkanbietern die Bandbreite ausgeht in ihren UNTS-Netzen und in anderen europäischen Ländern bereits als Internetanbieter oder Telekons halt mir so einen WLAN-Router anbieten, wo sie genau das machen. Und dann den einen Teil des Internetzugangs, den ich kaufe, der steht dann mir zur Verfügung, und den anderen Teil meines Internetzugangs verleihen oder verkaufen die dann eben an ihre Nutzer, die dann, also statt halt über ihr Handy, über UMTS zu surfen, dann halt über meinen privaten WLAN-Anschluss surfen dürfen.
 
-01:14:05.100 --> 01:14:13.660
-<v SPEAKER_1>Aber jetzt theoretisch gesprochen, macht es das unmöglich oder macht es das nur komplizierter?
+01:11:55.260 --> 01:12:03.040
+<v SPEAKER_3>Aber das ist dann so eingerichtet, dass ich davon keine einen Bußen habe? Interessant, gibt es aber in Deutschland anscheinend noch nicht so viel.
 
-01:14:13.680 --> 01:14:48.420
-<v SPEAKER_2>Also es macht es eigentlich quasi nie unmöglich, solange man alle Informationen hat. Also ich kann zum Beispiel meinen Key auch von einem Web-Server ziehen zur Laufzeit, um mich zu entschlüsseln. Und wenn der Web-Server nicht mehr da ist, dann hab ich den Key halt nicht mehr. Aber ich muss, solange ich mich selber ausführen kann, alle Informationen mitführen, die für einen Reverse Engineer interessant sein könnten. Es ist nur manchmal sehr schwierig, an diese Informationen zu kommen.
+01:12:03.920 --> 01:12:32.400
+<v SPEAKER_2>Nee, in Deutschland ist auch für dieses Moment in der Pilotphase und auch denen, auch die stoßen auf die Störerhaftung und haben sich halt bei dem Pilotversuch, der auch von den Mitteln der Europäischen Union gefördert wird, mit vier Millionen für Spanien und Portugal entschieden, weil sie in Deutschland juristische Probleme gesehen haben, eben unter anderem die Störerhaftung. Also die Störerhaftung ist für niemanden eigentlich eine gute Idee, außer für die Anwaltskanzleien, die davon profitieren.
 
-01:14:49.640 --> 01:16:10.120
-<v SPEAKER_1>Also nur die theoretische Frage. Es ist eine Frage des Aufwandes. Und der kann sozusagen zu hoch sein, dass man irgendwann sagt, fuck this shit, ich werfe das Handtuch. Aber theoretisch gesehen gäbe es einen Weg. Mit unendlichen Ressourcen gäbe es immer einen Weg. Kann man das sagen? Okay. Jetzt haben wir ganz viel über Software gesprochen. Weil das der Punkt ist, wo man am ehesten anfängt. Aber jetzt ist es ja so, diese Software läuft ja auf Hardware. Und wie diese Hardware aufgebaut ist, ist auch nicht ganz uninteressant. Jetzt frage ich mich, gibt es also Reverse Engineering auch für Hardware? Ich denke jetzt gerade an Spiele auch. Weil es gibt ja Retro Gaming, also ältere Konsolen, die es mittlerweile gar nicht mehr gibt. Und da will man wissen, wie die funktioniert hat. Und da muss man jetzt stellenweise tatsächlich wissen, wie die Technik aussah. Gibt es auch Hardware Reverse Engineering? Also ich vermute die Frage ist ja. Aber ist es von Relevanz, ist es von Interesse?
+01:12:32.420 --> 01:12:39.920
+<v SPEAKER_3>Betrifft diese Störerhaftung dann die Privatperson, bei der jetzt der Router steht, um denen es dann gerade ging oder betrifft es dann die große Firma?
 
-01:16:10.860 --> 01:17:54.460
-<v SPEAKER_4>Also mit Hardware Reverse selbst habe ich jetzt noch nicht so viel gemacht. Aber selbst wenn du halt eine Firmware anschauen willst, also die Firmware liegt ja irgendwo auf der Hardware. Und meistens ist die halt in einem Flash Speicher oder sowas drin. Und ich habe genau dasselbe Problem. Ich möchte halt irgendwie diese Firmware da draus rauskriegen, damit ich sie dann disassemblieren, dekompilieren kann. Und jetzt gibt es zum Beispiel die Möglichkeit, dass ich einen Chip abschleife oder als Schichten abtrage oder chemisch wie auch immer. Und dann mit einem Mikroskop vergrößere. Und teilweise kann man sogar dann sehen, was in den Speicherzellen drin steht. Also die sehen dann unterschiedlich aus. So 1 und 0. Auf dem Level kann man sich das vorstellen. Oder man macht die Hardware halt an und dann hat die manchmal so Debug-Ports. Weil irgendwie muss ja auch der Hersteller die Firmware draufkriegen. Und manchmal schützen die den Chip nicht gegen's Auslesen. Dann kann man die einfach so auslesen. Oder es gibt einen Bug da drin. Also was sehr häufig funktioniert, ist das sogenannte Glitching. Das ist im Detail erklärt. Aber man gaukelt dem Chip halt vor. Oder man spielt mit der Stromversorgung zum Beispiel vorm Chip. Oder mit der Clock, die der kriegt. Und dann führt der Chip manchmal falsche Befehle aus. Aber läuft weiter. Also kann man sich wirklich vorstellen, wie ein Assemblerbefehl wird nicht ausgeführt oder wird anders ausgeführt. Und dann kann man auf einmal doch die Firmware auslesen.
+01:12:40.480 --> 01:13:05.440
+<v SPEAKER_2>Ja, das ist halt die Frage. Der Internet Provider, das ist ja auch das Gemeine, dass der Internet Provider halt eine Ausnahme ist und an sich nicht der Störerhaftung unterliegt. Also wer sich bei der Bundesnetzagentur als Access Provider anmelden kann, weil er gewerblich einen Internetzugang anbietet, der fällt nicht unter die Störerhaftung, aber Privatpersonen tun das halt leider.
 
-01:17:54.480 --> 01:18:07.360
-<v SPEAKER_1>Verstehe, verstehe. Könnt ihr vielleicht doch irgendwie ein oder zwei Wortwünsche verlieren? Dieses, weil du gerade auch gesagt hast, man kann da wirklich die Zellen sehen und Nullen und Einsen. Wie genau macht man das?
+01:13:06.120 --> 01:13:49.120
+<v SPEAKER_3>Okay, das ist ein wichtiger Unterschied, über den wir gleich noch mal sprechen wollen, weil genau darauf zielt der Gesetzesvorschlag von der digitalen Gesellschaft ab. Jetzt würde ich ganz kurz nochmal dieses Ding einflächten, weil das in der Diskussion um File Sharing und Abmahnung kommt das immer wieder vor, dass Leute sagen, es ist doch nur das Hochladen illegal, nicht das Runterladen. Ich kenne dazu zwei Antworten. Die eine ist, wenn man zum Beispiel sowas wie BitTorrent macht, dann ist Hochladen immer gleich Runterladen. Also man kann das sozusagen nicht wirklich trennen. Und die andere ist, dass es wohl irgendwann mal eine Gesetzesänderung gab, die sagt, wenn du aus einer offensichtlich rechtswidrigen Quelle runterliegst, dann bist du auch dran und da das Internet eine Gefahrenzone ist, gehe ich mal fast davon aus, dass eigentlich alles eine offensichtliche rechtswidrige Quelle ist. Aber wir haben ja glücklicherweise Bea hier. Kannst du uns dazu etwas genaueres sagen, wie das mit dem hohen Runterladen sich verhält?
 
-01:18:09.100 --> 01:18:11.040
-<v SPEAKER_4>Also ich hab es selbst noch nicht gemacht.
+01:13:49.140 --> 01:14:36.660
+<v SPEAKER_6>Genau. Also das ist jetzt nicht Gesetz, sondern Rechtsprechung. Das ist für uns ja immer so wichtig, das zu trennen. Und zwar ist man dahin gegangen zu sagen, also im Gesetz steht schon, na egal, ja. Es geht darum, dass als Nutze ich erkennen können muss, ob mir jemand, also der Rechteinhaber, ob der das frei zugänglich macht oder eben, dass der Rechte drauf geschlossen sind. Oh Gott, das war eine schlechte Erklärung. Also es gibt ja natürlich sehr viel Werke, Filme, Musik etc. wo keine Urheberrechte drauf sind oder die halt eben für jeden frei zugänglich machen.
 
-01:18:11.060 --> 01:18:12.700
-<v SPEAKER_1>Aber ihr habt bestimmt schon davon gehört.
+01:14:36.680 --> 01:14:37.860
+<v SPEAKER_3>Also die man runterladen darf.
 
-01:18:14.800 --> 01:20:33.200
-<v SPEAKER_2>Also das ist auch irgendwie ongoing research ganz viel. Und es ändert sich viel. Aber was die Basics sind, eigentlich das, was Jiska schon beschrieben hat. Also man versucht diesen, im Falle eines Chips jetzt so, was wirklich kleine Strukturen sind, da versucht man halt erst mal dieses, also der ist irgendwie auf einem Gerät, auf einer Platine drauf. Und dann hat der so ein Packaging. Das heißt schwarzer Tropfen aus Kram, der da außenrum ist. Und das ist ja nicht der eigene Chip, sondern das ist nur irgendwie das Packaging außenrum. Und das möchte man jetzt erstmal entfernen. Und dann lasert man das auf oder schmeißt es in ätzende Flüssigkeiten, Schrägstrich Gase und versucht das irgendwie wegzubekommen. Und dann guckt man eben mit Messinstrumenten drauf. Messinstrumente können halt beliebig komplex werden. Für ganz alten Kram würde jetzt ein Lichtmikroskop reichen. Und bei den modernen Chips können wir glaube ich schon an Probleme mit Elektronenmikroskopen sinnvoll zu sehen teilweise. Aber so funktioniert dieser Prozess. Dann versuche ich eben darüber Dinge über die Hardware-Beschaffenheit herauszufinden. Das kann zum Beispiel sein, dass irgendwie, also früher gab es noch so hart vertratete Krypto-Algorithmen auf Chips drauf selber, die ich dann dadurch reverse engineern kann. Oder ein Beispiel, ich versuche irgendwie den ROM auszulesen. Also da ist irgendwo in diesem Chip ein Speicher mit Programmcode, der zuerst ausgeführt wird, wenn der Chip gestartet wird, immer. Und der ist tatsächlich hardwired da drin. Und dann kann ich den eventuell schon auslesen und reverse engineern, mit den ganzen Methodiken zu reverse engineern, die wir schon besprochen haben, um herauszufinden, was er tut, ob da Sicherheitslücken drin sind, was es eigentlich macht.
+01:14:37.880 --> 01:14:53.080
+<v SPEAKER_6>Genau, was legal ist. Und dann gibt es die illegalen. Und wenn es evident ist, also offensichtlich ist, dass es illegal ist, dann verstoße ich eben auch mit dem Runterladen gegen Urheberrechte.
 
-01:20:33.220 --> 01:20:48.900
-<v SPEAKER_1>Aber das klingt sozusagen sehr nach, also während ich beim Debugger zwischendurch dachte, Mensch, das kannst du doch mal selber ausprobieren. Das klingt so wie, da braucht man eher sozusagen eine große Hexenküche, Magielabor, um da überhaupt irgendwie drüber nachzudenken, da Sachen anzufangen.
+01:14:53.380 --> 01:14:54.860
+<v SPEAKER_3>Und dann streiten sich wahrscheinlich...
 
-01:20:50.220 --> 01:21:05.920
-<v SPEAKER_3>Es gibt auch ganz viele Hacker-Spaces, die solche Sachen haben, so man kann immer dahingehen und kriegt auch irgendwie Leute, die das erklären, wie die ganzen Werkzeuge funktionieren. Die sind normalerweise sehr teuer. Deswegen ist es besser, wenn man jemanden dabei hat, der weiß, wie das geht.
+01:14:54.860 --> 01:15:11.300
+<v SPEAKER_6>Nein, man streitet sich leider nicht, sondern macht das ganz einfach. Das gibt die Plattform, wo ich einfach Daten teile. Da muss ich dann als Nutzer davon ausgehen, dass das illegal ist. So einfach machen sich die Richter.
 
-01:21:07.180 --> 01:21:51.180
-<v SPEAKER_1>Okay, also ich kann mir vorstellen, das ist natürlich aus einer Nerd-Perspektive total interessant, weil die Neugier will, dass ich ja alles mal gesehen habe. Das kann ich mir schon spannend vorstellen. Aber im praktischen Alltag, stelle ich mir vor, versucht man Hardware-Reverse Engineering eher zu vermeiden, weil das hört sich mega aufwendig an. Und lieber, vor allen Dingen, die sozusagen konkret in den Chip reingucken und versucht, lieber sozusagen Software-Reverse Engineering zu machen oder sozusagen an den, wie du jetzt gerade gesagt hast, den, na, Dingsport. Wie ist der Port, wo man Sachen auslesen kann, was der Hersteller manchmal benutzt und dann vergisst zuzumachen?
+01:15:11.320 --> 01:15:14.660
+<v SPEAKER_3>Also wenn es irgendwo nicht verfügbar ist, ist es illegal?
 
-01:21:51.200 --> 01:22:12.140
-<v SPEAKER_4>Ja, eigentlich genau. Also man kann damit sogar zur Laufzeit sogar debuggen, wenn das freigeschaltet ist. Das heißt, der Chip hat je nachdem, ob er ein Interface zum Auslesen oder der Chip, der den Code ausführt, hat vielleicht sogar ein Interface, mit dem man auch wieder Breakpoints setzen kann und schauen kann, was passiert.
+01:15:17.460 --> 01:15:25.080
+<v SPEAKER_4>Heutzutage sieht man ja da eh schon noch dieses fiese GEMA-Grinsen, wenn man versucht auf YouTube sich Dinge, die...
 
-01:22:12.160 --> 01:22:16.340
-<v SPEAKER_1>Genau, und man will wahrscheinlich lieber das machen, als tatsächlich eine Chip aufzuschleifen, vermute ich mal.
+01:15:25.100 --> 01:15:28.500
+<v SPEAKER_3>Ach so, wenn es denn überhaupt verfügbar ist, muss es ja illegal sein.
 
-01:22:17.020 --> 01:23:17.980
-<v SPEAKER_2>Es gibt auch noch das Zwischending. Und das ist irgendwie so, vor allem wenn man irgendwie sehr hardwarenah Software Reverse Engineering möchte, braucht man manchmal ein bisschen die Umgebung, was denn auf dem, was in dem Gerät sonst noch so drin ist. Um herauszufinden, um irgendeinen Sinn da rauszumachen, warum jetzt genau auf dem Port, das irgendwie alle 50 Sekunden auf High gesetzt wird. Das sagt einem ja erstmal nicht. Das hat man jetzt irgendwie rausgefunden. Da muss man doch irgendwie noch gucken, was ist bei dem Port eigentlich? Und dann nimmt man sich eben so eine PCB, also so eine Platine von irgendwie dem Gerät, guckt sich an, was ist denn da auf der anderen Seite und stellt sich vielleicht fest, dass da ein bestimmter Sensor ist, der in einem gewissen Intervall dann ausgelesen wird und kann dann mehr Sinn aus dem machen, was man vorher irgendwie in der Software gesehen hat.
+01:15:31.100 --> 01:15:59.820
+<v SPEAKER_6>Also es geht um die Portale. Wenn ich mir, was weiß ich, bei Ripple Share dann eben das Webiber runter lade, dann muss ich einfach davon ausgehen, ich muss wissen, dass es illegal ist. Das ist so eine Annahme, wird auch mit nichts begründet wirklich. Sondern das ist diese Sichtweise, die eben auch angesprochen wurde. Richter sehen eben immer nur die Verletzer, die Paar und schließen dann darauf auf die ganze Gesellschaft.
 
-01:23:17.980 --> 01:24:17.280
-<v SPEAKER_1>Okay, so, wir haben vorhin ja drüber gesprochen, was man machen kann, um Reverse Engineering in Software schwer zu machen. Ich vermute, es gibt bei Hardware dann einfach sozusagen den Debugport zumachen und vielleicht irgendwie extra schwer ätzende Gehäuse anzubauen. Ich freu mich die ganze Zeit. Bei vielen Dingen, die mit Digitaltechnik und Gesellschaft zu tun haben, wird es dann irgendwann juristisch. Und ich könnte mir vorstellen, dass es Bestrebungen gibt, dass man Reverse Engineering sozusagen, wenn man denkt, aha, ich kann das technisch nicht unterbinden, vielleicht kann ich es verbieten. Am besten per Gesetz. Gibt es rechtliche Rahmenbedingungen, wenn man Reverse Engineering beachten muss? Also ihr seid alles keine JuristInnen, aber kommt ihr in Kontakt mit dem Gesetz, wenn ihr Reverse Engineering? Ist das Betretenesschweigen? Oder soll ich sagen, Barbie, fang noch mal an.
+01:15:59.840 --> 01:16:16.600
+<v SPEAKER_3>Okay, Jürgen, ich hoffe, das hat deine Frage jetzt beantwortet. Dann dir auch vielen Dank für das kurze Erklären der Freedom Fighter Box. Wird es noch mal so eine Aktion geben? Oder war das jetzt dann ein einmaliges Ding und ihr hofft, dass jetzt alles gut wird?
 
-01:24:23.040 --> 01:26:04.460
-<v SPEAKER_3>Wie gesagt, es ist einfacher, wenn man einfach mit Malware anfängt, weil Malware keine Copyright hat. Dann kann man das einfach reversen und man ist auf der sicheren Seite. Alles anders wird kompliziert. Es gibt Dinge wie Hechtlinien in der EU und in der EU ist es komplizierter, weil es hier nicht so wirklich solche Sachen gibt, wie Richtlinien, sondern irgendwann entscheidet jemand, dass es so ist und dann machen die alle nach. Und jemand hat auch hier schon irgendwann mal entschieden, dass das okay wäre, wenn man das für Kompatibilität oder zum Beispiel die wollten einfach, dass ein Spiel weiter gespielt werden kann und jemand wollte, dass ein Bug gepatcht würde, aber der Maintainer, der eigentlich den Besitz von dieser Software hatte, ist gestorben. Und deswegen war das okay zu Reverse Engineering zum Beispiel. Aber das ist sehr kompliziert und deswegen, normalerweise, wenn man das bei einer Firma macht, ist es einfacher, weil man ganz viele Hechtsanwärter hat und die sich darum kümmern, dass man das kann. Aber wenn man das zu Hause macht, würde ich eher irgendwie mit solchen Sachen anfangen, die keiner keiner wird sich beschweren, wenn man eine Malware reverse oder irgendwie Bescheid gibt. Aber wenn man etwas sehr teuer reverse und das Open Source macht, vielleicht schon.
+01:16:16.620 --> 01:17:41.840
+<v SPEAKER_2>Das war jetzt erstmal ein einmaliges Ding und 100 Router können jetzt auch nicht die Antwort sein. Es ging eigentlich einfach nur mal darum, exemplarisch aufzuzeigen, dass es Wege aus der Steuererhaftung gibt und wie sinnlos das eigentlich auch ist. Es gibt aber noch andere Wege aus der Steuererhaftung. Die idea ja auch schon mal angeschnitten hat am Anfang, dass ich eben zum Beispiel auf meinem Router so eine Splashpage mache und so Hinweise gebe, wie ich erwarte, dass der Nutzer, der jetzt da anonym ins Netz geht, sich im Internet so verhalten hat und dass ich vielleicht auch sogar technische Maßnahmen treffe, die Filesharing einschränken oder ich versuche, die einzuschränken. Bei Freifunk haben wir ein sogenanntes Zappscript, was halt so guckt, ein bisschen analysiert wird hier, möglicherweise Filesharing gemacht, weil eben bestimmte Ports geöffnet werden und dann versucht das Script, diesen Verkehr zu filtern. Und das dritte ist, dass ich für all dies Zeugen habe, möglichst viele, die auch bestätigen können, dass dieser WLAN-Router eben tatsächlich ein Freifunk-Router ist, dass der der Öffentlichkeit zur Verfügung steht und dass ich den so eingerichtet habe. Und dann stehen auch die Chancen sehr gut, dass man gegen so eine Abmahnkanzlei eigentlich anstinken könnte.
 
-01:26:04.480 --> 01:26:17.220
-<v SPEAKER_1>Das ist dann ein wichtiger Punkt, das will ich nochmal nachfragen wollen. Ist es rechtlich gefährlich zu Reverse Engineering? Oder ist es rechtlich gefährlich zu Reverse Engineering und dann die Ergebnisse anderer Leute sehen zu lassen?
+01:17:42.160 --> 01:18:36.300
+<v SPEAKER_3>Okay, die Chancen stehen sehr gut, das glaube ich sozusagen das Wichtige. Und wir werden jetzt gleich mal darüber sprechen, wie man das ganze Problem vielleicht aus der Welt schaffen könnte. Es gibt ja zumindest einen Vorschlag. Jürgen, dir erstmal vielen Dank. Viel Spaß noch. Bis dann. So, und jetzt kommen wir zu dem eigentlichen Anlass des heutigen Chaos Rades. Und das ist halt dieser Gesetzesvorschlag der digitalen Gesellschaft zur Aufhebung der Störerhaftung für Privatpersonen, wenn ich das jetzt richtig formuliert habe. Wir haben gerade schon gehört von Jürgen, wenn ich ein Internetprovider bin, dann falle ich gar nicht unter diese Störerhaftung, sondern dann bin ich wahrscheinlich nur verpflichtet, irgendwie sozusagen gewisse Informationen weiterzugeben, wenn die mir zustehen. Als jemand, der sein WLAN aufmacht, bin ich ja, könnte man argumentieren, ein kleiner Internetprovider, aber dann unterlege ich trotzdem der Störerhaftung. Und wenn ich das richtig verstanden habe, ist der Vorschlag der digitalen Gesellschaft genau zu sagen, kleine Internetprovider sind genau dasselbe, wie große Internetprovider. Was genau steht da drin, Bea?
 
-01:26:19.700 --> 01:26:27.020
-<v SPEAKER_3>Ich meine, was du zu Hause machst, interessiert keiner, solange du nicht laut wirst.
+01:18:36.320 --> 01:19:36.480
+<v SPEAKER_6>Das wird Paragraph 8 Telemediengesetz ergänzt oder soll ergänzt werden. Und für die Betreiber soll ausgeschlossen werden, dass sie haften für die Tätigkeiten, die dann die User im Internet machen. Und das ist der ersten Satz, der ergänzt werden soll. Und am zweiten soll sich die ganze Geschichte auch auf die Unterlassensansprüche besitzen. Also Störerhaftung ist ein Anspruch auf Unterlassen. Wir haben ja, erinnert euch, die ganze Schadensersatzgeschichte ausgeschlossen. Die fällt ja sowieso weg. Und Störerhaftung ist eben, dass man das unterlässt. Hier kausal daran teilzunehmen, dass diese Verletzungen begangen werden. Und dieser Ausschluss, also dieses Privileg, eben Haftungsprivileg, soll sich auch auf diese Unterlassungsansprüche, also die Störerhaftung beziehen.
 
-01:26:31.160 --> 01:26:34.440
-<v SPEAKER_1>Jiska, hast du auch noch sozusagen Anekdoten oder Gefühle dazu?
+01:19:36.500 --> 01:19:37.940
+<v SPEAKER_3>Jetzt nochmal bitte normal verständlich.
 
-01:26:35.440 --> 01:28:26.520
-<v SPEAKER_4>Ja, also der rechtlich schwierige Part ist vor allem das Copyright. Und das heißt, jemand hat eben ein Recht oder da drauf, also der hat halt diese Sachen erstellt. Und dann ist es halt Firmeigentum oder gehört einer Person. Und da sind vielleicht sogar noch Patente dran gebunden und so weiter und so fort. Und dann kann man es halt nicht einfach nachbauen. Und spätestens wenn man es halt nachbaut, kann es eben passieren, dass man verklagt wird oder je nachdem, was man nachbaut, kann es nicht nur passieren, sondern ist es sehr sicher, dass es passiert in dem Moment, wo man was veröffentlicht. Ja, aber es ist eben wichtig, dass man ja Kompatibilität zu anderer Software hat. Das heißt, das ist eine Sache, wo das mitunter gut gehen kann. Also es gibt schon, also man sollte sich relativ gut damit auseinandersetzen, was man reverse engineered. Und dann im Zweifelsfall noch, was ist es dann konkret für eine Firma? Weil es gibt halt Firmen, die relativ schnell einen verklagen. Und gerade im Bereich Security Reverse Engineering, wenn man Reverse Engineering nur macht, um zu sagen, ja und jetzt habt ihr dann Lücke. Und dann können die halt sagen, okay, das ist kein legaler Anwendungsfall jetzt für Reverse Engineering. Also es ist illegal, was ihr gemacht habt. Ihr habt gegen unser Copyright verstoßen. Auch wenn ihr reverse engineered habt, ohne Sicherheitslücke zu finden, ihr habt halt analysiert, wie funktioniert unsere Software und öffentlich darüber geredet. Also es passiert selten, aber es kann passieren. Und es wurde halt bisher noch nicht bis ins letzte Detail vor Gericht ausgefochten, was in solchen Fällen passiert. Das heißt, man hat da auch eine gewisse Rechtsunsicherheit.
+01:19:38.060 --> 01:19:50.000
+<v SPEAKER_4>Ich würde interessieren, was es bedeutet, wenn man als Störer in Haftung genommen wird, so dann finanziell im Gegensatz zu den Verfahren, in denen man selber schädigender sein soll.
 
-01:28:27.960 --> 01:29:02.720
-<v SPEAKER_1>Das klingt mir so ein bisschen, also dieses ganze Problem irgendwie, Sicherheitslücken aufdecken und dann juristischen Stress bekommen, ist ja noch mal ein ganz eigenes Thema, das gibt es auch in anderen Fällen. Aber so generell für den Hausgebrauch kommt es so ein bisschen vor wie Musiksampling. Was ich zu Hause mache, da kann ich erst mal machen, was ich will, aber es wird halt in dem Moment schwierig, wo man es irgendwie an die Öffentlichkeit trägt. Da sollte man, also da scheint man nicht darum zu kommen, sich wenigstens mit dem Thema mal beschäftigt zu haben, weil man dann sonst in das ein oder andere Fettnäpfchen treten kann. Bibor, hast du auch noch etwas dazu?
+01:19:51.840 --> 01:20:13.540
+<v SPEAKER_6>Der Schadensersatz ist die Lizenzgebühr. Und unterlassen bedeutet, ich muss diese Erklärung unterschreiben und habe die Anwaltsgebühren. Noch Fragen? Also es ist ein bisschen weniger. Also die Unterlassungserklärung könnte man eigentlich auch ohne Anwaltskosten, wenn man...
 
-01:29:04.180 --> 01:29:45.500
-<v SPEAKER_2>Ja, also das mit der Veröffentlichung ist halt wirklich ein wichtiger Punkt. Und da sind die Rechtslagen halt in den unterschiedlichen Ländern auch sehr stark unterschiedlich. Also es ist, die viele, viele Leute laden, zum Beispiel Reverse Engineer oder ihre Reversing Ergebnisse für irgendwelche proprietäre Software auf irgendwie beliebte Plattformen wie GitHub hoch. Und wundern sich dann, dass irgendwie zwei Tage später ihr Repo down ist, weil es eine DMCA-Takedown-Notice gab an GitHub wegen genau dem gebrochenen Copyright. Und daran muss man halt einfach denken, wenn man die Ergebnisse veröffentlicht, ob das irgendwer auf die Füße treten könnte.
+01:20:13.560 --> 01:20:16.040
+<v SPEAKER_3>Ich hab das Gefühl, wir verlassen gerade ein bisschen dem Vater, über das wir eigentlich reden.
 
-01:29:50.320 --> 01:30:19.540
-<v SPEAKER_1>Okay, jetzt sind wir glaube ich zu sagen einmal sehr, und ich bedanke mich wirklich sehr für eure Geduld, sehr niedrigschwellig in das Thema Reverse Engineering durchgegangen. Ich würde zum Schluss noch zwei Fragen stellen. Vielleicht drei Fragen stellen wollen. Die eine ist, habt ihr persönlich irgendwelche Reverse Engineering-Anekdoten oder Erfolgserlebnisse, die ihr noch mit der Welt dort draußen teilen wollt?
+01:20:17.640 --> 01:20:25.940
+<v SPEAKER_4>Ich find das schon spannend, dass wenn man einfach nur als Störer dahingestellt wird und nicht selber als Schuldiger, inwieweit das einem dann Ärger erspart.
 
-01:30:19.560 --> 01:30:24.320
-<v SPEAKER_2>Bibor. Wir haben ja schon gerade gesagt, dass es manchmal sehr schwierig ist, darüber zu reden.
+01:20:26.480 --> 01:20:29.040
+<v SPEAKER_3>Da tut es ja eben nicht, darüber haben wir die ganze Zeit schon geredet.
 
-01:30:32.500 --> 01:33:09.900
-<v SPEAKER_3>Ja. Ich glaube, ich kann nur sagen, es gibt Sachen, die sehr interessant sind zur Reversion. Vor allem, weil man daraus viel lernen kann. Bei Malware Reversions zum Beispiel habe ich eigentlich viel mehr gelernt, als ich jetzt irgendwie in dieser Exploit Writing Welt feiere, weil ich ganz viele sehr interessante Malware hatte. Ich habe erstmal mit Crimeware gearbeitet, d.h. diese ganzen kleinen Hemsommer oder Sachen, die eher private Menschen betrifft. Und dann merkt man z.B. bei den Binaries, in den Binaries und nicht unbedingt in der Quellcode, wie schlecht der Code geschrieben ist. Dass wirklich irgendwelche Empfänger das geschrieben haben. Und dann bin ich nachher zu einem Intero-Team gewechselt. Und da habe ich irgendwie so diese APT-Welt kennengelernt. Und dort habe ich gemerkt z.B. dass man wirklich diese Attribution nur von dem Code machen kann. Weil man merkt irgendwie, wie jeder Gruppe Code schreibt und die unterschiedliche Weise, wie die zusammenarbeiten. Nur von einem Binary. Und ich habe das nicht vorher gemerkt, nur von Sachen lesen. Und Politik verstehen ist ganz anders aus, wenn du irgendwie eine Software siehst. Und ich habe auch gemerkt, wenn man den Unterschied von Codequalität, wenn man zum Beispiel diese Crimeware anschaut und die wirklich einmal rausgeht, eine Kreditkarte klaut und das war's. Zu Code, die über jahrelang da ist und nicht unbedingt wirtschaftlich motiviert ist. Aber muss nur irgendwie für eine sehr lange Zeit maintainable sein. Wie schön die sind. Das ist wirklich irgendwie so wow. Irgendwann würde ich auch Code so gut schreiben können. Ich finde das ist sehr interessant, irgendwie zu wissen, dass man das von einem Binary lernen kann.
+01:20:29.060 --> 01:20:34.260
+<v SPEAKER_6>Also doch, es ist schon weniger. Also die Kosten zumindest, die auf einen zukommen, sind weniger.
 
-01:33:09.920 --> 01:33:16.460
-<v SPEAKER_1>Kannst du ganz kurz noch sagen, die APT-Welt, in der du dich befindest, was ist das?
+01:20:34.280 --> 01:20:35.060
+<v SPEAKER_3>Aber es sind Kosten.
 
-01:33:16.480 --> 01:33:28.220
-<v SPEAKER_3>Die sagen Nation-State-Mauer. Die sind eher diese komplexe politische Wertpolitik-Bereich.
+01:20:35.260 --> 01:20:40.140
+<v SPEAKER_6>Es sind Kosten, es sind nur die Anwaltskosten. Bei der Störerhaftung kommen nur die Anwaltskosten auf einen zu.
 
-01:33:31.660 --> 01:34:02.340
-<v SPEAKER_1>Ich stehe gerade ein bisschen auf dem Schlauch. Das heißt sozusagen, mal wer die von Staaten verwendet wird, im Gegensatz zu irgendjemanden, will mein Rechner verschlüsseln, damit ich ihm Bitcoin überweise. Was bedeutet das? Zu Attribution, also der Frage, wie findet man eigentlich raus, wer hinter einer Sache steckt? Hatten wir auch schon mal einen Chaosradio, Nummer 268. Ihr könnt auch gerne noch mal reinhören, wenn ihr euch für dieses Thema genauer interessiert. Und dann bleibt noch Jiska.
+01:20:40.160 --> 01:20:54.520
+<v SPEAKER_3>Die ja auch schon hoch genug sind. Jetzt aber noch mal zurück zu diesem Gesetzesvorschlag. Noch mal heißt es richtig, ich mache meinen Wählern auf, bin deswegen sozusagen dann, also laut diesem Gesetzesvorschlag, ein Betreiber und muss dann sozusagen nicht mehr als Störer haften.
 
-01:34:02.360 --> 01:35:00.280
-<v SPEAKER_4>Ja, also ich muss sagen, inzwischen schreibe ich, glaube ich, mehr oder ich reverse engineer mehr, ist, dass ich entwicke. Und eine Sache, die ich total gerne mache, ist, dass ich Sachen, also bestehende Firmware oder auch Applikationen zur Laufzeit instrumentiere. Das heißt, ich reverse engineer sie und ändere dann genau die Sachen, die ich halt anders haben will. Also zum Beispiel, dass ich eine Sache, eine Firmware-Downgrade anstatt eine Firmware-Upgrade macht. Oder dass irgendwo in einem System Messwerte geschickt werden und ich aber die Messwerte zwischendrin austausche und gucke, wie verhält sich halt das restliche System. Und das mache ich inzwischen ganz, ganz, ganz viel. Und ich glaube, ich mache eben mehr Reverse Engineering als Forward Engineering und bin damit sehr, sehr schnell geworden. Ja, also kann auch so rumlaufen.
+01:20:54.540 --> 01:20:56.840
+<v SPEAKER_6>Richtig, genau.
 
-01:35:00.300 --> 01:35:27.680
-<v SPEAKER_1>Ist das auch so ein bisschen Empowerment? Also ich stelle mir gerade vor, ich fühle mich ja manchmal der Maschine gegenüber sehr ohnmächtig. Irgendjemand hat mir mal versprochen, also im Prinzip sind Computer deterministisch. Das scheint mir nicht so. Die machen manchmal, was sie wollen und ist sozusagen Reverse Engineering so ein bisschen zumindest auch ein selbstwertdienliches Gefühl des Empowerment. Man kann halt sozusagen sehr viel mehr machen als es zum ersten Einstieg den Anschein hat.
+01:20:56.860 --> 01:21:05.800
+<v SPEAKER_3>Jetzt haben die diesen Gesetzesvorschlag sozusagen vorgeschlagen. Wie wahrscheinlich ist es denn, dass der so von irgendjemand übernommen wird?
 
-01:35:27.700 --> 01:35:39.220
-<v SPEAKER_4>Ein bisschen. Auf der anderen Seite kriegt man natürlich noch mehr Probleme. Ich glaube, das ist halt, ne? Also je besser man sich mit Computern auskennt, desto mehr Computerprobleme hat man.
+01:21:05.820 --> 01:22:01.400
+<v SPEAKER_6>So wie er jetzt steht, ist es ein Beginn. Wir haben aber hier ein großes Problem. Und zwar sind Grundrechte, die aufeinandertreffen. Also wir haben die Grundrechte, die Eigentumsrechte von den Urhebern. Und wir haben Grundrechte von den Nutzern. Meinungsfreiheit zum Beispiel, ganz groß. Wissenschaftsfreiheit, solche Sachen. Und die Problematik mit Grundrechten ist, man darf nicht zu dem, oder man kann einfach nicht zu dem Ergebnis kommen, dass einer auf sein Grundrecht verzichten muss. Sondern muss einen Kompromiss machen. Das heißt praktische Konkordanz für diejenigen, die sich für sowas interessieren. Das komplett Ausschließen, diese Störerhaftung wird man nicht schaffen. Sondern man muss es sauber herausarbeiten, unter welchen Umständen man in eine Störerhaftung reinkommen kann. Also man braucht einen Kompromiss.
 
-01:35:40.100 --> 01:35:42.760
-<v SPEAKER_1>Aber zumindest hat man sie dann selber verursacht oder so.
+01:22:01.420 --> 01:22:12.060
+<v SPEAKER_3>Ja, aber das heißt auch sozusagen, weil ein Kompromiss immer bedeutet, das ist dann die Beweis, die da bei mir steht, man kann das im Prinzip also nicht wirklich ausschließen, dass ich als Störerhafter verhaftet werde.
 
-01:35:42.860 --> 01:36:14.440
-<v SPEAKER_2>Ja, aber bezüglich des Empowerments fällt mir dann doch noch etwas ein. Und zwar es lohnt sich definitiv mal sowohl bei Apps, die man auf seinem Telefon installiert hat, als auch bei irgendwie den ganzen IoT-Geräten, die heute so in einer normalen Wohnung herumfleucht, nachzugucken, was sie denn für Daten aufnehmen und wo sie sie hinsenden. Das ist durchaus ein Teil, den man unter Empowerment sehen kann. Dann weiß man nämlich ungefähr, ob das stimmt, was in der Packungsbeilage steht oder nicht.
+01:22:14.260 --> 01:22:41.220
+<v SPEAKER_6>Na ja gut, also ich kann fast gar nichts komplett ausschließen. Aber ich muss es konkretisieren. Wir haben das jetzt weder in der Rechtsprechung noch in Gesetzen. Haben wir das konkretisiert. Wann komme ich denn in die Störerhaftung? Was halt nicht sein kann in dem Moment, wo ich einen Dritten in meinem Internetzugang nutzen lasse, dass ich sofort als Störer in die Haftung genommen werden kann. Das geht nicht, das funktioniert nicht. Also da ist dann der Verlust von Grundrechten auf der User Seite.
 
-01:36:16.280 --> 01:36:29.080
-<v SPEAKER_1>Aber macht man das direkt auf dem Gerät oder würde da der Heimann, wenn er nicht eher seinen Netzwerkverkehr beobachten? Oder fällt mir jetzt am Ende der Sendung erst auf, dass Netzwerkverkehr beobachten auch Reverse Engineering ist?
+01:22:41.240 --> 01:22:42.660
+<v SPEAKER_3>Das ist aber so, wie es gerade funktioniert.
 
-01:36:29.100 --> 01:36:32.940
-<v SPEAKER_4>Das kommt ein bisschen drauf an.
+01:22:42.860 --> 01:22:43.540
+<v SPEAKER_6>Richtig.
 
-01:36:32.960 --> 01:36:35.340
-<v SPEAKER_2>Also das ist zum Ende der Sendung ein großes Thema.
+01:22:43.760 --> 01:23:00.380
+<v SPEAKER_3>Was sind denn, also gibt es schon Vorschläge? Also auf der einen Seite ist es sozusagen, wenn ich meinen WLAN anbiete, dann bin ich automatisch Störer. Die andere Seite, der Gesetzesvorschlag sagt, ich bin auf gar keinen Fall Störer. Du sagst jetzt, man müsste das irgendwie ausarbeiten. Gibt es da schon konkrete Vorschläge, dass man sagt, okay, du kannst deinen WLAN aufmachen. Wenn du das und das beachtest, bist du kein Störer.
 
-01:36:36.420 --> 01:36:42.080
-<v SPEAKER_1>Ja, aber dann können wir das ja aufmachen. Dann nehmen wir es vielleicht beim nächsten Mal irgendwie noch zu einer eigenen Sendung.
+01:23:00.960 --> 01:23:50.200
+<v SPEAKER_6>Wir waren letzte Woche im Abgeordnetenhaus, also vom Freifunk. Wir wurden von den Grünen eingeladen. Das wurde diskutiert, wie man eben auf politischer Ebene, also das heißt im Bundestag diese Störerhaftung, irgendwie im Krockene Tücher bekommt. Man arbeitet daran. Es ist aber juristisch, gibt es keine schwierige Aufgabe als Interessenabwägung. Das ist einfach so. Man muss in den Kern rein, was für Pflichten hat derjenige, der seinen Internetzugang anderen zur Verfügung stellt. Es macht Sinn, die Analogie aus dieser Haftungsprivilegierung vom Telemediengesetz zu nehmen. Wir haben aber so eine riesen Industrie, ein riesen Lobby dahinter.
 
-01:36:42.100 --> 01:37:07.940
-<v SPEAKER_4>Wir haben so Hardware und Firmware gemacht. Aber häufig hat man halt Protokolle und die werden vielleicht sogar kombiniert von Hardware, Firmware, Betriebssysteme, allen möglichen gesprochen. Und auch die kann man halt Reverse Engineering und neu implementieren. Und das ist ein richtig großes Thema, weil es dabei eben auch um Schnittstellen häufig geht und damit tatsächlich in diesen Bereich fallen kann, der eventuell legal ist.
+01:23:52.000 --> 01:25:24.480
+<v SPEAKER_4>Ich versuch das jetzt einfach mal so zu be- Für mich ist das W-Laden meinen Nachbarn und meinen Besuchern anzubieten, ohne ihnen vorher Schriftstücke unterscheiden zu lassen, ohne ihre Personalausweise vorlegen zu lassen, ist für mich einfach so ein Akt der Gastfreundlichkeit. Dass mir das dann jetzt daraus ein Strick gedreht wird, finde ich politisch überhaupt, ja, sozial und gesellschaftlich, finde ich irgendwie eine kraftale Katastrophe, dass ich irgendwie diesen selbstverständlichen Akt der Gastfreundschaft nicht mehr bereiten darf. Und auf der anderen Seite ist natürlich auch das Problem, dass generell anonyme Zugänge zum Internet im Ausland immer verdammt hochgehalten werden. Dass wenn man sich gegen fiese Diktaturen im Ausland zur Wehr setzen muss, dann muss es einfach für alle Leute die Möglichkeit geben, das Internet anonym zu benutzen. Und gerade in Deutschland, wo wir hier die lupende Demokratur haben, hier ist aber am besten nur die Gefahrenzone, Internet zu benutzen, nachdem du dich dort einmal biometrisch mit Proktometrie identifiziert hast. Dann darfst du erst das Internet benutzen. Und das ist einfach ein unhaltbarer Zustand. Also heutzutage, ja, die Tor gibt es, aber Tor ist immer noch eine Krücke. Und es gibt aktive Gegenbewegungen von Verwertungsinhabern, auch aus der Politik, die einfach nicht wollen, dass Menschen am Internet anonymen Teil haben. Und da muss man einfach erst mal das Bewusstsein schärfen, bevor man dann im Detail dort auch juristisch oder politisch dagegen vorgeht. Erst mal...
 
-01:37:10.100 --> 01:37:49.380
-<v SPEAKER_1>Okay, aber lass uns sagen, sag dir wahrscheinlich noch mal ein Thema für eine eigene Sendung. Also es geht da auch, aber lassen wir es jetzt dabei. Und jetzt kommt wirklich die letzte Frage. Wenn man jetzt diese Sendung gehört hat und möglicherweise fragt man sich auch auf ein Interesse auch und sich denkt so, ja Mensch, das hört sich ja schon an, als könnte man das einmal ausprobieren. Es sind doch zwei Fragen. Erste Frage, was ist ein guter Einstieg? Also könnt ihr vielleicht wirklich ein konkretes Programm oder eine Ressource empfehlen, wo man sich mal sozusagen den ersten Schritt in die Tiefe begeben kann? Und zweite Frage, nicht unwichtig, kann ich damit was kaputt machen?
+01:25:24.500 --> 01:25:29.760
+<v SPEAKER_3>Das heißt, du würdest eigentlich nur die extreme Lösung akzeptieren und sagen, Privatversuche sind keine Störer?
 
-01:37:50.100 --> 01:38:48.620
-<v SPEAKER_2>Also das Beispiel, was ich gerade genannt habe mit den Apps, ist glaube ich ganz gut zum Einstieg. Also wenn man irgendwie mal, gerade wenn man mal ein Android-Telefon hat, dann sind das auch irgendwie häufig irgendwie, ist das Java-Bytecode, der ist auch, da braucht man ein bisschen einfacher zu lesen als jetzt ein normaler Assembler. Dann kann man mal irgendwie gucken von so einer App, wie man irgendwie vor fünf Jahren aus dem Playstore runtergeladen hat und sich fragt, macht dieses irgendwie Candy Crush-Derivat wirklich nur Candy Crush? Dann kann man sich genau solche Dinge mal angucken, auf Basis, das sind welche Kommunikation macht das eigentlich nach außen, welche Sinks gibt's, also welche, ja ich merk's selbst, also welche Daten kommen von wo, das wären dann die Data Sources, gehen in welche Data Sinks, also zum Beispiel werden zum Server zurückgeschickt, oder werden auf Platte geschrieben, oder solche Sachen sich da mal anzugucken.
+01:25:29.780 --> 01:25:49.340
+<v SPEAKER_4>Ich würde erst mal die komplette Idee, dass einfach Menschen Internet anzubieten, dass das eigentlich ein Grundrecht sein sollte, wie der Wanderer kommt an der Hütte vorbei, kriegt ein Glas Wasser, wie der Netznomade kommt an meinem Zuhause vorbei, kriegt irgendwie 64 Kilo mit, damit er sich seine E-Mails runterladen kann. Das ist für mich eigentlich total selbstverständlich.
 
-01:38:48.640 --> 01:38:54.620
-<v SPEAKER_1>Aber hast du da auch eine konkrete Empfehlung, womit man das macht?
+01:25:51.040 --> 01:25:55.340
+<v SPEAKER_3>Könnte man aber sagen, so politisch Realismus ist, dass das möglicherweise nicht durchkommt.
 
-01:38:54.640 --> 01:39:03.240
-<v SPEAKER_2>Ja, das kann man gut googeln, also wenn man Android App und Reverse Engineering in seine Suchmaschine seiner Wahl eingibt, dann findet man doch relativ viele Ressourcen dazu.
+01:25:57.200 --> 01:26:17.340
+<v SPEAKER_4>Was heißt, naja, ich meine trotzdem kann man ja erstmal einen Konsens haben, dass das prinzipiell eine gute Idee ist und dann versuchen daran, die Entscheidungen zu auszurichten und nicht bloß die seltsam verkorksten Weltbilder von irgendwelchen Richtern, die aus dem Internet nur das Böse kommen sehen, dort als Maß aller Dinge anzulegen.
 
-01:39:07.780 --> 01:39:30.740
-<v SPEAKER_3>Ja, ich würde sagen, ein guter Einstieg ist eigentlich diese CTFs. Die haben normalerweise ganz viele so Challenges, die unter Reverse Engineering sind. Und dann haben die sehr einfache Sachen, die auch irgendwie so Android-Apps, aber genau für den Zweck, irgendwie etwas zu lernen, gebaut werden.
+01:26:17.720 --> 01:26:39.880
+<v SPEAKER_3>Ja, aber jetzt hat der Jürgen von den Freifunkern gerade erzählt, es gibt diese ganzen Sachen, dass man sagen kann, hier, bevor du meinen Freispieler benutzt, kriegst du so eine Seite angezeigt, sei nicht böse, da ist der Zeigefinger. Kann so was reichen? Werden solche konkreten Schritte überhaupt schon diskutiert? Oder muss es irgendwie was anderes sein? Tatsächlich sowas wie, man darf nur das anbieten, wenn die Leute sich einloggen und irgendwie identifizieren müssen.
 
-01:39:32.780 --> 01:39:46.360
-<v SPEAKER_1>Also CTF, es kommt ja glaube ich von Capture the Flag, das sind ja Wettbewerbe. Ich würde jetzt sozusagen meinen ersten Schritt ungern unter dem Druck eines Wettbewerbs machen, aber du meinst, man kann diese Aufgaben auch sozusagen im Nachhinein finden und dann im stillen Kämmerlein versuchen nachzuvollziehen?
+01:26:42.000 --> 01:27:41.280
+<v SPEAKER_6>Das, was Jürgen gesagt hat, das stammt aus der Rechtbrechung auch. Also diese Prüfpflicht bezieht sich darauf, dass ich denjenigen, der mein Internetzugang benutzt, dass ich ihn belehre, dass ich ihn darüber in Kenntnis setze, was er im Internet nicht zu machen hat. Dann eben auch diese ganzen technischen Sachen. Das Problem ist, das läuft halt alles schon so lange, Jahre. Und wenn man jetzt Erdgeist zuhört, wird einem auch schon wieder klar, dass die Fronten sich so verherzt haben. GEMA macht unfassbare Werbung gegen die, gegen das freie Internet. Also hier wird ja kaum inhaltlich wirklich darüber gesprochen, was das Problem ist. Sondern jeder sagt auf der einen Seite, das muss alles kontrolliert werden. Und auf der anderen Seite, das darf nicht kontrolliert werden. Das wird auch nicht in der Gesellschaft darüber richtig diskutiert. Ich bin jetzt auch nicht hier und kann sagen, was die Lösung ist der Störerhaftung.
 
-01:39:46.380 --> 01:39:54.440
-<v SPEAKER_3>Genau. Normalerweise, wenn die Wettbewerb zu Ende ist, lassen die das alles online für Leute, die einfach was lernen wollen.
+01:27:41.640 --> 01:27:44.720
+<v SPEAKER_3>Aber möglicherweise gibt es eine Idee wenigstens.
 
-01:39:56.760 --> 01:40:03.360
-<v SPEAKER_4>Und außerdem gibt es Leute, die schreiben hinterher ein Write-up drüber, wo drin steht, wie die es gelöst haben.
+01:27:44.740 --> 01:28:21.460
+<v SPEAKER_6>Also ich tue mich sogar schwer mit dieser Splashpage. Also das ist jetzt bei über Freifunk dann zu schreiben, was in der ganzen Sache ist und was eben auch, was wir denken, ist wichtig, einen anonymen Zugang zum Internet. Aber auf der anderen Seite, das sind alles mündige Dritte. Das sind keine Kinder. Also da tue ich mich schon schwer zu sagen. Ich habe jetzt Sonderwissen, weil ich einen Internetzugang habe. Also ja, weil ich der Anschlussinhaber bin.
 
-01:40:07.220 --> 01:40:52.720
-<v SPEAKER_1>Sehr gut. Dann haben wir sozusagen ein paar Einstiegspunkte. Vielleicht könnt ihr die Behörerinnen nochmal in die Show Notes linsen. Vielleicht, ich weiß nicht, ob ihr drei uns nochmal, vielleicht einen Link irgendwie zukommen lassen könnt. Was vielleicht eine gute Anfangslektüre ist für solche Fälle. So, das soll es aber wirklich für heute gewesen sein. Liebe Jiska, liebe Barbie, lieber Bibor, vielen Dank, dass ihr so geduldig mit mir wart. Und das auch wirklich ganz kleinteilig erklärt hat, was ist eigentlich diese Reverse Engineering? Was kann man damit kaputt machen? Das war wirklich sehr, sehr, sehr spannend. Das soll es für heute auch gewesen sein. Und auch für dieses Jahr. Das war das letzte Chaosradio in 2021. Mir bleibt deshalb tatsächlich nur noch eine Sache zu sagen. Lasst euch nicht überwachen. Und verschlüsselt immer schön eure Backups.
+01:28:21.480 --> 01:28:25.080
+<v SPEAKER_3>Aber das hört sich jetzt für mich ein bisschen so an, wie das Problem ist eigentlich unlösbar.
+
+01:28:25.900 --> 01:28:57.400
+<v SPEAKER_6>Nein, das Problem ist nicht unlösbar. Es gibt aus Russland dieses Pirate Pay. Habt ihr das mal gehört? Damit sollen die Daten, ueberrechtlich die geschützt sind, sollen die auch technisch geschützt sein. Also es soll halt irgendwie, also ich bin kein Techniker, aber das soll so funktionieren, dass sie, wenn illegal up und down gelautet wird, dass sie irgendwie automatisch gelöscht oder gesperrt werden.
+
+01:28:58.560 --> 01:28:59.520
+<v SPEAKER_3>Das funktioniert doch nicht.
+
+01:28:59.540 --> 01:29:01.500
+<v SPEAKER_4>Sowas würde ich mir auch mein Rechner nicht installieren wollen.
+
+01:29:09.040 --> 01:29:22.540
+<v SPEAKER_6>Das ist auch so ein Knackpunkt. Bloß weil die Verwertungsgesellschaften ihre Daten nicht schützen können, sorgen sie dafür, dass man einen Kontrollnetz bekommt. Oder dass wir halt einen Kontrollnetz bekommen. Das funktioniert halt nicht. Also nicht so, nicht mit diesen harten Fronten.
+
+01:29:23.800 --> 01:31:04.120
+<v SPEAKER_4>Ich sehe ja da irgendwie die harten Fronten nicht, sondern ich finde jetzt, dass meine Idee, dass ich mein Internet einfach gerne Nachbarn und Freunden zur Verfügung stelle, sehe ich ein wenig mal als eine extrem harte Position an. Das ist einfach so mein Gefühl, wie ich für mich Netznachbarschaft definiere. Das Ding ist aber, dass man diese Fronten einfach total leicht entschärfen kann. Also es hat sich gezeigt in den letzten Jahren, dass diesen ganzen Urheberrechtskleinkrieg, der eigentlich Bürgerkrieg, den also ein einzelne Kanzlein gegen die Falscherer führen, dass man den entschärfen kann, indem man einfach total bequeme und gängelungsfreie Möglichkeiten diese Informationen aus dem Netz zu beziehen. Und zwar kein schlechteres Produkt, als was man aus den Tauschbörsen bekommt. Das funktioniert total toll. Hat Apple gezeigt, hat so einen Music Store aufgemacht, die Leute zahlen sich da dumm und dämlich und machen das, weil es einfach total bequem ist und weil sie es einfach auf ihren bunten Eistern, die weiß es, benutzen können. Machen sie es einfach und die Anzahl der Musik, die die Leute, die dort sich die Musik runterladen, dann auch aus den falschen Ringbörsen besorgen, ist da, glaube ich, verschwindend gering. Und da hat, ja, wie altes Mantra, die Urheberrechts- und Verwertungsindustrie einfach verschlafen, entspannte Angebote den Kunden anzubieten und in diese Nische, in diese Marktlücke, die sie gelassen haben, springen jetzt da auch immer wieder neue Dienste, die das, ja, öffnungszeitenfreie und ohne irgendwelche FBI-Warnings Vorspenne seinen Film nur beziehen. Das hast du alles nicht, wenn du dir aus Pirate Bay deine Musik kriegst.
+
+01:31:04.140 --> 01:31:27.940
+<v SPEAKER_3>Das ist aber schon wieder die große gesellschaftliche Diskussion, die ja das konkrete Problem nicht angeht, weil es möglicherweise, egal wie gut wir das gestalten, oder die Verwertungsindustrie das gestalten, es immer Leute gibt, die möglicherweise Raubbau und Kopien doch total super finden. Wir sprechen gleich darüber weiter. Wir müssen jetzt erst mal einen kurzen Break machen mit dem Fritz Infobot Nachrichten, Wetter und Verkehr. Danach könnt ihr gerne noch mal anrufen unter 0331 70 97 110. Ich möchte heute gerne noch eine Lösung für dieses Störerfunkproblem hier haben.
+
+01:31:29.220 --> 01:31:31.380
+<v SPEAKER_10>Fritz und Festivals.
+
+01:31:31.420 --> 01:31:55.300
+<v SPEAKER_9>Es ist sowas wie die Perle unter den Festivals. Drei Tage Sommer, Sonne, Strand und Meer. Also für Sommer und Sonne können wir nicht garantieren. Aber für Meer. Das Helene Beach Festival. Mit mehr als 100 DJs und Bands. Auch mehr als vier Bühnen. Nämlich fünf. Und darauf stehen Lexi und Cape Hall und Busse.
+
+01:32:03.160 --> 01:32:10.500
+<v SPEAKER_11>Oliver Kolecki und Kraftklub. Und viele viele mehr.
+
+01:32:10.520 --> 01:32:16.580
+<v SPEAKER_9>Das Helene Beach Festival. Von morgen bis Sonntag. Am Helene See bei Frankfurt Oder.
+
+01:32:16.600 --> 01:32:21.640
+<v SPEAKER_12>Die letzten Tickets zum dabei sein gibt es diese Woche bei den Radio Fritzen und bei Fritz im Netz.
+
+01:32:21.660 --> 01:32:25.820
+<v SPEAKER_9>Das Helene Beach Festival. Drei Tage Sommer Sonne Strand aber vor allem Meer.
+
+01:32:36.240 --> 01:32:37.820
+<v SPEAKER_3>Nachricht. Mitteljahre groß.
+
+01:32:37.840 --> 01:34:34.160
+<v SPEAKER_1>EU-Kommissionschef Barroso hat Griechenland versichert, dass es auf die Hilfe der anderen EU-Länder zählen kann. Allerdings müsse Athen auch seine Verpflichtungen gegenüber den Gläubigern erfüllen, sagte Barroso nach einem Gespräch mit Ministerpräsident Samaras. Barroso betonte, der Verbleib Griechenlands in der Eurozone sei der einzige Weg, den Schwächeren zu helfen. Die Polizei hat erneut Räume der Health Angels durchsucht. Rund 300 Beamte waren am Donnerstagabend in 16 Wohnungen in Berlin, Brandenburg und Sachsen-Anhalt, sowie in den Vereinsräumen der Health Angels in Potsdam im Einsatz. Es seien zahlreiche Waffen sowie Betäubungsmittel und Anabolika gefunden worden. Festnahmen soll es keine gegeben haben. Die US-Regierung und die amerikanische Börsenaufsicht ermitteln gegen die Rating-Agentur Standard & Poor's. Wie der Mutterkonzern der Rating-Agentur McGraw-Hill mitteilte, wird untersucht, ob Standard & Poor's bei der Bewertung bestimmter Investitionen gegen die Gesetze verstoßen hat. Gleichzeitig kündigte McGraw-Hill an, sich gegen die Anschuldigungen zur Wehr zu setzen. Den Agenturinnen wird vorgeworfen, mit ungerechtfertigt hohen Bewertungen von Hypothekenpaketen die Immobilienkrise in den USA angefacht zu haben. In Moskau hat die Opposition friedlich gegen den zunehmenden Druck auf Andersdenkende in Russland demonstriert. Die rund 3000 Teilnehmer forderten vor allem die Freilassung von oppositionellen, die nach einer Kundgebung am 6. Mai festgenommen worden waren. Das berichtete der Radiosänger Sender Echo Moskvi. Damals hatten zehntausende Menschen gegen die dritte Amtszeit von Präsident Putin demonstriert. Mit den aktuellen Temperaturen in Berlin sind es zwischen 22 und 25 Grad, in Angermünde und Wittenberge 20, Potsdam, Frankfurt, Neuropin 22 und im Cottbus 23 Grad. In der Nacht bleibt es größtenteils trocken und die Temperaturen sinken weiter auf bis zu 18 bis 13 Grad. Morgen dann wieder ganz viel Sonne, bei Temperaturen bis 32 Grad. Zum Abend kann es dann vereinzelt Wärmegewitter geben.
+
+01:34:35.380 --> 01:34:36.360
+<v SPEAKER_9>Verkehr.
+
+01:34:36.380 --> 01:34:46.840
+<v SPEAKER_1>Nach Brandenburg, die A12, Berlin Richtung Frankfurt oder zwischen der Raststätte Biegener Helden Süd und Frankfurt oder West steht auf der rechten Spur ein kaputter Laster. Passt da auf und gute Fahrt.
+
+01:34:47.740 --> 01:34:51.580
+<v SPEAKER_9>Fritz ist eine Produktion des Airbaby.
+
+01:34:51.600 --> 01:35:02.160
+<v SPEAKER_10>Und wenn ihr einen ganz bestimmten Song aus der Fritz Playlist sucht, dann seht sie euch doch einfach an. Die Playlist auf fritz.de und das Augehört mit man.
+
+01:35:15.823 --> 01:35:37.603
+<v SPEAKER_3>Heute Chaosradio mit Erdgeist Bea und Kai. Es geht um Störerhaftung, also die Art und Weise, wie ihr mitverantwortlich gemacht werdet, wenn ihr euer WLAN aufmacht und darüber jemand anderes was runterlebt oder möglicherweise habt ihr euer WLAN auch nicht aufgemacht. Wie das passiert, kann uns auch Martin erzählen. Dem ist das nämlich passiert. Martin aus Charlottenburg. Hallo und guten Abend. Sag doch mal genau, was bei dir passiert ist.
+
+01:35:38.223 --> 01:36:22.823
+<v SPEAKER_13>Ja, also direkt offenes WLAN war es nicht. Aber natürlich dieses besagte legendäre Anwaltschreiben über den Download einer Datei. In dem Fall soll es sich um eine SIP-Datei gehandelt haben mit 99 Megabyte, der größten Hits der 80er. Und da gab es auch dieses berühmt berüchtigte Anwaltschreiben. Und zwar in dem Fall vom Rechtsvertreter von Bushido. Denn Bushido hat das Copyright für einige Porno-Firme, was ebenfalls im Anwaltschreiben erwähnt wird. Und unter anderem auch als Produzent für einige Songs und Lieder und Hits. Und eines dieser Lieder in diesem großen Paket, da hat er das Copyright drauf und daraufhin hat der Anwalt abgemahnt.
+
+01:36:25.243 --> 01:36:29.003
+<v SPEAKER_3>Und du bist dir sicher, du hast nicht 99 Megabyte Super Hits der 80er runtergeladen?
+
+01:36:29.443 --> 01:37:46.023
+<v SPEAKER_13>Ja, wir waren uns nicht ganz sicher, weil wir sind halt eine WG. Und tatsächlich haben wir mal so ein paar alte Schallplatten entsorgt. Dann haben wir gesagt, ach Mensch, die Lieder hätten wir aber noch ganz gern. Und haben dann versucht eben diese Lieder noch mal runterzuladen. Und so direkt einzeln gab es die gar nicht mehr. Aber dann gab es halt durchaus auch mal solche Pakete, wo die gesuchten Lieder mit dabei waren. Und deswegen können wir das nicht ganz hundertprozentig ausschließen. Ja, wirklich, weil ich ja Anschlussinhaber bin und ich selber weiß, ich war es nicht. Aber ich kann nicht hundertprozentig sagen, ob nicht meine Mitbewohner da eventuell diesen Schaden verursacht haben. Und insofern habe ich da mal meinen Anwalt eingeschaltet. Ich habe ihn mir halt geleistet. Der war da auch ganz kulant. Der hat nämlich einfach das Standardantwort. Er hat einfach klar gesagt, okay, Unterlassungserklärung nicht unterschreiben. Stattdessen statt den geforderten 350 Euro halt freiwillig 150 Euro überweisen und anbieten, das vorgefertigte, wie auch das modifizierte Unterlassungserklärung ausfüllen, abschicken. Und gut ist es. Das heißt, also unterm Strich habe ich 100 Euro gespart. Ja, Geld ausgegeben und noch gespart.
+
+01:37:48.283 --> 01:38:00.183
+<v SPEAKER_4>Du hast da deine Mitbewohner offensichtlich nicht ausreichend im Benutzen des Internets geschult und vielleicht noch mal mit Nachdruck auf ihre Rechte und Pflichten in dieser potenziellen Gefahrenzone oder Schadenszone hingewiesen.
+
+01:38:00.203 --> 01:38:07.963
+<v SPEAKER_13>Nein, wirklich nicht. Aber wir können sagen, seitdem sind wir von BitTorrent und Co relativ abstinent.
+
+01:38:09.463 --> 01:38:38.423
+<v SPEAKER_4>Aber man muss sich das mal überlegen. Also die Schallplatten, um die es euch da ging, die hattet ihr ja eigentlich da im Vorfeld schon erworben und habt die jetzt eigentlich nur noch mal aus dem Internet runterladen wollen und der wirklich entstandene Schaden für Bushide ist ja eigentlich null, weil ihr wolltet seine Musik gar nicht haben oder respektive deine Mitbewohner wollten die nicht haben und das ist das einzige, was da jetzt bei euch dann auf den Rechnern oder bei den Mitbewohnern eventuell auf den Rechnern gelandet ist, sind Musikdateien für die, die schon ursprünglich Geld ausgegeben hatten.
+
+01:38:39.063 --> 01:38:51.883
+<v SPEAKER_13>Ja genau und zumal ich auch sagen kann, dass in den Jahren hat sie sicherlich eher noch nicht Musik gemacht und ich jetzt persönlich auch auf seine Werke durchaus verzichten kann, kann ich mit 100 Prozent der Sicherheit sagen, okay, die Datei hab ich nicht behalten.
+
+01:38:53.183 --> 01:39:07.003
+<v SPEAKER_3>Also die andere spannende Frage, es geht ja heute um Störerhaftung. Nehmen wir mal den Fall, das wäre tatsächlich so, dass es die nicht gäbe. Hättest du dich dann vielleicht hingesetzt gesagt, ja entschuldigt, das waren wir nicht, weißt du uns das erstmal nach?
+
+01:39:07.023 --> 01:39:32.743
+<v SPEAKER_13>Ja, durchaus. Also ich benutze natürlich und betreibe auch ein WLAN, das ist natürlich auch verschlüsselt bis zum Abwinken, aber natürlich habe ich dann auch überlegt, ob man da besser so argumentieren sollte, habe dann trotzdem erstmal umgefragt und kam dann so von wegen, es kann schon sein, dass ich da so was runtergeladen habe. Und deswegen haben wir dann gesagt, okay wir fragen den Anwalt und der Anwalt hat uns dann eigentlich rechtzügig dazu geraten, das einfach zu machen.
+
+01:39:34.123 --> 01:39:42.923
+<v SPEAKER_3>Da kann man natürlich sagen, politisch auch in Erklärungsschwierigkeiten, wenn dann so ein Fall vorgeführt wird. Oder wenn man sagt, okay wir schaffen die Störerhaftung ab, aber was ist denn genau dann mit so einen Leuten?
+
+01:39:42.943 --> 01:40:21.303
+<v SPEAKER_13>Ja, das ist definitiv ein Problem. Ich bin da auch ganz ehrlich oder sagen wir mal, bis vor kurzem habe ich berühmte, berüchtigte Film- und Serienwebseiten nicht besucht. Habe tatsächlich versucht immer, wenn ich was gucken wollte, die offiziellen Quellen zu nutzen, aber tatsächlich enthalten die immer nur den Kram von aktuell und nicht das, was man halt gerade aktuell gucken möchte. Bin dann schließlich endlich doch wieder auf einem Klon dieser vergangenen goldenen Tage gestoßen und tatsächlich, früher habe ich es nie gemacht, jetzt mache ich es halt wieder regelmäßig. Einfach deswegen, weil ich gar keine legale Möglichkeit habe, mir anzugucken, was ich gerade haben will.
+
+01:40:21.323 --> 01:41:36.843
+<v SPEAKER_3>Aber das ist ja das, was Erdgeist sagte, wenn du einen hättest, würdest du da auch Geld dafür ausgeben? Martin, vielen Dank für deine Geschichte und das praktische Beispiel. So kann es gehen. Wir driften jetzt so ein bisschen in diese Filesharing is evil or not-Ecke ab. Ich würde gerne noch mal bei dem offenen WLAN bleiben, weil wir sagen, das eigentliche Thema war ja dieses zur Verfügung stellen von Infrastrukturen für die Allgemeinheit. Und eine häufige Frage. Also, was wir jetzt gelernt haben, ist zu sagen, diese Störhaftung kriegen wir anscheinend nicht politisch geklärt. Unsere gestudierte Rechtsvertreterin sagt, naja, das ist relativ unwahrscheinlich, dass wir das irgendwie so in der Lebenszeit hinkriegen vielleicht. Mal abgesehen davon, gibt es ja diese Idee, das WLAN aufzumachen trotzdem und manche Leute sagen so, wie Erdgeist sagen so, das ist für mich einfach, das gehört sich für mich so, das ist eine Höflichkeit, mein WLAN auch anderen Leuten anzubieten. Eine häufige Angst, die ich bei Leuten erlebe, ist nicht nur das, das politische, das juristische, sondern auch, dass sie sagen so, wenn ich meinen WLAN aufmache, gewähre ich da nicht hackern noch extra freien Zugriff auf meinen Rechner. Also einfach die Angst, da technisch was falsch zu machen, wenn man das wieder aufmacht. Wie sieht es denn damit aus? Aha, gut.
+
+01:41:36.863 --> 01:42:07.923
+<v SPEAKER_4>Aber das tut man ja in vielen Fällen. Ist die Gefahr eigentlich eher aus dem Internet, ist die Gefahr eigentlich eher aus Attacken, die passieren, wenn man Webseiten besucht und von irgendwelchen Targeted Attacks, von Leuten, die jetzt wirklich rumfahren, Wardriven und auf die WLANs dazugreifen. Ja, habe ich noch nicht gehört. Es gibt, wenn ich jetzt Firma bin, dann würde ich mir das vielleicht überlegen, ob ich dann extra Gästenetzwerk anbiete, was ich nochmal physikalisch trenne.
+
+01:42:07.943 --> 01:42:19.183
+<v SPEAKER_3>Lass uns mal bitte nochmal ganz einfach machen. Die einfache Frage ist ja erstmal, wenn ich jemand, also wenn ich einen WLAN aufmache, dann erlaube ich ja demjenigen Zutritt zu meinem lokalen Netzwerk. Bin ich dann angreifbarer oder nicht?
+
+01:42:20.063 --> 01:42:24.883
+<v SPEAKER_4>Kommt ganz drauf an, wie du das Netzwerk konfigurierst. Das kommt drauf an. Ich bin jetzt auch mal Jurist.
+
+01:42:24.903 --> 01:42:35.403
+<v SPEAKER_3>Okay, ihr verdammten Juristen. Ganz normaler Typ holt sich ein Windows-Rechner, patcht den, weil Microsoft das ja irgendwie anbietet, macht dann sein WLAN auf.
+
+01:42:35.423 --> 01:42:44.283
+<v SPEAKER_5>Also wenn das WLAN dann unverschlüsselt ist, so richtig offen, also es gibt ja einmal die Variante, zum Beispiel das Café hängt dann ein A4-Zettel hin mit WLAN-Name und Passwort.
+
+01:42:44.303 --> 01:42:45.363
+<v SPEAKER_3>Nee, nee, nee, ich würde sagen, jetzt richtig.
+
+01:42:45.383 --> 01:43:04.223
+<v SPEAKER_5>Aber so richtig offen, das heißt dann auch, dass die gesamte Kommunikation vom Rechner zum Internet unverschlüsselt läuft und auch dadurch vulnerable ist. Also du kannst dich dann zum Beispiel dahinstellen und die E-Mail-Provider-Webseite vorspielen und die Passwörter abgreifen, wenn das nicht ordentlich verschlüsselt ist.
+
+01:43:04.643 --> 01:43:12.243
+<v SPEAKER_3>Das heißt, okay, da müsste man, müsste also der Benutzer auf seinen Rechner darauf achten, dass er sozusagen immer brav alles schon von sich aus verschlüsselt.
+
+01:43:12.703 --> 01:43:12.963
+<v SPEAKER_5>Genau.
+
+01:43:12.983 --> 01:43:21.243
+<v SPEAKER_3>Jetzt hast du gerade gesagt, wenn ich dir das WLAN verschlüsselte, aber das Passwort angebe, dann ist das irgendwie anders.
+
+01:43:22.423 --> 01:43:27.483
+<v SPEAKER_5>Ja, dann ist halt die Kommunikation verschlüsselt, aber wie das dann mit der Störerhaftung ist, weiß ich nicht genau.
+
+01:43:27.503 --> 01:43:32.243
+<v SPEAKER_3>Nee, nee, nee, es geht nicht um die Störerhaftung. Es geht jetzt erst mal sozusagen, an dieser Stelle tatsächlich nur um den technischen Aspekt.
+
+01:43:32.263 --> 01:43:59.703
+<v SPEAKER_4>Der technische Aspekt ist, dass dann für jeden einzelnen Client, also für jeden einzelnen Teilnehmer in dem WLAN ein eigener Session Key ausgehandelt wird und man kann die Pakete der anderen üblicherweise nicht entschlüsseln. Man sieht aber die IP-Adressen der anderen Leute innerhalb des LANs, kann dann, wenn man die angreifen möchte, kann man die dann auch, wenn man geroutet wird, also wenn man nicht direkt ins Internet geroutet wird, sondern auch noch innerhalb des LANs, kann man natürlich dann Angriffe auch versuchen.
+
+01:44:00.063 --> 01:44:24.643
+<v SPEAKER_5>Also das ist eh so ein Angriffsfall, der immer vorhanden ist, sobald man halt den fremden Access Point nutzt. Also man muss halt selbst entscheiden, ob man demjenigen vertraut, von dem man das Internet benutzt oder nicht, weil es kann jetzt auch jeder sein, wenn es irgendwie halt hochverschlüsselt ist, dass trotzdem der Access Point Betreiber irgendwie jetzt einen kriminellen Hintergedanken hat und die Kommunikation mitschneidet oder...
+
+01:44:25.683 --> 01:45:09.143
+<v SPEAKER_3>Ja, okay, das geht in beide Richtungen. Aber nun müssen wir mal sagen, bei dem konkreten Fall zu bleiben, es wäre also sozusagen schon ein kleines bisschen sicherer, wenn ich meinen WLAN öffentlich zur Verfügung stellen will, wenn ich sozusagen in die... es gibt ja diese SSID, also wenn ich meinen Rechner aufklappe und mir die WLANs anzeigen lasse, ich könnte also meine WLAN nehmen, das WPA2 verschlüsseln und in diesen Namen, der angezeigt wird, schreiben, so irgendwie Username, so. Nee, einfach nur das Passwort. Also Passwort für dieses WLAN ist so und so. Dann hätte ich zumindest schon mal, dass der Verkehr innerhalb des Netzwerks verschlüsselt ist. Okay. Könnt ihr also, wenn ihr das wollt, könnt ihr das zum Beispiel so machen. Jetzt hört sich das natürlich so an, okay, wir sind jetzt in diesem lokalen Netzwerk drin und deswegen machen wir uns angreifbarer. Man muss aber auch mal deutlich sagen, das ist genau dieselbe Szenerie, genau dieselbe Situation, wie wenn ich in einen Café gehe und dort den Rechner aufklappe.
+
+01:45:10.083 --> 01:45:15.043
+<v SPEAKER_4>Oder gar fremde Rechner benutzt in einem Internetcafé.
+
+01:45:15.063 --> 01:45:32.723
+<v SPEAKER_5>Also ein klassisches Beispiel, man vergisst sich bei Facebook auszuloggen im Internetcafé oder zum Beispiel, dass man soweit geht und sagt, jemand gaukelt halt vor, dass sein Rechner jetzt Facebook ist und du loggst dich mit deinem Rechner auf meinem Rechner ein und ich greife dein Passwort ab und du meldest dich nicht direkt bei Facebook an.
+
+01:45:32.743 --> 01:45:58.603
+<v SPEAKER_3>Also die Frage, die ich, ich wollte jetzt nicht auf einen konkreten Facebook Hack raus, sondern die Frage, die ich mir gerade stelle, ist, wenn ich jetzt jemand bin, der einen Laptop hat. Ich benutze ihn zu Hause und ich benutze ihn auch in einem Café und überall wo ich damit hingehe und überlege mir jetzt, ob das gefährlich ist, wenn ich meinen WLAN aufmache. Dann ist es doch sozusagen eigentlich diese Sicherheit, die mit meinem WLAN, dass ich nur ganz alleine benutze, das ist doch eher sozusagen eine gefühlte Sicherheit. Aber eigentlich begebe ich mich ja eh in gefahrenen Situationen, dadurch, dass ich im Café auch meinen Rechner aufklappe.
+
+01:45:58.623 --> 01:46:27.583
+<v SPEAKER_4>Ich glaube, ein Großteil der Angriffe auf deinem Rechner passieren einfach nicht außerhalb deines Lans, weil ein Großteil der Angriffe, die man mit seinem Rechner ausgesetzt ist, sind so Schrottflirndenangriffe von Leuten, die einfach nur auf Rechnern möglichst viel Schadsoftware installieren wollen, um dann Spam zu verschicken, um dort deine Bankdaten abzugreifen. Und die Probleme hast du normalerweise nicht, dass jetzt irgendein Hacker digitiert, der dir hinterher ist, um gerade in deinem Netzwerk rumzuschnüffeln.
+
+01:46:27.603 --> 01:46:48.483
+<v SPEAKER_5>Theoretisch könntest du mehr Schaden verursachen, aber es ist einfach nicht der Fall, dass sich jemand in ein Café setzt, um dann da vielleicht irgendwie fünf Rechner, die da rumstehen, zu ownen. Sondern als kann man halt irgendwie über ein Botnet zehnmal effektiver übers gesamte Internet machen. Und dazu muss ich mir nicht die Mühe machen, um sozusagen mein Haus zu verlassen und mich in ein Café in die Sonne zu setzen.
+
+01:46:53.143 --> 01:47:12.003
+<v SPEAKER_3>Also ich lerne in diesem Falle zu sagen, technisch gesehen, ich soll meinen Rechner immer sozusagen so sicher machen, wie es geht. Dann ist es auch egal, ob mein Netzwerk zu Hause offen ist oder nicht. Aber ich bin trotzdem ein bisschen unbefriedigt, weil dieses Störerhaftungsding, also generell kriegen wir das heute anscheinend nicht geklärt. Also ist denn eure Meinung, wir sollten alle unser Netzwerk aufmachen und lassen uns mal drauf ankommen?
+
+01:47:12.023 --> 01:47:13.863
+<v SPEAKER_8>Oder?
+
+01:47:13.883 --> 01:47:16.763
+<v SPEAKER_3>Ja, ich weiß ja, ich bin sozusagen wirklich so ein bisschen unsicher. Was ist denn jetzt ein guter Weg?
+
+01:47:18.403 --> 01:47:55.083
+<v SPEAKER_4>Was ein guter Weg ist für jeden Einzelnen, muss man natürlich schauen, wo die Komfortzone des einzelnen Benutzers ist. Ich will da niemanden oktruieren, was er tun soll. Ich sag einfach nur, wie ich mich fühle. Und wenn es andere Leute gibt, die mich dann eher als potenzielle Schadensquelle betrachten, weil ich dieses Internet benutze oder weil ich da drinnen Leuten, ohne deren Personalausweis vorher aufzunehmen, Zugang zu dem Internet gebe, dann muss ich mich dann im Zweifel da mit auseinandersetzen, wenn es mich dann irgendwann mal betrifft. Aber bis dahin gebe ich einfach mal Vorschuss Vertrauen an meine Mitbenutzer meines WLANs.
+
+01:47:55.103 --> 01:47:58.163
+<v SPEAKER_3>Wie machst du das zu Hause? Ist dein WLAN tatsächlich einfach offen?
+
+01:47:58.183 --> 01:48:17.603
+<v SPEAKER_4>Mein WLAN ist offen und ich habe einen Mac-Adressenfilter, sodass alle Mac-Adressen, die ich kenne, bekommen ungedrosseltes Internet und alle, die ich nicht kenne, bekommen so ISDN-Geschwindigkeit. Unbequem, ihre Mails runterzuladen und vielleicht mal News zu klicken, aber Filesharing schnarcht einfach lohnt nicht.
+
+01:48:18.003 --> 01:48:28.103
+<v SPEAKER_3>Okay, also das heißt also, ich lock mich bei, also wenn ich sehe ein WLAN lock mich ein, also ist einfach nicht schnell. Dann fragen wir jetzt einfach mal die Reihe durch.
+
+01:48:30.743 --> 01:48:44.483
+<v SPEAKER_6>Oh, ich wohne da wo, also ich brauche meinen WLAN nicht aufzumachen. Also es wurde nicht funktionieren. Ich hab da niemanden, der, also ich wohne in so einem, ich würde es ja gar nicht im Radio sagen.
+
+01:48:44.503 --> 01:48:45.403
+<v SPEAKER_3>Im Wald?
+
+01:48:45.423 --> 01:48:50.843
+<v SPEAKER_6>Ja, so ungefähr. So ungefähr. Also ich habe niemanden, der mitbenutzt.
+
+01:48:51.123 --> 01:48:54.023
+<v SPEAKER_3>Aber müsstest du denn nicht trotzdem mit gutem Beispiel und wegen des Prinzips?
+
+01:48:54.323 --> 01:49:24.523
+<v SPEAKER_6>Nee, ich mache das auf der anderen Ebene. Ich unterstütze Leute dabei, gegen diese Abmahnindustrie vorzugehen, juristisch. Und das ist auch das, was ich halt jedem ans Herz lege. Ja, genau. Also das, sicherlich gibt es Lösungen auf der technischen Seite. Also eigentlich müssten diese ganzen Verwerter das Geld von den Abmahnanwälten wegziehen und mal in die Innovation stecken.
+
+01:49:24.643 --> 01:49:27.923
+<v SPEAKER_3>Hör mal auf, bitte.
+
+01:49:27.943 --> 01:49:30.003
+<v SPEAKER_6>Aber wir können sie vielleicht auch zwingen dazu.
+
+01:49:30.023 --> 01:49:38.103
+<v SPEAKER_3>Okay, jetzt hast du gerade gesagt, du hilfst anderen Leuten. Gibt es tatsächlich zu sagen, außer zu meinem eigenen Anwalt zu gehen, meinst du, das ist politische Arbeit oder auch in konkreten Fällen?
+
+01:49:38.123 --> 01:49:40.803
+<v SPEAKER_6>Konkrete Fälle und zwar die Freifunkfälle.
+
+01:49:40.823 --> 01:49:46.463
+<v SPEAKER_3>Okay, also du sagst, für die Freifunker, wenn da was passiert, bist du sozusagen als unterstützende juristische Kraft dabei?
+
+01:49:46.483 --> 01:50:10.623
+<v SPEAKER_6>Genau, die trauen sich nicht so wirklich zu klagen, weil man möchte ja immer so das ärmste Würstchen vom Ende fertig machen. Also bei Freifunk ist halt schon eine größere Community. Aber wenn sie dann da klagen, dann also auch in dem Vorbereich bin ich dabei und unterstütze. Also wir wollen natürlich auch, dass sie klagen.
+
+01:50:11.903 --> 01:50:16.363
+<v SPEAKER_3>Dann zeigen wir es euch. Verstehe, verstehe. Kai, wie machst du das zu Hause?
+
+01:50:16.383 --> 01:50:30.543
+<v SPEAKER_5>Ich habe ein offenes WLAN, was aber richtig offen ist. Sprich, die Leute, die sich da anmelden, kriegen auch eine eindeutige IP-Adresse. Aber mit Loggen tue ich da jetzt nichts. Also es ist eigentlich vollkommen anonym mit maximalem Komfort.
+
+01:50:33.483 --> 01:50:40.043
+<v SPEAKER_3>Hast du einen Plan B oder C? Also wie würdest du jetzt reagieren, wenn jetzt so eine Abmahnung mal bei dir reinflattert?
+
+01:50:41.663 --> 01:50:55.123
+<v SPEAKER_5>Muss erst mal eine ankommen und dann mal schauen. Beziehungsweise einfach mal rumfragen, was dann die tagesaktuelle Strategie ist. Logieren oder bezahlen oder Anwalt darauf hetzen.
+
+01:50:55.143 --> 01:51:01.463
+<v SPEAKER_3>Gibt es ja, apropos tagesaktuelle Strategie, wo wendet man sich denn hin?
+
+01:51:01.483 --> 01:51:01.923
+<v SPEAKER_5>Gute Frage.
+
+01:51:02.603 --> 01:51:19.223
+<v SPEAKER_4>Na, Internet. Meistens sind es ja Serienbriefe, wo man ganz sicher nicht der Einzige ist, der es bekommen hat. Dann gibt man einfach die ersten paar Worte aus dem Schreiben in Google ein und dann hat man da so eine Liste von Hunderten von Links, wo Foren voll sind von was funktioniert und was nicht.
+
+01:51:19.443 --> 01:51:26.603
+<v SPEAKER_3>Also ja, aber ich hätte gehofft, es gibt sozusagen so eine Art Anlaufstellen von Leuten, die sich mit so einem Thema beschäftigen. Nein.
+
+01:51:26.623 --> 01:51:27.563
+<v SPEAKER_4>Sollte man mal, wa?
+
+01:51:27.583 --> 01:52:14.443
+<v SPEAKER_3>Sollte man mal, könnte mal einer. Also es gibt übrigens den Blog zum Chaosradio und da gibt es auch einen Eintrag zu jeder Sendung. Und wenn ihr jetzt also denkt, ja natürlich gibt es das, das kann man noch direkt mal da in die Kommentare schreiben, wären wir sehr verbunden, glaube ich. So, dann kommen wir jetzt an dieser Stelle zur Werbung, weil ich glaube das Thema haben wir jetzt erschöpfend nicht gelöst, möchte ich sagen. Also wenn ihr da wirklich noch Meinung habt, schreibt auch die gerne in den Kommentaren. Podcasts, diese Sendung gibt es wie gesagt noch. Ein spannendes Thema, das uns wahrscheinlich noch einige Weile erhalten bleibt. Ich möchte den Werbeblog anfangen mit den Freifunkern tatsächlich, also weil du ja gesagt hast, du unterstützt da auch und kommunizierst dich genau mit dem Zusammensetz. Wenn man da jetzt denkt, so Freifunk gehört sich irgendwie cool an, kann man da mitmachen. Wenn ja, wo geht man hin? Was muss man machen? Und überhaupt? Bia ist gerade ganz erschreckt, aber Bia ist doch von den Freifunkern.
+
+01:52:14.463 --> 01:52:55.763
+<v SPEAKER_6>Ja, das ist wichtig, das ist wichtig. Habe ich das missverstanden? Nein, ich dachte du spielst da tatsächlich irgendwas ein, okay. Okay, ich bin Radiohörer, ja. Freifunk, im, die Internet der Seite, ja. Freifunk.de Punkt nett. Punkt nett, dankeschön. Und da könnt ihr die, kommt ihr an die Software ran, da kommt ihr an sämtliche Information ran, auch so, du gibt es auch einen Blog mit Störerhaftung, und da kriegt ihr die ganzen Informationen, halt auch die technischen Informationen, wie das funktioniert. Und ja, macht mit.
+
+01:52:55.783 --> 01:53:09.323
+<v SPEAKER_3>Jetzt gibt's ja Leute, die denken so, ja, ne bitte nicht die langen Texte, da komm ich nicht mit, klar. Gibt es so einen Tag, der regelmäßig stattfindet? Die Seabase, die ist an der Janowitzbrücke.
+
+01:53:09.343 --> 01:53:10.163
+<v SPEAKER_6>Richtig, genau.
+
+01:53:10.183 --> 01:53:12.023
+<v SPEAKER_3>Hat auch eine Webseite, kann man nach, wo die genau ist.
+
+01:53:12.043 --> 01:53:27.903
+<v SPEAKER_4>Die Regie teilt mir gerade mit, dass es im Internet noch eine Webseite namens störerhaftung.net gibt, Störer mit OE, bei der Dokumente und Hinweise, wenn man dort Betroffener ist, sich durchlesen kann, die auch nicht so lang sind, die Texte.
+
+01:53:29.523 --> 01:53:38.503
+<v SPEAKER_3>Sehr gut. So, der Club hat dann irgendwie in der nächsten Woche noch etwas vor, was überhaupt gar nichts mit Störerhaftung zu tun hat, aber auch mit dem Club und die Leute und Themen kennenlernen. Was genau passiert da?
+
+01:53:38.523 --> 01:54:17.403
+<v SPEAKER_4>Na, der Chaos Computer Club hat ja eine unregelmäßige und jetzt hoffentlich demnächst regelmäßigere Vortragsreihe zu dem offenen Donnerstag und zu dem nächsten offenen Donnerstag in der Marienstraße 11 in 10117 Berlin. Findet einen Datengarten statt von Constanze Kurz zu elektronischen Wahlverfahren, zu der Geschichte, zu den aktuellen Entwicklungen und zu dem Versuch mit hässlichen elektronischen Wahlmaschinen unsere Demokratie zu übernehmen und wie der CCC das verhindert hat.
+
+01:54:17.423 --> 01:54:28.223
+<v SPEAKER_3>Also ich wollte gerade sagen, die großen Geschichten, also irgendwie die niederländische Wahlautomaten, die hatten wir ja möglicherweise schon mal gehört. Also ist das sagen, das ein Rerun oder gibt es da noch die kleineren Details?
+
+01:54:28.243 --> 01:54:47.243
+<v SPEAKER_4>Es gibt erst mal ein Wrap-up von dem, was passiert ist, aber Frau Konstanze Krootz hat ja ihre Dessertationen zu diesem Thema geschrieben und hat dort viele, viele, viele spannende, kleine, neue Anekdoten und Details, die sie doch mal gerne wieder einem größeren Publikum in komprimierter Form vermitteln möchte.
+
+01:54:47.563 --> 01:55:01.863
+<v SPEAKER_3>Nächsten Donnerstag also in der Marienstraße 11 beim Chaos Computer Club, könnt ihr gerne hingehen und mal was Neues lernen. Ich danke Erdgeist. Danke, das freut mich. Ich danke Bea fürs Vorbeikommen und Erklären.
+
+01:55:01.883 --> 01:55:02.483
+<v SPEAKER_6>Auch gerne.
+
+01:55:02.503 --> 01:55:07.323
+<v SPEAKER_3>Und Kai für die Anekdoten und das Erklären, wie man ein Netzwerk, ein größeres betreibt.
+
+01:55:07.343 --> 01:55:08.423
+<v SPEAKER_5>Auch gerne.
+
+01:55:08.443 --> 01:55:22.323
+<v SPEAKER_3>Und wünsche euch viel Spaß. Podcast gibt es, wie gesagt, noch heute Nacht unter den diversen Webadressen. Hendrik Schröder kommt jetzt gleich, macht den Night Flight und will nur noch zu sagen, mein Name ist Markus Richter und ich habe eine wichtige Nachricht für euch. Macht immer schön eure Backups und lasst euch nicht überwachen. Tschüss.

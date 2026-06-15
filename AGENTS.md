@@ -8,8 +8,9 @@ extend this project with following features:
     - manually add single transcripts for specific episode
     - import transcripts from PodLove Publisher API
     - import transcripts from Apple Podcasts by Podcast ID
-- import all existing episodes
+- import all existing episodes and map episode IDs over all sources accordingly
 - import new published episodes
+- always convert full ttml to vtt
 - replace existing transcripts with transcript from other sources
 - support all common transcript formats
 - show progressbar when fetching transcripts and counting words

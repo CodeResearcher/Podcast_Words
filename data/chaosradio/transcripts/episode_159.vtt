@@ -1,325 +1,799 @@
 WEBVTT
 
-00:00:00.740 --> 00:00:00.740
-<v SPEAKER_1>Hallo und herzlich willkommen zum Chaosradio 263, das sich mit wichtigen Dingen beschäftigt, könnte man so sagen. Wir leben ja gerade in aufregenden Zeiten und in aufregenden Zeiten gibt es Dinge, die funktionieren und Dinge, die nicht funktionieren. Und dass manche Dinge nicht funktionieren, ist nicht so schlimm, solange es nicht folgende Sachen sind. Systemrelevante Berufe und kritische Infrastruktur. Was hat das aber mit dem Chaosradio zu tun? Na ja, bei der kritischen Infrastruktur in einer digitalen Welt gibt es kritische IT-Infrastruktur. Oder ist es kritische Infrastruktur, die IT-Komponenten hat? Und was passiert, wenn die kaputt geht? Und was kann man dagegen machen? Und das ist exakt das Thema der heutigen Sendung. Hallo und herzlich willkommen. Mein Name ist Marcus Richter. Und ich werde versuchen, für euch zu verstehen, oder für und mit euch zu verstehen, was wir heute hier besprechen. Zu Gast sind zwei Hauptpersonen der sogenannten AG Kritis. Was das ist, werden wir heute auch besprechen. Sie sind HonkHase und Ijon. Hallo und herzlich willkommen. So, ihr seid bei AG Kritis. Wir werden noch genau erklären, was das ist und wofür man das braucht und was das kaputt macht. Und auch vielleicht wieder ganz. Aber was seid ihr denn noch? Weil das ist ja nicht alles, was ihr macht. Vielleicht könnt ihr euch noch ein bisschen vorstellen, wer eigentlich im normalen Leben, solange man heutzutage noch davon sprechen kann, seit HonkHase, vielleicht fängst du an.
+00:04:08.014 --> 00:06:12.174
+<v SPEAKER_2>So, ich hoffe, ihr habt schön brav und fleißig mitgezählt. Wenn ihr diese Musik hört und außerdem mitbekommt, dass der letzte Donnerstag im Monat ist, dann wisst ihr jetzt ist Chaos Radio Zeit. Das heißt, der Chaos Computer Club hat die Fritz Studios geentert, ist hier am Start und wird euch die nächsten zwei Stunden mit einem Thema seiner Wahl erfreuen. Heute geschieht das in Gestalt von Harald Welte und Andy Müller-Maguhn vom Chaos Computer Club. Hallo und guten Abend. Sehr schön. Und das Thema, das ihr mitgebracht habt, ist eins, das könnte man fast schon als altes Steckenpferd bezeichnen, das aus aktuellem Anlass wieder aus der Kiste geholt wird. Es handelt sich um Schnüffeleien, um Überwachung, insbesondere heute um Handyschnüffeleien. Also die Art und Weise, wie wir diese neuartigen Rundfunkempfangsgeräte, die manche auch Mobiltelefone nennen, überwachen, abhören, mitschneiden, was auch immer der Typ, dem das Ding gehört, machen kann, all das werdet ihr heute erklären. Und vielleicht auch, könnten wir kurz so reden, ob das alles so seine Richtigkeit hat oder nicht, mit den gesetzmäßigen Überwachungen oder den ungesetzmäßigen. Schauen wir mal. Aktuellen Anlass, an aktuellen Anlass gibt es natürlich, und das ist Dresden, die Geschichte dürfte euch über den Weg gelaufen sein, im letzten Monat sogar, also das ist schon eine Weile her, da kommen immer noch wieder neue Sachen raus. In Dresden gab es eine Demo und da hat die Polizei gedacht, hey, lass doch mal gucken, weil alles so da war und hat eine sogenannte Funkzellenauswertung gemacht. Was das genau ist, das werden wir gleich erklären, nur noch um die Dimension klar zu machen. Es hieß erst so, ja, das sind ein paar hundert Mobiltelefonbenutzer wurden da so mitgeschnitten. Dann hieß es auf einmal so, ja, war ein bisschen mehr, 40.000 oder so. Und dann ist jetzt noch letztens rausgekommen, es gibt noch einen größeren Fall, der liegt ein bisschen weiter zurück, da waren es dann gleich zwei Millionen. Also ihr benutzt euer Handy und die Polizei denkt dann irgendwann so, hey, lass doch mal gucken, was der komische Typ da macht. Was da genau passiert ist und ob es alles rechtmäßig ist und was man vielleicht noch so alles mit euren Handys anstellen kann, das wollen wir heute hier im Chaosradio klären. Jetzt geht es los, eine Funkzellenauswertung ist da geschehen. Was zur Hölle ist eine Funkzellenauswertung?
 
-01:01:23.657 --> 01:01:25.737
-<v SPEAKER_1>Naja, aber, aber wisst ihr heute...
+00:06:13.134 --> 00:07:09.414
+<v SPEAKER_3>Ja, Funkzellenauswertung, das ist ich würde fast sagen schon amtsdeutsch und bezeichnet eben die Auswertung der Polizei von sogenannten Verkehrsdaten des Mobilfunks. Das sind Daten, die anfallen bei der Benutzung von Mobilfunknetzen. Und da wird dann über einen richterlichen Beschluss die Polizei zu dem jeweiligen Netzbetreiber, also Vodafone, die Mobile, E+, oder O2, um auch alle genannt zu haben, schön ausgewogen berichten, geht und sagt, wir hätten jetzt gerne mal diese sogenannten Verkehrsdaten. Das sind also wer hat wann mit wem telefoniert, wo waren die Telefone zu dem Zeitpunkt. Also auch Daten darüber, wenn Datendienst, Internet über Telefone genutzt wurde, wann ist das passiert, von welchen IP-Adressen aus und so weiter. Diese ganzen Verkehrsdaten werden dann von den Netzbezweiflern an die Polizei weitergeleitet und die Polizei versucht damit irgendwas zu ermitteln.
 
-01:01:25.757 --> 01:01:27.057
-<v SPEAKER_2>Dass du halt weißt, wie man fragen kann.
+00:07:10.434 --> 00:07:19.054
+<v SPEAKER_2>Das ist dann vielleicht meine nächste Frage, aber nochmal, muss ich andersherum formulieren, Verkehrsdaten sind quasi alles, außer der Inhalt, worum es eigentlich ging, oder?
 
-01:01:27.077 --> 01:01:42.737
-<v SPEAKER_1>Also ja, wir reden jetzt aber in einer Stunde und ich dachte ja, heute wird es sozusagen was mit einer optimistischen Ausblick. Aber je länger wir reden, desto mehr komme ich an den Punkt, vielleicht ist doch das wieder ein Thema, über das ich eigentlich gar nicht so viel wissen wollte.
+00:07:19.074 --> 00:07:49.734
+<v SPEAKER_4>Nein, also man muss jetzt zunächst unterscheiden, es gibt Verkehrsdaten, das ist tatsächlich wer telefoniert mit wem und dann gibt es die sogenannten Begleitumstände der Telekommunikation, wie sie im Gesetz heißen. Das ist der genaue Aufenthaltsort der Zelle, der auch sozusagen nach GPS dann gleich abgeglichen werden kann. Das heißt, du hast da nicht die Gesprächsinhalte, aber wer spricht mit wem und welches Telefon ist wo. Das beinhaltet natürlich auch die Telekommunikationsvorgänge, wie zum Beispiel, wenn jemand eine SMS schickt. Auch das ist in den Verkehrsdaten in diesem Fall enthalten.
 
-01:01:42.757 --> 01:01:44.417
-<v SPEAKER_2>Darf ich, dann lege ich noch mal einen drauf.
+00:07:49.974 --> 00:07:53.474
+<v SPEAKER_2>Okay, also sie wissen quasi alles, außer worüber ich geredet oder geschrieben habe.
 
-01:01:44.437 --> 01:01:44.917
-<v SPEAKER_1>Ja bitte.
+00:07:53.494 --> 00:07:56.354
+<v SPEAKER_4>Genau, die Inhalte sind nicht Bestandteil der Verkehrsdaten.
 
-01:01:44.937 --> 01:01:50.817
-<v SPEAKER_2>Hast du schon mal was von Netzfrequenzstabilität gehört? War das schon mal ein Thema hier in der Sendung?
+00:07:56.874 --> 00:08:02.094
+<v SPEAKER_2>Okay, na immerhin. Warum macht man sowas, also was kann man dann damit rausfinden?
 
-01:01:50.837 --> 01:01:52.577
-<v SPEAKER_1>Bitte erkläre es nochmal.
+00:08:03.214 --> 00:08:30.294
+<v SPEAKER_3>Ja, im Grunde leider sehr viel. Zunächst denkt man vielleicht, es sind ja nur die Verkehrsdaten und nicht die Inhalte. Das ist ja noch nicht so relevant, aber wenn man das mal über einen längeren Zeitraum vor allem sich anschaut, bekommt man ein sehr genaues Profil, vor allem durch die Positionsdaten. Also wer sein Telefon den ganzen Tag mit sich rumträgt und eingeschaltet hat, der hat permanent Informationen dazu, wo er ist, an die Polizei weitergegeben in dem Fall.
 
-01:01:52.597 --> 01:01:58.637
-<v SPEAKER_2>Okay, also wir haben hier dieser 50 Hertz, das ist eine Betrabergesellschaft und auch ein wissenschaftlicher Wert der Frequenz.
+00:08:30.594 --> 00:08:55.314
+<v SPEAKER_2>Da kann man ein schönes Bewegungsprofil erstellen. Wisst ihr in dem Fall von Dresden jetzt, wie viele Daten die sich da haben geben lassen? Also vom Zeitraum her. Ich habe jetzt gelesen, bei dem Fall aus 2009, wo die zwei Millionen Daten sich da gegeben haben, da sind es fünf ganze Tage, da kann man schon ganz schön was mit machen. Wie lange braucht man denn, um so ein, damit man ordentlich was anstellen kann? Die werden ja wahrscheinlich jetzt nicht sagen, irgendwie gibt man jetzt hier alle Daten von 12 Uhr bis 12 Uhr 10, sondern es wird wahrscheinlich schon ein längerer Zeitraum sein, oder?
 
-01:01:58.657 --> 01:02:00.317
-<v SPEAKER_1>Wir reden jetzt vom Stromnetz.
+00:08:55.334 --> 00:09:49.774
+<v SPEAKER_4>Also, wenn ich es richtig sehe, haben die in Dresden tatsächlich nur zwischen 13, 17 und 30, also 4, 5 Stunden, heißt es hier. Allerdings, die Realität kommt hier so ein bisschen Scheibchenweise. Also, man muss da ein bisschen gucken, es gibt Andeutung, dass nicht nur eine Funkzellenauswertung, also eine netzzeitige Speicherung und Übermittlung der Daten stattgefunden hat, sondern auch der Einsatz von technischen Geräten der Polizei selbst, mit denen man GSM-Luftschnittstellen, wie sie heißen, also die Kommunikation zwischen dem Mobiltelefon und den Funkzellen abhören kann, entweder durch einen IMSI-Catcher oder durch passive oder sogenannte SEMI-Passive. Das sind dann aktive Komponenten, die Realität ist hier noch nicht vollständig transparent rekonstruiert, um es mal vorsichtig zu sagen.
 
-01:02:00.337 --> 01:02:08.857
-<v SPEAKER_2>Wechselstrom, genau. Wechselstrom wechselt 50 mal in der Sekunde die Richtung und deswegen heißt der Wechselstrom und weil das 50 Mal passiert, sind es 50 Hertz.
+00:09:50.034 --> 00:09:55.074
+<v SPEAKER_2>Okay, also wir können ja zu dem, was diese IMSI-Catcher und SEMI-Acmi was?
 
-01:02:08.877 --> 01:02:10.677
-<v SPEAKER_1>Das kommt aus der Steckdose.
+00:09:55.094 --> 00:10:20.554
+<v SPEAKER_4>SEMI-Passive ist so die, ja das ist so eine höfliche Herstellerumschreibung, das sind also Geräte, die wir nachher noch in Detail beschreiben können, die nicht nur passiv zuhören können und funktionellen Daten ausführen können oder auch Gesprächsinhalte mitlesen und mithören können, sondern die auch intervenieren können, die beispielsweise eine SMS, die an jemanden geschickt wird, abfangen können und dann eine andere SMS weiter schicken, um dem seine Beziehung zu beenden oder andere Dinge zu tun.
 
-01:02:10.697 --> 01:03:43.157
-<v SPEAKER_2>Genau, so und wenn das jetzt variiert, dann ist das schlecht. Also das kann ein bisschen variieren, so die erwartbare Größenordnung von 50 mHz. Also 50, 05 oder 49, 95. Das ist in Ordnung, wenn das in dem Bereich variiert. Damit können alle um und alle Geräte sind darauf vorbereitet. Diese 50 Hertz spiegeln sich direkt wieder in der Rotation der Kerne, der Turbinen und Generatoren in allen Kraftwerken. Die rotieren alle mit vereinfacht gesagt 50 Hertz. Wenn die Netzrequenz sinkt, rotieren die langsamer und andersherum. Wenn jetzt mehr Strom verbraucht wird als hergestellt wird, dann fängt die Netzrequenz an zu sinken und die Generatoren drehen sich langsamer. Andersherum genauso. Wenn das über den Grenzwert kommt von 200 millihertz, dann poppt die Sicherung. Wie viel Gigawatt muss ich spontan aus dem europäischen Verbundennetz ziehen, bevor die Netzrequenz auf 49, 8 sinkt? Die Antwort variiert je nachdem, wie man fragt, irgendwo zwischen 2 und 6 Gigawatt. Das klingt bestimmt von der Wetterlage ab, von der Tageszeit, von den Heißdampfreserven, vom Strommarkt. Es gibt schon ein paar Faktoren, aber so ist die Größenordnung. Wir sagen Hausnummer 3 Gigawatt. Jetzt haben wir in Deutschland ein halbes Gigawatt Lithium-Akkus am Start. 470, 480 Megawattstunden Kapazität.
+00:10:20.554 --> 00:10:24.754
+<v SPEAKER_2>Wir packen jetzt in unser Kapitel das ganze Programm, ja, konnte man so sagen, ok.
 
-01:03:43.177 --> 01:03:48.737
-<v SPEAKER_1>Warte mal, rettest du jetzt gerade alle unsere Smartphone-Akkus zusammen genommen oder sind das Stromreserven-Akkus irgendwo rumsteht?
+00:10:24.774 --> 00:11:24.534
+<v SPEAKER_4>Funktionellenauswertung, ich würde noch gerne kurz da beleiben, Funktionellenauswertung, wie genau wird das dann ausgehört, das kriegen die irgendwie, also ich stelle mir jetzt tatsächlich so ein bisschen Lachen vor, die kriegen jetzt einen Ausdruck, die haben eine Datenbank von 896.000 Datensätze, das sind die kompletten, also das ist zumindest die Zahl, die ich hier vorliegen habe, wo eben alle Verkehrsdaten sind, das heißt alle Kommunikationsvorgänge, das heißt, dass jemand abgehend telefoniert, dass er angerufen wird, dass einer es sendet oder empfängt oder in anderer Art und Weise, Stichwort Internet, eine Verbindung aufbaut. Das sind also nicht die, wenn man so eine nicht netzzeitige Auswertung macht, sondern eine technische Auswertung macht, also quasi die Luftschönstelle abhört, dann hat man natürlich noch viel mehr. Dann hat man auch das Gerät, das sich alle paar Minuten mal meldet und sagt, hier bin ich mit den Daten und so fort. Es sind hier immerhin nur in Anführungszeichen die Verkehrsdaten, aber eben alle Geräte in der Dresdner Innenstadt.
 
-01:03:48.757 --> 01:05:42.697
-<v SPEAKER_2>Nee, das Requenz-Ausgleichsanlagen. Das ist ein Schiffscontainer von der Lithium-Akkus, die auf der grünen Wiese stehen und die für, weiß ich nicht, 40 Centikilowattstunde sauteuer eine Ausgleichsleistung anbieten und die halt garantieren, dass sie binnen Sekunden, naja Megawatt da reinpumpen ins Netz, wenn das der Markt nachfragt. Und dafür, dass du diese Akkus ans Netz hängst, kriegst du halt Geld der Strombörse, weil das eine Ausgleichsleistung ist. So, und überlegen, 470, 480 Megawattstunden Kapazität haben wir, die kann man vielleicht in der Hälfte der Zeit, also mit 2C Kapazität, Modellbauer werden das noch kennen von Lithium-Akkus, ins Netz pumpen, so ungefähr die Größenordnung, also können wir ungefähr ein Gigawatt ausgleichen an Leistung. So, jetzt überlegen wir mal, nehmen wir mal so ein Router daher, hier vielleicht die W700V-Lücke, die 900.000 Geräte betroffen hat, da war jetzt nur so ein Home-Router mit 5 Watt Leistung, das ist jetzt kein größeres Problem, wenn der gebrochen ist, aber in zwei, drei Jahren kann man bestimmt sagen, dass, nehmen wir mal eine runde Zahl, 2, 4 Prozent der Haushalte, das ist genau eine Million, eine Million Haushalte, vielleicht so eine smarte Waschmaschine haben, oder so einen smarten Geschirrspieler, oder eine smarte Kaffeemaschine. Wenn du jetzt hier hingehst und mit NTP synchronisierst, also so ein Netzwerkzeitprotokoll über WLAN, geht das ganz gut, deine einzelnen Haushaltsverbraucher allesamt synchronisierst auf diese Netzfrequenz, ist das durchaus denkbar, dass sie alle gleichzeitig zum Peak der 50 Hertz Frequenz, wenn sie mal an der höchsten Stelle ist, die Heizspule für 10 Millisekunden einschalten, dann wird die nicht wirklich warm und der Besitzer merkt das nie wirklich, aber dann können wir damit schon reinrechnen, die 3 Gigawatt zusammenkriegen, die wir brauchen für Netzzusammenbruch. Nur über eine Million gehackte Waschmaschinen und das sind nur 2, 4 Prozent der Haushalte.
+00:11:24.554 --> 00:11:25.614
+<v SPEAKER_2>Was passiert da mit diesen Daten?
 
-01:05:43.217 --> 01:06:00.437
-<v SPEAKER_1>Da würde ich ja fast sagen, ich glaube, niemand würde das machen, sondern was man machen würde ist, man würde 1 Gigawatt nehmen und man ist dann nämlich der Betreiber dieser Lithium-Ionen-Ausgleichs-Akkus und dann hat man richtig cool Asche verdient.
+00:11:25.634 --> 00:11:29.614
+<v SPEAKER_4>Das ist eine gute Frage.
 
-01:06:00.457 --> 01:06:01.537
-<v SPEAKER_2>Nee, nee, das hast du nicht.
+00:11:29.634 --> 00:11:55.834
+<v SPEAKER_3>Da können wir nur mutmaßen, was die Polizei genau damit macht. Es sind halt doch sehr viele Daten, vor allem muss man immer berücksichtigen, es geht halt nicht nur um Telefonie, da kann man noch sagen, wie viele Telefonate für euch am Tag, es sind ja nur ein paar Datensätze. Aber gerade mit den modernen Smartphones, jedes Mal wenn das Telefon die E-Mails abfragt und synchronisiert, jedes Mal wenn ich irgendwie eine Twitter-Nachricht schreibe oder sonst irgendwas, das sind alles einzelne Kommunikationsvorgänge und da werden jeweils entsprechend Verkehrsdaten generiert.
 
-01:06:01.557 --> 01:06:01.977
-<v SPEAKER_1>Überhaupt nicht.
+00:11:56.474 --> 00:13:36.994
+<v SPEAKER_4>Ja, also was man vielleicht sagen kann, was die Polizei mit den Daten macht und auch was andere Institutionen mit den Daten machen, man unterscheidet in der Überwachungswirtschaft, um die mal so zu benennen, tatsächlich zwischen den Erhebungsinstrumenten, also SIGINT oder Common Signal Intelligence oder Communication Intelligence, das sind quasi Abhöhereinrichtungen und dem, was man danach mit den Daten macht, also die Auswertungskapazitäten, das sind die sogenannten Intelligence Support Systems. Das sind beispielsweise Systeme, um aus Verkehrsdaten Organigramme zu rekonstruieren, um Verbindungen zwischen Menschen, Organisationen, Ereignissen, also nicht nur Profile von den überwachten Teilnehmern zu erstellen, sondern auch einfach Muster zu erkennen, wie welche Teilnehmer sich anders verhalten, nachdem irgendetwas passiert ist, was natürlich insbesondere im Kontext von solchen politischen Sachen hier, wie in Dresden, interessant ist. Und wer sich danach schon mal ein bisschen googeln will hier am Radiogerät, googelt sich einfach mal ISS, Intelligent Support Systems. Es gibt eine gleichnamige Messe, die jedes Jahr dreimal stattfindet. Einmal in Dubai, wo sich ja das Herz der fast demokratischen Länder im Mittleren Osten versammeln. Dann in Amerika, was ja auch bekannt ist für seine vorbildliche Wahrung von Menschenrechten und Privatsphäre und so fort. Und dann noch mal in Prag, warum auch immer in Prag, aber jedenfalls in Europa, wo diese Instrumente, mit denen man eben Auswertungen machen kann, das ist eine ganze Bandbreite, fängt wie gesagt an, von Verkehrsdaten zu Organigramm, Analyse, Software, Spracherkennung.
 
-01:06:01.997 --> 01:06:50.277
-<v SPEAKER_2>Du hast genauso viel wie vorher. Das ist ja diese Virtual-Netzbetreiber. Als Netzbetreiber musst du garantieren, dass du eine gewisse Menge Strom liefern kannst, dass du eine gewisse Ausgleichsleistung hast für Schwankungen. Wenn du aber als Kraftwerksbetreiber nur Windkraft oder nur Solar hast, kannst du an deiner vertraglichen Verpflichtung nicht mehr nachkommen, in dem Moment, wo eine Wolke vorzieht oder der Wind aufhört oder zu stark wird. Entsprechend schaltet man sich dann am Markt zusammen, teilt sich das Risiko auf oder jemand übernimmt das, indem er einen virtuellen Betreiber macht und der kauft dann den ungleichmäßigen Solarstrom, den ungleichmäßigen Windstrom, kauft noch ein bisschen Wasserkraft dabei, weil die ist eine konstante Größe, und ein bisschen Ausgleichsleistung. Und dann hat er die Garantie, dass er seine Versorgungsverpflichtungen am Markt auch erfüllen kann, zum Lieferzeitpunkt genau die Menge zu liefern, die der Markt dann gerade braucht.
+00:13:37.014 --> 00:13:54.854
+<v SPEAKER_2>Um das mal ganz kurz abzuschließen, diesen kleinen Ausflug ist es also so, man stellt sich ja mal vor als normaler Mensch, es gibt jetzt diese staatlichen Behörden, die dürfen auch irgendwie so dieses Überwachungskram machen, es wird immer stark gestritten, was jetzt dürfen und nicht. Es ist aber nicht so, dass sie das alles selber bauen, sondern es gibt dahinter eine Industrie.
 
-01:06:50.297 --> 01:06:55.637
-<v SPEAKER_1>Aber das heißt, diesen Hack, den du gerade beschrieben hast, den würde man nur aus der reinen Zerstörungsfreude machen, oder wenn man Geld erpressen will.
+00:13:54.874 --> 00:14:57.694
+<v SPEAKER_4>Ja, absolut und es ist also diese Industrie, ich habe einige Präsentationen von diesen Veranstaltungen, die bewerben dann auch Sachen ungeachtet der gesetzlichen Rahmenbedingungen, sondern einfach auf Basis der technischen Möglichkeiten, beispielsweise die massenhafte Erhebung von Verkehrsdaten, wird dann massiv besorben mit, why catch a single target when you can cover them all. Frei nach dem Motto, Festplatten kosten kein echtes Geld mehr und es ist einfach viel ökonomischer, alle immer abzuhören und dann später auszuwerten, wer interessant, verdächtig in einem Vorgang auftaucht. Und mit solchen technologischen Konzepten, die wie gesagt völlig frei, weil die dann ja auch im Mittleren Osten, da brauchst du ja gar nicht diskutieren mit gesetzlichen Rahmenbedingungen, aber in Europa habe ich den Eindruck, es ist so, dass die Regierungsvertreter, die da hingehen der diversen Organisationen, das ist ja nicht nur Polizei, sondern auch die Nachrichtendienste, dass die dann auf lustige Ideen kommen und so was wie die Vorratsdatenspeicherung sozusagen der Effekt, die Auswirkung von Marketingmaßnahmen dieser Industrie sind.
 
-01:06:56.817 --> 01:07:02.857
-<v SPEAKER_2>Na ja, du hast schon acht Wochen Schummausfall in ganz Europa, und ein Szenario, das wir nie geprobt haben, nämlich ein Anfahren von Schwarzstaat.
+00:14:57.734 --> 00:15:19.574
+<v SPEAKER_2>Aha, okay, wir basteln euch einen schönen bunten Flyer. Guck mal hier, alle Gespräche abhören, das ist ganz einfach, und dann basteln wir uns einen Gesetz dazu. Apropos, jetzt gab es diese Funkzellenauswertung in Dresden und die ist ja von der Polizei durchgeführt worden, was mich zumindest zu der Vermutung bringt, dass es dahinter einen irgendwie gearteten, demokratisch legitimierten, juristischen Prozess gibt, der das Ganze möglich gemacht hat.
 
-01:07:04.297 --> 01:07:06.077
-<v SPEAKER_1>Wir wissen nicht, wie das geht.
+00:15:19.594 --> 00:15:23.374
+<v SPEAKER_4>Hey, du glaubst doch auch noch an Märchen.
 
-01:07:06.097 --> 01:07:07.737
-<v SPEAKER_2>In acht Wochen ist das konservativ gerechnet.
+00:15:23.394 --> 00:15:31.434
+<v SPEAKER_2>Ich wollte das erst mal nur so als These in den Raum stellen und euch dann fragen, wie sieht denn das aus, wenn die Polizei so eine Funkzellenauswertung machen will, was muss denn dazu passieren?
 
-01:07:07.877 --> 01:07:13.657
-<v SPEAKER_1>Ich muss mal mit der Kuh reden. Wer mir dieses Thema schon wieder eingebrockt hat, ich werde heute Nacht wieder nicht schlafen können. Vielen Dank!
+00:15:31.874 --> 00:16:20.154
+<v SPEAKER_3>Ja, also das Gesetz sieht da im Wesentlichen eine ganze Reihe unterschiedlicher Möglichkeiten vor, aber im Wesentlichen kann man sie aufteilen in einmal eben die sogenannte richterliche Anordnung. Das heißt, die Polizei respektive die Staatsanwaltschaft legt irgendwie ein Schreiben vor einem zuständigen Amtsrichter und sagt, ja, wir haben ja diesen jenes und die und jenen Straftaten und wir brauchen dazu Ermittlungen, diese oder jenen Daten und der Richter möge doch bitte darüber entscheiden, ob es denn erlaubt sein soll, dass die Polizei diese Daten bei den Netzbetreibern abfragt oder eben dort anfordert. Und der Richter entscheidet dann darüber. Das klingt jetzt erstmal alles auf dem Papier natürlich ganz wunderbar. Da gibt es einen Richter, der kriegt da was vorgelegt, der muss sich da darüber Gedanken machen, der kann sich dann entscheiden.
 
-01:07:13.677 --> 01:07:21.437
-<v SPEAKER_2>Also das war jetzt das eine Beispiel, und das gibt es für alle kritischen Infrastrukturen in der Hochrechnung. Okay, ich kann für jeden Sektor so ein Ding finden, wo Menschen sterben.
+00:16:20.234 --> 00:16:23.054
+<v SPEAKER_2>Also der kann einfach so sagen ja oder nein sagen und dann ist gut.
 
-01:07:21.577 --> 01:07:26.897
-<v SPEAKER_1>Ich wähle Ernährung.
+00:16:23.574 --> 00:16:29.314
+<v SPEAKER_4>Die Statistik sagt allerdings, dass er glaube ich in ungefähr 99, 99% immer ja sagt.
 
-01:07:26.917 --> 01:07:28.497
-<v SPEAKER_2>Wir gehen jetzt nicht alle durch. Komm, hör auf.
+00:16:29.794 --> 00:16:52.014
+<v SPEAKER_3>Ich glaube es ist nicht ganz so viel, Andy, aber ja, in überwiegenden Fällen sagt er ja, das liegt wohl auch daran, dass er ein nein begründen muss und ein ja hingegen nicht. Das heißt also ein nein zu sagen ist viel mehr Aufwand als ja zu sagen. Und ich meine, wenn man jetzt ständig solche Sachen vorgelegt bekommt, dann ist man natürlich schon auch ein bisschen unter Stress steht vielleicht, dass man vielleicht geneigt irgendwie zu sagen ja.
 
-01:07:28.517 --> 01:07:31.517
-<v SPEAKER_1>Nein, nein, ich möchte noch eins, und ich wähle Ernährung.
+00:16:57.114 --> 00:17:27.074
+<v SPEAKER_2>Ja. Gut, das haben die Dresden auch so gemacht, die haben dann gesagt, okay Richter, guck mal, wir wollen mal ein bisschen Funkzellenauswertung machen, sag mal ja oder ne und der ist auch kein Bock, irgendwie jetzt eine Begründung für die Ablehnung zu schreiben, macht mal. Also es muss ja wahrscheinlich sagen, auch einen Anlass geben, es ist ja bei manchen Dingen so, dass nur bestimmte Straftaten erlauben, dass dann bestimmte Rechtsmittel angewandt werden. Ist das bei dieser Funkzellenauswertung auch so oder ist es einfach egal? Also da ist jemand schwarz gefahren und wir vermuten, er ist in der Innenstadt auf, wir wollen eine Funkzellenauswertung machen. Geht das auch oder?
 
-01:07:31.537 --> 01:08:05.637
-<v SPEAKER_2>Gut, Ernährung, ja. Also du bist im Bereich Ernährung kritis, wenn du am Tag 600 Tonnen oder mehr Lebensmittel produzierst in deinem Lebensmittelwerk, dann bist du kritis. Wenn wir also jetzt so ein größeres Werk, da gibt es bestimmt auch welche geben hier, wir haben hier einen großen Fleischhabel in Betriebe, die machen, die waren ja auch gerade erst in Medien im Zusammenhang mit Corona, die produzieren wirklich, wirklich große Mengen Fleisch. In Gütersloh zum Beispiel. Naja, wenn die mal ausfallen, haben wir auch keinen Fleisch.
+00:17:27.094 --> 00:18:06.294
+<v SPEAKER_3>Das wird nicht gehen. Also ich denke, da wird auch der langweiligste Richter der Republik irgendwie sagen, hey, das ist nicht eine Straftat, bei der das erlaubt ist. Es gibt da dann immer sogenannte Katalog-Straftaten zum Beispiel. Das sind immer so schöne Begriffe, die da im Raum stehen. Also es gibt einfach eine Liste, die natürlich auch immer gern erweitert wird an Straftaten, bei denen also derartige Überwachungsmaßnahmen angeordnet werden dürfen. Und das muss dann eben so was sein. Und das, ich sag mal, ich hab jetzt den Katalog grad nicht vorliegen, muss ich nochmal irgendwie aufmachen. Aber also in dem Fall von Dresden ging es wohl um die Bildung einer kriminellen Vereinigung.
 
-01:08:05.657 --> 01:08:20.137
-<v SPEAKER_1>Moment, Moment, das Szenario jetzt gerade war so erschreckend, weil du sozusagen auch das Beispiel gebracht hast, wie das praktisch passieren kann. Wie geht denn so ein Fleischverarbeitungsbetrieb komplett vom Netz, vom Fleischnetz?
+00:18:06.714 --> 00:18:09.734
+<v SPEAKER_2>Und wieso spielt da diese Demo noch Rolle?
 
-01:08:20.157 --> 01:09:01.337
-<v SPEAKER_2>Naja, du musst dir überlegen, die kehlen da am Tag eine fünfstellige Anzahl Schweine, die kommt in eine vierstellige Anzahl LKWs. Und diese vierstellige Anzahl LKWs, die muss irgendwo, also ein LKW kann meiner Meinung nach so 50 bis 90 Schweine fassen, wenn ich mich richtig erinnere. Ich hab irgendwann mal bei einem Fleischverarbeitungsbetrieb gearbeitet als Jugendlicher. So, und das war so die Größenordnung, so ein Auflieger hatte 40 Schweinehälften oder so was. 40, 50 Schweinehälften, das war so die Größenordnung. Also irgendwie 50.000 Schweine am Tag irgendwie in deiner Facility Kills, dann hast du irgendwie auch eine vierstellige Menge LKWs, die dir auf den Hof fahren. Und wenn dein Logistiksystem nicht mehr weiß, welche LKW jetzt in welches Loading Bay muss, weil das kaputt ist, dann kannst du die LKW nicht mehr verarbeiten in dieser Menge und dieser Größenordnung.
+00:18:09.754 --> 00:18:19.634
+<v SPEAKER_3>Ja, da sind wohl Ausschreitungen gegen Polizisten auch unter anderem passiert. Und das scheint dann wohl offensichtlich gereicht zu haben.
 
-01:09:01.357 --> 01:09:08.017
-<v SPEAKER_1>Da muss man dann noch weniger kaputt machen, damit das schiefgeht. Hilfer! Ich hasse diese Welt.
+00:18:19.654 --> 00:18:28.794
+<v SPEAKER_2>Aber jetzt ist es ja so, so wie du es erklärt hast, scheint das ja seinen Weg gegangen zu sein. Also irgendwie man merkt davon halt was man will, aber es scheint sozusagen legal zu sein. Warum gab es diesen großen Aufschrei dann?
 
-01:09:08.337 --> 01:09:09.717
-<v SPEAKER_2>Molkereibetriebe zählen damit auch dazu.
+00:18:29.654 --> 00:19:09.714
+<v SPEAKER_3>Ich denke, das liegt im Wesentlichen an der Poste. Und insbesondere der Taz, die sich da extrem dahinter gestellt haben. Ja, die gesetzlichen Möglichkeiten sind in den letzten zehn Jahren oder so extrem ausgebaut worden. Es ging mit dem TKG 2002 glaube ich an, das Telekommunikationsgesetz, die zugehörige Telekommunikationsüberwachungsverordnung, TKÜV, nebst Anlagen und sonstigen Dingen. Also die Überwachungsbefugnisse sind extrem ausgeweitet worden. Es betrifft ja nicht nur die Polizei, die jetzt in normalen Fällen ermittelt. Überwachungsbefugnisse gibt es auch für den MAD und den BND und den Zoll in bestimmten Fällen.
 
-01:09:10.977 --> 01:09:30.157
-<v SPEAKER_1>So, jetzt hat HonkHase die ganze Zeit immer schon Cyber, Cyber, Cyber gemacht. Ich habe für meinen Gefühl sich ein bisschen lustig mit diesem Begriff gemacht. Trotzdem, wenn man euch auf Twitter folgt, also generell zu sagen, wenn ihr einen überwegt habt, der Begriff Cyberware kommt da schon vor. Was ist das? Was soll das?
+00:19:11.114 --> 00:19:14.554
+<v SPEAKER_2>MAD ist diese Zeitschrift mit dem Alfred E. Neumann und welcher ist der Heimdienst?
 
-01:09:30.177 --> 01:09:34.237
-<v SPEAKER_2>Also das ist die Lösung. Also wir haben ja jetzt die Angst gemacht. Das wollten wir ja auch.
+00:19:14.574 --> 00:19:34.614
+<v SPEAKER_4>Unser militärischer Abschirmdienst, der neulich mal abgeschafft werden sollte, aber seitdem unser ehemaliger Innenminister jetzt Verteidigungsminister ist, hat das Projekt gestoppt. Das heißt, den MAD gibt es weiterhin und er ist für die Sicherheit der Wehrstreitkräfte, aber auch die Sicherheit der Verbündeten, also unserer NATO-Partner, der amerikanischen Kasernen und so weiter.
 
-01:09:34.257 --> 01:09:36.977
-<v SPEAKER_1>Warte mal, ihr seid in Wirklichkeit so eine Art Zeugen Jehovas?
+00:19:34.634 --> 00:19:39.834
+<v SPEAKER_2>Wie viele Geheimnisse haben wir denn überhaupt? Also nur mal so, okay, bevor wir jetzt wieder gehangen, okay, warte.
 
-01:09:37.557 --> 01:09:45.357
-<v SPEAKER_2>Das ist schon abgekrasst. Wir sind die Zeugen Cyber-Hovas. Oh, das ist geil. Wir sind Cyber-Hovas.
+00:19:39.854 --> 00:19:41.954
+<v SPEAKER_4>Ja, hab ich zufällig.
 
-01:09:45.377 --> 01:09:47.537
-<v SPEAKER_1>Okay, I'm listening.
+00:19:41.974 --> 00:19:50.694
+<v SPEAKER_2>Nein, okay, also ich will jetzt sagen, nicht die Sendung zu einer Geheimdienst-Sendung machen, aber das ist mir völlig gerade aufgefallen, also wenn jemand sagt Geheimdienst Deutschland, dann denke ich, okay, BND.
 
-01:09:48.677 --> 01:11:09.917
-<v SPEAKER_2>Also wir haben uns gedacht, du hast ja auch stets die Zentralisierung vorgeschlagen als mögliche Lösung. Und an vielen Stellen ist das aber schon so. 90, 95, 98 Prozent der IT, die die Menschen so anfassen, da draußen ist halt irgendwie Windows. Und wir haben eine Infrastruktur gebaut, die Leuten Windows beibringt. Also Arbeitsagentur zum Beispiel bringt Menschen Windows bei, nicht Linux. Finde ich auch seltsam, aber es ist so. Und in dem Moment, wo also eine massive Risikerslücke in dem Windows-System auftaucht und ein Hacker dahinter ein bisschen malicious ist oder sagen wir mal hochkriminell, dann ist er kein Hacker mehr, ne? Dann ist er kein Hacker mehr, aber dann wird es halt gefährlich. Und in diesen Monokulturen haben wir uns gedacht, braucht es eine Instant-Response und zwar eine Instant-Response, die erst dann ausrückt, wenn nicht das einzelne Haus brennt, sondern der Straßenzug und dann so fungiert, ähnlich wie ein THW da draußen, aber halt virtuell. Ein CHW, ein Cyber-Hills-Werk. Also nicht für der Bach, bei uns im Dorf ist irgendwie ein bisschen Hochwasser, kommt die Feuerwehr, pumpt den Keller wieder leer. Kann noch mal zwei Tage dauern, wenn die busy ist, aber irgendwann wird sie kommen und pumpt den Keller wieder leer. Aber wenn von Dresden bis Hamburg so Hochwasser ist, dann kommt die lokale Feuerwehr nicht mehr, dann kommt das THW und die Bundeswehr.
+00:19:50.714 --> 00:20:03.594
+<v SPEAKER_4>Ja, wir haben noch den Bundesamt für Verfassungsschutz und die Landesämter für Verfassungsschutz und wir haben noch das Zollkriminalamt, was eigentlich auch als Geheimdienst gelten kann, weil es zumindest geheimdienstliche Befugnisse hat, auch wenn es eigentlich...
 
-01:11:09.937 --> 01:11:15.977
-<v SPEAKER_1>Aber was macht dann so ein CHW? Weil in den Szenarien, die ihr jetzt beschrieben habt, ist es ja eigentlich zu spät, wenn man irgendjemand anruft.
+00:20:03.794 --> 00:20:09.354
+<v SPEAKER_2>Ich wollte gerade sagen, da habe ich jetzt gerade heute einen Artikel gelesen, dass die gerne auch Telekommunikations überwachen wollen, um Schwarzarbeiter zu fangen.
 
-01:11:17.017 --> 01:11:24.857
-<v SPEAKER_2>Naja, das THW kommt auch erst, wenn es zu spät ab. Also die kommen ja nicht präventiv, die kommen ja reaktiv, ne?
+00:20:09.774 --> 00:20:15.134
+<v SPEAKER_4>Ja, was dann nicht mal so gerade auf der Tagesordnung für die Begründung dasteht.
 
-01:11:24.877 --> 01:11:35.357
-<v SPEAKER_1>Naja, gut, aber das THW kommt und tut dann noch Säcke auf den Deich. Vielleicht verhindert man das Schlimmste. Bei den Szenarien, die ihr jetzt beschrieben habt, ist es ja so, das macht Peng und dann ist alles weg.
+00:20:15.914 --> 00:20:57.354
+<v SPEAKER_3>Also es ist halt wirklich so, dass dieser Katalog, es kommt nur drauf an, welche Überwachungsmaßnahme wird jetzt beantragt, wann darf die angewandt werden, aber die werden eben ständig erweitert. Da gibt es also bestimmte Verstöße gegen das Arzneimittelgesetz, also Betäubungsmittel und dergleichen. Ja, es gibt eben die kriminelle Vereinigung, terroristische Taten natürlich, irgendwie Sexualstraftaten, was auch immer. Also es gibt eine ganze Reihe von Straftaten und das wird eben immer wieder erweitert. Das heißt dann, in dem Fall bemüht sich also eben der Zoll darum, dass hier weitere Straftaten im Bereich der Schwarzarbeit aufgenommen werden, bei denen dann eine bestimmte Überwachungsmaßnahme wie die Funkzellenauswertung angewandt werden kann.
 
-01:11:35.377 --> 01:12:29.137
-<v SPEAKER_2>Genau. Und dann musst du halt im Zweifel zum Beispiel diese Millionen-Waschmaschine tatsächlich patchen. Indem du halt hingehst, klingelst, sagst, ich bin von der Waschmaschine, ich bin vom CHW. So, da ein Stecker ransteckst, auf den Knopf drückst, den Chip patcht und den Stecker wieder abziehst, wenn du wieder rausgehst. Geiler Engel-Trick. Und das machst du dann, du repeatst eine Million, und das dann aber, alleine geht das nicht. Wenn das Bedingung ist, bis das Stromnetz wieder angefahren werden kann, dann musst du das parallelisieren, dann brauchst du dafür ein paar hundert, vielleicht sogar ein paar tausend Menschen, die das tun können. Bei anderen Geschichten ist das vielleicht ähnlich. Bei sehr zentralen Infrastruktur kann das reichen, wenn da nur so eine kleine Größenordnung von Leuten ist, 10, 12, 15 oder sowas, weiß ich nicht. Zwei, drei, vier ziehen Panik-Backups, fünf, sechs, sieben machen Forensik auf den Log-Files. Ein, zwei Leute halten die Geschäftsführung und den Vorstand in Schach und kommunizieren mit denen. Und irgendwer koordiniert den Rest der Instant-Response, bis man einen Patch hat.
+00:20:57.374 --> 00:21:05.394
+<v SPEAKER_2>Woher kommt es eigentlich so denn, dieses Bedürfnis, diese Überwachungsdinger immer ausweiten zu wollen? Macht es für die Ermittlungsbehörden das tatsächlich sozusagen so viel einfacher?
 
-01:12:29.157 --> 01:12:50.857
-<v SPEAKER_1>Aber ich finde das total nachvollziehbar. Das ist noch mal ein ganz spannendes Ding, dass wir ja über dieses Smart-Home-Ding, bei uns zu Hause stehen irgendwie 40.000 IP-fähige Geräte. Und vielleicht kommt natürlich mal der Punkt, wo man sicherstellen muss, dass die alle gepatcht werden. Das Ehrenamtliche, was das THW auch hat, ist auch Teil dieser Überlegungen?
+00:21:05.414 --> 00:21:42.794
+<v SPEAKER_4>Ja, naja, die sind natürlich auch ein bisschen schreibtisch faul und internetaffin geworden. Ja, das kann man glaube ich schon so sagen, dass es ein bequemes Instrumentarium ist, wenn man das jetzt mal vergleicht mit den Leuten, auch schon den Leuten, die Autos zu verwandeln. Da musst du jemanden rausschicken, der muss dann so ein Ding anbringen, das Ding kostet relativ viel Geld. Also wir haben ja jetzt durch diese NNQ, liegt bei der Bundespolizei, gibt es ja eine gute Übersicht über alle Hersteller dieser Instrumente und auch so die Art des Einsatzes. So ein Ding kostet irgendwie 1.000, 2.000 Euro. Dann muss ich da mal hinstellen und so fort. Also diese Funkzellenauswertung und diese anderen Sachen sind vergleichsweise kostengünstig.
 
-01:12:51.757 --> 01:12:57.677
-<v SPEAKER_2>Es ist auf jeden Fall. Es ist gedanklich und konzeptionell sehr nah am THW dran, was wir da vorhaben.
+00:21:43.214 --> 00:22:24.154
+<v SPEAKER_3>Ja, also vor allem die Funkzellenerbewachung. Ja, weil die Daten liegen bei dem Operator, also bei dem Netzanbieter, die muss ich nur anfordern. Da kriege ich dann, also die Polizei kann dann noch, wie es im Gesetz so schön steht, den Weg bestimmen, auf dem die Daten zu ihr gelangen. Also die können dann sagen, jetzt mal hier auf dieses Speichermedium oder so, oder diesen Übertragungsweg und dann habe ich die Daten. Und wenn ich mal überlege, was weiß ich, wir reden hier über 800.000 oder 2 Millionen Datensätze, das ist ja für jeden Popelcomputer von vor zehn Jahren irgendwie ein leichtes, die zu indizieren, zu cross-referenzieren, da eben Graphen zu malen, wer hat wann wen telefoniert und wo sind irgendwelche Gruppen. Da gibt es ja genügend Möglichkeiten, diese Daten dann zu durchforsten, mit ganz wenig Technik.
 
-01:12:58.137 --> 01:13:13.997
-<v SPEAKER_1>Das finde ich total nachvollziehbar. Und ich finde das auch nachvollziehbar, dass man sagt, man hat sozusagen so eine Elite-Einsatztruppe für diese zentralen Dinge. Aber an der Stelle frage ich mich, warum gibt es das nicht? Und warum gibt es das nicht als offiziell, als Behörde, als staatliche Behörde?
+00:22:24.174 --> 00:22:39.754
+<v SPEAKER_2>Also der Pfeil geht quasi so, also wir machen, wir überwachen mehr, weil das einfacher und unaufwendiger ist, als sozusagen immer die einzelnen Leute eine Start zu bringen. Dabei fallen, das ist halt die Technik, einfach mehr Daten an, als wir brauchen. Und dann können wir doch gleich nochmal gucken, ob da nicht noch was dabei ist. Ist das so grob der Ablauf?
 
-01:13:14.017 --> 01:13:31.357
-<v SPEAKER_2>Ja, gibt es als staatliche Behörde, finden wir auch gut, begrüßen wir. Wir sind auch im Gespräch mit den Leuten da. Das ist das Mobile Incident Response Team. Und die sind angeordnet im BSI, im Bundesamt für Sicherheit, in der Informationstechnik, also einer der Unterbehörden des BMI.
+00:22:39.974 --> 00:23:19.354
+<v SPEAKER_3>Ja, ich denke schon. Was ich jetzt gerade noch erwähnen wollte, weil du sagtest, warum ist der Aufschrei so groß? Also diese Gesetze, wie gesagt, seit vielen Jahren, also spätestens seit dem 11. September 2001, sind die Gesetze extrem verschärft worden in Bezug auf Überwachung. Und der CCC zum Beispiel und andere Bürgerrechtsorganisationen warnen ja schon seit vielen Jahren und versuchen da irgendwie die Öffentlichkeit darauf aufmerksam zu machen. Und wie wir jetzt auch sehen, bereits vor Jahren gab es da Fälle mit Millionen von Datensätzen usw. Es ist an der Tagesordnung, dass derartige Auswertungen gemacht werden. Und der Aufschrei kommt eigentlich meiner Meinung nach viel zu spät. Und es ist gut, dass er kommt.
 
-01:13:31.377 --> 01:14:39.817
-<v SPEAKER_1>Warte mal, ist das BSI? Sind das nicht die, die auch dafür zuständig sind, im Exploit-Markt Sachen zu kaufen? Aber die sind doch auch beim BMI, oder? Um es so rum zu erklären, das BSG ist nicht unabhängig vom BMI. Ich muss es kurz sagen, ich hab mir jetzt selber zu weit rausgeritten. Also liebe Hörerinnen, es ist ja so. Vielleicht habt ihr die Diskussion um die aktuelle Wiederauflebung der Idee des Staatsruhianners mitbekommen. Es gibt immer mal wieder in der Politik die Idee, dass es okay ist, auf den Laptop von irgendjemanden, der verdächtig ist, was auch immer, Schadsoftware aufzuspielen, um den zu belauschen. Um das zu machen, muss man Sicherheitslücken ausnutzen. Diese Sicherheitslücken kann man entweder selber rausfinden oder man kann sie kaufen. Und es gibt immer wieder eine spannende Diskussion, ob staatliche Stellen, die für die IT-Sicherheit zuständig sind, vielleicht auch dazu beitragen, dafür zu sorgen, dass diese Sicherheitslücken den Geheimdiensten zur Verfügung stehen. Und das ist, also hier entscheidet es gerade nicht der Fall. Und dann ist immer noch die Frage, wie nahe sind diese Einheiten?
+00:23:19.574 --> 00:23:25.594
+<v SPEAKER_2>Ja, vielleicht ist es einfach so, man hat ja eh nichts zu verbergen, wenn man nichts verbrochen hat. Das ist ja so ein landläufiger Argument, was du da mal kommst.
 
-01:14:42.517 --> 01:16:53.337
-<v SPEAKER_2>Also das Problem, was du ansprichst, ist ja die fehlende Unabhängigkeit des BSI vom BMI, vom Bundesinnenministerium. Und die zuständigen Mitarbeiter oder Fachbereiche sind ja zuständig für Sicherheitsbehörden und BSI. Das heißt, in deren Brust schlagen zwei Herzen, will schützen vor Terrorphasen nicht gesehen und will aber auch die Bevölkerung schützen. Und genau diese nicht vorhandene Unabhängigkeit ist ein Problem, und zwar wirklich. Deswegen hat auch die Ag Kritis als eine der Forderungen, dass wir eine deutlich höhere Unabhängigkeit eines BSI brauchen von sowas, damit sie eben nicht zum Handlanger oder Anreicherung von solchen Dingen, die du da gerade angesprochen hast, zur Verfügung stehen. Sie sollen ausschließlich den Cyber-Schutz-Gewährleistung-Punkt. Also jetzt, in diesem Zeitpunkt, macht das BSI sowas nicht. Das BSI hat einen üblen Track-Record von einem bekannten Case, wo sie quasi den Backchannel von einer früheren Start-Zu-Einer-Version für das BKA auditiert haben und gesagt haben, ja, so ist das sicher und verschlüsselt. Das haben sie gemacht. Es ist nicht ihre Aufgabe, sowas zu machen, aber das BMI und nur das BMI kann das BSI anweisen, sowas zu tun. Das BMI hat die Fach- und Rechtsaufsicht über das BSI. Und im Rahmen dieser Fachaufsicht kann das BMI das anweisen. Die Rechtsaufsicht wird wahrscheinlich Birken am Bundesministerium bleiben müssen. Die Fachaufsicht könnte man aber einer Unterbehörde auch selbst geben. Zum Beispiel das Bundesamt für Statistik ist genauso aufgesetzt. Da ist die Rechtsaufsicht irgendein Ministerium. Ich weiß gar nicht genau, welches. Und die Fachaufsicht hat nach wissenschaftlichen Kriterien durch den Präsidenten der Behörde zu erfolgen. So ginge das beim BSI auch. Da gibt es noch vier, fünf andere Varianten. Die haben wir als Ag Kritis auch mal diskutiert. Ich glaube, wir haben noch einen Blogpost dazu geschrieben. Zumindest mal Svenns Forderungen dazu verlinkt. Also da gibt es eine Debatte dazu, wie man das genau juristisch machen könnte, das BSI-Unabhängige zu machen. Und wir sind dafür, das zu tun.
+00:23:25.614 --> 00:23:55.214
+<v SPEAKER_4>Ja, aber man hat ja auch vielleicht was zu beschützen. Also es ist schon so, dass diese Daten, wenn sie einmal anfallen, und das ist ja auch unsere Hauptkritik an der Vorresteinspeicherung, in dem Moment, wo die Daten anfallen und gespeichert sind, ist eine Kontrolle der Hand, aber sei es eine technische Kontrolle oder eine gesetzliche, einfach ganz schwierig. Und das heißt, warum sollte man dann irgendwie glauben, dass Polizeidienststellen oder Nachrichtendienste sicherere Computer haben als andere? Weil man hat ja tatsächlich in den letzten Wochen...
 
-01:16:53.357 --> 01:17:02.117
-<v SPEAKER_1>Wo waren wir vorher? Wir sind genau an der Stelle, wo wir richtig gut sind. Und zwar kommen wir zu dem Punkt Ag Kritis. Das ist ja etwas sozusagen...
+00:23:56.394 --> 00:23:57.974
+<v SPEAKER_3>Das sind amtliche Computer.
 
-01:17:02.137 --> 01:17:05.277
-<v SPEAKER_2>Ah, nirrt. Genau, wir waren beim Mobile-Incent-Response-Team. Eigentlich.
+00:23:57.994 --> 00:24:00.814
+<v SPEAKER_2>Genau, das wollte ich sagen. Die haben schon doch so einen schicken Aufkleber.
 
-01:17:05.297 --> 01:17:05.797
-<v SPEAKER_1>Im BSI.
+00:24:00.834 --> 00:24:18.054
+<v SPEAKER_4>Ja, mit amtlichen Sicherheitslack, wie man jetzt seit den letzten Wochen weiß. Trojaner verseucht, ganze Dienststellen, bundesweit mit automatischen Updates von irgendwelchen jugendlichen Hackern, die noch nicht mal... Also das war schon interessant, was da bei der NN Crew alles so...
 
-01:17:05.817 --> 01:17:07.657
-<v SPEAKER_2>Ja, das hat sie ja schon erklärt.
+00:24:18.054 --> 00:24:27.654
+<v SPEAKER_2>Ja, okay, das möchte ich jetzt erkunden, weil der jetzt schon häufiger gefallen ist. NN Crew, Hack, Bürocomputer, kurze Zusammenfassung, was da passiert?
 
-01:17:07.677 --> 01:17:25.037
-<v SPEAKER_1>Genau. Gut, kommen wir jetzt zu Ag Kritis. Ein Name, der immer wieder gefallen ist, wo ihr sozusagen Mitglieder seid. Und wo sich jetzt die Frage stellt, will die Ag Kritis dieses CHW sein? Oder ist das eine Lobby-Organisation dafür, diese Strukturen, die ihr jetzt skizziert habt, zu schaffen?
+00:24:27.674 --> 00:26:28.214
+<v SPEAKER_4>Nicht Bürocomputer, sondern die NN Crew hat eine Leak-Site aufgemacht. Wir haben vor jetzt ungefähr, na zweiter Woche oder irgendwas, die war in Russland gehurstet und enthielt einen recht umfangreichen Datenbestand eines Computers der Bundespolizei, wo die GPS-Tracking-Abteilung sozusagen ihren Dienst angeboten hat. Das heißt, das sind Dienststellen, die so kleine Geräte den Leuten unter die Autos kleben, beziehungsweise mit starken Magneten bleiben diese Geräte selbsthaft unter den Autos. Die haben einen GPS-Empfänger, sammeln also die Positionsdaten, wo so ein Fahrzeug sich befindet, und senden die dann per GSM-Funk, also sind das anrufbar per GPS, oder senden die automatisch zu einem Server der Polizei, wo dann, in diesem Fall waren es so Zollvergänger und solche Geschichten, also Zollabteilungen zumindest, die da beteiligt waren, sich die Daten sammeln. Es waren aber auch Geräte dabei, die eine Audioüberwachung von Autos ermöglichen. Und es gab eben später, nachdem dieser Server gehackt war, die waren da offenbar mehrere Monate drin. Sie haben behauptet, über ein Jahr, ob das stimmt, sei dahingestellt. Aber jedenfalls hatten sie verschiedene Trojaner wohl verteilt. Und in diesem Datenstand, der dann im Internet stand, war unter anderem auch die Rufnummerliste. Das heißt, die GSM-Rufnummer dieser Wanzen. Und ein paar Tage später, nachdem die schon im Netz war, hat da mal jemand schweißesherbe angefangen, die Rufnummer anzurufen. Und ist ohne Authentifizierung, das heißt ohne Sicherheitsmaßnahme, gleich mal in so eine Audiowanze reingelaufen. Das heißt, da konnte irgendwelche Leute belauschen. Und da muss man sich schon die Frage stellen, ob diese Polizeidienststellen irgendwie so gewisse Grundsätze von sicherem Vorgehen bei installieren von solchen Anlagen. Also ohne Authentifizierung, da wird es sogar schwierig, daraus einen Gesetzesverstoß zu machen. Weil nach 202a beispielsweise, das ist der Strafgesetzbuch, Zweite Wirtschaftskriminalitätsgesetz, ist das Ausspielen von Daten nur dann strafbar, wenn die Daten gegen das Ausspielen geschützt sind.
 
-01:17:25.057 --> 01:21:59.477
-<v SPEAKER_2>Das Weitere. Letzteres, ganz klar. Die Ag Kritis ist ein Zusammenschluss aus 42 Experten. Ich habe gerade im Streamer-Channel nachgeguckt, wir sind 42. 42 Mitglieder haben wir. Alle 42 sind Experten im Bereich IT-Sicherheit, im Bereich Kritis. Und Expertinnen. Expertinnen haben wir inzwischen glücklicherweise auch. Sehr erfreulich. Und diese, sagen wir es sich, Mitglieder, sind beruflich beschäftigt mit dem Zeugs durch Auditierung, durch Entwicklung, durch Fixen, durch Internet-Response, durch Software-Entwicklung, durch Abministration und durch Beratung oder Beratungsunternehmen. Und wir haben natürlich auch eine Handvoll Kritis-Auditoren in unseren Reihen. Und wir als zivilgesellschaftliche Organisation haben uns zur Aufgabe gemacht, die sogenannten Bewältigungskapazitäten zur Bewältigung von Cyber-Sicherheitsvorfällen, also Großschadenslagen, die durch Cyber-Sicherheitsvorfälle hervorgerufen wurden, dass wir da die Bewältigungskapazitäten ausbauen wollen. Das ist originär eine staatliche Aufgabe, das können wir nicht selbst tun, aber wir können eine Blaupause machen, ein Konzept machen, dass bei der Zielgruppe, nämlich Hacker, Nerds, ehrenamtliche, IT-affine, Computerliebhaber und Leute, die gerne Spielzeug haben, attraktiv ist. Das hat der Staat nicht verstanden, das kann der Staat auch nicht verstehen. Aber wenn der Innenminister 2015 zum Vorstand der CCC sagt, ich hätte da gerne mal eine Hotline von ihnen für eine solche Großschadenslage und der CCC sagen muss, nachvollziehbarerweise sagen muss, gibt's nicht, haben wir nicht, dann erkennt man daran aber schon den großen Bedarf in der Politik für eine ehrenamtliche, zivilgesellschaftliche Notfallorganisation, ähnlich wie das Rote Kreuz, 600.000 Freiwillige oder das THW mit irgendwie auch so sechsstelliger Menge an Freiwilligen, die in der Krise oder nur in der Krise unseren Arsch retten könnten, vielleicht. Oder zumindest die Krise abmildern können. Und der Staat wird das nie vorbeigestellen können und alles, was der Staat oder das BSI oder das BMI dazu bauen kann, wird von den Nerds, den Hackern, den Leuten, die man da braucht als Ehrenamtliche, als Freiwillige, ausgelacht werden und das wahrscheinlich zu Recht. Deswegen haben wir, Ag Kritis, uns gedacht, wir müssen denen mal eine Blaupause schreiben. Ein Konzept, worauf sie achten müssen, wie das gehen könnte, dass man so eine Hilfsorganisation hat. Die haben es auch schon mal versucht, eine Cyberware zu bauen, indem sie qua Gesetz oder Verordnung oder Vertrag oder Abkommen dafür sorgen wollten, dass Mitarbeiter aus IT-Sicherheitsabteilungen in Unternehmen zu so etwas zusammengezogen werden können. Der Versuch wurde geschadet, der Versuch ist gescheitert aufgrund komplexer juristischer Sachverhalte, also Mittelwerbsrecht, Kartellrecht und aus anderen Rechtsgebieten. Nehmen wir Überlassungen und so weiter. Genau, da gab es ganz komische Dinge. Es ist gescheitert, deswegen gibt es aktuell staatlich keine Bemühungen, was in die Art nochmal zu versuchen, weil daran haben sich auch Beamte und Behördenmitarbeiter verbrannt. Die haben darauf gepokert, dass es was wird, haben das Projekt vorangetrieben und jetzt ist das Projekt gescheitert anhand von juristischen Gründen, deswegen haben sie sich verbrannt. Deswegen werden die relevanten Abteilungen im BSI jetzt auf absehbare Zeit sowas erstmal nicht versuchen. Aber wenn wir Nerds selbst ankommen, uns ein halbwegs seriöses Aussehen geben, gucken wir unser Logo an, so langweilig geht es ja gar nicht, das ist perfekt seriös. Kannst du nichts gegen sagen und sich mal aufschreiben, wie das funktionieren müsste. Dann haben wir Hoffnung, dass der Staat das nimmt, copypastet, als eigenes verkauft und sagt, guck mal, wir haben ein Cyber-Hillswerk gebaut. Und das Schöne als kleine Ergänzung, das BSI wie auch das BBK, die haben sich wirklich mit uns zusammengesetzt in Workshops und haben gesagt, so, reden wir mal über ein Cyber-Hillswerk, wie könnte das aussehen und worauf müsst ihr noch achten. Das Ultrageile ist, ein Jurist aus dem BSI wurde mitgesponsert, der ist gekommen und hat gesagt, so Leute, ich erkläre euch mal juristisch, was bei uns kacke gelaufen ist und die Fehler macht ihr nicht auch in diesem Konzept. Das hier ist der Plan, das hier sind die Fails und da sind die Lösungen, darauf müsst ihr achten. Das war zum Beispiel sehr cool, denn dieses Cyber-Hilfskonstrukt, was sie damals als Cyberware nutzen wollten und da mit der Fehlerkultur offen zu uns zu kommen und zu sagen, auf diese Punkte müsst ihr achten, damit es gut wird, das fand ich mega cool.
+00:26:28.234 --> 00:26:29.034
+<v SPEAKER_3>Besonders geschützt.
 
-01:21:59.497 --> 01:22:25.277
-<v SPEAKER_1>Ich habe jetzt zwei Fragen. Das eine ist, mir kreuzen sich jedes Mal, wenn ich das Wort Cyber höre, die Fußnägel hoch, weil das jahrelang ein sicherer Anscheinensbeweis dafür ist, dass jemand keine Ahnung hat, wenn er Cyber sagt. Warum habt ihr euch dafür entschieden, das so offensiv zu benutzen? Ist das ein Marketing-Gag, also Marketing im Sinne von, das viral in den Köpfen der Leute festzuhalten, die das geil finden oder?
+00:26:29.034 --> 00:26:41.774
+<v SPEAKER_4>Ja, besonders geschützt sind, genau. Und wenn man aber einfach so Daten im Netz verteilt und keine Schutzmaßnahmen einbaut, wenn man rufend mal anruft, dass man dann Leute belauschen kann, dann ist das kein Schutz gegen die Daten.
 
-01:22:25.297 --> 01:22:51.877
-<v SPEAKER_2>Es geht halt um mehr als nur IP oder Virtualisierung oder Digitalisierung, weil du sozusagen diesen gesamten, also Cyberraum beschreibt es schon so schön schwammig. Es kann alles Mögliche dazu kommen wie Industrial IoT, was vor Jahren kein Thema war, kann aber auch eine große Schadenslage bewirken. Es deckt Dinge ab wie Prozesse und Menschen, denn es ist nicht nur ein Maschinenproblem.
+00:26:41.794 --> 00:27:09.054
+<v SPEAKER_2>Ich halte also fest, die Polizeiwanze anzurufen, ist total legal, weil sie hätten es ja schützen können. Weiß man denn eigentlich, wie dieser Hack passiert ist? Ich bringe als Vergleich immer schön gerne Sony an. Sony ist ja über eine SQL-Injection gehackt worden und das ist sozusagen mehrere Monate in mehreren Kapiteln von Sony in verschiedenen Ländern. Und SQL-Injection, ohne es genauer erklären zu wollen, ist das kleine 1x1. War das so ähnlich? Oder weiß man das, was da passiert ist?
 
-01:23:00.777 --> 01:23:16.617
-<v SPEAKER_1>Ich verstehe die Motivation, einen Begriff zu finden, der ein bisschen weiter was sagt als nur IP oder IT oder sowas. Aber der Begriff Cyber im politischen Kontext ist ja nun nicht so geil besetzt.
+00:27:09.394 --> 00:27:38.694
+<v SPEAKER_4>Also das weiß man nur in Teilen und auch nur durch die Aussagen der Hacker, die hier ein bisschen, also man hat uns ein bisschen in Einnung, das sind auch Jugendliche, die sehr stolz darauf waren, das getan zu haben und darüber auch so viel gesprochen haben, aber jedenfalls sind sie angeblich in irgendeiner Form in den Server eingestiegen, wahrscheinlich durch eine Update-Funktion der Software, die diese GPS-Tracking-Software der Server sozusagen eingebaut hatte.
 
-01:23:16.637 --> 01:23:59.177
-<v SPEAKER_2>Wir versuchen ihn geil zu besetzen. Aus Community-Sicht können wir immer behaupten, das wäre ironisch gemeint. Aus straflicher Sicht ist das ein hoch seriöser, mehr der Wiener klar definierter Begriff, den jeder andere auch benutzt. Worunter die Menschen sich was vorstellen können. Dass das negativ konnotiert ist, ist vermutlich in deiner Filterblase so. Da draußen eher nicht so. Das ist nur ein relativ wertneutrales Wort, das noch breiter ist als IT. Nämlich auch alle anderen Kategorien, also OT und Netze und Menschen und Prozesse. Und was HonkHase gerade sagte, alles mit abdeckt und relativ vage bleibt.
+00:27:39.474 --> 00:27:42.354
+<v SPEAKER_2>Also auch was, was man normalerweise eigentlich in sicher haben will?
 
-01:24:00.477 --> 01:24:51.677
-<v SPEAKER_1>Ich versuche, mich daran zu gründen. Das andere ist, jetzt ist ja der Incident Response. Also die Tatsache, dass man auf Dinge, die kaputt sind, in IT-Systemen reagiert. Da hatten wir auch mal eine eigene Folge, das war die 236, wo das ein bisschen als Beruf beschrieben wurde. Und das ist genau der Punkt. Jetzt kann man da ja sehr gut Geld verdienen. Also Incident Response-Firmen sind nicht die Ärmsten auf der Welt, glaube ich. Und jetzt ist ja, wenn so eine Ag-Kritis daherkommt, sagt, hier, mach doch mal so und so, könnte man, also jetzt mal die Perspektive einnehmen, zwei Sachen, die eine ist, Moment mal, ihr macht uns hier das schöne Geschäft kaputt, dass wir Millionen damit aus der Notlage von Menschen schaffen können und das andere ist ja, Moment mal, wenn ihr das vorschlagt, landet ihr zufälligerweise auch auf den Chessesseln, wie auch immer die Struktur aussieht?
+00:27:42.734 --> 00:27:48.214
+<v SPEAKER_4>Ja, das will man in sicher haben, aber der Polizei hatte den günstigsten Anbieter gewählt.
 
-01:24:51.697 --> 01:28:10.837
-<v SPEAKER_2>Nein, also die Idee dahinter ist ja folgende, du gehst ja auch nicht deine eigene Bude anzünden, um zu sagen, jetzt kommt die Freiwillige Feuerwehr, weil die Berufsfeuerwehr reicht nicht aus und ich will Chef der Freiwilligen Feuerwehr werden. Das CRW soll auch nicht ausrücken, wenn du einen Sicherheitsvorfall oder einen Incident Response benötigst, sondern die rückt aus, wenn du eine Großschadenslage hast. Also das CRW kommt ja auch nicht, weil jemand sich einen Zähnagel gebrochen hat und die kommen auch nicht, wenn jemand sagt, wir haben hier so einen Fluss, der ist über Wasser, sondern wenn der scheiß Fluss durch ganz Deutschland läuft und über Wasser ist, dann kommen die und zwar mit vielen 1000 Mann im Worst Case an ganz vielen Stellen. Und das CAW rückt dann auch in dieser Logik nur aus, wenn wir eine Großschadenslage haben und nicht, wenn jemand sich ein paar Euro 50 für eine Incident Response sparen will. Denn da das ja dann im Idealfall, so wie unser Konzept das vorsieht, durch eine, wie nennt sich das, Ijon, das kannst du jetzt glaube ich besser erklären, eine offizielle Anfrage, übernimm du einfach mal. Wann kommt es, wenn welche formalen Dinge ins Leben gerufen werden? Also die Alarmierung kann erst dann erfolgen, wenn das zuständige Ministerium, also Bundesministerium, die Großschadenslage ausruft und definiert. So dann kann das THW kommen nicht vorher. Ja, es gibt Ausnahmen, das THW kannste dazu benutzen, dass sich ein Waltersbaum aufstellt, irgendwie einmal im Jahr, dann ist das eine Übung für die Mitglieder. Das geht schon und die können eventuell auch eine Glusche runter aufstellen, fürs Feuerwehrfest. So, aber einsatzmäßig muss das schon von ganz ganz oben kommen, also vom Innenminister. In der Realität ist es ein bisschen komplexer. Da gibt es noch Staatssekretäre dazwischen, die das auch tun könnten, aber vereinfacht erklärt ist es, der Innenminister muss sagen, Großschadenslage, shit hits the fan, Kotstücke fliegen überall, das ist jetzt schlecht. Wir machen mal die Großschadenslage, die bundesweite Krise und alarmieren das THW dazu. Beim THW wäre es nicht anders. Also erst, wenn die Großschadenslage so groß ist, dass alle staatlichen und alle privatwirtschaftlichen Kräfte und Personen und Unternehmen augenscheinlich nicht den Hauch einer Chance haben, die Lage in den Griff zu kriegen, erst dann müsste man so ein THW alarmieren. Und auf gar keinen Fall vorher, weil vorher haben wir ja die Unternehmen und die Wirtschaft und ein paar Ehrenamtler und ein paar Nachtschichten und Überstunden und obendrein auch noch das Mobile Instant Response Team mit etwa 30 Personen vom BSI, das bei größeren Sachen auch schon mal helfen kann. Aber wenn du diese 30 Personen halt in 600 Krankenhäuser schicken musst, um in 600 Krankenhäuser gleichzeitig ein kritisches Stück Systemkomponente zu reparieren, dann geht das halt nicht. Und dann kannst du halt überlegen, nimmst du einen THW, wobei selbst dann hast du vielleicht noch Chancen auf den Markt Instant Responder ranzukriegen. Aber irgendwann musst du als Start halt auch sagen, ich ziehe Notbremse und ich hole jetzt Leute hier ran, auch gegen den Willen deren Arbeitgeber. Das ist am THW nämlich auch so. Wenn THW Einsatz ist, dann können sie dir als Mitglied einfach sagen, jetzt ist der Einsatz befohlen, bitte, jetzt in den Einsatz. Und dein Arbeitgeber kriegt dann dein Bruttogehalt entschädigt. Aber der kann nicht sagen, nee, geht nicht.
+00:27:48.574 --> 00:28:13.714
+<v SPEAKER_3>Ich denke, wir sollten nicht jetzt zu viel auf diesem einen Fall drauf bleiben. Das soll jetzt hier nur als Beweis oder als Beleg dienen, dass es durchaus äußerst sicherheitsrelevante Daten von deutschen Polizeibehörden in unglaublich wenig IT-mäßig geschützt gibt. Und dass man das halt immer mit berücksichtigen muss, wenn man sagt, ja, das ist ja nur die Polizei und das sind nur die Entwicklungsbehörden. Diese sensiblen Daten und die werden ja auch alle gleich gelöscht.
 
-01:28:10.937 --> 01:28:22.897
-<v SPEAKER_1>Also ich bin freiwillig Teil des THWs, oder dann ausgedacht THWs. Also das entscheide ich freiwillig, dass ich dabei bin. Aber wenn ich dabei bin, dann kann ich sozusagen freigestellt werden. Das wäre der Idealfall.
+00:28:14.514 --> 00:28:32.794
+<v SPEAKER_2>Das wäre die nächste Frage zur Funkzellenauswertung gewesen. Jetzt sind da aktuell 40.000 Leute betroffen. Kriegen die irgendwann mitgeteilt, dass ihre Daten da erhoben wurden? Oder ist es so, wo haben wir jetzt? Also gibt es da eine Art Informationspflicht von den offiziellen Stellen?
 
-01:28:24.177 --> 01:28:37.477
-<v SPEAKER_2>Dann sagt der Innenminister Monoxid, du musst jetzt mal bitte hier ins Einsatz. Und dein Arbeitgeber wird dann entschädigt und hat da kein Mitspracherecht mehr. Also das ist, was unser Konzept vorsieht. Das heißt nicht, dass es so zwingend kommen muss. Aber wir haben gesagt, dass es einen blöden Sinn macht.
+00:28:32.814 --> 00:29:05.734
+<v SPEAKER_3>Wir als CCC haben das immer gefordert, dass es verpflichtend eine Mitteilung der Betroffenen gibt. Leider ist das meines Kenntnisses nach nie so umgesetzt worden. Es gibt Zollbestimmungen und es gibt, also nicht Zoll, sondern soll, es soll gemacht werden. Aber in der Realität wird es dann halt doch sehr selten gemacht. Also es gab dazu, glaube ich, mal eine parlamentarische Anfrage vor ein paar Jahren im Bundestag und da war das, also wirklich unterferner liefen, wie viel Prozent der Opfer dieser Überwachungsmaßnahmen tatsächlich mal benachsichtigt wurden nach Abschluss der Maßnahme.
 
-01:28:37.497 --> 01:29:46.157
-<v SPEAKER_1>Jetzt habe ich noch eine Frage, die möglicherweise damit zu tun hat, dass ich zu lange hier auf diesem Platz gesessen habe und Leute darüber gefragt haben, wie sie Dinge kaputt machen. Und zwar, wenn das THW kommt, dann hilft es sozusagen, dass Sachen nicht noch kaputter gehen, als sie gerade schon sind. Oder Fluss über die Ufer, Dinge brennen, Sachen sind zusammengestürzt, was auch immer. Oder helfen vielleicht sogar beim Wiederaufbau. Jetzt sind ja technische Systeme, also gerade dieses, entschuldigt mein böses Denken, aber ein Krankenhaus muss also Patch einspielen. Und das müssen gerade 600 Krankenhäuser. Und das ist doch total cool, dann der Typ zu sein, der da reingeht, den USB-Stick an alle Computer steckt und diesen Patch aufspielt und diese kleine Zusatzsoftware. Hintergrund der Frage ist also, wie stellt ihr euch vor, welche Leute da mitmachen? Weil ich mir das wirklich vorstellen kann, und das also wirklich schwieriger vorstelle als bei einem THW, dass du sagst, die müssen genug Ahnung haben, um das überhaupt machen zu können. Und die müssen aber auch in einem ganz besonderen Maße vertrauenswürdig sein.
+00:29:08.674 --> 00:29:32.814
+<v SPEAKER_4>Also es gibt in der Theorie auch im Gesetz eine Benachrichtigung des Betroffenen, wie es heißt. Und die ist allerdings nur dann vorgesehen, wenn durch die Benachrichtigung den Ermittlungsbehörden bei den Ermittlungen keine Nachteile entstehen könnten. Und das wird regelmäßig in Anspruch genommen, dass sie also sagen, ihnen würden dadurch taktische Nachteile entstehen, dass Leute wissen, dass sie abgehört wurden.
 
-01:29:46.177 --> 01:34:48.877
-<v SPEAKER_2>Der erste Schritt ist ja, dass sie nicht alleine agieren bei einem Vorfall, sondern natürlich immer gemeinsam mit dem Kritis-Betreiber agieren. Die gehen ja nicht in den Luft deren Raum und sagen, geht mal aus dem Weg, ich bin THW und ich mach jetzt hier Dinge an eurem System. Du brauchst immer, du brauchst immer, immer, immer den Kritis-Betreiber und die Know-how-Träger der Infrastruktur, mit denen du gemeinsam das Ganze abstimmst. Alles andere wäre ein Inferno. Das heißt, der Betreiber guckt da schon auf die Finger. Bekloppt sind die ja nicht. Und das ist schon mal die erste selbstkorrektive Variante. Die zweite ist, dass es in allen einsatzfahrenden Organisationen, Polizei, Feuerwehr, Krankenwagen, THW, scheißegal, da siehst du eigentlich nie die Leute alleine. Die haben eh mal einen Kollegen dabei, die sind zu zweit im Auto, die fahren auch zu zweit irgendwo hin. Das macht schon Sinn, weil da kann der eine Hilfe holen, wenn der andere ein Problem hat. Das ist schon clever, das könnte man auch einfach übernehmen. Umdrehen ist das ja auch jetzt keine Geschichte, wo du ohne jegliche menschlichen Kontakt sofort in Einsatz kommst, sondern da wird eine wahrscheinlich umfassende Ausbildung in verschiedenen Themenbereichen vorher erfolgen. Im Rahmen davon, man die Menschen und Kandidaten auch kennenlernen kann und faule Eier aussortieren oder bitten zu gehen. Das ist beim THW ja nicht anders. Die haben ja auch durchaus ein Kippe, mit dem man einen feinen Fug machen kann, nachdem man sie einsetzt. Ich denke, das kriegt man in den Griff. Und am Ende gibt es immer noch die Strafbarkeit. Wer sowas macht, der kommt halt in den Knast. Das wird nicht allzu häufig passieren, weil es ist ja am Ende auch relativ klar, wer das dann war. Was wir unter anderem auch im Konzept vorgesehen haben, ist zum Beispiel eine grundsatzethische Ausbildung. Nämlich wirklich zu sagen, du gehörst zu den Guten und verstehst, was das heißt an Verantwortung und so weiter. Und das wollen wir natürlich auch in eine Richtung treiben, zu sagen, wir wollen ja bewusst die Hacker-Community dazu aktivieren, im CAW freiwillig zu agieren. Weil das sind ja Know-how-Träger, die Dinge kaputt spielen können oder wieder ganz machen. Und auch mal unkonventionell denken, um in einer Problemsituation eine flexible Lösung zu erarbeiten. Und die kriegst du halt nicht, wenn du sagst, ja, das CAW kann natürlich auch militärische Einsätze fahren, würde auch mal als Ersatzdienstleistung bei einer dunkeldeutschen Sicherheitsbehörde komische Dinge aus Gründen tun oder so. Also wir haben auch klar zu verstehen gegeben in dem Konzept, entweder ist das Ganze ethisch korrekt aufgezogen oder eine Totgeburt. Und das hat zum Beispiel dann auch ein offizieller Vertreter des CCC durchaus in den Workshops auch zu verstehen gegeben und hat gesagt, dieses Spiel kann nur funktionieren, wenn ein Innenministerium oder wie auch immer eine Behörde, Institution, whatever ins Leben ruft und das ethisch korrekt ausrichtet. Wenn da irgendein Hasenfurz nach komisch riecht, ist vorbei. Dann werden wir einmal ganz laut sagen, so geht es nicht. Und dann ist das Ding kaputt bei Design. Das muss sowohl den ins Leben rufenden Behörden als auch den Teilnehmern klar sein, dass das ganz schnell Ärger gibt. Das ist ja auch das Schöne am THW, dass das THW schon besetzlich und durch Verträge internationaler Arten einer Staaten rein defensiv aufgebaut ist. Das THW genießt den gleichen Schutz wie ein Fahrzeug mit dem roten Kreuz drauf in einem Kriegsgebiet. Das darfst du nicht aktiv beschießen oder angreifen. Oder musst du annehmen, dass das friedlich ist und dir nichts tun wird, auch wenn es dem Gegner gehört. Das ist schon so ein Feldlazarett, darfst du nicht angreifen. Im gleichen Sinne und den gleichen Schutz genießt das THW. Daraus folgt aber auch, dass THW-Mitglieder selbst in gefährlichen Einsatzgebieten keine Waffen tragen dürfen. Und auch keinen Waffeneinsatz durchführen dürfen. Die Bundesregierung kann das THW nicht dazu bringen, dass sie Bunkeranlagen in Afghanistan springen. Obwohl sie das wohl sehr gerne gehabt hätten, dass man das tut, weil die Bundeswehr damit überfordert war, das durchzuführen. Man hat dann freundlich gefragt, bekam ein sehr deutliches Nein und dann war es erledigt. Und in der gleichen Weise müsste ein THW geschützt sein, damit ein Trojanereinsatz oder eine Überwachungsmaßnahme oder Vergleichbares halt nicht von einem Dienstleister THW übernommen werden kann, sondern da muss eine klare Limitierung auf defensive Handlungen, auf ethisch korrekte Sachen, alles, was kriegerisch oder straferfolgerisch ist. Dafür gibt es andere Behörden, das muss klar und sauber getrennt sein. Und dazu ist vielleicht auch kein Zufall, dass eine große Überlagerung zwischen Ag Kritis und Veranstaltungsausrichter und vollverantwortliche Veranstalter der DefensiveCon sind, was aber trotzdem eigentlich zwei Paar Schuhe sind.
+00:29:33.494 --> 00:29:55.834
+<v SPEAKER_3>Aber das wird bei solchen Großmaßnahmen, wie jetzt hier diese Funkzellenauswertung mit 300.000 betroffenen Leuten, also in diesen 800.000 Datensätzen ungefähr 300.000 Leute oder Telefone waren da beteiligt, da kann ich natürlich irgendwie nicht sagen, bei allen 300.000 würde es die Ermittlungen beeinträchtigen, wenn man die hinterher benachrichtigen würde. Dann würde man behaupten, dass die alle volle kriminell sind und alle irgendwie...
 
-01:34:48.897 --> 01:34:51.477
-<v SPEAKER_1>Du musst aber kurz erklären, was ein DefensiveCon ist.
+00:29:56.434 --> 00:29:59.694
+<v SPEAKER_2>Ja, die Dresdner, müsste man mal gucken.
 
-01:34:51.697 --> 01:36:08.097
-<v SPEAKER_2>Genau, das will ich erklären. Drei der fünf DefensiveCon-Veranstalter sind auch Ag-Kritis-Mitglieder. Die DefensiveCon wurde im Februar dieses Jahr zum zweiten Mal ausgerichtet. Das Hauptthema war defensiv statt offensiv und Ethik in der korrekten Ausrichtung. Da wurde unser Cyber-Hilfswerk-Konzept in der ersten und initialen Version 1.0 zum ersten Mal in der Öffentlichkeit vorgestellt. Auf der DefensiveCon wurden aber auch z.B. hat der BSI Myrd Leiter mal erzählt, wie Einsatzvorfälle bei kritischen Infrastrukturen sind. Da haben auch Leute Völkerrecht z.B. erklärt und interpretiert. All diese ethischen Defensivmaßnahmen und was der Gegenteil von dem offensiven Geraffel ist, sind ausführlich dargestellt. Es sind insgesamt 15 oder 16 Vorträge, die findet man auf media.ccc.de, frei verfügbar. Auch die Foliensätze sind alle online. Wir haben das schon bewusst in eine so nahe Lage dahin gebracht, damit es ganz klar ist, woher diese Signalrichtung kommt. Nämlich aus der Defensive, aus der Katastrophenhilfe, aus dem Helfen, nachdem es Peng gemacht hat, und zwar richtig groß pengen und nicht. Oder ist was passiert, schickt die mal dahin.
+00:29:59.714 --> 00:30:08.654
+<v SPEAKER_3>Vor allem dann die ganzen aus der Restrepublik angereist, gewaltbereiten Jugendlichen in hunderttausender Zahl.
 
-01:36:11.657 --> 01:36:45.757
-<v SPEAKER_1>Ich habe noch zwei, drei Fragen, bevor wir zum Schluss kommen. Die eine ist, von dem, was ihr erzählt habt, entnehme ich, dass es auf der Fachebene ein Interesse gibt, dass man aber gerade so ein bisschen vorsichtig ist, weil man sich noch die Finger dran verbrannt hat. Gibt es sozusagen schon eine parteipolitische Ausrichtung, wo man sagen kann, das finden eigentlich alle cool, oder große Koalitionen finden es doof, Oppositionen finden es gut. Gibt es schon einen parteipolitischen Standpunkt dazu, oder ist das dazu noch zu sehr am Anfang?
+00:30:08.674 --> 00:31:14.607
+<v SPEAKER_2>Dann haben wir jetzt also den aktuellen Anlass geklärt, warum wir heute darüber reden, wie man Mobilfunk-Telefone so schön überwachen, aushorchen und nachtracken kann. Wir werden gleich nach dem Fritz-Info mit Nachrichten, Wetter und Verkehr nochmal über die Vorratsdatenspeicherung sprechen, also ein gesetzliches Instrument, das sie überhaupt erst möglich gemacht hat, und danach um die ganzen anderen Dinge zu sprechen kommen, die man mit Handys noch so anstellen kann, aber vorher wie gesagt erstmal das fritz informe Nachrichtenwetter und Verkehr. Genauer gesagt heißt das heute Chaos Radio. Das ist nämlich der letzte Donnerstag im Monat. Und Andy Müller-Maguhn und Harald Welte vom Chaos Computer Club sind hier und erklären mal, was man mit diesen gesellschaftlichen Mobiltelefonen, die ihr alle, und das sag ich mal ausnahmslos, alle in der Hosentasche habt, so anstellen kann, überwachungsmäßig. Wir hatten in der ersten halben Stunde schon kurz geklärt, was in Dresden gerade abgegangen ist, wo mehrere Zehntausend Leute, wie heißt das, Bewegungsdaten, Verkehrsdaten erfasst wurden. Ist das das richtige Amtswort?
 
-01:36:45.777 --> 01:37:06.897
-<v SPEAKER_2>Selbst wenn es den gäbe, wäre das hier nicht der Rahmen, um ihnen breit zu treten. Selbstverständlich wollen wir dieses Konzept umsetzen, und wir wollen, dass der Staat das umsetzt. Das heißt, eigentlich müssen wir mit all den Parteien reden, bei denen es eine hinreichende Chance gibt, dass sie bei der nächsten Bundestagswahl eine Regierungskoalition bilden könnten.
+00:31:14.627 --> 00:31:16.047
+<v SPEAKER_3>Mehrere Hunderttausend.
 
-01:37:06.917 --> 01:37:09.117
-<v SPEAKER_1>Das ist klar und leuchtet ein, aber es gibt noch keinen Stadt.
+00:31:19.907 --> 00:32:03.287
+<v SPEAKER_2>Wer bietet mehr? Könnt ihr anrufen, 033 171 9711 0, just saying. Wir haben darüber gesprochen, es gibt, also wie man das macht, was da alles anfällt, warum die Behörden das so geil finden, dass man das alles irgendwie an Start bringen kann. Wenn ihr das jetzt verpasst habt, könnt ihr das gerne nachhören. Wir können es nicht nochmal erklären, weil die Sendung hat ja nur zwei Stunden und es gibt noch so viel zu bereden. Unter anderem wollen wir noch mal kurz genauer über das Instrument Vorratsdatenspeicherung sprechen, was da eine Rolle gespielt hat. Also jetzt im aktuellen Fall nicht, weil da ist ja sozusagen relativ kurz nachdem der Tag war, an dem die Daten angefallen sind, auch gesagt worden, wir wollen es jetzt haben. Wie ist es denn im Moment? Wie lange halten die Mobilfunkbetreiber diese Daten überhaupt vor? Also wie lange kann die Polizei überhaupt sagen, okay, ich möchte jetzt eine Funkzellenauswertung machen?
 
-01:37:09.137 --> 01:38:13.637
-<v SPEAKER_2>Diese Gespräche führt man hinter verschlossenen Türen. Wenn die aus ideologischen Gründen mit unabhängigem Naturschutz reinschreiben, wenn sie es als Ministerium aufbauen, schreibe ich gerne auch Schutz der Natur mit rein, als Schadenslage, die es zu berücksichtigen könnte, wenn die Partei, von der ich rede, an die Macht kommen könnte. Wenn die CDU ganz andere Forderungen hat, dann können wir auch darüber reden und gucken, wo man sich annähern kann. Aber genau dieser Abstimmungsprozess ist etwas, wo ein Geschaltungsspielraum da ist. Und am Ende muss jeder MDB, jeder Politiker, auch in der Lage sein zu sagen, ich hatte eine großartige Idee, guck mal. Das Paper stand aber von wem anders. Und die Kollegen und Mitarbeiter, die da in den Büros arbeiten, haben genauso wenig Zeit wie ich. Und deswegen, wenn man denen den Paper zuschieben kann und sagen, ich werde zu diesem Paper nicht sagen, dass ich der Autor war, auf gar keinen Fall, kannst du gerne dran schreiben deinen Namen und deinen Copyright, ist mir egal. Aber hier hast du einen Text, kannst du vielleicht als Formulierungshilfe verwenden. So, dann passiert da auch mal was.
+00:32:04.027 --> 00:34:35.247
+<v SPEAKER_3>Ja, das ist nicht so ganz genau definiert. Also es gibt da halt unterschiedliche Bestimmungen, die zum Tragen kommen. Zum einen muss man ja erst mal sagen, welche Daten fallen denn technisch notwendig in so einem Mobilfunknetz an? Das ist natürlich klar, vor allem zu Abrechnungszwecken brauche ich irgendwie, wer hat wann wie lange telefoniert, sonst kann ich dem keine Rechnung schreiben. Dann wenn es um Einzelverbindungsnachweis und solche Dinge geht, muss ich natürlich auch irgendwie, um diesen Einzelverbindungsnachweis ausstellen zu können, als Netzbetreiber muss ich diese Daten haben, wer hat da wann telefoniert und so. Auch bei Datendiensten, eben welches Datenvolumen ist angefallen und so weiter, welche Bandbreiten, wie lange, das ist ja alles Teil der Berechnung unter Umständen in diesen Tarifen. Dann gibt es auf der anderen Seite eben das Bundesdatenschutzgesetz und die Datenschutzgesetze der Länder, in denen auch drin steht. Daten sind eben nur so lange zu erheben, solange das notwendig ist. Und überflüssige Daten müssen dann eben gelöscht werden oder gar nicht erst erhoben werden. Das ist die Datensparsamkeit und zum anderen gibt es auch im Telekommunikationsgesetz entsprechende Anforderungen an die Netzbetreiber, dass sie Daten, die nicht notwendig sind zur Erbringung ihrer Dienste und so weiter, speichern. Das ist mal die eine Seite, dass man eigentlich gesetzlich sagt, so wenig wie möglich speichern, nur dass was nötig ist, um diese Dienstleistung zu erbringen. Und dann gibt es dem gegenüber eben andere gesetzliche Bestimmungen. Diese Vorratsdatenspeicherung zum Beispiel, die gekippt wurde, ich denke, da kommen wir gleich nochmal dazu. Aber die Frage, wie lange liegen diese Daten bei dem Netzbetreiber vor, das hängt von dem Netzbetreiber ab, wie der seine Abläufe strukturiert und was die intern dort beschlossen haben, zusammen mit der Justizabteilung und so weiter, was für sie sozusagen im Rahmen der Gesetze irgendwie Sinn macht und im Rahmen ihres Betriebs. Für uns als CCC ist es natürlich schon fraglich, warum so viele Daten überhaupt vorgehalten werden im Moment. Zum Beispiel die Positionsinformation, wo war dieses Telefon, ist für Abrechnungszwecke völlig irrelevant. Es gibt vereinzelt Tarife, wo es so eine Homezone oder ähnliche Konzepte gibt. Gibt es das noch? Ich weiß nicht, ob es das noch gibt. Ich denke, bestimmt. In dem Tarifdschungel, den wir haben im Mobilfunkmarkt, gibt es garantiert mindestens einen Anbieter, der noch mindestens eine Zahl an Tarifen hat, die sowas machen. Aber auch da, dass man sozusagen pauschal sämtliche Positionsdaten sämtlicher Telefonbesitzer speichert und vorhält, da muss man sich schon fragen, warum ist das denn tatsächlich nötig für Abwechslungszwecke?
 
-01:38:13.657 --> 01:38:18.637
-<v SPEAKER_1>Ich komme mir gerade vor wie in der Serie Parlament. Wenn ihr die gelegen habt, die zu gucken, schaut die mal.
+00:34:35.267 --> 00:34:44.347
+<v SPEAKER_4>Also was die Dresdner Staatsanwaltschaft beruft sich auf Paragraph 100 G, das ist die Strafprozessordnung und da...
 
-01:38:20.077 --> 01:38:30.537
-<v SPEAKER_2>Und genau auf diese Weise können wir da jetzt auch weiter voran schreiben. Für die Grünen schreibt man so eine Formulierungshilfe. Anders als für die Union, ist klar.
+00:34:44.367 --> 00:34:44.847
+<v SPEAKER_2>In Deutsch?
 
-01:38:31.117 --> 01:39:16.697
-<v SPEAKER_1>Das ist nicht nur eine Lektion hier, die wir heute gelernt haben in kritischer Infrastruktur und IT, sondern auch noch an Lobbyismus für Politik. Jetzt haben wir sozusagen diese Ecke. Die andere Ecke ist ja, wenn es so ein CHW gäbe, bräuchte das ja eben Freiwillige. Und jetzt kann ich mir vorstellen, wenn ihr also dieses Ding habt, da sind 42 Leute drin, habt ihr diesen DefensiveCon gemacht, dass wenn man sich ein paar Leute mehr gesehen haben, es wird also mindestens so eine Bubble geben. Aber habt ihr eine grobe Vorstellung, wie so die generelle Stimmung in eurer Zielgruppe, der HackerInnen eben, ist, da mitzumachen? Oder spielt ihr auch die Gefahr, dass man so... Ja, also alle finden es eine geile Idee, aber dann will halt niemand mehr mitmachen, weil das ist ja schon Aufwand.
+00:34:45.687 --> 00:35:18.007
+<v SPEAKER_4>Ja, das heißt, begründet bestimmte Tatsachen den Verdacht, dass jemand als Täter oder Teilnehmer bla bla bla Straftat hat erhebliche Bedeutung. Und da ist in der Tat natürlich jetzt, da ist jetzt nicht drin definiert, was die speichern müssen, sondern nur unter welchen Voraussetzungen die Polizei es abfragen darf. Diese Vorratsanspeicherung ist ja erst einmal gekippt, das war 113 und befindet sich jetzt gerade, ja ist jetzt Gegenstand öffentlicher Debatte kann man sagen, weil es natürlich Leute gibt, die die wieder haben wollen, aus welchen Gründen auch immer.
 
-01:39:18.117 --> 01:40:58.497
-<v SPEAKER_2>Na ja, an ein paar Stellen gab es schon vehemente Gegensprech. Es ist, glaube ich, auch kein Geheimnis, weil wer sich die DefensiveCon-Videos anguckt, wird auch sehen, dass Fefe da sehr dagegen war und gesagt hat, warte, dann sparen die sich nämlich alle genau die Kosten. Das ist ja irgendwie total schlecht. Also das Szenario, was du angebracht hattest, wir haben halt gesagt, nee, nee, das kommt ja nur bei Großschadenslagen und nicht bei jedem, der da Bock hat, Geld zu sparen. Insofern natürlich diese Vorbehalte gibt es und die sind auch insofern gut, weil wir uns dann mit diesen Fragestellungen auseinandersetzen und sagen, decken wir das ab in unserem Szenario? In dem Fall ja. Aber es gab auch nach der Vorstellung auf der DefensiveCon Initial und auch danach, ist ja auf unserer Webseite verlinkt, gab es sehr oft Anfragen an uns direkt oder an die Ag Kritis, wirklich echt Dutzende von Anfragen, wo kann ich beitreten, wo kann ich mitmachen, guck mal, ich hab folgende Experience, ich bin Experte im Krankenhaus für diese und jene Komponenten, ich mach schon seit Jahren Skada, Weilwegen, wo kann ich da mitmachen? Die waren alle total heiß und geil drauf, zu sagen, jetzt ich hier Einsatz. Und viele haben es sogar so vermengt, dass sie dann gesagt haben, hier, wo kann ich der Ag Kritis beitreten, ich will CRW machen, ich will helfen, ich hab dieses Helfersyndrom, ich hab die Ahnung, lasst mich das machen. Und dann haben wir gesagt, das ist nicht ag kritisch, wir entwickeln das Konzept und versuchen, Bevölkerungsschutz für Cybergroßschadenslagen und andere Dinge zu tun. Aber wenn ein CRW irgendwann vom Staat gegründet wird, dann werden wir einen Pointer geben und sagen, hier, da könnt ihr euch melden und da könnt ihr mitmachen. Also, war wirklich viel Zuspruch.
+00:35:19.427 --> 00:35:54.067
+<v SPEAKER_3>Ja, also vielleicht nur nochmal, damit das auch klar ist, diese Trennung, was in Dresden passiert ist, da ist die Polizei einfach aufgrund der Strafprozessordnung, also polizeilicher Gesetzgebung, dazu in der Lage zu dem Operator zu gehen und zu sagen, wir wollen einfach mal diese Daten, die du da gespeichert hast, sowieso. Also da geht die Polizei nicht vorhin, sagt jetzt mal bitte einschalten, irgendwie bestimmte Daten speichern und das ist auch nicht so, dass ein Gesetz sagt, jetzt diese Datensätze müssen erhoben werden, damit wir sie später abfragen können, sondern das ist einfach nur alles, was da so rumliegt beim Operator und was Verkehrsdaten sind, kann die Polizei dann abholen.
 
-01:40:58.517 --> 01:41:06.177
-<v SPEAKER_1>Aber kann man sich da jetzt, also wenn man jetzt das da, ha, geil denkt, kann man sich jetzt schon irgendwo einschreiben, eine Mailingliste, was auch immer, wo genau das passiert?
+00:35:54.087 --> 00:36:03.607
+<v SPEAKER_2>Also im Prinzip sagen, also da ist irgendwas passiert, die Polizei denkt sich kurz danach, also wie genau dieses kurz danach, beim besten das wissen wir nicht genau, aber kurz danach sagt die Polizei, okay, jetzt gebt uns doch einfach mal alles, was ihr zu diesem Zeitpunkt da habt.
 
-01:41:06.197 --> 01:41:18.477
-<v SPEAKER_2>Haben wir diskutiert und haben wir uns dagegen entschieden, weil wir uns wirklich nicht den Anschein geben wollen, als hätten, als wären wir das CHW. Wir können halt nur aus der Community heraus ein Konzept schaffen, das von der Community akzeptiert wird.
+00:36:03.847 --> 00:36:58.047
+<v SPEAKER_4>Ja, das ist aber vergleichsweise ungewöhnlich, wenn man sich sozusagen den Regelkatalog anguckt, der ansonsten bei dem Telekommunikationsgesetz festgelegt ist. Es ist zwar so, mit dem TKG hat sich das Paradigma grundlegend geändert. Früher war es so, Staatsanwaltschaft geht zum Richter, Richter macht einen Beschluss und dann wird quasi dem Netzbetreiber gesagt, du musst uns jetzt das und das geben. Heute ist das Gesetzwerk und die technische Installation so konstruiert, dass der Netzbetreiber selbst nicht wissen darf, wer abgehört wird. Das ist dann sozusagen mit der These, der könnte ja seine Kunden warnen und so fort. Und das heißt, der hat automatisierte Schnittstellen zur Verfügung zu stellen, die natürlich nach Krafttechnischer Wassersuppe und dagegen gesichert sein sollen, dass sie missbraucht werden. Aber beispielsweise automatisierte Abfrage, wer ein Anschlussinhaber ist, da gibt es einfach eine Schnittstelle für die Behörden und da hat der Netzbetreiber auch keinen Einfluss drauf, was da passiert.
 
-01:41:18.597 --> 01:41:36.057
-<v SPEAKER_1>Ja, verstehe ich, verstehe ich. Aber die Vorhaut des Menschen ist in Betracht gezogen. Ich erkenne an, ihr seid die Lobby-Organisation, die das macht. Und falls das Erfolg hat, möchte ich davon erfahren, und dann mache ich auch gerne mit, zwischendurch möchte ich nichts damit zu tun haben. Was abonniere ich, damit das passiert?
+00:36:58.127 --> 00:37:06.767
+<v SPEAKER_2>Also wir sagen, die Polizei sagt, hackt in ihren Rechner so, sag doch mal bitte, wer hinter dir nochmal Blabla steckt und dann spuckt das System jetzt einfach aus und jetzt der Netzbetreiber nochmal extra sozusagen was zu sagen hat.
 
-01:41:37.137 --> 01:41:48.657
-<v SPEAKER_2>Du guckst regelmäßig ins Blog der Ag Kritis, hörst Podcasts wie Chaosradio oder... Zum Beispiel, genau.
+00:37:06.807 --> 00:37:18.347
+<v SPEAKER_3>Richtig, ja. Das ist, also geht völlig online und völlig ohne, dass da jetzt irgendwie der Netzbetreiber noch irgendwas tun müsste. Das hat doch keiner gehackt. Na ja, das weiß man halt nicht.
 
-01:41:48.677 --> 01:41:51.677
-<v SPEAKER_1>Das heißt, wir machen also auf jeden Fall noch ein Chaosradio, falls das geklappt hat.
+00:37:18.487 --> 00:37:21.467
+<v SPEAKER_4>Es gibt ja auch Leute, die hacken und die genießen das dann einfach.
 
-01:41:51.697 --> 01:41:52.457
-<v SPEAKER_2>Sehr gerne.
+00:37:21.487 --> 00:37:31.447
+<v SPEAKER_2>Die sagen einfach, ok, weiß man nicht so genau. Na schön, ok, jetzt haben wir also festgestellt, was in Dresden jetzt gerade passiert ist, ist sozusagen, wie ich sag mal, normale Polizeiarbeit, wie auch immer man das dann genau beschreiben will.
 
-01:41:52.477 --> 01:42:05.617
-<v SPEAKER_1>Verhaftet. Okay. Genau, und die andere Frage wäre aber trotzdem, also wir haben gelernt, also CHW, das ist etwas, das dann kommen soll, dann braucht man da viele Freiwillige für.
+00:37:31.467 --> 00:38:09.547
+<v SPEAKER_4>Schon ein bisschen ungewöhnlich, weil die Schwere der Straftaten, die begangen ist. Die Frage ist ja, wie stellt man die denn fest, wenn man so eine Maßnahme anortet, bevor Straftaten begangen sind? Also wir hatten ja andere Fälle in Deutschland, wo beispielsweise dieser, bei Oldenburg, wo diese Jugendlichen diesen Holzklotz auf die Autobahn geschmissen haben und wo man dann gesagt hat, das war ein heimtückischer Mord und wir wollen jetzt wissen, was da ist. Und dann sind die auch aufs Zähnungsprogramm und haben auch, ich hab die genau zahl ich im Kopf, aber über 100.000 Daten sind sie jedenfalls auch abgefragt, um zu gucken, wer war da in der Umgebung zum Zeitpunkt der Tat, aber da gab es immerhin den Mord. Bei Dresden war das ein bisschen komplizierter und insofern schon ungewöhnlich.
 
-01:42:05.637 --> 01:42:07.597
-<v SPEAKER_2>Wir können Spielzeug erwähnen.
+00:38:09.967 --> 00:38:38.367
+<v SPEAKER_3>Ja, also das ist halt immer so eine Abwägungsfrage, bei welcher Art von Straftat wird sowas eben, ist das berechtigt oder nicht und das wird eben, wie wir schon vorhin erwähnt haben, immer weiter aufgeweicht. Man kann sich schon fragen, ist es denn gerechtfertigt, nur weil da, sag ich mal, so ein bisschen Widerstand gegen Polizei oder ähnliches da war, oder es ein bisschen zu Rangeleien gab, muss man deswegen zu dieser Vollüberwachung einer ganzen Stadt greifen?
 
-01:42:07.617 --> 01:42:08.957
-<v SPEAKER_1>Wir können Spielzeug erwähnen?
+00:38:39.167 --> 00:39:00.327
+<v SPEAKER_2>Ja, aber da wollte ich auch so sagen, dass das kleinere Übel aus eurer Perspektive ist, weil diese Geschichte von vor zwei Jahren, die da aufgetaucht ist mit den zwei Millionen Sachen oder Leuten, das ist ja aufgrund der Vorratsdatenspeicherung passiert, weil die gab es damals noch. Das heißt, du hast jetzt gerade erklärt, die Polizisten sind in einem aktuellen Fall hingegangen und haben gesagt, gib mal alles, was ihr habt, was ist denn der Unterschied zur Vorratsdatenspeicherung, wie funktioniert denn die?
 
-01:42:09.637 --> 01:42:36.137
-<v SPEAKER_2>Ach so, ja. Oh, ganz schlimm. CHW hat so geile Sachen wie zum Beispiel so Anlagen, wo sie Eisenbahn-Notbrücken auf- und abbauen können. Abgefahrenes Zeug, so große Wiese, Vielplatz, Kranplätze, verdichtete Kranplätze, noch unten Löcher, Dämme, Stahl, Betonträger, und da kann sie dann Eisenbahn-Notbrücken auf- und abbauen. Geiler Scheiß. Große Hydraulikzylinder, Spielspielzeug.
+00:39:00.867 --> 00:40:51.247
+<v SPEAKER_3>Ja, also die Vorratsdatenspeicherung ist etwas, was eingeführt wurde vor einigen Jahren, ich weiß nicht mehr was, Anfang 2009 oder 2008, also irgendwie vor ein paar Jahren wurde es ins Gesetz geschrieben, Paragraf 113a und b des Telekommunikationsgesetzes ist gekommen auf Druck seitens der EU, da gab es eine EU, eine Direktive oder Richtlinie dazu jedenfalls, dass es in allen Ländern umgesetzt werden muss. Und da ist es ganz anders, da geht es nicht darum, dass Daten, die sowieso schon da sind, dass man die dann nachher abgreift als Polizei, wenn man Glück hat sind die halt da, dann nimmt man sie nicht, wenn keine da sind hat man Pech gehabt, sondern da macht man das ganz, dreht man das um, sondern man sagt sozusagen, die gesamte Bevölkerung oder zumindest alle Teilnehmer von Telekommunikationsnetzen sind unter Generalverdacht und wir speichern mal auf Vorrat, im deutschen Fall für sechs Monate lang, sämtliche Verkehrsdaten dieser Telekommunikationsteilnehmer und da ist auch ganz genau spezifiziert, um was es geht, was da alles zu speichern ist und diese ganzen Daten muss dann jeder Anbieter von Telekommunikationsdiensten speichern, bevorraten, nur für den Fall, dass dann innerhalb von sechs Monaten mal irgendeine Polizei oder ähnliche Behörde des Staates sagt, ja wir hätten da gerne mal Daten gehabt. Also da werden dann wirklich, wenn man sich das vorstellt, wie viele Telefone, das betrifft ja nicht nur Mobiltelefonie, es betrifft Telefonnetze, das Internet, Mobiltelefonnetze, mobile Internetnutzung und so weiter. Diese ganzen Daten werden bevorratet und können dann auf Bedarf angefordert werden. Und das erfreulicherweise ist das dann durchs Bundesverfassungsgericht gekippt worden. Das Bundesverfassungsgericht hat die entsprechenden Paragrafen inzwischen für nichtig erklärt und damit stehen sie zwar noch im Gesetz, aber sind nicht mehr in Kraft.
 
-01:42:36.157 --> 01:42:38.757
-<v SPEAKER_1>Die Feuerwehr hat sowas auch.
+00:40:51.267 --> 00:41:17.107
+<v SPEAKER_2>Okay, sind nicht mehr in Kraft, gibt es ja gerade in der Diskussion, ich war gerade ganz zerschott in der Nachricht, haben wir gerade gehört, okay, die EU debattiert gerade, ob man möglicherweise die Waffengesetze mal verschärfen sollte. Das ist ja fast schon ein Fortschritt, weil normalerweise heißt es ja immer, wir sollten noch mal hier irgendwie mehr überwachen. Das ist ja auch gerade in dem Fall so, also über Vorratsansprechung wurde ja auch gerade wieder gesprochen, wir brauchen mehr Überwachung und noch Gefährderdateien und weis der Geier was. Steht das gerade jetzt noch mal an, dass wir sozusagen die wieder bekommen oder sind wir da noch im Moment raus?
 
-01:42:38.777 --> 01:43:04.897
-<v SPEAKER_2>In unserem Konzept kann das das CRW auch bieten. Ja, wenn es so umgesetzt wird. Zum Beispiel die Leitstände. Man könnte doch Leitstände von Kraftwerken, die wir gerade ausbetrieben haben, kaufen zum Spielen. Und in so einer Halle stellen, Kartine daneben, Bade daneben, 20 Kisten Mate oder eine Bierpipeline. Und dann hast du da dein Spaß. Dann ist das ein Testzentrum, wo du Einsätze an Kraftwerksleitstätten üben kannst, der Staat bezahlt das. Und wir können endlich mal die Nerds in das Radaranlagen ranlassen.
+00:41:17.287 --> 00:41:20.867
+<v SPEAKER_4>Ja, es gibt da schon ein starkes Drängen danach.
 
-01:43:04.917 --> 01:43:14.957
-<v SPEAKER_1>Die Sendung ist jetzt fast über 90 Minuten lang. Und jetzt wird mir klar, dass das alles nur ein elaborierter Plan für einen neuen Hackspace ist.
+00:41:20.887 --> 00:42:22.967
+<v SPEAKER_3>Ich würde sagen, reaktionäre Politiker sind da immer dahinter her. Bei jedem, egal was passiert, irgendwo wird irgendeine Straftat begangen, die irgendwo in der Brosse ist und dann wird sofort wieder in den Ring geworfen. Ja, aber mit der Vorratsdatenspeicherung hätten wir da irgendwie was dagegen tun können. Das ist sehr bedauerlich, dass wir diese Diskussion immer wieder und immer wieder haben. Wir hängen halt jetzt im Moment in der Luft. Das Bundesverfassungsgericht hat Gott sei Dank eben diese Paragraphen für nichtig erklärt und damit sind sie erstmal vom Tisch. Das heißt, es wird de facto heute im Moment gerade keine Vorratsdatenspeicherung gemacht. Auf der anderen Seite gibt es immer noch die EU-Richtlinie, die es vorschreibt. Ich glaube, die EU hat inzwischen ein Verletzungsverfahren gegen Deutschland eingeleitet, weil es in Deutschland noch nicht umgesetzt ist in ein nationales Gesetz, bzw. halt wieder rausgenommen wurde. Und die Politik, respektive der Gesetzgeber, ist sozusagen berufen, irgendwas zu tun. Und was da genau passieren wird, das steht noch offen, aber Forderungen sind genug da, eben wieder eine Vorratsdatenspeicherung einzuführen.
 
-01:43:19.377 --> 01:43:24.677
-<v SPEAKER_2>Ein neuer Hackspace mit ganz viel schwerem Gerüst, woran du einfach im normalen Leben nicht kommst.
+00:42:23.047 --> 00:42:41.487
+<v SPEAKER_4>Es ist jedenfalls nicht so, dass sich die Regierung über ihren Einfluss im Europäischen Parlament dafür einsetzt, die Vorratsdatenspeicherung auf Europa weiter abzuschaffen, was ja in der Theorie gab es ein Verfahren vom Europäischen Gerichtshof, wo andere Länder das versucht haben, aber da hat man auch noch keine Ahnung.
 
-01:43:26.097 --> 01:43:38.957
-<v SPEAKER_1>Aber trotzdem noch die Frage, jetzt ihr als Ag Kritis. Seid ihr jetzt sozusagen gesagt, wir sind 42, lasst uns mal machen? Oder kann man euch auch noch helfen? Also nicht Mitglied in einem Fleischrunden, sondern so.
+00:42:41.507 --> 00:43:28.007
+<v SPEAKER_2>Da blüht uns noch was, weil wir noch diese anderen spannenden Themen haben, also das mit dem Imseacatcher und den semi-passiven Dingern, die da freundlich konditioniert sind und die inhaltliche Überwachung. Ganz kurz zum Abschluss dieser Vorratsdatenspeicherung, eine Sache wollte ich noch sagen, Malte Spitz, sollte noch erwähnt werden, das war der grüne Politiker, der hat sich von der Telekom seine Vorratsdaten, Speicherungsdaten erklagt. Und bei der Zeit glaube ich gab es eine Visualisierung. Also wenn ihr jetzt die ganze Zeit zugehört habt und euch gefragt habt, was Vorratsdaten, Verkehrsdaten, wie soll das aussehen, da kann man das wirklich sehen. Da gibt es eine schöne Animation, da kann man sich das mal angucken. Da wisst ihr ganz genau, was man daraus absehen kann. Und das ist schon eine ganze Menge. Gibt es jetzt vom Club eine Position, wo ihr sagt, wir wollen entweder überhaupt gar nichts gespeichert wird oder wir wollen das vielleicht ein bisschen was oder...
 
-01:43:39.937 --> 01:45:58.137
-<v SPEAKER_2>Bitte mit Zucker oben drauf. Ja, nicht jetzt 5000 Mann, die einfach rumhören wollen, was wir so tun, sondern wir müssen halt auch Dinge tun, wie recherchieren, Blogpost schreiben, Awareness machen, auf Veranstaltungen uns anbiedern und einbringen, damit die Politiker auch mal zur Abwechslung zuhören, Medienarbeit und das alles erfordert natürlich viel Hintergrundarbeit, also wirklich diese Recherche, Analyse und so weiter. Und da können wir, wenn jemand da Lust und Laune zu hat, also man kann ja gerne mal auf unser Ag-Kritis-Blog gucken, da sind einige Paper und Fachartikel verlinkt, oder auch viele Podcasts und andere Artikel, wo Journalisten uns angefragt haben und wir dann Stellungnahme gegeben haben. Und all das kostet natürlich extrem viel ehrenamtliche Freizeit, wenn also jemand bereit ist, Lebenszeit abzuknappsen und das da reinzubuttern, herzlich gerne. Wir sind aber keine Aufklärungskonstellation für Leute, die wissen wollen, wie Kritis tut. Das kannst du im Rahmen deiner Recherche lernen, aber wir sind keine Austauschplattform für Leute, die wissen wollen, was ist Kritis, wie tut es. Das machen wir in Podcasts hier beispielsweise, aber eben nicht untereinander. Genau, also wenn du dich mit Kritis in irgendeiner Weise oder einem Sektor, einer schmalen Nische in diesem Bereich bereits tiefergehend auskennst, oder im beruflichen und privaten Alltag damit zu tun hast, und der Meinung bist, dass Grammatik und Texte schreiben eine wunderbare Ausdrucksform ist, dann bitte melde dich bei uns, dann bist du genau bei uns richtig. Oder wenn für dich Recherche nicht heißt, ich google mal kurz ein Wort und der erste Treffer ist Copy-Paste. Das ist wirklich wichtig. Wir müssen sehr detailliert im Hintergrund recherchieren, um so Szenarien wie Ijon hervorragend vorgeführt hat, wie viel Gigawatt wo, was ist eine Schnelllast usw. Du kannst da keinen Stuss erzählen. Jemand wird es gegenprüfen und sagen, was ist das denn? Das sind Labortaschen, die wollen hier irgendeinem Politiker ein Cocklat anzuortackern. Auf gar keinen Fall. Also wenn, dann hat das Hand und Fuß, was wir da von uns geben.
+00:43:28.947 --> 00:44:10.587
+<v SPEAKER_4>Eine verdachtlose Speicherung von Telekommunikationsdaten hat nicht zu erfolgen. Also ganz klar nicht. Natürlich können wir nicht dagegen angehen, wenn es einen richtigen Beschluss gibt. Und wenn jemand verdächtigt wird, Straftaten nach Katalog im 100a, ist das nebenbei bemerkt, ist die Liste dieser besonders schweren Straftat, auch wenn die schon ganz schön lang ist. Da kann man natürlich sagen, naja gut, wenn da jemand eine Straftat begeht und dann wird er abgehört, um ihn dazu zu überführen, da kann man schwer was gegen tun. Aber, dass verdachtlos gespeichert wird und dann noch nicht mal, weder technisch noch juristisch, richtig sichergestellt ist, dass solche Daten nicht in fremde Hände fallen, das kann es nicht sein.
 
-01:45:58.157 --> 01:45:59.697
-<v SPEAKER_1>Was sind jetzt bei euch konkret die nächsten Schritte?
+00:44:10.787 --> 00:44:26.227
+<v SPEAKER_2>Okay, aber ich wollte es noch mal klar machen, weil ich glaube, dass viele Leute immerhin das sozusagen beide Extremen verstehen. Ihr seid nicht dagegen, dass Telekommunikationsmittel überhaupt gar nicht benutzt werden, um Verbrecher ein Ding festzumachen, sondern ihr seid dagegen, dass das von Verdachtslos halt gespeichert wird.
 
-01:45:59.737 --> 01:47:26.597
-<v SPEAKER_2>Die nächsten Schritte ist das Cyber-Hilfstab-Konzept weiterentwickeln. Wir haben jetzt nach der Defensive Con sehr viel Feedback erhalten. Input, außer Community, kritischen und konstruktiven, ganz toll. Wir sind dabei, diese Inhalte zusammen zu tragen und intern zu diskutieren, damit wir dann zur nächsten Version dieses Konzepts kommen. Das entsteht mehr oder weniger nach einem Konsensprinzip. Wenn wir uns alle finden, dass das so gemacht werden muss, dann schreiben wir das da so rein. Das dauert also alles ein bisschen so eine Änderung. Darüber hinaus beschäftigen wir uns mit diversen Themen, die der Cyber- und IT-Sicherheit zugrücklich sind und damit auch kritisch betreffend, aber im weiteren Sinne sind. Zum Beispiel haben wir jetzt gerade unseren Input zur Cyber- und Sicherheitsstrategie 2016 gegeben und in den Workshops teilgenommen zur Entwicklung der Cyber- und Sicherheitsstrategie 2021 im BMI. Das war ganz spannend. Und jetzt, wo wir die Berichte der Workshops heute bekommen haben, sind da auch ein paar Sachen tatsächlich hängen geblieben. Das möchte ich sagen, war Lobbyismus, wie er funktioniert und funktionieren sollte, das haben wir genau richtig und gut gemacht. Und das machen wir und dann schreiben wir Blogposts und versuchen, das in der Öffentlichkeit zu platzieren. Gastartikel, wir kriegen natürlich wieder TTC auch sehr viele Presseanfragen von Leuten, die irgendwas wissen wollen zu irgendwas. Manchmal beantworten wir die, manchmal schaffen wir das nicht.
+00:44:27.367 --> 00:44:56.067
+<v SPEAKER_3>Es gibt zwei Dinge. Das eine ist eben, was Andy gesagt hatte, das Verdachtslose speichern, das andere ist halt immer die Verhältnismäßigkeit. Also ich weiß nicht, wer auf die Idee kommt, dass das Auswerten von 300.000 Personen, 800.000 Datensätze, 2 Millionen Datensätze, dass es in irgendeiner Art und Weise verhältnismäßig ist, über die Straftaten, die wir da reden. Da reden wir über, wie viele Täter sollen da ermittelt werden? 1, 2, 3, 4, eine Handvoll. Und dafür überwachen wir 300.000 Menschen. Wo ist da die Verhältnismäßigkeit?
 
-01:47:28.677 --> 01:47:43.717
-<v SPEAKER_1>Zwei Zeitfragen noch. Die eine ist, in welchem Zeitrahmen rechnet ihr mit dem Projekt? Also ist das so nächste Bundestagswahl, dann die Leute anquatschen, dann zwei Jahre später steht das Ding? Oder ist das eher sowas wie, das dauert alles, wir planen mal jetzt vorsichtig die nächsten zehn Jahre ein.
+00:44:56.947 --> 00:45:29.967
+<v SPEAKER_2>Okay, ihr könnt übrigens, wenn ihr euch dazu äußern wollt, auch gerne hier anrufen. 0331 77 97 21 0 ist die Nummer. Falls ihr denkt, ach nee, wir brauchen noch viel mehr Vorratsdatenspeicherung oder vielleicht gar nichts, könnt ihr gerne heute ihre Meinung dazu sagen. Solange ihr euch überlegt, ob ihr das machen wollt, wollte ich hier zu dem zweiten großen Punkt auf unserer Liste kommen. Das ist der sogenannte IMSI Catcher, der möglicherweise auch in Dresden zum Einsatz gekommen sein könnte. Das weiß man nicht, aber das ist auf jeden Fall eines dieser Werkzeuge, die man zur Mobiltelefonsüberwachung benutzen kann. Was ist das? Was macht der? Kann ich mir den auch selber basteln?
 
-01:47:44.717 --> 01:48:16.217
-<v SPEAKER_2>Ich glaube, jederzeit Angabe ist unseres. Wir reden mit Menschen in Behörden und hoffen, dass wir das nicht beschleunigen können. Eigentlich müsste man so ein Projekt, das ist unser Anlass nach hier vor, über Deep-State-Lobbying machen. Wenn wir die gesamte mittlere Ebene von allen relevanten Behörden überzeugt haben, dass das die richtige Idee ist, wird das von unten hoch gereicht. Und dann wird das irgendwann in einem Omnibus-Gesetz durch den Deutschen Bundestag gehen, wo 120 andere Gesetzesänderungen auch noch mit drin sind. So wie die Behörden das halt so machen.
+00:45:31.847 --> 00:46:32.507
+<v SPEAKER_3>Ja, das kann man definitiv. Worum geht es dabei? Zunächst mal vielleicht die Begrifflichkeit. IMSI ist die International Mobile Subscriber Identity. Das ist so etwas wie die Seriennummer der SIM-Karte. Das heißt eine eindeutige Nummer, die deinem Mobilfunkvertrag zugeordnet ist. Und die mit deiner Telefonnummer assesiert ist. Und das handelt sich um ein Gerät, was eine Basisstation vorgaukelt. Das heißt simuliert. Man startet dieses Gerät, es verhält sich wie eine normale Funkzelle des Netzbetreibers, ist aber keine. Man bringt dann die Telefonen dazu, in diese Zelle hineinzuwechseln, in diese falsche Zelle. Und dann weiß man natürlich, welche Telefone in der Umgebung sind. Diese Telefone suchen sich immer das stärkste Signal, die beste Zelle. Und wenn man also vorgaukelt, man sei die beste Zelle, und man sei die Telekom oder Vodafone oder einer dieser Netzbetreiber eben, dann werden die Telefone in der Umgebung dann alles sagen, eine starke Zelle, da buchen wir uns jetzt mal ein.
 
-01:48:16.237 --> 01:48:24.357
-<v SPEAKER_1>Halt! Ich finde den Begriff Deep-State schwierig, weil der aus der Verschwörungserzählung kommt. Was genau meinst du damit?
+00:46:32.527 --> 00:47:25.387
+<v SPEAKER_2>Ich möchte an dieser Stelle eine ganz kurze Anmerkung machen zu, wir reden hier die ganze Zeit über GSM-Telefonie, wir reden jetzt über Funkzellen und können das nicht ganz genau erklären, aber es gibt ja schon viele andere, ältere Chaosradios, wo das genau passiert. Also wenn ihr euch das noch mal genau raufhelfen müsst, könnt ihr das gerne hören, chaosradio.de, da gibt es die ganzen alten Folgen. Chaosradio ccc.de Das auch, aber ich glaube, das andere funktioniert. Egal, ihr wisst Bescheid, könnt da hingehen. Und so, also kurz gesagt, ein Handy, wenn ich das anmache, bucht sich das, heißt sagen, in eine Zelle ein, das heißt irgendwo steht ein Funkmast und da kommuniziert das Handy mit. Ich nehme jetzt so einen Imseacatcher mit und dann denkt mein Handy, okay, das ist die Zelle. Das fragt mich natürlich, Moment mal, wenn ich normalerweise in einem WLAN kommuniziere, dann wird doch irgendwie sichergestellt, dass ich mit der richtigen Gegenstelle kommuniziere. Wieso kriegt denn das Mobiltelefon nicht mit, dass ich jetzt gerade mit jemandem kommuniziere, der überhaupt gar nicht zum Mobilfunkbetreiber gehört?
 
-01:48:24.377 --> 01:48:32.397
-<v SPEAKER_2>Ich meine damit die unglaublich komplexen Verschränkungen der unteren und mittleren Behörden-Ebenen über alle Länder und Bundesbehörden hinweg.
+00:47:25.587 --> 00:49:36.307
+<v SPEAKER_4>Also das liegt an einer Eigenart des GSM-Protokolls. Da ist quasi ein Fehler geschehen, kann man sagen. Bei der Erstellung des Protokolls, andere sagen, da ist kein Fehler gestehen, sondern das wurde absichtlich so gemacht, die sogenannte einseitige Authentifizierung. Das heißt, wenn ein Mobiltelefon sich beim Netz anmeldet über die Luftschrittstelle, also über einen Funkzellenmast, kann das Netz sehr genau und auch eindeutig überprüfen, ob das Mobiltelefon das behauptet, eine bestimmte INSI zu haben, das heißt, eine bestimmte Rufnummer zu haben, die einer INSI dann auch zugeordnet ist. Das ist cryptografisch überprüfbar quasi. Es gibt aber keinen Mechanismus andersrum, dass das Telefon auch feststellen kann, ob der Funkzellenmast, der behauptet zuständig zu sein, auch tatsächlich zum Netzbetreiber gehört. Das haben sie irgendwie vergessen, kommt vor. Man muss aber auch vielleicht sagen, der INSI Catcher ist noch die preiswerteste Variante unter den Gerätschaften, die die Behörden zur Verfügung stellen. Man kann damit auch noch eine Sache machen, die noch nicht erwähnt wurde. Nicht nur, dass die Telefon sich da einbuchen und dann hat man ihre INSI, sondern man kann das auch, das ist in Brockdorf und in anderen bei Demonstrationsgeschichten geschehen, wenn sich da so 5000 Teilnehmer irgendwo befinden, man schaltet so ein Ding an mit einer entsprechenden Sendeleistung, dann buchen die sich alle ja in das Gerät ein. Das heißt, sie sind nicht mehr im Netz, sind auch nicht mehr anrufbar. Und wenn man dann das Gerät wieder ausschaltet, versuchen sich 5000 Mobiltelefone gleichzeitig wieder im Funknetz einzumelden, was auch daran scheitert, dass da die Lastverteilung nicht immer so funktioniert, wie man das euch mal vorgestellt hat, weil das kein Fall ist, der vorgesehen wurde, dass da 5000 Leute auf einmal ihr Telefon quasi anschalten. Das heißt, da gibt es Probleme, das nennt man dann technisch allerdings nicht ein Problem, sondern man nennt das eine Möglichkeit, nämlich die Null of Service, also die Verfügbarkeit des Services einzuschränken. Das kann ja auch ein Feature sein, wenn man das sozusagen als Polizeiseite betrachtet. Keiner kann anrufen, es gibt keine Zeugen, keiner kann einen Anwalt herbeirufen. Man kann keiner kann Bilder senden vielleicht von Dingen, die gerade geschehen. Also man muss ja immer die Perspektive betrachten. Für die einen ist es ein Problem, für die anderen ist es ein tolles Feature.
 
-01:48:33.377 --> 01:48:51.037
-<v SPEAKER_1>Das muss man vielleicht wissen. Also staatliche Behörden werden gelenkt durch die parteipolitische Besetzung, die im Rahmen einer Bundestagswahl stattgefunden hat. Da arbeiten aber ganz viele Leute, die da immer arbeiten, egal wer sozusagen gerade eine Regierung ist.
+00:49:36.967 --> 00:50:37.567
+<v SPEAKER_3>Ja gut, ob ich da jetzt so weit gehen würde, ist nochmal eine andere Frage. Aber was vielleicht noch relevant ist bei dieser ganzen Frage, warum hat man das vergessen? Das ist ganz einfach. Das ist entwickelt worden und man hat grundsätzlich immer die Sicherheit des Netzanbieters berücksicht, aber nie die Sicherheit des Anwenders. Der Anwender, wen interessiert das? Wen interessiert dieser Kunde? Der sollte völlig zahlen und den Mund halten. Der Netzbetreiber muss sicher davor sein, also um einfach Rechnungen stellen zu können und seine Dienste nachweislich, dass sie genutzt wurden, muss der Netzbetreiber feststellen können, ob dieser Teilnehmer, der behauptet, ein bestimmter Teilnehmer zu sein, ob das tatsächlich diese SIM-Karte und dieses Telefon ist. Dafür muss ein Mechanismus da sein. Sonst gibt es Missbrauch, sonst gibt es Betrug und Leute, die auf fremder Gründen telefonieren usw. Um das auszuschließen, hat man technische Maßnahmen in das GSM-System eingebaut. Aber irgendwie Dinge, die dem Schutz des Anwenders dienen.
 
-01:48:51.057 --> 01:48:58.937
-<v SPEAKER_2>Und wenn alle eine Meinung sind, dass man ein Thema jetzt aufmachen muss und anfangen muss, dann passiert da zumindest irgendwas. Dann bringt das irgendwann mit zur Politik durch.
+00:50:37.587 --> 00:50:53.047
+<v SPEAKER_4>Man könnte es aber auch noch zugute halten, in 3G, also in der Weiterentwicklung des GSM-Standards ist jetzt auch eine Netzautentifizierung vorgesehen. Insofern ist das schon eingestanden, dass das ein Problem war.
 
-01:48:58.957 --> 01:49:00.117
-<v SPEAKER_1>Was ist ein Omnibusgesetz?
+00:50:53.067 --> 00:51:26.627
+<v SPEAKER_3>Ich habe aber auch an sich Jahre später hat man dann doch mal das System verbessert, nicht wahr? Und dann hat man es auch gleich so verbessert, dass man sich wieder eine Lücke eingebaut hat. Eine Blöde, ist aber auch ärgerlich. Und zwar, wir sind jetzt hier in der Technik, ich werde noch den einen Satz erwähnen. Nämlich, wenn so ein Telefon sich versucht, auf 3G, also dem neuen Mobilfunksystem einzubuchen, auch als UMTS bekannt, dann kann eine 3G-Zelle, bevor sie sich automatisiert hat, kann sie sagen, ach schalt doch mal auf dieses alte GSM um. Und dann habe ich natürlich wieder die Probleme von GSM.
 
-01:49:00.877 --> 01:49:22.397
-<v SPEAKER_2>Ein Omnibusgesetz ist, wenn das BMI einmal eine Rundmeldung schreibt an alle nachfolgenden Behörden und sagt, was braucht ihr Jungs? Dann schreiben die einmal alle ihre Wünsche auf. Dann werden diese Wünsche zusammencopy pastet. Dann werden da in einem Gesetz 120 Gesetze angefasst oder so was und geändert. Und dann geht das in den Bundestag. Wird nach elf Kurs durchgewunken und dann haben die Behörden, was sie wollen.
+00:51:27.247 --> 00:51:31.707
+<v SPEAKER_4>Ja, aber es gibt Mobiltelefone, die kann man dazu zwingen, nur im 3G zu bleiben.
 
-01:49:23.697 --> 01:49:39.097
-<v SPEAKER_1>Also ich lerne nicht nur, dass es so weit, dass es einen schwarzen Neustart gibt. Ich lerne auch noch Dinge über das Gesetz, die ich gar nicht wissen wollte. Anyways, wenn man jetzt bei euch mitarbeiten will, wie viel Zeit muss man mindestens bereit sein, sich ans Bein zu nageln dafür?
+00:51:31.727 --> 00:51:32.987
+<v SPEAKER_3>Das glaubst du deinem Telefon?
 
-01:49:40.517 --> 01:50:25.917
-<v SPEAKER_2>Na ich hätte jetzt schon gesagt, pro Woche vier bis acht Stunden sollte man einplanen. Das ist realistisch, oder Ijon? Ich finde, das ist halt ein bisschen hochgegriffen. Also so pro Woche vier Stunden fände ich cool. Wir machen zwei Wochen Mammel, ein, zwei Stunden dauert das. Alle zwei Wochen ermammeln wir zusammen und reden über, was wir vorhaben. Und wenn man dann darüber hinaus dann noch mal jede Woche so ein, zwei, drei Stunden in die AG stecken kann, dann ist das schon geil. Ich würde denken, dass du die, vielleicht zehn Stunden im Monat. Würde ich sagen. Du hast es doch noch mitgekriegt, verdammt.
+00:51:33.007 --> 00:51:36.987
+<v SPEAKER_4>Ja, das habe ich ausprobiert mit einem Monitorgerät.
 
-01:50:25.937 --> 01:50:30.617
-<v SPEAKER_1>Der Zerfall der AG-Kritis begann an dieser Stelle. Nein, Quatsch.
+00:51:36.987 --> 00:51:48.107
+<v SPEAKER_2>Okay, ich habe aber auch, also ich habe jetzt nur Wikipedia geklickt im Vorfeld, aber da habe ich eben gelesen, dass diese Authentifizierungsmechanismus bei UMTS auch optional ist. Also der Betreiber muss den nicht anmachen.
 
-01:50:30.697 --> 01:50:52.677
-<v SPEAKER_2>Da gehört schon mehr zu. Alles ehrenamtlich, alles freiwillig. Und wenn es mal an drei Wochen nicht geht, oder ein Monat oder drei, weil irgendwie Stress auf Arbeit ist, oder in der Familie, dann ist das so. Und sagt man Bescheid kann halt nicht, dann ist es halt okay. Alles ehrenamtlich. Das ist jetzt nicht so das harte Kriterium. Aber so eine gewisse Erwartaushaltung steigt da schon hinter. Wenn du mitmachen willst, dann machst du halt auch was und hörst dich nur zu.
+00:51:48.127 --> 00:52:03.807
+<v SPEAKER_3>Das ist so meines Kenntnisses nach nicht wirklich korrekt. Ja, es gibt bestimmte Konstellationen, wenn man sehr alte SIM-Karten in neuen Telefonen hat und so, aber da, ne, ne, ne.
 
-01:50:52.697 --> 01:51:08.477
-<v SPEAKER_1>Ihr könnt beides machen. Ihr habt jetzt hier zugehört. Ihr könnt dann bis mitlesen in den Show Notes. Verlinken wir euch die passenden Twitter-Accounts und die Webseite Ijon und HonkHase. Vielen Dank, dass ihr da wart und das so ausführlich erklärt habt. Und auch meine Fragen alle beantwortet habt. Danke schön.
+00:52:03.827 --> 00:52:06.327
+<v SPEAKER_2>Also generell ist UMTS sozusagen eine gute Idee, könnte man sagen.
 
-01:51:08.497 --> 01:51:22.217
-<v SPEAKER_2>Das Konzept dazu, wo ihr all das noch ausführlicher und konkret und ohne Erinnerungslücken und sehr konsistent daher argumentiert aufgeschrieben findet, findet ihr auf der Ag Kritis Webseite auch. Show Notes. Vielleicht das Konzept da auch noch mal explizit verlinken.
+00:52:08.047 --> 00:52:20.487
+<v SPEAKER_3>Es ist besser, also aus Sicherheitsaspekten, die den Teilnehmer, die Sicherheit des Teilnehmens vor falschen Basisstationen beispielsweise, gesagt hat, ist es besser, aber nicht wirklich gut.
 
-01:51:25.437 --> 01:52:24.517
-<v SPEAKER_1>Profis am Werk, ne? und Lobby-Profis am Werk, merkt ihr selbst. Also, danke schön. Und ihr, liebe Hörerinnen und Hörer, an euch hab ich noch eine Frage, nämlich die letzte Folge vom Chaosradio. War ja ein ganz anderes Format, als wir das normalerweise haben. Das war so featuremäßig, wie ein verstehbarer Hof besucht, beziehungsweise Danimo hat das getan und daraus ein schönes Ding gebaut, wie ich zumindest finde. Trotzdem würde uns natürlich interessieren, interessiert euch so ein Format, würde euch das weiter anhören, oder lauft ihr mit Händen über dem Kopf aus dem Raum, wie Honk Hake es in dieser Sendung beinahe gemacht hätte? Also, lasst uns da gerne auf allen Kanälen, auf denen wir unterwegs sind, Kommentare zukommen, weil uns das natürlich interessiert, wie ihr das findet. Und das soll es für heute von mir auch gewesen sein. Vielen Dank an das Team, die das ganz hervorragend vorbereitet haben. Ich fand es tatsächlich ein bisschen gruselig, weil zwei Tage vorher die ganze Sendung stand und das passiert normalerweise nicht. Ich hätte gedacht, irgendwas explodiert. Und bevor es das tut, gehe ich jetzt und sage nur noch, lasst euch nicht überwachen und verschlüsselt immer schön eure Backups.
+00:52:20.947 --> 00:52:43.427
+<v SPEAKER_4>Na, es ist aber insofern besser, dass die Algorithmen, die eingesetzt werden, zur Verschlüsselung deutlich höheren Standard und deutlich technische, teurere Ausstattung, aufwändigerer Ausstattung für einen Angreifer erfordern. Aber hier reden wir jetzt gerade nur von Angriffen auf die Luftschnittstelle. Was die netzseitige Überwachung betrifft, also auch das, was in Dresden passiert ist, da gibt sich GSM und UMTS gar nichts.
+
+00:52:43.927 --> 00:53:08.027
+<v SPEAKER_2>Okay, das ist klar zu sagen. Wenn ich zum Anbieter gehe, dann sitze ich immer direkt an der Quelle, egal was der macht. Okay, jetzt muss ich mal kurz sortieren. Also IMSI Catcher gibt es. Genau, wir haben gerade schon festgestellt. Also man kann damit quasi einfach allen Telefonen, die da gerade in der Nähe sind, verbieten zu telefonieren, weil sie dann beschäftigt sind, sich wieder einzuloggen, wenn man den IMSI Catcher wieder ausmacht. Das kann man so lange machen, bis keiner mehr Bock hat. Dann kann man sozusagen, was kann man damit eigentlich machen? Also was habe ich denn für noch?
+
+00:53:08.047 --> 00:53:35.267
+<v SPEAKER_4>Es geht um die Identifikation der IMSIs und mit den IMSIs wiederum kann man die Teilnehmer identifizieren. Also wenn man wissen will, wer sich an einem Ort befindet und man hat die IMSIs, mit den IMSIs kann man sich aus der Netzbetreiberdatenbank die Rufnummern holen und über die Rufnummern dann entsprechend auch die Teilnehmerdatensätze, sprich das, was ich vorhin schon mal erwähnte, diese Schnittstelle, die Vorhandnisse, automatisierte Abfrage, das ist dann die Daten, die auch nach Gesetz erfasst werden müssen, Name, Vorname, Geburtsdatum, Anschrift und so fort.
+
+00:53:35.287 --> 00:53:44.567
+<v SPEAKER_2>Okay, das heißt, da habe ich dann diesen Punkt, wo ich dann nicht mehr hingehen muss zum Betreiber und sagen muss, mach mal Funkzahlenauswertung, sondern ich besorge mir quasi selber die anwesenden Rufnummern und frage dann automatisch ab, wer da war und habe dann schon mal einen Überblick.
+
+00:53:45.207 --> 00:54:55.967
+<v SPEAKER_3>Richtig, ja, das sind Möglichkeiten. Es gibt andere Dinge, wo man im Secature einsetzt, vielleicht mal ganz kurz die gängigen Fälle. Der eingängige Fall ist, dass man zum Beispiel nicht weiß, welche SIM-Karte oder was für ein Telefon eine zu überwachende Person benutzt. Also gerade wenn ich jetzt ein Krimineller bin und ich weiß, mit Telefonen wird viel überwacht und so, dann werde ich wohl kaum ein Telefon verwenden, was auf mich registriert ist oder was irgendwie mit mir assoziiert ist, sondern ich werde irgendwo halt ein Gebrauchtes mit einer gebrauchten Prepaid Sim, die noch auf jemand anders registriert ist oder irgendwelche solchen Sachen werde ich halt benutzen. Oder jeden Tag ein anderes Telefon verwenden, lauter solche Dinge, je nachdem wie paranoid man da ist. Und dann ist es sozusagen der Polizei oder der überwachenden Behörde nicht klar, was ist das jetzt, welche Telefonnummer benutzt der überhaupt, was für eine SIM-Karte benutzt der und deswegen können sie dann keine anderen Überwachungsmaßnahmen bei dem Netzbetreiber anträgen, weil sie wissen ja gar nicht, auf wen sie da überwachen sollen. Und dann benutzt man so einen IMSI-Catcher einfach, um herauszufinden, was für eine IMSI, also welche Identität benutzt dieser Mensch da gerade, um dann wieder zum Operator zu gehen und weiter zu überwachen. Das ist also ein ganz gängiges Einsatzszenario.
+
+00:54:55.987 --> 00:55:03.407
+<v SPEAKER_2>Aber wie mache ich das sozusagen? Ich kann ja nicht hingehen und sagen, okay IMSI-Catcher, catch mal das Telefon dort drüben.
+
+00:55:03.427 --> 00:55:24.487
+<v SPEAKER_4>Ja, doch ungefähr. Also wenn die Polizei beispielsweise eine Situation beobachtet und sie sieht die Leute telefonieren, weiß aber nicht die Rufnummern, dann können die sich in der Tat mit dem Geräte hinstellen. Sie müssen auch relativ weit ran bei einem IMSI-Catcher. Also 800 Meter ist so das technische, im städtischen Bereich, wo es aufhört dann effektiv zu sein.
+
+00:55:24.487 --> 00:55:26.547
+<v SPEAKER_2>Aber 800 Meter ist ja schon irgendwie gar nicht viel.
+
+00:55:26.567 --> 00:55:28.627
+<v SPEAKER_4>Genau. Ja, das ist das Maximum.
+
+00:55:29.127 --> 00:55:53.607
+<v SPEAKER_3>Aber was man da dann macht, ist man verfolgt diese Person. Also man, was weiß ich, der ist erst zu Hause, man sieht ihn da telefonieren, man weiß nicht, was er benutzt. Dann macht man da einmal kurz einen IMSI-Catcher an, sammelt alle IMSIs in der Umgebung ein, dann fährt er auf Arbeit, dann macht man das gleiche nochmal. Oder fährt er eben auch mit daher. Genau. Also man macht halt so zwei, drei solche Messungen und dann schaut man halt, welche Nummern tauchen bei allen drei Messungen auf. Die Wahrscheinlichkeit sagt, spätestens nach drei, vier Messungen weiß ich dann, wer das war.
+
+00:55:53.607 --> 00:57:21.752
+<v SPEAKER_2>Ich verstehe, also die gute alte Fußarbeit ist dann doch ein bisschen involviert. Okay, dann kann ich mit dem Imseacatcher herausfinden, wer womit telefoniert. Und was wir damit noch anfangen, das klären wir gleich. Ich muss jetzt erstmal kurz was erledigen. Chaos Radio heute, wie ihr hören könnt, zu Gast sind Andy Müller-Maguhn und Harald Welte von Chaos Computer Club und es geht heute um Mobilfunktelefonüberwachung und wir haben schon mal geklärt, was eine Funkzellenauswertung ist. Da werden einfach sogenannte Verkehrsdaten abgriffen beim Betreiber direkt. Reden haben über die Vorratsdatenspeicherung geredet, warum das, also wie man das macht, wann man das macht und ob das eine coole Idee ist und sind eher so zum Schluss gekommen ist. Nein, reden jetzt gerade über IMSI Catcher, haben da schon festgestellt, okay, man kann das benutzen, um rauszukriegen, wer mit einem bestimmten Telefon telefoniert. Jetzt habe ich, wie gesagt, vorher Wikipedia geklickt, gelesen, man kann den IMSI Catcher tatsächlich auch dazu benutzen, um zumindest einer einzelnen Person vorzugaukeln, das Telefon funktioniert ganz normal, also quasi man kann seine Telefonate durchreichen. Weil wenn ich es richtig verstanden habe, ist doch, wenn ich einen IMSI Catcher anmache, buchen sich die ganzen Telefone ein, aber dann ist der nicht im Netz, das heißt dann, also das Telefon funktioniert einfach nicht.
+
+00:57:21.772 --> 00:59:29.572
+<v SPEAKER_4>Der Begriff IMSI Catcher ist, muss man mal sehen, der stammt sozusagen aus der Frühzeit der Geschichte, wo vergleichsweise einfache Geräte den Polizeidienststellen und den Nachredendiensten angeboten wurden, um das Problem der Teilnehmeridentifizierung, das war tatsächlich das primäre Ziel zu ermöglichen. Mittlerweile gibt es noch zwei weitere Arten von Anlagen, die hier erwähnt werden müssen, damit man das im Kontext versteht. Das eine sind tatsächlich reine passive Abhöreinrichtungen. Das sind also Geräte, die hören wirklich nur zu, die senden überhaupt nicht und die entschlüsseln mit den mathematischen Müssen, vielleicht dann mit etwas viel Computing Power, sag ich mal, also mit FPGAs, das sind so schnelle Prozessoren, die darauf optimiert sind, diese spezifische Kryptographie zu brechen. Das heißt, das ist so bei den Nachrichtendiensten, bei anderen, wenn es darum geht, dass das Target, also der Mensch, der abgehört wird, absolut nicht wissen soll, dass das passiert, im Botschaftenbereich und so fort, wenn man da wirklich auch was riskiert. Den Polizeidienststellen muss man sagen, ist das aber ein bisschen egaler, sondern die benutzen das, was man dann semi-passiv nennt. Das heißt, das sind Geräte, die hören schon im Wesentlichen zu und intervenieren dann, wenn es darum geht, dass sie irgendeine Situation ermöglichen wollen. Beispielsweise ein Gerät von 3G auf 2G zu switchen, beispielsweise im Sie nicht nur in Erfahrung zu bringen, sondern damit auch irgendwas zu machen, zum Beispiel das Telefon klingeln zu lassen oder irgendetwas. Wenn man so ein Gerät hat, dann kann man komplett simulieren, die Netzzelle zu sein, kann mit dem Telefon machen, was man will. Ich habe hier zufällig so eine Bedienungsanleitung von so einem Gerät vor mir, wo dann eben auch diese ganzen Features, dass man Gespräche abfangen kann, dass man die Gespräche rejekten kann, also dass jemand bekommt einen Anruf und dann wird dem Anrufer quasi simuliert, der hätte ihn jetzt weggedrückt, bis hin dazu, dass das Telefon überhaupt keine Anrufe, keine Nachrichten bekommt oder dass man Nachrichten, also eingehende Kurznachrichten, abändert, auch abgehende Kurznachrichten, dass die in dem Gerät quasi abgefangen werden.
+
+00:59:30.712 --> 00:59:46.132
+<v SPEAKER_2>Ganz kurze Punkte, die ich eigentlich erst mal nur wissen wollte, ist, dass dieses Gerät agiert, also der schöne Begriff ist doch Man in the Middle sozusagen, also ich habe mein Handy an, ich bin in so einem Imseacatcher semi-passiv irgendwie eingeloggt und ich kann ganz normal mein Telefon benutzen und ich merke das quasi nicht.
+
+00:59:46.312 --> 01:00:19.232
+<v SPEAKER_4>In einem rein passiven Gerät ja, das hängt total davon ab, wie die Konfiguration des Gerätes ist, was das Gerät tun soll. Wenn es dich in Anführungszeichen nur abhören soll, dann merkst du davon erst mal nichts, außer dass du bei deinem Telefon, wenn du jetzt genau hingucken würdest, nämlich im Monitormodus, wenn es einen hat, dass du vielleicht siehst, oha, das ist zwar eigentlich ein UMTS-Telefon und hier gibt es auch UMTS-Netz, aber irgendwie bin ich hier doch in einem 2G-Netz, also wo eben auch andere Algorithmen zur Verschlüsselung eingesetzt werden, die sich einfacher brechen lassen, um das wiederum abzuhören.
+
+01:00:19.732 --> 01:01:35.172
+<v SPEAKER_3>Ja, aber gut, vielleicht nochmal etwas einfacher eingestiegen. Ja, wir haben also ein Gerät, die einfachste Stufe ist der Imseacatcher. Wir bringen diese Identität der Telefone in Erfahrung. So und was man da aber zunächst sieht, sind nur die Einbuchversuche der Telefone. Ja, sein Einbuchversuch. Und dann kann ich als derjenige, der sozusagen diese falsche Basisstation kontrolliert, respektive die Software, die das tut, kann ich sagen, den schicke ich mal wieder zurück aufs normale Netz, den will ich gar nicht. Oder ich kann sagen, hey, das ist ja mein Target, den lasse ich jetzt mal rein in meine Zelle. Und dadurch kann man dann eben so selektive Sachen machen. Und wenn jetzt das Telefon einer Person in meiner falschen Basisstation eingebucht ist, dann kann ich diese ganzen Angriffe machen, die Andy beschrieben hat. Also mit ausgehende Angriffe woanders hin umleiten oder SMS schicken, die gar nicht stimmen. Oder was weiß ich, da kommt eine eingehende SMS an und da steht dann drin Treffpunkt, diese Uhrzeit, dieser Ort. Und dann schreibe ich halt eine andere Uhrzeit in einen anderen Ort rein, um den irgendwie da abzugreifen oder so. Also das sind halt alles Möglichkeiten, die man da hat ab dem Punkt, wenn man dann solche Main-in-the-Mittel-Angriffe erfährt. Da hat man dann nicht nur die falsche Basisstation, sondern man hat dann auch noch ein falsches Telefon sozusagen, was dann gegenüber dem echten Netz sich wie das Telefon des angegriffenen verhält.
+
+01:01:35.192 --> 01:01:51.072
+<v SPEAKER_4>Und im Fall Dresden lässt sich nicht ausschießen, dass die Polizei eben ein solches Gerät eingesetzt hat, einfach mit der Konfiguration alle im SIS reinzulassen und auch entsprechend passiv dann, wenn man die einmal identifiziert hat, die Verkehrsdaten aus der Luft abzugreifen.
+
+01:01:51.292 --> 01:03:01.272
+<v SPEAKER_3>Das geht eben auch. Da gibt es eine Aussage dazu, meines Wissens nach im Sächsischen Landtag wurde, ich weiß nicht mehr wer es war, aber seitens der Polizei oder des entsprechenden Innenministeriums usw. wurde bestätigt, dass ein Imsycatcher eingesetzt wurde auch. Zunächst wurde es bestritten, so wie in dieser ganzen Geschichte. Ja, zunächst über Überwachung, wir haben noch nicht überwacht. Und dann sind es irgendwie ein paar Hundert, ein paar Tausend, ein paar Zehn Tausend, ein paar Hunderttausend Datensätze und auch Leute. Dann sagt man, oh man war ja selber überrascht von der Menge der Datensätze, die eigentlich angefallen sind. Es ist ja auch völlig unlogisch, das ist eine große Demonstration, das ist mitten in der Großstadt, da erwartet man ja nicht, dass da hunderttausend Telefone sind. Das ist ja völlig überraschend. Ja und dann, völlig überraschend hat sich dann herausgestellt, dass da, ach da war ja auch noch die andere Abteilung, mit der haben wir ja gar nicht gesprochen und die hatte ja auch ein Imsycatcher zufällig im Rucksack. Also das ist halt der Stand der Information im Moment, was sie genau gemacht haben mit dem Imsycatcher, wofür sie ihn eingesetzt haben, wie oft, wie lange, wie viel Daten dabei angefallen sind und so weiter. Das ist halt alles noch nicht öffentlich bekannt, noch nicht irgendwie, sag ich mal, an die Öffentlichkeit gelangt.
+
+01:03:01.292 --> 01:03:32.512
+<v SPEAKER_2>Warten wir mal ab, vielleicht kommt da noch was bei rum. Ich hab jetzt sozusagen ganz gut entwickelt, was da alles rausgekommen ist. So ich würde jetzt gerne, bevor wir mit dem Imsycatcher weitermachen, weil ich würde dieses, mit dem kann man sich das selber basteln, gerne noch mal genauer klären. Wir haben jetzt einen Anrufer, der tatsächlich dem Aufruf vorhin gefolgt ist, um zu sagen, Vorratsdatenspeicherung ja oder nein. Und die Meinung beim Club ist ja relativ klar. Nee. Und er sagt, und das finde ich jetzt ganz spannend, ich würde es gerne kurz halten, aber ich würde es tatsächlich gerne mal kurz auch wirklich machen. Der sagt nämlich, der Jan, er hat keinen Mist gebaut, warum soll er dann dagegen sein und ist jetzt am Telefon. Tag Jan.
+
+01:03:33.472 --> 01:03:34.292
+<v SPEAKER_1>Hallo.
+
+01:03:34.312 --> 01:03:41.652
+<v SPEAKER_2>Du findest es also total super, wenn alle Leute sechs Monate lang ihre Verkehrsdaten gespeichert kriegen. Und zwar weil?
+
+01:03:41.652 --> 01:04:16.792
+<v SPEAKER_1>Ich habe mich jetzt nicht so intensiv mit dem Thema beschäftigt, was Pro und Contra betrifft, aber ich habe nichts verbrochen. Und wenn auch nur der Hauch einer Chance besteht, damit irgendeinen Terroristen und sei es die Chance einer von 300.000 oder einer von drei Millionen oder irgendeinen, der in seinem normalen Job was total Ehrenwertes macht, aber nachts irgendwo Kinderpornografie runterlädt, den zu erwischen, dann finde ich das in Ordnung. Und derjenige, der das mit den Kindern meinetwegen macht, der wird vielleicht nicht fünfmal am Tag sein Handy wechseln.
+
+01:04:20.032 --> 01:04:25.092
+<v SPEAKER_2>Okay, das ist sozusagen so eine ganz klassische Extremargumentation, die anda bringt. Bitte.
+
+01:04:25.112 --> 01:05:17.292
+<v SPEAKER_4>Ja, was soll ich dazu sagen? Also in Bezug auf die Kinderpornografie, das ist ja in der Tat auch das Argument, was es war schon in EU-Papieren von 1996. Es war gesagt, das ist das wunderbarste Argument, um öffentliche Zustimmung zu bekommen, weil gegen Kinderpornografie sind alle. Das ist also natürlich konsensual. Man muss aber auch mal ein bisschen sehen, worum reden wir hier. Da müssen wir jetzt in die Materie einsteigen. So geht es um Missbrauch von Kindern oder geht es um Betrachten von Bildern. Verhindert man tatsächlich, dass Kinder missbraucht werden, wenn man diejenigen verfolgt, die sich solche Bilder angucken? Und ist das auch eine valide Rechtfertigung, um jetzt gleich mal alle Daten der gesamten Bevölkerung in Bezug auf ihr Telekommunikationsverhalten zu speichern? Weil darüber reden wir bei der Vorratsdatenspeicherung.
+
+01:05:17.812 --> 01:05:22.272
+<v SPEAKER_3>Wir möchten jetzt nicht eine Diskussion über Pornografie und Kinderpornografie und was auch immer halten.
+
+01:05:22.292 --> 01:05:25.852
+<v SPEAKER_4>Aber wenn das Argument kommt, kannst du es ja nicht komplett...
+
+01:05:25.872 --> 01:05:27.612
+<v SPEAKER_1>Mir geht es um jegliche Straftaten.
+
+01:05:27.972 --> 01:05:28.652
+<v SPEAKER_4>Jegliche?
+
+01:05:29.912 --> 01:05:35.332
+<v SPEAKER_1>Ja, also wer eine Straftat begeht, dafür gibt es ja Gesetze. Ich stimme natürlich zu.
+
+01:05:35.352 --> 01:05:50.952
+<v SPEAKER_4>Aber da hat ja Goethe, also Entschuldigung, da muss ich aber unterbrechen, weil dazu hat Goethe wirklich das Wichtige gesagt, wenn man alle Gesetze studieren würde, dann hätte man ja gar nicht mehr die Zeit, sie zu übertreten und dagegen zu verstoßen. Also wirklich jede Gesetze, wow.
+
+01:05:50.972 --> 01:06:16.172
+<v SPEAKER_2>Also ich möchte mal kurz sagen, Jan, also deine Argumentation zu Ende geführt, ist ja der Punkt, dass du sagst, wenn jemand kein Verbrechen begangen hat, hat er ja vor einer Vorratssattenspeicherung nichts zu befürchten. Du meinst sozusagen, dass es keine negativen Einflüsse auf einen normalen Menschen hat, wenn eine Vorratssattenspeicherung stattfindet. Da gibt es, glaube ich, eine andere Ansicht.
+
+01:06:16.372 --> 01:06:30.372
+<v SPEAKER_3>Ja, also ich möchte nur ganz kurz, bevor ich noch auf andere Punkte komme, dann mal sagen, gut, Filesharing ist ein Verstoß gegen Urhebergesetz, ist damit eine Straftat. Das heißt also jeder, der irgendwie mal ein Musikstück kopiert, unsrechtenmäßig, wäre dann also demnach schon irgendwie da drunter.
+
+01:06:30.392 --> 01:06:31.752
+<v SPEAKER_2>Hat doch noch nie jemand gemacht.
+
+01:06:32.092 --> 01:07:19.872
+<v SPEAKER_3>Ja, gut, ansonsten ist halt das Problem, dass diese Daten halt Bewegungsprofile auch enthalten und sehr viel Information über die einzelnen Personen. Die Frage ist dann eben, wer kann da drauf zugreifen? Ja, solche Datenbestände, wenn die erstmal irgendwo liegen, da gibt es große Interessen. Da gibt es vielleicht mal einen korrupten Polizeibeamten, der es dann natürlich auch wieder sich strafbar macht, aber der die Daten für was anderes benutzt. Es gibt vielleicht kriminelle Leute, die sich Zugang zu diesen Daten verschaffen. Und es sind halt schon sehr persönliche Dinge. Ja, da weiß man halt, ist jetzt jemand, keine Ahnung, wenn es jetzt um die Politik geht, ist jetzt jemand irgendwie, war der in dem Bordell oder nicht um die oder die Uhrzeit? Ja, und dann kann man da wieder einen öffentlichen Skandal draus machen und irgendwie, was weiß ich, da sozusagen die politische Karriere von Leuten beenden, nur weil man weiß, dass sie in einem bestimmten Ort waren, so in einer bestimmten Uhrzeit.
+
+01:07:19.892 --> 01:09:20.332
+<v SPEAKER_4>Also man kann mit den Daten, die man bemerkt, auch noch ganz andere Sachen machen. Wenn man jetzt mal über Wirtschaftsspionage oder Methoden redet, um irgendwie Straftaten zu begehen. Es sind ja hochinteressante Daten, wer wann wo ist. Es gab einen Fall in Köln vor Jahren, wo ein Mitarbeiter einer Bank, der dafür zuständig war, Überwachungsvideos auszuwerten, ein Muster bei einer bestimmten Filiale entdeckt hatte. Das funktionierte so, dass die Leute da mal mit dem Auto vorfahren konnten. Es war so eine Drive-In-Filiale quasi. Und es gab so ein Muster, wie die Kunden sich verhalten haben. Die sind also mit ihrem Auto vorgefahren, den Schlüsselbund noch in der Hand, haben den auf einen Kontostandsdrucker gelegt, ihre Karte reingeschickt, sich einen Kontostand ausdrucken lassen, dann weiter zum Geldautomaten, im PIN-Code eingeben, sich ein bisschen Kohle gezogen und sind damit da weitergefahren. Und was der gemacht hat, war, mit einem fein mechanisch begabten Freund zum einen aufgrund der Überwachungsvideos nach Schlüssel erzeugt haben, aufgrund der hochauflösenden Videos, die er von den Schlüsseln hatten, und zum anderen aufgrund der Daten, wann die Leute das nächste Mal in der Filiale waren, mit wiederum einem kleinen Netzwerk von Kumpels, den Leuten die Wohnung ausgeräumt hat. Und das ist vielleicht mal so ein kleines Beispiel, was klar macht, dass so Daten, die anfallen, in sogenannten Überwachungsvorgängen noch lange nicht dazu da sind Sicherheit zu erhöhen, sondern im Gegenteil hochgradig gefährlich sind, um Straftaten zu begehen, also um Unsicherheit quasi auszubauen. Und wir reden hier davon, wenn wir wirklich alle Vorratsdaten, also alle Daten der Telekommunikationsvorgänger, dann weißt du, wer mit wem Kontakt hat, du kannst Beziehungen, wirtschaftliche Verflechtung, alles Mögliche analysieren. Und das ist nicht nur für konkurrierende Unternehmen hochinteressant, sondern auch in menschlichen Zusammenhängen. Und ich will nicht in einer Gesellschaft leben, wo ich nicht mehr weiß, wer was über mich weiß. Und das genau ist ja die Begründung von Datenschutz überhaupt gewesen, informationelle Selbstbestimmung, dass man gesagt hat, wenn Leute nicht mehr wissen, was andere über sie wissen, dann werden sie sich nicht mehr so verhalten, wie sie sich verhalten und werden auch ihre demokratischen Rechte zu protestieren, sich zu organisieren und sofort nicht mehr wahrnehmen. Und darum geht es.
+
+01:09:23.432 --> 01:09:27.272
+<v SPEAKER_2>Jan, siehst du möglicherweise ein, dass es da auch eine Gegenargumentation gibt?
+
+01:09:27.472 --> 01:09:47.312
+<v SPEAKER_1>Logisch, keine Frage. Und dass die Kontrollmechanismen, dass das verstärkt werden muss, also wenn ich jetzt habe das jetzt von der Demonstration in Dresden das erste Mal gehört, aber dass da natürlich ein Parlamentarier geben muss, der dort Einblick bekommt und nicht hingehalten wird, also das versteht sich von selbst. Also gleich ist es ja mit dem Geheimdienst, Ausschuss und so weiter und so fort.
+
+01:09:47.572 --> 01:10:39.692
+<v SPEAKER_2>Okay, also ich empfehle dir einfach noch mal den Anfang der Sendung zu hören. Da haben wir schon mal ganz genau erklärt, wie sicher Behörden diese Daten verwalten hier anfangen. Und einen Tipp, Jan, vielen Dank für deinen Anruf. Einen Tipp würde ich da auch noch geben, in eine Diskussion, die schon jahrelang geführt wird einzusteigen mit. Ich habe mich jetzt nicht so ausführlich damit beschäftigt, aber ich habe eine sehr extreme Meinung. Könnte man noch mal drüber nachdenken? So, hätten wir das also auch geklärt mit der Vorratsdatenspeicherung? Gut, ihr könnt weiterhin noch anrufen. Wie gesagt, also die Diskussion läuft schon eine Weile und wenn man eine extreme Meinung hat, dann sollte man die schon auch gut begründen können. Finde ich zumindest machbar. Zurück zum Imseacatcher. Wir hatten festgestellt, was man mit alles machen kann und ihr hattet ganz am Anfang gesagt, man kann sich ja auch selber bauen. Jetzt ist es ja bei dem selber Bauen immer so ein Sache. Also theoretisch könnte man sich auch einen Space Shuttle selber bauen. Das macht nur keiner, weil es so super komplex ist. Wie einfach ist es denn wirklich so ein Ding zu machen?
+
+01:10:40.492 --> 01:12:09.052
+<v SPEAKER_3>Ja, das ist heutzutage total leicht. Ich bin selber ja sehr aktiv im Bereich Open-Source-Entwicklung zu GSM-Protokollen. Und hab tatsächlich also mir im Laufe der letzten Jahre eben Software dafür geschrieben. Jetzt nicht speziell für den IMSEE-Catcher. Aber in dem Moment, wo ich Software habe, die ein Mobilfunknetz implementiert, kann ich natürlich ein echtes Netz implementieren. Ich kann aber auch ein falsches Netz implementieren. Wenn ich ein falsches Netz habe, habe ich die falsche Basisstation. Da gibt es eine Reihe von, also drei von Projekten in letzter Zeit, die das ein bisschen öffentlicher machen. Zunächst bleibt mir historisch, ich glaube so 1994 herum ist die erste öffentlich bekannte Dokumentation von dem Imseacatcher und zwar eine Patentschrift der deutschen Firma Rode & Schwarz, die sogenannte Virtual Base Station, die virtuelle Basisstation. Da geht es also eben genau um diese Man in the Middle Angriff, den wir schon beschrieben haben, den sie da machen. Das heißt also, sei mal technisch bekannt, wie das funktioniert, öffentlich ist spätestens seit 1994, seitdem es dieses Patent gibt. Dann gibt es eine ganze Reihe von Firmen, diese ganze Sicherheitsindustrie, von der Andy von vorhin schon gesprochen hatte, die kommerzielle Geräte verkaufen in dem Bereich. Manche davon verkaufen das halt nur an Behörden, sag ich mal. Ja, weil die Frage ist, was sind das für Behörden? Und wenn es jetzt, was es sich der Pakistanische Geheimdienst hat, ist es dann auch eine legitime Behörde, die sowas gekauft hat. Die können das dann nach Deutschland mitbringen, können da irgendwelche Forschungen, also irgendwelche Spionage damit anstellen. So ist immer die Frage. Ja, nur Behörden heißt halt auch, naja, Behörden jedes Landes.
+
+01:12:10.292 --> 01:12:14.332
+<v SPEAKER_4>Die pakistanische Regierung ist ja zugleich ein schlechtes Beispiel. Die sind doch bei jedem Zweifel erhaben.
+
+01:12:14.352 --> 01:12:43.652
+<v SPEAKER_3>Ach so, ja, das wissen wir. Ja, deswegen habe ich ja dieses Beispiel gewähnt. Ja, können auch die amerikanischen Freunde ansprechen. Aber jedenfalls will ich mal gesagt haben, gut, es gibt eine Industrie, es gibt eine Branche, wo man die kaufen kann. Da gibt es seriösere Anbieter, da gibt es weniger seriöse Anbieter. Das heißt, wenn ich ein bisschen Geld auf der Tasche habe, dann kann ich mir so ein Ding auch einfach kaufen. Dann brauche ich nicht selber bauen. Hausnummer? Heutzutage, denke ich, ist man inzwischen im fünfstelligen Bereich angekommen. Vor ein paar Jahren musste man da schon noch so 100.000, 200.000 Euro irgendwie auspacken.
+
+01:12:43.672 --> 01:12:54.372
+<v SPEAKER_4>Aber wenn du jetzt über Nanozellen, Picozellen solltest du vielleicht auch noch reden. Das sind ja eigentlich auch BTS, also wie man sagt, Base Station Prinziper, die dasselbe machen und die nur entsprechend programmiert werden müssen.
+
+01:12:54.572 --> 01:12:57.172
+<v SPEAKER_2>Entschuldigung, Nanozellen bitte was?
+
+01:12:57.192 --> 01:13:18.472
+<v SPEAKER_3>Gleich. Diese Geldbeträge, die ich hier gesehen habe, das ist jetzt sozusagen die klassische Überwachungstechnologie-Anbieterindustrie, wo ich einfach hingehen kann, ich kaufe die irgendwie rundum glücklich Variante, ich kann nur Maus schubsen, ich weiß überhaupt nichts von der Technik, dann kann ich mir da was kaufen und das ist mit Schulung und allem drum und dran und dann funktioniert das. Ja, die Selberbau-Variante ist natürlich deutlich...
+
+01:13:18.492 --> 01:13:19.932
+<v SPEAKER_4>Auf die Behörde geeignet.
+
+01:13:19.952 --> 01:13:54.012
+<v SPEAKER_3>Richtig, auch ich, genau. Ja, jedenfalls wenn ich das selber bauen will, kann ich das deutlich leichter haben. Also ich kann mir Hardware kaufen, die inzwischen, sag ich mal, sich im Bereich von 1000 Dollar oder so bewegt, also was, was ich wirklich jedermann noch irgendwie leisten kann. Ja, das ist irgendwie zwei Smartphones, so ungefähr, vom Preis her. Also Hardware für den Betrag, dann benutze ich irgendwie Open-Source-Software, die für jedermann zur Verfügung steht, die muss ich noch ein bisschen richtig konfigurieren und muss noch hier und da ein bisschen was drehen, aber dann habe ich das Ganze.
+
+01:13:54.032 --> 01:13:55.192
+<v SPEAKER_2>Die gibt es aber auch schon.
+
+01:13:55.212 --> 01:14:18.212
+<v SPEAKER_3>Die gibt es schon, ja, das ist eben keine Imseacatcher-Software an sich, sondern es ist Software, die dir erlaubt, ein GSM-Netz zu betreiben. Da gibt es einmal das sogenannte Open-BTS-Projekt und auf der anderen Seite das Open-BSC-Projekt. Das sind beides Projekte, mit denen man sein GSM-Netz-Server betreiben kann. Und ein Imseacatcher, wie wir gerade erfahren haben, ist ja eigentlich nichts anderes als ein GSM-Netz, was nur sich falsch ausweist.
+
+01:14:19.052 --> 01:14:41.372
+<v SPEAKER_2>Also das hört sich jetzt an, wenn ich einen 1000 auf der Kante habe, dann hole ich mir so einen Teil, spiele ich Software drauf und dann geht es los. Jetzt ist es ja gerade bei Open-Source-Software so, dass es nicht immer so ganz einfach ist. Wie hoch muss denn der, also mein Fähigkeitswert sagen, also muss ich mich dann schon wirklich da reinknien? Oder ist es wirklich so irgendwie, ich klick mir so ein Ding im Shop und dann lese ich mir irgendwie drei How-To's im Internet durch und dann läuft es?
+
+01:14:41.392 --> 01:15:21.452
+<v SPEAKER_3>Naja, das kommt im Wesentlichen darauf an, so was für Know-How bringt man mit. Wenn ich jetzt mal sage, so ich bin irgendwie in der Fit, ich entwickele selber irgendwie Software, ich kenne Computersysteme, ich kenne mich ein bisschen mit Kommunikationssystemen aus, so in die Richtung, dann ist es natürlich nicht so super schwer. Dann würde ich sagen, bis es mal sauber funktioniert und getestet ist in ein paar Wochen oder so, jemand, der jetzt weniger Erkenntnisse mitbringt, der wird sicherlich einfach nur damit er weiß, muss erstmal verstehen, wie funktioniert dieses GSM Netz, was genau macht jetzt irgendwie so ein IMSI-Catcher, wie konfiguriere ich diese Software und so weiter, da würde ich dann schon sagen, es ist vielleicht im Monatsbereich, also ich sage mal im einstelligen Monatsbereich, was er da irgendwie an Aufwand hineinstecken muss.
+
+01:15:22.032 --> 01:16:33.812
+<v SPEAKER_4>Also ein Teil der Komplexität besteht sicherlich darin, dass man sich mal kurz einlesen muss, wie GSM tatsächlich funktioniert, also wie eben die Trennung der Frequenzbereiche, Organisationskanäle und so fort stattfindet, auch wie die Handoverprozeduren, also wie Telefone ihre Zellen wechseln und so fort, da muss man sich schon ein bisschen reinlesen. Und damit wollte ich auch ganz kurz noch einen Seitenschwenk eröffnen, nämlich abgesehen von der Variante, sich so eine kleine Zelle zu holen und sich die mit Open Software zu programmieren, gibt es auch noch die Variante des rein Passivens, erst mal zuhören, da gibt es Geräte, also kann man sich vorstellen wie ein Scanner, also wie ein Empfänger, der Vollprogrammierer ist, es gibt den sogenannten GNU Radio Entwicklungsstrang, das sind Geräte, die kosten zwischendurch auch so etwas 1500, 1200, ja, geht bei 1000 an inzwischen, gibt es auch billigere, bei 3000 Dollar, ja, und nächste Woche ist da ein Dollar dann ja eh, der US-Slot, die wird dann ja günstiger, und dann gibt es da auch schon teilweise Softwarekomponenten, Mit dem man zumindest da schon mal reinhorchen kann. Reinhorchen heißt jetzt nicht, sorry, klingt jetzt so, als wenn man dazuhören kann, kann man auch nicht, aber man kann sich dann schon mal das Protokoll angucken. Das heißt, man kann sich schon mal angucken, was in seiner Funktion so los ist.
+
+01:16:35.312 --> 01:16:41.752
+<v SPEAKER_2>Also als Vergleich sagen sie es, wie ein verschlüsseltes WLAN mitzuschneiden. Das heißt, du hast schon mal einfach alle Daten auf der Platte und dann kann man später mal gucken, was man damit macht.
+
+01:16:41.772 --> 01:16:43.372
+<v SPEAKER_4>Ja, es ist ja nicht alles verschlüsselt.
+
+01:16:46.392 --> 01:18:00.852
+<v SPEAKER_3>Ja, also es ist durchaus machbar. Das wurde ja auch inzwischen mehrfach demonstriert. Wir hatten am diversen ZTC-Kongressen dazwischen Vorträge und Demonstrationen, auch auf anderen Konferenzen in den USA im IT-Security-Bereich, ist das hinlänglich oft demonstriert worden, dass man sich nun echt mit extrem wenig Geld und wenig Aufwand irgendwie einen Imseacatcher selber bauen kann. Und das, was da passiert, ist ja nur, wie soll ich sagen, eine Demokratisierung dieser Technik und auf der einen Seite und auf der anderen Seite eben einfach ein Mehrbewusstmachen, dass das geht. Das ist nicht so, dass jetzt erst seit ein, zwei Jahren diese Technik verfügbar ist. Die Technik ist seit, wie gesagt, mindestens 1994 verfügbar. Es ist nur so, dass jetzt jeder sich selber ein Bild davon machen kann und sich davon überzeugen kann, wie funktioniert das. Und auch schon vor, was weiß ich, schon vor zehn Jahren habe ich Gerüchte gehört, dass die britische Presse, also die Tabloids irgendwie in England durchaus Imseacatcher auf Prominente ansetzen. Also dass die schon damals Imseacatcher hatten, weil sie halt einfach vielleicht die nächste große Story über das Königshaus und die Affären ist halt einfach so viel mehr wert als diese 100.000 Euro, die man für den Imseacatcher ausgeben muss. Da kann man mal leicht so ein Gerät kaufen, um irgendwie die Königsfamilie abzuhören.
+
+01:18:00.872 --> 01:18:19.872
+<v SPEAKER_4>Das ist ja auch bei News of the World nebenbei, wer merkt durchaus noch, im Moment geht es ja um das Abhören der Voice-Mailboxen. Das war ein vergleichsweise technisch primitiver Angriff, aber auch da ist noch nicht ganz raus, ob da nicht auch GSM-Abhörmaschinen benutzt wurden. Also bei den Mörderunternehmen.
+
+01:18:19.892 --> 01:18:27.872
+<v SPEAKER_2>Ich halte mal fest, Imsy-Catcher selber machen, fällt in die Kategorie aufwändigeres, komplexeres Hobby, aber ist auf jeden Fall machbar, wenn man will.
+
+01:18:29.452 --> 01:18:30.312
+<v SPEAKER_3>Also vielleicht noch dazu...
+
+01:18:30.332 --> 01:18:33.892
+<v SPEAKER_4>Ja, so laubsige Arbeiten und GSM-Abhören, das...
+
+01:18:33.912 --> 01:18:39.312
+<v SPEAKER_3>Vielleicht noch dazu, also inzwischen ist es auch so, dass es einige Bachelor- und Masterarbeiten in dem Bereich gibt.
+
+01:18:39.332 --> 01:18:41.712
+<v SPEAKER_4>Man findet im Netz schon auch...
+
+01:18:42.252 --> 01:18:55.252
+<v SPEAKER_3>Nicht, dass in den Arbeiten wirklich was Neues sind, stünde, aber da kann man auch das Niveau sehen. Ein Informatikstudent, der eine Abschlussarbeit schreibt, wenn man dieses Niveau hat technisch, dann schafft man es in jedem Fall.
+
+01:18:55.272 --> 01:19:11.892
+<v SPEAKER_2>Okay, alles klar, wisst ihr Bescheid, wo ihr verstehen müsst, wenn ihr euch einen eigenen IMSEE-Catcher bauen wollt. So, dann haben wir jetzt also die Funkzellenauswertung, dann haben wir den IMSEE-Catcher. Aber der IMSEE-Catcher macht ja schon so ein bisschen, wie heißt das, ich vergesse es immer wieder, semi-passiv?
+
+01:19:12.932 --> 01:19:23.812
+<v SPEAKER_4>Der IMSEE-Catcher ist irgendwie so ein einfacher Begriff, aber das ist tatsächlich das Primitivste der Geräte. Man redet ansonsten von passiven oder semi-passiven.
+
+01:19:23.832 --> 01:19:24.872
+<v SPEAKER_3>Oder auch semi-aktiven.
+
+01:19:24.892 --> 01:20:22.632
+<v SPEAKER_4>Oder semi-aktiven Dingern. Die machen dann eben, also die reinen Passiven, das ist auf der einen Seite, dass es einen programmierbaren Empfänger hat, der die Signale entsprechend rausholt und sortiert. Man muss ja sehen, dass so ein Mobiltelefon, wenn man eins abhören will, unter Umständen mehrfach während eines Gesprächs, wenn es sich bewegt, die Funkzelle und damit auch die Frequenz wechselt. Und die muss man quasi hinterher schalten, damit man das Gespräch voll abhören kann. Und dann braucht man noch Gerätschaften, um das Ganze zu dekodieren, also zu entschlüsseln. Es gibt ja drei verschiedene Algorithmen, die im GSM eingesetzt werden, um die Sprache zu verschlüsseln. Und dann gibt es noch A5, also die fangen alle mit A5 an. A50 ist eigentlich kein Algorithmus, es ist nämlich keine Verschlüsselung. Muss man trotzdem erwähnen, gibt es immer noch Länder und Mobiltelefone, die das komischerweise unterstützen, auch wenn anderes behauptet wird. Dann gibt es der Dominant im Einsatz, würde ich sagen, der Dominant ist A52, oder?
+
+01:20:22.652 --> 01:20:30.152
+<v SPEAKER_3>Nein, A51 ist der gängige Algorithmus. Also es gibt mehrere Algorithmen, aber da kommen wir jetzt eben auch in die Inhalte hinein.
+
+01:20:30.312 --> 01:20:47.392
+<v SPEAKER_2>Genau, darauf wollte ich hinaus. Da sind wir ja auch. Fast schon Ende der Sendung, also halbe Stunde haben wir noch, aber jetzt gibt es das Leckerli, das Dessert. Inhaltliche Überwachung, also ich möchte nicht nur wissen, wer da wo wann mit wem telefoniert wird, sondern ich möchte verdammt nochmal auch wissen, was hat der gesagt?
+
+01:20:47.412 --> 01:20:52.532
+<v SPEAKER_4>Also der A5.1-Algorithmus ist technisch schon durch, kann man sagen.
+
+01:20:52.552 --> 01:20:57.052
+<v SPEAKER_2>Technisch schon durch heißt sozusagen, existiert noch, aber es kann jeder Bastler ihn knacken.
+
+01:20:57.072 --> 01:20:58.192
+<v SPEAKER_3>Richtig, ja.
+
+01:20:58.212 --> 01:21:13.972
+<v SPEAKER_2>Warte mal, ich hab halt noch kurz einen Schritt zurück. Entschuldigung, kurz einen Schritt zurück. Also ich muss ja sozusagen, bevor ich diese Daten entschlüssel, muss ich an die ran kommen. Da gibt's ja sozusagen, hab ich drei Wege. Ich kann einerseits über diesen MC-Catcher gehen, also beziehungsweise dieses wie auch immer geartete Gerät, was Geräte, was diese Daten mitschneiden kann.
+
+01:21:13.972 --> 01:21:16.112
+<v SPEAKER_4>Ja, sagen wir einen Interceptor.
+
+01:21:16.132 --> 01:21:22.432
+<v SPEAKER_2>Ein Interceptor. Okay, kein MC-Catcher, ein Interceptor. Ist der dann genauso leicht zu bauen? Ja klar, ich muss einfach nur die Base Station machen.
+
+01:21:25.152 --> 01:21:29.772
+<v SPEAKER_4>Noch leichter eigentlich. Passiv oder semi-passiv?
+
+01:21:29.792 --> 01:21:30.512
+<v SPEAKER_3>Passiv.
+
+01:21:30.532 --> 01:21:34.472
+<v SPEAKER_4>Okay, rein passiv ist es tatsächlich, kannst du genug Radio nehmen und musst ihn nur programmieren.
+
+01:21:34.772 --> 01:21:39.012
+<v SPEAKER_2>Okay, dann hab ich so eine Art, der schneidet einfach mit, was du gerade an den Sender befroren hast.
+
+01:21:39.032 --> 01:21:41.512
+<v SPEAKER_4>Also ein Gerät für 1000 US-Dollar und ein bisschen Software.
+
+01:21:41.532 --> 01:22:17.492
+<v SPEAKER_3>Vielleicht nochmal für die Leute, die da mehr dazu lesen wollen, die frei erhältliche Open Source Software, die man dafür nehmen kann für dieses rein Mithören, nennt sich Air Probe, also wie Air, also die Luft und Probe, ja die Sonde, genau. Die Hardware, um die es da geht, die wir ansprechen, ist zum Beispiel das USRP, das ist das Universal Software Radio Peripheral. Das ist ein Gerät, was man an USB anschließt und was eine Antenne hat. Und das Gerät zusammen mit dieser Radio Software und dieser Air Probe Software kann man dann eben benutzen dafür.
+
+01:22:19.532 --> 01:22:28.192
+<v SPEAKER_2>Also ich nehme Hardware und schneide den GSM-Funk quasi mit, das ist die eine Variante, dann kann ich natürlich zumindest auf Schadlichstelle auch immer wieder zum Anbieter gehen und sagen Alter, gib mal einen Halter.
+
+01:22:28.212 --> 01:22:31.332
+<v SPEAKER_4>Ja, aber wie gesagt, das ist nicht...
+
+01:22:31.352 --> 01:22:34.272
+<v SPEAKER_2>Es geht erstmal nur darum, wie ich an den Halter rankomme. Das geht doch, oder?
+
+01:22:34.292 --> 01:22:41.872
+<v SPEAKER_4>Zum Netzbetreiber kannst du aber nur gehen, wenn du im Nachrichtendienst bist, in der Polizei, und nicht wenn du ein Hacker bist und deine Nachbar nachbehalten willst.
+
+01:22:41.892 --> 01:22:48.892
+<v SPEAKER_2>Wir haben ja die Sendung angefangen mit den Hacker. Ich würde schon gerne auch, dass wir wenigstens kurz dabei bleiben. Die müssen es aber vorher Bescheid sagen.
+
+01:22:49.372 --> 01:23:20.712
+<v SPEAKER_4>Also in den Netzen gibt es ja neben der Möglichkeit, die Verkehrsdaten und die erhobenen Daten in irgendeiner Form abzufragen, auch noch die sogenannten Lovel Interception, das heißt die Abhörmöglichkeiten, die vorgesehen sind, die setzen allerdings tatsächlich voraus, dass da gesagt wird, ok, dieser Teilnehmer wird abgehört, und dann wird immerhin in Echtzeit, also live quasi, werden die übertragenen Gespräche auch nochmal über eine Stelle, geschlossene Benutzungsgruppe im ISDN Netz, den Behörden dann übermittelt, um sie dort aufzuzeichnen.
+
+01:23:21.052 --> 01:23:31.812
+<v SPEAKER_2>Frage ist das sozusagen, die Polizei geht hin und sagt, wir möchten ab jetzt abhören? Das ist nicht wie dieses vollautomatische, ich frag mal eben abwärts in den Anschluss gehört, das muss schon sagen.
+
+01:23:32.952 --> 01:23:37.992
+<v SPEAKER_3>Also das ist auch wieder dieses richterliche Verfahren mit dem Vorbehalt, den wir vorhin ja...
+
+01:23:38.012 --> 01:23:40.912
+<v SPEAKER_4>Aber nicht bei den Nachrichtendiensten, da ist es kein richterliches Verfahren.
+
+01:23:41.052 --> 01:24:20.432
+<v SPEAKER_3>Das ist richtig, ja. Also gut, es gibt gesetzliche Anforderungen, warum, wer da hinkommen kann. Das sind die sogenannten berechtigten Stellen. Das ist auch ein bisschen das Vokabular hier mit reinzubringen. Also wir sprechen jetzt über die sogenannte Telekommunikations... Bedarfsträger ist auch Behörndeutsch. Im Gesetz steht die berechtigte Stelle. Wird auch in den ganzen technischen Richtlingen immer als BS bezeichnet, die berechtigte Stelle. Ja, die berechtigte Stelle kann also eben einer dieser Geheimdienste, die Polizei sein. Und was sehr interessant ist, was sie also alles geregelt haben zum Beispiel, ist, dass mehrere berechtigte Stellen gleichzeitig, und zwar bis zu drei gleichzeitig, können den gleichen abhören. Und die dürfen voneinander nicht wissen, dass sie alle den gleichen abhören.
+
+01:24:20.452 --> 01:24:26.292
+<v SPEAKER_4>Und Harald, du bist nicht auf dem letzten Stand. Das wurde erweitert. Das müssen jetzt fünf gleichzeitig abhören können ohne.
+
+01:24:26.572 --> 01:24:58.352
+<v SPEAKER_3>Ja, da hab ich wieder was verpasst. Es ist schon ein paar Jahre her, dass ich mir das alles durchgelesen hatte. Wir hatten da auch schon mal ein Chaosradio dazu gemacht, als es neu kam mit der TKÜV. Das sind also mehrere Stellen, die unanfänglich voneinander das gleiche Telefon abhören können und voneinander gegenseitig nicht wissen dürfen, dass die anderen abhören. So genau ist das alles geregelt. Da werden dann die Inhalte ausgeleitet. Das betrifft nicht nur die Gespräche, es betrifft genauso SMS oder E-Mails oder was auch immer man eben so tut, mit dem Telefon oder mit seinem Computer.
+
+01:24:58.372 --> 01:25:18.892
+<v SPEAKER_2>Das ist natürlich das Unaufwendigste, zumindest wenn das dann geklappt hat. Der dritte Fall, den ich mir aufgeschrieben habe, so stelle ich mir das zumindest vor, viele Leute haben ja Smartphones, also eher kleine Rechner als die alten Mobiltelefone. Da stelle ich mir vor, da könnte man einfach eine Software drauf spielen und dann damit mithören.
+
+01:25:18.912 --> 01:25:56.372
+<v SPEAKER_3>Da sind wir beim Thema Bundeszirianer oder die sogenannte Quellen-TKÜ. TKÜ für Telekommunikationsüberwachung, Quelle, weil das Telefon ist die Quelle der Kommunikation. Das hat man sich ausgedacht, weil die bösen Kriminellen und auch nicht Kriminellen, die haben sich ja erlaubt und erdreistet, Verschlüsselung einzusetzen. Also sowas wie um Gottes willen. Sie fangen an, ihre Kommunikation zu verschlüsseln. Und was müssen wir da machen? Wir müssen also Schadsoftware auf dem Endgerät installieren, um bevor der Verschlüsselungsvorgang aktiv wird in dem Gerät, die Daten noch abzugreifen.
+
+01:25:56.392 --> 01:26:24.032
+<v SPEAKER_4>Das ist also nachdem sie entschlüsselt wurden. Und das ist auch angefangen hat, dieses Problem erst in der Fläche tatsächlich ein Problem zu werden, durch Skype. Skype verschlüsselt zwar die Gespräche nicht so, dass Skype darauf kein Zugefetter, aber Skype ist eben keine in Deutschland beistutweise greifbares Unternehmen, das man mal so kurz dem Telekommunikationsgesetz unterstellen kann, weil die ja damit nicht mal Geld verdienen, sondern einfach nur Software im Netz verteilen.
+
+01:26:24.052 --> 01:26:26.552
+<v SPEAKER_3>Und Geld verdienen ist ja kein Punkt.
+
+01:26:26.572 --> 01:27:12.632
+<v SPEAKER_4>Na gut, geschäftsmäßig ist richtig. Aber der Punkt ist dann der, also die Quellen-TKÜ ist eigentlich schon Propagandabehördendeutsch. Im Gesetz heißt das ja nicht so, sondern das ist ja die Behauptung, dass man eben eine Telekommunikationsüberwachung an der Quelle machen würde. Da sind wir auch gleich wieder beim Bundesrujaner. Das ist nämlich dasselbe. Die technischen Dienstleister, wenn man jetzt im Netz danach googelt, dann sollte man nach Rimut Forensik Tools suchen. Und das ist auch eine Propagandalüge, weil Forensik heißt ja quasi Daten beweis-sicher zu erheben. Und das Problem bei so einem Projaner ist, dass man eben nicht mehr beweis-sicher sagen kann, welche Daten eigentlich durch den Verdächtigen in diesem Fall erstellt oder verarbeitet wurden und welche Daten durch den Trojaner da reingebracht wurden.
+
+01:27:14.732 --> 01:28:37.092
+<v SPEAKER_2>Ich glaube, diese Sache mit dem Bundestrojaner und Remote Forensik Software, das ist doch mal ein anderer Schnacke, wie man dann an manchen auch noch sagt. Wir haben jetzt erst mal festgestellt, also wenn ich an die Inhalte eines Mobiltelefons ran will, kann ich es auf drei verschiedenen Wegen machen. Welche davon der einfachste ist und welchen wir vielleicht mal selber ausprobieren werden könnten, zum selber basteln. Kleiner Vergleich. Vorher gibt es das Fritz-Info mit Nachrichten, Wetter und Verkehr. Genau genommen Chaosradio mit Markus Richter und natürlich den Leuten aus dem Chaos Computer Club, Andy Müller-Maguhn und Harald Welte, die euch heute darüber aufklären, wie man so ein Mobiltelefon mal ganz aufwendig und auch unaufwendig überwachen und orten kann. Wir haben schon geklärt im Verlaufe dieser Sendung, was eine funkzellen-Auswertung ist, was Verkehrsdaten sind, was die Vorratsdatenspeicherung bringt, wie man sich selber einen IMSI-Catcher baut. Und jetzt sind wir quasi gerade bei der Creme, nämlich der inhaltlichen Überwachen, also jemanden tatsächlich und wirklich abhören. Wir haben vor der Nachricht schon kurz geklärt, man kann das machen, indem man auch das Telefon selber eine Software spielt, die das vielleicht schon zerledigt. Direkt beim Anbieter und indem man einfach den GSM-Funk abhört. Ich fasse das nochmal zusammen, Harald, was du gerade erzählt hast. Die Software dafür kann man sich aus dem Netz laden und dann selber irgendwie an den Start bringen. Die Hardware dazu kostet 1000 Dollar ungefähr.
+
+01:28:37.112 --> 01:28:52.232
+<v SPEAKER_3>Ja, das ist richtig. Also das ist die reine Empfänger-Hardware. Wenn ich noch entschlüsseln will, also die Schlüssel brechen will und die Verschlüsselung, die da eingesetzt wird, dann muss ich noch ein bisschen mehr Geld ausgeben, aber das ist auch nur so ein PC mit zweitigen Grafikkarten.
+
+01:28:52.252 --> 01:29:04.852
+<v SPEAKER_2>Okay, da hab ich ja sowieso zu Hause stehen, weil ich gerade Bitcoins generiere. Okay, ich hab jetzt also dieses Ding, also dieses Empfangsgerät, das dropt mir quasi den gesamten GSM-Funk einfach auf meine Platte. Was mach ich dann damit?
+
+01:29:06.532 --> 01:29:09.772
+<v SPEAKER_3>Ja, das ist die gute Frage. Was möchtest du tun?
+
+01:29:10.492 --> 01:29:18.492
+<v SPEAKER_2>Im Prinzip möchtest du sagen, keine Ahnung, der Fall ist natürlich, dass ich total eifersüchtig bin und die Telefonate meiner Freundin abhören möchte, ohne dass sie es merkt.
+
+01:29:18.672 --> 01:30:52.072
+<v SPEAKER_3>Ja, naja gut, vielleicht nochmal aber auch im Allgemeinen, was es da für Herangehensweisen gibt. Ich denke, da gibt es zwei grundsätzlich unterschiedliche Herangehensweisen. Das eine ist eher so die geheimdienstliche Methode. Da will man halt mal alles erfassen, was geht. Und so ein bisschen durch Rasterfahndung, also das Analysieren von Unmengen von Daten, irgendwelche Verhaltensauffälligkeiten herausfinden, soziale Netzwerke von Dissidenten in irgendwelchen Staaten, die halt nicht so freundlich gegenüber irgendwelchen Bürgeraktivitäten gesinnt sind. Solche Dinge, die geheimdienstliche Herangehensweise und dann gibt es eher so die klassisch polizeiliche Herangehensweise. Bei der polizeilichen Herangehensweise, da hat man eben, sei mal im Idealfall eine Ermittlung gegen eine Person oder gegen einen kleinen Personenkreis, und dann will man gezielt diese Personen abhören. Da ist also nicht die Vollerfassung in der Breite, sondern eben wirklich in die Tiefe auf bestimmte Personen. Dazwischen gibt es natürlich alle möglichen Stufen. Und je nachdem, was ich jetzt erfassen will, eignen sich bestimmte Methoden besser oder weniger gut. Also wenn man jetzt sagt, die Polizei in Deutschland möchte, was weiß ich, dies oder jenes ermitteln, dann ist für die Polizei in der Regel das Leichteste, zum Netzpilseiber zu gehen und das irgendwo auf Netzseite zu tun. Da muss man nicht mit Fahrzeugen rumfahren und muss kein spezielles Equipment irgendwo hinstellen und so weiter. Das ist alles teuer, es kostet Geld. Und ja, es ist viel billiger, das auf der Netzseite zu machen. Wenn ich jetzt natürlich als ausländischer Geheimdienst in Deutschland unterwegs bin und irgendwelche deutschen Politiker oder Wirtschaftsgrößen überwachen will, oder die Polizei, oder die deutsche Polizei, oder den deutschen Geheimdienst überwachen will, dann kann ich natürlich nicht zu dem deutschen Netzbetreiber gehen, sagen, hallo, ich hätte hier gerne mal irgendwie überwacht.
+
+01:30:52.292 --> 01:30:58.832
+<v SPEAKER_4>Deswegen gründen ja ausländische Geheimdienste Telekommunikationsbetreiber, die dann in Deutschland Netzbetreiber sind, aber das ist ein anderes Thema.
+
+01:30:59.112 --> 01:31:00.472
+<v SPEAKER_2>Oh, wollte ich auch gerade sagen.
+
+01:31:00.492 --> 01:31:06.052
+<v SPEAKER_3>Das ist nochmal ein richtig anderes Thema. Oder bin ich jetzt ein organisierter Krimineller?
+
+01:31:07.372 --> 01:31:27.312
+<v SPEAKER_2>Also worauf ich eigentlich hinaus soll, ist der technische Ansatz. Weil wir haben ja vorhin schon mal, habt ihr kurz erzählt, irgendwie GSM hat verschiedene Verschlüsselungsstufen. Da gibt es eine, die ist sozusagen eigentlich egal, weil es da quasi Klartext ist. Ihr habt auch gesagt, es gibt verschiedene Sachen, die übertragen werden. Die sind gar nicht verschlüsselt, sondern die kann man einfach so mithören. Ich wollte eigentlich nochmal darauf hinaus sagen, was man da machen muss und wie schwierig das ist.
+
+01:31:27.332 --> 01:31:44.452
+<v SPEAKER_4>Wenn man jetzt ganz kurz mal den behördlichen Bereich gesiebt, also die Module, die angeboten werden für Behörden, die Telekommunikationen mit passiven oder semi-passiven Geräten abhören wollen, da zahlt man für so eine Kiste, die A52 macht, zahlt man irgendwas so 100.000.
+
+01:31:48.132 --> 01:31:50.752
+<v SPEAKER_2>Aber wir sprechen immer noch von viel Geld für uns.
+
+01:31:50.772 --> 01:32:41.272
+<v SPEAKER_4>Ja, gut, das ist ja alles... Also wir reden hier ja von Investition zum Ende. Das ist jetzt aus Sicht einer kriminellen Organisation betrachtet und es geht darum, dass du aus den Erkenntnissen jemanden erpressen willst oder so weiter und so fort, dann redest du okay. Hunderttausend ist ja viel Geld, aber wenn du damit Millionen verdienen kannst, dann ist das ganz wenig Geld. Also man muss das ja mal in Relation sehen mit dem Nutzen, den man damit erzielen kann, auch ökonomisch. Und die teuersten Geschichten oder die aufwendigsten, also A51 kann man sagen zunächst einmal, ist noch im Bereich von, also zumindest den Katalog, den ich in der Hand hatte, da kostete das noch eine Viertel Million. Und A53, das ist also der Angebot, der jetzt auch beim GSM, beim UMTS, also beim 3G eingesetzt wird. Da kenne ich kein Gerät, was man direkt mobil unterwegs betreiben kann. Ich weiß nicht, ob du da schon was gesehen hast, aber...
+
+01:32:41.292 --> 01:32:43.532
+<v SPEAKER_3>Nicht direkt, was man da halt macht, also...
+
+01:32:43.552 --> 01:33:08.952
+<v SPEAKER_4>Ist da das Dropping auf 2G runter, das man durch gezielte Störungen des Kanals so tut, als gibt es im 3G-Gard irgendein Problem und das Gerät dazu bringt, doch wieder 2G zu machen. Aber das lassen nicht alle Telefone mit sich machen. Ich weiß, dass es im Behördenbereich die Anordnung gibt, bestimmte Geräte nur einzusetzen, die eben genau dieses Feature haben, nämlich sich nicht aus dem 3G rauswerfen zu lassen. Das ist schon ein Sicherheitsfeature.
+
+01:33:08.972 --> 01:34:03.132
+<v SPEAKER_3>Ja gut, mal dahingestellt, ja. Aber es gibt diese unterschiedlichen Verschlüsselungsverfahren, die zu knacken. Das gängigste, was man eben heute noch bei den Mobilfunkanbietern findet, also 99% aller Mobiltelefonate in Deutschland zumindest werden über A51 verschlüsselt. Das Verfahren ist seit vielen Jahren in der, sag ich mal, Kryptographenszene gebrochen. Seit, ich weiß nicht mehr, war 1997 die erste Veröffentlichung oder so dazu auf einer kryptographischen Konferenz. Man muss sich auch immer vor Augen halten, das System, über das wir hier reden, GSM, ist eine Entwicklung Mitte der 80er Jahre. Wurde zum ersten Mal eingesetzt 1990, waren die ersten Netze da. Und wir sind jetzt im Jahr 2011. Das heißt, wir sprechen über was, was vor 20, 25 Jahren entwickelt wurde. Da ist natürlich dann auch so ein bisschen klar, dass es einfach heute nicht mehr so den Anforderungen gewachsen ist. Und dass die Computer alle schneller wurden und man Fortschritte gemacht hat im Bereich der Mathematik und so weiter.
+
+01:34:03.572 --> 01:34:42.332
+<v SPEAKER_2>Okay, das heißt, was mich hier langsam fragt, wir haben heute schon viel gelernt, weil die meisten Leute benutzen ein Handy quasi als dieses Gerät. Das ist das magische Anmachtding, und dann telefoniere ich damit und das ist schon alles super. Und was man heute auf jeden Fall in den zwei Stunden lernt, ist, das ist also auf relativ vielen Wegen angreifbar. Also viel mehr als ich viele Leute wahrscheinlich vorgestellt habe. Was mich gerade frage ist, wie benutzt ihr denn selber Handys? Also benutzt ihr die überhaupt noch? Oder ist das dann eher so, dass ihr so sagt, ha ha, ne lieber nicht? Oder ist das dann wie bei E-Mail? Da sagen ja die meisten sozusagen datenschutzbewussten Menschen, okay E-Mail muss man wie Postkarte betrachten, da schreibt man eigentlich nichts rein, was man nicht öffentlich sagen würde.
+
+01:34:42.352 --> 01:35:46.192
+<v SPEAKER_4>Ich habe vor Jahren mal etwas gelesen, über wie bei der Staatssicherheit Datenverarbeitung funktioniert hat. Und da hat, ich glaube der Büroleiter von Mielke oder sowas, hatte in seinen Memoaren so einen lustigen Abparagrafen, wo er eben gesagt hat, naja, es gab dann bei uns die Aktenvernichter, wenn wir also Akten vernichten wollen, dann gab es die Mülleimer. Und die Mülleimer, da haben wir die Dokumente reingelegt, das war quasi unser Übermittlungsweg an die ausländischen Nachrichtendienste, wenn wir denen etwas mitteilen oder wenn wir denen Desinformationen beimitteln wollten. Und so kann ich persönlich sagen, benutze ich Telekommunikationsfragen zwangsläufig. Natürlich gibt es immer noch Leute, mit denen ich unverschlüsselt telefonieren muss, aber es gibt eben auch Verschlüsselungstelefone, wo ich zufällig was mit zu tun habe. Aber davon unabhängig, also natürlich kommt man nicht drumrum, unverschlüsselt, wir sagen auf dem normalen Telefonnetz zu telefonieren, aber trotzdem will man da eben nicht alle Gespräche führen, ganz sicher nicht. Und das ist das Problem an der Vorratsdatenspeicherung, das Ganze führt zwangsläufig zu einer Verhaltensänderung.
+
+01:35:46.772 --> 01:35:58.172
+<v SPEAKER_3>Ja, und da muss man auch wieder unterscheiden, die Verschlüsselung selber bringt dir bei der Vorratsdatenspeicherung ja auch nichts. Die Inhalte kann ich noch so sehr schützen, diese Verkehrsdaten, die fallen trotzdem an.
+
+01:35:58.192 --> 01:35:59.112
+<v SPEAKER_4>Na ja, es kommt drauf an.
+
+01:35:59.132 --> 01:36:04.252
+<v SPEAKER_3>Na ja, man kann da schon auch noch Dinge verschleiern und so weiter.
+
+01:36:04.272 --> 01:36:10.772
+<v SPEAKER_2>Das ist ja durchaus eine spannende Frage, weil nach dem, was wir heute hier gehört haben, ist es so, sobald mein Handy an ist, bin ich ja sozusagen da drin.
+
+01:36:10.792 --> 01:36:52.912
+<v SPEAKER_4>Das ist richtig. Wenn du auf die Art und Weise deine Gespräche aufbaust, dass du einen Datenkanal zwischen dir und deinem Kommunikationspartner aufbaust und darüber direkt verschlüsselst, das von deinem Mobiltelefon machst, dann sieht man das unter Umständen im Netz. Aber wenn man erst noch über ein Servernetzwerk geht, wo eben das Ganze eher aussieht wie eine VPN-Verbindung, dann kann man da schon was machen. Und zumindest für Messaging gibt es schon funktionierende Sachen, wo das eben über Tor geht, also über so ein Anonymisierungsnetzwerk. Und ich würde mal kognostizieren, so in ein paar Jahren wird es das auch für Sprache geben. Das hängt im Moment noch an der Latenz, also an der Verzögerung, die da entsteht, wenn man eine Anonymisierung der Datenverbindung quasi betreibt. Das ist im Moment funktioniert, das für Sprache einfach gar nicht.
+
+01:36:53.372 --> 01:37:09.632
+<v SPEAKER_3>Ja, also das ist sicherlich möglich. Man kann da Dinge tun, aber es sind immer sowas wie, wo ist dieses Telefon gerade, das ist einfach eine Information, die zwangsweise dem Mobiltelefonnetz bekannt sein muss. Die müssen ja wissen, über welchen Sende-Masten können sie gerade mit deinem Telefon reden. Also wissen sie, wo dein Telefon ist.
+
+01:37:09.652 --> 01:37:12.272
+<v SPEAKER_4>Klar, wenn du in ein Mobilnetz eingebucht bist.
+
+01:37:13.372 --> 01:37:16.932
+<v SPEAKER_3>Also das gibt eben bestimmte Grenzen, da kommt man nicht drum rum.
+
+01:37:19.532 --> 01:37:28.412
+<v SPEAKER_4>Du kannst ja über IP telefonieren, da benutzt du einfach das nächste WLAN. Also es ist ja nicht so, dass es keine Alternativen gibt, um mobile Telekommunikation zu machen.
+
+01:37:29.132 --> 01:37:36.872
+<v SPEAKER_3>Naja, also eine wirkliche Alternative würde ich es nicht ansehen. Also du kannst das Telefon ausschalten, du kannst irgendwie einen öffentlichen Münz Fernsprecher benutzen.
+
+01:37:37.132 --> 01:37:42.652
+<v SPEAKER_4>Ich kann hier verschlüsselt über WLAN telefonieren, brauche ich kein GSM, brauche ich nicht im GSM-Netz.
+
+01:37:42.672 --> 01:37:52.192
+<v SPEAKER_3>Ja, dann bist du nicht im GSM-Netz, aber du bist irgendwie hier im IP-Netz, was genauso Vorratsdaten irgendwie anlegt. Fast.
+
+01:37:52.212 --> 01:37:53.892
+<v SPEAKER_4>Wieso? Wo liegt das Vorratsdaten dann?
+
+01:37:54.252 --> 01:38:04.832
+<v SPEAKER_3>Naja, weil es einen Internetprovider gibt, der hier dem Rundfunk Berlin Brandenburg irgendwie einen Internetanschluss legt und der ist auch wieder unterliegt der Telekommunikationsüberwachungsverordnung.
+
+01:38:05.152 --> 01:39:10.972
+<v SPEAKER_4>Aber nicht im selben Umfang wie ein Telekommunikationsanbieter. Also, okay, da gibt es schon Unterschiede in Bezug auf wer Telekommunikationsdienstleistungen in welcher Form anbringt. Ich sehe da schon auch eine Chance drin, dass das IP sozusagen andere Möglichkeiten bietet, weil wir sind ja auch gerade jetzt mal unabhängig von dem Überwachungsthema. Das gesamte Telefonnetz wird ja gerade quasi umgestellt und die zu Grunde liegen über Traumstechnik, die bislang esoterische Angelegenheiten wie ATM waren und irgendwelche X-Protokolle. Das wird ja alles auf IP gerade geschmissen. Und auf der einen Seite ist das ein riesen Problem, weil die Verfügbarkeit, also unter dem Aspekt der Betriebssicherheit, ist das eigentlich ein riesen Problem, weil die ganzen Internetprobleme jetzt auch ins Telefonnetz reinkommen. Aber auf der anderen Seite kommen auch die ganzen Chancen, die Daten ganz anders zu handhaben und ganz anders zu verteilen und auch zwischendurch zu verschlüsseln. Solche Sachen, die bislang sehr mühselig waren mit anderen Protokollen, die geraten jetzt auch im Bereich der Möglichkeiten für die Telekommunikation. Das ist auch eine Chance.
+
+01:39:10.992 --> 01:39:28.232
+<v SPEAKER_2>Ist der Ausblick zu sagen eher optimistisch, weil Harald, du meinst jetzt die ganze Zeit, wir telefonieren mit einer Technik aus den 80er Jahren. Würdest du sagen, in der nächsten Zeit was tun, wo man sagen kann, mobile Datenübertragung, das müsste man wahrscheinlich dann schon sagen, wird zeitgemäß?
+
+01:39:28.252 --> 01:40:21.092
+<v SPEAKER_3>Ich habe eine beschränkte Hoffnung. Spätestens bei LTE. Wenn man das GSM hat, danach kommt 3G, dann kann man noch sagen 35G, also HSPA-beschleunigte Verfahren. Dann kommt 4G, also das LTE-System, wo jetzt die ersten Basis-Stationen irgendwo in Brandenburg und irgendwie in was weiß ich wo stehen. Da gibt es keine klassische leitungsgebundene Telefonie mehr in diesem System. Das ist alles nur noch Internet, das ist alles nur noch IP. Telefonie gibt es an sich nicht mehr, da macht man halt dann Voice-over-IP. Ab dem Zeitpunkt, das ist was Andy eben angesprochen hat, da ist es natürlich spätestens da ist es dann so, Voice-over-IP-Telefonie und da gibt es durchaus mehr Möglichkeiten, dass man mit anderer Software einfach zusätzliche Verschlüsselung nachrüstet und derartige Dinge tut.
+
+01:40:21.112 --> 01:41:03.232
+<v SPEAKER_4>Aber man sollte jetzt das nicht missverstehen, dass das auch der Fall ist. Also wenn wir sagen, das kann man, dann ist das halt, das erschließt Möglichkeiten. Aber im Moment laufen wir eigentlich in einem Szenario rum, wo die behördlichen, nachrichtendienstlichen und sonstigen Interessierten, die ein Budget dafür haben, sehr weitflächig, einen sehr großen Umfang Telekommunikationsdaten nicht nur abhören, im Sinne von mitlesen, ihnen Erfahrungen bringen, sondern vor allem speichern können. Weil man muss sehen, dass es wirklich dramatisch günstig ist, Telekommunikationsdaten auch in großem Umfang einfach wegzuspeichern. Eine 2 TB Festplatte kostet jetzt gerade noch 80 Euro netto. Und da kriegt man schon eine Menge drunter.
+
+01:41:06.132 --> 01:41:27.872
+<v SPEAKER_2>Es gibt ja, wenn wir auf dem Rechner kommunizieren, gibt es klare Ansagen von Leuten, die Plan haben, verschlüsselt euer Zeug, guckt zu, dass ihr anonym im Netz unterwegs seid. Gibt es eine einfache Anweisung für uns Handybenutzer, gerade bevor wir in der schönen neuen LTE Welt ankommen? Gibt es Hinweise zur Handynutzung, die ihr gibt?
+
+01:41:27.892 --> 01:41:29.032
+<v SPEAKER_3>Da kann man nicht viel hinweisen.
+
+01:41:30.252 --> 01:42:36.932
+<v SPEAKER_4>Man kann schon darauf hinweisen. Ich habe mich mal damit beschäftigt, wie in Botschaften, Telekommunikationssicherheit und so etwas realisiert wird. In bestimmten Besprechungsräumen werden Mobiltelefone vorher an der Garderobe abgegeben. Da gibt es da eigene Fächer für. Es gibt auch einen Service, der wenn ein Telefon klingelt, dass derjenige den Raum verlässt und in Ruhe draußen telefonieren kann. Aber wenn man Vertraulichkeit des Wortes will, dann sitzt man nicht in einem Raum, in dem Mobiltelefone sich befinden. Weil man muss ja auch mal sehen, diese Remotrojaner, die können unter Umständen nicht nur die Gespräche des Telefons bei einem Telefongespräch abhören, sondern auch einfach das Gerät in ein mikrofonsendendes Wanzenteil sozusagen verwandeln. Und das kann man schon als Hinweis verstehen. Es gibt auch im professionellen Bereich dann Jammer, mit dem man die Frequenzen plattlegt. Das ist allerdings unter Umständen nicht erlaubt, wie auch der Einsatz von aktiven Geräten, weil man die Frequenzen des Netzbetreiber stört. Und es gibt auch Verschlüsselungstelefonie und Methoden, um SMSen zu verschlüsseln und ähnliches.
+
+01:42:36.952 --> 01:42:40.172
+<v SPEAKER_2>Das ist ja noch relativ teuer, wenn ich es richtig verstanden habe.
+
+01:42:40.192 --> 01:43:06.972
+<v SPEAKER_3>Wir reden hier über Equipment, was man sich in der großen Industrie leistet, was man sich im wirklich staatlichen Bereich leistet, wo es um hohe Würdenträger und Geheimnisträger geht. Ich habe mal eine Zahl gehört, dass es in Deutschland insgesamt für sämtliche öffentliche Beschäftigte, also von Behörden egal welcher Art, nur 2000 Telefone gibt, die verschlüsseln. Also die, die diese End-zu-End-Verschlüsselung haben.
+
+01:43:07.712 --> 01:43:20.452
+<v SPEAKER_2>Woran liegt das eigentlich? Warum sind Telefone noch so rumgefragt? Warum sind Telefone, die verschlüsseln können, noch so teuer? Es gibt ja auf dem Rechner, man kann jetzt irgendwie einen PGP halten. Sonst lad ich mir runter, installiere ich fertig.
+
+01:43:20.472 --> 01:43:56.072
+<v SPEAKER_4>Ja, aber dann hast du noch das Problem, dass du nicht die Betriebssystemsicherheit im Griff hast. Das heißt, wenn du deine Nachricht verschlüsselst, dann hast du damit sichergestellt, dass auf dem Transportweg die Nachricht, die abgehört wird, dem Angreifer nichts nützt. Aber du hast damit nicht verhindert, dass ein Trojaner auf deinem Rechner die Nachrichten bevor sie verschlüsselt werden, während sie verschlüsselt werden. Und beim Mobilfunk ist genau das der kritische Punkt. Es gibt Software, die kannst du dir für die Smartphones teilweise sehr günstig im Netz herunterladen. Die machen aber nur Sparverschlüsse. Die sichern nicht dein Gerät gegen Angriffe ab. Und der künstliche Ansatz beides zu machen ist halt relativ viel Aufwand.
+
+01:43:56.512 --> 01:44:08.392
+<v SPEAKER_2>Okay, das ist klar. Das ist mir auch klar, sozusagen. Und das ist ja auch genau so, dass du sagen, auf deinem eigenen Rechner hast du genau immer das Problem. Aber was ich halt die Frage war, tatsächlich die eher, wenn ich wenigstens diesen einen Schritt gehen will.
+
+01:44:08.412 --> 01:45:51.152
+<v SPEAKER_3>Das ist eine Frage der Kontrolle und wie die Technik angelegt ist. Also wenn ich jetzt den PC anschaue, da ist die Hardware relativ offen spezifiziert. Man kann da beliebige Betriebssysteme drauf installieren. Ich kann da Linux, FreeBSD, Windows, Schlag mich tot, was auch immer darauf installieren. Und dann kann ich auf dem Betriebssystem beliebige Anwendungen installieren. Und die tun mit der Hardware in der Regel das, was ich halt irgendwie von ihr will oder was ich für Dinge drauf... Also zumindest sag ich mal, als Entwickler sollte ich da irgendwie oder als IT-Mensch sollte ich da in der Lage sein zu kontrollieren, was da passiert oder auch nicht. Auf den Mobiltelefonen ist es eben so, dass man in der Regel, zumindest bei Smartphones, hat man im Prinzip zwei kleine Computer in so einem Telefon drin. Das ist wie so ein Zweigehörn. Und der eine Teil... Es gibt da auch so Split-Brain-Syndrom. Also manchmal behauptet der eine Teil, das wäre so, und der andere denkt was anderes. Also der eine Teil dieses Telefons ist sozusagen das echte Telefon, das was mit dem Mobilfunknetz interagiert. Das ist der sogenannte Baseband-Prozessor. Und da drauf läuft halt Software, die entweder vom Telefonentwickler, aber meistens eigentlich von dem Chipsats-Entwickler kommt. Und dies extrem zugenagelt, da kann niemand irgendwas... Zumindest ist nicht vorgesehen, dass irgendjemand was zusätzlich installiert. Das heißt selbst auf einem Android oder was auch immer Telefon, wo ich tausend Dinge auf diesem Prozessor, wo eben das Android-System drauf läuft, nachinstallieren kann und verändern kann. Das betrifft überhaupt nicht diesen Baseband-Prozessor. Und da läuft diese ganze klassische Telefonie drauf. Und demnach sind sehr wenige Firmen, ich würde mal sagen ungefähr fünf auf der Welt, überhaupt in der Lage dort, diese Software zu verändern oder neue Funktionen dort einzubauen.
+
+01:45:51.172 --> 01:46:02.912
+<v SPEAKER_2>Also es ist quasi von mir ein Missverständnis gewesen, dass ich sage, wir haben noch diese krassen Smartphones, die alle tausend Sachen können, weil die gibt es zwar, aber der große Smartphone-Rechner, der drin ist, der hat mit diesem kleinen Telefonrechner, der völlig abgekapstelt ist, gar nichts mehr zu tun.
+
+01:46:04.052 --> 01:46:42.132
+<v SPEAKER_4>Nur eingeschränkt, da gibt es natürlich Interfaces dazwischen, aber es gibt noch eine weitere Dimension, die man erwähnen kann, nämlich, dass wenn man so ein Gerät absichern will, dann hast du A diesen Computerteil und dann hast du B diesen Baseband-Teil und es gibt halt auch Angriffe auf den Baseband. Das heißt, dass du ein Mobiltelefon, der zwar unabhängig von dem Betriebssystem, was da installiert ist, über die GSM-Schnittstelle, die es natürlich haben muss, weil sonst kannst du damit nicht telefonieren, angegriffen werden können, weil das ist wie gesagt auch nur ein Computer. Von Menschen programmiertes Software. Und auch da gibt es natürlich Exploits, also Programmierfehler, die sich ausnutzen lassen, um wiederum da weiter im Gerät irgendwas zu tun.
+
+01:46:42.152 --> 01:46:55.152
+<v SPEAKER_3>Nur um mal eine Größenordnung vielleicht zu bekommen, was da an Software läuft, das ist ein kleiner Telefon-Teil. Wir reden da inzwischen auch leicht über eine Komplexität von 3 bis 8 Millionen Zeilen Code, die da laufen, nur auf diesem Telefon-Teil.
+
+01:46:55.172 --> 01:47:03.232
+<v SPEAKER_2>Okay, ich möchte mir das nicht durchlesen. Hat sich schon mal jemand die Bühr gemacht, das zu Reverse-Engineeren, also rauszufinden, was da für Code läuft? Oder ist das sowieso öffentlich verfügbar?
+
+01:47:03.472 --> 01:47:41.472
+<v SPEAKER_3>Öffentlich verfügbar ist es nicht. Es gibt Leute, die da dran arbeiten. Und jetzt gerade im Hinblick auf diese Exploitbarkeit, also da Schadsoftware drauf zu installieren und eben Sicherheitslücken auszunutzen, da gab es auf mehreren Veranstaltungen letztes Jahr Vorträge von Ralf-Philipp Weinmann dazu. Der hat also sowohl bei aktuellen iPhones als auch bei Android-Telefonen jeweils Lücken gefunden, mit denen er in der Lage war, diese Telefone automatisch antworten zu lassen. Das heißt also, er schickt eine spezielle Nachricht über das GSM-Netz an das Telefon und danach der nächste eingehende Anruf, dann nimmt das Telefon sofort ab, ohne dass der Anwender irgendwie den Ich nehme mal den Anruf an-Knopf drücken muss.
+
+01:47:41.492 --> 01:47:57.812
+<v SPEAKER_2>Sehr schön, da haben wir heute wieder viel gelernt über Mobiltelefone. Ich breche es an dieser Stelle einfach mal ab, weil alles noch mal zusammenzufassen würde wahrscheinlich jetzt noch mal zwei Stunden dauern. Ich sage auf jeden Fall schon mal vielen Dank, dass ihr da wart. Ich würde auf jeden Fall noch fragen wollen, wenn man sich für das Thema jetzt weitergehen interessiert, was sind gute Ansatzpunkte im Netz, wo klicke ich, um mal sagen genauer dazu zu lesen?
+
+01:48:00.572 --> 01:48:14.972
+<v SPEAKER_4>Tja, wir könnten natürlich versuchen, noch mal eine kleine Linksammlung zur Sendung zusammenzustellen. Früher haben wir das auch mal geschafft bei Chaosradio Sendung. Was wir vielleicht jetzt noch tun könnten, wären die Stichworte für die Suchmaschine eurer Wahl zu geben.
+
+01:48:15.792 --> 01:48:47.472
+<v SPEAKER_3>Es gibt einfach mal Chaos Communication Congress Präsentationen nach GSM-Suchen oder derartigen Dingen. Es gab Vorträge zu Airprobe, zu Kraken. Das sind diese Abhörangriffe. Also rein passiv die Luftschnittstelle mit Lauschen von Carsten Nohl beispielsweise. Es gibt von Ralf-Philipp Weinmann eben diese Vorträge zu den Baseband-Exploits. Es gibt Vorträge zu OpenBTS und OpenBSC. Also wenn man einfach mal die IT-Security-Konferenz in den letzten zwei, drei Jahren abklappert, zu allem was mit GSM zu tun hat, da denke ich, ist man dann ganz gut informiert.
+
+01:48:47.492 --> 01:49:01.772
+<v SPEAKER_2>Okay, die Schlagworte habt ihr jetzt. Also könnt ihr noch mal googeln. Wer weiß, vielleicht schaffen ist ja sozusagen Seltsamer Heintel, wenn die noch mal so eine Linkliste zu bauen. Die würde dann ins Blog geworfen werden wahrscheinlich. Vicky, stimmt. Es gibt ja einen Vicky. Ihr könnt selber, wenn ihr jetzt und so weiter und so fort, ihr wisst, wie das funktioniert.
+
+01:49:01.792 --> 01:49:04.272
+<v SPEAKER_4>Haben wir nicht den Ausstieg aus der Vicky-Technologie beschlossen?
+
+01:49:05.072 --> 01:49:18.852
+<v SPEAKER_2>Also okay, das ist vielleicht eine Diskussion, die wir an eine andere Stelle führen. Das könnte auch länger dauern, wenn ich das richtig verstanden habe. Traditionell macht ihr noch ein bisschen Werbung am Ende der Sendung. Ich habe gerüchteweise gehört, es steht ein runder Geburtstag an.
+
+01:49:21.072 --> 01:50:17.812
+<v SPEAKER_4>Ja, nun gut, es gibt ja zwei Ereignisse. Also Baus Todestag ist in vier Minuten, also wir sagen, ist morgen jetzt nicht so ein zehnmal, aber das ist natürlich eigentlich kein freudiges Ereignis. Trotzdem ist es auch anders, darüber nachzudenken, dass der Chaos Computer Club in diesem Jahr 30 Jahre wird. Das ist allerdings erst am 12. September. Gegründet ist er ja in den Räumen der Taz im Rahmen eines sogenannten 2-Watt-Kongresses. Und wir hatten schon mal den Versuch, die 20-jährige Geburtstagsfeier zu machen. Das war am 12. September 2001. Wir hatten eine Pressekonferenz am Vormittag des 11. September 2001, die die Veranstaltung ankündigen wollten. Wir hatten extra den Kongressalarm Alexanderplatz angemietet, die Ausstellungsfläche und so weiter. Aber irgendwie war am Nachmittag des 11. September 2001 ein anderes Thema, was uns völlig aus den Zeitungen verdrängt hat. Deswegen ist unsere 20-jährige Geburtstagsfeier so gut wie ausgefallen. Da ist keiner gekommen zur Ausstellung.
+
+01:50:17.832 --> 01:50:22.152
+<v SPEAKER_2>Und jetzt plant ihr keine 30-jährige, weil da möglicherweise wieder sowas passiert?
+
+01:50:22.172 --> 01:50:28.932
+<v SPEAKER_4>Ja, also soweit würde ich nicht gehen. Aber wir sind noch in der Konzeptionsphase. Wir haben noch kein echtes Konzept.
+
+01:50:28.952 --> 01:50:45.412
+<v SPEAKER_2>Okay, dann legen wir jetzt nicht weit über umgelegt. Also 30 Jahre auf jeden Fall. Und das Datum kommt noch her, war noch nicht. Manche Zeitungen erwecken einen anderen Eindruck. Außerdem gibt es den nächsten Camp, 10. bis 14. August. Im Sendungschat war gerade die Frage, wird es dort auch ein GSM-Netzwerk geben?
+
+01:50:45.432 --> 01:51:03.012
+<v SPEAKER_3>Ja, selbstverständlich. Auf den CTC-Veranstaltungen der letzten Jahre hatten wir eigentlich immer ein GSM-Netz zu Testzwecken. Das heißt, wir haben unser eigenes Mobilfunknetz. Da können die Leute sich einbuchen, können damit experimentieren, können damit spielen, können all die Dinge legal tun, die sie im echten Netz nie tun dürfen.
+
+01:51:03.032 --> 01:51:04.932
+<v SPEAKER_2>So, könnt ihr also hinfahren? Wo ist das nochmal?
+
+01:51:04.952 --> 01:51:06.812
+<v SPEAKER_3>In Finowood bei Eberswalde.
+
+01:51:06.832 --> 01:51:26.432
+<v SPEAKER_2>Alles klar. So, dann war's das. Diese Sendung wird es euch demnächst auch als Podcast geben. Sehr bald auf fritz.de und dann ein bisschen später auf chaosradio.ccc.de. So rum. Vielen Dank euch beiden nochmal für's Hiersein und Mitmachen. Gerne. Bis zum nächsten Mal. Und ich sag noch das, was ich immer an meiner Sendung sage, lasst euch nicht überwachen und macht immer schön eure Backups.

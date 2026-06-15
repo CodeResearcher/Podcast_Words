@@ -140,8 +140,10 @@ NSString* getBearerToken(BOOL useCache) {
 void printHelp() {
   printf("FetchTranscript version 1.1.0\n\n");
   printf("Usage:\n");
-  printf("  FetchTranscript <podcastId> [--cache-bearer-token]\n\n");
+  printf("  FetchTranscript <episodeId> [--cache-bearer-token]\n");
+  printf("  FetchTranscript --bearer-token-only [--cache-bearer-token]\n\n");
   printf("Options:\n");
+  printf("  --bearer-token-only    Print a Bearer token and exit (for amp-api catalog requests)\n");
   printf("  --cache-bearer-token   Use cached Bearer token if valid for 30 days, reducing the number of requests\n");
   printf("  --help                 Show this help message\n");
 }
@@ -154,17 +156,30 @@ int main(int argc, const char * argv[]) {
       return 0;
     }
 
-    // Get the podcast ID that we're trying to download
+    BOOL useCache = NO;
+    for (int i = 1; i < argc; i++) {
+      if (strcmp(argv[i], "--cache-bearer-token") == 0) {
+        useCache = YES;
+      }
+    }
+
+    if (strcmp(argv[1], "--bearer-token-only") == 0) {
+      NSString *bearer = getBearerToken(useCache);
+      if (!bearer || bearer.length < 10 || ![bearer hasPrefix:@"ey"]) {
+        NSLog(@"Failed to obtain Bearer token.");
+        return 1;
+      }
+      printf("%s\n", [bearer UTF8String]);
+      return 0;
+    }
+
+    // Get the episode ID that we're trying to download
     NSString *podcastId = [NSString stringWithUTF8String:argv[1]];
     // Ensure that it's in the right format
     NSCharacterSet *nonDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     if ([podcastId rangeOfCharacterFromSet:nonDigits].location != NSNotFound) {
-      NSLog(@"Error: podcastId must be a number.");
+      NSLog(@"Error: episodeId must be a number.");
       return 1;
-    }
-    BOOL useCache = NO;
-    if (argc >= 3 && strcmp(argv[2], "--cache-bearer-token") == 0) {
-      useCache = YES;
     }
 
     NSString *bearer = getBearerToken(useCache);

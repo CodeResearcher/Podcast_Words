@@ -8,7 +8,6 @@ up only newly published episodes). See the plan's "Dual-Mode Import" section.
 from __future__ import annotations
 
 import json
-import re
 import time
 from datetime import datetime, timezone
 
@@ -18,15 +17,16 @@ from podcast_words.catalog import (
     STATE_DONE,
     STATE_ERROR,
     STATE_NO_TRANSCRIPT,
+    _is_audio_url,
 )
 from podcast_words.config import PodcastConfig, SourceConfig
 from podcast_words.models import Transcript
+from podcast_words.pipeline.remote_index import RemoteIndex, build_remote_index
 from podcast_words.progress import iter_progress, write
 from podcast_words.transcripts import vtt
 
 # Per-source request spacing to stay polite to public APIs.
 _RATE_LIMIT_SECONDS = 0.5
-_GENERIC_NUMBER_RE = re.compile(r"(\d+)")
 
 
 def _discover_fn(source_type: str):
@@ -61,14 +61,20 @@ def _fetch_fn(source_type: str):
     return None
 
 
-def _merge_discovered(catalog: Catalog, discovered: list[Episode]) -> int:
+def _merge_discovered(
+    catalog: Catalog,
+    discovered: list[Episode],
+    *,
+    source: SourceConfig | None = None,
+) -> int:
     """Upsert discovered episodes; return the count of newly added ones."""
+    from_podlove = source is not None and source.type == "podlove"
     new_count = 0
     for episode in discovered:
         existing = catalog.get(episode.number)
         if existing is None and catalog.find_by_source_id(episode.source_id) is None:
             new_count += 1
-        catalog.upsert(episode)
+        catalog.upsert(episode, new_from_podlove=from_podlove)
     return new_count
 
 
@@ -87,43 +93,44 @@ def _write_sync_state(podcast: PodcastConfig, episode_count: int) -> None:
         json.dump(state, f, indent=2)
 
 
-def _number_from_title(podcast: PodcastConfig, title: str) -> int | None:
-    """Extract an episode number from a title for cross-source matching.
-
-    Uses the podcast's regex pattern when configured, else the first integer in
-    the title (e.g. 'FS308 Casual Punk' -> 308). This lets a fallback source
-    (Apple) be aligned to catalog episodes numbered by the primary source.
-    """
-    if podcast.episode_id.type == "regex" and podcast.episode_id.pattern:
-        match = re.search(podcast.episode_id.pattern, title)
-        return int(match.group(1)) if match else None
-    match = _GENERIC_NUMBER_RE.search(title)
-    return int(match.group(1)) if match else None
-
-
-def _catalog_number(podcast: PodcastConfig, episode: Episode) -> int | None:
-    """Map a remote episode row to the catalog's episode number."""
-    number = _number_from_title(podcast, episode.title)
-    return number if number is not None else episode.number
-
-
 def _discover_and_index(
     podcast: PodcastConfig,
     catalog: Catalog,
     source: SourceConfig,
-) -> tuple[int, dict[int, Episode]]:
-    """Discover from *source*, upsert the catalog, return (new_count, number -> remote)."""
+) -> tuple[int, RemoteIndex]:
+    """Discover from *source*, upsert the catalog, return (new_count, remote index)."""
     discover = _discover_fn(source.type)
     if discover is None:
-        return 0, {}
+        return 0, RemoteIndex()
     discovered = discover(podcast, source)
-    index: dict[int, Episode] = {}
-    for ep in discovered:
-        number = _catalog_number(podcast, ep)
-        if number is not None:
-            index.setdefault(number, ep)
-    new_count = _merge_discovered(catalog, discovered)
+    index = build_remote_index(podcast, discovered)
+    new_count = _merge_discovered(catalog, discovered, source=source)
     return new_count, index
+
+
+def _refresh_podlove_links(podcast: PodcastConfig, catalog: Catalog) -> int:
+    """Apply PodLove episode page links without changing transcript state."""
+    source = podcast.source_of_type("podlove")
+    if source is None:
+        return 0
+    discover = _discover_fn("podlove")
+    if discover is None:
+        return 0
+
+    updated = 0
+    for remote in discover(podcast, source):
+        link = (remote.link or "").strip()
+        if not link or _is_audio_url(link):
+            continue
+        existing = catalog.get(remote.number)
+        if existing is None:
+            catalog.upsert(remote, new_from_podlove=True)
+            updated += 1
+            continue
+        if existing.link != link:
+            existing.link = link
+            updated += 1
+    return updated
 
 
 def _probe_episode(catalog_ep: Episode, remote: Episode | None) -> Episode:
@@ -188,7 +195,7 @@ def _run_replace(
         total=len(targets),
     )
     for idx, episode in enumerate(bar, start=1):
-        remote = index.get(episode.number)
+        remote = index.find(episode)
         if remote is None:
             result["skipped"] += 1
             continue
@@ -265,7 +272,7 @@ def _run_fallback(
             total=total,
         )
         for idx, episode in enumerate(bar, start=1):
-            remote = index.get(episode.number)
+            remote = index.find(episode)
             if not remote or not remote.source_id:
                 still.append(episode)
                 continue
@@ -352,13 +359,15 @@ def sync(
             from podcast_words.pipeline.word_counter import count_words
 
             summary["count"] = count_words(podcast, rebuild=rebuild)
+        summary["podlove_links"] = _refresh_podlove_links(podcast, catalog)
+        catalog.save()
         return summary
 
     # --- Discover ---
     discover = _discover_fn(source.type)
     if discover is not None:
         discovered = discover(podcast, source)
-        summary["new_episodes"] = _merge_discovered(catalog, discovered)
+        summary["new_episodes"] = _merge_discovered(catalog, discovered, source=source)
         catalog.save()
 
     # --- Import ---
@@ -399,6 +408,8 @@ def sync(
         summary["fallback"] = _run_fallback(podcast, catalog, primary_source=source)
         catalog.save()
 
+    summary["podlove_links"] = _refresh_podlove_links(podcast, catalog)
+    catalog.save()
     _write_sync_state(podcast, len(catalog))
 
     # --- Count ---

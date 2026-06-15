@@ -1,178 +1,766 @@
 WEBVTT
 
-00:00:00.240 --> 00:00:00.240
-<v SPEAKER_1>Hallo, das ist Chaosradio 270. Mein Name ist Marcus Richter und ich spreche in Mikrofone und versuche diese Sendung so ein bisschen beisammenzuhalten. Und ich habe heute nur noch eine Nachricht für euch und die ist lasst uns nicht überwachen und verschlüsselt immer schön eure Backups. So enden die meisten Chaosradios. Und heute wollen wir uns mal damit beschäftigen, was das eigentlich genau bedeutet, wenn ich sage, verschlüsselt immer schön eure Backups. Gerade im letzten, wollen wir uns ganz ausführlich, wird man also, was ist eigentlich ein Backup? Und das ist so ein bisschen A, sagen wir es die ganze Zeit, es ist immer ein Ruf und B, ist es dem einen oder anderen vielleicht schon mal als Spruch begegnet, da draußen in diesem bösen Internet, kein Backups, kein Mitleid. Und das natürlich ein bisschen doof, aber trotzdem ist das ja so eine Sache, die man vielleicht so vor sich her schiebt, wie Hausaufgaben machen, Abwasch, die kaputten Socken aussortieren, einen Backup anlegen. Ist eine gute Idee, sollte man mal machen. So heute klären wir schon mal, was man machen muss, dann habt ihr das nicht mehr als Ausrede. Ich muss mich erstmal informieren. Und das besprechen wir also heute mal ganz ausführlich von vorne bis hinten. Und dazu begrüße ich recht herzlich Klara. Hallo und guten Tag. So, aus verschiedenen Sparten sind die Menschen heute hier. Klara, du bist IT-Forensikerin. Wenn ich das richtig verstehe, bist du vor allen Dingen an Backups interessiert, weil du dann rausfinden kannst, was die Daten sind, die du brauchst?
+00:00:15.580 --> 00:00:16.620
+<v SPEAKER_2>Die zwei Sprechstunden.
 
-01:00:09.480 --> 01:00:50.480
-<v SPEAKER_1>Ich habe einen NAS, auf das keine Backup, sondern so eine Spiegelung gemacht wird. Und an dem Ding hängt aber eine USB-Festplatte. Und die mache ich nach meinem Kalender an. Und wenn die angemacht wird, macht das NAS automatisch ein komplettes Backup, aber als Archiv. Also nicht löscht komplett, sondern hat eine Versionierung. Und wenn das fertig ist, kriege ich eine Mail und dann mache ich die wieder von Hand aus. Also da ist so ein Klick-Klack-Schalter richtig an der Steckdose. Aber ich habe keinen Offside-Backup.
+00:04:13.813 --> 00:04:40.533
+<v SPEAKER_3>Mal nach Zahlen im Radio. Wenn es soweit kommt, wisst ihr, dass der letzte Donnerstag im Monat am Start ist und dass euch das Chaos Radio erwartet. Das Chaos Radio, wo jeden letzten Donnerstag im Monat der Chaos Computer Club das Studio entert und übernimmt und nach einem Thema seiner Wahl euch, ich will nicht sagen belehrt, aber mal zum Besten gibt, was man darüber so wissen kann, was ihr möglicherweise noch nicht wusstet. Heute zu Gast sind Nibbler und Pluto. Hallo und guten Abend.
 
-01:00:50.500 --> 01:01:20.180
-<v SPEAKER_4>Ich wollte ganz kurz Florian eigentlich noch zu Ende bringen. Ich habe nicht keinen Backup, aber tatsächlich mein Backup ist ein NAS, das hinter mir steht, auf dem Tisch, ich befürchte, man hört es auch im Hintergurt, ein bisschen Rauschen im Lüfter. Das macht lokalen Backup mit einer Software, die halt auch immer die Unterschiede sichert, dass ich eine Historie habe. Aber was mir halt auch tatsächlich fehlt, ist dieses Offside-Backup. Und da arbeite ich halt gerade dran. Aber andere Sachen waren aktuell wichtiger. Aber das ist halt genau dieses. Du willst halt irgendwie die super sichere Lösung, dann machst du es halt nicht.
+00:04:40.553 --> 00:04:41.773
+<v SPEAKER_1>Einen wunderschönen.
 
-01:01:23.840 --> 01:01:52.240
-<v SPEAKER_2>Mein Backup-Verhalten hat sich auch stark verbessert, seitdem ich mal etwas Daten verloren habe. Zum Glück nicht so viel. Das war genau der Moment, wo ich über meine mittelmäßigen Backups sehr erfreut war, weil die mich letztendlich ziemlich gerettet haben. Und ich hatte ein forensisches Labor und forensische Skills, um möglichst die Daten wiederherzustellen. Aber auch das macht gar nicht mal so viel Spaß. Ja, also kommt drauf an. In meinem Fall geht das ganz gut.
+00:04:41.793 --> 00:04:42.913
+<v SPEAKER_4>Einen schönen Abend.
 
-01:01:52.680 --> 01:01:56.300
-<v SPEAKER_3>Ich hab drauf gewartet, ja.
+00:04:42.933 --> 00:05:34.393
+<v SPEAKER_3>Und es soll heute um Dinge gehen, die ihr alle schon mal in der Hand hattet, aber in Zukunft möglicherweise nicht mehr in der Hand haben werdet. Nämlich um Geld. Es ist ja also bis jetzt immer so gewesen, man hatte diese Scheine und Münzen in der Tasche, das hört langsam auf, es gibt diese komischen Plastikarten und in Zukunft wird das möglicherweise noch ganz, ganz, ganz, ganz, ganz anders, dass man nämlich das ganz voll elektronisch macht. Die Zukunftsvisionen, die man so sieht, da werden irgendwie Kreditstäbe ausgetauscht, in dunklen Gassen oder Geräte werden aneinander gehalten und irgendwie wird da auf seltsame Art und Weise Geld hin und her transferiert. Was da genau geht, wollen wir heute besprechen und natürlich auch was für schöne neue Möglichkeiten im Bereich, der wie sagt man so formschönen Sicherheitsschwankungen es dort geben kann.
 
-01:01:56.320 --> 01:02:05.040
-<v SPEAKER_1>Wie bei den Juristinnen. Es kommt darauf an. Als nächstes sagt ihr noch vor Cloud oder auf hoher See. Wir sind alle in Gottes Hand.
+00:05:34.413 --> 00:05:56.593
+<v SPEAKER_1>Und da sind wir ja schon beim ersten Bruch zwischen der futuristischen Welt, die man aus Science Fictions kennt, wo halt das Geld sozusagen elektronisch den Besitzer wechselt. Und sowas haben wir halt nicht. Also bei der ganzen schicken neuen Online-Bezahlwelt geht es ja tatsächlich immer noch um denselben alten Prozess. Wir hatten ja vor ein paar Monaten eine Bitcoin-Sendung.
 
-01:02:05.060 --> 01:04:03.420
-<v SPEAKER_4>So ungefähr. Also es gibt halt zwei Anekdoten hab ich halt noch. Das eine war irgendwie von wegen Raid ist kein Backup. Ich hab früher damals, vor vielen vielen Jahren, da war ich noch ganz jung und unerfahren oder so, hatte ich drei externe USB Festplatten an meinem Router und hab dann Raid 5 drauf gemacht. Und dann ist eine vom Bus geflohen. Also Raid 5 heißt, ich habe, also Raid ist ein, wie war das? Redundant Array of Inexpensive Disks, also ein, ich nehme mehrere Festplatten, die vielleicht günstiger sind und packe sie zusammen und sorge dafür, dass Datenredundant gespeichert sind mehr oder weniger, wenn ich jetzt von Raid 5 spreche. Das heißt, eine von den drei Festplatten darf ausfallen und die Daten sind immer noch da, weil mir zwei von drei Festplatten reichen, um sie wieder zurückzurechnen. Und nun war es aber so, dass dieser Controller oder dieses Linux da drauf irgendwie mit dem USB-Bus unzufrieden war und die Festplatte, die weggefallen war und wieder kam, war angeblich die älteste und er hat dann in der falschen Richtung die Daten wieder hergestellt von diesen drei Festplatten. Und ich hatte also auf der Festplatte oder im Dateisystem, ich habe es dann wieder gemountet und sah dann während des Betriebs wie Verzeichnisse verschwanden und plötzlich Sonderzeichen in Dateinnahmen auftauchten. Ich habe es dann ausgemacht, komplett und wieder angemacht und hatte dann alle 64 Kilobyte in allen Dateien Nullen. So über ein Viertel der Dateien. Und habe das dann also über mehrere Wochen quasi forensisch, hobbymäßig wieder hergestellt. Und es macht total Spaß, wenn du Dateien nur noch anhand des Inhaltes, des Dateityps hast, aber keine Namen mehr und dann da 10.000 PNG-Dateien mit Fotos findest und feststellst, oh, das sind alles die Avatare von den Leuten im Moodle-Forum aus der Uni, die da im Forum was geschrieben haben. Und du halt wirklich raten musst, was ist das für eine Datei, wo die gehört sind. Ich hab heute noch MP3-Dateien, mittendrin aber zu, ich weiß nicht, was Merkel Jackson angeht, weil die hintere Hälfte von der MP3-Datei ist aus dem anderen Pfeil. Da hätte ich mir ein gutes Backup auch gewünscht.
+00:05:56.613 --> 00:06:28.073
+<v SPEAKER_3>Halt, Entschuldigung, ich muss an dieser Stelle schon unterbrechen, dass ich möglicherweise im Laufe der Sendung noch häufiger tun werde, wenn ihr dazu unverständlich redet. An dieser Stelle möchte ich darauf hinweisen, dass die Bitcoins-Sendung aus dem Juli letzten Jahres, da war der Club wirklich mit prophetischen Fähigkeiten gesegnet. Das Fazit dieser Sendung war nämlich ja Bitcoin, ein Bezahlsystem im Internet, das wir heute auch noch mal ganz kurz erklären werden, wird nicht überleben. Es wird so eine Art spannendes Experiment gewesen sein, aber schon bald wird keiner mehr drüber reden. Kann man das jetzt schon sagen? Gibt es das noch? Hat man das noch gesehen?
 
-01:04:09.300 --> 01:04:27.500
-<v SPEAKER_1>Aber Klara, weil du es gerade erzählt hast, oder vielleicht können wir das noch mal so fragen. Du als Profi hast also die Möglichkeiten, da Dinge zu retten. Wie ist denn das, wenn ich, man kann es immer durchspielen, was ist, wenn ich aus Versehen eine Datei gelöscht habe? Könntest du die wieder hinkriegen?
+00:06:28.093 --> 00:07:01.713
+<v SPEAKER_1>Ja, gibt es auf jeden Fall noch. Ich meine, das ist ja so darauf ausgelegt, dass es nicht, dass es an sich funktioniert. Aber es ist halt immer die Frage, wozu man es verwenden kann, ob es noch irgendjemand akzeptiert. Und da ist jetzt schon so ein bisschen die Duft raus. Also der Tausch von digitalem Geld peer to peer. Also ich gebe dir digitales Geld, du gibst mir digitales Geld. So, das funktioniert zwar noch, aber die Akzeptanz ist halt nicht da. Das hat es nie über das Stadium hinaus geschafft.
 
-01:04:28.080 --> 01:04:30.360
-<v SPEAKER_2>Was hast du mit der gemacht? Hast du sie in den Papierkorb bezogen?
+00:07:01.733 --> 00:07:28.533
+<v SPEAKER_3>Wenn ich das richtig verstehe, geht es also heute, also wird es heute im Verlauf der Sendung also auch nicht darum gehen, dass wir tatsächlich Geld, also Münzen oder Scheinchen, wie wir sie kennen, in eine wie auch immer geartete digitale Form überführen und dann in Zukunft Geld im virtuellen haben, sondern es geht einfach nur darum, verschiedene Systeme zu erfinden oder zu begutachten, die Geld, das auf imaginären Konten oder auch nicht in den imaginären Konten liegt, hin und her zu bewegen. Versteh ich das richtig oder?
 
-01:04:31.980 --> 01:04:34.940
-<v SPEAKER_1>Und dann natürlich, wie ich das gelernt habe, den Papierkorb gelöscht?
+00:07:29.813 --> 00:07:45.113
+<v SPEAKER_1>Ja, leider. Wir leben halt nicht in dem Science Fiction, wo das tatsächlich funktioniert. Und der Bitcoin Versuch hat uns gezeigt, ja, Interesse ist auf jeden Fall da, sowas zu tun. Aber der Teufel ist ein Eichhörnchen, das steckt im Detail.
 
-01:04:36.120 --> 01:05:16.720
-<v SPEAKER_2>Also generell ist es so, natürlich, es kommt drauf an, nämlich auf dem Betriebssystem und Dateisystem, unter anderem in der, bei vielen ist es so, dass du so eine Art Inhaltsverzeichnis hast. Master File Table, zum Beispiel bei NTFS. Und da ist es so, wenn du einen Teil löscht, dann wird erstmal einfach der Eintrag markiert und wird gesagt, na die Datei ist gelöscht und dann kann, na die Datei ist gelöscht und der Speicher an der Stelle kann neu überschrieben werden, wenn das halt gebraucht wird. Kann man sich so ein bisschen vorstellen, wie ein Inhaltsverzeichnis beim Buch und wenn man irgendwas nicht mehr braucht, dann schreibt man einfach eine Notizen oder das kann man neu beschreiben, das braucht man jetzt eigentlich nicht mehr.
+00:07:48.933 --> 00:08:44.273
+<v SPEAKER_4>Und selbst wenn es einfach wäre, ist es auch nicht unbedingt das Erwünschte. Also in den letzten 20 Jahren gab es regelmäßig Versuche, Zahlungssysteme fürs Internet zu entwickeln, die irgendwie eine Art von Bargeld simulieren. Das heißt, wenn ich Bargeld habe, dann habe ich was in der Tasche. Und mit dem, was ich in der Tasche habe, kann ich was zahlen. Das gebe ich dir, das gebe ich dem, das gebe ich dem Händler, das gebe ich aber auch einem Freund. Das kann ich irgendjemandem geben, das kann ich meiner Oma geben. Und diese Art von Bargeld-Simulation im Internet war zum Beispiel Icage damals, gab es hier vor 14 Jahren mal eine Sendung. Da war ich übrigens auch dabei und ja, ja, ist lang her, ist lang her. Und diese Art von Zahlungssystemen haben für die Staaten diverse Probleme. Das eine ist, dass man damit eine neue Geldmenge aufmacht, die teilweise nicht kontrollierbar ist. Es findet eine Bezahlvorgänge statt, die von den Banken nicht überwacht werden können. Da wird dann keine Werbung für eingesetzt. Man kann irgendwie nicht hinterher die Werbung einblenden. Gestern haben sie ein Lolli gekauft. Heute wollen sie bestimmt auch wieder einen Lolli kaufen. Da vorne ist der nächste Lolli-Stand. Das heißt, das ist so Geld, das an vielen vorbeigeht.
 
-01:05:17.820 --> 01:05:19.380
-<v SPEAKER_1>Aber die eigentlichen Seiten im Buch sind noch da?
+00:08:44.293 --> 00:08:58.273
+<v SPEAKER_3>Wir müssen an dieser Stelle sozusagen unterscheiden. Was du jetzt sagst, das möchten die Leute nicht, die derzeit am Geldfluss verdienen. Ich könnte mir vorstellen, dass aus dem Hackerumfeld ihr sowas schon erstrebenswert ist. Also zumindest das Ideal, oder sehe ich das falsch?
 
-01:05:19.400 --> 01:05:40.160
-<v SPEAKER_2>Die sind noch da, genau. Das ist jetzt, da steht auch, wo du nachgucken musst und wie groß es ist im Zweifel und das ist dann relativ einfach, denn guckst du in dieses Inhaltsverzeichnis, siehst, ah, da ist meine Datei, holst der DB raus, ist alles gut, wenn du eine Festplatte hast.
+00:08:58.293 --> 00:09:25.473
+<v SPEAKER_4>Ich denke mal nicht nur für das Hackerumfeld. Ich denke mal, dass es für jeden interessant, der heute auch mit Bargeld umgeht. Also wir haben in Deutschland immer noch eine relativ hohe Bargeldquote, relativ wenig Karteneinsätze. Das heißt, dieses Land ist tatsächlich noch relativ weit vorne, wenn man es mal so aus der Sicht der Privatsphäre betrachtet. Das heißt, wir zahlen noch mit anonymen Geldsystemen, die schlecht nachzuverfolgen sind. Man kennt das aus dem Krimi, irgendwie die nummerierten Hunderter und so. Aber wenn man nicht gerade den Koffer mit nummerierten Hunderter hat, dann kann man nicht sagen, wer gestern diesen Schein hatte.
 
-01:05:40.180 --> 01:05:47.020
-<v SPEAKER_1>Weil, stopp, stopp, stopp, halt, ich dachte, du hast es gerade so erklärt, wenn ich lösche, wird aus dem Inhaltsverzeichnis rausgelöscht, aber nicht mal das?
+00:09:25.973 --> 00:09:56.433
+<v SPEAKER_1>Und das ist eigentlich ein Vorteil. Also das hat man in vielen anderen Ländern ganz anders. Also in den USA, das überrascht mich immer wieder, wenn Freunde da erzählen, da werden Kleinstbeträge und alle mit der Kreditkarte gezahlt, weil es ihnen bequem ist. Und sich die Gesellschaft auch schon quasi daran gewöhnt hat, dass man dieses Bargeld, diese dreckigen Scheine nicht mehr händewächseln lässt, sondern ein Stück Plastik in den Schlitz schiebt. Und dann ist gut.
 
-01:05:47.320 --> 01:07:15.360
-<v SPEAKER_2>Nee, das wird erstmal nur markiert, als, guck mal, hier die Datei ist gelöscht und wenn dann halt wieder Platz gebraucht wird, dann wird das irgendwann neu beschrieben. Wenn du eine SSD hast, dann sieht das wieder anders aus, weil dann, wie wir vorhin schon gesagt haben, bei einer SSD, ja, man kann die nur endlich häufig beschreiben, aber was auch die Sache ist, SSDs können keine Daten überschreiben, anders als Festplatten. Also wenn du eine Speicherzelle neu benutzen willst, dann muss die erstmal gelöscht werden und dann wird die irgendwann neu beschrieben. Also löschen ist im Vergleich zum Schreiben und zum Lesen relativ langsam, deswegen will die SSD schlau sein und macht das so, dass sie immer schon mal proaktiv Speicher freigibt. Das macht sie über unter anderem, also eine Garbage Collection und damit die SSD auch weiß, was kann jetzt eigentlich gelöscht werden, gibt es das sogenannte Trim Command, wo praktisch das Betriebssystem der SSD sagt, guck mal hier, das brauchen wir jetzt gar nicht mehr. Die SSD macht super viel Arbeit selbst und kopiert die Daten in der Gegend rum, organisiert das neu, mappt Daten um, das heißt, was sie eigentlich gerade macht und was da ist, das ist immer so ein bisschen Black Box. Sie versucht auf jeden Fall, schlau zu sein, was dann halt mehr oder weniger praktisch sein kann. Das heißt, bei einer SSD sind die Daten im Zweifel dann auch schneller mal weg. Das heißt, schon gelöscht.
+00:09:57.473 --> 00:09:58.473
+<v SPEAKER_3>Jetzt nochmal kurz.
 
-01:07:17.500 --> 01:07:48.780
-<v SPEAKER_1>Das führt uns ein bisschen weg vom Thema, aber weil wir gerade dabei sind. Also wenn sie gelöscht sind, gibt es die schon... Ach, da hab ich noch eine Nachfrage. Also du als Profi kannst das. Es gibt ja auch so Programme, die das versprechen. Hier, Sie haben aus Versehen Ihre SD-Karte gelöscht, laden Sie diese Programme für 60 Euro runter. Funktioniert das oder ist das nur... Also jetzt nicht einen bestimmten Typ sagen und ob das gut ist oder nicht. Also generell gibt es so eine Programme tatsächlich oder ist das alles nur Fake?
+00:09:58.493 --> 00:10:03.373
+<v SPEAKER_1>Da wird man komisch angeguckt, wenn man mit großen Scheinen so hunderter und drüber zahlt.
 
-01:07:48.800 --> 01:08:55.560
-<v SPEAKER_2>Nee, die Programme gibt es. Es gibt ja auch, es gibt jede Menge Datenrettungssoftware, die in der Regel auch ganz gut funktioniert. Kann man auf jeden Fall machen. Das eine, den ich jetzt genannt habe, das war der leichtere. Wenn praktisch dieser Eintrag im Inhaltsverzeichnis weg ist, dann hat man auch immer noch Chancen und kann das machen, was eben schon mal erwähnt wurde, dass man nämlich guckt nach den Dateien, praktisch welche Datei-Header findet man. Also Header ist pro Datei Typ, haben viele eine bestimmte Signatur, die den Anfang signalisiert, wo du halt wirklich auf die Bits, auf die Platte direkt guckst und eben guckst, was findest du und was kannst du dann noch an den Teilen wiederfinden. Da gibt es Datenrettungssoftware, die das macht. Es gibt auch Forensiksoftware, die kostenlos ist, die man sich runterladen kann. Das kann man auf jeden Fall mal versuchen, wenn man es tut, ist es auf jeden Fall immer eine gute Idee. Nicht, wenn man das Teil gelöscht hat, erstmal verschiedene Software runterzuladen, zu installieren und dann zu versuchen, das wieder herzustellen. Im Zweifel wird es dann auch schon überschrieben.
+00:10:04.073 --> 00:10:10.753
+<v SPEAKER_3>Liegt das nicht eher daran, dass diese Scheine so leicht gefälscht werden können oder häufiger Zielverfältungen sind?
 
-01:08:55.580 --> 01:08:57.800
-<v SPEAKER_1>Durch die runtergeladene Software.
+00:10:10.773 --> 00:10:37.893
+<v SPEAKER_1>Das ist eben die Frage, aus welchen Gründen das hier zulande noch so gut funktioniert mit dem anonymen Bezahlen mit richtigem echten Bargeld. Oder ob einfach in den USA die Alternative in Form der Kreditkarte schon von daher Akzeptanz hat, weil es eben tatsächlich ein Kredit ist und eine andere Gesellschaft. Also wo man quasi immer aus dem Dispo ist, ist es da ja nicht, sondern aus dem Kreditraten, im Verfügungrahmen lebt.
 
-01:08:57.820 --> 01:09:18.940
-<v SPEAKER_4>Es gibt da durchaus Live-CDs, also irgendwelche Linux Live-CDs, die dann von der CD direkt booten. Und ganz wichtig, wenn man irgend so was macht, nie auf den Live-Daten direkt arbeiten. Idealerweise hat man irgendwie eine 1-zu-1-Kopie von der SD-Karte vorher gezogen. In dem Fall der SD-Karte halt. Und arbeitet nicht wieder auf dieser SD-Karte beim Wiederherstellen, sondern auf irgendwas anderem.
+00:10:38.813 --> 00:10:52.453
+<v SPEAKER_4>Noch mal ein Kredit mehr, so nach der Häuserblase hatten wir die letzten ein, zwei Jahre dann ja auch die große Kreditblase, wo die Leute einfach auf Kredit gelebt haben, von der Kreditkarte alles bezahlt haben, weil sie es einfach drei Monate später erst zahlen müssen, teilweise je nach Payment Plan.
 
-01:09:18.960 --> 01:09:20.580
-<v SPEAKER_1>Aber wie macht man das denn?
+00:10:53.093 --> 00:11:29.733
+<v SPEAKER_3>Jetzt haben wir also sagen, die Grenzen schon in zwei Richtungen abgeschickt. Ich kann nicht mehr einerseits sagen, also dieses digitales Geld ist eine geile Idee, gibt es aber auf absehbare Zeit erst mal nicht, weil es zu kompliziert. Und auf der anderen Seite so Bargeld, naja vom Aussterben bedroht, kann man sagen, ob wir wollen oder nicht, aber wird sich mehr geben. Das heißt, wir leben jetzt in diesem Zwischenraum, da gibt es Lösungen. Was wir alle kennen, ist irgendwie Online-Banking. Da gab es ja auch schon den einen oder anderen Seiten-Heap. Da werden halt sozusagen übers Netz Dinge verteilt. Was wir auch alle kennen, was du gerade schon angesprochen habt, sind Kreditkarten, also beziehungsweise beliebige Karten mit Magnetstreifen oder Chips, wo Transfers ausgelöst werden können.
 
-01:09:20.600 --> 01:09:24.680
-<v SPEAKER_4>Da gibt es ja auch Software für, die dann einfach eine 1-zu-1-Kopie macht von der SD-Karte.
+00:11:29.753 --> 00:11:44.113
+<v SPEAKER_1>Und generell Zahlsysteme, wo du ein Authentifikations-Ding hast, das ist die Karte, die wird ausgegeben von einer Entität. Und die sagt, Leute, die mit dieser Karte zahlen können, die wissen, wer...
 
-01:09:24.700 --> 01:09:42.200
-<v SPEAKER_1>Das ist vielleicht nicht allen höherer innen, klar. Aber was du meinst, ist ja was anderes, als ich kopiere alle Dateien rüber. Weil dann will ich ja eine Kopie machen, die auch die gelöschten Dateien in Anführungszeichen rüber kopiert. Und das ist dann, wie nennt man das, Bitlevel-Kopie?
+00:11:44.133 --> 00:11:45.893
+<v SPEAKER_4>Die haben Kredit, die sind dafür in Betrag gut.
 
-01:09:42.220 --> 01:10:01.780
-<v SPEAKER_4>Ja, Image. Du ziehst halt eine Image von der gesamten Platte oder SD-Karte. Ein Stichwort dafür ist dann, wenn es um eine kaputte Festplatte geht, zum Beispiel DD Rescue. Das spricht zum Beispiel bei Fehlern nicht ab, sondern versucht einfach dann, den nächsten Sektor zu lesen. Auf diesen CDs meistens ist da auch irgendwas drauf.
+00:11:46.413 --> 00:11:52.813
+<v SPEAKER_1>Wir buchen dir das Geld, was du von diesen Menschen bekommst, der dir diese Karte drückt in seinem Auftrag um.
 
-01:10:01.800 --> 01:10:10.360
-<v SPEAKER_1>Da kopiert man nicht Dateien rüber, sondern man kann sich das vorstellen, wie da wird stumpf jedes Bit von links nach rechts geschoben.
+00:11:52.833 --> 00:12:25.113
+<v SPEAKER_3>Ich wollte gerade erst nochmal umreißen, wo wir gerade sind. Okay, also Kreditkarte, Online-Banking und dann dieses... Also der Begriff ist immer NFC. Also Dinge sind in unseren Geräten drin, die möglicherweise nochmal Datentransfer auf eine andere Art und Weise machen. Also man kennt das vom Handy, da irgendwie war jetzt auch gerade ein Artikel in der Welt, glaube ich, so, dass also das Handy dann irgendwie auch so... Digital Wallet ist das Schlagwort. Wurde auch im Vorgespräch schon belehrt, da wird das... Da ist kein Bargeld drin, auch kein Digital, das ist auch nur Transferleistung. Aber das soll halt kommen, dass wir irgendwie unsere Smartphones dazu benutzen, zum Bezahlen.
 
-01:10:10.380 --> 01:10:59.100
-<v SPEAKER_4>Alles, was lest, wird gelesen, wo extern abgespeichert. Sonst passiert dir halt das, was mir passiert ist. Du hast wirklich viele Geschichten. Ich hab für einen Schulfreund damals noch vom Abi irgendwie, das war irrsinnig teuer, eine 10 Gigabyte Festplatte hatte er, wo ganz viele Daten drauf waren. Da hab ich dann mit Taschenrechner und Hexeditor seinen FAT-Eintrag und sein Dateisystem neu geschrieben, damit das wieder lesbar war. Dann wollte er Windows neu installiert haben und dieses Windows hat dann bei der Installation die Festplatten durcheinander gewürfelt. Und das alles, was gerade refresh restauriert war, formatiert und überschrieben, das war dann unwiederbringlich weg. Weil am Anfang war wirklich nur das Inhaltsverzeichnis weg, das hab ich halt neu geschrieben. Aber ich konnte ihm danach einen Ausdruck über 30 Seiten geben, der mit einer Tiny-Dia verloren hat. Das ist ihm leider auch nicht weiter.
+00:12:25.133 --> 00:12:32.993
+<v SPEAKER_1>Das sehen wir ja schon. Also die Technologie, die du angesprochen hast, NFC, muss man vielleicht mal erklären, bevor wir hier mit so Dingen um uns werfen.
 
-01:10:59.960 --> 01:11:26.180
-<v SPEAKER_2>Deswegen, wenn man sowas forensisch macht, kommt natürlich auch hier immer auf die Situation an. Aber wenn man das sauber machen kann, dann baut man die Platte aus, hängt sie an einen Hardware-Write-Blocker, dokumentiert, dass der funktioniert, und kommt dann gar nicht in die Situation, dass man was löscht oder das, was an der Platte geändert wird. Außer natürlich, man hat eine SSD, die, wenn sie angepowered wird, wieder schlau sein will und Daten löscht.
+00:12:33.013 --> 00:12:38.693
+<v SPEAKER_3>Entschuldigung, das ist normalerweise meine Aufgabe, Herr Nebler, aber ja, bitte, erklär doch bitte mal NFC.
 
-01:11:28.520 --> 01:11:29.520
-<v SPEAKER_3>Das Wiederherstellen von Dateien.
+00:12:38.713 --> 00:13:36.773
+<v SPEAKER_1>Ja, was da im Prinzip passiert, ist, dass die Telefoner eine zusätzliche Funkschnittstelle bekommen, mit der sie Daten austauschen können, wo das bereits schon im Veltest eingesetzt wird, das ist hier in Berlin. Da habt ihr vielleicht an den Bahnsteigen diese Touchpoints schon gesehen mit dem roten Punkt. Das sind im Prinzip nichts anderes als Tokens, als Labels. Also das ist ein Ding, wo eine ID drin gespeichert ist. Wenn man das Telefon dagegen hält, dann kann das Telefon diese ID lesen, weiß also, ich bin jetzt hier in Potsdam-Babelsberg und das nächste Mal, wenn man es irgendwo wieder dagegen hält, ha, ich bin in Berlin Hauptbahnhof, dann weiß also das Telefon bzw. der Online-Dienst dahinter. Der Nutzer war also in Babelsberg, ist da eingestiegen und ist am Hauptbahnhof wieder ausgestiegen und ja, über die Weitergabe dieser, dieses Informationsstücks, das man da mit dem Telefon aufsammelt, weiß der Nahverkehrsbetreiber, welche Strecke man gefahren ist.
 
-01:11:29.540 --> 01:11:35.180
-<v SPEAKER_2>Ich glaube, wie man raushört, Forensiker mögen SSDs nicht so gerne.
+00:13:37.253 --> 00:14:20.753
+<v SPEAKER_3>Das ist der erste Punkt, wo ich gerne mal sagen würde, falls ihr so ein Ding tatsächlich ausprobiert habt, weil die sind tatsächlich im großen Test schon eingesetzt worden, dann gerne das hier. Das gilt auch insbesondere, wenn ihr heute Fragen haben solltet, falls euch doch irgendwie was zu schnell geht oder ihr noch etwas in eine andere Richtung ausbreiten wolltet. Gerne anrufen, 0331 70 97 110 und eure Frage loswerden. So, ne, jetzt hast du gerade erklärt, dass die, dieses Ding mit, man hält das Gerät daran und dann erfährt der Betreiber, wo ich bin. Das heißt, der Abrechnungsvorgang ist nicht, findet da nicht sozusagen an dem Gerätschat, sondern damit nur die Informationen übermittelt, wo ich gerade bin und der Betreiber rechnet dann aus, die Wegtrecke und bucht dann von irgendeinem Konto von mir ab.
 
-01:11:35.200 --> 01:11:37.560
-<v SPEAKER_1>Kommt so ein bisschen durch. Alex, du wolltest auch mal sagen?
+00:14:20.773 --> 00:14:57.533
+<v SPEAKER_1>Genau, das ist also ganz weit entfernt von irgendwelchen Bezahlvorgängen, sondern einfach wirklich nur mal diese Technologie auszuprobieren. Da sieht man auch schon, dass die Betreiber da sehr vorsichtig sind und sich erstmal rantasten mit irgendwie den Geräten, bevor das dann wirklich die Verbreitung findet, dass man dem Ganzen auch Zahlungsvorgänge dann anvertraut. Was ja schon so eine Sache ist, wo man da kontaktlos mit einem Gerät Dinge bezahlen kann. Will man schon noch mal vorher ausprobieren. Funktioniert das überhaupt? Ist das zuverlässig und was treiben die Leute damit für Schindluder?
 
-01:11:37.580 --> 01:12:24.160
-<v SPEAKER_3>Ja, dieses Daten retten mit Tools. Ich kenne eins, das nennt sich TestDisc. Das funktioniert besonders gut auf z.B. SD-Karten aus Digitalkameras. Weil die haben ein sehr einfaches Dateisystem. Digitalkameras möchten in der Regel auch einfach nur schnell Daten schreiben. Das heißt, wenn da so ein Foto gemacht wird, dann versuchen die das möglichst schnell auf die SD-Karte zu bekommen. Und schreiben in der Regel die Daten eines Fotos am Stück nacheinander hin. Das heißt, man findet, wenn man so ein Image von seiner SD-Karte macht, die Bilder alle schön nacheinander, soweit das geht. Und damit kann man recht viel wiederherstellen. Wenn man also ein Foto gemacht hat von irgendetwas und irgendjemand zwingt einen, das Foto auf der Kamera zu löschen, SD-Karte rausnehmen und zu Hause ganz entspannt ein Image davon machen und da dann das Bild wieder raussuchen. Das klappt ziemlich gut.
+00:14:57.553 --> 00:15:03.013
+<v SPEAKER_3>Gibt es da schon Erkenntnisse, die möglicherweise Leuten passiert sind, die jemand kennt, den ihr kennt?
 
-01:12:24.180 --> 01:12:37.180
-<v SPEAKER_1>Also nicht weiter fotografieren, das habt ihr nicht von uns. Wo wir jetzt aber genau an der Stelle sind. Also ein Backup zu haben ist immer noch besser als zu versuchen, das Video zu recht zu frickeln, aber man kann es versuchen.
+00:15:03.033 --> 00:15:59.333
+<v SPEAKER_4>Jetzt so direkt nicht, aber es sollte einem klar sein, dass wann immer man an so einem Transponder lang läuft. Das ist im Prinzip die gleiche Technik, die von Supermärkten benutzt wird, um irgendwie T-Shirts vom Clown zu bewahren oder zumindest zu wissen, welches T-Shirt jetzt wo ist. Also RefiD, was im Prinzip dahinter steht. Das heißt, immer wenn ich an so einem Ding lang laufe und da mein Ding hin, also mein Telefon oder was auch immer, der persönliche Transponder dafür ist, der persönliche Empfänger dafür ist, dann das aufnimmt, habe ich natürlich eine Datenschleimspur hinterlassen, die im Zweifelsfall auch ausgewertet werden kann, die im Zweifelsfall auch in einem Prozess mein Alibi bekräftigen oder nicht bekräftigen kann. Abgesehen davon, ich weiß nicht, hat irgendjemand mal probiert bei diesen hübschen kleinen RFID-Tags an den Bahnhöfen, die mal am einen Bahnhof abzukratzen und am anderen Bahnhof wieder anzukleben? Weil wenn man das auf großflächig mal machen würde, wäre das... Also A, könnte man sehr preiswert von Potsdam nach Hauptbahnhof fahren. Wenn in Potsdam halt der lehrte Bahnhof-Tag klebt, dann ist das alles nur noch sehr viel billiger.
 
-01:12:37.220 --> 01:12:37.740
-<v SPEAKER_2>Man kann es.
+00:16:00.513 --> 00:16:50.093
+<v SPEAKER_1>Ja, das ist halt die Frage in der Tat, wo man sich darauf einlässt. Wir sehen das ja bei Türöffnungssystemen, die auch auf Funktechnologie basieren. Da gab es in den letzten Jahren immer wieder Hacks, wo Leute demonstriert haben, dass eben dieses magische Token, was man da in der Hand hält und gegen diesen Apparat hält, der dann grün leuchtet, dass das eben kopierbar ist, also dass man da durchaus Fälschungen betreiben kann. Und ganz klassisch bei Zahlvorgängen, um jetzt wieder den Bogen auf die Jetzt-Welt zu ziehen, hat man ja auch das Problem, dass man im Prinzip dem Lesegerät und dass man seine Karte reinsteckt, vertrauen muss. Und das wird alles nicht besser, dadurch, dass eben ja dieses Lesegerät nicht mehr was ist, wo man eine Karte reinsteckt, was dann elektronisch mit dieser Karte spricht. Ja, dass da jetzt eine Funkschnittstelle zwischengebaut wird.
 
-01:12:39.020 --> 01:13:08.360
-<v SPEAKER_1>Wenn der Wörskiss eingetreten ist, besteht das Grund zur Annahme, dass es funktionieren könnte. Aber wo wir jetzt gerade dabei sind, gibt es natürlich auch den umgedrehten Fall. Wir entfernen uns ein bisschen, ich kehre gleich zum Backup zurück und zum Fazit dieser Sendung. Wie lösche ich den Daten, das ist jetzt völlig konträr, aber weil wir gerade dabei sind, wie lösche ich den Daten so, dass es eben nicht mehr geht? Vielleicht will ich ja gar nicht. Vielleicht will ich wirklich sicherstellen, dass dieses Bild niemand mehr restaurieren kann.
+00:16:50.113 --> 00:17:29.913
+<v SPEAKER_3>Okay, das würde ich an dieser Stelle gerne mal einhaken wollen mit diesem Lesegerät. Möglicherweise schlagen wir einfach den Bogen von da. Fangen jetzt mal bei dem Ding an, was wir alle kennen, nämlich ein Kreditkartenlesegerät. Können dann vielleicht sozusagen einen Weg weitergehen. Da gibt es ja so neue Formen, also irgendwie Kreditkartenlesegeräte per Smartphone und so. Und dann können wir noch mal zur NFC kommen. Wie ist denn das jetzt mit diesem Kreditkartenlesegerät? Jeder, der so ein Ding noch mal noch nicht auseinandergenommen hat. Wie genau funktioniert das denn, wenn ich sozusagen so eine Magnetkarte habe oder Chipkarte? Da können wir vielleicht den Unterschied auch noch erklären, weil das wird jetzt irgendwie ausgegeben und da steht dann drin, dass ist alles viel sicherer. Was genau passiert da und wie gibt es da, wie kommt es da zu Sicherheitsschrankungen?
 
-01:13:08.380 --> 01:13:37.920
-<v SPEAKER_2>Na deine Platten sind ja alle schön verschlüsselt. Das heißt, du schmeißt deinen Key weg und dann bist du schon mal nicht so schlecht da. Ich kann aber noch mehr dazu sagen. Man sagt so, wenn deine Verschlüsselung im Boot ist und du den Key wegschmeißt, dann bist du ja safe. Jetzt kann man trotzdem sagen, okay, vielleicht, weiß ich nicht, vielleicht hast du nicht Vertrauen, dass deine Verschlüsselungssoftware in aller Ewigkeit keine signikikante Schwachstelle hat.
+00:17:29.933 --> 00:19:14.253
+<v SPEAKER_1>Gehen wir mal ganz weit zurück zur Einführung der Kreditkarten. So eine Kreditkarte hat als kleinsten gemeinsamer Nenner so eine Nummer drauf stehen und diese Nummer ist mit einem Kundenkonto verknüpft und ganz ganz ganz früher war es eben so, dass man diese Imprinter nannte sich das, diese Ritsch-Ratsch Tabletts hatte, wo eben man die Kreditkarte drauf gelegt hat, drüber geritsch-ratscht hat und dann hat sich der in der Kreditkarte eingeprägte diese Nummer auf den Beleg übertragen, den hat man dann eingereicht und dann wurde das gebucht. Hat natürlich den Nachteil gehabt, dass man dem Kunden trauen musste, dass er sozusagen kreditwürdig ist, daher auch eben die Kreditkarte. Heutzutage ist es so, dass man diese Imprinter, funktioniert zwar alles immer noch, wenn es nicht gerade eingetrocknet ist, schon die Tinte, aber in der Regel ist es so, dass man eben diese Nummer dazu verwendet, um Dinge zu bezahlen in der Form, dass man diese Nummer an einem Händler gibt. Der Händler gibt diese Nummer weiter an ein Payment Gateway, also an eine Kreditkartenfirma, die sozusagen gegenüber dem Händler, dem abnimmt, mit jeder Karten ausgebenden Stelle zu kommunizieren und dem Händler sagt, okay, diese Nummer darf, das ist dann die Authorization, nennt man das. Da wurde eben gesagt, okay, der Betrag, den du uns da gerade genannt hast, und diese Kreditkartennummer, das klappt. Und dann sagt der Händler, jo, mach ich. Das nennt man dann Capture, also ist man ein beischrittiger Vorgang, der da passiert. Und in dem Moment ist es dann gebucht.
 
-01:13:38.320 --> 01:13:48.840
-<v SPEAKER_1>Ich rede jetzt auch eher von den Fällen, ich möchte keinen Ahnung, ich will den Rechner verkaufen oder die SD-Karte, meine Frau braucht eine SD-Karte. Ich formatiere die und frage mich, reicht das?
+00:19:14.273 --> 00:19:26.913
+<v SPEAKER_3>Warte mal, aber wenn ich richtig verstehe, sozusagen ist eine Abbuchung per Kreditkarte nichts anderes, als dass diese lange Nummer, die drauf steht, an irgendjemand übermittelt wird? Ich will ja nicht irgendwie neunmal klug erscheinen, aber ist das nicht relativ vielleicht angreifbar?
 
-01:13:48.860 --> 01:15:11.200
-<v SPEAKER_2>Wie gesagt, wenn sie verschlüsselt war, ist das schon mal ein guter Anfang. Ansonsten, es gibt, also es reicht nicht, es reicht nicht, weil bei der Formatierung bleiben, also ja, den Video formatierst, aber bleiben Daten erhalten. Es gibt ganz viel Diskussion und sich immer ändernde Hinweise drüber, was man denn dann machen soll, wie häufig man überschreiben soll und mit was. Momentan ist der Ratschlag eigentlich, dass im Normalfall einmal mit einem einfachen Muster komplett überschreiben reicht, außer bei SSDs. Ja, bei SSDs hast du das Problem. Die haben zwei Probleme oder zwei tolle Features, die aber in der Hinsicht jetzt nicht helfen. Das eine ist, dass die, wie gesagt, den Speicher ummappen. Das heißt, du sagst oder dein Betriebssystem sagt, der SSD überschreibt mal das hier mit Nullen. Die SSD mappt das Internum und überschreibt dann gar nicht deine Daten, die du wirklich löschen wolltest, sondern irgendwas anderes. Das andere ist, dass SSDs Speicherzellen ausfallen können und durch Abnutzen halten, die häufig noch so einen Speicher vor, praktisch andere Reserve-Speicherzellen und tauschen den dann hin und her, aber das ist gar nicht transparent nach außen. Also in diesem Speicher können noch Daten liegen, auf die man erstmal keinen Zugriff hat.
+00:19:27.473 --> 00:21:19.393
+<v SPEAKER_4>Das ist ein bisschen komplizierter als das. Also die Nummer ist im Prinzip nur der Hinweis darauf, wer der Zahler ist. Und dann wird das online, in dem Augenblick, in dem gezahlt wird, wird kontrolliert, dass dieser Zahler tatsächlich in der Lage ist, dieses Geld auch zu verfügen. Also nicht nur die 10 Euro fürs Taxi zum Flughafen, sondern vielleicht auch die 2000 Euro für den ganzen Tank voller Diesel in der Karibik. Und dann wird das Geld tatsächlich in dem Augenblick beim Zahler vermerkt in der Buchung und dann schon ein paar Wochen später dann dem Empfänger dann auch gut geschrieben. Teilweise, also bis das Geld dann tatsächlich beim Konto des Empfängers ankommt, vergehen bis zu sechs Wochen. Das sollte man sich auch überlegen. Also da liegt eine ganze Menge Geld teilweise auch rum, weil bei mir fehlt es ab dem Tag, an dem ich gezahlt habe als Kunde. Und beim Händler auf dem wirklichen, nicht auf dem Kartenkonto, sondern tatsächlich auf dem Bankkonto, kommt es im Schnitt zu um die sechs Wochen später an. Das ist also eine ganze Menge Laufzeit für Dinge, die eigentlich Transaktionen, wo man sagen könnte, eine E-Mail braucht doch auch nicht länger als 0, 2 Sekunden. Warum braucht eigentlich eine Kartenzahlung so lang? Ganz klar, weil unterwegs natürlich auch noch Geld verdient wird. Also bei mir ist es weg, beim Händler ist es noch nicht da. Irgendwo ist es dazwischen. Da haben ja doch die Banken schon mal ordentlich für auf die Nase bekommen, dass die bei Überweisungen eine Bank drei Tage, nächste Bank drei Tage jeweils das Geld im Nirwana für eigene Zwecke missbraucht haben. Also das passiert da natürlich auch und zu den Ritschradts, die sind an der Stelle da halt auch für den Kreditkartenfirmen ganz stark ausgefährst worden, also vertrieben worden, weil in dem Augenblick, wo das Ritschradts zum Bezahlen benutzt wird, garantiert die Kreditkartenfirma den Empfänger die Zahlung des Betrages. Das heißt, wenn ich mir eine Kreditkarte zahle, die seit gestern gesperrt ist oder seit letzter Woche oder seit letztem Monat gesperrt ist, also aber ja noch innerhalb ihrer Gültigkeit ist, dann muss die Kreditkartenfirma dem Empfänger das Geld tatsächlich zahlen, wenn er so eine Ritche hat. Dafür zahlt er mit der Ritche aber auch keine Ahnung, drei Euro pro Transaktion. Der hat dann halt die Versicherung quasi mitzuzahlen.
 
-01:15:11.220 --> 01:15:53.120
-<v SPEAKER_3>Ich würde mich da so ein bisschen an den Richtlinien des BSI orientieren. Ich habe das für berufliche Zwecke mal recherchiert. Und bei Festplatten scheint so der Konsens zu sein. Einmal überschreiben ist in Ordnung für aktuelle Festplatten. Bei SSDs wird das im Prinzip empfohlen, der SSD zu sagen, dass sie sich bitte einmal komplett löschen soll. Das gibt einen Feature namens Secure Erase, was wohl ganz gut funktioniert. Und bei SD-Karten und USB-Sticks, wenn du sie nicht verschlüsselt hast, bist du eigentlich so ein bisschen auf dich alleine gestellt, weil die manchmal auch noch mehr Speicher haben, als sie nach außen rausgeben. Und es da eben dieses lösche dich bitte selber Feature nicht gibt in der Regel.
+00:21:19.713 --> 00:21:35.873
+<v SPEAKER_1>Da sind wir ja dann auch schon beim Frontmanagement, weil genau das hast du gesagt, Markus, dass eben du da eine Nummer übermittelst und diese Nummer dazu verwendet wird. Das ist natürlich unglaublich attraktiv für Leute, die gerne Nummern sammeln und diese Nummern dann für Bösezwecke missbrauchen.
 
-01:15:54.400 --> 01:16:06.320
-<v SPEAKER_1>Aber das heißt, wenn man dem Betriebssystem sagt, bitte, also wenn es soweit kommt, dann kann ich dem Betriebssystem nachher sagen, bitte verschlüssel diesen USB-Stick und dann lösche ich ihn. Dann wäre ich ja wieder auf der sicheren Seite.
+00:21:36.113 --> 00:21:50.133
+<v SPEAKER_3>Ich wollte gerade fragen, also der Vorgang, den ihr beschrieben habt, der stellt sicher, dass der Händler das Geld kriegt. Also der stellt sicher, dass bei diesem Bezahlvorgang tatsächlich Geld bei rumkommt. Aber er stellt nicht sicher, dass derjenige, der diese Karte vorzeigt, tatsächlich der ist.
 
-01:16:06.340 --> 01:16:11.620
-<v SPEAKER_3>Wenn du schon einmal die Daten unverschlüsselt dahingeschrieben hast, dann weißt du ja nicht, ob sie wirklich überschrieben wurden.
+00:21:50.153 --> 00:23:11.633
+<v SPEAKER_1>Genau. Dafür gibt es eben, ja, Fraudmanagement nennt man das. Also den Umgang mit Betrugsfällen oder mit Betrugsversuchen. Wenn du in so ein Hardwaregerät diese Karte reinsteckst, dann passiert im Prinzip dasselbe, was mit so einem Ritschradgerät passiert, nämlich die Nummer. Die ist auf einem Magnetstreifen, besteht hinten aus drei Tracks nennt man das. Also da sind drei Datenspuren drauf. Und in der Datenspur zwei steht tatsächlich diese Nummer. Und diese Nummer wird dann sozusagen live überprüft, ob die Karte gesperrt ist, ob der Kunde wirklich über den Betrag verfügen darf. Und in dem Moment ist dann auch sichergestellt, ob diese Transaktion wirklich passieren darf. Und richtig in der Haftung drin ist der Kreditkarten, also der Payment Processor erst, wenn sozusagen das Geld gebucht ist. Also diese Transaktion durch ist. Er sagt, okay, die Transaktion geht, möchtest du haben. Na ja, möchte ich haben. Und ja, da gibt es natürlich dann auch Limits. Wenn jetzt schon häufiger was mit einer Karte passiert ist und das aus dem Rahmen fällt, kann es einem auch passieren, dass man seine PIN eingeben muss.
 
-01:16:14.380 --> 01:17:33.940
-<v SPEAKER_4>Du hast ja das Problem, dass alle diese Sachen immer in Blöcken gespeichert werden, sei es ein Festplattensektor oder ein Flashblock. Wir hatten das Stichwort jetzt schon mehrfach so umschrieben, die SSD versucht schlau zu sein und der USB-Stick auch. Das nennt sich Wear Leveling. Weil die Controller, das sind kleine Mikrocontroller da drin, mit eigenem Betriebssystem, versuchen dafür zu sorgen, dass du nicht bestimmte Speicherzellen zu sehr abnutzt und sie kaputt gehen. Wenn sie merken, dass eine davon kurz davor ist, den Geist aufzugeben, mappen sie intern um. Wenn du einen Block mit Nullen brauchst, und da ist schon woanders einer, dann kreist du auf den zu, statt irgendeinen anderen unnötig zu löschen. Du brauchst ja nur einen Block Nullen, wo der liegt, ist egal. Wenn du jetzt Sachen formatierst oder neu verschlüsselst, belegst du nicht unbedingt gesamten Platz auf dem Ding. Es bleibt immer noch was da, wo du nicht reingeschrieben hast, was nicht gelöscht wurde, wo der Controller nur weiß, wenn ich darauf zugreife, dann lief vielleicht nur Nullen, weil das Betriebssystem hat da noch nie was reingeschrieben. Dann braucht es sich auch nichts anderes zu merken, weil das sind der E00. Das heißt, du kannst dir nie sicher sein, dass du wirklich alles überschrieben hast, dass eine Festplatte nicht einen Sektor umgemappt hat und irgendwo vielleicht noch ein paar Kilobyte oder ein paar Byte private Daten oder genau dieses eine Passwort, was niemand wissen soll, nicht irgendwo noch in einem Sektor drin ist. Deswegen ist die Empfehlung, alle Medien von Anfang an nur verschlüsselt zu benutzen.
+00:23:12.493 --> 00:23:14.873
+<v SPEAKER_3>Moment mal, ich muss immer meine PIN eingeben.
 
-01:17:33.960 --> 01:17:36.420
-<v SPEAKER_1>Das ist aber bei der SD-Karte in der Kamera ein bisschen schwierig.
+00:23:14.893 --> 00:23:59.133
+<v SPEAKER_4>Das ist bei dem neuen System. Das heißt, wenn die modernen Karten jetzt seit, na ja, was heißt die modernen jetzt auch schon seit 7, 8 Jahren, haben einen Chip drauf. Der Chip hat schön Signatur und alles fein und der arbeitet mit der PIN. Das heißt, das, was früher möglich war, nämlich, dass man sich im Restaurant-Müll einmal die Kartennummern rausgepult hat und damit dann Karten, quasi Blankokarten hatte, mit denen man Karten simulieren konnte, um die zu Betrug zu nutzen, das ist alles nicht mehr so einfach. Dafür gibt es im Internet immer diesen Prüfcode, weil der dafür nun mitgespeichert werden und wenn man dann über die physikalische Karte redet, dann ist da an der Stelle der Chip mit PIN dann. Wobei ich tatsächlich auch wäre, also ich hab nur Karten mit Chip und ich hab noch keinen mit meinem PIN eingegeben, ich weiß es nicht.
 
-01:17:36.480 --> 01:17:47.180
-<v SPEAKER_4>Da ist es im Prinzip unmöglich. Da kannst du halt nur komplett eins zu eins alles überschreiben, aber damit reduzierst du natürlich die Limitszeit von so einem Ding dramatisch. Aber je nachdem, was dein Angriff ist...
+00:23:59.153 --> 00:25:20.053
+<v SPEAKER_1>Es ist in der Tat so, dass auf diesen Magnetstreifen auch noch draufsteht, ja, was die Karte darf, also das Discretionary Data Field. Da steht zum Beispiel drin, wie viel Geld du offline verfügen darfst, wie viel du online verfügen darfst, offline online der Unterschied ist, ob das Terminal jetzt wirklich live mit dem Institut Daten austauscht oder ob es wirklich nur speichert und darüber wird halt dieses Fraudmanagement betrieben dahingehend, dass man sagt, okay, der darf, wenn das Terminal nicht live abchecken kann, nur über 100 Euro verfügen oder nur über 500 Euro verfügen oder nach zehn Bezahlvorgängen ist PIN fällig. Ja, das war sozusagen der Einstieg in die Überprüfungstechnologie, was dann weitergeführt wurde mit der Smartcard, also wo wirklich nicht nur eine Zahl von einem Streifen gelesen wird, sondern wo mit der Karte gesprochen wird, also die Fälschung nicht nur durch das Kopieren eines Magnetstreifens möglich gemacht wird, sondern man dann schon den ganzen Chip, der da drin ist, mit den Daten, die da drin sind und so weiter. Da ist nochmal das Sicherheitsniveau sozusagen angehoben.
 
-01:17:47.200 --> 01:17:55.580
-<v SPEAKER_1>Aber warte mal, du hast doch gerade gesagt, man weiß gar nicht genau, ob da nicht noch extra Speicherplatz ist, das heißt alles überschreiben, ist ja dann auch nicht wirklich safe.
+00:25:20.073 --> 00:25:26.813
+<v SPEAKER_3>Angehoben auf einen Stand, wo ihr sagen würdet, das ist tatsächlich Sicherheit oder angehoben mit, das ist irgendwie kosmetisch und sieht gut aus.
 
-01:17:55.600 --> 01:18:26.520
-<v SPEAKER_4>Was ist denn dein Angriff, also das kommt auf dein Angriffsszenario oder auf dein Bedrohungsszenario an. Dein Szenario ist, du möchtest die SD-Karte einem Kumpel weitergeben, damit er die in seiner Kamera benutzt und der soll halt nicht irgendwie die Fotos von dir finden, die da vorher drauf waren. Dann überschreibst du halt alles einmal komplett auf quasi Bittebene. Dann kann man auch dann nicht einfach sowas wieder herstellen. Wenn diese SD-Karte natürlich einem Forensiker in die Hände fällt, der da irgendwie in einem großen Prozess unendlich viel Geld zur Verfügung hat, um das wiederherzustellen, dann baut er eventuell den Chip aus und je nachdem kann man halt vielleicht Sachen noch auslesen.
+00:25:26.833 --> 00:26:38.593
+<v SPEAKER_1>Ja, das Schöne an Kreditkartenzahlungen ist, als Händler zahlt man da so was um die 2, 3% und nochmal 50 Cent pro Transaktion oder so, um mal eine Hausnummer zu nennen mit so einem Online-Gerät. Das Schöne an der Kreditkarte ist tatsächlich, dass man als Kunde sagen kann, die Transaktion, die ich hier in meiner Monatsendabrechnung sehe, oder wenn man es online sieht, das ist zu Tage schon nach 2, 3 Tagen sichtbar, bzw. den Kontostand in der Regel live, geht man zu seinem kartenausgebenden Institut hin und sagt, du, hier, an diese Transaktion kann ich mich nicht erinnern. Je nachdem, was es dann ist, muss man denen das auch nochmal schriftlich geben, aber in dem Moment können die dann ein Chargeback, nennt sich das, also eine Rückbuchung auslösen. Das heißt, der Händler wird um einen Nachweis gebeten, was in der Sache ist. Je nachdem, aus welchem Grund man den Chargeback feiert, kann man zum Beispiel sagen, Service not rendered, also ich hab die Dienstleistung nicht bekommen, oder dass man die Transaktion gar nicht identifizieren kann, dass man den Händler nicht kennt, kriegt man in erster Linie erstmal sein Geld zurück und das wird dann mit dem Händler ausgekraspert.
 
-01:18:26.800 --> 01:18:29.760
-<v SPEAKER_1>Also ich halte mal fest, am Ende hilft immer noch der Flammenwerfer.
+00:26:38.613 --> 00:26:51.493
+<v SPEAKER_3>Also wichtiger Punkt, da kommen wir zur Sendung noch zu, ist im Zweifel ist bei diesem Modell noch der Händler letztendlich dafür verantwortlich zu beweisen, dass er tatsächlich von der Person, der die Kreditkarte gehört, diesen Zahlungsvorgang angewiesen bekommen hat.
 
-01:18:29.780 --> 01:18:30.420
-<v SPEAKER_4>Genau, der Termit.
+00:26:51.513 --> 00:27:06.093
+<v SPEAKER_1>Richtig. Und deswegen hat man auch in der Regel bei Transaktionen, wo man es keine PIN eingibt, wo man sich also wirklich mit einem Identifikationsmerkmal ausweist, was jetzt auch kopierbar und abschaubar ist, die Unterschrift. Okay.
 
-01:18:31.400 --> 01:18:56.120
-<v SPEAKER_2>Ja, genau, auch bei SSDs, weil es gerade gesagt wurde, das Secure Erase. Ja, also es implementieren viele. Das funktioniert aber auch nicht immer 100%. Also wie diese SSD-Controller funktionieren, was sie machen, das ändert sich einfach sehr, sehr viel zwischen den Generationen, zwischen Herstellern. Und man hat da auch relativ wenig Einblick. Also Secure Erase ist schon mal super. So komplett drauf verlassen, dass dann wirklich alles weg ist von der SSD, kann man aber auch nicht.
+00:27:06.113 --> 00:27:10.993
+<v SPEAKER_3>Also das gilt dann sozusagen, als der Typ war tatsächlich hier und hat.
 
-01:18:58.800 --> 01:20:30.980
-<v SPEAKER_1>Okay, gut, also weder kann man ein perfektes Backup machen, noch kann man das... Das ist, was für ein Irrsinn diese Digitaltechnik ist. Also nachdem wir eine Stunde lang gesprochen haben, dass es eigentlich ganz schwer möglich ist, ein perfektes Backup zu machen und dafür zu sorgen, dass die Daten wirklich da bleiben, wird dann auch noch in den letzten 10 Minuten erklärt. Dass es aber auch nicht so ist, dass man garantieren kann, dass die Daten wirklich verschwinden. Das ist doch vom Teufel gemacht. Ich würde jetzt zum Anschluss der Sendung nochmal tatsächlich, wir machen das sehr selten und vielleicht habt ihr keinen Bock drauf, dann sagt mir das gleich, aber ich würde es gerne versuchen, nochmal vielleicht tatsächlich sowas Konkreteres zu sagen. Und zwar ausgehend davon, liebe Zielgruppe, ich hoffe das passt so, man ist jemand, der technisch so ein bisschen interessiert ist, jetzt nicht irgendwie ein Hardcore Coder oder sowas, ich will jetzt nicht irgendwie, also nicht auf Betriebssystem Ebene sein eigenes Backup Programm schreiben, sondern man ist jemand, der technisch so ein bisschen interessiert, sagt sich, ok, jetzt habe ich die Sendung gehört, jetzt mache ich, in Zukunft mache ich Backups. Wie könnte so ein Setup aussehen, was so eine pragmatische Abwägung ist zwischen, es ist eben nicht nur eine Spiegelung im Cloud-Anbieter, sondern es ist sozusagen etwas, wo man sagen kann, es ist schon ok, wenn du es so machst. Also liebe Leute, weiterhin schlechtes Backup ist besser als keins. Aber ihr hier versammelte ExpertInnen, wo sagt ihr denn, was ist denn was, was man mal in Angriff nehmen kann?
+00:27:11.693 --> 00:27:41.453
+<v SPEAKER_4>Aber an der Stelle kurz zum Thema Fraudmanagement, was da tatsächlich passiert, deswegen eben das Beispiel mit den zwei Tonnen Diesel in der Karibik. Wenn mein typisches Zahlverhalten kleine Beträge in Berlin sind und eine Woche später zahle ich zwei Tonnen Diesel in der Karibik, dann druckt der lustige kleine Drucker beim Kreditkartentür mal ein zusätzliches Blättchen aus. Da steht drauf, bitte lassen sich den Perso zeigen. Und dann muss man dem Herrn an der Tankstelle tatsächlich den Perso zeigen. Und erst wenn der Perso zur Kreditkarte passt, dann kann das Geld ausgezahlt werden.
 
-01:20:32.040 --> 01:21:04.060
-<v SPEAKER_3>Also ich würde sagen, nehmt euch eine Backup-Software. Das kann Rastic sein, das kann Borg-Backup sein, das kann eine andere Software sein. Und fangt einfach erstmal an, im Zweifelsfall, erstmal mit einem lokalen Backup, also auf die gleiche Festplatte. Das ist ganz hilfreich für, ich habe die Datei versehentlich gelöscht und brauche sie schnell wieder. Und dann sucht euch irgendeinen Online-Anbieter oder sowas, wo ihr dann eine zweite Version der Backup-Daten auch nochmal ablegt. Wenn ihr ganz sicher sein wollt, benutzt ihr zwei verschiedene Programme, falls es irgendwelche Schwachstellen oder Bugs in diesen Programmen gibt.
+00:27:41.953 --> 00:27:43.373
+<v SPEAKER_3>Okay, aber nochmal sozusagen.
 
-01:21:07.060 --> 01:21:09.160
-<v SPEAKER_1>Und bei den Online-Anbietern immer verschütteln?
+00:27:43.393 --> 00:28:26.933
+<v SPEAKER_1>Ich hab das vorhin noch nicht gesehen, aber so das Kerngeschäft von so einem Kreditkartenunternehmen ist halt ja, Fraudmanagement, also damit umzugehen, wie man den Betrug erkennt, wie man mit künstlicher Intelligenz, um jetzt mal schon beinahe zu hochzugreifen, zu erkennen, wie muss ich die Transaktion, die mir da gerade entgegengebracht wird, bewerten. Und was ich in der Tat schon mal gesehen habe, ist, dass einfach Karten entweder gesperrt werden oder der Kunde einen Anruf bekommt. Da ist gerade was fischi. Können sie uns dann sagen, sind sie gerade in London, in Dingens, und sonst noch was. Und es kann einfach auch passieren, wenn man viel reist und vorher nicht gereist ist, dass dann einfach eine Transaktion nicht durchgeht.
 
-01:21:09.200 --> 01:21:12.640
-<v SPEAKER_3>Ja, das war jetzt meine Voraussetzung schon. Entschuldigung, das habe ich nicht extra dabei gesagt.
+00:28:27.493 --> 00:29:35.253
+<v SPEAKER_4>Ja oder man ruft vorher an. Also das mache ich halt seit diesen Erlebnissen, also das mit dem Diesel ist mir tatsächlich passiert. Internationales Segeln und dann hat man muss mal halt mal ein Schiff in der Karibik auftanken und dann kommt dieser Zettel daraus, was auf jeden Fall sehr beruhigend ist, weil für den Fall, dass die Karte irgendwie unterwegs mal geklaut werden sollte, ist das durchaus ein Faktor. Was halt auch schön ist für den Kunden, dass es da halt die Haftungsbeschränkung für den Kunden gibt. Das heißt, ich kann meine Kreditkarte eigentlich weltweit irgendwo einsetzen. Es kann mir ganz egal sein, wie fisch die Bude ist, wo ich sie durch den Schlitz ziehe, weil ich als Kunde zahle maximal 50 Prozent. Und das ist natürlich eine gute Absicherung. Was mir allerdings passiert ist über die letzten Jahre, ist, dass teilweise, wer war das, Visa hat vor einem Jahr oder vor zwei Jahren war es jetzt, erhebliche Probleme in Spanien gehabt. Da ist in Spanien irgendwas gehackt worden. Und da gab es dann tatsächlich, also persönliche Auswirkungen an der Stelle, dreimal in einem Jahr eine neue Kreditkarte mit neuen Nummern. Was natürlich super sicher ist und was mir natürlich total freut, dass Visa so da hinterher ist. Was aber bedeutet, dass man seine Kreditkarte, die man an 20, 30, 40 Stellen im Internet hinterlegt hat für automatische Abhörungen, an allen Stellen ändern muss. Und wenn man eine vergisst, plötzlich irgendwie einen Service nicht mehr kriegt, ab der an, den man sich gewöhnt hat.
 
-01:21:18.940 --> 01:22:03.880
-<v SPEAKER_2>Ja, finde ich eine gute Herangehensweise. Ich glaube, was auch noch wichtig ist, dass man sich wirklich überlegt, was sind denn die Dinge, wo es wirklich eine Katastrophe wäre, wenn die weg wären, also sei es die Abschlussarbeit oder die Baby-Fotos von den Kindern. Also ich habe mich überlegt, was sind denn wirklich die Daten, die man unbedingt braucht. Die kann man sich im Zweifel auch irgendwie in die Dropbox legen, wenn die super vertraulich sind oder man schickt sie sich selbst in der E-Mail oder man schickt sie irgendjemanden, den man kennt, von mir aus in WhatsApp oder irgendwas. Ich glaube, das ist ein wichtiger Punkt, wenn man wirklich anfängt. Erstmal gucken, was sind denn wirklich so jetzt die Grundjuwelen, wo es ganz schlimm wäre, wenn die weg wären und einfach mal schnell pragmatisch eine Lösung finden, die irgendwie wegzuspeichern.
+00:29:35.553 --> 00:30:03.053
+<v SPEAKER_3>Schön sicher ist das. Wir hatten ja auch gerade noch festgestellt, da möchte ich noch mal kurz eingehen, die Spieler unter euch haben das vielleicht mitbekommen. Es gibt ja auf der Visa-Karte, ich weiß nicht, ob es bei anderen Kreditkartenfirmen auch ist hinten drauf, diese dreistellige Nummer, die man extra eingeben muss. Und da ist der Deal ja, diese Nummer weiß nur der Kartenhaber und die dürfen nirgends wo gespeichert werden. Es gab den Sony-Hack im letzten Jahr oder war es schon im vorletzten Jahr und da hat Sony an irgendeiner Stelle, wenn ich mich richtig erinnere, ja gesagt so, ja, nee, diese Sicherheitscodes sind nicht weggekommen, die haben wir woanders gespeichert.
 
-01:22:04.780 --> 01:22:21.040
-<v SPEAKER_1>Oh Gott, das will die Hölle Fritz zu Chaosradio mit WhatsApp empfohlen, wenn das rauskommt. Hoffentlich hört niemand diese Folge. Nein Leute, nutzt nicht WhatsApp. Das war ein Beispiel dafür, dass ein schlechtes Backup immer noch besser ist als gar keins. Keine Aufforderung, das zu entzellen.
+00:30:03.073 --> 00:30:27.653
+<v SPEAKER_4>Das wird ziemlich peinlich, ja. Weil dann haben sie gegen jegliche Sicherheitsregel, die sie unterschrieben haben, als sie als Kreditkartenakzeptanzstelle sich bei der Firma angemeldet haben, verstoßen. Und eigentlich hätten sie dafür hochkant irgendwie rausfliegen müssen. Weil es gibt ganz klare Standards, die die Kreditkartenfirmen aufgestellt haben, was gemacht werden darf und was nicht. Und so ein eklatanter Verstoß gegen die AGBs und dann an so einer sicherheitsrelevanten Stelle. Na, es ist halt Sonny, was soll man machen?
 
-01:22:27.080 --> 01:22:45.780
-<v SPEAKER_2>Also wenn du irgendwie liest, ich war so schlaflos, ich hab die ganzen Babyfotos aus dem ersten Jahr verloren und bin für immer traurig, schick die in WhatsApp. Also klar, installiert ihr der Full Signal oder macht sonst irgendwas, aber low level ist eben, nimmt das, was du eh schon nutzt und schickt's einfach.
+00:30:27.853 --> 00:30:39.533
+<v SPEAKER_1>Also es gibt da einen, da sind sich PCI DSS, das ist der Payment Card Industry Data Security Standard. Das ist so ein kleines Büchlein mit einer langen, langen Checkliste.
 
-01:22:47.380 --> 01:22:48.320
-<v SPEAKER_1>Alright, Florian?
+00:30:39.553 --> 00:30:42.793
+<v SPEAKER_3>So was wie die Norm für Kreditkartengeschäfte.
 
-01:22:48.340 --> 01:23:40.920
-<v SPEAKER_4>Ich würde mich dem im Prinzip anschließen, dass du das mit dem Restdick und online hinschieben. Das ist halt super bequem, weil das ist dann automatisch offside. Es ist halt irgendwie sicher, es ist verschlüsselt. Und wenn ich jetzt irgendwie bedenken hab, dass das viele Daten sind und teuer ist und so weiter, würde ich vielleicht mir noch eine Festplatte kaufen, also eine richtige mit rotierendem Rost und Scheiben und so. Und würde halt die Sachen, die diese Kinder vorderst und sowas, was wirklich wichtig und archiv würdig ist, das einmal auf so eine Platte tun und das irgendwo bei einem guten Freund, Eltern, Verwandten, dem auch immer zu sagen, hier legt das mal irgendwo sicher in den Speicher oder irgendwo, wo nichts drankommen kann, dann hab ich die Sachen schon mal sicher archiviert und das Online-Backup ist dann auch nicht so groß. Aber da kann ich halt wirklich die Dateien und die Daten, die ich benutze, halt sichern. Ich brauch ja nicht unbedingt das ganze Betriebssystem auch sichern, aber halt so die Daten, die ich wirklich brauche.
+00:30:42.813 --> 00:32:19.233
+<v SPEAKER_1>Ja, das ist eine Zertifizierung. Die stattfindet, wenn man über einen bestimmten Betrag, ich glaube das ist eine Mio im Jahr oder in bestimmter anderer Form, beispielsweise das Kreditkarten Payment Gateway tätig wird, dann muss man bestimmte Sicherheitsstandards nachweisen. Da ist dann so Sachen drin wie von dem ganz offensichtlichen, wie jeder Benutzer, der in dieser Firma arbeitet, muss sein Passwort über Namie und so weiter muss man sich zertifizieren lassen, aber grundsätzlich muss man diesen Standard einhalten, wenn man Kreditkartendaten handelt. Da steht drin, dass man die einzelnen Benutzer eindeutig vernetifizieren können muss, dass sie regelmäßig ihre Passworte ändern, dass man seine Systeme updated, wie man mit den Kreditkartendaten selbst umgeht, dass man beispielsweise, was man von den Informationen, die man bekommt, speichern darf und dass man beispielsweise diese CVV oder CVC bei dieser Master Chaos 3-stellig, bei Amex 4-stellig nicht speichern darf, sondern das sozusagen wie eine PIN durchreicht, nur endet der Autorisierungsvorgang nicht im Endgerät, also in dem Kartenterminal, sondern bekommt eben der Kreditkartenprocessor zum Weiterreichen nach oben sozusagen. Und wenn dann feststeht, okay, hat gestimmt, dann darf er sich das mal merken, sodass diese Karte, also dass das funktioniert hat. Aber diesen Code nie speichern. Also grundsätzlich darf der nirgendwo gespeichert werden.
 
-01:23:40.940 --> 01:24:23.520
-<v SPEAKER_1>Also, liebe HörerInnen, lieber einfach Backupen oder schlecht Backupen als gar nicht. Lieber manuell als gar nicht. Ab und zu mal nachgucken, das, was ich da backupe, funktioniert das überhaupt? Also mal versuchen, die Dateien aufzurufen. Und was so total fancy, geo-redundantes Offside-Backup klingt, kann eben auch einfach eine verschlüsselte Platte sein, die man irgendwo hinlegt. Florian, Alex und Klara, vielen Dank, dass ihr da wart und so ausführlich Ausruf gegeben habt. Und auch besondere Dank an Florian für die zerreichenden Anekdoten.
+00:32:19.813 --> 00:33:49.933
+<v SPEAKER_3>Okay, dann hätten wir jetzt geklärt, wie Kreditkarten sozusagen jetzt gerade funktionieren. Wir werden uns gleich damit beschäftigen, wie sie in Zukunft funktionieren könnten, also was dafür Ansätze gibt, das neu zu machen oder ein bisschen in die Zukunft zu treiben. Und werden auch gleich noch die Frage von Gregor, der angerufen hat, beantworten, der eine Frage zu dieser hat. Bevor wir das machen, machen wir aber das Fritz Info mit Nachrichten, Wetter und Verkehr. Heute mit Markus Richter im Chaos Radio. Das heißt, ich sitze hier eigentlich nur und drücke die Knöpfe und Leute vom Chaos Computer Club sind dabei und erzählen euch etwas über bargeldloses Bargeld. Pluto und Nibbler sind am Start. Hallo und willkommen zurück. Und es geht um den elektronischen Transfer von Geldmitteln. Ich hoffe, das habe ich jetzt einigermaßen korrekt ausgedrückt. Und wir haben in der ersten halben Stunde erklärt, wie Kreditkarten-Abrechnungen funktionieren. Und ich habe gelernt, das ist also im Zweifel eine Übermittlung einer langen Nummer, mittlerweile ein bisschen sicherer gestaltet und mit ein bisschen Zusatz-Mathematik und Code-Übermittlung verhaftet. Aber jetzt noch nicht der Weisheit letzter Schluss. Wir werden gleich da mit uns mit beschäftigen, was da geplant ist für die Zukunft. Also wie Kreditkarten zukunftsfähig gemacht werden. Bevor wir das machen, aber nehmen wir Gregor rein. Der hat angerufen, 0331 77 97 110, was ihr auch gerne machen könnt und hat eine Frage zu Wiese. Hallo Gregor aus dem Friedrichshain.
 
-01:24:23.540 --> 01:24:28.080
-<v SPEAKER_4>Ja bitte gerne. Ich hoffe, ich bin nicht zu sehr ins Wort gefallen. Das ist beim Nicht-Angucken hier immer alles sehr schwierig.
+00:33:50.493 --> 00:34:39.673
+<v SPEAKER_2>Na Marcos, hallo ihr beiden. Ganz aktuell, ich fahr mal wieder in den Urlaub und fahr jetzt nach Indien aber jetzt schon drei, vier Mal. Und hab dort immer bargeldlos mit meiner IC-Karte, die IC-Karte von der Sparkasse Geld abgehoben. Das lief es dann immer so, das kam auch immer raus, egal welche Summe, zum Beispiel 100 Euro, 6000 Rupien. Und später hab ich dann auf meinem Kontoausdruck gesehen, das kostet der Sparkasse 8, 50 Euro so ungefähr. Die wurden immer plus runtergebucht und minus runtergebucht. Das ist für mich kein Kosten entstehen, das war für mich schon mal kostenlos. Jetzt hab ich Post gekriegt vor kurzem, dass das irgendwie umgestellt wird und dass ich das jetzt mit meiner Visa-Card machen soll und muss. Ich bin Visa-Card Besitzer, zahle dafür halt 30 Euro im Jahr. Und jetzt hab ich gerade beim Hören so, wie wir sie gehört, da ist Geld so sechs Wochen unterwegs und wollt euch mal fragen, wer verdient denn damit jetzt ihr Geld?
 
-01:24:28.080 --> 01:24:39.500
-<v SPEAKER_1>Das wird bald alles wieder besser. Genau. Jetzt bleibt mir tatsächlich an dieser Stelle nur noch eine Sache zu sagen. Lasst sie euch überwachen und verschüttelt immer schön eure Backups.
+00:34:39.693 --> 00:35:44.773
+<v SPEAKER_1>Das mit dem Geld, das ist lange unterwegs, das war mal. Also in der Regel wird das innerhalb von zwei, drei Tagen und auch die Bank bekommt das in der Regel live mit. Wenn ich bei meiner Kreditkarte, im Online-Interface gucke und eine Zahlung mache, kann ich auf Reload klicken und sehe schon, dass der Betrag, den ich verfügen kann, weniger geworden ist. Der Grund, warum deine Bank da jetzt eine andere Karte bevorzugt, ist der, dass es unterschiedliche Zahlungssysteme gibt. Es gibt die klassischen Kreditkarten, dann gibt es aber auch die ehemalige Euro-Checkkarte, die es ja nicht mehr gibt, die dann EC und jetzt GiroPay. Das ist ein anderes System. Und auch die Kreditkartenbetreiber haben noch mal unterschiedliche Systeme, die nicht nur auf Kredit beruhen, sondern sogenannte Debitkarten, die also mit einem Konto verbunden sind. Und je nachdem, in was für einer Gegend der Welt man unterwegs ist, gibt es eben unterschiedliche Systeme, die einem da zur Verfügung stehen. Hast du vielleicht schon mal einen Geldautomaten gesehen? Da sind ganz viele bunte Symbole drauf.
+
+00:35:44.793 --> 00:35:46.613
+<v SPEAKER_2>Pay-Union-Pay und so weiter, genau.
+
+00:35:47.073 --> 00:35:56.673
+<v SPEAKER_1>Genau, ob jetzt irgendwie, ja, Majestro oder Mastercard oder ich komm grad nicht drauf, wie das...
+
+00:35:56.693 --> 00:35:57.433
+<v SPEAKER_3>Diverse andere.
+
+00:35:57.453 --> 00:36:02.833
+<v SPEAKER_1>Genau, gibt's noch und so weiter. Visa, WePay.
+
+00:36:03.173 --> 00:36:07.433
+<v SPEAKER_3>Der Unterschied ist da, dass da ein Konto dahinter steckt, wo Geld drauf sein muss, das quasi nicht kriegt.
+
+00:36:07.453 --> 00:36:31.873
+<v SPEAKER_2>Richtig, das ist direkt verbunden mit meinen, das hab ich schon jetzt erfragt bei der Sparkasse. Ich konnte mir auch individuell jetzt einen neuen PIN-Code, weil ich ihn immer vergesse, weil man nutzt den ja gar nicht so von dieser Karte, weil man weiß ja, in Deutschland kostet es unheimlich viel Geld, am Automaten Geld zu holen damit, ne? Und hab ich jetzt auch gemacht, und jetzt ist halt die Frage, mit dem meister hatte ich echt nie Probleme dann. Man konnte fast überall an Bargeld kommen, ja? Wie ist das denn jetzt mit der Visa? Wie wird das vielleicht dort sein?
+
+00:36:33.053 --> 00:37:31.033
+<v SPEAKER_1>Der Unterschied ist halt, so ein Geldautomat ist auch an Zahlungsdienstleistungsanbieter angebunden. Und je nachdem, wie die aushandeln, sind halt die Transaktionen unterschiedlich teuer. Wenn du an der Tanke oder so mit der Maestro, also mit deiner normalen Zahlkarte zahlst, dann zahlen die sowas um die 2, 3 Promille. Wenn du das mit einer Kreditkarte machst, ist es faktor 10 mehr, also 2, 3 Prozent. Das wird natürlich teils auf den Kunden umgelegt. Und bei Geldautomaten, Abhebungen, ist es halt ähnlich. Wenn du da irgendwie bei deiner Bank oder im Bankenverbund bist, dann ist das für die relativ kostengünstig. Wenn du allerdings im Ausland bist, an irgendeinem Kreditautomaten, der jetzt in der Gegend ist, wo ein anderes Zahlungssystem hauptsächlich groß ist, dann ist es natürlich da teurer, mit einer Majestro zu zahlen als mit einer Visa, die da vielleicht ganz andere Deals haben an der Stelle.
+
+00:37:31.333 --> 00:37:38.233
+<v SPEAKER_3>Das heißt aber, man kann es jetzt nicht pauschal beantworten, sondern man müsste sich tatsächlich Land für Land, wo auch immer man hinfährt, mal informieren, wie das da ist.
+
+00:37:38.253 --> 00:38:07.593
+<v SPEAKER_4>Und auch abhängig von der Bank, bei der man ist. Also jede Bank hat ja auch ihre eigenen Deals mit den einzelnen Anbietern. Das heißt, wer bei der einen Bank ist, kann halt in Zukunft weiterhin vielleicht die Sonderfunktion seines Kontos nutzen, die da heißt weltweit bargeldlos, was irgendeine Werbeaktion von vor zwei Jahren war, die sie jetzt hinterher schaufeln müssen, ob sie wollen oder nicht. Die Konten haben sie so verkauft und müssen die Konten auch so einhalten. Auch wenn sie dann merken, die Leute reisen tatsächlich und es kostet tatsächlich mehr Geld als der Marketing-Mensch, der damals ausgerechnet hatte.
+
+00:38:08.453 --> 00:38:16.513
+<v SPEAKER_3>Okay, also Gregor, wir können ja eine Frage nicht abschließend beantworten. Müssen wir sagen, komplett klären, wie das sozusagen mit einer Bank in diesem Land dort ist.
+
+00:38:16.533 --> 00:38:20.133
+<v SPEAKER_2>Die hat mir natürlich alles versprochen, das kann ich überhaupt nicht.
+
+00:38:20.153 --> 00:38:21.933
+<v SPEAKER_1>Na ja, sie haben doch die 8 Euro in der Hand geschrieben.
+
+00:38:21.953 --> 00:38:26.193
+<v SPEAKER_2>Da stehst du und keine Kohle rauskommt, so. Weil ich dachte, ich könnte dich jetzt erfahren hier.
+
+00:38:26.213 --> 00:38:32.073
+<v SPEAKER_4>Also das passiert im Allgemeinen nicht. Also wenn du irgendwo unterwegs bist und es kommt keine Kohle raus, liegt das höchstwahrscheinlich an dir.
+
+00:38:33.673 --> 00:38:40.933
+<v SPEAKER_2>Mein Konto ist gedeckt und die sind alle miteinander verbunden. Das Visa-Konto und mein Girokonto. Und das müsste dann eigentlich klappen, oder?
+
+00:38:40.993 --> 00:38:44.073
+<v SPEAKER_3>Na gut, Gregor, wir sind guter Dinge und wünschen dir viel Spaß im Urlaub.
+
+00:38:45.913 --> 00:39:00.833
+<v SPEAKER_1>Was ist die Band mit den Karten, die du aushandelt? Visa hat jetzt in den letzten Jahren die V-Pay-Karten massiv in den Markt gedrückt und bieten natürlich andere Konditionen an, um neue Kunden zu ziehen.
+
+00:39:01.193 --> 00:39:04.913
+<v SPEAKER_3>Ist das jetzt eine neue Form von Kreditkarte oder was steckt dahinter?
+
+00:39:04.933 --> 00:39:18.893
+<v SPEAKER_1>Na es gibt unterschiedliche Zahlungssysteme und Zahlungsverbunde. Das ist der Grund, warum auf so einem Geldautomaten ganz viele Symbole drauf sind. Das ist eben, okay, ich spreche diese Karten.
+
+00:39:18.913 --> 00:39:29.853
+<v SPEAKER_3>Okay, das ist also nur sozusagen ein anderer Vertrag mit anderen... Okay, da kommen wir jetzt mal, um das nicht zu einer kompletten Kreditkartensendung ausarten zu lassen, weil die haben ja noch so viel mehr.
+
+00:39:29.873 --> 00:39:53.333
+<v SPEAKER_1>V-Pay ist sozusagen das, was Majestro für Mastercard ist. Also das, was dieses rot-blaue Symbol mit den zwei Kugeln, was hierzulande manchmal synonym mit der EC-Karte verwendet wird, ist das Mastercard-System. Und V-Pay ist dasselbe nochmal von Visa. Also kein Kreditkartensystem, sondern ein anderseitiges Zahlungssystem.
+
+00:39:54.053 --> 00:39:56.773
+<v SPEAKER_4>Aber im Markt präsent sind die damit noch nicht wirklich.
+
+00:39:57.953 --> 00:40:00.213
+<v SPEAKER_1>Da haben sie jetzt halt angefangen, wirklich massiv rauszudrücken.
+
+00:40:02.713 --> 00:40:59.773
+<v SPEAKER_4>Das heißt, sie haben ihre Karten, weil sie sind halt als eine der weltweit führenden Kartenausgabestellen, sind sie natürlich ganz weit vorne als Kartenlieferant, können dementsprechend ihre Systeme auf die Karten draufbringen. Das Problem, das man als Zahlungssystem-Anbieter immer hat, ist, dass man einerseits natürlich die Karten an die Leute kriegen muss, wo man natürlich mit als Visa, Mastercard oder Ähnliches natürlich schon mehr als einen Fuß in der Tür hat, im Sinne von die Karten sind schon draußen. Mit dem nächsten Update kann man die neuesten Features an alle Kunden rauspushen. Die andere Seite sind natürlich die Händler und die Zahlterminals. Das heißt, wenn die Geldautomaten nicht mitspielen, wenn die Zahlterminals bei den Händlern, wo man damit zahlen möchte, nicht mitspielen, dann kann das auch nicht klappen. Und Visa ist da gerade relativ viel am Machen. Die machen auch VMI und dann noch was. Und dann wollen sie auch noch irgendwie peer-to-peer angehen. Habe ich was gesehen, aber irgendwie auch nichts weiter gehört, außer eine Pressemitteilung. Also die sind anscheinend gerade heftig am Rudern. Mastercard ist weltweit sicherlich aktuell so einfach ein bisschen weit vorne. Da sind die gerade am Nacharbeiten, ne?
+
+00:41:01.313 --> 00:41:18.253
+<v SPEAKER_1>Aber es ist generell interessant, dass es da wirklich im Prinzip nur zwei Systeme gibt. Es gibt da noch, das ist aber wirklich US-spezifisch Discover. In Japan gibt es die JCB, das ist Japan Credit Bureau und so weiter.
+
+00:41:18.653 --> 00:41:44.893
+<v SPEAKER_3>Wir verfransen uns gerade in verschiedenen Ausprägungen des Systems. Das ja bedeutet, ich übermittel eine lange Nummer und kriege dann dafür irgendwie Geld überwiesen. Die spannende Frage, die wir uns heute beschäftigen wollen, nämlich dem elektronischen Transfer von diesen Leistungen, ist ja dieses Modell Kreditkarte. Hat das jetzt ausgedient? Gibt es da Zukunftsvisionen für? Also was ich zum Beispiel im Hinterkopf habe ist, irgendwie arbeiten mehrere Firmen dran, einen Kreditkartenleser für mein Smartphone auf den Markt zu bringen.
+
+00:41:46.113 --> 00:43:23.113
+<v SPEAKER_4>Da mal kurz einhaken. Du hast gerade gesagt, wir reden hier über Kreditkarten und über die Möglichkeit, Geld von A nach B zu schicken. Wobei man halt auch immer sagen muss, B, der Geldempfänger, muss in fast allen, bei fast allen Systemen ein Händler sein. Das heißt jemand, der einen Merchant-Account hat. Also nicht du, nicht ich. Wir haben den Kunden-Account. Wir dürfen kein Geld empfangen. Das muss man halt ganz klar sagen. Ist so eine der, sagen wir mal, aus Händlersicht Vorteile. Für mich als Privatperson, der vielleicht auch mal, ja gestern hat er mir ein Bierchen ausgegeben, heute will ich ihm das Geld geben, was mache ich? Bargeld gibt es nicht mehr. Muss ich ihm eine Überweisung machen? Das heißt, die Bank weiß wiederum, dass wir einen Kontakt haben. Wie viel Geld er mir schuldet, andersrum ich ihm geschuldet habe. Das heißt, das sind alles keine peer-to-peer-fähigen Systeme. Und ganz kurz da der Hinweis an der Stelle, bevor es jetzt so klingt, als ob Kreditkarten ein System werden. Und man kann diese ganzen Systeme, Debitkarten, Kreditkarte, sonstige Karten, die man so kennt, aber auch die anderen Zahlensysteme im Internet, die du jetzt gerade angesprochen hast, zusammenfassen unter, ich bin eine Person, ich zahle mit meinem guten Namen. Und es geht immer darum, dass ich sage, ich bin es, ich autorisiere eine Zahlung über Betrag X und die wird von einem anderweitig irgendwo anders auf einem Datenbank-Server irgendwo in der Welt hinterlegten Konto gebucht und nach der Buchung dann von wiederum einem anderen Konto bei den meisten Systemen, außer direkt EC-Karte, da geht es direkt auf mein Sparkassenkonto, hab abgebucht und sich von meinem Konto geholt. Das heißt, ich hab immer so eine Schattenwirtschaft, das heißt, ich hab mindestens ein, zwei Dienstleiste, die dazwischen hängen, die halt wissen, wer hat welches Geld hin und her geschoben.
+
+00:43:23.133 --> 00:43:49.893
+<v SPEAKER_1>Und natürlich auch Geld mit verdienen, denn das ist ganz charakteristisch für diese ganzen Systeme, dass in erster Beschau der Händler und die Bank dafür Transaktionsgebühren bezahlen. In der Regel reicht einem der Händler das nicht durch, die werden dann nur ein bisschen gnatsig, wenn man seine 2, 50 Euro mit der Kreditkarte oder hat auch gestern mit einer Debitkarte für unter 10 Euro. Machen wir hier keinen Debit.
+
+00:43:49.913 --> 00:43:54.053
+<v SPEAKER_4>Kennt man vom Späti, da steht oft irgendwie Karte ab 10 Euro. Gibt es auch ganz viele Supermärkte, ne?
+
+00:43:54.193 --> 00:44:06.693
+<v SPEAKER_1>Genau, das ist halt charakteristisch, dass eben der Händler dafür seinen Obolus zahlt und die Bank wenigerweise die Karten einem in die Hand rückt, dafür auch nochmal Geld haben möchte, das einem direkt weiter verrechnet, im Gegensatz zum Händler, der da auf den Kosten meistens sitzen bleibt.
+
+00:44:07.033 --> 00:44:31.193
+<v SPEAKER_4>Der Händler darf übrigens auch nicht, das kann man an der Stelle nochmal erwähnen. Das ist bei den AGBs, bei den Kreditkarten, jetzt sind wir immer noch bei den Kreditkarten, wir wollten da eigentlich nicht weg. Aber noch ganz kurz dazu. Der Händler ist verpflichtet, die Transaktionsgebühren nicht an den Kunden weiterzugeben, außer die Taxifahrer. Die Taxifahrer haben Sonderdeal rausgehandelt, weil die Taxifahrer hatten keine Lust auf Kreditkarten und haben gesagt, die Leute fahren bei uns auch mit, wenn sie mehr Bargeld wollen. Und die dürfen tatsächlich irgendwie 1, 50 aufschlagen.
+
+00:44:32.053 --> 00:44:40.973
+<v SPEAKER_3>Ok, kommen wir jetzt aber zu den Lesegeräten für Smartphone. Gibt es das? Ist das Zukunftsmusik? Und was wird da in Zukunft noch gemacht mit Kreditkarten?
+
+00:44:40.993 --> 00:44:53.013
+<v SPEAKER_4>Ist im Prinzip das Gleiche nochmal, ist alter Reis in neun Säcken. Weil es geht wieder dabei, zum Beispiel Smartphonebezahlung wäre jetzt zum Beispiel das große Schlagwort NFC, also die sogenannte Near Field Communication.
+
+00:44:53.033 --> 00:45:00.653
+<v SPEAKER_3>Wait, wait, wait, halt! Ich meinte doch gerade, ich habe gehört, es gibt Kartenlesegeräte, die man direkt anzahlt von Andrien.
+
+00:45:02.233 --> 00:46:44.473
+<v SPEAKER_1>Ja, das ist im Prinzip ja auch wieder ein alter Wein in neun Schläuchen, statt einem sicheren Terminal, das eben geprüft ist, wo es durchaus auch Sicherheitsschwankungen geben kann. Aber es hat nochmal eine ganz neue Qualität. Es gibt die ersten Anbieter, wo man eben sich so ein Gerät kaufen kann, das man an sein Telefon ransteckt als Händler. Das ist sozusagen ein neuer Markt für die Kreditkarten, für die Payment Provider, die sozusagen die Akzeptanz anbieten. Die sagen irgendwie, hallo Händler, möchtest du nicht Kreditkarten annehmen? Wir machen für dich den ganzen Kram. Das ist halt historisch mit einer gewissen Investition verbunden gewesen. Wir haben das auch ganz gerne gesehen, wenn man ein bisschen Umsatz gemacht hat. Da gibt es jetzt eben die ersten Anbieter, die für Händler die Kreditkarten unterwegs akzeptieren wollen, was auch immer, für Smartphones Zusatzgeräte herausgeben. Das wenigste, was ich bisher gesehen habe, war ein Gerät, das man an den Mikrofon-Kopfhörer-Port von seinem Telefon gesteckt hat, mit einem Kartenschlitz, wo man eine Karte durchzieht. Das hat dann über ein Audiosignal, den die Daten vom Magnetstreifen an das Telefon weitergereicht, die wiederum dann an den Payment-Source-Provider weitergereicht wurden, der dann für diesen Händler diese Zahlung vorgenommen hat.
+
+00:46:44.493 --> 00:48:32.253
+<v SPEAKER_4>Das ist mittlerweile auch relativ weit im Einsatz, weil während der letzten zwei Jahre mal Taxi gefahren ist, hat festgestellt, dass diese On-Board-Computer mittlerweile Telefone sind, schlichter greifend, also der HP-IPAC zum Beispiel war da mal sehr beliebt. Und dieses kleine Smartphone wird halt benutzt, um den Taxifahrer zu lokalisieren, damit er seine Aufträge kriegt, aber natürlich auch zur Kommunikation mit der Taxizentrale. Und da sind teilweise auch die Zahlungssysteme mit angeschlossen. Das heißt, es wird sozusagen von so Firmen wie zum Beispiel MyTaxi und anderen, um jetzt mal eine Firma mal hier rauszustellen, weil die recht bekannt sind, wird eine App angeboten, mit der der Taxifahrer sich dann einloggt bei denen und dann quasi alles über die machen kann. Der macht für die die Creditkarten-Clearing und alles. Das heißt, ich kann sozusagen meinen mobilen kleinen Händler-Account auch mitnehmen. Und mobiles Zahlen ist auf jeden Fall auch ganz klar im Kommen. Das ist ja nicht nur Taxis, sondern vor ein paar Monaten wurde mal benutzt Hobos, also Heimatlose. Obdachlose, genau das war das Wort. Obdachlose als Wi-Fi-Hotspot eine neue Arbeit zu verschaffen. Das war eine große Veranstaltung, Festival, wo die ganz dringend viele Immobile an Wi-Fi-Hotspots brauchten. Dann haben die den Leuten so ein Kästchen gegeben, mit dem sie sich irgendwo hingestellt haben. Das Kästchen hatte guten Ablink über Funk-Technologien. Und dann konnte man bei dem Obdachlosen für eine Viertelstunde Internet kaufen und hat das dann halt elektronisch bei dem Obdachlosen quasi bezahlt. Und es wurde dann im Hintergrund an so einer Obdachlosenvereinigung gestiftet, die dafür irgendwie einen Heim gebaut haben. Im Prinzip eigentlich eine gute Sache. Man hat Geld für einen guten Zweck gespendet, hatte Internet und irgendwie waren alle glücklich. Und vor allem die Obdachlosen waren irgendwie auch mehr in die Veranstaltung integriert. Ob Obdachlose als Funkmasten für bessere Netzversorgung, für Smartphoneinhaber jetzt wirklich ethisch komplett einwandfrei ist, überlasst man mal in die Sache.
+
+00:48:32.273 --> 00:48:36.013
+<v SPEAKER_3>Verlässt auch gerade ein bisschen das Themenfeld dieser Sendung, habe ich das Gefühl.
+
+00:48:36.033 --> 00:48:37.933
+<v SPEAKER_1>Aber mobile ist zahl.
+
+00:48:37.953 --> 00:48:39.933
+<v SPEAKER_4>Es geht darum, Zahlungen werden mobiler.
+
+00:48:40.013 --> 00:48:50.913
+<v SPEAKER_3>Ich möchte jetzt, genau, dazu möchte ich mir jetzt nur zwei Fragen stellen. Wir haben jetzt eine Stunde über Kreditkarten geredet und da sind mir jetzt zwei Dinge aufgefallen, die ich denke, sich mal ändern müssen in Zukunft. Das eine ist, ihr redet sozusagen...
+
+00:48:50.933 --> 00:50:33.593
+<v SPEAKER_1>Ich will nur ganz kurz noch einen Tuch zur Sicherheit von diesen Geräten, weil das war eigentlich, also nur um den, ja, das noch den Bogen zu schließen. Das Problem an der Stelle ist, wenn man so ein Gerät hat, das den Magnetstreifen liest, nur durch so ein Telefon durch, ja, es gibt im Internet einen großen Markt für Magnetstreifendaten. Also, das wird onBlock. Kannst du dir irgendwie 1000, 10.000 Magnetstreifendatensets kaufen. Und ich sehe da halt das ganz große Problem, dass der Sicherheitsstandard, der bisher gegolten hat, mit diesen Kartenterminals, die du auch im Taxi als Ersatz für den Imprinter hattest, da hatten sie so Geräte, die in GSM-Modem drin hatten und quasi ansonsten ein vollwertiges Payment Terminal waren, wie man es aus dem Supermarkt kennt, die dann einfach über GSM nach Hause telefoniert haben, dass das jetzt hingeht zu mobilen Endgeräten, die in keinster Weise sicherheitstechnisch geprüft sind, wo wir jetzt auch schon die ersten Trojaner erleben, die sich Online-Banking, Tanz von den Telefonen klauen und so weiter. Also dass man da jetzt auch noch Kreditkartendaten durchschiebt und komplette Kopien der Magnetstreifen. Das ist schon sehr bedenklich. Also da bin ich gespannt, wie lange sich das hält, weil natürlich die Kreditkartenunternehmen auch mit dem Risikopotential von so was umgehen müssen. Je weiter verbreitet sowas wird, desto mehr missbräuchliche Benutzung werden wir da sehen. Also ich persönlich würde ungern meine Kreditkarte irgendeinem Menschen, der mir sein iPhone entgegenstreckt oder sein Eneutgerät mit so einem Pinökel am Mikro...
+
+00:50:33.613 --> 00:51:20.993
+<v SPEAKER_4>Also dann kann ich jetzt mal den Advokatus Diabolim machen. Ich reise sehr viel, habe irgendwie eine ganze Tasche voller dieser Plastitteile und ich schmiere die überall rein, wo ich gerade will. Ganz einfach deswegen, weil ich weiß, Risiko zahlt die Gesellschaft. Dafür zahle ich ja tatsächlich auch das Geld. Ich muss mich als Kunde an der Stelle, kann ich mich darauf verlassen, wenn da irgendwie morgen 10.000 Euro abgebucht werden. Ich zahl's nicht, es ist mir egal. Aber unheimlich davon, weil das Risiko, das da gehandelt wird, ist natürlich ganz klar bei der Kreditkartenfirma und für die ist es einfach Coast of Doing Business. Die müssen ein Risiko eingehen. Sie sind im Prinzip eine Kreditkartenfirma oder auch die anderen Firmen, die da jetzt gerade im Markt sind. Wir können jetzt auch mal zu den Handyzahlungen übergehen. Reden wir doch jetzt einfach mal über zum Beispiel Google Wallet. Das ist das Gleiche. Nein, das ist tatsächlich eine Kreditkarte wird bei Wallet.
+
+00:51:21.013 --> 00:52:31.633
+<v SPEAKER_3>Pluto, ich möchte jetzt gerne noch mal zurückkommen zu dem Thema, über das wir gerade sprachen und möchte zwei wichtige Fragen stellen. Wir haben jetzt eine Stunde lang über Kreditkarten geredet und es gibt zwei Eckdaten, die da auftauchen, die erscheinen mir als sehr wenig zukunftsfähig. Das eine, ich habe die ganze Zeit erzählt, also egal wie weit wir fortschreiten mit diesem Ding, also jetzt Smartphone, Risiko ist höher, aber verbreitet sich mehr, kann man trotzdem machen. Es ist immer der Deal zwischen Händler und einem Kunden. Das heißt, da würde mich A interessieren, wie sieht denn das aus? Kunde zu Kunde, gibt es das überhaupt? Und die andere Sache ist, bei all diesen Transferleistungen reden wir immer von einer Karte, die an eine Person gebunden ist. Jetzt ist es ja, das hatten wir uns am Anfang drauf geeinigt, es ist ja so, dass das ideal ist wäre, dass man es auch anonym irgendwie macht. Jetzt habe ich gehört, es gibt Prepaid Kreditkarten, vielleicht können wir das gleich nochmal kurz klären, inwiefern das eine Rolle spielt und wie sicher die dann sind. Und das sind also zwei Fragen, die sozusagen, die ja zukunftsfähig da sein müssen, die man vielleicht beantworten kann. Bevor wir das machen, würde ich gerne noch mit Christoph sprechen, er hat mich angerufen und hat auch noch eine Frage. Hallo Christoph aus Kreuzberg.
+
+00:52:31.653 --> 00:52:32.893
+<v SPEAKER_2>Hallo, hallo.
+
+00:52:32.913 --> 00:52:33.713
+<v SPEAKER_4>Hallo.
+
+00:52:33.733 --> 00:53:26.353
+<v SPEAKER_2>Ja, genau, und zwar, früher hatte man ja bei der Sparkasse irgendwie so Sparbücher und Papier und dann gab es eine Sicherungskarte dazu und die konnte man dann irgendwie in den Tresor packen oder so, haben die Ommas dann gehütet zu Hause. Und man hatte dann irgendwie allenfalls eine EC-Karte irgendwie für sein Girokonto. Und dann haben die ja angefangen irgendwann diesen ganzen Käse alles in dieselbe Karte mit einzubinden. Die Frage ist, wenn ich jetzt zum Beispiel mit einer EC-Karte von einer Sparkasse in Spanien Geld abhebe und da ein paar Wochen unterwegs bin und jetzt hackt einer irgendwie die EC-Karte über irgendein Sicherheitsloch, was ich nicht kenne, dann hat er ja im Prinzip eigentlich zumindest über ein Mittelzimmer in Deutschland Zugriff auf sämtliche Sparkonten und könnte theoretisch da ohne, dass ich das in Spanien mitkriege, Geld von Sparkonten auf Zirokonto schieben, am Geldautomaten rausziehen, vielleicht mit irgendwelchen Limits von 5000 Euro am Tag oder sonst was, aber wäre ja eine schöne Bescherung, wenn dann hinterher alles, was man erspart hat, nicht mehr da ist.
+
+00:53:26.373 --> 00:53:29.613
+<v SPEAKER_4>Passiert ständig und ist tatsächlich eins der Probleme des Systems, klar.
+
+00:53:31.893 --> 00:54:15.513
+<v SPEAKER_1>Wobei man sagen muss, wenn da eine Karte gehackt wird, ist jetzt die Frage, was mit der Karte passiert. So eine Karte hat ja Sicherheitsmerkmale. Bei einer Geldautomaten Abhebung gibt es beispielsweise das MM-Feature, das ist magnetisch. Also da ist ein bisschen mehr als nur ein Magnetstreifen, den man kopieren muss. Das war auch der Grund, warum sie ja immer dahinter sind, Geldautomaten auf dem aktuellen Stand zu halten und bestimmte Sachen nicht mehr zu supporten und jetzt immer mehr auf den Chip gehen, der ja nicht an sich kopierbar ist. Ja, das ist ein Problem. Aber da wird sich mit auseinandergesetzt. Und es ist heutzutage nicht mehr so einfach, eine Karte zu kopieren.
+
+00:54:15.533 --> 00:54:30.833
+<v SPEAKER_3>Ich glaube, die Frage war ihr, Christoph korrigiere mich, wenn ich es falsch zusammenfasse, die Frage war ihr Gesetz, den Fall, es hat jemand geschafft, diese Karte sozusagen irgendwie an sich zu bringen oder zu kopieren, dann kommt der an alles ran, was damit verbunden ist. Oder gibt es da für bestimmte Sachen noch bestimmte Extra-Sicherheitsformen?
+
+00:54:34.573 --> 00:55:13.193
+<v SPEAKER_1>Es gibt ja diese Terminals bei der Bank, wo du auf deinen Konten zugreifen kannst und Umbruchungen usw. Da brauchst du ja auch deine PIN. Und die Karte wird da ja auch geprüft und da wird in der Regel auch der Chip eingesetzt. Das Problem, dass wirklich Leute Karten kopieren und Geld mit abheben, das passiert weitestgehend außerhalb von Deutschland, außerhalb von der EU, wo es Geldautomaten gibt, die eben noch nicht im Sicherheitsstandard entsprechen, den welche haben, die nicht das MM-Feature haben und dergleichen. Aber für alles, wo du irgendwie mit deiner Karte Dinge an einem Terminal tust und Überweisungen ausfüllst und Umbruchungen zwischen den Konten brauchst, immer deine PIN und tatsächlich den Chip.
+
+00:55:17.013 --> 00:55:40.933
+<v SPEAKER_4>Na ja, also es geht so. Ich hab gerade mal die aktuellen Schadenszahlen irgendwie nachgeschlagen. Also im gesamten Jahr 2010 war bei den 1.773 bekannt gewordenen Sperrangriffen 60 Millionen Euro Schaden entstanden in Deutschland. Nach Auskunft der Zahlungskarten bei der Euro-Kartensysteme gegenüber der Südfestpresse jetzt mal kurz aus dem Internet zitiert. Das heißt, da sind schon erhebliche Schadenssummen.
+
+00:55:40.953 --> 00:55:44.873
+<v SPEAKER_2>Aber geht das jetzt um gehackte EC-Karten in dem Low-Standard?
+
+00:55:44.893 --> 00:55:48.333
+<v SPEAKER_1>Was ist für dich eine gehackte EC-Karte?
+
+00:55:48.353 --> 00:56:16.293
+<v SPEAKER_2>Nein, die Frage ist doch, wenn ich zur Sparkasse gehe und sage, Leute, ich hab hier ein Sparbuch, da ist Geld drauf und ich hab eine EC-Karte mit einem Girokonto. Und ich möchte in den Urlaub fahren und ich hab überhaupt keinen Bock, das Sparbuch mit dem Geld in Form derselben Plastikkarte mit mir rumzuschleppen. Dann stellen die sich total quer und sagen, nö. Also ich hab da schon öfter mal gesagt, Leute, gebt mir doch einfach eine zweite Plastikkarte, da könnt ihr eure ganzen S-Card-Features für eure Sparbücher aufmachen. Die muss ich doch nicht täglich mit rumschleppen, die ist völlig separat. Lass ich irgendwie im Tresor liegen oder so.
+
+00:56:17.393 --> 00:56:21.233
+<v SPEAKER_4>Ich würde einfach ein zweites Konto bei einer anderen Bank eröffnen, dann hat sie das relativ schnell.
+
+00:56:21.253 --> 00:56:38.273
+<v SPEAKER_1>Aber solange du deine Karte hast, kannst du davon ausgehen, dass da ja bis auf Abhebespieler an unsicheren Geldautomaten mit deinem Magnetstreifendaten, die ja in vielen Ländern schon gar nicht mehr genutzt werden, nicht viel passiert.
+
+00:56:38.293 --> 00:57:26.953
+<v SPEAKER_4>Also 60 Millionen Euro Schaden in 2010 ist sicherlich klacks, wenn man sich überlegt, wie viele Milliarden an Euro jedes Jahr irgendwie durch das ECL-System gehen. Für den Einzelnen, den es betrifft, ist es allerdings dann oft mehr als ein Klacksatz. Ich bin selber Betroffener. Vor zwei Jahren haben sie mir das Konto leer gemacht mit genau so einem EC-Kartenspielchen. Da konnte ich bloß nachweisen, dass ich die EC-Karte niemals in meiner Hand war, weil die gerade erst zugeschickt wurde und auf dem Postweg geklaut wurde. Und solche Fälle werden dann komplett von der Bank als Kulanz übernommen. Wie es mit der Kulanz aussieht, wenn mit einer EC-Karte und sei es auch eine nachgemachte und der gültigen PIN an einem Geldautomat in irgendwo im Ausland, ohne jetzt irgendein Land zu erwähnen, die dortige Landeswährung gezogen wird. Da ist die Bank dann eher auf der Nummer... Tja, wissen Sie, die PIN hätten Sie nicht rausgeben dürfen. Das wissen Sie schon, dass Sie das falsch gemacht haben.
+
+00:57:26.973 --> 00:57:31.253
+<v SPEAKER_1>Ja, das ist ein riesiger Aufwand, dass dann der Bank irgendwie... Klar, da muss man sich schon auf die Hinterläufe und viele Schriftverkehrungen...
+
+00:57:31.273 --> 00:58:23.873
+<v SPEAKER_4>Und das klappt auch nicht immer. Man sollte davon ausgehen, dass man... Also es gab da auch so eine Beweislastumkehr nach dem Motto, Sie haben doch die PIN rausgegeben. Sie haben an einem Skimming nennt, ist das Fachwort an der Stelle. Also gehackt ist jetzt so ein bisschen großer Begriff. Das nennt sich Skimming. Das heißt, es kommt da so ein Gerät vor den Automaten, der greift den Magnetstreifen mit ab, übermittelt den per Funk an den... Oder speichert das mit, bis derjenige, der das gemacht hat, irgendwie das Gerätchen wieder abholt. Und über eine kleine Webcam oder ähnliches wird dann auch mitgeschnitten, welche PIN-Nummer eingegeben wurde. Und aus diesen Daten werden dann im richtig großen Stil dann gefälschte Karten gemacht. Und die werden in irgendwelchen Ländern, wo teilweise die Banken auch wissen, was läuft, weil den Banken ist es egal. Wenn ich als Bankinhaber einer kleinen Bank irgendwo in einem lustigen Ausland weiß, dass jetzt der Typgüter kommt mit den 10.000 EC-Karten und der zieht die bei mir durch einen Automaten irgendwie und ich hab nichts davon gesehen. Aber ich hab 20% gekriegt. Ich krieg das Geld ja von der Bank in Deutschland.
+
+00:58:25.153 --> 00:58:27.473
+<v SPEAKER_2>Zum Thema Skimming muss ich euch unbedingt was erzählen.
+
+00:58:27.553 --> 00:58:28.533
+<v SPEAKER_3>Ok, warte, Christoph?
+
+00:58:28.953 --> 00:58:29.173
+<v SPEAKER_2>Ja?
+
+00:58:29.193 --> 00:59:43.480
+<v SPEAKER_3>Wir müssen jetzt gerade mal eine kurze Pause machen. Und dann kannst du gleich dir eine Geschichte vom Skimming erzählen. Einen kleinen Moment bitte. Heute Chaosradio mit Pluto und Nibbler, die gerade nicht so sehr zugegen sind anscheinend. Leute, wir sind hier schon, wir machen Radio. Vielleicht könnt ihr ein bisschen zuhören. Die Mikros sind noch offen. Hey, willkommen zurück. Wir machen heute einen in Bar. Also eigentlich muss ich das mittlerweile fast schon sagen. Eigentlich war der Plan heute mal über die Zukunft des bargeldlosen Geldtransfers zu sprechen. Wir haben gerade eine Stunde Kreditkarte gemacht. Mal gucken, ob wir da noch rumkommen. Wir reden jetzt gerade über Skimming. Skimming heißt, was passiert, wie finden Leute die Geheimzahl zu meiner Kreditkarte raus. Da gibt es so kleine Spielereien, irgendwie mit aufgeklebten Eingabepads oder Kameras, die das beobachten und und und. Und Christoph, der gerade am Telefon ist, wollte uns dazu noch eine spannende Geschichte erzählen. Hallo Christoph.
+
+00:59:43.940 --> 01:01:33.340
+<v SPEAKER_2>Ja, hallo, der absolute Hammer. Und zwar letzten Sommer habe ich an der Sparkasse in Potsdam Geld abheben wollen im Hauptbahnhof und habe halt die Karte reingetan, so ein normaler Sparkassenautomat halt. Und wie ich die da so drin habe, sehe ich halt, dass genau rechts von dieser Pin-Code-Eingabe fällt, sind halt so vier Profilschienen gewesen und in der Mitte zwei total dilettantische Bohrungen. Da habe ich gedacht, na Moment mal, da kommt doch jetzt gleich der nächste Typ, der setzt jetzt irgendwie so ein Metallkästchen darauf, was dann so aussieht wie der restliche Automat und links ist dann ein kleines Loch mit einer Kamera drin und dann wird schick gefilmt, was ich da für eine Pin eingebe. Und wahrscheinlich war das Ding entweder vorher drauf und das hat schon einer wieder weggeschleppt oder das kommt gleich rauf irgendwie. Und dieses ganze Ding war mit Doppelklebeband auf dem Automaten drauf. Schön. Ich habe einmal dran gerissen und ich hatte diese ganze Trägerholzplatte mit den dilettantischen Bohrungen und so einfach in der Hand. Na wisst ihr, was ich dann gemacht habe? Dann bin ich rausgegangen und habe die Sparkasse angerufen auf der Hotline und habe denen das erzählt. Dann sagen die Leute bei der Sparkasse in Hotline irgendwie, ja tut uns leid, da können wir jetzt auch nichts machen, holen sie mal die Polizei und so. Wir wissen jetzt auch nicht, was wir tun sollen. Nur sagen, es ist der Polizei. Dann habe ich den Notruf angerufen und habe denen das auch noch mal so geschildert, dass ich jetzt auch, dass es vielleicht schon ein bisschen auffällig war. Aber ich habe es jetzt wieder darauf gepatscht und ich gehe jetzt mal unauffällig raus und die sollen vielleicht mal jemanden vorbeischicken, der vielleicht auch beobachtet, was jetzt da so passiert. Weil es ist ja auch eine gute Möglichkeit, die Leute dann auch frischer Tat zu haben. Und da habe ich da ungefähr eine Stunde gestanden, dann irgendwann ein Funkwagen kam und inzwischen kam dann irgendwie ein Polizist, von dem ich dachte, er wäre der, den ich gerufen hätte. Das war dann aber ein Bundesgrenzschutzer, der nämlich im Bahnhof saß. Da war ich nicht gekommen, dass man die hätte natürlich auch gleich fragen können. Er sagte dann, nö, das Ding ist da eigentlich schon immer drauf, da sind Werbetafeln von der Sparkasse drin.
+
+01:01:33.660 --> 01:01:58.760
+<v SPEAKER_1>Schön. Das Problem ist aber in der Tat, also macht sowas in Zukunft vielleicht ein bisschen vorsichtiger, weil wenn sowas da draufklebt, die Leute, die das bedienen, die sind in der Regel nicht sehr weit. Und wenn man sowas feststellt und sowas in der Hand hat, vorsichtig wieder ran kleben, sich von dem Ding entfernen und erst mal irgendwie Polizei oder so, weil Gefahr für Leib und Leben ist dann das vielleicht auch nicht wert an der Stelle.
+
+01:01:58.780 --> 01:02:05.620
+<v SPEAKER_2>Ja und vor allem, man kriegt sie ja nicht, wenn man aufs fällig das Ding abholt, klar, dann sehen die, das hat einer aufgedeckt und dann hauen die ab, das wollte ich sagen.
+
+01:02:05.640 --> 01:02:14.140
+<v SPEAKER_1>Im Idealfall, also im Worst Case kriegst du eins aufs Maul und die nehmen das Ding wieder mit, weil sie natürlich das Ding nicht hinterlassen wollen, weil das Ding teuer war.
+
+01:02:15.780 --> 01:02:38.720
+<v SPEAKER_2>Also diese Sparkasse mit Doppelklebeband werbe ich meine, die Rentner haben es ja eh alle noch nicht verstanden, aber irgendwie werden doch so langsam mal alle Leute dafür sensibilisiert, dass wenn einem einem Automaten irgendwas dran ist, dran gebastelt haben könnte, dass man dann aufmerksam wird. Und die Sparkasse baut eigene Werbetafeln mit Doppelklebeband auf ihre Automaten neben das Pinsel. Ich meine, das wird man doch in Hintern treten, sondern gleich, oder?
+
+01:02:40.240 --> 01:02:41.260
+<v SPEAKER_4>Aber das war Potsch dann, oder?
+
+01:02:41.280 --> 01:03:09.720
+<v SPEAKER_1>In einem deutschen Bankautomaten, dass mir die Blende vor dem Karten in dieser in die Hand gefallen ist. Ich dachte mir, hey, cool, ein Skimmer. Aber es war dann tatsächlich nur ein Plastikteil, was an der Stelle schlecht montiert war. Ich hab das denen dann in der Bank in die Hand gedrückt. Hier hätte auch ein Skimmer sein können. Ich wollte ja nicht mal eure Automaten austauschen. Das ist wohl mal echt unter eurer Würde. Die wussten aber interessanterweise schon, was ich mit Skimmer meine. Also die Sensibilisierung ist da. Aber in der Ausführung hapert es dann manchmal so ein bisschen.
+
+01:03:10.280 --> 01:03:16.420
+<v SPEAKER_3>Christoph, vielen Dank für diese sehr schöne Geschichte. Und wir werden die Zukunft alle mal nach Holzleisten ausverhalten und Bohrungen.
+
+01:03:19.480 --> 01:04:01.440
+<v SPEAKER_1>Als es um die ganzen Skimming-Nummern angeht, da gibt es in der Tat Koordinierungen zwischen den Banken. Es gibt den sogenannten EKS Pool, findet man unter eks-net.de. Darüber tauschen sich die Banken aus, was für Fälle es gegeben hat, und koordinieren sich auch, was die Schadensregulierung und so weiter angeht. Also die sprechen da schon miteinander über das Problem und gucken halt auch, dass wenn ein Kunde so was moniert, ob das ungefähr in das Petern reinpasst, was sie da haben. Nachrichtigen da auch Kunden proaktiv, wenn so was vorgefallen ist und da andere Kunden noch mit an dem Geldautomaten waren und sie wissen, da gab es einen Skimming-Fall, dann wird sich da ausgetauscht.
+
+01:04:01.600 --> 01:04:24.920
+<v SPEAKER_3>Gibt es denn eigentlich so, wonach guckt man denn da? Weil ich stehe oft vor so einem Geldautomaten, also ich kenne ja meinen Geldautomaten, wo ich immer hingehe, da fällt mir natürlich auf, wenn der sich erinnert. Aber ich stehe oft vor Geldautomaten, denke so, das sieht jetzt ganz schön abgegrabbelt aus und die Tastatur ist auch echt tief eingelassen. Also möglicherweise hat er ja was gebaut, aber das sind dann doch immer die richtigen. Aber gibt es so Dinge, wie man das erkennen kann?
+
+01:04:24.940 --> 01:05:25.660
+<v SPEAKER_1>Ja, es ist schwer. Am besten sich vielleicht wirklich mal im Internet, Google, Bildersuche, Skimmer, ATM, Skimmer, sich das mal anzuschauen, dass man ein Gefühl dafür kriegt, wie so Zeug aussieht. Es gibt bei neueren Automaten Anti-Skimming-Einrichtungen. Das sind so grüne Plastikaufsätze, die an der Stelle eine Aussparung haben, wo der Magnetstreifen ist. Das heißt, wenn man da einen Skimmer draufsetzen würde, dann würde man sehen, dass das nicht Teil dieses transparenten grünen Sicherheitsplastiks ist. Dann gibt es zusätzlich noch in den Automaten Sicherheitsmechanismen. Ich weiß nicht, ob sowas deploit wurde, aber ich habe gelesen, das war ein Paper, das sich damit beschäftigt hat, wie man dagegen vorgehen kann. Die überprüfen, ob irgendwie vor dem Schlitz irgendwas ist, also die mit Sensorik das überprüfen. Ja, aber in der Regel einfach den Geldschlitz sich angucken, ob man das Gefühl hat, dass irgendwas da vorgesetzt ist oder ob der...
+
+01:05:25.680 --> 01:05:31.960
+<v SPEAKER_3>Okay, also merken wir mal, Google-Sucher, ATM-Skimmer. ATM ist das Englische für Geldautomaten, dann kann man vielleicht mal ein bisschen was sehen.
+
+01:05:32.380 --> 01:06:58.440
+<v SPEAKER_1>So, das ist tierisch spannend, weil da echt viel schicke Technologie und auch krass Low-Tech, also von irgendwie 20 Euro Supermarkt, Plastik, Mini-Kameras, die auseinandergefrimmelt und die Platine dann mit einem Kabel verlängert und um die Ecke bis hin zu, also da gibt es die abenteuerlichsten Konstrukte für sowas, weil sowas natürlich auch immer nicht teuer sein darf, wenn man viele davon deploiten und zurücklassen möchte. Also das ist unglaublich erfinderisch. Und eine der neueren, die sind inzwischen auch schon ein bisschen angeheitert, ist Cash Trapping, was so eine Blende vor den Geldausgabe schlitz, wo die Noten rauskommen, dass er in der Regel so ein kleines Rolladentürchen, was aufgeht und wieder zugeht. Und da setzen so eine identisch aussehende Blende davor mit einem Kleber dahinter, an dem dann das Geld hängen bleibt. Also das Geld kommt raus, bleibt an diesem Kleber hängen und das Türchen kann nicht zugehen, aber das Geld auch nicht rein, weil der Automat das Geld ja nicht ziehen kann, wenn es noch irgendwo klebt. Und du stehst halt vor dem Automaten und hast das Gefühl, da kommt kein Geld raus, es macht irgendwie Ratsch, Ritter, Ritter, Ritter, so das Geräusch, aber da geht kein Türchen auf und der Schutz dagegen ist total lotig. Sie haben einfach unten an das Türchen noch eine Kante ran gemacht, dass man da nichts aufsetzen kann.
+
+01:07:00.860 --> 01:07:12.440
+<v SPEAKER_3>Also ein stetes Geben und Nehmen an Neuentwicklungen, am Geldautomaten. Ich gebe die Hoffnung nicht auf, dass wir in dieser Sendung noch zu bargeldlosen Transferdingern kommen. Ich würde jetzt gerne...
+
+01:07:12.460 --> 01:07:20.980
+<v SPEAKER_1>Ich würde gerne sagen, das ging in die richtige Richtung, weil das ist in der Tat so ein Ansatz, diesen Übergang in ein Peer-to-Peer-System zu gehen.
+
+01:07:26.120 --> 01:07:37.480
+<v SPEAKER_3>Was ich gerne noch mal wissen würde, ist, wie das ist mit Prepaid-Kreditkarten, also anders formuliert anonyme Kreditkarten. Gibt es sowas? Wenn ja, wie macht man das und wird sich das durchsetzen?
+
+01:07:37.780 --> 01:08:05.460
+<v SPEAKER_4>Da ich gerade eine in der Hand habe, kann ich ja vielleicht kurz dazu was sagen. Das gibt's, kommt von Visa. In dem Fall ist die bei irgendeiner Tankstelle gekauft, lag da einfach in den Prepaid-Karten mit rum. Also da, wo man sozusagen seine 20 Euro Aufladekarten fürs Handy kaufen kann, lag die dazwischen. Hat 10 Euro gekostet, die erste Aufladung irgendwie an der Kasse war umsonst. Muss man im Internet einmal am besten über ein Proxietor oder irgendwie sonst wie geheim aktivieren. Muss keine Daten abgeben.
+
+01:08:05.500 --> 01:08:08.240
+<v SPEAKER_3>Du kaufst die Karte und kaufst dann noch einen Gutscheincode oder wie?
+
+01:08:08.260 --> 01:08:37.500
+<v SPEAKER_4>Genau, die Karte kostet einmal 10 Euro. Die ist dann noch nichts wert mit, der kann nicht zahlen. Und ab dem Augenblick, wo ich sie im Internet registriert habe, kann ich dann hier eine Telefonnummer anrufen oder entsprechende Guthaben kurz kaufen und die, wie bei einem prepaid Handy, draufladen. 50 Euro draufladen oder 100. Einige Tankstellen bieten das an. Tankstellen versuchen ja mittlerweile den Geldautomaten auch Konkurrenz zu machen, nämlich das komische Geldhandling-System jetzt, wo man an der Tankstelle irgendwie Geld abheben kann. Und da kann man jetzt auch die Kreditkarte an der Tankstellenkasse dann auffüllen.
+
+01:08:37.920 --> 01:09:15.700
+<v SPEAKER_1>Möglich gemacht hat das eine Urteil, was es gab. Das ging durch viele Instanzen, weil das natürlich schon sehr praktisch ist, ja so prepaid Bezahlkarten zu haben, das ist ein unglaublicher Markt gerade ja für das untere Drittel der Transaktionen vom Volumen her. Und ja, letztenstens wurde dann da festgelegt, dass sowas in Deutschland legal ist, ohne Registrierung des Teilnehmers, der diese Karte besitzt, bis 150 Euro. Also das ist die Grenze, bis zu der uns sozusagen zugestanden wird, anonym mit digitalen Bezahlkarten.
+
+01:09:18.440 --> 01:09:21.500
+<v SPEAKER_3>Und das heißt, mehr kriegt man dann nicht drauf auf so einer Pre-Bate-Karte?
+
+01:09:21.520 --> 01:09:29.520
+<v SPEAKER_1>Richtig, genau. Das ist der juristische Rahmen. Ab dem Rahmen müsste man dann eine Registrierung vornehmen. Und das ist natürlich dann wieder ein anderes Produkt.
+
+01:09:29.540 --> 01:09:30.780
+<v SPEAKER_4>Stichwort an der Stelle Geldwäsche.
+
+01:09:31.280 --> 01:09:31.840
+<v SPEAKER_1>Genau.
+
+01:09:31.860 --> 01:09:42.800
+<v SPEAKER_4>Weil ganz klar, Geld, das fließt, muss natürlich kontrolliert werden. Weil wenn es in zu großen Mengen fließt, könnte ich damit ja meine illegal von meinen Parteifreunden eingesammelten Spenden irgendwie waschen.
+
+01:09:42.820 --> 01:09:44.000
+<v SPEAKER_3>Wer macht denn sowas?
+
+01:09:44.020 --> 01:09:44.720
+<v SPEAKER_4>Niemand, niemand, niemand.
+
+01:09:45.780 --> 01:09:46.640
+<v SPEAKER_3>Gut, dass wir darüber geredet haben.
+
+01:09:46.660 --> 01:09:57.460
+<v SPEAKER_1>Gibt es auch in anderen Ländern, das sind die klassischen Gift Cards. Also da hat man eine Geschenkkarte, die man irgendwie verschenken kann mit einem Guthaben drauf, was halt eine ganz normale Zahnkarte ist.
+
+01:09:57.480 --> 01:10:16.440
+<v SPEAKER_4>Was halt ziemlich aufwendig ist, wenn man 5 Millionen Euro Drogengeld irgendwann seine Lieblingspartei spenden möchte. Und jetzt geht man zum nächstgelegenen Baumarkt und kauft dort für besagtes Bargeld entsprechende Gutscheinkarten. In jeweils Höhe von 25 oder 50 Euro hat man dann hinterher doch einen größeren Container voll mit so kleinen Karten und...
+
+01:10:16.460 --> 01:10:35.880
+<v SPEAKER_1>Also wichtig war es, glaube ich, einfach nur, dass deutlich in der Entfernung zur Geldwäschegesetzhürde von 15.000 Euro, also ab 15.000 Euro ist eine Transaktion Geldwäschegesetz relevant. Und dass man einfach ganz weit davon entfernt bleibt. Und das wirklich nur für den, ja...
+
+01:10:35.900 --> 01:10:43.840
+<v SPEAKER_3>Okay, also anonym mit Plastigeld bezahlt. Also einsetzen tut man wie eine normale Kreditkarte, also wenn ich damit bezahle.
+
+01:10:43.860 --> 01:10:48.300
+<v SPEAKER_4>Ist eine richtige Kreditkarte, bloß es nicht personengebezogen ist.
+
+01:10:48.320 --> 01:11:07.560
+<v SPEAKER_3>Das geht also. Die andere Frage, die ich hatte, ist, wie sieht es denn jetzt aus? Kunde mit Händler geht? Wie ist es denn Kunde mit Kunde? Also wie kann ich dem Nibbler jetzt irgendwie zwei Euro für ein Döner geben? Okay, ich habe kein Bargeld mehr, sondern möchte das gerne... Leute, macht es mir nicht so schwer hier heute. Nein, also ernsthaft, gibt es dann...
+
+01:11:07.640 --> 01:11:09.720
+<v SPEAKER_1>Ich nehme auch deine Kreditkarten nochmal.
+
+01:11:09.740 --> 01:11:11.460
+<v SPEAKER_3>Nein, ich möchte dir meine Kreditkartennummer nicht geben.
+
+01:11:11.480 --> 01:11:12.440
+<v SPEAKER_1>Und die, die hinten drauf steht.
+
+01:11:13.580 --> 01:11:18.180
+<v SPEAKER_4>Ich würde dem Nibbler jetzt auch zutrauen, dass er das Geld kriegt, ohne dass er die Nummer von dir verdient. Aber unheimlich davon.
+
+01:11:18.200 --> 01:11:21.100
+<v SPEAKER_3>Ich habe heute gelernt, ich gebe dir nicht meine Nummer. Nein.
+
+01:11:21.120 --> 01:11:31.880
+<v SPEAKER_4>Es gab da mal den Politiker, der behauptet hat, irgendwie das deutsche Bankensystem sei so sicher, dass er auf einer großen Pressekonferenz unbedingt seine Kontonummer jetzt erzählen muss. Schön. Es waren drei Stunden oder so, bis sein Konto leer war.
+
+01:11:34.440 --> 01:11:54.420
+<v SPEAKER_1>Wobei das wahrscheinlich Lastschrift an der Stelle war. Das ist auch eine speziell deutsche Geschichte. Das gibt es auch in anderen Ländern. Aber generell Lastschrift, dass man eben nur mit dem Wissen einer Kontonummer und einer Bankleitzahl Geld einziehen kann.
+
+01:11:55.180 --> 01:11:56.680
+<v SPEAKER_3>Lastschrift kann man immer zurückrufen.
+
+01:11:56.700 --> 01:11:58.500
+<v SPEAKER_1>Innerhalb von sechs Wochen.
+
+01:11:58.680 --> 01:11:59.220
+<v SPEAKER_3>Genau.
+
+01:11:59.240 --> 01:12:09.100
+<v SPEAKER_4>Das waren keine Lastschriften. Der Spaß an der Sache war, es waren tatsächlich Überweisungen, die nicht rückrufbar waren an gemeinnützige Organisationen. Und da war das Geld echt los.
+
+01:12:09.120 --> 01:12:10.540
+<v SPEAKER_1>Das wüsste ich gerne, wie das funktioniert hat.
+
+01:12:10.800 --> 01:12:12.160
+<v SPEAKER_4>Ehrlich gesagt wüsste ich das auch nicht.
+
+01:12:12.180 --> 01:12:22.360
+<v SPEAKER_3>Es gab immer mal wieder Berichte über Überweisungsträger auf Papier, die ausgefüllt wurden, wo dann auch irgendwie so mit XXX und Dagobert Duck unterschrieben wurden und die dann irgendwie trotzdem durchgehen.
+
+01:12:22.380 --> 01:12:25.100
+<v SPEAKER_1>Da wird ja inzwischen auch nicht mehr der Name geprüft. Bei kleinen Überweisungen?
+
+01:12:26.880 --> 01:13:13.200
+<v SPEAKER_4>Also es wurde fandet auf den kleinen Überweisungsträgern wurde noch nie kontrolliert, irgendwie unterhalb einer gewissen Summe, was da wirklich draufsteht. Es gab da mal die Idee, dass man Denial-of-Service-Attacken gegen Banken fahren kann, in dem jeder allen seinen Freunden 5 Cent auf einem Papierträger überweist. Die Bank ist verpflichtet, das innerhalb von drei Tagen auszuführen. Das ist so eines der netten Bankengesetzes. Wir haben also Banken müssen innerhalb von drei Tagen operabel sein. Also sie müssen Überweisungen ausführen, gegenüber dem Kunden, aber auch gegenüber anderen Banken. Deswegen mögen Banken es nicht, wenn sie drei Tage gar nichts können. Und sie dann komplett so zu überlasten und sie dann hinterher dafür anzuklagen, dass sie irgendwie diese drei Cent nicht an ihnen überwiesen haben. War mal so eine Idee, die wahrscheinlich Gott sei Dank auch nicht gemacht wurde, weil, wie wir jetzt in den letzten zwei Jahren ja mehrfach gelernt haben, Banken sind systemkritisch.
+
+01:13:13.940 --> 01:13:25.800
+<v SPEAKER_3>In der Tat. Und deswegen würde ich jetzt schon wieder gerne zum Thema kommen. Wie ist denn das eigentlich, Leute untereinander Geld überweisen, ohne den Umweg, zwischen eine Bank oder eine Händler oder irgendwas zu machen? Geht das? Gibt es da Ideen zu?
+
+01:13:25.820 --> 01:15:33.140
+<v SPEAKER_4>Da gab es mal ganz viel. Also es gab so Sachen wie zum Beispiel diese Geschenkkarten und Ähnliches. Das heißt, ich kann sozusagen Wert, also was ist Geld? Geld ist sozusagen eine metaphysische Abstraktion von meistens Arbeitsleistung, weil dem Gold ist es egal, wem es besitzt, nur der Goldschürfer, der findet es spannend. Das heißt, ich habe sozusagen eine Metaeinheit von einer gewissen Arbeitsleistung, die kann ich hin und her schieben. Und irgendwie brauche ich einen Token, ein Stück, das diesen Wert versinnbildlich, das vertrauenswürdig ist und das ich hin und her schieben kann. Das heißt, das war früher mal ein Stückchen Gold, dann war es so ein Stückchen Papier und jetzt ist es halt so ein Stückchen Plastik, naja, da ist es nicht mehr das Geld, das muss man halt auch an der Stelle immer wieder sagen. Das ist halt nur das Verrechnungssystem, mit dem am Hintergrund wiederum Zahlen hin und her geschoben werden, die jetzt das Geld darstellen. Das heißt, wenn du an einen Freund Geld geben möchtest, dann musst du etwas suchen, was so viel Wert hat, dass es der Freund einfach gegen etwas tauschen kann, was ihm was wert ist. Das heißt, wenn der Freund jetzt zum Beispiel Hunger hat, dann solltest du ihm etwas geben, womit er in der Lage ist, sich einen Döner zu kaufen. Das kannst du zum Beispiel tun, indem du anfängst World of Warcraft zu spielen. Und wenn du bei World of Warcraft genügend Monster gekillt hast, oder irgendein anderes dieser Online-Spiele, genügend Monster gekillt hast, dann hast du ganz viel Gold und das Gold kannst du eintauschen gegen wahre Münze. Was übrigens sehr spannend ist an der Stelle meine Buchempfehlung. Das neueste Buch von Neil Stevenson, Reamde, also sozusagen Read Me falsch geschrieben, geht komplett um den Fall, dass der Inhaber einer solchen Online-Spiele-Bude ehemaliger Drogenschmuggler und ansonsten natürlich auch die super coole Typen vom Herrn wird in einen Erpressungsfall hineingezogen, wo es darum geht, dass den Leuten per Trojaner ihr Rechner verschlüsselt wird und die sollen dann in diesem Online-Spiel irgendwo hingehen, an eine bestimmte Stelle, sollen dort einen bestimmten Spielgeldbetrag vergaben, damit der Trojaner-Schreiber dann an dieser Stelle mit seinen Leuten wiederum das Spielgeld ausgräbt und dann über die entsprechenden Vermittlungsstellen aus dem Spielgeld wieder reales Geld macht. Und das geht überall. Das heißt, ich habe überall diese Vermittlungsstellen von Leuten, die bereit sind, Spielgeld anzunehmen und dafür reales Geld auszuzahlen oder reales Geld anzunehmen und dafür Spielgeld auszuzahlen.
+
+01:15:33.160 --> 01:15:39.240
+<v SPEAKER_3>Jetzt möchte ich aber, wenn ich auf einem offenen sozusagen unterwegs bin und dem Libler Döner ausgeben will, ja nicht meinen World of Warcraft anwerfen.
+
+01:15:39.260 --> 01:15:40.160
+<v SPEAKER_4>Warum nicht?
+
+01:15:40.180 --> 01:15:47.020
+<v SPEAKER_3>Weil das ganz schön lange dauern würde, bis man den Gegenwert eines Ich nenne auch keine Second Life Linden Dollars. So sieht es aus.
+
+01:15:47.040 --> 01:15:47.980
+<v SPEAKER_4>Das heißt, die sind auch echt alt.
+
+01:15:49.100 --> 01:15:57.180
+<v SPEAKER_3>Gibt es da, also ich fühle mich vorhin schon mal der Begriff Google Wallet, gibt es da irgendwie so Technologien, die ein bisschen praktikabler sich zumindest anhören?
+
+01:15:57.200 --> 01:17:03.800
+<v SPEAKER_4>Das wird kommen. Also gerade Google Wallet und dann gibt es von Google jetzt auch die Brille und es gibt noch ein zweites Buch, das total empfehlenswert ist, nämlich Demon von einem Herrn Suarez aus Amerika. Da haben wir dann alle diese Brillen auf, die bei Google jetzt ja auch bald kommen. Und über diese Brillen siehst du dann, wer Nibbler in einer zweiten Realität, also sprich in der Online-Welt, in dem Multi-User-Spiel dahinter ist und kannst ihn sozusagen nur durch angucken und zweimal blinzeln im dahinter gelegten Google Wallet das Spielgeld geben. Und er blinzelt dann den Dönerverkäufer an, der hat auch so eine Brille an. Und dann ist das Geld bezahlt, der Dönerverkäufer gibt das Geld rüber. Das ist Science Fiction, aber es ist insofern Science Fiction als, also nicht Science Fiction. Die Technik ist da, die Zahlungssysteme da, sind da, Google Wallet gibt's. Was im Prinzip auch nichts anderes ist, als ein namensbasiertes Zahlungssystem, das wiederum gegen eine Kreditkarte gesichert ist. Und die Kommunikationsformen sind auch da, das heißt die Möglichkeit sich zu sehen. Die Brille kommt gerade und das Buch, das das alles beschreibt, wie das dann mal alles so richtig gut wird und sozusagen die neue IT Revolution, den Planeten damit herrschen wird, heißt Demon von Suarez.
+
+01:17:03.820 --> 01:17:16.520
+<v SPEAKER_3>So und jetzt noch mal einen Schritt zurück und ein Schritt praktikabler, also realer, dieses Google Wallet. Ist das tatsächlich sozusagen so eine Science Fiction Brille oder ist das, ich habe irgendwas mit Handys im Hinterkopf, Handys, die man aneinander hält und dann wird irgendwie...
+
+01:17:16.540 --> 01:18:41.460
+<v SPEAKER_4>Also Google Wallet ist erstmal eine Handy Applikation, die auf Checkout basiert. Das heißt, erstmal habe ich Checkout und Checkout ist das Online Zahlungssystem von Google. Wenn ich bei Google im Market oder sonst wo irgendwas zahlen möchte, dann mache ich das über Checkout. Und Wallet ist die Schnittstelle zwischen Checkout über diese Near Field Communication, das heißt wiederum über eine Funkschnittstelle, die nur im Nahbereich funktioniert, zum Zahlterminal des Händlers. Also auch hier kein Peer-to-Peer, also aktuell Wallet, kein Peer-to-Peer. Das heißt, ich habe sozusagen die Möglichkeit, eine App auf meinem Handy zu haben, die diesen eingebauten Funkchip benutzt, um mit dem Funkchip des Händlers in seiner Kasse zu reden und dem Funkchip des Händlers ein Einmalpasswort zu sagen und eine Summe und wer ich eigentlich bin und was ich gerade kaufe und noch ein paar Sachen. Und mit diesem Einmalpasswort und der Summe kann der Händler dann sofort, natürlich online, wahrscheinlich auch über Android, Android for Cachedesks gibt es glaube ich noch nicht, kommt bestimmt irgendwann, dann zu Google gehen und dort das Geld gut geschrieben kriegen und hat dann die Zahlung autorisiert, so wie bei der Kreditkarte auch. Deswegen meinte ich vorhin irgendwie, da ist kein Unterschied. Ich habe wiederum eine Nummer, ich habe wiederum einen Namen, der dahinter steht und ob ich das nun Kreditkarte nenne oder EC-Karte oder Google Wallet oder Paypass oder Sonstiges. Es sind eigentlich nur die Schnittstellentechnologien zwischen dem, der zahlen möchte und autorisiert und dem, der die Zahlung empfängt und dann die Ware oder was auch immer herausgibt.
+
+01:18:41.480 --> 01:20:20.340
+<v SPEAKER_1>Das charakterisiert interessant, aber es ist wirklich alle dieses Thema. Sei es World of Warcraft, sei es Second Life oder sonst irgendwelches Geld, dass man sich jetzt auch in irgendwelchen Online-Webgames schenkt dir einen Schaf auf, hast du den nicht gesehen, farm.de. Das wirtschaftliche Interesse ist einfach nicht da. Wir hätten sowas schon sehr viel früher haben können, nämlich bei der unscheinbaren Geldkarte. Die Geldkarte war nämlich tatsächlich ein Ding, worauf mittels eine Authentifizierung Geld auf und abgebucht werden konnte. Das war da auch angedacht und wurden, glaube ich, auf welche ausgegeben, aber wird sich nie so richtig verbreitet, da wirklich eine anonyme nichtkonten- oder kartengebundene Zahlung zu haben. Eine White Card, wo du halt sagst, ich zahle jetzt Geld ein auf diese Karte. Das ist dann auf diesem Geldkarten-Chip und die Idee wäre weiterhin gewesen, dass man von einer Geldkarte auf eine andere Geldkarte Geld übertragen kann. Das war auch spezifiziert, das war mit der Geldkarte gegangen. Aber es gibt schlicht kein wirtschaftliches Interesse dahinter, weil wenn Kunden zwischen einander Geld übertragen, verdient da niemand was dran. Und es gibt einfach kein Unternehmen, was sich da irgendwie den Schuh anziehen möchte und sagen ja finde ich eine gute Sache. Auch Geld verdienen ist jetzt nicht so. Die Leute haben zwar auch andere Bezahlmechanismen, wo wir ein bisschen Geld abgreifen könnten, aber wir sind mal lieb zum Kunden und finden das mit dem Geld von Anach B ganz toll. Also gab da einfach ein wirtschaftliches Interesse dahinter, dass wirklich Kunden miteinander ohne Banken Geld transferieren.
+
+01:20:20.780 --> 01:20:40.820
+<v SPEAKER_4>Weil die Banken da schon auch mit dabei sind, muss man bei der Geldkarte, selbst bei Karte-Karte-Zahlung, Geldkarte arbeitet immer mit dem Schattenkonto, das heißt es wird wiederum nur von Karte zu Karte übertragen. Ich verspreche dir zu zahlen um den Hintergrund auf einem Schattenkonto, dass bei den ausgebenden Banken geführt wird, wird die eigentliche Zahlung ausgeführt. Das heißt die Bank weiß, wer wem was gibt.
+
+01:20:40.840 --> 01:21:06.180
+<v SPEAKER_1>Das Schattenkonto bei der Geldkarte auch nur nachgezogen wurde, also du kannst mit der Geldkarte schon verbindliche Transaktionen machen, ohne dass das Schattenkonto im Spiel ist. Das Schattenkonto ist wirklich nur da gewesen, um nachzuvollziehen, ob da jetzt irgendwo großer Betrug passiert und an welcher Stelle und dann da mal einzugreifen. Aber es war jetzt nie was, was wirklich für Transaktionen Ausschlag geben würde.
+
+01:21:06.200 --> 01:21:14.320
+<v SPEAKER_3>Ist das technisch dasselbe System, was ich in der Mensa habe, wenn ich irgendwie mit so einer, da gibt es ja diese Aufladekarten, wo ich eben Zwangi in den Automaten schiebe und dann ist das so.
+
+01:21:14.340 --> 01:21:34.120
+<v SPEAKER_1>Genau das glaube ich auch. Ja, der Unterschied ist, dass bei deiner Mensa Karte deine Mensa Karte meist ein ID-Token ist und dass irgendwo zentral gespeichert wird. Das kommt jetzt auf dieses Thema an. Bei der Geldkarte ist es aber in der Tat so, dass der Betrag auf der Karte tatsächlich gespeichert wird.
+
+01:21:34.140 --> 01:21:41.960
+<v SPEAKER_4>Also deine Karte macht aber keinen Unterschied, weil wenn ich meine Geldkarte verliere und da sind noch 20 Euro drauf, dann kriege ich drei Tage später von meiner Bank eine Gutschrift über 20 Euro.
+
+01:21:42.420 --> 01:21:53.780
+<v SPEAKER_1>Nein, das ist definitiv weg. Also das Geldkarte ist wie Bargeld gewesen. Definitiv. Also da kriegst du auch von deiner Bank keine Erstattung für, wenn dir die abhanden kommen mit dem Geld drauf.
+
+01:21:53.800 --> 01:22:31.280
+<v SPEAKER_3>Das heißt, da war es ein Versuch, aber kein wirtschaftliches Interesse. Jetzt ist ja nicht immer wirtschaftliches Interesse ausschlaggebend an so Dingern. Wir haben zum Beispiel Bitcoin, haben wir schon kurz erwähnt. Da wurde das ja versucht, das will ich jetzt hier nicht noch mal ausführen wollen, weil da gibt es das Chaosradio 169, das kann man sich ja noch mal komplett anhören. Da wird es erklärt, gab es denn noch andere Ansätze, also Community Driven, wie es im Bullshit-Bingo so schön heißt. Gibt es da noch andere Ansätze, sowas zu realisieren? Also sagen jetzt nicht von Banken aus, sondern halt außer, keine Ahnung, dass sich irgendwelche Hacker das ausgedacht haben oder so?
+
+01:22:31.300 --> 01:23:38.500
+<v SPEAKER_4>Neues Geld fürs neue Internet. Also wir kommen jetzt an der Stelle auf gerade die Frage, dass irgendwelche Hacker sich ausgedacht haben. Da stellt halt eine grundsätzliche Systemfrage von, was ist eigentlich Geld im Sinne von, wer gibt das eigentlich aus, wer sollte das eigentlich machen? Also wir haben, Entwicklung des Geldes war tatsächlich privatwirtschaftlich. Es gab irgendwie in den USA auch mal so zu Bürgerkriegszeiten, gab sowas wie Free Cat Banks, die haben dann ihr eigenes Geld gedruckt, unabhängig vom Staat und solche Dinge, die haben sich, wurden aber alle vom Staat wieder eingefangen. Und jetzt aktuell leben wir in einer Welt, in der die aktuellen Zahlungssysteme, oder das geht, na nicht die Zahlungssysteme, aber das Geld an sich stark vom Staat kontrolliert wird. Manchmal geht es schief, sie haben wir ja gerade immer in der Presse, aber nicht so so trotz leben wir in einer Welt, die von M1, M2 und M3 regiert wird. Also von den drei Geldmengen, die gerechnet werden. In dem Augenblick, wo Linden, Dollars oder Coins bei Facebook oder irgendwie Gold bei World of Warcraft oder sonstiges eine neue Währung erschaffen, mit der tatsächlich auch gehandelt wird, mit der Leute Dinge zahlen und sei es auch nur ein virtuelles Schaf, aber das Schaf kann man dann mit darum tauschen gegen einen echten Döner vielleicht. Das würde ja auch ganz gut zusammenpassen.
+
+01:23:38.520 --> 01:23:40.360
+<v SPEAKER_1>Und dass eine relevante Geräusse übersteigt.
+
+01:23:40.380 --> 01:23:54.400
+<v SPEAKER_4>Und eine gewisse Menge einfach an Geld damit transferiert wird, habe ich eine M4. Das heißt eine vierte Geldmenge, die bei den Bundesbanken nicht überwacht wird. Was sind die ersten drei? Das erste ist das Papiergeld, das Bargeld und das Kontokerentgeld oder so. Steht im Internet.
+
+01:23:57.700 --> 01:23:58.580
+<v SPEAKER_3>Schön.
+
+01:23:58.600 --> 01:24:11.280
+<v SPEAKER_4>Also das Wichtige ist sozusagen, ich habe die drei Geldmengen, die ich habe. Das sind einmal die Gelder, die bei den Banken auf dem Stapel liegen. Die Gelder, die tatsächlich im Bargeld umgelaufen sind. In der Mitte gibt es noch was.
+
+01:24:11.300 --> 01:25:08.960
+<v SPEAKER_1>Also um es mal ganz abstrakt zu halten, ist der Staat natürlich daran interessiert, über die Geldmenge, die im Umlauf ist, eine gewisse Kontrolle zu haben. Weil je mehr Geld da ist, das ist die Inflationsgeschichte. Das so weniger ist das Geld in der Theorie wert. Und wenn da jetzt eine Firma kommt, die künstlich Geld erfinden kann, für das man Dinge eingetauscht bekommt, ohne staatliche oder ohne externe Kontrolle, ist natürlich der Anreiz gegeben, dass die von diesem Geld, das sie ja frei produzieren können, mehr produzieren. Und dadurch dann Einfluss auf das wirtschaftliche System haben gegeben. Deswegen ist das ja natürlich sehr schädlich für die Wirtschaft insgesamt, wenn es da nochmal einen dritten Akteur gibt, der sozusagen aus der hohen Hand Geld erzeugen kann. Da ist glaube ich kein Staat oder keine Zentralbank großer Freude darüber.
+
+01:25:09.660 --> 01:25:28.980
+<v SPEAKER_4>Aber es stellt halt auch dieses ganze System so ein bisschen in die Frage, weil Geld im Prinzip hat damals mal mit MEVO-Wechseln angefangen, dass wir tatsächlich aufgehört haben, irgendwie Geld gegen Ware immer direkt zu sehen. Also die Goldbindung von Geld war im Prinzip MEVO-Wechsel. Die Erfindung davon wurde dann... MEVO-Wechsel.
+
+01:25:29.000 --> 01:25:30.200
+<v SPEAKER_1>MEVO?
+
+01:25:30.220 --> 01:27:18.040
+<v SPEAKER_4>Das war eine Erfindung 33, mit der die Autobahnen finanziert wurden. Hat so einen, einer Yalmer Schacht erfunden und der hat damit dafür gesorgt, er hat das erste Mal Wechsel auf die Ernte vom nächsten Jahr ausgegeben. Das heißt, er hat sozusagen Geld, das der Staat damals nicht hatte, woran die Regierung vorher auch gescheitert ist, weil die Autobahnpläne gab es ja schon, aber man konnte sie nicht zahlen. Also hat er sich überlegt, wie zahlen wir die? Okay, was haben wir? Okay, wir haben ein großes Land, wir haben eine Wirtschaft, wir haben blonde Mädchen, die irgendwie draußen auf den Feldern das Stroh einsammeln und eine Ernte einfahren, wie man sich das so schön auf diesen tollen Bildern von damals irgendwie so gesehen hat. Und der ist auf die schlaue Idee gekommen, dass das ja ein Riesenwert ist und dass man auf die Wirtschaftsleistung eines Landes, nämlich also auf die Ernte des Jahres, auf die Kohleförderung, auf die Erzgewinnung, auf die produzierten Autos, auf die was auch immer, dass das der Wert ist, den ich als Sicherheit benutze, um einen Wechsel auszustellen. Und dieser Wechsel ist quasi neues Geld. Und gegen dieses neue Geld kann ich auf Basis dieses neuen Gelds druck ich dann kleine Scheine und diese kleinen Scheine gebe ich den Leuten, damit sie heute arbeiten, damit sie nächstes Jahr sich von diesen kleinen Scheinen dann ein Auto, damals noch nicht ein Auto, ein Roller, ein Fahrrad und Brot und Milch auch kaufen können. Das heißt, es wurde, also eine der großen Umstiege im Geldsystem war das Weggehen von, du gibst mir deinen Schein Papier, ich gebe dir ein Stück Gold dafür. Wurde quasi mit dem Mähvorwechsel angefangen und dann mit dem Zusammenbruch von Bretton Woods 1974, als die Amerikaner den Engländern keine 5 Milliarden Dollar in Gold ausliefern wollten, haben die einfach Bretton Woods gekündigt. Sollte man sich immer überlegen, wenn man davon ausgeht, dass der Dollar zusammenbrechen wird, die haben schon mal als ihre Leitwährung zusammengebrochen ist, einfach das System gekündigt und waren danach mehr oder weniger schuldenfrei. Bretton Woods Zusammenbruch 1974.
+
+01:27:18.300 --> 01:27:21.720
+<v SPEAKER_3>Okay, das ist in der Tat was, was man vielleicht mal im Internet nachlesen sollte.
+
+01:27:21.840 --> 01:27:23.040
+<v SPEAKER_4>Das ist durchaus ein spannendes Thema.
+
+01:27:23.060 --> 01:27:25.360
+<v SPEAKER_3>Wir sind zu weit, wir müssen jetzt an dieser Stelle noch mal eine kurze Pause machen.
+
+01:27:25.380 --> 01:27:43.200
+<v SPEAKER_1>Wir haben auch einen wunderschönen Alternativlos Podcast. Unter alternativlos.org haben sich Frank und Fefe tatsächlich mal in mehreren Stunden dieses Themas Geld und was das eigentlich ist und was daraus geworden ist und so weiter angenommen. Da wird auch noch diese Geldmengen erklärt. Das ist vielleicht noch mal ein interessanter Point da.
+
+01:27:43.220 --> 01:28:56.920
+<v SPEAKER_3>Okay, könnt ihr euch raussuchen. Währenddessen machen wir das Fritz-Info mit Nachrichten, Wetter und Verkehr und dann nochmal vielleicht eine halbe Stunde kriegen wir es noch geklärt, wie dann in der Zukunft die Transferleistungen aussehen. Heute Chaosradio mit Nibbler und Pluto. Hallo und willkommen zurück. Mein Name ist Markus Richter und ich versuche, seit anderthalb Stunden aus den Beinen rauszukriegen, wie Zahlungsmittel in Zukunft ohne Bargeld funktionieren. Das ist nicht so einfach. Ich habe heute schon gelernt, Kreditkartenübertragungen sind so la la, aber kann man schon mal machen. Es wird wahrscheinlich auf absehbare Zeit kein System geben, wo wir untereinander, also einfach sozusagen gegeneinander Geld austauschen, ohne dass irgendwie Bargeld im Spiel ist, oder noch eine Bank. Jetzt wollte ich euch einfach mal fragen, was haben wir denn noch vergessen an Zukunftsaussichten? Was gibt es da noch oder was ist da möglicherweise schon bescheitert? Ist zum Beispiel sowas wie Flatter, der von Kennern auch der Tim Pritloff Fund genannt wird, ist das ein Zahlungssystem? Dieses, man klickt im Internet auf einen Knopf, die verwalten irgendwie Bargeld, was man vorher eingezahlt hat?
+
+01:28:56.940 --> 01:30:23.460
+<v SPEAKER_1>Das ist ja grundsätzlich eine ganz andere Lösung für ein Problem, was man bisher immer mit Zahlungen in einer anderen Weise... Also das Problem, was Flatter löst, ist, dass Leute für immaterielle Güter größtenteils in irgendeiner Form eine Vergütung bekommen. Das ist bisher im klassischen Internet so gelaufen, wenn sowas überhaupt passiert ist mit Werbung. Also bei dem Umweg der Werbung. Also so wie wir auch das andere Radio und Fernsehen, was es da draußen gibt, bezahlen mit unseren Nerven. Ich hatte das das letzte Mal mit dem Auto im Taxi nach Tegel raus. Das ist schon ganz schön teuer. Ja, lange Rede, gar keinen Sinn. Also da wurde die Direktion bisher über Werbung gegangen, dass man halt als Produzent noch ein bisschen Fremdcontent beipackt, für den man dann bezahlt wird, den dann die Hörer oder Leser oder was auch immer erdulden müssen. Und Flutter rollt das Ganze eben andersrum auf. Da kann man als Leser sagen, okay, das hat mir gefallen, da klick ich jetzt und hab gefluttert. Und was dann am Ende des Tages oder des Monats in dem Fall passiert, ist, dass Flutter sich anguckt, okay, wie viele, wie viel Mal hat dieser Nutzer was gefluttert?
+
+01:30:23.480 --> 01:30:25.420
+<v SPEAKER_4>Also wir können diesen Nutzer auch benennen.
+
+01:30:25.440 --> 01:30:25.900
+<v SPEAKER_1>Genau.
+
+01:30:25.920 --> 01:30:27.600
+<v SPEAKER_4>Dieser Nutzer hat einen Namen.
+
+01:30:27.620 --> 01:31:30.440
+<v SPEAKER_1>Genau. Ist eindeutig identifizierbar. Und das, was dieser Nutzer in diesem Monat eingezahlt hat, wird durch alle aufgeteilt. Und jeder bekommt da, je nach Anzahl, wie häufig und überhaupt gefluttert wurde, dann seinen Teil davon. Also es ist sozusagen nicht nur Bezahlkonzept, sondern auch nochmal dieses Entlohnungsproblem. Also wie teile ich das Geld, was jemand im Monat für Immaterialgüter, die er im Internet dargeboten bekommt, ausgeben möchte, wie teile ich das auf? Das ist eine sehr spezialisierte Lösung, auch wenn Peter Sunde, der das mit ins Leben gerufen hat, jetzt schon am Überlegen ist, was man da in Zukunft noch mehr draus machen kann. Aber auch da stößt er auf das Problem, dass er da in eine Richtung gedacht hat, in die bisher so noch niemand so richtig direkt gehen wollte.
+
+01:31:31.400 --> 01:32:10.080
+<v SPEAKER_4>Also das Thema Micropayments für Content. Also Flutter ist schon auch Teil der Problematik, wie zahle ich im Internet zukünftig Krams? Und Content ist an der Stelle natürlich ganz weit vorne, oder Blogbeiträge, oder ich folge geben auf Twitter, und dann kann ich dem per Flutter meine Gunst erweisen und klick seinen Twitter-Account oder flettere seinen Twitter-Account. Das hat sich halt einfach noch nicht weiter durchgesetzt, was ein bisschen schade ist, weil im Prinzip ist die Idee dahintersteht schon sehr gut, aber es gibt auch ein paar Leute, die damit durchaus auch leben, und von daher ist das derzeit schon ein gültiger Marktteilnehmer. International ist es halt aktuell noch nicht so relevant.
+
+01:32:10.180 --> 01:32:19.140
+<v SPEAKER_3>Ich wollte gerade sagen, ist ja sozusagen in Schweden, glaube ich, auch entwickelt oder Großbritannien oder wo? Und ist aber tatsächlich also ein deutscher Dienst, könnte man sagen, von den Nutzerzahlen her?
+
+01:32:19.160 --> 01:32:22.180
+<v SPEAKER_1>Von den Nutzerzahlen her größtenteils, ja.
+
+01:32:23.100 --> 01:33:20.280
+<v SPEAKER_4>Also Tim Prittlaffs Fandclub hat sich ein Vetter-Account besorgt und klickt ihn jetzt. Das kann man schon so zusammenfassen. Wenn man sich die Zahlen anguckt, irgendwie, ich hab das jetzt so im Halbjahres-Schnitt irgendwie mal gemacht, wer wieviel Flatters kriegt, ist irgendwie Tim mit 14.000 dabei, der nächste Beste ist dann Tim und der andere Moderator, der hier immer arbeitet, Holgi mit nochmal 12.000 und der nächste Beste hat dann 6.000 und das ist auch einer aus dem Chaosumfeld. Also von daher, das ist schon eine ganz gute Sache und es ist gut, dass die Leute da an der Stelle auch so viel machen und durch ihre Follower schafft dann auch tatsächlich dafür sorgen, dass so ein modernes System, um Content zu bezahlen, abseits von Werbung und direkten Zuschüssen von irgendwelchen Industrielobbyisten, die da ihre Produkte platzieren wollen oder einfach Blogger kaufen, damit sie irgendwie lustig über Sachen reden, weil sie genug Follower haben. Also es ist ein ehrliches, offenes System und es ist gut, dass es an der Stelle promotet wird. Man kann ihm nur wünschen, dass es sich weiter verbreitet. Aktuell systemrelevant wie gewisse Banken ist es halt noch nicht.
+
+01:33:20.320 --> 01:33:41.300
+<v SPEAKER_1>Es macht halt Mut, dass man sieht, dass so ein System, was mit einem ganz neuen Konzept daherkommt, durchaus funktionieren kann, wenn hinreichende Massanleuten sieht, okay, das ist eine interessante Lösung für das Problem. Das gab es so noch nicht. Das verwenden wir jetzt mal. Also das gibt schon Mut, da mal einen Vorstoß zu machen, um mal zu gucken. Probieren wir mal aus.
+
+01:33:41.320 --> 01:33:58.780
+<v SPEAKER_3>Aber haltet ihr das wirklich für zu mutig, weil ich habe eher den Eindruck bei diesem System, das funktioniert in so einem bestimmten Umfeld. Ich sag's mal, es ist eine sehr spezifische Lösung. Es ist nerdkompatibel und kommt da nicht drüber hinaus. Und was es ja auch nicht klärt, ist sozusagen, es klärt immer noch nicht das Problem, ich möchte in kleinsten Betragen elektronischer Format irgendjemand weitergeben.
+
+01:33:58.800 --> 01:36:17.140
+<v SPEAKER_4>Dafür gibt es eine Lösung. Die Lösung ist gerade in Arbeit und sie nennt sich Es fängt mit F an. Also wenn meine Tochter sagt, es fängt mit F an, dann weiß ich das über Fernsehen. Wenn ich jetzt sage, es fängt mit F an, wer rät das Wort? Wer hat die Lösung? Wer ist die Zukunft? Facebook ist die Lösung. Facebook ist die Zukunft. Facebook wird uns alle retten. In dem Facebook mit Paypal kooperiert für kostenlose Peer to Peer Payments, die innerhalb von Facebook realisiert werden. Und was dafür genutzt wird, sind Paypal Accounts. Und da konnte man bis jetzt ja schon, Paypal ist tatsächlich das einzige derzeit existierende Zahlungssystem, das weltweit systemrelevant ist und bei dem Peer to Peer Zahlungen möglich sind. Und das allerdings zu nicht unerheblichen Gebühren. Das heißt, von den zwei Euro, die jetzt hier für den Döner von gestern zu bezahlen wären, gehen dann, ich hab die aktuelle Preisstruktur nicht im Kopf, aber ich lass mir damit gerade für ein Buch, das ich geschrieben habe, irgendwie die Donation schicken. So eine Art Flatter-Simulation steht einfach vorne in der Einleitung drin. Wenn du das Buch gelesen hast und nichts dafür bezahlt hast wegen PDF, dann schick mir doch ein bisschen was an Paypal, das wär doch einfach nett. Und von daher sind sie da die einzige Möglichkeit, wie man sich solches Geld schicken kann, aber man muss so mit 30% Transaktionsgebühren rechnen. Und das ist natürlich für Kleinzahlungen im privaten Umfeld. Also wenn du mir gestern einen Döner ausgegeben hast und der 250 gekostet und willst mir heute das Geld wiedergeben, dann wirst du mir nicht 3, 60 Euro dafür zahlen wollen, weil du 30% draufschlagen musst, damit ich meine 250 kriege. Das heißt, das ist ganz klar, peer-to-peer ist sozusagen Micropayment ohne Transaktionsgebühr. Und deswegen interessiert es auch keinen von den großen Systemanbietern, weil wenn die Micropayment mit irgendeiner Pornosite oder mit irgendeiner Content-Site, mit der Paywall von New York Times oder Economist oder wem auch immer machen, dann haben die da einen Händler und von dem Händler können sie Prozente nehmen. Und das bringt ihnen Geld. Bei einer peer-to-peer Zahlung, niemand möchte irgendwie den Zahlungssystem aufschlag oben draufzahlen. Das wird keiner tun. Deswegen hat Facebook da jetzt eine Kooperation mit Paypal geplant. Und die wollen peer-to-peer Payments kostenlos. Das war irgendwie das Stichwort, wo ich dann bei der Pressemitteilung, die ist so 3, 4, 5 Monate alt, steht in unserem Linkbunker, ist die irgendwo drin.
+
+01:36:17.160 --> 01:36:51.020
+<v SPEAKER_1>Das ist natürlich für die... Also es gibt auch andere Systeme wie Moneybooker's Grill, wo man auch eine E-Mail-Adresse sozusagen Geld schicken kann. Aber die Quintessenz von so einem System ist im Prinzip, dass du als Systembetreiber und Paypal hat da eben eine gewisse Marktmacht, das Geld vom Nutzer irgendwann auch eingezahlt bekommst, damit er das weiterreichen kann. Und mit dem Geld kannst du natürlich arbeiten, weil du zahlst deinem Kunden da keine Zinsen oder sonst irgendwas, sondern im Gegenteil, kriegst du auch für irgendwelche Zahlungen, die außerhalb des Peer-to-Peer-Systems Macht Gebühren.
+
+01:36:51.640 --> 01:37:08.300
+<v SPEAKER_3>Aber warte mal, ich möchte mal kurz zusammenfassen. Also Facebook bietet möglicherweise das kostenlos an, dass sie wieder Geld untereinander hin- und herschieben. Und ein Geschäftsmodell für solche Anbieter könnte sein, dass sie quasi Geld durch die Zinsen machen, von einem Geld, das hochliegt.
+
+01:37:08.320 --> 01:37:57.840
+<v SPEAKER_1>Sie verdienen einfach dadurch, dass bei ihnen eine unglaubliche Menge an Geld liegt, können sie mit dem Geld wirtschaften. Das sehen wir auch jetzt bei eBay, die das jetzt verpflichtend machen wollen, dass man Transaktionen nicht mehr direkt abwickelt, also nicht mehr bei einer Banküberweisung, wenn man was versteigert hat, sondern dass man das Geld eBay überweist und dass die das weiter überweisen an den Verkäufer. Das führt natürlich dazu, dass von heute auf morgen Hunderte von Millionen auf eBay-Konten rumliegen. Da bin ich noch gespannt, wie schnell das Geld an die Händler weitergeht, wie da die Wertstellungstage sind, ob das nicht wirklich ein cleveres Schema ist, um einen großen Batzen an Geld, den man quasi...
+
+01:37:57.860 --> 01:38:01.220
+<v SPEAKER_3>Reicht da wahrscheinlich, wenn das ein paar Stunden da rumliegt bei eBay, oder?
+
+01:38:01.240 --> 01:38:02.860
+<v SPEAKER_1>Ja, es gibt doch in der Tageweise. Ich weiß es nicht.
+
+01:38:02.880 --> 01:39:07.480
+<v SPEAKER_4>Je länger, desto besser. Also es reichen auch Stunden, also im Zeiten von Pico-Sekundentrading. Es gibt tatsächlich Online-Finanztrader, die kaufen sich ihre Plätze im Rechenzentrum nach der Länge des Kabels zwischen ihrem Server und dem Anschluss an den Server von der Börse. Weil je kürzer das Kabel ist, desto schneller können sie handeln. Und es geht tatsächlich um Mikrosekunden. Teilweise, wenn es um Finanztransaktionen geht, also das System ist an der Stelle definitiv gerade extrem. Und was extrem ist, ist meistens krank, ohne das jetzt irgendwie so öffentlich gesagt haben zu wollen. Und da wird Geld sehr, sehr schnell hin und her gejagt. Das heißt, wenn ich auch nur das Geld 5 Sekunden auf meinem Konto habe, kann ich in den 5 Sekunden bereits 50 Transaktionen mit diesem Geld machen. Und 50 Transaktionen können mir bei einem durchschnittlichen Transaktionsgewinn vielleicht von 0, 3% dann schon wieder eine ganze Menge Geld einbringen. Da es in Deutschland oder weltweit keine Transaktionssteuer für solche Geldgeschäfte an den Börsen geben wird, wird das auch noch ein Weilchen existieren.
+
+01:39:07.500 --> 01:39:23.620
+<v SPEAKER_3>Jetzt haben wir in der Vorbereitung zu dieser Sendung, ist mir gerade aufgefallen, ist noch ein Wort gefallen, was wir noch gar nicht berücksichtigt haben. Das ist die Haftungsumkehr oder so ähnlich hieß das. Derzeit ist es ja oder wir sind es so gewohnt, wenn bei so Geldgeschäften oder Überweisungen was schief geht, dann steht die Bank dafür gerade.
+
+01:39:23.640 --> 01:39:32.080
+<v SPEAKER_1>Kommen wir aber gleich zum Kreditkarten. Wir haben noch irgendwas zu dem anderen Thema, weil das Haftungsumkehr ist tatsächlich was, was uns da akut ins Haus steht.
+
+01:39:32.600 --> 01:39:40.760
+<v SPEAKER_3>Ah ja, okay. Ich würde es gerne noch mal wenigstens kurz erwähnt haben. Wir haben nur noch zehn Minuten. Aber wenn wir noch bei dem anderen was vergessen haben, bitte.
+
+01:39:42.460 --> 01:39:45.360
+<v SPEAKER_1>Also vielleicht nur zu sagen, es gab früher noch sowas wie E-Gold.
+
+01:39:45.380 --> 01:39:46.420
+<v SPEAKER_4>Genau, da wollte ich auch gerade hin.
+
+01:39:47.120 --> 01:39:50.560
+<v SPEAKER_1>Ja, sag doch mal zwei Worte zu E-Gold. Ich sende mal meine Gedanken zu.
+
+01:39:50.660 --> 01:41:27.840
+<v SPEAKER_4>E-Gold war lustig im Sinne von, das war sozusagen mal wieder Geld gegen Gold. Also so wie es früher war, ein Schein. Und wenn ich dahin gehe und dann mein Schein auf den Tisch legt, dann kriege ich dafür eine bestimmte Menge Goldes. Das war das Geschäftsmodell dieser Firma. Und man konnte dort virtuell das Gold kaufen, das die Firma dann irgendwo eingelagert hat. Und die haben einem das garantiert, dass sie ihm das rausgeben. Man konnte denen auch Gold schicken. Und dann haben sie einem den Wert entsprechend gut gestellt. Das war auf so einer hübschen kleinen Karibikinsel. Ja ne, ich mal durch Zufall gesegelt bin, recht hübscher. Und davon war das so, beim größer an Schwarzgeldgeschäften interessierten Organisationen. Tatsächlich hat das Interesse geweckt. Und die wollten damit größere Geldmengen übertragen. Und haben sich das auch überlegt. Und denen hätte man damals nur raten müssen, Leute, wenn das das CIA nicht gegründet hat, kurz nachdem sie Facebook gegründet haben, was dann? Also ein paar Leute haben damit Geld verhandelt. Und ganz überraschend hat dann Egold auch seinen Hauptsitz nach Kalifornien verlegt. Und es kam mehr oder weniger inoffiziell raus, dass einige Mitarbeiter von Egold auch noch ein zweites Gehalt kriegen von einer amerikanischen Organisation. Und damit war die Sache dann auch geklärt. Egold ist jetzt tot, das Vertrauen war weg. Das ist halt immer das Problem, wenn ich mit solchen Systemen im Internet agiere. Und was an der Stelle, gerade weil wir es jetzt nur noch ein paar Minuten haben, das noch kurz erwähnt, noch mal mit erwähnt. Das heißt, es werden Geschäftsmodelle, Geldsysteme gegründet von privaten Firmen, die nicht in hoheitlicher Kontrolle der Staaten liegen. Das heißt, wir, das war Stevenson, irgendwie in den 80ern.
+
+01:41:27.860 --> 01:41:30.720
+<v SPEAKER_1>Und wir behaupten, sie legen da mal Gold in den Schrank und ist gut?
+
+01:41:30.740 --> 01:43:35.540
+<v SPEAKER_4>Ja, das Gold hatten sie tatsächlich. Bloß, dass sie halt nebenbei auch noch immer irgendwie ein Foto von dem Gold irgendwie an irgendwelche Leute auf dem Festland geschickt haben. Also das Geschäftsmodell war so, es gibt da auch noch einen Scheich, der will das auch machen. Ach nee, das mit dem Scheich, das stammt tatsächlich aus Kryptonomiken. Also alles, was man in die Richtung sagen kann, liest Stevenson, liest Wörner-Winch, weil da sind die Sachen tatsächlich gut vorhergesagt worden. Inklusive des Betrugs, den die E-Gold-Firma dann hinterher an den Kunden begangen hat. Selbst dies im Kryptonomiken schon vorhergesagt. Also soviel zum Thema lustige Systeme, wo man hier Geld einzahlt, so Western Union etc. das kann man ja nicht als Internetgeld sehen, obwohl die auch intern elektronisch Hand haben. Da ist die Frage, was fällt da rein? Also was man auf jeden Fall noch mit erwähnen sollte, weil das gerade eine der großen Revolutionen im Bankensystem ist und weil es auch alles elektronisch läuft, ist die Wiege der Menschheit hat was Neues erfunden, nämlich das Handybanking. Also das hat angefangen mit einer Bank, die Micro-Lending, also sprich Mini-Kredite an Pharma gegeben haben. Also wirklich ein Kredit für eine Schubkarre. Da konnte man denen irgendwie eine SMS schicken und sagen, ich bin der sowieso und ich brauch eine Schubkarre, dann kann ich mehr Reis anbauen und dann geht's meiner Familie besser und meine Kinder müssen nicht mehr hungern. Und die haben dann das Geld für die Schubkarre überwiesen, haben sich die Telefonnummer von den Menschen gemerkt und dann hat er angefangen jeden Monat irgendwie drei Reiskörner abzuzahlen und über drei Jahre hat er die Schubkarre wieder finanziert und natürlich dreimal repariert. Und das hat relativ gut funktioniert. Das war ein Riesenerfolg für die Entwicklungshilfe. Und aus diesem Schema hat sich jetzt mittlerweile zusammen halt auch so mit Telefon-Guthabenkarten ein komplettes eigenes Banking-System entwickelt, wo die Leute in kleinen Fischerdörfern, wo es echt nichts gibt, außer so einer älteren Dame, die mit ihrem Handy da sitzt und darauf wartet, dass jemand kommt. Und meistens ist da mittlerweile sogar eine Schlange. Der gibt den Menschen Cash, die tippt in ihr Handy ein. Handy-Nummer sowieso hat mir gerade gegeben 3000 Yuan. Oder wie auch immer das da heißt.
+
+01:43:35.560 --> 01:43:43.720
+<v SPEAKER_1>Oder generell die Verrechnung von Beträgen über prepaid-Karten-Guthaben. Also in den, ja, konnten...
+
+01:43:43.740 --> 01:43:44.560
+<v SPEAKER_4>Ganz nach der Vorläufer.
+
+01:43:45.960 --> 01:44:26.060
+<v SPEAKER_1>In Ländern wie Indien haben die Leute halt hauptsächlich prepaid-Karten und da gab es die Möglichkeit, zwischen den Kartenkonten der einzelnen prepaid-Karten Geld hin und her zu buchen. Das hat in letzter Konsequenz Indien dazu geführt, dass alle prepaid-Karten für mobile Telefone, also wirklich zum Telefonieren, das war das selbe Konto, wie wir das Telefonieguthaben, dass die alle registriert werden mussten. Also man musste dann Ausweis usw. und wirklich Registrierungen. Sie haben da sehr viele Karten abgeschaltet nach der Deadline, die nicht registriert waren. Da war ja natürlich der Staat auch wieder auf den Geldtransfer da seine Finger drauf bekommen wollte.
+
+01:44:26.080 --> 01:44:56.880
+<v SPEAKER_4>Auch wieder die Kontrolle und Überwachung. Das ist halt bei diesem neuen Banking-System, also bei diesem Handy-Banking, das sich da gegeben hat, sozusagen mit kaum ausgebildeten Leuten, die einfach da sitzen, mit dem Handy Geld annehmen und jemanden sagen, ich hab jetzt das Geld und ein paar Sekunden später kann der per SMS dann tatsächlich das Geld an jemand anders wieder in kleineren Stücklungen weitergeben. Das ist ja auch immer ganz wichtig, dass wenn ich Geld in einem Betrag X kriege, dass ich das wieder stückelen kann in kleinere Beträge und dann diese kleineren Beträge weitergeben kann. Deswegen ist man ja mal vom Tauschhandel mit ganzen Kühen abgekommen.
+
+01:44:58.240 --> 01:45:06.880
+<v SPEAKER_3>Hier haben sie eine Hufe. So, jetzt noch kurz, bevor Flo Heiler kommt und euch im Neidfeld mit Punk-Musik bewirft, würde ich gerne noch mal mit dem Haftungsumkehr...
+
+01:45:06.900 --> 01:45:07.660
+<v SPEAKER_1>Die Beweislastumkehr.
+
+01:45:07.680 --> 01:45:09.440
+<v SPEAKER_3>Die Beweislastumkehr bei der Haftung, genau.
+
+01:45:09.460 --> 01:45:45.400
+<v SPEAKER_1>Da sind wir jetzt tatsächlich wieder bei den Kreditkarten. Nämlich das heiße Neue, was jetzt kommt, ist Mastercard 3D Secure. Und ich weiß nicht, wie das Produkt von Visa heißt. Ja, lange Rede, gar keinen Sinn. Du bekommst nicht mehr nur die Nummer, die hinten und vorne auf deiner Karte drauf steht, wobei die hinten auf der Karte nicht gespeichert werden darf und die vorne und so weiter. Sondern du bekommst, wie auf einer schlechten Fishing Website, die versucht irgendwelche Daten von dir abzuziehen, eine Einblendung, dass du dich da doch bitte anmelden sollst.
+
+01:45:45.640 --> 01:45:46.820
+<v SPEAKER_3>Wo jetzt? Auf dem Automaten?
+
+01:45:46.840 --> 01:47:24.700
+<v SPEAKER_1>Nie, bei einer Online-Bezahlung. Also du kriegst deine Kreditkarten-Dings rein, deine CVV, und dann kriegst du nochmal ein Pop-Up oder ein Iframe mit etwas, was so tut, als wärst du eine Banken-Website, wo du dir auch nicht so richtig sicher sein kannst. Sieht auf jeden Fall rein, von der Psychologie her kommt das halt schon an einer Fishing Website, die irgendwelche Accountdaten abziehen möchte, sehr ähnlich. Und da musst du dich halt nochmal authentifizieren mit Benutzernahme, Passwort oder so. Und das Bemerkenswerte daran ist, nicht, dass sie irgendwie ein Sicherheitsmerkmal einführen, was so aussieht wie eine Fishing Website, sondern dass im gleichen Schritt in den Geschäftsbedingungen zu der Karte die Beweislast umgekehrt wird. Bisher kannst du zu deinen Kreditkarten-Dings hingehen und sagen, hier die Karte, da hab ich nicht verwendet. Weiß ich nicht, kann ich nicht zuordnen, mach mal Chargeback bitte. Bei dieser 3D-Secure-Geschichte ist es halt so, dass den Nachweis, dass du das nicht warst, weil das ist jetzt ja viel sicherer, den Nachweis musst du erbringen. Du kannst da jetzt nicht einfach sagen, ne, das war ich nicht, da hat irgendjemand im Internet meine Daten geklaut und da können wir uns genau ausrechnen, was passiert, weil diese Seite ist genauso eine Seite, wo man seine Daten eingibt und ob ich jetzt meine Kreditkartennummer eingebe oder meine Kreditkartennummer, ein Benutzernamen und ein Passwort, ist am Ende des Tages für den Angreifer kein großer Unterschied.
+
+01:47:24.720 --> 01:47:30.800
+<v SPEAKER_3>Ist das zum ersten Mal versucht worden, also diese Beweislastumkehr auf den Kunden abzuwälzen?
+
+01:47:30.820 --> 01:47:32.600
+<v SPEAKER_1>Das ist...
+
+01:47:32.620 --> 01:47:37.160
+<v SPEAKER_3>Weil ich könnte mir schon vorstellen, dass gerade so jemand wie die Bankenindustrie das schon mal häufiger probiert hat.
+
+01:47:37.180 --> 01:47:53.580
+<v SPEAKER_4>Also gerade die EC-Karten haben da eine schöne Historie von Beweisungen, dass der PIN-Brief echt nicht geöffnet war. Und gerade die EC-Karten haben da die schöne Historie, da gab es dann auch so Fälle, wo eine Oma den PIN-Brief tatsächlich irgendwie ungeöffnet zu Hause hat und ihr dann vorlegen konnte, irgendwie... So seltsame Vorfälle sind aber auch alle schon größer 10 Jahre hier.
+
+01:47:55.240 --> 01:49:15.020
+<v SPEAKER_1>Ja, also es ist im Prinzip tatsächlich vergleichbar mit der PIN-Geschichte. Also in dem Moment, wo du eine PIN an einem Terminal verwendest, ist ja auch die Haftungsumkehr, also EMV, bei Karte und Online an der Stelle. Also Karte in ein Terminal reinschieben, PIN eingeben. Bist du auch in der Nachweispflicht, dass du das an der Stelle nicht warst, dass du deine PIN aufgehoben hast und so weiter. Das ist da natürlich noch mal was anderes. Bei so einem Terminal, ja, natürlich gibt's da Sicherheitsschwankungen. Natürlich gibt's irgendwie den einen oder anderen Fall, wo es so ein Terminal gegeben hat, dass kein echtes war, sondern die Daten mitgeschrieben und an das Echte weitergereicht hat und so weiter. Aber bei der Online-Verwendung ist halt das Risikopotential um ein vierfaches höher, weil ja, Sicherheit auf Computern ist halt einfach nicht gegeben. Ist halt so, muss man sagen. Ein schönes Großteil der Felder der Computer da draußen. Ich würde auf dem Computer, den meine Eltern haben, meine Daten nicht eingeben wollen, weil ich nicht weiß, was die alle anklicken. Und selbst mein Notebook vertraue ich nur...
+
+01:49:15.040 --> 01:49:17.060
+<v SPEAKER_4>So weit, wie du es schmeißen kannst?
+
+01:49:17.080 --> 01:49:52.900
+<v SPEAKER_1>Nicht so weit, wie ich es schmeißen, aber man hat halt schon ein schlechtes Gefühl dabei, wenn man weiß, okay, das ist jetzt nicht mehr so eine Transaktion, wo ich sagen kann, bisher verwende ich meine Kreditkarte super gerne im Internet und gar kein Problem. Und trallala, bis ja auch zum Glück noch nichts passiert. Aber ich weiß, wenn irgendwas passiert, kann ich ein Chargeback machen und sagen, hm, war nicht, weil, dit und dit. Aber ja, mit Verified by Visa heißt das eine und 3D Secure ist das Ganze eben umgedreht. Und da bin ich dann halt wirklich in der Bredouille, wenn meine Kartendaten und das benutzende Passwort wegkommt.
+
+01:49:52.980 --> 01:50:19.000
+<v SPEAKER_3>Aber das wird natürlich nie passieren. Ich muss sagen, ich fand die Sendung heute ein bisschen frustrierend, denn ich habe vor allem zwei Sachen gelernt. A, es wird immer schlimmer für mich als Kunden. Möglicherweise muss ich demnächst noch beweisen, dass ich nicht Schindlula mit meiner Karte getrieben habe. Und B, eine echte digitale Ablösung des Bargeldes ist derzeit nicht am Horizont zu sehen, vor allem, weil es da keine wirtschaftlichen Interessen gibt. Falls ihr eine Idee habt, wie man das umsetzen kann, schreibt mir gerne eine Mail. Pluto Nibbler, vielen Dank fürs Dabeisein.
+
+01:50:19.120 --> 01:50:21.240
+<v SPEAKER_1>Hat noch eine Anekdote los, wer?
+
+01:50:21.260 --> 01:50:25.680
+<v SPEAKER_3>Alter, wenn der Flo jetzt reinkommt und dich vom Stuhl schubs, dann hab ich dich vorher gewarnt.
+
+01:50:25.700 --> 01:50:56.200
+<v SPEAKER_1>Bezahlterminis, modifizierte Bezahlterminis. Also da gab es tatsächlich eine Serie, die von Abwerk aus China kamen, die modifiziert waren. Und zwar so, dass sie, also selbst der Händler das nicht wusste, und diese die Daten über ein GSM-Modul nach Hause geschickt haben, also die Kartendaten und die PIN und so weiter. Gemerkt hat man es dann durch wiegen und seitdem wird halt alles auf die Goldwaage gelegt.
+
+01:50:56.240 --> 01:50:58.760
+<v SPEAKER_3>Also Leute, wiegt eure Kartenlesegeräte.
+
+01:50:58.780 --> 01:51:02.460
+<v SPEAKER_1>Großflächige Nachwiegeaktionen von Kartenterminals.
+
+01:51:02.480 --> 01:51:06.800
+<v SPEAKER_3>Sollte man immer mal machen, sein Kartenterminal wiegen. Außerdem, lasst euch nicht überwachen und macht immer schön eure Backups.

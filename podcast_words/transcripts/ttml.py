@@ -24,7 +24,8 @@ def _local(tag: str) -> str:
 def _parse_clock(value: str | None) -> int | None:
     """Parse a TTML time expression into milliseconds.
 
-    Supports clock-time (HH:MM:SS(.fff)) and offset-time (e.g. '12.5s', '500ms').
+    Supports clock-time (HH:MM:SS(.fff), MM:SS(.fff)) and offset-time
+    (e.g. '12.5s', '500ms', bare seconds like '7.640').
     """
     if not value:
         return None
@@ -36,6 +37,8 @@ def _parse_clock(value: str | None) -> int | None:
         factor = {"h": 3_600_000, "m": 60_000, "s": 1_000, "ms": 1}.get(unit)
         if factor is not None:
             return int(num * factor)
+    if ":" not in value:
+        return None
     parts = value.split(":")
     if len(parts) == 3:
         hours, minutes, rest = parts
@@ -47,6 +50,11 @@ def _parse_clock(value: str | None) -> int | None:
             + int(seconds) * 1_000
             + millis
         )
+    if len(parts) == 2:
+        minutes, rest = parts
+        seconds, _, frac = rest.partition(".")
+        millis = int((frac + "000")[:3]) if frac else 0
+        return int(minutes) * 60_000 + int(seconds) * 1_000 + millis
     return None
 
 

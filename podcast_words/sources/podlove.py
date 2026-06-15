@@ -6,18 +6,16 @@ Docs: https://docs.podlove.org/podlove-publisher/api
 
 from __future__ import annotations
 
-import re
-
 import requests
 
 from podcast_words.catalog import Episode, STATE_PENDING
 from podcast_words.config import PodcastConfig, SourceConfig
+from podcast_words.episode_number import number_from_title
 from podcast_words.models import Transcript, TranscriptCue
 from podcast_words.progress import iter_progress
 from podcast_words.transcripts import vtt
 
 _TIMEOUT = 30
-_NUMBER_RE = re.compile(r"(\d+)")
 
 
 def _api_get(url: str, params: dict | None = None) -> requests.Response:
@@ -46,13 +44,9 @@ def _episode_number(item: dict, podcast: PodcastConfig, fallback: int) -> int:
             return int(number)
         except (TypeError, ValueError):
             pass
-    if podcast.episode_id.type == "regex" and podcast.episode_id.pattern:
-        match = re.search(podcast.episode_id.pattern, str(item.get("title", "")))
-        if match:
-            return int(match.group(1))
-    match = _NUMBER_RE.search(str(item.get("title", "")))
-    if match:
-        return int(match.group(1))
+    extracted = number_from_title(podcast, str(item.get("title", "")))
+    if extracted is not None:
+        return extracted
     return fallback
 
 

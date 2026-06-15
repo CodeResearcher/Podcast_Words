@@ -1,0 +1,736 @@
+WEBVTT
+
+00:03:15.937 --> 00:03:43.037
+<v SPEAKER_2>Und damit herzlich willkommen im Chaosradio 226, wo wir uns heute mit dem Thema Anwendungssicherheit beschäftigen wollen. Und damit also quasi mit der Frage, warum Malware dieses fiese Zeug eigentlich immer noch so einfach ihren Weg auf die Endgeräte findet, egal ob mobil oder klassisch auf dem PC. Und dazu habe ich mir gestern eingeladen, weil ich selber das wahrscheinlich gar nicht so gut erklären könnte. Den Vakar.
+
+00:03:43.657 --> 00:03:44.897
+<v SPEAKER_3>Hallo.
+
+00:03:44.917 --> 00:03:46.417
+<v SPEAKER_2>Den Jasek.
+
+00:03:46.437 --> 00:03:47.277
+<v SPEAKER_4>Hallo.
+
+00:03:47.297 --> 00:03:51.537
+<v SPEAKER_2>Den Marco. Und zu guter Letzt den Nitram.
+
+00:03:51.557 --> 00:03:52.257
+<v SPEAKER_4>Schönen guten Abend.
+
+00:03:53.157 --> 00:04:17.457
+<v SPEAKER_2>So und Anwendungssicherheit. Da fahre ich doch direkt mal die erste Frage, über was reden wir heute Abend eigentlich, bzw. worüber reden wir heute Abend eigentlich nicht. Wir schauen uns jetzt nicht Netzwerke an beispielsweise. Wir schauen uns nicht an, was jetzt auf der Hardware Ebene passiert. Wir schauen uns nicht an, was auf dem Netz passiert.
+
+00:04:17.477 --> 00:04:18.757
+<v SPEAKER_3>Web-Applikationen auch nicht.
+
+00:04:18.777 --> 00:05:00.397
+<v SPEAKER_2>Web-Applikationen auch nicht, sondern wirklich Dinge, die lokal auf meinem Rechner komplett laufen. Und wir stellen uns so ein bisschen die Frage, was sind Applikationen? Und eigentlich müssten wir da zuerst mal ein bisschen so runter auf die Betriebssystemebene, weil die Betriebssysteme sind ja letztendlich das, was so eine Anwendung überhaupt erst mal an den Start bringt. Und Nitram, mit dir würde ich mal anfangen. Was muss so ein Betriebssystem eigentlich tun, um Anwendungen einigermaßen, oder wie muss es strukturiert sein, quasi um Anwendungen sinnvoll laufen lassen zu können, sodass man überhaupt ein gewisses Vertrauen in diese Anwendung haben kann?
+
+00:05:02.197 --> 00:08:31.357
+<v SPEAKER_4>Ja, da kann man natürlich jetzt auch nochmal mehrere Ebenen runtergehen und vielleicht sollte man damit beginnen zu sagen, dass das Betriebssystem zwischen der Hardware und der Anwendung steht. Grob zusammengefasst. Die Anwendung möchte sich auf ein angenehmes Umfeld verlassen und dass so auch Ressourcen zur Verfügung gestellt werden können und dergleichen. Und damit eine Anwendung nicht bei Null anfangen muss, hat sie einfach ein Betriebssystem unter sich. Und dieses Betriebssystem hilft auch, dass eben mehrere Anwendungen parallel miteinander arbeiten können, dass man so Konzepte wie Multi-User-Systeme umsetzen kann. Und dazu muss das Betriebssystem eine ganze Menge bereitstellen. Um jetzt darauf zu kommen, was so ein Betriebssystem bereitstellen muss, sollte man vielleicht auch noch mal einen Schritt zurückgehen und von vielleicht so zwei Begriffe einführen. Das eine ist der Begriff der Vertrauenszone und das andere ist der Begriff Schutzziele. Etwas akademisch, aber hilft, sich da gedanklich mit der Materie auseinanderzusetzen. Fangen wir doch mal an mit dem Begriff Vertrauenszone. Ein gutes analoges Beispiel ist ein Haus. Jeder hat wahrscheinlich irgendwie eine Wohnung. Und diese Wohnung befindet sich in einem Haus, wo mehrere andere Leute auch zugegen sind. Das Haus hat eine Haustür und die Wohnung hat eine Wohnungstür. Und so verhält sich das auch mit den Vertrauenszonen. Ein Angreifer kommt dann vielleicht gar nicht erst von draußen in das Haus rein, weil er keinen Haustürschlüssel hat. Aber man möchte ja, wenn der Angreifer schon im Hausflur ist, weil so eine Haustür nicht immer abgeschlossen ist, verhindern, dass der Angreifer dann zum Beispiel in die Wohnung kommt. Also hat man eine Wohnungstür. Und die Wohnung betrachtet man als eine Vertrauenszone. Da wird man in der Regel jetzt nicht unbedingt die Sachen wegschließen, sondern jeder, der innerhalb dieser Vertrauenszone ist, hat sozusagen physisch voll zu Griff auf alles andere. Wenn man noch mehr Vertrauenszonen haben will, weil man da einfach so auf mehrere Sicherheitsebenen steht, kann man sich da natürlich noch irgendwie so ein Möbeltresor reinstellen, damit halt nicht jeder in dieser Vertrauenszone auch noch auf diese Kernvertrauenszone zugreifen kann. Und so ähnlich kann man sich das mit den Computern vorstellen. Man kann den Begriff übertragen. Jemand, der auf der Straße steht, das ist sozusagen ein anonymer Nutzer im Netzwerk, der soll jetzt nicht auf Inhalte des Computers zugreifen, es sei denn, die werden irgendwie über den Dienst angeboten. Und wenn der Angreifer auf dem Computer ist, dann soll er nicht irgendwie gleich Vollzugriff auf alles haben, sondern der sollte zum Beispiel, naja, gut, vielleicht kann er bestimmte Dateien einsehen, aber der sollte jetzt vielleicht nicht alle Passwörter des Systems sehen können. Also sind die nochmal separat in der Vertrauenszone. Und so kann man das halt beliebig tief schachteln. Und was möchte man eigentlich verhindern? Also diese Schutzziele, man möchte die Vertraulichkeit von Informationen sicherstellen, man möchte die Integrität von Informationen sicherstellen und die Verfügbarkeit. Und alles hat mehr oder weniger eine Bedeutung, je nach Anwendungsfall. Die Integrität von meinen Dokumenten oder meinen E-Mails auf meinem Computer oder die Integrität von Programmdaten möchte man auf jeden Fall sicherstellen. Die sollte halt keiner einem unterm Hintern wegtauschen können. Vertraulichkeit spielt da vielleicht bei den Programmdaten weniger eine Rolle, aber vielleicht bei den Passworten auf den Computern.
+
+00:08:31.377 --> 00:08:40.737
+<v SPEAKER_2>Oder auch bei Dokumenten, die einfach niemandem was angehen, was ja im Regel wahrscheinlich das Überwiegende ist von Dokumenten, die man jetzt hat.
+
+00:08:41.057 --> 00:09:10.617
+<v SPEAKER_4>Und die Verfügbarkeit, naja gut, das spielt dann vielleicht eher eine Rolle bei Diensten, wenn man irgendwie ein Webshopbetreiber ist oder so. Aber diese Netzwerksicht wollten wir ja etwas herausnehmen. Wenn mein Computer nicht verfügbar ist, dann kann das natürlich auch für mich doof sein, weil ich dann vielleicht nicht unbedingt an, keine Ahnung, kein Online-Backing oder so was zum Beispiel, übers Internet shoppen kann, weil meine Kreditkarteninformation vielleicht in irgendeinem verschlüsselten Container hinterlegt ist.
+
+00:09:10.637 --> 00:09:27.377
+<v SPEAKER_2>Und dann wie ist sowas eigentlich dann praktisch umgesetzt? Also Vertraulichkeitsintegrität und Vertrauenszonen klingt ja erst mal ganz gut. Welche Mittel habe ich denn praktisch bei so Betriebssystemen, um dass mir sowas zugesichert wird?
+
+00:09:29.197 --> 00:11:14.357
+<v SPEAKER_4>Also wenn man mal so moderne Systeme anschaut, oder es gab es auch schon früher, aber vielleicht in der Zeit von Microsoft DOS nicht, aber man hat halt in der Regel, weil mehrere Nutzer sich einen Computer teilen, hat man einmal dieses Konzept, dass es überhaupt mehrere Benutzer geben kann. Computer kann man im weitesten Sinne auch als Spezialbenutzer betrachten in Umgebungen, wo man sowas vielleicht modellieren will. Damit das irgendwie halbwegs manageable wird, teilt man die Benutzer in Gruppen ein. Benutzer, die administrative Rechte haben, Benutzer, die vielleicht auf den Drucker zugreifen können, oder aufs Modem oder was auch immer. Das ist halt so das Hauptkonzept, mit dem man das einteilen kann. Das zieht sich dann natürlich weiter. Wir haben Programme bestehend aus ausführbaren Dateien und Bibliotheken, damit man auch Code wiederverwenden kann. Vielleicht hier eine Konfigurationsdatei und dort noch ein Icon. Diese Dateien sind jetzt auch Benutzern zugeordnet. Die hängen nicht in der Luft, sondern gehören irgendwelchen Benutzern. An diesen Dateien hängen dann wieder Zugriffsrechte dran. Wenn man so ein Programm startet, ein Programm ist ja erst mal nur ein Code, der irgendwo auf einer Festplatte liegt, aber nicht ausgeführt wird, und wenn man so ein Programm startet, dann hat man plötzlich einen Prozess. Man hat das Programm ja auch mehrfach starten, dann hat man sozusagen N Prozesse, und diese Prozesse gehören dann auch wieder einem Benutzer. So zieht sich halt dieses Benutzerkonzept eigentlich durch das ganze Betriebssystem.
+
+00:11:14.917 --> 00:11:30.617
+<v SPEAKER_2>So, jetzt haben wir so ein bisschen das Handwerkzeug in der Hand, aber meine Frage ist immer noch nicht geklärt, warum ist es so einfach, für Malware meinen Rechner zu übernehmen? Was läuft da schief? Vakar kann vielleicht mal weitermachen.
+
+00:11:30.637 --> 00:11:32.777
+<v SPEAKER_3>Warum ist es so einfach?
+
+00:11:32.797 --> 00:11:45.877
+<v SPEAKER_2>Oder warum gibt es da so viele Möglichkeiten? Also was ist da schief? Ich meine, wir haben jetzt diese ganzen Konzepte, wir haben Schutzziele, das ist ja alles total toll und die Betriebssysteme scheinen ja auch weitestgehend danach zu funktionieren.
+
+00:11:45.897 --> 00:13:59.537
+<v SPEAKER_3>Jedes Programm erwartet ja in irgendeiner Art und Weise irgendwelche Eingaben. Und diese Eingaben sind verschieden. Also zum Beispiel ein Webbrowser erwartet die Eingabe, dass man oben in der Adresszeile eine URL eingibt, wo man halt auf Facebook oder was weiß ich kommt. Und im Großen und Ganzen wird ja dann auch wieder Eingabedaten verarbeitet. Gerade wenn man so HTML anguckt, ist ja erstmal das HTML-Pasen, da kommt dann vielleicht noch JavaScript zu, da kommen dann Bilder zu, die verarbeitet werden müssen. Und alles das werden in einzelne Programmsegmente oder Programmsegmente werden ausgeführt oder bzw. sind daran beteiligt, es zu verarbeiten, sodass der Benutzer am Endeffekt Facebook sieht oder was weiß ich. Und alle diese Subprogramme nächstes Mal oder Subroutinen sind natürlich nicht unfähbar, weil im Zweifelsfall hat sich ja immer ein Mensch programmiert. Und der hat halt irgendwie einen Zweck darin gesehen, keine Ahnung, Bilder sehen so und so aus. Und diese Verarbeitung ist halt, wenn ein Angreifer, die interessanterweise ein bisschen verändert vielleicht, nicht im Sinne des Entwicklers denkt, sage ich mal, oder bzw. Sachen ausnutzt, die der Entwickler nicht auf dem Schirm hatte, sage ich mal, gibt es da Möglichkeiten, Sachen auszunutzen. Also indem er, keine Ahnung, das paar Sachen verändert und dann plötzlich kommt das Programm aus dem Tritt und kann Sachen anstellen, die es vielleicht nicht anstellen soll. Und dadurch, dass das ganze System, gerade Webbrowser zum Beispiel, sehr, sehr komplex sind und man nicht alles vollständig nachvollziehen kann, oder bzw. so viele Entwickler daran beteiligt sind, gibt es halt immer Möglichkeiten des Ausnutzens, sag ich mal. Und genau darauf zieht Malware ab. Es nutzt halt Lücken in diesen Subroutinen aus.
+
+00:14:03.237 --> 00:14:26.537
+<v SPEAKER_4>Na, ich würde da gerne noch ergänzen, wir haben ja vorhin den Begriff der Vertrauenszone eingeführt. Üblicherweise findet sehr viel innerhalb einer Vertrauenszone statt. Beispielsweise der Browser läuft unter der Kennung, unter der man auch den Mailclient startet, unter der man seine ganzen Dokumente hat. Sozusagen alles ist innerhalb einer Vertrauenszone.
+
+00:14:27.057 --> 00:14:30.917
+<v SPEAKER_2>Was eigentlich gar nicht vertrauen sollte.
+
+00:14:30.937 --> 00:15:08.317
+<v SPEAKER_4>Eben, was nicht so gut ist. Und wenn dann natürlich der Browser gekapert ist, das Mailprogramm der PDF-Viewer, dann haben die natürlich voll Zugriff auf alles. Da hat man zwar mehrere Benutzer auf einem Computer, aber letztendlich spielt sich 90% innerhalb einer Vertrauenszone ab. Das heißt, man ist vielleicht gut beraten, wenn man einen anderen Benutzer sich erzeugt in seinem Betriebssystem, mit dem man dann zum Beispiel online Banking macht. Oder, noch besser, man nimmt einfach eine komplett neue Vertrauenszone, die weitgehend entkoppelt ist, nämlich einfach einen separaten Computer.
+
+00:15:08.537 --> 00:15:09.377
+<v SPEAKER_2>Also gut.
+
+00:15:09.397 --> 00:15:11.537
+<v SPEAKER_3>Oder die einfache Variante, eine Sandbox.
+
+00:15:11.557 --> 00:16:06.917
+<v SPEAKER_2>Vielleicht kommt man da später noch drauf. Genau, das sollten wir vielleicht vorher nochmal so ein bisschen klären. Also für mich ist, ich hab das jetzt soweit verstanden, da gehen Dinge schief. Aber ich bin noch ein bisschen ratlos, was geht schief? Du hast gesagt, da tun Leute etwas anderes als an anderer Stelle. Leute, die anderen Teil des Programms geschrieben haben, erwarten. Aber vielleicht müssen wir nochmal an einer anderen Stelle anfangen. Nämlich, wie sieht es überhaupt aus, wenn so ein Programm läuft? Also was kann da schiefgehen? Also wir müssen uns letztendlich mal angucken, wie so ein Programm intern funktioniert. Jase, kannst du uns mal so da durchlaufen lassen? Also letztendlich müssen wir uns ja fragen, wie sieht so ein Programmablauf aus? Wie sieht da die Speicherverwaltung beispielsweise aus?
+
+00:16:06.937 --> 00:16:41.437
+<v SPEAKER_5>Also grundsätzlich hat jedes Programm, was auf meinem Betriebssystem läuft, von diesem Betriebssystem zur Verfügung gestellt, eine Reihe an Ressourcen. Die zwei offensichtlichen, die sicherlich ihr da kennt, sind die CPU selber, also überhaupt Zeit, die das Programm rechnen darf. Und Arbeitsspeicher, beziehungsweise auch Festplattenspeicher, aber mehr Arbeitsspeicher, wenn man das dann tatsächlich am Laufen hat. Es gibt noch andere Ressourcen, wie zum Beispiel einen möglicherweise angeschlossenen Bildschirm oder Zugriff auf die Tastatur, auf die Maus, auf den Drucker und so weiter.
+
+00:16:41.457 --> 00:16:52.237
+<v SPEAKER_2>Das ist auch noch eine spannende Sache. Also man will ja, das ist, weil du sagtest Zeit, die Zeit kann ja letztendlich auch jemand ausnutzen, der auf den Rechner will, nämlich die Rechenzeit.
+
+00:16:53.077 --> 00:19:12.917
+<v SPEAKER_5>Natürlich, auf vielfältige Art und Weise. Im Endeffekt, was das Betriebssystem macht, es beschäftigt sich die meiste Zeit damit, festzustellen, wie viel, von welcher Ressource, nun welchem Programm zugeordnet wird. Ich als Nutzer bekomme davon im Allgemeinen nicht besonders viel mit. Für mich sieht das aus, als ob mein Rechner ganz viele Programme gleichzeitig ausführt. Aber normalerweise sind auf einem modernen Rechner nicht mehr als 3 oder 4 davon gleichzeitig wirklich am Laufen, sondern das wird von meinem Betriebssystem nur im Hintergrund so schnell umgeschaltet, dass ich das nicht merke. Und jetzt muss man sich natürlich fragen, wenn ich dieses Programm dazu bewegen möchte, etwas zu tun, was der Programmierer nicht beabsichtigt hat, wie kriege ich das am einfachsten hin? Einer der häufigsten Schlachtfelder in diesem Hinblick ist der Arbeitsspeicher selber. Das grundsätzliche Problem bzw. grundsätzlich die Eigenschaft eines Computers in der Hinsicht ist, dass für einen Computer der Arbeitsspeicher eine Liste mit Adressen versehenen Speicherzellen ist. Die Adresse ist einfach nur eine Zahl. Der Computer weiß erstmal nicht, was in dieser Speicherzelle drin ist, wie das aussieht, was für ein Format das hat. Sondern für den Computer gibt es eine Adresse. An dieser Adresse steht eine weitere Zahl. Mein Programm sagt der CPU, lade die Zahl, die an dieser Adresse steht, und tu damit etwas, addiere da etwas drauf usw. Und sagt dann an anderer Stelle vielleicht, schreibe in diese Speicherzelle etwas hinein. Und Probleme treten in dem Fall dann überall dort auf, wo die Erwartungen des Programmierers, was an einer gewissen Speicherzelle nun liegt, beziehungsweise wo eine gewisse Speicherzelle liegt, möglicherweise sich nicht so in dem von ihm beschriebenen Code niederschlagen, wie er das gerne hätte. Das heißt, ich schreibe Code und ich übersehe z.B. dass unter gewissen Umständen eine Berechnung einer Adresse ein Ergebnis hat, an das ich nicht gedacht habe.
+
+00:19:17.317 --> 00:19:40.057
+<v SPEAKER_2>Und du sagst jetzt zellen, das ist jetzt sehr abstrakt. Wie ist denn da genauer der Aufbau? Also wenn ich jetzt so ein Programm habe, das schmeißt er sicherlich nicht irgendwie sein, das schmeißt er sicherlich nicht das, was es dann ausführen soll, einfach irgendwie ein Arbeitsspeicher und gut ist.
+
+00:19:40.637 --> 00:21:46.097
+<v SPEAKER_5>Ja, also grundsätzlich gibt es da zunächst erst mal so eine Art Zone, in die der Speicher eines Programms eingeteilt ist. Der eine Teil sind statische fixe Daten, die dieses Programm niemals verändert und nur lesen kann. Dazu gehört zum Beispiel der Text des Programms selber, also das Programm in seiner binären Schreibweise. Das wird vom Betriebssystem normalerweise einmalig beim Programmstart geladen und danach kann das nicht mehr schreibend angefasst werden. Das zweite ist der sogenannte Heap, könnte man vielleicht als Haufen oder Halde übersetzen. Das ist ein Speicherbereich, in dem das Programm nach Bedarf kleinere Speicherbereiche für einzelne Datenstrukturen reservieren kann. Dieser Heap kann sehr groß sein und das ist ein Großteil der eigentlichen Daten, die das Programm während seiner Laufzeit verarbeitet, ablegt. Der Heap selber wird verwaltet von einem kleinen Stück des Programms, dem Memory Manager, der in dem Fall nichts tut, als auf Anfrage des Programms einen kleinen Teil des Heaps als Beleg zu markieren, dem Programm zu erlauben, diesen Teil zu benutzen. Und wenn das Programm sagt, ich brauche diesen Speicherbereich jetzt nicht mehr, diesen Bereich wieder als frei zu markieren. Hierbei kann es viele Fehler geben. Zum einen kann ich als Programm vergessen, den Speicher frei zu geben, obwohl ich ihn vorher belegt habe. Das ist meistens nicht super kritisch, aber kann halt dazu führen, dass wenn ein Angreifer zum Beispiel verursachen kann, dass ich Speicher belege, aber nicht wieder freigebe, zum Beispiel indem er eine Verbindung über das Netzwerk zu meinem Programm aufmacht und mein Programm reserviert dann Speicher für diese Verbindung und der Angreifer macht die Verbindung wieder zu und das Programm gibt dem Speicher nicht mehr frei und jetzt macht der Angreifer das eine Million Mal. Und dann habe ich eine Million Mal Speicher reserviert, den ich niemals benutzen werde, weil die Verbindungen alle nicht mehr da sind, aber ich gebe ihn niemals frei. Und irgendwann habe ich keinen Speicher mehr.
+
+00:21:46.117 --> 00:21:48.017
+<v SPEAKER_2>Und dann ist meine Verfügbarkeit hin.
+
+00:21:48.037 --> 00:21:50.857
+<v SPEAKER_5>Genau, dann stürzt mein Programm ab.
+
+00:21:50.877 --> 00:21:51.977
+<v SPEAKER_3>Sogenannte Memory Leaks.
+
+00:21:54.137 --> 00:23:13.117
+<v SPEAKER_5>Ein weiterer Fehlermodus ist, wenn ich Programm und Speicher zwar freigebe, aber das zu früh mache. Weil ich zum Beispiel in einem Teil des Programms Speicher freigebe und in einem anderen Teil diese Speicheradresse von dem jetzt freigegebenen Speicher noch rumliegen habe und auf die zugreife und nicht der Programmierer in dem Fall übersehen hat, dass dieser Speicher an der Stelle schon freigegeben wurde. Das ist im Allgemeinen ein ziemlich, ein sehr gefährlicher Fehler. Zum einen, weil er sehr, sehr leicht zu machen ist, weil er sehr schwer, weil man da sehr schwer Einblick erhält in diese komplexe Logik. Und zum anderen, weil ich auf diese Art und Weise als Angreifer sehr schnell tiefgreifende Veränderungen an dem, an dem Speichern oder an den Speicherinhalten vornehmen kann, dieses Programm erwartet zu finden. Das grundsätzliche Problem ist, dass Speicher, der freigegeben wurde, natürlich wiederbelegt werden kann. Und wenn ich nun, wenn mein Programm nun Speicher freigibt und ich als Angreifer kann irgendwie dafür sorgen, dass das Programm diesen Speicher wiederbelegt und dort Werte reinschreibt, die ich ihm gebe. Und dann wird an anderer Stelle dieser Speicher benutzt, als wäre er in die freigegeben worden. Dann habe ich natürlich Kontrolle über einen Wert, den ich eigentlich gar nicht kontrollieren darf als Angreifer.
+
+00:23:14.057 --> 00:23:18.637
+<v SPEAKER_2>Mit anderen Worten, ich versuche da so ein Bild für zu finden.
+
+00:23:18.657 --> 00:23:55.037
+<v SPEAKER_5>Man kann es vielleicht mit Briefkästen machen. Dass man einen Speicherzeller als Briefkasten verbildlicht und sagt, ich sende an eine Adresse, oder ich habe meine Adresse und ich ziehe um, was in dem Fall das Freigeben dieses Briefkastens wäre, um in dem Bild zu bleiben. Nun wohnt da jemand anders, aber ich habe meinem Korrespondenten das gar nicht gesagt. Das heißt, jetzt kriege ich weiter Post an die alte Adresse, obwohl da jetzt jemand völlig anderes wohnt. Wenn dieser völlig andere Mensch jetzt vielleicht ein Angreifer ist, der mich nicht mag, dann habe ich ein Problem.
+
+00:23:55.057 --> 00:24:02.417
+<v SPEAKER_2>Deine Bank dir zufällig irgendwie die ganzen Pins und Tants zuschickt. Wunderbar.
+
+00:24:02.437 --> 00:24:35.737
+<v SPEAKER_3>Oder ein Angreifer schickt dir eine Briefbombe, du bist umgezogen und der andere... Genau. Der Fachbericht dafür ist übrigens Use After Free. Genau. Also Free ist dieser C-Befehl, um im Heap-Speicher, also im Haufen-Speicher, wie auch immer, den Speicher wieder freigeben und der wird danach wieder benutzt. Also das Benutzen nach dem Freigeben.
+
+00:24:38.317 --> 00:24:44.817
+<v SPEAKER_2>Gibt es sonst noch irgendwelche interessanten Probleme?
+
+00:24:44.837 --> 00:27:06.177
+<v SPEAKER_5>Nun ja, also es gibt dann noch, also keiner, der dritte so richtig offensichtliche Fehler, den ich bei Verwendung von Speicher machen kann, ist, ich reserviere einen Speicherbereich für irgendetwas, dessen Länge ich zur Zeit, wenn ich das Programm schreibe, nicht kenne. Also zum Beispiel für eine Datei, die mir der Angreifer über das Netzwerk schicken kann, oder die mir jemand anders über das Netzwerk schickt. Das heißt, ich habe ein Programm, das bekommt von jemandem, möglicherweise einem Angreifer, eine Datei geschickt, und das muss nun einen Speicherbereich reservieren, in dem diese Datei hineingeschrieben werden kann. Und das Programm geht nun hin und reserviert einen Speicherbereich dafür und fängt da an, Daten reinzuschreiben. Was passiert jetzt, wenn der Angreifer dem Programm sagt, ich sende dir gleich 500 Kilobyte und das Programm reserviert 500 Kilobyte und fängt an, die empfangene Daten in diesen Puffer reinzuschreiben. Und der Angreifer hört aber nach 500 Kilobyte nicht auf, Daten zu senden, sondern sendet einfach weiter. Was dann im Worst Case passiert, wenn ich als Programmierer nicht aufpasse, ist, dass das Programm einfach über das Ende von diesem reservierten Speicherbereich hinaus schreibt. Dem Rechner selber, der CPU, könnte das nicht egaler sein. Für die CPU sind alles Speicher. Speicher hat Adressen und Adressen werden von 0 bis 2 hoch 64 vergeben. Und wo da Grenzen zwischen irgendwelchen vom Programmierer erfundenen Puffern sind, das weiß die gar nicht. Das heißt, was dann passiert im Allgemeinen, ist, dass für eine ganze Weile mein Programm weiter in den Speicher hineinschreibt, in dem an dieser Stelle möglicherweise schon wieder ganz andere Programmdaten liegen sollten. Und wenn ich jetzt als Angreifer weiß, was ich tun muss, um das hervorzurufen, dann kann ich unter gewissen Umständen es schaffen, Daten vom Programm zu überschreiben, die es mir dann als Angreifer wiederum erlauben, den Programmfluss auf eine Art und Weise zu steuern, die für mich Vorteile bringt. Zum Beispiel irgendeiner Software die Rechte benutzt, dass ich auf einmal mehr Rechte habe, als ich haben sollte, weil ich es geschafft habe, in die Datenstruktur, die beschreibt, welche Rechte ich habe, ein paar mehr Bits zu setzen, als dort gesetzt sein sollten.
+
+00:27:07.657 --> 00:28:07.917
+<v SPEAKER_2>Mir fallen gerade zwei Dinge auf, wenn ich das höre. Zum einen hast du sehr häufig gesagt, zum Beispiel übers Netz. Das heißt, wir haben auf der einen Seite gesagt, wir wollen gar nicht so sehr über Netz reden und das ist auch keine Netzsecurity. Aber letztendlich verschärft sich dieses Problem gerade durch Netze. Und die zweite Beobachtung, die ich so ein bisschen mache, man merkt so ein bisschen, wer immer sich den Computer und die Architektur so ein bisschen überlegt hat, hat nicht damit gerechnet, dass so Einfluss von außen, so direkter Einfluss von außen, mal so ein großes Problem werden würde. Aber fällt euch jetzt spontan auch ein Szenario ein, wo jetzt nicht unbedingt jemand live am anderen Ende sitzen muss und euch direkt schadet? Oder eurem Rechner? E-Mail ganz einfach. Ja, das ist nicht mehr live, sehe ich ein, aber es ist immer noch quasi übers Netzwerk.
+
+00:28:10.117 --> 00:29:07.517
+<v SPEAKER_4>Naja, so Dienste können ja auch im Prinzip nur innerhalb eines Computers zur Verfügung stehen. Irgendein Dienst, vielleicht ein lokaler Proxy oder irgendein lokaler Service, der eben nur über localhost erreichbar ist und unter einer anderen Userkennung läuft und ein anderer Benutzer greift darauf zu und erweitert seine Rechte. Üblicherweise laufen ja lokale Dienste unter Windows als System oder Route unter Unix und sind somit ein lukratives Ziel, weil ein Angreifer darüber seine Rechte erweitern kann, wenn er eben genauso eine Speicherkorruptionsprobleme ausnutzen kann und wenn der Angreifer dann schafft, den Programmfluss so umzulenken, dass eigener Code ausgeführt wird, dann funktioniert das Spiel ja auch so, ohne dass man jetzt so was wie ein richtiges Netzwerk dazwischen hat.
+
+00:29:07.537 --> 00:30:59.597
+<v SPEAKER_3>Da kann man vielleicht noch zu sagen, dass aktuelle Malware meistens vielschichtig ist, also quasi mehrere Exploits, also mehrere Sicherheitslücken ausnutzt, um auf dem System halt Ressourcen im Zweifelsfall zu nutzen oder auszuspionieren. Gerade, keine Ahnung, sagen wir mal jetzt, es kommt eine PDF-Lücke und jemand schickt eine E-Mail. Okay, das ist der eine Punkt. Aber jetzt gerade zu dem Thema. Es ist dann so, okay, dann läuft dieser erste Chartcode quasi nur mit der Berechtigung des Nutzers. Der Nutzer kann halt nur in seinem Umfeld agieren. Und das Interessante ist, er möchte aber das gesamte System überblicken bzw. Daten von anderen Benutzern stehlen z.B. Dann muss er halt die nächste Sicherheitslücke ausnutzen. Das ist eine sogenannte Privilege Escalation. Das heißt, ein Programm bekommt mehr Rechte, als der Benutzer eigentlich hat, um an die Daten anderer Benutzer zu kommen. Das Programm versucht quasi, der Administrator zu werden und hat dann plötzlich Zugriff auf die anderen Daten der Benutzer. Das heißt, man nutzt quasi den einen Benutzer aus, um die Daten des anderen Benutzers zu stehlen. Das ist der lokale Angriff, aber es ist ein Hybrid aus der ersten Sicherheitslücke mit der gefolgten zweiten Sicherheitslücke. Das ist ziemlich häufig. Und gerade bei modernen Systemen braucht man halt mehrere Sicherheitslücken, um wirklich effektiv zum Beispiel Daten zu stehlen oder ähnliches.
+
+00:30:59.617 --> 00:35:54.637
+<v SPEAKER_2>Gut, dann haben wir jetzt da schon mal einen ganz guten Überblick bekommen. Wir müssen uns gleich auf jeden Fall nochmal ein bisschen damit beschäftigen. Ich kann mir nicht vorstellen, dass wir auf dem Niveau, man kann mal eben eine Sicherheitslücke ausnutzen, so trivialerweise geblieben sind. Und was so dagegen entwickelt wurde, das hören wir uns gleich an. Nach einer kurzen Musik hier im Chaosradio 226. Ich bin Sunchays, Wondertalk hier im Chaosradio 226, wo ich immer noch bei mir sitzen habe. Den Walker, hallo. Den Marco, den Jasik, hallo. Und ich habe ihn wieder zuletzt erwähnt, den Nitram, hallo.
+
+00:35:54.657 --> 00:35:55.937
+<v SPEAKER_4>Auch noch da.
+
+00:35:55.957 --> 00:35:57.677
+<v SPEAKER_3>Der Danimo ist übrigens auch da.
+
+00:35:57.697 --> 00:36:39.037
+<v SPEAKER_2>Ja, mir wurde schon vorgeworfen, dass ich meinen Namen nicht genannt habe. Hallo in die Runde und nach draußen. Wir haben gerade so ein bisschen uns unterhalten über die Tiefen des Programmflusses, weil wir uns natürlich heute über Anwendungssicherheit unterhalten und überlegen, was eigentlich alles schiefgehen kann. Und der Nitram möchte noch mal was zu Programmabläufen sagen, weil letztendlich der Programmablauf ist ja der, der gestört wird, damit wir überhaupt als böse Angreifer das Programm dazu überreden können, das zu tun, was es eigentlich nicht tun soll. Nämlich das, was wir möchten.
+
+00:36:39.057 --> 00:36:39.917
+<v SPEAKER_3>Der Angreifer möchte.
+
+00:36:40.317 --> 00:36:44.437
+<v SPEAKER_2>Genau. Also wir als böse Angreifer.
+
+00:36:44.457 --> 00:38:36.037
+<v SPEAKER_4>Genau, wir hatten ja vorhin schon erörtert, dass man Puffer im Speicher hat und wenn zu viele Daten kommen, dann werden die überschrieben. Ist der Puffer zu eng, macht er Peng. Und wir hatten das Beispiel auf dem Heap, wo natürlich Haufen Verwaltungsinformationen auch dazwischen liegen zwischen diesen Blöcken, die ein Programm reservieren kann. Und dazwischen liegen immer noch Verwaltungsinformationen. Und wenn man die auf dem Heap geeignet manipuliert, dann kann man den Programmfluss umlenken. Das ist ganz schön kompliziert und das hängt natürlich auch davon ab, was man für einen Memory Manager verwendet als Bibliothek. Relativ einfach ist der Fall bei sogenannten Stack-basierten Puffer überläufen. Was ist dieser Stack? Also der Stack ist ein Stapel, wie das Wort schon sagt. Und das kommt daher, da muss man wohl auch mal einen Schritt noch mal zurückgehen. Also wenn ein Softwareentwickler Programme schreibt, versucht er immer, möglichst viel Code wieder zu verwenden. Schreibt irgendeine Funktion und stellt fest, an irgendeiner anderen Stelle kann man ja prima irgendwie diese vier Zeilen Code nehmen. Das nennt man Refactoring. Man zieht die Zeilen dann heraus und macht deine Funktionen herum. Und letztendlich baut man sich so eine Bibliothek mit ganz vielen Funktionen. Und diese Funktionen rufen sich irgendwie alle gegenseitig auf. Und man spart da natürlich irgendwie Komplexität ein. Man reduziert halt die Komplexität, indem man immer wieder modulare Blöcke wiederverwendet. Und diese Blöcke können natürlich auch Speicher nutzen. Und da gibt es sozusagen aus Programmierersicht den Begriff des lokalen Speichers. Der wird halt innerhalb dieser Funktionen reserviert. Nicht auf dem Heap, sondern eben auf diesem Stack.
+
+00:38:36.057 --> 00:38:40.397
+<v SPEAKER_2>Das heißt, Heap Stack ist quasi ein Dualismus, der nebeneinander existiert?
+
+00:38:40.417 --> 00:39:48.737
+<v SPEAKER_4>Genau, das existiert sozusagen parallel. Und wenn man, naja, also die Funktionen, versucht er jetzt nicht, sich irgendwo eine Speicherzelle zu greifen und benutzt die dann immer wieder. Und eigentlich ist auch klar, dass man da jetzt nicht den Heap braucht, sondern ein lokaler Speicherbereich, der dann automatisch wieder weggeräumt wird und so, dass man den nicht freigeben muss. Und das spart natürlich auch Rechenzeit, weil man muss keine Verwaltungsstrukturen anpassen. Das schmeißt man dann einfach auf den Stapel und wenn die Funktion fertig ist, dann räumt sie das wieder ab. Was passiert dann noch? Wenn eine Funktion aufgerufen wird, dann wird die Rücksprungadresse auf dem Stack vermerkt, wo bei Beendigung der Funktion dann weiter gemacht werden kann. Und dann wird eine Funktion aufgerufen und wenn diese Funktion einen lokalen Speicher braucht, sagen wir mal, die braucht 16 Bytes oder so eine kleine Menge, dann wird dieser Speicherbereich einfach durch ein paar Adressberechnungen auf dem Stack reserviert.
+
+00:39:49.417 --> 00:39:55.597
+<v SPEAKER_2>Das heißt, da fange ich jetzt nicht an, den Hieb zu bemühen und zu sagen, gib mir mal da Speicher, sondern das kann ich auf dem Stack.
+
+00:39:55.617 --> 00:40:44.537
+<v SPEAKER_4>Genau, wenn das einfach nur so kleine Speichermengen sind, dann kann man das einfach auf den Stack packen. Und wenn jetzt die Funktion auf diesen Speicherbereichen operiert und da vielleicht nicht genau prüft, ob die Eingabedaten auch in den Puffer passen, dann kann es halt passieren, dass ebenfalls Verwaltungsinformationen auf dem Stack überschrieben werden. Und im schlimmsten Fall wird halt genau diese Rücksprung Adresse überschrieben mit Daten, die ein Angreifer spezifiziert hat. Und bei Beendigung der Funktion guckt der Prozessor nach, was steht da jetzt irgendwie noch an Rücksprung Adressen auf dem Stack. Und dann wird diese Rücksprung Adresse im Prinzip genutzt, um im ursprünglichen, also in der aufrufenden Funktion weiterzumachen.
+
+00:40:44.697 --> 00:40:49.717
+<v SPEAKER_2>Und gibt es da keine Plaustibilitätsprüfung? Kann ich einfach irgendwo hinspringen?
+
+00:40:49.737 --> 00:41:23.337
+<v SPEAKER_4>Früher war das so, dass dann im Zweifelsfall irgendwo hin gesprungen wird. Wenn das da in dem Register steht, dann wird das eben auch genauso ausgeführt. Mittlerweile gibt es natürlich Gegenmaßnahmen. Da kommen wir dann sozusagen zu diesem Thema Arms Race. Weil diese Stack-basierten Pufferüberläufe sind sehr elegant auszunutzen. Man braucht da nicht so viel Informationen. Man muss halt nur dafür sorgen, dass die Rücksprungadresse halbwegs sinnvoll ist und irgendwie in den eigenen Code reinspringt.
+
+00:41:23.357 --> 00:41:40.397
+<v SPEAKER_2>Das heißt, Arms Race, du hast es gerade schon angesprochen, es gibt also Ansätze, um diese total naiven Angriffe zu vermeiden. Und das heißt, Hersteller haben sich da was einfallen lassen?
+
+00:41:41.517 --> 00:42:40.337
+<v SPEAKER_3>Ja, dazu muss man sagen, dass es früher so war, dass man auf dem Stack beliebigen Code ausführen könnte. Das heißt, wir hatten ganz am Anfang noch darüber gesprochen, dass dieser Speicher in verschiedene Bereiche eingeteilt ist, der bestimmte Rechte hat und bestimmte Segmente. Früher war es halt so, dass der Stack auch Ausführungsrechte hatte. Das heißt, man konnte einfach sagen, Rücksprungadresse zeige irgendwo auf einen Speicherbereich innerhalb des Pofers, den ich gerade überschrieben habe. Somit konnte man eigenen Code auf dem Stack einfach ausführen, ohne dass man sich um irgendwelche großen Adressen kümmern musste. Man hat dann einfach reingeschrieben, was man ausführen wollte. Dem wurde dann später begegnet.
+
+00:42:40.357 --> 00:42:41.157
+<v SPEAKER_2>Und zwar?
+
+00:42:41.177 --> 00:43:25.097
+<v SPEAKER_3>Mit dem sogenannten NX-Bit, was bei Intel irgendwann eingeführt wurde. Ich sehe hier gerade irgendwie um die 2000er. Das heißt eigentlich, dass sämtlicher Speicher, in denen geschrieben werden darf, nicht ausführbar ist. Das heißt, der Stack ist Read-Write. Also man kann lesen und schreiben, allerdings nicht ausführen. Das heißt, man begegnet so mit dem Stack-Overflow bzw. diesem einfachen Prinzip, dass man in den Stack schreiben konnte, was man wollte und einfach ausführen konnte. Und da haben sich natürlich wieder die Angreifer was Lustiges ausgedacht, um das zu entgehen.
+
+00:43:25.117 --> 00:43:26.357
+<v SPEAKER_2>Natürlich haben sie das.
+
+00:43:26.377 --> 00:43:30.617
+<v SPEAKER_3>Natürlich haben sie das, weil es ja immer noch alles angreifbar und böse ist.
+
+00:43:30.637 --> 00:43:32.577
+<v SPEAKER_2>Sonst würden wir auch nicht von einem Rüstungswettlauf reden.
+
+00:43:32.597 --> 00:43:57.237
+<v SPEAKER_3>Richtig, genau. Und zwar ist es so, dass man das sogenannte Return-to-libc verwendet hat bzw. das wurde unter Linux oder Unix-System verwendet, weil libc ist so die Standard-Bibliothek oder Library, die in jedem Prozess eingebunden wurde, wo so die Standardbefehle drin sind, um Ressourcen vom System zuzugreifen.
+
+00:43:57.257 --> 00:43:59.557
+<v SPEAKER_2>Das heißt, man kann sich darauf verlassen, dass es da ist.
+
+00:43:59.577 --> 00:44:46.517
+<v SPEAKER_3>Genau. Und das wurde damals an eine feste Adresse immer gespeichert. Das heißt, man konnte von dort aus ausgehen, okay, an dieser Stelle ist die Bibliothek geladen und an dieser und dieser und dieser Adresse ist denn der nächste ausführbare Code. Und dann hat man halt einfach gesagt, okay, die Rücksprung Adresse zeigt auf eine von diesen Funktionen. Unter Unix-Systemen ist es zum Beispiel hochgradig interessant, den System Call mit einem bestimmten Parameter aufzurufen, in dem Fall BinShell. Und schon hat man eine ausführbare Shell, die man als Angreifer quasi nutzen kann, um beliebige Befehle auszuführen im Kontext des Benutzers.
+
+00:44:48.717 --> 00:44:54.417
+<v SPEAKER_2>Das heißt, ich hab noch nicht Zugriff auf das ganze System, aber ich kann immer schon mal als der Benutzer arbeiten.
+
+00:44:55.017 --> 00:44:59.397
+<v SPEAKER_4>Kommt drauf an, unter welchem Prozess, unter welcher Benutzerkennung der Prozess läuft.
+
+00:44:59.417 --> 00:45:06.737
+<v SPEAKER_3>Wenn es als Administrator oder Route unter Linux läuft, dann hat man halt schlechte Karten mehr.
+
+00:45:06.757 --> 00:45:17.077
+<v SPEAKER_2>Aber im Kontext, von dem wir jetzt die ganze Zeit geredet haben, also beispielsweise einem Webbrowser oder einem E-Mail-Programm, das wäre dann erst mal der Benutzer.
+
+00:45:17.097 --> 00:45:28.297
+<v SPEAKER_3>Ja, wenn noch keine anderen Sicherheitsmaßnahmen drum herum sind. Also wir reden jetzt wirklich nur von relativ einfachen Programmen. Genau. Und...
+
+00:45:28.317 --> 00:45:35.977
+<v SPEAKER_2>Ja, das heißt, so nochmal zusammenzufassen, wir haben dieses NX-Bit gesetzt, das heißt...
+
+00:45:35.997 --> 00:45:37.017
+<v SPEAKER_3>Non-Executable Bit.
+
+00:45:37.037 --> 00:45:47.277
+<v SPEAKER_2>Non-Executable Bit, danke. Und die Direktion war, sich einen neuen Angriff einfallen zu lassen auf Seite von Angreifern.
+
+00:45:47.297 --> 00:45:50.517
+<v SPEAKER_3>Genau, Angreifer wäre immer noch angreifend.
+
+00:45:50.537 --> 00:45:58.717
+<v SPEAKER_2>Genau, und die haben sich halt überlegt, wir können uns darauf verlassen, dass die Adressen immer gleich sind. Wie sah da jetzt die Antwort darauf aus?
+
+00:45:59.157 --> 00:47:14.297
+<v SPEAKER_3>Ja, also dazu muss man noch sagen, natürlich ist bei Bibliotheken der Code immer ausführbar, darum sind ja die Funktionen da, deswegen hat man das ausgenutzt. Das hatte ich noch vergessen zu erklären. Genau, um den festen Adressen zu begegnen, ist natürlich der logische Schluss, man macht es einfach zufällig. Das heißt, bei jeder Programmausführung wird ein Zufall genommen und die Adresse virtuell an eine andere Adresse gespeichert. Also die Bibliothek zum Beispiel wird an eine andere Adresse gespeichert. Davon ausgeschlossen ist allerdings der Programmcode selber. Also das Programm selbst liegt immer an der gleichen Stelle. Was auch noch an verschiedenen Stellen damit ist, ist der sogenannte Heap und Stack, den wir ja schon besprochen hatten. Der ist auch an zufälligen Adressen. Das heißt, der Angreifer hat jetzt unter Umständen große Probleme herauszufinden, okay, ich möchte jetzt Funktion X aufrufen, ist aber nicht mehr an der Stelle, wo es bei der letzten Ausführung war. Das heißt, das Programm würde halt einfach nur abstürzen, wenn man das einfach ausführen würde.
+
+00:47:14.317 --> 00:47:19.817
+<v SPEAKER_2>Es sei denn, man findet eine Verwundbarkeit direkt in dem Programm. Weil da hast du ja gesagt, sind die Speicheradressen immer noch die gleichen.
+
+00:47:19.837 --> 00:48:57.597
+<v SPEAKER_3>Genau. Und da war die Idee, einfach Programmteile zu nehmen, die an der gleichen Stelle immer liegen. Und das ist diese, man benutzt sozusagen kleine Teile des Programms selber. Und da sind wir wieder zum Beispiel beim Stack. Weil dort die Rücksprungadresse auf dem Stack gespeichert wird. Wenn man diesen beeinflussen kann, kann man sich Teile des Programms nehmen und die hintereinander packen. Also man nimmt die Sprungadresse, die Rücksprungadresse verweist auf ein Stück Programm innerhalb des Programms. Die relativ kurz sind. Und meistens in der Nähe unter x86 ist es die Return Assembler Instruktion. Die ist dafür zuständig, aus dem Stack die Speicheradresse auszulesen, an die jetzt als nächstes ausgeführt werden soll. Das heißt, man macht einfach ein paar Operationen, die davor sind, die man halt gerne haben möchte und springt immer von Adresse zu Adresse. Und diese kleinen Codeschnipsel nennt man auch Gadgets. Und das gesamte Prinzip nennt man Return Oriented Programming. Das heißt, man guckt nach Rücksprung, Befehlen oder Instructions und nutzt diese halt aus, um aus dem Stack beliebigen Code sozusagen auszuführen, weil jedes halbwegs komplexe Programm halt...
+
+00:49:04.277 --> 00:49:25.497
+<v SPEAKER_5>Im Endeffekt kommt es darauf hinaus, dass wenn ich ein Programm mit vielen tausend Funktionen habe, habe ich viele tausend Return Instructionen. Und wenn ich mir zu jeder Return Instruction die paar letzten Befehle davor anschaue, finde ich für mehr oder weniger alles, was ich tun möchte, eine Return Instruction vor der das steht.
+
+00:49:25.517 --> 00:49:33.157
+<v SPEAKER_3>Das was? Genau, eine Instruction vor der Return Instruction, die genau das tut, was ich haben möchte.
+
+00:49:33.177 --> 00:50:00.277
+<v SPEAKER_2>Das heißt, letztendlich benutze ich das Programm oder das kompilierte Programm als Bibliothek und schaue durch, was kann ich gebrauchen und benutze genau den Teil. Das springt genau an diesen Teil. Ist ja doof, weil jetzt haben wir diese ganzen Maßnahmen ergriffen und so richtig viel gerissen haben wir dabei ja immer. Also es ist natürlich schon erheblich schwerer. Wie viel schwerer kann das irgendjemand beantworten? Also wie viel mehr Aufwand ist das in der Praxis? Kann man das irgendwie sagen?
+
+00:50:01.237 --> 00:50:22.797
+<v SPEAKER_4>Also ich glaube, sowas wie Rob-Chaining, dieses returnorientierte Programmieren, das wird mittlerweile durch Python-Script und dergleichen unterstützt, sodass das keine Hürde mehr darstellt. Das ist ja nicht trivialer geworden mit Rob, aber ich glaube, das ist mittlerweile wegautomatisiert worden.
+
+00:50:24.257 --> 00:50:32.997
+<v SPEAKER_2>Okay, das heißt, wir haben jetzt diesen ganzen Aufwand getrieben und sind irgendwie immer noch nicht besonders viel weitergekommen. Ich bin frustriert und ein bisschen enttäuscht. Was machen wir jetzt?
+
+00:50:33.017 --> 00:50:40.057
+<v SPEAKER_3>Aber man muss auch sagen, dass dieses ASLR, was ja Address-Base-Layer-Randomization ist...
+
+00:50:40.077 --> 00:50:42.097
+<v SPEAKER_2>Also dieses Würfeln der Speicheradressen.
+
+00:50:42.117 --> 00:51:36.137
+<v SPEAKER_3>Genau, den Fachbegriff hatte ich glaube ich noch nicht genannt. Ich hab's auch immer falsch. Genau, das hat es schon erheblich schwieriger gemacht. Das ist eine vergleichweise einfache Umsetzung gewesen, die den Angreifern das doch deutlich erschwert hat, erst mal Sachen anzugreifen. Also es ist auch wirklich so, dass man nicht einfach auf jedem Betriebssystem beziehungsweise jeden System das einfach so jetzt ausnutzen kann, weil da spielen auch solche Geschichten mit rein, wie zum Beispiel ist dein Windows jetzt deutsch, ist dein Windows jetzt englisch und somit verschieben sich teilweise auch die Speicheradressen. Also es funktioniert oder es hat die Latte schon ordentlich höher gelegt.
+
+00:51:37.197 --> 00:51:52.037
+<v SPEAKER_2>Okay, aber wenn ich jetzt, also wie gesagt so ein Webbrowser, der ist zwar jetzt vergleichsweise, der hat vergleichsweise vieles in Bibliotheken, aber der ist wahrscheinlich immer noch gut über sein eigentliches Programm angreifbar.
+
+00:51:52.057 --> 00:51:53.657
+<v SPEAKER_3>Und durch Plugins.
+
+00:51:53.677 --> 00:52:02.477
+<v SPEAKER_2>Und durch Plugins, okay, Flash sollte, also liebe Leute, die hier zuhört, ihr habt hoffentlich alle Flash in euren Browsern deaktiviert, ihr habt auch sonstigen Müll deaktiviert.
+
+00:52:06.457 --> 00:52:09.257
+<v SPEAKER_3>Es deaktiviert sich jetzt schon standardmäßig selbst.
+
+00:52:09.557 --> 00:52:26.777
+<v SPEAKER_2>Das stimmt. Also, wie ich das gehört habe, ist auch zumindest, hat Google angekündigt, in Chrome Flash jetzt auch die vollmäßig anzuschalten und bis zum Ende des Jahres ganz rauszuwerfen. Aber gut, Flash ist die eine Baustelle.
+
+00:52:26.797 --> 00:52:27.437
+<v SPEAKER_3>Ja, was gibt die andere?
+
+00:52:30.937 --> 00:52:36.017
+<v SPEAKER_2>Und was können wir denn jetzt immer noch tun?
+
+00:52:36.037 --> 00:53:29.057
+<v SPEAKER_4>Also zum Beispiel unter Windows gibt es ein Standardverfahren, was auch nochmal die Hürde etwas höher hängt. Zum Beispiel gibt es standardmäßig, wenn man einen Internet Explorer startet und der wird gekapert, so zumindest die Theorie, kann er nicht unmittelbar auf die eigenen Dateien zugreifen. Das liegt an diesem Integrity Level. Im Prinzip innerhalb eines Benutzers gibt es sozusagen nochmal weitere Vertrauenszonen. Diese Integrity Level sollen dafür sorgen, dass wenn zum Beispiel der Internet Explorer gekapert wird, dass er eben nicht automatisch auf alle anderen Dateien des Benutzers zugreifen kann. Diese Integritätslevel sind ein Mechanismus, um dann noch weitere Layer dazwischen zu ziehen.
+
+00:53:29.077 --> 00:53:35.597
+<v SPEAKER_2>Und was ist unter Linux? Das ist jetzt eine spezielle Lösung für den Internet Explorer.
+
+00:53:35.617 --> 00:53:40.157
+<v SPEAKER_3>Also für mich klingt das jetzt erstmal nach Sandbox.
+
+00:53:40.637 --> 00:53:47.637
+<v SPEAKER_4>Ja, ich meine Sandbox ist wahrscheinlich als Begriff eh nicht so definiert, aber sofern passt der da mit Sicherheit.
+
+00:53:47.657 --> 00:53:53.737
+<v SPEAKER_2>Also Sandboxing, ist das ein generelles Verfahren? Wo kommt das zum Einsatz sonst noch?
+
+00:53:53.757 --> 00:53:58.397
+<v SPEAKER_3>Also Sandboxing ist so eine Möglichkeit.
+
+00:53:58.417 --> 00:53:59.457
+<v SPEAKER_2>Genau, was ist es überhaupt?
+
+00:53:59.477 --> 00:54:35.537
+<v SPEAKER_3>Genau, also Sandboxing ist erstmal, man versucht die Ressourcen eines Prozesses so weit einzusperren, dass wenn er gekapert wird, dass er quasi nur mit eingeschränkten Ressourcen, wozu auch Rechte gehören, läuft. Das heißt, wenn ein Flashplugin jetzt gekapert wird, dann kann er nicht gleich auf die Urlaubsbilder von sonst was zugreifen. Also vom Prinzip her ist es so, dass es versucht wird, somit Auswirkungen einzuschränken.
+
+00:54:39.697 --> 00:54:48.657
+<v SPEAKER_2>Das ist aber jetzt nicht was, was ich jetzt benutzen kann für gesamte Prozesse, sondern nur für Plugins? Oder könnt ihr mir das beantworten?
+
+00:54:48.677 --> 00:56:53.397
+<v SPEAKER_5>Das kann man auf allen Ebenen machen. Sandboxing ist einer der bekannteren Sandboxen, die in der Java-Programmiersprache implementierte. Die gibt es schon ganz schön lange. Die arbeitet auf Anwendungsebene. Eine der Sachen, die an Google Chrome sicherheitsmäßig neu waren, als Google Chrome auf den Markt kam, war, dass sie dort unter Anwendungsebene noch eine weitere Sandbox implementiert haben, sodass einzelne Teile des Browsers selber wiederum weiter eingesperrt werden. Sodass zum Beispiel ein Teil, der eigentlich nur HTML vendern soll, also in Bilder umwandeln soll, die dann am Fernbildschirm angezeigt werden können, auch nur genau auf die dafür benötigten Ressourcen zugreifen kann. Auf der anderen Seite gibt es auch über Anwendungsebene ganz viel Sandboxing. Das nennt man dann Virtualisierung, aber es ist das gleiche Konzept. Eine ganze Weile war das total umwog im Serverbereich, da ich auf die Art und Weise mehrere virtuelle Server in einem physischen echten Server unterbringen kann. Allerdings findet sich das heutzutage zum Beispiel in einem Großteil aller Handys. In Handys wird ganz oft das DRM, also Digital Restrictions Management, so implementiert, dass mein Handybetriebssystem eigentlich auch nur in einer Art von Sandbox läuft und höher privilegiert als selbst das Betriebssystem selber, habe ich ein kleines Stück Code, was meistens von dem Hersteller, von dem Handyprozessor oder von Google geschrieben wurde, was sich darum kümmert, meine Filmchen und Musikdateien zu entschlüsseln und abzuspielen, sodass ich als Nutzer keinerlei Kontrolle mehr darüber haben kann, was ich mit diesen Videodaten mache, sodass ich als Nutzer nicht einfach hingehen kann und diese Datei auf ein anderes Gerät kopieren kann, ohne dass da mein großer Medienkonzern das Okay für gibt.
+
+00:56:54.337 --> 00:56:55.237
+<v SPEAKER_3>Spielkonzolen sind da.
+
+00:56:55.257 --> 00:56:59.617
+<v SPEAKER_2>Also das ist aber schon ein bisschen was, was sich auch auf Hardware-Ebene abspielt. Natürlich.
+
+00:56:59.637 --> 00:57:18.757
+<v SPEAKER_5>Also das Ding an Sandboxen ist, man kann das rein in Software machen, das ist dann nur ganz schön langsam. Das heißt, in der Praxis, ja okay, man kann Tricks anwenden, aber im Allgemeinen ist es nicht besonders schnell. Und in der Praxis wird es halt sehr, sehr häufig in Hardware mit zumindest einzelnen Teilen von der Hardware unterstützt.
+
+00:57:19.477 --> 01:03:02.505
+<v SPEAKER_2>Okay, gut, wir ernähren uns der vollen Stunde. Das heißt, ich würde sagen, bevor wir weitermachen, gibt es jetzt noch eine kleine Musik und danach hören wir die Nerd News und dann noch geht es weiter im Chaosradio 226. Reminiscence und ein Chaosradio wäre kein Chaosradio, wären wenn ich auch noch die Nerdnews hätten und die wurden heute geschrieben vom Chaos Computer Club und präsentiert von Christina.
+
+01:03:02.525 --> 01:05:26.785
+<v SPEAKER_1>Wem eine unberechtigte Abmahnung wegen angeblicher Urheberrechtsverstöße ins Haus flattert, kam bislang kaum um einen Anwalt herum. Insbesondere Freifunker, Betreiber von Flüchtlingsunterkünften und Freiwillige aus der Tor-Community, die sich häufig unberechtigten Abmahnungen gegenüber sehen, gehen mit ihrem Engagement oft Gefahr, Opfer solcher Abmahnungen zu werden. Da die Schreiben von Anschlägigen Kanzleien häufig vollautomatisch erstellt werden, werden Abmahnungen so zur Behinderung für freie Kommunikation. Daher stellen der Förderverein freie Netze und der Chaos Computer Club mit dem Abmahnbeantworter nun ein Werkzeug zur Verfügung, mit dem sich Betroffene wehren können. Nach dem Beantworten weniger Fragen erstellt das Tool ein versandfertiges Antwortschreiben. Das Tool und rechtliche Details findet ihr unter abmahnbeantworter.ccc.de Eine anonyme Gruppe namens Shadow Brokers stellt Angriffswerkzeuge ins Netz, die sie von der Equation Group erbeutet haben will. Diese wiederum steht in Zusammenhang mit der NSA. Die Unterlagen von Edward Snowden stützen die These, dass die Shadow Brokers tatsächlich Exploits und Root Kids der NSA besitzen. So taucht sowohl in der Software als auch in den Unterlagen ein identischer 16-stelliger Code auf. Unter den veröffentlichten Exploits befinden sich Angriffe gegen Router der Hersteller Cisco, Juniper, FortiGate und Topsec, die bereits mit Advisories reagiert, aber noch nicht alle Lücken gepatcht haben. Systemadministratoren sollten die Augen offen halten. Unterdessen vermutet Edward Snowden auf Twitter, dass sich hinter den Shadow Brokers der russische Geheimdienst verstecken könnte. Die öffentliche Bloßstellung sei dazu geeignet, die Außenpolitik der USA zu beeinflussen. Andere vermuten hinter der Tat einen Insider, der die Daten direkt aus der NSA gelegt hat. Auch eine Kombination beider Szenarien ist vorstellbar, falls es sich um einen Maulwurf handelt. Es bleibt jedenfalls spannend. Die Innenminister von Frankreich und Deutschland fordern nach ihrem Treffen, dass Anbieter von Kommunikationsdiensten im Internet wie etwa WhatsApp oder Signal bei der Entschlüsselung von Daten mithelfen sollen. Ein Papier fordert die EU-Kommission auf, entsprechende Gesetzesinitiativen zu ergreifen. Gleichzeitig solle die Verfügbarkeit starker Verschlüsselungssysteme gewahrt bleiben. Auch wenn das Papier keine konkreten Handlungsanweisungen zur Umsetzung enthält, deutet es den Einbau von Hintertüren an. Deutschland setzt mit CITES künftig vor allem auf den Aufkauf von Zero-Day-Exploits, um an Daten zu gelangen, die auf dem Transportweg verschlüsselt sind.
+
+01:05:55.773 --> 01:06:05.393
+<v SPEAKER_2>Und jetzt geht's los in die zweite Stunde des Chaosradios 226 mit Nitram.
+
+01:06:05.413 --> 01:06:06.293
+<v SPEAKER_4>Hallo.
+
+01:06:06.313 --> 01:06:07.373
+<v SPEAKER_2>Mit Varkar.
+
+01:06:07.393 --> 01:06:08.333
+<v SPEAKER_3>Hallöchen.
+
+01:06:08.353 --> 01:06:09.253
+<v SPEAKER_2>Mit Jasek.
+
+01:06:09.273 --> 01:06:09.833
+<v SPEAKER_3>Hallo.
+
+01:06:09.853 --> 01:07:16.893
+<v SPEAKER_2>Und mit Marco. Immer noch da? Immer noch da, sehr gut. Und wir hatten gerade so unglaublich abgefahrene Art und Weise, die auch immer komplizierter wurden, um ein Rechner oder ein Programm, denn darum geht es heute, Anwendungssicherheit, dazu zu verleiten, etwas zu tun, was es tun soll, indem man den Speicher manipuliert. Und wir sind da kompromittiert und sind dabei immer komplexer geworden. Und es wurde irgendwie immer unheimlicher. Wir hatten einen Non-Execution-Wild, wir hatten Speicherrandomisierung und wir haben festgestellt, so richtig hat es nicht was gebracht, aber einfach ist es jetzt auch nicht mehr so richtig. Da stelle ich mir die Fragen, ist das wirklich das tägliche Brot von Angreifern, so komplexe Dinge zu tun? Also Nitram hat ja schon gesagt, das ist gar nicht so komplex, es gibt da schon Tools. Aber muss man immer so weit gehen, um einem Programm dazu zu überreden, das zu tun, was man als Angreifer möchte? Gibt es da nicht auch noch einfachere Methoden?
+
+01:07:18.493 --> 01:07:53.893
+<v SPEAKER_4>Also es gibt natürlich immer die tiefhängenden Früchte, die ein Angreifer versucht zunächst zu ernten. Weil in der Regel genügt ein Sicherheitsproblem, um zum Ziel zu kommen. Und da nimmt man natürlich nicht die, die man am kompliziertesten ausnutzen kann, sondern die, die man am einfachsten ausnutzen und natürlich auch finden kann. Vor dem Ausnutzen steht immer noch das Finden. Es gab im April 2016 ein Business Report, Verizon Data Breach Investigation Report oder so ähnliches. Gesundheit. Und das Fazit...
+
+01:07:53.913 --> 01:07:56.553
+<v SPEAKER_2>Also es ging um den Telekommunikationsanbieter Verizon dabei.
+
+01:07:57.153 --> 01:09:05.493
+<v SPEAKER_4>Ja, die haben da natürlich auch eine Consulting-Klitsche da und haben eben diesen Report veröffentlicht und Fazit von diesem Report war, dass sie im Prinzip beobachten, seit 20 Jahren immer mit den gleichen Problemen zu tun zu haben und eben nicht so die esoterischen, schwer ausnutzenden Probleme, sondern irgendwie dieser ganze Standardgerümpel, den man im Prinzip auch schon vor 20 oder mehr Jahren hatte und ganz großer Klassiker ist natürlich der Umgang mit Passworten und da ist natürlich eine ganze Menge zu holen. Was auch immer wieder ein Problem sind, sind halt so Injection-Angriffe und das geht historisch gesehen ganz schön weit zurück, um das mal zu erläutern. Also es gab ja irgendwann mal ein Telefonsystem, wo Vermittlungsstellen existierten, bei denen Menschen Kabel in Buchsen steckten, um so eine Verbindung herzustellen.
+
+01:09:05.513 --> 01:09:07.313
+<v SPEAKER_2>Das vorneil vom Amt.
+
+01:09:07.333 --> 01:11:24.313
+<v SPEAKER_4>Genau und irgendwann wurde das mal automatisiert und dazu wurde ein System benutzt, wo innerhalb vom Datenkanal, also das Mikrofon, in das man hineinspricht, dieser Datenkanal, in diesem Datenkanal wurden auch Kommandos übertragen, um zum Beispiel eine Telefonnummer zu übertragen, damit irgendwelche Release gesteuert werden und da gab es diverse Signalisierungen und Leute, Hacker, sind auf die Idee gekommen, diese Signalisierungen einfach direkt in den Datenkanal zu injizieren. Beispielsweise gab es da Spezialkommandos, womit man dem Telefonsystem sagen konnte, hier Gegenstelle hängen mal bitte auf, aber die eigene Vermittlungsstelle, die war trotzdem noch verbunden und dann konnte man zum Beispiel Kosten anderer telefonieren, indem man erst mal eine kostenfreie Nummer anrief, aber dann eine halb getrennte Verbindung schuf durch das Senden bestimmter Kommandos und dann konnte man aber trotzdem noch mit dem Telefonsystem weiter kommunizieren und weitere Fehlbefehle sozusagen übersenden. Das gab es in 5000 Spielarten, es gab Systeme, wo man dem Telefonsystem sagen konnte, ich habe hier gerade eine Münze eingeworfen und das Guthaben reicht jetzt auch aus, um noch weiter telefonieren zu können. Und diese Vermischung von Daten und Steuerkanälen, das ist ein Sicherheitsproblem, das zieht sich im Prinzip schon durch die Dekaden, eben über diese Injectionangriffe. Da gibt es verschiedene Spielarten, zum Beispiel gibt es gerade bei Web-Anwendungen, das wollten wir jetzt hier allerdings ausklammern, diese SQL Injections, wenn da noch eine Datenbank dahinter hängt, gibt es aber auch Lokalen. Viele Telefon-Applikationen benutzen eine Datenbank, um Daten zwischenzuspeichern, Konfigurationen oder User-Daten. Und auch da kann man im Prinzip durch geeignete Konstruktionen von zu bearbeitenden Daten Kommandos einschleusen. In diesem Datenkanal kippt man dann zum Beispiel Datenbankbefehle ein und die werden dann verarbeitet. Oder ja, das gibt es halt an tausend Stellen.
+
+01:11:24.333 --> 01:11:28.693
+<v SPEAKER_2>Varkas, unser Profi für die Fachbegriffe.
+
+01:11:28.713 --> 01:11:51.433
+<v SPEAKER_3>SQL Injection wurde schon genannt, aber was so häufig da genommen wird, ist halt so gerade Delimiter, also irgendwie Hochkommentars, Minusminus, um Kommentare einzuleiten und solche Geschichten, um um den Code dahinter halt ja auszuklammern, sag ich mal.
+
+01:11:51.453 --> 01:11:58.773
+<v SPEAKER_2>Genau, was in Kreisen da gerne rumgeschickt wird, ist der XKCD Little Bobby Tables.
+
+01:11:58.793 --> 01:12:01.173
+<v SPEAKER_3>Richtig, das ist sehr zu empfehlen.
+
+01:12:01.913 --> 01:12:04.073
+<v SPEAKER_2>Genau, Entschuldigung, ich wollte dich nicht.
+
+01:12:04.093 --> 01:12:38.913
+<v SPEAKER_4>Ja, und das gibt es halt in 1000 Varianten. Es gibt LDAP Injections, wenn man ein System hat, was die Daten in so ein LDAP String reinhemmert und das Ding gegen so ein LDAP Server wirft, dann kann man da halt auch sozusagen die LDAP Query auch erweitern. Das Ganze gibt es dann irgendwie als XML Injection, wenn so ein XML Parse, so ein XML Dokument verwaltet, dann kann man in dem XML Dokument mit untersagen, ach hier, guck mal bitte in der Datei XY, da stehen noch irgendwelche XML Entitäten.
+
+01:12:38.933 --> 01:12:46.993
+<v SPEAKER_2>Warte, ich kann in XML verursachen, dass der Parse andere Dateien aufmacht?
+
+01:12:47.013 --> 01:13:02.473
+<v SPEAKER_4>Ja, das sind diese XML External Entities. Und dann kannst du sagen, hier, guck mal in etc.pass.vd, vielleicht findest du ja einen validen XML Code und wenn es ganz schlimm läuft, dann hast du das halt als Antwort ausgelesen.
+
+01:13:06.593 --> 01:13:07.313
+<v SPEAKER_2>Ja, bitte.
+
+01:13:07.333 --> 01:13:09.573
+<v SPEAKER_3>Locify Inclusion.
+
+01:13:10.333 --> 01:13:14.373
+<v SPEAKER_4>Ja oder bei OWASP heißt das XML External Entity, la la la.
+
+01:13:16.133 --> 01:13:38.093
+<v SPEAKER_5>Das grundsätzliche Problem ist halt hier, dass wie häufig, dass man ein sehr komplexes System hat, zum Beispiel ein XML-Parser und dass man als Programmierer nur einen Bruchteil davon benutzt und sich in dem Moment nicht bewusst ist, dass dieses System in Wirklichkeit viel, viel, viel größer ist und dass da dann teilweise in Ecken des Systems unerwartete Features schlummern.
+
+01:13:38.673 --> 01:13:49.433
+<v SPEAKER_2>Es überrascht mich halt auch, weil ich so denke, XML, das ist die Sprache für das Internet und dann irgendwie da nicht nachgedacht. Das schockiert mich jetzt gerade so.
+
+01:13:49.453 --> 01:13:55.513
+<v SPEAKER_3>Flash ist auch das. Genau, Flash ist ja auch die Grafik des, wissen Sie schon.
+
+01:13:55.533 --> 01:14:00.113
+<v SPEAKER_2>Ich möchte da nicht drüber reden, aber du hast natürlich vollkommen recht.
+
+01:14:00.133 --> 01:14:05.053
+<v SPEAKER_3>Also komplexe Systeme haben interessante Fehler.
+
+01:14:05.073 --> 01:14:07.473
+<v SPEAKER_2>Komplexe Probleme oder triviale Fehler.
+
+01:14:11.613 --> 01:14:52.873
+<v SPEAKER_4>Ja, gut, dieses Injection-Themen-Gebiet kann man natürlich irgendwie beliebig vertiefen, weil wenn irgendwie verschiedene Systeme miteinander verheiratet werden, dann gibt es halt immer irgendwie Brüche. Also ich will jetzt hier nicht zu kriminellen Handlungen aufrufen, aber es gibt da draußen im Internet ganz viele, ich kann hier online LaTeX schreiben und da gibt es natürlich auch irgendwie diverse Problematiken, dass man zum Beispiel in LaTeX auch Kommandos einschleusen kann, wie inkludiere mal diese Datei. Und schwuppdiwupp hat man bei diesen 5000 online, wir rendern hier mal LaTeX zusammen zu einem PDF, dann hat man ganz fix die Passwort-Dateien ausgelesen.
+
+01:14:53.393 --> 01:14:59.573
+<v SPEAKER_2>Best Practice ist glaube ich da, das dann wieder einfach in irgendeine Art von Virtualisierung oder Container zuzupacken.
+
+01:14:59.593 --> 01:15:07.713
+<v SPEAKER_4>Genau, ich hab mal irgendwie so einen Online-Service, ich hab da mal ein bisschen rumgeforscht und hab dann irgendwann mal so einen Online-Service angeschrieben und die meinten, ja alles halb so wild, sie benutzen jetzt hier Docker.
+
+01:15:11.593 --> 01:15:15.873
+<v SPEAKER_3>Ja, zur Information, Docker ist sowas wie eine Sandbox. Genau.
+
+01:15:16.253 --> 01:15:24.453
+<v SPEAKER_4>Genau, das eigentliche Problem ist nicht gefixt, aber das Problem ist so weit abgeschwächt, dass es nicht sofort alles auseinanderfällt.
+
+01:15:26.473 --> 01:15:46.073
+<v SPEAKER_2>Genau. Also statt es richtig zu machen, nimmt man sich ein Brett und zwei Nägel und hofft, dass es hält. Beziehungsweise die bessere Analogie ist eigentlich, man stellt einen Eimer unter und leert ihn für jede Benutzung wieder aus. Das heißt, es ist völlig egal, was in diesem Eimer landet.
+
+01:15:46.093 --> 01:15:47.913
+<v SPEAKER_3>Man braucht halt eine zweite Sicherheitslücke.
+
+01:15:51.013 --> 01:16:10.893
+<v SPEAKER_2>Das Loch im Eimer, genau. Okay, also letztendlich, man schaut sich an, was man so mit XML machen kann. Das ist ja schon ziemlich scary. Aber ich befürchte, das ist noch nicht alles, oder?
+
+01:16:10.913 --> 01:17:30.673
+<v SPEAKER_4>Naja, wenn wir beim Thema XML und Beispiele sind, dann gibt es da ein sehr schönes Beispiel, was auch mehrere Sachen vereint, nämlich hauptsächlich unerwartete Komplexität. Und wir mischen auch mal hier irgendwie Code und Daten zusammen. Es gibt ja dieses Scalable Vector Graphics Format SVG, was modern ist, und da steht in der Spezifikation, dass man bei SVG auch Code einschleusen kann, also den kann man sozusagen mit der SVG Datei transportieren, und dieser Code kommt zur Ausführung, um Sachen zu rendern. Und da gibt es in der Lautspezifikation zwei Möglichkeiten, entweder JavaScript oder man kann auch eine URL mit Java Code angeben. Und je nachdem, wie das Framework damit umgeht, kann einem das auf die Füße fallen oder nicht. Da gab es dieses Open Source Framework Bartek, und da gab es auch so Tools, die das dann einfach dann ausgeführt haben. Und das ist natürlich dann nicht so, wie man das will, aber das stand halt immer in der Spezifikation. Hat halt niemand wirklich realisiert, dass das auch mal daneben gehen kann.
+
+01:17:30.693 --> 01:17:37.953
+<v SPEAKER_2>Das heißt im schlimmsten Fall, ich lade mir so eine SVG Datei runter, lebe mir die Lokale angucken und fange mir da unter Umständen.
+
+01:17:37.973 --> 01:17:46.593
+<v SPEAKER_3>Was da gegebenenfalls ein bisschen geläufiger ist, ist PDF. PDF ist so ein ganz böses Format, wo dann halt auch Action-Script und sowas wird ausgewählt.
+
+01:17:46.873 --> 01:18:59.173
+<v SPEAKER_5>Na ja, du sagst geläufiger. Also, ich meine, man lädt sich ja nicht häufig SVG-Dateien runter, aber ein Punkt, wo auf ganz, ganz vielen Computern heutzutage SVG eingesetzt wird, ist Emoji. Diese kleinen Smiley-Gesichter, die ich in meinem, zum Beispiel Android, in der Text-Anwendung, also in der Nachrichten-Anwendung habe. Und zwar werden die in vielen heutigen Fonts so gebaut, also so eine Schriftart, die ist ja dafür verantwortlich, wie ein gewisses Zeichen auf meinem Bild schon dargestellt wird. Und das ist ja auch nur eine Datei. Und jetzt hat man, als man sich überlegt hat, wie man diese bunten Bilder in dieser Datei kodieren möchte, sich natürlich gedacht, müssen wir vielleicht nicht alle selber bauen, können wir ja was Existierendes nehmen. Das heißt, was sie gemacht haben, ist, sie haben im OpenType Format, also einem der meisten verwendeten Standardformate für Schriftarten, spezifiziert. Okay. Und wenn das nicht reicht, was OpenType eingebaut hat, dann kannst du hier SVG reintun. Und auf die Art und Weise führt im Endeffekt mein Browser oder andere Programme, bei denen ich dafür sorgen kann, dass eine Schriftart von mir geladen wird als Angreifer, führt dieses Programm meinen SVG-Code aus.
+
+01:18:59.873 --> 01:19:06.053
+<v SPEAKER_2>Also auch meine ganzen total vertrauenswürdigen Messenger.
+
+01:19:06.073 --> 01:19:09.913
+<v SPEAKER_5>Na gut, bei Messenger kann ich die Schriftart im Allgemeinen nicht kontrollieren. Aber zum Beispiel beim Browser kann ich das.
+
+01:19:10.833 --> 01:19:23.273
+<v SPEAKER_2>Okay, das stimmt natürlich. Aber ich könnte mir, es gibt ja genügend Apps heutzutage, wo man sich eigene Emojis, die noch mal fancierer sind, runterlädt. Und das heißt, wenn die App selber noch nicht shady ist, die Emojis sind es möglicherweise.
+
+01:19:23.293 --> 01:19:32.113
+<v SPEAKER_5>Ja, und technisch gibt es sogar, es gibt sogar ein Apple-Standard, wie man dann gleich die komplette Schriftart mit dem Emoji und dem SVG drin in die Datei selber reinpackt, wenn es eine PDF oder so ist.
+
+01:19:32.133 --> 01:19:38.533
+<v SPEAKER_3>Aber dazu muss man sagen, dass du dann eine App installieren musst, wo die Emojis installiert sind.
+
+01:19:38.553 --> 01:19:43.233
+<v SPEAKER_2>Und in dem Moment ist... Das kann ich dir sagen, das passiert durchaus häufiger.
+
+01:19:43.253 --> 01:19:47.133
+<v SPEAKER_3>Ja, aber dann brauchst du theoretisch auch die Emojis nicht mehr, wenn du eine App installierst.
+
+01:19:47.153 --> 01:20:04.233
+<v SPEAKER_2>Nein, nein, nein, eine andere App, die eine andere App dann kompromittieren soll. Ja, aber ja, ich sehe was. Oh man, also SVG auch ganz furchtbar.
+
+01:20:04.253 --> 01:20:23.733
+<v SPEAKER_4>Das setzt natürlich voraus, dass das Framework dann auch tatsächlich da diesen Code anfasst. Ich glaube, bei den meisten Frameworks ist das wahrscheinlich ausgeschaltet. Aber gut, das gibt wahrscheinlich dann noch 5000 andere low-hanging fruits, die tiefhängenden Früchte, deren man sich bedienen kann.
+
+01:20:27.293 --> 01:20:54.253
+<v SPEAKER_3>Ganz wichtig, das würde ich noch gerne mit aufnehmen, ist auf jeden Fall, einer der häufigsten Fehler sind Standardinstallationen. Die Konfigurationen sind unter Umständen nicht immer die sichersten, sondern sie sollen halt meistens laufen. Dazu gehört natürlich auch das, was schon Nitram angesprochen hatte, Standardpasswörter. Aber gerade die Konfigurationen sind normalerweise so, dass sie immer laufen sollen.
+
+01:20:54.273 --> 01:21:01.993
+<v SPEAKER_5>Baga an die Zuhörer, wer hat das Passwort auf seinem Router geändert? Bitte jetzt aufzeigen. Ich sehe keine Hände. Drei, okay, drei.
+
+01:21:02.073 --> 01:21:03.333
+<v SPEAKER_3>Du musst doch auch die Augen aufmachen.
+
+01:21:06.293 --> 01:21:33.793
+<v SPEAKER_2>Also, das Router ist ja mittlerweile auch wenigstens so, dass sie irgendeine Art von zufälligem Passwort haben. Ich mach hier Gänsefüßchen in die Hände, weil wir auch wissen, dass das natürlich auch leider teilweise zurückberechenbar ist. Aber es ist immerhin nicht mehr das Passwort. Das ist sicherlich auch eine Sache, die die Leute gelernt haben.
+
+01:21:40.073 --> 01:21:48.613
+<v SPEAKER_3>Also, ja, dazu gehören natürlich auch Probleme, die in der Logik an sich drin sind.
+
+01:21:48.633 --> 01:21:51.673
+<v SPEAKER_2>Ja, also in Logikprogrammen.
+
+01:21:51.693 --> 01:21:54.713
+<v SPEAKER_3>Also in der Logik von Programmen.
+
+01:21:54.733 --> 01:24:17.753
+<v SPEAKER_2>In der Logik von Programmen, verzeihung. Und welche wären das? Marco ist da, glaube ich, der prädestinierte Mensch, dafür, den wir uns dazu genommen haben. Naja, also im Endeffekt eigentlich ist, wo man am besten anfängt, ist eigentlich, dass alles, was Computer kennen, nur Zahlen sind. Das heißt, alles, auch Buchstaben, Bilder, was auch immer, sind halt als Zahlen repräsentiert. Und wenn man jetzt, oder wenn man halt Text hat, zum Beispiel, dann hat man halt zum Beispiel eine 97 als kleines A, eine 98 als kleines B, und so weiter und so weiter. Wenn man jetzt aber stattdessen halt irgendwie, wenn das Programm jetzt denkt, dass stattdessen an der Stelle eine Zahl steht, dann wird halt, was weiß ich, vier Buchstaben zusammen als Zahl interpretiert und dann passiert halt irgendwas anderes. Und ein Problem, was dann halt auch ist, dass halt absolut alles in diesen Zahlen dargestellt werden muss. Das heißt, teilweise hat man halt Sachen, wo man halt irgendwie spezielle Werte hat, die man halt eigentlich aus einem Wertbereich ausschließen will. Das heißt, man hat halt entweder eins von diesen paar tausend Möglichkeiten oder halt irgendwie, dass es keins von all diesen ist. Und da gab es zum Beispiel vor einer Weile in Sudo ein Programm, was man benutzt, um seine Rechte auf dem Rechner zu erweitern. Einen lustigen Bug. Den hast du sogar gefunden, ne? Oh, cool. Im Endeffekt, das hat so ein Bequemlichkeits-Feel drinne. Du musst halt immer dein Passwort eingeben, damit du halt einen Programm mit erweiterten Rechten ausführen darfst. Und damit du das halt nicht ständig machen musst, wenn du das innerhalb der letzten fünf Minuten eingegeben hast, dann brauchst du das Passwort nicht eingeben und das wird halt einfach so gemacht. Und wenn du jetzt halt irgendwie deinen Rechner irgendwie länger stehen lässt oder so und da auf Nummer sicher gehen willst, dass das nicht jemand verwenden kann, kannst neben dem den Rechner zu locken halt auch einfach sagen sudo-k, das setzt das Datum, was es sich dafür gemerkt hat, dann auf den 1.1.1970 0 Uhr.
+
+01:24:17.773 --> 01:24:21.193
+<v SPEAKER_3>Und das ist so lange zurück. Das heißt, die fünf Minuten sind rum.
+
+01:24:21.213 --> 01:24:41.493
+<v SPEAKER_2>Das heißt beim nächsten Mal musst du den Passwort eingeben, außer du darfst als User die Uhr ändern. Dann drehst du die Uhr auf den 1.1.1970 0 Uhr und so du prüfst 1.1.1970 0 Uhr und ein bisschen bis innerhalb der letzten fünf Minuten. Du darfst ohne Passwort. Und dürfen Benutzer das in der Regel?
+
+01:24:41.513 --> 01:24:42.673
+<v SPEAKER_5>Na ja, kommt auf das System an.
+
+01:24:42.693 --> 01:24:48.853
+<v SPEAKER_3>Unter macOS kann man das im Terminal nicht machen, aber in der GUI, wenn man nicht das explizit lockt.
+
+01:24:48.873 --> 01:24:50.953
+<v SPEAKER_5>Unter Ubuntu darf man das glaube ich auch.
+
+01:24:50.973 --> 01:24:53.933
+<v SPEAKER_3>Unter anderen Linuxen in der Regel nicht.
+
+01:24:53.953 --> 01:25:24.393
+<v SPEAKER_2>Also alles, was auf Benutzerbequemlichkeit ausgelegt ist, ist das dann halt leicht, dass das auch irgendwie funktioniert. Puh, aber das ist glaube ich was, was man gar nicht so schnell übersieht, weil ich wäre jetzt auch nicht davon ausgegangen, dass Benutzer das einfach so ändern dürfen, ohne sich eben durch so einen Mechanismus wie eben Sudo noch mal zu legitimieren. Na ja, unter Windows darf das glaube ich auch so ziemlich jeder User. Also außer auf Mehrbenutzersystemen, wo das dann halt explizit weg konfiguriert wird oder? Genau, das stimmt, aber da habe ich auch kein Sudo.
+
+01:25:25.573 --> 01:25:37.893
+<v SPEAKER_3>Aber daran sieht man mal wieder, dass Convenience halt genau die Gegenstelle zu Security ist. Also Convenience und Security ist halt so gut wie unmöglich.
+
+01:25:38.773 --> 01:26:00.653
+<v SPEAKER_2>Ja, ich bin mir da nicht ganz sicher. Da gibt es ja irgendwie verschiedene Schulen, die einen sagen doch irgendwie, das schließt sich aus, und anderen sagen, na ja, wenn man es denn halt nur gescheit designen würde, sodass ich dann so quasi direkt mit Security im Kopf dann ginge da schon einiges, würde dir da nicht zustimmen?
+
+01:26:01.833 --> 01:26:02.813
+<v SPEAKER_3>Also ich nicht.
+
+01:26:02.833 --> 01:27:07.233
+<v SPEAKER_5>Naja, also ein grundsätzlicher Trend, den man schon beobachten kann, ist, dass modernere Systeme, in die viel Geld gesteckt wurde, tendenziell sicherer sind als weniger moderne Systeme, in die viel Geld gesteckt wurde. Also wenn man sich zum Beispiel die modernen Mobilbetriebssysteme anschaut, irgendwie das iOS, was auf iPhones ausgeliefert wird, und Android, die sind gegenüber ihren Desktop-Vorgängern, nenne ich das mal, durchaus aus theoretischer Sicht eleganter geworden auf eine gewisse Art und Weise. Zum Beispiel hat Android ein sehr feines Berechtigungsmodell, was auch für alle Anwendungen durchgesetzt wird. Alle Anwendungen haben gegeneinander eine sehr gute Isolation, deutlich besser, als das auf einem Desktop-Linux der Fall wäre. Obwohl ein Android auch nur ein Linux ist. Das konnte in dem Fall gemacht werden, weil dieses System mehr oder weniger von Null auf, from scratch, designt wurde. Und man nicht die Verpflichtung hatte, dass bestehende Programme darauf laufen müssen.
+
+01:27:09.373 --> 01:27:35.213
+<v SPEAKER_2>Gut, aber da macht man sich natürlich auch ein bisschen leicht, weil man viele Dinge, die auf dem Desktop laufen, um dort Dateien im Dateisystem zu speichern. Also so Dateisysteme per se, die viele Probleme verursachen, die gibt es ja nicht, weil die ganzen Sachen werden in der Cloud gespeichert. Und die Cloud macht ja nochmal ganz andere Probleme, über die wir aber heute Abend nicht reden wollen.
+
+01:27:35.233 --> 01:27:46.493
+<v SPEAKER_3>Was ich noch als Logikfehler mit aufnehmen würde, wären, glaube ich, die interessanten Implikationen, die gerade durch Encoding entstehen.
+
+01:27:46.513 --> 01:27:50.753
+<v SPEAKER_2>Encoding erzähl doch erstmal. Was meinst du mit Encoding?
+
+01:27:50.773 --> 01:28:04.653
+<v SPEAKER_3>Encoding ist quasi die Repräsentation. Wie Marco schon gesagt hat, alles ist ja eine Zahl für den Computer. Und dies Encoding sagt halt, welche Zahl, welchen Buchstaben für den Benutzer darstellen sollte.
+
+01:28:06.513 --> 01:28:08.653
+<v SPEAKER_2>Also bei Zeichenketten.
+
+01:28:08.673 --> 01:28:50.853
+<v SPEAKER_3>Ja, gutes Beispiel ist ja immer Umlaute. Da kennt man ja diverse Arten, wie die plötzlich aussehen können. Und wenn jetzt bestimmte Programme mit interessanten Encodings ausgeführt werden, dann verstehen sie plötzlich bei irgendeiner Stringrepräsentation irgendwas anders, als wenn sie auf einem anderen Computer laufen. Und das kann halt unter Umständen zu Problemen führen. So die einfachste Variante ist dann halt, dass sie den Benutzernamen falsch interpretieren. Oder das Passwort oder wie auch immer. Das sind die einfachsten Varianten.
+
+01:28:50.873 --> 01:29:14.913
+<v SPEAKER_2>Hilf mir mal, ob das ungefähr das Problem ist, was ich hier sehe auf unserem Aufnahmeprogramm. Da hab ich ein Hauptgerät. Warum hab ich ein Hauptgerät und kein Hauptgerät? Und meine Vermutung ist, dass bei der Längenberechnung... Genau, bei der Längenberechnung. Kannst du das besser erklären als nur Multibytes?
+
+01:29:15.513 --> 01:29:18.933
+<v SPEAKER_3>Ja, jetzt wird's übel. UTF-8.
+
+01:29:18.953 --> 01:31:09.733
+<v SPEAKER_5>Ich glaube, ich kann das versuchen. Im Endeffekt ist man halt hingegangen und hat entschieden, dass man mehr als nur die im Englischen verwendeten Zeichen durch Zahlen darstellen möchte. Nun braucht man natürlich für alle Schriftzeichen dieser Erde ganz schön viele Zahlen. Der am weitesten verbreitete Standard, der Unicode-Standard, listet aktuell über 100.000 verschiedene Schriftzeichen. Nun ist die Standardgröße für eine Zahl auf einem Computer ein Byte. Ein Byte kann nur Werte bis 256 fassen. Erst hat man sich natürlich die Frage gestellt, okay, wie kriege ich nun mit Bytes all diese Zahlen dargestellt? Und anstatt für jedes Zeichen einfach mehrere Bytes zu verwenden, hat man sich nun überlegt, okay, der meiste Text, den ich auf meinem Computer benutze, ist ja sowieso irgendwie mehr oder weniger Englisch. Und was man jetzt gemacht hat, ist, dass man sich ein System ausgedacht hat, wie für zum Beispiel englische Zeichen Zahlen des Wertebereichs bis 256 verwendet werden, allerdings für Zeichen, die nicht mehr in diesen Wertebereich hineinpassen, dann bestimmte magische Folgen von Zahlen verwendet werden, die der Computer eindeutig erkennen kann, die dann für eine einzige größere Zahl wiederum stehen. Und im Endeffekt, was in deinem Fall halt geschehen ist, ist, du hast eine Zeichenkette, die aus ganz, ganz vielen englischen Zeichen besteht, auf Name G, das sind ja alles Buchstaben, die gibt es in der englischen Sprache, und dem Ä, das gibt es da nicht. Das heißt, das Ä muss nun durch eine Zahl, oder wird in diesem Fall durch eine Zahl dargestellt, die größer als, oder die in dem Fall größer als etwas unter 256 ist. Und diese Zahl muss nun vom Computer durch zwei Bytes dargestellt werden.
+
+01:31:09.753 --> 01:31:13.473
+<v SPEAKER_2>Weil das Ä quasi nichts ist, was die englische Sprache kennt.
+
+01:31:13.493 --> 01:32:23.713
+<v SPEAKER_5>Ja, das ist nicht an Englisch gekoppelt, das hat sie sehr historische Gründe, warum das so aussieht, wie es aussieht. Im Endeffekt ist dieses Ä in diesem erweiterten Wertebereich. Deswegen werden zwei Bytes zur Kodierung verwendet, statt für andere Buchstaben ein Byte. Mit dem Ergebnis, dass diese Zeichenkette aus einem Byte mehr besteht, als sie aus Zeichen besteht. Ich zähle jetzt nicht ihr Buchstabenaufnahmegerät im Kopf, aber wenn ich mir das zum Beispiel an ein Gerät anschaue, dann habe ich G-E-R-Ä-T als Buchstaben, aber der Computer sieht da ein Byte mehr, weil das Ä in zwei Byte kodiert ist. Ein häufiger Programmierfehler ist, dass ich bei einer Zeichenkette aus Versehen die Bytelänge als Länge der Zeichenkette im Buchstaben nehme, oder umgekehrt die Länge der Zeichenkette im Buchstaben als Länge des Puffers in Byte, aber dann kopiere ich da was rein und dann ist ein Zeichen auf einmal breiter und dann kriege ich halt Fehler in verschiedene Richtungen. Also entweder, dass ich einen Puffer habe, der zu schmal ist, oder dass ich in deinem Fall halt, dass ich zu wenig Zeichen aus diesem Puffer wiederum ausgebe.
+
+01:32:23.733 --> 01:32:31.673
+<v SPEAKER_2>Und wenn ich jetzt in der Lage bin, als Angreifer diese Zeichenkette zu manipulieren oder zu beeinflussen, dann kann das unter Umständen zu Problemen führen?
+
+01:32:31.953 --> 01:32:42.233
+<v SPEAKER_3>Ja, die kann plötzlich doppelt so lang werden. Und dann hätte man wieder einen Pufferüberlauf oder einen Pufferaufschub zum Beispiel. Oder man kann Fehler umgehen.
+
+01:32:42.253 --> 01:39:53.497
+<v SPEAKER_2>Das heißt, wer da nochmal darauf zurück will, der spult nochmal kurz zurück in die erste Stunde, wo wir das kurz angesprochen haben. Aber ich glaube, das ist eine tatsächlich sehr, sehr schöne Erklärung. So, und damit haben wir wieder eine halbe Stunde abgeschlossen. Und dann spielen wir jetzt noch eine kleine Musik. Und dann müssen die Herren nochmal ran und mir erklären, wie das jetzt eigentlich alles anders sein müsste. Und wir hören uns jetzt von Infinite Freefall gutted. So, das ist die letzte halbe Stunde hier im Chaosradio 226, wo wir uns ein wenig unterhalten haben über Anwendungssicherheit. Und was mich jetzt eigentlich noch so ein bisschen umtreibt, ist, wir haben jetzt so viel gehört an Low Hanging Fruit, an Sachen, wo man wirklich tief einsteigen muss. Aber wird es jemals besser werden? Was kann man überhaupt tun, um sich da so ein bisschen gegen zu wehren?
+
+01:39:53.517 --> 01:39:59.097
+<v SPEAKER_5>Es wird nie besser werden. Wir können im Grunde heute damit aufhören, alle Computer verbrennen und...
+
+01:39:59.117 --> 01:40:31.437
+<v SPEAKER_4>Ich glaube, es wird schon besser. Man sieht ja auch, dass es besser wird. Allein anhand der Fehlerklassen, die so im Laufe der Zeit aufpoppen, und das wird halt auch auf einer Weise immer spezieller, den Fehlerklassen und immer komplizierter die auszunutzen. Auf der anderen Seite, mal abgesehen von den Low Hanging Fruits, sieht man auch, dass sich der Aufwand fürs Angreifen immer weiter erhöht.
+
+01:40:31.877 --> 01:41:00.697
+<v SPEAKER_2>Aber meine These ist eigentlich eine andere. Ich stelle jetzt mal die These auf, man wird nicht hinterherkommen, weil Hersteller immer mit neuer Technologie herkommen, weil sie immer unter dem Druck stehen, neue Sachen zu liefern. Und weil der Druck, neue Sachen zu liefern, höher ist, als der Druck, die Sachen ordentlich zu machen. Oder manchmal bedenkt man auch nicht alles, selbst bei bester Absicht.
+
+01:41:00.717 --> 01:41:30.397
+<v SPEAKER_4>Gut, ich glaube, das schließt sich alles nicht aus. Es gibt ja auch den Trend, dass immer mehr Komplexität auf die Rechner kommt. Und auf der anderen Seite natürlich immer nur ein Fehler genügt, um ein System zu Fall zu bringen. Mehr Komplexität, sowieso mehr von allem. Wenn man sich das so als Grafen vorstellt, dann wächst das immer wilder. Und irgendwas ist für den Angreifer immer dabei.
+
+01:41:31.137 --> 01:41:41.177
+<v SPEAKER_2>Und eine andere Sache, die ich auch mal aufstellen würde, ist alte Sachen kommen immer wieder. Alte Probleme kommen immer wieder entweder in neuen Kombinationen.
+
+01:41:41.197 --> 01:41:43.877
+<v SPEAKER_5>Google-Suchbegriff Internet of Shit.
+
+01:41:44.557 --> 01:41:46.437
+<v SPEAKER_3>IoT, yeah.
+
+01:41:46.457 --> 01:41:53.337
+<v SPEAKER_2>Also ihr meint einfach das Internet of Things. Das wäre eigentlich ausklammern wollen, wenn wir nicht über das Internet reden.
+
+01:41:53.357 --> 01:42:00.057
+<v SPEAKER_3>Aber da läuft auch Softwarelokal drauf. Da laufen auch Anwendungen drauf.
+
+01:42:04.117 --> 01:43:25.837
+<v SPEAKER_5>Im Grunde ist das Problem halt, dass ständig Software geschrieben wird und produziert wird und deutlich mehr Software in jeder Sekunde geschrieben wird, als von Leuten nach Sicherheitslücken durchsucht wird. Das heißt, wir haben einen ständig anwachsenden Haufen an potentiell unsicherer Software und wir kommen einfach nicht hinterher, das alles zu überprüfen. Das ist uns jetzt im letzten paar Jahren ein paar Mal auf die Füße gefallen. Stichwort OpenSSL, aber auch einer der Jeep Hacks, wo sie ein Auto gehackt haben, im Endeffekt über eine Lücke in einem der Decoder für den Radiodatenstrom, den dieses Auto empfangen hat. Also Musik, da war eine Lücke in dem Decoder und darüber haben sie dann die Kontrolle über das Auto übernommen. Und diese Lücke, das war jetzt auch nichts Besonderes in der Hinsicht. Aber dadurch, dass wir so eine, dass in jedem System, jedem computerbasierten System, was man heute in der Hand hält, so unglaublich unvorstellbar viel Komplexität und viel Software drinsteckt, gibt es schlicht nicht, kann man schlicht als Entwickler und auch als Sicherheitsforscher nicht mehr den Überblick über das gesamte System haben.
+
+01:43:26.437 --> 01:43:48.197
+<v SPEAKER_2>Aber das ist sozusagen eines dieser Punkte, die ich in meiner These drin hatte. Das ist halt gerade jetzt im Autobereich mit all den Innovationen und DASMUS noch und dieser Sensor noch und dieses Komfortmerkmal noch. Das ist ja im Prinzip genau das, was ich beschrieben habe, jetzt auf das konkrete Beispiel Auto runtergebrochen.
+
+01:43:49.297 --> 01:44:35.837
+<v SPEAKER_3>Ja, dazu muss man sagen, dass der Weg, den der Desktop, sag ich mal, oder die Consumer Electronics vielleicht ein bisschen zu weit gefasst, ist quasi so, dass der Desktop heutzutage als relativ gut abgesichert im Allgemeinen geht. Also man kann sich halt nicht mehr, indem man halt einen Desktop einfach so ins Internet anschließt, es sei denn, er ist wirklich zehn Jahre nicht gepatcht worden oder was weiß ich. Wenn man jetzt einen heutzutage einen Windows XP anschließt, okay. Aber ich sag mal, wenn man jetzt ein frische installiertes Windows 10 oder was weiß ich ins Netz hängt, dann ist die Wahrscheinlichkeit relativ gering, dass man innerhalb der ersten fünf Minuten geohnt wird.
+
+01:44:35.857 --> 01:44:42.117
+<v SPEAKER_2>Es sei denn, man lädt sich irgendwelche lustigen Dinge runter oder klickt auf irgendwelche...
+
+01:44:42.137 --> 01:45:15.477
+<v SPEAKER_3>Ich rede nur vom Betrieb. Ich rede nur vom direkten Reinhängen. Also ich rede jetzt nicht davon, dass jetzt irgendwie der die Nutzerin auf komischen Seiten sich rumtreibt. Aber diesen Weg hat sogenannte Embedded Software noch vor sich. Also in den ganzen Routern, Internet of Things Geräten, da findet man das Ganze, was wir heute eigentlich größtenteils als Abwehrmaßnahmen besprochen haben, noch gar nicht.
+
+01:45:19.157 --> 01:46:12.317
+<v SPEAKER_2>Und Marco hatte glaube ich auch, wie siehst du das? Also wird das irgendwann besser? Naja, also auf der einen Seite werden die Abwehrmechanismen halt immer besser und das Problem wird sich LON irgendwo so ein bisschen reduzieren. Auf der anderen Seite ist halt allein dadurch, dass Computer halt mehr oder weniger logikbasiert sind, ist halt von vornherein klar, dass es nie sicher sein kann, weil man halt einfach so komische Sätze bilden kann, wie dieser Satz ist falsch oder einen kleinen Tick komplexer, wenn du das erste versuchst, rauszufiltern. Der nächste Satz ist falsch, der vorhergehende Satz ist wahr. Und so immer weiter. Also das macht keinen Sinn, die Aussage?
+
+01:46:12.337 --> 01:46:17.017
+<v SPEAKER_3>Wir Menschen haben mit solchen selbstreferenziellen Sachen kein Problem für Computer.
+
+01:46:17.037 --> 01:47:03.897
+<v SPEAKER_2>Also wir sagen, was soll das? Aber der Computer würde das einfach hinnehmen. Genau. Und Güdel's Unvollständigkeitssatz zum Beispiel und noch viele andere solche theoretischen Ergebnisse. Bitte wer? Güdel hat im Endeffekt das mit der Mathematik halt mal gemacht. So genau so einen Satz quasi einfach als mathematische Formel mehr oder weniger konstruiert und damit gezeigt, dass was auch immer wir benutzen, um Mathematik zu formalisieren, nie sich selbst als korrekt beweisen kann, sondern wir halt immer so das Inner Schwebe haben. Das könnte unsicher sein. Also es könnten halt Fehler drin sein. Wir könnten halt irgendwie Schluss beweisen. Das heißt, die Wissenschaft sagt, es wird nie sicher.
+
+01:47:04.237 --> 01:47:08.237
+<v SPEAKER_3>Sicherheit ist ein Prozess, kein Zustand.
+
+01:47:11.017 --> 01:47:16.617
+<v SPEAKER_2>Und das deprimiert mich heute ganz schön.
+
+01:47:16.817 --> 01:47:30.077
+<v SPEAKER_3>Ja, also es gibt die üblichen Dinge, die halt ein Benutzer tun kann. Das ist halt irgendwie Firewall, Anti-Viren-Software installieren. Aber darüber hinaus.
+
+01:47:30.857 --> 01:47:32.277
+<v SPEAKER_2>Ja, macht das das wirklich sicherer?
+
+01:47:36.877 --> 01:47:39.937
+<v SPEAKER_5>Das ist ein Wunderpunkt, weil wir uns gerne gerade in den letzten Monaten...
+
+01:47:39.957 --> 01:48:48.017
+<v SPEAKER_3>Ich wollte gerade sagen, das Wichtigste daran ist eigentlich zu gucken, ist das, was ich hier abberufe überhaupt sinnvoll. Beziehungsweise man sollte nicht auf jede E-Mail gucken. Also gerade so, was in letzter Zeit die üblichen Angriffe sind, sind auch gerade auf den Menschen, sogenanntes Social Engineering. Und da sollte man vielleicht halt mal gucken, ob der Mensch nicht in den Vordergrund tritt und nicht gerade die Anwendung. Ganz einfache Sachen. Ich bekomme eine E-Mail. Dort drin steht, hier, Paypal, bitte die Kreditkarten überprüfen. Und da ist ein Link drin. Und wenn man allein schon mit der Maus über diesen Button hovert, dann sieht man unten meistens schon, wo es hingeht. Und wenn da jetzt irgendwie sento.to x, y, z drinsteht und nicht paypal.com, dann ist irgendwas schon mal komisch. Und da sollte man vielleicht nicht drauf drücken. Da gibt es einen Rechtsklick und dann kann man auch drücken, Betrugsversuch melden.
+
+01:48:48.997 --> 01:48:54.917
+<v SPEAKER_2>Okay, also du redest jetzt von ganz klassischem Social Engineering.
+
+01:48:54.937 --> 01:49:14.537
+<v SPEAKER_3>Funktioniert häufig, teilweise besser als irgendwelche Anwendungssicherheitslücken zu finden. Weil stellt man sich vor, man schickt 50 Millionen E-Mails, also Spam oder Phishing-E-Mails, es gibt mindestens ein Prozent, würde ich behaupten, die darauf reinfallen. Also Anwendung ist das eine.
+
+01:49:18.677 --> 01:49:26.317
+<v SPEAKER_2>Also immer Augen offen halten, immer zusehen, dass man seine...
+
+01:49:26.337 --> 01:49:38.357
+<v SPEAKER_3>Also direkte Angriffe, dass die dich jetzt direkt angreifen, ist eher selten. Sie nutzen heutzutage den Menschen als Sicherheitslücke.
+
+01:49:38.377 --> 01:50:11.977
+<v SPEAKER_2>Das ist ein interessanter Aspekt, wann würde man denn wirklich zu den härteren Waffen greifen? Also wann ist Spam quasi nicht mehr das Mittel der Wahl? Muss ich da wirklich schon irgendwie die NSA sein? Oder gibt es da auch noch andere Leute, die vielleicht interessiert sind? Also lohnt sich das unterhalb eines Staates, solche Sachen zu machen? Wenn du jetzt sagst, das ist viel einfacher, dann schicke ich die Leute natürlich auf meine Adresse.
+
+01:50:13.297 --> 01:51:05.977
+<v SPEAKER_4>Ich glaube, da gibt es tausend Kombinationen, wo Angriffe Sinn machen. Allein diese Verschlüsselungstrojaner, die einen Rechner befallen, die Daten verschlüsseln und dann Geld fordern für die Herausgabe von der Originaldaten zeigen, dass im Prinzip jeder da Daten speichert und verarbeitet, die er gerne auch behalten möchte. Und zeigt auch, dass das Angriffe sind, womit man viel Geld verdienen kann. Und ich glaube, bei den meisten börsennotierten Unternehmen, wenn man da einen Fuß in der Tür hat und irgendwie interne Informationen herauszieht, sind die sofort Geld wert, weil man die entweder selbst einsetzen kann oder verkaufen kann. Okay, also man muss kein Staat sein, um Angriffsziele zu machen.
+
+01:51:05.997 --> 01:51:12.077
+<v SPEAKER_2>Das sind sozusagen einfach, je nachdem, welches Ziel man verfolgt.
+
+01:51:12.157 --> 01:51:18.017
+<v SPEAKER_4>In der Regel will ein Angreifer irgendwie Geld haben. Also die meisten Angreifer. Oder Kontrolle über...
+
+01:51:18.037 --> 01:51:20.337
+<v SPEAKER_2>Oder Informationen, die er hinterher zu Geld machen kann.
+
+01:51:27.957 --> 01:52:00.957
+<v SPEAKER_3>Wenn man ein Dispote ist und Leute unterdrücken möchte, wäre das zum Beispiel auch eine Möglichkeit, um, wie jetzt mit bestimmten Journalisten passiert ist, dass sie denen irgendwelche Beweise für kriminelle Taten untergeschoben haben, in denen sie versucht haben, Malware zu installieren oder sämtliche anderen Sachen. Also wenn ich jetzt versuchen würde, meine Opposition zu unterdrücken, in irgendeiner Art und Weise wäre das zum Beispiel auch eine Möglichkeit.
+
+01:52:01.697 --> 01:52:28.317
+<v SPEAKER_2>Okay, also wir sehen schon, es wird irgendwie keine perfekte Sicherheit geben. Es gibt tausend Angriffsmöglichkeiten. Also was tun wir letztendlich? Was tun wir als Anwender oder was ratet ihr Anwendern, was sie tun sollen? Sie können sich ja offensichtlich nicht wehren. Das heißt, man kann nur präventiv tätig werden letztendlich.
+
+01:52:28.337 --> 01:52:29.857
+<v SPEAKER_3>Updates installieren.
+
+01:52:29.877 --> 01:52:30.897
+<v SPEAKER_2>Updates installieren.
+
+01:52:30.917 --> 01:52:31.897
+<v SPEAKER_3>Standard.
+
+01:52:31.917 --> 01:52:39.337
+<v SPEAKER_2>Okay, also Updates installieren, Backups machen, etc. Das ist ja irgendwie...
+
+01:52:39.357 --> 01:52:40.157
+<v SPEAKER_3>Mau.
+
+01:52:40.177 --> 01:52:45.377
+<v SPEAKER_2>Das ist sehr, sehr mau. Also ich hätte jetzt auch irgendwie erwartet, dass das hier ein bisschen mehr bei rumkommt, aber offensichtlich...
+
+01:52:49.177 --> 01:53:35.497
+<v SPEAKER_5>Es gibt halt kein Silver Bullet in dem Sinne oder ein Allheilmittel. Im Endeffekt braucht das eine gewisse Bemühung von allen Seiten, sowohl von den Leuten, die Software schreiben, als auch von den Leuten, die das Thema administrieren, als auch von dem Endanwender. Auf allen Seiten, aber besonders auf Seiten der Endanwender, eine Sache, die schon sehr, sehr viel hilft, ist, wenn ich versuche, wenigstens einigermaßen zu verstehen, womit ich es zu tun habe und wie das funktioniert, weil ich dadurch schon relativ häufig Angriffsversuche anhand von unnormalem Verhalten erkennen kann. Zum Beispiel sehe ich in einer Spam oder in einer Phishing-E-Mail, kann ich dann anhand der URL erkennen, dass das nicht paypal.com ist und dass ich in diese Login-Seite nicht meine Paypal-Daten eingeben sollte.
+
+01:53:35.797 --> 01:53:41.097
+<v SPEAKER_2>Mit anderen Worten, Awareness schaffen, Aufmerksamkeit schaffen, Leute schulen.
+
+01:53:41.577 --> 01:53:42.837
+<v SPEAKER_3>Beste Variante.
+
+01:53:42.857 --> 01:53:49.197
+<v SPEAKER_2>Okay, das heißt, das ist mindestens so wertvoll und wichtig, wie Backups machen.
+
+01:53:49.217 --> 01:53:58.497
+<v SPEAKER_3>Weil die meisten Angriffe wie gesagt nicht direkt passieren, sondern eher jetzt heutzutage durch die ganzen Sicherheitsmaßnahmen eher auf den Menschen ziehen.
+
+01:53:59.577 --> 01:54:10.457
+<v SPEAKER_2>Okay, gut, dann würde ich sagen, machen wir an der Stelle, haben wir noch was vergessen? Das ist ja immer die wichtigste Frage. Legt euch noch irgendwas auf dem Herzen.
+
+01:54:10.997 --> 01:54:22.597
+<v SPEAKER_4>Also vergessen haben wir bestimmt ganz, ganz, ganz viel. Das Thema würde ja Bücher füllen oder diverse Podcasts. Insofern haben wir sicherlich ganz viele Themen hier einfach auslassen müssen.
+
+01:54:22.617 --> 01:54:36.477
+<v SPEAKER_2>Das ist aber denke ich vollkommen okay. Es gibt ja noch die Show Notes, die hier fleißig mit tippen und auf die möchte ich dann auch verweisen für weitere Informationen. Ansonsten könnt ihr es gerne auf dem Blog Kommentare hinterlassen.
+
+01:54:37.997 --> 01:54:49.277
+<v SPEAKER_3>Mich würde persönlich auch mal interessieren, ob die Zubehörer daran interessiert sind, die Schauer gegebenenfalls das Thema ein bisschen zu intensivieren.
+
+01:54:50.337 --> 01:55:06.837
+<v SPEAKER_2>Also mehr Übersicherheit in diversen Aspekten. Da wird schon geklatscht. Also auch da könnt ihr uns gerne Feedback zu geben, ob und in welcher Form ihr das gerne hättet. Ansonsten mache ich das Thema jetzt hier zu. Das war Chaosradio 226 und ich verabschiede mich von Nitram.
+
+01:55:07.977 --> 01:55:09.437
+<v SPEAKER_4>Ja, bis zum nächsten Mal.
+
+01:55:09.457 --> 01:55:15.837
+<v SPEAKER_2>Von Vakar. Und von Jasek.
+
+01:55:15.857 --> 01:55:17.057
+<v SPEAKER_5>Gute Nacht.
+
+01:55:17.077 --> 01:55:32.657
+<v SPEAKER_2>Und ich wünsche euch alles Gute. Das nächste Mal gibt es dann Chaosradio 227, wieder von Fritz, wieder mit Markus Richter. Und ich bin Danimo und wünsche euch noch einen schönen Tag oder eine schöne Nacht, wo immer ihr auch seid. Macht's gut, tschüss.

@@ -1,0 +1,733 @@
+WEBVTT
+
+00:03:15.343 --> 00:04:59.303
+<v SPEAKER_2>Hallo und guten Abend, mein Name ist Markus Richter. Ich spreche Mikrofon und tue das heute im Chaos Radio 249, live aus der Marienstraße 11 in Berlin zum Thema dezentrale Infrastruktur. Jetzt ist das Chaos Radio ja schon ein bisschen älter und die treuesten der treuen Hörerinnen und Hörer fragen sich vielleicht Moment mal, dezentrale Infrastruktur, dezentrale soziale Netzwerke, das hatten wir doch schon mal. Stimmt genau, am 26. Mai 2011. Aber wir sind halt alt genug, sozusagen um Dinge nochmal zu machen oder beziehungsweise abzudaten, weil in der Zwischenzeit einiges passiert ist. Damals wurde ausgerufen, Facebook ist tot, hoch die internationale Dezentralität. Ich sag's mal diplomatisch, das hat ja nicht so richtig funktioniert. Aber mittlerweile oder mal wieder ist ein neues Netzwerk an den Startgang oder eine neue Software, ein neues, wie das genau zu bezeichnen ist, müssen wir vielleicht auch noch klären. Auf jeden Fall wird viel darüber geredet, zumindest in den Kreisen der Menschen, die sich für Technik interessieren. Mastodon soll so eine Alternative möglicherweise sein. Es sind viele Leute dahin gegangen, als Twitter mal sich wieder selbst kaputt gemacht hat. Und das Ganze ist ein föderales System. Wir wollen heute in der Sendung mal also a. erklären, was ist denn eigentlich dieses komische Mastodon? Und andererseits, was ist denn eigentlich diese föderale Systeme, Interfaces, Software, Programme, Plattformen? Braucht man das überhaupt mehr, wenn ja, wozu ist das gut? Dazu beruhige ich es recht herzlich Rixx und Leah. Hallo und guten Abend. Zugeschaltet über Jitsi und Betreiber oder Admins des Chaos.Social Mastodon-Servers. Oder muss man Instanz sagen?
+
+00:05:01.763 --> 00:05:04.843
+<v SPEAKER_3>Geht beides. Wenn du besser klingen willst, sagst du Instanz.
+
+00:05:04.863 --> 00:05:24.143
+<v SPEAKER_2>Wenn ich so klingel, als ob ich Ahnung hätte, meinst du? Also die Instanz Admins. Außerdem hier vor Ort im Club sind Henning Krause von der Helmholtz-Gesellschaft. Hallo. Hallo. Und Arthur von Nextcloud. Hallo. Hallo. Jetzt ging es schnell zu sagen, das sind Mastodon-Admins. Arthur, du bist bei Nextcloud. Du machst dort genau was?
+
+00:05:24.163 --> 00:05:44.483
+<v SPEAKER_1>Ich bin dort Entwickler bei Nextcloud, hauptsächlich im Backend im Server. Ich kümmere mich dort um die LDAP-Anbindung zum Beispiel oder auch um die Infrastruktur, wie man die Kommentare hinterlassen kann zu Dateien oder auch zum Chat in Nextcloud Talk, das es seit kurzem gibt.
+
+00:05:44.503 --> 00:06:02.623
+<v SPEAKER_2>Nextcloud ist ja sozusagen etwas, das man kennt, um Dateien zu synchronisieren. Was das wiederum mit sozialen Netzwerken und dann auch noch für die Realisierung zu tun hat, das erklären wir auch im Laufe der Sendung. Henning Krause von der Helmholtz Gesellschaft. Das ist ja, wie hast du es vorhin gesagt, eine außeruniversitäre Forschungseinrichtung bzw. ein Verbund davon. Was genau ist das und was machst du da?
+
+00:06:02.943 --> 00:06:12.463
+<v SPEAKER_4>Genau, es gibt natürlich die ganzen Unis, die man so kennt und dann gibt es noch die außeruniversitäre Wissenschaft und wir als Helmholtz Gemeinschaft heißt es genau genommen.
+
+00:06:12.483 --> 00:06:14.423
+<v SPEAKER_2>Verdammt, der Server, die Instanz, die Gesellschaft.
+
+00:06:14.443 --> 00:06:36.603
+<v SPEAKER_4>Genau, sind eine von vier großen außeruniversitären Wissenschaftseinrichtungen neben Max Planck, Leibniz und Fraunhofer und wir von Helmholtz betreiben zum Beispiel Forschungsschiffe, die in die Antarktis und Arktis fahren, wie vom Alfred-Wegener-Institut. Wir machen Klimaforschung, wir machen Krebsforschung, Luft- und Raumfahrt und so haben wir ganz viele Wissenschaftsschiffe.
+
+00:06:36.623 --> 00:06:38.703
+<v SPEAKER_2>Habt ihr auch Todesleser?
+
+00:06:38.723 --> 00:06:40.723
+<v SPEAKER_4>Ja, doch, wir haben auch Todesleser, ja.
+
+00:06:40.743 --> 00:06:42.503
+<v SPEAKER_2>Hört sich gut an. Und was machst du da?
+
+00:06:42.523 --> 00:06:57.203
+<v SPEAKER_4>Ich arbeite hier in Berlin bei diesem Brückenkopf, der so übergeordnet ist und mach da in der Kommunikation die Social Media Kommunikation. Also ich bin ja Social Media-Fuzzi und mach da die ganzen bösen Sachen wie Twitter und Facebook, aber auch die guten wie Mastodon.
+
+00:06:57.223 --> 00:07:03.503
+<v SPEAKER_2>Okay, dann kannst du vielleicht gleich am Anfang erklären, was ist für dich Mastodon und wie bist du drauf gestoßen?
+
+00:07:04.603 --> 00:07:30.283
+<v SPEAKER_4>Also ich frage mich halt immer, wir wollen halt die Wissenschaft, die wir mit den Steuer finanziert von den Leuten so machen, wollen wir halt auch erklären, warum wir das machen. Wir wollen mit den Leuten, die an Wissenschaft interessiert sind, in Interaktion treten und dazu machen wir, benutzen wir halt eigentlich alle digitalen Kanäle, die irgendwie sinnvoll sind und sich anbieten. Und als ich im April letzten Jahres über Mastodon gestolpert bin, habe ich sofort gesagt, dezentrale Netzwerke.
+
+00:07:30.303 --> 00:07:43.343
+<v SPEAKER_2>Aber halt, was ist das? Ich bin ja hier immer der, der sozusagen vertreten für alle, die jetzt überhaupt keine Ahnung haben und jetzt ankommt und sagt so, Henning, ich habe gehört, Mastodon, something, something, Twitter, neu, was ist das?
+
+00:07:44.143 --> 00:08:20.263
+<v SPEAKER_4>Also ich würde sagen, wenn jemand sozusagen mit uns sich öffentlich austauschen möchte, wenn jemand mit uns chatten möchte, sozusagen öffentlich, so wie das auf Twitter auch geht, dann kann man das auch auf Mastodon machen und der tolle Vorteil davon ist halt, dass das nicht von einer privaten Firma betrieben wird, die eigentlich irgendwelche Geschäftsmodelle im Hintergrund hat und darauf gehend eigentlich alles optimiert, sondern dass das halt eine freie, offene Struktur ist, wo wir uns darauf verlassen können, dass zum Beispiel eine chronologische Timeline vorhanden sein wird und das nicht von irgendwelchen Geschäftsmodellen uns kaputt gemacht wird.
+
+00:08:24.823 --> 00:08:26.743
+<v SPEAKER_2>Leah, was würdest du sagen, Mastodon, was ist das eigentlich?
+
+00:08:28.403 --> 00:08:55.463
+<v SPEAKER_5>Das ist gar nicht so einfach zu sagen. Der Unterschied ist für mich, zum Beispiel, wenn man es vielleicht an einem Unterschied eben festmacht, einfach mehr Offenheit. Es ist eben nicht dieses, dass ich versucht werde, in ein Geschäftsmodell rein gepresst zu werden, mit meinen Aussagen, meinen Gefühlen, was auch immer ich auf Twitter teilen möchte. Und das geht einfach auf Mastodon einfach viel besser, weil da habe ich eben eine Plattform, die ich auch ganz anders nutzen kann, dadurch, dass ich eben nicht das Produkt letztendlich bin.
+
+00:08:55.483 --> 00:09:02.863
+<v SPEAKER_2>Ok, Arthur, benutzt du Mastodon? Du bist hier für NextLot heute hier. Benutzt du eigentlich Mastodon auch? Weißt du, was das ist?
+
+00:09:03.263 --> 00:09:26.843
+<v SPEAKER_1>Ja, ich weiß, was Mastodon ist. Ich selber benutze es nicht, weil ich anscheinend ein bisschen alt und verrostet bin und noch auf Diaspora rumhänge, aber NextLot selbst, unser Community Account, der hat eine Präsenz auf Mastodon und auch viele meiner Kollegen und Community Mitglieder sind halt eben auch da drauf. Da müsste ich auch nochmal nachziehen.
+
+00:09:26.863 --> 00:09:30.243
+<v SPEAKER_2>Rixx, wie würdest du Mastodon erklären?
+
+00:09:30.263 --> 00:09:58.523
+<v SPEAKER_3>Wenn ich das meiner Mutter erkläre, dann sag ich zuerst, das ist wie Twitter, dann guckt sie mich an und sagt, das hab ich auch noch nie verstanden, warum Leute Twitter brauchen. Und dann sag ich, naja, es ist halt ein Ort im Netz, wo ich mit Freunden und mir noch überhaupt nicht bekannten Leuten, die ich dann aber auch total cool finde, kommunizieren kann über ernste Sachen und über, boah, nee, mir ist gerade die Kaffeetasse schon wieder über den Laptop gekippt und alles dazwischen.
+
+00:09:58.543 --> 00:10:18.543
+<v SPEAKER_2>Mir ist die Kaffeekasse schon wieder über den Laptop gekippt, Münzchepper. Also, Mastodon, ich versuch's auch nochmal, ist ein soziales Netzwerk, das heißt, das ist etwas, das kann man sich in den Account zulegen, kann Menschen folgen, kann Dinge reinschreiben, Fotos posten und die liken und re-boost.
+
+00:10:19.883 --> 00:10:22.563
+<v SPEAKER_4>Nicht tuten, das nein.
+
+00:10:22.583 --> 00:10:42.463
+<v SPEAKER_2>Also was, genau, das ist eine schöne Sache. Es macht ein paar Sachen anders. Auf eine Grundlegende kommen wir gleich zu sprechen, die ja schon ein bisschen anklangt, dass es nämlich nicht einen Mastodon Server gibt, sondern ganz viele. Aber genau, was bei Twitter ein Tweet ist und bei Facebook ein Post und bei Instagram ein Bild. Was ist das bei Mastodon nochmal? Ein Toot, ein Tröt?
+
+00:10:43.583 --> 00:10:45.063
+<v SPEAKER_4>Ich glaube Toot auf Englisch, ja.
+
+00:10:47.263 --> 00:11:01.223
+<v SPEAKER_2>Genau. Warum seid ihr dahin gegangen? Also Henning, wenn ich dir jetzt schon zugehört habe, würde ich jetzt vermuten, du bist dafür zuständig für Wissenschaftskommunikation. Da ist etwas, da sind mehr als einer.
+
+00:11:04.223 --> 00:12:10.583
+<v SPEAKER_4>Genau. Erstens das und zweitens habe ich wirklich auch diesen Impuls, dass wir als Wissenschaftsorganisation vielleicht auch ein bisschen einen Weg bestreiten, in soziale Netzwerke zu gehen, die halt diese Probleme, die zum Beispiel Facebook mit sich bringt, wie wir das gesehen haben bei diesem Cambridge Analytica Skandal vor ein paar Monaten. Dass wir solche Probleme eigentlich auch vermeiden können. Natürlich hat man bei den zentralen Netzwerken andere Probleme, aber ich sehe schon immer diese ganze Diskussion, wo es Probleme gibt bei Facebook. Letztendlich kann man viel darauf runterbrechen, dass da immer irgendwelche Firmen dahinter stehen, die damit unbedingt Geld verdienen müssen. Und mir stellt sich wirklich die Frage, wieso ist das eigentlich so? Es gibt ja auch andere Dienste, die nicht monetarisiert werden, wie z.B. E-Mail und dann finde ich, dass wir als Wissenschaftsorganisation, als ein gesellschaftlicher Player auch sozusagen vielleicht ein Vorreiter, aber doch irgendwie auch früh mit dabei sein sollten, in solche Netzwerke reinzugehen, um dann halt auch Leute da reinzulocken.
+
+00:12:10.963 --> 00:12:47.423
+<v SPEAKER_2>Also ich sehe schon, wir müssen wirklich gleich drüber reden, was bedeutet eigentlich Föderalisierung und was ist das Problem an zentralen Diensten. Aber vorher würde ich bei Rixx und Leah noch mal fragen wollen, wie war denn eure erste Begegnung und was hat euch darauf aufmerksam gemacht? Bei mir war es ja wirklich so Twitter irgendwie cool, aber macht sich gerade kaputt dieses neue Ding. Da reden jetzt in meiner Umgebung so ein paar Leute davon, ich probiere es wenigstens mal aus. Dann hab ich da hingegangen und das sieht von der Timeline her so ähnlich aus wie Twitter. Es sind auch ein paar Leute, die man kennt, so gerade hier Berliner Chaos Umfeld, Podcaster und so weiter und so fort. Leah, wie war es bei dir?
+
+00:12:48.123 --> 00:12:57.103
+<v SPEAKER_5>Ja, bei mir war es eigentlich tatsächlich so, dass Rixx irgendwann auf mich zu gekommen ist, dass er gesagt hat, hier ist diese coole Software, wollen wir da nicht einfach gemeinsam in den Tanz?
+
+00:12:57.123 --> 00:13:05.823
+<v SPEAKER_2>Warte mal, also bevor du mit dem ganzen Ding in Kontakt gekommen bist, wurdest du schon gefragt, willst du da einen Admin machen?
+
+00:13:05.843 --> 00:13:17.003
+<v SPEAKER_5>Ja, so indirekt. Also ich glaube, Rixx kam da tatsächlich auf mich zu und meinte so, hier ist eigentlich ein cooles Projekt, wollen wir nicht.
+
+00:13:17.023 --> 00:13:21.683
+<v SPEAKER_2>Okay, Rixx, ich vermute zumindest, bevor man auf die Idee kommt, etwas selber zu betreiben, probiert man es aus.
+
+00:13:23.343 --> 00:15:18.483
+<v SPEAKER_3>Das ist jetzt ganz schön fies, weil jetzt liegt der schwarze Peter bei mir. Ich kann nicht sagen, oh, Leah hat voll die gute Idee. Stimmt. Ja, nee, wenn ich mich richtig erinnere, habe ich also auf Twitter rumgehangen und dann, ich glaube da oder auf Github, ist mir jedenfalls begegnet, dass Leute ein alternatives soziales Netzwerk aufmachen und ich bin auf Twitter noch nicht so unendlich lange aktiv, dass ich die vorherigen Versuche, davon wegzukommen, so aktiv erlebt habe. War also quasi für mich das erste Mal, dass ich gedacht habe, das sieht ja nett aus. Weil ich ja auch sonst schon so ein paar Dienste für mich selber hoste, in der Chaos-Community unterwegs bin und Twitter so am Ende der letzte große, nicht offene, nicht freie Silo war, in dem ich so drin steckte. Silo ist vielleicht fies, aber da habe ich mir das so ein bisschen angeguckt, habe festgestellt, das ist alles offene, freie Software, kann man sich angucken. Das wird auch von einigen Leuten genutzt. Dann fingen gerade etliche Leute an, das war letztes Jahr im April, eigene Instanzen aufzusetzen. Und ich habe überlegt, erst eine für mich selber aufzusetzen, aber dann hatte ich irgendwie gleich fünf oder sechs oder vielleicht auch mehr so 15 Leute, die gesagt haben, boah, das wäre voll cool, wenn du deine Instanzen hast, dann sag mal Bescheid. Und dann dachte ich, naja, das ist ja auch affig, dann kann es ja gleich was Größeres werden. Und hab halt mir Leah geschnappt, weil ganz alleine sowas administrieren macht immer keinen Spaß, nicht? Und Leah hat am Ende auch noch mehr Ahnung als ich mit dem ganzen admin Zeug. Ich mach das mehr auf der Seite, Leah macht das mit mehr Ernst und Können. Und dann dachte ich, setzt man sich das mal auf.
+
+00:15:19.923 --> 00:15:55.443
+<v SPEAKER_2>Okay, ich finde, ich würde sagen, dass man, ich bin ja beim Chaosradio ein bisschen müde, auch die Perspektive dessen, der von ganz vorne ankommt. Und das ist ganz schwierig, weil ihr alle schon sehr, sehr, sehr tief drin seid. Vielleicht müssen wir mal einen Schritt zurückgehen und fragen, was stört euch denn an der Name Silo viel gerade? Also es gibt ja die großen sozialen Netzwerke, halt Instagram, Facebook, Twitter sind, darauf bezieht sich der Silo-Name vielleicht an einem Ort. Also wenn ich mich da anmelde, dann melde ich mich halt auf der Webseite von Twitter slash Facebook slash Instagram an. Was stört euch daran?
+
+00:16:00.923 --> 00:17:21.343
+<v SPEAKER_3>Ich fange mal an, weil ich uns mit dem Silo da reingeritten habe. Na, was für mich da schwierig ist, ist, dass man so gar keine Einsicht und gar keinen Einfluss hat. Also ich habe keine Einsicht, was Twitter in Wirklichkeit mit meinen Daten macht und was sie überhaupt sammeln. Ich kann jetzt natürlich Datenauskunftsbegehren stellen und ich kann denen auch glauben, was sie alles an Werbedienstleister weiterverkaufen und was nicht. Aber die machen da ja schon sehr viel, so Zielgruppenaufbereitungen finden raus, was mich wahrscheinlich interessiert und wem sie das mit meine Daten am besten geben können und Werbung schalten lassen. Und das alleine finde ich schon gar nicht mal so attraktiv. Und außerdem habe ich halt keinen Einfluss, nicht? Also Twitter ist ja relativ bekannt dafür, immer mal wieder auf Ideen zu kommen und die auch umzusetzen, die die Community eigentlich nicht geil findet. Also ob das jetzt was albernes ist, wie ob das Symbol für einen Pfaff ein Stern oder ein Herz ist oder was Größeres wie die Timeline zeigt dir plötzlich mehr die Sachen von den Leuten, mit denen du mehr interagierst, statt von allen Leuten gleichberechtigt. Das sind halt alles Dinge, auf die man genau null Einfluss hat. Da sehe ich mich dann ziemlich schnell nach Alternativen.
+
+00:17:21.763 --> 00:17:38.203
+<v SPEAKER_2>Also das heißt, es geht, ich will nur kurz nachfragen, es geht dir sozusagen nicht so sehr um was Konkretes, was dich geärgert hat, sondern eher um so ein Gefühl, der Ohn macht, weil du da irgendwo unterwegs bist und, wie du gesagt hast, keine Kontrolle hast. Also du hast nicht einen konkreten Vorwurf, sondern du willst eher mehr Kontrolle.
+
+00:17:39.103 --> 00:17:45.643
+<v SPEAKER_3>Ich habe eine ganze Liste konkreter Vorwürfe. Das wäre jetzt ein bisschen lang geworden und ich glaube, das fährt uns am besten zusammen.
+
+00:17:48.183 --> 00:18:31.763
+<v SPEAKER_5>Was ich noch einen ganz wichtigen Punkt finde, mal davon abgesehen, dass ich mich da Tobi siedlerweit anschließen würde, ein ganz großes Problem ist einfach auch, wie Twitter mit den Nutzern an sich umgeht. Also wir haben ja alleine immer das Beispiel von irgendwelchen Hassnachrichten und so weiter. Das ist ganz oft, dass die Leute, die eh schon marginalisiert werden, dann auch noch von Twitter gesperrt werden, wenn sie sich irgendwie sagen, hier, da ist gerade was passiert. Meistens dann sogar noch in so Fällen, wenn sie den Tweet einfach nur zitieren und Twitter dann mal die ja, das haben die doch gesagt. Und das ist auch ein Problem, das ich ganz groß sehe, dass es ganz unsichtbar ist, wo da Wärm wie moderiert und einfach dass sehr intransparent einfach an der Stelle ist.
+
+00:18:31.803 --> 00:18:36.103
+<v SPEAKER_2>Henning?
+
+00:18:36.123 --> 00:19:39.143
+<v SPEAKER_4>Also ich denke, ich muss auch grundsätzlich sagen, wenn man sich heute mal neu ausdenken würde, wir haben so ein Bedürfnis, irgendwie sich digital miteinander auszutauschen. Das haben die Menschen einfach. Das geht auch nicht wieder weg. Aber wenn man sich heute mal neu ausdenken würde, wie würde man sich denn solchen, so einen digitalen Austausch gewährleisten können, dann würde man wahrscheinlich nicht da landen, dass man irgendwie drei, vier große Firmen hat, die dann diese Apps betreiben und diese Dienste betreiben. Sondern ich würde mir wirklich denken, dass wir als Gesellschaft diesen digitalen Austausch auch so wichtig, für so wichtig halten müssen, dass man so einen digitalen Diskursraum, ähnlich wie einen Straßenverkehr, ich weiß, diese Straßenanalogien sind immer ganz gefährlich hier bei den Nerds, dass man so wie wir auch eine Straßeninfrastruktur öffentlich betreiben, dass man vielleicht auch da hinkommt, dass es eine so eine verteilte Infrastruktur ist.
+
+00:19:39.163 --> 00:19:44.443
+<v SPEAKER_2>Halt, bevor wir dahingehen, was die Lösungen für die Probleme sein könnten, was sind denn die Probleme?
+
+00:19:46.383 --> 00:20:54.963
+<v SPEAKER_4>Wir haben das zum Beispiel bei diesem Cambridge Analytica Skandal im März und April gesehen, dass Facebook, Schindluder mit den Daten betrieben hat, dass sie Firmen Zugriff auf Daten gegeben hat, wo wir alle uns nicht darüber im Klaren waren, dass das mit unseren Daten passieren könnte. Und die machen das, das passiert natürlich deswegen, weil die Geld verdienen wollen auf gewisse Art und Weise. Und ich sehe, ich halte dieses, Leute wollen sich digital austauschen, für so wichtig, dass man da das dem wirtschaftlichen Kreislauf ruhig entreißen kann und sagen kann, das ist jetzt hier mal gesellschaftlich ein so wichtiger Aspekt, dass Leute sich digital austauschen können, dass daran nicht unbedingt Geld verdient werden muss. So wie auch am Wassersystem, man das vor ein paar Jahren in Berlin mal wieder zurückgekauft hat aus der privaten Hand in die öffentliche Hand. Und dass es keine Notwendigkeit gibt, da unbedingt jetzt irgendwie, dass da Leute mitreich werden müssen, sondern das muss halt betrieben werden, das muss funktionieren und das muss nicht irgendwie von ein paar wenigen Firmen betrieben werden.
+
+00:20:56.183 --> 00:22:04.223
+<v SPEAKER_2>Das heißt aber, also die Gründe, die ihr alle genannt habt, die sind schon sehr auf einer Metaebene. Es geht also nicht so sehr ums konkrete Wehwehchen, sage ich mal, die damit geklärt werden, sondern eher ums große Ganze. Also der Kontrollverlust, die Transparenz der Moderation und die ganz grundsätzliche Frage, wie organisiert Gesellschaft eine soziale Interaktion im Digitalen? Was ich ganz spannend finde und das Ding ist zu jedem dieser einzelnen Punkte, hätte ich jetzt eigentlich sofort die Frage, naja Moment mal, aber wie wird denn das jetzt durch Mastodon gelöst? Mir fällt gerade auf, dass wir heute dann auch noch mal über zwei Sachen reden müssen. Weil also einerseits ist Mastodon halt eine konkrete Software und die er heute ein ausführliches Beispiel sein wird, aber halt auch nur ein Beispiel ist für die Technologie, über die wir eigentlich reden wollen. Das ist der andere Punkt, nämlich die Föderalisierung von Systemen. Und da würde ich jetzt, bevor wir dann gleich in die erste Pause gehen, das mal fragen wollen, kann mal bitte jemand von euch, bitte um ein Handzeichen, erklären, was diese Föderalisierung eigentlich heißt. So einfach wie möglich. Wer möchte? Möchte jemand? Rixx?
+
+00:22:07.623 --> 00:22:31.923
+<v SPEAKER_5>Also um es mal an einem Beispiel festzumachen, das vermute ich auch die meisten Leute kennen werden. Das ist einfach, zum Beispiel E-Mail ist da sehr ähnlich. Das heißt, ich kann mir eigentlich, habe ein System, in dem ich nicht einen Anbieter habe, sondern in dem ich viele Anbieter haben kann und die trotzdem sich auf einen Standard sozusagen geeinigt haben, sodass ich miteinander kommunizieren kann, egal welchen Anbieter ich mir raussuche.
+
+00:22:36.323 --> 00:23:32.763
+<v SPEAKER_2>Das heißt also bei E-Mail ist es der Fall, ich mache mir meinen eigenen E-Mail-Account, also um einen großen zu sagen bei Gmail oder halt bei meinem eigenen Web-Server, weil mein Web-Server anbietet, ich setze selber einen Mail-Server aus, also diese ganzen Abstufungen und dann können wir aber trotzdem untereinander interagieren. Das ist die Grundlage des Föderalismus. Okay und dann ist sozusagen, was muss man, kannst du das noch genauer erklären, was das in sozialen Netzwerken bedeutet? Also was ist der Unterschied zwischen einem zentralen sozialen Netzwerk und einem dezentralen? Und vor allen Dingen, was das Dezentrale können muss? Also wenn ich mir das richtig verstanden habe, ist es ja so, also Mastodon ist sowas wie Twitter, aber ich kann mir selber einen Server einrichten. Und dann ist es ja, wenn es wie Twitter wäre, könnte ich dann nur mit den Leuten interagieren, die auf demselben Server sind. Das geht aber, aber Mastodon kann mehr.
+
+00:23:32.783 --> 00:24:08.643
+<v SPEAKER_5>Genau. Im Prinzip hast du ja schon jetzt zwei Beispiele gebracht, mit Twitter und Mastodon. Also Twitter als zentralistisch aufgebauten Dienst und Mastodon eher als dezentral aufgebauten Dienst. Und da muss einfach natürlich jedem durch gewisse Standards, im Falle von Mastodon ist das jetzt Activity Pub, sichergestellt werden, dass diese ganzen Einzelinstanzen, diese Einzelinstallationen, die auch jeder selbst betreiben kann, miteinander reden können. Das ist die Grundbedingung und die muss eben sichergestellt werden, über standardisierte Sprachprotokolle.
+
+00:24:08.663 --> 00:24:14.083
+<v SPEAKER_2>Sprache, also nicht im Sinne von Audio, sondern Sprache im Sinne von, dass die verschiedenen Instanzen miteinander reden können.
+
+00:24:14.683 --> 00:24:16.583
+<v SPEAKER_5>Ja, ein definiertes Format eben.
+
+00:24:16.623 --> 00:32:07.808
+<v SPEAKER_2>Okay, über dieses übrigens, das kann ja dann jeder betreiben, müssen wir nachher auch noch mal ausführlich reden. Wir machen aber jetzt erst mal... Das ist ein Anführungszeichen, aber wir werden sozusagen gleich noch mal rausfinden, wie groß die Anführungszeichen sein werden. Jetzt machen wir erst mal eine kleine Pause. Und die ist wie immer untermalet mit Netzmusik. Die kommt heute von Timecrawler, die sehr schöne Musik gemacht haben, die Mo rausgesucht hat. Netzmusik kann man sich frei runterladen. Das Album heißt Osaka 82 und hört sich so ein bisschen an, wie so eine Mischung aus Blade Runner Musik und Pixel Grafik. Also soweit sich Musik wie Pixel Grafik einhören kann. Einfach mal reinhören. Alle Songs kommen heute von diesem Album. Und der erste ist Driving in the Rain. Driving in the Rain von Timecrawler, Netzmusik im Chaosradio 249, wo wir dezentrale Infrastrukturen am Beispiel von Masterdon und anderen reden wollen. Hallo und herzlich willkommen zurück. Ich würde jetzt gerne darüber sprechen, was genau Masterdon macht, was es anders macht und was für Vorteile das hat und welche Probleme es vielleicht noch gibt. Ein großes Ding ist ja zum Beispiel, was bei Twitter oder was eigentlich bei jedem größeren sozialen Netzwerk, zumindest bei den Power-Usern für Unmut gesorgt hat, ist die Timeline ist nicht mehr chronologisch. Also früher war es ja so, man hat was gepostet, dann ist das da in der Timeline aufgetaucht. Also wenn ich Leuten gefolgt bin oder die abonniert habe, dann habe ich ganz oben gelesen, was hat jemand als letztes gepostet. Dann ging das halt sozusagen der zeitlichen Reihenfolge nach unten. Irgendwann, ich glaube Facebook hat damit angefangen, war das so, nein, wir werden jetzt mal aufgrund der Likes, die du schon ausgegeben hast, mal versuchen, rauszufinden, was könnte dir denn jetzt am besten gefallen? Das hat dann überall übergegriffen. Und dann war es bei Twitter, das hat auch für Unmut gesorgt, sogar so, dass sie nicht nur diese Timeline algorithmisch sortiert haben, sondern nicht nur Tweets gezeigt haben, die Leute geschrieben haben, denen man gefolgt ist, sondern auch Tweets auf Tweets von Andi, wie war das? Tweets, die Leute geliked habe, denen ich folge. So rum, also die Timeline war so ein wildes Mischmasch, über das man keine Kontrolle hatte, Mastodon macht und darüber müssen wir auch noch mal reden, bevor wir zum föderalen Aspekt kommen, ein paar Sachen anders. Zum Beispiel nämlich, es macht eine chronologische Timeline. Das heißt, wenn ich da reingucke, dann lese ich da genau von vorne nach hinten, was gerade passiert ist. Leah und Rixx, ich würde von euch gerne wissen, was ist da noch anders? Was sind für euch noch wichtige Unterschiede zu Twitter?
+
+00:32:07.828 --> 00:33:58.168
+<v SPEAKER_3>Auch der Unterschied, der den Leuten vor allem ganz am Anfang als erstes ins Auge gefallen ist, ist, dass man 500 Zeichen Platz hat, um sich textlich auszutoben. Es hat ja alles angefangen, als Twitter noch fix auf 140 Zeichen waren. Da sahen sich Leute dann plötzlich damit überfordert, so einen großen langen Deutschaufsatz zu schreiben, weil man dringend erst mal den Platz nutzen musste. Es behandelt die Sichtbarkeit, die Öffentlichkeit von Statussen granularer. Auf Twitter kann ich ja quasi sagen, entweder mein Account ist öffentlich oder privat. Wenn er privat ist, dann sehen nur Leute, die ich mir folgen lasse, die Nachrichten. Sonst sieht es jeder. Auf Mastodon kann man das pro Status auswählen. Ob nur die Leute, die mir folgen, das sehen können sollen oder sogar nur die Leute, die ich erwähne. Das ist dann eine Privatnachricht für zwei bis n Personen. Oder ob es komplett öffentlich ist. Oder sogar nur auf der, Achtung, nächstes Feature, lokalen Timeline nicht zu sehen sein soll. Das ist, glaube ich, der andere große Unterschied für die Nutzenden ist, dass es nicht nur die eine Timeline gibt, die man auf Twitter hat, sondern noch mehrere daneben. Nämlich die Timeline, die man auf Twitter hat, ist ja die von den Leuten, denen man folgt. Oder auch noch, was die liken oder nicht auf Twitter. Und auf Mastodon gibt es daneben noch die lokale Timeline, wo man sieht, was auf der eigenen Instanz so los ist, unabhängig davon, ob man den Leuten folgt oder nicht. Und die globale, die einen Einblick in dieses ganze Fediverse, in den ganzen Instanzen, Verbund gibt.
+
+00:33:59.248 --> 00:34:17.368
+<v SPEAKER_2>Also die Analogie bei Twitter wäre ja, ich lese auf twitter.com, was alle Twitterer auf der ganzen Welt schreiben. Und ich vermute mal, die für Mastodon insgesamt ist genauso unläsbar. Diese lokalen Timelines, bringen die tatsächlich irgendwas? Kann man denen noch folgen?
+
+00:34:20.708 --> 00:34:41.728
+<v SPEAKER_5>Es kommt ein bisschen auf die Instanzgröße an. Das ist unter anderem auch ein Faktor, warum es zum Teil relativ kleine Instanzen gibt. Weil es sich dadurch eben, was auch anbietet, Instanzen für ein spezielles Thema aufzumachen. Weil sich da dann eben innerhalb dieser lokalen Timeline einfach auch Leute treffen können und kennenlernen können.
+
+00:34:41.748 --> 00:35:29.828
+<v SPEAKER_2>Ich finde ja, es gibt so ein paar Unterschiede auch, die sich mir nicht ganz erschließen. Vielleicht könnte ich mir da auf die Beine helfen. Also alle hier Anwesenden, die angesprochen fühlen. Das eine ist Direct Messages. Bei Twitter gibt es ja, da kann ich mir mit einem oder mehreren Leuten hin und her schreiben in so einer Art Messenger. Und das ist dann abgeteilt. Also in einem extra Postfach kann man sagen. Und das ist bei MasterDone nicht so, sondern die Direktnachrichten tauchen in der normalen Timeline auch auf. Also es gibt auch ein extra Fach, das kann man aufmachen, aber es taucht dann in der normalen Timeline auf. Was es, finde ich, unfassbar schwierig macht zu erkennen, ob jetzt gerade da jemand mir die direkte Nachricht schreibt oder nicht. Die sind farblich, also es kommt dann auf ein Client an oder Web-Unterfax, die sind ein bisschen anders farblich unterlegt. Aber es ist halt auf den ersten Blick unfassbar schwierig, finde ich.
+
+00:35:30.028 --> 00:35:34.908
+<v SPEAKER_4>Aber hey, dafür kann man sie faffen. Man kann DMs faffen. Wie geil ist das denn?
+
+00:35:34.928 --> 00:36:13.448
+<v SPEAKER_2>Ich weiß nicht genau. Was ich dann im Konzept ganz cool fand, war, dass es sozusagen sehr einfach möglich ist, von einem Post von jemandem in eine direkte Kommunikation zu wechseln. Also jemand schreibt was und ich möchte dem antworten, aber ich möchte dem eigentlich nicht öffentlich antworten. Dann klicke ich sozusagen auf Reply, sage dann, es soll aber eine DM sein. Das fand ich ganz praktisch. Trotzdem frage ich mich, wir haben auch versucht, den Macher, tatsächlich einen zu laden, der sitzt ja in Jena, aber er hatte keine Zeit, wollte nicht, keine Ahnung. Wisst ihr, was der Grund dahinter ist? Oder gibt es eine Idee für dieses Konzept, Derrick Messages in der sozusagen normalen Post Timeline anzuzeigen?
+
+00:36:15.128 --> 00:36:51.308
+<v SPEAKER_3>Na, das liegt genau daran, was du gesagt hast, dass die sich dadurch so gut in Gespräche einbetten und dass man die Öffentlichkeit eines Gesprächs weiter runterschrauben kann. Das bildet halt quasi auch direkt ab, wie dieses Fediverse über direkte Nachrichten denkt, nämlich das ist quasi nur eine weitere Unterhaltung, wie jede andere Unterhaltung da auch, nur dass sie ein paar weniger Leuten zugänglich ist. Und man kann sie sich ja trotzdem zusätzlich noch in dem Privatnachrichtenfach angucken. Das besteht ja auch, wie die lokale Timeline, halt quasi noch eine weitere Speite für eine weitere Sichtbarkeit.
+
+00:36:52.108 --> 00:38:15.928
+<v SPEAKER_2>Was ich ganz spannend an diesem Konzept fand, war tatsächlich, dass ich für mich, also es gibt ja immer den Streit um Direct Messages oder Messenger, nämlich den Streit, dass man sagt, naja, solange da nicht ordentlich Krypto drauf ist, sollte man das eigentlich nicht für private Nachrichten benutzen. Und was ich tatsächlich ganz interessant fand, ist, dass für mich in meinem Kopf, dadurch dieses, dass es in der öffentlichen Teilmann stattfindet, dass es tatsächlich so eine Sache hat wie von, naja, also ich unterhalte mich zwar jetzt konkret mit diesen ganz bestimmten Leuten, aber vom Gefühl, es ist trotzdem öffentlicher Raum. Also eher so wie ich sitze in der Kneipe, unterhalte mich in den und nicht sozusagen, ich sitze in meinem Wohnzimmer. Eine andere Sache, und da dachte ich also, okay, es gibt also eine Interpretation dieser Technologie, die ich als sinnvoll empfinden kann und die tatsächlich auch was macht, was so einen pädagogischen Effekt hat, nämlich Direct Messages sind nicht total sicher, sondern nur sozusagen so eine semiöffentliche Unterhaltung. Wo ich das aber nicht gefunden habe, ist, es gibt ein anderes Feature und zwar bei Twitter kann man Quote tweeten heißt das, also ich kann einen anderen Tweet in meinen Tweet einbetten und den dann direkt kommentieren und das geht auch nicht und das soll eine bewusste Entscheidung gewesen sein, also das geht auch nicht, das geht nicht bei Mastodon, das soll eine bewusste Entscheidung gewesen sein, weil das anscheinend also Hate Speech verhindern soll, mir ist aber nicht ganz klar wie.
+
+00:38:17.008 --> 00:38:42.028
+<v SPEAKER_5>Genau, im Prinzip ist das an der Stelle der Punkt bzw. der Gedanke, zu sagen ich rede nicht über jemanden, sondern ich rede mit jemanden, indem man die Leute eben dazu zwingt, auf den Ursprungs-Tut zu antworten. Weil wenn ich zitieren würde, hätte ich ganz schnell das Problem, dass ich eben so ein bisschen rausgenommen werde und anderen eben die Möglichkeit hätte, über mich zu reden, statt mit mir zu reden und das ist diese Idee dahinter.
+
+00:38:43.888 --> 00:39:50.628
+<v SPEAKER_2>Also die Denke ist, dass dieses Feature wird vor allem dazu benutzt, um andere Leute dem Phras vorzuwerfen. Also ich sage meinen Followern, guck mal hier, was da gepostet wurde, was für ein Quatsch. Ich habe es immer dazu benutzt, um etwas zu einem Titel zu sagen, wo ich denke, hier, das ist ein öffentliches, aber egal. Was ist denn jetzt so, und jetzt wollen wir ja eigentlich, das sind ja Eigenschaften dieser Software. Die könnten ja aber genauso realisiert worden sein, wenn das genau wie Twitter auf einer einzelnen Instanz laufen würde. Also es gäbe eine Seite, wo man sich anmeldet und Mastodon benutzt und es wäre dann genau dasselbe. Da können wir auch diese ganzen Dinge, die wir jetzt gerade gesagt haben, machen, außer die lokale Timeline. Könnt ihr mal kurz erklären, was sind denn jetzt die Besonderheiten, die durchs Föderale entstehen? Also das Bild, also ein Mastodon ist ja ein ausgestorbenes Rüsseltier. Auch wenn ich gerade von meinem Teil mal gesagt kriege, ich soll bitte lieber an die Metalband denken. Das, was mit den verschiedenen Instanzen verbunden ist, ist so ein Herdengedanke. Ist das richtig?
+
+00:39:50.648 --> 00:40:23.428
+<v SPEAKER_5>Wir hatten es ja ganz kurz vorhin schon, dass sich dadurch zum Beispiel auch einfach etwas geben kann, dass man das mal grobenspezifische Instanzen betreibt. Also zum Beispiel themenspezifisch. Wenn ich mich nicht irre, gibt es zum Beispiel Instanzen für Leute aus der Amateurfunk-Ecke oder es gibt Instanzen für ganz andere Themen. Und das sind eben Möglichkeiten, die da dieses föderale System bietet. Aber es gibt noch viele andere Möglichkeiten. Vielleicht können wir noch ein paar weitere Ideen.
+
+00:40:23.448 --> 00:41:35.528
+<v SPEAKER_3>Genau, ein weiterer schöner Vorteil ist, dass die Instanzen gar nicht gezwungen sind, alle genau die selbe Software am Laufen zu haben. Ich will jetzt gar nicht darauf eingehen, dass es neben Mastodon noch Alternativen gibt, die auch so als Mikro-Blogging funktionieren. Aber man kann erstmal Kleinigkeiten ändern. Man kann ändern, wie die Instanz aussieht. Es gibt Instanzen, die sind einfach in anderen Farben gestylt oder die haben eigene Maskottchen. Bei uns hat z.B. das Mammut eine kleine Ferrari-Dust im Brüssel statt eines Papierfliegers. Und es gibt auch Instanzen, die laufen auf leicht modifiziertem Code, der z.B. erlaubt, mehr als 500 Zeichen zu posten. Oder wo kleinere Features dazu gebaut wurden, die im Kernmastodon es noch nicht geschafft haben oder vielleicht auch grundsätzlich nicht geschafft haben, die aber Leuten wichtig genug waren, dass sie halt den Code modifiziert haben, davon gestartet haben und mit dem dann ihre Mastodon Instanz betreiben und so dann da andere Features bieten.
+
+00:41:35.888 --> 00:41:51.028
+<v SPEAKER_2>Wenn ich es richtig verstanden habe, ist es ja so, das große Ding an Mastodon ist, ich kann es auf verschiedenen Servern aufsetzen, ich kann meine eigene Instanz betreiben und die können aber trotzdem alle miteinander reden. Aber in dem Moment, wo ich den Code verändere, laufe ich da nicht in Gefahr, dass genau das kaputt geht?
+
+00:41:53.088 --> 00:42:10.528
+<v SPEAKER_3>Das kannst du natürlich nur einfach so machen, wenn du so ein bisschen weißt, was du tust. Wenn du veränderst, wie die Server ihre Nachrichten zueinander schicken, dann wird es schwierig. Also wenn du diese Ebene der Kommunikation zwischen den Servern angreifst, dann ja. Aber den Servern ist ja völlig egal, welche Farbe eine andere Instanz hat. Das sehen die ja nicht mal.
+
+00:42:10.548 --> 00:42:14.428
+<v SPEAKER_2>Aber zum Beispiel die Länge der Nachrichten könnte auch schon ein Problem sein, oder?
+
+00:42:14.448 --> 00:42:44.428
+<v SPEAKER_3>Könnte ein Problem sein, wenn wir uns einfach auf das Hirn gespinst eines Entwicklers und wie der sich denkt, wie Server kommunizieren sollen, verlassen müssten. Aber glücklicherweise gibt es da ja einen Standard. Wir sind ja Nerds und wir haben ja für alles einen Standard oder meistens auch mehr, so fünf bis fünfzehn. Und in dem Fall sagen die Standards nichts darüber, wie lang die Nachrichten sein dürfen. Und deshalb lässt sich da einiges modifizieren.
+
+00:42:46.988 --> 00:43:11.908
+<v SPEAKER_2>Also quasi solange man sich innerhalb dieses Rahmes bewegt, ist dann auch die Interoperabilität nicht gefährdet. Henning, hast du noch besondere Vorteile, die für dich aus dem föderalen System? Also das eine Ding, da will ich gleich noch genauer drüber reden, ist, man ist nicht in der Hand des einen Betreiber. Da spreche ich gleich noch drüber, aber hat ansonsten dieses System. Es gibt da verschiedene Instanzen noch einen Vorteil für dich?
+
+00:43:15.348 --> 00:43:32.988
+<v SPEAKER_4>Da mir ist eben nur als ein Beispiel eingefallen, dass man nicht nur so thematische Instanzen haben kann, sondern es gibt auch regionale Instanzen. Also ein Freund von mir betreibt zum Beispiel Bonn.Social. Und da machen die allerlei auch lokalen Inhalt, der sich irgendwie auf Bonn bezieht. Und sowas geht natürlich auch. Aber ansonsten fällt mir jetzt gerade nichts ein.
+
+00:43:33.008 --> 00:44:13.868
+<v SPEAKER_2>Jetzt muss man eine Frage stellen, die ist auch sozusagen vereinzelt vorgekommen. Das heißt ja, wenn ich mich für eine Instanz interessiere, warte mal, ich muss mal kurz sagen. Also, es gibt verschiedene Instanzen und die können verschiedene Themen haben. Also nicht müssen, aber können. Und wenn ich mich jetzt für die interessiere, habe ich ja zwei Möglichkeiten. Entweder ich mache mir einen Account auf irgendeiner Instanz und abonniere dann von der anderen Instanz halt die Accounts, die mich interessieren. Also ich gehe sozusagen gezielt zu Bonn Social oder halt zur Instanz der Einhorn Freunde und sag dann, aha, irgendwie guck mir die lokale Timeline an, dann seh ich ein paar Accounts, denen folge ich. Kann ich auch einer anderen lokalen Timeline folgen?
+
+00:44:17.268 --> 00:44:42.828
+<v SPEAKER_5>Also du hast für deine Instanz erstmal nur die lokale Timeline. ZB wenn du jetzt das Webinterface benutzt. Es gibt inzwischen aber Apps, oder Clients eben fürs Handy zum Beispiel, die das nochmal ein bisschen spezifischer machen, die dann ermöglichen, in anderen Instanten sozusagen in die lokale Timeline reinzugucken. Ein Beispiel wäre z.B. Masterlab, das kann das.
+
+00:44:42.848 --> 00:45:08.028
+<v SPEAKER_2>Aber es ist nicht so, dass ich quasi sagen kann, also wenn ich bei mir auf den Reiter lokale Timeline, jetzt wird man ja Quatsch sagen, es gibt nicht dieses Ding, ich sage, ich möchte gerne in den lokalen Timelines folgen von Einhornfreunde, BonSocial und ChaosSocial. Das heißt also, wenn ich das will, dann ist die andere Wahl, die ich habe, ich mache mir auf jeder Instanz, die mich interessiert, einen Account.
+
+00:45:09.588 --> 00:45:10.348
+<v SPEAKER_5>Genau.
+
+00:45:10.368 --> 00:45:15.568
+<v SPEAKER_2>Und dann habe ich aber drei einzelne Accounts.
+
+00:45:15.588 --> 00:45:23.528
+<v SPEAKER_5>Was nicht unbedingt ein Riesenproblem ist, die meisten Clients, wenn man mal vom Webinterface absieht, können mehrere Accounts.
+
+00:45:23.548 --> 00:45:29.568
+<v SPEAKER_2>Was heißt, können mehrere Accounts, man muss sie dann umschalten oder man hat dann eine Timeline, die das alles verbindet?
+
+00:45:29.568 --> 00:45:36.808
+<v SPEAKER_5>Genau, das ist theoretisch möglich. Das kommt eben ein bisschen drauf an, was der Client gerade macht.
+
+00:45:36.828 --> 00:45:44.828
+<v SPEAKER_2>Also theoretisch möglich, ist es auch praktisch? Hat da jemand Erfahrung mit dem Betreiben von mehreren Accounts?
+
+00:45:44.848 --> 00:46:03.408
+<v SPEAKER_5>Ich habe zum Beispiel mehrere Accounts, weil wir zum Beispiel auch noch auf CarScoutSocial einen Ordnung-Account haben, über den wir so offizielle Sachen publizieren. Und der ist natürlich genauso eingerichtet in meinem Tüder. Und da läuft das einfach beides rein. Und ich sehe das einfach, das ist ein Wisch zu Seite. Und dann sehe ich die anderen Sachen.
+
+00:46:03.428 --> 00:46:04.708
+<v SPEAKER_2>Also du musst die Accounts umschalten?
+
+00:46:06.328 --> 00:46:12.588
+<v SPEAKER_5>Nein, das ist einfach nur einmal zu Seite Wischen sozusagen. Aber ich könnte es auch in eins laufen lassen.
+
+00:46:12.608 --> 00:46:14.508
+<v SPEAKER_2>Okay, weil, ja, Henning?
+
+00:46:14.528 --> 00:46:37.968
+<v SPEAKER_4>Ja, eine andere Möglichkeit, sozusagen auch instanzübergreifend zu kommunizieren und zu lesen, sind natürlich auch Hashtags. Bei mir in der App ist es dann zumindest so, dass sozusagen die Hashtags dann aus der globalen federierten Timeline rausgesucht werden und ich dann zu einem Hashtag wie Introduction zum Beispiel, wo Leute sich, die jetzt eine neue Account aufgesetzt haben, erstmal selbst vorstellen, dann auch das sehe, wenn das von anderen Instanzen herkommt und ich dann entscheiden kann, ob ich denen vielleicht folgen möchte.
+
+00:46:39.708 --> 00:47:24.248
+<v SPEAKER_2>Also ich muss aber ganz ehrlich sagen, als jemand, der nicht unbedingt ganz viele Accounts haben möchte, sondern der ist schon eher überlegen, schaffe ich diesen Masterdown-Account tatsächlich? Ich finde das auch ein spannendes Projekt sozusagen. Aber wie wird das, wenn die Phase des oh, ein spannendes neues Ding vorbei ist? Finde ich die Vorstellung davon, dass man dann mehrere Accounts braucht, eigentlich ist das ein bisschen erschreckend. Also um mal, ich versuche gerade zu übersetzen, wie das in der alten, in Anführungszeichen, Technologie geht. Und da wäre der Facebook-Gruppen eigentlich so ein Ding. Also wenn ihr sagt, man kann so eine Instanz aufsetzen, dann ist die thematisch sozusagen, hat hier einen Fokus. Das wäre ja, auf Facebook hab ich einen Account. Und wenn ich mich für thematisch für was interessiere, gehe ich in Gruppen rein. Und dann hätte ich dieses Problem nicht.
+
+00:47:27.688 --> 00:47:51.548
+<v SPEAKER_3>Insofern, als das die lokale Timeline zwar ein Aspekt, so eine Instanz ist, aber halt nicht der einzige. Die lokale Timeline ist super, um neue Leute kennenzulernen. Und so ein bisschen über den Tellerrand zu schauen. Aber um das zu haben, reicht es dir eben auch, so einen Client zu haben, wo du einfach in andere lokale Timelines reingucken kannst. Da brauchst du keinen extra Account für.
+
+00:47:51.568 --> 00:47:56.148
+<v SPEAKER_2>Okay, das heißt, ich soll mir den gar nicht zulegen, oder gibt es andere Gründe, warum das praktisch sein kann?
+
+00:47:56.228 --> 00:48:53.328
+<v SPEAKER_3>Da gibt es andere Gründe. Es gibt, wenn dich ein Thema so sehr interessiert und du es so sehr berathalten willst, dass du dafür einen zweiten Account betreiben willst. Oder du aus anderen Gründen dein Profil trennen willst. Also es gibt Leute, die schreiben auf mehrere Accounts jeweils in einer Sprache, um das auseinanderzuhalten. Und nehmen sich dann oft gleich eine andere Instanz dafür. Mal eine englischsprachige und mal eine in ihrer regionalen Sprache. Oder die haben starke Interessengebiete. Ich habe bemerkt, dass ich so viel darüber schreibe, was für Bücher ich gerade wieder lese. Und welche ich als nächstes lesen will. Und was für Meinungen ich da habe. Und das sind viele Meinungen. Dass das die Leute auf Chaos.Social gar nicht so irre interessiert hat. Und vor allem es Instanzen gibt, die sich damit viel mehr beschäftigen. Wo ich auch Leute kennenlernen will. Und deshalb habe ich mir da einen zweiten Account gemacht.
+
+00:48:54.648 --> 00:49:41.028
+<v SPEAKER_2>Ich frage mich natürlich, wie praktikabel das ist. Oder wie viel Interesse es daran gibt, dass Menschen Social Media Accounts nicht als ihre Person im Netz nehmen, sondern als ein Interesse. Also quasi ihre Person aufsplitten und dann mehr haben. Ich will die Frage mal umgedreht stellen. Ihr habt ja Chaos Social. Das ist ja die Instanz, die ihr betreibt. Habt ihr da einen Fokus oder habt ihr da einen Anspruch, wer da sein soll? Also jetzt nicht im Sinne von, dass ihr es hart begrenzen wollt. Aber das ist ja schon Chaos-Umfeld irgendwie gefärbt. Ist das tatsächlich ein inhaltlicher Anspruch? Oder ist das nur so, naja, wir haben das halt jetzt gemacht, das war der Anfang, aber letztendlich ist es uns egal, wer da ist.
+
+00:49:42.388 --> 00:50:08.788
+<v SPEAKER_5>Also ich glaube, da kann man sagen, es ist immer noch die Idee, erstmal eine Community oder einen Rahmen für die Chaos-Community und das Umfeld zu schaffen. Aber wir sind, wie das Chaos ja auch an sich sein möchte, offen für vieles Weitere, eben um auch das eigene Weltbild zu erweitern.
+
+00:50:09.388 --> 00:50:44.448
+<v SPEAKER_3>Ich würde uns da als ungefähr so offen wie das durchschnittliche große Chaos-Event sehen. Der Kongress ist ja auch nicht nur für Leute, die schon immer beim Kongress waren. Oder die kleineren Events. Das soll natürlich irgendwie ein Aufschlagpunkt für Leute aus dem Chaos sein. Aber es gibt auch noch andere Instanzen, die aus dieser Chaos-Community gewachsen sind. Wir sind da nicht die Einzigen. Wir würden auch gar nicht die Einzigen sein wollen. Du hast ganz eingangs schon auf das Java-CCC-DE-Problem hin moderiert.
+
+00:50:44.488 --> 00:50:48.828
+<v SPEAKER_2>Das werden wir auf jeden Fall sehr ausführlich besprechen.
+
+00:50:48.848 --> 00:50:55.288
+<v SPEAKER_3>Genau, das sollte es ja nie werden. Wir sind aus dieser Geschichte klug geworden. Deshalb gibt es ja eben nicht nur uns.
+
+00:50:56.388 --> 00:51:09.888
+<v SPEAKER_4>Ich habe noch mal eine Frage. Habt ihr eigentlich schon Moderationsleitlinien? Habt ihr so ein Etikett dafür? Musstet ihr schon was moderieren? Hattet ihr schon Nazis, die sich bei euch angemeldet haben, unter Nazi-Kram gepostet haben?
+
+00:51:10.968 --> 00:53:05.728
+<v SPEAKER_5>Danke, darauf wollte ich die ganze Zeit ein bisschen hinleiten. Das ist nämlich ein ganz wichtiges Thema auch für die Instanz. Eben zu gucken, wer moderiert die eigentlich? Von wem wird überhaupt betrieben? Da haben wir zum Beispiel Regeln, die sind, wenn man Chaos Social eingibt, kann man hintendran noch About More eingeben. Und da findet man zum Beispiel dann unsere Instanzregeln, wo wir eben Sachen festgeschrieben haben, wie dulden keinerlei Diskriminierung gegenüber Minderheiten, wie Nazis wollen wir auch nicht haben und so weiter. Das ist da einfach festgeschrieben, das sind die Regeln. Da hat sich auch jeder dran zu halten. Und wir hatten zum Beispiel inzwischen so 228 Reports ungefähr. Das heißt, die Leute werden von uns durchaus dazu aufgefordert, wenn sie irgendwas Problematisches sehen, das einfach zu melden. Und wir versuchen das dann auch schnellstmöglich anzugucken, damit eben sich die Plattform so entwickelt und sich alle Leute darauf wohlfühlen. Weil das ist eben ein entscheidender Punkt. Wir versuchen dann meistens so die Leute, wenn es jetzt nichts total Krasses ist, auch erstmal anzuschreiben und darauf hinzuweisen, hier, das war vielleicht nicht so cool, versuch das nächste Mal vielleicht anders zu sagen. Oder denk mal drüber nach, was du da gerade eigentlich gesagt hast. Und das ist dann immer was, was wir versuchen. Wir versuchen die Leute erstmal darauf hinzuweisen, bevor wir wirklich Leute runterwerfen. Aber, das muss ich auch sagen, wir hatten schon ein paar Fälle, wo wir tatsächlich so weit gehen mussten, weil es einfach nicht anders geht. Und was tatsächlich auch noch ein ganz hartes Mittel ist, es gibt aus dem asiatischen Bereich, wo auch die Rechtslage ein bisschen anders ist, gewisse Instanzen, die Material verbreiten, das in Deutschland nicht erlaubt ist. Und da mussten wir zum Teil so weit gehen. Das dokumentieren wir aber auch öffentlich, dass wir ganze Instanzen von unserer abgeschnitten haben, weil wir einfach diese Daten nicht auf unseren Servern haben wollen, weil wir uns damit schon Strafe machen würden.
+
+00:53:05.748 --> 00:53:19.288
+<v SPEAKER_2>Also das heißt, ihr Kontakt unterbinden heißt, ihr verhindert, dass Nutzerinnen und Nutzer auf eurer Instanz wie auch immer gearteten Kontakt zu Nutzerinnen und Nutzer dieser Instanz haben.
+
+00:53:20.528 --> 00:53:26.648
+<v SPEAKER_5>Das und tatsächlich noch, dass die Sachen über die förderierte Timeline zu uns kommen.
+
+00:53:26.668 --> 00:53:36.428
+<v SPEAKER_2>Also ihr verhindert, dass jemand, der auf einer dritten Instanz ein Inhalt der besagten Instanz repostet oder was auch immer, dass das bei euch durchschlägt.
+
+00:53:37.488 --> 00:53:40.688
+<v SPEAKER_5>Genau, im Prinzip alle Möglichkeiten, dass das irgendwie in unsere Instanz erreicht.
+
+00:53:40.988 --> 00:53:59.768
+<v SPEAKER_2>Aber Entschuldigung, ist das nicht Überwachung und Zensur? Also sagen jetzt, nicht auf die Barrikaden gehen, das ist sozusagen für die Übertreibung, aber in der theoretischen Diskussion spielt das wieder eine Rolle. Also ihr seid schon die, die entscheiden, was auf dem Server passiert.
+
+00:54:01.288 --> 00:54:02.988
+<v SPEAKER_3>Das ist richtig.
+
+00:54:03.008 --> 00:54:19.508
+<v SPEAKER_2>So, jetzt hat ja Rixx zum Beispiel ganz am Anfang gesagt, einer der Hauptpunkte dafür ist, die Kontrolle zu erlangen. Und das ist ja schön für dich. Also du hast jetzt sozusagen die absolute Kontrolle, wie wir gerade auch vergestellt haben. Aber inwieweit überträgt sich das auf die Nutzerinnen und Nutzer?
+
+00:54:21.828 --> 00:56:11.248
+<v SPEAKER_3>Ich habe jetzt die total absolute Kontrolle über eine kleine Instanz in diesem Fadivers. Das ist der erste Punkt. Also das macht einen der theoretischen Unterschiede nicht. Es sind jetzt nicht alle Leute genau nur von mir abhängig, wie sie es auf Twitter wären, wenn mir Twitter gehören würde. Aber wenn ich jetzt anfangen würde, da irgendwie mal nichts durchzudrehen, das ist keine gute Formulierung, wenn ich da jetzt anfangen würde, irgendwie die Instanz nach genau nur meinen Wünschen zu gestalten, dann hätte auf Twitter niemand die Möglichkeit, großartig was dagegen zu tun. Und im Fadivers könnten die Leute woanders hin abwandern. Aber was die Leute auch machen können, ist ja vor allem schon vorher zu gucken, wie so eine Instanz geführt wird, wenn sie sich gerade dabei sind, eine auszusuchen. Und Leah und ich machen das ja so, dass wir alles sehr breit öffentlich dokumentieren. Also wir haben eine Liste, mit welchen Instanzen wir aus welchen Gründen gerade nicht fötterieren. Die ist auch auf Git geführt, das heißt, man kann sehen, wann und warum die geupdatet wurde. Und bevor wir irgendwie sonst Dinge an der Instanz ändern, holen wir auch immer die Meinung von den Leuten auf der Instanz ein. Also als wir uns zum Beispiel entschlossen haben, vorübergehend, oder als wir uns das erste Mal entschlossen haben, die Anmeldungen zu schließen, wurde da auch vorher drüber geredet. Oder als wir das letzte Mal eine Regel zusätzlich eingeführt haben, wurde das auch vorher diskutiert. Und das ist nicht irgendwie von oben durchgedrückt. Klar liegt die Entscheidung am Ende bei uns. Aber das ist jetzt nichts, was wir irgendwie hart ausnutzen wollen.
+
+00:56:11.268 --> 00:56:23.008
+<v SPEAKER_2>Also ihr betreibt die Instanz so, wie ihr euch vorstellt, dass es gut wäre. Und sozusagen der technische Vorteil ist für Nutzerinnen und Nutzer. Im Zweifel kann ich immer woanders hingehen.
+
+00:56:23.948 --> 00:56:24.308
+<v SPEAKER_3>Genau.
+
+00:56:24.328 --> 00:56:33.888
+<v SPEAKER_5>Und wir setzen im Prinzip darauf, dass wir unseren Job gut machen und die Leute uns dann eben Vertrauen entgegenbringen und eben nicht wegwechseln.
+
+00:56:34.968 --> 01:01:55.157
+<v SPEAKER_2>Aber trotzdem werden wir gleich darüber reden, wie das eigentlich geht. Also, weil ich, Beispiel für eine Realisierung, ich kann mir jederzeit ein neues E-Mail-Konto irgendwie zulegen. Wie ist denn das eigentlich, wenn ich so ein Account umziehen will? Und das andere ist, es gibt ja so ein paar Sachen, wo man sagt, ja, also irgendwie, was machen die eigentlich mit meinen Daten? Das ist ja bei Twitter nicht so klar, deswegen machst du das besser. Ob das wirklich so stimmt und wie das da genau ist, das kennen wir auch gleich. Und sprechen dann drüber, was es noch für föderale Systeme gibt. Es gibt vorhin noch eine kleine Musik, aber von Timecrawler, nämlich Mount Fuji. Mount Fuji von Timecrawler hier im Chaosradio 249, wo natürlich auch ein paar Nerd-News nicht fehlen dürfen. Die wurden geschrieben dieses Mal von Danny Moe und Moe und sind gesprochen von Helena.
+
+01:01:55.177 --> 01:02:56.337
+<v SPEAKER_6>Die Hausdurchsuchungen beim Verein Zwiebelfreunde waren rechtswidrig. Das hat das Landgericht München 1 entschieden und kassierte damit Entscheidungen des Amtsgerichts München. Der Verein sammelte Gelder für den E-Mail-Provider Rise Up. Einem Rise Up-Nutzer waren zuvor strafbare Handlungen vorgeworfen worden. Das besondere elektronische Anwaltspostfach BEA soll ab dem 3. September wieder in Betrieb gehen. Die Bundesrechtsanwaltskammer hat das System auf Basis eines Expertengutachtens als sicher erklärt. Anwältinnen und Anwälte müssen das BEA mindestens zum Empfang von Dokumenten nutzen. Der CCC Darmstadt zeigte bereits im Januar gravierende Sicherheitslücken und strukturelle Probleme im BEA auf. Die Deutsche Bahn will ihr Glasfasernetz entlang der Gleise vermarkten. Die Verbindungen dienen der Steuerung des Zugverkehrs, seien damit aber nicht ausgelastet. Verbliebene Kapazitäten sollen für den Breitbandausbau eingesetzt werden. Die Bahn denkt dabei vor allem an Mobilfunk und sucht nach Partnern in der Telekommunikationsbranche.
+
+01:03:25.263 --> 01:04:08.603
+<v SPEAKER_2>Und damit Herzlich Willkommen zurück zum Chaosradio 249, wo wir weiter über Mastodon und föderale Systeme sprechen wollen und hatten vor der Pause gerade geklärt, na ja, im Zweifelsfall kann man ja immer weiterziehen. Das heißt, ich kann meinen Account nehmen und irgendwo anders hingehen, auf eine andere Instanz vergleichbar mit, also der Vergleich hinkt wie alle Vergleiche, aber vielleicht vergleichbar mit, ich richte meine neue E-Mail Adresse bei einem anderen Anbieter ein. Jetzt, Leah und oder Rixx, was genau kann ich denn machen? Also mache ich mir einen neuen Account und muss dann von vorne anfangen, also neu den Leuten folgen, mir müssen Leute neu folgen, Inhalte sind mitgenommen oder gehen verloren, also was genau passiert oder kann ich umziehen und was nehme ich dann mit?
+
+01:04:13.703 --> 01:04:43.123
+<v SPEAKER_3>Du machst dir erstmal einen ganz normalen neuen Account, wie du es gesagt hast, als wär es dein erster Account. Und du nimmst nicht mit, was du schon gepostet hast, weil du nicht rückwirkend Status absetzen kannst. Also du kannst nicht sagen, dieser Account hat übrigens vor einem Jahr das hier geschrieben. Das ist schwierig, weil sonst könntest du das ja überall hinfaken. Guckt mal, ich habe vor einem Jahr schon vorhergesagt, was heute passieren wird.
+
+01:04:43.143 --> 01:04:44.363
+<v SPEAKER_2>Könnte man nicht was mit Blockchain machen?
+
+01:04:45.883 --> 01:04:48.503
+<v SPEAKER_3>Alter.
+
+01:04:48.523 --> 01:04:53.903
+<v SPEAKER_2>Bitte liebe Hörerinnen und Hörer, entschuldigt diesen Insider-Gag. Wir haben wirklich nicht die Zeit, den zu erklären. Aber gut, okay, das geht also nicht.
+
+01:04:53.923 --> 01:05:47.743
+<v SPEAKER_3>Keine Posts? Keine Posts. Du kannst auch nicht einfach so mitnehmen, wer dir folgt. Weil damit, also damit würdest du ja einfach fremd Leuten sagen, du folgst jetzt übrigens einer anderen Person. Das lässt sich ja auch einfach so missbrauchen. Du kannst aber mitnehmen, wem du folgst. Also du kannst eine Liste importieren, also vorher exportieren, und dann wieder importieren und dann hast du die Leute, denen du folgst, wieder da. Und du kannst auf deinem alten Profil ein Redirect-Hinweis anbringen. Also du kannst sagen, dieser Account ist jetzt lahmgelegt, das steht da auch so. Also das ist ein Feature, das ist nicht nur was, was du da so irgendwo halt hinschreibst. Dieser Account ist lahmgelegt, wenn du dem folgen willst, dann klick hier, kommst zum aktuellen.
+
+01:05:48.803 --> 01:06:14.623
+<v SPEAKER_2>Aber ich muss ja, also das war nur ein dover Gag mit der Blogschneider, aber ich muss trotzdem mal fragen, gibt es keine Möglichkeit sozusagen einen ein eindeutigen Identifikationsmechanismus zu erzeugen, der halt genau das macht? Also der sagt, okay, da gibt jemand einen Account auf und möchte den umziehen und dass man das dann doch mitnimmt? Also ist das technisch nicht möglich? Oder ist es zu aufwendig, um es umzusetzen?
+
+01:06:14.643 --> 01:06:50.183
+<v SPEAKER_3>Das ist technisch sicher möglich, aber nicht umgesetzt, weil es sehr, sehr aufwendig ist, das gut und richtig und nicht missbrauchbar hinzukriegen. Das ist in aktiver Diskussion. Das wirklich wirklich Schöne an Mastodon ist ja nicht nur, dass es dieses abstrakte Konzept von freier offener Software ist, sondern dass es wirklich öffentliche Diskussionen um neue Features gibt. Die sind auf GitHub und man kann da mit voten und mit diskutieren und mit Lösungen vorschlagen. Aber diese Diskussion ist halt bislang zu noch keinem Abschluss gekommen.
+
+01:06:50.203 --> 01:06:59.983
+<v SPEAKER_2>Wird denn da wirklich offen diskutiert? Oder trifft letztlich sozusagen dann der Eugen als Wohlwolle, der Diktator, die Entscheidung macht, dass er so wie er will?
+
+01:07:00.003 --> 01:07:22.023
+<v SPEAKER_3>Tut er. Ist auch was, was nicht alle deuten super lieb ist. Hat bislang gut genug funktioniert, obwohl es auch, wie gesagt, den einen oder anderen Fog von Mastodon gibt. Aber trotzdem lässt sich an den meisten Stellen mit Argumenten ziemlich weit kommen. Also sonst hätte das so lange nicht zusammengehalten.
+
+01:07:22.043 --> 01:07:43.203
+<v SPEAKER_2>Ich will mal zurück zum User umzugehen. Du hast gesagt, man kann so ein Redirect einrichten. Wenn ich jemanden folge, der umzieht, kriege ich dann irgendwie eine Benachrichtigung? Also sagt mir dann mein Mastodon, ey, du folgst jetzt meinen Typen, aber der ist jetzt leider ganz woanders, aber klick doch mal hier. Oder ist das eher so, wenn ich aktiv auf das Profile klicke, weil ich denke, ja Mensch, von dem, was ich lange nichts mehr gehört, dann steht das da irgendwo.
+
+01:07:45.603 --> 01:07:58.263
+<v SPEAKER_3>Also ich habe dafür noch nie eine Notification gesehen. Ich glaube, dafür gibt es keine. Aber siehst du, es wäre wieder was, was man als Feature Vorschlag in dieses Mastodon-Repo schubsen könnte und mit gar nicht so schlechten Chancen, dass es passieren würde.
+
+01:07:58.283 --> 01:08:12.903
+<v SPEAKER_2>Okay, und kann man sowas einrichten wie, okay, ich habe jetzt einen neuen Account und da soll einfach mein alter Account immer re- Was? Retooten? Retooten. Rebooten, was der neue Account macht.
+
+01:08:14.523 --> 01:08:21.223
+<v SPEAKER_3>Das lässt sich, also ich habe dafür noch nichts gesehen, aber dafür einen Bot zu schreiben, der sowas macht, das dürfte ziemlich leicht sein.
+
+01:08:21.243 --> 01:10:30.423
+<v SPEAKER_2>Okay, so, dann hätten wir das geklärt, wie da umzugeht. Die eine andere Sache, die ich noch fragen wollte, ihr habt am Anfang gesagt, Henning hat das Beispiel, Cambridge Analytica, also Facebook gibt Daten, die es eigentlich nicht weitergeben soll, an Dritte weiter und das war ein Skandal. Na, die Größe, wenn man sich unbedingt kreiert, so sagen, vielleicht war ich nicht groß genug, aber das kann auf jeden Fall passieren. Jetzt ist das ja eigentlich kein, also ganz hartes Argument für Macedon, weil da fallen ja auch Daten an, die können ja auch weitergegeben werden. Und dazu erstmal noch mal eine technische Frage, weil das habe ich auch wieder häufiger gelesen von neuen Master Newsern. Die Admins einer Instanz können die Direktnachrichten einsehen, technisch, theoretisch. Wir können in die Datenbank gucken und da liegen die im Klartext, also sie sind nicht verschlüsselt. Genau, wie auf Twitter auch. Also der Admin eines Betrebers kann bei solchen Nachdiensten häufig, wenn sie nicht verschlüsselt sind, das sehen. Und bei Mastundes ist das so, das kann nicht nur, also wenn ich Instanz übergreifend kommuniziere, dann können das die Admin bei der Instanz sehen oder beziehungsweise aller beteiligten Instanzen. Richtig? So, das heißt also auch, so und auch wenn, na sag schnell, also die, ich will immer Tweet sagen, die Tuts, ich weiß auch nicht, ob das so eine gute Idee ist, da ein neues Wort zu benutzen. Das heißt, sollte man Tweet einfach so verallgemeinern, für einen Social Media Post ist halt ein Tweet immer Post. Wenn ich also poste, dann kann das ja auch sozusagen auf einer anderen Instanz landen. Das heißt, diese Daten, also so ähnliche Daten wie Facebook da gesammelt hat, können ja hier auch anfallen und können dann auch an Dritte weitergegeben werden. Und alles, was mich sozusagen da verschützt, ist hoffentlich die richtige Instanz ausgewählt zu haben. Und selbst dann weiß ich das ja nicht sicher, weil ich ja diese Daten auch von außen auslesen kann. Also ist das mal Hand aufs Herz wirklich ein Vorteil von Mastodon, dass die Daten in einer wie auch immer gearteten Art und Weise sicherer sind?
+
+01:10:32.883 --> 01:10:38.403
+<v SPEAKER_5>Sie sind in der Hinsicht sicherer, dass wir zumindest jetzt sagen, wir machen nichts damit.
+
+01:10:38.423 --> 01:10:49.163
+<v SPEAKER_2>Aber nur, wie gesagt, ist es nicht um einen Vorwurf zu machen, sondern das ist eine technische Frage. Ich muss euch genauso vertrauen, wie ich einem Facebook vertraue. Also ich habe sozusagen keinen Einfluss, sondern ich muss euch vertrauen.
+
+01:10:52.503 --> 01:11:42.303
+<v SPEAKER_3>Das würde ich sagen, gilt für die Partnachrichten, weil da nicht allen Leuten immer klar ist, dass die nicht komplett privat sind. Auch wenn du schon sagtest, allein dadurch, dass die mit in der normalen Timeline auftauchen, wird einem das etwas klarer und wir bemühen uns auch, das immer wieder klarzustellen. Aber alles andere sind ja Daten, die du öffentlich postest, aktiv von dir aus. Wenn du einen Status veröffentlicht, der öffentlich ist, dann taucht der auf einer Internetseite auf, die Leute sehen können, ohne eingeloggt zu sein. Das taucht in einem öffentlichen RSS-Feed auf. Diese Daten können natürlich auch Leute beliebig abschnorcheln oder als Admins abgreifen, aber das müssen sie nicht mal. Die können einfach auf diese ganzen RSS-Feeds gucken.
+
+01:11:42.323 --> 01:11:45.583
+<v SPEAKER_2>Und genauso ist es mit den Dingen, die ich like. Das ist ja auch öffentlich sichtbar.
+
+01:11:46.543 --> 01:12:03.423
+<v SPEAKER_3>Das ist richtig. Das ist einer der Vorteile von einem großen Mastodon-Frog. Der hat daneben noch ein privates Bookmark-Feature, das die Likes nicht öffentlich macht. Aber auch bei den Likes ist dir das ja irgendwie klar, weil du ja immer einsehen kannst, wer alles so ein Like auf so einen Status geworfen hat.
+
+01:12:03.443 --> 01:12:08.043
+<v SPEAKER_2>Aber das heißt also tatsächlich, mehr Datum ist eigentlich nicht so ein großes Argument, oder Henning?
+
+01:12:08.063 --> 01:13:02.163
+<v SPEAKER_4>Wie siehst du das jetzt? Ich finde erstmal ist es natürlich wirklich so, dass ich dem Admin ein bisschen vertrauen muss. Auch dass mein Passwort da irgendwie nicht wegkommt oder dass das gut verschlüsselt ist. Aber ich finde es erstmal gut, wenn sich Oma Erna, wenn sie sich so einen Account aufsetzt, darüber überhaupt mal Gedanken darüber macht, dass sie halt so einem Admin vertrauen muss. Ich befürchte nämlich bei Facebook und GMX und wo sie sich überall einen Account angelegt hat, hat sie sich gar nicht so richtig Gedanken darüber gemacht. Und der zweite Punkt ist natürlich, dass wir jetzt halt verschiedene Instanzen haben. Und der Unterschied zu Facebook ist halt, dass Facebook die Daten von zwei Milliarden Menschen auf diesem Planeten hat, was halt irgendwie ja kaum vergleichbar ist mit kleineren Instanzen. Auch wenn die Mastodonnetz natürlich vom Gesamtmenge her viel kleiner ist. Aber verteilt ist auch schon mal irgendwie besser, was so Unfälle und Daten sind, weggekommen, Vorgänger angeht.
+
+01:13:02.183 --> 01:14:00.503
+<v SPEAKER_2>Okay, das funktioniert so lange, wie die Hauptsoftware nicht einen Bug hat, der nicht erkannt und... Na egal, da können wir nachher noch reden. Jetzt möchte ich zum ganz anderen Punkt kommen und einen kurzen Mastodonbreak machen. Weil Hörer der ersten Stunde erinnern sich vielleicht, am Anfang hat er doch noch jemanden vorgestellt. Da sitzt doch noch ein A-Tor. Was war denn da eigentlich los? Wir haben jetzt die ganze Zeit über Mastodon als ein Beispiel. Und ja, das hat heute sehr viel Platz eingenommen, weil es einfach gerade in aller Munde ist. Zumindest in der Tech Bubble. Aber ist halt eben ein Beispiel für ein föderalisiertes System. Wir haben bei manchen Gesellungen gesagt, wir wollen auch über Nextcloud reden, was auch so ein Beispiel dafür ist. Und da fragt man sich ja Moment mal, Nextcloud, das ist doch so ein Ding, da kann ich irgendwie Dateien zwischen meinen Rechnern synchronisieren und die auch für Dritte freigeben. Was genau hat das jetzt mit diesem föderalen System zu tun? Und das wird uns Arthur jetzt erklären. Arthur, wieso ist Nextcloud auch ein föderales System? Also was bedeutet das in diesem Zusammenhang?
+
+01:14:01.963 --> 01:14:27.283
+<v SPEAKER_1>Ja, das bedeutet auch ähnlich wie bei den ganzen Masterron Instanzen, dass sich jeder seine Nextcloud Instanz aufziehen kann. Das soll jetzt auch wieder jeder in Anführungsstrichen. Und darüber auch eben seine Dateien dann mit anderen teilen kann, sodass darüber daran gearbeitet werden kann.
+
+01:14:27.343 --> 01:15:12.783
+<v SPEAKER_2>Ich will nur versuchen, das ganz genau zu verzeihen. Also dass ich mir eine eigene Nextcloud aufsetze, das ist ja sowieso die grundlegende Idee dieses Dienstes. Also das Ding ist ja, also die Idee ist ja genau, das ist also hier, bei Mastodon ist das große Vorbild Facebook und Twitter, bei Nextcloud ist es halt Google Drive oder Dropbox. Nämlich da gibt es den zentralen Anbieter, wo ich Dateien zwischen den Rechnern synchronisieren kann und sie für Dritte freigeben. Das macht Nextcloud auch und die Idee ist halt, ich installiere die im Zweifel auf dem Raspberry Pi unter meinem Schreibtisch oder auf meinem eigenen Webseiter, wie auch immer. Und kann ja dann auch Dateien an Dritte freigeben, entweder indem ich so einen Link generiere auch, wo ich sage, hier klickt ihr den Link, etc. oder indem ich ihn einlade, macht ihr einen Account bei mir und dann schreibe ich die Rechte zu. Aber das ist ja noch nicht Föderalismus.
+
+01:15:16.363 --> 01:16:41.963
+<v SPEAKER_1>Ja, Föderalismus. Na, es geht am Ende dahin, dass du, wie gesagt, du hast deine Instanzen. Im Wesentlichen macht das Sinn für irgendwelche Organisationen, ganz im Kleinen, vielleicht für Familien, wo dann halt auch eben andere Angebote wie der Kalender verwendet werden zusammen, bis zu Vereinen, Firmen, Schulen, etc. Dann geht es darum, wie sich diese Instanzen vernetzen können. Da gibt es ein Modell, dass man gegenseitig auch User woanders finden kann. Dazu gibt es noch eine Komponente, die sich Lookup Server nennt, die fest konfiguriert ist, was man sich aufsetzen kann. Und wenn man sein Profildaten entsprechend einstellt, andere darüber auch finden kann. Das ist aber nicht zwingend vorgeschrieben. Es ist eher so ein Opt-in und man selber kann aktiv Dateien und Ordner über diese federierte Schnittstelle dann mit ganz speziellen anderen Benutzern oder neuerdings auch Gruppen teilen.
+
+01:16:41.983 --> 01:16:58.963
+<v SPEAKER_2>Okay und das Föderale daran ist, dass ich, wenn ich, also ich kann ja bei NextLoud immer Dateien frei gegenüber den Link und ich kann ja aber auch einem Nutzer, der bei mir ist, bestimmte Rechte einräumen und der föderale Gedanke ist, ich kann das auch mit Nutzern machen, die woanders eine NextLoud haben.
+
+01:16:58.983 --> 01:17:26.323
+<v SPEAKER_1>Ja genau, okay vielleicht ist nicht klar geworden, sorry. Ja genau, wenn ich kann dort im Dialog zum Teilen eben einer Datei, kann ich dich auf deine Instanz da eintragen und darüber wird dann die Anfrage an dich gestellt. Hier Arto möchte gerade diese Datei mit der Teilen annehmen, damit du auch nicht gefloidet wirst.
+
+01:17:26.863 --> 01:17:27.603
+<v SPEAKER_2>Gespammt.
+
+01:17:27.623 --> 01:17:28.643
+<v SPEAKER_1>Gespammt wirst, genau.
+
+01:17:28.663 --> 01:17:34.843
+<v SPEAKER_2>Hier möchten sie diesen Flyer für diesen unfassbar tollen Staubsaugerteil.
+
+01:17:34.863 --> 01:18:13.643
+<v SPEAKER_1>Ja genau, und dann kannst du eben das ablehnen oder annehmen und dann erscheint, wenn du das annimmst, erscheint diese Datei dann bei dir in deinem Nextcloud. Wenn du die Synchronisations-Client benutzt, dann an dir dann auch gegebenenfalls auf deinem Smartphone oder auf deinem Laptop, dann kannst du halt damit da ganz normal auch mitarbeiten. Ich kann dir, genau, Berechtigungen mitgeben. Entweder, dass du das eigentlich nur ansehen darfst, dann darfst du das halt eben nicht zurückschreiben oder dich auch da editieren lassen, wenn du jetzt an einem Textdokument zusammenarbeiten möchtest.
+
+01:18:13.663 --> 01:18:43.103
+<v SPEAKER_2>Du bist ja Entwickler auch bei Nextout. Kannst du einen Einblick oder einen groben Überblick darüber geben? Wie gesagt, nicht im technischen Detail, aber inwieweit das eine Software komplizierter macht, wenn sie halt dieses föderale System auch hat? Also mit anderen Instanzen derselben Software übers Netz zu reden. Ist das so, ja gut, irgendwie User generieren kann man sowieso, dann User von anderen Instanzen ist da auch egal oder ist das noch mal relevant viel Arbeit?
+
+01:18:43.123 --> 01:19:23.143
+<v SPEAKER_1>Das Ziel letztendlich ist, das Ganze auch tatsächlich so einfach zu machen, dass das für Benutzer keine große Rolle mehr spielt, dass die irgendwie ganz bewusst eine ganz komplizierte E-Mail-Adresse eingeben, sondern es soll dahin gehen, dass man das einfach benutzender macht, dass es sich für den End-User, der nicht so technisch großartifiziert ist, dass es da möglichst einfach funktioniert.
+
+01:19:23.163 --> 01:19:48.163
+<v SPEAKER_2>Ja, das finde ich auch ein sehr lohnenswertes Ziel. Aber was ich eigentlich meinte ist, wie hoch ist der Aufwand in der Entwicklung der Software? Weil die Software muss ja jetzt etwas mehr können. Und ich kann sozusagen als Leier von außen nicht sagen, ist das, man baut da irgendwie noch, keine Ahnung, 30 Zeilen Code an, dann ist das getan, oder ist das nochmal ein relevanter Punkt der Softwarearchitektur und sehr, sehr viel Arbeit, das zu realisieren, dass die Software auch untereinander reden kann.
+
+01:19:48.623 --> 01:20:16.623
+<v SPEAKER_1>Ja, natürlich ist es einfacher, wenn man irgendwie einfach nur so einen geschlossenen Kreis hätte, dann müsste man sich keine Gedanken machen, wie sieht halt eine Schnittstelle aus, die halt irgendwie da vernünftig ist. Insofern muss sich darüber Gedanken gemacht werden, wie kann es am besten funktionieren, dass das vielleicht auch nicht missbraucht wird, dass man das irgendwie gut verwenden kann, dass...
+
+01:20:23.623 --> 01:20:59.523
+<v SPEAKER_2>Was mich zum Beispiel interessieren würde ist, solange ich nutze nur auf meiner eigenen Software, also ich habe eine Nextalk Installation, da kann ich User anlegen und diese User können auch untereinander interagieren mit diesen ganzen Möglichkeiten und haben nicht das Problem von verschiedenen Versionen, sondern meine Software hat eine Version. Wenn ich jetzt mit der Software von Tante Emma, mit der Nextcloud von Tante Emma noch irgendwie kommuniziere, dann hat die möglicherweise, oder vielleicht auch ich, vielleicht war ich faul und habe die letzten drei Patches nicht eingespielt. Inwieweit ist das ein Problem oder ist es sozusagen, solange man diese Komponente, die für die Kommunikation nicht verändert, dann ist es egal?
+
+01:21:00.883 --> 01:21:17.563
+<v SPEAKER_1>Ja, hier geht es am Ende um die Schnittstelldefinition, API auf Entwicklersprech. Da ist es wichtig, dass die gegebenenfalls versioniert wird und ansonsten, dass sie rückwärts compatible bleibt.
+
+01:21:17.583 --> 01:21:37.283
+<v SPEAKER_2>Das heißt, meine aktuelle Reversion fragt die andere an und die sagt dann, ja ich bin alt und die aktuelle Reversion sagt, kein Problem, ich weiß noch, wie ich mit dir reden kann. Und inwieweit ist das von der Security her? Dann noch mal aufwendiger?
+
+01:21:37.303 --> 01:22:22.923
+<v SPEAKER_1>Aufwendiger? Letztendlich muss man. Natürlich, da liegt es am Ende am Empfänger, ob er die Datei tatsächlich annehmen möchte, ob er dir auch vertraut, dass das keine Schadsoftware ist oder sowas. Da muss man natürlich auch wissen, ob er dem Benutzer, der da sind, vertrauen kann. Auch da gibt es natürlich andere Mittel und Wege, das dann ein bisschen einfacher zu machen. Es gibt diverse Apps, die jetzt noch Ransomware entdecken möchten oder so was. Spamfilter oder so, aber idealerweise ja.
+
+01:22:22.943 --> 01:22:37.583
+<v SPEAKER_2>Aber da geht es um die übertragenen Dateien. Musst du diese Schnittstelle geben, von der du gesprochen hast? Die ist natürlich ein Angriffspunkt, wie jeder Softwarebestandteil ein Angriffspunkt ist. Aber ist das extra gefährlich?
+
+01:22:37.603 --> 01:23:27.103
+<v SPEAKER_1>Es ist ein weiterer Punkt, der natürlich irgendwie angegriffen kann. Andererseits unterscheidet sich dann aber nicht wirklich von der weiteren Entwicklung. Zum einen haben wir grundsätzlich automatisierten Checks, die irgendwo in einem Malayer, in der Chefsoftware, versteckt sind, dass sich der Entwickler des Endpunktes jetzt darüber nicht so viele Gedanken machen muss, außer dass er halt tatsächlich irgendwelche Features freischalten muss. In dem Fall muss er erlauben, dass der Endpunkt auch von Nicht-Administratoren erreicht werden kann. Also das sind die striktesten Vorgaben, erstmal Standard und alles andere muss runtergebrochen werden. Also das unterscheidet sich dann jetzt eigentlich nicht von allen anderen Endpunkten, die man dann auch macht.
+
+01:23:27.123 --> 01:23:31.723
+<v SPEAKER_2>Und habt ihr den Überblick darüber, wie weit das als Feature genutzt wird?
+
+01:23:35.403 --> 01:23:43.483
+<v SPEAKER_1>Na, wir selbst, bei uns selbst fallen eigentlich keine Daten an, ist das nicht?
+
+01:23:43.503 --> 01:23:46.523
+<v SPEAKER_2>Aber ihr kriegt ja wahrscheinlich irgendwie Nutzerinnen-
+
+01:23:46.543 --> 01:24:27.643
+<v SPEAKER_1>und Nutzerfeedback. Das ist eigentlich aus einer anderen Perspektive noch mal viel interessanter, wenn es darum geht, wie man die Nextcloud so skalieren kann, dass Millionen von uns dann weltweit das benutzen können. Und mit der üblichen Architektur, da kann man das halt auch weit treiben, wenn man halt genug Loadbalancer davor haut und Daten anklasset, etc. Irgendwann wird es dann auch zu viel. Und dann ist dann die Idee, dass man die User auch die verschiedenen Instanzen verteilt und die unter anderem mit dem Federated Sharing auch anbinden kann.
+
+01:24:27.823 --> 01:24:37.483
+<v SPEAKER_2>Also das heißt, du sagst, dass ich als große Firma irgendwie nicht hingehe und mir eine große Nextcloud baue, sondern eher viele kleine und die können untereinander interagieren.
+
+01:24:37.843 --> 01:24:46.303
+<v SPEAKER_1>Genau. Das sind noch ein paar andere Komponenten zu, sodass das alles auch einheitlich aussieht. Aber im Grunde ist es dann auch dieses.
+
+01:24:46.323 --> 01:25:14.803
+<v SPEAKER_2>Jetzt haben wir sozusagen ein zweites Beispiel gehabt. Und jetzt würde ich gerne um einmal fragen, was ist für euch noch eine Technologie, die föderalisiert ist und die ihr wichtig findet? Also ich sitze gerade und denke so, verhältst du die Frage eigentlich stellen sollen, weil so viele kommen gar nicht mehr zusammen. Aber mal sehen, du hast doch noch ein andere, sozusagen föderalisiertes Software, wo du denkst, das ist ein super Ding, das ist eine super Idee gewesen. Also außer Mastodon, außer E-Mail, außer Nextcloud, außer Java.
+
+01:25:17.063 --> 01:25:37.743
+<v SPEAKER_1>Ja, wenn ich ganz am Anfang mal gesagt hab, Diaspora ist ja auch irgendwie noch da. Das ist halt so ein bisschen eher so ein Mischmasch vielleicht aus Mastodon, Twitter und Facebook. Das lebt ja auch noch vor sich hin. Und das ist ja quasi so mein Zuhause bisher.
+
+01:25:37.763 --> 01:25:47.103
+<v SPEAKER_2>Also ich habe das Gefühl, dass Diaspora eher das Google Plus oder das Google Wave ist noch böse. Aber Henning, hast du noch etwas zu sagen?
+
+01:25:47.123 --> 01:26:19.163
+<v SPEAKER_4>Es ist nicht unbedingt eine Software, aber ich meine eigentlich beim Telefonieren ist es ja eigentlich auch so. Ich habe vielleicht irgendwie eine Technologie, wo ich einen Anbieter habe, zum Beispiel jetzt im Bifunk bei der Telekom. Wenn du ein O2-Vertrag hast, dann kann ich dich trotzdem anrufen, weil es ein Protokoll gibt, einen gemeinsamen Standard, auf dem diese Anbieter sich verabredet haben, da zu peeren oder wie auch immer. Und dann kann ich dich anrufen und wir können miteinander telefonieren.
+
+01:26:19.603 --> 01:26:25.663
+<v SPEAKER_2>Also ich finde es ein bisschen gecheatet, weil es eine sehr alte Technologie ist, aber ich finde es sehr gut, dass du es gesagt hast, weil eigentlich hätte man es damit erklären sollen.
+
+01:26:26.243 --> 01:26:29.583
+<v SPEAKER_4>Das ist ein Beispiel für diese Interoperabilität, über die wir jetzt sprechen.
+
+01:26:30.623 --> 01:26:32.083
+<v SPEAKER_2>Vielleicht solltest du in Zukunft moderieren.
+
+01:26:32.103 --> 01:26:34.903
+<v SPEAKER_4>Was bezahlt ihr denn hier?
+
+01:26:34.923 --> 01:26:44.223
+<v SPEAKER_2>Hier, bezahlen. Über Geld reden wir auch gleich nochmal. Leah, was findest du für eine federale Technologie, die du wichtig findest?
+
+01:26:44.243 --> 01:27:01.823
+<v SPEAKER_5>Gute Frage. Ich hatte mir jetzt das Java erst mal aufgedacht. Ehrlich gesagt müsste ich jetzt gerade ein bisschen nachdenken. Ich habe ISC, anderes Chatprotokoll.
+
+01:27:01.843 --> 01:27:12.603
+<v SPEAKER_2>Wo man auch eine eigene Server aufsetzen kann. Ist das tatsächlich federal? Kann ich damit Leuten auf anderen IRC-Servern reden?
+
+01:27:12.623 --> 01:27:14.003
+<v SPEAKER_5>Es kommt drauf an.
+
+01:27:17.003 --> 01:27:23.083
+<v SPEAKER_2>Wir haben eine Wortmeldung aus dem Publikum bzw. vom Mischpult. Aber wir hören den nicht.
+
+01:27:25.723 --> 01:27:30.303
+<v SPEAKER_4>Der Mensch am Mischpult hat noch eine Idee. Und zwar das Internet.
+
+01:27:30.323 --> 01:27:34.923
+<v SPEAKER_2>Das Internet. Meinst du jetzt das World Wide Web?
+
+01:27:35.063 --> 01:27:52.383
+<v SPEAKER_4>Genau, da kommunizieren ja auch verschiedene autonome Systeme. Also IS miteinander, die keinen zentralen Server haben. Klar, man kann sagen, es gibt zentrale Instanzen, z.B. die RIPE. Aber die Systeme versee kommunizieren ja federiert.
+
+01:27:52.563 --> 01:28:08.523
+<v SPEAKER_2>Also ich fürchte, das ist als Beispiel an dieser Stelle ein bisschen schwierig, weil man nochmal ganz genau erklären müsste, wie das Internet eigentlich funktioniert. Dazu gibt es ein Chaosradio. Ich hab die Nummer nicht, aber den Show notes wird es bestimmt verlinkt. Aber okay, das Internet. Rixx, hast du vielleicht noch ein kleines, besser verständliches Beispiel?
+
+01:28:10.923 --> 01:28:45.023
+<v SPEAKER_3>Ich glaube, durch besser verständliche Beispiele sind wir durch. Ich war auch versucht, irgendwas wie DNS zu sagen, nicht? Weil das ist technisch gesehen auch federiert. Und man kann natürlich in der Politik Graben gehen, wo man sagen könnte, ich war Federated Federal Republic. Das steckt ja gewissermaßen im Namen. Aber was die Erklärung eher leichter als schwerer macht, habe ich jetzt nicht.
+
+01:28:45.043 --> 01:28:59.563
+<v SPEAKER_2>Vielleicht kann ich noch eine andere Frage stellen ganz kurz an dich. Gibt es eine Technologie in der Zukunft, wo du denkst, die müsste eigentlich federiert werden? Nein, anscheinend nicht.
+
+01:28:59.583 --> 01:29:13.423
+<v SPEAKER_3>Na, schon irgendwie alles, was Kommunikation betrifft. Es ist ja kein Zufall, dass das gerade in diesen sozialen Netzwerken und in E-Mails nicht.
+
+01:29:14.183 --> 01:29:15.983
+<v SPEAKER_2>Das stimmt.
+
+01:29:16.003 --> 01:29:22.743
+<v SPEAKER_3>Das heißt, gerade alles, was auch direkte Messaging-Systeme wären.
+
+01:29:24.683 --> 01:29:30.943
+<v SPEAKER_2>Also sowas wie WhatsApp oder Threema oder Signal oder was auch immer.
+
+01:29:30.963 --> 01:29:37.903
+<v SPEAKER_4>Ja, aber es gibt doch auch jetzt so Ideen, YouTube auf dezentral zu machen. Da gibt es auch dieses PeerTube.
+
+01:29:37.923 --> 01:29:44.443
+<v SPEAKER_3>Das ist ja schon. Das habe ich jetzt noch mit unter Fediverse gerechnet. Das habe ich gedacht.
+
+01:29:44.463 --> 01:29:58.883
+<v SPEAKER_4>Aber ich glaube, aus Anwendersicht haben wir bisher so diskutiert, so Mastodon ist so die Twitter-Alternative. Und dann gibt es aber noch ein paar andere Apps, die sehr angesagt sind wie WhatsApp und YouTube. Und da kann man auch was.
+
+01:29:58.943 --> 01:37:29.940
+<v SPEAKER_2>Also werde ich mir das beim Messenger ganz gut vorstellen kann, dass man das macht, weil die E-Mail- und Telefonanalogie da gut funktioniert. Bin ich mir bei Video-Serving sozusagen nicht wirklich sicher, ob das was ist, wo man Nutzerinnen und Nutzer davon sagen kann, dass das da sinnvoll ist. Weil so ein One-Stop-Shop für alle Bewegt-Bild-Inhalte, also was auch immer man politisch davon halten mag, bin ich mir nicht ganz sicher, wie gut das gehen kann. Aber eine der wichtigen Dinge, die bei diesem ganzen Föderalismus-Zeug eben wichtig sind, ist ja auch, dass man das aufsetzen kann. Darüber reden wir gleich. Vorher noch eine kleine Musikpause, ein Video von Timecrawler, diesmal mit Streetdancing. Streetdancing von Timecrawler und damit begeben wir uns in den Endspurt des Chaosradios 249, wo wir über föderale Systeme sprechen. Und jetzt natürlich wissen wollen, wie weit ist es denn her mit, das kann ja jeder. Also die Idee ist ja eben gerade, dass es verschiedene Instanzen von föderaler Software gibt, also nicht nur von Mastodon, sondern generell Nextcloud auch, Email, was auch immer. Und ich kann nur zwei Enauguten von mir erzählen. Das eine ist, ich habe noch nie eine Nextcloud Instanz betrieben, aber eine Owncloud Instanz mal selber installiert auf einem Raspberry Pi unter meinem Schreibtisch. Das ist ein Jahr lang gut gegangen und danach ist zweimal in kurzer Folge hintereinander ein Akana-Fehler, der irgendwas mit dem Dateisystem zu tun hatte und mir die Datenbank zerschossen hatte. Und alleine dieser Satz hat mir dann gezeigt, ich habe da einfach keine Lust mehr drauf. Das ist einfach zu viel Aufwand. Und das andere ist, als Mastodon aufkam, habe ich mal geguckt, wie könnte ich mir da aber selber so eine Instanz zulegen. Das ist ja, also ich meine, ein Software, der man installieren kann. Und dann habe ich irgendwas von Linux-Servern und Jason, weiß ich nicht genau. Also das zu sagen, das war schon vom Einmal-An-Gucken zu kompliziert, als dass ich da selber hätte was machen wollen. Wie sieht es denn bei Nextcloud aus? Kann das mittlerweile jeder? Ist das einfach eine Software auf einem Rechner auspacken und dann läuft das? Oder muss man dafür Fachwissen haben?
+
+01:37:31.160 --> 01:38:40.320
+<v SPEAKER_1>Ja, so ganz einfach wird es nie werden, wenn man das wirklich von Hand installieren möchte, weil da immer noch Komponenten wie die Web-Server und die Datenbank da sind und die PHP-Laufzeit. Von daher, wenn man auf diese Schiene möchte, da muss man sich schon ein bisschen mit auskennen. Es gibt aber auch noch, gibt oder wird auch noch ein paar andere Wege geben, wie man das betreiben kann. Also zum einen gibt es manche Software-Anbieter oder Distributionen, bei denen das relativ einfach geht, wo man das mit einem Klick fast nahezu installieren kann. Aus dem eher geschäftsmäßigen Bereich haben wir, oder habe ich da auch, die Integration in den Univention Corporate Server als Beispiel, wo das halt, also es ist halt auch eine Linux-Distribution. Und da kann man es installieren und dann kann man sich einloggen und dann läuft das und dann wird es auch automatisch, oder fast automatisch geupdatet.
+
+01:38:40.340 --> 01:38:43.860
+<v SPEAKER_2>Aber das kostet dann Geld, das ist dann quasi ein Abo-Modell oder was?
+
+01:38:43.880 --> 01:38:46.740
+<v SPEAKER_1>Für den privaten Gebrauch haben die das auch für Ume.
+
+01:38:46.760 --> 01:38:49.180
+<v SPEAKER_2>Genau, aber dann liegt das auf dem Rechner eines anderen Menschen.
+
+01:38:49.280 --> 01:39:00.040
+<v SPEAKER_1>Nee. Nee, da musst du halt die sogenannte Appliance oder das selbst installieren. Das läuft aber auf deine Maschine, ist dann relativ wartungsfrei.
+
+01:39:00.060 --> 01:39:04.200
+<v SPEAKER_2>Aber meine Maschine steht in einem Rechnungszentrum, also sie steht nicht bei mir zu Hause, oder wie?
+
+01:39:04.940 --> 01:39:16.880
+<v SPEAKER_1>Das kann auch bei dir zu Hause stehen, ja. Also wie gesagt, das ist eine Rechnungsdistribution, die halt ein bisschen spezialisierter ist. Der Univention Corporate Server.
+
+01:39:16.900 --> 01:39:21.520
+<v SPEAKER_2>Und das ist ein Paket, das kann ich installieren, oder läuft da eine Nextcloud Instanz drauf?
+
+01:39:21.540 --> 01:39:57.420
+<v SPEAKER_1>Wie gesagt, also das ist eine Rechnungsdistribution, hier müsste man sich installieren, aber das geht relativ einfach, wenn man sich durch den Standard dadurch klickt. Das ist so ein Beispiel, es gibt noch andere Softwareanbieter, die dir halt auch sowas bereitstellen. In Japan, für Japan hat NEC angekündigt, dass er demnächst die Router, die man halt zu Hause stehen hat, mit Nextcloud besticken möchte. Die haben auch eine schöne Internetanbindung dort und dann wird es da halt relativ nett funktionieren wohl.
+
+01:39:58.100 --> 01:40:15.760
+<v SPEAKER_2>Na gut, aber da muss ja wieder auch ein Gerät kaufen. Leah, du bist ja für den technischen Teil im Hintergrund zuständig. Kannst du kurz sagen, was man alles haben muss, bevor man eine laufende Mastodon-Instanz am Start hat?
+
+01:40:15.780 --> 01:40:28.040
+<v SPEAKER_5>Was man haben muss, man braucht halt irgendwie eine Kiste mit ausreichend Ressourcen und Anbindung vor allem auch. Und das reicht theoretisch, technisch gesehen.
+
+01:40:28.060 --> 01:40:32.280
+<v SPEAKER_2>Ich meine sozusagen, was man da alles installieren muss.
+
+01:40:32.300 --> 01:40:36.460
+<v SPEAKER_5>Es ist eine lange Liste und ich glaube, das hilft.
+
+01:40:36.480 --> 01:40:38.640
+<v SPEAKER_2>Okay, verstehe.
+
+01:40:38.660 --> 01:40:45.700
+<v SPEAKER_5>Dementsprechend ist es, sagen wir so eine Software, so eine Web-Applikation, auch funktioniert ja nicht alleine.
+
+01:40:45.720 --> 01:41:09.520
+<v SPEAKER_2>Okay, dann lasst es mich andersrum fragen. Normalerweise versuchen wir immer alles zu erklären, aber kannst du, wenn du sozusagen einem auf Augenhöhe operierenden Admin-Kollegen, der die Software nicht kennt, aber sozusagen deinen technischen Stand hat, wenn du dem sagst, was sind die Dinge, die man braucht, um eine Mastodon-Instanz zu installieren, wie würde das klingen?
+
+01:41:09.540 --> 01:41:36.620
+<v SPEAKER_5>Vermutlich würde ich ihm einfach sagen, hier guck mal, ich hab eine fertige Ansprillrolle, benutze doch einfach die. Das ist im Prinzip Automatisierung. Praktisch ist es aber, er braucht eben eine Datenbank, eventuell noch was, was ein bisschen zwischendurch cashed, damit nicht alles komplett direkt ausgeliefert werden muss. Es braucht eine Webserver, es braucht die Software, also Mastodon selbst. Und das war es im Prinzip auch im Großen und Ganzen schon.
+
+01:41:36.640 --> 01:41:39.380
+<v SPEAKER_2>Okay, worin ist sie geschrieben?
+
+01:41:39.400 --> 01:41:41.640
+<v SPEAKER_5>Die ist in Ruby on Rails geschrieben.
+
+01:41:41.660 --> 01:42:05.980
+<v SPEAKER_2>Ah, okay, das heißt, damit ist es für Endanwender, die bei einem Web-Poster irgendwas sich zusammenklicken können, raus, weil die meistens kein Ruby on Rails können. Ja, ich meine so per Klick. Also ich hab einen Web-Poster, da kann man einfach klicken, installieren mit WordPress. Und das kann der für verschiedene Softwarearten, aber halt nicht. Das ist halt alles dann PHP, glaube ich, und nichts, was irgendwie Ruby on Rails kann.
+
+01:42:06.300 --> 01:42:12.080
+<v SPEAKER_5>Ich glaube, mich immer erinnern zu können, dass es für Mastodon sogar auch so ein One-Click-Hoster gab.
+
+01:42:12.100 --> 01:42:42.260
+<v SPEAKER_2>Tatsächlich, es gibt zumindest einen Dienst, der das anbietet, dass man, glaube ich, für einen fünferen Monat sich eine eigene Mastodon-Instanz da bucht, aber der ist dann spezialisiert genau darauf. Aber das bringt uns ja sozusagen zum Problem. Also beides, was wir jetzt gehört haben, es ist halt schon was für, sagen wir mal, Profis. Oder anderswo Henning, du hast ja gesagt, irgendwie so großes Interesse an diesem Dienst im Sinne der, oder in der Idee der Wissenschaftskommunikation, eigener Server aufsetzen. Was willst du mal versuchen?
+
+01:42:42.280 --> 01:43:17.560
+<v SPEAKER_4>Also ich persönlich möchte da auf gar keinen Fall admin sein. Ich bin irgendwie damit ausgelastet, bei so einem Web-Poster, wie du ihn beschrieben hast, so einen WordPress zu administrieren. Und das ist oberkante Unterkiefer für meine technischen Fähigkeiten. Aber wir als Wissenschaftsorganisation, finde ich, könnten das schon machen. Und wir haben natürlich eine IT-Abteilung, die das kann oder die halt einen technischen Dienstleister hat, dem man beauftragen könnte, so was zu tun. Und ja, ich stelle mir in der Tat die Frage, ob wir das nicht machen sollten. Da gibt es aber noch ein paar ungelöste Fragen, um die ich gerade...
+
+01:43:17.580 --> 01:43:20.540
+<v SPEAKER_2>Welche? Juristische zum Beispiel.
+
+01:43:20.560 --> 01:43:23.060
+<v SPEAKER_4>Gibt es da eigentlich was von Podcasts?
+
+01:43:23.080 --> 01:43:55.160
+<v SPEAKER_2>Ich weiß es nicht genau. Aber das ist tatsächlich eine interessante Frage. Also es gibt jetzt diese Datenschutzgrundverordnung, vor der alle eine Einheit und Respekt haben. Aber es ist ja nicht erst seitdem, dass man sich Gedanken um andere Leute Daten machen muss, wenn man so eine Systeme betreibt. Wie ist denn das bei Nextcloud eigentlich? Spätestens in dem Moment, wo ich die Software nicht nur für mich selbst benutze, sondern auch öffne in andere Bereiche, müsste ich ja zumindest als Betreiber da auch eine juristische Idee haben. Im Idealfall. Ist das was, was ihr mitdenkt und den Nutzerinnen und Nutzern auch mitgibt?
+
+01:43:55.180 --> 01:45:06.540
+<v SPEAKER_1>Oder ist das sozusagen, ja, aber da muss ich halt jeder selber kümmern? Ja klar, wir denken auch damit. Und inzwischen gibt es auch Optionen, dass man da eben noch so ein Impresso, ein Privacy Statement da verlinken kann. Es gibt Apps, eine App, mit der man beim Administrator dann fragen kann, dass man sich die Daten rauszieht, bitte. Oder eben den Account löscht. Aber als erstes einmal versuchen wir überall so weit wie möglich mit offenen Standards zu arbeiten. Speziell bei den Dateien erst mal hier, dass es halt web darf. Das heißt, wenn man sich die rausziehen möchte, dann geht das halt sofort im Kalender, im Kontakt, im Adressbuch ebenfalls. Von daher, alles was den Export so betrifft, das geht auf diese Art und Weise. Und für den Rest, wenn halt irgendwie die Anfrage da ist, dann müsste der Administrator so ein bisschen seine Datenbankkenntnisse da bemühen.
+
+01:45:06.560 --> 01:45:26.700
+<v SPEAKER_2>Okay, also das ist auch für Expert-Messen. Rixx und Leah, habt ihr euch mal Gedanken gemacht? Es gibt diese Chaos Social Instanz, die ist ein paar tausend User und Userinnen schwer, wenn ich mich richtig erinnere. Habt ihr euch schonmal über die juristische Komponente oder habt ihr euch da irgendwie darauf vorbereitet oder seid ihr jetzt gerade froh unter Nickname hier zu operieren?
+
+01:45:28.100 --> 01:46:00.460
+<v SPEAKER_5>Grundsätzlich ist einer der wichtigen Punkte, wir versuchen allgemein, wie das im Chaos eigentlich anliegen ist, so wenig Daten wie möglich zu speichern. Das heißt, zum Beispiel haben wir selbst das Ganze noch so ein bisschen erweitert, dass wir zum Beispiel alle IP-Adressen, die irgendwo gespeichert werden, rausschmeißen. Das heißt, wir setzen uns schon dafür ein und versuchen, so wenig Daten wie möglich zu speichern. Zum Beispiel gibt es auch eine Suche für Mastodon, die man theoretisch aktivieren kann, aber da sagen wir auch, damit fangen wir eben an, die Daten auszuwäßen. Dann bedienen wir uns auf ganz dünnes Eis und das wollen wir einfach nicht.
+
+01:46:00.480 --> 01:46:08.420
+<v SPEAKER_2>Aber zwischen sozusagen dem Datenschutzideal aus dem Chaos-Umfeld und den juristischen Anforderungen an einen betriebenen Online-Service gibt es ja noch zwei Unterschiede.
+
+01:46:10.800 --> 01:46:22.620
+<v SPEAKER_5>Da muss man einfach sagen, wir versuchen so weit wie möglich das Ganze natürlich zu erfüllen. Das sind wir natürlich auch verpflichtet. Aber es gibt eben Dinge, da ist es schwierig, weil uns einfach die Software das nicht ganz zulässt.
+
+01:46:23.060 --> 01:46:24.680
+<v SPEAKER_2>Okay, das ist noch Neuland sozusagen.
+
+01:46:25.160 --> 01:46:30.400
+<v SPEAKER_5>Genau, das ist einfach die Problematik, die alle haben vor der Stelle, natürlich genauso.
+
+01:46:30.420 --> 01:46:46.540
+<v SPEAKER_3>Aber wir bemühen uns schon, die ordentlich anzugehen. Also wir kommunizieren das auch an die Leute auf der Instanz natürlich transparent. Aber wir haben ja schon von uns aus Schritte ergriffen, dass halt noch weniger Daten anfallen als eh schon. Mehr können wir an der Stelle nicht machen.
+
+01:46:46.560 --> 01:48:01.020
+<v SPEAKER_2>Jetzt ist ja so eine der Sachen, jetzt ist die Sendung schon wieder fast rum. Und den wichtigsten Punkt haben wir noch gar nicht besprochen. Die Idee an einem dezentralen System ist ja, dass das System dezentral ist. Das heißt, es gibt möglichst viele Leute, die Instanzen oder Server oder was auch immer betreiben. Jetzt haben wir schon in zwei oder drei Stellen in der Sendung immer gesagt, ja, JavaCCC.de war so ein Beispiel. Und um das jetzt zu erklären, ist es ja, es gibt Java, einen Chatdienst, der auch dezentral funktionieren kann. Und was in Deutschland, in dem Umfeld sozusagen passiert ist, theoretisch könnte es ganz viele 1000 Java Server geben. Praktisch waren, sagen wir mal betrieben, alle Leute auf JavaCCC.de. Und wenn der sozusagen mal offline war, dann war halt Java in Deutschland tot, mehr oder weniger. Daran kann man halt gut sehen, dass es halt eine geile Idee ist, die zentrale Dienste zu haben. Jetzt haben wir aber gerade schon festgestellt, es ist aber schwierig, die zu administrieren. Was haltet ihr denn für eine gute Größe? Also habt ihr zum Beispiel bei Chaos Social, denkt ihr euch so, naja, um diesen selben Effekt zu verhindern, müssten wir vielleicht eine Begrenzung einführen, wir machen Schluss bei 5.000 Leuten oder was auch immer.
+
+01:48:08.860 --> 01:48:49.360
+<v SPEAKER_5>AT-AT. Wir hatten schon ein paar Mal zugemacht, also wir hatten ein paar Mal schon tatsächlich die Registrierung geschlossen. Zum Beispiel jetzt beim letzten Mal, als Twitter irgendwie was Größeres geändert hat, da hatten wir unsere Registrierung nochmal kurz aufgemacht. Dummerweise, es gibt noch die Seite joinmustodon.org, das ist so eine Suchmaschine für welche Instanzen möchte ich eigentlich, mit welchen Instanzen möchte ich eigentlich haben oder was passt zu mir. Und leider sind wir da für deutschsprachig überall als erstes aufgetaucht. Das heißt, plötzlich kamen ganz, ganz viele Leute auch aus eben nicht diesem Chaosumfeld dazu. Und dementsprechend musste man eben dann auch einfach gucken, wie steuert man das, damit die Community eben noch erhalten bleibt und das dann nicht einfach...
+
+01:48:49.380 --> 01:49:09.720
+<v SPEAKER_2>Nee, aber das meine ich gar nicht so genau. Also ich habe dann auch gelesen, ihr macht jetzt zu, weil die eigene Community, lokale Teilnehmer sozusagen, soll nur organisch wachsen. Aber meine Frage bezieht sich darauf, was glaubt ihr, was eine gute Größe für eine Instanz ist, damit sichergestellt wird, dass es halt nicht nur eine Instanz gibt, sondern halt viele.
+
+01:49:09.740 --> 01:49:21.820
+<v SPEAKER_3>Das hängt doch immer von dem Umfeld ab, das du betrachtest, ne? Also ich meine, die Instanzgröße wird ja eh in absoluten Nutzern angegeben und Nutzerinnen, was überhaupt nicht hilft, weil eigentlich interessieren ja nur die Aktiven.
+
+01:49:31.780 --> 01:49:36.020
+<v SPEAKER_2>Okay, Jitsi ist anscheinend der Ansicht, die Sendung ist jetzt bald zu Ende, was tatsächlich auch bald passieren könnte.
+
+01:49:36.100 --> 01:49:40.380
+<v SPEAKER_3>Es ist eine andere Größe als für uns.
+
+01:49:40.400 --> 01:49:47.560
+<v SPEAKER_2>Das Problem ist nicht nur, dass wir Rixx nicht mehr hören, sondern er anscheinend auch nicht hört, dass ich versuche zu sagen, dass wir ihn gar nicht mehr hören. Das ist leider ein großes Problem.
+
+01:49:47.580 --> 01:49:50.620
+<v SPEAKER_5>Ich hab's ihm mal gesagt.
+
+01:49:50.640 --> 01:49:58.020
+<v SPEAKER_2>Sehr gut, das ist Föderation. Alle reden irgendwie miteinander. Henning, hast du dazu eine Meinung?
+
+01:49:59.020 --> 01:50:25.940
+<v SPEAKER_4>Ja, also ich finde es natürlich super, dass Rixx und Leah als private Enthusiasten und Nerds hier sowas betreiben. Ich finde aber auch, dass viele Leute das privat machen könnten. Dass aber auch gesellschaftliche Player, wie zum Beispiel wir in der Wissenschaft, uns überlegen sollten, sollen wir das nicht machen. Aber auch andere gesellschaftliche Organisationen, gewerkschaften, Kirchen, Verbände, NGOs, Fußballvereine.
+
+01:50:25.960 --> 01:50:44.160
+<v SPEAKER_2>Aber die spannende Frage ist ja genau sagen, welche Größe soll das haben. Du hast im Vorgespräch erzählt, es gibt für andere digitale Dienste innerhalb des Forschungsnetzwerkes einen Anbieter, der dann für alle Unis in Deutschland ist. Die Gefahr bestünde ja, wenn man das macht und sagt, okay, machen wir auch, dass das auch passiert. Ist das nicht schon eigentlich zu groß?
+
+01:50:45.100 --> 01:51:28.880
+<v SPEAKER_4>Na ja, weiß ich nicht, ob jetzt sozusagen die Wissenschaft irgendwie so ein gesellschaftlicher Player ist im Vergleich zu die Fußballinteressierten oder die Feministinnen. Aus meiner Sicht könnten all solche Organisationen, Verbände, Interessengruppen auch sich fragen, sollen wir nicht auch da mitmachen und so einen Server aufsetzen. Und das betrifft auch nicht nur Mastodon. Ich finde, man sollte auch über andere kommende Systeme nachdenken, also die, die jetzt noch gar nicht entwickelt sind. Wir brauchen ja nicht nur Twitter-Klone in dezentralen Social Media Infrastrukturen, sondern wir brauchen auch Chat Software. Da müssen wir über ganz viele Dinge nachdenken, aus meiner Sicht.
+
+01:51:29.580 --> 01:51:46.600
+<v SPEAKER_2>Aber du würdest das ansetzen auf institutioneller Ebene. Man könnte ja auch sagen, Idealforstellung ist, hinter dem Router steht in jedem Zuhause so eine Instanz. Da würdest du sagen, das ist vielleicht eine Nummer zu kleinteilig, lieber auf einer sozusagen eine Ebene größer.
+
+01:51:47.980 --> 01:52:09.680
+<v SPEAKER_4>Nee, ich meine auch, ich finde es super, wenn Privatleute wie Rixx und Leah das betreiben. Dieses Netz in Bürgerhand, finde ich eigentlich eine Supervision. Warum nicht? Aber ich fürchte, ich wäre damit überfordert und könnte das nicht. Ich würde vor allem nicht mir zutrauen, dann irgendwelche meinen Freunden zu sagen, kommt zu mir, bei mir sind eure Passwörter sicher. Wären sie wahrscheinlich nicht.
+
+01:52:10.200 --> 01:52:49.740
+<v SPEAKER_2>Da komme ich wieder zu dem Bild, das ich ab und zu habe, wenn wir über so digitalen Kram diskutieren, denn eigentlich sind wir doch alle noch in dieser Stammeszeit. Vielleicht hat jeder in seinem näheren Umfeld eine Nerdin oder eine Nerd, die so etwas kennen können und die dann so eine Instanz betreiben. Und die sind quasi der Schamane des Stammes. Es gibt das Dorf, das digitale Dorf, da gibt es den einen Schamanen. Und der wird halt irgendwie die Mastodon Instanz dann betreiben. Wie würdest du das denn sehen, Arthur? In welcher Größenordnung so was passieren kann? Oder andersrum, wie kann man denn sicherstellen, dass dezentral wirklich dezentral bedeutet und halt nicht wieder sozusagen das eine oder zwei große zentrale Server gibt?
+
+01:52:51.380 --> 01:53:29.300
+<v SPEAKER_1>Ja, wäre natürlich gut, wenn da so eine Art Regulation stattfindet. Das, was ja eben irgendwie in diesem industriellen Sektor, sag ich jetzt mal, fehlt. Ja, Rick und Leah, die versuchen das ja mit so Selbstregulierung. Ob das jetzt überall so klappt, ist wahrscheinlich eher auch so ein Ideal. Sonst würden wir das ja woanders so sehen. Ja, aber am Ende, weiß nicht, wird es darauf irgendwie hinauslaufen, dass man über irgendwelche Mittel und Wege, dass ich das so selbst regulieren soll. Weiß nicht, vielleicht gibst du was von Blockchain oder so.
+
+01:53:29.320 --> 01:53:30.580
+<v SPEAKER_2>Der Markt wird es schon regeln, meinst du.
+
+01:53:32.460 --> 01:53:38.560
+<v SPEAKER_1>Nee, der Markt bestimmt nicht, sondern da brauchst du irgendwie andere Instanzen, dass man das halt gesellschaftlich auf die Reihe kriegt.
+
+01:53:40.860 --> 01:54:06.780
+<v SPEAKER_5>Soll ich noch ganz kurz was anfangen? Tobi schrieb nämlich mir gerade noch was. Also man muss sagen, es ist gefühlt bei Masterton und auch bei anderen Communities, ich war auch im Freifunkumfeld aktiv. Muss man sagen, so ein guter dreistelliger, eine gute dreistellige Zahl bis, wenn man es mal wirklich in Zahlen festmacht, bis eine höhere vierstellige Zahl, das ist so realistisch. Danach entfremdet sich das ein bisschen untereinander.
+
+01:54:07.400 --> 01:54:11.080
+<v SPEAKER_2>Also danach ist es dann keine Community mehr, sondern?
+
+01:54:12.380 --> 01:54:23.120
+<v SPEAKER_5>Da gefühlt geht da so ein bisschen dieses, hey, ich gucke jetzt mal in die lokale Timeline und da finde ich jemanden, wenn ich rede, dann passiert da einfach auch ein bisschen zu viel, um das einfach zu überblicken zu können.
+
+01:54:24.300 --> 01:55:01.080
+<v SPEAKER_2>Okay, so ein Dorf, wo es so ein paar Tausend Leute groß ist, damit kann man dann auch leben. Wir sind da am Schluss, ich hätte voll gerne noch geredet, wie das eigentlich mit der Finanzierung ist, weil das ist ja sicher ein nicht ungeregendes Problem. Mir wird gerade noch ein Schild hingehalten, was ich nicht lesen kann, aber ich glaube, es bedeutet, dass wir noch über Masterdown-Accounts reden sollen, was ich es sowieso machen wollte. Ich möchte mich gerne von meinen Gästen verabschieden, also Rixx, Leah, Arthur und Henning, und zum Schluss noch nach euren Masterdown-Accounts fragen, oder wenn ihr die nicht sagen wollt, weil ihr die lieber ganz im eigenen halten wollt, einen empfehlen, den man vielleicht folgen kann. Arthur, hast du schon einen Masterdown-Account eingerichtet während der Sendung?
+
+01:55:02.400 --> 01:55:20.480
+<v SPEAKER_1>Ich hab's während der Sendung jetzt noch nicht viel geschafft. Aber ich mach's in die Tage, denke ich mal, und dann kommt das vielleicht auf pot.graspora.de, u slash blizz, bli und 3z nachlesen.
+
+01:55:20.500 --> 01:55:24.120
+<v SPEAKER_2>Alles klar. Zurückspulen noch mal, dann habt ihr die Uhr. Henning, wo kann man dich finden?
+
+01:55:24.640 --> 01:55:45.020
+<v SPEAKER_4>Ja, ich heiße Henning Krause, aber die Mastodon Instanz ist sowas von unaufsprechlich. Das ist so ein französischer Nerd, der das für mich hustet. Aber ich glaube, wenn man im Chaosradio Feed guckt, dann findet man da irgendwelche Menschen. Was ich aber empfehlen möchte, ist der Account atprimes, at botsyn.space, der tutelt einfach Primzahlen.
+
+01:55:45.040 --> 01:55:45.980
+<v SPEAKER_2>Sehr geil.
+
+01:55:50.040 --> 01:56:01.780
+<v SPEAKER_5>Ja, ich würde jetzt auch Rixx das Ganze mit übernehmen, weil er bei dem Punkt mir die Akustik ja nicht so kennt. Von daher wäre es bei uns Rixx at chaos.social bzw. Leah at chaos.social.
+
+01:56:01.800 --> 01:56:25.920
+<v SPEAKER_2>Da könnt ihr gerne folgen. Und wenn ihr wissen wollt, was auf der chaos.social Instanz abgeht, ist der zugehörige Account Ordnung at chaos.social. Ein wichtiger Account, den man auch noch findet, ist Überraschung Chaosradio at chaos.social. Mein Name ist Monoxyd at mastodon.social und ich habe noch eine wichtige Nachricht für euch. Lasst euch nicht überwachen und verschlüsselt immer schön eure Backups.
+
+01:59:32.000 --> 01:59:33.920
+<v SPEAKER_1>Don't forget I'm in your extended network.

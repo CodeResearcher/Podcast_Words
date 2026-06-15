@@ -37,6 +37,38 @@ def _now_iso() -> str:
 
 # Leading characters a spreadsheet may interpret as a formula (CSV injection).
 _CSV_FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r")
+_AUDIO_SUFFIXES = (".mp3", ".m4a", ".wav", ".ogg", ".aac")
+
+
+def _is_audio_url(url: str) -> bool:
+    lower = url.lower().split("?", 1)[0]
+    return (
+        lower.endswith(_AUDIO_SUFFIXES)
+        or "/podlove/file/" in lower
+        or "podigee-cdn" in lower
+        or "archive.org" in lower
+    )
+
+
+def _prefer_episode_link(new: str, existing: str, *, new_from_podlove: bool = False) -> str:
+    """Keep episode page URLs when merging with audio-only feed links."""
+    new = (new or "").strip()
+    existing = (existing or "").strip()
+    if new_from_podlove and new and not _is_audio_url(new):
+        return new
+    if not new:
+        return existing
+    if not existing:
+        return new
+    new_audio = _is_audio_url(new)
+    existing_audio = _is_audio_url(existing)
+    if existing_audio and not new_audio:
+        return new
+    if new_audio and not existing_audio:
+        return existing
+    if not new_audio and not existing_audio:
+        return existing
+    return new
 
 
 def _csv_safe(value):
@@ -114,7 +146,13 @@ class Catalog:
                 return ep
         return None
 
-    def upsert(self, episode: Episode, *, overwrite_state: bool = False) -> Episode:
+    def upsert(
+        self,
+        episode: Episode,
+        *,
+        overwrite_state: bool = False,
+        new_from_podlove: bool = False,
+    ) -> Episode:
         """Insert a new episode or update an existing one.
 
         Existing rows keep their state unless overwrite_state is True, so a
@@ -130,7 +168,9 @@ class Catalog:
 
         # Merge metadata, preserve transcript state unless told otherwise.
         existing.title = episode.title or existing.title
-        existing.link = episode.link or existing.link
+        existing.link = _prefer_episode_link(
+            episode.link, existing.link, new_from_podlove=new_from_podlove
+        )
         existing.source_id = episode.source_id or existing.source_id
         existing.published_at = episode.published_at or existing.published_at
         if overwrite_state:

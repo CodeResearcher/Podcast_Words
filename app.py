@@ -8,6 +8,7 @@ import streamlit as st
 
 from podcast_words.catalog import STATE_DONE, Catalog
 from podcast_words.config import load_config, sorted_podcast_ids
+from podcast_words.pipeline.word_counter import _read_word_counts_csv
 
 st.set_page_config(layout="wide")
 
@@ -126,9 +127,10 @@ def get_config():
 def load_data(podcast_id: str):
     config = get_config()
     podcast = config[podcast_id]
-    df = pd.read_csv(podcast.word_counts_csv, index_col=0, keep_default_na=False)
+    df = _read_word_counts_csv(podcast.word_counts_csv)
+    df.set_index("word", inplace=True)
     df.fillna(0, inplace=True)
-    df = df[df["is_stop"] == False]  # only relevant words
+    df = df[df["is_stop"].astype(str).str.lower() != "true"]
     df = df.drop(columns=["is_stop"])
     df = df.astype("uint32")
     df = df.T  # episodes become rows

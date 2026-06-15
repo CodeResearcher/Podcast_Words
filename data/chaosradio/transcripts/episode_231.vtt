@@ -1,0 +1,838 @@
+WEBVTT
+
+00:03:49.319 --> 00:05:45.799
+<v SPEAKER_1>Und damit Herzlich willkommen zum Chaos Radio im Blue Moon, wo alle zwei Monate hier auf Fritz, der Chaos Computer Club und nähere Anverwandte versuchen, ein technisches Problem oder Thema so zu erklären, dass es jeder verstehen kann. Mein Name ist Markus Richter und ich werde versuchen, in den nächsten zwei Stunden durch diese Sendung zu führen und sie so zu halten, dass man sie auch dann verstehen kann, wenn man gar keine Ahnung davon hat. Und das ist heute besonders wichtig, weil wir über ein Thema sprechen wollen, das zumindest am Anfang so klingt, als würde das bedeuten, wir müssen alle sterben, denn die Herzen unserer Computer sind krank. Was ich damit meine, ist, in unseren Computern und Smartphones und technischen Geräten werkelt ja ein Stück Hardware, das ist dafür verantwortlich, dass aus dem Ding überhaupt erst ein Computer wird, der sogenannte Prozessor und der ist kaputt. Also jetzt nicht ein ganz bestimmter, sondern ich übertreibe jetzt bestimmt, aber so grundsätzlich gesehen eigentlich alle. Zumindest, wenn wir von den Geräten sprechen, die wir so haben. Wie das passiert ist, was da kaputt ist, was das bedeutet, ob man das dagegen machen kann oder ob wir wirklich alle sterben müssen, das klären wir heute hier in den nächsten zwei Stunden im Chaosradio auf fritz.de. Und wir machen das live aus dem Fräulein Fritz in Berlin. Wenn ihr vorbeikommen wollt, könnt ihr das gerne tun. Falkensteinstraße 47 ist die Adresse neben der Baumhaus Bar. Einfach hinkommen, an die Glastür klopfen. Wir lassen euch rein, dann könnt ihr live zuhören und zu gucken. Das ist ganz hervorragend. Das kann ich natürlich alles nicht alleine machen, sondern muss zahlreiche Gäste dafür begrüßen, die Ahnung von dem Thema haben und uns das erklären können. Ich begrüße also recht herzlich Meise, Peter und Mirá. Hallo und guten Abend. So, wichtig ist, dass ihr ganz dicht ans Mikrofon rangeht. Sprecht hinein an das Mikrofon. Und ihr macht was mit Computern, habt ihr gesagt? Soll ich euch vorstellen? Also ein bisschen genauer. Peter macht Hardware- und Software-Entwickler mit Blick auf Sicherheit. Das heißt, machst du die Sachen kaputt oder baust du sie so, dass sie sicher sind?
+
+00:05:45.819 --> 00:05:51.379
+<v SPEAKER_2>Ich baue die lieber so, dass die sicher sind. Aber dafür muss ich natürlich verstehen, wie sie kaputt sind.
+
+00:05:51.879 --> 00:06:01.019
+<v SPEAKER_1>Okay, verstehe. Mirah ist auch im Club und arbeitet in dem Bereich. Das kann man so sagen. Machst du Sachen kaputt oder baust du sie neu?
+
+00:06:01.039 --> 00:06:03.579
+<v SPEAKER_3>Ich analysiere Sicherheitslücken und Malweh.
+
+00:06:03.599 --> 00:06:21.019
+<v SPEAKER_1>Das heißt also, wenn sie kaputt sind, guckst du, was da passiert ist? Und dann haben wir noch Meise, der auch im Club ist, beim Walk, beim Video Center, die normalerweise das Chaosradio auch streamen, was heute irgendwie nicht live geht, wenn ich es richtig verstanden habe. Aber es wird eine Aufzeichnung geben. Das heißt, wenn ihr es sehen müsst, kommt vorbei, er wollt, kommt vorbei und arbeitet bei einem Hoster.
+
+00:06:21.039 --> 00:06:30.179
+<v SPEAKER_4>Genau, ich betreibe gerne Infrastruktur und muss dann immer relativ schnell hinterher sein, solche Lücken dann zum Beispiel zu fixen.
+
+00:06:32.999 --> 00:08:39.859
+<v SPEAKER_1>Okay, das heißt also, wenn wir ein schreiender Privatradio-Sender werden oder ein Privatfernster, noch besser, würde sie jetzt ein Bild von der Angeleiterung herstellen. Der Betroffene! Was das wirklich damit zu tun hat, das kennen wir heute auch noch. So, also ich habe ja schon ganz kurz versucht zu erklären oder anzureißen, warum es geht. Nämlich, dass es eine Sicherheitslücke oder mehrere Sicherheitslücken in Prozessoren gibt, die wiederum die Kernstücke der neuartigen Rundfunk- und Fachgeräte sind, die wir in unserem Alltag so benutzen. Also nicht nur Computer, der vielleicht auf dem Tisch steht, sondern auch das Smartphone oder vielleicht sogar das Auto, in dem wir fahren. Sie haben auch sehr schöne Namen. Auch darüber wollen wir noch sprechen. Meltdown und Spectre heißen die. Meltdown, also Kernschmelz und Spectre. Ein James Bond Film. Das kann man schon mal machen. Und ich möchte die Sendung, weil wenn man gerade über Prozessoren und Sicherheitslücken in Prozessoren spricht, wird es sehr schnell, sehr kompliziert. Das heißt, ich möchte die heutige Sendung eigentlich zweimal machen, nämlich einmal als am Anfang so ganz, ganz kurzen Durchritt, worüber sprechen wir da eigentlich und dann die genauen, also so genau man das in einer Radiosendung machen kann, ohne Informatikstudium, dann sozusagen gehen wir mal, versuchen wir genau reinzugehen und das aber zu jedem Zeitpunkt verständlich zu halten. Falls ihr Fragen habt, zwischendurch könnt ihr gerne anrufen unter 0331 70 97 110. Auch, das ist mir wie gesagt immer wichtig beim Chaosradio, wenn es Verständnisfragen sind. Dazu, wenn ihr an irgendeiner Stelle sagt, da waren sie jetzt ein bisschen schnell, ruft an, fragt nach, wir klären das. Oder wie gesagt, ihr könnt vorbeikommen. So, ich habe jetzt überlegt, wie stelle ich jetzt die erste Frage an euch, so, dass sie auch tatsächlich einfach zu beantworten ist. Und ich glaube, alles, was in die Richtung geht, von was ist denn da eigentlich kaputt, zieht eine komplizierte Erklärung nach Sicht. Deswegen vielleicht als erstes die Frage, was kann denn durch diese Sicherheitslücken passieren? Also was ist denn der Effekt davon? Was ist denn die Gefahr, wenn man die ausnutzt, was passiert dann? Also bei einem Auto kann man, wenn da die Fernbedienung irgendwie geknackt ist, dann kann also jeder mit dem Auto wegfahren. Das ist ein Satz, den kann ich sehr schnell einfach formulieren. Könnte das für Melda und Spectre auch sagen? Was ist da das Problem?
+
+00:08:39.879 --> 00:08:55.199
+<v SPEAKER_2>Nicht so leicht wie die Fernbedienung, leider. Also wichtig ist zu erwähnen, dass man schon irgendwie in dem System reingekommen sein muss, um diese Lücken auszunutzen.
+
+00:08:56.699 --> 00:09:05.279
+<v SPEAKER_1>Wir wollen jetzt nicht darüber reden, ob das alles kompliziert ist und wie man das genau macht, sondern es ist eine Sicherheitslücke. Wenn man die ausgenutzt hat, was kann man dann machen?
+
+00:09:05.299 --> 00:09:31.219
+<v SPEAKER_3>Das wird man hauptsächlich nutzen, um Informationen zu lesen, die man üblicherweise nicht lesen können sollte. Also beispielsweise Passwörter, Credentials zu dumpen, Cookies, also Authentifizierungstokens für Webseiten zum Beispiel oder auch um weitere Informationen über Systeme zu sammeln, die man vielleicht in anderen Arten von Exploits verwenden kann.
+
+00:09:31.879 --> 00:09:43.579
+<v SPEAKER_1>Also ich kann, wenn ich die Sicherheitslücke erfolgreich ausnutze, Dinge wissen über andere Menschen, die diesen Computer benutzen, die ich eigentlich nicht wissen sollte.
+
+00:09:43.599 --> 00:09:44.939
+<v SPEAKER_2>Oder andere Programme.
+
+00:09:44.959 --> 00:09:45.719
+<v SPEAKER_1>Oder andere Programme.
+
+00:09:46.579 --> 00:10:00.439
+<v SPEAKER_2>Also wenn ich als Benutzer ein Programm verwende, dann oder auf meinem Telefon zum Beispiel, dann ist die App ja schön getrennt von den anderen Apps in der Theorie, aber vielleicht doch nicht.
+
+00:10:00.719 --> 00:10:25.099
+<v SPEAKER_1>Also Beispiel, wir benutzen ja alle, seit wir gelernt haben, dass wir Passwörter benutzen sollen, wir benutzen ja Passwortmanager. Diese Passwortmanager sind geschützt durch ein Passwort, was dafür sorgt, dass alle anderen Passwörter sozusagen verschlüsselt sind. Und ich möchte natürlich, wenn ich diesen Passwortmanager betreibe auf meinem Computer oder Telefon, nicht, dass da eine andere App, die ich mir unvorsichtigerweise aus dem Internet heruntergeladen habe.
+
+00:10:25.119 --> 00:10:28.179
+<v SPEAKER_2>Wie jede Webseite eigentlich.
+
+00:10:28.199 --> 00:10:47.599
+<v SPEAKER_1>Wie jede Webseite könnte das auch sein. Also ich möchte sozusagen nicht, dass andere Programme in meinen Passwortmanager reinkommen oder möglicherweise sogar das Passwort mitbekommen, das der Passwortmanager hat. Aber wenn ich Meltdown und oder Spectre erfolgreich ausnutze, dann könnte das passieren. Ihr dürft nicht mit dem Kopf schütteln, ihr seid im Radio, ihr müsst es sagen.
+
+00:10:47.619 --> 00:11:35.419
+<v SPEAKER_3>Das ist natürlich immer bei Zuständen, also das ist natürlich alles sehr kompliziert, aber man kann generell sagen, ja, diese Sicherheitslücken kann man tendenziell zu nutzen, generisch Informationen zu lesen, an die man sonst nicht kommen sollte. Das kann beispielsweise sein, dass man aus dem einen Browser-Tab jetzt liest, was in dem anderen Browser-Tab steht, sei es jetzt die Anmeldeinformation, die ich jetzt gerade in eine andere Webseite eingebe, oder das kann natürlich sein, dass es jetzt möglich ist, dann aus dem Userspace, also aus dem Ausführungskontext, wie jetzt zum Beispiel mein Word läuft als Beispiel, da wo ich jetzt meine Texte editiere, dass ich da dann auf einmal Daten lesen kann, die eigentlich im Könnespace liegen, die also für den Userprozess, also mein Word gar nicht sichtbar sein sollten, da kann man dann jede Menge Unfunktionen haben.
+
+00:11:35.439 --> 00:11:39.359
+<v SPEAKER_1>Wo kommt ihr mit, wie schnell das kompliziert ist? Er hat ja gerade Kernelspace gesagt. Was ist dann Kernelspace?
+
+00:11:39.379 --> 00:11:48.659
+<v SPEAKER_3>Das ist abstrakt jetzt der Betriebssystem Kern. Also das ist sozusagen der Unterbau von meinem Betriebssystem. Das ist das, was Kernfunktionalitäten bereitstellt.
+
+00:11:48.679 --> 00:11:55.439
+<v SPEAKER_1>Also so wie der Prozessor das Herzstück des Computers ist, ist der Kernelspace quasi der innere Teil des Betriebssystems, was es überhaupt zum Funktionieren bringt?
+
+00:11:55.519 --> 00:12:27.759
+<v SPEAKER_3>Ja, der Kernel, der ist so ein bisschen die zentrale Verwaltungskomponente eines Betriebssystems. Die sorgt sich halt drum, wann jetzt welcher Prozess dran ist und eben die Code ausführen darf, macht Dinge mit Speicher, verwaltet meine angeschlossenen Geräte, meine Peripherie. Da laufen halt diese Treiber drin. Also wenn ich jetzt ein Gerät anschließ, dann läuft da irgendwie Code im Kernelspace, der mir ermöglicht, mit diesem Gerät zu interagieren. Also das ist das, wovon der Nutzer im Idealfall erst mal nichts mitbekommt, was halt...
+
+00:12:27.779 --> 00:12:29.819
+<v SPEAKER_1>Aber wenn ich da drin bin, dann kann ich auch alles machen?
+
+00:12:29.839 --> 00:12:36.259
+<v SPEAKER_3>Genau. Ja, wobei es geht ja jetzt nicht darum, Code auszuführen im Kölner, sondern ich kann nur Sachen lesen im Kernel.
+
+00:12:36.279 --> 00:12:39.559
+<v SPEAKER_1>Okay, aber wenn ich das lesen kann, dann kann ich alles lesen?
+
+00:12:39.579 --> 00:12:41.699
+<v SPEAKER_3>Genau. Überbande sozusagen.
+
+00:12:41.719 --> 00:12:44.939
+<v SPEAKER_1>Kann ich dann möglicherweise auch Dinge lesen, die mir es ermöglichen, wiederum andere Dinge kaputt zu machen?
+
+00:12:45.679 --> 00:12:58.959
+<v SPEAKER_3>Ja, als Beispiel, wenn ich jetzt ein Windows-System, was jetzt Domain-gejoint ist, also... Bitte was? was jetzt zentral gemanagt wird, also von der IT-Abteilung.
+
+00:12:58.979 --> 00:13:06.539
+<v SPEAKER_1>Ich betreibe nicht den Computer sozusagen alleine, sondern ich darf an meinem Computer nichts machen. Und es gibt noch 100 andere Computer, es gibt einen Administrator irgendwo, der es kontrolliert.
+
+00:13:06.559 --> 00:13:17.879
+<v SPEAKER_3>Genau, richtig. Und da wär es dann zum Beispiel möglich, unter Umständen Anmeldedaten auszulesen für Accounts, womit ich dann wieder zu anderen Computern laufen kann, um mich da weiter anzumelden.
+
+00:13:19.999 --> 00:14:03.079
+<v SPEAKER_1>Jetzt hat man das Gefühl, wenn man das so aus dem Augenwinkel mitverfolgt hat, das ist irgendwie sehr gefährlich und wir sind alle davon betroffen. Weil das im Prozess so ist, ist es jetzt schlimmer, also wie gesagt, so ein Gefühl, das man da mitgenommen hat, ist es jetzt schlimmer, als wäre nur eine Software kaputt. Also weil es gibt ja, ich will jetzt nicht sagen, einmal auf einen Band, aber es passiert ja ab und zu, dass Betriebssysteme kaputt sind oder Software kritische Sicherheitslücken haben, die ganz, ganz, ganz schlimm sind. Und jetzt kann man sagen, okay, wenn es der Prozessor ist, dann ist es ja im Computer drin, ist es deswegen schlimmer. Also ich verstehe nicht, ist das jetzt wirklich dramatischer als andere Sicherheitslücken oder nicht?
+
+00:14:03.099 --> 00:14:57.379
+<v SPEAKER_3>Das wird uns mit Sicherheit länger begleiten. Wenn man sich jetzt dieses Gesamtsystem Computer wie so ein Schichtmodell vorstellt, ganz unten irgendwie der Prozessor, dann kommt irgendwie der Kernel, dann kommen irgendwann User-Land-Programme. Dann liegt dieses Problem jetzt halt ganz unten und das zieht sich dann durch, durch die ganzen drüber liegenden Ebenen. Das heißt, wenn ich jetzt irgendwie ein Sicherheitsproblem mit meinem Browser habe, da gibt es jetzt einen Bug, der exploitable ist, also womit ich Unfug treiben kann, dann reicht das. Und zwar, wenn ich meinen Browser update, dann muss ich jetzt nicht irgendwie noch mein Betriebssystem updateen und meinen CPU wegschmeißen und irgendwie einen neuen Computer kaufen. Wenn ich jetzt allerdings ein Problem mit der ganz untersten Schicht, mit der Hardware selber oder noch schlimmer, mit einem Designprinzip habe, wo nach dieser Hardware design wurde, dann ziehen sich die Auswirkungen, die ich davon habe, durch alle Schichten und betreffen halt sowohl den Kernel als dann eben auch Usern in Applikationen.
+
+00:14:58.579 --> 00:15:40.779
+<v SPEAKER_1>Was mich aber dann wiederum überrascht hat, ist, das kam Ende letzten Jahres auf, weil Townspector sozusagen, dass es wirklich die größte Runde gemacht hat. Und was man ja normalerweise hat bei so Sicherheitslücken, die wirklich gefährlich ist, dann kommen irgendwelche Viren. Ransomware, also diese Verschlüsselungstrojaner. Und von der Art und Weise, wie das kommunizieren, hätte ich gedacht, da muss doch irgendwas Hochdramatisches passieren. Und diese Sicherheitslücke wirklich so krass ist, mitten im Prozess, am Herzen des Computers. Aber gefühlt ist noch nichts passiert, wo irgendwo was explodiert ist. Ich meine das jetzt im übertragenen Sinne, nicht richtig, aufgrund von Spectre und Meltdown. Liegt das daran, weil das eine theoretische Sicherheitslücke ist, die man gar nicht ausnutzen kann?
+
+00:15:41.559 --> 00:16:07.839
+<v SPEAKER_2>Nee, das ist schon irgendwie machbar, auch wenn erst mit viel Aufwand. Aber wie gesagt, diese Sicherheitslücken, die haben ein paar Voraussetzungen oder die funktionieren nur unter bestimmten Bedingungen oder unter gewissen Umständen. Nur weil ein Rechner im Internet angeschlossen ist, heißt das nicht, dass jeder im Internet diese Sicherheitslücken ausnutzen können.
+
+00:16:10.399 --> 00:16:15.339
+<v SPEAKER_1>Verstehst nicht ganz, warum nicht? Also was genau macht es kompliziert auszunutzen?
+
+00:16:15.359 --> 00:16:43.799
+<v SPEAKER_2>Der erste Schritt ist, dass man auf jeden Fall als Angreifer, wenn wir die Rolle durchspielen, schon die Möglichkeit haben muss, in einem System zu agieren. Also ich muss schon in deinen Rechner eingebrochen haben, um diese Sicherheitslücke ausnutzen zu können. Wie mache ich das? Ja, ich kann dir zum Beispiel eine gefälschte Webseite ausliefern, statt der Webseite, die du eigentlich wolltest.
+
+00:16:43.819 --> 00:17:13.639
+<v SPEAKER_1>Aber ich muss sagen, ich muss schon mit anderen Sicherheitslücken agieren, damit die dann zum Tragen kommt. Ist das, also kann man sozusagen, wir sehen später noch genau, worum es geht, aber kann man vielleicht sagen, das ist nicht ökonomisch, jetzt damit zu arbeiten, weil das ist, also die Sicherheitslücke ist zwar schon sehr aufwendig. Es ist sehr aufwendig und es lohnt sich also quasi als jemand, der vielleicht damit Geld verdienen will, Computer aufzumachen oder halt diese Verschließungstreuern aufspielen will. Es ist momentan einfach sehr, sehr aufwendig. Es gibt einfachere Wege.
+
+00:17:14.399 --> 00:18:10.199
+<v SPEAKER_3>Genau, also die meisten Infrastrukturen, Netzwerke, Computersysteme, die sind viel einfacher kompromittierbar. Das bedeutet, es gibt jetzt natürlich hoch abgesicherte Systeme, die dann vielleicht sehr viele Kunden haben, eben so klassische Infrastrukturprovider, die dann irgendwie so Shared Hosting anbieten, Virtualisierungslösungen oder so was, wo sich das für einen Angreifer mit den entsprechenden Ressourcen potenziell lohnt, das jetzt aus, also diese Sicherheitslücke auszunutzen, um sehr schnell zu probieren, da vielleicht dann eben irgendwelche Zugangsdaten rauszutragen oder irgendwelche geschnitzten Informationen, die eben in Containern von anderen Kunden laufen. Das ist sicherlich ein Szenario, was man als Betreiber sich einfach schon im Kopf haben muss. Aber das ist jetzt keine Sicherheitslücke, wo man jetzt erwarten muss, dass ich nächste Woche eine E-Mail mit einem Word-Attachment kriege, wo ein Spectre-Exploit reinhängt.
+
+00:18:10.299 --> 00:18:20.279
+<v SPEAKER_1>Okay, das ist ja schon mal ein bisschen beruhigend. Heißt das, wir müssen uns gar keine Gedanken drüber machen oder heißt das, momentan hat noch niemand was programmiert, was sich leicht benutzen lässt?
+
+00:18:20.299 --> 00:19:02.779
+<v SPEAKER_3>Also absolut muss man sich darüber Gedanken machen. Man kann halt jetzt sagen, gut, es gibt Sicherheitslücken, die sind halt sehr tiefgehend, die gefährden die Integrität meiner Systeme sehr stark. Die sind aber kurzfristig, das heißt, die sind schnell auszunutzen, die können schnell gepatcht werden. Das sind diese Sicherheitslücken oder diese klassischen Sicherheitslücke ist es nicht, sondern das ist halt eine Sicherheitslücke, die ist sehr schwierig auszunutzen, die gefährdet aber potenziell trotzdem sehr mein System sehr stark. Ich kann eben viele Vorteile als Angrafer dadurch bekommen, aber ich kann sie wahrscheinlich auch sehr langfristig ausnutzen. Das heißt, ich muss zwar einen sehr hohen Aufwand treiben, um das auszunutzen, aber ich kann damit rechnen, dass ich damit noch relativ lange in die kleine Art Erfolg haben werde, Systeme zu kompromittieren.
+
+00:19:02.979 --> 00:19:16.739
+<v SPEAKER_1>Okay, das heißt aber auch, ich als Privatnutzer, Markus Richter, kein High-Value-Target für irgendwelche Elite-Hacker und oder Geheimdienste, muss mir jetzt nicht konkret Sorgen machen, aber man muss perspektivisch sich um das Problem kümmern?
+
+00:19:16.759 --> 00:19:44.219
+<v SPEAKER_3>Genau. Also man muss das strukturiert und sauber angehen. Das Gefährlichste ist halt, das wegzureden. Also man kann natürlich auch nicht sagen, naja, wir haben das Problem nicht. Wir machen jetzt die Augen zu und bauen weiter Prozesse um, wie wir das immer gemacht haben. Es ist aber genauso falsch, jetzt panisch hinzugehen und irgendwie Systeme, die vielleicht jetzt gar nicht so unbedingt in dieses Bedrohungsszenario fallen, im Zweifel mit irgendwelchen fehlerhaften Patches lahmzulegen.
+
+00:19:44.239 --> 00:19:44.799
+<v SPEAKER_1>Okay.
+
+00:19:44.819 --> 00:20:05.959
+<v SPEAKER_2>Was ich auf jeden Fall finde, dass man als Privatbenutzer machen kann, ist danach zu fragen, ob die Hersteller sich mit solchen Problemen auch jetzt künftig auseinandersetzen oder die Lieferanten und dann vielleicht einen Prozessor von dem Hersteller aussuchen, der weniger Probleme hat.
+
+00:20:05.979 --> 00:20:49.539
+<v SPEAKER_1>Oder sich schneller darum gekümmert hat, weil das ja fast alle gekümmert haben. Da kommen wir noch drauf. Meise, ich würde jetzt bei dir noch gerne fragen, ich stecke jetzt gerade wieder halbfinsten zusammen. Wir haben ja gehört, man muss, um dieses Ding auszunutzen, schon auf dem Computer drauf sein. Jetzt ist es ja so, es gibt im hosting Bereich etwas, das heißt virtuelle Maschinen. Und wenn ich es richtig verstehe, ist das ja exakt dieses Szenario. Also ich teile, es gibt sozusagen dieses technische Konstrukt. Ich brauche, wenn ich eine Webseite betreibe, nicht einen ganzen Rechner für mich alleine, der das hat, sondern ich teile mir die quasi mit ganz vielen verschiedenen. Und das heißt aber auch, ich bin gerade auf einem Computer, da sind auch andere Leute, die möglicherweise interessante Dinge da machen. Ist das sozusagen exakt das Szenario?
+
+00:20:49.559 --> 00:21:20.919
+<v SPEAKER_4>Das wäre ein Szenario, wobei man muss das schon unterscheiden. Es gibt halt Roaster, die Infrastruktur nur bereitstellen für einen bestimmten Personenkreis. Dann gibt es aber zum Beispiel Cloud Roaster, wie zum Beispiel Google oder AVS. AVS ist Amazon. Genau, Amazon. Da kann man sich halt einfach irgendwie so eine virtuelle Maschine klicken. Und dann kann man da drauf Spaß haben, wenn man das möchte. Und genau für solche Unmanage-Sachen wäre das halt unter Umständen möglich.
+
+00:21:20.939 --> 00:21:22.499
+<v SPEAKER_1>Unmanage heißt was?
+
+00:21:22.519 --> 00:21:25.079
+<v SPEAKER_4>Naja, also es verwaltet halt niemand für mich.
+
+00:21:25.439 --> 00:21:31.759
+<v SPEAKER_1>Also ich klicke mir da einen Account und habe dann eine virtuelle Maschine auf einem echten Rechner und kann damit aber wirklich machen, was ich will.
+
+00:21:31.779 --> 00:21:33.919
+<v SPEAKER_4>Genau, innerhalb dieser virtuellen Maschine, ja.
+
+00:21:34.839 --> 00:21:57.099
+<v SPEAKER_3>Also im Prinzip sind alle Dienste oder Maschinen gefährdet, wo ich generischen Code ausfüllen kann und desto fein granularer dieser Code ist. Also wenn ich jetzt eine sehr abstrakte Sprache hab, wie jetzt Python oder sowas, was dann noch mal in einer Interpreter-Runtime läuft und so, dann wird das viel schwieriger.
+
+00:21:59.459 --> 00:22:13.599
+<v SPEAKER_1>Warte, warte, du kannst dich mit Dingensätzen erklären, ich will jetzt nicht genau wissen, was ein Interpreter und so weiter und so fort ist, aber wenn du sagst, wie sagst du abstrakte Sprache, das heißt man programmiert dann nicht nah an der Technik oder wie?
+
+00:22:13.619 --> 00:22:54.979
+<v SPEAKER_3>Ja, genau, wenn ich jetzt direkt in Assembler, also wirklich Maschinensprache programmieren kann, dann ist es für mich jetzt als Angreifer, also das ist definitiv nicht einfach diesen Exploit auszumutzen, aber relativ gesehen noch einfacher, genau, Spectre oder Meltdown zu exploiten, desto weiter ich von dieser Maschinensprache weggehe, indem ich andere Sprachen benutze, die mir immer mehr Abstraktionen reinbringen, desto komplizierter wird das auch. Das liegt halt daran, dass man eben wie gesagt Verhalten der CPU ausnutzt, wo man sehr genau die Codefade für kontrollieren muss. Also man muss sehr genau verstehen, was macht denn genau meine CPU gerade und das wird halt schwieriger, je mehr Abstraktionsschicht ich dazwischen habe.
+
+00:22:55.399 --> 00:23:04.159
+<v SPEAKER_1>Mit den Programmiersprachen, nur fürs allgemeine Verständnis, ist das also so, es gibt Programmiersprachen, wo man quasi vereinfacht den Prozessor direkt sagt, macht das und das.
+
+00:23:04.179 --> 00:23:05.259
+<v SPEAKER_2>Direkt?
+
+00:23:05.279 --> 00:23:18.399
+<v SPEAKER_1>Und wo man, okay, also tatsächlich direkt und dann gibt es sozusagen diese abstrahierten, das heißt, ich sage eigentlich einer Software, bitte führe mal den Befehl aus, der das und das Ergebnis hat und die übersetzt das dann wiederum in Sprache, die dann irgendwann beim Prozessor anwesst.
+
+00:23:18.419 --> 00:23:32.799
+<v SPEAKER_3>Also in irgendwelche Zwischensprachen, wobei das mit dem direkt, ich weiß nicht, ob das eher was für den zweiten Teil ist, aber im Prinzip diese Maschinen, was man gemeinten dann auch unangenehm als Maschinensprache noch bezeichnet, also Assembler, selbst das interpretiert die CPU nicht direkt.
+
+00:23:32.819 --> 00:23:34.139
+<v SPEAKER_1>Aber es ist halt näher dran.
+
+00:23:34.159 --> 00:23:39.339
+<v SPEAKER_3>Genau, es ist näher dran. Das heißt, ich nehme da Abstraktion weg.
+
+00:23:43.319 --> 00:23:51.519
+<v SPEAKER_1>Also, ich will zurück zu dir. War das denn ein Problem jetzt?
+
+00:23:51.539 --> 00:24:44.039
+<v SPEAKER_4>Generell ist das für die Zuhörer zu Hause da eingehend ein Problem, dass sie sich erstmal nicht direkt schützen können, wenn zum Beispiel ein Mail-Anbieter, wo sie halt ihre Mails haben in der Cloud, zum Beispiel bei Amazon eine VM hostet, da irgendwie ihren Mails Server laufen hat und dann halt letztendlich der Angreifer über eine weitere VM, die halt zufälligerweise auf demselben Server läuft, wie die VM des Cloud-Anbieters, dann halt diesen Exploit ausnutzt oder zumindest einen Angriff versucht. Das heißt, ich persönlich kann mich jetzt mit meinem eigenen Rechner vor solchen Angriffen zum Beispiel nicht schützen. Von daher ist das halt dann schon ein Problem, sodass man halt als Service-Anbieter, als Dienstleister entsprechend halt reagieren muss.
+
+00:24:44.679 --> 00:25:16.719
+<v SPEAKER_1>Wow, also was sie bis jetzt mitnehmen ist, es ist gefährlich, es ist aber extrem kompliziert, das auszunutzen. Aber niemand weiß so genau, wann es passiert wird und wem es passieren wird. Das heißt also tatsächlich als Endanwender, dadurch, dass ich diese ganzen Dinge nutze, die einfach im Internet funktionieren und ich gar nicht weiß, welche Computer da eine Rolle spielen, kann ich gar nicht wissen, ob ich betroffen bin oder nicht. Heißt das, wir werden alle sterben und wir sollen alle Computer abschalten?
+
+00:25:16.739 --> 00:25:20.539
+<v SPEAKER_2>Vorsichtig mit der Cloud umgehen, würde ich vielleicht sagen, wir werden nicht sterben.
+
+00:25:20.559 --> 00:25:32.359
+<v SPEAKER_1>Aber wie geht das denn vorsichtig mit der Cloud? Na gut, das können wir vielleicht. So, dann haben wir es mal grob geklärt. Also es gibt eine Sicherheitslücke, die wirklich sehr aufregend ist und sehr große Konsequenzen hat.
+
+00:25:32.379 --> 00:25:33.759
+<v SPEAKER_3>Vor allem langfristige Konsequenzen.
+
+00:25:33.779 --> 00:26:12.099
+<v SPEAKER_1>Vor allem langfristig, wir werden aber nicht alle sterben. Und das ist sozusagen der grobe Überblick, den wir euch geben. Und nach den Nachrichten und der Musik, die ich gleich noch spiele, beginnen wir mit den Details. Und dann wollen wir mal versuchen zu verstehen, was sind denn überhaupt diese Sicherheitslücken und wie funktionieren die? Vorher gibt es ein bisschen Musik. Und die kommt heute vom Album 33 von Ketzer. Das ist ein Netzmusiker, der sehr viel Musik sehr regelmäßig veröffentlicht. Also 33 ist glaube ich tatsächlich die Albumnummer. Und die ganzen Titel, die ich heute spiele, die kommen von ihm. Und was wir jetzt hören ist Still Precious. Und danach geht's Nachrichten mit Wett- und Verkehr.
+
+00:29:41.959 --> 00:29:54.119
+<v SPEAKER_5>Die Leoniden und Suki feiern mit uns. Und wir würden total gern mit euch feiern. Feiert mit uns in der Columbia Halle.
+
+00:30:31.819 --> 00:33:05.819
+<v SPEAKER_6>Wegen Verstößen gegen den gesetzlichen Mindestlohn mussten deutsche Firmen im vergangenen Jahr Buß- und Verwarnungsgelder von mehr als 4 Millionen Euro zahlen. Das geht aus einer Antwort des Bundesfinanzministeriums auf eine Anfrage der Linksfraktion hervor. Demnach wurden im vergangenen Jahr rund 2500 Verfahren eingeleitet. Linken Chef Rixinger sagte, Verstöße müssten stärker bestraft werden. Außerdem brauche es mehr Kontrollen, damit Verstöße nicht von der Ausnahme zur Regel werden. Flüchtlinge dürfen in Europa nicht psychologisch getestet werden, um zu klären, ob sie homosexuell sind. Der Europäische Gerichtshof hat heute entschieden, dass damit zu sehr in das Privatleben eines Asylbewerbers eingegriffen wird. Nur Gutachten, die das Privatleben der Betroffenen achten, sind für die Richter zulässig. Flüchtlinge haben ein Recht auf Asyl, wenn sie homosexuell sind und in ihrer Heimat deswegen verfolgt werden. Die Klärung ist aber oft schwierig. Der Orkan Friederike vor einer Woche hat deutlich mehr Schaden angerichtet als erst gedacht. Laut Gesamtverband der Deutschen Versicherungswirtschaft sind allein versicherte Schäden in Höhe von einer Milliarde Euro entstanden. Erste Schätzungen lagen noch halb so hoch. Damit ist Friederike der zweitschwerste Wintersturm seit 20 Jahren. Der Orkan Kyrill hatte die Deutschen Versicherung im Jahr 2007 2 Milliarden Euro gekostet. In Cottbus will eine neu gegründete Initiative von geflüchteten Einzeichen gegen Gewalt und Stigmatisierung in der Stadt setzen. Unter dem Motto Leben ohne Hass, gemeinsam gegen die Angst, soll am 3. Februar eine erste Demonstration stattfinden, bestätigte einer der Initiatoren gegenüber dem RPB. Unterstützt wird die Initiative Gemeinsam ohne Angst Cottbus, unter anderem von Cottbus Nazi-Frei und dem Projekt für ein tolerantes und weltoffenes Cottbus. Mit den aktuellen Temperaturen in Berlin-Pankow 7 Grad, Kreuzberg 8 Grad, in Pritzwalk und Angermünde 6 Grad, Frankfurt-Oder 7 Grad, in Potsdam sind es aktuell 8 Grad. Bis zum Morgen kann es immer wieder mal regnen und das Thermometer sinkt bis auf 4 Grad. Am Tag erwarten uns viele Wolken und leichter Regen. Später ist es dann meist trockener zu Höchstwerte von 9 Grad in Berlin und 10 Grad in Brandenburg. Vorsicht auf der A12 Berlin Richtung Frankfurt-Oder. Zwischen Storkow und Fürstenwalde West steht ein defekter Lkw auf der Standspur. A10 östlicher Berliner Ringen Richtung Dreieck-Spreau. Zwischen Hellersdorf und Rüdersdorf sind wegen Bauarbeiten die rechte und die mittlere Spur gesperrt bis morgen früh 5 Uhr. Stadtverkehr Berlin in Bohnsdorf ist die Waltersdorfer Straße zwischen Joachim- und Darmestraße nach einem Wasserraubuch statt auswärts gesperrt. Ein Hinweis zur S-Bahn, die Linie S1 ist zwischen Botanischer Garten und Schöneberg bis Betriebsschluss unterbrochen. Ersatzweise fahren aber Busse.
+
+00:33:13.599 --> 00:33:26.319
+<v SPEAKER_7>Wenn ihr die laufende Sendung noch mal hören wollt, dann macht das doch zusammen mit vielen weiteren öffentlich-rechtlichen Angeboten kostenlos und werbefrei in der App zur ARD-Audiothek.
+
+00:33:40.217 --> 00:33:46.937
+<v SPEAKER_1>Heute das Chaosradio im Blue Moon. Zu Gast sind Maisi, Mira und Peter. Hallo und guten Abend. Herzlich willkommen zurück.
+
+00:33:46.957 --> 00:33:47.557
+<v SPEAKER_3>Guten Abend.
+
+00:33:48.177 --> 00:35:17.837
+<v SPEAKER_1>Und wir reden heute über Spectre und Meltdown. Das sind zwei Prozessor-Sicherheitslücken. Ziel der Sendung ist es, dass man alles verfolgen kann, wenn man schon Anfang an dabei war und keine Ahnung, hatte wir eine halbe Stunde, ist schon rum und wir haben grob geklärt. Es ist sehr komplex, es betrifft sehr viele, aber wir müssen nicht alle sterben. Jetzt möchte ich mich damit beschäftigen oder möchte ich euch zu Gehör bringen, wie diese Sicherheitslücken genau funktionieren. Also ganz genau werden wir wahrscheinlich nicht klären. Dafür braucht man ein Informatikstudium und ein paar Vorlesungen, aber zumindest so ein grobes Verständnis dafür entwickeln. Das schaffen wir heute. Wenn ihr das euch nicht nur anhören wollt, sondern auch ansehen könnt, könnt ihr es gerne tun unter media.ccc.de gibt es einen Livestream. Oder ihr kommt vorbei in der Falkensteinstraße 47 in Fräulein-Fritz in Berlin und könnt hier live dazugucken. Es ist schon Publikum da, vielleicht kann ich es zu einem Geräusch animieren. Publikum, macht ihr mal ein Geräusch. Genau, das könnt ihr auch mitmachen. Kommt einfach vorbei. Wir lassen euch jederzeit gerne reinkommen. Kommt für die Studiotür, klopft uns, dann machen wir die auf. So, wir haben, wie gesagt, schon gelernt. Es gibt Sicherheitslöckungen Prozessoren und die sind ganz schön krass. Und ich würde jetzt gerne versuchen zu erklären, wie die zustande kommen. Und ich habe mich im Vorfeld ein bisschen belesen und habe mitbekommen, das hat etwas zu tun mit Speculative Execution Branch Prediction and Caching. Also mit Dingen, die Prozessoren, moderne Prozessoren machen. Könnt ihr mal bitte ganz einfach, dass jeder versteht, erklären was das ist.
+
+00:35:17.857 --> 00:36:06.377
+<v SPEAKER_3>Okay, das ist eigentlich noch relativ einfach zu verstehen. Ja, also so eine moderne CPU, die hat verschiedene Work Slots. Also man kann sich das vorstellen wie verschiedene Förderbänder. Wo gleichzeitig Arbeitspakete abgearbeitet werden können. Und die werden von der CPU immer aufgefüllt. Das heißt, wenn ich jetzt eine Instruktion an die CPU gebe, dann wird die aufgeteilt in verschiedenen Arbeitspakete. Die werden dann zum Teil parallel abgearbeitet, zum Teil nacheinander, weil die aufeinander voneinander abhängig sind. Und diese nicht gefüllten Slots, die werden von der CPU aufgefüllt mit Arbeitspaketen, die geraden werden. Also die CPU merkt sich so ein bisschen, okay, was ist denn so passiert bisher? Und versucht dann eine Vorhersage zu machen, was denn jetzt als nächstes wieder ausgefüllt wird an Kurs.
+
+00:36:06.397 --> 00:36:48.337
+<v SPEAKER_1>Okay, warte, warte, stopp, ich will lächeln schon mal, ob ich es richtig verstanden habe. Also, CPU besteht aus mehreren Arbeitsdingen, das heißt sie kann mehrere Dinge parallel machen. Also zum Beispiel sowas wie, addiere auf einen Wert, den ich dir gegeben habe, eins dazu, und parallel male einen Pixel weiß. Nicht der konkrete Befehl abstrakt. Dann hast du gesagt, dass das versucht zu raten, welcher der Befehl der nächste ist. Also wenn ich auf diesem einen Slot sozusagen jetzt 40 mal gesagt habe, addiere zu dem Wert, den ich dir gegeben habe, plus eins, dann denkt die CPU, möglicherweise sagt er beim nächsten Mal auch plus eins. Das heißt, er füllt die, kann ich dir so einen Kartai-Zettelkasten vorstellen, quasi, da steckt er schon mal hier Befehl plus eins rein, weil er denkt, der kommt als nächstes.
+
+00:36:48.357 --> 00:37:13.837
+<v SPEAKER_3>Genau, im Wesentlichen kann man sich das so ungefähr vorstellen. Und diese Arbeitspakete, die werden jetzt abgearbeitet. Und wenn dann an diese Einzelpakete, wenn dann Ergebnis von geliefert wird, dadurch, dass ich die bearbeite, dann merkt sich die CPU, okay, das Ergebnis gehört zu diesem Arbeitspaket. Ganz am Ende, wenn ich dann diese nicht unbedingt in der richtigen Reihenfolge bearbeitenden Arbeitspakete habe, dann werden die wieder in der richtigen Reihenfolge retired.
+
+00:37:14.997 --> 00:37:19.977
+<v SPEAKER_1>Wie können die Reihenfolge durcheinander kommen? Das verstehe ich jetzt nicht. Du hast ja gesagt, dass die sozusagen nacheinander abgearbeitet werden.
+
+00:37:20.977 --> 00:37:39.177
+<v SPEAKER_3>Genau. Also ich rede jetzt auch nicht von mehreren Prozessorkernen oder so, sondern der einzelne Prozessorkern, der teilt sich, soweit das geht, seine einzelnen Aufgaben in noch kleinere Arbeitspakete. Und die sind ja nicht immer voneinander abhängig. Das kann sein, dass ich da gar keine Abhängigkeit zu anderer Arbeit habe und dann wird das gleichzeitig ausgeführt.
+
+00:37:39.197 --> 00:37:40.957
+<v SPEAKER_1>Kannst du zum Beispiel entwerfen, wie ich es auch gerade versucht habe?
+
+00:37:40.977 --> 00:37:46.597
+<v SPEAKER_3>Wenn ich zwei verschiedene Zahlen addiere, dann brauche ich nicht darauf warten, dass die erste Instruktion fertig wird, sondern dann kann ich das gleichzeitig machen.
+
+00:37:47.497 --> 00:37:50.557
+<v SPEAKER_2>Zwei plus vier und sechs plus zwölf.
+
+00:37:51.897 --> 00:37:54.277
+<v SPEAKER_1>Das kann ich gleichzeitig addieren, weil das eine ergibt...
+
+00:37:54.297 --> 00:38:09.577
+<v SPEAKER_3>Genau, das beeinflusst mich. Und das macht dann die CPU eben gleichzeitig. Und da kann es dann im Endeffekt passieren, dass das nicht so ganz in der richtigen Reihenfolge unten ankommt. Wenn man sich dann vorstellt, dass es jetzt diese parallelen Förderbinder gibt, wo dann immer die Arbeitspakete runterlaufen, dann fließt das hinterher auf wieder nur ein Förderband.
+
+00:38:09.597 --> 00:38:21.637
+<v SPEAKER_1>Warte mal, heißt das, ich habe... Also was? Zwei plus vier und sechs plus acht, habe ich gesagt. Und ich habe reingegeben, rechne mal zwei plus vier, dann habe ich reingegeben, rechne sechs plus acht und das ist eine Möglichkeit. Aber zuerst kommt das Ergebnis der zweiten Aufgabe raus.
+
+00:38:21.657 --> 00:38:33.777
+<v SPEAKER_3>Zum Beispiel, das ist jetzt an dem Punkt dann auch nicht so wichtig, aber die CPU geht hinterher wieder hin und sortiert diese Ergebnisse, dass die wieder in der richtigen Reihenfolge landen, bevor diese Änderungen dann zurückgeschrieben werden.
+
+00:38:33.797 --> 00:38:34.957
+<v SPEAKER_1>Zurückgeschrieben was?
+
+00:38:34.977 --> 00:38:54.577
+<v SPEAKER_3>In den Speicher, also in den Memory zum Beispiel. Das ist wenn die Instruktion fertig ist und die zu einem Ergebnis kommt und dieses Ergebnis wieder zurückgeht an das eigentliche System. Also zum Beispiel, wenn ich jetzt irgendwie eine Zahl addiere, wenn das Ergebnis dann zurück in den Speicher geschrieben wird als Beispiel.
+
+00:38:55.857 --> 00:39:11.837
+<v SPEAKER_1>In den Speicher des Programms. Das Programm hat sozusagen im Speicher des Computers einen Bereich, wo es Daten ablegt und aber auch erwartet, dass die Ergebnisse zu den Rechneroperationen hingeschrieben werden. So, was hat das jetzt zu tun, mit dem er versucht zu erraten, was der nächste Befehl ist?
+
+00:39:11.857 --> 00:39:47.477
+<v SPEAKER_3>Jetzt gibt es ja eben auf diesen Förderbindern schon mal Leerstellen, die jetzt aufgefüllt werden mit Instruktionen, die spekulativ ausgefüllt werden. Weil die CPU sagt nicht, naja gut, ich hab da jetzt Leerstellen, ob ich da jetzt nix rechne oder irgendwas rechne, das ist der CPU vollkommen egal, dann rechne ich mal lieber irgendwas und rate das. Und dann kann es jetzt auch oft sein, dass der CPU richtig rät. Und wenn dann diese geradene Instruktion tatsächlich drankommt, dann sagt der CPU direkt, naja gut, ich hab ja schon das Ergebnis. Und kann das direkt zurückschreiben. Und das ist tatsächlich ein signifikanter Performance-Vorteil. Also das ist dann schon mal so 25, 30 Prozent schneller, als wenn man das nicht tun würde.
+
+00:39:47.657 --> 00:39:58.077
+<v SPEAKER_1>Warte mal, ich hab gerade das Verständnisproblem damit, momentan klingt es gerade so, die CPU arbeitet auch, wenn sie eigentlich nichts zu tun hat und das ist dir egal?
+
+00:39:58.097 --> 00:40:26.897
+<v SPEAKER_3>Nee, die CPU, die, also selbst ein einzelner Kern, der macht verschiedene Dinge gleichzeitig in einer Instruction Pipeline. Und da gibt es jetzt schon mal Leerstellen, weil ich tu ja auch Instruktionen rein, die tatsächlich so gebaut sind, dass sie immer voneinander abhängig sind, wo ich erst ein Ergebnis haben muss, um damit weiterzurechnen. Dann hab ich vielleicht auf dem Förderband nebenan gerade nichts zu tun. Und da schmeißt die CPU dann Befehle rein oder Instruktionen.
+
+00:40:26.917 --> 00:40:28.177
+<v SPEAKER_2>Spätere Instruktionen.
+
+00:40:28.197 --> 00:40:30.137
+<v SPEAKER_3>Genau, die potentiell später mal drankommen.
+
+00:40:32.617 --> 00:40:38.237
+<v SPEAKER_1>Das Wichtigste ist sozusagen, es braucht dazu einen Prozessor, der Dinge parallel machen kann. Das Ganze macht gar keinen Sinn bei einer...
+
+00:40:38.277 --> 00:40:44.057
+<v SPEAKER_3>Das macht jeder eine moderne Prozession.
+
+00:40:44.077 --> 00:40:46.597
+<v SPEAKER_2>Würde aber auch bei einem Single-Core gehen.
+
+00:40:46.617 --> 00:40:48.117
+<v SPEAKER_1>Wie kann denn bei einem...
+
+00:40:48.137 --> 00:40:55.717
+<v SPEAKER_2>Weil die ja intern unterschiedliche Teilbereiche hat oder Teil... Ja, Teil ein hyphen.
+
+00:40:55.737 --> 00:41:12.517
+<v SPEAKER_1>Aber das heißt auch das, was ihr Single-Core nennt, der ist so rechenstark, dass er Dinge parallel macht. Ich rede jetzt von dem Unterschied, es gab ja mal Prozessoren, die haben einen Schritt nach dem anderen gemacht. Da konnte man nichts reinschrieben, weil ein richtig nach dem nächsten kam.
+
+00:41:12.537 --> 00:41:13.697
+<v SPEAKER_2>So bis in den 90ern ungefähr.
+
+00:41:14.277 --> 00:41:24.837
+<v SPEAKER_1>Ja, aber das Verständnis von so und so. Mittlerweile ist es so, egal ob Single-Core oder Multi-Core oder was auch immer alles auf der Kiste steht, Prozessoren sind mittlerweile so rechenstark, dass sie Dinge parallel machen.
+
+00:41:26.377 --> 00:42:08.957
+<v SPEAKER_3>Ja, also vielleicht hilft es da noch mal zu erklären, wie das denn überhaupt passiert. Wenn ich jetzt eine ganz, also was man eben als vorhin schon mal erzählt, dass Hemmler Instruktionen an die CPU geben, dann ist das keine atomare Instruktion, die die CPU jetzt so in einem Rutsch ausführt, sondern die CPU geht hin und zählt selbst diese Instruktion noch mal in Subpakete. In der CPU selber läuft wieder Code, der noch viel, viel mehr macht, als man das jetzt eigentlich wissen muss. Da läuft wie so ein kleines Betriebssystem drauf. Das ist das, was durch diese Microcode-Updates immer geupdatet wird. Die CPU, die ist eigentlich wesentlich mehr als jetzt ein statischer Prozess, wo jetzt irgendwie...
+
+00:42:08.977 --> 00:42:26.637
+<v SPEAKER_1>Ich hab das Gefühl, jetzt wird es unnötig komplizierter. Es geht doch darum, dass der Prozessor sozusagen, der arbeitet Aufgaben nacheinander ab, hat aber sozusagen mehrere, keine Ahnung, interne Arbeiter. Und wenn der eine davon nichts zu tun hat, dann gibt man dem was zu tun, von dem man denkt, es könnte später noch relevant sein.
+
+00:42:26.657 --> 00:42:28.017
+<v SPEAKER_3>Genau, kann man sich so vorstellen.
+
+00:42:30.417 --> 00:42:38.397
+<v SPEAKER_1>So, was ich jetzt noch nicht ganz verstanden habe, ist, wie man das ausnutzen kann.
+
+00:42:38.417 --> 00:43:26.157
+<v SPEAKER_3>Das ist jetzt eben das eigentlich Spannende an dieser Klasse von exploit, also sowohl bei Spectre als auch bei Meltdown nutzt man jetzt eben aus, dass die CPU probiert clever zu sein und halt proaktiv schon mal Code auszuführen, wo vermutet wird, dass der jetzt bald drankommt. Das ist ja jetzt das, was im Endeffekt gerade erklärt wurde oder was wir versucht haben zumindest zu erklären, dass die CPU irgendwie ein Mechanismus hat, der probiert aus Effizienzgründen über Kapazität zu nutzen, in dem schon mal Code ausgeführt wird, der halt eventuell als nächstes drankommt. Und diesen Mechanismus, den kann man jetzt eben ausnutzen, um halt Speicher zu lesen, den ich eigentlich nicht lesen darf.
+
+00:43:27.317 --> 00:43:40.777
+<v SPEAKER_1>Also wenn du jetzt gesagt hast, dass es diese parallelen Stränge gibt und da ist es manchmal der Lauf, da war ich jetzt sozusagen einfach ausgedrängt, okay wir reden hier von einem Programm, das diesen Prozessor belegt, aber das ist gar nicht der Fall.
+
+00:43:40.797 --> 00:43:41.497
+<v SPEAKER_2>Doch.
+
+00:43:41.517 --> 00:43:55.237
+<v SPEAKER_1>Doch. Okay, dann verstehe ich es nicht. Dann verstehe ich nicht, warum es ein Problem ist, wenn nur mein Programm darauf Zugriff hat. Also wenn mein Programm Daten aus meinem Speicher liegt, ist es doch egal, es ist ja keine Sicherheitslücke.
+
+00:43:55.257 --> 00:43:57.497
+<v SPEAKER_2>Du hast mehrere Programme auf deinem Rechner?
+
+00:43:57.517 --> 00:44:02.717
+<v SPEAKER_1>Du hast gerade gesagt, nicht. Du hast gerade gesagt, das was wir hier erklären, passiert alles nur mit einem Programm.
+
+00:44:02.737 --> 00:45:07.117
+<v SPEAKER_3>Doch, im Prinzip, es laufen ja immer ganz viele Programme gleichzeitig auf einem Computer. Also man kann jetzt sagen, naja gut der Colonel, das ist jetzt ein oder mehrere Programme, ist jetzt egal. Dann gibt es diverse andere Programme wie in meinem Browser, was auch immer und die teilen sich an den CPU. Da gibt es eben immer so eine Art Wechsel, das mal das eine Programm eben auf der CPU rechnen darf, dann wieder das andere. Und das Ganze ist dann nochmal parallelisiert durch Hyper-Threading, z.B. Multicore-Prozessoren, also Prozessoren, die wirklich mehrere Kerne haben. Das ist aber, das sage ich jetzt aber nur, weil das ist explizit nicht das, worüber wir hier reden. Das ist vollkommen egal für Spectre und Meltdown gerade, jedenfalls auf der Ebene, wie wir das jetzt erklären. Das heißt, vielleicht für den Rest des Abends, das Modell, mit dem wir jetzt versuchen, das zu erklären, das ist wirklich nur ein Kern, ein einzelner Kern, der immer nur gleichzeitig ein Programm ausführen kann. Der kann aber natürlich zwischen verschiedenen Programmen wechseln. So funktioniert halt ein modernes System. Das ganz schnell immer zwischen verschiedenen Programmen gewechselt wird, sodass der Eindruck entsteht, die würden gleichzeitig laufen.
+
+00:45:07.137 --> 00:45:18.217
+<v SPEAKER_2>Genau, es wird immer so schnell zwischen allen deinen offenen Programmen gewechselt, dass es für dich und für uns alle so scheint, dass die tatsächlich gleichzeitig laufen. Das ist aber gar nicht der Fall.
+
+00:45:18.237 --> 00:45:44.317
+<v SPEAKER_3>Genau, und die CPU weiß auch nur relativ bedingt, was denn da jetzt gerade für ein Programm läuft. Die CPU weiß nicht, ob jetzt gerade irgendwie Instruktionen gerechnet werden, die jetzt zu, weiß ich nicht, Word gehören oder zu meinem Browser oder das weiß die CPU aktuell erstmal nicht, jedenfalls nicht so, wie man das meinen könnte. Die CPU weiß nur, ob gerade der Betriebssystem Kern läuft, also der Körner oder ob irgendein anderes Programm läuft.
+
+00:45:44.337 --> 00:45:44.937
+<v SPEAKER_2>Eine Anwendung.
+
+00:45:44.957 --> 00:45:47.717
+<v SPEAKER_3>Eine Anwendung.
+
+00:45:47.737 --> 00:45:59.257
+<v SPEAKER_1>Ich bin also trotzdem noch verwirrt, weil jetzt wieder zurückkehren zu dieser Frage, ihr habt ja gesagt, also der Prozessor arbeitet nacheinander Befehle ab und ich hänge mich jetzt gerade auf an diesem, ihr habt gesagt, ihr macht immer nur ein Programm.
+
+00:45:59.277 --> 00:46:00.477
+<v SPEAKER_2>Zu jedem Zeitpunkt.
+
+00:46:00.497 --> 00:46:18.017
+<v SPEAKER_1>Zu jedem Zeitpunkt macht ihr nur ein Programm. Das heißt, also heißt das sozusagen, wenn er versucht, diese Lehrstellen zu raten, also wenn er versucht zu raten, was eine Instruktion ist, ist das dann eine Instruktion, die zu dem Programm gehört, was auch gerade läuft, oder kann das dann von einem anderen Programm sein?
+
+00:46:18.037 --> 00:47:13.977
+<v SPEAKER_3>Für uns interessant, also wir gehen jetzt davon aus, dass es zu dem Programm gehört, was wir auch gerade ausführen. Also wir betrachten jetzt, also das ist für Spectre Meltdown, geht es darum, dass Instruktionen ausgeführt werden, die zu demselben Programm gehören, wo die CPU jetzt gerade drin läuft. Das heißt, diesen Wechsel zwischen den Programmen, der ist nur insofern wichtig, dass diese Trainingsdaten quasi, diese Erfahrungswerte, die die CPU hat, was als nächstes ausgeführt wird, dass die jedenfalls bedingt geteilt werden zwischen allen Programmen. Das heißt, wenn jetzt irgendwie mein Internet Explorer oder mein Browser ist egal, irgendwie eine bestimmte Code-Sequenz ausführt, uns eine ähnliche Code-Sequenz in einem anderen Programm gibt, dann geht die CPU von denselben Erfahrungswerten aus. Dann hat die diese Sequenz gelernt, obwohl das vielleicht Code ist, der eben von einem ganz anderen Programm stammt. Nehmt aber diese Erfahrungswerte mit, wenn jetzt Programmcode ausgeführt wird in einem anderen Kontext.
+
+00:47:13.997 --> 00:47:29.957
+<v SPEAKER_1>Was ich nicht verstehe ist, wo dann ein Problem ist, wenn wir hier von einem Programm reden. Weil ihr habt ja vorhin gesagt, es ist möglich, also das Problem der Sicherheitslücke ist, ich kann Dinge lesen, die mich nichts angehen. Aber solange ich das eine Programm bin und nur Dinge passieren, die für mich passieren, wo ist das Problem?
+
+00:47:30.357 --> 00:48:01.957
+<v SPEAKER_2>Du kannst quasi messen, was andere Programme machen oder gemacht haben, indem du diesen Verhalten von der CPU ganz genau beobachtest und versucht zu steuern. Versteh ich nicht, sag noch mal. Du kannst sozusagen, gegebenenfalls, also wenn du diese Sicherheitslücken ausnutzt, dann kannst du außerhalb von deinem eigenen Programm sehen. Was? Alles, was gespeichert wird in der Theorie.
+
+00:48:01.977 --> 00:48:19.097
+<v SPEAKER_1>Versteh ich immer. Nein, nein, ich versteh das. Das Konzeptbeispiel ist, es gibt diese Arbeit, diese Förderbenevise, wie wir sie genannt haben. Da gibt es manchmal Platz, da packt man da Dinge rein. Ihr habt aber auch gesagt, die ganze Zeit, es ist immer dasselbe Programm, was das macht. Wie kann ich dann Dinge von anderen Programmen sehen?
+
+00:48:19.397 --> 00:49:41.737
+<v SPEAKER_3>Na, das sind jetzt, wir reden jetzt bei dieser, also die CPU, die führt Instruktionen aus. Das hat jetzt per se noch nicht so viel mit meinen Daten zu tun, sondern das ist Code. Der macht Dinge mit Daten, aber das ist jetzt erst mal Code. Das ist dann zum Beispiel irgendwie, addiere irgendwo was, schreibe irgendwo Speicher woanders hin. Und da wird es dann eben spannend. Ich kann jetzt dadurch, das war das, was ich vorhin erwähnt habe, dadurch, dass ich jetzt aus dem Ausführungskontext von anderen Programmen, also Programme können sich gegenseitig beeinflussen, dadurch, dass die CPU halt lernt, in welcher Reihenfolge Instruktionen abgearbeitet werden und sich das merkt, auch wenn zwischendurch die Programme gewechselt werden auf derselben CPU. Das heißt, wenn ich jetzt eben eine bestimmte Instruktionssequenz habe, also da geht es noch gar nicht um Speicher, sondern ich habe einfach irgendwie eine Instruktionssequenz, die macht bestimmte Dinge, dann wird der Kontext gewechselt, dann läuft eben auf einmal ein anderes Programm, dann weiß die CPU trotzdem noch, naja okay, wenn jetzt erst diese Zahl addiert wurde und dann diese Zahl addiert wurde, dann springe ich danach hier hin, also ganz, so läuft es nicht, aber jetzt, das Bildes halber, das merkt die CPU sich prozessübergreifend, also das ist jetzt nicht, die CPU weiß jetzt nicht, okay, das hier macht jetzt nur mein Browser und das hier macht jetzt nur irgendwie mein Schreibprogramm.
+
+00:49:42.657 --> 00:49:44.157
+<v SPEAKER_1>Aber wo ist die Sicherheitslücke?
+
+00:49:44.177 --> 00:50:41.097
+<v SPEAKER_3>Die Sicherheitslücke ist, dass ich dadurch, dass ich die CPU also trainieren kann, bestimmten Code vorauszusehen, ich kann die CPU jetzt beeinflussen, dass sie annimmt, naja, als nächstes wird das und das passieren, nachdem eine definierte Code-Sequenz passiert ist. Dadurch kann ich jetzt beeinflussen, dass diese Speculative Execution in dem anderen Programm, was ich potenziell angreifen will, zum Beispiel im Fall von Spectre, dass dort dann die CPU hingeht und fälschlicherweise annimmt, dass eine bestimmte Code-Sequenz, eine bestimmte Instruktionssequenz in diesem Programm, was ich eigentlich angreifen will, dann auf einmal ausgeführt wird. Das ist jetzt der erste Schritt. Der zweite Schritt ist, dass dieser Code, der fälschlicherweise ausgeführt wird, der eigentlich eben nicht in diesem Kontext ausgeführt werden sollte, wo die CPU aber fälschlicherweise dazu trainiert wurde, durch mein Angreiferprogramm diesen Code jetzt auszuführen. Diesen Code, den kann ich dann nutzen, um über einen Seitenkanal Informationen rauszutragen.
+
+00:50:44.837 --> 00:51:22.777
+<v SPEAKER_1>Also, ich versuche mal zusammenzufassen. Es gibt diese Förderbänder-Metapher. Darauf sind die Befehle abgelegt. Manchmal sind die leer. Wenn ich jetzt ein Programm bin, das ganz oft dasselbe macht, dann denkt die CPU oder der Prozessor, beim nächsten Programm das läuft, haha, weil jetzt 3000 Jahre immer dasselbe gemacht wurde, das Programm will auf jeden Fall genau dasselbe machen, wie das andere Programm und diese Befehlsfolge werde ich dann mal reinladen und schon vorsichtshalber ausführen. Und dann verstehe ich aber immer noch nicht, was ist eine Seitenkanal?
+
+00:51:22.797 --> 00:52:48.817
+<v SPEAKER_3>Genau, bis dahin war es jetzt ein gutes Modell vielleicht dafür. Jetzt kann ich eben diese Instruktionssequenz, die ich beeinflussen kann, da kann ich dann sagen, naja gut, spring halt mal bitte auf diesen folgenden Code, da weiß ich, was der tut als Angreifer. Diesen Code kann ich jetzt benutzen, um Speicher zuzugreifen. Also um aus dem Hauptspeicher, aus dem RAM Speicher zuzugreifen, das ist egal, ob ich den jetzt lese, was ich genau damit mache, aber ich lese ihn irgendwie, das bringt die CPU dazu, diesen Speicher zu cashen, also in einen schnelleren Speicher zu schreiben, der Bestandteil der CPU ist. Weil die CPU behält immer in der CPU selber eine bestimmte Menge Daten, womit dann sehr schnell gearbeitet werden kann, weil tendenziell arbeite ich ja ganz oft auf denselben Daten, schmeißt die irgendwann weg und nehme dann andere Daten. Das beschleunige ich als so ein Cache. Und das passiert jetzt in diesem fälschlicherweise ausgeführten Code, der also eigentlich gar nicht dran gewiesen wäre, wo ich die CPU aber dazu gebracht habe, ihn doch schon mal spekulativ auszuführen. Was die CPU jetzt mit dem Speicher macht, das ist mir eigentlich dann egal, also ob da jetzt irgendwie was addiert oder modifiziert wird, das ist egal, weil das Ergebnis, das schmeißt die CPU hinterher weg, bevor das Ergebnis nämlich zurückgeschrieben wird, merkt die CPU, ah verdammt, das war jetzt eigentlich gar nicht dran, das Ergebnis brauche ich nicht, das schmeiße ich weg.
+
+00:52:48.837 --> 00:52:51.337
+<v SPEAKER_2>Ich habe diesen Code fälschlicherweise ausgeführt.
+
+00:52:51.577 --> 00:53:03.777
+<v SPEAKER_1>Ich wollte gerade sagen, also alles was ich mich jetzt erreiche, ist sozusagen, dass diese Trefferquote für die Vorhersage sehr schlecht ist. Das heißt, das Programm, das ich angreife jetzt in dem Wiesner-Gesell-Beil, wird einfach langsamer.
+
+00:53:03.797 --> 00:53:04.477
+<v SPEAKER_2>Es hat aber Folgen.
+
+00:53:09.157 --> 00:53:31.197
+<v SPEAKER_3>Genau, das Spannende ist jetzt, ich kann jetzt, eben das ist dann der eigentliche Seitenkanalangriff, ich kann jetzt prüfen, ob bestimmte Daten eben im Cache liegen. Wie ich gerade erwähnt habe, kann ich jetzt hingehen und kann sagen, gut, ich kann jetzt die CPU dazu bringen, auch wenn ich davon nicht sehe, irgendwie Daten in den Cache zu laden. Dadurch, dass ich die CPU trainiere, fälschlicherweise bestimmten Code auszuführen in der spekulativen Ausführung.
+
+00:53:31.277 --> 00:53:32.097
+<v SPEAKER_1>Aber ich sehe das ja nicht.
+
+00:53:32.317 --> 00:54:00.917
+<v SPEAKER_3>Genau, und jetzt gehe ich aber hin und greife in Abhängigkeit zu den Daten, die ich lesen will. Greife ich jetzt Speicher zu und gehe jetzt in meinem Angreiferprogramm über diesen Speicher und schaue nach, wie lange dauert es, den Speicher zu laden. Wenn mein Angriff jetzt erfolgreich war und die spekulative Ausführung den Speicher schon mal zugegriffen hat, dann geht das sehr schnell. Dann kann ich das messen als Angreifer, auch wenn ich in einem anderen Prozess bin, weil ich greife, ich modifiziere nichts oder ich greife nichts zu.
+
+00:54:00.937 --> 00:54:02.697
+<v SPEAKER_1>Was kannst du messen, ob dann drin steht, was du glaubst?
+
+00:54:04.137 --> 00:54:19.597
+<v SPEAKER_3>Ich kann nur messen, ob eine bestimmte Cashline, also ein bestimmter Speicher, ob der schon in dem CPU-Cash ist. Da spricht man von einem Cash-Hit. Das ist dann, wenn der Cash das tut, was er soll. Das heißt, der hat den Speicher schon im, also die CPU hat den Speicher schon im Cash.
+
+00:54:19.737 --> 00:54:31.797
+<v SPEAKER_1>Ich versuche auf etwas im Arbeitsspeicher zuzugreifen. Das dauert länger. Also ich versuche auf etwas im Arbeitsspeicher zuzugreifen und wenn das sehr schnell kommt, weiß ich, das lag im Cash.
+
+00:54:31.817 --> 00:54:35.657
+<v SPEAKER_3>Genau, wobei ich sehe als Programm nicht, wo das liegt. Ich habe nur irgendeine Adresse.
+
+00:54:35.677 --> 00:54:41.217
+<v SPEAKER_1>Nein, nein, nein, genau. Ich versuche zuzugreifen und weil das so schnell kommt, weiß ich, es liegt im Cash.
+
+00:54:41.237 --> 00:54:41.677
+<v SPEAKER_3>Genau.
+
+00:54:41.697 --> 00:54:55.537
+<v SPEAKER_1>Aber jetzt würde ich ja vermuten, wenn ich im Arbeitsspeicher versuche, Daten abzurufen, dann weiß ja das Betriebssystem, ob diese Daten überhaupt in mich ausgeliefert werden können oder nicht. Ich weiß also nur, dass die Daten, die mir nicht gehören, im Cash liegen.
+
+00:54:55.557 --> 00:55:30.377
+<v SPEAKER_3>Genau. Diese Daten, womit ich jetzt diesen Seitenkanal-Angriff starte, also die ich jetzt probiere zu lesen und zu schauen, ob das ein Cash-Hit oder Miss ist, das sind Daten, die müssen tatsächlich beide Prozesse lesen können. Also sowohl der Prozess, der angegriffen wird, als auch der Angreifer. Da spricht man dann zum Beispiel von einem Probe Array, also einfach eine Reihe von Daten, wo ich mir die Werte drin kodiere, die ich aus meinem anderen Prozess raustragen will. Das kann zum Beispiel eine Bibliothek sein, eine DLL unter Windows, die halt verschiedene Programme benutzen.
+
+00:55:30.397 --> 00:55:40.317
+<v SPEAKER_1>Versteh nicht. Wenn ich auf einen Speicherbegriff zugreifen will, den ich eh schon zugreifen darf, warum muss ich da einen Aufriss machen?
+
+00:55:40.717 --> 00:57:01.217
+<v SPEAKER_3>Mich interessiert ja gar nicht der Inhalt dieses Speichers, sondern mich interessiert quasi die Position, also die Position von dem Speicher, der sehr schnell geladen wird. Darin kann ich kodieren, rein über die Position, gar nicht über was da steht, das ist mir vollkommen egal. Aber über die Position kann ich dann Informationen kodieren. Also ich gehe halt hin, bringe meinen Prozess, den ich angreifen will dazu, Code auszuführen, der Speicher zugreift, den ich als Angreifer auch lesen kann. Das ist Speicher, die haben beide Prozesse. Das sind eben typischerweise irgendwelche Softwarebibliotheken oder sowas. Und der angegriffene Prozess, der geht jetzt hin und führt in Abhängigkeit zu einem einzelnen Byte, also eine Zahl von 0 bis inklusive 255, greift er jetzt auf diesem Speicherbereich, den beide Prozesse lesen können, zu. Und rein durch die Position von diesem Zugriff, das können jetzt halt 256 verschiedene Positionen sein, die messe ich. Das heißt, ich gehe dann 256 mal hin und setze mir Messpunkte und schaue, wie lange dauert das, diesen Speicher zuzugreifen. Und an irgendeiner Stelle geht es dann schnell. Und dann weiß ich, aha, wenn das jetzt die fünfte Stelle ist, dann weiß ich, ok, da ist eine 5 codiert, dann habe ich einen Byte gelesen.
+
+00:57:03.917 --> 00:57:11.677
+<v SPEAKER_1>Verstehe ich immer noch nicht. Wenn ich auf den Speicher zugreifen darf, wie du gesagt hast, dann weiß ich doch, dass da eine 5 steht. Wieso muss ich das dann extra noch messen?
+
+00:57:11.697 --> 00:57:31.677
+<v SPEAKER_2>Die 5 steht woanders. Die 5 steht woanders. Die wird gelesen von dem bösen Code sozusagen, der in das Opferprogramm reingeschoben wird, reintrainiert wurde sozusagen. Und normalerweise dürfen wir als Angreifer die 5 gar nicht lesen in dem Opferprogramm.
+
+00:57:31.697 --> 00:57:36.637
+<v SPEAKER_1>Das verstehe ich jetzt wiederum nicht, aber es wurde doch gerade gesagt, ich kann nur Speicher lesen, auf den ich eh zugreifen darf.
+
+00:57:36.657 --> 00:57:58.037
+<v SPEAKER_2>Ja, Moment. Durch dieses Training können wir Code in andere Programme reinschleichen sozusagen. Also da können wir als Angreifer Code in einem anderen Programm ausführen lassen, obwohl wir das eigentlich nicht machen dürften.
+
+00:57:58.257 --> 00:57:59.877
+<v SPEAKER_1>Aber auch nicht wirklich, weil es wird doch weggeworfen.
+
+00:58:00.317 --> 00:58:27.077
+<v SPEAKER_2>Naja, das Ergebnis wird weggeworfen, aber die Folgen von der Ausführung, die bleiben in der Prozessor drin. Wenn wir Code ausgeführt haben, um Speicher zu lesen, dann bleibt der gelesene Speicher oder die gelesene Werte, dann bleiben die in der Cache und dann sind die also schnell verfügbar.
+
+00:58:27.877 --> 00:58:32.017
+<v SPEAKER_1>Dann bin ich wieder bei dem Punkt, wo ich zwar weiß, dass da was im Cache liegt, aber nicht weiß, was es ist.
+
+00:58:32.037 --> 00:58:58.177
+<v SPEAKER_3>Genau und das Spannende oder ich glaube, das schwer zu verstehen ist jetzt, dass die Information rein in der Position des zugegriffenen Speichers codiert ist. Das heißt, was da genau steht, das ist mir vollkommen egal. Ich habe halt einen Speicher, der ist halt linear, also da liegen hintereinander, liegt da Speicher. So und rein über die Position, die zugegriffen wird, weiß ich, welchen Wert ich denn raustragen möchte.
+
+00:58:58.197 --> 00:59:00.517
+<v SPEAKER_1>Ich denke, es ist mir egal, was da drin steht.
+
+00:59:00.537 --> 00:59:30.197
+<v SPEAKER_3>Ja, die Position ist mir nicht egal. Man kann sich das vielleicht vorstellen, wie man sagt als Programmierer, als, wie erklärt man das einfach, eine Liste, irgendwie hintereinander liegende Datenblöcke. Und wenn ich jetzt sehe, okay, auf den fünften Datenblock kann ich jetzt sehr schnell zugreifen, das ist ein Cache-Hit, dann weiß ich, okay, in diesem ganzen Array ist eine 5 codiert. Was an der Stelle im Speicher steht, das ist mir egal.
+
+00:59:30.217 --> 00:59:43.077
+<v SPEAKER_2>Jemand hat sozusagen schon, ein anderes Programm hat schon dafür gesorgt oder ausführen von anderem Code, hat dafür gesorgt, dazu geführt, dass der Zugriff schnell ist, an Stelle 5.
+
+00:59:43.077 --> 00:59:51.477
+<v SPEAKER_1>Moment, was mich gerade irritiert ist, ihr sagt, die ganze Zeit ist mir egal, was drin steht, aber ich weiß, dass es eine 5 ist. Wenn ich weiß, dass es eine 5 ist, ist mir noch nicht egal, was drin steht, weil dann weiß ich ja bis, dass es eine 5 ist.
+
+00:59:51.477 --> 01:00:27.257
+<v SPEAKER_2>Es gibt zwei Werte oder zwei Informationen, sozusagen. Zum einen den Wert, den wir wissen wollen, das Passwort zum Beispiel oder Teil des Passwortes. Zum anderen gibt es den Wert, den wir benutzen, um das Passwort aus dem Opferprogramm rauszukriegen, rauszulesen oder zu übertragen. Das ist eben so ein Side Channel. Und der Side Channel benutzt einen zweiten Wert in so einem Array bzw. die Adresse.
+
+01:00:28.277 --> 01:04:19.146
+<v SPEAKER_1>Ich hab keine Ahnung, wovon ihr redet. Also wirklich überhaupt gar nicht. Ich kann folgen bis zu dem Zeitpunkt, wo ihr sagt, es gibt dieses Förderband und da sind Dinge frei. Und da versuche ich, sozusagen andere Dinge hinzutrainieren. Also der Prozessor macht Dinge, die er eigentlich nicht machen soll, aber die kann auch niemand sehen, weil der Prozessor auch merkt, das ist gar nicht das, was jetzt wirklich passiert. Ich werfe das wieder weg. Genau. Und das ist auch... Dann kann ich auch noch verstehen, es gibt einen Punkt, da weiß ich, welche Bereiche aus dem Arbeitsspeicher schon im Cash liegen. Weil mir das, weil dieser Code, wo das jetzt weggeworfen wird, sehr schnell ausgeführt werden kann. Aber was ich nicht verstehe ist, wie komme ich davon, dass ich weiß, wie schnell etwas geladen wird, obwohl ich es nicht sehen kann, dazu zu wissen, was da drin steht. Weil ihr auch immer zwischendurch immer wieder sagt, mich interessiert gar nicht, was da drin steht, aber es tut es ja doch. Diese Frage müssen wir gleich beantworten, weil zwischendurch gibt es eine wichtige kleine Nachricht. So, also willkommen zurück zum Chaos Radio in Le Moon, wo wir gerade versuchen zu verstehen, was es genau mit den Sicherheitslücken zu Meltdown und Spectre auf sich hat. Und ich sage euch, liebe Leute, es ist nicht einfach. Wir sind an dem Punkt angekommen, wo man verstehen kann, dass also der Prozessor dazu angehalten wird, Dinge auszuführen, schon so pro forma zu raten, was demnächst passieren könnte und dann die Ergebnisse wieder wegzuwerfen. Aber wie man davon dahin kommt, dass man wirklich Daten aussehen lässt, das habe ich noch nicht verstanden. Falls ihr es verstanden habt, gerne anrufen, dann erklärt es mir auch und allen anderen Hörern. Ich versuche es so lange weiter mit Meisebierer und Peter. So, also noch mal. Wir haben also diese Förderband-Analogie. Die Befehle, die ein Prozessor ausführt, sind nicht immer, also das ist nicht immer voll die Liste. Dann wird geraten und das wird auch schon mal berechnet. Und dann wird es aber tatsächlich nur vorgezeigt, wenn es zu dem Programm auch passt, das gerade ausgeführt wird. Und was ich jetzt immer gesagt habe ist, ich kann als fremdes Programm rausfinden, indem ich den Prozessor darauf zu trainiere, eine ganz bestimmte Folge von Befehlen auszuführen, zu erkennen, ob Daten im Cache sind. Aber der Punkt, wie ich, also möglicherweise, ich habe noch eine weitere Verständnisfrage, sag mir nur, ob ich es richtig verstanden habe oder nicht. Also möglicherweise weiß ich, wie ein Programm, das ich angreife, wo das das Passwort im Speicher liegen hat. Und dann kann ich durch das, was ihr beschrieben habt, rausfinden, ob das Passwort im Cache liegt. Hast du das richtig verstanden? Okay, ich weiß einfach nur, es gibt Bereiche im Speicher. Und wenn ich befrage, in diesem Code, der sozusagen vorausgeführt wird, guck doch mal, liest den Wert aus.
+
+01:04:19.166 --> 01:04:19.926
+<v SPEAKER_2>Lies den Wert einfach.
+
+01:04:19.946 --> 01:04:20.486
+<v SPEAKER_1>Lies den Wert.
+
+01:04:20.506 --> 01:04:29.986
+<v SPEAKER_2>Und wenn das Ergebnis sehr schnell kommt, Nee, das mit dem Zeitmessen, das ist in einem zweiten Teil.
+
+01:04:31.746 --> 01:04:34.606
+<v SPEAKER_1>Jetzt verstehe ich also anscheinend noch weniger, als ich vorhin gerade verstanden habe.
+
+01:04:34.626 --> 01:05:19.286
+<v SPEAKER_2>Also das Arbeitspaket, was wir sozusagen darauf trainieren, auf das Arbeitsband, liest das Passwort aus dem Speicher. Und je nachdem, dann legen wir noch ein Paket auf das Band, was abhängig von dem Passwort an einem zugänglichen Speicherteil irgendwas macht. Und zwar in einem Bereich von einem Speicher, wo sowohl das Passwortprogramm als auch mein Angreiferprogramm Zugriff haben. So dass das Paket, was ich auf das Band gelegt habe, dadurch mir sagen kann, was ist das Passwort.
+
+01:05:20.406 --> 01:05:55.306
+<v SPEAKER_1>Aber wie macht das das? Also ich versuche mal zusammen so was. Also ich habe den Prozessor trainiert, dass er folgende Dinge tut. Während mein Programm läuft, denkt der Prozessor, okay sozusagen im nächsten und im übernächsten Schritt hole ich das Passwort des Programms, das ich angreifen will aus dem Speicher, lege es in den Cache. Im übernächsten Schritt denkt der Prozessor, ich hole jetzt aus einem Speicherteil, wo sowohl das Angreiferprogramm als auch das angegriffene Programm rauslesen können, hole ich Daten.
+
+01:05:55.886 --> 01:06:10.926
+<v SPEAKER_2>Ja und zwar an einer bestimmten Adresse. Das Passwort wird dann aufgeteilt und das wird pro Zeichen gemacht. Diese ganze Sache, sodass du einmal für das erste Zeichen in dem Passwort...
+
+01:06:10.966 --> 01:06:19.206
+<v SPEAKER_1>Achso, das heißt, das Passwort wird in diesem Code auch wohin gelegt. Es wird gelesen und wieder wohin gelegt, nämlich in einem gemeinsamen zugänglichen Teil des Speichers.
+
+01:06:19.226 --> 01:06:57.586
+<v SPEAKER_2>Das Passwort an sich nicht, sondern es wird... Also der Code, der eingeschleust wird, der greift auf einen Adressbereich, auf eine bestimmte Adresse, zu, innerhalb eines Adressbereichs und das kann ich dann wiederum in dem Angreiferprogramm messen, genau an welcher Stelle das war. Die Stelle ist abhängig von dem ersten Zeichen in deinem Passwort.
+
+01:06:57.606 --> 01:07:09.146
+<v SPEAKER_1>Also mein Passwort besteht, sollte es niemals, liebe Leute, aber wir nehmen es mal an. Mein Passwort besteht aus 1, 2, 3, 4. Das heißt, kann ich einen Phantom-Code nennen?
+
+01:07:09.166 --> 01:07:12.606
+<v SPEAKER_3>Ja, also die Autoren nennen das Transienten-Code.
+
+01:07:15.406 --> 01:08:36.726
+<v SPEAKER_1>Der Phantom-Code sagt also, hole das Passwort aus dem Speicher. Und dann sagt der Phantom-Code, wenn das erste Zeichen im Passwort eine 1 ist, hole aus dem Speicher, wo beide Programme zugreifen können, nämlich aus der Speicheradresse 1 die Daten. Dann gehe ich im nächsten Schritt als Angreiferprogramm hin und sage, hole bitte aus dem Speicher die Adresse 1. Und wenn das dann sehr, sehr, sehr, sehr schnell geht, weiß ich, dass mein Phantom-Code aus der Speicherstelle Adresse 1 gelesen hat. Und damit weiß ich, dass das erste Zeichen vom Passwort eine 1 war. Genau. Ich glaube, ich hab's verstanden. Der Applaus wäre tatsächlich nur gerechtfertigt, wenn ihr es vor der neuartigen Rundung Umfangsgeräten auch verstanden habt. Falls es nicht so ist, ruft an 0331 77 97 0. Wir haben noch bis Mitternachtzeit und ich lasse die nicht eher hier raus, bis wir das alle verstanden haben. So, vielen Dank. Vielen Dank auch, dass ihr so geduldig mit mir wart. Okay, so kann ich sozusagen Daten auslesen. Und das erklärt auch sozusagen, warum es so kompliziert ist, weil ich muss den Prozessor darauf trainieren, diese Dinge zu tun. Und ich muss auch eine grobe Vorstellung haben, wo diese Passwörter liegen oder beziehungsweise wie das Programm, das ich angreife, auf die Passwörter zugreift.
+
+01:08:36.746 --> 01:08:39.846
+<v SPEAKER_2>Oder du hast viel Zeit und machst das einfach für den ganzen Speicher.
+
+01:08:40.506 --> 01:09:11.246
+<v SPEAKER_1>Okay, würde so was eigentlich auffallen? Also, weil ich habe gelesen, dass die, dass die, dass diese, dass der Phantom Code nicht in Logs auftaucht. Also wenn ich mir hinterher angucke, was hat denn der Computer so gemacht? Dann sehe ich nicht, was er gemacht hat, weil das ist ja Phantom Code sozusagen. Und aber was ihr jetzt sagt, ich habe sehr viel Zeit und dann macht es einfach immer wieder und immer wieder und immer wieder, macht das den Computer dann irgendwie langsamer? Also kann ich dann so schon sagen, Moment mal irgendwie, mein Prozessor ist nur noch halb so schnell, der macht doch gerade jemand Spectre drauf?
+
+01:09:11.586 --> 01:09:32.446
+<v SPEAKER_3>Ja, also bei den aktuellen Implementierungen, also bei den konkreten Beweisen, dass das geht, also wo wirklich konkret Leute diese Angriffe implementieren, da ist das halt so, dass man aus verschiedenen anderen Gründen tatsächlich viele Prozesse gleichzeitig starten muss und die CPU doch recht stark auslassen muss. Also das fällt schon auf.
+
+01:09:32.466 --> 01:09:56.146
+<v SPEAKER_1>Okay, so, jetzt war ich so in diese Erklärung vertieft, dass ich gerade eine Sache außer Acht gelassen habe, die wir noch nachholen müssen. Es ist einerseits eine kleine Musik und andererseits sind es die Nerd-News und die machen wir gleich. Erst noch mal eine kleine Musik, Told you so von Ketzer und danach die Nerd-News. Geschrieben dieses Mal von Dani Mo und Mo und vorgetragen von Christina. Und dann machen wir weiter mit den Auswirkungen.
+
+01:12:58.798 --> 01:15:14.398
+<v SPEAKER_8>Der US-Auslandsgeheimdienst NSA, eigentlich Spezialist im überufernden Sammeln und Aufbewahren von Daten, hat erneut versehentlich verfahrensrelevante Informationen gelöscht, entgegen einer gerichtlichen Anordnung. Das hat der Geheimdienst in einem Prozess um das Abschnorcheln von Daten in einem Netzknoten von AT&T einräumen müssen. Es sollen besonders sensible Inhaltsdaten und deren Backups zerstört worden sein. Die Speicherung von Inhalten ist ein Kernbereich des Verfahrens. Ein NSA Mitarbeiter hatte vor Gericht angegeben, dass gerade diese aufgrund von Speichermangel des benutzten Systems automatisch überschrieben worden seien. 2014 waren bereits Verbindungsdaten versehentlich gelöscht worden. Umzugswillige Internet- oder Kabelfernsehanschlusskunden, deren Anbieter am neuen Ort seine Leistung nicht anbieten kann, können ihren Vertrag nicht bereits vor dem Umzug kündigen. Das besagt ein aktuelles Urteil des OLG München. Kunden müssen bei Umzügen drei Monate ihren alten Vertrag weiterzahlen, denn das Sonderkündigungsrecht für solche Fälle gilt nach dem Urteil erst ab dem Tag des Umzugs. Grund? Das Telekommunikationsgesetz räumt zwar ein Sonderkündigungsrecht ein, gibt aber nicht an, wann es beginnt. Vodafone hat im vorliegenden Fall ein Missbrauchspotenzial reklamiert, falls vor dem Umzug gekündigt werden können. Ob das Urteil Bestand haben wird, ist noch nicht klar. Markus Dränger und Felix Rohrbach vom Chaos Darmstadt haben ihre Erkenntnisse zum besonderen elektronischen Anwaltspostfach, kurz BEA, präsentiert. Diese gewannen die beiden nicht etwa durch ein Security Review des Systems, sondern lediglich durch den Test des öffentlich verfügbaren Clients. Schon dadurch konnten sie nachweisen, dass in der Client Software ein Zertifikat mit öffentlichem und privatem Schlüssel zusammen mit dem dazugehörigen, nur verschleierten Passwort gespeichert wurde. Nachdem ein zweiter Reparaturversuch aus kryptografischer Sicht ein noch größeres Loch riss, zog die Bundesrechtsanwaltskammer die Reißleine. Offenbar liegen nun die Nerven blank. Beim sogenannten Beatlon, bei dem das Projekt überprüft werden soll, ist Hersteller Atos nicht dabei und untersagte seinen Subunternehmern ebenfalls die Teilnahme. Gleichzeitig erhielten angeblich fachfremde Journalisten, etwa eine Journalistin der Spiegel Online Netzwelt, keine Akkreditierung. Den Vortrag zum BA im Chaos Darmstadt gibt's unter media.ccc.de.
+
+01:15:15.758 --> 01:16:04.358
+<v SPEAKER_1>Das waren die Nerd News im Chaos Radio im Bloemunen auf Fritz.de. Wenn ihr vorbeikommen wollt, könnt ihr es noch eine dreiviertel Stunde lang tun. Wir sitzen in der Falkensteinstrasse 47 in Berlin und sprechen über Meltdown und Spectre, und zwar mit Mirameise und Peter. Und wir haben gerade eine dreiviertel Stunde gebraucht, also ich habe eine dreiviertel Stunde gebraucht, um zu verstehen, was genau das Prinzip dahinter ist. Aber wir haben es geschafft. Also ich kann jetzt wirklich sagen, also hört die Sendung noch mal nach, es dauert lange. Aber dann kommt man zu dem Punkt, wo man ja, aha, so funktioniert das. Jetzt habe ich voller Schrecken mitbekommen. Ich weiß jetzt erst, wie Spectre funktioniert. Meltdown ist anscheinend noch was anderes. Aber es wird ja immer sozusagen zusammengenommen. Könnt ihr vielleicht ganz grob sagen, was Meltdown anders macht oder schlimmer oder weniger schlimm?
+
+01:16:04.378 --> 01:16:30.818
+<v SPEAKER_3>Also das Prinzip, also diese Eigenheit der CPU, dass irgendwie Code ausgeführt wird, der geraten wird, das ist zugrundelegend dasselbe. Das einzige, was jetzt hier wirklich anders ist, ist, dass halt noch einmal eine spezifische Schwäche in Intel-CPUs ausgenutzt wird, damit ich das Ganze ein bisschen einfacher machen kann und halt Speicher, der eigentlich zum Kernel gehört, lesen kann, statt eben Speicher, der einfach nur zu einem anderen Programm gehört.
+
+01:16:30.838 --> 01:16:46.818
+<v SPEAKER_1>Ah, okay, also das heißt, das funktioniert auf weniger Prozessoren, aber ich habe potenziell Zugriff auf mehr Speicherplatz. Also auf eigentlich alles. Okay, ich kann alles. Es funktioniert jetzt nur bei Intel-CPUs. Also, hat jemand die Verteilung im Kopf? Intel vs.
+
+01:16:46.978 --> 01:16:48.898
+<v SPEAKER_2>Keine Sahne, aber eindeutig Marktführer.
+
+01:16:49.018 --> 01:17:08.878
+<v SPEAKER_1>Also, genau. Okay, gut, gut, gut. Apropos Intel, was ich jetzt mal gerne wissen würde, ist, was in den News auch immer war, das ist halt nicht ein Prozessor davon betroffen, also nicht ein Modell oder eine Reihe, sondern alle. Stimmt jetzt alle wirklich?
+
+01:17:08.898 --> 01:17:11.538
+<v SPEAKER_2>So ziemlich? Alle relevanten, alle moderne, ja.
+
+01:17:12.018 --> 01:17:31.198
+<v SPEAKER_1>Also Intel ist ja die eine, AMD ist das andere große, was wir vom Desktop können. Genau, das ist ja, weil wir immer einen Unterschied machen zwischen sozusagen Heimatwänden, also hier mein Spielerechner, Intel oder AMD, kann man in vorn endlos lange Kriege führen, aber das sind schon auch sozusagen die Prozessoren, die auch im Web, also quasi für Webangebote, Web-Posting-Services verwendet werden.
+
+01:17:32.178 --> 01:17:39.138
+<v SPEAKER_4>Oder auch im Heimbereich. Also alles aus diesem Jahrtausend, glaube ich, ist betroffen. Also auch mein Notebook zu Hause.
+
+01:17:39.158 --> 01:17:39.738
+<v SPEAKER_1>Auch mein Smartphone?
+
+01:17:40.318 --> 01:17:42.178
+<v SPEAKER_4>Auch dein Smartphone unter Umständen, ja.
+
+01:17:42.598 --> 01:17:44.058
+<v SPEAKER_1>Arm, hab ich gelesen, ist auch betroffen.
+
+01:17:44.078 --> 01:17:56.538
+<v SPEAKER_3>Genau. Also dieses Prinzip eben, dass man spekulativ Code ausführt, das hat sich eben einfach sehr bewährt, weil das halt meinen Prozessor sehr effizient macht. Das haben eigentlich alle Hersteller irgendwie von modernen Prozessoren so übernommen.
+
+01:17:57.338 --> 01:18:13.038
+<v SPEAKER_1>Also ich frag mich jetzt zwei Sachen. Die erste ist, also wie lang geht denn das zurück? Also alle Prozessoren, die das machen, was du gerade gesagt hast, Pentium, das ist dann wie 90er, Mitte der 90er. Also alle Prozessoren, ab da sind da quasi anfällig für.
+
+01:18:13.058 --> 01:18:18.658
+<v SPEAKER_2>Ab Pentium gibt es eben mehrere Bänder, die die Pakete bearbeiten können.
+
+01:18:18.678 --> 01:18:24.758
+<v SPEAKER_1>Und gibt es irgendwie schon Nachweise, wie lange diese Sicherheitslücken funktionieren? Also bei welchen Generationen?
+
+01:18:25.058 --> 01:18:46.878
+<v SPEAKER_3>Ich hab jetzt irgendwie gelesen, dass eben diese Proof of Concepts relativ kompliziert sind und das nicht ganz einfach ist, dass jetzt auf wirklich jeder Hardware zu testen, gibt es da meines Wissens nach noch keine erschöpfende Liste von irgendwie Chips, wo das jetzt wirklich jemand ausprobiert hat. Aber Intel sagt pauschal oder auch AMD, naja, das machen wir ja seitdem eigentlich überall so. Das heißt, wir gehen davon aus, dass eh alles betroffen ist.
+
+01:18:46.898 --> 01:19:10.718
+<v SPEAKER_1>Gut, also wenn der Hersteller davon ausgeht, dann würde ich sagen, dann müssen wir jetzt nicht zwangsweise anzweifeln. Da stellt es mich aber die Frage, das ist ja also nicht das Problem einer Bau, also wie gesagt eines einzelnen Produkts, sondern das Problem einer Technologie oder einer Art und Weise, wie das betrieben wird. Wieso kommen wir erst 2017 drauf oder ist es so, dass es 2017 erst öffentlich geworden ist?
+
+01:19:10.738 --> 01:19:53.038
+<v SPEAKER_3>Also es gab schon immer mal wieder eine Reihe von Leuten, die sich zu Wort gemeldet haben mit verwandten Angriffen, die halt in eine ähnliche Richtung gehen oder auch mit Vermutungen, dass das irgendwie schlecht sein könnte mit dieser spekulativen Ausführung. Auch schon teilweise gab es schon Blockeinträge mit ziemlich konkreten Vorstellungen, wie so ein Angriff aussehen könnte. Aber es gab halt keinen öffentlich dokumentierten Fall, wo das jemand erfolgreich dann genau in dieser Art getan hat. Es gab einen Researcher, der war schon sehr, sehr nah dran an Meltdown. Hat das dann aber praktisch einfach nicht umgesetzt bekommen durch Leiderspezifiker, die halt gerade nicht stimmten bei dem Labor-Setup.
+
+01:19:53.058 --> 01:20:17.978
+<v SPEAKER_1>Aber ist es, also das Ding ist, man dies ja dann, wenn sowas erstmal losgeht, auch ganz viele mit sich. Ich hab auch schon noch so Tweets gesehen, ja, Intel hätte schon damals wissen können und den und den Forscher haben sie abgelehnt mit einem Vortrag. Ist das so ein Ding, wo alle so wussten, okay, ja, das ist vielleicht ein Problem, aber ich hab jetzt eigentlich auch keinen Bock und das ist so kompliziert? Oder ist da aktiv Verhinderung betrieben worden? Oder wie ist das?
+
+01:20:17.998 --> 01:21:06.198
+<v SPEAKER_3>Ich weiß natürlich jetzt nicht, was da jetzt spezifisch bei irgendwelchen Entscheidern bei Intel bekannt war, aber generell diese Idee der spekulativen Ausführung in Kombination mit diesen Timing-Problemen, dass dadurch Daten schon mal im Cash liegen und man das dann vielleicht ausnutzen kann. Die Idee, die hatten halt durchaus immer mal Leute und es gab auch den ein oder anderen Talk, der in dieselbe Richtung geht und diese Art, wie ich die Informationen jetzt raustrage, was wir vorhin erklärt haben, die ist tatsächlich auch schon gut dokumentiert und bekannt und jetzt nicht spezifisch Teil von Spectre oder Meltdown. Das heißt, so die Einzelbausteine waren so ein bisschen halt klar, aber das dann konkret umzusetzen, das hat halt vorher noch keiner geschafft.
+
+01:21:06.218 --> 01:21:19.538
+<v SPEAKER_1>Na gut, aber könnte man zwar sagen, wir haben ein kapitalistisches Problem hier, weil sozusagen alle wollen den Prozessor immer schneller machen und deswegen guckt man nicht so genau hin, was die Gefahren ist, sondern verwendet es einfach, weil das hat ja gut funktioniert.
+
+01:21:19.558 --> 01:21:40.018
+<v SPEAKER_2>Es wird nichts gemacht, was nicht notwendig ist, weil Sicherheitsfeatures oder Sicherheitseinschränkungen, die kosten Geld oder Zeit oder Strom, also Akkulaufzeit. Und dann stehst du als Prozessorhersteller schlechter da als deine Konkurrenz.
+
+01:21:40.038 --> 01:21:47.038
+<v SPEAKER_1>Wie schnell haben sie denn jetzt reagiert, als das rausgekommen ist? Ist es jetzt zufriedenstellend, wie das gerade läuft?
+
+01:21:47.058 --> 01:22:32.878
+<v SPEAKER_3>Also in Anbetracht der Tatsache, wie viele verschiedene Ebenen man jetzt an so einem Computer, also das Gesamt-Setup, also sowohl die Hardware als dann auch die ganze Software, die da drauf läuft, wie viel man da anfassen muss, ist doch recht viel, recht schnell passiert. Was ja im Endeffekt auch der Grund war, warum das ein bisschen früher rausgekommen ist. Also dadurch, dass man eben, um diese Exploits zu verhindern, sowohl an der CPU rumpatchen muss, als dann eben zum Teil auch am Betriebssystem, als dann auch an Compilern, also der Software, die mir dann meine eigentlichen Programme zusammenbauen, ist es dann halt aufgefallen. Und das ist schon eine sehr komplexe Koordination. Also da weiß ich jetzt nicht.
+
+01:22:33.298 --> 01:23:06.838
+<v SPEAKER_1>Warte, wir können ja über Patches und was man damit macht, gleich noch mal genau sprechen. Ich meinte jetzt eher so im großen Umfeld, also zum Beispiel die großen Firmen bringen ja im Jahresrhythmus oder Zweihäuse Prozessoren raus. Da will man ja auch als Gamer dann immer den geilsten, besten. Und jetzt haben wir also festgestellt, es gibt ja diese Technologie, die seit Mitte der 90er in allen Prozessoren drin ist. Und dann wäre jetzt so mein Verlade, okay, die verkaufen jetzt einfach die nächste Generation. Genau so. Also weil, wenn man jetzt einen neuen Prozessor... Okay.
+
+01:23:06.858 --> 01:23:08.678
+<v SPEAKER_3>Das wird mit Sicherheit passieren.
+
+01:23:13.838 --> 01:23:22.198
+<v SPEAKER_1>Ja, also das war ironisch gemeint. Ist das... Könnte man einen Prozessor bauen, der das Problem nicht hat?
+
+01:23:23.618 --> 01:23:33.818
+<v SPEAKER_2>Der braucht dann mehr Strom. Oder ist langsamer oder so. Und der verliert dann im Wettbewerb einfach.
+
+01:23:33.838 --> 01:23:57.158
+<v SPEAKER_3>Man kann sogar, meines Wissens nach, jedenfalls eine eigentlich verwundbare CPU nehmen und dieses Feature abschalten. Also, dass man halt gar keine Speculative Execution mehr macht. Da gibt es teilweise, glaube ich, eben ein Bit für, was man dann setzen kann, so eine Konfiguration quasi. Aber das wird einfach dem Prozessor so viel langsamer machen, dass das einfach keiner tun wird. Das ist halt dann mal ein Drittel langsamer alles.
+
+01:23:57.178 --> 01:24:28.598
+<v SPEAKER_1>Okay, aber, also würde ich dich gerne mal fragen, weil du ja in dem Bereich auch so sagen arbeitest, der betroffen ist, nämlich das Hosting, was so ein Hauptangriftszenario zumindest ist, nicht das jetzt akutes. Und jetzt kann man ja sagen, ja, das wird dann langsamer und stromfressender, aber gibt es für dich Szenarien, wo du sagst, da würde ich eigentlich schon wenigstens das Angebot haben, den stromfressenderen oder langsameren Prozessor zu nehmen, einfach um sicher gehen zu können, dass das da nicht passieren kann? Oder ist das völlig außer Frage?
+
+01:24:28.898 --> 01:24:57.398
+<v SPEAKER_4>Nee, klar. Also wenn man Services betreibt, oder ich als Anwender möchte natürlich immer das sicherste Produkt erst mal haben. Das soll natürlich auch wenig Strom verbrauchen, wenig kosten. Aber für mich selber oder als Serviceanbieter will ich eigentlich den sichersten Service erst mal zur Verfügung stellen. Weil am Ende bin ich halt auch mitunter in der Haftung. Das fehlt halt aktuell gerade bei den Hardware-Herstellern stellenweise vollständig.
+
+01:24:57.418 --> 01:25:14.278
+<v SPEAKER_1>Warte mal, das heißt, wenn... Also angenommen, es gibt ja einen Web-Posting-Betreiber, dem werden jetzt durch Meltdown-Respector die Computer ausgeräumt. Dann haftet dafür nicht der Prozessor-Hersteller, sondern der Hosting-Betreiber. Also gegenüber den Kunden dann.
+
+01:25:15.138 --> 01:25:21.838
+<v SPEAKER_4>Im Zweifelsfall ja, klar. Oder man verliert halt die komplette Kundschaft und ist seit seinem Business los.
+
+01:25:23.718 --> 01:25:46.958
+<v SPEAKER_1>Aber jetzt ist es ja auch so, dass die... sozusagen anscheinend komplex ist, das anzugreifen. Deswegen zählt sich die Frage darauf ab, ob du, wenn du die Wahl hättest, würdest du dann überall die sichere Version nehmen? Oder würdest du sagen, naja, keine Ahnung, wenn jetzt irgendwie Tante Ketig ihre Webseite für den Sockenverkauf betreibt, dann ist es vielleicht nicht so schlimm. Aber...
+
+01:25:46.978 --> 01:25:49.138
+<v SPEAKER_4>Also ich persönlich würde ja die sichere Variante nehmen.
+
+01:25:49.158 --> 01:25:50.578
+<v SPEAKER_1>Immer, sozusagen, also grundsätzlich.
+
+01:25:50.598 --> 01:25:56.578
+<v SPEAKER_4>Und ich sag mal so, der CPU-Hersteller wird sich freuen, weil ich halt wieder bei ihm weitere CPUs kaufen.
+
+01:25:56.598 --> 01:26:04.718
+<v SPEAKER_1>Warte mal, ich stelle das mir noch gar nicht aufgefallen. Es sind ja alle betroffen. Ich kann jetzt gar nicht irgendwo einkaufen gehen und sagen, hier, du bist der sichere CPU-Hersteller, oder?
+
+01:26:06.318 --> 01:26:09.158
+<v SPEAKER_4>Naja, also zumindest im Meltdown schon.
+
+01:26:09.178 --> 01:26:10.638
+<v SPEAKER_2>Genau, im Meltdown kannst du schon...
+
+01:26:10.658 --> 01:26:14.238
+<v SPEAKER_1>Man kann halt keine Intel-CPU kaufen. Aber wenn nicht Spectre sicher werden will?
+
+01:26:14.258 --> 01:26:19.038
+<v SPEAKER_2>Das Problem ist ja in der gemeinsamen Technologie, oder?
+
+01:26:19.058 --> 01:26:32.318
+<v SPEAKER_1>Gut, dann reden wir gleich nochmal in der letzten halben Stunde über die insgesamt gesellschaftlichen Auswirkungen und was coole Marketing-Namen mit Sicherheit zu tun haben. Vorher gibt es aber nochmal eine kleine Musik und dann Nachrichten mit Wetter und Verkehr.
+
+01:29:31.800 --> 01:29:54.640
+<v SPEAKER_5>Milliarden feiern mit uns. Mavie Phoenix feiert mit uns. Zucki und die Leoniden feiern mit uns. Und Sido feiert mit uns. Und wir würden total gern mit euch feiern. Fritz wird Fritz von 20 feiert mit uns in der Columbia-Halle. Freitag, 2.
+
+01:29:54.660 --> 01:30:03.200
+<v SPEAKER_7>März. Hier gibt's Karten, überall wo's Karten gibt's. Zum Beispiel auch auf fritz.de slash fritzundzwanzig.
+
+01:30:03.220 --> 01:30:05.300
+<v SPEAKER_5>Für gerade mal fritzundzwanzig Euro.
+
+01:30:05.320 --> 01:30:06.820
+<v SPEAKER_7>Fritzundzwanzig.
+
+01:30:06.840 --> 01:30:17.040
+<v SPEAKER_5>Die große Radio-Geburtstagsparty in der Columbia-Halle. Mit Sido, Milliarden, Zucki, Mavie, Phoenix, Leoniden, jeder Menge Fritzen und hoffentlich auch mit euch.
+
+01:30:17.060 --> 01:30:18.760
+<v SPEAKER_7>Fritzundzwanzig Jahre, Fritz.
+
+01:30:31.200 --> 01:33:07.760
+<v SPEAKER_6>Wegen Verstößen gegen den gesetzlichen Mindestlohn mussten deutsche Firmen im vergangenen Jahr Buß- und Verwarnungsgelder von mehr als 4 Millionen Euro zahlen. Das geht aus einer Antwort des Bundesfinanzministeriums auf eine Anfrage der Linksfraktion hervor. Demnach wurden im vergangenen Jahr rund 2500 Verfahren eingeleitet. Linkenchef Rixinger sagte, Verstöße müssten stärker bestraft werden. Außerdem brauche es mehr Kontrollen, damit Verstöße nicht von der Ausnahme zur Regel werden. Im Potsdamer Landtag ist heute über die aktuellen Konflikte zwischen Deutschen und Ausländern in Cottbus gesprochen worden. Der Cottbuser Oberbürgermeister Kelch forderte im Innenausschuss mehr Unterstützung vom Bund und dem Land Brandenburg. Er berichtete davon, dass man an die Familien der Geflüchteten nicht mehr herankomme und von überforderten Schülern. Kelch forderte außerdem eine Image-Kampagne für Cottbus, die Stadt erlebe momentan international einen massiven Imageverlust. Münchens Oberbürgermeister Reiter hat die Bundesregierung aufgefordert, mehr für den Mieterschutz zu tun. Vor allem der Mietspiegel sei ein wichtiges Instrument, um gerechte Preise zu erhalten. Dabei müssten aber alle Wohnungen erfasst werden, nicht nur die Neugebauten. Reiter verlangte auch mehr sozialen Wohnungsbau durch den Bund. Außerdem solle der Bund seine Flächen nicht meist bieten verkaufen, sondern für bezahlbaren Wohnraum zur Verfügung stellen. Der Orkan Friederike vor einer Wache hat deutlich mehr Schaden angerichtet als erst gedacht. Laut Gesamtverband der Deutschen Versicherungswirtschaft sind allein versicherte Schäden in Höhe von 1 Milliarde Euro entstanden. Erste Schätzungen lagen noch halb so hoch. Damit ist Friederike der zweitschwerste Wintersturm seit 20 Jahren. Der Orkan Küril hatte die Deutschen Versicherung im Jahr 2007 2 Milliarden Euro gekostet. Wetter Mit den aktuellen Temperaturen in Berlin Friedrichshagen 6 Grad zählen auf 7 Grad, Neuropin 6 Grad, Lindenberg 7 Grad, in Ludwigsfelde und Cottbus 8 Grad. Bis zum Morgen kann es immer wieder mal regnen und das Thermometer sinkt bis auf 4 Grad. Am Tag erwarten uns viele Wolken und leichter Regen, später ist es dann meist trocken. Dazu Höchstwerte von 9 Grad in Berlin und 10 Grad in Brandenburg. A10 östlicher Berliner Ringen Richtung Dreieck, Spreeaut zwischen Hellersdorf und Rüdersdorf sind wegen Bauarbeiten die rechte und die mittlere Spur noch bis 5 Uhr früh gesperrt. Stadtverkehr Berlin in Niederschöne Weide sind auf der Schnellerstraße zwischen Riegsdorf und Karlshorster Straße die Ampeln außer Betrieb. In Bohnsdorf ist die Waltersdorfer Straße zwischen Joachim- und Darmestraße nach einem Wasserrohrbruch statt auswärts gesperrt. Und ein Hinweis zur S-Bahn, die Linie S1 ist zwischen Botanischer Garten und Schöneberg bis Betriebsschluss unterbrochen, ersatzweise fahren aber Busse. Allen unterwegs und da, wo es geht, nur gute Fahrt.
+
+01:33:09.120 --> 01:33:10.980
+<v SPEAKER_1>Fritz ist eine Produktion des RBB.
+
+01:33:13.060 --> 01:33:28.540
+<v SPEAKER_7>Und wenn ihr Fritz immer dabei haben wollt mit Livestream, Studio Message, Podcasts und jede Menge mehr, dann holt euch doch die Fritz-App kostenlos und werbefrei in euren App oder Play Store.
+
+01:33:41.928 --> 01:34:53.868
+<v SPEAKER_1>Fritz Chaos Radio im Blue Moon auf Fritz. Wir reden heute über Meltdown und Spectre, zwei Sicherheitslücken, die nicht Software betreffen, sondern Prozessoren, also die Herzchecken der Computer. Und wir haben die vergangenen anderthalben Stunden dazu benutzt, um zu verstehen, was da eigentlich passiert. Und jetzt wollen wir noch mal gucken, was man dagegen machen kann. Herzlich willkommen zurück, Mira, Peter und Meise. Und so, wir haben ja wie gesagt geklärt, was da passiert. Wir haben ganz am Anfang auch schon gesagt, also es ist jetzt, es ist gefährlich, es ist vor allen Dingen langfristig sehr interessant, weil da halt sozusagen ein Herzstück kaputt ist und auch grundlegend kaputt, weil diese Technologie seit 20 Jahren, 30 Jahren, oh mein Gott, eingesetzt wird. Aber wir sind trotzdem nicht konkret betroffen, weil es sehr schwierig ist, diese Sicherheitslücke auszunutzen, insbesondere sozusagen auf unseren privaten Computern. Trotzdem will man das ja nicht sich auf Dauer an die Backe binden. Wie ist denn da jetzt eigentlich die Patch-Situation? Also jetzt bei der Software kriege ich einen Update und dann wird eine neue Version des Programms aufgespielt. Also ich weiß, Prozessoren sind mittlerweile so komplex, dass auch da so eine Art Software schon drauf läuft. Aber das ist ja am Ende, ist es ja Hardware, also sind es ja Leiterbahnen. Kann man denn Prozessoren überhaupt updaten?
+
+01:34:55.348 --> 01:34:57.708
+<v SPEAKER_2>Ja, moderne, ja, teilweise schon.
+
+01:34:57.888 --> 01:35:04.488
+<v SPEAKER_1>Ach so, warte mal, Mira, in der letzten halben Stunde hattest du gesagt, und das wolltest du noch korrigieren, dass man das abschalten kann.
+
+01:35:04.588 --> 01:35:34.988
+<v SPEAKER_3>Richtig, das geht leider nicht. Also es gibt keine Möglichkeit der CPU zu sagen, naja, mach halt mal bitte keine Speculative Execution. Ob man das per Update machen könnte, weiß ich jetzt auch nicht. Man kann sich so eine CPU vorstellen, wie so einige in Hardware wirklich gebaute Komponenten, die dann per Software zusammengeschaltet werden. Ich kann jetzt einen gewissen Einfluss darauf nehmen, wie das genau verschaltet ist, aber ich kann jetzt nicht frei hingehen und jetzt eine CPU komplett anders durch Software gestalten.
+
+01:35:36.008 --> 01:35:38.668
+<v SPEAKER_1>Was wird da jetzt gerade versucht?
+
+01:35:38.688 --> 01:35:41.448
+<v SPEAKER_2>Schwierig, würde ich sagen.
+
+01:35:41.468 --> 01:36:39.548
+<v SPEAKER_4>Also letztendlich das, was aktuell versucht wird, wird, glaube ich, primär versucht, Mitigation zu machen. Also dass man halt versucht, die Wahrscheinlichkeit, dass man halt entsprechende diese Lücken oder diese unterentsprichtlichen Angriffsszenarien halt ausnutzen kann, so weit versucht zu minimieren, dass das halt eigentlich nicht mehr stattfinden kann. Und auch diese Mitigations können halt auf unterschiedlichen Leveln passieren. Also dieser Microcode-Patch, der halt schon mehrfach angesprochen wurde heute, ist halt so mit das, ja, also das beeinflusst halt die CPU im Prinzip direkt. Man kann aber auch versuchen, auf anderen Wegen zumindest das Risiko zu minimieren. Also man kann halt hingehen und sagen, Browser-Hersteller, also Firefox, oder Microsoft haben halt irgendwie Patches veröffentlicht für ihre Browser, um da halt eine Mitigation zu machen. Man kann das Betriebssystem patchen.
+
+01:36:39.568 --> 01:36:53.888
+<v SPEAKER_1>Also das heißt, es geht schon, das hört sich sozusagen wie so eine Sysifos-Arbeit an, aber im Prinzip kann jede einzelne Software jetzt sagen, okay, wir wissen, es gibt diese lückenden Prozessoren, deswegen funktioniert die Software jetzt anders. Das klärt aber das Problem nicht. Das ist quasi ein bisschen ein Symptom rumdoktern, könnte man sagen.
+
+01:36:53.908 --> 01:38:31.128
+<v SPEAKER_3>So ein bisschen, ja. Das muss man eigentlich aufdröseln. Es gibt jetzt verschiedene Mitigierungen, die gegen verschiedene Angriffsszenarien wirken. Gegen Meltdown hat man das ganz gut verstanden. Da kann man vernünftig gegen, na ja, mitigieren. Ich finde, Patchen ist da eben auch, wie gesagt, der falsche Ausdruck, wenn man wirklich Symptombekämpfung macht. Da kann man halt über eine Änderung am Betriebssystem verhindern, dass man eben an diesen Kernelspeicher dann kommt. Für Spectre, da gibt es ja eben zwei Varianten. Die sich halt eben leicht unterscheiden. Da werden bei beiden Varianten auch wieder dieselben Mechanismen ausgenutzt. Nur die konkrete Implementierung, was genau ich da mache, die ist halt ein bisschen anders, je Variante. Und bei der einen Variante kann man halt vernünftig patchen und kann das auch nachhaltig patchen, diesen konkreten Angriff. Die zweite Variante, die ist allerdings so generisch, dass es da sehr, sehr schwierig ist, das vernünftig zu mitigieren. Da kommen dann einmal eben diese Mikrocode-Updates ins Spiel, die vorhin genannt wurden. Die geben der CPU im Wesentlichen neue Instruktionen, die man dann benutzen kann, wenn man ein Programm baut, um an bestimmten Stellen Dinge zu tun, dass da diese Prediction-Feature nicht weiterläuft, also so Barrier-Operationen. Das heißt jetzt aber, ich muss dann einmal meine CPU updaten, ein Mikrocode-Update, muss danach hingehen und muss mein Programm nochmal neu compilen mit einem Compiler, der diese Instruktion versteht. Das ist schon eher aufwendig.
+
+01:38:31.148 --> 01:38:34.148
+<v SPEAKER_1>Wir haben hier etwas, das möglicherweise hilft, aber du musst alles neu machen.
+
+01:38:34.168 --> 01:38:37.208
+<v SPEAKER_2>Ich muss jedes Werkzeug erstmal neu bauen.
+
+01:38:47.508 --> 01:39:18.728
+<v SPEAKER_1>Da wird schon gegen Vorgehör. Jetzt hab ich irgendwas gelesen, was mich tatsächlich auch Frage ist. Herzstück des Computers. Ich benutze das natürlich, weil es so schön plakativ klingt. Aber ich stelle mir auch vor, es gibt ja auch diese Theorie, wenn ich Dinge in beliebig komplexer Software repariere, dann habe ich auch eine gute Chance, neue Fehler reinzubringen. Und ich denke so, wenn ich jetzt im Prozessor was verändere, dann kann ja richtig Dinge schiefgehen. Das habe ich irgendwo gelesen. War das Intel, das Computer, Rebooten nach Einspieler oder nicht mehr Rebooten oder irgendwas, also dass es da Probleme gab?
+
+01:39:18.748 --> 01:39:54.448
+<v SPEAKER_4>Ja, also ist in der Tat passiert. Also Microcode-Körner wurden eingespielt, Patches wurden eingespielt. Und danach Rebooteten Server willkürlich oder liefen Endlosschleifen. Und gerade bei den Intel Microcode-Patches wurden die jetzt sogar wieder zurückgezogen. Und man arbeitet jetzt aktuell an neuen Patches. Aber bei AMD war das glaube ich auch der Fall, bei Windows. Also da hat da irgendwie Microsoft einen Update rausgehauen. Und ja, gab es so auch Probleme. Also Systeme booteten nicht mehr.
+
+01:39:57.408 --> 01:40:12.768
+<v SPEAKER_1>So unfassbar. Und ich würde, nee, Frage erst mal. Haben wir jetzt sozusagen, was das grundlegende Verständnis ist? Ich weiß, wir kennen nicht alle Details. Aber das Grundlegende Verständnis dieser beiden Dinge, haben wir das jetzt sozusagen abgeschlossen? Oder habe ich noch was ganz Wichtiges vergessen?
+
+01:40:14.308 --> 01:40:34.408
+<v SPEAKER_3>Ich denke, das ist soweit ganz gut abgeschlossen. Das ist vielleicht sogar besser, wenn das so ein bisschen nicht ganz spezifisch ist, weil das ist auch eigentlich eine Klasse von Angriffen. Also diese Varianten, die wir da gerade haben, das ist nicht unbedingt jetzt das Ende der Fahnenstange. Das ist halt vielleicht hat noch mal irgendwer anders eine kluge Idee, was man noch macht.
+
+01:40:34.468 --> 01:40:40.868
+<v SPEAKER_1>Ach so, das kann auch sein, dass Meltdown und Spectre jetzt sozusagen der Anfang einer neuen Geschichte von wow, nice!
+
+01:40:40.888 --> 01:40:42.708
+<v SPEAKER_2>Spectre insbesondere.
+
+01:40:42.728 --> 01:41:54.728
+<v SPEAKER_1>Überlegt, wo ihr es zuerst gehört habt. Also falls demnächst die Welt untergeht, Chaosradio 242. Wir haben es zuerst gesagt. Aber apropos Weltuntergang und fashion-Namen. Zu diesen Attacken gibt es ja diese schöne Namen Meltdown und Spectre. Und dazu gibt es auch entsprechende Webseiten, nämlich Meltdown-Attacks und spectreattacks.com, glaube ich. Und dann ist wenige Tage später die Webseite Skyfall-Attacks aufgetaucht und alle so, nein, noch eine Sicherheitslücke, was ist da los? Und das war aber tatsächlich von einem Typen, der nur zeigen wollte, dass es mittlerweile, wie in so vielen Bereichen des menschlichen Lebens, auch bei der Verbreitung von wichtigen Sicherheitslücken, Marketing eine ganz wichtige Rolle spielt. Und er meinte so, wir haben jetzt halt geile Namen gehabt und wir reden alle gerade drüber, aber es ist ja auch gar nicht so gefährlich. Und was die Leute möglicherweise gar nicht mitkriegen, es ist alles noch viel schlimmer, es hat noch nicht so fancy Namen. Und deswegen an euch jetzt die Frage, ist alles viel schlimmer? Also ist sozusagen, ist Meltdown und Spectre jetzt etwas, was so ein Medienereignis ist, auf das ich jetzt auch reingefallen bin und euch anderthalb Stunden drüber ausgequetscht habe, weil bei Wirklichkeit ist jede Woche eine Sicherheitslücke, die unser Untergang bedeuten würde?
+
+01:41:55.728 --> 01:42:31.608
+<v SPEAKER_3>Ich denke, in dem Fall war es ganz gut, dass diese Sicherheitslücke diese Medienaufmerksamkeit bekommen hat, einfach weil die so kompliziert ist. Und man natürlich dann durch diese Medienaufmerksamkeit dann doch die Leute motiviert, sich doch damit zu beschäftigen, auch wenn das vielleicht sehr kompliziert ist und man da gar keine Lust drauf hat. Also hier hätte das vielleicht echt mal was Gutes. Und ich schätze das schon auch als so gravierend ein, einfach dadurch, dass das eben so fundamental tief im System sitzt und uns wahrscheinlich noch recht lange begleitet, dass man das schon sehr ernst nehmen muss. Also da würde ich sagen, ist das schon gerechtfertigt. Also da lohnt sich das Zeichen eines Logos durchaus.
+
+01:42:31.628 --> 01:42:56.028
+<v SPEAKER_2>Aber es können natürlich andere Probleme geben. Wahrscheinlich gibt es andere Probleme und zwar viele andere Probleme, die wir gar nicht wissen und die wir auch nicht wissen können. Weil Intel hat ja kein Interesse daran zu erzählen, wie deren Produkte drin funktionieren. Weil dann würde ich im Einblick die nachbauen. Also Intel hat sozusagen ein Interesse daran.
+
+01:42:57.708 --> 01:43:46.528
+<v SPEAKER_1>Nee, das meinte ich gar nicht. Also auch auf die Gefahr, dass ich mich zynisch anhöre, aber dass Hersteller kein Interesse daran haben, ihre Produkte so offen zu legen, dass man sie so untersuchen kann, dass man Sicherheitslücken auch findet. Das ist ja schon häufiger mal Thema gewesen. Was ich eher meinte, ist, als jemand, der sich nicht mit Security beschäftigt wie ihr, sondern jemand wie ich oder jemand, der sich noch weniger mit dem Thema beschäftigt, passiert ja sozusagen alle Jubeljahre sowas wie. Also keine Ahnung. Ich habe bei meinem Passwortmanager zum Beispiel eine Kategorie von Passwörtern, die heißt Post Heartbleed. Also es gab, Heartbleed war so ein ganz fieses Problem bei verschüttelten Internetverbindungen. Ich habe sozusagen durchgegangen, habe Passwörter geändert, weil ich so viele habe, einfach sozusagen die markiert, die ich schon geändert hatte.
+
+01:43:46.548 --> 01:43:47.328
+<v SPEAKER_2>Vorbildlich.
+
+01:43:47.848 --> 01:44:52.148
+<v SPEAKER_1>Naja, aber das zeigt halt auch, es gibt halt diese eine Lücke, es gibt sicherlich noch irgendwie 5000 andere Lücke, wie seitdem passiert ist und so. Was gab es noch für schöne Namen? Stacklash, nee Pudel, kann ich mich noch erinnern. Genau. Und jetzt gibt es halt irgendwie Meltdown und Spectre. Und was ich aber auch weiß, ich verfolge es nicht mehr aufmerksam, aber es gibt ja so Mailinglisten und Newsdienste und Sicherheitslücken bekommen, sogenannte CVE-Nummern. Das sieht schon nach Bürokratie aus. Da hat man natürlich als Normalchepper nicht so einen Bock. Und die Frage ist jetzt vielmehr, also wir haben jetzt über Meltdown und Spectre gesprochen aufgrund der, wie soll man das sagen, das grundlegende System unserer Computer, ist da kaputt, aber die Frage ist, passieren eigentlich in diesem Bereich der Sicherheit sozusagen viel häufiger solche unfassbar krassen Sicherheitslücken, also eine Auswirkung, und wir kriegen die einfach nur nicht mit, weil es da kein Logo, keine Webseite, sondern halt nur eine CVE-Nummer und eine lange trockene Beschreibung gibt. Also verpassen wir was und brauchst du mehr Marketing für Sicherheitslücken?
+
+01:44:52.168 --> 01:44:59.228
+<v SPEAKER_2>Ich würde spontan sagen, ja, es gibt viel mehr Sicherheitslücken als besprochen wird.
+
+01:44:59.248 --> 01:45:03.148
+<v SPEAKER_1>Die letzte Krasse, von der wir nichts wissen, fällt euch da spontan was ein?
+
+01:45:03.568 --> 01:45:08.628
+<v SPEAKER_3>Ja, es gab halt immer mal wieder irgendwie Sicherheitslücken, die die Management Engine betroffen haben.
+
+01:45:08.648 --> 01:45:10.268
+<v SPEAKER_1>Was ist eine Management Engine?
+
+01:45:10.288 --> 01:45:47.668
+<v SPEAKER_3>Das ist eine Komponente, die in bestimmte Intel-CPUs integriert sind und die dazu benutzt werden können, aus der Ferne bestimmte Wartungsarbeiten direkt an dem Rechner durchzuführen. Das ist wie eine sehr tief in das System integrierte Remote-Wartung, kann man sagen. Die Management Engine selber macht noch ein bisschen mehr, aber das ist jetzt warum jetzt zum Beispiel große Firmen die gut finden, wenn man dann halt remote sehr tief ins System eingreifen kann und auch komplexe Fehler noch remote beheben kann und eben nicht irgendwo rumlaufen muss und auf irgendwelchen Baustellen im Dschungel Notebooks einsammeln muss.
+
+01:45:47.688 --> 01:45:55.148
+<v SPEAKER_2>Und automatisiert auch über die ganze Firma gleichzeitig große Änderungen zu machen.
+
+01:45:55.168 --> 01:45:56.268
+<v SPEAKER_1>Und die war auch kaputt.
+
+01:45:56.288 --> 01:45:58.828
+<v SPEAKER_3>Genau, bevor das jetzt zu gut klingt, genau das geht auch andauernd kaputt.
+
+01:46:02.028 --> 01:46:45.508
+<v SPEAKER_2>Nicht nur einmal, wirklich jahrelang. Immer mal wieder. Und das ist eine Komponente, die eben auch von Intel sehr geheim gehalten wird, wo Intel behauptet, na das ist das ist unsere sichere Bereich. Mit dieser Komponente implementieren wir Sicherheit auf unseren Plattformen. Die sorgt teilweise auch für DRM, also verschlüsselte Videoübertragungen oder Tonübertragungen, was dann eben nicht von dem, also vor dem, wo der Inhalt vor dem Betriebssystem und vor den Abwendungen geschützt werden soll, so dass nur das Bildschirm wirklich den Inhalt sehen darf.
+
+01:46:46.328 --> 01:47:30.508
+<v SPEAKER_4>Wobei man jetzt auch mal sagen muss, ich meine, am Ende muss der Endanwender ja irgendwas damit anfangen und zum Beispiel für Intel Management Engine, ja, da kann man halt nix machen aktuell, nicht großartig. Und bei Spectrum mit Meltdown ist ja letztendlich, ja, man kann jetzt Patches installieren, aber konnte man halt auch nicht, als das Medienecho halt so groß war. So, die Patches sind jetzt erst rausgekommen und als das rauskam, ist halt schwierig. Also so richtig schönes Marketing ist das auch noch nicht, wenn man will, dass sich irgendwas verändert. Also auch, dass die Masse dann mal Druck auf die Hersteller ausübt. Nicht das Gefühl, dass das passiert.
+
+01:47:30.528 --> 01:47:53.108
+<v SPEAKER_1>Aber meinst du nicht sozusagen, dass das viel eher möglich ist durch genau so eine Aktion? Also dass man halt tatsächlich sagt, also wir machen das öffentlich, wir geben dem einen schicken Namen, wir erklären es irgendwie möglichst einfach, um nicht, damit jeder den Patch einspielt, sondern damit überhaupt dieses Bewusstsein, diese Aufklärung ist, ran erzogen wird, dass man sagt, so liebe Hersteller, klar kann Sachen schief gehen, aber bitte kümmert euch mal.
+
+01:47:53.128 --> 01:48:18.548
+<v SPEAKER_2>Jaja, diese Aufklärung ist immens wichtig, finde ich, weil Sicherheit ist nicht so sehr ein Kriterium, wenn wir Produkte einkaufen. Also IT-Sicherheit oder Sicherheit ist nicht so ein Kriterium, wenn wir IT-Produkte einkaufen. Wir gehen einfach davon aus, dass jeder Hersteller alles gemacht haben, was geht und uns das sicherste Mögliche anbieten. Aber das muss nicht unbedingt der Fall sein.
+
+01:48:18.568 --> 01:48:58.168
+<v SPEAKER_1>Aber kann man jetzt im Nachhinein noch nachvollziehen, wie oder was dazu geführt hat, dass beim Meltdown und Spectre diese Grenze überschritten wurde? Weil ich habe auch einen Artikel gelesen, wo es so durchklang. Also im Prinzip wusste Intel schon Bescheid und hat auch schon dran gearbeitet. Aber es ist dann doch irgendwie früher an die Öffentlichkeit gekommen, als das beabsichtigt war. Und was hat jetzt eigentlich dazu geführt? Also nicht inhaltlich, sondern sozusagen welche Leute oder welche, welche, keine Ahnung, welcher Schritt hat dazu geführt, dass das so eine breite Öffentlichkeit, also relativ breite Öffentlichkeit auch interessiert hat?
+
+01:48:58.188 --> 01:49:32.808
+<v SPEAKER_3>Also das hat einfach dadurch, ist das auch nur kurz vorher aufgeflogen. Also es war ja nur einige Tage, bevor das eben eigentlich e-veröffentlicht werden sollte, dass eben Patches im Linux-Könnel unter anderem aufgetaucht sind, die einfach merkwürdig aussahen. Also wo Leute drauf geschaut haben und gesagt haben, naja, wofür sind die denn da? Was soll denn diese broken Intel-CPU irgendwas? Flagg, hier erklärt doch mal bitte. Und dadurch sind dann ja einige Berichte entstanden, dass eben irgendwie Intel-CPUs generisch kaputt sind.
+
+01:49:33.168 --> 01:49:59.788
+<v SPEAKER_1>Ich glaube, wir mussten noch ganz kurze Erklärung einschreiben. Also das Gegenbeispiel zu dem, was du gerade beschreibst, sind ja, wenn die Facebook-App auf Smartphones geupdatet wird, dann steht ja drin, wir haben Verbesserungen durchgeführt. Und das ist exakt alles, was man als Anwender weiß. Und Linux ist ja open source. Das heißt, alles, was da passiert, ist nicht nur sozusagen, als hier spiel mal das Update ein, sondern da kann man auch tatsächlich in den Programmcode reingucken. Und das haben Leute gesehen und daraufhin kam das, oder?
+
+01:50:01.188 --> 01:50:28.728
+<v SPEAKER_3>Und das war zumindest ein Teil, also eine Vermutung, warum das dann ursprünglich hochgekommen ist. Und dann haben sich wahrscheinlich die Hersteller, vor allem Intel, dann gedacht, na ja, bevor es jetzt irgendwie in der Presse überall heißt, Intel-CPUs sind jetzt irgendwie kaputt, veröffentlichen wir das Thema doch jetzt mal und weisen daraufhin, dass das dann ein generisches Problem ist, um halt nicht mit dem Intel-spezifischen Meltdown-Problem alleine dazustehen.
+
+01:50:29.388 --> 01:50:48.568
+<v SPEAKER_1>Und dann die Presse so, hey, Intel-CPUs sind kaputt, aber gut. Aber ich hab irgendwo, ich mein, ich mach noch kurz, ich mach noch kurz, also die Verschwörungstheorien zum Schluss auch noch mal abarbeiten. Ich hab immer gelesen, irgendwie ein Intel-CEO hat irgendwie Aktien verkauft. Hängt das auch damit zusammen?
+
+01:50:48.588 --> 01:50:50.168
+<v SPEAKER_3>Das weiß man natürlich nicht.
+
+01:50:50.188 --> 01:50:51.488
+<v SPEAKER_2>Weiß wohl nur er.
+
+01:50:51.508 --> 01:50:56.388
+<v SPEAKER_1>Ach so, also das war so ein Fall von, das passt zeitlich gerade sehr, sehr gut, aber möglicherweise ist es Zufall.
+
+01:50:58.088 --> 01:51:36.848
+<v SPEAKER_3>Also es war wohl ein automatischer Trade, soweit ich das gelesen hatte. Also im Wesentlichen wurde irgendwann mal in der Vergangenheit geklickt, zu diesem Zeitpunkt verkaufe doch mal bitte. Das kann natürlich auch einfach viele persönliche Gründe haben, wie weiß ich nicht, eine neue Villa irgendwo in der Karibik muss zu dem Zeitpunkt gekauft werden. Das ist natürlich jetzt von außen schwierig nachzuvollziehen. Aber zu dem Zeitpunkt, wo das wohl angewiesen wurde, müsste die Person eigentlich dann schon Bescheid gewusst haben. Also das kann man natürlich von außen nie wissen und nie sagen. Das ist immer Spekulation, aber es riecht halt ein bisschen.
+
+01:51:38.288 --> 01:52:04.308
+<v SPEAKER_1>Es riecht ein bisschen unangenehm. Gut, dann ganz zum Abschluss noch für alle, die jetzt sozusagen sich also wirklich von Anfang an nicht wissen, zu dieser Sendung gekämpft haben, versucht haben zu verstehen, was da passiert ist und wir jetzt angeblieben sind, was sollen wir ganz privat in Zukunft machen? Oder jetzt konkret in dem Fall, worauf gilt es zu achten? Patches einspielen und unseren Mailbetreiber nerven oder?
+
+01:52:04.328 --> 01:53:11.208
+<v SPEAKER_3>Also sicherlich das langfristig produktivste und nachhaltigste ist, zu schauen, dass man überhaupt irgendwie den Hersteller seiner Geräte unter Druck setzt, Updates auszuliefern. Auch gerade dieses Microcode-Update, das wird eben für normale Geräte mit Windows als BIOS oder EFI-Update ausgeliefert. Das heißt, das muss von dem Hersteller kommen. Wenn ich jetzt irgendwie ein, weiß ich nicht, Notebook von einem namhaften Hersteller habe, dann muss der mir wirklich dieses Update geben. Ich kann nicht selber irgendwo hingehen und kann sagen, naja, ich lad mir jetzt mal einzeln auf eigene Initiative von Intel diesen Patch runter. Das geht nicht. Sondern das muss halt der Hersteller von dem Notebook für mich paketieren und in ein installierbares Format ausliefern. Und das Schlimmste, was es meiner Meinung nach gibt, sind dann eben Hersteller, die sagen, naja, aber das Notebook, das ist ja zwei Jahre alt. Und wir haben das ja mal irgendwo im Outsourcing dieses BIOS-Paket bauen lassen und wissen auch gar nicht mehr, irgendwie die Leute, die gibt es vielleicht gar nicht mehr. Und das können wir jetzt nicht mehr unterstützen. Das ist das Schlimmste. Und da hilft man, glaube ich, auch langfristig am meisten, wenn man da hinterher ist und schaut, dass man zumindest irgendwann noch Updates bekommt.
+
+01:53:13.468 --> 01:53:25.268
+<v SPEAKER_1>Das heißt aber auch, dass ich jetzt möglicherweise noch Hardware-Stelle daran bereichere. Also wir bringen jetzt noch die nächsten Generationen raus, die machen alles so wie vorher und dann verkaufen wir euch in drei Jahren die...
+
+01:53:25.288 --> 01:53:26.188
+<v SPEAKER_2>Planned Obsolescence, ja.
+
+01:53:26.208 --> 01:53:32.328
+<v SPEAKER_1>die Spectre-gehärteten neuen Super-Prozessoren, die genauso schnell sind wie vorher, aber ohne Spectre.
+
+01:53:33.548 --> 01:54:38.448
+<v SPEAKER_3>Ja, also schauen wir mal, ob die dann genauso schnell sind wie vorher oder ein bisschen langsamer. Aber ich denke, dass das natürlich... Man kann das jetzt natürlich so dann darstellen, aber es ist ja einfach eine ganz stumpfe Gewinnverlustrechnung. Die haben eben jetzt in Zweifel sehr viel Anlaufkosten gehabt für die Produktion der nächsten Prozessor-Generation, vielleicht eben auch schon die ganze Produktionsstraße aufgebaut und sehr viel investiert und sagen sich natürlich, naja, gut, das Risiko, dass wir da jetzt irgendwie noch in Schwierigkeiten kommen durch irgendwie Verbraucherklagen oder sonstiges, das ist einfach signifikant geringer, als es diese Fabrik abzureißen und unser Lager anzuzünden. Das sehe ich jetzt nicht, dass da irgendwie Prozessoren nicht verkauft werden, die jetzt schon in der Pipeline sind. Es wird natürlich geschaut, dass man dann, also vermute ich jetzt, ich unterstelle mal guten Willen, dass so gut wie es geht eben noch durch noch mögliche Änderungen, vielleicht auch nur im Mikrocode, eventuell noch Mitigierungen eingebaut werden. Aber das wird sicherlich nicht grundlegend jetzt am Design geschraubt.
+
+01:54:38.908 --> 01:54:56.608
+<v SPEAKER_1>Würde es dir eine Möglichkeit geben, dass dann wirklich die allerletzte Frage, dass man den Prozessor in zwei Modi betreiben kann? Als Gamer hat man ja manchmal im Rechner so ein hier über Takte meine Grafikkarte kontrolliert, weil ich jetzt das supergeile Spiel spielen will, dass man so einen Switch am Computer hat. Spectre not Spectre.
+
+01:54:56.628 --> 01:55:08.368
+<v SPEAKER_2>Wenn man bereit ist, ein Drittel der Akkulaufzeit oder ein Drittel der Geschwindigkeit zu opfern. Dann wäre das ein ein Feature bei einem künftigen Produkt.
+
+01:55:08.388 --> 01:55:49.108
+<v SPEAKER_1>Wollen wir mal schauen, ob uns das ereilt. Wir haben heute auf jeden Fall erst mal verstanden, was überhaupt passiert ist. Meise, Peter, Mirah, vielen Dank, dass ihr hier wart und mir das so geduldig erklärt habt. Und ich hoffe, wir haben es verstanden. Ihr, liebe Hörerinnen und Hörer, wenn ihr gerade eingestiegen seid und euch fragt, was ist das? Ich weiß nicht, was das ist. Hört euch den Podcast an. Der Podcast erscheint auch mit Bild unter media.ccc.de oder sehr schnell im Laufe der Nacht noch auf fritz.de. Wir hören uns im nächsten Monat oder sehen uns, wenn ihr wollt, wieder dann im Chaos Computer Club Berlin und in zwei Monaten wieder hier auf Fritz. Mein Name ist Markus Richter und ich habe nur noch eine wichtige Nachricht für euch und die ist, lasst sie nicht überwachen und verschüttelt immer schön eure Backups.

@@ -1,0 +1,589 @@
+WEBVTT
+
+00:00:00.240 --> 00:01:36.780
+<v SPEAKER_1>Hallo, das ist Chaosradio 270. Mein Name ist Marcus Richter und ich spreche in Mikrofone und versuche diese Sendung so ein bisschen beisammenzuhalten. Und ich habe heute nur noch eine Nachricht für euch und die ist lasst uns nicht überwachen und verschlüsselt immer schön eure Backups. So enden die meisten Chaosradios. Und heute wollen wir uns mal damit beschäftigen, was das eigentlich genau bedeutet, wenn ich sage, verschlüsselt immer schön eure Backups. Gerade im letzten, wollen wir uns ganz ausführlich, wird man also, was ist eigentlich ein Backup? Und das ist so ein bisschen A, sagen wir es die ganze Zeit, es ist immer ein Ruf und B, ist es dem einen oder anderen vielleicht schon mal als Spruch begegnet, da draußen in diesem bösen Internet, kein Backups, kein Mitleid. Und das natürlich ein bisschen doof, aber trotzdem ist das ja so eine Sache, die man vielleicht so vor sich her schiebt, wie Hausaufgaben machen, Abwasch, die kaputten Socken aussortieren, einen Backup anlegen. Ist eine gute Idee, sollte man mal machen. So heute klären wir schon mal, was man machen muss, dann habt ihr das nicht mehr als Ausrede. Ich muss mich erstmal informieren. Und das besprechen wir also heute mal ganz ausführlich von vorne bis hinten. Und dazu begrüße ich recht herzlich Klara. Hallo und guten Tag. So, aus verschiedenen Sparten sind die Menschen heute hier. Klara, du bist IT-Forensikerin. Wenn ich das richtig verstehe, bist du vor allen Dingen an Backups interessiert, weil du dann rausfinden kannst, was die Daten sind, die du brauchst?
+
+00:01:38.440 --> 00:02:09.820
+<v SPEAKER_2>Ja, aus verschiedenen Aspekten eigentlich. Also klar, als IT-Forensikerin werte ich digitale Spuren aus. Eben Hinblick auf Unregelmäßigkeit, bei meinem Fall Wirtschaftskriminalität. Backups sind natürlich eine interessante Quelle für Datenanalysen. Spielt aber auch eine Rolle im Rahmen von Inzidenz-Response, also Reaktionen auf Sicherheitsvorfälle. Da ist es natürlich gerade, was ransomware angeht, sehr gut, wenn man Backups hat.
+
+00:02:09.840 --> 00:02:40.300
+<v SPEAKER_1>Und zwar nicht einfach nur Backups, sondern ganz bestimmte Backups. Aber darüber sprechen wir heute tatsächlich noch ausführlich. Alexander kennt ja vielleicht, der hat häufiger schon mal Vorträge gehalten auf dem Kongress, glaube ich zumindest im Umfeld, ist auch als FT0 bekannt. Und ist der Entwickler einer Backup Software. Restick heißt sie. Und Alex, sag mal, ist das so ein typischer Fall von, es gibt zwar schon 400 Webserver, aber ich kann auch mal meinen eigenen programmieren? Oder warum hast du das angefangen?
+
+00:02:40.740 --> 00:03:35.920
+<v SPEAKER_3>Es ist eigentlich aus der Not heraus geboren. Also ich arbeite eigentlich als Penetrationstester, mache also was ganz anderes und greife Systeme aktiv an. Dabei stößt man manchmal auch auf Backups. Das ist für uns Angreifer immer ganz hilfreich, weil man da dann an Daten kommt, an die man regulär gar nicht dran kommt. Aber ich habe Restick gestartet, weil es zu der Zeit nichts Gescheites gab, dachte ich. Und ich habe eine Riesenliste gemacht von Backup Software, die pflege ich auch immer noch. Es stellte sich im Nachhinein raus, es hätte eine Software gegeben, die ähnlich gewesen wäre. Attic hieß die damals, die habe ich aber schlicht und ergreifend nicht gefunden. Und ich habe mir dann gedacht, es kann doch nicht sein, dass das nicht mal jemand ordentlich gemacht hat. Alles muss man selber machen. Und habe mich da ein Jahr lang vorgedrückt, habe mit meinen Kollegen gesprochen, wie würde man das denn so machen, dass man sich da nicht so sehr darum kümmern muss. Und habe es dann schlicht und ergreifend irgendwann 2012, glaube ich, habe ich damit angefangen. Ja, dann habe ich das als Open-Source-Software veröffentlicht. Und mittlerweile ist da eine große aktive Entwickler-Community dahinter.
+
+00:03:35.940 --> 00:03:40.900
+<v SPEAKER_1>Warte mal, wenn ich das auf der Webseite richtig gesehen habe, ihr seid noch nicht bei Version 1.0, ne?
+
+00:03:42.140 --> 00:04:04.320
+<v SPEAKER_3>0.12.0 ist das jetzt offiziell immer noch, weil es fehlen ja immer noch Dinge. Aber ich finde das nicht so wichtig, da jetzt Version 1.0 der Software draus zu machen. Vielleicht da können wir später nochmal drüber sprechen. Das Wichtigste ist ja bei dieser Software eigentlich gar nicht die Implementierung, sondern die Spezifikation des Dateiformats. Weil es ja egal, ob ich jetzt vielleicht meine Software neu schreibe, meine Benutzer erwarten ja das in zehn Jahren.
+
+00:04:04.340 --> 00:04:22.400
+<v SPEAKER_1>Halt, halt, das machen wir nachher. Okay, und dann haben wir noch Mutags. Da bin ich ein bisschen verwirrt, weil Florian, ich kenne und weiß, dass du an der Uni bist. Brauchst du häufiger Backups? Oder in welcher Funktion bist du heute bei uns?
+
+00:04:29.760 --> 00:04:42.140
+<v SPEAKER_4>Tatsächlich, einfach mal quer durchs Kraut. Ich kann davon erzählen, wie praktisch Backups sind, wenn dir die Wohnung quasi abbrennt, also die Wohnung über dir zum Beispiel.
+
+00:04:46.380 --> 00:05:46.040
+<v SPEAKER_1>Wie man sieht, an anekdotischer Evidenz gibt es genug, wofür man Backups braucht. Wir werden das heute aber wirklich mal sehr kleinteilig auseinandernehmen, damit man nicht nur weiß, wie man es macht, sondern vielleicht auch, warum man es macht. Und da ist die erste Frage, die man als Laie vielleicht haben könnte. Man hat ja gelernt, das Digitale ist 0 und 1. Und wenn ich Daten speichere, auf einer Festplatte, dann stehen da also Nullen und Einsen. Und die liegen dann da und sind doch eigentlich safe, oder? Also wenn man jetzt mal nicht davon redet, dass die Wohnung abbrennt oder so, sondern einfach, wenn die Daten auf der Festplatte sind, dann sind die doch erstmal safe. Oder dann brauch ich doch eigentlich erstmal keinen Backup, weil Nullen und Einsen kann man ja, also die können ja nicht irgendwie, keine Ahnung, schlecht werden oder rosten oder schimmeln.
+
+00:05:46.060 --> 00:05:48.340
+<v SPEAKER_3>Ja, das dachte ich ja auch.
+
+00:05:48.420 --> 00:05:49.980
+<v SPEAKER_1>Okay und dann?
+
+00:05:50.000 --> 00:06:31.740
+<v SPEAKER_3>Aber mittlerweile haben wir in dem Projekt von Rastic eine ganze Menge Stories von Benutzern gesammelt, deren Daten tatsächlich schlecht geworden sind. Weil eins der Features ist, dass Rastic sich selber überprüfen kann, ob die Daten noch in sich stimmig sind. Und da haben wir es immer wieder, dass Leute kommen und sagen, hier das Programm sagt, da gibt es einen Fehler in den Backup-Dateien. Und manchmal kann man das auf ein einzelnes Bit, was sich geändert hat, zurückführen. Das ist immer sehr faszinierend. Manchmal ist es Hardware, manchmal ist es Software, manchmal ist es eine schlechte Festplatte, manchmal ist es eine schlechte SSD, manchmal ist es die CPU, die kaputt ist, manchmal ist der Arbeitsspeicher, der kaputt ist. Haben wir alles schon gesehen.
+
+00:06:31.760 --> 00:07:01.780
+<v SPEAKER_1>Aber ich habe ja gelernt, CD's, die älteren Autohorns erinnern sich, vielleicht Datenträger, die in der Regel nur einmal beschreibbar waren, wo früher Musik drauf gemacht wurde, dass die Chemie da auseinanderfällt. Ich glaube 15 Jahre oder so was, also relativ schnell tatsächlich. Aber worin gibt es denn Bitrot, wenn man das so nennen kann, eben im digitalen, also auf einer Festplatte? Wie kann das denn dazu kommen?
+
+00:07:01.800 --> 00:07:04.700
+<v SPEAKER_3>Das ist eine sehr interessante Frage. Hast du da eine Idee zu, Klara?
+
+00:07:06.620 --> 00:07:50.460
+<v SPEAKER_2>Ja, also besonders einfach zu erklären ist es bei SSDs. SSDs haben ja viele Vorteile, aber auch ein paar Dinge, die sie ein bisschen komplizierter machen. Und gespeichert wird auf SSDs über eine elektrische Ladung. Und die nimmt tatsächlich einfach mit der Zeit ab, wenn die Platte nicht am Strom ist. Also wie lange das jetzt genau ist, das kommt natürlich auf wahnsinnig viele Faktoren an. Man sagt in der Regel so zwei Jahre, gibt aber auch Berichte, dass es weniger als ein Jahr dauert. Ist jetzt in der Praxis vielleicht weniger ein Thema bei Systemen, die man regelmäßig nutzt. Aber zum Beispiel, wenn man sich überlegt, ob man ein Backup, das man vielleicht nicht so häufig braucht, macht, ist SSD-Feld nicht unbedingt das perfekte Speichermedium zum Beispiel.
+
+00:07:52.880 --> 00:08:00.700
+<v SPEAKER_1>Wow, erst eine Viertelstunde in der Sendung, aber schon was wichtiges gelernt. SSD ist also nicht so prall für nicht laufende Systeme.
+
+00:08:01.420 --> 00:08:10.720
+<v SPEAKER_3>Nimmt das dann so direkt binär ab? Also ich kann jetzt von heute auf morgen die Daten nicht mehr lesen oder verschwinden da einzelne Bereiche, die man nicht mehr lesen kann? Wie muss ich mir das vorstellen?
+
+00:08:12.540 --> 00:08:42.280
+<v SPEAKER_2>Das ist graduell, also sicher nicht von einem Moment auf den anderen die ganze Platte, aber generell ist es bei SSDs so mehr als bei Festplatten, dass es sehr viele Hersteller gibt und Controller von SSDs sind ja auch sehr viel komplexer als bei Festplatten. Und man weiß eigentlich nie so richtig, was sie gerade tun. Deswegen dieses zwei Jahre, aber kann auch kürzer sein. Genauso ist es mit der kann man dann noch Teile lesen oder nicht. Muss man im Zweifel ausprobieren, aber sollte man natürlich nicht, außer man hat schon Backup gemacht.
+
+00:08:44.260 --> 00:08:52.200
+<v SPEAKER_1>Ich bin jetzt gerade sehr hell, Röhrig, an der Stelle, wo du gesagt hast, das ist bei Festplatten besser. Das heißt Festplatten sind auch nicht perfekt?
+
+00:08:52.220 --> 00:09:42.760
+<v SPEAKER_2>Die sind auch nicht perfekt. Die Festplatten, im Gegensatz zu SSDs, haben ja bewegliche Teile, also die haben magnetisierte Platten, die haben einen Schreibbläsekopf und einfach durch mechanische Abnutzung treten da auch mit der Zeit Probleme auf. Auch da ist es so, kommt ein Stück weit drauf an, also sie nicht benutzen ist nicht so ein Thema wie bei SSDs, aber natürlich durch Vibration, durch Temperatur, durch alles Mögliche nutzt sich die Platte auch ab. Und auch da ist es so, jede Festplatte fällt früher oder später aus. Unterscheidet sich natürlich auch gar nicht nach, was so eine Art von Festplatte das ist, aber es ist halt sehr schwer vorhersehbar, wann das passieren wird. Aber es wird passieren irgendwann.
+
+00:09:42.780 --> 00:11:13.860
+<v SPEAKER_4>Du hast halt durch die unterschiedliche Technologie in den Geräten sehr unterschiedliche Fehlermechanismen oder Fehlerbilder. Bei Festplatten ist es ja so, du hast eine Glasscheibe, die ist mit einem Metalldampf im Prinzip bedampft und das wird magnetisiert. Und naja, so eine Magnetisierung hält halt auch nicht ewig und ist empfindlich gegen, wie gesagt, Temperatur, andere Magnetfelder. Typisches Szenario, du machst irgendwie deine Backups auf externe Bänder oder Platten, was auch immer, legst den Aktenkoffer und der Mitarbeiter fährt mit dem zur Bank und legt das halt auf seine Hutablage hinten, wo leider die großen Lautsprecherboxen drunter sind. Sowas ist schon passiert. Und bei einer Festplatte ist es halt so, ja du hast halt diese mechanischen Sachen. Festplatten, die lange gelaufen sind, bilden durchaus Abrieb im Gehäuse. Wenn die dann ausgeschaltet werden, sammelt der sich irgendwo und bei Wiedereinschalten geht das halt kaputt. Auch beliebt. Was bei SSDs jetzt noch das Problem ist, das sind ja alles einzelne Flashchips da drin, auf denen gespeichert wird und es gibt diesen Controller, der steuert, welche Bits wo gespeichert werden, der auch dafür sorgt, dass diese Speicherzellen nicht übermäßig belastet werden, weil immer beim Schreiben geht die eventuell ein bisschen kaputt. Bei SSDs ist das Problem, wenn dieser Controller jetzt kaputt ist oder größerer Schaden ist, dann kann es dir durchaus passieren, dass von heute bis auf morgen alle Daten auf einmal wechseln. Bei einer Festplatte kann man meistens noch was wieder herstellen. Bei SSDs kann es je nachdem sehr schwierig sein, weil du kriegst diese Zuordnung, welche Daten, wo auf dem Chip gespeichert sind, nicht unbedingt wiederhergestellt, weil der Controller das halt alles macht, völlig unsichtbar.
+
+00:11:14.760 --> 00:11:39.380
+<v SPEAKER_2>Ja, man kann natürlich Chip auf Forensik auf eine SSD machen, das ist aber gar nicht sicher für den Privatanwender. Und selbst in der Forensik ist das ein ziemlich fortgeschrittenes Thema. Also wirklich, dass man die Speicherchips rausnimmt, unabhängig vom Controller analysiert. Das lohnt sich vielleicht, wenn da unglaublich wichtige Dinge drauf sind, ist aber extrem aufwendig.
+
+00:11:39.400 --> 00:11:41.200
+<v SPEAKER_1>Das ist dann tatsächlich Raketentechnik.
+
+00:11:42.340 --> 00:11:45.160
+<v SPEAKER_2>Ja, und angewandte Forschung zugleich.
+
+00:11:47.160 --> 00:12:32.020
+<v SPEAKER_1>Was ich ganz spannend finde, ist, ich wollte ja eigentlich mal über dieses Thema reden, wo die Daten überhaupt erst mal herkommen oder originär sind. Da habt ihr immer schon gesagt, ja, das kann als Backup-Medium ein Problem werden. Habe dem aber entnommen, das wird vor allem ein ganzes Problem, wenn die Dinge lange nicht benutzt werden. Also wenn man sie liegen lässt, dann geht die Spannung weg oder die machen die Sicherung erstaubsam mit sich an. Das heißt, da beim Gegenzug, ich war neulich in der Werkstatt und mein Auto ist schon ein bisschen älter und da hat er gesagt, hab ich gefragt, wie lange hält das noch? Da meinte er, ach, wenn man ein Auto bewegt, dann ist das wie Sport machen, dann fährt das eigentlich ewig. Ich glaube nicht ganz, aber gut. Analog gefragt, heißt das ja in dem, was sie jetzt alles erzählt, solange die Festplatten oder SSDs in einem laufenden System sind, sind sie doch relativ safe?
+
+00:12:35.900 --> 00:12:56.760
+<v SPEAKER_2>Bei SSDs ist es so, was so eigentlich der Kern vieler Probleme ist, ist, dass es eine begrenzte Anzahl von Schreibzyklen gibt. Wie viel das ist, auch da gibt es wieder unterschiedlichste Zahlen, aber irgendwas zwischen 1000 und 100.000. Das heißt, irgendwann hat die sich auch abgenutzt.
+
+00:12:59.320 --> 00:13:03.460
+<v SPEAKER_4>Also klingt total komisch, weil es ist doch digital und Speicher und Flash und Kram.
+
+00:13:03.480 --> 00:13:03.980
+<v SPEAKER_1>Ja, eben.
+
+00:13:04.000 --> 00:13:38.840
+<v SPEAKER_4>Aber auf der Halbleiter-Ebene wägst du da tatsächlich so ein bisschen Ladung und Atome und Kram und Zeug und dann gehen eventuell Sachen wirklich einfach auch da im ganz, ganz kleinen mechanischen kaputt mit der Zeit. Und wenn du zu viel und zu oft auf eine Zelle schreibst, dann mag sie irgendwann nicht mehr neu geschrieben werden. Und dann muss der Controller sich überlegen, finde ich noch eine andere Zelle, wo ich speichern kann. Dann mappt er halt um. Das machen diese SSDs halt ganz viel intern. Und irgendwann ist halt kein Ersatz mehr da. Und dann kann man halt nicht mehr schreiben. Und je nachdem, ob man dann Glück oder Pech hat, sagt die SSD dann, ich bin pot oder ich bin halt nur noch lesbar.
+
+00:13:40.020 --> 00:14:46.080
+<v SPEAKER_3>Das gibt es bei Festplatten auch. Ganz neuere Festplatten, so ab der 4 Terabyte Größe. Das ist manchmal dann so genanntes SMR, shingled magnetic recording. Man muss sich das ja bei Festplatten so vorstellen. Es gibt diese Gasscheiben, die eine magnetisierbare Schicht haben und so einen Schreibkopf, der dann so ein Magnetfeld anlegt. Und dann ist hoffentlich an der Stelle, wo der Magnetkopf gerade drüber schwebt, ein Bit gespeichert, 0 oder 1. Und bei den neueren Festplatten sind diese Spuren, wie bei einer Schaltplatte kann man sich das vorstellen, die sind so eng zusammen, dass wenn ich eine Spur schreibe, immer dann die Nachbarspuren schon mit beeinflüsse. Und dann kann man gar nicht mehr an eine beliebige Stelle irgendeinen Bit ändern. Man muss immer die Nachbarspuren dann auch einmal lesen, geändert schreiben mit diesem geänderten Bit und dann wieder mehrere Spuren schreiben. Und bei diesem Lesen und Wiederschreiben können die Daten kaputt gehen. Weil vielleicht lese ich die Daten bei einem von 1000 Fällen, lese ich die Daten nicht mehr ganz korrekt, dann sind andere Bits haben sich verändert. Und dann schreibe ich diese veränderten, kaputten Bits wieder auf die Platte. Wenn ich dies nächstes Mal lese, dann ist der Lesevorgang selber ganz gut und erfolgreich, aber ich habe die falschen Daten gelesen.
+
+00:14:48.360 --> 00:15:00.540
+<v SPEAKER_1>Also, Wohnung brennt ab, Computer wird geklaut oder ich benutze ihn halt einfach. Da möchte ich ja schon wieder zur Tischlerei und zur Orchideen zurück. Am Anfang der Sendung.
+
+00:15:00.680 --> 00:15:03.900
+<v SPEAKER_5>Das ist doch fürchterlich alles.
+
+00:15:03.920 --> 00:15:21.700
+<v SPEAKER_4>Und wir waren jetzt ja nur bei den Festplatten. Wir hatten ja kurz am Anfang gesagt, Speicher kann kaputt sein. Theoretisch könntest du halt was dagegen tun, indem du halt den Speicher in deinem Rechner so mit Prüfsummen und so machst. Aber das hat man beschlossen, braucht man für den Endanwender nicht, weil das ist dann halt ein bisschen billiger. Und wenn er so mitkippt, dann ist es halt kaputt und gekippt.
+
+00:15:21.720 --> 00:15:40.520
+<v SPEAKER_1>Naja, aber wenn, also ja, das ist ein Problem. Aber das ist doch nicht heute unser Thema, oder? Weil Backups macht man die nicht, also beim Endanwender, bei uns zu Hause und Anwenderinnen, macht man die nicht sozusagen für die Dinge, die ich sag mal jetzt platt auf der Platte liegen?
+
+00:15:41.200 --> 00:16:07.980
+<v SPEAKER_4>Ja, aber vielleicht möchte ich ja, wenn ich feststelle, das Dokument ist kaputt und ich brauche das ganz dringend, auch ein Backup haben von der Woche davor. Und es ist vielleicht kaputt gegangen, weil mein Speicher kaputt war und beim Speichern ich es halt überschrieben hab mit was kaputtem. Also warum ist ja egal, ob das jetzt wegen kaputtem Speicher ist oder weil ich Mist gebaut hab und es aus Versehen gelöscht habe oder mir eine Ransomware an meine Festplatte verschlüsselt hat. Das ist ja letztlich egal, aber um halt noch mal drauf zu kommen, kann da immer irgendwas kaputt gehen.
+
+00:16:09.800 --> 00:16:19.400
+<v SPEAKER_1>Also je jünger ich euch zuhöre, desto mehr komme ich zu dem Schluss. Wenn der Rechner tatsächlich mal funktionieren sollte, ist das eher so eine Art statistisches Wunder.
+
+00:16:20.660 --> 00:16:25.660
+<v SPEAKER_3>Ja, es ist auf jeden Fall sehr viel häufiger, dass was passiert, als man das so meint. Das hätte ich vorher auch nie gedacht.
+
+00:16:29.040 --> 00:16:36.140
+<v SPEAKER_4>Und wir sind halt in der IT sehr, sehr gut da drin, solche Sachen zu verstecken und hoffen, sich automatisch zu korrigieren. Das klappt halt nicht immer.
+
+00:16:36.880 --> 00:16:50.100
+<v SPEAKER_3>Es gibt auch Dateisysteme, die dich darauf hinweisen, wenn du jetzt gerade von der Festplatte oder SSD kaputte Daten gelöscht hast, dann weißt du aber auch nur, die Datei ist jetzt kaputt, kann nicht mehr gelesen werden. Die kriegst du deswegen ja nicht unbedingt wieder. Und da kommen wieder Backup ins Spiel.
+
+00:16:51.620 --> 00:16:58.860
+<v SPEAKER_1>Okay, dann also muss ich jetzt noch mal fragen, können Daten auch noch in eine andere Art und Weise verloren gehen oder haben wir jetzt alles?
+
+00:17:00.080 --> 00:17:28.280
+<v SPEAKER_2>Wobei wir noch nicht gesprochen haben, ist klar, man hat die lokalen Daten, aber man hat natürlich vielleicht auch Daten online, die einem wichtig sind. Und da kann es natürlich immer passieren, dass die Seite einfach offline genommen wird oder ihre ganzen alten Daten wegschmeißt oder angegriffen wird und die Daten sind gelöscht. Und das ist auch ein Aspekt, wo man drüber nachdenken sollte, wie wichtig sind die Daten und will man da nicht vielleicht einen Backup machen.
+
+00:17:28.300 --> 00:17:32.400
+<v SPEAKER_1>Du meinst sozusagen nicht, wenn ich eine eigene Webseite betreibe, sondern wenn ich irgendeinen Online dienste?
+
+00:17:32.420 --> 00:17:39.060
+<v SPEAKER_2>Genau, wenn du eine eigene betreibst natürlich auch, aber wenn du genau ein soziales Netzwerk oder sonstige Webseiten.
+
+00:17:39.080 --> 00:17:49.980
+<v SPEAKER_4>Klassiker Google Fotos, also ich hab da auch irgendwie Fotos von vor ein paar Jahren, die einfach schwarz sind, weil Google die Daten verloren hat offenbar irgendwann. Und wenn man das dann sagt, bekommt man irgendwie fünf Euro Gutschein und dann ist gut.
+
+00:17:50.000 --> 00:18:23.260
+<v SPEAKER_1>Es ist krass, egal. Kommen wir also jetzt, also es können Dinge kaputt gehen, auf mannigfaltige Art und Weise, kommen wir jetzt zum Backup. Und zu der wichtigen Frage, was genau ist eigentlich ein Backup? Also könnt ihr mal eine Definition von Backup? Weil es gibt glaube ich, also jeder, der jeder der Backup, also den Schritt geschafft hat, ein Backup zu machen, macht vielleicht eine leicht andere Sache als der nächste, der sagt, ein Backup zu machen. Was genau ist eigentlich ein Backup?
+
+00:18:24.980 --> 00:18:43.680
+<v SPEAKER_3>Das sind eigentlich Daten, die mir wichtig sind, die ich nicht aus anderen Quellen wieder einfach so herstellen kann. Die also wahrscheinlich meistens persönliche Daten, Arbeitsergebnisse, die es sonst nirgendwo gibt, und die ich selbst dann wieder herstellen können möchte, wenn mein Laptop geklaut wird zum Beispiel.
+
+00:18:43.700 --> 00:18:58.740
+<v SPEAKER_4>Genau, oder wenn es halt in der Wohnung von der Oma über dir brennt und die Nachbarn zwar so lieb sind, alle deine Sachen rauszutragen und du sie dann auf den Bürgersteig wieder findest, bei der Aktion aber die Festplatte runterfällt und kaputt geht, weil es eine Wechselfestplatte war. Das ist mir halt passiert als Jugendlicher.
+
+00:19:04.720 --> 00:19:14.640
+<v SPEAKER_1>Würdet ihr, also Backup, wichtige Daten, würdet ihr sagen, dass man wirklich diese Entscheidung so hart treffen sollte? Oder im Zweifel einfach alles backupen?
+
+00:19:14.660 --> 00:19:17.080
+<v SPEAKER_3>Im Zweifel lieber mehr backupen.
+
+00:19:17.100 --> 00:20:08.340
+<v SPEAKER_4>Genau, es kommt halt hart drauf an, wie viele Daten du hast und was du bereit bist zu bezahlen. Wenn du sagst, ich möchte alles backupen und datenmäßig bist, dann irgendwann bei 10 Terabyte ist, dann wird halt das alles backupen mit der Zeit schon ein bisschen sehr teuer. Aber es gibt halt einfach Daten, die wirklich wichtig sind. Wenn du irgendwie keine Ahnung selbstständiger bist oder sowas, musst du eventuell Steuerunterlagen und Geschäftsunterlagen halt wirklich sicher haben fürs Finanzamt. Ähnliches gilt für deine Bachelor- oder Masterarbeit oder sonstige Abschlussarbeiten, die du gerade am Arbeiten bist. Die willst du vielleicht auch nochmal irgendwie gesichert haben und nicht nur auf dem Laptop, der in der U-Bahn liegt. Also diesen Aussagen haben wir, glaube ich, alle mehrfach gesehen in Berlin oder so. Oder wo auch immer wir sind, so Biete-Finder-Lohn, meine Masterarbeit ist weg. Aber im Zweifelsfall, wie gesagt, wenn du nicht sicher bist, lieber mal sichern, weil im Zweifelsfall ist das, was du brauchst, dann doch nicht gesichert.
+
+00:20:10.180 --> 00:20:23.580
+<v SPEAKER_2>Ich glaube, es ist wichtig, sich einmal zu überlegen, was habe ich denn alles für Daten? Welche davon sind mir wie wichtig? Wie verfügbar sollten die im Zweifel sein? Und vielleicht auch, wie vertraulich sind sie denn eigentlich? Weil auch davon kann es abhängen, wie man das Backup macht.
+
+00:20:35.100 --> 00:21:45.880
+<v SPEAKER_1>Ich versuche, eine allgemeine Frage zu formulieren, aber ich kriege es gerade nicht hin. Und deswegen ist die Frage plattgestellt. Ist eine Kopie? Wie soll ich das sagen? Ich komme gerade nicht auf die Frage. Der Unterschied ist mir schon so klar, was ich gerade fragen will. Nämlich, es gibt ja einerseits die Möglichkeit sozusagen, die Daten, die ich habe, zu spiegeln. Also diese ganzen Cloud-Systeme oder Online-Systeme, wo man dem Betriebssystem sagt, hier ist ein Ordner. Dieser Ordner soll noch entweder zu einem Dienstanbieter oder zu seinem eigenen Server oder einer eigenen Netzfestplatte, die man selber vielleicht in der Wohnung stehen hat, gespiegelt werden. Das heißt, alles, was in dem Ordner passiert, passiert auch auf dem zweiten Ordner. Das heißt, wenn mein Rechner weg ist, habe ich das exakte Ebenbild dessen nochmal woanders. Ist das für euch ein Backup oder ist das nochmal was anderes? Weil, Hintergrund der Frage ist natürlich, wenn ich in meinem Ordner aus Versehen der Datei lösche und dann feststelle, ach, das wollte ich eigentlich gar nicht, dann ist die ja weg. Auch in meinem Anführungszeichen Backup. Ist das schon ein Backup oder es gibt ein anderes Fachwort für?
+
+00:21:45.900 --> 00:23:09.340
+<v SPEAKER_4>Das ist eine Spiegelung, hast du ja schon im Prinzip gesagt. Also für mich persönlich wäre das kein Backup, weil es schützt mich halt quasi vor einem Bedrohungsszenario, nämlich Laptop ist weg oder kaputt und ich kann halt direkt weiterarbeiten. Das ist der Vorteil, ich kann direkt weiterarbeiten mit den Daten, so wie sie sind, setze mich an einen anderen Rechner, gebe irgendwie meine Zugangsdaten ein und habe die Daten wieder. Aber wie schon gesagt, das schützt mich halt nicht davor, vor den sogenannten Fatfingers. Also ich drücke halt aus Versehen Entfernen auf allem, dann ist es weg. Wenn es halt auf der Serverseite kein Backup mehr gibt, dann ist das halt weg. Das gleiche mit Ransom wäre, wenn ich mir halt irgendwie ein Trojaner irgendwas einfange, verschlüsselt er halt auch diese Daten und sie sind weg. Gleiches gilt, wenn ich halt eine externe Festplatte anschließe und alles darüber schiebe, dann ist das zwar auch irgendwie eine Art Backup, wenn ich sie abziehe und woanders lagere. Aber solange das halt am selben System angeschlossen ist, ist es halt schreibbar. Das heißt Ransom wäre oder ich als jemand, der halt gerne mal Fehler macht, kann sie halt löschen aus Versehen. Und wenn ich halt so ein Backup mache, kann es mir durchaus sein, dass wenn die Daten schon kaputt sind und ich es nicht merke und ich die dann sichere, überschreibe ich mir halt die letzten guten Daten, wenn ich dann nur eine externe Festplatte habe oder so. Das heißt, du willst eigentlich schon ein externes Medien in dem Sinne, dass es wirklich weg ist, dass es nicht mehr beschreibbar ist, wenn du das Backup gemacht hast und vielleicht sogar zwei tauschen kannst, dass wenn das aktuelle Backup kaputt geht, du noch ein eins in der Hände antast von ein paar Tagen davor.
+
+00:23:10.240 --> 00:23:35.800
+<v SPEAKER_1>Wow, das ist ganz schön aufwendig. Das heißt aber, es gibt auch Systeme, Rates heißen die, wo man mehrere Festplatten reinbauen kann und dann kann man entweder sein System schneller machen oder man kann auch sozusagen einfach auf Festplatten-Ebene tatsächlich Spiegel anlegen, das heißt einfach mirrorn. Das ist für euch also auch kein Backup, das ist sozusagen, das ist nur ein kleiner Schutz gegen einen Hardware-Ausfall einer Festplatte, aber sonst hat das mit Backups eigentlich nichts zu tun.
+
+00:23:35.800 --> 00:24:17.900
+<v SPEAKER_3>Das ist eine etwas bessere Spiegelung und Florian will wahrscheinlich gerade auf den Spruch hinaus, Raid is not Backup, weil es eben genau das ist. Also für mich ist es auch kein Backup, sondern eine Spiegelung. Das hat natürlich erhebliche Vorteile, weil du live alle Änderungen, wenn du in einem Word-Dokument einfach abspeicherst, ein paar Sekunden später ist es auf der anderen Seite dann, wenn es ein Cloud-Dienst ist, angekommen und wenn dir dann der Laptop runterfällt, hast du direkt die letzte Version des Dokuments. Ich finde, es ist kein Backup, weil es keinen Unterschied gibt zwischen, also es ist nicht getrennt zwischen, ich mache jetzt ein Backup, ich schreibe Daten da rein und ich ändere Daten, ich kann jederzeit alle Daten ändern und wie in dem Ransomware Beispiel von eben, war das genau schön ausgeführt, weil der Ransomware, der Trojaner, der kann natürlich auch alle Daten ändern.
+
+00:24:19.700 --> 00:24:23.000
+<v SPEAKER_1>Okay, dann noch mal meine Frage, was ist denn ein gutes Backup?
+
+00:24:23.020 --> 00:24:35.440
+<v SPEAKER_3>Ja, es ist etwas, was Daten an einen sicheren Ort ablegt, sodass sie auch vielleicht verschlüsselt sind, integretätsgeschützt sind und es eine separate Operation braucht, diese Daten da wieder zu entfernen.
+
+00:24:39.320 --> 00:25:11.800
+<v SPEAKER_1>Aber sozusagen in Line für Line gefragt, muss ich das, also das stelle ich mir ein bisschen kompliziert vor. Also ich muss die Daten von Hand irgendwo hin kopieren und dann will ich sie, also will ich vielleicht so eine Art Versionierung haben, heißt das so? Also dass man sagt, also ich mache heute das Update vom, wann nehmen wir die Sendung auf? 24.06. Ich lösche aber nicht das Update vom 18.06. weil wer weiß, ob in dem neuen Update irgendwas kaputt ist und so weiter und so fort. Wird sowas schon automatisch gemacht oder ist das sozusagen wirklich? Also es gibt Cloud-Dienste oder ich muss von Hand machen?
+
+00:25:11.820 --> 00:25:51.780
+<v SPEAKER_4>Der Klassiker, der richtige Klassiker aus den 90ern und früher war halt so das große Tape-Laufwerk in der Uni, der große Band-Roboter. Wo du halt wirklich Magnetbänder hattest, die dann alle Daten regelmäßig gesichert haben, teilweise auch dann nur die Änderungen seit dem letzten Backup, um halt weniger sichern zu müssen. Und dann hast du halt irgendwie jeden Tag ein Band aus diesem Roboter rausgenommen und in den Tresor gelegt. Und am nächsten Tag kam halt ein anderes Band raus. Und nach einer Woche oder zwei hast du die Bänder überschrieben. Aber konntest du halt immer wieder auf einen Stand von einem beliebigen Tag zurückgehen an den Änderungen. Und das kannst du halt alles schön in Software machen und auch durchaus automatisieren. Und ich glaube, das ist dann auch eine Sache, wo halt Restik dann definitiv ins Spiel kommt, oder?
+
+00:25:53.940 --> 00:25:54.520
+<v SPEAKER_3>Ja, das...
+
+00:25:54.540 --> 00:26:01.320
+<v SPEAKER_1>Aber wenn man es automatisiert, heißt es ja auch, dass das System noch an dem, also dass das Backup-System noch am Live-System hängt, oder?
+
+00:26:03.980 --> 00:26:48.560
+<v SPEAKER_3>Das hat Vor- und Nachteile tatsächlich. Weil wenn du eine externe Festplatte hast, dann hast du immer... Ja, da musst du deinen Hintern vom Sofa hoch bewegen, diese Festplatte aus ihrem sicheren Ort holen, anschließen, hoffen, dass du das Netzteil findest, hoffen, dass das Dateisystem das auch direkt erkannt wird, dann deine Backup-Software starten und dann die Platte nicht einfach drangescheckt lassen, sondern wieder schön in den Schrank legen, das Netzteil daneben, damit du es wieder findest. Und das ist ein erheblicher Reibungspunkt, der bei mir dazu geführt hat, dass ich jahrelang keine Backups gemacht hab. Und deswegen bin ich ein Freund davon, tatsächlich einen Online-Speicher zu benutzen, mit einem guten Backup-Programm, was das einfach automatisch macht. Und ich mach das immer, bevor ich abends, wenn ich den Rechner ausmache, dann mach ich ihn nicht aus, sondern ich starte mein Backup-Programm und das macht danach den Rechner aus, wenn es fertig ist.
+
+00:26:50.240 --> 00:27:02.840
+<v SPEAKER_1>Trickfrage, aber wenn du von deinem Rechner aus das alles bedienen kannst und das auch so ein Automatismus ist, ist das dann die Ransomware, also die Shadeling Software, die auf deinem Rechner ist, kann die das dann nicht auch machen und dann ist dein Backup wieder futsch?
+
+00:27:02.860 --> 00:27:43.100
+<v SPEAKER_3>Die kann das nicht machen, weil das zwei getrennte Operationen sind, zumindest wie ich das hier so bei mir eingestellt habe. Das heißt, ich kann diesem sogenannten Repository, also da, wo ich meine Backup-Daten anlege, dem kann ich Daten hinzufügen, aber dem kann ich keine Daten entfernen. Ich kann also neue Versionen von Dateien hochladen und sagen, hier meine Masterarbeit in dieser Version, jetzt Stand heute, die kann ich hinzufügen, aber das Ändern oder auch das Löschen von alten Backups, von alten Datenständen, das ist eine vollständig separate Operation. Das kann man auch bei den gängigen Cloud-Speichern, kann man solche Zugänge auch erstellen, dass man Daten hochladen und hinzufügen kann, aber nicht Daten löschen kann, da braucht man einen anderen Zugang dazu.
+
+00:27:43.120 --> 00:27:48.420
+<v SPEAKER_1>Und das, Daten nicht löschen, heißt auch, man kann sie dann in einen Ransom-Vertroianer, kann sie nicht verschlüsseln?
+
+00:27:48.620 --> 00:28:11.080
+<v SPEAKER_3>Genau, richtig. Das ist bei Rastic nochmal ein bisschen anders, weil dort sind alle Daten, das ist alles so gebaut, dass immer nur neue Dateien hinzukommen. Und selbst wenn ich alte Daten lösche, dann werden die Daten aus den Dateien, die noch gebraucht werden, runtergeladen, in neue Dateien zusammengepackt und wieder hochgeladen. Man hat das gar nicht regulär im Betrieb, dass Dateien, die einmal existieren, verändert werden. Es werden nur neue hinzugefügt.
+
+00:28:14.900 --> 00:28:18.800
+<v SPEAKER_1>Das hab ich nicht verstanden. Man löscht Dateien, indem man neue Dateien irgendwohin hochlädt?
+
+00:28:18.820 --> 00:30:26.380
+<v SPEAKER_3>Die Idee ist ja, vielleicht können wir da jetzt ein bisschen drauf eingehen. Es gibt ja, wenn man Backups macht, ich hab so ein Arbeitsverzeichnis, zum Beispiel, da sind alle möglichen Sachen drin. Da ist irgendwie Sourcecode drin, da sind irgendwie Schreiben vom Amt drin, da sind PDF-Dateien drin, da sind Fotos drin. Und ich sag meiner Backup-Software jetzt, bitte jetzt ein Backup machen von dem Verzeichnis und dann macht die das. Wenn ich das morgen noch mal mache, dann sind ein Großteil der Daten exakt identisch. Weil sich die Fotos vom Familientreffen vor letztes Jahr, als das noch ging, die haben sich ja nicht geändert in der Zwischenzeit. Vielleicht meine Masterarbeit, wenn ich da drei Seiten mehr geschrieben hab. Mehr aber auch nicht. Das heißt, ich hab eine ganz erhebliche Duplikation an Daten, weil die ganzen Fotos und so weiter, das ändert sich in der Regel nicht. Und selbst wenn ich da jetzt mit Photoshop dran bearbeite, dann betrifft das ein paar Dateien. Aber ein Großteil der Daten werden in der Regel zwischen zwei verschiedenen Backup-Ständen sozusagen. Wenn ich das heute ein Backup mache und morgen eins mache, das meiste wird gleich sein. Das heißt, es ergibt Sinn, die Daten so zu speichern, dass man quasi sagen kann, ich hab hier eine Datei und der Inhalt ist der Folgende. Und morgen hab ich die Datei mit dem Namen immer noch, aber der Inhalt ist ein bisschen ein anderer. Und bei Rastic ist das so, dass Dateien in kleine Schnipsel auseinander geschnitten werden. Diese Schnipsel werden sozusagen einzeln gespeichert. Und dann kann ich auch, wenn ich Versionen meiner Masterarbeit habe, die jetzt vielleicht 500 Megabyte Word-Datei sind, wo ich dann große Bilder drin habe, dann werden Teile dieser Datei identisch sein, obwohl ich dran gearbeitet hab. Und das wird dann auch nochmal so abgespeichert, dass ich sage, heute ist der Stand irgendwie Schnipsel A, B, C und morgen ist der Stand Schnipsel A, B, Y. Und diese Schnipsel, die werden immer nur hinzugefügt. Und irgendwann entscheide ich ja, dass ich jetzt mal die Daten von letztem Jahr zum Beispiel wegschmeißen möchte. Dann muss das System nachschauen, welche Schnipsel werden noch benötigt. Die werden dann in neue Dateien verpackt. Und die alten Dateien, die diese Schnipsel enthalten, die nicht mehr benötigt werden, die kann man dann löschen. Aber das kann man explizit so einstellen, dass das eine unterschiedliche Operation ist. Also das Löschen von Dateien auf einem Cloud-Speicher, das kann ich beschränken, weil ich das im normalen Betrieb nicht brauche.
+
+00:30:28.280 --> 00:30:57.200
+<v SPEAKER_1>Aber das bringt mich zu der Frage, wenn die Daten so archiviert werden, das ist ja fast schon kein Backup mehr, sondern eine Archivierung, wenn die so archiviert werden, dann brauche ich ja diese Software, um überhaupt wieder an den Daten ranzukommen. Ist das auch was, was ein gutes Backup auszeichnet? Weil ich immer dachte, eigentlich ist das perfekte Backup das, was ich ohne ein bestimmtes System zu haben, an einer möglichst breiten Palette von Maschinen wieder auslesen kann.
+
+00:30:57.660 --> 00:31:12.600
+<v SPEAKER_3>Das ist tatsächlich eine ganz gute Idee. Und eigentlich wäre es total super, wenn ich meine Familienfotos und Schreiben vom Amt als PDF-Dateien einfach zu Amazon oder zu Google hochladen könnte. Das kam für mich als Nerd aber überhaupt nicht in Frage. Die müssen mindestens verschlüsselt werden.
+
+00:31:13.560 --> 00:31:59.000
+<v SPEAKER_1>Nee, darum geht es mir nicht, darum geht es mir tatsächlich nicht. Das meinte ich nicht, sondern ich meinte, wenn diese Dateien in dieser Art und Weise auseinandergebaut werden, dann brauche ich ja das Restick auch wieder, um sie wieder zusammenzubauen und daraus zu ziehen. Und was ich eher und sozusagen und Verschlüsselung kannst du ja auch so machen. Also wenn ich, ich habe jetzt keine Ahnung von Festplatten, Krypto, aber ich keine Ahnung, ich glaube das einfach mal, wenn man alle Dateien GPG verschlüsselt, dann brauche ich also nur ein beliebiges System, was auch GPG kann, was eine weitverbreitete Software ist und kann dann wieder alles rausholen. Das meinte ich nicht, dass man zu Amazon gehen soll oder zu einem großen Handbill, sondern einfach nur, ist es nicht sinnvoll, einen Backup möglichst einfach abzuspeichern?
+
+00:31:59.020 --> 00:33:01.300
+<v SPEAKER_4>Im Prinzip ja, aber bei deinem Beispiel mit GPG brauchst du zum Beispiel deinen geheimen GPG-Schlüssel, wenn du es halt mit Schlüssel machst oder die Pathphrase. Ist also auch nicht so, dass du komplett ohne externe Sachen das kannst und du brauchst die GPG-Software. Rastic ist nur Open Source, die kriegst du halt irgendwie immer wieder. Ich gehe mal stark davon aus, dass der Autor, der ja nicht doof ist, da auch eine Versionierung drin hat, dass das Rastic erkennt, welche Version das geschrieben hat und das alte Dateiformat wieder lesen kann von der Version von vor fünf Jahren. Aber auch diese Magnetbänder früher brauchtest du halt, eine Software, die das bestimmt wieder zusammensetzt. Und oft war es dann so, dass am Anfang von den Bändern die Software oder der Quellcode zur Software vom Wiederherstellen als C-Code drin war und du konntest halt dann den C-Code aus dem Band wiederherstellen und compilen und damit die Backups wiederherstellen. Also das war immer schon ein Problem, wo du die eine oder die andere Lösung drumherum finden musstest. Und da jetzt noch Open-Store-Software zu haben, die nicht Closed Source ist, wo der Hersteller sagt, wir provideen bald jetzt nicht mehr für aktuelle Systeme, ist da glaube ich noch die beste Lösung, als zu sagen, ja ist ja schön, dass sie da vor zehn Jahren mit ihrem i386...
+
+00:33:02.820 --> 00:34:05.380
+<v SPEAKER_1>Es ging mir ja gar nicht so sehr, verschiedene Software zu verkaufen, sondern nur die Frage sozusagen, wie sinnvoll es ist, dass es ein kompliziertes System ist. Aber gut, nehmen wir das mit. Also ich hatte schon mal fest, also ein gutes Backup ist, wenn es gebackupt wurde, von einem System getrennt. Das kann man entweder hart machen, indem man das abstöpselt, oder eben, ich nenne es jetzt mal die weiche Variante, indem das Backup quasi nur in eine Richtung funktioniert. Also ich kann in das Backup-Archiv Dinge reingeben, aber kann sie nicht ohne weiteres daraus holen, verändern oder löschen, weil das zwei Dinge verhindert, wie heißt das genannt, Fatfingers, also ich mache aus Versehen was kaputt, und jemand Böswilliges kann das auch nicht ohne weiteres, zumindest nicht automatisch, wie es eben so bei Ransomware Trojanern sind. Wenn wir jetzt gerade noch dabei sind, was ein gutes Backup aufmacht, das hört sich jetzt aber alles an. Ich behandle meine Daten alle gleich. Also es ist egal, ob das jetzt eben die schon angesprochene Familienfotos, Texte oder meine Musiksammlung oder irgendwas ist. Backup ist Backup, oder gibt es da doch Unterschiede?
+
+00:34:06.100 --> 00:34:36.900
+<v SPEAKER_4>Also für mich gibt es da durchaus Unterschiede. Also vorhin hatten wir ja schon die Definition, Backup ist eine Sicherung von Daten, die ich nicht einfach wieder beschaffen kann. Also ich sichere zum Beispiel nicht meine Musiksammlung, weil im Zweifelsfall ist das in Anführungsstrichen nur Musik. Aber so Hochzeitsbilder oder Familienfeiern, oder von den Eltern was, oder Dokumente vom Amt, das will man vielleicht doch sichern. Und da kann man schon sich überlegen so, naja, okay, die Musik wär zwar schade, wenn die weg ist, aber da reicht mir irgendwie eine olle Festplatte im Schrank.
+
+00:34:36.920 --> 00:35:15.720
+<v SPEAKER_1>Nein, ich hab doch Missverständnis. Ich meine nicht, also es ist klar, dass man priorisiert. Das meine ich nicht, sondern ich meine tatsächlich, lass mich einen analogen Vergleich machen. Also bei Fotos musste ich halt gucken, dass die nicht im Sonnenlicht ausgesetzt sind, deswegen verpacke ich sie in UV-sichere Folie, damit die nicht ausbleichen. Das muss ich bei meinem Lieblingsstück Kohle nicht machen. Das kann ich einfach in eine Schachtel legen. Das meinte ich mit verschiedenen Datentypen, ob es da einen Unterschied gibt oder ob hier dann doch wieder gilt. Das ist alles 0 und 1, deswegen ist es egal. Rein ins Backup-System.
+
+00:35:15.740 --> 00:35:46.660
+<v SPEAKER_3>Ich würde sagen einfach rein ins Backup-System. Was das Backup-System noch tun müsste, das haben wir noch nicht erwähnt bisher, es sollte dir die Möglichkeit geben, einen Restore, also einen Zugriff auf die Daten, die du wieder herstellen willst, zu simulieren, damit du gucken kannst, kriegst du die Daten wieder, die du da reingesteckt hast. Denn das ist der große Unterschied auch zu, ich kopiere einfach meine Masterarbeit als Word-Datei ins Google Drive, wenn das da kaputt geht, dann kriege ich das eventuell erstmal gar nicht mit, weil ich halt nicht bemerke, dass sich da die Daten verändert haben. Das kann tatsächlich durchaus passieren.
+
+00:35:47.160 --> 00:35:49.340
+<v SPEAKER_1>Und das ist dann auch was, was die Backup-Software leistet?
+
+00:35:49.400 --> 00:35:51.400
+<v SPEAKER_3>Das sollte die Backup-Software leisten, ja.
+
+00:35:51.420 --> 00:37:01.560
+<v SPEAKER_4>Auf jeden Fall sollte man halt die Restore-Fähigkeit testen, weil niemand möchte Backups, eigentlich wollen alle nur das Restore, und zwar dann, wenn die Daten weg sind. Und dann festzustellen, dass das Backup seit 10 Jahren null Daten gesichert hat, ist doof. Also man möchte das Restore irgendwie testen, auch üben, ob man da dran kommt. Und wenn es online ist, naja, du brauchst halt Bandbreite zum Runterladen, zum Beispiel. Wie lange dauert das eigentlich, um die Daten wiederzubekommen? Aber ich glaube, was Monoxid eben meinte, unterschiedliche Daten, naja, wenn ich halt ein bestimmtes Textverarbeitungsprogramm habe, in dem ich vor 10, 15 Jahren, in keine Ahnung, Word Perfect, meine Abschlussarbeit geschrieben habe, kann ich das eventuell heute nicht wieder herstellen. Also wenn ich halt irgendwie Daten archivieren muss, um da zehn Jahre später nochmal drauf zugreifen zu können, brauche ich vielleicht auch die Software, da muss das in andere Dateiformate übertragen, die man auch in Zukunft noch lesen kann. Aber das ist, glaube ich, jetzt für den Privatanwender. Das wird ja tatsächlich durchaus teilweise gemacht. Und das war auch das, was ich vorhin so ein bisschen meinte. Wenn du halt irgendwie mit deinem 386er die Backups gemacht hast und der Hersteller von der Backupsoftware, das jetzt für aktuelle Hardware nicht mehr anbietet, ist das halt doof.
+
+00:37:01.580 --> 00:37:03.260
+<v SPEAKER_1>Ist Klara eigentlich noch da?
+
+00:37:03.280 --> 00:37:04.420
+<v SPEAKER_2>Ich bin noch da.
+
+00:37:04.440 --> 00:37:08.920
+<v SPEAKER_1>Hast du die ganze Zeit zustimmt mit dem Kopf genickt oder eher die Hand vor das Gesicht gestanden? Was redet denn die da?
+
+00:37:09.680 --> 00:38:13.420
+<v SPEAKER_2>Ich stimme total zu, ich hätte mich schon gemeldet. Wir haben ja über die Abschlussarbeit geredet, das wäre noch ein Punkt. Wenn man das so hört, die Abschlussarbeit ist verloren gegangen. Klar tut einem total leid, das ist eine furchtbare Sache. Was ich mir dann immer denke ist, man muss ja jetzt nicht gleich sich komplette Backups anlegen und das alles super perfekt machen und umfassend machen, sondern wenn man sich zum Beispiel die Abschlussarbeit in regelmäßigen Abständen selbst per E-Mail schickt, solange sie nicht so groß ist, dafür ist das auch schon ein okes Backup. Also es ging jetzt viel darum, wie man Dinge gut und richtig macht und ich glaube, das ist auch total wichtig, aber ich glaube, das kann auch eine Hemmschwelle sein, wenn man so überlegt, ich will ein Backup machen, aber ich will nicht irgendwas dahinstümpern, sondern ich will das richtig machen und gut und regelmäßig und safe in allen möglichen Hinsicht. Es kann auch ganz gut sein, einfach ein schlechtes Backup zu machen, wenn die Daten weg sind, dann freut man sich auch über ein schlecht gemachtes Backup sehr.
+
+00:38:13.440 --> 00:38:48.120
+<v SPEAKER_1>Ich finde es total schön, dass du das sagst, weil mir ist das jetzt gerade nicht eingefallen, aber ich habe das tatsächlich auch immer gesagt, wenn Leute mir erzählen, ich sitze gerade in meiner Arbeit und ich dann so hast du Backups, ich weiß, ich müsste dir so, hey, mach's doch, mach's wie Alex, wenn er deinen Rechner runterfährt, am Ende deines Arbeitstages, mail dir das Ding selbst. Dann hast du deine Inbox, die ist auf deinem Rechner, die ist noch mal beim Mailanbieter, hast du sogar schon eine Versionierung, weil du gucken kannst, wie war denn mein Chat gestern Abend. Das ist auf jeden Fall ein mega schöner Hinweis. Und ich finde, ein schlechtes Backup ist besser als kein Backup, könnte fast die Überschrift für diese Sendung sein.
+
+00:38:48.140 --> 00:39:04.420
+<v SPEAKER_3>Der erste Schritt ist ja auch, sich da überhaupt mal Gedanken drüber zu machen. Und das ist genau das, was Marcus gerade sagte, wenn man halt mal von jemandem darauf hingewiesen wird. Ich hab das in meiner Familie dann auch extensiv gemacht. Die Leute haben einfach gesagt, im Teilwitzfall einfach noch mal einen zweiten Ordner und dann ein Datum vom aktuellen Tag und einfach mal eine Kopie der Datei dahin legen.
+
+00:39:05.880 --> 00:39:25.140
+<v SPEAKER_4>Ja, und ganz kurz, das Einfachste, wenn man wirklich noch gar nichts hat und irgendwie anfangen möchte, kauft man sich halt eine oder wenn man das Geld hat und investieren will, zwei kleine externe USB-Festplatten und macht halt jeden Tag im Abwechseln auf die Platten einen Backup und zieht die Daten rüber. Das ist besser als gar nichts. Und da hat man halt noch was.
+
+00:39:27.140 --> 00:39:58.340
+<v SPEAKER_1>Also sozusagen, liebe HörerInnen, wir machen hier Chaosradio und deswegen gehen wir vom seichten Anfang auch in die Tiefe und versuchen, die perfekte Lösung zu finden. Aber macht lieber irgendeinen Backup als gar keinen Backup. Auch da geht es natürlich sozusagen, guckt, nicht immer gleich sidetracken, nicht immer gleich sidetracken. Guckt auch, ob das überhaupt funktioniert hat und so. Aber wie gesagt, lieber die USB-Festplatte als die perfekte Lösung, die wir heute hier versuchen noch zu ergründen.
+
+00:40:00.440 --> 00:40:15.580
+<v SPEAKER_2>Und zweifel, kaufst du dir drei von denen, machst drei im Wechsel und schickst die dritte noch an jemanden, dem du vertraust. Dann hast du auch noch ein Offside-Backup. Dann bist du schon ziemlich gut aufgestellt. Vielleicht ist vielleicht noch nicht alles perfekt oder sonst was, aber dann bist du schon echt gut dabei.
+
+00:40:15.600 --> 00:41:16.340
+<v SPEAKER_1>Über Offside will ich gleich nochmal genauer reden. Aber vorher wollte ich noch fragen, weil wir am Anfang schon für fürchtetliche Festplatten und SSDs, im Prinzip ist eigentlich zwei Backups schon auch besser als nur eins, weil man weiß ja nie. Also wie gesagt, liebe Leute, wir reden von einer perfekten Lösung. Und dann die Dinge, die ihr vorhin erzählt habt, über die Art und Weise, wie so Sachen kaputt gehen können, da würde ich jetzt fast vermuten, vielleicht ist es nur Voodoo, aber man will ja eigentlich, dass das Backup-Medium ein anderes ist als die, also wenn wir jetzt von Platten reden, sozusagen drei verschiedene Herstelletypen und vielleicht auch noch verschiedene Arten, also SSD und Festplatte. Oder könnt ihr mir jetzt sagen, gibt es einen, wenn man von physischen Datenträgern redet, gibt es da was, was am besten geeignet ist? Oder gibt es vielleicht sogar besondere Arten von Festplatten, die dann teurer sind, aber dafür sehr viel zuverlässiger und langlebiger?
+
+00:41:16.460 --> 00:41:23.960
+<v SPEAKER_4>Ich glaube, das Bundesarchiv nimmt Edelstahl und graviert das. Aber ich glaube, das ist nicht die Lösung, die du da haben wolltest.
+
+00:41:23.980 --> 00:41:25.540
+<v SPEAKER_1>Für alle, die diese Möglichkeit nicht haben.
+
+00:41:26.440 --> 00:42:03.180
+<v SPEAKER_3>Also ich würde sagen, das, was am bequemsten ist, ist auch zu benutzen. SSDs haben wir ja eben schon gehört. Es ist keine gute Idee, wenn man die länger ohne Strom rumliegen lässt. Und wovon ich tatsächlich auch abraten würde, weil ich damit mal Daten verloren habe, ist alle Arten von selbstgebrannten CDs oder DVDs, weil die noch mal sehr viel schneller Daten verlieren als gepresste CDs. Die sind tatsächlich relativ langlebig. Aber ich will ja meine Daten nicht von so einem Presswerk auf so zwei Millionen CDs pressen lassen, sondern wenn, dann habe ich da ja vielleicht die Fotosammlung von vor 30 Jahren mal digitalisiert und auf eine CD gebrannt. Und das Zeug ist meistens nicht mehr lesbar leider.
+
+00:42:04.380 --> 00:42:18.380
+<v SPEAKER_4>Die sind bei mir mittlerweile auch alle kaputt. Ich habe hier einen Riesenstapel, der lichtdicht verpackt war, auch nicht übereinmäßig heiß wurde, aber die haben sich alle verfärbt und zerlegen sich und sind nicht mehr lesbar.
+
+00:42:18.400 --> 00:42:54.000
+<v SPEAKER_1>Also ich nehme dem, dass die, also in meinem Rechner bin ich eine SSD, weil die ist schön schnell, aber fürs Backup will ich eine klassische Festplatte, weil die einfach mechanisch und auch elektronisch erstmal zuverlässig, also nicht perfekt, aber zuverlässig gern ist. Wenn man jetzt guckt und sich da vielleicht extra viel Equipment anschaffen will, es gibt tatsächlich Hersteller, wenn man hier, das ist eine besonders gute Backup Festplatte oder die ist gut geeignet für Backup-Systeme, ist das Schlangenöl oder gibt es tatsächlich sozusagen verschiedene Arten von Festplatten oder lohnt es sich nachzugucken?
+
+00:42:54.020 --> 00:43:18.420
+<v SPEAKER_3>Da gibt es tatsächlich verschiedene Optimierungen für Festplatten, da gibt es bei manchen Herstellern welche, die sind explizit so für den Rechenzentrumsbetrieb ausgelegt und haben besonders hohe Lese- und Schreibraten und es soll auch welche geben, die besonders gut Daten halten können. Ich hab das persönlich selber nicht ausprobiert. Ich weiß nicht, was davon zu halten ist, aber es gibt zumindest schon verschiedene Optimierungskriterien für Festplatten. Da kann man auch an der Mechanik einiges machen.
+
+00:43:20.780 --> 00:44:14.560
+<v SPEAKER_1>Jetzt zu dem Onlinespeicher. Einerseits ist das ein mega praktisch, so ein Onlinespeicher, weil da kommt man schnell ran und es ist sehr bequem und niedrigschwillig, um einen Backup zu machen. Aber von dem, was ihr sagt, will man das eigentlich? Ich rede jetzt gar nicht mal vom Anbieter her, sondern die Frage, die ich mir gerade stelle, ist, wenn ich online mir Platz hole, sei es auch sogar in einem Rechenzentrum, dann ist das ja immer nicht ein konkretes, physikalisches System, sondern läuft es ja meistens auf irgendwie, würde er in verschiedenen... Und die Cloud ist ja sowieso was, was sich gänzlich meiner Kontrolle erzieht. Würdet ihr sagen, Backup lieber auf einem konkreten System, also ein Backup, ist auch eine ganz konkrete Festplatte? Oder sind, wenn wir von der perfekten Lösung reden, Cloud-Anbieter oder Online-Speicherplatz durchaus auch was, wo ihr sagen würdet, das kann man auch in Betracht ziehen?
+
+00:44:15.680 --> 00:45:08.200
+<v SPEAKER_3>Das ist eine klassische, das kommt drauf an Antwort. Aber worauf kommt es an? Das kommt drauf an, wie die Daten dort gespeichert werden. Bei manchen Anbietern weiß man das, bei anderen weiß man es nicht. Ich persönlich würde ein System, wo ich bei einem Rechenzentrums- anbieter eine konkrete Hardware miete, also einen Rechner mit zwei Festplatten oder so was, das wäre mir persönlich nicht sicher genug. Ich würde das lieber bei einem Anbieter machen, wo ich weiß, die Daten liegen hinten auf einem großen Storage-Rate drauf. Und der benutzt auch noch ein Dateisystem, was versucht sicherzustellen, dass Dateien, die ich da einmal abgelegt habe, auch da so liegen bleiben. Das Stichwort da ist Redundanz. Wenn man da also versucht im Dateisystem und auf den Platten, auf denen das nachher liegt, Redundanz herzustellen, dann kann man mit diesen Hardware-Fehlern, die es irgendwann geben wird bei großen Datenmengen, auch umgehen und die Daten wieder herstellen.
+
+00:45:08.220 --> 00:45:10.720
+<v SPEAKER_1>Und das wäre dir lieber als selber irgendwo eine Festbataille?
+
+00:45:10.740 --> 00:45:14.060
+<v SPEAKER_3>Ja, das wäre mir auf jeden Fall lieber, ja.
+
+00:45:14.080 --> 00:47:23.240
+<v SPEAKER_4>Das ist halt auch wieder ein Online-System. Du musst es selber irgendwie bedienen und steuern und irgendwie administrieren und dich drum kümmern. Und wenn es kaputt geht und du gerade Stress... Also das typische Szenario, du bist halt gerade, bleib mal bei den Beispielen, bei deiner Abschlussarbeit oder irgendwas Wichtigem, das geht hier kaputt. Oder du bist damit beschäftigt und jetzt geht dein Backup auch noch kaputt. Dann hast du ja die Zeit, dich jetzt auch noch um das Backup zu kümmern. Also baust du an der Arbeit weiter und dann ist sie kaputt und das Backup ist auch kaputt. Also du willst dich ja nicht aktiv dauern, um dieses Backup kümmern zu müssen. Du willst ja, dass das automatisch einfach funktioniert und da ist. Und so ein Cloud-Dienstleister, das ist halt deren Job, die Daten zur Verfügung zu stellen. Klar, du musst halt gucken, was die tun. Neulich ist so ein Rechenzentrum in die Cloud gegangen, sprich abgebrannt und hat sich in Rauch raufgelöst, wo dann auch viele feststellten, dass sie ja tatsächlich gar kein richtiges Backup haben. Und als dann der Anbieter getwittert hat, man sollte jetzt mal sein Disaster Recovery Plan aktivieren, den man da so hat und dann Leute geantwortet haben, wo muss ich da klicken, Webinterface? Nee, das wäre deine Verantwortung gewesen, aber die haben sich halt darauf verlassen, dass der Anbieter gesagt hat, wir haben eure Daten hier sicher. Da muss ich auch Gedanken zumachen. Und ich persönlich würde auch einem Cloud-Anbieter, der löst ganz, ganz viele Probleme. Es ist offsite, es ist verfügbar, es ist nicht bei dir zu Hause, es ist nicht dein Dateisystem und so weiter. Aber die können halt ihren Dienst aufgeben oder auch in Flammen aufgeben. Also irgendeine Art von Archivierung würde ich da tatsächlich auch ab und zu machen, weil es ist schon passiert, dass der Cloud-Anbieter irgendwie keine Ahnung, ein Problem in seinem Rechnungssystem hatte oder du vergessen hast zu bezahlen, dann machen sie halt den Account dicht und die Daten sind weg. Oder es ist halt ein Klick im Webinterface und das gesamte AWS-Setup von der ganzen Firma ist gelöscht und die Firma ist weg. Ist ja auch schon passiert. Die Cloud ist total super, weil sie alles automatisiert, aber sie automatisiert halt auch das Löschen. Also irgendeine Art von Archivierung würde ich persönlich da auch haben wollen, vielleicht so, keine Ahnung, einmal die Woche, einmal im Monat, oder keine Ahnung wie oft, dass du halt nicht alles verlierst.
+
+00:47:23.260 --> 00:48:50.540
+<v SPEAKER_1>Aber das heißt sozusagen, für den Peace of Mind brauche ich also einen Cloud-Speicher und ich meine, also ich sag's jetzt zum letzten Mal und dann sagen wir, der Rest ist ein Cloud-Speicher. Cloud-Speicher meint, das kann sozusagen einer der großen Anbieter sein, die damit werben, also nur Dropbox, Google Drive, was auch immer, aber Cloud-Speicher ist jetzt in unserem Fall alles, was irgendwie online passiert. Und dann will ich aber nebenher noch eigentlich auch was, was ich selber unter Kontrolle habe, um wirklich in Ruhe schlafen zu können. Das bringt mich zu einer weiteren Frage. Man kann sich ja so kleine Systeme für zu Hause kaufen, so NAS heißen, die Network Attached Storage, wo dann eine bis, ich glaube, gibt es auch viele Festplatten drin hängen, und die dann auch so eine Software mitbringen, wo man genau so ein Kram machen kann. Und dann hat man das Problem immer noch, das kann man sich kaufen, das kann man in seinen Router ranstöpseln, und dann kann man auch da schön irgendwie Backup-Sachen machen. Und dann ist er aber immer noch in einer eigenen Wohnung. Also wenn der eigene Rechner unterwegs wegkommt, dann hat man zu Hause noch das Backup, gut und schön, aber wenn, wie gesagt, die Wohnung abbrennt oder was auch immer, dann ist halt doof. Da könnte man ja jetzt als sozusagen technisch interessierte Partei sagen, hey, ich habe einen Freund oder eine Freundin, die findet das auch, und wir können uns doch eigentlich gegenseitig sowas in die Wohnungen stellen, das ist jeweils anders, und dann haben wir ein Offside-Backup. Da frage ich mich, wie viel Internetleitung braucht man, damit es nicht nervt?
+
+00:48:50.560 --> 00:48:53.580
+<v SPEAKER_4>Das war unsere Chaosradio-Folge zu Glasfaserausbau.
+
+00:48:53.820 --> 00:48:58.160
+<v SPEAKER_5>Ich habe die Nummer vergessen.
+
+00:48:58.180 --> 00:49:03.660
+<v SPEAKER_1>Nicht aufs Schlimme, sondern wie viel Internet braucht man, damit das nicht nervt? Oder ist das eh eine doofe Idee?
+
+00:49:03.680 --> 00:49:04.740
+<v SPEAKER_5>Es ist eigentlich eine sehr gute Idee.
+
+00:49:12.100 --> 00:50:34.100
+<v SPEAKER_3>Es kommt natürlich ein bisschen drauf an, was du da für Arten von Dateien hast und wie gut deine Backup-Software ist. Wenn du da jetzt die Fotosammlung, die du gerade bearbeitest, weil du vielleicht Fotograf bist, jeden Tag dreimal sicherst, dann schiebst du das durch deinen sehr kleinen Upstream zu deinem Freund, einer Freundin hin, die in der Regel ja eine recht große Downstream-Bandbreite haben. Das heißt, beim Backup-Vorgang nervt dich das mehr, als es die nervt, weil in der Regel ja die Leitung von dir zum Internet eher klein ist. Und abhängig von der Backup-Software und was für eine Art von Daten du da hochlädst, kann das auch sehr wenig nerven. Wenn das halt die Backup-Software gut ist und du viele Daten hast, die sowieso schon da gespeichert sind, dann kann das sehr klein sein. Andersrum ist es deutlich nerviger. Wenn du jetzt merkst, meine Wohnung ist abgebrannt und ich muss jetzt die Daten wieder haben, dann musst du die Daten alle von deinem Freund, deiner Freundin durch deren schlechtes Upstream zu dir bekommen. Das ist die deutlich ungünstigere Richtung. Und manchmal bietet es sich an, je nach Entfernung, natürlich dann einfach vorbei zu fahren und zu sagen, ok, ich kauf mir einen neuen Laptop und komm bei dir vorbei und zieh mir das mal alles bei dir lokal im Netzwerk. Das funktioniert dann auch ganz gut. Aber ich glaube, so bei aktuellen DSL-Geschwindigkeiten, alles was so 10 Megabits aufwärts an Upstream-Bandbreite ist, dann sollte das eigentlich kein Problem mehr sein.
+
+00:50:34.680 --> 00:50:37.540
+<v SPEAKER_4>Genau, weil du sicherst ja eigentlich, also...
+
+00:50:38.660 --> 00:50:52.180
+<v SPEAKER_2>Sorry, noch ein anderer Punkt. Die Frage ist auch, ob du dein Nas wirklich ins Internet stellen willst oder darüber Verfügung machen willst. Also klar kannst du auch wieder Schutzmaßnahmen treffen, aber ist auch was, was man sich überlegen muss.
+
+00:50:52.200 --> 00:50:53.660
+<v SPEAKER_1>Weil?
+
+00:50:53.680 --> 00:51:14.960
+<v SPEAKER_2>Na, weil klar, in dem Moment, in dem es von außen erreichbar ist für jeden, wirst du auch... Leute haben, die versuchen, an deine Daten zu kommen, die versuchen, an das System zu kommen, einfach weil es online verfügbar ist. Und je nachdem, was wir schwachstellen, es gibt wie gut deine Passwörter sind, wie gut deine ganze Sicherheit ist, ist es mehr oder weniger einfach. Aber es ist auf jeden Fall unsicherer, als es einfach nicht ins Internet zu stellen.
+
+00:51:15.700 --> 00:51:20.500
+<v SPEAKER_1>Wie bei allen Sachen. Aber ist es unsicherer als bei einem Cloud-Hoster?
+
+00:51:20.520 --> 00:52:05.740
+<v SPEAKER_4>Das kommt drauf an. Ich glaube, ich bin ja heute hier für die Horrorstories zuständig. Hinter mir in meinem Regal steht ein, ich glaube, von einem größeren Hersteller so ein NAS. Das ist ein paar Jahre alt. Und die bieten dir total komfortabel an, dass du deine Daten, die du lokal in dieses NAS tust, per Internet auf einer Webseite vom Hersteller einsehen kannst. Weil das NAS macht einen VPN zum Hersteller mit deinen Daten. Und dann gehst du auf die Webseite und kannst darauf zugreifen. Und das ist halt bei denen im Netzwerk verfügbar dann. Und ich kam auch von mir aus durch dieses VPN zurück zu dem Hersteller und so. Also du willst vielleicht dann schon irgendwie...
+
+00:52:05.760 --> 00:52:07.040
+<v SPEAKER_1>Ich weiß nicht genau, was du gerade sagen willst.
+
+00:52:07.060 --> 00:52:33.640
+<v SPEAKER_4>Also ich konnte halt auf die Server vom Hersteller zugreifen und auch auf die VPNs der anderen Kunden, weil die haben einfach Mist gebaut. Das heißt, du willst, wenn du so ein Ding baust, halt irgendwie VPN mit deinem Kumpel, deiner Freundin, wem auch immer haben und darüber die Daten austauschen. Naja, bei Wohnung abgebrannt brauchst du sowieso einen Platz zum Pennen. Also dann kannst du auch vorbeifahren, die Daten runterladen. Und wenn die Software gut genug ist, dass sie nur die Änderung sichert, geht das. Also das ist schon cool.
+
+00:52:33.660 --> 00:52:47.400
+<v SPEAKER_3>Vor allen Dingen willst du eigentlich, wenn du irgendeine Art von Backup Software verwendest, egal wo die das jetzt ablegt, ob das die Festplatte ist, die du in den Schrank legst, ob das ein großer Online-Speicher ist, ob das das NAS des besten Schulfreundes ist, eigentlich willst du immer, dass die Daten auf jeden Fall verschlüsselt sind.
+
+00:52:48.280 --> 00:52:50.380
+<v SPEAKER_4>Korrekt.
+
+00:52:50.400 --> 00:52:53.020
+<v SPEAKER_1>Und wie mache ich das am besten?
+
+00:52:53.040 --> 00:53:30.060
+<v SPEAKER_3>Das macht idealerweise die Software für dich. Rastic lässt zum Beispiel das gar nicht zu, dass es unverschlüsselte Backups gibt. Es muss immer verschlüsselt werden. Und das ist, glaube ich, auch eine ganz gute Idee, weil man dann auch nicht versehentlich mal da noch Klartextdaten daneben liegen kann. Und je nachdem, was man da sichert, also die Behörden schreiben, die wir eben schon als Beispiel hatten, da möchte man ja vielleicht auch nicht, dass der beste Schulfreund da mal versehentlich nur mal drüber guckt, ohne dem jetzt was unterstellen zu wollen. Und das Gleiche gilt natürlich auch für die großen Anbieter, die ja auch aufgrund von der Verfügung der Staatsanwaltschaft zum Beispiel dazu gezwungen werden können, deine Daten auszuhändigen.
+
+00:53:31.480 --> 00:54:01.680
+<v SPEAKER_4>Ja, und es gibt ja auch solche Bedrohungsszenarien, dass dann bei deinem Kumpel oder bei dir eingebrochen wird und die Sachen geklaut werden. Dann wirst du auch noch nicht, dass die Sachen irgendwie öffentlich werden oder die Platten verkauft werden. Oder auch Platten zum Hersteller zurückschicken, weil sie kaputt sind. Ist deutlich einfacher, wenn die Daten darauf verschlüsselt sind und du dann einfach auf Garantien neu kriegen kannst und dir keine Gedanken drüber machen musst. Also verschlüsseln von Festplatten generell auch in deinem Notebook bei Verlust oder so, das erspart dir ganz ganz viele schlaflose Nächte, wenn die mal weg sind oder so.
+
+00:54:02.600 --> 00:54:10.320
+<v SPEAKER_1>Aber das muss ich sagen, nichts, was man extra lernen muss, weil gängige Backup-Software bietet sowas zumindest an. Also macht es vielleicht nicht automatisch, aber bietet sowas zumindest an.
+
+00:54:10.340 --> 00:54:10.800
+<v SPEAKER_4>Sollte sie, ja.
+
+00:54:13.300 --> 00:54:54.160
+<v SPEAKER_1>Ich will nochmal, apropos Online-Backup, also es gibt halt die großen Anbieter und es gibt halt irgendwie, ich stelle mir selber ein Gerät irgendwo hin, die Zwischenstufe ist ja, ich miete mir sozusagen irgendwo Online-Platz oder einen Server, auf den ich zugreifen kann. Ist das die, hat das dieselbe Ausfallsicherheit, also über den Daumen gepalt, ich weiß, kommt drauf an, oder sind Cloud-Anbieter sozusagen, also Cloud-Cloud-Anbieter was anderes, als ich mach mir irgendwo einen Server und keine Ahnung, mach da mein eigenes Nextcloud drauf oder sowas. Also ich werd... Also da geht's mir nicht um die Software, sondern da geht's mir sozusagen die Zuverlässigkeit der gemieteten Cloud.
+
+00:54:54.180 --> 00:54:57.760
+<v SPEAKER_4>Ich trau mich jetzt grad schon wieder nicht zu sagen. Es kommt drauf an.
+
+00:54:57.780 --> 00:54:59.500
+<v SPEAKER_1>Ja, aber worauf?
+
+00:54:59.520 --> 00:55:14.740
+<v SPEAKER_4>Ob das, was du da mietest, ja, ob das, was du mietest, zum Beispiel eine echte Hardware ist, wie vorhin gesagt, du mietest dir halt wirklich einen physikalischen Root-Server mit Festplatten oder SSDs drin, wo du aber auch dafür verantwortlich bist, ein Ticket aufzumachen beim Hoster, wenn deine Platte kaputt geht, damit die getauscht wird.
+
+00:55:15.840 --> 00:55:41.960
+<v SPEAKER_1>Okay, dann lass mich die Frage anders formulieren. Wenn ich mir online Speicherplatz kaufe, der ähnlich komfortabel ist wie bei einem großen Cloud-Cloud-Anbieter, ist die Wahrscheinlichkeit, also dass er genauso sicher ist, genauso ausfallsicher ist, eher gering. Weil, was du gesagt hast, ich miete mir einen ganzen Server, wo ich selber Dinge machen kann, wo wirklich die konkrete Hardware dann nur meint, das ist ja auch relativ teuer.
+
+00:55:41.980 --> 00:55:56.060
+<v SPEAKER_4>Genau, also ich hab mir ganz kurz, ich hab mir halt irgendwie eine VM geklickt für ein paar Euro, und da ist das Storage-Backend auch irgendwo in dem Nass von dem Hersteller, von dem Anbieter. Das ist dasselbe Backend, wo sie auch ihre Cloud drin haben.
+
+00:55:58.580 --> 00:55:59.680
+<v SPEAKER_1>Spreche aber jetzt wieder dafür.
+
+00:56:02.020 --> 00:56:20.980
+<v SPEAKER_4>Das ist denke ich sicherer, oder das ist ähnlich ausweilsicher, wie halt dieses Cloud-Angebot vielleicht schlechter gemonitert, weil du halt dafür zuständig bist, aber es ist sicherer oder zuverlässiger als diese Rootbox, die du da irgendwie mietest, wo du halt komplett selber verantwortlich für alles bist und nicht drüber kümmern musst.
+
+00:56:21.580 --> 00:57:00.480
+<v SPEAKER_2>Ich glaube, das ist ein wichtiger Punkt, denn man ist selber dafür verantwortlich. Also da hängt einfach super viel dran. Ich hab das lange gemacht, jetzt nicht beim Backup, aber dass ich einfach diverse Anwendungen, Web-Anwendungen, E-Bail selber betrieben hab. Ich war, nachdem Google Reader eingestellt wurde, war ich auf dem Flugzeug, weil ich will nie wieder, dass irgendwas abgeschaltet wird gegen meinen Willen, ich mach das jetzt alles selbst. Und klar, das kann man machen. Was man sich dann immer fragen muss, ist, wie viel Zeit kann man dafür aufwenden? Wie viel, wie sehr ist man gewillt, immer auf dem Laufenden zu bleiben? Und kann man das dann als andere Person wirklich besser als ein professionelles Team bei einem Anbieter, das einem der Arbeit abnimmt?
+
+00:57:00.500 --> 00:57:20.140
+<v SPEAKER_3>Das ist auch ein bisschen die Frage, auf welcher Ebene du den Dienst einkaufst. Ist es die Ebene, jemand stellt dir eine physische Box irgendwo in dein Rechenzentrum und wenn die kaputt ist, dann zucken die mit den Schultern und stellen dir eine neue hin? Oder ist das, du kaufst die Dienstleistung ein, das Daten, die du da speicherst, du die später wieder abrufen kannst? Und das wäre ungefähr so das Level, auf das ich schielen würde.
+
+00:57:22.160 --> 00:58:07.600
+<v SPEAKER_4>Genau. Es ist so ein bisschen so dieses Zwiespältige, wo wir ja auch Chaosradios zu hatten, mithostet eure Daten selber Dezentralisierung. Das hat halt immer das Problem, dass du im Zweifelsfall wahrscheinlich nicht so professionell dabei bist und auch ich nicht, weil es nicht mein Tagesjob ist, acht Stunden am Tag für die Verfügbarkeit dieser Systeme da zu sein, sondern es ist halt irgendwie mein Routeserver, den ich irgendwo gemietet habe, der muss halt laufen. Und es ist nicht mein Job, jeden Tag zu gucken, welche Sicherheitsupdates muss ich einspielen. Ein Anbieter muss das halt machen im Rahmen seines Angebots eigentlich. Das heißt, meine Systeme haben eine höhere Wahrscheinlichkeit, dass ich mich halt vielleicht doch mal vier Wochen nicht drum kümmere oder acht oder es einfach vergesse. Und dann hab ich halt nix glaubt, was Sicherheitslücken hat oder so. Ist dann nicht besser als wenn es bei Google liegt.
+
+00:58:09.140 --> 00:58:44.800
+<v SPEAKER_2>Also ich sehe den Zwiespalt so ein bisschen darin, wenn man das selber macht, ja, dann ist man auch komplett verantwortlich dafür und man kann es im Zweifel nicht so gut in den, weiß ich nicht, paar Stunden, die man sich dafür nimmt in der Woche, wie ein Unternehmen das professionell macht. Dafür weiß man natürlich genau, was abläuft. In dem Moment, in dem man das einem Anbieter übergibt. Klar, der kann viel sagen, aber der wird dich nicht ins Rechenzentrum lassen, um dir das alles anzugucken. Du wirst da auch gar nicht vielleicht im Zweifel beurteilen können. Das heißt, entweder du hast ein bisschen Ungewissheit oder du musst vertrauen oder du machst es selbst. Dann hast du einen riesigen Aufwand und ich glaube, die meisten Menschen bekommen das nicht so gut hin wie ein kommerzieller Anbieter.
+
+00:58:45.680 --> 00:59:10.480
+<v SPEAKER_3>Das Schöne bei Backups ist ja im Gegensatz zum E-Mail-Server, man kann mehr als eins haben. Das heißt, man kann beides machen. Man kann eine Box in ein Rechenzentrum stellen und man kann das NAS vom Schulfreund nutzen und man kann seine Daten auch noch bei AWS hosten. Das ist gar kein Problem und wenn man es dann braucht, dann hat man aus drei Quellen kann man sogar sozusagen auswählen. Und selbst wenn AWS gerade meinen Firmen-Account gesperrt hat, ich an die Daten nicht rankomme, na dann nehme ich halt die Kopie, die auf dem NAS vom Schulfreund liegt.
+
+00:59:12.140 --> 00:59:17.860
+<v SPEAKER_1>Wie viele Backups, wie Alex das gerade beschrieben hat, habt ihr, bevor ihr euch sicher fühlt?
+
+00:59:17.880 --> 00:59:20.780
+<v SPEAKER_3>Also ich persönlich habe drei verschiedene Locations, wo ich Sachen ablege.
+
+00:59:25.480 --> 00:59:29.860
+<v SPEAKER_4>Du kennst den Spruch mit dem Schuster und den schlechtesten Schuhen?
+
+00:59:30.560 --> 01:00:02.100
+<v SPEAKER_2>Also Klara? Ich habe ein NAS mit RAID 5, auf das ich Daten sichere. Ich habe ein paar USB-Passplatten, auf die ich besonders wichtige Daten sichere. Und die tausche ich gelegentlich aus und bringe sie zu den Schwiegereltern, um Offside-Backups zu haben. Ich habe sehr wenige Dinge online und das sind Sachen, die ich dringend brauche und die ich nicht mehr so vertraulich halte, weil ich einfach zu bestraut bin.
+
+01:00:09.480 --> 01:00:50.480
+<v SPEAKER_1>Ich habe einen NAS, auf das keine Backup, sondern so eine Spiegelung gemacht wird. Und an dem Ding hängt aber eine USB-Festplatte. Und die mache ich nach meinem Kalender an. Und wenn die angemacht wird, macht das NAS automatisch ein komplettes Backup, aber als Archiv. Also nicht löscht komplett, sondern hat eine Versionierung. Und wenn das fertig ist, kriege ich eine Mail und dann mache ich die wieder von Hand aus. Also da ist so ein Klick-Klack-Schalter richtig an der Steckdose. Aber ich habe keinen Offside-Backup.
+
+01:00:50.500 --> 01:01:20.180
+<v SPEAKER_4>Ich wollte ganz kurz Florian eigentlich noch zu Ende bringen. Ich habe nicht keinen Backup, aber tatsächlich mein Backup ist ein NAS, das hinter mir steht, auf dem Tisch, ich befürchte, man hört es auch im Hintergurt, ein bisschen Rauschen im Lüfter. Das macht lokalen Backup mit einer Software, die halt auch immer die Unterschiede sichert, dass ich eine Historie habe. Aber was mir halt auch tatsächlich fehlt, ist dieses Offside-Backup. Und da arbeite ich halt gerade dran. Aber andere Sachen waren aktuell wichtiger. Aber das ist halt genau dieses. Du willst halt irgendwie die super sichere Lösung, dann machst du es halt nicht.
+
+01:01:23.840 --> 01:01:52.240
+<v SPEAKER_2>Mein Backup-Verhalten hat sich auch stark verbessert, seitdem ich mal etwas Daten verloren habe. Zum Glück nicht so viel. Das war genau der Moment, wo ich über meine mittelmäßigen Backups sehr erfreut war, weil die mich letztendlich ziemlich gerettet haben. Und ich hatte ein forensisches Labor und forensische Skills, um möglichst die Daten wiederherzustellen. Aber auch das macht gar nicht mal so viel Spaß. Ja, also kommt drauf an. In meinem Fall geht das ganz gut.
+
+01:01:52.680 --> 01:01:56.300
+<v SPEAKER_3>Ich hab drauf gewartet, ja.
+
+01:01:56.320 --> 01:02:05.040
+<v SPEAKER_1>Wie bei den Juristinnen. Es kommt darauf an. Als nächstes sagt ihr noch vor Cloud oder auf hoher See. Wir sind alle in Gottes Hand.
+
+01:02:05.060 --> 01:04:03.420
+<v SPEAKER_4>So ungefähr. Also es gibt halt zwei Anekdoten hab ich halt noch. Das eine war irgendwie von wegen Raid ist kein Backup. Ich hab früher damals, vor vielen vielen Jahren, da war ich noch ganz jung und unerfahren oder so, hatte ich drei externe USB Festplatten an meinem Router und hab dann Raid 5 drauf gemacht. Und dann ist eine vom Bus geflohen. Also Raid 5 heißt, ich habe, also Raid ist ein, wie war das? Redundant Array of Inexpensive Disks, also ein, ich nehme mehrere Festplatten, die vielleicht günstiger sind und packe sie zusammen und sorge dafür, dass Datenredundant gespeichert sind mehr oder weniger, wenn ich jetzt von Raid 5 spreche. Das heißt, eine von den drei Festplatten darf ausfallen und die Daten sind immer noch da, weil mir zwei von drei Festplatten reichen, um sie wieder zurückzurechnen. Und nun war es aber so, dass dieser Controller oder dieses Linux da drauf irgendwie mit dem USB-Bus unzufrieden war und die Festplatte, die weggefallen war und wieder kam, war angeblich die älteste und er hat dann in der falschen Richtung die Daten wieder hergestellt von diesen drei Festplatten. Und ich hatte also auf der Festplatte oder im Dateisystem, ich habe es dann wieder gemountet und sah dann während des Betriebs wie Verzeichnisse verschwanden und plötzlich Sonderzeichen in Dateinnahmen auftauchten. Ich habe es dann ausgemacht, komplett und wieder angemacht und hatte dann alle 64 Kilobyte in allen Dateien Nullen. So über ein Viertel der Dateien. Und habe das dann also über mehrere Wochen quasi forensisch, hobbymäßig wieder hergestellt. Und es macht total Spaß, wenn du Dateien nur noch anhand des Inhaltes, des Dateityps hast, aber keine Namen mehr und dann da 10.000 PNG-Dateien mit Fotos findest und feststellst, oh, das sind alles die Avatare von den Leuten im Moodle-Forum aus der Uni, die da im Forum was geschrieben haben. Und du halt wirklich raten musst, was ist das für eine Datei, wo die gehört sind. Ich hab heute noch MP3-Dateien, mittendrin aber zu, ich weiß nicht, was Merkel Jackson angeht, weil die hintere Hälfte von der MP3-Datei ist aus dem anderen Pfeil. Da hätte ich mir ein gutes Backup auch gewünscht.
+
+01:04:09.300 --> 01:04:27.500
+<v SPEAKER_1>Aber Klara, weil du es gerade erzählt hast, oder vielleicht können wir das noch mal so fragen. Du als Profi hast also die Möglichkeiten, da Dinge zu retten. Wie ist denn das, wenn ich, man kann es immer durchspielen, was ist, wenn ich aus Versehen eine Datei gelöscht habe? Könntest du die wieder hinkriegen?
+
+01:04:28.080 --> 01:04:30.360
+<v SPEAKER_2>Was hast du mit der gemacht? Hast du sie in den Papierkorb bezogen?
+
+01:04:31.980 --> 01:04:34.940
+<v SPEAKER_1>Und dann natürlich, wie ich das gelernt habe, den Papierkorb gelöscht?
+
+01:04:36.120 --> 01:05:16.720
+<v SPEAKER_2>Also generell ist es so, natürlich, es kommt drauf an, nämlich auf dem Betriebssystem und Dateisystem, unter anderem in der, bei vielen ist es so, dass du so eine Art Inhaltsverzeichnis hast. Master File Table, zum Beispiel bei NTFS. Und da ist es so, wenn du einen Teil löscht, dann wird erstmal einfach der Eintrag markiert und wird gesagt, na die Datei ist gelöscht und dann kann, na die Datei ist gelöscht und der Speicher an der Stelle kann neu überschrieben werden, wenn das halt gebraucht wird. Kann man sich so ein bisschen vorstellen, wie ein Inhaltsverzeichnis beim Buch und wenn man irgendwas nicht mehr braucht, dann schreibt man einfach eine Notizen oder das kann man neu beschreiben, das braucht man jetzt eigentlich nicht mehr.
+
+01:05:17.820 --> 01:05:19.380
+<v SPEAKER_1>Aber die eigentlichen Seiten im Buch sind noch da?
+
+01:05:19.400 --> 01:05:40.160
+<v SPEAKER_2>Die sind noch da, genau. Das ist jetzt, da steht auch, wo du nachgucken musst und wie groß es ist im Zweifel und das ist dann relativ einfach, denn guckst du in dieses Inhaltsverzeichnis, siehst, ah, da ist meine Datei, holst der DB raus, ist alles gut, wenn du eine Festplatte hast.
+
+01:05:40.180 --> 01:05:47.020
+<v SPEAKER_1>Weil, stopp, stopp, stopp, halt, ich dachte, du hast es gerade so erklärt, wenn ich lösche, wird aus dem Inhaltsverzeichnis rausgelöscht, aber nicht mal das?
+
+01:05:47.320 --> 01:07:15.360
+<v SPEAKER_2>Nee, das wird erstmal nur markiert, als, guck mal, hier die Datei ist gelöscht und wenn dann halt wieder Platz gebraucht wird, dann wird das irgendwann neu beschrieben. Wenn du eine SSD hast, dann sieht das wieder anders aus, weil dann, wie wir vorhin schon gesagt haben, bei einer SSD, ja, man kann die nur endlich häufig beschreiben, aber was auch die Sache ist, SSDs können keine Daten überschreiben, anders als Festplatten. Also wenn du eine Speicherzelle neu benutzen willst, dann muss die erstmal gelöscht werden und dann wird die irgendwann neu beschrieben. Also löschen ist im Vergleich zum Schreiben und zum Lesen relativ langsam, deswegen will die SSD schlau sein und macht das so, dass sie immer schon mal proaktiv Speicher freigibt. Das macht sie über unter anderem, also eine Garbage Collection und damit die SSD auch weiß, was kann jetzt eigentlich gelöscht werden, gibt es das sogenannte Trim Command, wo praktisch das Betriebssystem der SSD sagt, guck mal hier, das brauchen wir jetzt gar nicht mehr. Die SSD macht super viel Arbeit selbst und kopiert die Daten in der Gegend rum, organisiert das neu, mappt Daten um, das heißt, was sie eigentlich gerade macht und was da ist, das ist immer so ein bisschen Black Box. Sie versucht auf jeden Fall, schlau zu sein, was dann halt mehr oder weniger praktisch sein kann. Das heißt, bei einer SSD sind die Daten im Zweifel dann auch schneller mal weg. Das heißt, schon gelöscht.
+
+01:07:17.500 --> 01:07:48.780
+<v SPEAKER_1>Das führt uns ein bisschen weg vom Thema, aber weil wir gerade dabei sind. Also wenn sie gelöscht sind, gibt es die schon... Ach, da hab ich noch eine Nachfrage. Also du als Profi kannst das. Es gibt ja auch so Programme, die das versprechen. Hier, Sie haben aus Versehen Ihre SD-Karte gelöscht, laden Sie diese Programme für 60 Euro runter. Funktioniert das oder ist das nur... Also jetzt nicht einen bestimmten Typ sagen und ob das gut ist oder nicht. Also generell gibt es so eine Programme tatsächlich oder ist das alles nur Fake?
+
+01:07:48.800 --> 01:08:55.560
+<v SPEAKER_2>Nee, die Programme gibt es. Es gibt ja auch, es gibt jede Menge Datenrettungssoftware, die in der Regel auch ganz gut funktioniert. Kann man auf jeden Fall machen. Das eine, den ich jetzt genannt habe, das war der leichtere. Wenn praktisch dieser Eintrag im Inhaltsverzeichnis weg ist, dann hat man auch immer noch Chancen und kann das machen, was eben schon mal erwähnt wurde, dass man nämlich guckt nach den Dateien, praktisch welche Datei-Header findet man. Also Header ist pro Datei Typ, haben viele eine bestimmte Signatur, die den Anfang signalisiert, wo du halt wirklich auf die Bits, auf die Platte direkt guckst und eben guckst, was findest du und was kannst du dann noch an den Teilen wiederfinden. Da gibt es Datenrettungssoftware, die das macht. Es gibt auch Forensiksoftware, die kostenlos ist, die man sich runterladen kann. Das kann man auf jeden Fall mal versuchen, wenn man es tut, ist es auf jeden Fall immer eine gute Idee. Nicht, wenn man das Teil gelöscht hat, erstmal verschiedene Software runterzuladen, zu installieren und dann zu versuchen, das wieder herzustellen. Im Zweifel wird es dann auch schon überschrieben.
+
+01:08:55.580 --> 01:08:57.800
+<v SPEAKER_1>Durch die runtergeladene Software.
+
+01:08:57.820 --> 01:09:18.940
+<v SPEAKER_4>Es gibt da durchaus Live-CDs, also irgendwelche Linux Live-CDs, die dann von der CD direkt booten. Und ganz wichtig, wenn man irgend so was macht, nie auf den Live-Daten direkt arbeiten. Idealerweise hat man irgendwie eine 1-zu-1-Kopie von der SD-Karte vorher gezogen. In dem Fall der SD-Karte halt. Und arbeitet nicht wieder auf dieser SD-Karte beim Wiederherstellen, sondern auf irgendwas anderem.
+
+01:09:18.960 --> 01:09:20.580
+<v SPEAKER_1>Aber wie macht man das denn?
+
+01:09:20.600 --> 01:09:24.680
+<v SPEAKER_4>Da gibt es ja auch Software für, die dann einfach eine 1-zu-1-Kopie macht von der SD-Karte.
+
+01:09:24.700 --> 01:09:42.200
+<v SPEAKER_1>Das ist vielleicht nicht allen höherer innen, klar. Aber was du meinst, ist ja was anderes, als ich kopiere alle Dateien rüber. Weil dann will ich ja eine Kopie machen, die auch die gelöschten Dateien in Anführungszeichen rüber kopiert. Und das ist dann, wie nennt man das, Bitlevel-Kopie?
+
+01:09:42.220 --> 01:10:01.780
+<v SPEAKER_4>Ja, Image. Du ziehst halt eine Image von der gesamten Platte oder SD-Karte. Ein Stichwort dafür ist dann, wenn es um eine kaputte Festplatte geht, zum Beispiel DD Rescue. Das spricht zum Beispiel bei Fehlern nicht ab, sondern versucht einfach dann, den nächsten Sektor zu lesen. Auf diesen CDs meistens ist da auch irgendwas drauf.
+
+01:10:01.800 --> 01:10:10.360
+<v SPEAKER_1>Da kopiert man nicht Dateien rüber, sondern man kann sich das vorstellen, wie da wird stumpf jedes Bit von links nach rechts geschoben.
+
+01:10:10.380 --> 01:10:59.100
+<v SPEAKER_4>Alles, was lest, wird gelesen, wo extern abgespeichert. Sonst passiert dir halt das, was mir passiert ist. Du hast wirklich viele Geschichten. Ich hab für einen Schulfreund damals noch vom Abi irgendwie, das war irrsinnig teuer, eine 10 Gigabyte Festplatte hatte er, wo ganz viele Daten drauf waren. Da hab ich dann mit Taschenrechner und Hexeditor seinen FAT-Eintrag und sein Dateisystem neu geschrieben, damit das wieder lesbar war. Dann wollte er Windows neu installiert haben und dieses Windows hat dann bei der Installation die Festplatten durcheinander gewürfelt. Und das alles, was gerade refresh restauriert war, formatiert und überschrieben, das war dann unwiederbringlich weg. Weil am Anfang war wirklich nur das Inhaltsverzeichnis weg, das hab ich halt neu geschrieben. Aber ich konnte ihm danach einen Ausdruck über 30 Seiten geben, der mit einer Tiny-Dia verloren hat. Das ist ihm leider auch nicht weiter.
+
+01:10:59.960 --> 01:11:26.180
+<v SPEAKER_2>Deswegen, wenn man sowas forensisch macht, kommt natürlich auch hier immer auf die Situation an. Aber wenn man das sauber machen kann, dann baut man die Platte aus, hängt sie an einen Hardware-Write-Blocker, dokumentiert, dass der funktioniert, und kommt dann gar nicht in die Situation, dass man was löscht oder das, was an der Platte geändert wird. Außer natürlich, man hat eine SSD, die, wenn sie angepowered wird, wieder schlau sein will und Daten löscht.
+
+01:11:28.520 --> 01:11:29.520
+<v SPEAKER_3>Das Wiederherstellen von Dateien.
+
+01:11:29.540 --> 01:11:35.180
+<v SPEAKER_2>Ich glaube, wie man raushört, Forensiker mögen SSDs nicht so gerne.
+
+01:11:35.200 --> 01:11:37.560
+<v SPEAKER_1>Kommt so ein bisschen durch. Alex, du wolltest auch mal sagen?
+
+01:11:37.580 --> 01:12:24.160
+<v SPEAKER_3>Ja, dieses Daten retten mit Tools. Ich kenne eins, das nennt sich TestDisc. Das funktioniert besonders gut auf z.B. SD-Karten aus Digitalkameras. Weil die haben ein sehr einfaches Dateisystem. Digitalkameras möchten in der Regel auch einfach nur schnell Daten schreiben. Das heißt, wenn da so ein Foto gemacht wird, dann versuchen die das möglichst schnell auf die SD-Karte zu bekommen. Und schreiben in der Regel die Daten eines Fotos am Stück nacheinander hin. Das heißt, man findet, wenn man so ein Image von seiner SD-Karte macht, die Bilder alle schön nacheinander, soweit das geht. Und damit kann man recht viel wiederherstellen. Wenn man also ein Foto gemacht hat von irgendetwas und irgendjemand zwingt einen, das Foto auf der Kamera zu löschen, SD-Karte rausnehmen und zu Hause ganz entspannt ein Image davon machen und da dann das Bild wieder raussuchen. Das klappt ziemlich gut.
+
+01:12:24.180 --> 01:12:37.180
+<v SPEAKER_1>Also nicht weiter fotografieren, das habt ihr nicht von uns. Wo wir jetzt aber genau an der Stelle sind. Also ein Backup zu haben ist immer noch besser als zu versuchen, das Video zu recht zu frickeln, aber man kann es versuchen.
+
+01:12:37.220 --> 01:12:37.740
+<v SPEAKER_2>Man kann es.
+
+01:12:39.020 --> 01:13:08.360
+<v SPEAKER_1>Wenn der Wörskiss eingetreten ist, besteht das Grund zur Annahme, dass es funktionieren könnte. Aber wo wir jetzt gerade dabei sind, gibt es natürlich auch den umgedrehten Fall. Wir entfernen uns ein bisschen, ich kehre gleich zum Backup zurück und zum Fazit dieser Sendung. Wie lösche ich den Daten, das ist jetzt völlig konträr, aber weil wir gerade dabei sind, wie lösche ich den Daten so, dass es eben nicht mehr geht? Vielleicht will ich ja gar nicht. Vielleicht will ich wirklich sicherstellen, dass dieses Bild niemand mehr restaurieren kann.
+
+01:13:08.380 --> 01:13:37.920
+<v SPEAKER_2>Na deine Platten sind ja alle schön verschlüsselt. Das heißt, du schmeißt deinen Key weg und dann bist du schon mal nicht so schlecht da. Ich kann aber noch mehr dazu sagen. Man sagt so, wenn deine Verschlüsselung im Boot ist und du den Key wegschmeißt, dann bist du ja safe. Jetzt kann man trotzdem sagen, okay, vielleicht, weiß ich nicht, vielleicht hast du nicht Vertrauen, dass deine Verschlüsselungssoftware in aller Ewigkeit keine signikikante Schwachstelle hat.
+
+01:13:38.320 --> 01:13:48.840
+<v SPEAKER_1>Ich rede jetzt auch eher von den Fällen, ich möchte keinen Ahnung, ich will den Rechner verkaufen oder die SD-Karte, meine Frau braucht eine SD-Karte. Ich formatiere die und frage mich, reicht das?
+
+01:13:48.860 --> 01:15:11.200
+<v SPEAKER_2>Wie gesagt, wenn sie verschlüsselt war, ist das schon mal ein guter Anfang. Ansonsten, es gibt, also es reicht nicht, es reicht nicht, weil bei der Formatierung bleiben, also ja, den Video formatierst, aber bleiben Daten erhalten. Es gibt ganz viel Diskussion und sich immer ändernde Hinweise drüber, was man denn dann machen soll, wie häufig man überschreiben soll und mit was. Momentan ist der Ratschlag eigentlich, dass im Normalfall einmal mit einem einfachen Muster komplett überschreiben reicht, außer bei SSDs. Ja, bei SSDs hast du das Problem. Die haben zwei Probleme oder zwei tolle Features, die aber in der Hinsicht jetzt nicht helfen. Das eine ist, dass die, wie gesagt, den Speicher ummappen. Das heißt, du sagst oder dein Betriebssystem sagt, der SSD überschreibt mal das hier mit Nullen. Die SSD mappt das Internum und überschreibt dann gar nicht deine Daten, die du wirklich löschen wolltest, sondern irgendwas anderes. Das andere ist, dass SSDs Speicherzellen ausfallen können und durch Abnutzen halten, die häufig noch so einen Speicher vor, praktisch andere Reserve-Speicherzellen und tauschen den dann hin und her, aber das ist gar nicht transparent nach außen. Also in diesem Speicher können noch Daten liegen, auf die man erstmal keinen Zugriff hat.
+
+01:15:11.220 --> 01:15:53.120
+<v SPEAKER_3>Ich würde mich da so ein bisschen an den Richtlinien des BSI orientieren. Ich habe das für berufliche Zwecke mal recherchiert. Und bei Festplatten scheint so der Konsens zu sein. Einmal überschreiben ist in Ordnung für aktuelle Festplatten. Bei SSDs wird das im Prinzip empfohlen, der SSD zu sagen, dass sie sich bitte einmal komplett löschen soll. Das gibt einen Feature namens Secure Erase, was wohl ganz gut funktioniert. Und bei SD-Karten und USB-Sticks, wenn du sie nicht verschlüsselt hast, bist du eigentlich so ein bisschen auf dich alleine gestellt, weil die manchmal auch noch mehr Speicher haben, als sie nach außen rausgeben. Und es da eben dieses lösche dich bitte selber Feature nicht gibt in der Regel.
+
+01:15:54.400 --> 01:16:06.320
+<v SPEAKER_1>Aber das heißt, wenn man dem Betriebssystem sagt, bitte, also wenn es soweit kommt, dann kann ich dem Betriebssystem nachher sagen, bitte verschlüssel diesen USB-Stick und dann lösche ich ihn. Dann wäre ich ja wieder auf der sicheren Seite.
+
+01:16:06.340 --> 01:16:11.620
+<v SPEAKER_3>Wenn du schon einmal die Daten unverschlüsselt dahingeschrieben hast, dann weißt du ja nicht, ob sie wirklich überschrieben wurden.
+
+01:16:14.380 --> 01:17:33.940
+<v SPEAKER_4>Du hast ja das Problem, dass alle diese Sachen immer in Blöcken gespeichert werden, sei es ein Festplattensektor oder ein Flashblock. Wir hatten das Stichwort jetzt schon mehrfach so umschrieben, die SSD versucht schlau zu sein und der USB-Stick auch. Das nennt sich Wear Leveling. Weil die Controller, das sind kleine Mikrocontroller da drin, mit eigenem Betriebssystem, versuchen dafür zu sorgen, dass du nicht bestimmte Speicherzellen zu sehr abnutzt und sie kaputt gehen. Wenn sie merken, dass eine davon kurz davor ist, den Geist aufzugeben, mappen sie intern um. Wenn du einen Block mit Nullen brauchst, und da ist schon woanders einer, dann kreist du auf den zu, statt irgendeinen anderen unnötig zu löschen. Du brauchst ja nur einen Block Nullen, wo der liegt, ist egal. Wenn du jetzt Sachen formatierst oder neu verschlüsselst, belegst du nicht unbedingt gesamten Platz auf dem Ding. Es bleibt immer noch was da, wo du nicht reingeschrieben hast, was nicht gelöscht wurde, wo der Controller nur weiß, wenn ich darauf zugreife, dann lief vielleicht nur Nullen, weil das Betriebssystem hat da noch nie was reingeschrieben. Dann braucht es sich auch nichts anderes zu merken, weil das sind der E00. Das heißt, du kannst dir nie sicher sein, dass du wirklich alles überschrieben hast, dass eine Festplatte nicht einen Sektor umgemappt hat und irgendwo vielleicht noch ein paar Kilobyte oder ein paar Byte private Daten oder genau dieses eine Passwort, was niemand wissen soll, nicht irgendwo noch in einem Sektor drin ist. Deswegen ist die Empfehlung, alle Medien von Anfang an nur verschlüsselt zu benutzen.
+
+01:17:33.960 --> 01:17:36.420
+<v SPEAKER_1>Das ist aber bei der SD-Karte in der Kamera ein bisschen schwierig.
+
+01:17:36.480 --> 01:17:47.180
+<v SPEAKER_4>Da ist es im Prinzip unmöglich. Da kannst du halt nur komplett eins zu eins alles überschreiben, aber damit reduzierst du natürlich die Limitszeit von so einem Ding dramatisch. Aber je nachdem, was dein Angriff ist...
+
+01:17:47.200 --> 01:17:55.580
+<v SPEAKER_1>Aber warte mal, du hast doch gerade gesagt, man weiß gar nicht genau, ob da nicht noch extra Speicherplatz ist, das heißt alles überschreiben, ist ja dann auch nicht wirklich safe.
+
+01:17:55.600 --> 01:18:26.520
+<v SPEAKER_4>Was ist denn dein Angriff, also das kommt auf dein Angriffsszenario oder auf dein Bedrohungsszenario an. Dein Szenario ist, du möchtest die SD-Karte einem Kumpel weitergeben, damit er die in seiner Kamera benutzt und der soll halt nicht irgendwie die Fotos von dir finden, die da vorher drauf waren. Dann überschreibst du halt alles einmal komplett auf quasi Bittebene. Dann kann man auch dann nicht einfach sowas wieder herstellen. Wenn diese SD-Karte natürlich einem Forensiker in die Hände fällt, der da irgendwie in einem großen Prozess unendlich viel Geld zur Verfügung hat, um das wiederherzustellen, dann baut er eventuell den Chip aus und je nachdem kann man halt vielleicht Sachen noch auslesen.
+
+01:18:26.800 --> 01:18:29.760
+<v SPEAKER_1>Also ich halte mal fest, am Ende hilft immer noch der Flammenwerfer.
+
+01:18:29.780 --> 01:18:30.420
+<v SPEAKER_4>Genau, der Termit.
+
+01:18:31.400 --> 01:18:56.120
+<v SPEAKER_2>Ja, genau, auch bei SSDs, weil es gerade gesagt wurde, das Secure Erase. Ja, also es implementieren viele. Das funktioniert aber auch nicht immer 100%. Also wie diese SSD-Controller funktionieren, was sie machen, das ändert sich einfach sehr, sehr viel zwischen den Generationen, zwischen Herstellern. Und man hat da auch relativ wenig Einblick. Also Secure Erase ist schon mal super. So komplett drauf verlassen, dass dann wirklich alles weg ist von der SSD, kann man aber auch nicht.
+
+01:18:58.800 --> 01:20:30.980
+<v SPEAKER_1>Okay, gut, also weder kann man ein perfektes Backup machen, noch kann man das... Das ist, was für ein Irrsinn diese Digitaltechnik ist. Also nachdem wir eine Stunde lang gesprochen haben, dass es eigentlich ganz schwer möglich ist, ein perfektes Backup zu machen und dafür zu sorgen, dass die Daten wirklich da bleiben, wird dann auch noch in den letzten 10 Minuten erklärt. Dass es aber auch nicht so ist, dass man garantieren kann, dass die Daten wirklich verschwinden. Das ist doch vom Teufel gemacht. Ich würde jetzt zum Anschluss der Sendung nochmal tatsächlich, wir machen das sehr selten und vielleicht habt ihr keinen Bock drauf, dann sagt mir das gleich, aber ich würde es gerne versuchen, nochmal vielleicht tatsächlich sowas Konkreteres zu sagen. Und zwar ausgehend davon, liebe Zielgruppe, ich hoffe das passt so, man ist jemand, der technisch so ein bisschen interessiert ist, jetzt nicht irgendwie ein Hardcore Coder oder sowas, ich will jetzt nicht irgendwie, also nicht auf Betriebssystem Ebene sein eigenes Backup Programm schreiben, sondern man ist jemand, der technisch so ein bisschen interessiert, sagt sich, ok, jetzt habe ich die Sendung gehört, jetzt mache ich, in Zukunft mache ich Backups. Wie könnte so ein Setup aussehen, was so eine pragmatische Abwägung ist zwischen, es ist eben nicht nur eine Spiegelung im Cloud-Anbieter, sondern es ist sozusagen etwas, wo man sagen kann, es ist schon ok, wenn du es so machst. Also liebe Leute, weiterhin schlechtes Backup ist besser als keins. Aber ihr hier versammelte ExpertInnen, wo sagt ihr denn, was ist denn was, was man mal in Angriff nehmen kann?
+
+01:20:32.040 --> 01:21:04.060
+<v SPEAKER_3>Also ich würde sagen, nehmt euch eine Backup-Software. Das kann Rastic sein, das kann Borg-Backup sein, das kann eine andere Software sein. Und fangt einfach erstmal an, im Zweifelsfall, erstmal mit einem lokalen Backup, also auf die gleiche Festplatte. Das ist ganz hilfreich für, ich habe die Datei versehentlich gelöscht und brauche sie schnell wieder. Und dann sucht euch irgendeinen Online-Anbieter oder sowas, wo ihr dann eine zweite Version der Backup-Daten auch nochmal ablegt. Wenn ihr ganz sicher sein wollt, benutzt ihr zwei verschiedene Programme, falls es irgendwelche Schwachstellen oder Bugs in diesen Programmen gibt.
+
+01:21:07.060 --> 01:21:09.160
+<v SPEAKER_1>Und bei den Online-Anbietern immer verschütteln?
+
+01:21:09.200 --> 01:21:12.640
+<v SPEAKER_3>Ja, das war jetzt meine Voraussetzung schon. Entschuldigung, das habe ich nicht extra dabei gesagt.
+
+01:21:18.940 --> 01:22:03.880
+<v SPEAKER_2>Ja, finde ich eine gute Herangehensweise. Ich glaube, was auch noch wichtig ist, dass man sich wirklich überlegt, was sind denn die Dinge, wo es wirklich eine Katastrophe wäre, wenn die weg wären, also sei es die Abschlussarbeit oder die Baby-Fotos von den Kindern. Also ich habe mich überlegt, was sind denn wirklich die Daten, die man unbedingt braucht. Die kann man sich im Zweifel auch irgendwie in die Dropbox legen, wenn die super vertraulich sind oder man schickt sie sich selbst in der E-Mail oder man schickt sie irgendjemanden, den man kennt, von mir aus in WhatsApp oder irgendwas. Ich glaube, das ist ein wichtiger Punkt, wenn man wirklich anfängt. Erstmal gucken, was sind denn wirklich so jetzt die Grundjuwelen, wo es ganz schlimm wäre, wenn die weg wären und einfach mal schnell pragmatisch eine Lösung finden, die irgendwie wegzuspeichern.
+
+01:22:04.780 --> 01:22:21.040
+<v SPEAKER_1>Oh Gott, das will die Hölle Fritz zu Chaosradio mit WhatsApp empfohlen, wenn das rauskommt. Hoffentlich hört niemand diese Folge. Nein Leute, nutzt nicht WhatsApp. Das war ein Beispiel dafür, dass ein schlechtes Backup immer noch besser ist als gar keins. Keine Aufforderung, das zu entzellen.
+
+01:22:27.080 --> 01:22:45.780
+<v SPEAKER_2>Also wenn du irgendwie liest, ich war so schlaflos, ich hab die ganzen Babyfotos aus dem ersten Jahr verloren und bin für immer traurig, schick die in WhatsApp. Also klar, installiert ihr der Full Signal oder macht sonst irgendwas, aber low level ist eben, nimmt das, was du eh schon nutzt und schickt's einfach.
+
+01:22:47.380 --> 01:22:48.320
+<v SPEAKER_1>Alright, Florian?
+
+01:22:48.340 --> 01:23:40.920
+<v SPEAKER_4>Ich würde mich dem im Prinzip anschließen, dass du das mit dem Restdick und online hinschieben. Das ist halt super bequem, weil das ist dann automatisch offside. Es ist halt irgendwie sicher, es ist verschlüsselt. Und wenn ich jetzt irgendwie bedenken hab, dass das viele Daten sind und teuer ist und so weiter, würde ich vielleicht mir noch eine Festplatte kaufen, also eine richtige mit rotierendem Rost und Scheiben und so. Und würde halt die Sachen, die diese Kinder vorderst und sowas, was wirklich wichtig und archiv würdig ist, das einmal auf so eine Platte tun und das irgendwo bei einem guten Freund, Eltern, Verwandten, dem auch immer zu sagen, hier legt das mal irgendwo sicher in den Speicher oder irgendwo, wo nichts drankommen kann, dann hab ich die Sachen schon mal sicher archiviert und das Online-Backup ist dann auch nicht so groß. Aber da kann ich halt wirklich die Dateien und die Daten, die ich benutze, halt sichern. Ich brauch ja nicht unbedingt das ganze Betriebssystem auch sichern, aber halt so die Daten, die ich wirklich brauche.
+
+01:23:40.940 --> 01:24:23.520
+<v SPEAKER_1>Also, liebe HörerInnen, lieber einfach Backupen oder schlecht Backupen als gar nicht. Lieber manuell als gar nicht. Ab und zu mal nachgucken, das, was ich da backupe, funktioniert das überhaupt? Also mal versuchen, die Dateien aufzurufen. Und was so total fancy, geo-redundantes Offside-Backup klingt, kann eben auch einfach eine verschlüsselte Platte sein, die man irgendwo hinlegt. Florian, Alex und Klara, vielen Dank, dass ihr da wart und so ausführlich Ausruf gegeben habt. Und auch besondere Dank an Florian für die zerreichenden Anekdoten.
+
+01:24:23.540 --> 01:24:28.080
+<v SPEAKER_4>Ja bitte gerne. Ich hoffe, ich bin nicht zu sehr ins Wort gefallen. Das ist beim Nicht-Angucken hier immer alles sehr schwierig.
+
+01:24:28.080 --> 01:24:39.500
+<v SPEAKER_1>Das wird bald alles wieder besser. Genau. Jetzt bleibt mir tatsächlich an dieser Stelle nur noch eine Sache zu sagen. Lasst sie euch überwachen und verschüttelt immer schön eure Backups.

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from podcast_words.transcripts import ttml
 
 SAMPLE = """<?xml version="1.0" encoding="UTF-8"?>
@@ -54,3 +56,19 @@ WORD_LEVEL = """<?xml version="1.0" encoding="UTF-8"?>
 def test_word_level_spans_get_spaced():
     cue = ttml.parse(WORD_LEVEL).cues[0]
     assert cue.text == "Herzlich Willkommen beim"
+
+
+def test_parse_minute_second_clock():
+    assert ttml._parse_clock("1:01.340") == 61_340
+    assert ttml._parse_clock("5:40.220") == 340_220
+    assert ttml._parse_clock("2:14.480") == 134_480
+
+
+def test_parse_ligatour_episode_1_ttml():
+    path = Path(__file__).resolve().parents[1] / "data/ligatour/transcripts/raw/episode_1.ttml"
+    if not path.exists():
+        return
+    transcript = ttml.parse_file(path)
+    assert len(transcript.cues) == 22
+    assert transcript.cues[-1].text.endswith("Ciao.")
+    assert max(cue.end_ms for cue in transcript.cues) >= 340_000

@@ -1,0 +1,763 @@
+WEBVTT
+
+00:00:00.440 --> 00:00:01.580
+<v SPEAKER_1>Guten Morgen, Linus.
+
+00:00:01.600 --> 00:00:03.120
+<v SPEAKER_2>Guten Morgen, Tim.
+
+00:00:03.140 --> 00:00:04.880
+<v SPEAKER_1>Und hast du deine SIM-Karte schon getauscht?
+
+00:00:06.280 --> 00:00:09.420
+<v SPEAKER_2>Ich wüsste nicht, was mir das jetzt noch bringen würde.
+
+00:00:30.825 --> 00:00:34.665
+<v SPEAKER_1>Logbuch Netzpolitik, die Folge 132. Herzlich willkommen.
+
+00:00:35.145 --> 00:00:55.305
+<v SPEAKER_2>Wir entschuldigen uns natürlich als erstes mal, dass wir in der letzten Woche dann wieder nicht dazu gekommen sind zu podcasten. Das liegt daran, dass der Tim ja jetzt die Metaebene temporär in ein anderes Land verlegt, um dem GCHQ näher zu sein. Wie ist es denn?
+
+00:00:55.325 --> 00:01:11.465
+<v SPEAKER_1>Ja, 5 Grad bewölkt, die Sonne schaut ein bisschen durch und Bristol ist schön. Also es ist eine tolle, bewegende Stadt, 10 Kilometer vom Meer entfernt und die achtgrößte Stadt des Vereinigten Königreichs. Ich bin glücklich mal wieder hier zu sein.
+
+00:01:11.485 --> 00:01:20.025
+<v SPEAKER_2>Was machst du denn da jetzt? Was soll denn daran schön sein? Bristol ist jetzt nicht irgendwie der Nabel der Welt, oder?
+
+00:01:20.045 --> 00:01:29.465
+<v SPEAKER_1>Also es ist auf jeden Fall der Nabel zu Wales. Es ist auch nur ein paar Kilometer entfernt und ich werde es hier die nächsten Monate verbringen.
+
+00:01:30.465 --> 00:01:42.965
+<v SPEAKER_2>Naja, dann kannst du denn Englisch? Du bist ja Brite. Ich vergesse das immer. Ja, okay, alles klar. Na dann, aber du wirst auch ab und zu dann irgendwie für Freakshow oder so kommst du entweder nach Berlin.
+
+00:01:42.985 --> 00:01:44.205
+<v SPEAKER_1>Ich bin ab und zu in Berlin.
+
+00:01:44.385 --> 00:02:19.385
+<v SPEAKER_2>Okay, das heißt, wir müssen nicht jetzt jedes Mal remote machen und so. Na gut. Tja, kommen wir mal zu den Themen. Wir haben ja einerseits ein paar Sachen in der letzten Woche verpasst. Andererseits müssen wir jetzt mal uns etwas mehr der Security, den Security-Sachen zu bewegen, die ja immer mehr politische Relevanz bekommen. Und deswegen fangen wir heute an mit der Nachricht, die heute Morgen mein Telefon nicht hat stillstehen lassen, nämlich dem SIM-Karten-Hack von GCHQ und NSA.
+
+00:02:20.585 --> 00:02:24.425
+<v SPEAKER_1>Genau, was ist da jetzt passiert? Was hat NSA denn so getan?
+
+00:02:25.165 --> 00:03:54.125
+<v SPEAKER_2>Also man muss sich das so vielleicht, um das mal zu erklären, warum gibt es überhaupt SIM-Karten? Ist jetzt vielleicht nicht unbedingt jedem klar. In den SIM-Karten ist gespeichert quasi die Identität, die wir als Nutzer gegenüber dem Mobilfunknetz haben und auch der geheime Schlüssel, aus dem unsere gesamte Verschlüsselung, die wir mit dem Mobilfunknetz dann aufbauen, generiert wird. Und diese Information könnte man natürlich einfach auch ohne SIM-Karten dem Kunden geben, dass man sagt, hier, gib mal diese beiden Sachen in dein Handy ein, dann funktioniert das. Oder lad dir hier mal ein Profil runter, dann funktioniert das auch. Und der Grund, warum man das auf Karten gemacht hat, ist, dass diese Karten so gebaut sind, dass sie den eigentlichen Schlüssel nie verraten. Also den KI, der in dieser SIM-Karte drin ist, sollte sich, wenn die SIM-Karte keine Sicherheitsschwächen hat, von dieser Karte nicht extrahieren lassen. Das heißt, die Funktion, den Schlüssel zu verraten, hat die SIM-Karte erstmal nicht. Stattdessen wird so beim Anfang einer Transaktion, also wenn das Mobilfunknetz anfängt, mit dem Handy zu verschlüsseln, quasi der SIM-Karte gesagt, fang jetzt mal an, einen Cipher-Stream auf Basis dieses Keys zu generieren und dann authentifizieren wir uns und so weiter. Das heißt, selbst wenn der Nutzer die SIM-Karte in der Hand hat, kriegt er diesen Key dann nicht raus.
+
+00:03:54.145 --> 00:03:58.725
+<v SPEAKER_1>Und das heißt, der Telefonanbieter, der hat den…
+
+00:03:58.745 --> 00:04:03.385
+<v SPEAKER_2>Genau, der Telefonanbieter hat den aber auf der anderen Seite auch, denn der muss ja quasi…
+
+00:04:03.725 --> 00:04:06.885
+<v SPEAKER_1>Der muss dahin gehen, das aufschließen und die Verschlüsselverbindung herstellen.
+
+00:04:06.905 --> 00:04:57.325
+<v SPEAKER_2>Na, der muss halt wissen, welche Verschlüsselung er jetzt erwartet. Also, bei dem Mobilfunkanbieter ist der einmal in einer großen Datenbank, das steht dann halt für jeden Kunden drin. Was weiß ich? Telefonnummer, IMSI und KI und dann wahrscheinlich noch ein paar andere Sachen. Ach so, die ICC-ID, also die Seriennummer der SIM-Karte und so ein paar Informationen. Aber das Entscheidende ist, dass das Telefonnetz weiß, wenn diese Nummer angerufen wird, dann möchte ich diese SIM-Karte erreichen in meinem Netz und mit dieser SIM-Karte habe ich folgenden geheimen Schlüssel für unsere verschlüsselte Kommunikation. Und aufgrund dessen werden wir dann natürlich auch jedes Mal noch mal ein neuer Session-Key errechnet und so. Aber das Entscheidende ist, wenn du diesen KI nicht hast, kannst du keine vertrauenswürdige Verbindung mit dem Netz aufbauen.
+
+00:04:57.445 --> 00:05:16.845
+<v SPEAKER_1>Das heißt, das Geschäft mit SIM-Karten läuft letztlich so. Ich bin die Telekom, ich will für die T-Mobile, für meine Kunden eine Million neue SIM-Karten kaufen. Dann gehe ich zu Gimalto oder wem auch immer von diesen Herstellern und sage, okay, ich hätte gerne eine Million neue SIM und dann kriege ich eine Million SIM und eine Datenbank mit einer Million Schlüsseln.
+
+00:05:17.025 --> 00:05:41.625
+<v SPEAKER_2>Genau. Die SIM-Karte ist nicht so gebaut, dass du den Schlüssel wieder rauskriegen könntest. Das heißt, die werden vorgebanken mit dem Schlüssel drin, werden auch so ausgeliefert und du als Telefonnetz-Provider gehst einfach nur hin und sagst, okay, hast halt eine Zuordnung, ICC-ID, der SIM-Karte und der KI, der da drin ist und so weiter, gibst die dem Kunden raus und trägst bei dir dann nachher in die Datenbank ein.
+
+00:05:41.645 --> 00:05:42.245
+<v SPEAKER_1>Hab ich verkauft.
+
+00:05:42.265 --> 00:05:43.845
+<v SPEAKER_2>Die habe ich jetzt dem Linus Neumann gegeben.
+
+00:05:46.185 --> 00:05:51.125
+<v SPEAKER_1>Das heißt, NSA und GCHQ gehen zum Hersteller?
+
+00:05:51.425 --> 00:06:22.005
+<v SPEAKER_2>Ich will noch kurz einen Punkt sagen, was der Telefon-Provider auch möchte. Warum will der nicht, dass du diese SIM-Karten kopieren kannst? Erstens wird dir dadurch natürlich so ein unkomplizierter Wechsel des Geräts ermöglicht, aber eigentlich sind diese Sicherheitsmechanismen auch dafür da, den Mobilfunk-Provider vor betrügerischer Aktivität zu schützen. Denn wenn ich SIM-Karten kopieren könnte, dann könnte ich ja zum Beispiel eine Kopie meiner SIM-Karte noch jemand anderem geben.
+
+00:06:22.025 --> 00:06:23.085
+<v SPEAKER_1>Und dann telefonieren wir zusammen.
+
+00:06:23.105 --> 00:08:05.985
+<v SPEAKER_2>Und dann telefonieren wir zusammen auf einer Flatrate. Würde aber auch das Mobilfunknetz ein bisschen aus dem Takt bringen, weil kopierte SIM-Karten auf Dauer das Mobilfunknetz ein bisschen verrückt machen würden. Deswegen kriegst du auch, wenn du jetzt eine zweite SIM-Karte hast, habe ich hier zum Beispiel für mein Handy, dann kriege ich eine andere SIM-Karte, wo wieder ein anderes Schlüsselpaar drin ist und so weiter. Und in der Datenbank bei dem Provider steht einfach nur drin, Neumann hat zwei SIM-Karten, beide klingeln lassen, wenn einer anruft. Oder erst die eine klingeln lassen und SMS immer in die eine SIM-Karte schicken oder so. So ist das halt gebaut. Und was sich dummerweise, worauf sie sich dummerweise eingelassen haben, ist, dass sie die SIM-Karten vorprovisioniert bekommen mit diesen, oder provisioniert ist der falsche Ausdruck, aber vorgebacken bekommen mit den Schlüsseln und dass alles von Gimalto kommt. Und genau das, was du gerade gesagt hast, der Provider geht hin, sagt, ich brauche irgendwie 100.000 neue SIM-Karten, schickt mal rüber. Und Gimalto schickt dann die SIM-Karten und die Schlüssel noch mal in einer getrennten Datei dazu. Und dann flicht die der Mobilfunk-Provider bei sich ein und gibt ihr den Kunden raus. Und das hat natürlich auch den Vorteil, dass du SIM-Karten einfach invalidieren kannst. Alles zentral, ne? Also das System nennt sich Smart Card und das ist ein ähnliches Prinzip, was auch so bei Einlasssystemen zur Anwendung kommt, bei Kreditkarten in der Form zur Anwendung kommt, mit diesem kleinen goldenen Chip, der jetzt überall drauf ist. Es ist im Prinzip immer das gleiche Verfahren, dass man ein Geheimnis dem Nutzer in die Hand geben kann. Und zwar so, dass er nicht in der Lage ist, das zu kopieren.
+
+00:08:07.265 --> 00:08:34.545
+<v SPEAKER_1>Okay, und jetzt gehen die Geheimdienste zu Gimalto, holen sich diese Schlüsseldateien und sagen, okay cool, wir können jetzt darauf zugreifen, wir müssen nicht mehr zur Telekom, zur E-Plus oder zu Deutschland Net, Deutschland SIM, gehen und sagen okay, wir würden uns jetzt hier überwachen. Dann fragen die möglicherweise da, so hey, habt ihr überhaupt eine Berechtigung dazu? Sondern die können einfach direkt eben dann raufgehen.
+
+00:08:34.565 --> 00:10:01.845
+<v SPEAKER_2>Genau, wenn du den KI hast, dann kannst du prinzipiell von allen SIM-Karten, zu denen du den KI hast, die gehören dir quasi, d.h. du kannst die Telefonate, die davon geführt werden, vollständig abhören. Du kannst aber auch die SIM-Karte imitieren. Das ist eigentlich so das Betrugs-Szenario, was da auch ganz spannend ist bei Leuten, die in der Lage sind, KI's zu extrahieren. Es gibt wie gesagt natürlich dann auch immer wieder Sicherheitsschwankungen in SIM-Karten. Das Team, in dem ich vor zwei Jahren gearbeitet habe, muss das gewesen sein, genau beim Camp in Holland und bei der BlackHat vor zwei Jahren, da auch was zu präsentiert. Das ist natürlich auch bei einigen SIM-Karten-Modellen möglich ist, diesen KI da irgendwie wieder rauszukratzen über Sicherheitsschwächen. Wenn du das getan hast, dann hast du alles, um diese Identität auch zu fälschen. Das heißt, könnte ich jetzt in deinem Namen Premium-SMS schicken, also irgendwelche SMS, wo die pro Stück 60 Cent kosten oder 1,80 Euro spenden, und dann könnte ich mir Geld spenden, also für Logbuch Netzpolitik zum Beispiel. Können Premium-SMS sende so und so an, und dieser gehört mir dann.
+
+00:10:01.865 --> 00:10:06.305
+<v SPEAKER_1>Und der Hack auf die einzelne Karte ist natürlich viel aufwendiger als direkt die Datenbank sich rauszukriegen.
+
+00:10:06.325 --> 00:10:35.205
+<v SPEAKER_2>Genau, und insofern muss man sagen, die NSA geht da verantwortungsbewusst mit Steuergeldern um und versucht natürlich, den ökonomischsten Angriff zu finden. Und die Folge ist aber, Gimalto ist einer der führenden Hersteller. Es ist der führende Hersteller für SIM-Karten. Und die decken ungefähr so 50 Prozent des Marktes ab, wenn nicht sogar mehr. Die genauen Zahlen kenne ich da gar nicht, aber das ist auf jeden Fall der eine große.
+
+00:10:35.285 --> 00:10:37.765
+<v SPEAKER_1>Und es gibt es Milliardengeräte.
+
+00:10:37.785 --> 00:13:09.505
+<v SPEAKER_2>Ja, vor allem weltweit. Also jeder Mobilfunk-Provider, der irgendwie Gimalto-Karten zum Einsatz bringt, ist potenziell betroffen und das Krasse ist, wir wissen es ja jetzt gar nicht, welche betroffen sind und welche nicht. Und der schöne Teil ist eben, wenn du diesen KI hast, kannst du eben bei allen betroffenen SIM-Karten weltweit mit einem rein passiven Angriff diese Telefonate abhören. Das heißt, es gibt keine, also das Gemeine oder das Schöne bei passiven Angriffen ist, die sind halt nicht detektiert oder nachweisbar. Und das heißt, du kannst halt, wenn man jetzt mal wieder auf dieses Merkel-Handy zurückkommt, kannst halt jetzt da einen passiven Angriff machen und zwar ungeachtet davon, wie gut die Verschlüsselung tatsächlich ist. Der bisherige Stand der Technik war, dass die 2G-Verschlüsselung schon geknackt werden kann mit moderatem Aufwand, also für Geheimdienste im Prinzip, also absolut lächerliche Preise. 3G hat dann schon eine bessere Verschlüsselung bekommen, also einen anderen Algorithmus und längere Schlüssel. Das heißt, da waren dann passive Angriffe, sind da eigentlich nicht wirklich drauf bekannt öffentlich. Und da wird es natürlich dann interessanter, direkt auf die SIM-Karte zu gehen. Klammer auf, da gibt es jetzt auch nochmal Angriffsszenarien, die auch von unserem Team dieses Jahr präsentiert wurden, bei 31C3, wo man dann über SS7 irgendwie den Session-Key kriegt, das ist aber dann immer nur der Schlüssel für das eine Telefonat, das gerade stattfindet. Und die Königsklasse des Angreifens von Mobiltelefonen oder von Mobilkommunikationen ist eben, den KI zu haben, weil dann hast du wirklich alle Verschlüsselungen für immer geknackt und zwar eben auch Retrograd, also dieser Ansatz, einfach alle verschlüsselten Kommunikationen wegzuschreiben und darauf zu warten, dass man irgendwann den Schlüssel hat, der trägt dann hierauf für die NSA-Früchte. Und das wäre natürlich jetzt ein, das wäre natürlich, also das heißt, alles, was Mobiltelefonie an Sicherheitsannahmen hat, ist damit einfach allemal kaputt für immer.
+
+00:13:09.985 --> 00:13:21.305
+<v SPEAKER_1>Schön, Gemalto hat ja den, der Leitspruch, der Claim von Gemalto ist, Security to be free.
+
+00:13:21.325 --> 00:14:09.005
+<v SPEAKER_2>Das Krasse ist, als die erste Sicherheitslücken in den Gemalto-Karten, in den etwas älteren Gemalto-Karten da veröffentlicht wurden, die Folge davon war einfach, dass Gemalto gesagt hat, ja super, müsst ihr die neuen Karten kaufen. Da ist das Problem nicht drin. Da hat Gemalto letztendlich zwar einen Schaden im Ruf genommen, aber finanziell keinen unmittelbaren Schaden erlitten. Ganz im Gegenteil, die haben versucht, den Netzbetreibern neue Karten zu verkaufen bzw. haben dann auch irgendwie versucht, die Karten zu patchen und so. Das war ein relativ großes Kuddelmuddel, je nachdem, welche Karten-Generation da gerade betroffen war.
+
+00:14:09.025 --> 00:14:10.545
+<v SPEAKER_1>Haben die sich denn schon geäußert?
+
+00:14:10.565 --> 00:15:27.725
+<v SPEAKER_2>Das weiß ich nicht genau. Ich war heute die ganze Zeit damit beschäftigt, Presseanfragen zum Ausmaß des Schadens zu beantworten und habe mich noch nicht damit beschäftigt, was Gimaito sagt. Dem bleibt nichts anderes über, als das zu verurteilen. Oder? Also was sagen Sie dazu? Ja, also du musst noch lesen. Genau, das, was wir im Prinzip immer wussten und jetzt kommen natürlich auch Leute, die sagen, ja, aber das wussten wir doch schon immer, dass Mobilfunk unsicher ist. Ja, eigentlich eben nicht. Bis jetzt war der Stand der Technik, dass du, wenn deine Sorge war, dass der Geheimdienst der Juristikation, in der du dich befindest, dich abhört, dann konntest du natürlich dem Mobilfunknetz und jedem anderen Telefonnetz nie wirklich trauen. Aber wenn deine Sorge war, dass ein internationaler Geheimdienst dich abhört, ohne dass du irgendeine Möglichkeit hast, dich dagegen zu wehren, dann sah die Welt nicht so schlecht für dich aus. Und genau das ist halt jetzt passiert, es ist einfach alles vorbei.
+
+00:15:28.045 --> 00:16:11.305
+<v SPEAKER_1>Genau, und Gimalto sagt, wir können in diesem frühen Stadium noch nicht irgendwie sagen, was da passiert ist. Wir sind extrem aufmerksam gegen alle Angriffe und Hacker und haben immer unsere Sicherheit in den letzten Jahren nach oben gezogen und wir nehmen die Publikation sehr ernst und will devote all resources necessary, also um das aufzuklären, also die sagen eigentlich noch nichts. Sagen noch, wie wichtig ist eigentlich, also Cybersecurity ist so wichtig heutzutage. Also die sagen noch, das ist noch kein richtiges Statement, das ist nur so, okay, wir haben es mitbekommen, oh Scheiße, wir haben ein Problem.
+
+00:16:11.325 --> 00:16:45.165
+<v SPEAKER_2>Genau, also das Problem, was sie hier haben, ist natürlich, dass die im Zweifelsfall und das war natürlich auch wieder der, wie gesagt, das ist ein ökonomischer Einsatz von NSA-Ressourcen, die haben natürlich mit jedem einzelnen Provider, dem sie irgendwas liefern, natürlich das Problem, wie geben wir dem denn diese Keys? Und ich kann mir gut vorstellen, dass die nicht mit jedem Provider da die Sorgfaltspflicht walten lassen, die jetzt aus meiner Perspektive da geboren wäre.
+
+00:16:45.185 --> 00:16:48.105
+<v SPEAKER_1>Hier sind die Dropbox, hier könnt ihr die Keys runterladen.
+
+00:16:48.125 --> 00:16:48.785
+<v SPEAKER_2>Ja klar.
+
+00:16:48.805 --> 00:16:49.945
+<v SPEAKER_1>Jetzt sind wir auf die Tour.
+
+00:16:49.965 --> 00:17:59.645
+<v SPEAKER_2>Also will ich den jetzt nicht unterstellen, aber kannst du dir natürlich vorstellen. Und am Ende gibt es wahrscheinlich einen relativ ausführlichen Nutzerkreis oder Mitarbeiterkreis bei Gemalto, der Zugriff auf diese Daten hat. Und das, was sich hier als Angriff eben auch herauskristallisiert hat, ist, dass die Geheimdienste GCHQ und NSA hier einfach die Mitarbeiter von Gemalto getargetet haben und einfach deren, was weiß ich, Mailboxen oder Computer irgendwie geohnt haben. Und immer, ja, also es kristallisiert sich heraus, dass die NSA eben auch mit den besten Maßnahmen und ohne aufzugeben auf den größten Trog geht. Und klar, wenn du den SIM-Kartenhersteller ownen kannst und da einfach mal alle Keys rauskratzt, ja, super. Also das ist halt sehr viel billiger als einen Cracker für LTE zu entwickeln.
+
+00:17:59.665 --> 00:18:17.305
+<v SPEAKER_1>Jetzt gibt es Kritik daran, also die Geschichte wurde von Intercept veröffentlicht, gibt Kritik, dass das erst so spät kommt, dass das irgendwie, hey, die Daten sind seit langem oder die Snowden-Dokumente bekannt. Warum wartet ihr anderthalb Jahre?
+
+00:18:17.325 --> 00:19:36.765
+<v SPEAKER_2>Das weiß ich nicht. Ich meine, die Snowden-Dokumente sind natürlich auch viele. Die muss man auch erst mal alle gelesen haben. Und zu jeder einzelnen Veröffentlichung musst du ja, also stell dir mal vor, Glenn Greenwald, Laura Poitras oder irgendjemanden bei Intercept, würde es jemals passieren, dass sie eine vorschnelle Behauptung aufstellen, die sich nachher als nicht 100 Prozent gesichert herausstellt. Dieses gesamte Ding wäre sofort diskreditiert. Man kann sich vorstellen, wie viele PR-Berater und Geheimdienstmitarbeiter, die in den USA nur damit beschäftigt sind, irgendwie bei The Intercept Fehler nachzuweisen. Entsprechend müssen die natürlich mit enormer Sorgfalt vorgehen. Und alle Behauptungen, die sie aufstellen, eben auch absolut belegen und beweisen können. Und das scheint mir hier der Grund zu sein, warum das auch so lange gedauert hat, bis sie das eben zu Ende recherchiert hatten. Gleichzeitig haben sie natürlich auch die Strategie ein bisschen, diese Geschichten eben nach und nach immer wieder neu zu veröffentlichen, um den politischen Druck eben auch aufrechtzuerhalten.
+
+00:19:36.785 --> 00:19:38.585
+<v SPEAKER_1>Und nicht alles auf einmal.
+
+00:19:38.605 --> 00:19:58.965
+<v SPEAKER_2>Und gleichzeitig ist es auch so, ich meine, diese Veröffentlichung kommt natürlich jetzt auch in einer Zeit und in einer Welt, wo jetzt keiner mehr sagt, oh was, Mobilfunk abhören, wer hätte damit rechnen können? Ja, also ich meine, Mobilfunk hatte jetzt nie den Ruf, dass Menschen das als besonders vertrauenswürdig und sicher angesehen hätten.
+
+00:20:00.145 --> 00:20:19.485
+<v SPEAKER_1>Okay, auch hier bleibt wahrscheinlich nur, noch ein Layer von Verschlüsselung raufzulegen und eben irgendwelche Apps zu nutzen oder Kryptofone, um da eben diese unsichere Basis, die jetzt davor herrscht, irgendwie zu machen.
+
+00:20:19.505 --> 00:20:52.685
+<v SPEAKER_2>Genau, also die Maßnahme, die natürlich jetzt geboten wäre, ist zu sagen, okay, ist jetzt auch nichts Neues. Also ich meine, das wird ja seit vielen Jahren, also über einem Jahrzehnt gibt es irgendwie Kryptofone und andere Anbieter, die also sagen, okay, Ende zu Ende verschlüsselte Telefonie mit Spezialgeräten, die halt über dieses Mobilfunknetz, das wir grundsätzlich als nicht vertrauenswürdig betrachten, einen verschlüsselten Kanal aufbauen, der von einem Gerät zum anderen geht.
+
+00:20:54.185 --> 00:20:57.105
+<v SPEAKER_1>Aber das ist ja natürlich keine Lösung jetzt für die Massen.
+
+00:20:57.585 --> 00:21:42.725
+<v SPEAKER_2>Na ja, genau, also Kryptofones sind nicht ganz so günstig. Und zwar liegt das daran, dass in dem Moment, wo du sagst, du machst jetzt ein Ende zu Ende verschlüsselndes Telefon, dann wird natürlich genau dieses Telefon zum Angriffsziel. Weil dann ist der nächste sinnvolle Angriff, gerade bei Kryptofonen, die halt wirklich eine Verschlüsselung zum Einsatz bringen, wo man sich relativ sicher sein kann, dass jetzt ein Angriff auf die Schiffre eher nicht realistisch erscheint. Genauso wie es ja hier bei LTE auch schon der Fall ist. Die greifen ja nicht die Schiffre an, sondern die holen sich einfach die Keys. Und das heißt, genau dieser Angriff auf ein Kryptofon wäre dann eben oder eben ein Telefon mit einer x-beliebigen Krypto-App. Was gibt es da?
+
+00:21:42.745 --> 00:21:45.225
+<v SPEAKER_1>Redphone, Signal.
+
+00:21:45.245 --> 00:22:59.285
+<v SPEAKER_2>Genau, Signal ist das Redphone für iPhone. Dann gibt es noch verschiedene andere Anbieter. Text-Secure ist das nur für Nachrichten. Was gibt es denn noch? Silent Circle. Ich glaube, das sind schon die meisten. Das Guardian-Project, die arbeiten da auch an irgendwas. Es gibt viele kostenlose und auch kostenpflichtige Applikationen. Das Problem ist, in dem Moment wird das Telefon zum attraktiven Angriffsziel. Wenn du jetzt sagst, du willst einen normalen Schutz für dich als Bürger haben, dann reicht im Zweifelsfall, wenn du dir eine App runterlädst. Aber wenn du sagst, du fürchtest dich vor Geheimdiensten, die so ganz schön Malto angreifen, die schrecken von nichts zurück, dann hilft es also nur, dass das Telefon noch mal besonders gehärtet ist. Deswegen sind Krypto-Telefone so teuer, weil sie konstant gehärtet werden müssen gegen alle möglichen Angriffsszenarien. Deswegen ist ein Hardware-Kryptophon im niedrigen bis mittleren vierstelligen Bereich. Und das ist ja nur eins, du brauchst ja zwei.
+
+00:22:59.305 --> 00:23:08.785
+<v SPEAKER_1>Und auf Hardware geht die NSL ja auch gerne, wie man die Woche gesehen hat. Also die Wanze auf der Festplatte. Was ist da eigentlich passiert?
+
+00:23:09.125 --> 00:24:25.405
+<v SPEAKER_2>Na, da gab es jetzt eine Security-Konferenz in Cancun. Die wurde, glaube ich, von Kaspersky abgehalten, die Russen. Kann man natürlich gut verstehen, dass Cancun natürlich sehr, sehr viel attraktiver von Temperaturen ist als jetzt irgendwie eine Konferenz um diese Jahreszeit in Moskau. Und die haben relativ viel Forschung vorgestellt, die sie alle einer Hackergruppe zu attribuieren. Das ist die Equation Group, haben sie die getauft. Und zwar Equation, also mathematische Gleichung. Aufgrund der Vorliebe dieser Gruppe für Kryptographie. Und diese Vorliebe hat es natürlich sehr, oder hat es dann auch erschwert, deren Malware und deren Angriffe zu reversen. Aber worum es hier eigentlich geht, was jetzt so die Meldung war, ist, dass sie eine quasi trojanisierte Firmware für Festplatten entdeckt haben. Muss man sich so vorstellen, eine Festplatte. Ist einmal diese ganzen magnetisierbaren Ringe, die da drin sind, auf die dann ein Magnetkopf Daten schreibt. Plus ein kleiner Computer, der diese Festplatte steuert.
+
+00:24:25.425 --> 00:24:26.305
+<v SPEAKER_1>Und da gehen die rauf.
+
+00:24:26.325 --> 00:26:11.365
+<v SPEAKER_2>Und auf der anderen Seite eben dann hier bei der Festplatte, die du hier liegen hast, am Ende USB spricht mit dem eigentlichen Computer oder eben SATA oder was auch immer. Also quasi das Protokoll, was der Computer erwartet, um mit einem Storage Device sprechen zu können. Und das heißt, eine Festplatte ist nichts als ein weiterer kleiner Computer, der eine spezifische Funktionalität zur Verfügung stellt. Und wenn ich jetzt also hingehe und sage, ich ändere die Firmware von dieser Festplatte, dass sie etwas macht, was in meinem Sinne ist, dann kann ich da natürlich relativ viele Angriffsszenarien daraus entwickeln. Das Naheliegendste wäre zu sagen, hey, jedes Mal, wenn dieser Computer angeht und nach der Festplatte fragt, antworte bitte mit, ja, ich bin eine Festplatte und von mir kann man booten, boote ein sehr schmales Virtualisierungssystem und dann erst das System, was wirklich auf dieser Festplatte liegt. Wäre jetzt so ein Beispiel. Dann hättest du quasi alles, was sich danach abspielt, quasi in deiner Virtualisierung gefangen, könntest alle Tastatureingaben und so weiter irgendwie kontrollieren. Oder sagen wir mal auf der Festplatte, der Nutzer ruft eine Datei auf, eine Exe-Datei und die Festplatten-Firmware sagt, ach, der will eine Exe haben, jetzt können wir mal gerade ganz kurz mit einem Trojaner dieses System infizieren. Also es gibt viele verschiedene Angriffszenarien, wenn die Firmware der Festplatte…
+
+00:26:11.385 --> 00:26:15.605
+<v SPEAKER_1>Da hilft dann auch kein Löschen und Formatieren halt, ne?
+
+00:26:15.625 --> 00:26:20.805
+<v SPEAKER_2>Genau, da hilft gar nix. Die Firmware ist ja intransparent für dich als Nutzer.
+
+00:26:20.825 --> 00:26:24.985
+<v SPEAKER_1>Es ist nicht so, dass die Firmware so, hey, mach mal eine neue Firmware auf die Festplatte.
+
+00:26:25.005 --> 00:26:25.985
+<v SPEAKER_2>Doch, das gibt's sogar.
+
+00:26:26.005 --> 00:26:28.865
+<v SPEAKER_1>Aber das macht ja keiner. Also kaum jemand.
+
+00:26:28.885 --> 00:26:29.845
+<v SPEAKER_2>Ich mach das schon manchmal.
+
+00:26:29.865 --> 00:26:35.085
+<v SPEAKER_1>Ja, okay, aber sagen wir mal, 99 Prozent der Leute machen das nicht.
+
+00:26:35.105 --> 00:26:43.045
+<v SPEAKER_2>Genau, viele machen das nicht. Und die Funktion, die Firmware zu updaten, ist ja eine Funktion der Firmware. Das heißt…
+
+00:26:43.245 --> 00:26:45.345
+<v SPEAKER_1>Ah, der kann immer noch draufbleiben dann.
+
+00:26:45.365 --> 00:28:22.705
+<v SPEAKER_2>Genau, also so eine NSA-Firmware wird dann natürlich sagen, ach, neue Firmware, ja klar, kein Problem, gib mal her. Und lässt sich halt die Firmware geben, schmeißt die weg, merkt sich den Versionsstring und sagt, ich bin jetzt diese Firmware. Wunderbar, Update hat funktioniert. Vielen Dank, lieber Nutzer. Übrigens, Parallele dazu, vielen Nutzern oder vielen Hörern sagt sicherlich, bad USB was, das war im Prinzip das Gleiche auf die Firmware von USB-Sticks oder von anderen USB-Geräten. Da wurde also die Firmware so manipuliert, dass man sagt, du gibst dich erstmal als USB-Stick aus und funktionierst auch wie ein USB-Stick und irgendwann sagst du, du bist übrigens auch noch eine Tastatur und gibst mal eben gerade kurz ein paar Befehle ein oder du bist auch eine Netzwerkkarte und führst mal eben einen netzwerkbasierten Angriff auf das Gerät aus. Und auch da war natürlich die Herausforderung, dass es keine Möglichkeit gibt, keine sinnvolle Möglichkeit, die Firmware von Geräten auf Infektionen zu prüfen, weil die Firmware per Definition so gebaut ist, dass sie sich nicht auslesen lässt, weil der Hersteller ja nicht möchte, dass seine Firmware geklaut wird. Also das sind eben persistente Infektionen, die wenn sie einmal da sind, nur mit sehr komplizierten Methoden überhaupt zu detektieren oder zu entfernen sind.
+
+00:28:22.725 --> 00:28:32.225
+<v SPEAKER_1>Aber da kommen sie jetzt nicht ab Werk mit, oder was kriege ich, wenn ich eine Western Digital-Festplatte mir kaufe, sind ja auch da direkt ab Werk mit dabei.
+
+00:28:32.245 --> 00:31:30.705
+<v SPEAKER_2>Also da ist jetzt das Spannende, wo hat Kaspersky die Sache überhaupt her? Denn eine infizierte Festplatte wirst du nur sehr schwer von einer nicht infizierten Festplatte unterscheiden können. Dafür müsstest du aber erstmal einen Anhaltspunkt haben, dass diese Festplatte infiziert ist, im Gegensatz zu einer nicht infizierten. Und diesen Anhaltspunkt dann untersuchen können, um irgendwann den Unterschied feststellen zu können, was tut diese Firmware überhaupt. Also ist es wahrscheinlich, dass Kaspersky seine Finger an etwas bekommen hat, also an die Malware bekommen hat, die quasi dieses bösartige Firmware-Update in die Zielfirmwares einspielt. Und es kursieren Gerüchte, dass Kaspersky da vielleicht ein bisschen Hilfe hatte von seinem Partner, dem FSB, dem Russischen Geheimdienst, der wahrscheinlich sehr viel eher Ziel eines solchen Angriffs war und das kursieren gerade Gerüchte, ob nicht vielleicht Kaspersky dann einen Tipp vom FSB bekommen hat. Ja, weil, wie gesagt, solche Sachen, selbst wenn du weißt, diese Festplatte ist betroffen, musst du noch immer sehr, sehr viel Aufwand betreiben, um herauszufinden, wie diese Infektion sich gestaltet und wie du die wieder loswerden könntest oder analysieren könntest. Denn die Funktion, eine Firmware auszulesen, haben die Geräte in der Regel nicht, weil die Firmware ja geheim gehalten werden soll. Das heißt, das war auch bei der Entwicklung von Bad USB, die übrigens zufälligerweise auch in meinem Team stattgefunden hat oder in dem Team, für das ich arbeite, die erste Herausforderung. Man muss erstmal die Firmware da rauskratzen, um sie zu verstehen, um sie dann zu manipulieren, um dann eine neue Firmware einspielen zu können. Deshalb gab es da jetzt auch wieder Gerüchte, ob denn nicht eventuell da eine Kooperation stattgefunden hat oder ob nicht eventuell die NSA, als sie sich von den Festplattenherstellern Festplatten hat liefern lassen, gesagt hat, Freunde, alles, was bei uns zum Einsatz kommt, wird übrigens von uns nochmal sicherheitsauditiert. Und bei euch interessieren wir uns für die Firmware, gebt mal den Source-Code, damit wir gucken können, ob das alles so sicher ist, wie wir das gerne bei uns in unserem Datencenter in Utah haben wollen. Und wenn das der Fall ist, dann lassen wir uns von euch auch ein paar Millionen Festplatten liefern. Und das wäre zum Beispiel eine Möglichkeit, wie die NSA vielleicht an den Source-Code gekommen ist, den ändern konnte, eigene Firmware schreiben konnte und diese dann mit normaler MyWare über die Firmware-Update-Befehle auch auf Festplatten schreiben könnte. Betroffen ist Western Digital, Magstor, Samsung, Toshiba und Seagate.
+
+00:31:30.725 --> 00:31:34.025
+<v SPEAKER_1>Und ja, ist ein ordentlicher Marktanteil schon mal.
+
+00:31:34.045 --> 00:34:19.565
+<v SPEAKER_2>Ist ein ordentlicher Marktanteil. Hier bietet sich natürlich dann auch noch, es gibt eingeschränktere, oder sagen wir mal eine Vollverschlüsselung, bietet hier natürlich gegen bestimmte Angriffsszenarien einen Schutz. Aber wie gesagt, die Königsklasse wäre eben, dass die Festplatte zu Beginn beim Boot mit dem Computer etwas anderes vorgaukelt, als das, was sie nachher macht. Und das ist eben das Geile bei solchen Firmware-Angriffen, dass du eben Dateien modifizieren kannst. Und quasi beim ersten Abruf einer Datei, was anderes lief, als beim zweiten Abruf. Und das dann eben nutzen könntest, um Rechner zu infizieren. Also wenn der Festplatte nicht mehr getraut werden kann, dann ist es schlecht für deinen Computer. Übrigens hat Kaspersky gleichzeitig noch über einen USB-Stick berichtet, der namens Fanny, der zum Einsatz kommt, um über sogenannte Air Gap-Netzwerke zu arbeiten. Also hoch sicherheitsrelevante Gerätschaften versucht man in weiser Voraussicht, von dem Internet fernzuhalten, also für die Steuerelektronik eines Atomkraftwerkes sollte, so diktiert ist der gesunde Menschenverstand, nicht mit dem Internet in Verbindung gebracht werden. Aber natürlich hat das dann Folgen dafür, wie man überhaupt Dateien da hinbekommt und das, was sich herausgestellt hat, ist, dass natürlich die Leute anfangen über diesen Air Gap, also über die Luftlücke, irgendwie mit USB-Sticks oder so zu hantieren, weil Virenscanner müssen ja trotzdem noch geupdatet werden. Also irgendwie müssen ja Daten dorthin kommen und Updates müssen installiert werden und so. Da haben sich halt USB-Sticks als ganz beliebtes Mittel etabliert und da wird natürlich dann BadUSB interessant und Stuxnet hat sich ja auch über USB-Sticks auf die geairgappten Zentrifugen des iranischen Atomprogrammes begeben und dieser FANY ist ein USB-Stick, der das Zielsystem in diesem Airgap-Netz infiziert, sodass dieses anfängt dort Auszukundschaften, also Netzwerkscans zu machen, zu fingerprinten, was sind denn hier für Geräte, welchen Patch-Stand haben sie und dann diese Informationen wieder auf den USB-Stick zu kopieren und wenn du das nächste Mal in einem Computer bist, der mit dem Internet verbunden ist, dann sagt er, ah, Internet, dann funkt er halt nach Hause.
+
+00:34:19.585 --> 00:34:21.845
+<v SPEAKER_1>Ist das auch mit SD-Karten denkbar?
+
+00:34:22.005 --> 00:35:11.525
+<v SPEAKER_2>Ist das auch mit SD-Karten denkbar? Da gab es auch, ich glaube, beim 30C3 einen Vortrag, der im Prinzip ein ähnliches Szenario hatte. Ist im Prinzip mit allem denkbar, also für USB ist es jetzt demonstriert und öffentlich bekannt, für Festplatten-Controller ist es dokumentiert und öffentlich bekannt. Bei USB hast du noch die schöne Sache, dass es ja so viele Geräteklassen gibt, d.h. der USB-Stick kann nicht nur Angriffe machen, die irgendwie mit USB-Stick zu tun haben, sondern er kann auch alles andere imitieren, was es über USB gibt, also eine Soundkarte, eine Netzwerkkarte, ein Stift, eine Maus, eine Tastatur und entsprechend darüber dann wieder Computer angreifen. Also, man sieht, das Feld der IT-Sicherheit wird zunehmend zur Lachnummer.
+
+00:35:12.085 --> 00:35:16.765
+<v SPEAKER_1>Ja, da hatte Lenovo dann auch diese Woche eine schlechte Meldung.
+
+00:35:19.365 --> 00:35:22.845
+<v SPEAKER_2>Superfisch. Das ist echt der Superhammer.
+
+00:35:22.865 --> 00:35:25.685
+<v SPEAKER_1>Superfisch-Superhammer.
+
+00:35:25.745 --> 00:35:40.105
+<v SPEAKER_2>Lenovo ist hingegangen und hat gesagt, in unseren neuen Geräten liefern wir mal eine Software mit, die Werbung in Webseiten einblendet, warum auch immer.
+
+00:35:40.125 --> 00:35:45.905
+<v SPEAKER_1>Werbung in Webseiten, das heißt, die wollen nochmal so ein Level von Werbeverkauf haben sie draufgemacht. Genau.
+
+00:35:45.925 --> 00:35:53.465
+<v SPEAKER_2>Sie haben gesagt, das ist völlig absurd, mir ist völlig unklar, was das überhaupt ist. Na ja, mir ist schon klar, was das soll.
+
+00:35:53.485 --> 00:36:05.545
+<v SPEAKER_1>Na ja, klar, das geht um Geld. Es geht darum, also ich mach nochmal irgendwie als Hardware-Firma, versuche ich an dem Werbemarkt, der eigentlich an mir vorbeizieht, zu partizipieren.
+
+00:36:05.565 --> 00:36:22.905
+<v SPEAKER_2>Das ist ja sowieso inzwischen so ein Geschäftsmodell, dass man sagt, okay, das Internet ist irgendwie größtenteils werbefinanziert, dann gehen diese AdBlock Plus Leute hin und sagen, wir bieten ein Programm an, was dich von der meisten Werbung befreit und dann haben wir irgendwann so einen großen Marktanteil, dass wir anfangen...
+
+00:36:22.925 --> 00:36:26.045
+<v SPEAKER_1>Leuten das zu verkaufen, das Recht wieder durch den Blocker durchzukommen.
+
+00:36:26.065 --> 00:36:40.165
+<v SPEAKER_2>Genau, das war ja schon vor zwei, drei Jahren eben das Thema, das AdBlock Plus gesagt hat, okay, wenn eure Werbung nicht so besonders störend und blinkend ist, dann könnt ihr bei uns kaufen, dass ihr unseren Filter umgeht, wunderbar.
+
+00:36:41.065 --> 00:36:43.005
+<v SPEAKER_1>Ehreziele, moralisch einwandfrei.
+
+00:36:44.285 --> 00:37:07.645
+<v SPEAKER_2>Und Lenovo hat sich halt gedacht, wunderbar, dann bauen wir mal so ein Programm, was wir ausliefern auf unsere Hardware, was in Webseiten Werbung einbaut, in unserem Sinne. Und dann können wir auf dem freien Markt die Dienstleistung anbieten, auf Lenovo-Laptops zu werben im Browser mit garantiertem Erfolg zu verschränken.
+
+00:37:07.665 --> 00:37:10.185
+<v SPEAKER_1>Das legt sich dann oben rüber, oder wie war das gedacht?
+
+00:37:10.205 --> 00:37:24.365
+<v SPEAKER_2>Das ist einfach viel geiler. Jeder Traffic, dein gesamter Web-Traffic, geht durch diesen Superfish einmal durch. Geht zu Lenovo und …Nee, nee, nee, nee. Und der Superfish sagt einfach, ach ja, hier, da bauen wir jetzt mal hier noch eine schöne Werbung mit ein.
+
+00:37:24.385 --> 00:37:24.705
+<v SPEAKER_1>Pop-up.
+
+00:37:25.365 --> 00:38:49.505
+<v SPEAKER_2>Pop-up oder irgendwie die Werbung, die da schon ist, das ist der Ansatz, der eigentlich interessanter ist. Die Werbung, die da schon ist, die wir erkennen, die ersetzen wir einfach durch was anderes. Weil das macht es dir einfacher, weil derjenige, der da Werbung schaltet, hat sich ja schon von der Größe …Das ist ein App-Blocker, der dann auch wieder Werbung macht, oder was? Sowas zum Beispiel, Werner. Also ich muss ganz ehrlich sagen, ich habe mich eher nur aus Sicherheitsperspektive damit auseinandergesetzt, als was der jetzt genau macht. Aber Fakt ist, der baut Werbung in Seiten ein. Das kannst du natürlich, also ein Werbeproxy, ein vorinstallierter Werbeproxy auf deinem Rechner. Und das kannst du natürlich sehr schön bei HTTP machen, weil die Kommunikation ja unverschlüsselt durch diesen Proxy geht und dann kann das halt verändern. Klammer auf, das ist ja das große Risiko bei unverschlüsselter Kommunikation, nicht nur, dass sie abgehört wird, sondern dass jemand, der sich in der Mitte befindet, dann auch Angriffe in diese Kommunikation einbauen kann. Also zum Beispiel ein Flash-Video, was eine Sicherheitslücke in deinem Flash-Player ausnutzt und dich dann owned. Das ist eben ja auch das Risiko dabei, wenn du normalen HTTP-Traffic durch das Tornetz machst, weil eben der die End-Note, die Exit-Note eventuell deinen Traffic manipuliert und versucht, dir irgendwie MyWare unterzuschieben und dich zu infizieren.
+
+00:38:51.345 --> 00:38:55.185
+<v SPEAKER_1>Und das Sicherheitsrisiko bei diesem Ding, dass eben dieses Schadprogramm da drauf ist?
+
+00:38:55.205 --> 00:40:11.925
+<v SPEAKER_2>Ja, pass auf, jetzt kommt ja erst noch der Hammer. Jetzt haben die gesagt, naja, okay, aber was machen wir denn bei HTTPS-Verbindungen? Was machen wir bei verschlüsselten Surfen? Da können wir ja mit unserem kleinen Superfish gar nicht reinschauen und das wiederum heißt, da können wir keine Werbung reinbauen. Da haben sie gesagt, naja, okay, wir geben unserem Proxy ein Zertifikat für HTTPS und machen einen Man in the Middle-Angriff. Und dieses Zertifikat, ja, das ist ja überhaupt das Geile, dieses Zertifikat installieren wir als vertrauenswürdig in dem Betriebssystem. Das heißt, der Internet-Explorer geht los und sagt, ah, www.https.google.com und dann kriegt er von dem SuperFish das Zertifikat von SuperFish und sagt, hi, dieses Zertifikat ist vertrauenswürdig, ich habe es mal für dich signiert, du sprichst mit google.com und ich bürge dafür. Und dann sagt der Internet-Explorer, super, alles klar, gültiges Zertifikat deckt sich mit der Trust-Chain, die bei mir in meinem Zertifikatschlüsselbund drin ist und dann gibt mal her. Und dann kommt Google, was weiß ich, mit Werbung drin, wie gesagt.
+
+00:40:11.945 --> 00:40:18.165
+<v SPEAKER_1>Oder ich gehe in meinen Banking, gehe auf meine Bank, dann sagt es auch, hey, sichere Verbindung.
+
+00:40:18.225 --> 00:40:37.725
+<v SPEAKER_2>Ja, sichere Verbindung, der SuperFish bürgt, dass das hier alles sicher ist. Und jetzt, also wie gesagt, die ganze Sache ist sowieso schon asozial, aber jetzt kommt aus Sicherheitsperspektive, warum ist das so absolut krank?
+
+00:40:37.745 --> 00:40:46.065
+<v SPEAKER_1>Weil ich dort, da habe ich einen Punkt, da kann ich hingehen und da habe ich ja praktisch schon den Angriff vorinstalliert, oder?
+
+00:40:46.165 --> 00:43:20.385
+<v SPEAKER_2>Du hast den Angriff vorinstalliert. Aber man könnte ja jetzt argumentieren, also nehmen wir mal die Perspektive ein, dass Lenovo das richtig gut gemacht hat. Dass das, was Lenovo da tut, aus irgendwelchen Gründen legitim ist. Gehen wir mal davon aus, dafür verkaufen sie den Rechner für die Hälfte des Preises und sie machen ja wirklich nur Werbung. Ja, und dadurch monetarisierst du dir den weiteren Preis des Laptops, oder was auch immer du bei denen gekauft hast. Aus einer reinen Sicherheitsperspektive ist das Problem, dass dieser SuperFish on the fly Zertifikate erstellt und signiert, die dein Rechner akzeptiert. Und das macht er mit einem Signature-Zertifikat, was in dieser Excel-Datei eingebaut ist und das somit auf jedem Lenovo-Rechner irgendwo versteckt rumliegt. Und das erste, was Robert Graham gemacht hat, ein Sicherheitsforscher von Erata Security, der hat diese Excel-Datei genommen und hat sie untersucht und hat genau dieses Zertifikat da rausgekratzt und veröffentlicht. Das ist also den Secret Key zu diesem Zertifikat. Da musste er noch das Passwort brute-force und hat da auch noch gemacht. Und das hat er jetzt veröffentlicht. Und mit diesem Zertifikat kann jetzt jeder von außen sagen, es ist eine sichere Verbindung. Das ist eine sichere Verbindung. Genau, also damit kannst du dich jetzt halt in Starbucks setzen, im offenen WLAN und kannst auf Lenovo-Laptops Men in the Middle-Angriffe fahren mit korrekt signierten Zertifikaten. Die gesamte Idee, dass die Zertifikate, denen du traust, sobald deren Secret Key kompromittiert ist, musst du diesem Zertifikat nicht mehr vertrauen. Kannst du nicht mehr. Und du redest hier halt von einem Problem, wo dieser Secret Key auf potentiell hunderttausend oder Millionen von Lenovo-Laptops rumliegt und da sofort von einem Sicherheitsforscher in einer kleinen Mittagspause rausgekratzt wurde. Und es gibt quasi jetzt für diese Lenovo-Dinger ein valides Man in the Middle Zertifikat, was der Weltöffentlichkeit zur Verfügung steht.
+
+00:43:20.865 --> 00:43:22.745
+<v SPEAKER_1>Geh ich mir gleich ein Lenovo-Laptop kaufen.
+
+00:43:22.765 --> 00:44:04.145
+<v SPEAKER_2>Genau. Du hast nämlich ein super schönes Zertifikat von ZL. Das ist ein Fuck-Up, den man sich so was von hätte denken können. Aus Sicherheitsperspektive selbst wenn das legitim gewesen wäre, was es schon ohnehin nicht ist. Es ist einfach so was von bescheuert umgesetzt, dass es auf gar keinen Fall geht. Die haben im Prinzip jetzt das gleiche Problem wie die Mobilfunk-Provider, die Gemalto-Karten gekauft haben. Ein kleiner Nachsatz noch zu dem Gemalto, es ist natürlich nicht davon auszugehen, dass andere Hersteller von SIM-Karten nicht betroffen werden. Warum sollten die nur auf die armen Holländer kloppen?
+
+00:44:04.965 --> 00:44:13.205
+<v SPEAKER_1>Ja, kommen wir vom Superfisch zum Elefanten. Frankreich, die haben wenigstens schöne Namen für ihre Staatstrojaner.
+
+00:44:13.225 --> 00:44:13.805
+<v SPEAKER_2>Das finde ich so geil.
+
+00:44:16.745 --> 00:44:41.305
+<v SPEAKER_1>In Deutschland denkt man immer, alles was mit so Cyber und so, das kriegt gleich so einen fiesen Namen, was auch wie so Militärgeräte heißen, der Fuchs und der Marder, so Wiesel. Und die Franzosen nennen ihren Staatstrojaner Baba. Wir werden vielleicht einigen von euch bekannt, Baba der Elefant. Das sind so schöne Geschichten, die ihm als Kind vertraut waren.
+
+00:44:45.925 --> 00:44:59.705
+<v SPEAKER_2>Wie genial das ist, seinem Staatstrojaner einen coolen Namen zu geben. Ich habe seitdem die Meldung gelesen, diesen Ohrwurm, kennst du den? Baba wird er genannt.
+
+00:44:59.725 --> 00:45:01.605
+<v SPEAKER_1>Der wird er genannt, oder?
+
+00:45:01.625 --> 00:47:33.885
+<v SPEAKER_2>Baba wird er genannt. Baba der Elefant. Find ich spitze, also Baba, das ist doch echt geil, ey. Hoffentlich werden die jetzt von diesem Kinderbuch-Verlag endlich mal auf irgendwie einen Grund- und Boden verklagt, irgendwie Markenrechtsverletzung und Geschäftsschädigung oder so. Aber so wie es läuft, ey, ich kauf jetzt erstmal ein paar Baba-Bücher und alle sind happy, weißt du, also genau, das ist der Staatstrojaner des französischen Geheimdienstes DGSE, der wurde schon in den Snowden-Dokumenten erwähnt wegen Kooperationen mit kanadischen Geheimdiensten und Baba wurde ähnlich wie Stuxnet gegen das iranische Atomprogramm eingesetzt, aber auch auf Zielen in Europa und in ehemaligen französischen Kolonialgebieten gefunden bzw. laut den Kanadiern in den Snowden-Dokumenten angegriffen worden sein. Man sieht, Frankreich hat also auch eine Inhouse-Entwicklung von Staatstrojanern und auch die, der ist jetzt geleakt worden. Wie gesagt, so diese Security-Welt steht gerade wirklich Kopf. Das ist in meinen Augen der Cyberwar, der da jetzt auch stattfindet. Dass das auch nicht mehr klar ist, wer liegt jetzt diese ganzen Dinger, wer entwickelt überhaupt diese Trojaner und wo kommen die zum Einsatz. Und damit werden natürlich immer mit so einem Release dann auch Investitionen notwendig. Wobei da natürlich auch wieder die Frage ist, wir hatten das bei den Fynnfischer Leaks, dass ich ja schon auch gesagt habe, wenn die ihren Job richtig machen bei Gamma, dann haben die natürlich schon die nächsten Generationen da liegen für den Fall, dass aktuelle Varianten irgendwie in der Weltöffentlichkeit landen. Aber so dieses, der Staatsdriana mit dem menschlichen Antlitz, der Baba, das finde ich schon echt eine ziemlich geile Idee. Also Fynnfischer, wie böse.
+
+00:47:34.185 --> 00:47:56.665
+<v SPEAKER_1>Es klingt schon so, Fischende ab und Baba, der Elefant. Man kann der ganzen Geschichte Kolonialismus vorwerfen und so, der Baba, aber der König der Elefanten, diese herzzerreißende Geschichte auch. War das nicht so, dass irgendwie die Eltern von ihm von Wilderen umgebracht werden und dann kommt er da in die Stadt und wird dann so ein König und fährt in den Karo rum.
+
+00:47:56.665 --> 00:48:04.325
+<v SPEAKER_2>Das ist ein cooles, also Baba ist eigentlich ein cooler Elefant und der ist eigentlich korrekt. Und was ich ganz cool finde, der...
+
+00:48:04.345 --> 00:48:13.845
+<v SPEAKER_1>Na ja, vielleicht nennt der BND dann den nächsten Trojaner die Maus. Von der Sendung mit der Maus oder...
+
+00:48:13.865 --> 00:48:15.865
+<v SPEAKER_2>Wie gibt es denn noch, wer wäre denn so...
+
+00:48:15.885 --> 00:48:17.085
+<v SPEAKER_1>Ja, was ist denn noch so...
+
+00:48:17.565 --> 00:48:19.325
+<v SPEAKER_2>Vicky.
+
+00:48:19.345 --> 00:48:20.885
+<v SPEAKER_1>Ist das überhaupt ein deutsches Comic?
+
+00:48:20.905 --> 00:48:27.305
+<v SPEAKER_2>Ein Vicky ist ja auch schon besetzt. Was wäre denn ein deutscher Comic? Prinzessin Lillifee.
+
+00:48:27.425 --> 00:48:35.145
+<v SPEAKER_1>Lillifee, infiziert, der Verfassungsschutz lässt grüßen.
+
+00:48:35.165 --> 00:48:59.985
+<v SPEAKER_2>Ja, ansonsten nicht viel Neues. Es wird über den Trojaner berichtet, dass er also über den durchschnittlichen Trojanerniveau ist, was man so in der Wildbahn findet. Und ja, es war ja sowieso... In Frankreich war man ja, was diese ganze Spionagesachen anging, die waren immer verhältnismäßig ruhig. Da gab es ja dann auch irgendwie so schon vor zwei Jahren dann so...
+
+00:49:00.005 --> 00:49:07.385
+<v SPEAKER_1>Weil die Franzosen wirklich ganz weit vorne sind in Sachen Überwachung. Überwachung, also auch gesetzesmäßig, das ist so, dass England...
+
+00:49:07.405 --> 00:49:14.045
+<v SPEAKER_2>Genau, die sind halt sehr, sehr viel zynischer. Also in Frankreich herrscht dann eine sehr viel...
+
+00:49:14.065 --> 00:49:21.745
+<v SPEAKER_1>Also die haben den Sicherheitsapparaten letzten Jahren extrem aufgebaut und krass ausgebaut und haben sehr viel mehr Befugnisse.
+
+00:49:21.765 --> 00:50:27.825
+<v SPEAKER_2>Genau, und da gibt es halt auch überhaupt nicht so diese... Also die Reaktion der französischen Bevölkerung scheint so zu sein so, okay, it's on, weißt du so, alles klar, jetzt legen wir los, der Staat ist zu nah aufgedeckt, fuck, jetzt bauen wir einen anderen und da gab es halt jetzt auch nicht so viele Aufregungen wie in Deutschland, sondern die Franzosen scheinen echt zu sein so, ja, es ist Cyberwar und die Amis Cyberwarrieren genauso wie wir und gut, dass wir das wissen. Ähnliche Reaktionen zeigt ja auch Russland. Also Putin hat sich ja jetzt nicht ernsthaft da als Bürgerrechtler aufgestellt, so, sondern der sagt halt auch, alles klar, was der Snowden getan hat, ist in meinem Sinne, der fügt deren Geheimdienstapparat massiven Schaden zu, dafür soll er bei mir ein angenehmes Leben haben und damit kann ich die Amis ziemlich ärgern, so. Putin ist da sicherlich sehr interessiert daran, was da so losläuft und ist aber bei weiblich der Gute und die Franzosen sind es eben auch nicht und ey sorry, die Deutschen eben auch nicht.
+
+00:50:27.845 --> 00:50:33.105
+<v SPEAKER_1>Ich glaube nirgendwo sind die Geheimdienste die Guten, das wäre was Neues.
+
+00:50:33.885 --> 00:50:44.305
+<v SPEAKER_2>Ja, wäre tatsächlich was Neues. Aber die französische Geheimdienste sind wenigstens echt mal coolen Namen, so. Wir werden Prinzessin Lillifee Strikes Back, so. Zieht euch warm an.
+
+00:50:47.045 --> 00:51:05.085
+<v SPEAKER_1>Ja, vielleicht kommen wir mal weg von diesem ganzen Thema Sicherheitsapokalypse, das wir jetzt hier angeschnitten haben. Es ging ja hoch her. Das waren Abmahn-Wochen in Berlin, war das Gefühl, die letzten zwei Wochen da.
+
+00:51:05.105 --> 00:51:07.625
+<v SPEAKER_2>Warum wurden wir eigentlich noch nicht abgemahnt?
+
+00:51:07.645 --> 00:51:15.825
+<v SPEAKER_1>Ich weiß nicht, wir lehnen uns nicht weit genug aus dem Fenster. Vielleicht müssen wir da nochmal irgendwie gucken. Oder ich vermute einfach, die hören alle keine Podcasts.
+
+00:51:15.845 --> 00:51:16.425
+<v SPEAKER_2>Das kann sein.
+
+00:51:16.445 --> 00:51:18.225
+<v SPEAKER_1>Die Leute, die abmahnen, hören keine Podcasts.
+
+00:51:18.245 --> 00:51:19.465
+<v SPEAKER_2>Abmahner hören keine Podcasts.
+
+00:51:19.485 --> 00:51:38.185
+<v SPEAKER_1>Da kommen die nicht reingeguggelt in die Aussagen. Also das ist so das Ding, das kriegen die nicht in ihren Clippings. Die kriegen ja jeden Tag so wahrscheinlich von ihren PR-Agenturen so Clippings durchgereicht und hier, das wurde ein Netz, das wurde ein Print und so. Und da wird Podcast einfach nicht erfasst.
+
+00:51:38.205 --> 00:51:50.245
+<v SPEAKER_2>Das wäre aber genial, einfach mal so abmahnfähige Podcasts en masse zu produzieren. Und die so zu detonieren, da müssten die alles hören. Nee, nicht in die Show notes. Einfach so, was wäre denn jetzt mal abmahnfähig?
+
+00:51:51.545 --> 00:51:55.465
+<v SPEAKER_1>Ja, keine Ahnung, vielleicht muss man es doch gar nicht provozieren.
+
+00:51:56.365 --> 00:52:04.685
+<v SPEAKER_2>Naja, also wer wurde denn alles abgemahnt? Also ich habe irgendwie mitbekommen, diese Metronaut-Leute da wurden abgemahnt. Was ist denn da passiert?
+
+00:52:04.705 --> 00:52:26.685
+<v SPEAKER_1>Naja, die haben alte Nazi-Plakate genommen und haben da das Logo der Berliner Olympia-Bewerbung drauf montiert. Ich finde ja nicht besonders einfallsreich, aber doch dann wirksam.
+
+00:52:26.705 --> 00:52:31.685
+<v SPEAKER_2>Also wann war die Olympia hier?
+
+00:52:31.705 --> 00:53:10.125
+<v SPEAKER_1>1936 war Olympiade in Berlin und war das große Propagandaevent, das Hitler genutzt hat, um sich als weltoffen und modern darzustellen. Ein paar Jahre später gab es dann auch Krieg. Und 88 Jahre später will Berlin 2024 wieder eine Olympiade machen. Und sieht man ja überall, wir wollen Berlin, auch wenn 50 Prozent... Wir wollen die Spiele. Wir wollen die Spiele. Wir wollen die Spiele. Berlin für Olympia, das mussten sie mit wegmachen aus Markenschutzgründen. Das EUC hatte ihnen ihr eigenes Logo für die Bewerbung jetzt verboten.
+
+00:53:10.145 --> 00:53:11.745
+<v SPEAKER_2>Also Berlin wurde auch abgemahnt oder was?
+
+00:53:12.165 --> 00:53:19.285
+<v SPEAKER_1>Ja, das hat man glaube ich auch unter Abmahnung gemacht, sondern eher so, mach man lieber nicht, das ist nicht gut und jetzt steht da überall nur noch Berlin 2024.
+
+00:53:19.305 --> 00:53:20.805
+<v SPEAKER_2>Weil keiner darf, keiner darf...
+
+00:53:20.825 --> 00:53:24.125
+<v SPEAKER_1>Olympia, das Wort darf man nicht benutzen. Olympia, vielleicht kriegen wir doch noch eine Abmahnung.
+
+00:53:24.145 --> 00:53:27.765
+<v SPEAKER_2>Olympia, Olympia, Olympia, Olympia für Logbuch Netzpolitik.
+
+00:53:27.785 --> 00:53:32.725
+<v SPEAKER_1>Dieser Podcast wird ihnen präsentiert von Olympia.
+
+00:53:32.745 --> 00:53:48.265
+<v SPEAKER_2>Inoffizieller Sponsor der Berliner Spiele 2024, genau, weil natürlich, vielleicht war er an so einer Olympia, hängt ja Geld dran und nur der offizielle Sponsor darf damit werben. Das ist nicht, das wird teuer gekauft, ne?
+
+00:53:48.285 --> 00:54:17.925
+<v SPEAKER_1>Genau, das verkauft das IOC teuer, weswegen nicht mal ein Olympia-Bewerber und ich glaube, der Streit hat sich da an R-Berlin, die haben sich dieses Logo auf ihre Flugzeuge gepappt und da stand dann Berlin für Olympia und da hat das Deutsche Olympische Komitee oder Vertretung des IOC gesagt, ne, ne, das geht nicht, da sind Fluglinien und Olympia, da wollen wir eigentlich Geld haben und jetzt haben sie das halt weggemacht. Hauptstadt für die Spiele oder irgendwas, da haben sie das jetzt überklebt.
+
+00:54:17.985 --> 00:54:30.345
+<v SPEAKER_2>Das hatte doch bei den Spielen in London noch ganz anderes Ausmaß, oder? Wo da irgendwie Ladenbesitzer sich irgendwie ein paar Hula-Hoop-Ringe in den Schaufenster gehängt hat und dann die Polizei da reingeritten ist und den...
+
+00:54:30.365 --> 00:55:11.765
+<v SPEAKER_1>Es gibt so Marketing-Zonen, wenn die Olympiade kommt, dann ist irgendwie 6 Kilometer rund um das Stadion, dürfen nur offiziell lizenzierte Verkäufer irgendwie was verkaufen, offiziell lizenzierte Produkte, also man holt sich ja so eine Gesetzgebung damit auch ins Land. Darum ging es allerdings in dem ganzen Fall gar nicht, sondern die haben einfach diese historischen Plakate genommen, also waren auch nicht nur Olympia-Plakate, da waren auch Wehrmachtsoldaten mit Hitler-Jungen und hinten dran so wehende Nazifahnen und haben das Logo raufgepappt und in einem satirischen Artikel so getan, dem Pressesprecher in den Mund geschoben, dass er irgendwas gesagt hätte und ein paar Tage später...
+
+00:55:11.785 --> 00:55:22.985
+<v SPEAKER_2>Also, dass er diese Motive vorgestellt hat, wie irgendwie neue Motive offener Umgang mit der Vergangenheit und dann, was stand da drin, Jan Thies oder wie hieß der?
+
+00:55:23.005 --> 00:56:02.085
+<v SPEAKER_1>Nee, weiß ich nicht, also der Sprecher dieser Bewerbung und dem wurden Zitate in den Mund geschoben. In lustiger Weise sind die Zitate eigentlich nur abgewandelte Zitate von der offiziellen Webseite von Wir wollen Olympia. Und dann haben eben diese Einzelpersonen, dieser Sprecher und die Stadt Berlin Metronaut zur Unterlassung aufgefordert. Und die Leute von Metronaut haben dann erstmal irgendwie überall zensiert draufgeschrieben und das so runtergenommen und am nächsten Tag aber die Motive zumindest wieder raufgeladen.
+
+00:56:03.125 --> 00:56:05.285
+<v SPEAKER_2>Nach Rücksprache mit Ihren Anwälten oder was?
+
+00:56:05.305 --> 00:56:31.025
+<v SPEAKER_1>Genau, nach Rücksprache mit Anwälten wohl. Und die Sache war glaube ich interessant, weil es so eine Art, vielleicht so ein Double Streisand ausgelöst hat. Und einerseits dieses zensiert draufschreiben, dann heißt es überall Zensur und auf der anderen Seite am nächsten Tag dann sagen, wir können das doch oben drauf lassen und dann haben sie es wieder draufgestellt und dann kam mal der, cool, ist wieder drauf.
+
+00:56:32.005 --> 00:56:38.005
+<v SPEAKER_2>Aber jetzt muss natürlich, wie lange ist das jetzt noch mal her, dass wir alle Charlie Hebdo waren? Das ist noch nicht so lange her, oder?
+
+00:56:38.025 --> 00:56:39.865
+<v SPEAKER_1>Das ist jetzt vielleicht sechs Wochen her, oder?
+
+00:56:39.885 --> 00:56:40.865
+<v SPEAKER_2>Da waren wir alle Charlie Hebdo.
+
+00:56:41.685 --> 00:56:55.645
+<v SPEAKER_1>Genau, und dann Satire ist dann halt nicht möglich, wenn sie die Intrikretät des Senats sind. Da gab es so einen schönen Spruch, den der Berliner Senat dann aufgesagt hat.
+
+00:56:55.665 --> 00:58:01.545
+<v SPEAKER_2>Ich finde es ganz interessant, weil als ich die Motive gesehen habe, ja, die waren ja ganz, ja, ist ganz lustig, das ist, da schmunzelt man mal. Aber jetzt so, wenn man sich anschaut, es gibt ja unter dem Hashtag NoLympia relativ ausführliche Kritik eben an dieser Idee Olympia, wo dann eben auch mal erklärt wird, warum wollen wir das nicht? Warum haben wir als Stadt keine Lust, uns hier die Olympia-Heuschrecken reinzuholen, die über die Stadt rüber grasen, irgendwie einmal vielleicht das Gaststättengewerbe beflügeln und uns aber als Steuerzahler eigentlich in einen schweren Ruin treiben. Man kann sich das ja sehr gut anschauen, in Südafrika zum Beispiel, mit der WM, wo die jetzt da diese riesen Stadien stehen haben, die sie überhaupt nicht finanzieren können, wo sie selbst in dieser Fußball begeisterten Nation, wo alle Fußball gucken wollen, nicht genug Leute haben, um diese Stadien überhaupt zu füllen, weil sie selbst mit den stark subventionierten Preisen die Menschen sich das nicht leisten können, da reinzugehen.
+
+00:58:01.985 --> 00:58:08.445
+<v SPEAKER_1>Also ich glaube, es gibt wahrscheinlich mannigfache Gründe dagegen zu sein, und es gibt sicher auch ein paar Gründe dafür zu sein.
+
+00:58:08.465 --> 00:58:15.085
+<v SPEAKER_2>Aber nichts davon wird in diesem Metronaut-Artikel irgendwie angesprochen, muss ich mal jetzt einfach sagen. Was soll das? Also es ist halt...
+
+00:58:15.105 --> 00:58:52.265
+<v SPEAKER_1>Ich glaube, es ist halt einfach da, diese Vergangenheit, die man rausgesucht. Und ist ja auch natürlich, in der Berliner Olympia-Bewerbung ist natürlich kein Umgang, hat da stattgefunden wie, oh, wir sind da in einer unseligen Tradition, die wir irgendwie brechen müssen, wenn wir das hier machen. Ich meine, das ist ja irgendwie ein Kern davon, wenn du wirklich das machst, dann musst du dich auch immer wieder auseinandersetzen und das hat denen halt überhaupt nicht irgendwie reingepasst. Und ja, auf jeden Fall sieht es wohl so aus, dass der, ja, also das ist immer noch online und da stehen die Senat und das Blog Metronaut gegeneinander. Mal gucken, wie es da weitergeht.
+
+00:58:52.285 --> 00:59:08.545
+<v SPEAKER_2>Es gab dann gleich eine weitere Abmahnung in der Woche und zwar, also vielleicht noch ganz kurz, wo du gerade sagst, gleich eine weitere Metronaut hatte, das war ja auch noch ein Punkt, der dem Ding so interessant war. Die haben zwei Abmahnungen bekommen im Abstand von?
+
+00:59:08.565 --> 00:59:09.905
+<v SPEAKER_1>Ich glaube, die erste war im Mikro.
+
+00:59:09.925 --> 00:59:11.625
+<v SPEAKER_2>Also mehrere Rekorde.
+
+00:59:11.645 --> 00:59:25.905
+<v SPEAKER_1>Kurz nach vier eine und dann nochmal um halb sechs und die beiden hatten wohl die Frist irgendwie 18 Uhr, also bei dem einen war es irgendwie 26 Minuten Zeit, um auf eine Abmahnung zu reagieren, das runterzunehmen, eine Unterlassung zu unterschreiben. Also das sind sehr, sehr sportliche.
+
+00:59:26.205 --> 00:59:36.285
+<v SPEAKER_2>Also die Anzahl an Abmahnungen ist, glaube ich, ich weiß nicht, ob es ein Rekord ist, aber schon sportlich, weil üblicherweise kriegt man eine und die Frist ist wahrscheinlich Rekord.
+
+00:59:36.925 --> 00:59:46.145
+<v SPEAKER_1>Ja, also das ist, keine Ahnung, ob so etwas Bestand hat vor Gerichten, so eine Frist, weil das ist ja praktisch nicht machbar, ist natürlich eine Methode, um Leute einzuschüchtern.
+
+00:59:46.165 --> 01:00:12.705
+<v SPEAKER_2>Und das ist ja hier auch gelungen, also eigentlich ist Metronaut ja nicht dafür bekannt, das ist ja eher so ein Krawallblock, die sind ja jetzt nicht unbedingt dafür bekannt, dass sie Sachen runternehmen, aber ich glaube, dieser, wie heißt der hier, John F Nebel hat hier offensichtlich auch zuerst Muffensausen bekommen. Kann ich aber auch verstehen, ich meine, wenn du zwei Abmahnungen bekommst und die da irgendwie auf einmal auf dich losprügeln und dann...
+
+01:00:12.725 --> 01:00:22.085
+<v SPEAKER_1>Ja, das kostet ja auch wahrscheinlich dann das Doppelte, ne, zwei Abmahnungen, ne. Genau, das ist der neue Trick, wir müssen einfach von mehreren Seiten abmahnen, dann kann man dann Geld verdienen als Kanzlei.
+
+01:00:22.105 --> 01:00:48.485
+<v SPEAKER_2>Wollen wir der Kanzlei natürlich jetzt nicht unterstellen? Also bitte nicht abmahnen, aber genau, also das war schon ein Rekord und nachdem das dann wieder, war es eigentlich nachdem das wieder online gestellt wurde oder schon vorher, das hat ja wirklich international Wellen geschlagen, also das hab ich, da war ich ja wirklich erstaunt, wenn man jetzt mal überlegt, für so einen einfachen Feierabendscherz, ja, ich glaub, was war die krasseste Meldung, irgendwie foxnews.com hatte?
+
+01:00:48.505 --> 01:02:37.205
+<v SPEAKER_1>FoxNews, ne, aber es waren auch mexikanische Zeitungen dabei und neuseeländische und... Also, ich glaub, das ist über Agenturen so weit gekommen und ich glaub, das hat dann der Stadt Berlin und dem Senat, der da abmahnt, war dann doch wehgetan, dass diese ganze Geschichte, uuuh, die Olympia-Bewerbung, die Stadt mahnt gegen Satire, ist auch immer blöd gegen Pressefreiheit zu sein, wenn du dich irgendwie für weltoffene Spiele bewirbst und ich glaub, ja, das war auf jeden Fall ein sehr schöner Streisand-Effekt, der sehr international und sehr stark wahrgenommen wurde und ähm, also das sind echt, das ist internationaler Maßstab auf der nach obenen offenen Streisand-Skala, oder, also das kann man echt so... Ich schätze es auch, also sag mal, Streisand dann auch, solche Sturmskalen von 1 bis 12, ich weiß nicht, das war für sich eine 9, auch ordentlich Streisand hat dann das Peng-Kollektiv, das ist eine Aktionskünstlergruppe aus Berlin, die haben mal so Shell zum Beispiel, sind sie als falsche Wissenschaftler in so einen Science-Slam rein und haben da Öl verspritzt und so, so Geschichten, oder haben auch auf der Republik so eine Google-Imitation gemacht und diesmal ist das Peng-Kollektiv mit einem falschen Clown bei dem allseits beliebten Sender Astro TV, das ist so ein Anruf, Achtung jetzt müssen wir aufpassen wegen Abmahnung, ein Anruf Tarot-Karten legen, Lebensberatung, in die Sterne gucken, Sender mit einer 090er Ich hab sie ja schon gehört. Und die sind da mit einem falschen Clownen und haben dann dem Moderator ein Ei auf den Kopf zerschlagen.
+
+01:02:37.225 --> 01:02:41.585
+<v SPEAKER_2>Erst mal hat er dem ja noch ein Bullshit vor dem Herrn erzählt.
+
+01:02:41.605 --> 01:03:10.665
+<v SPEAKER_1>Hier rechts ist die Energie nicht so stark und hat einfach so vorgeführt, wie man da mit dem Moderator immer schön am nicken, ja ja ja. Dann hat er Quatsch erzählt und hat dann dem Moderator gesagt, ich werde jetzt zu tun, wie dieses alte Spiel, bei dem das Ei so über den Kopf läuft, und hat ihm dann aber tatsächlich ein Ei auf dem Kopf zerschlagen und dann gerufen, entzieht diesem Sender die Senderlizenz, das ist hier Betrug und wenn Sie Probleme haben, gehen Sie doch zur psychosozialen Beratungsstelle, das kostet nichts.
+
+01:03:10.685 --> 01:03:25.005
+<v SPEAKER_2>Das Modell bei AstroTV ist ja wie bei diesen anderen. Das ist unglaublich. Genau, aber wie ist das bei Neuen Live? Die machen das doch auch so, oder? Da sitzt einer die ganze Zeit. Neuen Live macht das doch so mit diesen beknackten Rätseln.
+
+01:03:25.025 --> 01:03:25.985
+<v SPEAKER_1>Gibt es Neuen Live noch?
+
+01:03:26.005 --> 01:03:54.445
+<v SPEAKER_2>Weiß ich nicht. Ich habe mir das angeschaut. Das Geschäftsmodell ist, da sitzt einer mit einem Rätsel auf Schimpansen-Niveau und ruft die ganze Zeit dazu auf, das zu lösen und dann ist unten eine Nummer, wo drin steht, irgendwie 69 Cent pro Anruf und wenn sie einen Zufallszahlen-Generator entscheidet, wann sie in die Sendung kommen.
+
+01:03:54.745 --> 01:03:56.205
+<v SPEAKER_1>Wie kommt jemand in die Sendung?
+
+01:03:56.225 --> 01:04:26.925
+<v SPEAKER_2>Genau, dann rufen die ganze Zeit Leute an und dann piept das irgendwie und sagt, leider nicht, versuchen sie es gleich noch einmal und dann rufst du da wieder an und irgendwann hast du deine 10 Euro ausgegeben, die haben ein paar tausend Euro in der Kasse und dann lassen sie irgendjemanden rein, der das dann falsch löst und dann so, oh nein, oh nein, oh nein, rufen sie weiter. Das ist irgendwie der Geschäftsmodell. Bei Astro TV läuft das genauso, nur du gewinnst nicht 100 Euro und dafür, dass du ein Schimpansen-Rätsel bist.
+
+01:04:26.945 --> 01:04:59.705
+<v SPEAKER_1>Eine Wahrsagerin sagt dir deine Zukunft voraus. Und dieses Video hat dann dieses Peng-Kollektiv ins Netz gestellt. Und es wurde auch relativ viel angeschaut. Also, keine Ahnung, mehr als 100.000 Klicks hat es bekommen. Und die Astro TV hat innerhalb kürzester Zeit auch das Peng-Kollektiv abgemahnt und gefordert, dass sie irgendwie unterlassen, dieses Video auf Twitter, Facebook, YouTube und etc. zu verbreiten.
+
+01:04:59.725 --> 01:05:07.945
+<v SPEAKER_2>Wie sieht denn das aus? Da haben die da, glaube ich, sogar rechtlich eine Handhabe, oder? Also, ist das nicht so, dass...
+
+01:05:07.965 --> 01:06:39.065
+<v SPEAKER_1>Ja, die können das wahrscheinlich über das Urheberrecht durchziehen, dass man Mitschnitte kann nicht verhindern als Sender, weil es ja mein Copyright daran ist. Das haben die auch versucht, dann so durchzuziehen als Ansprüche, um über das Urheberrecht das durchzusetzen. Und dann hat irgendwie Peng aber noch mal reagiert und hat, fand ich, einen sehr schönen Hack, hat dann noch ein Video gedreht, wo sie dann bei Astro TV anrufen und der Schauspieler, also dieser Clown, dann irgendwie der Lebensberatungsfrau bei Astro TV sagt, ja, ich habe ein Problem, ich bin Schauspieler und ich habe mein liebstes Video. Sie wollen es vom Netz haben und erzählt dann, und die antwortet dann, ja, das Video, das ist wirklich ein Problem, aber das müssen Sie überlegen, ob Sie das machen. Und letztlich eben also so eine lebenspflichtige Lebensberatung von Astro TV geben, einfach nochmal, da sieht man auch, wie Streisand gespielt werden muss, damit er groß wird und dann schießt man nochmal hinterher, dann ist Anonymous darauf aufgesprungen, hat die Video überall verteilt, irgendjemand hat noch eine D-Nose-Attacke gefahren auf Astro TV kurzzeitig. Und das Ganze ist dann am Ende, ja, das Video gibt es immer noch, es haben viele Medien berichtet, die Abmahnung, keine Ahnung, die wird wahrscheinlich auch nicht durchgezogen, weil eben Astro TV dann nicht Lust hat, diesen Konflikt und dieses, wir sind ein Betrügersender, diese Vorwürfe, sie sind ein Betrügersender, weiter laufen zu lassen.
+
+01:06:39.805 --> 01:07:18.745
+<v SPEAKER_2>Also wir wollen halt nicht unbedingt Beratungen geben, wie man sich in Ansicht von Kommunikationsgeräten sinnvoll verhält, aber ich glaube, diese Peng-Aktion, die war schon ganz cool, das war halt so mein Lacher, das Problem ist, das wäre natürlich wahrscheinlich nie in diesem Zuschauerkreis von Astro TV jemals vorgedrungen, wenn die das nicht abgemahnt hätten. Und diese Olympia-Bilder, ja, das war halt eher so mittelklasse Satire, also es war jetzt nicht der ganz große Wurf, wo man sagt, ha ha ha, wie witzig und wie entlarvend. Und das ist schon...
+
+01:07:18.765 --> 01:07:41.105
+<v SPEAKER_1>Ja, das sind beides natürlich, wenn man sie so hart kritisiert, ist es immer eine mittelklasse Satire und auf der anderen Seite eine ordentlich gemachte Kommunikations-Geriliaktion, aber auch jetzt nicht so der Oberbringer, weil, ich meine, jeder weiß von Astro TV, dass es irgendwie ein... .ein Sender ist, der nicht ernst zu nehmen ist.
+
+01:07:41.125 --> 01:07:47.425
+<v SPEAKER_2>Aber das wurde doch live gesendet, oder? Das wurde live gesendet. Weil die wahrscheinlich, das ist halt so ein Billo-Laden, die zeichnen die Sendung wahrscheinlich noch nicht mehr live.
+
+01:07:47.445 --> 01:07:49.945
+<v SPEAKER_1>Nee, nee, die machen das live. Das muss ja, mit diesem Call-In muss ja live...
+
+01:07:49.965 --> 01:07:54.025
+<v SPEAKER_2>Ach so, ja klar, natürlich. Obwohl, naja, mit dem Call.
+
+01:07:54.045 --> 01:08:00.785
+<v SPEAKER_1>Weil das zeigt natürlich, dass so eine Abmahnung dann eben das schön befeuern kann.
+
+01:08:04.505 --> 01:08:06.785
+<v SPEAKER_2>Aber Netzpolitik hat auch noch Ärger bekommen, oder?
+
+01:08:06.805 --> 01:08:19.145
+<v SPEAKER_1>Die haben auch, ja, die haben irgendeinen Geschäftsführer von so einer Bewachungsklitsche mit Bild in einem Artikel gezeigt und haben dann auch eine Abmahnung bekommen. Und sie haben aber gesagt, okay, den Kampf fechten wir jetzt nicht aus.
+
+01:08:19.165 --> 01:08:23.245
+<v SPEAKER_2>Bei Logbuch Netzpolitik können wir durchaus sagen, welche Überwachungshersteller das waren.
+
+01:08:23.265 --> 01:08:23.925
+<v SPEAKER_1>Das kann man auch sagen.
+
+01:08:23.945 --> 01:12:14.125
+<v SPEAKER_2>Das war der liebe Christoph Storz. Das ist der Geschäftsführer der Firma AGT, Advanced German Technology, der international Überwachungs- Hard- und Software verkauft. Das ist eine deutsch-arabische Firmengruppe. Das ist natürlich in diesen Überwachungsbereichen üblich, dass du in mehreren Staaten als Firma registriert bist, um dich mit den durch Export-Registriktionen entstehenden Komplikationen nicht herumärgern zu müssen. Und vor allem, weil sie ihre Überwachungstechnologien an Behörden im Nahen Osten verkaufen. Zum Beispiel den Staatstrojaner Remote Stealth Surveillance Suite. Denen sie dort an Polizeien und Geheimdiensten vermarkten. Und das, was sich natürlich schon sehr perfide an dieser Firma ist, dass sie noch mit dem Deutschsein da... Advanced German Technology. Und das ist eine Firma, die schon relativ lange bekannt ist. Und André Meister, der hier auch schon öfter mal zu Gast war, hat über diese Firma berichtet, recherchiert und hat da ein Foto des Geschäftsführers, was er von dessen LinkedIn-Profil oder Xing-Profil geholt hat, in den Artikel eingebunden. Und dann gab es eben eine Abmahnung auf Basis des Urheberrechts, was eben dieser Mensch, der Christoph Storz, der Managing Director von Advanced German Technology, der in Berlin wohnt und an der Freien Universität Berlin studiert hat, jetzt da eben als sein Urheberrecht beansprucht, was er nur dort, wo er es möchte, nämlich auf seinem Xing-Profil, auf seinem LinkedIn-Profil, auf der Seite Semigator, auf der Seite Coaching-Experten, der Seite SimpliCompetent und emanation.de veröffentlicht sehen möchte, wo er das überall eingebaut hat. Bei SimpliCompetent, meine Güte, Emanation, das ist ja ein geiler Typ. Bei Emanation setzt er sich mit intelligenter, ganzheitlicher Kompetenzentwicklung auseinander. Intelligenter, ganzheitlicher Kompetenzentwicklung und Coaching. Na, wer würde sich denn nicht gerne von einem Menschen coachen lassen, der Überwachungstechnologie in den Nahen Osten exportiert, unter Umgehung von Exportrestriktionen, weil er direkt noch eine Firma dort hat. Das ist also ein cooler Typ. Und der hat dann netzpolitik.org abgemahnt auf Basis des Urheberrechts. Denn, und das ist ja auch schön, in dem Artikel selber gab es ja keine falschen Tatsachenbehauptungen über Christoph Storz, den Managing Director von Advanced German Technology aus Berlin, der Überwachungstechnologie in den Nahen Osten verkauft. Und deswegen durfte der Artikel inhaltlich genauso bestehen bleiben, nur es musste halt über sein Gesicht ein Foto, ein Zensiertbalken gemacht werden. Auch da würde ich sagen, tja, also interessant eigentlich. Also man merkt, dass dieser Mensch sich offensichtlich dafür schämt, dass er Managing Director bei Advanced German Technology ist und Überwachungstechnologie im Nahen Osten verkauft. Und deswegen ungern mit seinem Foto in der Berichterstattung erwähnt werden möchte. Da fragt man sich natürlich, warum macht der Mensch das überhaupt?
+
+01:12:14.145 --> 01:12:16.085
+<v SPEAKER_1>Und warum er sich mit Fotos ins Netz stellt.
+
+01:12:16.605 --> 01:12:22.345
+<v SPEAKER_2>Ja, warum stellt er sich auf Zingen? Kann man sehr klar sehen, wie er aussieht und wer er ist und wie er heißt und was er tut.
+
+01:12:22.365 --> 01:13:02.825
+<v SPEAKER_1>Nein, er will halt nicht im Rahmen dieser Berichterstattung, die kritisch ist, genannt werden. Wenn man sich diese unterschiedlichen Abmahnungen anschaut, ist das auch... also Netzpolitik hat sich ja dann entschieden, okay, lass, wir machen kein Streisand, wir machen nicht jetzt irgendwie hier richtig Alarm dagegen, sondern zensieren einfach das Bild. Aber die Anfrage ist auch so ein bisschen anders. Die ist so ein bisschen so mit so, hey, entfernen Sie das, besprechen Sie das mal mit Ihren Anwälten, wir setzen Ihnen eine Lösungsfrist bis morgen immerhin. Also es ist auch eine Abmahnung, aber vielleicht auch nicht kostenpflichtlich, sondern eher so Post so vom Anwalt. Also das ist vielleicht ein intelligenterer Umgang damit. Und ich glaube, man kann sich rechtlich durchaus streiten, ob man das darf, das Bild einfach.
+
+01:13:02.845 --> 01:13:12.905
+<v SPEAKER_2>Also aus urheberrechtlicher Perspektive... Ja, ja, da hat er Recht, da kannst du nicht einfach irgendwie das Bild von... Da musst du den schon selber fotografieren und dann kommt er noch mit Recht am eigenen Bild oder sowas.
+
+01:13:12.925 --> 01:13:15.585
+<v SPEAKER_1>Naja, wenn er auf irgendeine Konferenz sprechen würde, was er natürlich nicht macht.
+
+01:13:16.065 --> 01:13:21.185
+<v SPEAKER_2>Es ist schwieriges Wirrige und deswegen hat netzpolitik.org da eben dann auch...
+
+01:13:21.205 --> 01:13:26.545
+<v SPEAKER_1>Es ist nicht den Dings große Fass aufgemacht, sondern das Bild eben zensiert. Ja...
+
+01:13:26.565 --> 01:13:30.785
+<v SPEAKER_2>Wichtig bleibt aber zu betonen, dass sie keine falschen Tatsachen behauptet haben über...
+
+01:13:30.805 --> 01:13:31.815
+<v SPEAKER_1>Nein, nein, nein, das ist nicht so...
+
+01:13:31.815 --> 01:13:43.925
+<v SPEAKER_2>.Christoph Schorz, der von Advanced German Technology gemacht hat. Dann hat netzpolitik.org noch irgendwie eine kleine Einschränkung in der Berichterstattung erfahren. Und zwar wollte André Meister gerne zum Polizeikongress.
+
+01:13:43.945 --> 01:14:56.885
+<v SPEAKER_1>Europäischer Polizeikongress, hier die größte Polizeifachmesse Europas wahrscheinlich. Ich nehm keine Ahnung, was sie auf der Seite schreiben. Auf jeden Fall ist das hier so eine Technik-Show und wahrscheinlich so eine Hochleistung, sich überbieten in der Forderung von Vorratsdaten, Speicherung, Überwachung, Staatstrojanern und Ende der Kryptografie. Also man hat dort alles, was Rang und Namen hat aus diesem ganzen Sicherheitsbereich, die dort eben dann auf Podien, die wahrscheinlich alle einer Meinung sind, irgendwie das fordern. André Meister wollte darüber berichten. Und das Schöne an der Geschichte ist, dass er eben die Akkreditierungsunterlagen ausgefüllt hat, dass dahin gefaxt hat. Gefaxt, das finde ich auch super. Gefaxt hat. Und dann kam zurück, ja, nee, Herr Meister, tut uns leid, danke für Ihre Bewerbung, aber das Kontingent an Journalisten ist schon voll. Und André Meister wäre nicht André Meister, wenn er nicht dann gleich sagt, okay, jetzt lasse ich mal ein paar Kollegen anrufen von Leuten, die ich kenne, von anderen Medien, die sollen sich mal bewerben. Die haben sich beworben, haben nach zehn Minuten, ja, herzlich willkommen, kein Problem hier. Sie sind akkreditiert und konnte eben beweisen, dass es dann doch darum ging, eben Netzpolitik oder ihn persönlich dort nicht vor Ort zu haben als Journalisten.
+
+01:15:01.025 --> 01:15:43.905
+<v SPEAKER_2>Schön, schön, aber so laufen halt Akkreditierungen. Ich meine, diejenigen, die du nicht da haben willst, den schreibst du dann im begrenztes Kontingent, schwierig, schwierig. Aber üblicherweise, was ich da noch krass finde, da ist es ja tatsächlich so, der kommt da jetzt nicht rein. Bei anderen Veranstaltungen ist das dann, bei normalerweise öffentlichen Veranstaltungen ist das halt so, musst du dir halt ein Ticket kaufen. Das ist halt, finde ich, auch völlig in Ordnung. Dass du jetzt nicht einem Journalisten, der dir irgendwie am Ende auf deine Veranstaltung rotzt, dann noch ein Ticket schenkst, damit er das besser machen kann, das würde ich dir noch nicht mal übel nehmen. Aber dieser Polizeikongress, da kommt der halt jetzt überhaupt nicht rein.
+
+01:15:44.185 --> 01:16:02.765
+<v SPEAKER_1>Genau, du kommst auch nicht mit Journalistenausweisern einfach so, dann kannst du dir eine Karte oder... Also, ist das ja nicht ein öffentliches... Naja, die wollen halt unter sich bleiben und haben eigentlich keine Lust auf kritische Berichterstattung. Und dann, wenn ich den Leuten nicht die Chance gebe, darüber zu berichten, dann ist es halt aus pressefreiheitlicher Sicht ein bisschen schwierig.
+
+01:16:03.165 --> 01:17:26.265
+<v SPEAKER_2>Es gab da übrigens mal, kann man erzählen, vor ein paar Jahren, das war vor vier Jahren oder so, auch einen schönen Zwischenfall mit dem CCC, weil in die Media irgendwie behauptet wurde, dass das BCC, nämlich das Berliner Kongresszentrum, in dem da immer auch im Dezember der CCC-Kongress stattgefunden hat, damals eben der 26C3, wurde also behauptet auf in die Media, dass sich eine anonyme Hacker-Gruppe daran gemacht hat, das gesamte Gebäude zu verwanzen. Also beim 26C3 wurde das Gebäude verwanzt und dann irgendwie zwei, drei Monate später... Zwei, drei Monate später war dann da der Polizeikongress und da waren natürlich alle in heller Aufruhr, weil ihr Kongress jetzt von anonymen CCC-Hackern verwandt war. Und dann wurde da noch ein Mitglied des CCCs, der dort sich akkreditiert? Der war dort im Auftrag seines Arbeitgebers angemeldet. Ich vermute, dass es da um Verschlüsselungstechniken ging. Es gibt ja immer noch den Unterschied bei diesen Veranstaltungen. Da werden natürlich Offensivsachen beworben, aber natürlich auch Defensivsachen wie Verschlüsselungstechnologien und so. Ich würde vermuten, dass das...
+
+01:17:26.285 --> 01:17:28.825
+<v SPEAKER_1>Der wurde dann vom Kongress geworfen.
+
+01:17:28.885 --> 01:17:39.905
+<v SPEAKER_2>Der wurde von diesem Polizeikongress geworfen wegen Verstoßes gegen die Geschäftsbedingungen. Das Ding wird ausgerichtet vom Behördenspiegel. Das ist auch kein Behördenspiegel.
+
+01:17:39.925 --> 01:17:46.105
+<v SPEAKER_1>Ich habe mir diese Seite mal angeschaut. Das sieht aus wie Internet 1999.
+
+01:17:46.125 --> 01:17:50.485
+<v SPEAKER_2>Das ist ein Verlag, der sich auf diesen ganzen Behördenkram spezialisiert hat.
+
+01:17:50.505 --> 01:17:54.245
+<v SPEAKER_1>Die machen so Event-Anstattungen.
+
+01:17:54.265 --> 01:18:49.165
+<v SPEAKER_2>Aber die veröffentlichen auch ein Magazin namens Behördenspiegel. Und eben machen auch Veranstaltungen. Übrigens, da habe ich auch mal auf einer Veranstaltung des Behördenspiegels an einem Podium teilgenommen. Mir war das gar nicht mehr bekannt, dass die auch den Polizeikongress ausrichten. Aber die richten eben alle möglichen Veranstaltungen in diesem Bereich aus. Die machen sicherlich auch irgendeinen Finanzbeamtentag oder was weiß ich für Behörden. Für die Polizei dann eben das. Interessant, Andre darf leider nicht dahin. Wobei, so wie ich Andre kenne, wird er sich dann nicht gefallen lassen. Und da werden wir jetzt erst recht Berichterstattung von netzpolitik.org über diesen Polizeikongress haben. Es wäre auf jeden Fall das erste Mal, dass sich Andre von einer nicht gegebenen Akkreditierung in irgendeiner Form an seiner Arbeit hindern lässt.
+
+01:18:49.185 --> 01:19:01.825
+<v SPEAKER_1>Was war sonst noch in der Woche? Also wir haben natürlich mit den Anschlägen von Dänemark kamen natürlich sofort wieder die Vorratsdatenspeicherungsschreier aus den Graben.
+
+01:19:01.845 --> 01:19:04.205
+<v SPEAKER_2>War das in Dänemark auch so? Ich weiß nicht.
+
+01:19:04.225 --> 01:19:27.685
+<v SPEAKER_1>Es gibt eine schöne Liste. Ich glaube, der Wetter auf Netzpolitik veröffentlicht so eine Liste, wann kommen die immer aus dem, wie lange dauert es, von Anschlag bis Vorratsdatenspeicherungsforderung. Der Beißreflex hieß das. Es gab auch danach Forderungen.
+
+01:19:27.705 --> 01:19:37.345
+<v SPEAKER_2>Dieser Beißreflex ist geil, weil Ull und Bosbach sich da immer so einen Kopf an den Kopf halten.
+
+01:19:37.365 --> 01:20:02.025
+<v SPEAKER_1>Die sind auf jeden Fall ganz weit vorne. Der Bosbach gilt ja als notorischer Frühaufsteher, der schon um vier die Radiosender abtingelt. Und dann immer so, wenn der Ull zu Hause, Scheiße, der Bosbach hat es wieder zuerst gesagt. Wenn er dann morgens, wenn der Bosbach schon um 5.30 Uhr irgendwie im Deutschlandfunk seine Vorratsdaten-Speicherungsforderungen durchsetzt.
+
+01:20:02.645 --> 01:20:26.405
+<v SPEAKER_2>Also das ist echt eine sehr schöne Sammlung, die der Wetter hier zusammengestellt hat. Erkenntnisse über die ersten drei Frauhlaute des Verfassungsschutzes im NSU-Umfeld. Irgendwie vier Stunden später Bundesinnenminister Hans-Peter Friedrich. Vorratsdaten-Speicherung. Anschläge in Norwegen, Hans-Peter Uhl. Vorratsdaten-Speicherung. Mutmaßlicher Bombenanschlag in Berlin. Wolfgang Bosbach. Vorratsdaten-Speicherung.
+
+01:20:36.485 --> 01:20:48.665
+<v SPEAKER_1>Das ist das neueste Leak auf Netzpolitik. Es gibt ein neues Verfassungsschutzgesetz, das in Planung ist. Da ist richtig viel Cyber drin.
+
+01:20:48.685 --> 01:20:56.825
+<v SPEAKER_2>Da ist viel Cyber drin. Es geht um das Reformieren des Bundesamtes für Verfassungsschutz und Ausbau der...
+
+01:20:56.845 --> 01:20:59.785
+<v SPEAKER_1>Reformieren heißt in diesem Fall 261 neue Stellen.
+
+01:21:00.985 --> 01:21:29.645
+<v SPEAKER_2>Das ist der Hammer. Überlegt mal, dieses Bundesamt für Verfassungsschutz hat über Jahre großflächig dieses NSU-Ding verkackt. Die sind als Allererstes losgerannt, als das rauskam und Akten geschreddert. Das, was man üblicherweise als Reform bezeichnen würde, wäre, dass alle komplett neues Personal einziehen und die alten irgendwie dahin schieben, wo sie niemandem mehr schaden können. Stattdessen kriegen die jetzt mehr Geld.
+
+01:21:29.665 --> 01:21:38.885
+<v SPEAKER_1>17 Millionen mehr und 261 neue Personalstellen. Die Frage ist, ist das noch getrennt? Also die Personalstellen schon bezahlt und dann noch 17 Millionen drauf?
+
+01:21:38.905 --> 01:21:41.945
+<v SPEAKER_2>Das wahrscheinlich, würde ich von ausgehen, ja.
+
+01:21:41.965 --> 01:22:24.325
+<v SPEAKER_1>Genau, und es sollen jetzt einige Änderungen eben auch im G10-Gesetz sein. Und was, glaube ich, das Bedrohliche daran ist, ist, glaube ich, dass der BND diese Cybergefahren soll auch aufgerüstet werden und diese Daten dann dem Verfassungsschutz weitergeben. Und der Verfassungsschutz soll das auch wieder an die Strafverfolgungsbehörden weitergeben dürfen. Also das heißt, wir haben hier eine weitere Durchlässigkeit zwischen den Behörden, eine weitere Auflösung des Trennungsgebotes. Genau, also bei Trennungsgebote.
+
+01:22:24.345 --> 01:23:02.865
+<v SPEAKER_2>Lass uns das nochmal kurz nach und nach. Trennungsgebote kannst du besser erklären als ich. Aber im Moment, das G-10-Gesetz, das müssen wir immer nochmal neu erklären. Das G-10-Gesetz heißt G-10-Gesetz, weil es sich auf Grundgesetzartikel 10 bezieht. Und Grundgesetzartikel 10 steht drin, Briefpost und Fernmeldegeheimnis. Und wie heißt der Satz nochmal? Näheres regelt ein Bundesgesetz. Oder Verstöße dürfen nur auf Basis eines Gesetzes stattfinden. Und dieses Gesetz, in dem Beschränkungen des Briefpost- und Fernmeldegeheimnisses reguliert werden, wird dann eben so schön G-10 genannt.
+
+01:23:04.205 --> 01:23:23.625
+<v SPEAKER_1>Genau, momentan darf man das eben aus bewaffneter Angriff auf Deutschland, ist ein Grund, weswegen G-10 außer Kraftsetzung kann, terroristische Anschläge, Verbreitung von Kriegswaffen, Verbringung von Betäubungsmitteln, also die ganze Drogenkriminalität, Geldfälschung, Geldwäsche und das Einschleusen von ausländischen Personen.
+
+01:23:23.645 --> 01:23:39.465
+<v SPEAKER_2>Genau, das heißt, das sind die einzigen Gründe, die du vorweisen darfst, oder die es dir erlauben, eine Kommunikation abzuhören. Wenn das nicht unter einem dieser Fälle fällt, dann...
+
+01:23:39.485 --> 01:23:54.365
+<v SPEAKER_1>Als Geheimdienst, ne? Also die Polizei kann natürlich auch in anderen Fällen abhören, mit richterlichen Beschluss dann allerdings. Und da soll eben Cybergefahren hinzu. Und das Wort Cyber kennen wir ja, ist immer dann, wenn Internet böse, dann Cyber.
+
+01:23:55.145 --> 01:25:00.985
+<v SPEAKER_2>Genau, wenn Internet böse, dann Cyber. Denn diesen sieben Gründen soll jetzt Angriff mittels Schadprogrammen aus international kriminellen, terroristischen oder staatlichen Motiven gestellt werden. Das heißt, der BND soll in seiner, in seinen Abhörmaßnahmen, wo er eben internationale Telekommunikationsleitungen großflächig abhört, wo er also die Internetleitungen, die aus unserem Land hinausgehen und in unser Land hineinführen, abhört, nach Cybergefahren suchen dürfen. Denn hier diese zehn Gründe, das war immer, bevor wir irgendwie wussten, wie schlimm es alles ist, haben wir noch gewitzelt über diese Suchwortliste des BND. Da gibt es ja auch heute noch Leute, die dann in ihren E-Mail futtern, die immer noch so Bombe-Obama und so was drin stehen haben. Morgen Flughafen, Bombe-Flughafen, Bombe-Flughafen Drogen und so stehen haben. Genau, darum geht es hier. Und jetzt, wenn sie sagen, ja...
+
+01:25:01.005 --> 01:25:03.165
+<v SPEAKER_1>Muss man dann noch DNS-Spoofing reinschreiben?
+
+01:25:03.985 --> 01:25:22.385
+<v SPEAKER_2>Genau, jetzt muss noch DNS-Spoofing rein... Der Punkt geht natürlich viel weiter, wenn du sagst, sie sollen nach internationalem, also nach Cybergefahren suchen. Das ist ja alles. Und da müssen sie, da können sie dann vor allem, um diesem Auftrag nachgehen zu können.
+
+01:25:22.405 --> 01:25:23.265
+<v SPEAKER_1>Alles aufmachen.
+
+01:25:23.285 --> 01:26:48.945
+<v SPEAKER_2>Müssen sie alles aufmachen. Und viel müssen sie, also das wird der Vorwand dafür sein, viel besseres Analyse-Equipment zu kaufen. Und dann eben Dateitypen zu erkennen, Cyberangriffe zu erkennen. Cyberangriff kann ja alles sein. Angriff mittels Schadprogramm. Das kann ein Trojaner sein, das kann aber auch ein Denial-of-Service-Angriff sein, das kann ein Heartbleed sein. Wenn du dieser Aufgabe vernünftig nachkommen willst, dann investierst du da viele, viele Millionen in irres Equipment, um dieser Aufgabe irgendwie näher zu kommen. Das heißt, das ist hier der Vorwand, auch das technische Equipment enorm auszubauen und sehr, sehr viel tiefgreifender diesen Überwachungsauftrag wahrnehmen zu können. Denn ein Angriff mittels Schadprogramm kann sich sehr, sehr weit interpretieren lassen. Und da werden sicherlich ein paar Juristen festgestellt haben, dass es jetzt kaum noch irgendwas gibt, was nicht als Grund ist, dass du da reinschauen darfst. Das heißt, da wird es dann eben zum Full-Take, was sie ja ohnehin schon machen. Und obendrauf kommt das, was du gerade ansprachst, das, was ich auch immer sehr, sehr spannend finde, nämlich das Trennungsgebot zwischen den Geheimdiensten und den Verfolgungsbehörden. Erklären wir das doch nochmal.
+
+01:26:48.965 --> 01:27:32.405
+<v SPEAKER_1>Das Trennungsgebot kommt, das ist eigentlich eine urdeutsche Idee, kommt aus der Geschichte Deutschlands, dass sich im Dritten Reich, dass alles auf dem Reichssicherheitshauptamt die Information zusammengeflossen ist. Und was die Lehre daraus war, wir trennen. Es gibt das Landesamt für Verfassungsschutz in Bayern und das Bundesamt. Und die dürfen nicht so richtig gut zusammenarbeiten, damit sie in einer gewissen Konkurrenz stehen. Und das BKA darf nicht die gleiche Datenbank mit dem Verfassungsschutz nutzen und die Landespolizei auch nicht. Und die haben alle eigene Systeme, damit du nicht so eine Verschränkung hast, dass auf einmal alle Sicherheitsapparate zusammenführen. Und diese Konkurrenz soll die Demokratie schützen.
+
+01:27:32.425 --> 01:27:35.085
+<v SPEAKER_2>Also grob ist doch der Gedanke, die Polizei...
+
+01:27:35.105 --> 01:27:35.945
+<v SPEAKER_1>Jackson-Ballance.
+
+01:27:35.965 --> 01:27:38.845
+<v SPEAKER_2>Nee, nicht Jackson-Ballance ist aber so... Ich glaube, das ist...
+
+01:27:38.865 --> 01:27:41.105
+<v SPEAKER_1>Die Polizei und Geheimdienst nicht zusammen auch, ne?
+
+01:27:41.125 --> 01:29:09.465
+<v SPEAKER_2>Genau, weil der Geheimdienst darf dich grundlos abhören, aber der darf dich nicht in den Knast bringen. Die Polizei darf dich nicht grundlos abhören, die darf dich in den Knast bringen. Das heißt, es ist prinzipiell möglich, dass der Geheimdienst Informationen über dich erlangt, die zu einer Verurteilung ausreichend wären, die es aber mit Methoden erlangt, die nicht vor Gericht verwendet werden dürfen. Und das war jetzt schon, wir hatten da auch in Logbuch Netzpolitik schon mal darüber geschrieben, dass natürlich das Naheliegende ist, dass wenn die NSA mittels ihrer Full-Tech-Abhörsachen in den Besitz von Informationen bekommt, die das FBI nicht hat, dass die NSA dann sagen kann, ey, schaut mal dort. Und dann braucht das FBI immer noch, um eine Überwachungsmaßnahme anzuordnen, probable cause. Also die können auch nicht einfach irgendjemanden abhören, sondern sie brauchen einen Anfangsverdacht, mit dem sie dann einen Richter überzeugen können. Das ist der einzige Grund, dieses Trennungsgebot ist das, was uns im Moment noch so von so einer, wie heißt dieser Film, Judge Dredd oder was, wo diese vollüberwachte Gesellschaft und der Polizist, Richter und alles in einem ist, wo du quasi bei dem Gedanken an einen Verbrechen schon dafür verhaftet wirst.
+
+01:29:09.845 --> 01:29:38.685
+<v SPEAKER_1>Wobei, das ist mit dem Trennungsgebot, es gibt auch durchaus Ansätze auch aus bürgerechtlicher Sicht, die sagen, wenn wir Geheimdienste abschaffen wollen, müssen wir das mit dem Trennungsgebot abschaffen. Weil dann müsste die Polizei gewissermaßen ein paar geheimdienstliche Befugnisse, aber ohne geheim, bekommen. Und die schafft die Geheimdienste ab. Und dann höre ich mit dem Trennungsgebot, muss ich auch ein bisschen dann aufhören. Das ist die einzige Chance, das abzuschaffen. Es wird durchaus diskutiert, wie, wenn man Geheimdienste abschaffen will, muss man sich vom Trennungsgebot trennen.
+
+01:29:47.465 --> 01:29:51.785
+<v SPEAKER_2>Ich will aber doch die Geheimdienste loswerden, weil sie unsere Bürgerleute verletzen.
+
+01:29:51.805 --> 01:30:34.565
+<v SPEAKER_1>Die Idee dahinter ist, wenn ich Geheimdienste loswerden will und es der Polizei geheimdienstliche Befugnisse gebe, dann habe ich das aber innerhalb der Polizeigesetze. Und die sind viel härter und führen zu deutlich mehr Transparenz als Geheimdienste die Kontrolle. Dort kann ich immer irgendwelche Fahnen einsetzen und gucken. Da schauen wir uns das im Innenausschuss an und habe eine deutlich größere Transparenzpflicht der Polizei. Auch wenn die natürlich nicht immer gut greift, gerade wenn es um Polizeigewalt geht. Aber letztlich ist die Kontrolle der Polizei deutlich stärker als die Kontrolle der Geheimdienste. Und das ist die Argumentation, lass uns doch denen das geben und die Geheimdienste abschaffen.
+
+01:30:35.545 --> 01:30:37.885
+<v SPEAKER_2>Aber das ist nicht die Argumentation dieses Gesetzes.
+
+01:30:37.905 --> 01:31:06.205
+<v SPEAKER_1>Die Argumentation dieses Gesetzes ist das Gegenteil. Das ist das Interessante nach Snowden. Erst hat der BND mehr Kohle bekommen, jetzt kommt das Verfassungsschutzgesetz, da kriegt der Verfassungsschutz mehr Geld. Man hätte annehmen können, nach all diesen Skandalen mit NSA-Untersuchungsausschuss und dem NSU-Skandal, dass dann eigentlich eine Einhegung, eine Begrenzung, eine Reform, mehr Transparenz, mehr Kontrolle rauskommt. Und was passiert ist, die werden aufgerüstet. Und das ist das, was gerade passiert.
+
+01:31:09.045 --> 01:31:10.985
+<v SPEAKER_2>Es ist so absurd.
+
+01:31:11.025 --> 01:31:14.745
+<v SPEAKER_1>Nach den Dingen, dass die aufgerüstet werden, da fragt man sich...
+
+01:31:14.765 --> 01:31:49.145
+<v SPEAKER_2>Ich wurde da gebeten, da einen Kommentar zuzugeben. Und mein Kommentar war, die Massenüberwachung durch Geheimdienste ist die größte Cyberbedrohung, der heute alle Bürger gleichermaßen ausgesetzt sind. Es ist absurd, dass diese nun unter Berufung auf Cyberbedrohung noch weiter ausgebaut werden soll, während der BND fleißig weiter auf dem internationalen Markt für Cyberwaffen mehrere Millionen im Jahr ausgelben möchte. Das war ja das, was wir vor einigen Wochen schon behandelt hatten, dass der BND jetzt vom Bundestag ein Etat von mehreren Millionen haben möchte, um Sicherheitslücken zu kaufen.
+
+01:31:49.165 --> 01:32:02.745
+<v SPEAKER_1>Was diesen Markt halt befeuert. Und das Einzige wäre, das eben auszutrocknen, indem man nicht da noch Geld reinwirft, um diese Sicherheitslücken dann zu kaufen für den eigenen Vorteil des Geheimdienstes, der es dann gegen die eigenen Bürger im Zweifelsfall einsetzt.
+
+01:32:02.765 --> 01:32:42.585
+<v SPEAKER_2>Es gab ja diesen Vorschlag von dem ex-NSA-Fuzz, der sagte, eigentlich wäre es sinnvoll, dass die staatliche Behörden oder institutionen diesen Markt einerseits die Preise richtig krass in die Höhe treiben und andererseits das gekaufte Wissen dann aber releasen. Also quasi, dass die NSA hingeht und sagt, okay, Zero-Day für iPhones, kein Problem. Hier eine Million und dann Apple geben. Das heißt, dadurch wäre dieser Sumpf trockengelegt für Kriminelle und andere Geheimnisse.
+
+01:32:42.605 --> 01:32:44.165
+<v SPEAKER_1>Aber trotzdem bleiben die Preise oben?
+
+01:32:44.785 --> 01:34:13.945
+<v SPEAKER_2>Die Preise bleiben oben, aber das tun sie sowieso. Das war ja so ein Gedanke. Die Tatsache ist ja nun mal, diese Preise sind deshalb hoch, weil diese vier da eben von Waffen reden. Also Angriffe auf weit verbreitete Computersysteme sind sehr, sehr mächtig und sehr attraktiv. Sowohl für Kriminelle als auch für Geheimdienste. Und die Geheimdienste sind da welche, die natürlich diesen Markt auch nur weiter befeuern. Wenn mir der Kriminelle 100.000 bietet und die NSA 200.000, ja alles klar, dann weißt du doch, an wen du verkaufst. Aber auch darüber hatten wir in Logbuch Netzpolitik schon ausführlich gesprochen. Das heißt, das Fazit der Sendung dieser Cyberwar, der ist eigentlich in vollem Gange. Aber ich werde nicht müde zu betonen, eben auf einer anderen Ebene. Also diese Horror-Szenarien, wir schalten euch den Strom aus. Und dann kriegt ihr alle, das ist, glaube ich, nicht der sinnvolle Cyberwar, den du heute führen würdest. Der sinnvolle Cyberwar ist, du infiltrierst einfach alles, was der Gegner hat und hörst alles ab.
+
+01:34:13.965 --> 01:34:29.345
+<v SPEAKER_1>Du infiltrierst private Firmen wie Gemalto. Genau. Also das ist der Cyberwar, um eben an Informationen ranzukommen. Oder du machst die Firmware für die Festplatten. Also ich glaube, es geht gar nicht hier so rum, ok, euer Wasserwerk ist jetzt aus. Sondern vielleicht auch.
+
+01:34:31.145 --> 01:35:13.065
+<v SPEAKER_2>Ich will nicht ausschließen, dass das auch mal passiert im Zuge einer kriegerischen Handlung, dass dann irgendwie, was weiß ich, kurz bevor uns hier die Dronen über den Kopf liegen und uns irgendwie gezielt auf Basis unserer SIM-Karten töten, wird uns dann nochmal der Strom ausgemacht, damit wir uns da nicht gegenwehren können oder so. Aber der wirkliche Cyberwar, der heute schon stattfindet, ist eben die Durchdringung aller informationsverarbeitenden Systeme in allen Bereichen. Und um dadurch eben alle Sicherheitsmechanismen, die irgendjemand in seiner IT irgendwo haben könnte, unterwandern zu können.
+
+01:35:13.065 --> 01:35:16.945
+<v SPEAKER_1>Und für einen Zweifelsfall dann zu haben, für den Fall der Fälle.
+
+01:35:16.965 --> 01:35:45.465
+<v SPEAKER_2>Und da bin ich froh, echt, dass ich nicht bei einem Hersteller für sicherheitsrelevante Produkte arbeite. Weil du musst ja inzwischen echt scared shitless sein. Also ich meine, wenn du irgendwas machst, was ein Produkt ist, was irgendjemandem Schutz bieten soll, dann bist du sicherlich bei denen auf der Zielliste. Und darf ich nicht darüber nachdenken, dass wir teilweise so Open-Source-Projekte auch haben in dem Bereich.
+
+01:35:46.505 --> 01:35:50.245
+<v SPEAKER_1>Das Ende der kryptierten Kommunikation findet statt.
+
+01:35:50.265 --> 01:35:51.645
+<v SPEAKER_2>Wer hat das gefordert? Maaßen.
+
+01:35:51.665 --> 01:36:10.185
+<v SPEAKER_1>Maaßens Chef des Verfassungsschutzes. Das Ende kryptiert. Das Wort ist schon super. Das klingt schon nach Cyberwar. Und das klingt so nach gefährlich. Es geht einfach um Verschlüsselung, um Privatsphäre, um niemand kann reingucken, um Briefumschlag. Aber kryptiert die Gegner. Die Terroristen haben das kryptiert.
+
+01:36:14.645 --> 01:36:16.165
+<v SPEAKER_2>Damit sind wir am Ende.
+
+01:36:16.185 --> 01:36:18.665
+<v SPEAKER_1>Und dann gibt es noch Danksagungen sicher?
+
+01:36:18.685 --> 01:37:15.105
+<v SPEAKER_2>Danksagungen wie immer. Dieses Mal an Jan, an Erika und Misha, an Orti und an eine unbekannte Person. Da ist wieder dieser klassische Fehler aufgetreten, dass Amazon irgendwie nicht sagt, wer das Geschenk gemacht hat, wenn es von einem anderen Versender stammt. Das kommt auch immer vor, ne? Unbekannte Personen können ja auch. Unbekannte Personen sind ja deshalb kein schlechterer Mensch. Das ist halt eigentlich das Erzieher noch mehr. Aber wenn so etwas passiert oder stattfindet, dann freue ich mich natürlich immer über kurze Meldungen, über das Kontaktformular, damit ich mich da auch noch mal persönlich bedanken kann. Somit würde ich sagen, zurück ins Internet.

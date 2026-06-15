@@ -1,0 +1,1159 @@
+WEBVTT
+
+00:03:53.659 --> 00:04:20.019
+<v SPEAKER_2>Und damit Herzlich Willkommen zum Chaos Radio im Blumen auf Ritz, wo wir uns heute zwei Stunden lang wieder mit Dingen beschäftigen werden, die unser digitales Leben ermöglichen, aber kaputt sind, wie das so häufig so ist im Chaos Radio. Eine Sendung, die mit dem Chaos Computer Club Berlin zusammengestaltet wird und wo es heute um DNS gehen soll. Was das ist, erkläre ich gleich. Aber erst mal stelle ich die lieben Gäste vor, die heute mitgekommen sind. Und das sind der Nibler. Hallo und guten Abend.
+
+00:04:20.039 --> 00:04:20.859
+<v SPEAKER_3>Mahlzeit.
+
+00:04:20.879 --> 00:04:31.819
+<v SPEAKER_2>Der Dirk. Hallo. Und der Lutz. Hallo und guten Abend. Könnt ihr euch noch mal kurz vorstellen, wo ihr herkommt und warum ihr heute hier seid? Nibler vielleicht als erstes?
+
+00:04:31.839 --> 00:04:46.219
+<v SPEAKER_3>Ich bin heute hier, weil ich gerade nach Potsdam ausgefahren bin. Aha, okay. Ja, ich baue schon seit über einem Jahrzehnt sowohl beruflich als auch in meiner Freizeit Netze. Und da gehört natürlich DNS auch immer mit dazu, weil so ein Netz ohne Namen ja immer doof ist.
+
+00:04:48.239 --> 00:05:04.219
+<v SPEAKER_5>Ja, ich mache das seit auch seit über 20 Jahren privat und manchmal auch für Firmen, aber eigentlich in den letzten. Also ich bin ein bisschen raus sozusagen aus den neuesten Technologien, aber ich kann vielleicht was Grundsätzliches zum DNS erzählen.
+
+00:05:06.779 --> 00:05:43.079
+<v SPEAKER_4>Ach ja, weil der Nibbler hat gesagt, ich soll einfach mal versuchen reinzurufen. Ansonsten behalte ich mich, so weit es geht, in Jena auf, um möglichst weit weg zu sein von allen großen Dingen. Und DNS mäßig, naja, da bin ich reingerutscht, bis hin zu der zentralen Verwaltung DNS im Internet, der Icon hoch und die ganzen technischen Sachen habe ich so weit mitgemacht, wie es mir gerade noch ging. Also den ganzen blöden Kram um Absicherung, wie so ein Protokoll im Detail funktioniert und den ganzen Quatsch eben.
+
+00:05:43.599 --> 00:06:59.499
+<v SPEAKER_2>Mal gucken, wir können heute noch ganz hochkommen und ganz in Detail mal gucken, was wir davon in den nächsten zwei Stunden unterbringen. Ich denke am Anfang an der Sendung immer zwei Stunden, das ist schon sehr lang, um über ein Thema zu reden, aber zum Schluss reicht die Zeit meistens nicht, weil wir immer ganz vorne anfangen. Und das ist natürlich, das gilt für alle dort draußen, weil diese Sendung soll halt keine Sendung sein für Leute, die eh schon Ahnung vom Thema haben, sondern eben das Ziel ist immer, man ist interessiert, aber hat keine Ahnung, wenn man vom Anfang an dabei ist, hat man es am Ende dann verstanden. Deswegen müssen wir zum ersten Mal erklären, warum wir uns das überhaupt angucken, dieses komische DNS, von dem wir schon geredet haben. Das ist, wenn ich es richtig verstanden habe, ich darf dann gleich korrigiert werden, im Grunde genommen System, das wir alle jeden Tag und immer benutzen, weil es URLs in IP-Adressen übersetzt. Also wenn ihr irgendwo im Netz surft, dann sind die Dinge, die euch angezeigt werden, kommen von einem Computer. Dieser Computer hat eine Nummer, den sich niemand merkt, sondern man merkt sich fritz.de, twitter.com, was auch immer. Und es gibt ein System, das übersetzt einen Namen in eine Nummer. Es ist quasi das Telefonbuch des Internets. Aber Marcus, was ist ein Telefonbuch? Naja, so eine Art Nachschlagendatei, Wikipedia für Namen oder wie man das sagen soll. Hab ich das bis jetzt richtig erklärt oder hab ich jetzt schon was falsch gemacht?
+
+00:07:01.559 --> 00:07:12.519
+<v SPEAKER_5>Also es wird nur der, von der URL wird nur ein kleiner Teil aufgelöst vom DNS, nämlich der nach dem zweiten Slash bis zum dritten Slash. Also der Hostname.
+
+00:07:14.779 --> 00:07:18.079
+<v SPEAKER_2>Jetzt hast du mich schon durcheinander gemacht. Was bedeutet das?
+
+00:07:19.619 --> 00:07:22.199
+<v SPEAKER_4>Das, was Fett gedruckt ist in der URL, das wird aufgelöst.
+
+00:07:22.219 --> 00:07:24.839
+<v SPEAKER_2>Was Fett gedruckt ist in meiner URL? Ist doch nicht Fett gedruckt. Was?
+
+00:07:24.859 --> 00:07:27.259
+<v SPEAKER_6>Hilfe!
+
+00:07:27.279 --> 00:07:34.899
+<v SPEAKER_5>Und das war nicht falsch, aber es geht auch umgekehrt. Also man kann auch Nummern zu Namen auflösen. Ein kleiner Trick.
+
+00:07:35.839 --> 00:08:08.999
+<v SPEAKER_2>Okay, mit dem Fett gedruckt muss man mal erklären. Ich kann jetzt irgendwie fritz.de slash blue moon zum Beispiel eingeben. Was genau ist dann der Part, wo das DNS eine Rolle spielt und wo nicht? fritz.de fritz.de, okay, sehr gut. So, mal ganz kurz. Das hört sich ja erstmal nach einer relativ einfachen Technologie an. Und wir erklären heute noch im Detail, was da passieren wird und was da möglicherweise ein Problem sein könnte. Könnt ihr schon mal ganz kurz oder in einem Schlagwort anreißen, was es da für ein Problem gibt?
+
+00:08:10.259 --> 00:08:34.419
+<v SPEAKER_5>Also DNS im klassischen Sinne ist halt unverschlüsselt und auch unauthentifiziert. Das heißt, man kann sich nicht sicher sein, dass die Nummer, die man da bekommt, also der der Rechner, in dem man sitzt, bekommt vielleicht die falsche Nummer von einem Angreifer, der diesen Namen gehyakt hat. Und man kann sich also man kann sich sicher sein, dass jeder mitlesen kann, welchen Server man da gerade anfragt.
+
+00:08:34.439 --> 00:09:27.519
+<v SPEAKER_2>Okay, das sind die Informationen, die ich bekomme. Weiß ich gar nicht, ob sie richtig sind, aber jeder darf mitlesen, was ich davon tun soll. Okay, ja, das ist sehr schön. Ich habe zumindest in den letzten Chaosradios in den letzten Jahren schon gelernt. Das ist selten eine gute Idee. So, jetzt haben wir geklärt, wofür wir das brauchen. Und jetzt beginnen wir gleich mit der Erklärung. Und da gilt für euch, wenn ihr irgendwo hängen bleibt und denkt so Moment, halt einen Schritt zurück. Ich habe das nicht verstanden. Ich versuche das für euch mitzudenken. Aber falls es mir misslingt, ruft gerne an 0331 70 97 110. Oder wenn ihr zwischendurch, ich hoffe auch auf die eine oder andere Anekdote, Fahrzeug da was aufschließt, wo ihr sagt, da könnte ich auch eine Geschichte erzählen, könnt ihr auch gerne anrufen unter 0331 70 97 110. So, Nibler meinte vor der Sendung schon, ja, aber wenn wir da anfangen, dann müssen wir auch die Geschichte erzählen. Die Geschichte von DNS. Schaffen wir das in zwei Stunden?
+
+00:09:34.639 --> 00:09:47.919
+<v SPEAKER_3>Am Anfang war das Internet grau und das lag nicht. Ja, und die Menschen hatten da halt Computer zusammengestöpselt, die hatten so ihre Adressen, aber das war Nummern und naja.
+
+00:09:47.939 --> 00:09:57.819
+<v SPEAKER_2>Also wir heute sagen, Fritz, früher war das Internet ja sehr, sehr, sehr viel kleiner. Wie bin ich da auf ein anderes Gerät gekommen? Kannst du ein Beispiel nennen, wie das aussah?
+
+00:09:57.839 --> 00:10:30.339
+<v SPEAKER_3>Zunächst gab es ja noch nicht mal das Web. Also sowas, was wir an Internetseiten und so kennen, das gab es da ja auch noch nicht. Und damit man überhaupt so Protokolle entwickeln kann, musste man die Rechner irgendwie mit einem Namen benennen. Und dazu hat man am Anfang Listen gepflegt, wo eine Nummer drin stand und der passende Name dazu und hat die halt rumgeschickt und ausgetauscht. Und ist jedem klar, wenn das mal irgendwie global skalieren soll und da viele, viele Tausende Leute teilnehmen, dann können die nicht alle gemeinsam so eine Liste pflegen, die sie austauschen, wozu jeder Nummer der Name drin steht.
+
+00:10:30.359 --> 00:10:45.859
+<v SPEAKER_2>Aber diese Liste, ich will kurz diese Liste fragen, ist es eine Liste, die hatte ich sozusagen auf meinem Rechner oder möglicherweise sogar ausgedruckt, neben dran. Und wenn ich dann einen Dienst benutzen wollte, der also noch vor dem Anzeigen für Website ging, dann habe ich die Nummer per Hand irgendwo eingetippt oder war das schon eine Liste, die auch automatisch verarbeitet wurde?
+
+00:10:45.899 --> 00:10:54.699
+<v SPEAKER_3>Das war eine Liste, die automatisch verarbeitet wurde. Das gibt es sogar bis heute, wird halt nicht mehr für sehr viel genutzt. Aber, ja.
+
+00:10:54.719 --> 00:11:05.039
+<v SPEAKER_2>Und da hatte jeder seine eigene Version von der Liste. Und wenn jemand einen neuen Rechner irgendwo angeschlossen hat, hat man sich sozusagen gegenseitig angerufen, so hier, pass mal auf, ich schreibe da was ein, okay, verstehe.
+
+00:11:05.059 --> 00:11:47.879
+<v SPEAKER_3>Und dass das nicht skaliert, ist klar. Das heißt, man braucht eine verteilte Datenbank für so was. Eine Datenbank ist ein Konstrukt, in dem man eben Nummern und Namen dazu ablegen kann. Aber das Problem ist weiterhin, wie verteilt man diese Datenbank? Wie teilt man sie so auf, dass Leute ihre Namen für ihr Institut, was da angeschlossen ist an diesem Internet, zum Beispiel selber pflegen können und andere Leute andere Listen eines anderen Instituts weiter pflegen können, ohne dass beide sich koordinieren müssen. Das heißt, man braucht irgendeine Hierarchie dahinter, die sagt, der Teil des Namensraums ist dort und der andere Teil des Namensraums, den darf diese andere Entität. Das heißt, man muss...
+
+00:11:48.019 --> 00:11:49.459
+<v SPEAKER_2>Was sind Teile von Namensräumen?
+
+00:11:49.659 --> 00:12:54.639
+<v SPEAKER_3>Diese Adressen also irgendwie strukturieren. Das heißt, man braucht irgendwie eine Hierarchie, um sagen zu können, der Teil des Internets oder der Teil der Namen im Internet wird von der einen Organisation, der von jener und dass man da eben abbilden kann, dass es mehrere Teilnehmer an diesem Netz gibt. Deswegen hat man diese Hierarchie eingeführt mit den Punkten. Das heißt fritz.de, das endet ja in.de. Das heißt, das ist eine Adresse, die geografisch oder von der Zuordnung her nach Deutschland administrativ zuzuordnen ist. Das heißt, es gibt eine Vergabestelle für.de-Namen. Da kann man sich zum Beispiel rbb.de oder fritz.de holen, wenn das noch kein anderer vor einem getan hat. Und unterhalb dieser Domänen dann zum Beispiel www.fritz.de vergeben. Das heißt, derjenige, der fritz.de bei der Vergabestelle für.de-Domains, das ist in Deutschland die DENIC, das ist eine Genossenschaft, zugeteilt bekommen hat, der kann eben unterhalb, also alles, was links von.fritz.de steht, selber vergeben.
+
+00:12:55.199 --> 00:13:21.779
+<v SPEAKER_2>Okay, das ist also quasi das Telefonbuch Deutschland sozusagen, könnte man sagen. Wir haben tatsächlich schon einen Anrufer, der sich diese Momente wieder verabschiedet hat. Ihr müsst einen kleinen Moment Geduld hatten, Geduld haben. Der fragen wollte, wie weit das früher mit den Listen war, wie weit das verbreitet war. Kann man sich das vorstellen, sozusagen groß wie ein Stadtviertel? War das nun in den USA, weil dort er das Netz unter anderem seine Anfänge genommen hat? Oder wie groß muss man sich das vorstellen? Wie viele Rechner gab es damals? Wie lange war die Liste?
+
+00:13:22.559 --> 00:13:29.339
+<v SPEAKER_4>Das kann man relativ einfach sagen. Die Zahlen sind bekannt. Also bis 1989 hatten wir etwa 150 Rechner im Internet.
+
+00:13:29.359 --> 00:13:42.379
+<v SPEAKER_2>150, okay. Nur zum Vergleich. Kannst du abschätzen, Stand 2018, jetzt, wir senden am 24.09. um 22.13. wie viele Rechner jetzt im Netz sind, die darüber erreicht werden müssen?
+
+00:13:48.579 --> 00:13:53.659
+<v SPEAKER_4>Ich hab gerade überlegt, ob die 4 Milliarden reichen. Das tun sie nicht.
+
+00:13:53.679 --> 00:14:07.819
+<v SPEAKER_2>Okay, über 4 Milliarden. Zumindest schon mal eine Hausnummer, mit der man arbeiten kann. Okay, also man hat die Welt unterteilt in verschiedene, sind das alles geografisch? Na nicht mehr. Also DE ist ja tatsächlich ein geografischer Bereich.
+
+00:14:09.399 --> 00:15:06.999
+<v SPEAKER_3>Da muss man unterscheiden. Man hat sich dann überlegt, nach welchen Kriterien vergibt man diese Domains, also diese Namen. Und die eine Möglichkeit ist geografisch, also über Ländercodes wie DE für Deutschland oder CH für die Schweiz oder AT für Österreich und so weiter. Oder eben der Art der Organisation. Da gab es zunächst.org für Organisationen, nicht kommerzielle, .com für Kommerzielle organisationen, .edu für Schulen, tatsächlich hauptsächlich in den USA und so weiter und so fort. Das gab dann noch mal vor ein paar Jahren eine Explosion, wo eben von diesen generischen Top-Level Domains, also der ganz rechte Teil an so einer Domain, das wurde geöffnet. Das heißt, es konnten sich Organisationen für einen sechsstelligen Betrag eben so eine Domain-Endung besorgen und diese dann auch selber verwalten.
+
+00:15:11.739 --> 00:15:14.199
+<v SPEAKER_4>Das können wir nachher noch mal diskutieren. Das ist ein bisschen länglich.
+
+00:15:16.759 --> 00:15:23.699
+<v SPEAKER_2>Also da geht es um so etwas wie Punkt Berlin oder Punkt Mobi und diese ganzen neuen, also relativ neuen Namen, die es da mittlerweile gibt.
+
+00:15:23.719 --> 00:15:24.999
+<v SPEAKER_3>Oder Punkt iFinanzberater.
+
+00:15:25.539 --> 00:15:26.199
+<v SPEAKER_2>Bitte was?
+
+00:15:26.219 --> 00:15:29.919
+<v SPEAKER_3>Punkt iFinanzberater. Das ist mal mein Lieblingsbeispiel für unsinnige.
+
+00:15:29.939 --> 00:15:33.039
+<v SPEAKER_2>Das gibt es wirklich? Ja. iFinanzberater?
+
+00:15:33.339 --> 00:15:34.939
+<v SPEAKER_3>Also Punkt i...
+
+00:15:35.299 --> 00:15:39.559
+<v SPEAKER_4>Die haben sogar drei davon. Drei verschiedene Schreibweisen haben sie sich registriert für das Geld.
+
+00:15:40.779 --> 00:15:41.139
+<v SPEAKER_2>Meine Güte.
+
+00:15:41.159 --> 00:15:42.499
+<v SPEAKER_4>Also dreimal das Geld ausgegeben.
+
+00:15:43.239 --> 00:15:46.019
+<v SPEAKER_2>Was es nicht alles gibt. Wir haben noch einen Anruf.
+
+00:15:46.139 --> 00:15:56.939
+<v SPEAKER_3>Leider kann man die nicht offen registrieren, sonst hätte ich mir schon längst Triggbetrüger Punkt.
+
+00:15:56.959 --> 00:16:06.459
+<v SPEAKER_5>Also es gibt dazu auch einen Twitter Feed, wo man sich alle neu registrierten Top Level Domains anschauen kann. Das ist at, jetzt muss ich nochmal gucken, newtl.ds.
+
+00:16:06.479 --> 00:16:09.859
+<v SPEAKER_2>Okay, kann man gucken. Nadine ist am Telefon und hat ja eine Frage.
+
+00:16:11.679 --> 00:16:32.079
+<v SPEAKER_1>Ich habe eigentlich zwei Fragen, wenn ich ganz ehrlich bin. Die erste Frage ist, woran liegt es eigentlich, dass einige Seiten halt nicht geöffnet werden können? Das heißt an Seiten Ladefehler, obwohl sie erstens existieren und was ich ein, zwei Tage später oder vorher funktionieren soll und dazwischen dann auf einmal nicht. Was ist das?
+
+00:16:33.719 --> 00:16:34.539
+<v SPEAKER_4>Eine gute Frage.
+
+00:16:35.459 --> 00:16:45.519
+<v SPEAKER_5>Also das kann mehrere Gründe haben. Ich habe in letzter Zeit häufiger auf US-Nachrichtenseiten die Begründung, dass sie die EU-Data Protection nicht einhalten wollen und deshalb gehen die nicht mehr.
+
+00:16:45.559 --> 00:16:58.799
+<v SPEAKER_2>Ja, aber da, also technisch gesehen funktioniert da ja noch die Webseite. Aber die Webseite zeigt dir an, sozusagen, hier ist ein Fehler. Was Sadin meint, ist, die Webseite ist tatsächlich erscheiflich. Aber das ist plötzlich passiert, ist das Sorge haben. Am anderen Ende ist ein Computer und der ist nicht mehr da, oder?
+
+00:16:59.799 --> 00:17:37.119
+<v SPEAKER_5>Es gibt auch da mehrere Möglichkeiten. Einerseits kannst du sie vielleicht nicht mehr auflösen, die Domain, weil in deinem Land Sperrmechanismen greifen oder der, wo du hin willst, der hat seinen DNS Server nicht richtig konfiguriert. Genau, das hat man noch gar nicht besprochen, dass es da zwei Seiten gibt. Bei dem DNS Server nämlich das Resolven und das. Sorry, da können wir glaube ich nicht konkret sagen, was es ist. Was du aber ausprobieren kannst, ist, es gibt einen Web Service, wo man Domainnamen eingeben kann und da, der heißt irgendwie Down for me or for everybody. Und da kannst du gucken, ob andere Leute noch darauf zugreifen können.
+
+00:17:37.879 --> 00:18:06.499
+<v SPEAKER_1>Okay, das hört sich schon mal gut an. Ich habe aber noch eine Frage, wenn das geht. Und zwar hat ich vor langer Zeit meine Internetadresse gehabt, noch einen Username und die habe ich längere Zeit nicht genutzt. Vor drei Jahren habe ich mich dann mit diesen Daten an Papas Computer für unsere Lieder halt eine Songliste zusammengestellt und abgeschickt. Ich sollte einen Aktivierungslink erhalten und den hat mein Papa dann bekommen, auch seine E-Mail Adresse und sagte ja, deine E-Mail Adresse ist gar nicht mehr da. Darum ist es bei mir gelandet. Er hat mir das verziehen, es war mir aber sehr peinlich.
+
+00:18:10.919 --> 00:18:15.859
+<v SPEAKER_2>Okay, ich fürchte, das führt jetzt ein bisschen weit und vor allen Dingen weg vom Thema.
+
+00:18:15.879 --> 00:18:28.359
+<v SPEAKER_5>Also ich kann vielleicht eine kurze Antwort. Es könnte sein, dass er eine Catchall Adresse hat auf der Domain, wo alles hingeht, was nicht explizit für jemand anderes eingerichtet ist und dass er deshalb das bekommen hat, was eigentlich an dich gehen sollte.
+
+00:18:28.759 --> 00:18:30.199
+<v SPEAKER_1>Kann die E-Mail Adresse ablaufen?
+
+00:18:31.899 --> 00:18:39.619
+<v SPEAKER_2>Du kannst, wenn du beim externen Anbieter bist, also bei irgendjemand anders, und die eine Weile lang nicht benutzt, kann der sagen, naja, da war die Nadine lange nicht mehr da, dann streichen wir mal das Posto aus.
+
+00:18:39.639 --> 00:18:41.579
+<v SPEAKER_1>Oh, die ist tot oder wie?
+
+00:18:41.599 --> 00:19:13.599
+<v SPEAKER_2>Irgendwie so, genau. Na gut, dann hoffen wir, dass wir damit ein bisschen helfen konnten, aber wollen wieder zurück zum Thema kehren und dabei auch gerne im Verlauf der Sendung bleiben. Also ihr könnt gerne anrufen, 0331 77 97 110, aber es sollte mit dem Thema zu tun haben, das wäre sehr praktisch. Stehen geblieben waren wir bei, es gibt also verschiedene Institutionen, die den letzten Teil einer URL verwalten und dann den Teil davor, können sich sozusagen Privatnutzer kaufen.
+
+00:19:13.679 --> 00:19:16.919
+<v SPEAKER_4>Na da möcht ich einhaken. Ganz ehrlich.
+
+00:19:16.939 --> 00:19:19.799
+<v SPEAKER_2>Was ist denn jetzt schon wieder kaputt?
+
+00:19:19.819 --> 00:19:28.039
+<v SPEAKER_4>Die Geschichte. Bevor wir anfangen, Organisationen einzuführen, sich darum kümmern, müssen wir erst mal drüber reden, wie es überhaupt dazu gekommen ist, das zu zerlegen.
+
+00:19:29.399 --> 00:19:32.479
+<v SPEAKER_2>Das hat doch Nimmela gerade erklärt, es ist einfach zu groß geworden.
+
+00:19:34.999 --> 00:22:04.979
+<v SPEAKER_4>Nicht ganz, weil es gab da eine Person, die das zentral zusammengehalten hat, der John Postle, und der hatte dann die wunderbare Aufgabe, diese komischen Verteiler zu pflegen. Also nicht die ganze Liste, wo drinne steht, wer hat welche Namen und welche Maschine, an welche Uni hat welche IP-Adresse, diese lange Liste, sondern der hat dann die Verwaltung gepflegt, dass beispielsweise die Universität in Kalifornien da drüben ihre Nameser waren, die man dann befragen kann. Aber diese Verwaltung, wer gehört wohin? Wo muss man sich hinwenden? Wer ist eigentlich für was zuständig? Das hat er gepflegt. Und das ging einfach über persönliche Kontakte. Wenn man sowas haben wollte, hat man den angerufen, hat gesagt, du, ich würde gerne für unsere Organisation das in die Verwaltung nehmen. Und dann hat er sich das aufgeschrieben und dann gab es die entsprechende Domain, wo man seine eigenen Sachen eintragen konnte. Und da gab es mal eine schöne Geschichte, nämlich als die ganzen Top-Level Domains, die es da gab, die waren Edu, die waren Com, die waren Net, die waren Org. Die Länder Top-Level Domains gab es damals noch gar nicht. Dann kam irgendwann mal die Idee mit den Ländern auf, insbesondere wegen Deutschland, weil die als erste angefangen haben, um so viel zu machen, dass der gute John die Nase voll hatte. Der hat dann einfach angerufen bei jemandem in Karlsruhe und hat gesagt, ich hab keinen Bock darauf, das macht ihr jetzt. Ich reich dir das mal rüber. Und alles, was dann unter DE ist, das macht ihr dann. Also wirklich nicht im Sinne einer Organisation, sondern im Sinne von Arbeitsverteilung. Einfach Arbeiten vom Tisch wegdelegieren. Und dieser John hat dann eines schönen Tages einen Anruf bekommen. Da hat sich dann jemand sehr militärisch vorgestellt und hat gesagt, wir sind von der NATO. Und wir würden das auch gerne haben. Aber das passt nicht. Wir sind ja nicht DE, wir sind ja auch nicht in irgendeiner Form EU. Gab's nicht. Aber wir sind auch nicht, was sind wir eigentlich? Wir sind nicht EU, wir sind nicht KOM. MIL geht auch nicht, weil wir sind ja nicht das amerikanische Militär. Und da hat der John gesagt, na gut, dann werdet ihr eben, wenn ihr eben gar nicht zuzuordnen seid, seid ihr eben INT, die internationale Organisation. So ist die Top-Level-Domain INT entstanden. Und dann gab's eine Organisation, die ITU.
+
+00:22:05.899 --> 00:22:08.199
+<v SPEAKER_2>Wir können nicht die Geschichte aller Top-Level-Domains erzählen.
+
+00:22:09.999 --> 00:22:30.419
+<v SPEAKER_4>Ich schieb mich dazwischen, die ist lustig. Das sind Franzosen, die schreiben ihre Buchstaben anders als die Engländer. Deswegen gibt es heute noch in der INT Top-Level-Domain eine Weiterleitung in der Schreibweise der Franzosen, damit die ihre Website immer noch aufrufen können, obwohl sie die Buchstaben in der falschen Reihenfolge hinterherlegen.
+
+00:22:30.439 --> 00:22:32.939
+<v SPEAKER_2>Und wie führte das jetzt zu einem automatischen?
+
+00:22:32.959 --> 00:22:54.239
+<v SPEAKER_4>IT.int hat da eingeführt. Aber dann kommt der Punkt, wo wir anfangen, in Organisation zu kommen. Also wenn dieses Chaos am Anfang, jeder kriegt einfach so ein Ding auf die Nase gedrückt und sagt, na, hier kümmer du dich drum, irgendwann fängt das an, kommerziell interessant zu werden. Und dann braucht man Organisation dafür. Und jetzt können wir zu einer Organisation weitermachen.
+
+00:22:54.259 --> 00:22:59.519
+<v SPEAKER_3>Ganz kurze Zwischenfrage. Wer hat dann damals DE gepflegt, bevor das eine Organisation war?
+
+00:23:00.899 --> 00:24:04.099
+<v SPEAKER_4>Das fing in Karlsruhe an. Und dann wurde es den Leuten in Karlsruhe auch zu fehlen. Die haben gesagt, da müssen wir irgendwas finden. Ich bin mir nicht mehr ganz sicher, weil ich mich nicht mehr dran erinnern kann, wie das damals gelaufen ist. Ich weiß noch, dass wir in Karlsruhe angerufen haben, als wir unsere Domain geholt haben. Aber das ging dann wirklich so, dass da die Genossenschaft hochkam. Dass dann angefangen haben, Leute zu sagen, na gut, als Uni ist es uns zu aufwendig. Eigentlich der Grund war, dass die Uni Karlsruhe gesagt hat, wir haben keine Planstelle dafür. Wir können da nicht Geld dafür investieren, dass da jemand sitzt und so einen Verwaltungsquatsch macht. Und wir müssen das irgendwie auslagern. Da haben sich dann mehrere zusammengetan mit der Uni Dortmund. Und die haben dann einfach zusammen gesagt, na dann setzen wir uns eben hin und überlegen uns was. Und so ist dann nach und nach die Genossenschaft der DENiC entstanden. Das Witzige daran ist, dass diese DENiC, die DE Domain, bis 2006 nicht anerkannt war.
+
+00:24:05.339 --> 00:24:06.179
+<v SPEAKER_5>Wie nicht anerkannt?
+
+00:24:06.199 --> 00:24:10.299
+<v SPEAKER_4>Das heißt, die E-Toplevel Domain hat es bis 2006 offiziell nicht gegeben.
+
+00:24:12.159 --> 00:24:13.839
+<v SPEAKER_2>Ja, aber praktisch doch schon.
+
+00:24:14.459 --> 00:24:15.279
+<v SPEAKER_4>Ja, natürlich.
+
+00:24:15.799 --> 00:25:06.099
+<v SPEAKER_2>Also, ich bin jetzt tatsächlich ein bisschen erschüttert, weil normalerweise ist es im Chaosradio so, dass ich in technischen Details ertrinke und ich mich doll bemühen muss, dass man sozusagen so ein bisschen den gesellschaftlichen Überbau in Institutionen was Problem sein kann. Das ist hier heute anscheinend umgedreht. Wir haben jetzt erst mal geklärt, wie die Historie ist, welche Institutionen daran beteiligt sind, dass früher in der Uni jemand im Zettel gesessen hat und sich Nummern aufgeschrieben hat. Wir müssen aber gleich tatsächlich mal noch die Technik ein bisschen besser erklären, als da werden irgendwie Namen und Nummern in der Liste ausgetauscht. Das machen wir aber nach den Nachrichten. Vorher gibt es noch eine kleine Musik, die ich heute mitgebracht habe. Die Songs aus der Sendung kommen vom ChipTunes gleich Win Sampler Nummer 7, der im August erschienen ist. Und jetzt hören wir von Cronwolf Third Times the Chill.
+
+00:29:27.927 --> 00:29:39.067
+<v SPEAKER_6>Und jetzt ein kurzer Hinweis in eigener Sache und zwar in eurer. Wenn ihr gerade auf Wohnungssuche in Berlin seid, dann können wir euch vielleicht helfen. Meldet euch einfach bei uns.
+
+00:29:39.087 --> 00:29:45.787
+<v SPEAKER_7>fritz.de slash mietgefühl Seit wann schreibt man ein Mitgefühl mit IE?
+
+00:29:45.807 --> 00:29:47.487
+<v SPEAKER_6>Na, seit man auf Wohnungssuche ist.
+
+00:29:59.127 --> 00:30:01.647
+<v SPEAKER_8>Mit Moses Vendel. Nach dem Streit um die Zukunft.
+
+00:30:01.667 --> 00:30:02.887
+<v SPEAKER_2>Das wollte ich gerade sagen.
+
+00:30:02.907 --> 00:30:07.587
+<v SPEAKER_8>Ja, dann sag es doch nochmal. Ich dachte, da kommt nichts mehr. Und dann sagt es nochmal.
+
+00:30:07.607 --> 00:30:08.927
+<v SPEAKER_2>Los geht's mit Moses Vendel.
+
+00:30:08.947 --> 00:33:25.687
+<v SPEAKER_8>Nach dem Streit um die Zukunft von Verfassungsschutzpräsident Maaßen haben CDU und SPD den neuen Kompromiss gelobt. Bundeskanzlerin Merkel gab aber auch Fehler zu. Die Große Koalition habe sich zu viel mit sich selbst beschäftigt, so die Kanzlerin. Jetzt wolle sie sich wieder um die Themen kümmern, an denen sie eigentlich arbeiten muss. Gestern hatten sich die Chefs von Union und SPD geeinigt, den bisherigen Verfassungsschutzpräsidenten nicht zu befördern. Stattdessen soll Maaßen Sonderberater im Innenministerium werden. Das Rettungsschiff Aquarius will mit fast 60 Flüchtlingen an Bord im Hafen von Marseille anlegen. Die Hilfsorganisationen SOS, Mediterranee und Ärzte ohne Grenzen baten die Behörden, die Menschen an Land gehen zu lassen. Die Organisationen sagen, dass der französische Hafen die einzige Möglichkeit ist, um die Flagge zu wechseln. Hintergrund ist, dass Panama am Wochenende angekündigt hat, dem Hilfsschiff die Flagge zu entziehen. Das Land reagierte damit auf eine Beschwerde Italiens. Dessen Behörden hatten die Aquarius aufgefordert, die geretteten Flüchtlinge nach Nordafrika zurückzubringen. Die EU-Kommission verklagt Polen vor dem europäischen Gerichtshof, weil das Land viele oberste Richter zwangspensioniert hat. Die Kommission hat gesagt, dass das, dazu von der Regierungspartei PiS eingeführte Gesetz, gegen EU-Recht verstößt. Es verletze nämlich zwei wichtige Grundregeln, die Unabhängigkeit von Richtern und dass der Staat Richter nicht einfach absetzen darf. Wenn der europäische Gerichtshof das auch so sieht, muss Polen das Gesetz entweder ändern oder eine hohe Geldstrafe bezahlen. Der Kroate Luca Modric ist zum ersten Mal Weltfußballer des Jahres. Bei der FIFA-Gala in London setzte sich der 33-jährige von Real Madrid gegen den Portugiesen Cristiano Ronaldo und den Ägypter Mo Salah durch. Mit Modric ist zum ersten Mal seit 10 Jahren ein anderer als Ronaldo oder Messi Weltfußballer des Jahres. Mit den aktuellen Temperaturen in Berlin-Kreuzberg sind es 9 Grad und in Pankow 5. Prenzlau und Frankfurt melden 7, in Neuropin und Brückam war 8 Grad. Heute Nacht ziehen die Schauer Richtung Südosten ab und es klart auf, die Temperaturen gehen noch weiter runter auf 5 bis 2 Grad. Es kann an manchen Orten sogar Bodenfrost geben. Morgen wird es dann fast den ganzen Tag sonnig oder freundlich. Vorübergehend ziehen wir ein paar Wolkenfelder durch. Es bleibt aber weitgehend trocken. Maximal 13 bis 16 Grad. Es ist einiges los. A113 Zubringer Schönefeld statt einwärts. Zwischen Adlershof und Stubenrauchstraße sind an einer Baustelle die rechte Spur und die mittlere Spur gesperrt. A2 Berlin Richtung Magdeburg. Zwischen Brandenburg und Wollin steht immer noch ein kapotes Auto auf der rechten Spur. A12 Berlin Richtung Frankfurt Oder. Zwischen Friedersdorf und Fürstenwalde West ist an einer Baustelle die linke Spur bis morgen früh gesperrt. A115 Zubringer Nutetal Richtung Berliner Ring. Zwischen Kleinmachno und Potsdam-Babelsberg gibt's immer noch Behinderungen nach einem Unfall. In Berlin ist die linke Spur gesperrt, und zwar auf der A111, dem Zubringer Oranienburg, statt auswärts zwischen am Festplatz und dem Eichborn-Damm. Grund dafür sind Wartungsarbeiten. Und dann noch eine Meldung. A113 Zubringer Schönefeld Richtung Dresden. Zwischen Adlershof und Schönefeld Nord eine Sperrung. Grund dafür sind Wartungsarbeiten, und zwar bis morgen früh. Bei der Berliner S-Bahn fahren Busse statt Bahnen. Und zwar ab 22 Uhr auf den Ringbahnlinien S41 und S42 zwischen Westhafen und Gesundbrunn. Und zwar bis heute Betriebsschluss. Wo ihr durchkommt, eine gute Fahrt.
+
+00:33:26.047 --> 00:33:27.687
+<v SPEAKER_3>Und wenn ihr.
+
+00:33:34.067 --> 00:33:45.867
+<v SPEAKER_7>Einen ganz bestimmten Song aus der Fritz Playlist sucht, dann seht sie euch doch einfach an. Die Playlist auf fritz.de und in der Fritz App. Und das Auge hört mit, man.
+
+00:33:59.012 --> 00:35:10.532
+<v SPEAKER_2>Chaos Radio in Blumun heute mit Nibla, Dirk und Lutz. Hallo und herzlich willkommen zurück. Sehr verhalten, wir reden doch darüber ein ernsthaftes Thema, DNS. Wir haben in der ersten halben Stunde schon geklärt, dass wir heute über dieses System reden, dass man am ehesten daherkennen, dass es dafür zuständig ist, dass das Internetadressen in Zahlen auflöst und so ermöglicht, dass Computer miteinander kommunizieren und euch Webseiten angezeigt werden. Und wollen jetzt, nachdem wir in der ersten halben Stunde auch erklärt haben, dass da nichts ist einfach, riesige Institutionen und eine lange Historie dahinter stecken, würde ich jetzt gerne verstehen lernen, wie das technisch funktioniert. Es gilt wie immer, wenn ihr es nicht versteht, 0331 70 97 110. So, also, bevor ich nachher frage, was man noch damit machen kann, jetzt der sozusagen, also das, was mir gewahrt ist, ich gebe im Browser eine Adresse ein und dann wird es irgendwie in eine Nummer übersetzt. Die dann ermöglicht, dass mein Rechner eine Nummer hat und der andere Rechner, der auch eine Nummer hat, miteinander kommunizieren. Technisch ist es, meine Befürchtung zumindest, ein bisschen komplizierter. Was passiert da genau? Weiß es einer von euch?
+
+00:35:12.572 --> 00:35:51.072
+<v SPEAKER_4>Wer will? Okay, also im Browser irgendwas eingegeben, da steht, keine Ahnung, HTTPS, Doppelpunkt, Slash, Slash. Dann kommt irgendwie Buchstaben mit Punkten drin. Und dann kommt irgendwann wieder ein Slash und dann kommt noch ein ganzer Haufen anderer Quatsch. Der relevante Teil ist der, wie ich schon vorhin erwähnt, zwischen den drei Slashs. Das ist wie bei dem Pfeifer in 3F. Der interessante Teil ist also das Ei dazwischen. Den nehmen wir jetzt her und aus dem müssen wir eine Nummer machen, weil das gibt an, welchen Rechnung wir befragen sollen nach der Webseite.
+
+00:35:51.092 --> 00:35:58.372
+<v SPEAKER_2>Gut, wer weiß das? Das passiert noch sozusagen auf meinem Computer?
+
+00:35:58.392 --> 00:36:26.032
+<v SPEAKER_4>Das passiert noch im Browser drinnen. Der muss das auseinanderdröseln und muss also sagen, das ist jetzt der Name, der mich interessiert. Den gibt er jetzt weiter an jemanden, der in die Namensauflösung machen soll. Der also den Namen in eine IP-Adresse umwandeln soll. Jetzt haben wir ein Problem. Wenn wir dastehen und sagen, wir brauchen so eine Namensauflösung, was machen wir? Normalerweise, wenn wir ein Telefon haben und wir haben einen Namen, wollen wir eine Telefonnummer haben, dann rufen wir die Auskunft an. Früher jedenfalls haben wir das so gemacht.
+
+00:36:26.052 --> 00:36:33.292
+<v SPEAKER_2>Man kann gerade sagen, man würde ins Internet gehen und in den Online-Telefon nachschlagen, aber es geht nicht, weil das DNS noch nicht funktioniert. Oh mein Gott.
+
+00:36:33.312 --> 00:36:55.092
+<v SPEAKER_4>Alles, was ich wissen muss, ist die Nummer der Auskunft. Wenn ich die Nummer der Auskunft habe, dann kann die mir helfen. Genau das funktioniert nämlich beim Rechner heute noch so. Die Nummer der Auskunft erfahre ich, wenn ich meinen Rechner konfiguriere. Nein, da trage ich die ein. Da trage ich nämlich ein, dass die Nummer der Auskunft ist. Also welcher Rechner mir, wenn ich ihm einen Namen hinschicke, die IP-Adresse zurückliefert.
+
+00:36:55.112 --> 00:36:55.792
+<v SPEAKER_2>Moment.
+
+00:36:55.812 --> 00:36:57.212
+<v SPEAKER_4>Der heißt mein Resolver.
+
+00:36:57.232 --> 00:37:05.732
+<v SPEAKER_2>Ich bin mir sicher, dass, sagen wir mal, 98 Prozent aller Hörerinnen und Hörer des Chaos Radios nie irgendwo eine Telefonbuchnummer eingetragen haben.
+
+00:37:06.712 --> 00:37:52.152
+<v SPEAKER_4>Da bin ich mir ganz sicher, dass sie es getan haben. Sie wissen es nur nicht. Weil was sie gemacht haben ist, sie haben ihren Rechner praktisch aus der Verpackung genommen, angeschlossen. Und da ist schon was drin, das eine automatische Konfiguration vornimmt und der erfährt von seinem zugehörigen Router oder Internet Provider oder sonst was, die Nummer da rauskommt. Das ist die Summe des DNS-Servicers, des DNS-Resolvers. Die erfährt er dort einfach, die kriegt er mitgesagt. Wenn ich mir einen Rechner ins WLAN hänge und in ein anderes WLAN komme, da kriege ich jedes Mal die neue und die zuständige Auskunft gesagt. An den wende ich mich, dem schicke ich eine Nachricht, sage das ist der Name, ich brauche die Nummer. Interessante Frage ist, wie kriegt die Auskunft das raus?
+
+00:37:52.172 --> 00:37:55.912
+<v SPEAKER_2>Na ja, da gibt es ja diese Listen, die historisch bedingt nicht mehr von Hand geführt werden.
+
+00:37:55.932 --> 00:37:57.112
+<v SPEAKER_4>Nee, die Listen gibt es nicht mehr.
+
+00:37:57.132 --> 00:37:57.652
+<v SPEAKER_2>Was?
+
+00:37:57.672 --> 00:38:07.932
+<v SPEAKER_4>Also jedenfalls nicht für den Zweck, weil das einfach zu lang wäre. Was die machen, ist ganz einfach. Die gehen hin und haben erstaunlicherweise die Nummer der Auskunft.
+
+00:38:07.952 --> 00:38:08.012
+<v SPEAKER_1>Was?
+
+00:38:08.032 --> 00:38:11.052
+<v SPEAKER_9>Moment mal.
+
+00:38:11.072 --> 00:38:58.172
+<v SPEAKER_4>Die haben die Resolver, die jeder Rechner da irgendwo fragt, also die vom Internet Provider oder vom lokalen Router oder was auch immer oder im Firmenetz, die haben selber noch mal eine Liste von Auskunftsnummern. Das sind die sogenannten zentralen Auskünfte, also Routeserver heißen die, das ist der Wurzel, da geht alles los. Die fragen die und sagen, hallo ich hab hier einen Namen, zum Beispiel www.fritz.de, kannst du mir die Adresse dazu sagen, Antwortet der Routeserver? Mö, kann ich nicht. Aber ich hab einen Tipp für dich, weil ich glaube, das sind die Server, die für die DE zuständig sind und ich hab auch noch ein paar IP-Nummern dazu, also ein paar Auskunftsnummern, die du da ausprobieren kannst, vielleicht antwortet der einer davon.
+
+00:38:58.492 --> 00:39:13.952
+<v SPEAKER_2>Warte, warte, ich muss nur, damit ich hinterherkomme, wir gehen jetzt gleich zur Auskunft Nummer drei. Mein Rechner weiß, wo er anfragen soll. Wo er angefragt hat, wird ihm gesagt, na ja, geh mal lieber zu so einer Art Meta-Auskunft, also der Zentralstelle und die sagt dann wieder...
+
+00:39:13.972 --> 00:40:13.292
+<v SPEAKER_3>Er beauftragt seine lokale Auskunft, damit ihm darauf eine Antwort zu liefern. Und wenn diese lokale Auskunft noch keine Antwort hat, weil er sie vielleicht noch nicht danach gefragt hat, dann muss man ja irgendwo mit dem Beauskunft anfangen und fängt man von rechts nach links eben an. Fragt eben, wer ist denn hier so zuständig für diese Domänen? Für DE ist DE nicht zuständig. Die haben hier diese 3, 4, 5, 12 Server. Fragst du mal, vielleicht antwortet da einer. Der sagt ja, jo, fritz.de, sagt mir wat. Da fragst du mal diesen Server vom RABB. Und der sagt dir dann, jo, www.fritz.de, das hat die und die IP-Adresse. Das heißt, es geht den Baum von ganz rechts nach ganz links hierarchisch runter. Eben über die globale Auskunft, die dir sagt, wofür.de die Server stehen. Die sagt dir, wer für fritz.de zuständig ist. Und der sagt dir, wer www.fritz.de.
+
+00:40:13.312 --> 00:40:53.992
+<v SPEAKER_2>Da kommen wir für mich zu einem spannenden Punkt, weil ich kann verstehen, also hier beim RABB macht das die Technikabteilung, die pflegt dann so einen Server, der auf Auskunft sagt, also wenn ihr fritz.de erreichen wollt, dann ist es folgende Nummer. Ich kann mir auch vorstellen, bei DENIC habt ihr gerade gesagt, ja die haben irgendwie mehrere Rechner, vielleicht für die Ausfallsicherheit oder was auch immer. Die sagen auch, okay, wenn du diese Adresse suchst im deutschen Raum, dann fragt man danach. Jetzt sind zwei Sachen, wo ich nicht genau weiß, wer das ist und wer das betreibt. Das erste ist, ihr habt diese sogenannten Root Server, also diese Zentralauskunft, die mich dann wieder herunterschickt. Wer betreibt die denn? Wo sind die denn? Gibt es da viele?
+
+00:40:54.012 --> 00:40:54.792
+<v SPEAKER_4>13.
+
+00:40:54.812 --> 00:40:56.572
+<v SPEAKER_2>13, okay.
+
+00:40:56.592 --> 00:41:12.112
+<v SPEAKER_4>Wobei wir unterscheiden 13 verschiedene Root Server, das sind 13 verschiedene Betreiber. Die sind alle von der Professionalität her sehr unterschiedlich. Es gibt einen Root Server Betreiber, das ist ein Rechner, der steht unter dem Schreibtisch. Aus historischen Gründen.
+
+00:41:12.132 --> 00:41:14.192
+<v SPEAKER_5>Unter Wissenschreibtisch?
+
+00:41:14.212 --> 00:41:15.372
+<v SPEAKER_2>Von John Postel oder was?
+
+00:41:16.092 --> 00:41:49.052
+<v SPEAKER_4>So ungefähr, ja, es sind drei Büros weiter. Egal, es gibt einen Server, der wird von der RIPE betrieben. Das ist die Europäische Verwaltungsstelle für Internetfragen, wenn man das so kurz fassen will. Und die betreibt unter ein und demselben Nummer, also praktisch für die gleiche IP-Adresse, beziehungsweise die gleiche Auskunftsnummer, den gleichen Namen, irgendwas bei 150 Servern.
+
+00:41:49.072 --> 00:41:55.192
+<v SPEAKER_5>Und wenn es da 13 Server gibt, fragt dann mein Resolver immer alle 13 oder sucht er sich zufällig einen aus?
+
+00:41:55.212 --> 00:41:59.852
+<v SPEAKER_4>Einen, von dem er gerade eine gute Erfahrung gesammelt hat, mit dem er gut kommunizieren konnte.
+
+00:41:59.872 --> 00:42:00.552
+<v SPEAKER_5>Der schnell geantwortet hat.
+
+00:42:00.572 --> 00:42:18.592
+<v SPEAKER_4>Er behält einfach die letzten, wo es gut geklappt hat. Das ist wie beim Telefonieren, wenn ich jemanden anrufen soll, ich habe mehrere Nummern und auf einer Nummer klappt es, dann bleibe ich solange bei der Nummer dabei, bis irgendwie ein Problem auftritt. So suchen die sich immer die Auskunftsnummer von den Routesurfen, die am nächsten dran ist, die am schnellsten antwortet.
+
+00:42:20.052 --> 00:42:28.492
+<v SPEAKER_2>Das sind also mehr oder weniger vertrauenswürdig, aber auf jeden Fall eher größere Institutionen, die das Ganze legen.
+
+00:42:29.352 --> 00:42:31.932
+<v SPEAKER_3>Zum Beispiel das US-Militia.
+
+00:42:31.952 --> 00:42:33.852
+<v SPEAKER_2>Interessant.
+
+00:42:33.872 --> 00:42:43.232
+<v SPEAKER_4>Es ist immer sehr nützlich, wenn man solche Organisationen hat. Weil die lassen sich schlechter pressen.
+
+00:42:43.252 --> 00:42:52.772
+<v SPEAKER_2>Aber jetzt noch mal zu dem ganz am Anfang. Also mein Rechner schickt die Anfrage an seine lokale Auskunft nach. Wer ist denn diese lokale Auskunft?
+
+00:42:52.792 --> 00:43:11.132
+<v SPEAKER_4>Entweder der Router, also in den normalen Hausnetzen, es gibt irgendeinen Router, der Internetanschluss bereitstellt, der hat so ein Resolver mit drauf. Oder es wird vom Internet Service Provider, also vom Internetanschluss Provider, wird auch eine Nummer mitgeschickt und sagt, das ist unsere Auskunftsnummer, da kannst du dich hinwenden.
+
+00:43:11.152 --> 00:43:50.592
+<v SPEAKER_3>Und das ist natürlich sehr praktisch, wenn der relativ nahe ist. Denn jede Antwort, die ihr bekommt, die speichert ja auch eine bestimmte Zeit lang zwischen. Und derjenige, der am Ende dann den Server betreibt, zum Beispiel für www.fritz.de kann auch sagen, die Antwort, die ich dir jetzt gebe, die ist 60 Sekunden oder eine Stunde oder einen Tag oder eine Woche gütig. Und solange wie diese Zeit läuft, bleibt das dann zwischengespeichert. Das macht man eben, um zum einen entweder die Antworten möglichst lange verfügbar zu haben und schnell beantwortet zu bekommen oder eben man macht die Zeit sehr klein, lässt das Ganze nur eine Minute oder eine Stunde gütig sein, damit man den Server auch mal umziehen kann.
+
+00:43:51.572 --> 00:44:39.992
+<v SPEAKER_4>Ich muss dazu sagen, dass das eine sehr gute Sache für einen Umzug ist, aber eine sehr schlechte für den Betrieb. Weil wenn die Zeiten sehr kurz sind, dann werden praktisch alle Nutzer und alle Kleins, die da irgendwo draußen in der Welt sind und damit kommunizieren wollen, gezwungen, regelmäßig die Anfragen wieder an den lokalen Server zu stellen. Also in dem Falle der vom RBB. Und wenn jetzt eine Fritz Radiosendung besonders viel Erfolg hat, dann kann es sein, dass der Server vom RBB plötzlich ganz massiv Stress bekommt, wenn der ganz wenig Haltezeit angegeben hat. Wenn der dagegen angibt, Haltezeit ein Tag oder so, dann antworte der einen bestimmten Resolver, wie zum Beispiel ein Resolver bei der Telekom, einmal, das ist die Adresse und dann hat er den Rest des Tages Ruhe und wird nicht wieder danach gefragt. Das ist natürlich eine massive Arbeitsentlastung.
+
+00:44:40.012 --> 00:45:26.392
+<v SPEAKER_2>Was sind da so übliche Zeiten? Bevor wir jetzt gleich noch mal genauer über die Zuverlässigkeit, diese Informationen, die da hin und her ausgetauscht werden, sprechen können, würde mich noch mal aus Nutzerperspektive interessieren, wir nehmen ja als Beispiel immer, ich gebe eine Adresse irgendwo ein und brauche dann quasi diese IP-Nummer, dann wird diese Form ausgelöst. Aber im Prinzip kann ich mir das, frage ich mich gerade sozusagen, kann ich mir das auch so vorstellen, also zum Beispiel diese ganzen sozialen Netzwerke, also YouTube, Facebook, Twitter, etc. Da nutze ich ja Apps und da gebe ich ja selber keine Internetadressen mehr ein. Ich vermute aber, also arbeiten die im Hintergrund dann direkt mit den Zahlen, um das nicht nachschlagen zu müssen oder arbeiten auch die meisten Programme eigentlich mit den Host-Namen und dann wird es auch jedes Mal aufgelöst.
+
+00:45:26.412 --> 00:45:48.212
+<v SPEAKER_3>Die arbeiten aus einem ganz wichtigen Grund mit Host-Namen. Das wird dann zwar nicht www.twitter.com sein, sondern irgendeinen apiendpunkt.twitter.com. Und sie tun das alleine schon deswegen, weil sie die Verbindung verschlüsseln wollen und dafür brauchen sie in der Regel ein Name, also ein Zertifikat. Und das wird ausschließlich für Domain-Namen ausgestellt.
+
+00:45:48.232 --> 00:45:54.632
+<v SPEAKER_2>Ah, wenn der eine verschlüsselte Verbindung aufbauen will, dann muss ich das über einen Namen machen, kann das nicht über eine IP-Adresse machen.
+
+00:45:54.652 --> 00:45:58.692
+<v SPEAKER_3>Theoretisch kann man auch eine IP-Adresse reinschreiben, aber das macht halt keiner.
+
+00:45:58.712 --> 00:46:31.152
+<v SPEAKER_4>Es gibt noch einen anderen wesentlichen Grund dafür, nämlich wenn ich ein großes Netz betreibe, ich muss ja damit rechnen, dass mir mal eine Technik kaputt geht. Und in dem Falle muss ich ganz schnell ausweichen können auf eine andere Maschine oder auf ein anderes Rechenzentrum im Ernstfall, die ja nun ganz andere Adressen haben. Ich kann ja die Adressen nicht mitnehmen unter Umständen. Und wenn ich dort in die ganzen Apps irgendwo die Nummern hart reinkodiere, dann kann ich die nicht wechseln. Nur weil ich einen Serverausfall habe, kann ich nicht über den Play Store hingehen und neue Software austauschen. Dann nimmt man auch einen Namen.
+
+00:46:31.172 --> 00:46:32.672
+<v SPEAKER_5>Ja genau, das würde ich auch sagen. Flexibilität.
+
+00:46:34.452 --> 00:46:53.092
+<v SPEAKER_2>Das heißt aber im Umkehrschluss, falls DNS mal komplett ausfallen würde, jetzt mal nicht über die Wahrscheinlichkeit reden, dass das passiert, aber wenn das passieren würde, wäre ein großer Teil unseres digitalen Lebens erst mal stillgelegt, oder? Oder was? Was würde denn noch funktionieren problemlos?
+
+00:46:53.672 --> 00:46:57.892
+<v SPEAKER_4>Ich kann es aus erster Hand sagen, weil ich habe das hinbekommen.
+
+00:46:57.912 --> 00:47:03.732
+<v SPEAKER_2>Was für dich oder sozusagen weltweites DNS, der große DNS-Ausfall von 2000?
+
+00:47:03.772 --> 00:47:59.472
+<v SPEAKER_4>Nein, nicht ganz. Ich habe für mich und für alle meine Kunden hinbekommen, weil ich habe nämlich mir eine eigene Route gebaut, was man sowieso gerne eigentlich tun sollte. Und die ist eines wunderschönen Abends, nämlich am Weihnachtsabend am ersten Feiertag, gegen 17 Uhr kaputtgegangen. Mit dem Ergebnis, dass gar nichts mehr ging. Und so gar nicht, dass es hieß, also aufs Fahrrad steigen und in die Firma fahren und an die Konsole der entsprechenden Maschinen rangehen. Weil die hat einen auch nicht mehr draufgelassen, die Maschinen. Da geht also wirklich nicht nur nichts, da geht gar gar nichts. Also da kommt man nicht von einer Kiste zur anderen. Das, was alles bisher ging, wo man sagt, ich kann mich wenigstens so mut an eine Maschine anmelden oder so. Nichts. Die nimmt nichts an, da tut gar nichts mehr. Der kann keine IP-Adressen auflösen, der kann keinen Namen auflösen, geht nicht vorwärts, nicht rückwärts. Also wenn die Ruhtzone richtig kaputt ist, das ist ein sehr, sehr beklemmendes Gefühl.
+
+00:47:59.492 --> 00:48:05.892
+<v SPEAKER_2>Also das heißt dann, für normalsterbliche Nutzerinnen und Nutzer könnten die genauso gut das Netzwerkkabel ziehen? Oder das WLAN-Aufsteller?
+
+00:48:05.912 --> 00:48:13.472
+<v SPEAKER_4>In dem Falle war es ein ISP und der ISP, das ist ungefähr so, als wäre einfach total Blackout. Wir hatten also die Situation, dass praktisch nichts mehr ging.
+
+00:48:13.492 --> 00:48:16.532
+<v SPEAKER_2>Okay, also hoffen wir alle, dass das DNS nicht kaputt geht.
+
+00:48:16.712 --> 00:48:38.592
+<v SPEAKER_5>Also das Einzige, was noch geht, also ich hab auch mal im Support gearbeitet und wenn die Leute dann halt ihren Nameserver konfiguriert haben, das ist ja eine ähnliche, verkonfiguriert haben, ist es ja eine ähnliche Situation. Also was noch geht, ist ein Ping auf eine Adresse. Damit kann man dann schon mal feststellen, dass es am Nameserver liegt, wenn das nämlich noch geht. Wenn man sozusagen eine Adresse noch, also eine, die man sich vorher gemerkt hat, dass es die gibt.
+
+00:48:38.612 --> 00:48:40.952
+<v SPEAKER_2>Ich muss gerade sagen, da müsste man sich ja so eine aufschreiben.
+
+00:48:40.972 --> 00:49:03.892
+<v SPEAKER_5>Ja, die von dem Nameserver könnte man ja nehmen. Also die von dem richtigen Nameserver. Oder man nimmt einfach 1.1. Das geht nicht auf allen Rechnern. 8.8.8 kann man im Zweifel pingen. Und wenn das noch geht, weiß man, man hat noch Netz. Und wenn man aber keinerlei Posts auflösen kann, dann hat man wohl kein DNS gerade.
+
+00:49:05.812 --> 00:49:09.252
+<v SPEAKER_2>Na gut, ist schon mal weltweit DNS kaputt gegangen? Nee, oder?
+
+00:49:12.612 --> 00:49:15.072
+<v SPEAKER_5>Das war vor meiner Zeit, wenn das passiert ist.
+
+00:49:15.092 --> 00:49:16.972
+<v SPEAKER_2>Ihr plant es gerade? Kommen wir dazu später?
+
+00:49:16.992 --> 00:49:18.952
+<v SPEAKER_9>Oder willst du es gleich erzählen? Dann kommen wir später zu.
+
+00:49:18.972 --> 00:50:02.292
+<v SPEAKER_2>Okay, dann würde ich jetzt zwei Sachen fragen wollen. Die eine ist, und beide betreffen die Zuverlässigkeit dieser Informationen. Also weil, wenn ich jetzt frage fritz.de, dann möchte ich ja eigentlich sicher gehen, dass ich die richtige Nummer kriege. Und nicht, also bei fritz.de wäre es zu sagen, könnte man sich einen Gag erlauben, aber wenn es bei meiner Bank zum Beispiel ist, dann möchte ich ja, dass ich die Webseite meiner Bank ausgeliefert bekomme und nicht die Webseite von einem anderen Betreiber, der so tut, als wäre die Webseite meiner Bank und mich ganz unverfänglich macht, beim Login meiner PIN Nummer fragt. Woher weiß denn mein Computer, wenn er diese Anfrage jetzt los schickt, dass die Antwort, die zurückkommt, auch die richtige ist?
+
+00:50:02.312 --> 00:50:03.592
+<v SPEAKER_5>Das kann er nicht wissen. Bei DNS.
+
+00:50:03.612 --> 00:50:05.892
+<v SPEAKER_2>Was? Moment mal! Entschuldigung?
+
+00:50:07.172 --> 00:50:19.372
+<v SPEAKER_4>Das kommt einfach, DNS kommt aus der Zeit, wo alles noch gut und prima war, wo man sich gegenseitig vertraut hat und gekannt hat. Und wenn man jemandem was gefragt hat, dann hat man eine ehrliche Antwort bekommen.
+
+00:50:21.452 --> 00:50:25.452
+<v SPEAKER_2>Äh, ich bin ein bisschen irritiert. Es ist im Chaosradio nicht für gewöhnlich, dass das die Antwort ist.
+
+00:50:29.572 --> 00:50:49.632
+<v SPEAKER_4>Na ja, es gibt ein paar kleine Tricks. Also man stellt ja nicht nur die Anfrage und sagt, hallo, ich hab hier die und die Frage. Sondern man schickt auch noch eine Nummer, eine Zufallsnummer mit und sagt, also Anfrage Nummer 32275, ich hätte gerne die Auskunft zu folgenden Namen. Und dann kommt irgendwann eine Antwort zu dieser Nummer. Und da muss man selber zusammenführen. Also die müsste auch noch die Nummer raten.
+
+00:50:53.592 --> 00:51:17.472
+<v SPEAKER_2>Aber diese Kette der Auskunft teilen sozusagen, da muss ich einfach darauf vertrauen. Also ich muss darauf vertrauen, dass mein ISP, also Internet Provider sozusagen einen gut konfigurierten Server hat. Der muss darauf vertrauen, dass der Root Server ihm keine falschen Informationen gibt. Die müssen darauf vertrauen, dass sie denen keinen Quatsch bauen und denen muss darauf vertrauen, dass die Haustechnik hier beim RBB keinen Quatsch baut.
+
+00:51:19.312 --> 00:51:47.172
+<v SPEAKER_4>Wobei das Gefährlichste an der Stelle ist der Resolver beim Internet Service Provider. Weil der bekommt ja die Anfrage von Endkunden und muss sich um alles andere selber kümmern. Das heißt, der kriegt eine Anfrage und gibt genau eine Antwort zurück. Und der Kleine, der hinten gefragt hat, der wartet auch so lange. Das heißt, wenn der jetzt irgendwelchen Blödsinn machen will, hat er alle Zeit der Welt sich zu überlegen, welchen Blödsinn er machen will und kann es zurückgeben.
+
+00:51:47.752 --> 00:51:50.632
+<v SPEAKER_2>Das heißt, wenn man was kaputt machen wollen würde, würde man das da machen?
+
+00:51:51.672 --> 00:52:06.012
+<v SPEAKER_4>Wenn man etwas, wenn man Geld verdienen will, macht man es an der Stelle. Das nennt sich Domain Rewriting und wird von den großen Internet Service Provider sehr gerne gemacht, um Tippfehler auf die eigene Suchseite umzuleiten, um dort die Werbeeinnahmen zu generieren.
+
+00:52:06.932 --> 00:52:11.992
+<v SPEAKER_2>Also wenn ich zum Beispiel fratz.de eingebe, na, das gibt es wahrscheinlich als URL. Sie wissen schon, was ich meine.
+
+00:52:12.012 --> 00:52:13.952
+<v SPEAKER_5>Speigl.de.
+
+00:52:13.972 --> 00:52:16.612
+<v SPEAKER_2>Speigl.de, okay.
+
+00:52:16.632 --> 00:52:40.392
+<v SPEAKER_5>Nee, aber, Markus, um dich kurz nochmal zu beruhigen, wenn dein Browser dir dieses Schloss anzeigt und das Grün hinterlegt ist, dann hat nicht das DNS funktioniert. Also das auch. Aber dann ist die Verbindung zwischen deinem Rechner und deiner Bank sozusagen abgesichert. Und zwar auch in der Hinsicht, dass die Bank sich auch dir gegenüber autorisiert hat. Also in dem Fall brauchst du nicht unbedingt die Sicherheit des DNS.
+
+00:52:41.252 --> 00:52:47.832
+<v SPEAKER_2>Also mein Rechner, also da muss ich dazu sagen, das ist bestimmt auch kaputt, aber auf eine andere Art und Weise.
+
+00:52:48.512 --> 00:52:52.312
+<v SPEAKER_4>Das ist auch eine sehr subtile andere Weise kaputt.
+
+00:52:52.332 --> 00:53:47.132
+<v SPEAKER_2>Aber ich möchte sehr schnell sagen, möchte ich diesen Strang sozusagen abscheiden und sagen, über exakt dieses Thema haben wir vor zwei Sendungen gesprochen. Also wenn es euch interessiert, Chaosradio 248 über verschlüsselte Verbindungen ist unter chaosradio.ccc.de zum Nachhören bereit. Gut, das ist also die eine Sache, also das Vertrauen ist so über einen Trick geregelt und auch letztlich dann gar nicht so wichtig, wenn man dann überhaupt erst mal was gelernt hat. Die andere Sache ist ja, wie kriege ich denn jetzt die Information, wie kommt die ins System rein? Also ich könnte jetzt zum Beispiel sagen, ich setze mir jetzt auch so einen Rechner auf, der diese Funktionalität hat, an den DENYX Server Dinge zu melden und sage, ja also die IP-Adresse von fritz.de, das ist der Rechner, der bei mir zu Hause unter Beschreibte steht. Wie unterscheiden denn sozusagen diese Auskunft teilen, dass die Informationen, die die bekommen, real sind?
+
+00:53:47.152 --> 00:54:03.132
+<v SPEAKER_4>Das sind zwei verschiedene Fragen. Die erste ist, wenn ich einen Name Server aufsetze, der für fritz.de antworten würde, dann würde die DENYX ja gar nicht dahin verweisen. Die würde ja immer zum RBB verweisen und nicht auf irgendeine andere Auskunftsstelle.
+
+00:54:03.152 --> 00:54:06.032
+<v SPEAKER_2>Aber warum verweist sie zum RBB?
+
+00:54:06.052 --> 00:54:51.212
+<v SPEAKER_4>Weil es eine Geschäftsbeziehung gibt. Und im Rahmen dieser Geschäftsbeziehung gibt es ein Austauschprotokoll, um diese Daten zu übertragen und mitzuteilen. Das sind die korrekten Daten. Also die DENYX an der Stelle, der Fachbegriff ist dort Registry, die registriert die Namen. Und derjenige, der die Einträge dort macht, das ist der Registrar. Und derjenige, der es eingetragen haben will, das ist der Registrant. Das ist praktisch die Fallminister und der Ministrant, dasselbe Spiel. Also der Registrant hat nicht so viel zu sagen. Der hat einfach nur zu sagen, ich muss das bezahlen. Und der sucht sich einen Dienstleister, das ist der Registrar. Und der Registrar hat die entsprechenden Werkzeuge, um die Einträge vorzunehmen.
+
+00:54:51.232 --> 00:54:56.812
+<v SPEAKER_2>Das heißt also, ich müsste einen kompletten Domain-Kauf- Anmeldungsvertrag fälschen.
+
+00:54:56.832 --> 00:55:04.292
+<v SPEAKER_4>Also man kann das so sagen, man geht da zum Notar. Und der Notar macht da so einen Grundbucheintrag. Weil man selber keinen Grundbucheintrag machen kann.
+
+00:55:04.312 --> 00:55:11.392
+<v SPEAKER_5>Da muss man aber auch regelmäßig bezahlen. Wenn man das nicht tut, dann kann der auch auslaufen. Und dann kann auch jemand anders sich das holen unter Umständen.
+
+00:55:16.432 --> 00:55:53.232
+<v SPEAKER_3>Danke. Übrigens Seitenarm die D-Nik zu einer günstigeren weltweit im Vergleich. Denn das ist meines Wissens die größte quasi nicht kommerzielle Registry. Es ist immer noch eine Genossenschaft. Und wenn man sozusagen als Wiederverkäufer dahin geht und Domains zum Weiterverkauf reinkauft, zahlt man einen gewissen Preis und bekommt am Jahresende nach Proporz, also je nachdem, wie viele Domains man hat, also wie groß der eigene Anteil am großen D-E-Domain-Kuchen ist, das überschüssige Geld zurück. Also für eine D-E-Domain zahlt ein Wiederverkäufer nur genauso viel, wie es kostet.
+
+00:55:53.252 --> 00:55:57.792
+<v SPEAKER_5>Aber für mich als Endnotzeifer, das ist immer die teuersten Domains, die D-E-Domains.
+
+00:56:00.012 --> 01:00:52.448
+<v SPEAKER_2>Aber das ist eine andere Diskussion, die wir an einer anderen Stelle führen müssen. Denn jetzt wird es wieder Zeit für eine kleine Pause. Wir hören jetzt eine kleine Musik, dann machen wir den Nerd News und dann geht es weiter hier im Fall DNS. Und dann möchte ich ja auch langsam mal wissen, was denn da jetzt angeblich kaputt sein soll. Aber wie gesagt, vorher eine kleine Musik und zwar von Loot & Key, auch vom Chiptunes gleich Win Sampler 7 und so wir Rebuild. Loot and Key and So We Rebuild vom ChipTunes gleich Win7 Sampler. Kann man auf chiptunes.bandcamp.com runterladen. Aber gibt es auch auf jeden Fall im Blog zur Chaosradiosendung den Link dann dahin. Und hier im Chaosradio gibt es immer auch die Nerd News und die wurden dieses Mal verfasst von Danimo und vorgetragen werden sie von Moses Fendel.
+
+01:00:52.468 --> 01:02:25.848
+<v SPEAKER_8>Chrome Nutzer, die sich auf einer Google Webseite anmelden, melden sich in der neuen Version 69 automatisch auch im Webbrowser an. Das passiert ohne Einwilligung. In sozialen Netzwerken und in Fachkreisen wurde diese Änderung heftig kritisiert. Auch wenn Google beteuert, dass durch die Änderung nicht automatisch der Browserverlauf mit Google abgeglichen werde. Der Kryptologe Matthew Green schrieb, die Änderung sei ein sogenanntes Dark Pattern. Es verspiele das Vertrauen bei Benutzern dadurch, dass sie zu Dingen verleite oder zwinge, denen sie bewusst nicht zustimmen würden. Bislang hält Google jedoch an dem neuen Verhalten fest. Wie lässt sich die Versteigerung der Frequenzen für den neuen Mobilfunkstandard 5G regeln? Die Bundesnetzagentur hat dazu jetzt Pläne veröffentlicht. Die kritisieren unter anderem die Linken. Deren netzpolitische Sprecherin Domscheit Berg warnte, dass der Ausbau mit den aktuellen Plänen zu langsam vorangehen werde. Die drei Netzanbieter Telekom, Vodafone und O2 müssten dazu verpflichtet werden, auch Wiederverkäufer von Anfang an in das neue Netz zu lassen. Außerdem sollten die Netzanbieter verpflichtet werden, Funkzellen gemeinsam zu nutzen. Drittens sorge der Entwurf dafür, dass wenig bewohnte Flächen wie Autobahnen oder Bahngleise erst spät ausgebaut würden, so Domscheit Berg. Sir Charles Quinn Kao, der Erfinder der Glasfaser, ist im Alter von 84 Jahren in Hongkong gestorben. Während seiner Arbeit am britischen Standard Telecommunication Laboratories in Harlow entdeckte er 1966, dass die Übermittlung von Lichtsignalen über hochreines Glas möglich ist. 2009 hat er den Physik-Nobelpreis bekommen und zwar für seine bahnbrechenden Erfolge auf dem Gebiet der Lichtleitung.
+
+01:02:26.328 --> 01:02:30.868
+<v SPEAKER_2>Die Nerd-News geschrieben von Dani Moe, vorgetragen von Moses Wendel. Vielen Dank.
+
+01:02:30.888 --> 01:02:34.108
+<v SPEAKER_7>Radio hat einen Namen.
+
+01:03:38.999 --> 01:04:51.679
+<v SPEAKER_2>Und damit herzlich willkommen zurück zum Chaos Radio in Blumen, wo wir heute über das DNS System sprechen. Das System, das es erlaubt, das Rechner im Internet miteinander kommunizieren. Wir haben schon ganz viel darüber gesprochen, wo es historisch herkommt, wie es technisch funktioniert und wie man den Informationen, die darüber ausgetauscht werden, vertrauen kann. Solala, aber passt schon, ist das möchte ich grob zusammenfassen. Und dann wollen wir jetzt ein bisschen weiter drüber sprechen, wie wer da vielleicht alles mitlesen kann. Und dazu berühre ich mich nochmal recht herzlich, Nibla, Dirk und Lutz. Hallo und herzlich willkommen zurück. Alle noch da? Diese Begeisterung, unfassbar. Genau, wir haben, wie gesagt, gerade drüber gesprochen. Mein eigener Rechner stellt ja diese Anfrage, also wo muss ich denn eigentlich hin im Internet und bekommt dann eine Antwort. Und die ist so okay vertrauenswürdig. Jetzt habt ihr aber am Anfang der Sendung auch gesagt, naja, das Ganze ist unverschlüsselt. Das heißt, theoretisch kann das jemand mitlesen und Daten sammeln, vermute ich jetzt mal, weil das immer das ist, was passiert. Wer genau kann was über mich lernen, wenn er an welcher Stelle überwacht, was ich für DNS-Anfragen rausschicke?
+
+01:04:51.699 --> 01:04:54.499
+<v SPEAKER_3>Jeder überall.
+
+01:04:54.519 --> 01:04:56.059
+<v SPEAKER_2>Jeder überall alles oder wie?
+
+01:04:56.079 --> 01:05:04.119
+<v SPEAKER_5>Na ja, man muss schon auf der Leitung sitzen, wo die Daten auch durchgehen. Oder selber einen Nameserver betreiben, den viele Leute benutzen, weil dann kriegt man auch die Anfragen.
+
+01:05:04.499 --> 01:05:06.379
+<v SPEAKER_2>Also das heißt sozusagen...
+
+01:05:06.399 --> 01:05:07.879
+<v SPEAKER_5>Ein Resolver.
+
+01:05:07.899 --> 01:05:09.739
+<v SPEAKER_2>Ein Resolver, aber welchen?
+
+01:05:09.759 --> 01:05:10.819
+<v SPEAKER_5>Zum Beispiel Resolbetracht.
+
+01:05:10.839 --> 01:05:17.419
+<v SPEAKER_4>8.8.8 zum Beispiel. Wenn ich wissen will, was die Leute machen, setze ich einen Resolver auf und mache ihn bekannt. Wie zum Beispiel Google.
+
+01:05:17.439 --> 01:05:19.279
+<v SPEAKER_5>Und schnell und kostenlos.
+
+01:05:22.739 --> 01:05:35.919
+<v SPEAKER_2>Also das heißt im Zweifel sozusagen, ist das immer mein Internetanbieter, der mir erstmal meinen Standardresolver mitliefert. Oder halt jemand, der groß ist und der schnell ist. Aber gibt es tatsächlich sozusagen bei den Angeboten so Unterschiede?
+
+01:05:37.699 --> 01:06:12.499
+<v SPEAKER_3>Ja. Ja, es gibt zum Beispiel Internetprovider oder ja auch nicht Internetprovider, DNS-Resolver-Anbieter, die dir, wenn sie keine Antwort bekommen, also wenn es den Namen nicht gibt, also sie für eine bestimmte Domain zuständigen Server bekommen, haben wir nicht, die dir eine Adresse ausliefern, unter der sie Werbung einblenden. Das ist zum Glück in letzter Zeit ein bisschen zurückgegangen, aber ich glaube, die Telekom macht das immer noch standardmäßig, dass sie einen dann auf so eine Vermittlungsseite schickt, wo man irgendwie...
+
+01:06:12.679 --> 01:06:14.519
+<v SPEAKER_4>Ich kann meinen Brunnenportal ausschalten.
+
+01:06:14.539 --> 01:06:19.079
+<v SPEAKER_3>Ja, aber es ist halt opt-out, wenn ich das richtig im Hinterkopf habe.
+
+01:06:19.099 --> 01:06:42.359
+<v SPEAKER_5>Ja, also einerseits kann man Werbung dafür deliveren oder ausliefern und andererseits kann man aber natürlich auch Nutzerprofile pro Region erstellen. Also die Nutzer kommen ja aus einer, aus einem AP Range, den man geografisch zuordnen kann als Nameserver Betreiber. Und dann kann man gucken, wofür interessieren sich denn die Deutschen heute so? Also welche Webseiten?
+
+01:06:42.379 --> 01:07:01.699
+<v SPEAKER_4>Auf der anderen Seite gibt es natürlich auch positive Sachen. Es gibt Anbieter, die einfach sagen, es gibt Namen, unter denen Schatzhautfähr verbreitet wird. Es gibt Namen, die Inhalte verbreiten, die vielleicht nicht gewünscht sind. Und die dann einfach sagen, solche Namen lösen wir nicht auf. Oder lösen sie auf auf irgendeine Stoppschildseite, wie das die Frau von der Leinen mal vorgeschlagen hatte.
+
+01:07:03.319 --> 01:07:07.139
+<v SPEAKER_9>Ah, aber ist das positiv oder negativ zu geben?
+
+01:07:07.159 --> 01:07:13.659
+<v SPEAKER_2>Ich wollte gerade sagen, da wurde auch immer eine rufen so, nein, das ist gar nicht positiv, das ist dann eine Zensurmaschine.
+
+01:07:13.679 --> 01:07:17.799
+<v SPEAKER_4>Ja, nicht unbedingt. Also es gibt durchaus sinnvolle Anwendungen für diesen Zweck. Ja, durchaus.
+
+01:07:17.819 --> 01:07:20.239
+<v SPEAKER_2>Also wenn es die Guten machen, dann kann das schon hilfreich sein, meinst du?
+
+01:07:22.099 --> 01:07:24.039
+<v SPEAKER_4>Wobei gut natürlich im Auge des Betrachtens.
+
+01:07:24.059 --> 01:07:26.099
+<v SPEAKER_2>Ja, ja, eben, eben, eben, eben, das ist der Punkt.
+
+01:07:26.119 --> 01:08:27.319
+<v SPEAKER_3>Es gibt dann auch ganz ausgefeilte Dienste, die zum Beispiel für Unternehmen Namesaber betreiben, die dann so Filter drin haben, die zum Beispiel nach dem Alter von Domains gehen. Also wenn so eine Adresse erst ein paar Tage oder Wochen alt ist, dann wird die erstmal nicht aufgelöst, weil zu vermuten ist, also viele speziell dafür eingerichtete Adressen andersrum. Wenn man eine malware hat, also eine Shardsoftware in seinem Netz, dann versucht die ja auch erstmal nach Hause zu verbinden, um sich irgendwelche Befehle abzuholen oder um sich zurückzumelden, dass sie jetzt irgendwie einen neuen Rechner infiziert hat. Und das passiert in letzter Zeit sehr häufig über frisch registrierte Domains. Und ja, da gibt es Dienstlaster, die eben Listen pflegen und sagen, wenn das Domain ein Monat alt ist, dann nehmen wir sie mit rein. Dann haben wir auch schon ungefähr eine Abschätzung, ob da jetzt Malware mit ja spricht oder nicht.
+
+01:08:27.339 --> 01:08:30.819
+<v SPEAKER_5>Es geht gar nicht um Server, die Malware ausliefern, sondern es geht um Command und Control Server.
+
+01:08:30.839 --> 01:08:33.639
+<v SPEAKER_3>Genau, um Command und Control Server oder eben Server, die...
+
+01:08:33.659 --> 01:09:01.879
+<v SPEAKER_2>Also jetzt müssen wir aber nochmal kurz erklären, was hier gerade diese Dinge, die so nebenbei einstreuten, was sie bedeuten. Also Malware, also wenn Chartsoftware auf einem Rechner ist, dann agiert die mittlerweile nicht nur alleine, sondern versucht oder soll ferngesteuert werden, im besten Fall. Und dazu richtet man halt extra Computer ein, wo die Befehle hinterlegt sind. Und dann greift diese Software darauf zu. Und das tut sie auch übers DNS-System, denn ohne DNS funktioniert gar nichts mehr. Genau, und das kann man damit sozusagen ein bisschen unterbinden.
+
+01:09:02.039 --> 01:09:53.499
+<v SPEAKER_4>Ja, und das ist spannend. Das ist ein total spannendes Thema, weil es gibt da so Software, die dann auch jeden Tag eine neue Domain nimmt. Die die auswirft nach einem bestimmten Verfahren und als praktisch der Hersteller weiß genau, welchen Namen der verwenden wird, sodass der jeden Tag was anderes. Da kommen wir mit dem Stern nicht hinterher. Und das Ganze hat deswegen so gut funktioniert, weil es einige Anbieter gab, die so Testdomains gemacht haben. Das nennt sich Domain-Tasting. Da hat man monatlang nichts bezahlt für eine Domain. Und das hat ganz massiv dazu geführt, dass diese Technik eingesetzt wurde im Schadsoftware-Bereich. Die Reaktion darauf war, dass die Verwaltungsorganisation, die dahintersteht, die ICON, festgelegt hat, dass solches Domain-Tasting verboten ist. Und dass das nicht mehr gemacht werden darf, sondern das erst bezahlt und dann die Domain gerichtet wird.
+
+01:09:53.519 --> 01:09:54.059
+<v SPEAKER_2>Domain-Tasting.
+
+01:09:54.079 --> 01:09:55.859
+<v SPEAKER_4>Da war ja noch Schluss mit dem Spuk.
+
+01:09:57.079 --> 01:10:03.359
+<v SPEAKER_2>Das heißt Domain-Tasting. Also im Sinne von ein Tasting ist ja ein Testessen sozusagen. Jetzt verstanden.
+
+01:10:03.379 --> 01:10:28.679
+<v SPEAKER_3>Und der Hintergrund ist der, dass man in dem Moment, wo man ein Domain bezahlt, muss man mit irgendeinem Zahlungsmittel daherkommen. Und das ist was, wo man ermittlungstechnisch, also Bitcoins der Kriminalansätze kann. Und gerade bei Bitcoin hat man keine Anonymität. Da hat man genau das Gegenteil. Man hat die komplette Rückverfolgbarkeit der Transaktion. Deswegen nimmt man, wenn man sowas macht, Zcash.
+
+01:10:31.419 --> 01:10:57.739
+<v SPEAKER_4>Oder man geht auf die andere Seite hin und guckt mal wieder auf die DNS-Technik. Also es war da so ein Fall vor ein paar Jahren, da gab es also eine Software, die das so ausgewürfelt hat und die ist analysiert worden. Und man hat diesen Algorithmus rausbekommen. Dann hat man sich als seitens der Strafverfolgungsbehörden mit den Domainverwaltern zusammengesetzt und hat gesagt, welche Domain an welchem Tag nicht registriert werden darf. Und das hat tatsächlich dazu geführt, dass man diese Schadsoftware vom Netz nehmen konnte.
+
+01:11:00.019 --> 01:11:12.419
+<v SPEAKER_2>Jetzt sind wir aber schon wieder sozusagen da, was die DNS Serverbetreiber sozusagen Gutes machen können oder was sie ausführen können. Aber eigentlich wollte ich ja wissen, warum das jetzt schlimm ist, dass man das mithören kann.
+
+01:11:12.439 --> 01:12:04.139
+<v SPEAKER_4>Mithören ist nicht schlimm. Weil das ist wirklich nicht schlimm. Und zwar deswegen nicht. Und zwar aus einem ganz einfachen Grund nicht. Wie gesagt, man muss auf der Leitung sitzen. Wenn man auf der Leitung sitzt, dann kann man auch einfach die DNS-Anfrage durchlaufen lassen, ohne sie zu verstehen und guckt einfach, was als nächstes als Anfrage kommt, als Datenpaket für einen neuen Verbindungsaufbau. Ganz offensichtlich ist das das Ergebnis der DNS-Anfrage gewesen, die dazu diesen Verbindungsaufbau geführt hat. Und wenn es eine verschlüsselte Verbindung ist, ein HDD-Perso oder so, dann ist in den meisten Fällen steht am Anfang auch noch drin, welchen Domainname er aufrufen wollte, damit der Server auf der Gegenseite das richtige Zertifikat raussuchen kann. Das heißt, das DNS ist überhaupt kein Problem mit dem Mitlesen, weil es gibt genügend Möglichkeiten an derselben Stelle, die Daten auch ohne DNS rauszukriegen.
+
+01:12:04.159 --> 01:12:15.639
+<v SPEAKER_2>Also du sagst quasi, wenn jemand mal den DNS-Anfragen mitlesen kann, dann ist es egal, ob er es direkt aus meiner Anfrage erfährt, weil dann hat er auf jeden Fall auch Mittel, wie er das sonst erfahren kann.
+
+01:12:16.119 --> 01:12:26.639
+<v SPEAKER_4>Das ist ungefähr so, als wenn man sagt, du darfst nicht in den Briefkasten gucken, wenn du den Schlüssel von mir hast und den ganzen Tag an der Haustür stehst. Auf den Briefkasten kommt es dann nicht mehr an.
+
+01:12:26.659 --> 01:12:31.599
+<v SPEAKER_3>Was ist denn das viel schützenswürdigere im DNS?
+
+01:12:31.619 --> 01:13:00.099
+<v SPEAKER_4>Falschauskunft. Das große Problem besteht darin, dass die DNS-Server, diese Resolver, sich die Ergebnisse merken. Hatten wir vorhin gesagt, bis zu einem Tag oder eine Woche. Und wenn ich es schaffe, einen DNS-Resolver, der für irgendeine ganze Gruppe zuständig ist, davon zu überzeugen, sich eine falsche Auskunft zu merken, dann würde die ohne mein Zutun immer weiterverteilen. Den Fall hatten wir vor einigen Jahren.
+
+01:13:02.139 --> 01:13:08.659
+<v SPEAKER_2>Ihr habt gerade vor den Nördnüs erzählt, löst es eher unwahrscheinlich. Das kann gar nicht passieren, das System ist sicher genug.
+
+01:13:08.659 --> 01:13:10.919
+<v SPEAKER_4>Na eher unwahrscheinlich heißt ja nicht, dass es nicht geht.
+
+01:13:15.679 --> 01:13:17.459
+<v SPEAKER_5>Und es gibt ja noch SSL oben drauf.
+
+01:13:17.479 --> 01:13:18.999
+<v SPEAKER_2>Also was ist passiert?
+
+01:13:19.019 --> 01:13:33.759
+<v SPEAKER_5>Aber was gibt es denn für Angriffe, wo SSL nicht gegen hilft? Also wenn man den DNS-Cache verdirbt. Vergiftet, Entschuldigung.
+
+01:13:34.499 --> 01:13:38.679
+<v SPEAKER_2>Ihr redet jetzt Dinge, die ihr versteht. Ich verstehe sie nicht mehr. Also noch mal, oder Lutz, mach mal weiter.
+
+01:13:38.699 --> 01:13:54.779
+<v SPEAKER_3>Der Angriff, den du besprochen hast, war, dass man an so einen Auskunftsserver rangeht, zum Beispiel bei deinem ISP, und dem gezielt eine Fehlauskunft in diesen Zwischenspeicher schreibt über technisch trickreiche Wege.
+
+01:13:54.799 --> 01:13:57.099
+<v SPEAKER_2>Ich wollte gerade sagen, das ist eine technische Sicherheitslücke.
+
+01:13:57.119 --> 01:14:19.499
+<v SPEAKER_3>Du stellst zum Beispiel eine Anfrage und schickst gleich hinterher von der vermuteten Adresse die Antwort. Und wenn der sich nicht besonders dagegen schützt, dann nimmt er die Antwort für bare Münze und trägt die ein. Genau, das wurde zwar mittlerweile ein bisschen erschwert, aber es ist halt, ja, es ist keine gesicherte Information. Sie ist nicht signiert, sondern das ist einfach eine Antwort, die er dann da speichert.
+
+01:14:20.519 --> 01:15:04.679
+<v SPEAKER_4>Ja, und wir hatten den Fall in Mexiko, da gab es einen Angriff gegen Kabelmodems. Das heißt, man hat da gar nicht ins DNS-Protokoll angegriffen, sondern ist direkt auf die Kabelmodems draufgegangen und hat denen praktisch durch remote access, also durch Fremdzugriff, weil die einfach ungesichert waren relativ, falsche Daten ins DNS, in den DNS-Cache geschrieben. Die Resolver für diesen Kabelmodems haben also dann für die in Mexiko sehr beliebte Bank falsche Auskunft gegeben und praktisch den kompletten Bereich des Haupt-ISPs alle zum falschen Server umgelenkt. Das ist gar kein Angriff aufs DNS im Transport gewesen, sondern auf die Geräte, auf die Resolver, die einfach ungesichert waren an der Stelle. Und das hat massive Schäden verursacht.
+
+01:15:04.699 --> 01:15:10.939
+<v SPEAKER_5>Wieso hat das funktioniert? Haben die Leute nicht darauf geachtet, dass das grüne Schloss geschlossen ist in der HTTPS?
+
+01:15:10.959 --> 01:15:18.839
+<v SPEAKER_3>Das grüne Schloss kann ja trotzdem geschlossen sein, wenn der Name ähnlich aussieht. Also du kannst ja umleiten von...
+
+01:15:21.039 --> 01:15:28.659
+<v SPEAKER_4>Es gibt eine kurze Fehlermeldung, dann ist wieder alles in Ordnung. Und das mit dem grünen Schloss hilft auch nichts mehr. Das Grün verschwindet nach und nach. Aber das ist ein anderes Thema.
+
+01:15:28.679 --> 01:15:40.719
+<v SPEAKER_2>Ich wollte gerade sagen, das CR248. Aber ist denn das was, dass man das in der Umsetzung von DNS besser machen könnte? Also gibt es da Schutz vor?
+
+01:15:40.739 --> 01:15:42.139
+<v SPEAKER_4>Ja, da kann man viel besser machen.
+
+01:15:42.159 --> 01:15:43.699
+<v SPEAKER_2>Nämlich?
+
+01:15:43.719 --> 01:15:53.939
+<v SPEAKER_4>Man kann dafür sorgen, dass man prüfen kann, ob die Auskunft, die man bekommt, die ist, die ursprünglich mal von der Registry oder von dem Serverbetreiber auch eingetragen wurde.
+
+01:15:57.019 --> 01:16:06.519
+<v SPEAKER_2>Ich bin ein bisschen erschüttert, dass das jetzt kommt, weil ich meine, vorher genau das gefragt zu haben, aber wie macht man das und wie macht man es jetzt und wie würde man es dann richtig machen?
+
+01:16:08.379 --> 01:16:51.679
+<v SPEAKER_4>Also, nein, das eine ist der technische Weg. Bisher haben wir darüber gesprochen, wie bekommt ein Resolver oder irgendein Rechner eine Auskunft von einem anderen Rechner? Wie kann man den Weg absichern? Das ist ein Weg. Also wie zwei Computer miteinander reden. Das andere ist die Frage, was ist denn eigentlich ursprünglich mal eingegeben worden und kommt das hinten wieder raus? Das hat weniger mit den beteiligten Rechnern zu tun. Die sind dann einfach nur Transportprotokoll, sondern vielmehr um die Art der Nachricht, die dahinter gelegt wird. Wenn ich eine Nachricht so hinschreibe, dass der andere verifizieren kann, dass es die richtige Nachricht ist, ist der Transportweg dazwischen völlig egal. Wie macht man das denn? Die muss ich dann nicht weiter absichern.
+
+01:16:51.699 --> 01:16:53.319
+<v SPEAKER_2>Aber wie geht das denn?
+
+01:16:53.339 --> 01:16:57.999
+<v SPEAKER_4>Indem ich ihn unterschreibe, digital.
+
+01:16:58.019 --> 01:17:02.519
+<v SPEAKER_2>Also ich sag mal jetzt mal ganz normal wie E-Mail Verschlüsselung, also so ähnlich.
+
+01:17:03.419 --> 01:17:06.459
+<v SPEAKER_4>Nur die Signatur, nicht Verschlüsselung, Signatur, ja.
+
+01:17:06.479 --> 01:17:11.679
+<v SPEAKER_5>Aber unterschreiben reicht natürlich nicht. Um das prüfen zu können, muss ich den Schlüssel auch kennen.
+
+01:17:11.699 --> 01:17:35.239
+<v SPEAKER_4>Das ist das nächste Problem. Ich habe ein riesiges Schlüsselmanagement Problem und ich habe ein riesiges Problem, damit auch dieses Unterschreiben so zu machen, dass es ein anderer Rechner versteht. Das ist ja nun keine Kontrolle, die der Endnutzer macht, sondern das ist ja etwas, was irgendein Resolver oder irgendein Browser oder irgendjemand, der da hinterher die Signatur um die Ohren geschlagen bekommt, der muss das verstehen und der muss das verifizieren können.
+
+01:17:35.259 --> 01:17:53.459
+<v SPEAKER_2>Aber verlagert dann nicht das Problem nur dahingehend, dass man dann sozusagen nicht mehr die DNS-Handräge verfälscht, sondern einfach falsche Schlüssel ausspielt? Also da gibt es auch eine Hierarchie. Also ein unlösbares Problem im System momentan?
+
+01:17:53.479 --> 01:18:23.639
+<v SPEAKER_4>Nicht ganz, nicht ganz unlösbares Problem. Weil wenn es klappt, dass diese Signatur gemacht wird und auch die verifiziert wird, dann kann ich ja den Schlüssel bei der Delegation, ich gebe ja an und sage, die Denik sagt zum Beispiel, wenn du fritz.de wissen willst, dann wende es dich da drüben an den Server vom RBB. Und der gibt nicht nur die Auskunft, wende dich da drüben hin an die anderen Server. Und wenn du das machst, dann werden die dir einen Schlüssel präsentieren und ich sag dir schon mal, welcher das sein wird.
+
+01:18:23.659 --> 01:18:26.799
+<v SPEAKER_2>Und das wäre dann gegen diese von dir beschriebene oder von euch beschriebene Attack-Lehmung?
+
+01:18:26.819 --> 01:18:55.479
+<v SPEAKER_4>Dann kann ich nicht mehr mit einem anderen Server antworten, der den richtigen Schlüssel nicht hat. Dazu muss ich allerdings der DE-Zone vertrauen können, indem ich nämlich dort die Signaturen verifiziere. Und das ist ganz einfach, weil wenn ich von den Rutsäubern die Auskunft bekomme, da drüben sind die DE-Server, die kannst du fragen, die wissen was zu fritz.de. Und wenn du die schon fragst, im Übrigen, das sind die Schlüssel, die die verwenden werden. Ist doch ganz clever.
+
+01:18:55.839 --> 01:19:11.199
+<v SPEAKER_2>Also ganz ehrlich sozusagen, ich verlier den Faden dahingehend, dass der Weg, den du gerade schilderst, für mich exakt derselbe ist wie vorhin. Nur, dass jetzt noch eine Zusatzinformation gegeben ist, mir ist aber völlig unklar, wieso ich die nicht genauso gut fälschen kann, wie den eigentlichen DNS-Eintrag.
+
+01:19:11.219 --> 01:19:57.659
+<v SPEAKER_3>Du hast selbst bei dir einen Anker-Schlüssel, anhand dessen du sehen kannst, ob dir diese oberste Instanz, die dir sagt, wer für dir zuständig ist, überprüfen kannst, ob diese Antwort richtig ist. In dieser Antwort, die du dann überprüft hast, von der du weißt, ja, das stimmt mit dem Anker-Schlüssel, den ich habe überein, dann kannst du dieser Auskunft vertrauen und den Schlüssel für DE mit der Antwort, die du von der DENIC bekommst, vergleichen. Und in dieser Antwort wiederum steht der Schlüssel vom RBB und hast sozusagen eine Kette an Vertrauen bis hin zu diesem Ankerschlüssel, den du lokal gespeichert hast. Lutz, korrigier mich, falls ich da gerade Unfug erzähle.
+
+01:19:57.679 --> 01:20:06.539
+<v SPEAKER_4>Das ist genau richtig und dieser zentrale Ankerschlüssel, den jeder haben muss, das ist das unlösbare Problem.
+
+01:20:06.559 --> 01:20:25.479
+<v SPEAKER_2>Ich wollte gerade sagen, das muss ja ein Schlüssel sein, wo zwar sozusagen der Root Server passt und der DDE Enix Server passt und der RBB Server passt, aber wo nicht der sozusagen der Böse, der was Böses will, der hat da irgendwie auf magische Art und Weise, kann er da keinen Zugriff machen.
+
+01:20:25.779 --> 01:20:52.839
+<v SPEAKER_4>Ja, also fangen wir mal mit den einfachen Sachen an. Also ohne den Root Schlüssel erst mal. Die DDE Enix sagt jetzt beispielsweise, da wird ein Schlüssel kommen, einen langen Ketten mit irgendeine Prüfsumme, eine kryptographische, die man nicht so leicht fälschen kann und sagt, das wird der Schlüssel sein, mit dem der RBB Server seine Antworten unterschreiben wird. Und dann kriege ich irgendwann die Antworten von dem RBB Server und kann validieren, dass das stimmt.
+
+01:20:52.859 --> 01:21:02.939
+<v SPEAKER_2>Aber den Punkt verstehe ich halt nicht, weil das ist doch auch wieder nur eine Information, die hat mir irgendwann mal einer von diesen Servern in der Kette gegeben. Wieso kann ich die nicht genauso fälschen wie die anderen?
+
+01:21:02.959 --> 01:21:08.419
+<v SPEAKER_4>Der entscheidende Punkt ist, dass ich der Information, die ich von dem DE Server bekomme, erst mal vertraue.
+
+01:21:08.559 --> 01:21:09.399
+<v SPEAKER_2>Ja, aber warum?
+
+01:21:09.419 --> 01:21:20.299
+<v SPEAKER_4>Wie ich zu dem Vertrauen komme, ist die nächste Frage. Es geht jetzt erst mal nur um den Schritt, wie komme ich von einem in der Hierarchie weiter. Der ist mir jetzt erst mal wichtig.
+
+01:21:20.319 --> 01:21:28.339
+<v SPEAKER_2>Weil wenn ich den DE Server vertraue, wird es ein Bund. Das hast du ja schon erklärt. Es geht ja um die Frage, ist das Problem jetzt momentan lösbar oder nicht?
+
+01:21:28.359 --> 01:21:29.519
+<v SPEAKER_5>Woher kommt das Urvertrauen?
+
+01:21:31.159 --> 01:21:32.579
+<v SPEAKER_2>Es ist gelöst.
+
+01:21:32.599 --> 01:21:33.999
+<v SPEAKER_4>Es ist gelöst seit einigen Jahren.
+
+01:21:34.019 --> 01:21:36.099
+<v SPEAKER_2>Es ist gelöst, aber man kann es nicht verständlich erklären.
+
+01:21:36.679 --> 01:21:38.039
+<v SPEAKER_9>Doch.
+
+01:21:39.539 --> 01:23:24.179
+<v SPEAKER_4>Der Punkt dabei ist schlicht und ergreifend. Von einer Stelle komme ich zur nächsten, indem ich die Schlüsselinformationen mitreiche und sage, das ist die nächste Auskunft, die ist wieder unterschrieben. Ich habe ein Problem mit dem Schritt, Vertrauen aufzubauen von der Wurzel her. Wenn ich irgendwo anfangen kann, wo ich Vertrauen habe, kann ich immer weitergehen und immer weitere Schritte machen. Das ist alles kein Thema. Das ist geklärt, gut. Das ist jetzt die Frage, wie bekommen wir das Wurzelvertrauen hin? Wie kommen wir hin, dass wir wissen, dass wir die ursprünglichen Schlüssel, die in der Wurzel drin sind, dass die korrekt sind? Und das ist ein Riesenproblem, weil jedes einzelne Gerät, der irgendwo mal eine Namensauflösung machen soll, ein Resolver sein soll, der muss diese Schlüssel kennen. Das heißt, ich muss in Millionen, in Milliarden von Geräten diese Schlüssel verteilen. Das ist ein Problem. Und zwar deswegen ein Problem, weil man soll Schlüssel nicht verteilen, man soll sie auch wechseln können. Was passiert denn, wenn diese Schlüssel geklaut werden? Das erste, was wir also tun müssen, ist dafür sorgen, dass diese Master-Schlüssel, diese Rutschlüssel, die in Milliarden von Geräten drin stecken, dass diese Schlüssel nicht geklaut werden können. Das ist der erste Punkt. Es ist völlig illusorisch, geht aber. Man hat dazu ein Verfahren entwickelt, um diesen Rutschlüssel wirklich sicher aufzubewahren. Erstens, man gibt ihn nicht einer Institution in die Hand, sondern man gibt ihnen 21 Institutionen in die Hand. Und zwar so, dass keiner von denen einzeln was tun kann.
+
+01:23:24.199 --> 01:23:27.059
+<v SPEAKER_5>Also, dass keiner von denen den kompletten Schlüssel hat?
+
+01:23:27.079 --> 01:23:42.319
+<v SPEAKER_4>Keiner hat den kompletten Schlüssel. Es gibt eine Gruppe von sieben Leuten, von denen jeweils fünf zusammenkommen müssen für die Ostküste der USA. Da gibt es ein Rechenzentrum, wo man sowas tun kann. Es gibt eine Gruppe von sieben Leuten, von denen fünf zusammenkommen müssen, um das an der Westküste der USA zu tun.
+
+01:23:42.339 --> 01:23:46.039
+<v SPEAKER_2>Mir geht es ein bisschen zu weit. Können wir es jetzt abkürzen auf...
+
+01:23:46.059 --> 01:23:47.639
+<v SPEAKER_4>Da gibt es eine Organisation für, ja.
+
+01:23:47.659 --> 01:23:51.519
+<v SPEAKER_2>Es ist sozusagen theoretisch geklärt, aber praktisch wird es nicht angewendet?
+
+01:23:51.539 --> 01:23:54.219
+<v SPEAKER_4>Es wird praktisch seit 2007 angewendet.
+
+01:23:55.239 --> 01:23:57.519
+<v SPEAKER_5>Also das ist jetzt DNSSEC, über was wir reden?
+
+01:23:58.959 --> 01:24:02.319
+<v SPEAKER_4>Das ist DNSSEC, das wir seit 2007 ausgerollt haben.
+
+01:24:03.899 --> 01:24:06.599
+<v SPEAKER_5>Aber benutzt mein Browser das?
+
+01:24:06.619 --> 01:24:10.899
+<v SPEAKER_4>Na, der Browser muss es nicht benutzen, weil der Resolver, der unten drunter liegt, der macht das schon.
+
+01:24:11.979 --> 01:24:29.019
+<v SPEAKER_5>Okay, und für welche Domains macht der das? Also er kann erkennen, das ist registriert. Also es gibt, wenn ich eine Domain anfrage, dann weiß mein Resolver, meine Resolver Software auf meinem Rechner, weiß dann, ob es dafür eine DNSSEC-Autorisierung gibt.
+
+01:24:31.219 --> 01:24:37.119
+<v SPEAKER_2>Also es gibt ein sicheres und ein unsicheres DNS, beides funktioniert. Und warum wird das Unsichere überhaupt noch benutzt?
+
+01:24:38.759 --> 01:25:23.399
+<v SPEAKER_4>Weil es aufwendig ist für viele Leute. Die Signaturen sind nur eine bestimmte Zeit gültig. Die muss man regelmäßig erneuern, man muss sich darum kümmern. Also der amerikanischen Regierung ist das passiert, dass sie ihre Gov-Domain nicht unterschrieben haben und die Signaturen nicht erneuert haben und dann plötzlich nichts mehr auflösbar war, als die Signaturen abgelaufen sind. Also man kann sich das jetzt mal angucken. Wer das machen möchte, gibt es eine Webseite dafür, die es schön aufbereitet. Die nennt sich dnsviz.net. Und dann gibt man einen fritz.de und sagt, zeige mir das auf. Und dann sagt er ja, bis zur DE Domain kriege ich das alles hin. Aber wenn es dann zum RBB rüber geht, dann können die das alles nicht.
+
+01:25:23.419 --> 01:25:44.899
+<v SPEAKER_2>Okay, das machen wir jetzt mal, während wir eine kleine Musik hören. Danach sprechen wir weiter darüber, wie sicher das jetzt ist und ob wir in Zukunft noch was dran ändern können. Dann gibt's vorhin noch ein paar Nachrichten und dann nochmal eine halbe Stunde Chaosradio im Blue Moon. Und der letzte Song für heute vom TipTunes gleich Wind Sampler ist von Business Pastel und heißt Ghosting.
+
+01:30:23.159 --> 01:30:49.019
+<v SPEAKER_6>Klingt nach ner Menge. Holz, Holz, Holz. Fritz präsentiert die 257er's. Samstag, 24. November. Die 257er's live in der Kolumiale. Die 257er's in 030.
+
+01:30:49.039 --> 01:30:51.159
+<v SPEAKER_7>Präsentiert von Fritz.
+
+01:30:52.019 --> 01:30:53.939
+<v SPEAKER_2>Und das hört man um kurze halb 12.
+
+01:31:02.263 --> 01:33:59.763
+<v SPEAKER_8>Bundeskanzlerin Merkel wird nicht am Staatsbankett für den türkischen Präsidenten Erdogan teilnehmen. Das Bankett findet am Freitagabend bei Bundespräsident Steinmeier im Schloss Bellevue statt. Aus Protest gegen die Politik von Erdogan haben auch mehrere Oppositionspolitiker abgesagt. Bei seinem Besuch in Deutschland will Erdogan unter anderem mit Vertretern der Wirtschaft zusammenkommen. Deutschland ist für die Türkei der wichtigste Handelspartner. Das Rettungsschiff Aquarius will mit fast 60 Flüchtlingen an Bord im Hafen von Marseille anlegen. Die Hilfsorganisationen SOS, Mediterranée und Ärzte ohne Grenzen baten die Behörden, die Menschen an Land gehen zu lassen. Die Organisationen sagen, dass der französische Hafen die einzige Möglichkeit ist, um die Flagge zu wechseln. Hintergrund ist, dass Panama am Wochenende angekündigt hat, dem Hilfsschiff die Flagge zu entziehen. Das Land reagierte damit auf eine Beschwerde Italiens. Dessen Behörden hatten die Aquarius aufgefordert, die geretteten Flüchtlinge nach Nordafrika zurückzubringen. Die Wirtschaft in Brandenburg ist in der ersten Hälfte des Jahres stärker gewachsen als der deutsche Durchschnitt. Das Bruttoinlandsprodukt, mit dem die Wirtschaftsleistung gemessen wird, stieg in Brandenburg um 2, 3 Prozent. Bundesweit waren es dagegen nur 1, 9 Prozent, wie der Arbeitskreis volkswirtschaftliche Gesamtrechnungen der Länder mitteilte. Im Ländervergleich landete Brandenburg zusammen mit Berlin auf Platz drei. Ein größeres Wirtschaftswachstum gab es nur in Rheinland-Pfalz und in Bayern. Der Kroate Luca Modric ist zum ersten Mal Weltfußballer des Jahres. Bei der FIFA-Gala in London setzte sich der 33-jährige von Real Madrid gegen den Portugiesen Cristiano Ronaldo und den Ägypter Mo Salah durch. Mit Modric ist zum ersten Mal seit zehn Jahren ein anderer als Ronaldo oder Messi Weltfußballer des Jahres geworden. Wetter Mit den aktuellen Temperaturen in Berlin-Spandau sind es 6 Grad und in Adlershof im Moment 8. Küritz, Ludwigsfelde und Manxnou melden 8 und in Cottbus sind es 9 Grad. Heute Nacht ziehen die Schauer Richtung Südosten ab und es klart auf, die Temperaturen gehen noch weiter runter auf 5 bis 2 Grad. An manchen Orten kann es sogar Bodenfrost geben. Morgen wird es dann fast den ganzen Tag sonnig und freundlich, vorübergehend sind mal ein paar Wolkenfelder möglich, aber es soll weitgehend trocken bleiben. Das Ganze bei maximal 13 bis 16 Grad. Vorsicht auf der A10 nördlicher Berliner Ring Richtung Dreieck Havelland. Zwischen dem Dreieck Pankow und Mühlenbeck besteht Gefahr durch ein Tier auf der Fahrbahn. Wen es interessiert, es handelt sich um einen Schwan. A113, Zubringer Schönefeld statt Einwärts. Zwischen Adlershof und Stubenrauchstraße sind an einer Baustelle die rechte und die mittlere Spur gesperrt. A12 Berlin Richtung Frankfurt Oder zwischen Friedersdorf und Fürstenwalde West ist an einer Baustelle die linke Spur gesperrt. Und zwar noch bis morgen früh. Und Meldungen aus Berlin noch von der A111, dem Zubringer Oranienburg statt auswärts. Zwischen am Festplatz und Eichborn-Damm ist wegen Wartungsarbeiten die linke Spur gesperrt. A113, der Zubringer Schönefeld Richtung Dresden zwischen Adlershof und Schönefeld-Nord ist wegen Wartungsarbeiten die Autobahn komplett gesperrt. Und zwar bis morgen früh. Wo es geht, eine gute Fahrt.
+
+01:34:01.403 --> 01:34:18.163
+<v SPEAKER_7>Mehr aktuelle Infos rbb24.de Und wenn ihr Fritz bei Twitter, Facebook, Instagram, Snapchat oder YouTube folgen wollt, dann macht das doch. Gebt da einfach Radio Fritz ein und da sind wir.
+
+01:34:31.775 --> 01:35:21.475
+<v SPEAKER_2>Halbe Stunde Chaosradio im Blue Moon haben wir noch. Herzlich willkommen zurück in nebler Dirk und Lutz. Hallo. Und wir sprechen über DNS, ein System, das ermöglicht, dass Rechner miteinander sprechen, was vor allen Dingen von dem Internetgebrauch gar nicht so schlecht ist. Wir haben jetzt schon verschiedene technische institutionelle und gefährliche Dinge beleuchtet und bis jetzt klingt es für Technologien, die man im Chaosradio so besprechen kann, relativ gut abgehangen und zumindest ok, sicher und privatsphärisch. Liebe Teilnehmerinnen und Teilnehmer hier im Studio, nee, stimmt nicht. Liebe Teilnehmer hier im Studio und an den Endgeräten, wir haben ja noch eine halbe Stunde, das ist manchmal sehr wenig. Welche Dinge müssen wir unbedingt noch besprechen?
+
+01:35:22.035 --> 01:35:32.315
+<v SPEAKER_5>Ich werd noch mal kurz was sagen, es ist nicht besonders gut für die Privatsphäre dieses DNS, es macht es nämlich schlimmer als das, was man sowieso schon an Informationen bekommt.
+
+01:35:32.335 --> 01:35:43.475
+<v SPEAKER_2>Warte mal, das heißt sozusagen, DNS ist sozusagen ein nachgelagertes Problem, wenn alles andere privatsphärisch wäre, dann müssten wir uns auch um DNS kümmern, aber vorher macht es keinen Sinn.
+
+01:35:43.515 --> 01:36:01.595
+<v SPEAKER_5>Nein, nein, das macht vorher auch schon Sinn, würde ich zumindest sagen, dass es vorher schon Sinn macht. Aber was wir gerade kurz, was ich kurz mit Nibbler besprochen hatte, mich würde mal interessieren, gibt es überhaupt eine Möglichkeit, dass der Resolver nicht weiß, welche Domains ich abfrage? Also kann ich oder kann ich überhaupt?
+
+01:36:01.615 --> 01:36:12.535
+<v SPEAKER_2>Warte mal, wenn ich was in der Sendung gelernt habe zusammenfasse, fragst du gerade, es gibt ja den Computer, der ist dafür zuständig, mir zu sagen, wo ich hin will. Kann der mir sagen, wo ich hin will, ohne dass er weiß, wo ich hin will?
+
+01:36:12.555 --> 01:36:17.875
+<v SPEAKER_5>Ja, genau. Technisch sollte das schon möglich sein.
+
+01:36:18.675 --> 01:37:30.355
+<v SPEAKER_4>Das sind sogar zwei Fragen in einem. Die eine Frage ist, welchen Computer ich überhaupt frage? Wir haben ja vorhin gesagt, wir fragen den Resolver. Der kriegt eine volle Anfrage und muss auch eine volle Antwort liefern. Und der wendet sich nun an alle möglichen Rechner in der Welt, wie zum Beispiel an die Root-Server und den DENIX-Server und fragt dort jedes Mal die komplette Frage. Der fragt also, liebe Root-Server, kannst du mir sagen, wie ich zu www.fritz.de komme? Warum muss der das den Root-Server fragen? Von dem wird er nie so eine Antwort bekommen. Er könnte ja auch fragen, sag mal, wie komme ich zu DE? Dann wäre der Rest schon mal weg. Und wenn er bei DE ist, könnte er fragen, kannst du mir mal sagen, wie ich zu fritz.de komme? Und dann kann er erst seine richtige Frage stellen. Im Moment ist es so, er stellt jedem die volle Frage. Das wäre der eine Teil. Und der zweite Teil ist, kann er eine Frage so stellen, dass es eigentlich uninteressant ist, was drin steht. Was?
+
+01:37:32.515 --> 01:37:34.535
+<v SPEAKER_2>Also ja, kann ich, aber ist das dann noch zielführend?
+
+01:37:34.555 --> 01:38:23.775
+<v SPEAKER_4>Ja, er braucht eigentlich nur einen Namen zur IP-Auflösung, wobei der Name für den Computer ja uninteressant ist. Der ist ja nur für uns interessant, die wir am Bildschirm sehen. Das heißt ja noch lange nicht, dass das der Name ist, der auch gebraucht wird. Wenn ich zum Beispiel eine Seite mit Suchergebnissen sehe, ist es absolut nicht notwendig. Da kann zwar stehen www.fritz.de auf der Webseite, aber wenn ich drauf klicke, muss da nicht www.fritz.de stehen. Da könnte auch was völlig anderes dahinterstehen. Da könnte also eine Anfrage nach einem völlig abstrusen XY Blafassl irgendwas Name machen. Und mit dem Namen könnte er dann einen Rechner erreichen. Und wenn er die Verbindung zu dem aufgebaut hat, dann kann er sagen, du eigentlich wolltest www.fritz.de haben.
+
+01:38:23.795 --> 01:38:30.335
+<v SPEAKER_5>Also man obfusciert sozusagen in den Suchergebnissen die tatsächlichen Ergebnisse. Richtig.
+
+01:38:30.355 --> 01:38:34.775
+<v SPEAKER_4>Die links gegenüber einen anderen Namen könnte eigentlich der KPI-Adressen gehen.
+
+01:38:34.795 --> 01:38:37.575
+<v SPEAKER_2>Aber das ist jetzt für den Spezialfall so, ich benutze eine Suchmaschine.
+
+01:38:39.395 --> 01:39:05.795
+<v SPEAKER_4>Und da geht es übrigens auch hin. Die ganzen Versuche, die dort in der Richtung gemacht werden, laufen darauf hinaus, die URL abzuschaffen und stattdessen komplett alles durch Suchergebnisse zu ersetzen. Ja, wenn ich eh alles mit der Suche... Wie viele Leute gucke ich mir an. Egal, was sie angaben, bekommen immer ein Suchfeld ein. Nicht in die Adresszeile vom Browser, sondern immer ein Suchfeld.
+
+01:39:05.815 --> 01:39:08.475
+<v SPEAKER_5>Die Adresszeile ist ja die Suchzeile.
+
+01:39:08.495 --> 01:39:26.355
+<v SPEAKER_2>Moment mal, was ich dann aber auch gerade denke, ist, was ich ja dann tausche, ist nicht mehr die DNS Auflösung weiß, wo ich hin will, aber die Suchmaschine. Und die Suchmaschine ist, wenn wir jetzt damit argumentieren, wie Leute Computer benutzen, Google. Und Google weiß jetzt echt genug über mich.
+
+01:39:27.255 --> 01:39:31.135
+<v SPEAKER_4>Also das wird auch auf die restlichen Klagen kommt es da auch nicht mehr an, oder?
+
+01:39:31.155 --> 01:39:42.395
+<v SPEAKER_2>Nee, ich meine sozusagen, nee, das meine ich nicht, sondern die wissen schon genug über mich. Und dann verlagere ich noch einen Teil meines digitalen Lebens ausschließlich dorthin, in dem Google sozusagen in Zukunft der Einzige ist, der weiß, wo ich hingehe.
+
+01:39:42.555 --> 01:40:24.955
+<v SPEAKER_3>Ja, also ich versuche, genau diesen Ausschließlichkeitsanspruch, den will man jetzt mit einer neuen scheinbar Privatsphäre herstellenden, in Anführungszeichen, Technologie, nämlich dass man DNS gar nicht mehr über DNS spricht, sondern dass man DNS über HTTPS spricht. Da gibt es jetzt die ersten Anbieter, die eben sagen, um die Privatsphäre zu schützen, also um deine Anfrage verschlüsselt durchs Netz zu transportieren, stell deine Anfrage doch einfach via HTTPS. Dann sprechen wir nicht mehr DNS, sondern dann sprechen wir ein Protokoll, was da oben drüber ist, was aber eben, wie wir in Chaos Radio 248 schon besprochen haben, zwischen dir und dem Resolver verschlüsselt abläuft.
+
+01:40:25.095 --> 01:40:34.435
+<v SPEAKER_2>Aber habt ihr ja vorhin gesagt, das eigentliche Problem an dem Mithören ist sowieso, dass die Resolver mithören und nicht irgendjemand zwischendurch. Das wird ja damit nicht behoben.
+
+01:40:34.715 --> 01:40:38.975
+<v SPEAKER_3>Nee, aber dafür bekommt der Resolver ausschließlich und als Einziger diese Information.
+
+01:40:39.075 --> 01:40:43.715
+<v SPEAKER_2>Aber ihr habt doch vorhin gesagt, das ist sowieso der Einzige, der das mithört.
+
+01:40:43.735 --> 01:40:51.455
+<v SPEAKER_4>Also wenn wir sagen, der Resolver ist derjenige, der alles bekommt, dann ist die eigentliche Lösung, dann muss ich den Resolver auf meine Kiste transportieren und darf nicht mehr an Fremden benutzen.
+
+01:40:52.355 --> 01:41:03.955
+<v SPEAKER_5>Genau. Wenn ich das tun würde. Genau. Niemand der Resolver wäre auf meiner Kiste. Also ich hatte das auch schon. Ich hatte einen DNS-Cache auf meinem lokalen Rechner laufen und der hat dann das Resolving für mich übernommen.
+
+01:41:03.975 --> 01:41:16.715
+<v SPEAKER_2>Ist das, ich muss kurz fragen, ist das ein Resolver, der für mich diese Anfrage an den Root-Server übernimmt, ist das was, das kann ich mir zu Hause zusammenklicken oder ist das nur was für Vollprofis?
+
+01:41:16.735 --> 01:41:18.855
+<v SPEAKER_4>Das ist völlig trivial, das kann man sich zusammenklicken.
+
+01:41:19.335 --> 01:41:21.155
+<v SPEAKER_5>Okay, ich bin da nicht auf dem neuesten Stand.
+
+01:41:21.175 --> 01:41:24.155
+<v SPEAKER_2>Kannst du dann einen Tipp sagen, wo man da hingeht, nach was man googelt?
+
+01:41:25.995 --> 01:41:27.275
+<v SPEAKER_4>Die Software heißt Unbound.
+
+01:41:29.475 --> 01:41:31.955
+<v SPEAKER_2>Okay, dann mach ich das also und dann...
+
+01:41:31.975 --> 01:41:41.435
+<v SPEAKER_5>Genau, jetzt hab ich noch eine Frage. Wenn ich dann so einen Unbound installiert habe und der kann dann DNS over TLS, kann er dann auch mit den Root-Servern reden?
+
+01:41:41.455 --> 01:41:52.475
+<v SPEAKER_4>Oder über TLS? Das würde ich sogar nicht mal machen. Ich würde sogar hingehen und dem Unbound sagen, du, da drüben sind die Root-Server, zieh dir eine Kopie und beantworte es aus dem lokalen Cache.
+
+01:41:52.875 --> 01:41:54.415
+<v SPEAKER_5>Ah, darf man das?
+
+01:41:55.035 --> 01:41:56.315
+<v SPEAKER_2>Also beantworten die Root-Server das?
+
+01:41:56.335 --> 01:42:01.475
+<v SPEAKER_3>Du darfst dir beliebige Sachen zwischenspeichern. Das kann dann halt sein, dass sie nicht mehr up-to-date sind.
+
+01:42:01.655 --> 01:42:02.515
+<v SPEAKER_2>Was für eine TTL haben wir denn?
+
+01:42:02.535 --> 01:42:03.995
+<v SPEAKER_4>Die sind up-to-date.
+
+01:42:04.015 --> 01:42:07.315
+<v SPEAKER_5>Was für eine TTL habe ich denn auf den Root-Server antworten?
+
+01:42:07.935 --> 01:42:16.195
+<v SPEAKER_4>Das Protokoll zum Abgleich von Zonendaten, so wie ein Zontransfer, enthält auch eigene TTLs, die sicherstellen, dass man kein Update verpasst.
+
+01:42:17.275 --> 01:42:19.295
+<v SPEAKER_3>Ah, und du kannst dir die Root-Zone ziehen?
+
+01:42:19.795 --> 01:42:20.595
+<v SPEAKER_4>Ja, natürlich.
+
+01:42:20.615 --> 01:42:27.295
+<v SPEAKER_2>Also das heißt, dann weiß der Root-Server nicht mehr, welche Anfrage ich gestellt habe, weil ich frage einfach, sag mir alles. Okay, verstehe.
+
+01:42:27.435 --> 01:42:28.995
+<v SPEAKER_4>Ich bin mein eigener Root-Server.
+
+01:42:29.815 --> 01:42:43.655
+<v SPEAKER_2>Ich habe hier noch eine Frage von Twitter bekommen. Ich weiß nicht, ob es überhaupt Sinn macht, sie zu stellen. Ich gebe sie mal weiter. Warum muss der Domain Name überhaupt noch in Zahlen umgesetzt werden? Warum kann man nicht einfach die Namen routen? Warum brauchen wir noch IPs?
+
+01:42:44.575 --> 01:43:00.675
+<v SPEAKER_3>Weil der Speicher in Routern ist begrenzt. Und bei begrenztem Speicher bietet sich es immer an relativ kurze Adressen und Adressen, die eine bestimmte Länge haben, die sie nicht unter- oder überschreiten. Und dafür eignen sich Zahlen einfach hervorragend.
+
+01:43:00.695 --> 01:43:05.515
+<v SPEAKER_5>Man könnte aber auch einen Hashtag nehmen, der hat auch immer die gleiche Länge.
+
+01:43:05.535 --> 01:43:20.235
+<v SPEAKER_4>Es gibt auch solche Ansätze, die so arbeiten, so mit Overlay-Netzen, die tatsächlich auf Namens basiert oder auf irgendeinem anderen Protokoll das übereinanderlegen und ein Routing auf Namensbasis machen. Das geht.
+
+01:43:20.255 --> 01:43:21.875
+<v SPEAKER_5>Ist aber nicht so verbreitet.
+
+01:43:21.895 --> 01:43:22.715
+<v SPEAKER_3>Und ist ein Overlay.
+
+01:43:22.735 --> 01:43:23.375
+<v SPEAKER_4>Nicht wirklich.
+
+01:43:24.295 --> 01:43:26.675
+<v SPEAKER_2>Was heißt ein Overlay? Also Overlay, dort, wo es drüber liegt.
+
+01:43:26.695 --> 01:43:29.715
+<v SPEAKER_4>Also das heißt, wir unterarbeiten die alle noch mit IP-Adressen, ganz normal.
+
+01:43:29.735 --> 01:43:30.275
+<v SPEAKER_2>Ach so.
+
+01:43:30.295 --> 01:43:33.075
+<v SPEAKER_4>Aber davon krieg ich nichts mit.
+
+01:43:33.095 --> 01:43:33.375
+<v SPEAKER_2>Verstehe.
+
+01:43:33.395 --> 01:43:44.695
+<v SPEAKER_4>Und das ist ungefähr so, als würde ich mit, auf Twitter mit Leuten reden, dann rede ich ja auch nicht mit den Rechnern, sondern ich rede mit den Alias-Namen, die die Leute bei Twitter haben. Das ist ein Overlay-Netz.
+
+01:43:44.715 --> 01:43:51.775
+<v SPEAKER_2>Okay, was ich ganz am Schluss noch machen würde, wenn es keine weltbewegenden Dinge mehr gibt, ich frage mich, wollte ich dir nicht noch irgendwas anziehen?
+
+01:43:51.795 --> 01:43:52.935
+<v SPEAKER_4>Hab noch was weltbewegendes.
+
+01:43:52.955 --> 01:43:57.655
+<v SPEAKER_9>Ich wollte noch das Internet kaputt machen.
+
+01:43:57.675 --> 01:44:01.575
+<v SPEAKER_2>Bitte? Also kannst du jetzt bis Nachmittag Nacht warten, aber dann ja?
+
+01:44:01.595 --> 01:44:04.795
+<v SPEAKER_4>Nein, wir warten bis zum 11. Oktober, dann machen wir es kaputt.
+
+01:44:04.815 --> 01:44:05.215
+<v SPEAKER_2>Wie das?
+
+01:44:05.235 --> 01:44:06.035
+<v SPEAKER_5>Das schreib ich mir kurz mal auf.
+
+01:44:06.835 --> 01:44:37.815
+<v SPEAKER_4>Ja genau, also am 11. Oktober ist Weltuntergangstag. Die ICANN, die zentrale Verwaltung für die DNS Sachen, also die ganze Policyverwaltung, die die Regeln festlegen, hat am 16. September beschlossen, also letzte Woche, dass sie am 11. Oktober um 4 Uhr, nee 4 Uhr Nachmittag das Internet kaputt machen wollen.
+
+01:44:37.835 --> 01:44:41.755
+<v SPEAKER_2>Bitte erklär's ihnen verständlich sehr schnell, weil die Sendung ist gleich vorbei. Ich fürchte, es dauert noch mal.
+
+01:44:41.775 --> 01:44:52.975
+<v SPEAKER_4>Also wir hatten vorhin über die RUT Keys gesprochen, über die Schlüssel, die überall in den Millionen von Geräten drin sind. Diese Schlüssel werden wir am 11. Oktober auswechseln durch andere.
+
+01:44:53.695 --> 01:44:55.535
+<v SPEAKER_5>Also alle gleichzeitig?
+
+01:44:55.555 --> 01:44:55.975
+<v SPEAKER_4>Natürlich.
+
+01:44:56.035 --> 01:44:57.515
+<v SPEAKER_2>Klingt doch nach einer hervorragenden Idee.
+
+01:44:59.795 --> 01:46:05.395
+<v SPEAKER_4>Wir haben das jetzt schon viermal verschoben, weil wir zu viel Angst gehabt haben, es zu machen. Und diesmal wollen wir es tatsächlich durchziehen. Deswegen ist die Ankündigung kurzfristig, damit also die Protestwelle klein bleibt und nicht mehr so sich aufbauschen kann. Der Punkt, der dabei passiert ist, werden also praktisch zwei Root-Server-Schlüssel gleichzeitig aktiv sein. Die sind auch schon seit einigen Jahren aktiv, sollten sich mittlerweile hin überall durchgesprochen haben. Und die meisten Leute wird es überhaupt nicht betreffen. Es gibt da auch Testseiten. Ich hatte hier im JABBer Nibbler eine rübergeschickt, wo man das einfach testen kann. Da kann man draufdrücken und kann sagen, bin ich davon betroffen, wenn das passiert? Trifft mich der Weltuntergang? Und die Antwort wird in fast allen Fällen heißen, nein, weil du einen Provider hast, der zu dämlich ist, die Validierung durchzuführen, also zu prüfen, ob die Signaturen korrekt sind. Also insofern dürfte das den größten Teil der Welt nicht betreffen. Aber tatsächlich, wir werden also am 11. Oktober Weltuntergangstag machen.
+
+01:46:05.415 --> 01:46:22.395
+<v SPEAKER_3>Aber es gibt da noch als weitere flankierende Maßnahme, dass DNS-Resolverbetreiber aktiv angeschrieben werden. Also ich habe das für meinen bekommen, dass eben darauf hingewiesen werde, dass mein DNS-Resolver noch einen alten Key verwendet und dass ich den doch bitte updaten soll, bevor die Welt untergeht.
+
+01:46:22.415 --> 01:46:28.115
+<v SPEAKER_4>Ja, das ist seit letztem Jahr gemacht worden. Da haben wir schöne Tricks angewendet, um das rauszubekommen.
+
+01:46:28.115 --> 01:47:17.535
+<v SPEAKER_2>Also wissen, liebe Leute, ich bin heute ein bisschen enttäuscht, weil also es wird nichts angezündet. Der Weltuntergang ist eigentlich auch gar nicht so schlimm. Ich möchte es deswegen sozusagen konstruktiv enden lassen. Und zwar, wir haben jetzt eigentlich die ganze Zeit geredet über die Richtung. Ich als Endnutzer möchte wissen, wo der Web-Server oder der wie auch immer geartete Dienst einer großen Institution ist. Aber es gibt ja mittlerweile Leute, die haben Dinge unter dem Schreibtisch stehen, die können fast so viel wie ein Web-Server und würden jetzt gerne über ihren eigenen Internetanschluss auch einen kleinen Service betreiben. Das geht aber nicht, weil ja der Internet Service Provider häufiger mal die IP-Adresse ändert. Das geht doch aber auch, oder, dass man sozusagen über etwas, was dynamisches DNS dann glaube ich heißt, seinen eigenen Service betreibt? Ja, nein, vielleicht.
+
+01:47:17.555 --> 01:47:21.215
+<v SPEAKER_4>Das ist ein Problem möglich, ja.
+
+01:47:21.235 --> 01:47:26.155
+<v SPEAKER_2>Wie funktioniert das? Was ist da anders? Und warum?
+
+01:47:26.175 --> 01:48:04.635
+<v SPEAKER_4>Die einfachste Variante ist, dass man seinen Router, der als Erster mitbekommt, wenn der eine neue IP-Adresse bekommt, ein spezielles Protokoll, die sind genormt, das ist also schon hinterlegt in den Routern, dass man einfach sagt, melde dich bei folgendem Dienst an, einige sind schon drin, und der generiert mir dann einen DNS-Namen, der immer zu meinem Router zeigt. Und damit kann ich einfach dem Router sagen, hier auf dem Port möchte ich gerne Dienst betreiben. Und ich habe einen festen Namen, der außen gültig ist und der vom Router aus, immer wenn sich die Adresse ändert, aktualisiert den Datenbestand. Aber ganz ehrlich, wenn ich das machen will, dann nehme ich die in 1, 2 Euro in die Hand und sage meinem Provider, ich hätte gerne eine feste Adresse.
+
+01:48:06.135 --> 01:48:13.055
+<v SPEAKER_2>Ist das mittlerweile so? Also du meinst meinen Internet Provider, der mir eine feste Adresse bietet? Ist das wirklich so billig heutzutage?
+
+01:48:13.075 --> 01:48:13.915
+<v SPEAKER_4>Ich habe keine Ahnung.
+
+01:48:14.875 --> 01:48:21.555
+<v SPEAKER_1>Es sollte eigentlich so billig sein, aber ich bezweifle, dass mein Internet Provider das überhaupt anbietet.
+
+01:48:21.575 --> 01:48:25.855
+<v SPEAKER_2>Wir sollten auch über all symmetrisches Internet haben und 100 MBit ab und down nur gleichzeitig.
+
+01:48:25.875 --> 01:48:42.415
+<v SPEAKER_4>Na ja, eigentlich reden wir über den vollkommen falschen Fall, weil wir reden ja eigentlich darüber, wenn ich dynamische Adressen habe, dann rede ich eigentlich über das völlig falsche. Ich rede nämlich über IPv4, über IP-Adressen mit Punkten dazwischen. Ich will aber IP-Adressen mit Doppelpunkten haben. Wir haben eigentlich 2018 und wir können uns Doppelpunkte mittlerweile leisten.
+
+01:48:42.435 --> 01:49:01.035
+<v SPEAKER_2>Na ja, aber dahinter steht auch die Annahme, dass die Internetanbieter die IP-Adressen eines Privatanschlusses wechseln, weil sie müssen, nicht weil sie können und uns das Leben schwer machen wollen. Ich vermute, dass auch bei den großen IPv6-Adressen das auch passieren würde. Einfach nur, weil man nochmal extra Geld machen kann.
+
+01:49:01.275 --> 01:49:10.155
+<v SPEAKER_5>Ja, ich glaube, sie wollen, nicht sie müssen, also. Ich hatte mal einen Internet-Bewiderer, der hat mir eine feste IP-Adresse einfach so gegeben auf meinem Anschluss.
+
+01:49:10.475 --> 01:49:39.315
+<v SPEAKER_3>Ja, bei v6 ist das aber auch nur der Bug bei der Feature, dass man eben, wenn man möchte einen neuen Blog bekommen kann, leidet der nicht-Trackbarkeit. Also dass man nicht permanent mit demselben Adressblock unterwegs ist. Kann durchaus auch ein Privatsphäre-Feature sein, aber ich hätte immer den Anspruch an meinen Service Provider, dass ich sagen möchte, ich will jetzt einen statischen dauerhaft behalten oder gib mir mal jedes Mal einen neuen.
+
+01:49:40.155 --> 01:49:54.735
+<v SPEAKER_4>Also wir haben das so gemacht, bei v6 ist ja die Möglichkeit, mehr als einen Adressblock gleichzeitig zu haben und mehr als eine IP-Adresse gleich. Wir geben drei raus. Der erste Blog ist zwei Stunden gültig und man darf ihn nur eine Stunde lang für neue Verbindung verwenden. Der zweite fängt noch eine Stunde an.
+
+01:49:55.075 --> 01:49:57.595
+<v SPEAKER_2>Okay, Details kann ich mir folgen, stopp, stopp, stopp, stopp.
+
+01:49:57.615 --> 01:49:59.075
+<v SPEAKER_9>Nein, Moment, ganz einfach.
+
+01:49:59.095 --> 01:49:59.795
+<v SPEAKER_3>Der dritte ist fix.
+
+01:49:59.815 --> 01:50:02.715
+<v SPEAKER_4>Jede Stunde einen neuen Adressblock und ein Statischschub.
+
+01:50:02.735 --> 01:50:26.295
+<v SPEAKER_2>Das ist nicht mehr ganz einfach. Dem kann niemand mehr folgen, der nicht weiß, was IPv4 und IPv6 sind, schuldigt die Behörerinnen und Hörer, dass wir sehr schnell dahin abgebogen sind. Das kriegen wir ziemlich nicht mehr aufgefangen. Ganz Schluss Abschlussstatement, werden wir in zwei Jahren nochmal über DNS reden müssen, weil dann doch irgendwas kaputt ist oder ist das jetzt, geht das jetzt alles einen geregelten Gang nachdem das Internet untergegangen ist am 11. November.
+
+01:50:26.315 --> 01:50:28.335
+<v SPEAKER_3>Lass uns in zehn Jahren nochmal zusammensetzen.
+
+01:50:28.355 --> 01:50:30.515
+<v SPEAKER_2>In zehn Jahren, okay, Dirk?
+
+01:50:30.535 --> 01:50:46.315
+<v SPEAKER_5>Ich überleg gerade, ob ich mir nicht einen lokalen Resolver einrichte, der dann wirklich alles... Also jetzt hab ich ja wieder einen Grund. Früher war das ja nur eine Spielerei, jetzt ich das gemacht habe, aber jetzt... und dann eine lokale Kopie von den Ruhtzonen.
+
+01:50:46.335 --> 01:50:47.355
+<v SPEAKER_2>Aus privatsfernem Grund dann?
+
+01:50:47.375 --> 01:50:47.935
+<v SPEAKER_5>Ja.
+
+01:50:47.955 --> 01:51:35.815
+<v SPEAKER_2>Alles klar. Sehr gut. Dann sag ich schon mal vielen Dank Lutz, Nibla und Dirk, für diesen Einblick in dieses ja doch für uns nicht ganz unwichtige System, weil wir es ja eben alltäglich benutzen. Ich gehe mit ein bisschen seltsamem Gefühl aus dieser Sendung, weil ich bin so eine Mischung aus beruhigt und beunruhigt. Also normalerweise geht man aus dem Chaosradio und denkt so, das ist alles schlimm, alles anzunehmen. Aber ich hab das Gefühl, naja, das ist, also ich meine, das rumpelt ein bisschen, weil es schon älter ist. Aber im Prinzip geht es auch so sein Gang. Das wird schon und andere Dinge sind schlimmer. Wir haben jetzt am Ende des Chaosradios noch einen kleinen Veranstaltungstipp für euch oder mehrere sogar, wie ich hier sehe. Und dafür ist der Herr Danimo noch mal ins Studio gekommen. Der müsste allerdings, weil er sich an das Mikrofon gestellt hat, selber den Regler aufmachen.
+
+01:51:40.615 --> 01:51:41.535
+<v SPEAKER_10>So, schönen guten Abend.
+
+01:51:42.995 --> 01:51:44.095
+<v SPEAKER_2>Was ist denn los?
+
+01:51:44.115 --> 01:52:04.395
+<v SPEAKER_10>Wir hätten da zum Beispiel eine Privacy Week im Angebot. Die wird seit vielen Jahren eigentlich vom CCC Wien mit organisiert, ist die Frage, na, na, na, was machen wir hier in Berlin damit? Die gibt es nämlich jetzt auch in Berlin und zwar vom 26.9. bis 3.10. Dazu können alle gerne vorbeikommen. Es gibt Vorträge.
+
+01:52:04.415 --> 01:52:06.775
+<v SPEAKER_2>Stopp, vorbeikommen wo?
+
+01:52:06.795 --> 01:52:24.895
+<v SPEAKER_10>Vorbeikommen wo? Das könnt ihr euch angucken auf privacyweek.berlin. Da gibt es dann den Link. Und wer nicht dabei sein kann, einige zentrale Vorträge werden auch vom ccc-vog gestreamt dann unter media.ccc.
+
+01:52:24.915 --> 01:52:27.295
+<v SPEAKER_2>Das sind die Leute, die auch machen, dass man das jetzt gerade gucken kann?
+
+01:52:27.475 --> 01:53:05.595
+<v SPEAKER_10>Genau. Genau, genau. Und im Rahmen dieser Privacy Week findet die FIFKON statt, die Herren und Damen von dem Forum Informatikerinnen für Frieden und gesellschaftliche Verantwortung. Die waren nämlich zu Gast im Chaosradio 245. Wenn ihr noch mal nachgucken wollt. Und die suchen auch noch Helfer. Also wenn ihr mal Lust habt, für eine gute Sache zu helfen, dann meldet euch unter helfer.fifkon.de. Na alles von Kamera halten bis Getränke ausschenken.
+
+01:53:06.535 --> 01:53:10.895
+<v SPEAKER_2>Okay, kann man sich dann bewerben oder muss man sozusagen, ist das so eine Art Losbox? Ich bewerbe mich und dann...
+
+01:53:10.915 --> 01:53:24.555
+<v SPEAKER_10>Ich glaube, ihr schreibt einfach mal eine Mail an helfer.fifkon.de. Und ich denke, da wird euch dann einfach geholfen. Ich denke, da wird die Bewerber... Also ihr müsst euch da nicht prügeln.
+
+01:53:24.575 --> 01:53:30.355
+<v SPEAKER_2>Sehr, sehr gut. Und zur Privacy Week in Berlin, gibt es da inhaltlich noch ein bisschen was, was da so die Höhepunkte sind?
+
+01:53:30.375 --> 01:53:57.015
+<v SPEAKER_10>Genau. Also es wird ein Privacy Café geben. Da bin ich auch mal sehr gespannt, was das wird. Es gibt ein persönliches Data Detox Kit. Nein. Und es gibt abends den digitalen Salon live von der Informatik 2008 Konferenz und ein Slow-Tech-Dinner in Friedrichshain. Also ich bin sehr, sehr gespannt, was das alles wird.
+
+01:53:57.815 --> 01:54:02.195
+<v SPEAKER_2>Also es hört sich ein bisschen, als ob es dann auch da Homöopathie-Chips gibt. Na ja, wir werden sehen.
+
+01:54:02.215 --> 01:54:03.655
+<v SPEAKER_5>Wann ist das jetzt noch mal?
+
+01:54:03.675 --> 01:54:07.255
+<v SPEAKER_10>Das ist vom 26.9. bis 3.10.
+
+01:54:07.275 --> 01:54:07.735
+<v SPEAKER_5>Übermorgen.
+
+01:54:10.555 --> 01:54:16.455
+<v SPEAKER_2>Ganz richtig. Oder weil ihr den Podcast gehört habt, vielleicht schon heute. Genau, oder gestern.
+
+01:54:16.475 --> 01:54:17.115
+<v SPEAKER_10>Da weißt du das schon.
+
+01:54:17.135 --> 01:54:50.355
+<v SPEAKER_2>Das wurde in der Zeit so reden. Das war auf jeden Fall das Chaosradio 250. Wir essen jetzt noch ein bisschen Kuchen, weil es so eine schöne Runde zahlt ist. Danke euch fürs Zuhören und mitmachen. Ihr könnt das Ganze oder auch alle alten Sendungen im Podcast hören. Jetzt gleich, falls ihr noch mal nachholen wollt, auf fritz.de, also im Laufe der Nacht erscheint es da und dann im Laufe der Woche auch mit Bild unter chaosradio ccc.de. Mein Name ist Marcus Richter und ich habe zum Schluss noch eine wichtige Nachricht für euch. Lasst euch nicht überwachen und verschlüsselt immer schön eure Backups.
+
+01:57:55.738 --> 01:57:58.108
+<v SPEAKER_8>Acht Don't forget I'm in your extended network, biatch!

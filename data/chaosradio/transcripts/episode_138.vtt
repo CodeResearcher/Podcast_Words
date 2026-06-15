@@ -1,370 +1,886 @@
 WEBVTT
 
-01:00:28.277 --> 01:04:19.146
-<v SPEAKER_1>Ich hab keine Ahnung, wovon ihr redet. Also wirklich überhaupt gar nicht. Ich kann folgen bis zu dem Zeitpunkt, wo ihr sagt, es gibt dieses Förderband und da sind Dinge frei. Und da versuche ich, sozusagen andere Dinge hinzutrainieren. Also der Prozessor macht Dinge, die er eigentlich nicht machen soll, aber die kann auch niemand sehen, weil der Prozessor auch merkt, das ist gar nicht das, was jetzt wirklich passiert. Ich werfe das wieder weg. Genau. Und das ist auch... Dann kann ich auch noch verstehen, es gibt einen Punkt, da weiß ich, welche Bereiche aus dem Arbeitsspeicher schon im Cash liegen. Weil mir das, weil dieser Code, wo das jetzt weggeworfen wird, sehr schnell ausgeführt werden kann. Aber was ich nicht verstehe ist, wie komme ich davon, dass ich weiß, wie schnell etwas geladen wird, obwohl ich es nicht sehen kann, dazu zu wissen, was da drin steht. Weil ihr auch immer zwischendurch immer wieder sagt, mich interessiert gar nicht, was da drin steht, aber es tut es ja doch. Diese Frage müssen wir gleich beantworten, weil zwischendurch gibt es eine wichtige kleine Nachricht. So, also willkommen zurück zum Chaos Radio in Le Moon, wo wir gerade versuchen zu verstehen, was es genau mit den Sicherheitslücken zu Meltdown und Spectre auf sich hat. Und ich sage euch, liebe Leute, es ist nicht einfach. Wir sind an dem Punkt angekommen, wo man verstehen kann, dass also der Prozessor dazu angehalten wird, Dinge auszuführen, schon so pro forma zu raten, was demnächst passieren könnte und dann die Ergebnisse wieder wegzuwerfen. Aber wie man davon dahin kommt, dass man wirklich Daten aussehen lässt, das habe ich noch nicht verstanden. Falls ihr es verstanden habt, gerne anrufen, dann erklärt es mir auch und allen anderen Hörern. Ich versuche es so lange weiter mit Meisebierer und Peter. So, also noch mal. Wir haben also diese Förderband-Analogie. Die Befehle, die ein Prozessor ausführt, sind nicht immer, also das ist nicht immer voll die Liste. Dann wird geraten und das wird auch schon mal berechnet. Und dann wird es aber tatsächlich nur vorgezeigt, wenn es zu dem Programm auch passt, das gerade ausgeführt wird. Und was ich jetzt immer gesagt habe ist, ich kann als fremdes Programm rausfinden, indem ich den Prozessor darauf zu trainiere, eine ganz bestimmte Folge von Befehlen auszuführen, zu erkennen, ob Daten im Cache sind. Aber der Punkt, wie ich, also möglicherweise, ich habe noch eine weitere Verständnisfrage, sag mir nur, ob ich es richtig verstanden habe oder nicht. Also möglicherweise weiß ich, wie ein Programm, das ich angreife, wo das das Passwort im Speicher liegen hat. Und dann kann ich durch das, was ihr beschrieben habt, rausfinden, ob das Passwort im Cache liegt. Hast du das richtig verstanden? Okay, ich weiß einfach nur, es gibt Bereiche im Speicher. Und wenn ich befrage, in diesem Code, der sozusagen vorausgeführt wird, guck doch mal, liest den Wert aus.
+00:00:13.852 --> 00:00:15.012
+<v SPEAKER_2>Blum, die zwei Sprechstunden.
 
-01:04:19.166 --> 01:04:19.926
-<v SPEAKER_2>Lies den Wert einfach.
+00:02:50.638 --> 00:03:33.818
+<v SPEAKER_3>So, den dürftet ihr mittlerweile mitsingen können. Letzter Mittwoch im Monat, Blue Moon bei Frips, das heißt Chaos Radio. Heute ist für die Statistiker das 149. Mein Name ist Jakob Kranz, der Chaos Computer Club ist hier in Form von Frank Rosengarten, namens Frank. Und wir haben Daniel Schmidt hier von Wikileaks. Hallo Daniel. Wikileaks ist das Thema der heutigen Sendung. Eine sehr spannende Sendung, bisschen quatschig jetzt hier auf die Musik drauf. Ihr habt die garantiert sowieso auf irgendeiner Festplatte, um die zu hören, weil wir haben ja nur quasi zwei Stunden Zeit, um darüber zu reden. Wir machen heute eine Webseite sichtbar, die eigentlich so anonym als grafische Oberfläche im Netz steht. Und wir haben einen der Betreiber und Organisatoren und der sich darum kümmernden hier, nämlich Daniel. Und fangen gleich an. Wikileaks, was ist das?
 
-01:04:19.946 --> 01:04:20.486
-<v SPEAKER_1>Lies den Wert.
+00:03:35.358 --> 00:03:54.838
+<v SPEAKER_4>Also genau genommen ist Wikileaks eine Plattform im Internet, wie viele andere Plattformen auch. Allerdings mit dem Unterschied, dass wir Dokumente publizieren, die vorher nicht publiziert wurden. Das heißt, wir bekommen Material von verschiedensten Quellen und stellen sicher, dass dieses Material für die Öffentlichkeit im Internet bereitgestellt werden kann.
 
-01:04:20.506 --> 01:04:29.986
-<v SPEAKER_2>Und wenn das Ergebnis sehr schnell kommt, Nee, das mit dem Zeitmessen, das ist in einem zweiten Teil.
+00:03:55.058 --> 00:03:58.258
+<v SPEAKER_3>Und das kann theoretisch jeder euch schicken und posten?
 
-01:04:31.746 --> 01:04:34.606
-<v SPEAKER_1>Jetzt verstehe ich also anscheinend noch weniger, als ich vorhin gerade verstanden habe.
+00:03:58.718 --> 00:04:38.758
+<v SPEAKER_4>Ja, das Ganze ist eine Konsequenz daraus, dass in den letzten Jahren verschiedene Leute mit dem unterschiedlichsten Hintergrund, Techniker, Anwälte, Journalisten, viele Aktivisten, eben wahrgenommen haben, dass die Informationsfreiheit, der Schutz für die Presse in der ganzen Welt, die Möglichkeit, Sachen zu publizieren, Missstände in dieser Welt ans Licht zu bringen, dass eben diese ganzen Umstände in vielen Bereichen der Welt schwierig geworden sind und immer schwieriger werden. Und Wikileaks selbst ist eine Summe dieser Erkenntnisse und offeriert dafür verschiedenste Lösungsstrategien.
 
-01:04:34.626 --> 01:05:19.286
-<v SPEAKER_2>Also das Arbeitspaket, was wir sozusagen darauf trainieren, auf das Arbeitsband, liest das Passwort aus dem Speicher. Und je nachdem, dann legen wir noch ein Paket auf das Band, was abhängig von dem Passwort an einem zugänglichen Speicherteil irgendwas macht. Und zwar in einem Bereich von einem Speicher, wo sowohl das Passwortprogramm als auch mein Angreiferprogramm Zugriff haben. So dass das Paket, was ich auf das Band gelegt habe, dadurch mir sagen kann, was ist das Passwort.
+00:04:38.778 --> 00:04:40.518
+<v SPEAKER_3>Wann und warum ist Wikileaks genau entstanden?
 
-01:05:20.406 --> 01:05:55.306
-<v SPEAKER_1>Aber wie macht das das? Also ich versuche mal zusammen so was. Also ich habe den Prozessor trainiert, dass er folgende Dinge tut. Während mein Programm läuft, denkt der Prozessor, okay sozusagen im nächsten und im übernächsten Schritt hole ich das Passwort des Programms, das ich angreifen will aus dem Speicher, lege es in den Cache. Im übernächsten Schritt denkt der Prozessor, ich hole jetzt aus einem Speicherteil, wo sowohl das Angreiferprogramm als auch das angegriffene Programm rauslesen können, hole ich Daten.
+00:04:41.958 --> 00:05:10.938
+<v SPEAKER_4>Also die Plattform kann man nicht genau definieren, wann es entstanden ist. Weil das eine längere Diskussion zwischen verschiedensten Leuten auf der Welt war. Es waren Überlegungen, die zu diesen Missständen gemacht wurden. Das erste Mal öffentlich wurde Wikileaks zu Ende 2006, Anfang 2007. Das ist der Zeitpunkt, an dem die Öffentlichkeit uns wahrgenommen hat. Die ersten Pressevertreter darüber berichtet haben und die Plattform eben dann live gegangen ist.
 
-01:05:55.886 --> 01:06:10.926
-<v SPEAKER_2>Ja und zwar an einer bestimmten Adresse. Das Passwort wird dann aufgeteilt und das wird pro Zeichen gemacht. Diese ganze Sache, sodass du einmal für das erste Zeichen in dem Passwort...
+00:05:10.958 --> 00:05:13.798
+<v SPEAKER_5>Wie viele Leute nutzen euch jetzt so täglich?
 
-01:06:10.966 --> 01:06:19.206
-<v SPEAKER_1>Achso, das heißt, das Passwort wird in diesem Code auch wohin gelegt. Es wird gelesen und wieder wohin gelegt, nämlich in einem gemeinsamen zugänglichen Teil des Speichers.
+00:05:13.818 --> 00:06:00.458
+<v SPEAKER_4>Das ist auch sehr schwer zu sagen. Wir publizieren ja alle Dokumente anonym. Das bedeutet, wir müssen verschiedene Mechanismen etablieren, um Anonymität zu garantieren. Die Anonymität gilt allerdings nicht nur für unsere Quellen oder für Leute, die uns Material schicken, sondern wir behalten auch keinerlei Statistiken zu Nutzern oder irgendwelche Logfiles, Zugriffsstatistiken, irgendwas in dieser Art. Das macht es sehr schwierig zu beurteilen, zum einen, was auf der Plattform gerade los ist, und zum anderen ist es auch schwierig, weil wir nicht selbst damit werben können, wie viele Leute uns besuchen. Es gibt die Möglichkeit, dass wir sehen, wie viel Traffic zum Beispiel durchgeht, einfach bandbreiten Statistiken, sowas in der Art. Und in Hochzeiten von Dokumenten, wir hatten das in einigen Fällen, sind das schon viele Hunderttausende bis über die Millionen Besucher, die wir pro Stunde auch anziehen können.
 
-01:06:19.226 --> 01:06:57.586
-<v SPEAKER_2>Das Passwort an sich nicht, sondern es wird... Also der Code, der eingeschleust wird, der greift auf einen Adressbereich, auf eine bestimmte Adresse, zu, innerhalb eines Adressbereichs und das kann ich dann wiederum in dem Angreiferprogramm messen, genau an welcher Stelle das war. Die Stelle ist abhängig von dem ersten Zeichen in deinem Passwort.
+00:06:01.998 --> 00:07:08.738
+<v SPEAKER_5>Ja, also ich glaube zu den technischen Details kommen wir später noch, wie man so Sachen verschleiert, auch die Besuchsstatistiken oder beziehungsweise die Leute, sag ich mal unkenntlich macht, die die Dokumente abrufen und vor allem auch die Dokumente, die diese einreichen, die Dokumente. Worüber wir heute Abend ein bisschen sprechen wollen, auch mit euch Hörern, ist es eigentlich legitim, auch tatsächlich alles zu veröffentlichen. Gibt es Grenzen? Welche Sachen würdet ihr an eurer Stelle nicht veröffentlichen, wenn ihr an der Stelle von Wikileaks werdet? Gibt es Sachen, die ihr glaubt, dass sie vielleicht besser doch privat oder geheim bleiben? Möglicherweise irgendwelche heiklen Staatsdokumente, die keine Ahnung, die Revolutionen auslösen oder irgendwelche anderen Sachen, ein schweres Chaos, ein Staat in schweres Chaos stürzen. Sachen, die Personen betreffen, die Personen auch gezielt diskreditieren, möglicherweise. Auch wenn man sagt, okay, es ist tatsächlich nur die Wahrheit oder die Wirklichkeit, die da publiziert wird. Aber es bringt die Personen, die da betroffen sind, möglicherweise schon in Schwierigkeiten, in Ernstesschwierigkeiten. Wo sind da für euch die Grenzen? Wo würdet ihr sagen, so, nee, also das muss jetzt vielleicht nicht unbedingt veröffentlicht werden?
 
-01:06:57.606 --> 01:07:09.146
-<v SPEAKER_1>Also mein Passwort besteht, sollte es niemals, liebe Leute, aber wir nehmen es mal an. Mein Passwort besteht aus 1, 2, 3, 4. Das heißt, kann ich einen Phantom-Code nennen?
+00:07:08.758 --> 00:07:25.698
+<v SPEAKER_3>Oder sagt ihr im Sinne einer allgemeinen demokratischen Wahrheit, wenn irgendwelche Sachen passiert sind, sollen sie auch publiziert werden. Alles, was passiert, soll auch im Netz öffentlich für alle zugänglich sein. Darüber wollen wir heute reden. Ihr könnt uns wie immer anrufen. Das ist Potsdam 0331 und dann die 70 97 110. Da seid ihr direkt hier bei uns im Studio.
 
-01:07:09.166 --> 01:07:12.606
-<v SPEAKER_3>Ja, also die Autoren nennen das Transienten-Code.
+00:07:25.718 --> 00:07:50.158
+<v SPEAKER_5>Bevor wir starten, vielleicht noch zwei Terminankündigungen. Ich fange mal mit der an, die ein bisschen weiter entfernt ist, nämlich den Chaos Communication Congress. Das ist die Veranstaltung, die jährliche Veranstaltung des Chaos Computer Clubs. Wie jedes Jahr zwischen Weihnachten und Neujahr, auch dieses Jahr wieder im BCC, im Kongresszentrum am Alex in Berlin. Und ja, Infos dazu auf www.ccc.de. Und ganz jetzt direkt vor der Tür, Daniel.
 
-01:07:15.406 --> 01:08:36.726
-<v SPEAKER_1>Der Phantom-Code sagt also, hole das Passwort aus dem Speicher. Und dann sagt der Phantom-Code, wenn das erste Zeichen im Passwort eine 1 ist, hole aus dem Speicher, wo beide Programme zugreifen können, nämlich aus der Speicheradresse 1 die Daten. Dann gehe ich im nächsten Schritt als Angreiferprogramm hin und sage, hole bitte aus dem Speicher die Adresse 1. Und wenn das dann sehr, sehr, sehr, sehr schnell geht, weiß ich, dass mein Phantom-Code aus der Speicherstelle Adresse 1 gelesen hat. Und damit weiß ich, dass das erste Zeichen vom Passwort eine 1 war. Genau. Ich glaube, ich hab's verstanden. Der Applaus wäre tatsächlich nur gerechtfertigt, wenn ihr es vor der neuartigen Rundung Umfangsgeräten auch verstanden habt. Falls es nicht so ist, ruft an 0331 77 97 0. Wir haben noch bis Mitternachtzeit und ich lasse die nicht eher hier raus, bis wir das alle verstanden haben. So, vielen Dank. Vielen Dank auch, dass ihr so geduldig mit mir wart. Okay, so kann ich sozusagen Daten auslesen. Und das erklärt auch sozusagen, warum es so kompliziert ist, weil ich muss den Prozessor darauf trainieren, diese Dinge zu tun. Und ich muss auch eine grobe Vorstellung haben, wo diese Passwörter liegen oder beziehungsweise wie das Programm, das ich angreife, auf die Passwörter zugreift.
+00:07:50.178 --> 00:08:18.498
+<v SPEAKER_4>Ja, am 12. September ist die Freiheit statt Angst-Demo in Berlin, die sich mit der fortnehmenden Überwachung der Bürger beschäftigt und eben für eine Privatsphäre, den Schutz der Privatsphäre und die Informationsfreiheit, Datenschutz und so weiter beschäftigt. Also sind alle herzlich aufgerufen, nach Berlin zu kommen, wie Padelun, eine der Organisatoren, gerne sagt. Wir brauchen 82 Millionen in Berlin am 12. Also von daher hoffentlich werden einige Leute da erscheinen.
 
-01:08:36.746 --> 01:08:39.846
-<v SPEAKER_2>Oder du hast viel Zeit und machst das einfach für den ganzen Speicher.
+00:08:18.518 --> 00:08:37.718
+<v SPEAKER_5>Es ist ein ziemlich breites Bündnis von vielen Organisationen, die dazu aufrufen, ich glaube auch Gewerkschaften sogar. Also alle Organisationen, die sich irgendwie darum kümmern, dass Bürgerrechte, Privatsphäre, Datenschutz verteidigt werden, rufen zu der Demo auf und engagieren sich da.
 
-01:08:40.506 --> 01:09:11.246
-<v SPEAKER_1>Okay, würde so was eigentlich auffallen? Also, weil ich habe gelesen, dass die, dass die, dass diese, dass der Phantom Code nicht in Logs auftaucht. Also wenn ich mir hinterher angucke, was hat denn der Computer so gemacht? Dann sehe ich nicht, was er gemacht hat, weil das ist ja Phantom Code sozusagen. Und aber was ihr jetzt sagt, ich habe sehr viel Zeit und dann macht es einfach immer wieder und immer wieder und immer wieder, macht das den Computer dann irgendwie langsamer? Also kann ich dann so schon sagen, Moment mal irgendwie, mein Prozessor ist nur noch halb so schnell, der macht doch gerade jemand Spectre drauf?
+00:08:37.738 --> 00:09:14.438
+<v SPEAKER_3>Aufgerufen zu kommen ist eigentlich jeder, der sich in irgendeiner Form dafür interessiert, dass seine Persönlichkeits- seine Persönlichkeit und seine Privatsphäre geschützt wird im Netz. Online-Durchsuchung, Stichwort, Stichwort Vorratsdatenspeicherung. Was es da so alles gab in der letzten Zeit, das ist genau euer Termin, 12. September in Berlin, 15 Uhr geht's los, Infos dazu gibt's natürlich auch im Netz. Aber jetzt lass uns mal zurückkommen zu Wikileaks. Um es einfach zu sagen, also ihr veröffentlicht Dokumente, die eigentlich nicht für die Veröffentlichung vorgesehen sind, die Staatsgeheimnisse beinhalten oder interne Papiere von Parteien, zum Beispiel Firmenpapiere. In welcher Bandbreite bewegt sich das, was ihr veröffentlicht?
 
-01:09:11.586 --> 01:09:32.446
-<v SPEAKER_3>Ja, also bei den aktuellen Implementierungen, also bei den konkreten Beweisen, dass das geht, also wo wirklich konkret Leute diese Angriffe implementieren, da ist das halt so, dass man aus verschiedenen anderen Gründen tatsächlich viele Prozesse gleichzeitig starten muss und die CPU doch recht stark auslassen muss. Also das fällt schon auf.
+00:09:14.618 --> 00:10:46.578
+<v SPEAKER_4>Also das ist wirklich, es gibt fast alles. Also wir haben mittlerweile einfach von sehr großen Mengen an Ausrüstungslisten, zum Beispiel, die kamen relativ früh in der Geschichte von Wikileaks, was das amerikanische Militär betrifft. Darüber konnte nachgewiesen werden, dass es zum Beispiel verschiedenste als chemische Kampfstoffe deklariertes Material im Irak gibt, entgegen der Aussage, dass die Amerikaner sowas dort eigentlich nicht haben. Das ist ein Beispiel. Es gibt Dokumente aus Firmen, die Korruption nachweisen, die den Missbrauch von Macht in Firmen oder in Institutionen oder irgendwo in der Regierung nachweisen. Wir haben Korruption nachgewiesen, zum Beispiel in Kenia in der Höhe von drei Milliarden Dollar. Da können wir vielleicht später als eines der Beispiele noch drüber reden. Es gibt Dokumente zu verschiedensten Parteien, Strategien von Parteien. Es gibt Dokumente, die sich mit der aktuellen Policy befassen, also damit, wie Politik gemacht wird, welche Gesetze geplant sind. So hatten wir das ja zum Beispiel auch hier mit dem Sperrgesetz gegen Kinderpornografie. Es gibt einfach die ganze Bandbreite an Informationen. Dadurch, dass wir eben nicht steuern, welche Inhalte wir haben wollen, sondern wir sind getrieben von dem, was Menschen zu uns bringen, können wir das widerspiegeln, was Menschen auf der ganzen Welt einfach beschäftigt und in welchen Umständen Menschen leben, in denen sie eben gewisse Sachen ans Licht bringen möchten. Von daher, dass die Bandbreite ist so vielfältig wie das Leben, würde ich sagen.
 
-01:09:32.466 --> 01:09:56.146
-<v SPEAKER_1>Okay, so, jetzt war ich so in diese Erklärung vertieft, dass ich gerade eine Sache außer Acht gelassen habe, die wir noch nachholen müssen. Es ist einerseits eine kleine Musik und andererseits sind es die Nerd-News und die machen wir gleich. Erst noch mal eine kleine Musik, Told you so von Ketzer und danach die Nerd-News. Geschrieben dieses Mal von Dani Mo und Mo und vorgetragen von Christina. Und dann machen wir weiter mit den Auswirkungen.
+00:10:46.598 --> 00:10:54.258
+<v SPEAKER_3>Wie viele, um den Umfang fassen zu können, wie viele Dokumente kriegt ihr so pro Woche oder pro Monat oder ist das mittlerweile schon pro Tag?
 
-01:12:58.798 --> 01:15:14.398
-<v SPEAKER_8>Der US-Auslandsgeheimdienst NSA, eigentlich Spezialist im überufernden Sammeln und Aufbewahren von Daten, hat erneut versehentlich verfahrensrelevante Informationen gelöscht, entgegen einer gerichtlichen Anordnung. Das hat der Geheimdienst in einem Prozess um das Abschnorcheln von Daten in einem Netzknoten von AT&T einräumen müssen. Es sollen besonders sensible Inhaltsdaten und deren Backups zerstört worden sein. Die Speicherung von Inhalten ist ein Kernbereich des Verfahrens. Ein NSA Mitarbeiter hatte vor Gericht angegeben, dass gerade diese aufgrund von Speichermangel des benutzten Systems automatisch überschrieben worden seien. 2014 waren bereits Verbindungsdaten versehentlich gelöscht worden. Umzugswillige Internet- oder Kabelfernsehanschlusskunden, deren Anbieter am neuen Ort seine Leistung nicht anbieten kann, können ihren Vertrag nicht bereits vor dem Umzug kündigen. Das besagt ein aktuelles Urteil des OLG München. Kunden müssen bei Umzügen drei Monate ihren alten Vertrag weiterzahlen, denn das Sonderkündigungsrecht für solche Fälle gilt nach dem Urteil erst ab dem Tag des Umzugs. Grund? Das Telekommunikationsgesetz räumt zwar ein Sonderkündigungsrecht ein, gibt aber nicht an, wann es beginnt. Vodafone hat im vorliegenden Fall ein Missbrauchspotenzial reklamiert, falls vor dem Umzug gekündigt werden können. Ob das Urteil Bestand haben wird, ist noch nicht klar. Markus Dränger und Felix Rohrbach vom Chaos Darmstadt haben ihre Erkenntnisse zum besonderen elektronischen Anwaltspostfach, kurz BEA, präsentiert. Diese gewannen die beiden nicht etwa durch ein Security Review des Systems, sondern lediglich durch den Test des öffentlich verfügbaren Clients. Schon dadurch konnten sie nachweisen, dass in der Client Software ein Zertifikat mit öffentlichem und privatem Schlüssel zusammen mit dem dazugehörigen, nur verschleierten Passwort gespeichert wurde. Nachdem ein zweiter Reparaturversuch aus kryptografischer Sicht ein noch größeres Loch riss, zog die Bundesrechtsanwaltskammer die Reißleine. Offenbar liegen nun die Nerven blank. Beim sogenannten Beatlon, bei dem das Projekt überprüft werden soll, ist Hersteller Atos nicht dabei und untersagte seinen Subunternehmern ebenfalls die Teilnahme. Gleichzeitig erhielten angeblich fachfremde Journalisten, etwa eine Journalistin der Spiegel Online Netzwelt, keine Akkreditierung. Den Vortrag zum BA im Chaos Darmstadt gibt's unter media.ccc.de.
+00:10:54.598 --> 00:11:28.378
+<v SPEAKER_4>Also ja, wir bekommen auf alle Fälle täglich neue Dokumente. Da muss ich vielleicht gerade einsteckend dazu sagen, wir publizieren eigentlich alles. Das heißt, es gibt keine Relevanzbeurteilung von unserer Seite. Auf der anderen Seite publizieren wir aber nur wirkliche Dokumente. Das ist die einzige Einschränkung. Das heißt, wir publizieren nichts, was irgendjemand geschrieben hat, aus seiner eigenen Erfahrung oder seiner eigenen Sicht, ohne dass es über ein faktisches Dokument belegbar ist. Das heißt, das ist einer der Mechanismen, um so was wie Gerüchten vorzubeugen, um auch den Missbrauch dieser Plattform zu verhindern.
 
-01:15:15.758 --> 01:16:04.358
-<v SPEAKER_1>Das waren die Nerd News im Chaos Radio im Bloemunen auf Fritz.de. Wenn ihr vorbeikommen wollt, könnt ihr es noch eine dreiviertel Stunde lang tun. Wir sitzen in der Falkensteinstrasse 47 in Berlin und sprechen über Meltdown und Spectre, und zwar mit Mirameise und Peter. Und wir haben gerade eine dreiviertel Stunde gebraucht, also ich habe eine dreiviertel Stunde gebraucht, um zu verstehen, was genau das Prinzip dahinter ist. Aber wir haben es geschafft. Also ich kann jetzt wirklich sagen, also hört die Sendung noch mal nach, es dauert lange. Aber dann kommt man zu dem Punkt, wo man ja, aha, so funktioniert das. Jetzt habe ich voller Schrecken mitbekommen. Ich weiß jetzt erst, wie Spectre funktioniert. Meltdown ist anscheinend noch was anderes. Aber es wird ja immer sozusagen zusammengenommen. Könnt ihr vielleicht ganz grob sagen, was Meltdown anders macht oder schlimmer oder weniger schlimm?
+00:11:28.398 --> 00:11:30.838
+<v SPEAKER_5>Das heißt, es geht wirklich direkt um Quellen sozusagen?
 
-01:16:04.378 --> 01:16:30.818
-<v SPEAKER_3>Also das Prinzip, also diese Eigenheit der CPU, dass irgendwie Code ausgeführt wird, der geraten wird, das ist zugrundelegend dasselbe. Das einzige, was jetzt hier wirklich anders ist, ist, dass halt noch einmal eine spezifische Schwäche in Intel-CPUs ausgenutzt wird, damit ich das Ganze ein bisschen einfacher machen kann und halt Speicher, der eigentlich zum Kernel gehört, lesen kann, statt eben Speicher, der einfach nur zu einem anderen Programm gehört.
+00:11:30.858 --> 00:12:05.198
+<v SPEAKER_4>Genau, es geht um Quellen, die sich in der Regel auch an Journalisten wenden würden, für die es aber in vielerlei Hinsicht zum einen keine Möglichkeit gibt, vielleicht sich an Journalisten zu wenden, sicher, ohne selbst ein rechtliches Risiko einzugehen. Wir haben Beispiele, wo wir Dokumente publiziert haben oder wieder publiziert haben, weil sie aus der Presse zensiert wurden. Das heißt, dass selbst eine Zeitung irgendwo auf der Welt, zum Beispiel in England ist das ein großes Problem, bestimmte Inhalte selbst nicht rechtlich verteidigen kann vor jemandem, der diese zensieren möchte oder filtern möchte.
 
-01:16:30.838 --> 01:16:46.818
-<v SPEAKER_1>Ah, okay, also das heißt, das funktioniert auf weniger Prozessoren, aber ich habe potenziell Zugriff auf mehr Speicherplatz. Also auf eigentlich alles. Okay, ich kann alles. Es funktioniert jetzt nur bei Intel-CPUs. Also, hat jemand die Verteilung im Kopf? Intel vs.
+00:12:05.218 --> 00:12:19.038
+<v SPEAKER_3>Zum Beispiel gibt es bei euch einen Artikel über den norwegischen Geheimdienst, der von einem norwegischen Sender, TV2 oder so hieß er, glaube ich, der von denen nicht veröffentlicht werden durfte, also er war schon fertig. Und dann hieß es von staatlicher Seite wahrscheinlich, der Artikel darf so nicht erscheinen und der steht jetzt bei euch.
 
-01:16:46.978 --> 01:16:48.898
-<v SPEAKER_2>Keine Sahne, aber eindeutig Marktführer.
+00:12:19.078 --> 00:12:59.478
+<v SPEAKER_4>Ja, das sind genau genommen sogar zwei Dokumente. Es gab zwei Veröffentlichungen, einmal in VG, das ist eine größere Zeitung, und eben bei TV2. Die sind beide auch veröffentlicht gewesen, wurden aber nach wenigen Stunden entfernt und es gibt auch keine Stellungnahme warum. Im Kontext dazu gibt es einige Journalisten in Norwegen, die von ihrem Verleger auch hingewiesen wurden, dass sie zu viel über sich mit dem Geheimdienst in Norwegen beschäftigen. Da geht es im Moment kontextmäßig, soweit ich weiß, um verschiedene neue Stellenbesetzungen zum Beispiel. Und das sind Informationen über Abläufe, die im Hintergrund stattfinden und das ist eben etwas, was der Geheimdienst nicht in der Öffentlichkeit sehen möchte.
 
-01:16:49.018 --> 01:17:08.878
-<v SPEAKER_1>Also, genau. Okay, gut, gut, gut. Apropos Intel, was ich jetzt mal gerne wissen würde, ist, was in den News auch immer war, das ist halt nicht ein Prozessor davon betroffen, also nicht ein Modell oder eine Reihe, sondern alle. Stimmt jetzt alle wirklich?
+00:12:59.498 --> 00:13:40.818
+<v SPEAKER_3>Da gibt es eine Menge schwedischer Autoren, die daraus großartige Krimis schreiben zum Beispiel. Genau mit solchen Geschichten. Das gibt es auch, ja. Aber ich hab jetzt ganz kurz mal willkürlich ein paar Sachen rausgegriffen, die bei euch stehen. Ihr habt nicht nur diesen Artikel über norwegischen Geheimdienst, also internationale Sachen. Es gibt auch ein Papier, ein internes, ein Aufruf der Jungen Union, den linken Kandidaten Bodo Ramelow zu boykottieren. Das kommt aus Thüringen. Wo drinsteht, so sind auch Besuche bei Wahlkampfveranstaltungen von Bodo Ramelow geplant, allerdings in zivil und ohne dass primär die CDU oder das Team Thüringen damit in Verbindung gebracht werden soll. Um die Wirksamkeit in der Öffentlichkeit zu erhöhen, sollen die kontrastierenden Aktionen, also die gehen zu seinen Wahlkampfveranstaltungen, als Aktionen von der Jungen Union ausgehen und damit nicht dem Ansehen von der CDU und dem Team Thüringen schaden.
 
-01:17:08.898 --> 01:17:11.538
-<v SPEAKER_2>So ziemlich? Alle relevanten, alle moderne, ja.
+00:13:40.838 --> 00:14:08.778
+<v SPEAKER_4>Genau. Das ist zum Beispiel eines der Beispiele, wo wir in einem aktuellen politischen Prozess, der jetzt gerade stattfindet, Transparenz schaffen können. Und so kann jeder, der dieses Dokument liest, schwarz auf weiß sehen, dass auch wieder im Verborgenen eigentlich geplant wird, dass es eine Positivkampagne gibt, die die CDU selbst bestreitet und dann gibt es die Junge Union, die etwas im Hintergrund agiert und versucht, die Kampagne der Linken in irgendeiner Art und Weise zu schaden.
 
-01:17:12.018 --> 01:17:31.198
-<v SPEAKER_1>Also Intel ist ja die eine, AMD ist das andere große, was wir vom Desktop können. Genau, das ist ja, weil wir immer einen Unterschied machen zwischen sozusagen Heimatwänden, also hier mein Spielerechner, Intel oder AMD, kann man in vorn endlos lange Kriege führen, aber das sind schon auch sozusagen die Prozessoren, die auch im Web, also quasi für Webangebote, Web-Posting-Services verwendet werden.
+00:14:08.938 --> 00:14:16.538
+<v SPEAKER_3>Also Wahlkampf funktioniert nicht nur so, dass die Leute bei euch im Kiez Plakate kleben, Stifte verteilen und Lollis verteilen, sondern da gibt es noch ganz andere Sachen im Hintergrund.
 
-01:17:32.178 --> 01:17:39.138
-<v SPEAKER_4>Oder auch im Heimbereich. Also alles aus diesem Jahrtausend, glaube ich, ist betroffen. Also auch mein Notebook zu Hause.
+00:14:16.558 --> 00:14:40.298
+<v SPEAKER_4>Das ist der Blick hinter die Kulissen in diesem Fall, für etwas, was im Moment passiert. Und das ist ein sehr großes und sehr ein wertvolles Dokument, so etwas zu sehen und damit auf etwas reagieren zu können, was heute passiert. Das ist, warum Transparenz so wichtig ist, damit der Bürger sehr gut informierte Entscheidungen treffen kann. Und diese Entscheidungen, die bestmöglichen sind für die Welt von morgen.
 
-01:17:39.158 --> 01:17:39.738
-<v SPEAKER_1>Auch mein Smartphone?
+00:14:40.318 --> 00:15:02.978
+<v SPEAKER_5>Jetzt muss ich aber da schon gleich nochmal nachhaken. Prüft ihr denn diese Sachen? Also das heißt, wenn ihr jetzt dieses Dokument bekommen habt, überlegt ihr, okay, ist es jetzt wirklich von der CDU, sei es Jung und Jungen, gelegtes Dokument? Oder es könnte ja auch sein, dass genau die Gegenseite dieses Dokument erstellt hat und euch dann als echt zugespielt hat, um genau das Gegenteil zu bewirken?
 
-01:17:40.318 --> 01:17:42.178
-<v SPEAKER_4>Auch dein Smartphone unter Umständen, ja.
+00:15:03.158 --> 00:17:08.918
+<v SPEAKER_4>Ja, also es ist so, wir haben natürlich einen redaktionellen Prozess. Und dieser redaktionelle Prozess ist da, um zum einen zu klären, ob das Dokument schon öffentlich ist. Wenn es öffentlich ist, ist es für uns nicht weiter relevant, weil ihr es dann nicht mehr publizieren müsst. Es sei denn, es wurde irgendwo zensiert oder es ist rechtlich bedroht, dann machen wir das auch. Und zum anderen prüfen wir dann natürlich, ob das Dokument echt ist. Das ist die Prüfung, die wir vornehmen. Das geschieht eigentlich auf drei verschiedenen Ebenen. Wir nehmen eine technische Prüfung vor. Das ist so was wie eine forensische Untersuchung. Das heißt, wir können, wenn wir digitale Dokumente haben, feststellen, ob an dem Dokument etwas verändert wurde. Wann wurde das Dokument zuletzt bearbeitet? Von wem wurde das bearbeitet? Das sind alles erste Indizien, die zeigen, ob ein Dokument echt aussieht. Wenn man zum Beispiel gescannte Dokumente hat, kann man auch überprüfen, ob die ganzen Fluchten von Absätzen stimmen, ob das irgendwie zusammengebastelt aussieht oder wie auch immer. Da lässt einem die Technik ja auch sehr viele Möglichkeiten. Das zweite ist, dass wir natürlich eine Kontextprüfung machen. Das heißt, wir prüfen, ist bekannt, dass es dieses Dokument gibt. Stimmen die Eckdaten dieses Dokuments, was zum Beispiel das Veröffentlichungsdatum betrifft, der Kontext, der im Dokument zu finden ist, und eben auch eine inhaltliche Prüfung. Das heißt, ergibt das Sinn, passt das in den geschichtlichen Zusammenhang zum Beispiel. Wir haben ein großes Netzwerk an Experten, mit denen wir sprechen können, die uns sagen können, wie wahrscheinlich die Echtheit eines solchen Dokuments zum Beispiel ist oder ob das Dokument falsch ist. Das sind eben ganz verschiedene Ansätze, über die wir uns der Wahrheit zu einem Dokument immer annähern. Und von den hunderttausenden publizierten Dokumenten bisher haben wir alle Dokumente auch richtig eingeordnet. Es gibt ein paar Beispiele, die gelegentlich genannt werden, wo wir Dokumente publiziert haben, die Fälschungen waren. Aber die sind dann auch markiert als Fälschungen. Das ist extrem wichtig gewesen, diese Fälschungen der Öffentlichkeit gegenüber zu outen, um auch sicherzustellen, dass nicht andere Medien, denen das zugespielt wird, die vielleicht nicht auf dieselben Arten und Weisen prüfen können wie wir, damit das da nicht für voll genommen wird.
 
-01:17:42.598 --> 01:17:44.058
-<v SPEAKER_1>Arm, hab ich gelesen, ist auch betroffen.
+00:17:08.938 --> 00:17:13.558
+<v SPEAKER_5>Meine Frage war wahrscheinlich genau die gleiche. Das heißt, dass euch auch schon gezielt Fälschungen zugespielt werden?
 
-01:17:44.078 --> 01:17:56.538
-<v SPEAKER_3>Genau. Also dieses Prinzip eben, dass man spekulativ Code ausführt, das hat sich eben einfach sehr bewährt, weil das halt meinen Prozessor sehr effizient macht. Das haben eigentlich alle Hersteller irgendwie von modernen Prozessoren so übernommen.
+00:17:13.578 --> 00:19:03.318
+<v SPEAKER_4>Es gibt dieses ganz in Deutschland sehr weit verbreitete Beispiel, als quasi Negativbeispiel zu uns, was ganz falsch eingeordnet ist eigentlich zu Steve Jobs. Das heißt, wir haben von Steve Jobs, dem Chef der Firma Apple, ein Dokument bekommen, was seinen Aids-Test oder angeblichen Aids-Test darstellt, der positiv ausgefallen ist. Dieses Dokument wurde publiziert oder wurde versucht, bei uns zu publizieren, um den Apple-Aktienkurs zu beeinflussen. Und genauso haben nicht nur wir dieses Dokument bekommen, sondern wir haben über Kontakte erfahren, dass es zum einen in Börsenkreisen zirkuliert wurde, da wo die Leute sowas eben ernst nehmen. Genau, wo das Dokument Geld wert ist. Und zum anderen auch bei anderen Medien. Und wir haben das forensisch untersucht, haben festgestellt, dass das Photoshopped war. Das war damals, glaube ich, eine Bilddatei. Und genauso haben wir festgestellt, dass es einfach inhaltliche Widersprüche gab im Kontext. Also die Firma, die dieses Dokument angeblich ausgestellt hat, hat zu diesem Zeitpunkt der Ausstellung noch gar nicht existiert. Also es waren einfach inhaltliche Ungereimtheiten. Und es war extrem wichtig, dieses Dokument als Fälschung zu outen und ganz klar zu sagen, niemand darf das ernst nehmen. Weil sonst nämlich irgendjemand anders drauf reinfällt und dann am Ende vom Tage irgendein virtueller Aktienkurs beeinflusst wird. Und da sind wir auch bei einem der Probleme unserer Gesellschaft, dass diese ganzen, das ganze fragile gebildete Wirtschaft, das wir in der Welt haben, ist so abhängig von Informationen und ist so virtuell gebunden an spekulative Informationen, dass es beschützt werden muss. Es muss sichergestellt werden, dass wir keine falschen Informationen eben da ranlassen und dass der Bürger möglichst viele Fakten hat, um sinnvolle Entscheidungen zu treffen.
 
-01:17:57.338 --> 01:18:13.038
-<v SPEAKER_1>Also ich frag mich jetzt zwei Sachen. Die erste ist, also wie lang geht denn das zurück? Also alle Prozessoren, die das machen, was du gerade gesagt hast, Pentium, das ist dann wie 90er, Mitte der 90er. Also alle Prozessoren, ab da sind da quasi anfällig für.
+00:19:03.338 --> 00:19:24.598
+<v SPEAKER_3>Um bei diesem Beispiel zu bleiben, du hast gesagt, ihr habt nachgewiesen, dass das eine Fälschung war, habt es dann als Fälschung an sich publiziert, ließ sich dann auch, ohne jetzt Namen zu nennen, ließ sich zurückverfolgen von welcher Quelle das kam, die also Interesse daran haben, diesen Aktienkurs von der Firma zu beeinflussen. Also könnt ihr nachvollziehen, wer solche Informationen rausbringt, um dann möglicherweise auch rechtliche Schritte einzuleiten?
 
-01:18:13.058 --> 01:18:18.658
-<v SPEAKER_2>Ab Pentium gibt es eben mehrere Bänder, die die Pakete bearbeiten können.
+00:19:25.058 --> 00:19:59.418
+<v SPEAKER_4>Ja, also unser Interesse ist natürlich nicht, irgendwen zu verfolgen, dass wir publizieren, dass ein Dokument als das, was es ist. Wir haben in dem Fall damals ein bisschen recherchiert und das ist nie bewiesen worden oder so, aber es war relativ wahrscheinlich, dass das aus der Bloggerszene irgendwo kam. Da gab es zeitgleich oder mehr oder weniger zeitgleich in einem der Blogs noch eine Veröffentlichung und das sah ein bisschen danach aus, als hätte jemand versucht, ein bisschen Aufmerksamkeit zu gewinnen. Aber da wir eben anonym arbeiten, ist es sehr schwer zu sagen, wo sowas herkommt. Und wir wollen auch eigentlich in den meisten Fällen das gar nicht wissen.
 
-01:18:18.678 --> 01:18:24.758
-<v SPEAKER_1>Und gibt es irgendwie schon Nachweise, wie lange diese Sicherheitslücken funktionieren? Also bei welchen Generationen?
+00:19:59.558 --> 00:20:14.918
+<v SPEAKER_3>Du hast gerade in Ansätzen beschrieben, wie Wikileaks arbeitet und welcher Aufwand dahinter steckt, wenn ihr ein Dokument bekommt, um das nachzuprüfen. Du bist einer von vielen, die sich da engagieren und die ihr Leben und ihre Zeit darin investieren. Wie viele Leute sind denn an diesem Projekt Wikileaks beteiligt?
 
-01:18:25.058 --> 01:18:46.878
-<v SPEAKER_3>Ich hab jetzt irgendwie gelesen, dass eben diese Proof of Concepts relativ kompliziert sind und das nicht ganz einfach ist, dass jetzt auf wirklich jeder Hardware zu testen, gibt es da meines Wissens nach noch keine erschöpfende Liste von irgendwie Chips, wo das jetzt wirklich jemand ausprobiert hat. Aber Intel sagt pauschal oder auch AMD, naja, das machen wir ja seitdem eigentlich überall so. Das heißt, wir gehen davon aus, dass eh alles betroffen ist.
+00:20:15.838 --> 00:21:39.998
+<v SPEAKER_4>Also das muss man ein bisschen in zwei verschiedene Lager aufteilen. Also es gibt einen relativ harten Kern, sag ich mal, von Leuten, die sich mit nichts anderem mehr beschäftigen. Dazu gehöre auch ich. Mit einigen anderen Leuten, die auf der Welt verteilt daran arbeiten. Das ist natürlich dadurch, dass wir kein formales Funding haben. Also wir haben niemanden, der uns finanziert. Formal außer das, was wir an Einzelspenden zum Beispiel bekommen. Diese Leute brauchen natürlich eine gewisse Flexibilität, um ihre Zeit so stark investieren zu können. Deswegen ist diese Gruppe etwas kleiner. Es gibt eine sehr große Gruppe an Leuten, die uns unterstützen auf die vielfältigste Art und Weise. Also man kann uns ganz einfach helfen, indem man einen Server irgendwo haust, irgendwo auf der Welt. Das haben wir mit sehr vielen Maschinen so. Das heißt, man bezahlt die Miete für den Server irgendwie im Monat und stellt ihn uns zur Verfügung. Davon gibt es einige Leute. Es gibt andere Leute, die machen für uns technische Entwicklungsarbeiten, um eben Programmieraufgaben zu übernehmen, die sehr wichtig sind im Rahmen unserer Plattform. Genauso gibt es eine riesen Schar von Anwälten, die mit uns zusammenarbeiten und wenn es brenzlig wird, uns verteidigen und uns beraten und so weiter. Dann gibt es die ganzen Leute, die helfen, Dokumente zu prüfen. Das heißt, wir haben Ansprechpartner aus allen möglichen Spezialgebieten, die wir kontaktieren können, wenn wir jetzt ein Dokument haben aus einem bestimmten Bereich. Das lässt sich sehr schwer sagen. Das sind wirklich sehr viele Leute, die in irgendeiner Art und Weise da beteiligt sind.
 
-01:18:46.898 --> 01:19:10.718
-<v SPEAKER_1>Gut, also wenn der Hersteller davon ausgeht, dann würde ich sagen, dann müssen wir jetzt nicht zwangsweise anzweifeln. Da stellt es mich aber die Frage, das ist ja also nicht das Problem einer Bau, also wie gesagt eines einzelnen Produkts, sondern das Problem einer Technologie oder einer Art und Weise, wie das betrieben wird. Wieso kommen wir erst 2017 drauf oder ist es so, dass es 2017 erst öffentlich geworden ist?
+00:21:40.018 --> 00:22:02.878
+<v SPEAKER_3>Also das ist schon auch ein heikles Pflaster, auf dem ihr euch da manchmal bewegt, weil viele der Dokumente natürlich auch sehr delikat sind, wenn man es mal so vermuten möchte. Andererseits, wieso werdet ihr dann, du hast gerade gesagt, es gibt viele Anwälte, die euch verteidigen. Das heißt, wieso werdet ihr dann angegriffen, weil ihr seid doch sozusagen nur die, die die Informationen weitergeben. Ihr seid ja nicht die, die die Informationen geleakt haben. Also die die Informationen sozusagen vom Schreibtisch, vom Chef geklaut und dann weitergegeben haben.
 
-01:19:10.738 --> 01:19:53.038
-<v SPEAKER_3>Also es gab schon immer mal wieder eine Reihe von Leuten, die sich zu Wort gemeldet haben mit verwandten Angriffen, die halt in eine ähnliche Richtung gehen oder auch mit Vermutungen, dass das irgendwie schlecht sein könnte mit dieser spekulativen Ausführung. Auch schon teilweise gab es schon Blockeinträge mit ziemlich konkreten Vorstellungen, wie so ein Angriff aussehen könnte. Aber es gab halt keinen öffentlich dokumentierten Fall, wo das jemand erfolgreich dann genau in dieser Art getan hat. Es gab einen Researcher, der war schon sehr, sehr nah dran an Meltdown. Hat das dann aber praktisch einfach nicht umgesetzt bekommen durch Leiderspezifiker, die halt gerade nicht stimmten bei dem Labor-Setup.
+00:22:02.898 --> 00:22:58.278
+<v SPEAKER_5>Wir hatten ja in Deutschland oder hier in der Nähe auch die sogenannte Desenzizio-Fall, wo es einfach darum ging, eigentlich nicht die eigentliche Quelle zu bestrafen, sondern eher die Journalisten, quasi die Überbringer der schlechten Nachrichten. Dann gab es auch eine Hausdurchsuchung und alles. Und zumindest hier in Deutschland war es ja eine Weile gang und gäbe, dass man eher die Überbringer der Nachrichten versucht anzugehen, anstatt wirklich der Quelle versucht nachzugehen. Also die zwar auch, aber trotzdem ist es immerhin noch so, und das haben ja dann auch die entsprechenden Gerichtsbeurteile bestätigt, dass es also tatsächlich nur um die Leute geht, die diese Infos ja noch wirklich geleakt, also nicht geleakt, sondern immer rausgegeben, weitergegeben haben an die Öffentlichkeit. Und nicht die Leute, die sie dann letztendlich veröffentlicht haben. Und das ist natürlich schon auch noch ein wichtiger Schritt. Und das muss man sich auch vor Augen halten, dass es zumindest in der Theorie bei uns in Deutschland schon so ist, dass also nicht die Überbringer der Nachrichten das Problem darstellen.
 
-01:19:53.058 --> 01:20:17.978
-<v SPEAKER_1>Aber ist es, also das Ding ist, man dies ja dann, wenn sowas erstmal losgeht, auch ganz viele mit sich. Ich hab auch schon noch so Tweets gesehen, ja, Intel hätte schon damals wissen können und den und den Forscher haben sie abgelehnt mit einem Vortrag. Ist das so ein Ding, wo alle so wussten, okay, ja, das ist vielleicht ein Problem, aber ich hab jetzt eigentlich auch keinen Bock und das ist so kompliziert? Oder ist da aktiv Verhinderung betrieben worden? Oder wie ist das?
+00:22:58.738 --> 00:24:03.638
+<v SPEAKER_4>Ja, wenn man Drucker von Journalisten ausübt oder auf jemanden der Informationen publiziert, dann setzt man damit ja auch indirekt die Quelle unter Druck. Das heißt, eine Quelle hat potenziell Bedenken, dass ein Journalist so weit kompromittiert werden kann oder gezwungen werden kann, dass er die Quelle aufdeckt. In vielen Ländern dieser Welt gibt es keine Gesetze mehr, die das vernünftig regeln. Und Quellen, also Whistleblower in dem Sinne, Menschen, die gegen ihre Anweisungen ein Dokument an die Öffentlichkeit geben, stellen eigentlich in unserer Gesellschaft so etwas wie eine natürliche Fehlerkorrektur dar. Es ist ganz extrem wichtig, dass es diese Menschen gibt, und die müssen auch um jeden Preis geschützt werden. Denn jedes System, das im Geheimen abläuft oder das keine transparenten Prozesse hat, kann von jemandem missbraucht werden. Und wenn jemand den Missbrauch beobachtet und entscheidet sich dafür, gegen seine eigenen Interessen ein Risiko einzugehen und diese Information nach außen zu geben, dann muss es Mechanismen geben, die diese Menschen schützen. Und das ist einer der Gründe, warum auch diese Plattform konzipiert wurde. Und das ist eine technische Umsetzung dieser Idee.
 
-01:20:17.998 --> 01:21:06.198
-<v SPEAKER_3>Ich weiß natürlich jetzt nicht, was da jetzt spezifisch bei irgendwelchen Entscheidern bei Intel bekannt war, aber generell diese Idee der spekulativen Ausführung in Kombination mit diesen Timing-Problemen, dass dadurch Daten schon mal im Cash liegen und man das dann vielleicht ausnutzen kann. Die Idee, die hatten halt durchaus immer mal Leute und es gab auch den ein oder anderen Talk, der in dieselbe Richtung geht und diese Art, wie ich die Informationen jetzt raustrage, was wir vorhin erklärt haben, die ist tatsächlich auch schon gut dokumentiert und bekannt und jetzt nicht spezifisch Teil von Spectre oder Meltdown. Das heißt, so die Einzelbausteine waren so ein bisschen halt klar, aber das dann konkret umzusetzen, das hat halt vorher noch keiner geschafft.
+00:24:03.658 --> 00:24:10.078
+<v SPEAKER_3>Welche, du hast gerade gesagt, wir waren gerade bei den rechtlichen Geschichten und so, welche rechtlichen Schritte gab es denn in der Vergangenheit gegen Wikileaks?
 
-01:21:06.218 --> 01:21:19.538
-<v SPEAKER_1>Na gut, aber könnte man zwar sagen, wir haben ein kapitalistisches Problem hier, weil sozusagen alle wollen den Prozessor immer schneller machen und deswegen guckt man nicht so genau hin, was die Gefahren ist, sondern verwendet es einfach, weil das hat ja gut funktioniert.
+00:24:10.098 --> 00:24:17.818
+<v SPEAKER_4>Also wir bekommen eigentlich einmal jede Woche oder alle zwei Wochen bekommen wir von irgendjemandem eine Drohung, dass man gegen uns vorgeht.
 
-01:21:19.558 --> 01:21:40.018
-<v SPEAKER_2>Es wird nichts gemacht, was nicht notwendig ist, weil Sicherheitsfeatures oder Sicherheitseinschränkungen, die kosten Geld oder Zeit oder Strom, also Akkulaufzeit. Und dann stehst du als Prozessorhersteller schlechter da als deine Konkurrenz.
+00:24:17.838 --> 00:24:29.258
+<v SPEAKER_3>Um an dem Beispiel von der Jungen Union zu bleiben, wo ihr das Papier veröffentlicht habt, wie die Junge Union gegen andere Politiker, also nicht vorgeht, aber die Strategie, die sie im Wahlkampf fahren. Haben die sich dann bei euch gemeldet, haben gesagt, wir möchten eigentlich nicht, dass das veröffentlicht wird?
 
-01:21:40.038 --> 01:21:47.038
-<v SPEAKER_1>Wie schnell haben sie denn jetzt reagiert, als das rausgekommen ist? Ist es jetzt zufriedenstellend, wie das gerade läuft?
+00:24:29.278 --> 00:25:43.918
+<v SPEAKER_4>Nein, von denen haben wir, soweit ich mich jetzt erinnere, nichts gehört. Also die meisten sind auch mittlerweile, also ich denke, wer ein bisschen recherchiert, weiß, dass es problematisch ist, wenn man uns bedroht. Weil das Ganze eigentlich mit diesem sogenannten Streisand-Effekt dann dazu führt, dass immer mehr Leute überhaupt auf das Material aufmerksam werden. Im prominentesten Fall hatten wir das ja 2008, Anfang 2008 mit der Bank Julius Baer. Da haben wir Dokumente publiziert, sehr viele Dokumente, die hunderte Millionen in Steuerumschiffung und Versicherungsvehikeln in den Cayman Islands, also in einer Offshore-Bank nachgewiesen haben. Und diese Dokumente hätten niemals so viel Aufmerksamkeit bekommen, wenn nicht die Bank in einer sehr prominenten Rechtssache gegen uns vorgegangen wäre. Das hat dazu geführt, dass unser Domain für sieben Tage abgeschaltet wurde. Also eine von 400 Domains, die wir unterhalten. Es hat niemanden daran gehindert, unsere Webseite zu besuchen. Und das Einzige, was passiert ist, war, dass die halbe Welt darüber berichtet hat. Und das hat der Bank damals extrem große Probleme bereitet. Also es gab zum Beispiel eine IPO, also ein Börsengang, der geplant war in New York. In der Höhe von, ich glaube, eine Milliarde Dollar damals. Der wurde abgesagt von den amerikanischen Aufsichtsbehörden.
 
-01:21:47.058 --> 01:22:32.878
-<v SPEAKER_3>Also in Anbetracht der Tatsache, wie viele verschiedene Ebenen man jetzt an so einem Computer, also das Gesamt-Setup, also sowohl die Hardware als dann auch die ganze Software, die da drauf läuft, wie viel man da anfassen muss, ist doch recht viel, recht schnell passiert. Was ja im Endeffekt auch der Grund war, warum das ein bisschen früher rausgekommen ist. Also dadurch, dass man eben, um diese Exploits zu verhindern, sowohl an der CPU rumpatchen muss, als dann eben zum Teil auch am Betriebssystem, als dann auch an Compilern, also der Software, die mir dann meine eigentlichen Programme zusammenbauen, ist es dann halt aufgefallen. Und das ist schon eine sehr komplexe Koordination. Also da weiß ich jetzt nicht.
+00:25:43.938 --> 00:25:47.538
+<v SPEAKER_3>Weil die mitgekriegt haben, dass die Bank da nicht ganz so sauber ist.
 
-01:22:33.298 --> 01:23:06.838
-<v SPEAKER_1>Warte, wir können ja über Patches und was man damit macht, gleich noch mal genau sprechen. Ich meinte jetzt eher so im großen Umfeld, also zum Beispiel die großen Firmen bringen ja im Jahresrhythmus oder Zweihäuse Prozessoren raus. Da will man ja auch als Gamer dann immer den geilsten, besten. Und jetzt haben wir also festgestellt, es gibt ja diese Technologie, die seit Mitte der 90er in allen Prozessoren drin ist. Und dann wäre jetzt so mein Verlade, okay, die verkaufen jetzt einfach die nächste Generation. Genau so. Also weil, wenn man jetzt einen neuen Prozessor... Okay.
+00:25:47.558 --> 00:26:34.898
+<v SPEAKER_4>Ja, und da musste dann erstmal von der Aufsichtsbehörde recherchiert werden, wie überhaupt diese ganze Konstellation aussieht. Und inwiefern das, was bei uns veröffentlicht wurde, relevant ist für die Geschäfte der Bank in den USA. Und da gibt es bis heute, fast anderthalb Jahre später, gibt es heute noch Gerichtsprozesse, die irgendwo auf der Welt gegen die Bank laufen, aufgrund des Materials, das wir veröffentlicht haben. Es gibt regelmäßig heute noch ganze Doppelseiten in Zeitungen, die publiziert werden mit einer Hintergrundstory zu einem der Fälle, die da publiziert sind. Das ist extrem wichtig. Es hilft zum einen zu verstehen, wohin das Geld in dem Fall gewandert ist, aber was viel wichtiger ist, es hilft zu verstehen, wie diese Mechanismen funktionieren und welche Mechanismen man sich bedient, um solche Schlupflöcher zu bauen und auszunutzen.
 
-01:23:06.858 --> 01:23:08.678
-<v SPEAKER_3>Das wird mit Sicherheit passieren.
+00:26:35.978 --> 00:26:53.478
+<v SPEAKER_5>Warum publizieren andere denn sowas nicht? Also wenn es gerade so, um bei diesem einen Beispiel zu bleiben, mit Julius Beer, da hätte derjenige, der das Dokument hat, hätte sich doch wahrscheinlich eine goldene Nase verdienen können damit, wenn er das an Zeitungen verkauft hätte, an Geheimdienste, an andere Anwälte, weiß nicht was alles.
 
-01:23:13.838 --> 01:23:22.198
-<v SPEAKER_1>Ja, also das war ironisch gemeint. Ist das... Könnte man einen Prozessor bauen, der das Problem nicht hat?
+00:26:53.498 --> 00:26:54.418
+<v SPEAKER_3>Wer auch immer Geld zahlt dafür.
 
-01:23:23.618 --> 01:23:33.818
-<v SPEAKER_2>Der braucht dann mehr Strom. Oder ist langsamer oder so. Und der verliert dann im Wettbewerb einfach.
+00:26:54.438 --> 00:26:58.178
+<v SPEAKER_5>Wer auch immer Geld zahlt dafür. Warum ist er zu euch gegangen und hat auf die Möglichkeit verzichtet?
 
-01:23:33.838 --> 01:23:57.158
-<v SPEAKER_3>Man kann sogar, meines Wissens nach, jedenfalls eine eigentlich verwundbare CPU nehmen und dieses Feature abschalten. Also, dass man halt gar keine Speculative Execution mehr macht. Da gibt es teilweise, glaube ich, eben ein Bit für, was man dann setzen kann, so eine Konfiguration quasi. Aber das wird einfach dem Prozessor so viel langsamer machen, dass das einfach keiner tun wird. Das ist halt dann mal ein Drittel langsamer alles.
+00:26:59.418 --> 00:27:49.038
+<v SPEAKER_4>Also ich glaube, das ist ein ganz großer Fehlschluss hier. Niemand, erstens würde fast niemand dafür Geld zahlen. Also das ist sehr verpönt, in den Medien Geld für Quellenmaterial zu zahlen. Das bei manchen Zeitungen hier in Deutschland oder Magazinen war das vielleicht gelegentlich üblich, aber in der Regel, in der internationalen Presse macht man das eigentlich nicht. Das zweite Problem bei der Sache ist, dass niemand den rechtlichen Status hat wie wir. Das ist halt auch eine der Sachen, die wir anbieten können. Wir sind rechtlich nicht wirklich angreifbar. Ich würde uns jetzt nicht als rechtsfreien Raum bezeichnen, aber wir kommen schon in diese Richtung eigentlich. Weil wir eben so kompliziert sind oder die ganze Organisation so kompliziert ist, dass wir so viele Jurisdiktionen abdecken mit dem einfachsten Sachverhalt, dass gar nicht wirklich klar ist, in welche Jurisdiktion...
 
-01:23:57.178 --> 01:24:28.598
-<v SPEAKER_1>Okay, aber, also würde ich dich gerne mal fragen, weil du ja in dem Bereich auch so sagen arbeitest, der betroffen ist, nämlich das Hosting, was so ein Hauptangriftszenario zumindest ist, nicht das jetzt akutes. Und jetzt kann man ja sagen, ja, das wird dann langsamer und stromfressender, aber gibt es für dich Szenarien, wo du sagst, da würde ich eigentlich schon wenigstens das Angebot haben, den stromfressenderen oder langsameren Prozessor zu nehmen, einfach um sicher gehen zu können, dass das da nicht passieren kann? Oder ist das völlig außer Frage?
+00:27:49.058 --> 00:27:51.418
+<v SPEAKER_3>Mit welchem Gesetz man euch jetzt quer kommen kann?
 
-01:24:28.898 --> 01:24:57.398
-<v SPEAKER_4>Nee, klar. Also wenn man Services betreibt, oder ich als Anwender möchte natürlich immer das sicherste Produkt erst mal haben. Das soll natürlich auch wenig Strom verbrauchen, wenig kosten. Aber für mich selber oder als Serviceanbieter will ich eigentlich den sichersten Service erst mal zur Verfügung stellen. Weil am Ende bin ich halt auch mitunter in der Haftung. Das fehlt halt aktuell gerade bei den Hardware-Herstellern stellenweise vollständig.
+00:27:52.678 --> 00:29:21.098
+<v SPEAKER_4>Also alles, was über das Portal passiert, wird technisch, was das Routing betrifft, durch verschiedene Länder geroutet. Das bedeutet, dass in diesem Fall eine Kommunikation in diesen Ländern zwischen einer Quelle und einer journalistischen Institution stattfindet. Diese Länder haben alle, wie z.B. in Schweden oder auch in Belgien, extrem starke Gesetze zum Schutz von Journalisten. Das ist eigentlich jedem Angriff gegenüber das Entgegengesetzte. Das heißt, wir können sogar jeden, der uns angreift, aktiv in diesen Ländern verfolgen, weil es illegal ist, in diesen Ländern gegen uns vorzugehen. Die meisten Presseinstitutionen hier haben eben nicht diese Aufstellung. Und es ist nicht möglich, das Material zu verteidigen. Das sind rein ökonomische Faktoren, die da angreifen. Gerade wenn man nach England schaut zum Beispiel, die Presse in England hat vor einem englischen Gericht keine Möglichkeit mehr heute, Material vor der Zensur durch jemanden, der mehr Geld hat, zu verteidigen. Es gibt dieses berühmte UK Libel Law, das besagt, dass ein Journalist, der eine Story publiziert, wenn er wegen übler Nachrede verklagt wird, den Beweis erbringen muss, dass es keine üble Nachrede ist. Das heißt, der Kläger gegen den Journalisten kann beliebig lange das, was der Journalist an Beweisen erbringt, anzweifeln. Der Prozess läuft und läuft und läuft. Es fallen Kosten an und es wird der Gewinn, der mehr Kapital hat, um diesen Prozess fortzusetzen.
 
-01:24:57.418 --> 01:25:14.278
-<v SPEAKER_1>Warte mal, das heißt, wenn... Also angenommen, es gibt ja einen Web-Posting-Betreiber, dem werden jetzt durch Meltdown-Respector die Computer ausgeräumt. Dann haftet dafür nicht der Prozessor-Hersteller, sondern der Hosting-Betreiber. Also gegenüber den Kunden dann.
+00:29:21.118 --> 00:29:23.278
+<v SPEAKER_3>Und wer das in dem Fall ist, liegt eigentlich auf der Hand.
 
-01:25:15.138 --> 01:25:21.838
-<v SPEAKER_4>Im Zweifelsfall ja, klar. Oder man verliert halt die komplette Kundschaft und ist seit seinem Business los.
+00:29:23.478 --> 00:30:03.718
+<v SPEAKER_4>Ja, das ist ein Gesetz, das geschaffen wurde in England, um Adlige zu schützen, dafür, dass ihre geheimen Sachen irgendwo exponiert werden. Das ist so alt, dass es uns heute extreme Probleme macht. Und in England, in der Presse, wird die ganze Geschichte neu geschrieben. Ganze Zeitungsarchive sind heute nicht mehr akkurat, wo Geschichten entfernt wurden, ohne dass es irgendjemand mitbekommen hat, im stillen Camerline. Und wir alle denken eben, dass unsere digitalen Archive, das Internet, das alles akkurat. Wir verlassen uns darauf, dass wir die Informationen haben, dass das, was einmal in der Zeitung stand, auch in zehn Jahren noch da sein wird und wir eben unsere Geschichte vollständig wissen. Aber es ist nicht der Fall.
 
-01:25:23.718 --> 01:25:46.958
-<v SPEAKER_1>Aber jetzt ist es ja auch so, dass die... sozusagen anscheinend komplex ist, das anzugreifen. Deswegen zählt sich die Frage darauf ab, ob du, wenn du die Wahl hättest, würdest du dann überall die sichere Version nehmen? Oder würdest du sagen, naja, keine Ahnung, wenn jetzt irgendwie Tante Ketig ihre Webseite für den Sockenverkauf betreibt, dann ist es vielleicht nicht so schlimm. Aber...
+00:30:03.738 --> 00:30:22.378
+<v SPEAKER_3>Wir beobachten hier im Chaosradio heute eine extrem spannende Geschichte. Wir haben gerade so ein kleines bisschen in den Schuhkarton reingeguckt, der Wikileaks heißt. Es gibt noch viel, viel mehr spannende Sachen zu erfahren in dieser ganzen Geschichte. Chaosradio geht noch weiter bis 22 Uhr. Daniel Schmidt von Wikileaks ist hier. Frank Rosengardt vom CTC bleibt auch noch da. Wir haben ganz kurzes Fritz Info mit Nachrichten, Wetter und Verkehr. Dann sind wir gleich wieder bei euch.
 
-01:25:46.978 --> 01:25:49.138
-<v SPEAKER_4>Also ich persönlich würde ja die sichere Variante nehmen.
+00:31:23.438 --> 00:33:30.338
+<v SPEAKER_6>Gesundheitsministerin Ulla Schmidt muss nach ihrer Dienstwagen-Affäre vorerst nicht mit Konsequenzen rechnen. Nach der Befragung durch den Haushaltsausschuss des Bundestages, sagte sie, es sei in alle Richtlinien beachtet worden und die privat gefahrenen Kilometer gesondert abgerechnet worden. Auch Wirtschaftsminister zu Guttenberg musste sich wegen eines umstrittenen Auftrages in eine Anwaltskanzlei rechtfertigen. Er wies darauf hin, dass das Ministerium auf externe Beratung angewiesen war, weil bei der Entwicklung eines Bankengesetzes die Kompetenz gefehlt hätte. In Lindo im Kreis Ostprignitz-Rupin hat es eine Schlägerei mit fremdenfeindlichem Hintergrund gegeben. Laut Polizei gingen Jugendliche aus dem Ort und türkischstämmige Jugendliche aus Berlin aufeinander los. Bei der Schlägerei kamen unter anderem Baseballschläger zum Einsatz. Es gab zwei Verletzte. Die türkischstämmigen Jugendlichen gehörten zu einem Berliner Fußballverein, der in Lindo zu Gast war. Die einheimischen Jugendlichen sollen die Gäste vorher ausländerfeindlich beschimpft haben. In Brandenburg stehen in den nächsten vier Jahren 33 Millionen Euro bereit, um Schulen, Turnhallen, Kitas und Jugendclubs energiesparend umzubauen. Der größte Teil des Geldes kommt aus dem Konjunkturpaket II, teilte heute Bauminister Dellmann mit. Die Zuschüsse sollen vor allem für die Modernisierung von Heizungen, die Wärmedämmung von Fassaden und Dächern sowie für Solarzellen verwendet werden. Fußball-Zweitligist Union Berlin hat in dem Freundschaftsspiel gegen Bayern München verloren. Am Ende stand es 1 zu 3. Der VfB Stuttgart spielt gerade um den Einzug in die Champions League. Gegner ist in der Qualifikation der rumänische Verein FC Timis Shoara. Kurz vor Schluss steht es immer noch 0 zu 0. Das Hinspiel hatten die Stuttgarter mit 2 zu 0 gewonnen. Mit den aktuellen Temperaturen Wittenberge 15 Grad, Neuropin 16, Angermünde 18, Cottbus 20, Potsdam und Frankfurt 21 und in Berlin 18 bis 23 Grad. In der Nacht gibt es nur ein paar Wolken, kaum Regen, dazu gehen die Temperaturen runter auf bis zu 12 Grad. Tagsübermorgen ist es dann wieder sonnig, nur wenig Wolken stehen bereit und es bleibt meist trocken bei maximal 30 Grad. Auf dem Stadtring auf der A100 in Berlin, da kann es immer noch mal wieder stockenden Verkehr geben. Ansonsten Reuz, gute Fahrt.
 
-01:25:49.158 --> 01:25:50.578
-<v SPEAKER_1>Immer, sozusagen, also grundsätzlich.
+00:33:30.358 --> 00:33:48.678
+<v SPEAKER_3>Liane Gruß war das mit dem Fritz Info. Die Frage im Blue Moon im Chaosradio heute an euch, darf wirklich alles an Dokumenten publiziert werden? Oder wo ist für euch die Grenze, an der ihr sagt, das ist bitte nur für mich und sonst für niemanden zugänglich? Da könnt ihr mitdiskutieren. 0331 70 97 110 bei uns zu Gast. Und das Thema ist Wikileaks.
 
-01:25:50.598 --> 01:25:56.578
-<v SPEAKER_4>Und ich sag mal so, der CPU-Hersteller wird sich freuen, weil ich halt wieder bei ihm weitere CPUs kaufen.
+00:33:48.698 --> 00:33:53.618
+<v SPEAKER_7>Fritz ist eine Produktion des RBB.
 
-01:25:56.598 --> 01:26:04.718
-<v SPEAKER_1>Warte mal, ich stelle das mir noch gar nicht aufgefallen. Es sind ja alle betroffen. Ich kann jetzt gar nicht irgendwo einkaufen gehen und sagen, hier, du bist der sichere CPU-Hersteller, oder?
+00:33:53.638 --> 00:33:58.138
+<v SPEAKER_8>Und wenn im Radio 89, 85 an Fritz im Berliner Kabel.
 
-01:26:06.318 --> 01:26:09.158
-<v SPEAKER_4>Naja, also zumindest im Meltdown schon.
+00:34:07.460 --> 00:34:34.580
+<v SPEAKER_3>Chaos Radio Teil 149, mein Name ist Jakob Kranze, ihr seid bei Fritz, herzlich willkommen. Daniel Schmidt von Wikileaks ist bei uns. Hallo Daniel nochmal. Hallo. Und Frank Rosengard vom CCC ist auch da. Hallo Frank. Und, ach siehst du, Knopf drücken. Ha, da ist er wieder. Ihr könnt uns anrufen, 0331 70 97 110 und am Telefon ist Faruk. Ähm, jetzt geht hier gerade. Janu, du kannst mich ruhig wieder rüber schieben. Ja, wir warten, wir warten. Ach, da ist er. Hallo Faruk, du bist jetzt im Studio.
 
-01:26:09.178 --> 01:26:10.638
-<v SPEAKER_2>Genau, im Meltdown kannst du schon...
+00:34:34.600 --> 00:34:34.940
+<v SPEAKER_9>Grüß dich.
 
-01:26:10.658 --> 01:26:14.238
-<v SPEAKER_1>Man kann halt keine Intel-CPU kaufen. Aber wenn nicht Spectre sicher werden will?
+00:34:34.940 --> 00:34:36.020
+<v SPEAKER_7>Achso, ach guck an.
 
-01:26:14.258 --> 01:26:19.038
-<v SPEAKER_2>Das Problem ist ja in der gemeinsamen Technologie, oder?
+00:34:36.040 --> 00:34:37.800
+<v SPEAKER_9>Ja, erstmal einen schönen Abend noch.
 
-01:26:19.058 --> 01:26:32.318
-<v SPEAKER_1>Gut, dann reden wir gleich nochmal in der letzten halben Stunde über die insgesamt gesellschaftlichen Auswirkungen und was coole Marketing-Namen mit Sicherheit zu tun haben. Vorher gibt es aber nochmal eine kleine Musik und dann Nachrichten mit Wetter und Verkehr.
+00:34:39.480 --> 00:34:40.260
+<v SPEAKER_3>Ja, von wo rufst du an?
 
-01:29:31.800 --> 01:29:54.640
-<v SPEAKER_5>Milliarden feiern mit uns. Mavie Phoenix feiert mit uns. Zucki und die Leoniden feiern mit uns. Und Sido feiert mit uns. Und wir würden total gern mit euch feiern. Fritz wird Fritz von 20 feiert mit uns in der Columbia-Halle. Freitag, 2.
+00:34:40.820 --> 00:34:48.580
+<v SPEAKER_9>Äh, ich ruf an aus Berkheim, Nähe Köln. Und ich hör euch eigentlich immer zu. Und jetzt hab ich mir gedacht, ich ruf mal an hier.
 
-01:29:54.660 --> 01:30:03.200
-<v SPEAKER_7>März. Hier gibt's Karten, überall wo's Karten gibt's. Zum Beispiel auch auf fritz.de slash fritzundzwanzig.
+00:34:48.600 --> 00:34:51.440
+<v SPEAKER_3>Lass mal das Ganze geschnöselt, wir haben uns lieb weggekommen.
 
-01:30:03.220 --> 01:30:05.300
-<v SPEAKER_5>Für gerade mal fritzundzwanzig Euro.
+00:34:51.460 --> 00:35:05.240
+<v SPEAKER_9>Wir haben uns auch gar nicht so wirklich lieb jetzt. Und zwar mit diesem Wikileaks, ist das eigentlich nur so für große Sachen, in Anführungsstrichen, also für große Firmen, solche Geschichten, oder geht das auch schon mal ins Kleine?
 
-01:30:05.320 --> 01:30:06.820
-<v SPEAKER_7>Fritzundzwanzig.
+00:35:05.260 --> 00:35:43.520
+<v SPEAKER_4>Ähm, also das ist, wie ich schon versucht hatte, vorher zu erklären, wir nehmen keine Beurteilung vor. Das heißt, wir sagen nicht, das ist uns groß genug, oder das ist uns zu klein. Wir haben sehr viele Beispiele aus verschiedensten Bereichen der Welt, wo Dokumente sind, die nur für eine ganz kleine Community, für irgendwo die Lokale, ein kleines Dorf oder eine kleine Gemeinschaft eben relevant sind. Für kleine Firmen. Es geht vom Prinzip darum, dass wenn jemand was ans Licht bringen möchte, wir eben das Versprechen an diese Person geben, ihm dabei zu helfen. Und wir nehmen nicht keine Beurteilung vor, was wichtig genug ist oder nicht.
 
-01:30:06.840 --> 01:30:17.040
-<v SPEAKER_5>Die große Radio-Geburtstagsparty in der Columbia-Halle. Mit Sido, Milliarden, Zucki, Mavie, Phoenix, Leoniden, jeder Menge Fritzen und hoffentlich auch mit euch.
+00:35:43.740 --> 00:36:06.760
+<v SPEAKER_9>Ach so, jetzt rechtlich halt. Also wenn ich jetzt nur mal Spaß sagen würde, ich hab jetzt was ganz Großes über, weiß ich nicht, den Bürgermeister von Köln oder sowas. Dann würd ich euch das schicken können, im Prinzip. Und ihr würdet dann das prüfen, die Echtheit und so weiter und so weiter. Und sagen, Mensch, Falk, irgendwie das geht nicht, das kannst du nicht bringen, weil wenn wir das dann so machen, dann passiert dann halt das und das und jenes.
 
-01:30:17.060 --> 01:30:18.760
-<v SPEAKER_7>Fritzundzwanzig Jahre, Fritz.
+00:36:07.060 --> 00:36:13.080
+<v SPEAKER_4>Nein, das würden wir dir nicht sagen. Sondern wir würden dir sagen, das Dokument sieht echt aus und wir publizieren dir das.
 
-01:30:31.200 --> 01:33:07.760
-<v SPEAKER_6>Wegen Verstößen gegen den gesetzlichen Mindestlohn mussten deutsche Firmen im vergangenen Jahr Buß- und Verwarnungsgelder von mehr als 4 Millionen Euro zahlen. Das geht aus einer Antwort des Bundesfinanzministeriums auf eine Anfrage der Linksfraktion hervor. Demnach wurden im vergangenen Jahr rund 2500 Verfahren eingeleitet. Linkenchef Rixinger sagte, Verstöße müssten stärker bestraft werden. Außerdem brauche es mehr Kontrollen, damit Verstöße nicht von der Ausnahme zur Regel werden. Im Potsdamer Landtag ist heute über die aktuellen Konflikte zwischen Deutschen und Ausländern in Cottbus gesprochen worden. Der Cottbuser Oberbürgermeister Kelch forderte im Innenausschuss mehr Unterstützung vom Bund und dem Land Brandenburg. Er berichtete davon, dass man an die Familien der Geflüchteten nicht mehr herankomme und von überforderten Schülern. Kelch forderte außerdem eine Image-Kampagne für Cottbus, die Stadt erlebe momentan international einen massiven Imageverlust. Münchens Oberbürgermeister Reiter hat die Bundesregierung aufgefordert, mehr für den Mieterschutz zu tun. Vor allem der Mietspiegel sei ein wichtiges Instrument, um gerechte Preise zu erhalten. Dabei müssten aber alle Wohnungen erfasst werden, nicht nur die Neugebauten. Reiter verlangte auch mehr sozialen Wohnungsbau durch den Bund. Außerdem solle der Bund seine Flächen nicht meist bieten verkaufen, sondern für bezahlbaren Wohnraum zur Verfügung stellen. Der Orkan Friederike vor einer Wache hat deutlich mehr Schaden angerichtet als erst gedacht. Laut Gesamtverband der Deutschen Versicherungswirtschaft sind allein versicherte Schäden in Höhe von 1 Milliarde Euro entstanden. Erste Schätzungen lagen noch halb so hoch. Damit ist Friederike der zweitschwerste Wintersturm seit 20 Jahren. Der Orkan Küril hatte die Deutschen Versicherung im Jahr 2007 2 Milliarden Euro gekostet. Wetter Mit den aktuellen Temperaturen in Berlin Friedrichshagen 6 Grad zählen auf 7 Grad, Neuropin 6 Grad, Lindenberg 7 Grad, in Ludwigsfelde und Cottbus 8 Grad. Bis zum Morgen kann es immer wieder mal regnen und das Thermometer sinkt bis auf 4 Grad. Am Tag erwarten uns viele Wolken und leichter Regen, später ist es dann meist trocken. Dazu Höchstwerte von 9 Grad in Berlin und 10 Grad in Brandenburg. A10 östlicher Berliner Ringen Richtung Dreieck, Spreeaut zwischen Hellersdorf und Rüdersdorf sind wegen Bauarbeiten die rechte und die mittlere Spur noch bis 5 Uhr früh gesperrt. Stadtverkehr Berlin in Niederschöne Weide sind auf der Schnellerstraße zwischen Riegsdorf und Karlshorster Straße die Ampeln außer Betrieb. In Bohnsdorf ist die Waltersdorfer Straße zwischen Joachim- und Darmestraße nach einem Wasserrohrbruch statt auswärts gesperrt. Und ein Hinweis zur S-Bahn, die Linie S1 ist zwischen Botanischer Garten und Schöneberg bis Betriebsschluss unterbrochen, ersatzweise fahren aber Busse. Allen unterwegs und da, wo es geht, nur gute Fahrt.
+00:36:14.220 --> 00:36:25.000
+<v SPEAKER_9>Also dann habt ihr da irgendwie schon irgendwelche Schwierigkeiten, weil ich kann mir vorstellen, dass man das in einem politischen Kreis nicht so wirklich gerne sieht, ne?
 
-01:33:09.120 --> 01:33:10.980
-<v SPEAKER_1>Fritz ist eine Produktion des RBB.
+00:36:25.500 --> 00:36:53.100
+<v SPEAKER_4>Ja, also wie gesagt, wir haben alle zwei Wochen mindestens bekommen wir rechtliche Drohungen von irgendwem. Der letzte Fall war jetzt, da haben wir Korruption in einer, oder den Missbrauch sagen wir, in einer Charity in England nachgewiesen. Die haben uns jetzt schon die zweite Aufforderung geschickt, dass das Dokument gelöscht werden soll. Das Einzige, was wir dazu sagen können, ist, dass unsere Infrastruktur so aufgebaut ist, dass nichts gelöscht werden kann. Also was wir publiziert haben, das bleibt da und wir verteidigen das mit allen Mitteln.
 
-01:33:13.060 --> 01:33:28.540
-<v SPEAKER_7>Und wenn ihr Fritz immer dabei haben wollt mit Livestream, Studio Message, Podcasts und jede Menge mehr, dann holt euch doch die Fritz-App kostenlos und werbefrei in euren App oder Play Store.
+00:36:53.120 --> 00:37:03.940
+<v SPEAKER_9>Das habe ich verstanden schon. Aber irgendwie, jetzt sage ich mal so ein bisschen Thriller-mäßig, gab es da schon so richtig so eine Drohung, jenseits vom rechtlichen Rahmen jetzt irgendwie?
 
-01:33:41.928 --> 01:34:53.868
-<v SPEAKER_1>Fritz Chaos Radio im Blue Moon auf Fritz. Wir reden heute über Meltdown und Spectre, zwei Sicherheitslücken, die nicht Software betreffen, sondern Prozessoren, also die Herzchecken der Computer. Und wir haben die vergangenen anderthalben Stunden dazu benutzt, um zu verstehen, was da eigentlich passiert. Und jetzt wollen wir noch mal gucken, was man dagegen machen kann. Herzlich willkommen zurück, Mira, Peter und Meise. Und so, wir haben ja wie gesagt geklärt, was da passiert. Wir haben ganz am Anfang auch schon gesagt, also es ist jetzt, es ist gefährlich, es ist vor allen Dingen langfristig sehr interessant, weil da halt sozusagen ein Herzstück kaputt ist und auch grundlegend kaputt, weil diese Technologie seit 20 Jahren, 30 Jahren, oh mein Gott, eingesetzt wird. Aber wir sind trotzdem nicht konkret betroffen, weil es sehr schwierig ist, diese Sicherheitslücke auszunutzen, insbesondere sozusagen auf unseren privaten Computern. Trotzdem will man das ja nicht sich auf Dauer an die Backe binden. Wie ist denn da jetzt eigentlich die Patch-Situation? Also jetzt bei der Software kriege ich einen Update und dann wird eine neue Version des Programms aufgespielt. Also ich weiß, Prozessoren sind mittlerweile so komplex, dass auch da so eine Art Software schon drauf läuft. Aber das ist ja am Ende, ist es ja Hardware, also sind es ja Leiterbahnen. Kann man denn Prozessoren überhaupt updaten?
+00:37:03.960 --> 00:37:14.000
+<v SPEAKER_4>Das kam in dem Sinne jetzt noch nicht vor. Also es gab schon Situationen, dass Leute von uns angesprochen wurden, aber nichts, was ich jetzt so als Drohung auffassen würde.
 
-01:34:55.348 --> 01:34:57.708
-<v SPEAKER_2>Ja, moderne, ja, teilweise schon.
+00:37:14.680 --> 00:37:22.300
+<v SPEAKER_9>Achso, ja gut, das war's dann auch. Mehr wollte ich jetzt auch gar nicht wissen. Ich mache mal die Leitung frei für die anderen und einen schönen Abend noch weiter.
 
-01:34:57.888 --> 01:35:04.488
-<v SPEAKER_1>Ach so, warte mal, Mira, in der letzten halben Stunde hattest du gesagt, und das wolltest du noch korrigieren, dass man das abschalten kann.
+00:37:24.200 --> 00:37:29.500
+<v SPEAKER_3>Aber die Frage, die dahinter steht, ist natürlich richtig, welche Art von Dokumenten publiziert ihr? Du hast gerade gesagt, wir publizieren eigentlich alles.
 
-01:35:04.588 --> 01:35:34.988
-<v SPEAKER_3>Richtig, das geht leider nicht. Also es gibt keine Möglichkeit der CPU zu sagen, naja, mach halt mal bitte keine Speculative Execution. Ob man das per Update machen könnte, weiß ich jetzt auch nicht. Man kann sich so eine CPU vorstellen, wie so einige in Hardware wirklich gebaute Komponenten, die dann per Software zusammengeschaltet werden. Ich kann jetzt einen gewissen Einfluss darauf nehmen, wie das genau verschaltet ist, aber ich kann jetzt nicht frei hingehen und jetzt eine CPU komplett anders durch Software gestalten.
+00:37:29.560 --> 00:37:30.220
+<v SPEAKER_9>Ja.
 
-01:35:36.008 --> 01:35:38.668
-<v SPEAKER_1>Was wird da jetzt gerade versucht?
+00:37:30.240 --> 00:37:45.380
+<v SPEAKER_5>Ich habe noch mal ganz kurz noch eine Frage zu dem besagten Charity oder Dokument dieser Charity-Organisation. Wenn die sagen, nehmt es runter, begründen die das eigentlich? Also sagen die, nehmt es runter, weil wir wollen es so? Oder sagen die, nehmt es runter, weil das ist eine Fälschung? Oder da werden Geschäftsgeheimnisse verletzt oder?
 
-01:35:38.688 --> 01:35:41.448
-<v SPEAKER_2>Schwierig, würde ich sagen.
+00:37:45.400 --> 00:38:05.300
+<v SPEAKER_4>In der Regel geht es bei sowas. Das ist auch eine sehr interessante Entwicklung insgesamt. Es wird eigentlich immer sowas wie Copyright nach vorne geschoben. Es ist mittlerweile sogar so, dass fast jeder Anwalt, der uns was schreibt, in seinem Schreiben drinstehen hat, dass dieses anwältliche Schreiben ein Copyright hat und er die Veröffentlichung dieses Schreibens somit verbietet.
 
-01:35:41.468 --> 01:36:39.548
-<v SPEAKER_4>Also letztendlich das, was aktuell versucht wird, wird, glaube ich, primär versucht, Mitigation zu machen. Also dass man halt versucht, die Wahrscheinlichkeit, dass man halt entsprechende diese Lücken oder diese unterentsprichtlichen Angriffsszenarien halt ausnutzen kann, so weit versucht zu minimieren, dass das halt eigentlich nicht mehr stattfinden kann. Und auch diese Mitigations können halt auf unterschiedlichen Leveln passieren. Also dieser Microcode-Patch, der halt schon mehrfach angesprochen wurde heute, ist halt so mit das, ja, also das beeinflusst halt die CPU im Prinzip direkt. Man kann aber auch versuchen, auf anderen Wegen zumindest das Risiko zu minimieren. Also man kann halt hingehen und sagen, Browser-Hersteller, also Firefox, oder Microsoft haben halt irgendwie Patches veröffentlicht für ihre Browser, um da halt eine Mitigation zu machen. Man kann das Betriebssystem patchen.
+00:38:05.320 --> 00:38:07.480
+<v SPEAKER_3>Weil ihr es veröffentlichen würdet, wäre es eine Unüberrechtsverletzung.
 
-01:36:39.568 --> 01:36:53.888
-<v SPEAKER_1>Also das heißt, es geht schon, das hört sich sozusagen wie so eine Sysifos-Arbeit an, aber im Prinzip kann jede einzelne Software jetzt sagen, okay, wir wissen, es gibt diese lückenden Prozessoren, deswegen funktioniert die Software jetzt anders. Das klärt aber das Problem nicht. Das ist quasi ein bisschen ein Symptom rumdoktern, könnte man sagen.
+00:38:07.500 --> 00:39:02.560
+<v SPEAKER_4>Wir veröffentlichen immer, was Anwälte uns schicken. Das ist Teil der Transparenz, die wir bieten müssen. Und wir müssen auch natürlich feststellen können, dass jemand versucht, die Publikation von einer Information zu verhindern. In vielerlei Hinsicht, gerade in den Anfangszeiten, als die meisten Anwälte noch nicht wussten, wie sie mit uns umgehen sollen, also nicht, dass es heute wirklich wissen, aber wo man noch gar nichts wusste, kam es vor, dass Dokumente darüber verifiziert wurden, dass die Anwälte nachgefragt haben. Wir hatten Dokumente, zum Beispiel von der Northern Rock Bank in England. Da ging es um verschiedene Informationen zu dieser Bank kurz vor dem Kollaps. Das hatte die englische Presse versucht zu publizieren. Das wurde untersagt. Wir haben dieses Material vorrangig gehalten und das wurde endgültig in all seinen Details erst bestätigt, darüber, dass die Anwälte massiven Druck gemacht haben. Das sind Mechanismen, die sich halt auch dynamisch dann ergeben.
 
-01:36:53.908 --> 01:38:31.128
-<v SPEAKER_3>So ein bisschen, ja. Das muss man eigentlich aufdröseln. Es gibt jetzt verschiedene Mitigierungen, die gegen verschiedene Angriffsszenarien wirken. Gegen Meltdown hat man das ganz gut verstanden. Da kann man vernünftig gegen, na ja, mitigieren. Ich finde, Patchen ist da eben auch, wie gesagt, der falsche Ausdruck, wenn man wirklich Symptombekämpfung macht. Da kann man halt über eine Änderung am Betriebssystem verhindern, dass man eben an diesen Kernelspeicher dann kommt. Für Spectre, da gibt es ja eben zwei Varianten. Die sich halt eben leicht unterscheiden. Da werden bei beiden Varianten auch wieder dieselben Mechanismen ausgenutzt. Nur die konkrete Implementierung, was genau ich da mache, die ist halt ein bisschen anders, je Variante. Und bei der einen Variante kann man halt vernünftig patchen und kann das auch nachhaltig patchen, diesen konkreten Angriff. Die zweite Variante, die ist allerdings so generisch, dass es da sehr, sehr schwierig ist, das vernünftig zu mitigieren. Da kommen dann einmal eben diese Mikrocode-Updates ins Spiel, die vorhin genannt wurden. Die geben der CPU im Wesentlichen neue Instruktionen, die man dann benutzen kann, wenn man ein Programm baut, um an bestimmten Stellen Dinge zu tun, dass da diese Prediction-Feature nicht weiterläuft, also so Barrier-Operationen. Das heißt jetzt aber, ich muss dann einmal meine CPU updaten, ein Mikrocode-Update, muss danach hingehen und muss mein Programm nochmal neu compilen mit einem Compiler, der diese Instruktion versteht. Das ist schon eher aufwendig.
+00:39:02.580 --> 00:39:17.040
+<v SPEAKER_3>Also um es einfach zu erklären, ihr kriegt ein Dokument, in dem steht drin, Fakt XY hat mit dieser Bank zu tun. Die Bank sagt, dem ist alles nicht so, ihr dürft es nicht publizieren. Und erst der Anwalt, der euch ein Schreiben schickt, sagt dann, bezüglich des Punktes mit Fakt XY habe ich hier folgende Einwände und damit wisst ihr, ok stimmt.
 
-01:38:31.148 --> 01:38:34.148
-<v SPEAKER_1>Wir haben hier etwas, das möglicherweise hilft, aber du musst alles neu machen.
+00:39:17.060 --> 00:39:30.180
+<v SPEAKER_4>Es geht zum Beispiel dann nicht um üble Nachrede, sondern um das Verletzen von Geschäftsgeheimnissen. Und wenn ich Geschäftsgeheimnisse verletze, dann wird zumindest impliziert gesagt, dass das, was publiziert wurde, auch der Wahrheit entspricht.
 
-01:38:34.168 --> 01:38:37.208
-<v SPEAKER_2>Ich muss jedes Werkzeug erstmal neu bauen.
+00:39:30.200 --> 00:39:41.240
+<v SPEAKER_3>Gibt oder gab es Dokumente, Entschuldigung bitte, Frank. Gibt oder gab es Dokumente, bei denen ihr gesagt habt, das können wir nicht veröffentlichen? Womit wir ja wiederum bei der Frage der Sendung sind. Gibt es Grenzen, wo man sagt, das kann man nicht rausgeben?
 
-01:38:47.508 --> 01:39:18.728
-<v SPEAKER_1>Da wird schon gegen Vorgehör. Jetzt hab ich irgendwas gelesen, was mich tatsächlich auch Frage ist. Herzstück des Computers. Ich benutze das natürlich, weil es so schön plakativ klingt. Aber ich stelle mir auch vor, es gibt ja auch diese Theorie, wenn ich Dinge in beliebig komplexer Software repariere, dann habe ich auch eine gute Chance, neue Fehler reinzubringen. Und ich denke so, wenn ich jetzt im Prozessor was verändere, dann kann ja richtig Dinge schiefgehen. Das habe ich irgendwo gelesen. War das Intel, das Computer, Rebooten nach Einspieler oder nicht mehr Rebooten oder irgendwas, also dass es da Probleme gab?
+00:39:41.660 --> 00:41:11.540
+<v SPEAKER_4>Also wir haben natürlich, wir bekommen sehr viele Zusendungen, die von irgendwer selbst verfasst wurden. So und diese Zusendungen können wir, die sind in vielerlei Hinsicht auch interessant, aber wir können sie einfach nicht annehmen, weil es keine Möglichkeit gibt, das über ein Dokument zu verifizieren. Das tut uns sehr leid, aber das sind Dokumente, die wir halt regelmäßig ablehnen müssen. Ansonsten haben wir keine Informationen bekommen, die wir nicht veröffentlicht hätten. Ich glaube, es gab ganz am Anfang mal einen Fall, da hat uns jemand für Sarinengas das Rezept geschickt. Das hat keinen Mehrwert, so was zu publizieren, abgesehen davon, dass es sehr viele Publikationen gibt, in denen so was zu finden ist, wenn man lange genug danach sucht. Das ist nicht wirklich zu sehr versteckt, als dass man das nochmal publizieren müsste. Und das hat auch niemanden, das hat keine Relevanz. In der Praxis kann man auch sagen, eigentlich, dass sich das sehr gut selbst reguliert. Also wir geben eben unseren Quellen mit, als eine der Anforderungen, dass wir etwas haben möchten, was wichtig ist für die Öffentlichkeit, was einen historischen Wert hat oder einen moralischen Wert oder so. Und das ist natürlich nichts, was wir inhaltlich dann beurteilen, aber das ist was, was Quellen von vornherein schon als, sag ich mal, als so was wie einen soften Filter verstehen. Und die meisten Leute schicken uns auch nichts, was dann total bogus ist und keinen Hintergrund hat oder irgendwas in dieser Art.
 
-01:39:18.748 --> 01:39:54.448
-<v SPEAKER_4>Ja, also ist in der Tat passiert. Also Microcode-Körner wurden eingespielt, Patches wurden eingespielt. Und danach Rebooteten Server willkürlich oder liefen Endlosschleifen. Und gerade bei den Intel Microcode-Patches wurden die jetzt sogar wieder zurückgezogen. Und man arbeitet jetzt aktuell an neuen Patches. Aber bei AMD war das glaube ich auch der Fall, bei Windows. Also da hat da irgendwie Microsoft einen Update rausgehauen. Und ja, gab es so auch Probleme. Also Systeme booteten nicht mehr.
+00:41:11.560 --> 00:41:34.200
+<v SPEAKER_5>Du hast vorhin gesagt, dass die Anwälte gerade in Anfangszeit noch gar nicht wussten, wie sie mit euch umgehen sollen, also wie sie das Hand haben sollen. Jetzt muss ich mal fragen, bringt es denn überhaupt was, wenn Anwälte schreiben? Also es ist irgendwie sinnvoll, dass ein Anwalt überhaupt auch nur eine Minute der Zeit darauf verwendet, euch mit euch in Kontakt zu treten und euch freundlich zu bitten, dieses Dokument vielleicht dann doch offline zu nehmen.
 
-01:39:57.408 --> 01:40:12.768
-<v SPEAKER_1>So unfassbar. Und ich würde, nee, Frage erst mal. Haben wir jetzt sozusagen, was das grundlegende Verständnis ist? Ich weiß, wir kennen nicht alle Details. Aber das Grundlegende Verständnis dieser beiden Dinge, haben wir das jetzt sozusagen abgeschlossen? Oder habe ich noch was ganz Wichtiges vergessen?
+00:41:34.220 --> 00:42:12.040
+<v SPEAKER_4>Nein. Also meiner Meinung nach, ich sehe keinen Zusammenhang, in dem jemals es dazu führen könnte, dass etwas zurückgenommen wird. Das ist gar nicht möglich. Wie ich schon gesagt habe, wir haben das technisch als alles so strukturiert, dass auch niemand von uns, das ist auch was, wo wir uns vor dem Missbrauch auch unsere eigenen Organisationen der Zukunft schützen müssen, dass niemand von uns gekauft werden kann, um etwas zu löschen, oder niemand von uns einen Fehler machen kann, um etwas zu löschen, und es ist verloren. Oder niemand von uns eben der Meinung ist, das passt ihm persönlich nicht besonders gut, und er hält es deswegen zurück oder entfernt es. Das ist alles nicht möglich. Und das sind technische Mechanismen, die etabliert sind.
 
-01:40:14.308 --> 01:40:34.408
-<v SPEAKER_3>Ich denke, das ist soweit ganz gut abgeschlossen. Das ist vielleicht sogar besser, wenn das so ein bisschen nicht ganz spezifisch ist, weil das ist auch eigentlich eine Klasse von Angriffen. Also diese Varianten, die wir da gerade haben, das ist nicht unbedingt jetzt das Ende der Fahnenstange. Das ist halt vielleicht hat noch mal irgendwer anders eine kluge Idee, was man noch macht.
+00:42:12.060 --> 00:42:43.940
+<v SPEAKER_3>Du hast jetzt ein paar Beispiele schon genannt, von denen ihr Dokumente veröffentlicht habt. Das war eine Korruption in einer Charity-Firma in England, das waren mehrere Bankenskandale, noch vieles mehr. Wo kommen denn diese Dokumente her? Was sind das für Quellen? Tauchen die zufällig auf? Sind das Leute, die daran arbeiten, aber es nicht veröffentlichen dürfen und sich an euch wenden? Kriegt ihr dann noch eine Argumentation dazu, warum sie das jetzt an euch schicken? Weil du hast ja gesagt, in der Presselandschaft ist es mittlerweile unüblich, Geld für Informationen zu zahlen. Sie wenden sich ja speziell an euch. Was sind das für Quellen?
 
-01:40:34.468 --> 01:40:40.868
-<v SPEAKER_1>Ach so, das kann auch sein, dass Meltdown und Spectre jetzt sozusagen der Anfang einer neuen Geschichte von wow, nice!
+00:42:44.160 --> 00:42:52.440
+<v SPEAKER_4>Ja, also unsere Quellen sind ja anonym. Sagen wir 90% der Fälle oder 95% der Fälle treten die Quellen nicht mit uns in Kontakt.
 
-01:40:40.888 --> 01:40:42.708
-<v SPEAKER_2>Spectre insbesondere.
+00:42:55.500 --> 00:42:56.960
+<v SPEAKER_3>Aber ihr kriegt das Dokument dann irgendwie?
 
-01:40:42.728 --> 01:41:54.728
-<v SPEAKER_1>Überlegt, wo ihr es zuerst gehört habt. Also falls demnächst die Welt untergeht, Chaosradio 242. Wir haben es zuerst gesagt. Aber apropos Weltuntergang und fashion-Namen. Zu diesen Attacken gibt es ja diese schöne Namen Meltdown und Spectre. Und dazu gibt es auch entsprechende Webseiten, nämlich Meltdown-Attacks und spectreattacks.com, glaube ich. Und dann ist wenige Tage später die Webseite Skyfall-Attacks aufgetaucht und alle so, nein, noch eine Sicherheitslücke, was ist da los? Und das war aber tatsächlich von einem Typen, der nur zeigen wollte, dass es mittlerweile, wie in so vielen Bereichen des menschlichen Lebens, auch bei der Verbreitung von wichtigen Sicherheitslücken, Marketing eine ganz wichtige Rolle spielt. Und er meinte so, wir haben jetzt halt geile Namen gehabt und wir reden alle gerade drüber, aber es ist ja auch gar nicht so gefährlich. Und was die Leute möglicherweise gar nicht mitkriegen, es ist alles noch viel schlimmer, es hat noch nicht so fancy Namen. Und deswegen an euch jetzt die Frage, ist alles viel schlimmer? Also ist sozusagen, ist Meltdown und Spectre jetzt etwas, was so ein Medienereignis ist, auf das ich jetzt auch reingefallen bin und euch anderthalb Stunden drüber ausgequetscht habe, weil bei Wirklichkeit ist jede Woche eine Sicherheitslücke, die unser Untergang bedeuten würde?
+00:42:57.320 --> 00:44:30.900
+<v SPEAKER_4>Ja, das Dokument wird uns hochgeladen. Es gibt bei uns auf der Webseite so eine Submission-Form. Da kann man hingehen, kann das Dokument eben hochladen. Und wir haben sechs Fragen, die wir der Quelle stellen, um eben bestimmte Punkte abzuklappern. Da gehört dazu, wen könnte man kontaktieren, um das Dokument zu verifizieren. Das heißt, eine Quelle, die den Kontext sehr gut kennt, kann sagen, ruft doch den und den an oder schreibt da und dahin, wenn ihr einen Kontakt braucht, die können dazu was sagen. Genauso fragen wir danach, was die Motivation ist für eine Quelle, um das eben verstehen zu können, ohne dass jemand, also die Quelle bestimmt, zu welchem Grad sie sich selbst entlöst. Man muss auch nichts schreiben, das ist nicht verpflichtend. Wir wissen, dass unsere Quellen mit den verschiedensten Hintergrund zu uns kommen. Das heißt, wir haben Individuen, die irgendwo arbeiten und mit einem bestimmten Umstand nicht mehr klarkommen, die von Vorgängen in Firmen oder Behörden oder so wissen und sehen, das kann ich nicht mit meinem Gewissen vereinbaren. Ich brauche jetzt irgendwas, wo ich das rauslassen kann. Und genauso haben wir Dokumente, die die Medien versucht haben, zu publizieren und nicht publizieren können. Wir haben auch viele Dokumente, die zum Beispiel Menschenrechtsorganisationen für Jahre versucht haben zu bekommen. Die Guantanamo-Handbücher sind da ein gutes Beispiel. Das heißt, wir hatten die ACLU in den USA, die über Jahre versucht hat, über den Freedom of Information Act diese Handbücher für Guantanamo zu bekommen. Und die sind daran gescheitert. Und irgendjemand aus dem Umfeld von Guantanamo Bay mit Zugriff auf diese Information hat uns das zugespielt.
 
-01:41:55.728 --> 01:42:31.608
-<v SPEAKER_3>Ich denke, in dem Fall war es ganz gut, dass diese Sicherheitslücke diese Medienaufmerksamkeit bekommen hat, einfach weil die so kompliziert ist. Und man natürlich dann durch diese Medienaufmerksamkeit dann doch die Leute motiviert, sich doch damit zu beschäftigen, auch wenn das vielleicht sehr kompliziert ist und man da gar keine Lust drauf hat. Also hier hätte das vielleicht echt mal was Gutes. Und ich schätze das schon auch als so gravierend ein, einfach dadurch, dass das eben so fundamental tief im System sitzt und uns wahrscheinlich noch recht lange begleitet, dass man das schon sehr ernst nehmen muss. Also da würde ich sagen, ist das schon gerechtfertigt. Also da lohnt sich das Zeichen eines Logos durchaus.
+00:44:31.180 --> 00:44:33.000
+<v SPEAKER_3>Was steht da so drin in diesen Handbüchern?
 
-01:42:31.628 --> 01:42:56.028
-<v SPEAKER_2>Aber es können natürlich andere Probleme geben. Wahrscheinlich gibt es andere Probleme und zwar viele andere Probleme, die wir gar nicht wissen und die wir auch nicht wissen können. Weil Intel hat ja kein Interesse daran zu erzählen, wie deren Produkte drin funktionieren. Weil dann würde ich im Einblick die nachbauen. Also Intel hat sozusagen ein Interesse daran.
+00:44:33.020 --> 00:45:00.800
+<v SPEAKER_4>Da steht halt drin, wie die Gefangenen in Guantanamo behandelt werden. Und es konnte eben nachgewiesen werden, dass zum Beispiel den meisten Gefangenen in den ersten Wochen kein Zugang zum Roten Kreuz gewährt wird. Diese Einzelhaftbedingungen, verschiedenste andere Behandlungswege der Gefangenen da. Und es ist sehr schön oder sehr interessant zu sehen, wie genau eben der Prozess ist für jemanden, der dort inhaftiert ist. Und damit konnte eben das erste Mal nachgewiesen werden, was genau passiert dort.
 
-01:42:57.708 --> 01:43:46.528
-<v SPEAKER_1>Nee, das meinte ich gar nicht. Also auch auf die Gefahr, dass ich mich zynisch anhöre, aber dass Hersteller kein Interesse daran haben, ihre Produkte so offen zu legen, dass man sie so untersuchen kann, dass man Sicherheitslücken auch findet. Das ist ja schon häufiger mal Thema gewesen. Was ich eher meinte, ist, als jemand, der sich nicht mit Security beschäftigt wie ihr, sondern jemand wie ich oder jemand, der sich noch weniger mit dem Thema beschäftigt, passiert ja sozusagen alle Jubeljahre sowas wie. Also keine Ahnung. Ich habe bei meinem Passwortmanager zum Beispiel eine Kategorie von Passwörtern, die heißt Post Heartbleed. Also es gab, Heartbleed war so ein ganz fieses Problem bei verschüttelten Internetverbindungen. Ich habe sozusagen durchgegangen, habe Passwörter geändert, weil ich so viele habe, einfach sozusagen die markiert, die ich schon geändert hatte.
+00:45:00.820 --> 00:45:16.320
+<v SPEAKER_3>Aber mit der Publikation, speziell dieses Guantanamo Handbuchs, jeder, der irgendwie schon mal ein Krimi gesehen hat oder ein Krimi gelesen hat, würde jetzt sagen, ach, da dauert es genau zwei Minuten, dann stehen CIA, FBI und das komplette amerikanische Militär bei euch vor der Tür und sagen, Jungs, das geht bitte sofort wieder offline.
 
-01:43:46.548 --> 01:43:47.328
-<v SPEAKER_2>Vorbildlich.
+00:45:16.580 --> 00:45:53.160
+<v SPEAKER_4>Ja, das einzige, was wir an Propaganda gesehen haben oder an Eindämmungsversuchen von Seiten des Militärs, da war eigentlich ein Team aus Guantanamo selbst, das haben wir ein paar Wochen später bemerkt, die aus dem IP-Adressbereich von Guantanamo Bay in verschiedensten Stellen im Internet versucht haben, Sachen abzuändern, an Fakten, die zu diesem Dokument geschrieben wurden. Die haben auch Wikipedia-Einträge, ähnlich wie der BND, das von da in diesem einen Zusammenhang gemacht hat, dann modifiziert und so weiter. Also es gab dann ein Propagandateam, was geschickt wurde, um hinterher ein bisschen sauber zu machen im Internet, aber die sind auch überführt worden.
 
-01:43:47.848 --> 01:44:52.148
-<v SPEAKER_1>Naja, aber das zeigt halt auch, es gibt halt diese eine Lücke, es gibt sicherlich noch irgendwie 5000 andere Lücke, wie seitdem passiert ist und so. Was gab es noch für schöne Namen? Stacklash, nee Pudel, kann ich mich noch erinnern. Genau. Und jetzt gibt es halt irgendwie Meltdown und Spectre. Und was ich aber auch weiß, ich verfolge es nicht mehr aufmerksam, aber es gibt ja so Mailinglisten und Newsdienste und Sicherheitslücken bekommen, sogenannte CVE-Nummern. Das sieht schon nach Bürokratie aus. Da hat man natürlich als Normalchepper nicht so einen Bock. Und die Frage ist jetzt vielmehr, also wir haben jetzt über Meltdown und Spectre gesprochen aufgrund der, wie soll man das sagen, das grundlegende System unserer Computer, ist da kaputt, aber die Frage ist, passieren eigentlich in diesem Bereich der Sicherheit sozusagen viel häufiger solche unfassbar krassen Sicherheitslücken, also eine Auswirkung, und wir kriegen die einfach nur nicht mit, weil es da kein Logo, keine Webseite, sondern halt nur eine CVE-Nummer und eine lange trockene Beschreibung gibt. Also verpassen wir was und brauchst du mehr Marketing für Sicherheitslücken?
+00:45:53.180 --> 00:46:00.540
+<v SPEAKER_5>Aber das ist eigentlich genau das, was ich auch machen würde. Na klar, ich würde versuchen, dann auch mit Propaganda gegenzuhalten. Das ist ja offensichtlich die einzige Chance, die ich noch habe.
 
-01:44:52.168 --> 01:44:59.228
-<v SPEAKER_2>Ich würde spontan sagen, ja, es gibt viel mehr Sicherheitslücken als besprochen wird.
+00:46:01.220 --> 00:47:16.540
+<v SPEAKER_4>Ja, natürlich. Aber es ist eben, das ist auch so ein leichtes Missverständnis, glaube ich. Wenn man jetzt denkt, ein Top Secret Dokument aus dem amerikanischen Militärum fällt, dass wenn man sowas publiziert, dann ist der Ärger extrem groß und man verschwindet direkt in einem schwarzen Loch oder so. Das ist gar nicht der Fall. Wenn man das Geschichtliche sich betrachtet, es gibt keinen einzigen Menschen in den USA, der für die Veröffentlichung oder für die Weitergabe eines solchen Dokuments an die Presse oder die Veröffentlichung davon eben verurteilt wurde. Ja, da ist Daniel Ellsberg zum Beispiel mit den Pentagon Papers, ist ein extrem gutes Beispiel dafür. Ja, das First Amendment in den USA ist ein extrem guter Schutz für Journalisten und für jeden, der versucht Informationen an die Öffentlichkeit zu geben. Und nur weil da Top Secret drauf steht, bedeutet das nicht, dass das für irgendwen relevant ist. Ich bin kein Mitglied des amerikanischen Militärs. Das ist für mich ein Satz, der da steht, der keinerlei Relevanz hat auf das, was ich damit machen darf oder auch nicht. Ich habe nirgends unterschrieben, dass ich amerikanische Militärdokumente oder Klassifizierungen von diesen Dokumenten irgendwie achten muss. Und das ist das, was auch viele falsch verstehen. Also das ist so eine Art Hörigkeit gegenüber den Autoritäten und so weiter, die meistens viel größer ist, als es eigentlich nötig wäre.
 
-01:44:59.248 --> 01:45:03.148
-<v SPEAKER_1>Die letzte Krasse, von der wir nichts wissen, fällt euch da spontan was ein?
+00:47:17.780 --> 00:47:39.640
+<v SPEAKER_5>Aber warum trauen sich zum Beispiel Zeitungen nicht oder generell Medien nicht? Also jetzt vielleicht mal bleiben wir mal in Deutschland. Warum trauen sich deutsche Medien deiner Meinung nach nicht so Quellen auch selbst preiszugeben oder zu veröffentlichen? Das wäre kein Problem mehr heutzutage online. Man sagt, okay, ich hab jetzt hier einen 300 Seiten Dokument. Das kann ich jetzt halt nicht in einer täglichen Zeitung abdrucken, aber ich könnte es problemlos auch im Web haben und da verlinken.
 
-01:45:03.568 --> 01:45:08.628
-<v SPEAKER_3>Ja, es gab halt immer mal wieder irgendwie Sicherheitslücken, die die Management Engine betroffen haben.
+00:47:39.660 --> 00:48:54.000
+<v SPEAKER_4>Es ist eine rein ökonomische Frage wieder. Die Zeitung gewinnt darüber nicht direkt was, das zu publizieren. Außer dass sie glaubwürdiger wird. Ja, das ist der Punkt, den wir versuchen mitzuteilen. Die Zeitung gewinnt nichts, das Einzige, was sie bekommt, ist eigentlich Ärger dafür. Es gibt keinen finanziellen oder ökonomischen Gewinn. Es ist ein ideeller Gewinn dabei. Wenn ich als Journalist meine Quellen öffentlich mache, dann kann jeder, der meine Storys zu diesen Quellen liest, das, was ich dazu geschrieben habe, was ich recherchiert habe usw. nachprüfen. Und das macht mich als Journalist sehr glaubwürdig. Und das ist was, was wir versuchen nahe zu bringen. Dass es wichtig ist, dass Journalisten anfangen, wieder in dieser Art und Weise zu arbeiten. Und der Bürger weiß, dass die Information, die er bekommt, akkurat ist und das auch nachprüfen kann. Wir sehen halt leider auch, dass viele Journalisten die Dokumente, die sie haben, horten und dass so eine Art Statussache ist. Wie viele Dokumente habe ich im Petto? Wie viele Storys kann ich schreiben, die niemand anders schreiben kann, weil niemand diese Dokumente hat? Und das ist aus meiner oder aus unserer Sicht ist das auch der falsche Ansatz gegenüber dem Rest der Gesellschaft, weil wir alle Transparenz schaffen müssen, damit die Gesellschaft sich positiv entwickelt.
 
-01:45:08.648 --> 01:45:10.268
-<v SPEAKER_1>Was ist eine Management Engine?
+00:48:54.020 --> 00:49:14.340
+<v SPEAKER_3>Wikileaks ist das Thema im heutigen Chaosradio. Ihr könnt gerne anrufen, Fragen stellen. Es gibt heute die sehr seltene Chance, jemanden von Wikileaks direkt zu fragen oder aber auch mit zu diskutieren, bei welchen Dokumenten wäre bei euch Schluss, wo ihr sagt, das möchte ich eigentlich nicht publiziert haben. Unsere Telefonnummer ist 0331 für Potsdam und dann 70 97 110. Und wir haben Anruf von Thomas. Guten Abend Thomas.
 
-01:45:10.288 --> 01:45:47.668
-<v SPEAKER_3>Das ist eine Komponente, die in bestimmte Intel-CPUs integriert sind und die dazu benutzt werden können, aus der Ferne bestimmte Wartungsarbeiten direkt an dem Rechner durchzuführen. Das ist wie eine sehr tief in das System integrierte Remote-Wartung, kann man sagen. Die Management Engine selber macht noch ein bisschen mehr, aber das ist jetzt warum jetzt zum Beispiel große Firmen die gut finden, wenn man dann halt remote sehr tief ins System eingreifen kann und auch komplexe Fehler noch remote beheben kann und eben nicht irgendwo rumlaufen muss und auf irgendwelchen Baustellen im Dschungel Notebooks einsammeln muss.
+00:49:14.360 --> 00:50:12.760
+<v SPEAKER_10>Hallo. Ich habe eine Frage. Und zwar gibt es bei euch eine moralische Grenze, Dokumente zu veröffentlichen? Und zwar jetzt ganz im Bezug darauf, was es denn das Dokumente sind, die im Zweifelsfall Leib und Leben irgendeiner Person gefährden? Also ich denke da an diesen Fall. Also ich bin eigentlich pro offenen Journalismus. Die Leute sollen schreiben können, was passiert und sollen dafür nicht irgendwie irgendwelche Repressionen fürchten müssen. Und der einzige Punkt, wo mich das mal irgendwann so zurückgeschmissen hat, war als ich gelernt habe, wie das damals irgendwie in München 72 passiert ist, wo irgendwie Kameras gefilmt haben, wie die Polizei den Geiselnemern da aufs Dach gestiegen ist und die dann wiederum gewerkt haben übers Fernsehen, was da passiert. Also so, dass das jemand, der halt das Dokument bei euch findet, das dann nutzen kann, um im Zweifelsfall eine Rettungsstation oder irgendwas zu verhindern.
 
-01:45:47.688 --> 01:45:55.148
-<v SPEAKER_2>Und automatisiert auch über die ganze Firma gleichzeitig große Änderungen zu machen.
+00:50:13.180 --> 00:50:54.840
+<v SPEAKER_4>Ja, also die Antwort darauf ist zweideutig. Oder es gibt zwei Antworten auf diese Frage. Generell, wir hatten keinen Fall, in dem wir jetzt hätten sagen können, dass ein Dokument bisher direkt das Leben von jemandem gefährdet hätte. Wir haben natürlich mit den Leuten, die an den Dokumenten arbeiten, darüber gesprochen, was wir machen, wenn das soweit ist. Ich denke, dass so wie wir das momentan sehen, oder der Schluss, zu dem wir gekommen sind, ist, dass wir sicherstellen würden, dass wir denjenigen informieren, dessen Leben bedroht ist, um sicherzustellen, dass vor der Publikation entsprechende Maßnahmen eingeleitet werden können, um eben dessen Wohlergehen zu beschützen.
 
-01:45:55.168 --> 01:45:56.268
-<v SPEAKER_1>Und die war auch kaputt.
+00:50:54.860 --> 00:51:07.920
+<v SPEAKER_3>Um an einem konkreten Beispiel zu bleiben, du hast kurz vor der Sendung erzählt, ihr habt die Mitgliedsdaten der British National Party, also eine ganz rechte Organisation in England, da habt ihr die kompletten Mitgliedsdaten bekommen und die veröffentlicht. Das waren 30.000 oder so was?
 
-01:45:56.288 --> 01:45:58.828
-<v SPEAKER_3>Genau, bevor das jetzt zu gut klingt, genau das geht auch andauernd kaputt.
+00:51:07.940 --> 00:52:26.140
+<v SPEAKER_4>Ja, 30.000 Mitglieder. Das war zum Beispiel eine der Fragen, wo dann nicht klar war, geht jetzt irgendwer auf die Straße und zündet den Leuten die Autos an oder schmeißt denen die Scheiben ein oder wird irgendjemand auf dem Heimweg von der Arbeit überfallen und wird verprügelt, weil er zu dieser rechten Partei gehört. Wir haben alle diese Leute angeschrieben, bevor veröffentlicht wurde und sie darauf hingewiesen, dass diese Veröffentlichung stattfinden wird. Wir haben ihnen einen Kontakt gegeben zu uns, wo sie sich mit uns in Verbindung setzen konnten. Und im Endeffekt, das sind 30.000 Leute, es hat extrem viel Presse gegeben dazu. Eine der ersten Reaktionen war, dass Leute in Google Maps nachgebildet haben, wie die Dichte in den einzelnen Wahlbezirken ist, wo genau wohnen diese Leute, wie viele Leute wohnen, in welcher Straße usw. Es hat aber zu nichts geführt. Also niemand wurde zu, es hat niemand Schaden genommen aus dieser ganzen Aktion. Und genauso haben wir das mit vielen anderen Dokumenten, immer dann, wenn wir größere Datenmengen publizieren, also wo sowas wie ein Massenleak stattfindet, wo viele Individuen involviert sind, dann werden wir die vorher informieren. Und wenn es jetzt um das Leben geht, wie du ja gefragt hast, dann wäre das schon was, wo wir natürlich erst mit jemandem in Kontakt treten. Und wenn dann sichergestellt ist, dass derjenige fair informiert ist usw. dann werden wir trotzdem alles publizieren.
 
-01:46:02.028 --> 01:46:45.508
-<v SPEAKER_2>Nicht nur einmal, wirklich jahrelang. Immer mal wieder. Und das ist eine Komponente, die eben auch von Intel sehr geheim gehalten wird, wo Intel behauptet, na das ist das ist unsere sichere Bereich. Mit dieser Komponente implementieren wir Sicherheit auf unseren Plattformen. Die sorgt teilweise auch für DRM, also verschlüsselte Videoübertragungen oder Tonübertragungen, was dann eben nicht von dem, also vor dem, wo der Inhalt vor dem Betriebssystem und vor den Abwendungen geschützt werden soll, so dass nur das Bildschirm wirklich den Inhalt sehen darf.
+00:52:26.280 --> 00:52:38.620
+<v SPEAKER_3>Und da ist der Unterschied von Wikileaks zu einigen journalistischen Publikationen, die es auf der Welt gibt, die nur um der Schlagzeile willen, da eine Riesen-Story hochziehen und sich nicht darum scheren, was mit der Person eigentlich passiert ist.
 
-01:46:46.328 --> 01:47:30.508
-<v SPEAKER_4>Wobei man jetzt auch mal sagen muss, ich meine, am Ende muss der Endanwender ja irgendwas damit anfangen und zum Beispiel für Intel Management Engine, ja, da kann man halt nix machen aktuell, nicht großartig. Und bei Spectrum mit Meltdown ist ja letztendlich, ja, man kann jetzt Patches installieren, aber konnte man halt auch nicht, als das Medienecho halt so groß war. So, die Patches sind jetzt erst rausgekommen und als das rauskam, ist halt schwierig. Also so richtig schönes Marketing ist das auch noch nicht, wenn man will, dass sich irgendwas verändert. Also auch, dass die Masse dann mal Druck auf die Hersteller ausübt. Nicht das Gefühl, dass das passiert.
+00:52:38.640 --> 00:52:47.220
+<v SPEAKER_5>Und vor allem auch noch den Anspruch haben, die ersten zu sein, oder am besten live dabei sein. Und ich denke, das ist auch der große Vorteil, denn ihr habt das ja wahrscheinlich auch gar nicht in Anspruch gehabt, jetzt unbedingt sofort zu publizieren.
 
-01:47:30.528 --> 01:47:53.108
-<v SPEAKER_1>Aber meinst du nicht sozusagen, dass das viel eher möglich ist durch genau so eine Aktion? Also dass man halt tatsächlich sagt, also wir machen das öffentlich, wir geben dem einen schicken Namen, wir erklären es irgendwie möglichst einfach, um nicht, damit jeder den Patch einspielt, sondern damit überhaupt dieses Bewusstsein, diese Aufklärung ist, ran erzogen wird, dass man sagt, so liebe Hersteller, klar kann Sachen schief gehen, aber bitte kümmert euch mal.
+00:52:47.620 --> 00:52:55.420
+<v SPEAKER_4>Also es gibt Fälle, da werden wir gebeten, sofort zu publizieren. Wir fragen natürlich auch die Quelle, ob es dringend ist, aus irgendeiner Art und Weise, weil wir den Kontext auch...
 
-01:47:53.128 --> 01:48:18.548
-<v SPEAKER_2>Jaja, diese Aufklärung ist immens wichtig, finde ich, weil Sicherheit ist nicht so sehr ein Kriterium, wenn wir Produkte einkaufen. Also IT-Sicherheit oder Sicherheit ist nicht so ein Kriterium, wenn wir IT-Produkte einkaufen. Wir gehen einfach davon aus, dass jeder Hersteller alles gemacht haben, was geht und uns das sicherste Mögliche anbieten. Aber das muss nicht unbedingt der Fall sein.
+00:52:55.440 --> 00:52:56.980
+<v SPEAKER_3>Womit wir bei der Motivation wieder sind.
 
-01:48:18.568 --> 01:48:58.168
-<v SPEAKER_1>Aber kann man jetzt im Nachhinein noch nachvollziehen, wie oder was dazu geführt hat, dass beim Meltdown und Spectre diese Grenze überschritten wurde? Weil ich habe auch einen Artikel gelesen, wo es so durchklang. Also im Prinzip wusste Intel schon Bescheid und hat auch schon dran gearbeitet. Aber es ist dann doch irgendwie früher an die Öffentlichkeit gekommen, als das beabsichtigt war. Und was hat jetzt eigentlich dazu geführt? Also nicht inhaltlich, sondern sozusagen welche Leute oder welche, welche, keine Ahnung, welcher Schritt hat dazu geführt, dass das so eine breite Öffentlichkeit, also relativ breite Öffentlichkeit auch interessiert hat?
+00:52:57.000 --> 00:54:26.820
+<v SPEAKER_4>Genau. In manchen Fällen muss das sein, in anderen Fällen ist es aber ja auch unsere Pflicht, damit mit dem Material umzugehen. Und wenn jetzt nichts gerade brennt, sodass diese Information unbedingt sofort raus muss, dann kontaktieren wir natürlich auch erst Leute. Wir versuchen, mit der Presse in Kontakt zu kommen. Wir müssen das Dokument ja auch verifizieren und so weiter. Dafür geht ja schon auch ein gewisser Zeitraum. Es gibt aber noch diese zweite Antwort auf die Frage von Thomas hier. Transparenz bei der Publikation von Leaks ist eben auch extrem wichtig. Es kann ja jetzt so sein, es gibt ein Dokument zum Beispiel, was die Sicherheitssituation von irgendjemandem betrifft. Jetzt hat jemand das Dokument und warum auch immer es motiviert, dieses Dokument nach außen zu geben. Jetzt kann er das Dokument entweder jemandem geben, den es vielleicht, wenn es wichtig ist, immer gibt, der dafür Geld zahlen würde, weil er zum Beispiel die Sicherheit der betreffenden Personen kompromittieren möchte, dem irgendwas tun möchte oder so. Oder er kann halt das Dokument bei uns publizieren. Wenn es bei uns publiziert wird, dann erfährt jeder davon, dass seine Sicherheit eingeschränkt ist oder dass es ein Informationslag gibt. Ob das jetzt das amerikanische Militär ist oder irgendeine Firma oder so. Wir machen transparent, dass diese Information jetzt öffentlich ist. Der Gegensatz dazu ist, dass es irgendwo privat zirkuliert wird und derjenige, dessen Information irgendwo privat zirkuliert wird, überhaupt nicht weiß, dass es dieses Informationslag gibt. Das heißt, wir triggern Reformen.
 
-01:48:58.188 --> 01:49:32.808
-<v SPEAKER_3>Also das hat einfach dadurch, ist das auch nur kurz vorher aufgeflogen. Also es war ja nur einige Tage, bevor das eben eigentlich e-veröffentlicht werden sollte, dass eben Patches im Linux-Könnel unter anderem aufgetaucht sind, die einfach merkwürdig aussahen. Also wo Leute drauf geschaut haben und gesagt haben, naja, wofür sind die denn da? Was soll denn diese broken Intel-CPU irgendwas? Flagg, hier erklärt doch mal bitte. Und dadurch sind dann ja einige Berichte entstanden, dass eben irgendwie Intel-CPUs generisch kaputt sind.
+00:54:26.840 --> 00:54:37.900
+<v SPEAKER_5>Gut, aber eigentlich ist es ja kein Zwang, denn auch das gesamte Dokument zu veröffentlichen. Ihr könnt ja auch sagen, wir beweisen es in Teilen, dieses Dokument ist da, ist es öffentlich, aber ihr müsst es ja nicht unbedingt ganz veröffentlichen.
 
-01:49:33.168 --> 01:49:59.788
-<v SPEAKER_1>Ich glaube, wir mussten noch ganz kurze Erklärung einschreiben. Also das Gegenbeispiel zu dem, was du gerade beschreibst, sind ja, wenn die Facebook-App auf Smartphones geupdatet wird, dann steht ja drin, wir haben Verbesserungen durchgeführt. Und das ist exakt alles, was man als Anwender weiß. Und Linux ist ja open source. Das heißt, alles, was da passiert, ist nicht nur sozusagen, als hier spiel mal das Update ein, sondern da kann man auch tatsächlich in den Programmcode reingucken. Und das haben Leute gesehen und daraufhin kam das, oder?
+00:54:38.580 --> 00:55:18.120
+<v SPEAKER_4>Ja, da sind wir bei dieser grundsätzlichen Frage. In dem Moment, wo wir uns entscheiden zu selektieren oder in dem Moment, wo wir sagen, wir publizieren nur Teile eines Dokuments oder wir nehmen die Auswahl vor, wie kann uns dann eine Quelle vertrauen, dass wir neutral sind? Und wie können wir das transparent machen, so transparent, dass uns jemand vertraut, indem er uns wirklich brisantes Material gibt? Das ist genau das Problem bei diesem ganzen redaktionellen Prozess. In dem Moment, wo wir uns entscheiden würden zu sagen, wir beurteilen, was wir haben möchten und was nicht, inhaltlich gesehen oder eine Auswahl treffen, in dem Moment sind wir nicht glaubwürdig.
 
-01:50:01.188 --> 01:50:28.728
-<v SPEAKER_3>Und das war zumindest ein Teil, also eine Vermutung, warum das dann ursprünglich hochgekommen ist. Und dann haben sich wahrscheinlich die Hersteller, vor allem Intel, dann gedacht, na ja, bevor es jetzt irgendwie in der Presse überall heißt, Intel-CPUs sind jetzt irgendwie kaputt, veröffentlichen wir das Thema doch jetzt mal und weisen daraufhin, dass das dann ein generisches Problem ist, um halt nicht mit dem Intel-spezifischen Meltdown-Problem alleine dazustehen.
+00:55:18.140 --> 00:55:23.400
+<v SPEAKER_5>Habt ihr denn über permanent sprudelnde Quellen oder sind das alles Einzel-Einsendungen?
 
-01:50:29.388 --> 01:50:48.568
-<v SPEAKER_1>Und dann die Presse so, hey, Intel-CPUs sind kaputt, aber gut. Aber ich hab irgendwo, ich mein, ich mach noch kurz, ich mach noch kurz, also die Verschwörungstheorien zum Schluss auch noch mal abarbeiten. Ich hab immer gelesen, irgendwie ein Intel-CEO hat irgendwie Aktien verkauft. Hängt das auch damit zusammen?
+00:55:23.420 --> 00:55:33.240
+<v SPEAKER_4>Nein, das ist schwer zu sagen. Also wir bekommen mehrere Dokumente pro Tag. Also das ist die Rate. Davon werden nicht alle genommen, weil auch viel selbstgeschriebene Sachen dabei sind.
 
-01:50:48.588 --> 01:50:50.168
-<v SPEAKER_3>Das weiß man natürlich nicht.
+00:55:33.260 --> 00:55:39.520
+<v SPEAKER_5>Ich meine von einer Person, also weil du sagst, es muss Vertrauen geben. Also ich kenne jetzt keinen, der schon mal was zu Wikileaks submitted hat.
 
-01:50:50.188 --> 01:50:51.488
-<v SPEAKER_2>Weiß wohl nur er.
+00:55:39.540 --> 00:55:39.820
+<v SPEAKER_4>Das meinst du.
 
-01:50:51.508 --> 01:50:56.388
-<v SPEAKER_1>Ach so, also das war so ein Fall von, das passt zeitlich gerade sehr, sehr gut, aber möglicherweise ist es Zufall.
+00:55:39.840 --> 00:55:55.940
+<v SPEAKER_5>Das heißt also ich... Ja, genau, klar, das ist eine Vertrauensgeschichte, aber das Vertrauen muss ich ja irgendwie aufbauen auf einen guten Ruf oder so. Also eigentlich muss ja auch jemand bestätigen, die haben meine Dokumente eins zu eins veröffentlichten. Das ist ja eigentlich auch eine schwierige Sache mit dem Vertrauen, denn dieses Vertrauen aufbauen.
 
-01:50:58.088 --> 01:51:36.848
-<v SPEAKER_3>Also es war wohl ein automatischer Trade, soweit ich das gelesen hatte. Also im Wesentlichen wurde irgendwann mal in der Vergangenheit geklickt, zu diesem Zeitpunkt verkaufe doch mal bitte. Das kann natürlich auch einfach viele persönliche Gründe haben, wie weiß ich nicht, eine neue Villa irgendwo in der Karibik muss zu dem Zeitpunkt gekauft werden. Das ist natürlich jetzt von außen schwierig nachzuvollziehen. Aber zu dem Zeitpunkt, wo das wohl angewiesen wurde, müsste die Person eigentlich dann schon Bescheid gewusst haben. Also das kann man natürlich von außen nie wissen und nie sagen. Das ist immer Spekulation, aber es riecht halt ein bisschen.
+00:55:56.240 --> 00:56:03.640
+<v SPEAKER_4>Ja, aber bisher denke ich, haben wir da geglänzt. Also es gab keine Beschwerden von irgendwem und wir haben...
 
-01:51:38.288 --> 01:52:04.308
-<v SPEAKER_1>Es riecht ein bisschen unangenehm. Gut, dann ganz zum Abschluss noch für alle, die jetzt sozusagen sich also wirklich von Anfang an nicht wissen, zu dieser Sendung gekämpft haben, versucht haben zu verstehen, was da passiert ist und wir jetzt angeblieben sind, was sollen wir ganz privat in Zukunft machen? Oder jetzt konkret in dem Fall, worauf gilt es zu achten? Patches einspielen und unseren Mailbetreiber nerven oder?
+00:56:03.660 --> 00:56:20.760
+<v SPEAKER_5>Gut, aber wenn jetzt jemand ein Geheimdokument euch geschickt hat, dann kann er kaum mehr sagen, aber Wikipedia hat hier mein internes Firmendokument nicht veröffentlicht... Entschuldigung, ich kann das fehlen, wie peinlich. Das ist der Name. Wikileaks hat mein an euch weitergegebenes Geheimdokument nicht veröffentlicht. Wie können die nur?
 
-01:52:04.328 --> 01:53:11.208
-<v SPEAKER_3>Also sicherlich das langfristig produktivste und nachhaltigste ist, zu schauen, dass man überhaupt irgendwie den Hersteller seiner Geräte unter Druck setzt, Updates auszuliefern. Auch gerade dieses Microcode-Update, das wird eben für normale Geräte mit Windows als BIOS oder EFI-Update ausgeliefert. Das heißt, das muss von dem Hersteller kommen. Wenn ich jetzt irgendwie ein, weiß ich nicht, Notebook von einem namhaften Hersteller habe, dann muss der mir wirklich dieses Update geben. Ich kann nicht selber irgendwo hingehen und kann sagen, naja, ich lad mir jetzt mal einzeln auf eigene Initiative von Intel diesen Patch runter. Das geht nicht. Sondern das muss halt der Hersteller von dem Notebook für mich paketieren und in ein installierbares Format ausliefern. Und das Schlimmste, was es meiner Meinung nach gibt, sind dann eben Hersteller, die sagen, naja, aber das Notebook, das ist ja zwei Jahre alt. Und wir haben das ja mal irgendwo im Outsourcing dieses BIOS-Paket bauen lassen und wissen auch gar nicht mehr, irgendwie die Leute, die gibt es vielleicht gar nicht mehr. Und das können wir jetzt nicht mehr unterstützen. Das ist das Schlimmste. Und da hilft man, glaube ich, auch langfristig am meisten, wenn man da hinterher ist und schaut, dass man zumindest irgendwann noch Updates bekommt.
+00:56:21.280 --> 00:56:29.280
+<v SPEAKER_3>Wenn ihr so ein Dokument ablässt, hast du ja vorhin schon gesagt, wenn ein Dokument abgelehnt wird, sagen sie dir ja warum. Also ich kriege eine Begründung.
 
-01:53:13.468 --> 01:53:25.268
-<v SPEAKER_1>Das heißt aber auch, dass ich jetzt möglicherweise noch Hardware-Stelle daran bereichere. Also wir bringen jetzt noch die nächsten Generationen raus, die machen alles so wie vorher und dann verkaufen wir euch in drei Jahren die...
+00:56:29.300 --> 00:56:31.160
+<v SPEAKER_5>Aber ich kann es schlecht weiter erzählen.
 
-01:53:25.288 --> 01:53:26.188
-<v SPEAKER_2>Planned Obsolescence, ja.
+00:56:31.180 --> 00:57:00.460
+<v SPEAKER_4>Wenn wir natürlich eine Kommunikation haben mit der Quelle, es gibt diese Idee, über die wir immer nachgedacht haben, dass wir, wenn wir etwas mehr Ressourcen hätten, das scheitert im Moment nur daran, dass wir genug zu tun haben und keine offenen Ressourcen haben. Dass wir gerne alles publizieren würden, was wir abgelehnt haben. Das würde die volle Transparenz schaffen. Dass es ein zweites Portal gibt, das alles publiziert, was wir abgelehnt haben, von dem Material. Und damit könnte man das vollumfängliche Bild schaffen.
 
-01:53:26.208 --> 01:53:32.328
-<v SPEAKER_1>die Spectre-gehärteten neuen Super-Prozessoren, die genauso schnell sind wie vorher, aber ohne Spectre.
+00:57:00.720 --> 00:57:02.320
+<v SPEAKER_5>Dann könnte man es auch testen.
 
-01:53:33.548 --> 01:54:38.448
-<v SPEAKER_3>Ja, also schauen wir mal, ob die dann genauso schnell sind wie vorher oder ein bisschen langsamer. Aber ich denke, dass das natürlich... Man kann das jetzt natürlich so dann darstellen, aber es ist ja einfach eine ganz stumpfe Gewinnverlustrechnung. Die haben eben jetzt in Zweifel sehr viel Anlaufkosten gehabt für die Produktion der nächsten Prozessor-Generation, vielleicht eben auch schon die ganze Produktionsstraße aufgebaut und sehr viel investiert und sagen sich natürlich, naja, gut, das Risiko, dass wir da jetzt irgendwie noch in Schwierigkeiten kommen durch irgendwie Verbraucherklagen oder sonstiges, das ist einfach signifikant geringer, als es diese Fabrik abzureißen und unser Lager anzuzünden. Das sehe ich jetzt nicht, dass da irgendwie Prozessoren nicht verkauft werden, die jetzt schon in der Pipeline sind. Es wird natürlich geschaut, dass man dann, also vermute ich jetzt, ich unterstelle mal guten Willen, dass so gut wie es geht eben noch durch noch mögliche Änderungen, vielleicht auch nur im Mikrocode, eventuell noch Mitigierungen eingebaut werden. Aber das wird sicherlich nicht grundlegend jetzt am Design geschraubt.
+00:57:02.340 --> 00:57:21.120
+<v SPEAKER_4>Das geht natürlich auch. Genau. Das sind alles Sachen, natürlich Überlegungen, die wir gerne umsetzen würden, aber das scheiterte ein bisschen an der Manpower momentan. Da können wir vielleicht später drüber reden, wenn wir uns mit beschäftigen, wo das alles hinführen soll. Wir sind am Anfang, wir sind in einem Projekt, das sich in der Beta-Phase befindet. Und das muss auch jedem klar sein.
 
-01:54:38.908 --> 01:54:56.608
-<v SPEAKER_1>Würde es dir eine Möglichkeit geben, dass dann wirklich die allerletzte Frage, dass man den Prozessor in zwei Modi betreiben kann? Als Gamer hat man ja manchmal im Rechner so ein hier über Takte meine Grafikkarte kontrolliert, weil ich jetzt das supergeile Spiel spielen will, dass man so einen Switch am Computer hat. Spectre not Spectre.
+00:57:21.140 --> 00:57:52.320
+<v SPEAKER_3>Aber in der Beta-Phase dieses Projekts sind schon so viele Sachen passiert. Ich habe jetzt hier so ein paar Beispiele, die wir so im Laufe der ersten Stunde gefallen sind. Einfach so mit einem Zettel von den Guantanamo-Handbüchern über britische Bankenskandale, über die Geschichte, dass Steve Jobs angeblich Aids haben soll und da Leute versucht haben, den Aktienkurs von Apple oder welcher Firma auch immer, also in dem Fall war es eben Apple, zu beeinflussen. Da sind schon einen Haufen brisante Sachen dabei. Gibt es da für dich so eine Top 5 oder Top 3 Liste, wo du sagst, das waren wirklich die heißesten Eisen, die wir gekriegt haben?
 
-01:54:56.628 --> 01:55:08.368
-<v SPEAKER_2>Wenn man bereit ist, ein Drittel der Akkulaufzeit oder ein Drittel der Geschwindigkeit zu opfern. Dann wäre das ein ein Feature bei einem künftigen Produkt.
+00:57:52.340 --> 00:58:11.560
+<v SPEAKER_4>Das ist wirklich sehr schwer zu sagen. Gerade weil die Bandbreite ebenso groß ist. Und weil es gibt zum Teil Sachen, die sind nur relevant für sehr wenige Leute, aber es ist einfach wunderschön zu sehen, weil das gerade in dieser Community extrem viel bewirkt. Und genauso gibt es Sachen, die sind so groß, dass es einfach überwältigend ist, zu sehen, wie groß das ist.
 
-01:55:08.388 --> 01:55:49.108
-<v SPEAKER_1>Wollen wir mal schauen, ob uns das ereilt. Wir haben heute auf jeden Fall erst mal verstanden, was überhaupt passiert ist. Meise, Peter, Mirah, vielen Dank, dass ihr hier wart und mir das so geduldig erklärt habt. Und ich hoffe, wir haben es verstanden. Ihr, liebe Hörerinnen und Hörer, wenn ihr gerade eingestiegen seid und euch fragt, was ist das? Ich weiß nicht, was das ist. Hört euch den Podcast an. Der Podcast erscheint auch mit Bild unter media.ccc.de oder sehr schnell im Laufe der Nacht noch auf fritz.de. Wir hören uns im nächsten Monat oder sehen uns, wenn ihr wollt, wieder dann im Chaos Computer Club Berlin und in zwei Monaten wieder hier auf Fritz. Mein Name ist Markus Richter und ich habe nur noch eine wichtige Nachricht für euch und die ist, lasst sie nicht überwachen und verschüttelt immer schön eure Backups.
+00:58:11.720 --> 00:58:16.960
+<v SPEAKER_5>Gab es denn irgendwelche Dokumente, die für dich persönlich sehr wichtig waren, dass du sagst, hey, danke, super?
+
+00:58:17.320 --> 00:59:07.660
+<v SPEAKER_4>Ja, also alles, was in dem Ganzen jetzt für mich als Deutscher, der sich gerade einer Propaganda durch das Familienministerium gegenüber sieht, ist alles, was in dem Umfeld zu den ganzen Kinderpornosperren oder den geplanten Zensursystemen eben erschienen ist, ist für mich extrem relevant als Bürger dieser Republik. Es gibt andere Dokumente. Wir hatten jetzt vor einigen Wochen zum Beispiel dieses Dokument von der Kaupting Bank aus Island. Das ist eines der schönsten Dokumente, die ich bis jetzt gesehen habe. Einfach weil für jeden einzelnen Islander von 350.000 Islandern, die auf dieser Insel wohnen, für jeden einzelnen von denen war dieses Dokument extrem wichtig. Und die haben dieses Dokument angenommen und gefeiert. Und wir haben so viel positives Feedback bekommen, dass es einfach schön ist zu sehen, wie ein ganzes Land in dem Moment von dieser Publikation profitiert.
+
+00:59:07.680 --> 00:59:10.520
+<v SPEAKER_3>Was stand da drin? Also warum war das so wichtig?
+
+00:59:11.020 --> 00:59:22.080
+<v SPEAKER_4>Ja, die isländischen Banken, wie viele andere Banken weltweit, ja auch befinden sich in einer ziemlichen Krise. Und die größten Banken in Island sind vor kurzem verstaatlicht worden.
+
+00:59:22.100 --> 00:59:22.780
+<v SPEAKER_3>Kaupting gehört dazu.
+
+00:59:22.800 --> 01:01:14.880
+<v SPEAKER_4>Ja, und Kaupting ist die größte Bank in Island gewesen. Die hat etwa das dreifache Bruttosozialprodukt des ganzen Landes verliehen an Geldern. Das heißt, wir reden von Riesensummen, die durch den Steuerzahler irgendwie kompensiert werden müssen in Zukunft, die zurückgezahlt werden müssen an Leute überall in der Welt, vor allem in den Niederlanden und in England. Und wir haben ein Dokument publiziert, das eine interne Statistik auf 210 Seiten zeigt, wie das Geld aus der Bank rausgegeben wurde kurz bevor dem Crash, eine Woche vor dem Crash, glaube ich, wenn ich mich recht erinnere. Und das hat auf 210 Seiten dargestellt, wer mehr als 45 Millionen aus dieser Bank rausgeholt hat. Und darüber konnte eigentlich nachgewiesen werden, das ist auch durch die ganze Welt gegangen, dass die Großaktionäre und die Insider der Bank das ganze Ding kurz vor Schluss geplündert haben. Und das ist natürlich extrem wichtig für jeden Islander zu wissen, denn jeder Islander muss das bezahlen in Zukunft. Und es ist wichtig, dass diese Leute zur Rechenschaft gezogen werden können und dass eben diesen Leuten Druck gemacht werden kann und dass man nachvollziehen kann, wer genau hat überhaupt jetzt die Bank ausgenommen. Und gerade in so einem kleinen Umfeld wie in Island sieht man eben, wie groß die Auswirkung dann ist, wenn sowas publiziert wird. Die isländische Premierministerin hat darauf nach dem League angekündigt, dass sie eigentlich eine Entwicklung sehen möchte, in der das isländische Bankengeheimnis abgeschafft wird. Das ist ein enorm riesiger politischer Erfolg. Das ist ein Einfluss auf das, wie die Zukunft dieses Landes aussehen wird. Nämlich hin zur Transparenz und zu dem, dass der Staat versteht, dass den Bürgern gegenüber sehr viel Offenheit herrschen muss, damit eben nicht solche Sachen wie eine große Bank, die ein Vielfaches des Staatsvermögens verleiht, eben benutzt wird, um einige Leute in die Taschen vollzumachen.
+
+01:01:14.900 --> 01:01:28.480
+<v SPEAKER_3>Und das alles in der Beta-Phase von Wikileaks. Das heißt, das Ding ist noch gar nicht so, wie sich die Macher das eigentlich vorstellen. Thomas, ist deine Frage übrigens damit beantwortet? Alles klar, dann machen wir mal Platz für die nächsten, wünsche dir noch einen schönen Tag.
+
+01:01:28.500 --> 01:01:29.760
+<v SPEAKER_10>Ja, euch noch eine schöne Sendung, macht's gut.
+
+01:01:30.420 --> 01:05:49.896
+<v SPEAKER_3>Auf dem Elf. Boah, was eine spannende Sendung. Chaosradio Nummer 149 auf Fritz, ihr seid mittendrin. Frank Rosengrat vom CCC ist da, Daniel Schmidt von Wikileaks ist auch hier. Mein Name ist Jakob Kranz, wir reden heute über Wikileaks. Die erste Stunde war schon extrem spannend und es kommt noch viel mehr. Gebt uns mal kurz eine Sekunde, um mal Luft zu schnappen. Wir sind gleich wieder bei euch. Das Ding geht irgendwann noch Ende des Jahres in die Liste der besten Songs dieses Sommers ein. Gebrünn, gebrünn, Paul Kalkbrenner. Ihr seid im Chaosradio auf Fritz. Wir reden über Wikileaks. Daniel Schmidt von Wikileaks ist hier und der nächste am Telefon ist Erik. Hallo Erik, guten Abend.
+
+01:05:49.916 --> 01:05:58.456
+<v SPEAKER_9>Hallo und zwar meine Frage ist, hattet ihr schon mal Probleme mit den Web-Servern, also worauf Wikileaks läuft, dass ihr irgendwie Angriffe hattet oder halt auch deutsch gehackt wurdet?
+
+01:05:59.236 --> 01:06:52.236
+<v SPEAKER_4>Ja, also wir sind relativ häufig Opfer von irgendwem, der versucht, sich ein bisschen an unsere Infrastruktur auszutoben oder ein bisschen zu eruieren, was möglich ist oder nicht. Also wir sehen das ja auch. Nach unserer Kenntnis ist bisher noch nie kompromittiert worden. Das heißt, es hat noch keine erfolgreiche irgendwas gehackt, zumindest soweit wir das sagen können. Dazu kommt, dass wir das alles so strukturiert haben, dass selbst wenn eine Komponente wie der Web-Server kompromittiert würde, dass es keine keine praktische Konsequenz hat für die Sicherheit von irgendjemandem. Das heißt, der Web-Server zum Beispiel sieht überhaupt keine IP-Adressen von irgendwelchen Nutzern. Das ist alles auf dem Weg zum Web-Server in unserem Netzwerk schon längst anonymisiert. Das heißt, der Web-Server sieht irgendwelche Bogus-IP-Adressen, die nicht zu dem eigentlichen Besucher einer Seite gehört oder zu demjenigen, der gerade was hochlädt.
+
+01:06:54.276 --> 01:07:13.516
+<v SPEAKER_9>Und wie sieht das jetzt aus, wenn ihr zum Beispiel irgendwas veröffentlicht und jemand sagt, man muss ja nicht sein, dass diejenigen unbedingt an die IP-Adressen ran sind, sondern einfach nicht will, dass dieses Dokument publiziert wird. Und sagen wir jetzt einfach mal, die DDoS ist ja leider ziemlich bekannt und könnt ihr da auch vorgehen gegen oder seid ihr da auch wehrlos?
+
+01:07:13.536 --> 01:08:01.596
+<v SPEAKER_4>Na ja, wir sind, natürlich gibt es immer technische Einschränkungen gegen sowas wie ein DDoS, sich zu wehren. Ist jetzt, sag ich mal, unter Umständen nicht unbedingt trivial. Kommt drauf an, wie viel Bandbreite dahinter steckt oder so. Aber das sind auch keine Probleme, die wir in der Praxis bisher so hatten. Wir haben auch alternativ dazu verschiedenste Einstiegspunkte an verschiedenen Teilen der Welt. Also wir können auch ausweichen, falls jetzt eine Leitung komplett von irgendjemandem blockiert wird, der gerade ein bisschen zu viel Energie hat oder so. Ja, also wobei das auch bisher zum Glück realistischerweise kein Problem ist. Ich schiebe das ein bisschen darauf, dass das, was wir machen, innerhalb der technischen Community, die sowas machen könnte, relativ anerkannt ist und deswegen eigentlich niemand von den Leuten, die es machen könnten, irgendwas gegen uns hat.
+
+01:08:02.016 --> 01:08:25.276
+<v SPEAKER_5>Ihr verliert ja auch kein Geld daran. Also diese Denial-of-Service-Attacken, die sind da, wenn sie jetzt gegen Firmen, weiß nicht, gegen Amazon oder sonst wen, es ist ja bei denen, jede Minute, die die nicht erreichbar sind, ist ja da einfach richtig Kohle was flöten geht, wenn die Leute da nichts kaufen können. Und es ist ja bei Wikileaks nicht der Fall, weil da geht es ja jetzt in dem Sinne nicht um Geld und Umsatz. Die sind dann halt mal eine Weile schwer zu erreichen, aber dann wird es dann irgendwann auch langweilig.
+
+01:08:26.996 --> 01:09:01.436
+<v SPEAKER_4>Also wir haben schon auch, das haben ja die meisten, die unsere Webseite vielleicht länger verfolgen, schon bemerkt, gelegentlich mal Ressourcenengpässe, so dass eine Leitung dicht ist und wir eine Splashpage zeigen müssen, dass wir zu viele Besucher haben gerade. Aber das sind halt Sachen, die kommen auch mit unserer Beta-Phasenstellung momentan. Also einfach weil das, was implementiert ist, ist so eine Art Minimal-Set, um das abzubilden, was wir machen wollen. Und das wird hoffentlich mit dem Release 1.0, über den wir vielleicht dann später noch ein bisschen reden, sind solche Sachen dann eigentlich auch ausgeschlossen. Beziehungsweise stehen wir etwas besser da.
+
+01:09:01.456 --> 01:09:15.576
+<v SPEAKER_5>Viel größeres Problem als Denial-of-Service-Attacken. Also Angriffe mit dem Ziel, eure Serverlärm zu legen, sind ja wahrscheinlich eher Bemühungen von Regierungen, von Firmen, auch durch Anwälte, euch zu stoppen.
+
+01:09:16.156 --> 01:09:30.076
+<v SPEAKER_4>Ja, also die rechtliche Seite ist da, denke ich, auch wesentlich problematischer als auf so einer technischen Ebene. Oder was heißt so wirklich problematisch, ist es ja eigentlich auch nicht, weil die bisher alle irgendwo ins Leere laufen.
+
+01:09:30.096 --> 01:09:39.056
+<v SPEAKER_3>Das heißt, es ist noch nicht so weit, dass ihr die Hälfte des Tages damit verbringt, Dokumente zu sichten und auf Echtheit zu prüfen und die andere Hälfte des Tages den technischen Ablauf oben zu halten, euch gegen Anwälte zu wehren?
+
+01:09:39.196 --> 01:09:44.376
+<v SPEAKER_4>Nein, nein, nein. Wir können uns zum Glück sehr stark Dokumenten widmen.
+
+01:09:44.396 --> 01:09:45.516
+<v SPEAKER_5>Haben wir deine Frage beantwortet?
+
+01:09:49.516 --> 01:09:52.676
+<v SPEAKER_3>Jetzt geht es hier gleich weiter, nächster am Telefon ist David. Guten Abend, David.
+
+01:09:55.956 --> 01:11:10.536
+<v SPEAKER_2>Ich habe auch eine Frage an euch, so ein bisschen was rechtliches. Ihr habt ja bestimmt Erfahrungen, wie das ist. Ihr habt ja schon gesagt, ihr werdet regelmäßig Leute, die euch mit Klagen drohen, irgendwie macht das weg, macht das weg. Und ich möchte halt als Privatperson, wäre das für mich natürlich schwierig, irgendwie gegen so eine Klagewelle anzukommen. Weil, worauf ich hinausfälle, ist, dass ich mir wünsche, ich möchte mir irgendwann so eine Diskussion auf der Seite machen. Und auf der mal halt, das soll eine Diskussionsplattform werden für Leute, wo ich halt irgendwie alles groß und in die Meinungsfreiheit irgendwie deklarieren möchte, klar. Und da gibt es dann bestimmt auch den einen oder anderen, der eine Meinung vertritt, die irgendwie verfassungswidrig ist, wie auch immer. Und ich möchte halt solche Leute, klar, ich möchte es nicht da haben, aber ich möchte sie auch nicht davon ausschließen. Also wie das halt ist, wenn jetzt irgendwelche Leute meinen, sie müssen jetzt irgendwelche antisemitischen Standpunkte verteidigen oder so ein Shit, dann will ich ihnen halt die Möglichkeit geben, dass sie halt sich einer offenen Diskussion stellen können. Und da kann das natürlich auch dann in der Diskussion sehr schmutzig werden und da können bestimmt auch Leute sich dadurch gestört fühlen. Und da wäre meine Frage, was jeder denkt, wie das für mich als Privatperson wäre, ob ich da irgendwie groß was befürchten muss oder ob ich das halt wie in so einem Internetforum sagen kann, ich bin nur der Inhaber der Seite, da bin ich nicht verantwortlich.
+
+01:11:11.136 --> 01:11:15.396
+<v SPEAKER_4>Das ist also eine sehr komplizierte Frage.
+
+01:11:15.416 --> 01:11:43.216
+<v SPEAKER_5>Als Privatperson ist es zumindest schon mal eine schlechte Idee, das zu machen. Weil dann erst mal hast du, auch wenn es vielleicht, sage ich mal, im Endeffekt gut ausgeht, aber du hast natürlich erst mal den ganzen Ärger an der Backe, der halt irgendwie von Klagen, Anwaltsrechnungen, Hausdurchsuchungen, weiß nicht was gehen kann, wenn man dir einen Karren fahren will. Und insofern würde ich mir das schon überlegen, ob du das als Privatperson machen willst oder ob du dir vielleicht irgendeinen Verein gründen willst, ein paar Mitstreiter suchst, dass ihr da einfach eine rechtlich bessere Basis habt.
+
+01:11:44.116 --> 01:11:58.076
+<v SPEAKER_2>Okay, also das heißt, aber prinzipiell kann man das so sagen irgendwie, weil es gab ja irgendwann mal so ein Internetforum halt auch so Sachen, dass halt irgendwie die Webmasse, wenn man halt irgendwie so ein Disclaimer davor setzt, ich registriere mich hier auf der Plattform, ich bin mir bewusst, dass...
+
+01:11:58.096 --> 01:12:20.136
+<v SPEAKER_5>Naja, also da solltest du auf jeden Fall mal einen Juristen fragen. Letztendlich, ich meine so eine Diskussion, ich meine, schau dir irgendwie StudiVZ an, da gibt es auch regelmäßig irgendwelche, sage ich mal, zumindest grenzwertige Äußerungen. Und ja, da gibt es auch genauso viele Leute, die irgendwie das Scheiße finden, dass die da sind und auch darauf bestehen, dass es da wieder wegkommt. Aber ich denke mal, das führt auch ein kleines bisschen vom Thema ab.
+
+01:12:20.156 --> 01:12:31.236
+<v SPEAKER_4>Also was ich dir anbieten kann ist, du kannst mir eine Mail schreiben, daniel.wikileaks.org und kannst vielleicht mal kurz schildern, was du da genau vorhast und dann können wir ja sehen, ob sich vielleicht was ergibt, was man dir raten kann oder so.
+
+01:12:31.256 --> 01:12:37.436
+<v SPEAKER_3>Also wenn du bis jetzt noch keinen Stress in deinem Leben hast, dann mach das und du wirst sehr schnell graue Haare kriegen und sonstige Geschichten.
+
+01:12:39.476 --> 01:12:44.356
+<v SPEAKER_2>Dann kann ich einfach mal probieren, das irgendwie in Worte zu fassen, schriftlich und eine Mail rüberzuschreiben.
+
+01:12:44.376 --> 01:12:45.716
+<v SPEAKER_4>Alles klar, danke schön.
+
+01:12:47.416 --> 01:12:52.296
+<v SPEAKER_3>Wollen wir gleich weitermachen? John ist am Telefon. Hallo John, guten Abend.
+
+01:12:52.316 --> 01:13:10.596
+<v SPEAKER_1>Hallo. Guten Abend. Ich wollte mich eigentlich bedanken, nur bedanken für die Wikileaks, also ihr macht das echt super, so ein Projekt vorzurufen finde ich echt super. Und da auch so viel Zeit und Geld und Nerven zu investieren, finde ich einfach genial von euch.
+
+01:13:10.896 --> 01:13:11.396
+<v SPEAKER_4>Danke.
+
+01:13:11.716 --> 01:13:14.436
+<v SPEAKER_3>Nutzt du Wikileaks selber persönlich auch?
+
+01:13:14.456 --> 01:13:31.636
+<v SPEAKER_1>Ja, ich guck da halt ab und zu rein oder ich seh, wenn ich irgendwo News lese, halt links zu Wikileaks, wo dann eben die News sich auf so einen Leak bezieht. Und finde ich einfach super, da hat man halt so was wie Media nur für noch krassere Informationen sozusagen.
+
+01:13:32.156 --> 01:13:33.696
+<v SPEAKER_4>Ja danke, dafür machen wir es.
+
+01:13:33.696 --> 01:13:37.436
+<v SPEAKER_3>So direktes Feedback gibt es ja dann eigentlich auch nicht, wenn ihr da ein Dokument braucht.
+
+01:13:37.456 --> 01:13:52.556
+<v SPEAKER_4>Ja das ist immer schön zu hören. Das ist ähnlich wie mit Island auch, dass wir haben so viele Mails bekommen, in denen uns Leute sich bedankt haben für das, was wir machen. Und das ist auch das, was meine Motivation ist, diese Sache weiter zu machen. Das baut einen halt auch zwischen dem ganzen Stress immer weiter auf.
+
+01:13:52.596 --> 01:14:12.976
+<v SPEAKER_3>Du hast jetzt eine ganze Weile darüber gesprochen, wie Dokumente zu euch kommen und wie ihr die prüft und dass sie veröffentlicht werdet. Wie ist denn dann der Weitergang der Dinge? Also gibt es dann Leute wie John, Leute wie wir, Journalisten, Presse, Nachrichtenagenturen, die sich dann auf euch beziehen, bei euch anrufen, die echt das Dokument fordern oder wissen wollen und daraus dann die Story weiter drehen und sich auf euch beziehen?
+
+01:14:13.356 --> 01:14:56.716
+<v SPEAKER_4>Ja, also in der Regel wird das dann, wenn wir jetzt von Medien sprechen, wird das von Zeitungen oder Online-Medien oder vom Fernsehen oder wie auch immer aufgegriffen. Und die benutzen dieses Dokument dann eben so, wie sie ein Dokument benutzen, das eine ihrer Journalisten eben zugespielt bekommen hat. Daraus entstehen dann die vielfältigsten Sachen. Und neben den ganzen Medien benutzen das auch zum Beispiel Anwälte, wo wir wieder bei Guantanamo sind, für die Verteidigung von den ganzen Gefangenen in Guantanamo. Die Anwälte, die dort vor Gericht für diese Menschen kämpfen, nutzen die Dokumente, die wir publiziert haben, aktiv, um eben Menschenrechtsverletzungen nachzuweisen. Das ist für die verschiedensten Menschen auf dieser Welt einfach von Nutzen.
+
+01:14:56.736 --> 01:15:07.816
+<v SPEAKER_5>Ich habe mal noch eine Frage, was einfach rein die Namensgebung angeht. Was habt ihr einmal mit Wikipedia vielleicht zu tun? Und es gibt auch noch eine Seite, die heißt Live Leaks, auch vom Namen ähnlich.
+
+01:15:07.836 --> 01:16:37.536
+<v SPEAKER_4>Ja, also der Leak, das Leck an sich als englisches Wort, ist eben das, wie wir Dokumente verstehen, die zu uns kommen. Also es gibt irgendwo einen Informationsleck und daraus entsteht eben ein Dokument oder daraus der Ursprung für ein Dokument, das bei uns auftaucht. Die Idee mit dem Wiki ist im Moment etwas, das aus den früheren Zeiten des Projekts einfach noch übrig ist. Die ganz einfache idealistische, sehr idealistische Idee hinter diesem Projekt war, dass wir gesagt haben, wir möchten so etwas wie den ersten öffentlichen Geheimdienst gründen. Also der Öffentlichkeit jedem Bürger ermöglichen, in einem Intelligence-Dienst beteiligt zu sein, der so viel mehr Informationen akkumulieren kann als jeder staatliche Geheimdienst, dass er einfach viel mächtiger wird. Und wir wollten eben sicherstellen, dass auch die Öffentlichkeit in diesem ganzen Intelligence-Business eben ihre Position hat und vertreten ist. Und die Möglichkeit hat eben auch, mit Informationen zu arbeiten. Und da war ganz am Anfang eben die Idee, dass Wikipedia ist eine der Oberflächen, die die meisten Leute im Internet kennen. Also auch Leute, die nicht besonders technisch versiert sind oder so, sondern man kennt eben dieses Interface vom MediaWiki. Und wir haben versucht, es daran anzulehnen, um Anreize zu schaffen, damit sich möglichst viele Leute aus der breiten Öffentlichkeit eben auf diesem Portal involvieren. Das ist mittlerweile ein bisschen durch die Realität korrigiert.
+
+01:16:38.836 --> 01:16:39.656
+<v SPEAKER_5>Aber der Name bleibt.
+
+01:16:39.976 --> 01:16:49.096
+<v SPEAKER_4>Ja, zumindest Wikileaks selbst ist ja auch, da kommen wir auch vielleicht dann später nochmal drauf, auch nur einen Teilaspekt, eine etwas größere Überlegung, die wir eigentlich haben.
+
+01:16:49.536 --> 01:16:59.696
+<v SPEAKER_3>Na lass uns doch darüber mal reden. Du hast schon gesagt, es ist jetzt eine Beta und da kommt irgendwann ein 1.0. Wie würde es denn aussehen, wenn du dir das jetzt mal zusammenbasteln könntest? Und wohin soll es gehen?
+
+01:16:59.956 --> 01:19:54.516
+<v SPEAKER_4>Wikileaks selbst ist, sag ich mal, ein Aspekt von etwas, das wir die Sunshine Press nennen. Das heißt, es ist eine Institution, die verschiedenste Sachen publiziert, unter anderem eben die Wikileaks-Plattform. Wir haben eine ganze Menge Ideen, wie man das, was in diesem ganzen Umfeld entsteht, eben noch weiter nutzen könnte. Zum Beispiel würden wir, das ist was, was mit Release 1.0 kommen wird, werden wir für Zeitungen oder überhaupt für jeden, der online zum Beispiel eine Webseite betreibt, betreibt ein Code-Snippet, bereitstellen, dass man bei sich auf der Webseite implementieren kann. Und das bringt quasi unsere Submission-Methode auf diese Webseite. Das heißt, jede Zeitung könnte irgendwo eine Submission-Form haben, die ein Leser dieser Zeitung oder ein Besucher nutzen kann, um ein Dokument zu verschicken. Das würde direkt an uns geschickt. Und wir können über den Referrer dann sehen, dass es von dieser Zeitung kam. Und könnten dann der Zeitung das Exklusivrecht zum Beispiel für eine oder zwei Wochen auf dieses Dokument geben. Die Zeitung würde profitieren, weil sie das Dokument bekommt, weil sie keine rechtlichen Probleme hat, weil wir dieses Dokument dann publizieren. Und sie hätte Exklusivrecht daran. Ein weiterer Vorteil wäre, dass zum Beispiel der Leser seine Zeitung unterstützen könnte. Lokale Dokumente, die jetzt, sagen wir, irgendwo in der Kleinstadt zum Beispiel relevant sind, auch den entsprechenden Medien sehr einfach zugespielt werden könnten. Und es entsteht so was wie eine Interaktion eben, auch zwischen der Öffentlichkeit und den Zeitungen und uns. Das ist so eine der Überlegungen. Eine andere Überlegung ist, dass wir zum Beispiel sehr gerne so was wie ein Peer Review Journal rausgeben möchten. Also wirklich gedruckt als Magazin. Im Sinne von dem, was es in der Wissenschaft auch gibt. Wir möchten gerne die Möglichkeit bieten, dass jemand, der eine akademische Laufbahn verfolgt, Material von uns für seine akademische Laufbahn publizieren kann oder analysieren kann. Darüber dann ein Paper schreibt, was er in diesem Peer Review Journal veröffentlicht. Und wir eben somit die Akademiker einbinden können, um Sachen zu analysieren, die für unser heutiges Leben relevant sind. Und ihnen die Möglichkeit bieten, das in ihre akademische Laufbahn mit einzubinden. Es sind ziemlich viele verschiedene Überlegungen. Also es gibt noch wesentlich mehr Beispiele von Sachen, die wir uns gerne vorstellen könnten oder die wir gerne sehen möchten. Aber es scheitert eigentlich im Moment alles daran, dass wir eben die Ressourcen dafür bereitstellen müssen. Und der Release 1.0, den wir so für Richtung Ende des Jahres geplant haben, zum Beispiel, braucht 30 bis 35 neue Maschinen, die wir irgendwo von irgendwem bekommen müssen. Also es geht dann weniger um die Hardware, sondern um die Kosten im Monat.
+
+01:19:54.536 --> 01:20:02.656
+<v SPEAKER_3>Okay, wenn Leute hören jetzt zu, sagen, finde ich super, ich habe irgendwie gerade im Lotto gewonnen, kann euch ein paar Maschinen sponsern. Wie kann ich damit euch in Verbindung treten und das machen?
+
+01:20:02.876 --> 01:21:22.896
+<v SPEAKER_4>Ja, also wir haben ja den Chat zum Beispiel. Man kann über unseren Chat besuchen, das ist ein IRC-Chat, für den es auch im Webfront entgibt, das SSL verschlüsselt ist. Man kann sich über Mail mit uns in Kontakt treten. Wir sind hier auf vielen Konferenzen und so auch, wo technisch orientierte Leute sind unterwegs. Im Endeffekt, was wichtig ist zu wissen, ist, dass wir gerne den Leuten die Möglichkeit geben möchten, so ähnlich wie der CCC das auch mit den Tor-Servern plant, ja sowas wie eine Patenschaft zu übernehmen. Dass man sagt, ich möchte 50 Euro im Monat, ist mir das wert. Und dafür sponsor ich das Betreiben von einem Server. Das verursacht keine weitere Mehrarbeit für irgendwen. Also man muss sich nicht um die Maintenance von dem Server kümmern oder so. Und vor allem verursacht es auch keine rechtlichen Probleme. Denn die Server, die wir alle betreiben, sind in einem privaten Verbund. Keiner dieser Server wird direkt ins Internet exponiert. Man sieht diese IP-Adresse nicht. Also es gibt keine rechtlichen Schritte gegen die Betreiber von unseren Servern. Das ist alles in diesem Konstrukt, wie wir das aufgebaut haben, eben gewährleistet. Und deswegen ist es eigentlich sehr einfach, uns zu unterstützen. Es ist halt nur sehr zeitintensiv, zum einen Leute zu finden, die verlässlich sind, und zum anderen eben, sage ich mal, gewisse organisationstechnische Sachen zu entwickeln. Und eben solche Ideen wie unser Peer-Revisional oder auch dieses Code-Snippets usw. eben bereitzustellen.
+
+01:21:22.916 --> 01:21:32.076
+<v SPEAKER_3>Braucht ihr, jetzt haben wir zum einen gesagt, ihr braucht Leute, die Server hosten, die euch finanziell unterstützen. Braucht ihr auch noch Manpower, also Leute, die euch...
+
+01:21:32.096 --> 01:21:32.656
+<v SPEAKER_4>Klar.
+
+01:21:32.676 --> 01:21:40.196
+<v SPEAKER_3>Tatkräftig unterstützen, wenn nicht wie bei der Wikipedia, dass Leute also Artikel quer lesen, die gegenrecherchieren. Weil es könnt ihr ja nicht alleine stemmen, wenn es immer größer wird.
+
+01:21:40.376 --> 01:21:55.256
+<v SPEAKER_4>Also jeder, der das, was wir machen, gerne unterstützen möchte und in irgendeiner Art und Weise was kann, ist eigentlich von Nutzen für uns. Das können Leute sein, die bestimmte Fachbereiche abdecken können bei der Verifizierung von Dokumenten, einfach weil sie da Expertise haben.
+
+01:21:55.616 --> 01:21:57.416
+<v SPEAKER_5>Das ist vor allem wichtig gerade aus dem Nicht-Computer-Bereich.
+
+01:21:59.556 --> 01:23:04.436
+<v SPEAKER_4>Wir können Hilfe aus allen Schichten dieser Gesellschaft brauchen. Wir brauchen Leute, die gewisse Teile der Plattform in alle Sprachen übersetzen. Es ist sehr wichtig, dass zum Beispiel die Submission-Guidelines, die Beschreibungen für Risiko, die ganzen Informationen, die wir potenziellen Quellen zum Beispiel geben, dass sowas muttersprachlich verfügbar ist. Weil das wichtig ist, dass Leute das hundertprozentig verstehen können und den Zugang auch direkt dazu finden. Genauso haben wir sehr viel Entwicklungsarbeit, also Code-Arbeit, die erledigt werden muss. Wenn jetzt jemand zuhört, der gerne C-Programmierung nah am BSD-Könnel macht und ein bisschen was an Zeit frei hat, wir könnten sehr gut Leute gebrauchen. Genauso für verschiedenste Entwicklungsaufgaben im Ruby-Umfeld oder so. Und das sind alles Sachen, die es noch nicht gibt. Und das sind alles Sachen, von denen man, wenn man dabei hilft, sieht, dass sie was Positives bewirken. Es ist ein greifbares Ergebnis. Es sind Sachen, die direkten Einfluss nehmen auf das, was wir machen können und das, was wir auf unserem Portal offerieren können. Der Befriedigungswert ist auch extrem hoch.
+
+01:23:04.456 --> 01:23:09.136
+<v SPEAKER_3>Sag einmal eine Kontaktadresse und du hast die nächsten 14 Tage zu tun, Mails zu lesen.
+
+01:23:09.156 --> 01:23:27.056
+<v SPEAKER_4>Die Kontaktadressen sind alle auch im Wiki. Wer links bei Contact us schaut, findet die Kontaktadressen. Ansonsten wäre das wl-tech at sunshinepress.org. Ist eigentlich die Adresse für jeden, der uns technisch unterstützen mag. Es gibt auch wl-supporters at sunshinepress.org und so weiter.
+
+01:23:27.076 --> 01:23:28.816
+<v SPEAKER_3>Aber du findest das schon.
+
+01:23:28.976 --> 01:23:30.996
+<v SPEAKER_4>Da findet sich jeder zurecht.
+
+01:23:31.016 --> 01:23:33.056
+<v SPEAKER_5>Und im Zweifelsfall fragt er einfach beim CCC nach.
+
+01:23:33.676 --> 01:23:45.496
+<v SPEAKER_3>0331 77 97 110 Telefonnummer vom Chaosradio hier auf Fritz. Und wir haben Arne am Telefon. Hallo Arne, guten Abend. Ist schon nicht schlafen, oder was? Klingst ein bisschen verpennt, großer.
+
+01:23:46.556 --> 01:24:42.196
+<v SPEAKER_11>Ich war halt unterwegs, hab ein bisschen Sport gemacht und dann ist man ein bisschen fertig. Nee, ich hab ne Frage, ich erzähl gar nicht. Und zwar, ihr redet ja davon, dass alles unglaublich anonyme ist. Das ist ja auch vollkommen richtig so, wenn anders wäre es so irgendwie scheiße. Aber was ich mich jetzt frage ist, ich meine, ihr veröffentlichte irgendwelche, ich schätze mal Berichte, die mehr oder weniger entfernt auch sind. Ich gehe immer davon aus, dass in diesen Berichten ja eigentlich auch Namen genannt werden. Prinzipiell müsste ja, wenn alles anonym wäre, eben auch entsprechend diese Berichte auch anonymisiert werden. Ich meine, dass der das dahinspielt, das ist klar, dass der anonym ist, aber ich meine, irgendwo müsste es ja, also wenn ich mir jetzt vorstelle, dass da was veröffentlicht wird, dass das gleiche teilweise auch die Persönlichkeitsrechte von den Leuten an, die darin irgendwie genannt werden, oder?
+
+01:24:44.516 --> 01:25:07.796
+<v SPEAKER_4>Das ist natürlich immer eine Frage. Allerdings, wenn jemand in einem Dokument, aus unserer Sicht, in einem Dokument genannt ist, dass ein bestimmten Sachverhalt, der in der Realität stattfindet, der von einem öffentlichen Interesse ist, wenn da ein Name genannt wird, dann ist dieses öffentliche Interesse in zumindest den Fällen, die mir bisher bekannt sind, größer als das Persönlichkeitsrecht von demjenigen, der im Dokument genannt wird.
+
+01:25:07.816 --> 01:25:42.116
+<v SPEAKER_5>Wobei wir natürlich auch immer so ein bisschen das Henne-Ei-Problem dabei haben. Das heißt also, in dem Moment, wo es bei euch auf Wikileaks ist, dann wird natürlich auch ein öffentliches Interesse wahrscheinlich erst draus, was möglicherweise vorher noch gar nicht da ist. Das Problem haben wir aber auch genauso bei den Medien, bei Stars. Wenn es darum geht, dass die Paparazzi den Leuten hinterherstiefelt und Fotos schießt, während sie am Pool liegen, ist natürlich bei gewissen Leuten erst dann relevant, wenn sie auch einen gewissen Grad in Öffentlichkeit erreicht haben. Aber das ist so eine Sache, die sich auch aufbaut und wahrscheinlich die Grenze auch ein bisschen schwimmt.
+
+01:25:42.136 --> 01:26:21.396
+<v SPEAKER_4>Das ist natürlich eine sehr komplexe Frage. Wir müssen auch bei vielen Dokumenten zum Beispiel berücksichtigen, dass Namen, die im Dokument genannt werden, natürlich auch vielleicht jemandem wie die Quelle exponieren können. Aber das sind Sachen, wo wir halt auch zum einen mit der Quelle zusammenarbeiten können. Die Quelle kann uns auch sagen, dass sie zum Beispiel darum bittet, dass ein Dokument redigiert wird. Das ist auch was, was wir machen. Also wenn die Quelle darum bittet, bestimmte Informationen, die Persönlichkeitsrechte betreffen, aus Gründen, die die Quelle hat, dass das redigiert werden soll, dann können wir dabei auch helfen. Und wir haben eben auch die Erfahrung, das so zu machen, dass niemand hinterher diese Redigierung wieder rückgängig machen kann.
+
+01:26:21.896 --> 01:26:28.016
+<v SPEAKER_11>Also das heißt eigentlich, dass wenn jemand hier sagt, ich möchte, dass der Name daran zum Beispiel abgeändert wird, würde die das auch machen?
+
+01:26:28.036 --> 01:26:38.016
+<v SPEAKER_4>Ja, das kommt natürlich ein bisschen auf den Sachverhalt an, aber in der Regel ist das schon was, was wir mit der Quelle verhandeln können. Oder wo wir die Quelle unterstützen, sage ich mal, gewisse Sachen zu beschützen.
+
+01:26:39.016 --> 01:26:43.236
+<v SPEAKER_5>Das ist natürlich gut, wenn denn die Quelle das eigentliche Problem ist, die dann damit wieder gedeckt wird.
+
+01:26:44.016 --> 01:26:45.536
+<v SPEAKER_4>Ja, aber das ist wahrscheinlich auch sehr theoretisch.
+
+01:26:45.556 --> 01:26:52.176
+<v SPEAKER_3>Wahrscheinlich diskutiert sich das immer nur am konkreten Fall ganz genau und jetzt wenig an so einem hypothetischen Beispiel, was auch was rumspiegt.
+
+01:26:52.196 --> 01:27:18.396
+<v SPEAKER_11>Okay, dann noch gerade eine andere Frage. Bisher war ja immer von irgendwelchen Dingen die Rede von Firmen, von irgendwelchen Staatssicherheitssachen. Aber ist es nicht auch so, dass da teilweise irgendwelche Sachen, Leute aus irgendwelchen Bereichen, aus irgendwelchen Szenen da rein posten, die vielleicht auch von uns her sind? Also ist das Angebot, aber die Information, die da befindet, die ausschließlich begrenzt auf eben entsprechende...
+
+01:27:18.436 --> 01:27:23.756
+<v SPEAKER_4>Nein, das ist gesteuert über das, was Leute uns schicken. Nicht über das, was wir sagen, was wir gerne haben wollen.
+
+01:27:23.776 --> 01:27:25.956
+<v SPEAKER_11>Ja, aber die Frage ist sowas da auch zu finden.
+
+01:27:26.616 --> 01:27:27.336
+<v SPEAKER_4>Was denn für Szenen?
+
+01:27:28.076 --> 01:27:46.336
+<v SPEAKER_11>Ja, mein Gott, weiß ich, aber man stellt sich vor, man ist als Journalist auf der Suche nach einem Artikel über irgendwelche Untergrundszenen, zum Beispiel eine Graffiti-Szene. Dann wäre Wikileaks ein Anlaufpunkt, um eben auch da was zu finden.
+
+01:27:46.356 --> 01:28:11.016
+<v SPEAKER_4>Also zur Graffiti-Szene haben wir nichts. Das kann ich jetzt praktisch so sagen. Ansonsten ist die Frage halt leider etwas hypothetisch so. Das ist immer schwierig. Die Leute schicken uns verschiedenste Sachen. Du könntest jetzt auch sagen, wir haben zum Beispiel jetzt vor anderthalb Wochen 627 E-Mails von einem E-Mail-Verteiler der nationalsozialistischen amerikanischen Partei publiziert. Das ist eine gewisse Szene. Zu der Szene, der Nazis in den USA, findest du bei uns jetzt Informationen.
+
+01:28:11.196 --> 01:28:23.376
+<v SPEAKER_5>Da wollen wir vielleicht bei dem Spray am Beispiel bleiben. Es wäre natürlich schon blöd, wenn jetzt auf Wikileaks die Mitgliederlisten der fünf größten Sprühergruppen in Berlin auftauchen. Aber das ist wahrscheinlich auch nur hypothetisch.
+
+01:28:24.076 --> 01:28:37.796
+<v SPEAKER_4>Es hätte überhaupt niemand, der diese Listen kennt, hätte ein Interesse, sowas zu submitten. Das kommt ja auch immer dazu. Die Arbeit, das ist ja auch eine Frage, wie viel Arbeit mache ich mir? Was für eine Motivation habe ich überhaupt, das zu machen? Das ist eine rein ökonomische Frage wieder.
+
+01:28:39.816 --> 01:28:41.836
+<v SPEAKER_3>Also musst du dir keine Sorgen machen, Arno, du stehst noch nicht im Netz.
+
+01:28:46.396 --> 01:29:09.096
+<v SPEAKER_5>Die Frage ist ja durchaus berechtigt. Wir haben das ja auch schon viel diskutiert, auch im Vorfeld der Sendung. Das war ja eigentlich auch ein bisschen unser Diskussionsansatz. Gibt es da wirklich irgendwo Grenzen? Gibt es irgendwelche Sachen, die jetzt einfach nicht veröffentlicht werden sollten, weil sie eben Persönlichkeitsrechte berühren? Wenn da jetzt nicht dieses öffentliche Interesse drüber steht, dann gäbe es ja auch möglicherweise einen guten Grund, die dann tatsächlich auch nicht zu veröffentlichen.
+
+01:29:09.296 --> 01:29:31.616
+<v SPEAKER_11>Ja, aber insofern stehen meine Fragen ja auch im Zusammenhang. Denn wenn man eben aus öffentlichen Interessen, wie großen Firmen, Banken etc. hinausgeht, geht es auch aus anderen Gebieten, glaube ich. Da kommen wir an diese Eckpunkte. Aber ich glaube, ich habe jetzt eher verstanden, dass es so läuft, dass so etwas gar nicht existiert, weil gar kein Interesse daran hat, so etwas abzuladen.
+
+01:29:31.636 --> 01:29:34.036
+<v SPEAKER_4>Zumindest praktisch bisher.
+
+01:29:34.056 --> 01:29:43.736
+<v SPEAKER_3>Und was da in der Zukunft passiert, werden wir alles sehen. Danke dir für eine Anrufe, Anne. Wir machen jetzt kurz Nachrichten mit Wetter und Verkehr und danach geht es weiter mit James. Leg nicht auf, bleib dran, wir wollen auch mit dir reden.
+
+01:29:46.376 --> 01:29:57.116
+<v SPEAKER_12>Vor ein paar Jahren spielten sie eines der legendärsten Radiokonzerte aller Zeiten live in den Fritz-Studios. Jetzt hätten wir fast keinen Ort gefunden, wo alle reinpassen, die sie sehen wollen.
+
+01:30:11.176 --> 01:30:12.656
+<v SPEAKER_2>Donnerstag, 29.
+
+01:30:12.736 --> 01:30:38.496
+<v SPEAKER_12>Oktober. News, live in der Haute-Wolle-Berlin. Karten gibt's über, wo's Karten gibt, aber zusammen mit mehr Infos auch auf fritzee. News, pünktlich zum neuen Album in Berlin. Fast pünktlich. Und das wird man.
+
+01:30:38.516 --> 01:30:42.396
+<v SPEAKER_3>Aber wir sind pünktlich halb zwölf.
+
+01:30:45.776 --> 01:33:28.936
+<v SPEAKER_6>Gesundheitsministerin Ola Schmidt muss nach ihrer Dienstwagen-Affäre vorerst nicht mit Konsequenzen rechnen. Nach der Befragung durch den Haushaltsausschuss des Bundestages sagte sie, es seien alle Richtlinien beachtet und die privat gefahrenen Kilometer gesondert abgerechnet worden. Auch Wirtschaftsminister zu Guttenberg musste sich wegen eines umstrittenen Auftrages in eine Anwaltskanzlei rechtfertigen. Er wies darauf hin, dass das Ministerium auf externe Beratung angewiesen war, weil bei der Entwicklung eines Bankengesetzes die Kompetenz gefehlt hätte. In Lindo bei Neuropien haben sich zwei Gruppen von Jugendlichen heute geprügelt. Die 15 einheimischen Jugendlichen sollen eine Gruppe türkestämmiger Jugendlicher aus Berlin ausländerfeindlich beschimpft haben. Außerdem kamen unter anderem Baseballschläger zum Einsatz. Zwei Personen wurden verletzt. Die türkestämmigen Jugendlichen waren mit ihrem Fußballverein für ein Trainingslager in Lindo. Das haben sie am Abend auf eigenen Wunsch verlassen. Bundeskanzlerin Merkel will sich für internationale Regeln einsetzen, um Bonuszahlungen an Banker zu begrenzen. Sie unterstützt damit einen Vorschlag von Frankreichs Präsident Sarkozy. Die CDU-Chefin sagte, es sei ärgerlich, dass viele Banken bei den Bonuszahlungen so weitermachten wie vor der Finanzkrise. Der französische Präsident Sarkozy hatte vorgeschlagen, Bonuszahlungen bei Fehlleistungen auch nachträglich noch zu kürzen. Sie sollten zudem nicht auf einmal, sondern zeitlich gestreckt ausbezahlt werden. Der VfB Stuttgart hat den Einzug in die Champions League geschafft. Im Rückspiel gegen den rumänischen Gegner FC Timisoara reichte Stuttgart ein 0 zu 0 unentschieden. Neben Wolfsburg und den Bayern ist Stuttgart die dritte deutsche Mannschaft in der Champions League. Und Fußball-Zweitligist Union Berlin hat in dem Freundschaftsspiel gegen Bayern München verloren. Am Ende stand es 1 zu 3. Mit den aktuellen Temperaturen Wittenberge 14 Grad, Neuropäen 15, Angermünde 16, Potsdam-Corpus, Frankfurt 20 Grad und in Berlin zwischen 17 und 22 Grad. Orten Nacht gibt's nur ein paar Wolken, kaum Regen ist dabei. Und die Temperaturen sinken noch auch bis zu 12 Grad. Tagsüber ist es dann wieder schön sonnig und warm, nur wenig Wolken. Es bleibt auch meistens trocken bei maximal 30 Grad. A115 Zubringer Nutetal statt einwärts Richtung Berlin zwischen Dreieck-Mutetal und Sammund. Da steht ein defekter Lkw, hier ist der Standstreifen blockiert. Dann die A10 westlicher Berliner Ring Richtung Dreieck-Hafeland zwischen Leest und Potsdam Nord. Da gibt's ebenfalls Behinderungen durch ein defektes Fahrzeug. Dann die A10 südlicher Berliner Ring Richtung Schönefelder Kreuz zwischen dem Rastplatz Schwielosee und der Raststätte am Fichtenplan Süd. Da fährt ein Schwertransport und es gibt Behinderungen. Und A24 Berlin Richtung Hamburg. Zwischen Dreieck-Wittstock, Dosse und Suko ebenfalls ein Schwertransport. An dem kommt ihr nicht vorbei. Ansonsten Rolls.
+
+01:33:29.956 --> 01:33:31.956
+<v SPEAKER_7>Fritz ist eine Produktion des RBB.
+
+01:33:35.136 --> 01:33:38.916
+<v SPEAKER_8>Und wenn im Radio 103, 2, dann Fritz im Cottbus.
+
+01:33:47.982 --> 01:34:06.142
+<v SPEAKER_3>Leute, was für eine spannende Sendung. Chaosradio auf Fritz Nummer 149. Daniel Schmidt ist bei uns von Wikileaks, Frank Rosengard vom CCC ist auch bei uns, mein Name ist Jakob Kranz. Wir haben auch eine halbe Stunde Zeit über Wikileaks zu reden, denn nichts am Telefon ist James. Koffe, du bist, ist okay, dass du jetzt noch ein bisschen warten musstest, Nachrichten müssen ja pünktlich sein.
+
+01:34:07.402 --> 01:34:25.162
+<v SPEAKER_7>Äh, ehrlich gesagt, es ist echt eine oberspannende Sendung, es ist richtig krass. Also ich höre jetzt seit anderthalb Stunden gut zu, so. Sehr aufmerksam und das einzige Wort, was mir zu den Männern einfällt, die so motiviert und so kompetent dabei sind, ist einfach Respekt.
+
+01:34:25.802 --> 01:34:26.922
+<v SPEAKER_4>Vielen Dank.
+
+01:34:26.942 --> 01:34:32.382
+<v SPEAKER_7>So krass, also aus tiefstem Herzen Respekt. Das ist wirklich ganz krass.
+
+01:34:33.262 --> 01:34:34.662
+<v SPEAKER_5>Ja, das hören wir bestimmt gerne.
+
+01:34:34.702 --> 01:34:35.642
+<v SPEAKER_4>Ja, auf jeden Fall.
+
+01:34:35.662 --> 01:34:37.542
+<v SPEAKER_3>Wir sind sprachlos und bedanken uns zurück.
+
+01:34:37.562 --> 01:34:40.782
+<v SPEAKER_5>Hast du sonst noch Fragen, die wir dir beantworten können oder magst du sonst noch was?
+
+01:34:40.802 --> 01:34:44.682
+<v SPEAKER_3>Wenn nicht, habe ich nämlich noch Fragen ohne Ende.
+
+01:34:44.702 --> 01:34:57.102
+<v SPEAKER_7>Ja, im Prinzip ist es ja so, dass das, was ihr macht, ist ja sozusagen das, was das System mit uns macht, nur mit der Ausnahme, dass ihr es halt nicht irgendwie verschleiert.
+
+01:34:58.862 --> 01:35:05.282
+<v SPEAKER_4>Genau das ist Sinn der Sache. Ja, wir machen weiter.
+
+01:35:05.302 --> 01:35:06.742
+<v SPEAKER_3>Wir lassen James noch ein bisschen geflasht.
+
+01:35:06.762 --> 01:35:13.202
+<v SPEAKER_7>Ich wünsche euch alles Gute und ich wünsche euch alle Hilfe, die ihr kriegen könnt. Und ich wünsche euch alles, alles, alles, alles Gute.
+
+01:35:17.042 --> 01:35:33.582
+<v SPEAKER_3>Ich habe nämlich noch ein paar Fragen. Wir haben noch gar nicht darüber gesprochen. Wenn ich angenommen, ich möchte Wikileaks-Dokumente schicken, die ich habe, auf was muss ich denn da achten? Wie müssen die beschaffen sein? Gibt es da technische Hinweise, die ich brauche, um auch mich als Quelle zu schützen?
+
+01:35:33.602 --> 01:36:26.642
+<v SPEAKER_5>Vielleicht noch mal so einen ganz kleinen Exkurs in die analoge Vergangenheit. Es gibt ja schon oder es gibt immer noch die Möglichkeiten, wenn ich Dokumente habe, die ich gern an die Öffentlichkeit kommen lassen möchte, möglichst. Das sind allerdings leider nicht so ganz zuverlässige Sachen. Also die eine, das ist ein ganz beliebter alter Trick, ist der Trick mit dem Schließfach im Bahnhof, wo man dann einfach die Sachen einschließt und weggeht und einfach den Schlüssel wegwirft. Und dann wird das Ding irgendwann dann vom Service geöffnet und dann finden sich da brisante Sachen drin. Das ist eine sehr beliebte Sache gewesen. Dann natürlich auch der Klassiker, die geheime Übergabe an Journalisten, sind dann die Dokumente, die im Müll einmal gelandet sind, anstatt im Papierschredder. Das kommt auch mal wieder vor, dass so Dokumente gefunden werden oder dass zumindestens die Story das ist. Und natürlich auch ganz klassisch der einfachste Weg, der braune Umschlag ohne Absender drauf, der dann irgendwie bei der Redaktion landet.
+
+01:36:26.662 --> 01:37:21.942
+<v SPEAKER_4>Also in der Art und Weise, wir haben verschiedene Möglichkeiten, wie man uns Dokumente zukommen lassen kann. Also ganz klassisch, wie der Frank das ja gerade gesagt hat, wir haben überall auf der Welt verteilt Postfächer, die von Leuten unterhalten werden für uns. Das heißt, man kann einfach anonym irgendetwas ausdrucken, einwerfen, das kommt bei uns irgendwo an, wir scannen das wieder ein, verarbeiten das weiter, digitalisieren das und so weiter. Das ist so die Failsafe-Methode, wo eigentlich fast nichts schief gehen kann. Durch den ganzen Prozess, dass es wieder gescannt wird, digitalisiert wird und so weiter, kann man auch viele Probleme umgehen, was die Markierungen dieser Dokumente angeht. Also es gibt ja zum Beispiel Markierungskennzeichen auf Dokumenten, die auf Farbdruckern oder sowas ausgedruckt wurden, also diese gelben Dots, die Yellowdots, die es da gibt. Zum Beispiel dadurch, dass es wieder gescannt wird, von unserer Seite wird zum Beispiel sichergestellt, dass diese Yellowdots nicht mehr da sind.
+
+01:37:22.142 --> 01:37:23.262
+<v SPEAKER_3>Was machen diese Yellowdots?
+
+01:37:23.282 --> 01:38:17.362
+<v SPEAKER_5>Also ganz kurzer Exkurs, ist es so, dass seit vielen Jahren schon, wir haben das vor vier Jahren, fünf Jahren ungefähr hier in Deutschland, bei den Big Brother Awards auch schon aufgedeckt, die jetzt übrigens am 16. Oktober verliehen werden wieder, dass viele Geräte, vor allem Farbkopierer, das ist als erstes aufgetreten, aber mittlerweile auch praktisch alle Farbdrucker, hinterlassen kleine, praktisch unsichtbare Spuren auf dem Papier. Und diese Spuren beinhalten Informationen über das Gerät, mit der diese Seite gedruckt worden ist. Das heißt also eine Seriennummer, teilweise sogar auch schon ein Datum. Das heißt also, es ist anhand von Vergleichen, von Dokumenten, von Ausdrucken ziemlich gut nachverfolgbar, wo dieses Dokument gedruckt, ausgedruckt worden ist oder kopiert worden ist. Das ist leider kaum bekannt. Die Hersteller sind da auch nicht so richtig kooperativ gewesen. Und das muss man immer wissen, dass also alle Farbdrucke, Farbausdrucke, Farbkopien zurückverfolgbar sind.
+
+01:38:17.902 --> 01:39:49.282
+<v SPEAKER_4>Also ich denke, dass wir, das denke ich kann ich so sagen mittlerweile, wir haben eine extrem große Expertise entwickelt, was das Behandeln von verschiedensten Dokumenten betrifft. Sowohl was den Ursprung dieser Dokumente angeht, wie auch die Art und Weise, wie wir das bekommen. Und wir sind sehr stark darauf spezialisiert, diese Dokumente eben vernünftig zu anonymisieren. Jedes Dokument, das bei uns ankommt, wird technisch gesäubert. Also das, was wir publizieren, beinhaltet keine Metadaten mehr, die irgendjemand auswerten kann. Wir stellen sicher, dass wenn wir was scannen zum Beispiel, dass es von der Auflösung her so niedrig ist, dass sowas wie diese Yellowdots gar nicht mehr erkennbar sind. Das sind verschiedenste Sachen, die man einfach berücksichtigen kann. Was wichtig ist, ist, dass die Leute, dass jemand, der ein Dokument hat, das wichtig ist, versteht, dass man es richtig machen muss. Das ist die größte Gefahr bei der ganzen Sache. Wir haben viele Beispiele gehabt oder zumindest ein paar Beispiele, wo Leute uns was geschickt haben und haben es dann selbst denselben Inhalt, den sie uns geschickt haben, nochmal woanders publiziert, weil sie in irgendeiner Art und Weise in einem Forum damit angeben wollten, dass sie sowas haben oder so. Das bedeutet, dass jemand ein Originaldokument woanders hingeschoben hat. Bei uns wurde dann die anonymisierte Version publiziert, mit der gibt es keine Probleme, aber es gab Leute, die dafür ertappt wurden oder in Schwierigkeiten gekommen sind, weil eben ihre Originaldokumente irgendwo aufgetaucht sind. Es ist wichtig zu verstehen, dass man mit jemandem zusammenarbeiten muss, wie uns, der sicherstellt, dass eben das Dokument richtig vernünftig verarbeitet wird.
+
+01:39:49.302 --> 01:40:14.962
+<v SPEAKER_5>Das geht über irgendwelche Rauschmuster, Digitalkamera-Fotos, das können irgendwelche Eigenarten von Scannern sein. Das können aber auch selbst wie ein Wasserzeichen in einem Text sein. Das heißt also auch, dass selbst Texte, wenn jetzt von irgendwelchen Dokumenten eine überschaubare Anzahl, vielleicht 10 Stück ausgegeben worden sind, dass auch möglicherweise im Dokument auch bestimmte Muster versteckt sind. Könnt ihr sowas eigentlich auch rausfinden?
+
+01:40:16.222 --> 01:40:27.282
+<v SPEAKER_4>Ja, wir haben für verschiedene Organisationen, die solche Methoden verwenden, wissen wir, welche Methoden da verwendet werden und können darauf reagieren.
+
+01:40:27.582 --> 01:40:32.982
+<v SPEAKER_5>Also dass zum Beispiel einfach irgendwelche Lehrzeichen irgendwo eingefügt werden, Buchstaben ausgetauscht werden oder sowas.
+
+01:40:33.002 --> 01:41:47.662
+<v SPEAKER_4>Was in der Regel hilft, ist, dass man sich zum Beispiel eine zweite Kopie besorgt, die von einer anderen Quelle kommt. Sowas haben wir in der Vergangenheit für manche Dokumente gemacht. Und dann kann man sowas abgleichen. Das ist aber auch was, was, sag ich mal, generell überschätzt wird. Weil der Aufwand, Dokumente einzigartig zu gestalten, ist extrem hoch. Vor allem, wenn man nicht weiß, wie viele diese Dokumente unter Umständen rausgegeben werden müssen. Wenn wir jetzt von einer Regierungsorganisation zum Beispiel sprechen, kann es sein, dass jemand eine Notiz macht zu einem bestimmten Dokument. Dann muss dieses Dokument viel weiter verteilt werden innerhalb der Regierung, als das vielleicht vorher gedacht war. Das muss zu anderen Ressorts gegeben werden, die müssen da von den Kenntnissen gesetzt werden usw. Und das skaliert eben so eine Lösung nicht mehr, wo Dokumente so einzigartig sind, dass man hinterher sagen kann, diese Leerzeile gehört zu ihm hier. Das sind Sachen, die theoretisch natürlich existieren, aber in der Praxis extrem selten vorkommen. Und von daher, wir haben wirklich sehr viel Erfahrung damit entwickelt. Uns ist noch kein bekannter Fehler unterlaufen. Und das ist etwas, wo ich wirklich jeden nur ermutigen kann, einfach mit uns zusammenzuarbeiten. Man kann sich auch sehr schnell das Tor Browser Bundle zum Beispiel organisieren. Damit kann man anonym im Netz sich bewegen, kann sich irgendwo anonym eine E-Mail-Adresse registrieren. Und wenn irgendwelche Fragen sind und man sich wirklich Gedanken macht, wendet man sich einfach so an uns.
+
+01:41:47.682 --> 01:41:51.382
+<v SPEAKER_5>Könnt ihr da eigentlich noch einen Dienst empfehlen für anonyme E-Mails?
+
+01:41:53.442 --> 01:42:20.422
+<v SPEAKER_4>Es gibt fastmail.fm zum Beispiel funktioniert aus meiner Erfahrung jetzt zum Beispiel ganz gut. Das ist sehr unkompliziert, sich da anzumelden. Ich würde vermeiden, irgendwelche Services zum Beispiel in den USA zu nehmen, weil da eben bekannt ist, wie viele oder dass die NSA eigentlich den gesamten E-Mail-Verkehr screenen. Also kleinere E-Mail-Dienste sind da eigentlich ganz okay. Und wenn man dann schaut, dass man eben seine Verbindung anonymisiert, dann ist das eigentlich schon in Ordnung. Das ist der wichtigere Teil eigentlich.
+
+01:42:20.442 --> 01:42:44.162
+<v SPEAKER_3>Aber das ist dann auch schon wieder ein anderes Thema, was von Wikileaks so ein bisschen weit wegführt. Da haben wir auch mal ein Chaos Radio gemacht zum Thema anonymen im Netz surfen, anonymes mail schicken. chaosradio.ccc.de ist die Webseite, da gibt es die Podcasts der alten Sendung. Wir kommen nochmal zu dem Beispiel zurück, was du ganz am Anfang genannt hast, nämlich die Geschichte mit dem angeblichen positiven Aids-Test von Steve Jobs. Dazu hat es Andreas angerufen. Hallo Andreas, guten Abend.
+
+01:42:44.182 --> 01:43:00.102
+<v SPEAKER_13>Ich habe eine ganz einfache Frage dazu. Was wäre denn gewesen, wenn dieses Dokument jetzt verifiziert worden wäre? Hättet ihr das dann veröffentlicht? Also wenn ihr gesagt hättet, okay, der ist AIDS krank, hättet ihr das dann veröffentlicht?
+
+01:43:00.882 --> 01:43:55.062
+<v SPEAKER_4>Ja, also in dem Fall wäre das Dokument eh noch weitläufig woanders zirkuliert worden, aber es wäre etwas gewesen, das wir so veröffentlicht hätten. Ich muss auch ganz ehrlich für mich persönlich dazu sagen, dass bei gewissen Sachen das so, es ist schon immer eine Gratwanderung und bei manchen Sachen habe ich persönlich auch ein gewisses Bauchweh. Aber wir machen das jetzt mehr als zwei Jahre und wenn eines klar ist, uns allen, die beteiligt sind, dann mittlerweile ist uns allen klar, dass man diese Linie so fahren muss. Ansonsten gibt es keine Möglichkeiten, solches Projekt zu machen. Das ist das Problem. Ich setze alle meine Glaubwürdigkeit bei einer Quelle aufs Spiel, wenn der Eindruck entsteht, dass ich in irgendeiner Art und Weise vorfiltre, was publiziert wird oder nicht. Und es wird nie möglich sein, transparent zu machen, wessen Interessen ich dabei vertrete, ob ich für irgendjemand das Agenda arbeite, ob ich selbst persönliche Interessen darin habe oder wie auch immer.
+
+01:43:55.082 --> 01:44:01.362
+<v SPEAKER_13>Aber es geht nicht um Interessen, es geht einfach um das persönliche Leben, dieses Menschen. Da ist das Problem dabei.
+
+01:44:01.382 --> 01:44:20.642
+<v SPEAKER_4>Das ist auf einer menschlichen Ebene natürlich sehr verständlich. Andererseits, gerade bei Steve Jobs, bei dem Beispiel, das ist eine amerikanische Persönlichkeit und in Amerika wäre es überhaupt keine Frage, ob die Presse eine solche Sache veröffentlichen würde oder nicht. Das wäre ein ganz klares Ja. Bitte?
+
+01:44:20.942 --> 01:44:23.882
+<v SPEAKER_13>Es geht ja nicht um die amerikanische Presse, es geht um dich, ob du es machst.
+
+01:44:24.882 --> 01:44:40.082
+<v SPEAKER_3>Aber Daniel hat ja gerade eben gesagt, er persönlich hätte Bauchschmerzen damit, aber es gibt einen, kann ich das Codex nennen von Wikileaks, so kann man das sagen, also eine Grundstruktur, nach der Wikileaks arbeitet und sie sagen, sie werden nichts filtern, sondern alles veröffentlichen.
+
+01:44:40.922 --> 01:44:46.782
+<v SPEAKER_4>Es bin ja auch nicht ich persönlich, der das veröffentlicht, nur um das auch dazu zu sagen. Das ist eine etwas kompliziertere Konstruktion.
+
+01:44:47.322 --> 01:44:50.762
+<v SPEAKER_13>Ja, ist auf jeden Fall schwierig, wenn man das macht.
+
+01:44:51.742 --> 01:44:54.222
+<v SPEAKER_4>Natürlich, das würde ich auch gar nicht bestreiten wollen.
+
+01:44:54.242 --> 01:45:04.022
+<v SPEAKER_13>Da wird es halt schwierig mit der Wahrheit, ob man da persönliche Dinge veröffentlicht über jemand, der das vielleicht gar nicht haben will.
+
+01:45:04.042 --> 01:45:18.362
+<v SPEAKER_4>Dafür sind wir aber wieder beim Punkt öffentliche Personen usw. Dass gerade Informationen zu Steve Jobs und seiner Gesundheitslage es gang und gäbe, dass das von der Presse heiß diskutiert wird. Das ist auch nichts, was groß umstritten ist.
+
+01:45:18.642 --> 01:45:32.462
+<v SPEAKER_5>Wobei es natürlich schon auch eine Frage ist. Ich würde mich da auch anschließen, der Kritiker, dass ich sage, es muss eigentlich nicht... Nur weil es die Presse gern diskutiert, heißt das noch lange nicht, dass es auch in Ordnung ist, so etwas zu veröffentlichen.
+
+01:45:32.482 --> 01:45:33.822
+<v SPEAKER_4>Das will ich auch gar nicht bestreiten.
+
+01:45:34.782 --> 01:45:44.222
+<v SPEAKER_13>Wenn da die Krankenschwester von dem Arzt sozusagen die geheimen Daten euch schickt, dann kann das schon sehr schwierig sein, das zu veröffentlichen.
+
+01:45:45.022 --> 01:45:52.142
+<v SPEAKER_4>Das ist auch ganz klar. Ja, das will ich auch hier gar nicht bestreiten. Aber das Beispiel Steve Jobs kommt...
+
+01:45:52.162 --> 01:46:03.342
+<v SPEAKER_13>Ich habe gefragt, ob der Grenze, wo man irgendwie aufpassen muss, und das ist so ein Beispiel, da habe ich mich so ein bisschen gewundert, dass man das nicht bemerkt hat sofort, dass da sozusagen eine Grenze sein könnte.
+
+01:46:03.362 --> 01:46:35.502
+<v SPEAKER_4>Das haben wir sehr wohl bemerkt. Aber was dieses Realbeispiel Steve Jobs Aids-Test angeht, ist jetzt wichtig, das als Fake zu exponieren. Und wir haben leider, das ist jetzt hochthetisch, aber... Wir haben leider im Moment keine Möglichkeit, oder ich habe kein praktisches Beispiel, wo ich jetzt sagen kann, da haben wir Persönlichkeitsrechte verletzt, wo ich der Meinung bin, das hätten wir nicht tun sollen oder so. Das Beispiel gibt es in der Realität leider noch nicht. Oder das heißt leider, zum Glück nicht. Von daher ist es schwierig, das jetzt zu etablieren irgendwie und darüber zu diskutieren, was wäre wenn.
+
+01:46:35.522 --> 01:46:39.162
+<v SPEAKER_3>Weil es ja genau andersrum passiert ist. Ich hab diese Publikation als Fake entlarvt.
+
+01:46:39.182 --> 01:46:59.322
+<v SPEAKER_13>Aber es geht darum, die Frage, wo man da aufhört, das war doch das Problem der ganzen Sendung. Also die Grundfrage der Sendung, ab welchem Punkt man das nicht macht. Und da gibt es eben auch Dinge, die man vielleicht nicht sagen sollte. Und da kann man sich schon fragen, wozu sagen, so eine positive Zensur auch okay ist. Ja, das ist doch die Frage.
+
+01:47:00.022 --> 01:47:10.902
+<v SPEAKER_4>Ja, aus meiner Erfahrung, was die Arbeit mit dem Projekt betrifft, stellt sich die Frage so nicht. Aber ich verstehe natürlich die Bedenken. Danke für den Kommentar.
+
+01:47:12.842 --> 01:47:15.922
+<v SPEAKER_3>Wahrscheinlich wird die Frage euch in Zukunft immer wieder mal treffen.
+
+01:47:15.942 --> 01:47:16.602
+<v SPEAKER_4>Ja, natürlich.
+
+01:47:16.622 --> 01:47:19.282
+<v SPEAKER_3>Ihr seid seit etwa zwei Jahren jetzt online.
+
+01:47:19.302 --> 01:48:03.642
+<v SPEAKER_4>Das ist ja auch der Punkt. Wir haben ein Projekt hier, dass wir zum einen als was sehen, was über einen sehr langen Zeitraum existieren wird. Also wir haben nicht vor, das innerhalb der nächsten Jahre oder Jahrzehnte oder wie auch immer wieder einzustellen, sondern wir planen eigentlich für die Unendlichkeit. Und wir möchten etwas schaffen, was einen Mehrwert für die Gesellschaft in ihrer zukünftigen Entwicklung hat. Gleichzeitig ist es ja aber was, was so noch niemand unternommen hat. Somit betreten wir Pionierland. Und es gibt auch viele Fragen, wenn man Pionierland betritt, die überhaupt nicht vorher geklärt sind, wo wir Erfahrungen machen müssen, um uns selbst auch einzupendeln und Grenzen auszuloten, um zu sehen, was ist möglich, was ist nicht möglich, was sind Fehler und dann aus diesen Fehlern halt auch zu lernen. Aber es ist Teil einer ganz normalen Entwicklung.
+
+01:48:03.662 --> 01:48:36.182
+<v SPEAKER_3>Aber bei dem Beispiel Steve Jobs nochmal, also die Frage ist natürlich richtig, auf der einen Seite ist Steve Jobs eine öffentliche Person, der eine Firma vertritt, diese Firma wiederum hat wirtschaftliche Interessen, da hängt eine Menge Geld dran und so weiter und so fort. Und es gibt auch Leute, die diese Firma natürlich droppetieren wollen. Das auf der einen Seite, auf der anderen Seite ist er eine Privatperson, der sein absolutes Recht hat auf die Wahrung seiner persönlichen Intimsphäre und wo man eigentlich sagen muss, es geht keinem was an, wie viele Weisheitszähne der Mann noch im Bund hat. Wir kommen mal dazu, ich glaube Martin hat eine Frage, die etwa in die ähnliche Richtung drückt. Hallo Martin, guten Abend.
+
+01:48:36.202 --> 01:48:57.542
+<v SPEAKER_14>Hallo, ja und zwar generell zum Thema High Society und wenn dazu irgendwelche Dokumente auftauchen. Ob das jetzt ist Michael Schumacher, wie viele Punkte hat er in Flensburg oder wer teilt wie sein Vermögen, ist ja schon mal spazierfahrend von der High Society. Also ein Kleinkram, der halt auch an den Nachrichten auftauchen könnte.
+
+01:48:58.402 --> 01:49:55.122
+<v SPEAKER_4>Ja, also es gibt keine Beispiele jetzt, wo jemand uns den Flensburger Bericht geschickt hat von irgendwem oder irgendwas in der Art. Aber wir haben natürlich auch schon Dokumente zu prominenten Persönlichkeiten oder zu Leuten, die sich im politischen Umfeld bewegen. Da ist ja zum Beispiel das Beispiel, was wir vorhin hatten mit den jungen Vertretern der CDU. Das ist ja eines der Beispiele, wo aus dem politischen Umfeld transparent wird, was da so gespielt wird. Das hängt wie immer, wie alle anderen Dokumente auch davon ab, ob sich jemand motiviert, was einzusenden. Und wer hat denn überhaupt von irgendeinem prominenten den Flensburger Bericht und hat gleichzeitig die Motivation, unsere Webseite zu besuchen, nimmt das Ding dann auch noch mit nach Hause, hat, wenn er zu Hause ankommt, immer noch die Motivation, die Webseite zu besuchen und das da hochzuladen. Das ist alles eine Frage davon, auch was derjenige davon hat. Die Motivation ist bei dieser ganzen Sache immer eine große Frage.
+
+01:49:55.622 --> 01:50:13.182
+<v SPEAKER_14>Und die moralische Sache im Prinzip dahinter, dass es dann auch irgendwie eben halt ein bisschen zu weit gehen könnte oder dass es halt auch ein bisschen an der Serisität von Wikileaks kratzen könnte, wenn da halt eben hochherne Prominente ausspioniert werden, im weiteren Sinne.
+
+01:50:13.202 --> 01:50:35.262
+<v SPEAKER_4>Also ich denke, dass das, was an unserer Reputation kratzen könnte, wäre, wenn wir irgendwann ertappt werden, dass wir filtern und bestimmte Sachen bevorzugen, während wir andere eben beiseitekehren. Das ist das, wo ich sehe, dass ich einen Ruf verlieren könnte bei dem, was wir machen. Das andere sind halt Sachen, die müssen sich einpendeln.
+
+01:50:35.282 --> 01:50:43.522
+<v SPEAKER_14>Also das heißt, wenn ihr jetzt Berichte von irgendwelchen Stalkern bekommt, dann werdet ihr das auch nachheben.
+
+01:50:43.542 --> 01:50:52.042
+<v SPEAKER_4>Ein Bericht von einem Stalker würde voraussetzen, dass der Stalker den selbst verfasst hat. Das ist ein selbst verfasstes Dokument und ist für uns nicht weiter relevant, weil das kein Dokument ist in dem Moment.
+
+01:50:52.062 --> 01:51:05.322
+<v SPEAKER_14>Der hat natürlich noch einen Anhang mit dran. Aber so im weiteren Sinne, wenn es jetzt einen Stalker von einem Prominenten gibt, der irgendwie die Post durchwühlt oder so, dann würdet ihr selbstverständlich auch dem nachheben.
+
+01:51:05.342 --> 01:51:08.002
+<v SPEAKER_3>Das ist schon wie eine hätte-wäre-wenn-Diskussion.
+
+01:51:08.022 --> 01:51:13.282
+<v SPEAKER_4>Sehr konstruiertes Beispiel leider. Das lässt sich nicht so beantworten.
+
+01:51:14.122 --> 01:51:17.182
+<v SPEAKER_5>Aber im Prinzip, ihr würdet über euch eure Sachen auch veröffentlichen?
+
+01:51:17.422 --> 01:51:21.102
+<v SPEAKER_4>Ja, das hatten wir ja auch schon. Also es gibt dieses Beispiel.
+
+01:51:21.122 --> 01:51:22.782
+<v SPEAKER_5>Also auch euch persönlich jetzt?
+
+01:51:22.802 --> 01:52:12.342
+<v SPEAKER_4>Ja, wir haben ja diesen Paypal-Account gehabt, der momentan inaktiv ist, aber bald hoffentlich wieder zur Verfügung steht, auf dem wir Spenden entgegennehmen können. Wir bedanken uns dann immer mit einer Mail an die Spender und haben bei einer dieser Mails, die glaube ich an 60 Leute oder so rausging, standen die alle in dem CC-Feld von der Mail drin und nicht im BCC-Feld. Somit konnte jeder, der diese Mail empfangen hat, sehen, wer sonst noch gespendet hatte im selben Zeitrahmen und das hat dann keine Stunde gedauert. Und uns hat jemand diese Mail zugeschickt als Leak und wir mussten dann diesen Leak publizieren, der quasi einen Teil unserer Unterstützung offengelegt hat. Aber das ist genauso konsequent. Das, was wir machen, müssen wir das genauso konsequent behandeln. Da gibt es auch von unserer Seite, auch wenn jetzt jemand heute etwas über mich irgendwie offenlegt, gibt es keine Möglichkeit, dass ich mir überlege, das doch nicht zu publizieren.
+
+01:52:12.362 --> 01:52:17.562
+<v SPEAKER_5>Das heißt eigentlich der beste Weg, gegen euch vorzugehen, ist möglichst euch allen hinterher zu spionieren und alles zu veröffentlichen.
+
+01:52:18.322 --> 01:52:30.762
+<v SPEAKER_4>Ich glaube nicht, dass man damit gegen uns vorgeht, ernsthaft. Das Einzige, was dabei rauskommen könnte, ist, dass jemand beführt, wie viel ich für das Projekt arbeite. Also das würde etabliert werden über meine Verfolgung. Das wäre eher positiv.
+
+01:52:32.942 --> 01:52:46.382
+<v SPEAKER_14>Mal noch eine andere Frage. Jetzt wo die Wahlen vor der Tür stehen, wird da irgendwie bemerkt, dass auch mehr Dokumente sozusagen wahlintern extra sich anhäusend geben, um einer anderen Partei vor den Karten zu kippen.
+
+01:52:49.102 --> 01:53:32.162
+<v SPEAKER_4>Das gibt's. Also wir haben schon einige Dokumente aus dem Wahlumfeld bekommen in der letzten Zeit. Und wir haben ja auch diese Most Wanted Liste, die haben wir noch gar nicht erwähnt. Also wir haben eine Liste zusammengestellt mit Dokumenten, die verschiedenste Menschen auf der Welt gerne sehen möchten. Also sehr viele Organisationen, die gesagt haben, wir wissen von dem und dem Dokument, wir versuchen das seit Jahren zu bekommen und wir hätten das sehr gerne. Diese Liste ist international. Ich glaube, es sind über 30 Länder der Welt vertreten. Und das geht einmal querbeet durch die Art von Dokumenten, die es gibt. Auf dieser Liste stehen auch Dokumente, die jetzt im Umfeld dieser Wahl zum Beispiel relevant wären. Also ob das jetzt irgendwie die Fadenbücher von Frau von der Leyen sind oder die Stasi-Akte von Angela Merkel oder sowas in der Art.
+
+01:53:32.182 --> 01:53:34.422
+<v SPEAKER_5>Die Toll-Collects-Verträge sind wahrscheinlich auch immer noch drauf.
+
+01:53:34.442 --> 01:54:00.862
+<v SPEAKER_4>Ja, die stehen auch noch mit drauf. 17.000 Seiten. Natürlich ist jeder, der zu uns kommt und uns ein Dokument gibt, in irgendeiner Art und Weise motiviert. Der kann auch motiviert sein, dass er extrem frustriert ist, weil sein Chef ihn schlecht behandelt hat oder so. Aber es heißt nicht, dass diese Motivation schlecht ist. Sondern das heißt, dass ein Mensch durch irgendetwas getriggert wurde, um etwas transparent zu machen für das Wohl der Gesellschaft in dem Moment. Und das ist das, was unterstützt werden muss eben.
+
+01:54:00.882 --> 01:54:03.082
+<v SPEAKER_3>Martin, Frage beantwortet, uns läuft jetzt langsam die Zeit weg.
+
+01:54:04.522 --> 01:54:05.942
+<v SPEAKER_4>Ja danke auch, tschüss.
+
+01:54:05.962 --> 01:54:08.522
+<v SPEAKER_3>Wir schaffen noch ganz schnell Carsten. Hallo Carsten, guten Abend.
+
+01:54:08.542 --> 01:54:09.362
+<v SPEAKER_1>Hallo, guten Abend.
+
+01:54:09.382 --> 01:54:10.162
+<v SPEAKER_3>Los, fix.
+
+01:54:10.182 --> 01:54:15.102
+<v SPEAKER_1>Okay, also ich habe eine ganz allgemeine Frage. Und zwar habt ihr am Anfang gesagt, dass ihr halt die Dokumente nicht löschen könnt.
+
+01:54:15.282 --> 01:54:16.402
+<v SPEAKER_4>Ja.
+
+01:54:16.402 --> 01:54:31.482
+<v SPEAKER_1>Und was ist denn jetzt, wenn ihr was reingestellt habt und irgendwann merkt, dass es vielleicht doch falsch ist oder manipuliert ist oder so, aber später halt, nachdem ihr es reingestellt habt, könnt ihr dann noch irgendwas machen?
+
+01:54:31.502 --> 01:55:30.462
+<v SPEAKER_4>Wir publizieren ja nicht ein Dokument, ohne dass das Dokument einen Kontext bekommt. Also jedes Dokument hat diesen sogenannten Lick Descriptor. Und auf dem Lick Descriptor steht eine Zusammenfassung des Dokuments. Da steht eine Beschreibung, die die Quelle des Dokuments uns unter Umständen gegeben hat und weitere Kontextinformationen. Unter anderem würde da stehen, ob das Dokument echt ist oder eine Fälschung ist. Im schlimmsten Fall würden wir feststellen, wir haben eine Fälschung als echt markiert und müssen diese Beschreibung dann ändern und sicherstellen, dass die Änderung dieser Beschreibung kommuniziert wird zu allen Leuten, die es mitbekommen haben. Das wäre was, wo wir uns dann natürlich in dem Moment einen Fehler eingestehen müssten. Andererseits, wenn es eine Fälschung ist, genau wie bei dem Steve Jobs Dokument, jede Fälschung oder jeder Versuch an einer Fälschung hat er natürlich auch seine eigene Geschichte. Und dann in dem Moment wird interessant, warum gibt es diese Fälschung, was war die Motivation dahinter, das zu fälschen, was hat jemand versucht. Und damit kommt man dann in einen ganz anderen Themenbereich.
+
+01:55:30.482 --> 01:55:49.702
+<v SPEAKER_3>Ein kleiner Exkurs in die Welt von Wikileaks.de. Carsten, danke dir für den Anruf. Fritz.de klicken, da gibt es den Podcast der Sendung, die gibt es genauso unter chaosradio.ccc.de und ansonsten wikileaks.org ist die Adresse. Daniel Schmidt war bei uns von Wikileaks. Frank vom ccc hat noch zwei Ansagen zu machen, die wir noch schaffen. Guckst du mich an? Ansagen, Ansagen, Ansagen.
+
+01:55:49.722 --> 01:56:08.142
+<v SPEAKER_5>Kongress. Kongress hatten wir. Machen wir gerne nochmal. Klar. Also, Kongress zwischen Weihnachten und Neujahr in Berlin. Im Kongresszentrum am Alex, der jährliche Kongress des Chaos Computer Clubs. Mit ganz vielen Vorträgen, Workshops, Feiern, Abhängen, Leute treffen und Spaß haben.
+
+01:56:08.162 --> 01:56:10.722
+<v SPEAKER_3>Und am 12. September Demo nicht vergessen.
+
+01:56:10.742 --> 01:56:19.642
+<v SPEAKER_4>Die Freiheits-Stadt-Angst-Demo in Berlin. 15 Uhr geht es los. Könnt ihr im Netz auch alles nachlesen. Es wäre extrem wichtig, dass alle kommen und jeder noch 10 Leute mitbringt. Mindestens.
+
+01:56:19.842 --> 01:56:39.222
+<v SPEAKER_3>Euch vielen Dank fürs Zuhören. Das war mein letztes Chaos-Radio, weil ab demnächst wird der Kollege Markus Richter das übernehmen, weil ich einfach keine Zeit mehr habe, das zu machen. Hat extrem viel Spaß gemacht. Ich höre auf jeden Fall weiterhin rein. Gleich geht es weiter mit dem Kollegen Smith & Smart, die hier gigantische Beats bauen. Und da wir gerade beim Leaken sind, Kollege Zane Low von BBC hat gestern Nacht die neue Massive Attack gespielt. Hier ist sie.

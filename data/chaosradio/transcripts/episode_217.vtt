@@ -1,0 +1,1213 @@
+WEBVTT
+
+00:03:15.832 --> 00:04:07.732
+<v SPEAKER_2>Und damit sehr geehrte Damen und Herren, herzlich willkommen zum Chaosradio 228 aus dem Chaos Computer Club in Berlin. Genauer gesagt in der Marienstraße 11. Ihr habt jetzt noch bis Mitternacht Zeit hier vorbei zu kommen, wenn ihr wollt euch das Ganze live anzugucken. Ihr könnt das auch im Stream machen unter streaming.media.ccc.de und ich frage mich jedes Mal, wenn ich das sage, hat es überhaupt Sinn, das an dieser Stelle zu sagen, weil wenn ihr das hört, guckt ihr den Stream doch eh. Aber vielleicht heute auch den Podcast und dann könnt ihr es beim nächsten Mal live machen. Damit zum eigentlichen Thema. Und zwar machen wir ausnahmsweise mal was Aktuelles. Und in dieser Woche gab es ja die tolle Nachricht, dass das Internet kaputt war. Also nicht nur eine Sache, sondern ganz viel. Was auch ein bisschen komisch ist, wie ich gerade feststelle, ist, dass ich mich selber höre. Ich hoffe, das ist in der Aufzeichnung nachher auch noch drin, damit man die komischen Dinge sagt. Bitte was?
+
+00:04:07.752 --> 00:04:10.132
+<v SPEAKER_3>Hast du auf deinem Rechner den Stream offen?
+
+00:04:10.152 --> 00:05:23.472
+<v SPEAKER_2>Ich glaube eigentlich nicht. Das ist ja verrückt. Zum ersten Mal in einer Live-Sendung Live-Technikprobleme. Das ist ganz hervorragend. Mal gucken, was wir hinkriegen. Also in diesem Sinne, wie wir gerade gezeigt haben, das Internet ist manchmal auch kaputt. Und da war es so, es war eigentlich ganz typisch, Twitter geht nicht. Man überlegt, wo soll ich denn jetzt twittern, dass Twitter nicht geht. Dann denkt man, geht man halt so lange shoppen. Dann geht Amazon auch nicht. Und dann erfährt man Tage später, ja, es war eine DDOS Attacke aus dem Botnetz des Internet of Things. Und was das genau bedeutet, das wollen wir heute hier auseinandernehmen. Dazu begrüße ich recht herzlich Sokrates. Hallo und guten Abend. Hallo. Du musst ins Mikrofon ansprechen, du darfst nicht nur winken. Benthor. Und wir wollen heute so sagen, wie wir das Chaosradio ab und zu machen, so ein Thema von ganz vorne auseinandernehmen. Und das heißt sozusagen, diesen schönen Satz, den ich gerade gesagt habe, den möchte ich jetzt die einzelnen Fachbegriffe im Laufe der nächsten zwei Stunden erläutern und die damit zusammenhängenden technischen und gesellschaftlichen Konsequenzen erörtern. Fangen wir also ganz vorne an. Was ist denn eigentlich ein DDOS?
+
+00:05:27.872 --> 00:06:04.772
+<v SPEAKER_3>Ein DDOS steht für Distributed Denial of Service, also eine verteilte Unterbrechung der Dienste. Wenn man es wörtlich übersetzt. Hintergrund ist, du hast jetzt vorhin Twitter genannt. Ich möchte auf die Webseite von Twitter gehen und das geht nicht. Also ich kann den Dienst Twitter nicht erreichen. Das kann mehrere Gründe haben. Was jetzt die letzten Tage passiert war, ist, dass man die eigentliche Adresse von dem Server von Twitter nicht mehr auflösen konnte. Das heißt, wenn ich jetzt auf diese Webseite gehen möchte mit meinem Rechner oder mit meiner App auf dem Handy, ist da irgendwie ein Hostname drin. So twitter.com zum Beispiel oder twitter.de. Das muss auf eine Adresse aufgesetzt werden.
+
+00:06:04.792 --> 00:06:30.792
+<v SPEAKER_2>Warte, warte, warte, warte. Du fängst schon wieder zwei Sachen auf einmal zu erklären. Erstmal nur DDOS. Ich möchte noch kurz erklären, warum das so besonders ist, und ich jetzt schon darauf hinweise. Weil normalerweise, wenn irgendwas im Internet kaputt ist, und dann sagt mir jemand, okay, das war ein DDOS, dann ist es halt immer ein Dienst. Das Besondere, was ja passiert ist, ist, dass es mehrere waren. Warum es mehrere waren, dazu müssen wir später kommen. Erstmal nur erklären, was ist DDOS.
+
+00:06:31.532 --> 00:07:12.312
+<v SPEAKER_3>DDOS heißt, ich überlasse einen bestimmten Dienst oder einen einzelnen Dienst so, dass er nicht mehr erreichbar ist. Das heißt, ich überflute ihn mit Anfragen, die er bearbeiten muss oder auf die er antworten möchte. Und ich mache so viele Anfragen, die sinnlos sind und Ressourcen auf den Servern brauchen, dass die normalen Webseitenbesucher zum Beispiel die Webseite nicht mehr aufrufen können. Klassisches Beispiel, Webshop. Wenn ich die Seite von dem Webshop so oft abrufe, dass der Webserver ununterbrochen damit beschäftigt ist, diese Anfragen zu beantworten, kann ich als normaler Besucher diese Seite nicht mehr benutzen, weil der Server einfach überlastet ist. Es gibt zu viele gleichzeitigige Anfragen, die von ganz vielen anderen Rechnern kommen. Deswegen ist Distributed die Null-of-Service-Attacke.
+
+00:07:12.332 --> 00:07:24.832
+<v SPEAKER_2>Das heißt aber sozusagen, die einzelne Anfrage ist nichts Schlimmes. Also wenn ich eine einzelne Anfrage nehme, dann ist das für den Webserver was ganz Normales. Das ist kein Hackingversuch oder sowas, sondern das ist einfach ein ganz normales...
+
+00:07:27.172 --> 00:08:06.112
+<v SPEAKER_3>Ich greife die Verfügbarkeit der Dienste an. Availability wäre auf Englisch das Wort dafür, ist auch ein Begriff, der in der Sicherheitsforschung durchaus als sicherheitsrelevant gesehen wird. Denn wenn ein Dienst nicht mehr verfügbar ist, kann ich ihn nicht benutzen. Das heißt, ich habe zum Beispiel einen Verlust von Einnahmen. Die einzelne Anfrage, die da drin ist, eine von diesen vielen kleinen Anfragen, die kann harmlos sein, dann brauche ich halt mehr Anfragen. Oder ich sorge dafür, dass ich weniger Anfrage habe, die aber sehr viel Rechenleistung auf den Servern brauchen. Das ist auch eine Möglichkeit, einen Dienst zu überlasten. Aber was da jetzt passiert ist, war, dass ich ganz, ganz, ganz viele Rechner im Internet hatte, die Antworten oder die Anfragen an diese Server geschickt haben.
+
+00:08:06.132 --> 00:08:12.472
+<v SPEAKER_2>Und wir kommen ja nachher noch darauf, was jetzt konkret passiert ist, aber was sind denn sozusagen beliebte Anfragen? Wie kann man sich das vorstellen?
+
+00:08:12.492 --> 00:08:56.192
+<v SPEAKER_3>Beliebte Anfragen, das ist das Einfachste, was ganz viel ist, ist, dass einfach Netzwerkdaten an die Server geschickt werden. Das heißt, auch die Internet-Server sind ja mit Netzwerkkabeln, mit begrenzter Bandbreite angeschlossen. Die können 1 Gigabit haben, wie so die Rechner hier, oder 10 Gigabit. Das ist aber letztlich egal, wie viel das ist. Wenn ich einfach so viele Daten dahinschicke, dass diese eine Verbindung überlastet ist, dann kann ich nichts mehr auf diesem Server aufrufen, weil die Leitungen einfach dicht sind. Und das erreiche ich, indem ich bestimmte Netzwerkdienste, die es im Internet gibt, teilweise historische, alte, auf eine bestimmte Art und Weise anspreche, mit gefälschten Absenderadressen zum Beispiel, sodass alle Antworten an diesen einen Server gehen, der überlastet wird. Das nennt sich dann, kann man nachher nochmal genauer erklären, Reflection Attacke.
+
+00:08:56.732 --> 00:09:10.532
+<v SPEAKER_2>Achso, das heißt, ich wollte jetzt gerade fragen, viele stellen eine Anfrage, aber das muss man gar nicht machen, sondern das ist schon der zweite Schritt eigentlich. Ich stelle an viele Rechner eine Anfrage, und die denken, es kommt von einem anderen Unterstützer.
+
+00:09:10.552 --> 00:10:29.512
+<v SPEAKER_3>Genau, es gibt da mehrere Möglichkeiten. Die einfachen Botnetze waren eben so, ich habe ganz viele gekaperte Rechner, und diese Rechner schicken mit so viel Bandbreite, wie sie haben, Anfragen an einzelne Server und sorgen dafür, dass die überlastet sind. Dadurch, dass sie wirklich Rechenleistungen verbrauchen, indem sie Anfragen stellen, zum Beispiel eine aufwändige Suche im Webshop machen. Es gibt viele Webshops, die nicht so gut darauf reagieren, wenn ich alle Artikel, die sie haben, auf einer Seite auflisten lasse. Wenn ich dann einfach nach und suchen kann, und in allen Artikeln, wo und vorkommt, die auf der Suchseite kommen, braucht das sehr viel Leistung auf der Serverseite. Wenn das sehr viele Leute parallel machen, das können auch schon 20 sein, das reicht dann manchmal, ist der Server eben ausgelastet. Das andere ist eben, dass ich wirklich die Netzwerkleitung dicht mache, einfach mit purem Daten. Es gibt zum Beispiel Dienste, die eigentlich zum Testen da sind. Da schicke ich einen einzelnen Byte hin, und die antworten mit einem bis 500 Bytes als Antwort. Also ich schicke einen Byte an einen bestimmten Port, und ich bekomme eine zufällige Anzahl von Zeichen mit zufälligem Inhalt zurück. Wenn ich jetzt die Absenderadresse fälsche, dann geht diese Antwort nicht an mich, sondern an einen Obfass, was ich mir ausgesucht habe. Das heißt, ich kann mit sehr wenig Bandbreite dafür sorgen, dass jemand anderes überlastet wird. Oder ich schicke eben selber von ganz vielen Bots mit deren maximaler Bandbreite auf ein Ziel.
+
+00:10:29.532 --> 00:10:57.272
+<v SPEAKER_2>Die Frage, wo die ganzen vielen Rechner herkommen, da kommen wir noch zu. Was ich jetzt noch wissen wollen würde, ist, dass du gesagt hast, okay, für einen einfachen Webshop, da reichen irgendwie 20, aber man hört ja wirklich manchmal, dass auch größere Webangebote davon in die Knie gezwungen werden. Was sind denn so Größenordnungen, wenn man an Dienste ran will, die wir alle kennen? Also wie gesagt, die aktuelle Attacke ist ja sozusagen auch noch einmal um die Ecke, die nicht, sondern wenn du direkt auf so ein großes Ding gehst, um das auszumachen, von was sprechen wir da?
+
+00:10:57.292 --> 00:11:48.432
+<v SPEAKER_3>Es kommt sehr darauf an, wie die Dienste aufgebaut sind. Viele von den großen Diensten sind mittlerweile weltweit verteilt, haben sehr, sehr viele Standorte. Aber wenn ich mir das angucke, typische Bandbreiten, mit denen Dienste an einem Internetknoten angebunden sind, sind zum Beispiel 100 Gigabit. Oder auch mal mehrere von diesen Leitungen. Das ist so der Standard für alles, was größer ist. 10 Gigabit ist sehr weit verbreitet, 1 Gigabit sind kleinere Dienstleister normalerweise. Das heißt, wenn ich da einen Angriff mit 40, 50 Gigabit pro Sekunde mache, dann haben die schon ordentlich zu tun, weil die Leitungen natürlich auch nicht unendlich viel Kapazität als Rest haben. Die kosten ja alle Geld. Das heißt, ich versuche die Leitungen so zu kaufen, dass sie im Mittel gut ausgelastet sind, ich aber immer Raum nach oben habe für zum Beispiel Kundenanfragen, wenn ich gerade eine Werbeanzeige geschaltet habe oder so. Oder wenn mal mehr Bedarf ist.
+
+00:11:48.452 --> 00:11:55.472
+<v SPEAKER_2>Aber jetzt hast du die Bandbreite gesagt, was bedeutet das in Rechnern? Also wie viele Maschinen müssen an der Anfrage stellen?
+
+00:11:55.492 --> 00:12:02.512
+<v SPEAKER_3>Das kommt halt sehr auf die Attacke an. Wir hatten jetzt bei dem, was jetzt die letzten Wochen passiert ist, das spricht man davon, dass es etwa 150.000 waren.
+
+00:12:05.472 --> 00:12:06.552
+<v SPEAKER_2>So gratis, wolltest du dazu was sagen?
+
+00:12:07.372 --> 00:12:24.592
+<v SPEAKER_5>Ja, das ist sehr differenziert. Das ist eine einfache Darstellung jetzt. Aber du kannst auch eine eigentliche Leitung haben, wenn du einen guten Upstream-Provider hast, also einen Provider, der hinter dir ist, dann kann der das auch wegfiltern. Das heißt, du kannst auch eine kleine Leitung haben und einen riesen DDOS abfangen.
+
+00:12:26.152 --> 00:12:36.132
+<v SPEAKER_3>Ja, also da ist ja der Trick. Wenn dieser Internetknoten für dich den Traffic schon wegwirft, bevor er zu dir kommt, ist deine Leitung halt nicht voll. Das bieten jetzt auch immer mehr als Dienstleistungen an.
+
+00:12:36.152 --> 00:12:43.472
+<v SPEAKER_2>Weil, wie soll man das sagen, beilern die das schon so zum normalen Handwerkszeug des Netzplokierens?
+
+00:12:43.492 --> 00:13:40.172
+<v SPEAKER_3>Also es gibt da ganz viele verschiedene Varianten, wo das benutzt wird. Klassisch sind Online-Gamer, die ihre Gegner eben aus dem Netz rauswerfen, die sitzen halt irgendwie zu Hause. Und wenn ich dann ganz viele Daten auf diese arme DSL-Leitung schicke, dann ist der halt offline und aus dem Spiel. Das sind meistens kurze Attacken, fünf bis zehn Minuten. Es gibt dann auch Attacken, die laufen so ab, dass man mal so eine halbe Stunde einen Webshop zum Beispiel aus der Betrieb setzt, dann eine E-Mail hinschreibt, wenn ihr nicht drei Bitcoins überweist, dann machen wir das die nächsten vier Tage oder vier Wochen. Und man bekommt dann so eine kurze Attacke, sieht, okay, das funktioniert wirklich, und danach geht es halt rund. Und was dann passiert, ist, naja, entweder man ist halt eben offline oder man hat eben Provider oder Internet Exchange Points, also Internetknoten, mit denen man da angeschlossen ist, die in der Lage sind, diesen Angriffstraffic zu filtern, das heißt wegzuwerfen, bevor er bei mir ankommt.
+
+00:13:40.192 --> 00:13:48.712
+<v SPEAKER_2>Ist ja leicht zu erkennen, also macht man dann sowas wie, okay, wenn 50 Rechner genau dieselbe Anfrage stellen, dann werfe ich das weg oder wie macht man das?
+
+00:13:51.372 --> 00:14:10.212
+<v SPEAKER_5>Das ist sehr kompliziert. In den Paketen, die da kommen, gibt es DNS-Anfragen zum Beispiel, wo du dann merkst, okay, der kommt jetzt mit dem Identifier oder sowas. Das ist sehr komplex. Aber manchmal kannst du es in den Paketen schon sehen.
+
+00:14:10.832 --> 00:14:43.732
+<v SPEAKER_3>Also ganz typisch ist, dass diese Pakete eine bestimmte Größe haben, oder dass sie von bestimmten Quellen kommen. Wenn ich ein Anbieter bin, der in Deutschland einen Webshop hat, dann kann man mit Tricks arbeiten und sagen, ich werfe alles weg, was nicht aus Deutschland oder den Nachbarländern kommt. Weil mein Kerngeschäft läuft dann auch weiter. Das heißt, die Kunden, die hier sind, erreichen mich noch. Aber jemand, der jetzt in Hongkong ist oder in China oder in USA, wird meinen Server nicht mehr erreichen. Aber damit filtre ich dann eben sehr, sehr viele von diesen Angriffen weg, weil die Server oder die angreifenden Rechner natürlich weltweit verteilt sitzen.
+
+00:14:43.752 --> 00:15:49.272
+<v SPEAKER_2>Ist nicht so schlimm. Okay, Technologien gibt es dafür. Was man als Bild ja irgendwie gut verwenden kann für DDOS, ist ja Sitzblockade. Im Prinzip kann man ja sagen, okay, das ist einfach zu sagen, da ist viel von etwas, was alleine nicht gefährlich ist, und das führt dann dazu, dass man irgendwo nicht mehr hinkommt. Das ist ja sozusagen eine Sitzblockade eigentlich. Und es war ja auch mal eine Weile, wo das wirklich so benutzt wurde, wo dazu aufgerufen wurde, Leute, also da war sozusagen, wir kommen gleich noch zu Botnetzen, und das ist alles sozusagen technisch gemacht worden, wo halt sagen, wo ich aufgerufen würde, das von Hand zu machen. Also Leute, geht bitte abends so und so, um die und die Uhrzeit auf die Webseite, und ruft die alle auf, weil dann stürzt ihr zusammen. Und wie seht ihr denn jetzt DDOS an sich? Ist das etwas, was tatsächlich auch als, sagen wir mal, Mittel des demokratischen Meinungsausdrucks einer Online-Demonstration sozusagen weiterhin machbar bleiben sollte, oder ist es gut, wenn man dafür einfach sagt, okay, das ist ein technisches Problem oder ein technischer Missbrauch, und wir wollen das eigentlich abschaffen. Und deswegen sozusagen technische Lösungen drauf werfen, eventuell.
+
+00:15:49.292 --> 00:16:17.172
+<v SPEAKER_1>Naja, also der Fakt ist halt, dass, das war vielleicht mal vor fünf bis zehn Jahren eventuell ein legitimes Mittel, aber dass die DDOS-Attacken, die heutzutage noch passieren, halt zu, weiß ich nicht, 99 Prozent, tatsächlich automatisiert von Einzelpersonen gesteuert sind, sagt für mich eigentlich, dass wir an der Stelle ansetzen sollten und versuchen da technische Möglichkeiten zu schaffen, das zu unterbinden.
+
+00:16:18.052 --> 00:16:26.832
+<v SPEAKER_2>Aber das heißt, du sagst, wenn ich das ein bisschen interpretiere, was du gesagt hast, ist, du würdest sagen, das wäre als demokratische Meinung, okay, solange es von Hand gemacht wird?
+
+00:16:26.852 --> 00:16:28.112
+<v SPEAKER_1>Würde ich so sagen, ja.
+
+00:16:28.132 --> 00:17:08.372
+<v SPEAKER_3>Du hast halt eine Reihe von Problemen, die da reinkommen. Das eine ist, du weißt nicht, welche Dienst du eventuell noch mit abschießt, weil es ist nicht so, dass auf einem Server nur ein Dienst ist. Gerade wenn das was kleineres ist, kann da alles Mögliche drauf sein und die leiden dann wirklich drunter. Das andere ist, und das halte ich für ein bisschen gefährlicher sogar noch, durch die Notwendigkeit, sich gegen diese ganzen DDOS-Attacken zu verteidigen, kommen jetzt im Internet ganz viele Dienstleister aus dem Boden, auch an den Internet Exchange Points zum Beispiel, die da Filterlösungen für anbieten. Das heißt, wir bauen da gerade eine Infrastruktur auf, die Traffic filtern kann, nach beliebigen Kriterien, weil die Kriterien weiß man vorher nicht, deswegen muss man diese Filter sehr, sehr weit fassen.
+
+00:17:09.792 --> 00:17:12.432
+<v SPEAKER_2>Also du meinst sozusagen, dann hast du Angst, dass es eine Überwachung wird?
+
+00:17:12.672 --> 00:17:32.112
+<v SPEAKER_3>Na ja, keine Überwachung, aber es kann zum Beispiel heißen, dass übermorgen die Unterhaltungsindustrie feststellt, wir haben jetzt hier so bestimmte Webseiten, die unserer Meinung nach illegale Dinge vertreiben, wir hätten jetzt gerne mal blockiert, dass die nichts mehr auf dem Markt machen können im Internet. Dann kann man nicht argumentieren, wir haben da keine Infrastruktur für.
+
+00:17:32.232 --> 00:17:36.472
+<v SPEAKER_2>Das deutsche Kabelfernsehen sagt, Netflix ist ja eigentlich auch so eine Art DDOS-Attacker.
+
+00:17:36.492 --> 00:17:58.232
+<v SPEAKER_3>Ja, nicht Netflix, aber es gibt halt ja in Deutschland vielleicht nicht irgendwie die Genehmigung für bestimmte Filme oder Videos, dass die jetzt schon freigegeben sind, ähnlich wie die Regionalkurse damals bei der DVD. Dann sorgen wir jetzt mal dafür, dass man die englischen Original-Serien hier auf gar keinen Fall gucken kann, weil da gibt es keine Verträge für, bzw. wir haben den Exklusivvertrag. Also müssen wir dafür sorgen, dass man die NVC-Seite nicht mehr aufrufen kann.
+
+00:18:01.272 --> 00:18:15.932
+<v SPEAKER_5>Ja, der größere Punkt ist, dass wir dann wieder so eine blöde Oettinger-Debatte kriegen mit, ja, wir müssen irgendwie die Autobahn separieren, irgendwie für bestimmte Dienste. Und das ist halt ein falscher Weg von daher.
+
+00:18:16.492 --> 00:18:26.972
+<v SPEAKER_2>Aber wie ist denn dann der richtige? Einerseits sagt ihr sozusagen, wir wollen schon, dass DDOS technisch unterbunden wird. Andererseits ist aber auch gerade die Gefahr, jetzt bin ich durcheinander.
+
+00:18:27.572 --> 00:18:54.152
+<v SPEAKER_1>Okay, da gibt es halt verschiedene Wege. Einerseits kann man halt, wo wir noch gleich zukommen werden, verhindern, dass sogenannte Amplification-Attacks halt funktionieren, indem man die Software so sauber schreibt, dass zum Beispiel nicht einer mal hingehen kann und nur noch einen Byte an einen Dienst schickt, der dann, weiß ich nicht, 500 Bytes an einen anderen Dienst schickt. Da kann man mit Software-Design herangehensweise kann man das unterbinden.
+
+00:18:54.712 --> 00:19:04.832
+<v SPEAKER_2>Ich will es jetzt nicht im Detail so sagen, rausgeweitet haben, aber ist das so ein Ding, wo ihr sagt, das ist theoretisch möglich, indem man sauberer als bis jetzt arbeitet und dann könnte das eigentlich nicht mehr passieren?
+
+00:19:04.852 --> 00:19:06.292
+<v SPEAKER_1>Genau.
+
+00:19:06.312 --> 00:19:21.692
+<v SPEAKER_5>Aber es ist ja auch so, dass dieser DDOS passiert ja durch defekte Hardware meistens. Software auf Hardware. Ja genau, Software auf Hardware. Und ich denke, dass wir da ansetzen sollten, also dass wir einfach versuchen sollten, saubere Hardware zu haben.
+
+00:19:21.992 --> 00:19:50.112
+<v SPEAKER_2>Ok, also sagen, es geht nicht so darum, eine DDOS-Attacke an dem Punkt zu erkennen, wo sie ankommen kann. Ihr seid also nicht Fans davon, dort irgendwie Schutzmechanismen einzurichten, weil die immer auch in der Filterung enden können. Sondern eher das grundsätzliche Problem zu klären. Ok, dann müssen wir uns jetzt natürlich dem grundsätzlichen Problem anwenden und sagen, gucken woher die kommen. Jetzt fehlt es schon der Begriff Botnetz. Noch mal für Leute, die nicht wissen, was das ist. Was ist das? Ein sogenanntes Botnetz, was da passiert?
+
+00:19:50.372 --> 00:20:22.472
+<v SPEAKER_5>Ein Botnetz ist ein Netzwerk, also ein Zusammenschluss von Einzelgeräten, einfach Befehle ausführen und diese dann meist postbüßartig sind. Meistens sind das irgendwelche Computer Handys, was weiß ich, IoT-Devices, einen Virus oder irgendwas drauf haben, Mailware, die für eine gewisse Gruppe von Menschen irgendwelche Kommandos ausführt, also irgendwelche Datenpakete rausschmeißt oder so. Und damit passiert dann so ein DDOS.
+
+00:20:22.492 --> 00:21:04.952
+<v SPEAKER_3>Simpelser Fall. Die ganze Spam, die wir sehen, kommt von Ausbotnetzen häufig. Das heißt, ich hab irgendwelche Rechner, das ist jetzt irgendwie das Notebook, was vor mir hier liegt oder auf dem Schreibtisch steht, der Rechner. Auf dem ist irgendein Mailware drauf, irgendwas, was ich mir halt im Internet organisiert habe, weil ich auf einer Webseite war, die bösartige Werbung hatte oder weil ich keine Updates eingespielt habe oder oder oder. Die Software ist im Hintergrund und kontaktiert regelmäßig Comment and Control Server. Das heißt, Rechner, auf denen eine Liste von Befehlen ist, die die dann abarbeiten. So ein Befehl kann sein, schick mal die E-Mail an folgende Adresse mit diesem Absender. Oder schicke mir mal die Inhalte aus dem Adressbuch auf deinem Rechner. Oder schicke Daten an diesem Rechner mit diesem Port und diesem Dienst.
+
+00:21:04.972 --> 00:21:07.092
+<v SPEAKER_2>Das wäre dann sozusagen Teil einer DDOS Attacke.
+
+00:21:07.112 --> 00:21:25.452
+<v SPEAKER_3>Das kann dann Teil einer DDOS Attacke sein. Aber das sind jetzt erstmal einzelne Bots, die dann alle, weil sie dieselben Comment und Control Server abfragen, Botnetz genannt werden. Weil die arbeiten dann alle zusammen dieselben Listen ab. Das heißt, es gibt jemanden, der hat Rechner gekapert, die dann seine Befehle ausführen. Das heißt, zum Beispiel Webseiten angreifen.
+
+00:21:25.812 --> 00:21:29.812
+<v SPEAKER_2>Und sozusagen, die kaufen sich nicht Rechenkraft irgendwo und benutzen das da?
+
+00:21:29.832 --> 00:22:00.092
+<v SPEAKER_3>Teilweise kaufen sie sich das auch. Deswegen ist es sehr schwierig, solche Root-Server zu mieten, wenn man nicht irgendwie telefonisch erreichbar ist und so was. Das passiert oft, dass die dann da sich so einen Test-Server klicken und der wird dann eine Stunde oder einen Tag benutzt und dann nicht bezahlt und dann ist er wieder offline. Es gibt auch durchaus den Fall, dass sie sich auf Amazon irgendwelche Cloud-Services klicken mit gefälschten Kreditkarten oder so. Aber die Masse sind einfach Rechner, die eine Mailware drauf haben, die mit irgendwas infiziert sind.
+
+00:22:01.792 --> 00:22:38.952
+<v SPEAKER_2>Ich mache sozusagen einen Angriff, der eine Überlastung, der daraus besteht, dass ich eigentlich, ich nenne sie sich mal, ich versuche gerade ein Wort zu sagen, ich will es immer legal sagen, weil die einzelne Aktion ist ja sozusagen eigentlich nichts Schlimmes, sie wird nur dadurch schlimm, dass sozusagen ganz viele davon kommen. Was ist denn noch ein besseres Wort dafür? Technisch okay oder was sagt man dazu? Eine valide Anfrage sozusagen. Ich mache also etwas, in dem ich viele valide Anfragen stelle, die dann aber zu viel werden. Und das passiert, indem ich, indem ich, indem verschiedene Rechner gekapert werden, und zwar so viel, dass die dann so viel Traffic verursachen, dass da noch eine dicke Ladung voll sein kann. Soweit richtig?
+
+00:22:39.252 --> 00:22:52.132
+<v SPEAKER_3>Soweit richtig. Mit der Erweiterung noch. Es gibt eben Angriffe, die für eine Verstärkung von diesem Traffic noch sorgen. Das heißt, der einzelne Rechner macht gar nicht so viel. Und sorgt aber dafür, dass andere Server ganz viele Daten dahinschicken.
+
+00:22:53.012 --> 00:23:02.152
+<v SPEAKER_2>Das ist das, was du vorhin erzählt hast, sozusagen, mit der Verstärkung. Der gekaperte Rechner macht nicht direkt die valide Anfrage, sondern stellt eine valide Anfrage mit gefälschter Adresse.
+
+00:23:02.172 --> 00:23:02.452
+<v SPEAKER_3>Genau.
+
+00:23:02.472 --> 00:23:04.832
+<v SPEAKER_2>Und dann die Antwort davon geht an den eigentlichen Angriffspunkt.
+
+00:23:05.392 --> 00:23:40.192
+<v SPEAKER_3>Und deswegen ist es unheimlich schwer, die Quelle davon auszumachen, weil es sieht natürlich so aus, als würde sie von dem Opfer kommen, die Anfrage, die eigentliche. Deswegen ist dann Filtern auch manchmal ein bisschen doof, weil dann das Opfer selber nicht mehr ins Internet kommt oder Dienst nicht mehr aufrufen kann. Und da ist das Problem eben, dass es noch oft möglich ist, die Absenderadresse zu fälschen. Und da müssten im Prinzip die Provider alle ansetzen und müssten dafür sorgen, dass man aus ihren Netzen nicht mehr mit falschen Absenderadressen schicken kann. Das versuchen wir aber so in der RIPE-Community zum Beispiel und bei der IETF schon seit Jahren durchzudrücken, dass da mal ein bisschen mehr Leute ihre Netze besser im Griff haben.
+
+00:23:40.212 --> 00:24:00.552
+<v SPEAKER_2>Es gibt eine ganze Chaosradio-Folge, die erklären, was ein RIPE-Commitee in IETF ist. Ich weiß die Nummer gerade, die würde in den Show notes stehen, aber da ist morgens auch zu Gast gewesen, da könnt ihr es genau nachhören. Es sind kurz gesagt die Committees, die dafür sorgen, dass es Internet die Standards bekommt, die dazu führen könnten, dass es funktioniert. Sokrates hat gerade ganz schwer eingeatmet und gesagt, ah, also Absender kontrollieren, das ist ja, oder was möchtest du dazu sagen?
+
+00:24:00.572 --> 00:24:03.312
+<v SPEAKER_3>Ich glaube, für die TCP 38, wer es googeln möchte, oder für die Show Notes.
+
+00:24:03.332 --> 00:24:24.412
+<v SPEAKER_5>Ja, also es gibt so Kleinigkeiten an Sachen, wo das legitim sein kann, dass man das macht. Aber? Das könnte man auch anders lösen. Man müsste dann halt irgendwie andere Software schreiben, die das dann nicht macht. Ja, ist jetzt zu schwierig.
+
+00:24:24.692 --> 00:24:29.852
+<v SPEAKER_2>Was Mozart gerade gesagt hat, ist sozusagen, es ist möglich, einen Absender zu fälschen, und es müsste eigentlich so sein, dass das nicht mehr geht.
+
+00:24:32.912 --> 00:24:39.712
+<v SPEAKER_5>Der Ansatz ist richtig und super und toll, aber es gibt halt Software, die darauf aufbaut, dass genau diese Funktionalität existiert.
+
+00:24:41.172 --> 00:24:41.912
+<v SPEAKER_2>Wofür ist die gut?
+
+00:24:42.192 --> 00:25:00.112
+<v SPEAKER_5>Na, wenn ich jetzt eine Anfrage sende, wo ich weiß, dass die Antwort aber woanders hin soll, dann kann man dadurch was abkürzen. Also, was weiß ich, Beispiel, ich, äh, nehmen wir DNS. Ich will jetzt eine DNS-Anfrage stellen, die wo die Antwort aber woanders hin soll. Ja, aber das ist kaputt. Ja, ich weiß.
+
+00:25:00.132 --> 00:25:06.792
+<v SPEAKER_2>Aber ich wollte gerade fragen, das ist was, das klingt so wie, wir machen das, weil es geht, aber eigentlich war das nie so gedacht.
+
+00:25:06.932 --> 00:25:10.412
+<v SPEAKER_5>Ja, das ist genauso wie mit Mail. Mail funktioniert genauso, also in diesem Ding.
+
+00:25:12.152 --> 00:25:29.872
+<v SPEAKER_2>Also, können wir sozusagen das abkürzen und sagen, das ist was, wo das technisch sozusagen eine offensichtliche Lösung ist, aber wo sich Leute darüber streiten, wo es eine gute Idee ist, weil das System, so wie es ist, läuft gerade auch so gut? Ist das was, wofür wir mal ein eigenes Chaosradio machen sollen?
+
+00:25:29.892 --> 00:26:36.812
+<v SPEAKER_1>Man kann an der Stelle vielleicht ganz kurz sagen, das Internet ist eigentlich best effort. Das Internet ist eigentlich entstanden aus einem Netzwerk von Computern, die mal versuchsweise miteinander geredet haben. Und daraus sind noch viele von diesen Protokollen hervorgegangen. Wir versuchen mal miteinander zu reden. Wir haben uns noch nicht darüber Gedanken gemacht, wie man sich anschaut, dass derjenige, der vorgibt, dieser Absender zu sein, noch wirklich dieser Absender ist. Das beißt uns jetzt natürlich in den eigenen Hintern, weil wir Probleme haben mit Spam zum Beispiel. Da stehen irgendwelche Phantasie-Absender-Adressen drin und jeder hat schon mal so ein E-Mail gesehen. Das liegt daran, dass ein E-Mail nicht vorgesehen ist, designmäßig nicht vorgesehen ist, dass man sagen muss, also wirklich korrekt angeben muss, wo es herkommt. Dass da meine E-Mail-Adresse drinsteht, sorgt nur dafür, dass derjenige, der diese E-Mail bekommen hat, mir auch antworten kann. Also eigentlich wurde gedacht, es ist in meinem eigenen Interesse, dass ich meine E-Mail-Adresse nicht fälsche.
+
+00:26:38.132 --> 00:26:55.072
+<v SPEAKER_2>Ich wollte gerade sagen, das Internet ist so gebaut worden, dass man gedacht hat, der will ja nehmen etwas Böses. Man hilft sich auch. Im Prinzip wäre das eine schöne Idee, aber wir wissen jetzt auch, wenn man es richtig macht, würde man eigentlich das Ganze noch mal von vorn bauen wollen.
+
+00:26:55.092 --> 00:27:02.012
+<v SPEAKER_1>Das funktioniert anscheinend auch nicht. Man würde es eigentlich gerne machen.
+
+00:27:02.032 --> 00:27:24.612
+<v SPEAKER_3>Es gibt da einen bösen Spruch zu, dass das heute nicht mehr funktionieren würde, weil das Internet, wie wir es kennen, wurde von drei bis fünf Leuten ausgedacht am Anfang. Und jetzt sind das alles Komitees. Designed by committee. Es gibt Leute, die sagen, das, was an neuen Protokollen spezifiziert wird, ist alles so komplex, weil da so viele Leute mitreden, dass das eigentlich alles kaputt ist.
+
+00:27:25.612 --> 00:32:08.589
+<v SPEAKER_2>Gut, also wir halten mal fest. Es gibt DDOS-Attacken, valide Anfragen, die so viel sind, dass sie Dinge kaputt machen können, die aus Bordnetzen kommen, was eine Ansammlung von gekaperten Maschinen ist. Und das Internet ist so gestaltet, dass das überhaupt funktioniert, ist darin begründet, wie das Internet gewachsen ist. Aber besser machen können wir es auch nicht so genau. Dann kommen wir gleich zu der Frage, okay, jetzt wissen wir also, warum ich einen einzelnen Service abschießen kann. Aber es war ja sozusagen bei der Attacke, über die wir heute reden, so, da sind gleich mehrere in die Knie gegangen. Und warum das so ist, klären wir nach der Musik. Und die kommt von ADMB, heißt Master of the Sun und ist Teil des Chip-Pop. Nee, ich schlag's nach und sag's euch nach der Musik. Herzlich Willkommen zurück beim Chaos Radio 228, wo es um eine DDoS-Attacke aus einem Botnetz aus dem Internet of Things geht. Und wir haben gerade schon ein bisschen erklärt, was DDOS ist. Aber bevor ich jetzt weiter rede, ich hab vorhin eine ganz wichtige Sache vergessen. Also halb. Das ist ja live heute aus dem Chaos Computer Club. Das heißt, ihr könnt vorbeikommen. Und das ist auch, wir haben Publikum hier. Mal gucken, wie laut der Applaus gibt, den es machen kann. Herzlich willkommen. Ihr hört, da ist noch ein klein wenig Platz. Kommt vorbei, Marienstraße 11 ist die Adresse. Ihr könnt gerne hier mit dabei sein. So, herzlich willkommen zurück. Sokrates Bentorn Mutaks, guten Tag.
+
+00:32:09.629 --> 00:32:10.829
+<v SPEAKER_5>Moin.
+
+00:32:10.849 --> 00:33:09.409
+<v SPEAKER_2>Wir haben uns gerade schon, oder ich hab mir gerade schon von euch erklären lassen, was eine DDOS-Attacke ist. Und dass sie aus einem Netzwerk gehackter Computer veranschaltet wurde. Und das klingt ja alles ganz verständlich auch, dass man sagt, ok, also Leute, also Computer werden zusammengetan zu einer, zu vielen, vielen, vielen Datenanfragen und machen dann den Dienst platt. Jetzt war es aber letzte Woche so, dass nicht nur das Twitter-Down war, sondern auch das Amazon und auch noch ein paar andere Sachen, die ich jetzt alle nicht genau im Kopf habe. Und da frage ich mich natürlich, was zur Hölle ist denn da los? Also haben die dann einfaches geschafft, mit den Botnetzen, die sie haben, ganz viele Dienste gleichzeitig in die Knie zu bringen oder haben sie irgendwas anderes abgeschossen, was dann dazu geführt hat, dass viele Dinge in die Knie gingen? Ich habe einen halbwegs nicht informierten Gast gemacht.
+
+00:33:10.369 --> 00:33:15.929
+<v SPEAKER_3>Sie haben einen Dienst abgeschossen, also einen Dienst, auf dem die anderen alle aufbauen.
+
+00:33:15.949 --> 00:33:19.589
+<v SPEAKER_2>Warte mal, war die Idee vom Internet nicht, dass das dezentralisiert ist?
+
+00:33:19.609 --> 00:33:23.929
+<v SPEAKER_3>Ja, war mal. Aber es ist so teuer.
+
+00:33:24.229 --> 00:33:29.809
+<v SPEAKER_2>Also es gibt einen Dienst, auf den all die Dienste, die sozusagen in der letzten Woche Probleme hatten, den die alle benutzen.
+
+00:33:29.829 --> 00:35:27.429
+<v SPEAKER_3>Genau, das ist das Domain Name System. Das besteht aus mehreren DNS-Servern, die die Aufgabe haben, die Adressen, die man oben in die Suchzeile eingibt, wenn man jetzt nicht per Google sucht automatisch, aber die dafür sorgt, dass Host-Namen umgeschrieben werden in IP-Adressen und eine IP-Adresse ist das, was der Rechner braucht, um einen Server im Internet zu erreichen, weil die ist die Zielangabe für die Datenpakete. Und was jetzt passiert ist, ist, dass die ganzen Dienste, die du da vorhin genannt hast, alle Kunden sind von einer Firma namens Dyn. Kennt der eine oder andere vielleicht vom Dienst DynDNS, damit hat man, wenn man so einen DSL-Anschluss zu Hause hat und immer eine andere IP-Adresse zu Hause hat, dafür sorgen können, dass man einen eigenen DNS-Namen hat, sprich einen Host-Namen, der endet dann z.B. auf dyndns.com, org, weiß ich nicht, und man konnte dann dafür sorgen, dass man immer auf sein Rechner zugreifen konnte mit diesem Namen. Das haben die Angeboten kostenlos. Das heißt, die haben da Nameserver betrieben und das ist auch tatsächlich ihr Geschäft. Die bieten für andere Firmen an, dass man nicht selber Nameserver betreiben muss, sondern dass man das an die Outsourcen kann, die das für einen machen. Und die haben da ganz viele Nameserver von, die sind auch ganz verteilt. Was aber jetzt wohl passiert ist, ist, dass die immer mehr Dienstleister aufgekauft haben. Das heißt, die Firma ist größer geworden, die hat immer mehr andere Firmen, die auch so Nameserver, Dienstleistungen angeboten haben, nach und nach aufgekauft und alle diese Kunden bei sich auf die Plattform integriert, das heißt, alle diese Kunden waren nicht mehr verteilt bei verschiedenen Firmen, sondern alle auf derselben Plattform von Dyn. Und jetzt kam dieser riesengroße Angriff von diesen ganzen gekaperten Webcams und Rechnern und alle möglichen und die haben die Nameserver von der Firma Dyn angegriffen und die überlastet, die waren dann nicht mehr erreichbar. Und jetzt gab es dann so eine Verkettung von unglücklichen Zuständen, äh Umständen. Normalerweise werden die Inhalte von diesen Servern zwischengespeichert.
+
+00:35:27.449 --> 00:35:40.809
+<v SPEAKER_2>Ich wollte gerade sagen, es ist ja nicht so, also ich habe, wir haben in der Vorbereitung darüber gesprochen und da hat jemand gesagt, DNS, das Telefonbuch des Internets und hast du so ganz schlimm zusammengezogen, das ist Fall, warum stimmt das nicht?
+
+00:35:40.829 --> 00:35:44.769
+<v SPEAKER_3>Es klingt so, als wäre das so ein Zentralregister, wo man nachschlägt, wie so ein Telefonbuch.
+
+00:35:44.789 --> 00:35:55.909
+<v SPEAKER_2>Nee, finde ich nämlich gerade nicht, sondern ein Telefonbuch, also die jungen Leute heute da kennen das ja gar nicht mehr. Genau, so ein Telefonbuch hat eigentlich jeder zu Hause. Und ich dachte tatsächlich auch, dass das DNS auch so funktioniert.
+
+00:35:55.929 --> 00:35:58.149
+<v SPEAKER_3>Du kannst es im Prinzip so vergleichen, ja.
+
+00:35:58.169 --> 00:36:15.549
+<v SPEAKER_2>Genau, deswegen lass mich die Frage stellen. Ich dachte immer so, wenn ich mir meine Webseite bestelle, dann gibt es sozusagen einen DNS-Server, dem ich zum ersten Mal sage, chaosradio.de gehört zu dieser IP-Adresse, und dann wird es aber sozusagen verteilt auf verschiedene DNS-Server.
+
+00:36:15.569 --> 00:37:01.989
+<v SPEAKER_3>Ja, nicht ganz. Es läuft genau umgedreht. Ich habe einen oder zwei oder drei Nameserver, in denen ist meine Domain konfiguriert. Das sind die sogenannten autoritativen Nameserver. Da ist meine Zone, so nennt man das, drin gespeichert. Da steht drin www.chaosradio.de hat folgende IP-Adresse. Dieser Nameserver ist dann zum Beispiel zuständig für alles, was mit chaosradio.de endet. Wenn jetzt jemand anderes diese Seite aufrufen möchte, dann fragt er bei seinem Provider einen Nameserver, wie ist denn die Adresse von www.chaosradio.de? Und der geht dann los, holt das Ergebnis und speichert das bei sich zwischen. Damit die nächste Anfrage von einem anderen Kunden zum Beispiel, die ja auch auf chaosradio.de gehen möchte, nicht nochmal neu aus dem Internet geholt werden muss, sondern lokal schon gespeichert ist.
+
+00:37:02.009 --> 00:37:11.569
+<v SPEAKER_2>Also wenn ich das zum ersten Mal frage und mein Provider noch nie was davon gehört hat, dann fragt der Nameserver beim Original an, also wenn ich quasi zu Hause bin, holt es ab, aber speichert es dann zwischen.
+
+00:37:11.589 --> 00:38:49.569
+<v SPEAKER_3>Er speichert das dann zwischen und zwar solange, wie der Inhaber von der Domain das angegeben hat. Das heißt, jeder Eintrag hat eine TTL, eine Time to Live, die sind dann normalerweise so ein paar Tage bis Wochen. Was aber jetzt in letzter Zeit passiert ist, dass dieses Internet alles total dynamisch wird und die ganze Lastverteilung so gemacht wird, dass ich, wenn ich merke, dass da ganz viele Leute auf die Webseite gehen möchten, ich mehr Webserver dazuschalten möchte, damit die Last sich verteilt. Auch zum Beispiel, um solche DDOS-Agentriffe abwehren zu können. Wenn so eine DDOS-Attacke kommt und alle auf Chaosradio.de zugreifen wollen, dann fangen alle diese Bots an, die Adresse zu suchen von Chaosradio.de. Soweit klar. Wenn ich jetzt mehr Server bereitstelle, die auch die Webseite ausliefern können und dann in die DNS-Zone zum Beispiel diese Adressen updaten möchte, weil die werden jetzt zwischengespeichert bei den anderen, dann muss die TTL sehr klein sein, weil was sonst passiert ist, es gibt ganz viele Angreifer, ganz viele Bots, die sind bei einem Provider, zum Beispiel bei der Telekom, weil da sind jetzt ganz viele Privatrechner, die sind gekapert worden, die Telekom hat dann ihren Nameserver und da steht drin Chaosradio.de, bei der letzten Anfrage hatte das die und die IP-Adresse. Jetzt wollen wir aber dafür sorgen, dass die Angriffe ins Leere laufen und ändern die IP-Adresse auf unserem Nameserver für Chaosradio.de. Aber dadurch, dass das bei der Telekom noch zwischengespeichert ist, das alte Ergebnis mit einer TTL von einer Woche oder sowas, werden die ganzen Bots weiterhin zu uns kommen und nicht woanders hingehen. Auch wenn wir mittlerweile auf einen anderen Server umgezogen sind, wird das dafür sorgen, dass selbst wenn die Bots noch auf den alten Server gehen, neue Anfragen von anderen Kunden auch noch auf den alten Server gehen. Weil sich das gar nicht so schnell rumspricht.
+
+00:38:49.589 --> 00:39:27.129
+<v SPEAKER_2>Halt, halt, halt. Ich habe versucht, ich möchte es aber noch mal selber zusammenfassen und besicher so gehen, dass ich verstehen habe. Normalerweise, es scheint mir wieder so eine Geschichte zu sein, wir haben uns das mit dem Internet mal so und so genacht, machen es aber jetzt anders und deswegen geht es leichter kaputt. Also normalerweise ist es so, es gibt einen Eintrag, der zum ersten Mal sagt, ok, da gehört diese Adresse hin. Und dieser Eintrag wird zwischengespeichert und das hält man auch ein paar Tage vor. Im Original. Und jetzt ist es aber so, dass ich mittlerweile wenn ich einen großen Dienst betreibe, nicht nur einen, also jetzt mal bildlich gesprochen, nur einen Computer dafür habe, sondern ganz viele und diese Zahl auch dynamisch ändern will.
+
+00:39:27.149 --> 00:39:27.969
+<v SPEAKER_3>Genau.
+
+00:39:27.989 --> 00:39:44.929
+<v SPEAKER_2>Und deswegen muss ich auch den Eintrag im DNS-Verzeichnis sehr häufig ändern. Und deswegen sage ich, ok, diese Zwischenspeicherung soll eigentlich nicht mehr stattfinden. Also technisch gesagt, die ist sehr viel kürzer, aber übertragen könnte man sagen, also frag doch im Prinzip jedes Mal sozusagen im Original-Server.
+
+00:39:44.949 --> 00:39:46.369
+<v SPEAKER_3>Das sind halt so ein bis fünf Minuten.
+
+00:39:47.009 --> 00:39:56.209
+<v SPEAKER_2>Ok, und das heißt, ok, das heißt sozusagen, wenn der Original-DNS-Server dann sozusagen kaputt gemacht wird, länger als fünf Minuten, dann fangen diese Ausfälle an?
+
+00:39:56.229 --> 00:40:40.409
+<v SPEAKER_3>Dann fangen diese Ausfälle an, weil dann eben der Nameserver nicht mehr nachfragen kann, wie denn der Eintrag ist. Es gibt jetzt die erste Reaktion, dass man sagt, naja, wenn ich den Original-Server nicht mehr erreiche, nehme ich trotzdem das, was ich da lokal noch gespeichert habe, auch wenn die TTL abgelaufen ist. Das kann aber natürlich auch wieder bei solchen Angriffen dafür sorgen, dass die Angriffe nicht aufhören. Aber das ist eine lange Diskussion, die auch sehr, sehr in die Details geht. Aber im Grunde gibt es eben drei Faktoren, die dazu beigetragen haben. A, die Firma Dyn hat zu viele Kunden auf zu wenige Server gelegt, also auf zu wenige Nameserver. Das heißt, wenn da plötzlich Hunderttausende von Domains auf einer Serverfarm sind, dann sorgt das eben dafür, dass alle Angriffe gegen diese Kunden auf einer Serverfarm landen. Oder auf einer Infrastruktur.
+
+00:40:40.429 --> 00:40:53.409
+<v SPEAKER_2>Was mich jetzt frage ist, ich habe ja tatsächlich mal Informatik studiert, ich habe davon nicht viel behalten, aber eine Sache ist, wenn es einen Dienst gibt, von dem ich will, dass er zuverlässig funktioniert, dann verpacke ich ihn auf mehrere.
+
+00:40:53.489 --> 00:41:16.429
+<v SPEAKER_3>Genau, das passiert auch eigentlich. Das war ja auch vorher der Fall. Aber dadurch, dass die Firma Dyn sehr viele Kunden zusammengeführt hat, sind die alle auf einer Infrastruktur. Man kann sich das so vorstellen, wenn ich ganz viele Kunden habe, dann verteilen sich die Lastenspitzen dieser ganzen Kunden über alle Server. Das heißt, ich brauche am Ende gar nicht mehr so viele Server für alle Kunden wie vorher.
+
+00:41:16.449 --> 00:41:17.869
+<v SPEAKER_2>Es sei denn, jemand macht Unfug.
+
+00:41:17.889 --> 00:41:37.229
+<v SPEAKER_3>Genau, es sei denn, jemand macht Unfug und greift auf alle diese Kunden gleichzeitig zu. Und dann kommt es eben zu dieser Überlastung. Das heißt, die haben im Prinzip diese drei Fehler gemacht. Diese sehr kurzen TTLs sorgen dafür, dass es sehr viele Anfragen gibt. Sie haben im Vergleich relativ wenige Server noch für viele Kunden. Und sie habe ich vergessen.
+
+00:41:41.149 --> 00:41:51.209
+<v SPEAKER_2>Aber kann man es dann auch grob zusammenfassen, dass man sagt, da ist, würde sagen, wieder versucht worden, Geld zu sparen und zwar in einer falschen Ecke?
+
+00:41:51.229 --> 00:42:09.569
+<v SPEAKER_3>Im Prinzip ja. Die Frage ist halt, ob es wirtschaftlich wirklich vertretbar ist, wenn man so viele Server unnötig da im DNS drin hat, die man eigentlich nicht braucht. Aber im Prinzip hätten sie nicht alle Kunden auf dieselben Farben losgelassen, dann wäre es wahrscheinlich besser gelaufen.
+
+00:42:14.269 --> 00:42:23.789
+<v SPEAKER_5>Skalierbarkeit hätte einfach nur gereicht. Rein brutal skalieren können. Einfach irgendein automatisiertes Skript, da kommt jetzt was angerollt, okay, wir skalieren jetzt mal.
+
+00:42:23.809 --> 00:42:26.449
+<v SPEAKER_3>Also mehr Server dazuschalten.
+
+00:42:26.469 --> 00:42:38.409
+<v SPEAKER_2>Aber hätte das Problem gelöst, weil ich weiß jetzt nicht genau, die Größenordnung war ja irgendwie schon, also das Botnet, da vorne haben wir irgendwie so 20 Gigabit. Das war irgendwie 800 oder so?
+
+00:42:38.429 --> 00:42:53.109
+<v SPEAKER_5>Nee, das war das davor. Aber ja, Terabit, keine Ahnung, ist kein Problem. Wenn du diese Skripte hast, dann kannst du mal eben bei Amazon oder bei anderen CDN-Anbietern das Ganze ausrollen. Du musst es nur vorbereiten.
+
+00:42:53.189 --> 00:43:07.529
+<v SPEAKER_3>Ja, das Problem da ist aber auch wieder, dazu musst du ganz viele DNS-Einträge ändern, damit du auch mehr Nameserver drin hast. Das kann schwierig sein, weil es einfach ein bisschen dauert, bis sich das alles so rumspricht.
+
+00:43:07.709 --> 00:43:14.409
+<v SPEAKER_2>Was meinst du jetzt, wenn du sagst ein bisschen? Nicht mit Begriffen werfen, die wir nicht sofort erklären können.
+
+00:43:16.249 --> 00:43:31.169
+<v SPEAKER_3>Round Robin heißt, ich habe mehrere Einträge und die werden immer einer nach dem anderen benutzt. Das heißt, wenn ich eine Liste von Servern in einer DNS-Antwort drin habe, sorgt es dafür, dass die Kleines oder die Anfragen gleichmäßig über alle Einträge verteilt werden.
+
+00:43:31.249 --> 00:43:33.129
+<v SPEAKER_1>Das hätte jetzt aber nicht geholfen.
+
+00:43:33.149 --> 00:44:20.949
+<v SPEAKER_3>Das hätte da jetzt nicht geholfen. Was da jetzt hilft, ist halt, Achtung, neuer Fachbegriff, Anycast im großen Stil. Das heißt, ich habe weltweit verteilt ganz, ganz viele Server, die alle die selber IP-Adresse haben. Das kann man mit ein paar Tricks machen. Und alle Anfragen landen immer auf dem Server, der am nächsten dabei ist. Das wird bei DNS auch benutzt, ganz viel. Es gibt ja immer diese Zahl von 13 Root-Name-Servern, die wir haben, oder so. Ich glaube, 13 sind es, 15 vielleicht. Das sind in Wirklichkeit ein paar hundert. Aber es gibt nur 13 Adressen dafür. Die teilen die sich. Und das sorgt dann dafür, dass man mit derselben Adresse in Europa einen Server hat, und einen in Asien und einen in Amerika. Und alle Anfragen, die aus Europa kommen, landen auf der Serverfarm in Europa. Die aus Asien bleiben in Asien, die in den USA bleiben in den USA. Das hilft bei so was unheimlich.
+
+00:44:20.969 --> 00:44:26.389
+<v SPEAKER_2>Aber alles, was ihr sagt, läuft immer daraus hinaus, also mehr Rechner sozusagen, also mehr Kapazität.
+
+00:44:26.409 --> 00:44:26.869
+<v SPEAKER_3>Richtig.
+
+00:44:26.889 --> 00:44:34.289
+<v SPEAKER_2>Und das ist auch so, das ist sozusagen kein physikalisches Problem, was irgendwann eine Grenze schützt, sondern es ist wirklich nur Geld. Also Geld und Vorbereitung.
+
+00:44:34.309 --> 00:44:35.589
+<v SPEAKER_3>Ja, Geld, Strom, Kühlung.
+
+00:44:37.149 --> 00:44:45.249
+<v SPEAKER_2>Aber für DynDNS wäre das sozusagen nur eine Frage der Planung gewesen und das ist eine wirtschaftliche Frage. Es ist nicht eine der technischen Machbarkeit. Das ist mir eine wichtige Frage.
+
+00:44:45.269 --> 00:44:52.629
+<v SPEAKER_3>Merkt man ja auch daran, die Rootname-Server sind in der Vergangenheit mehrfach schon von diesem Anonymus-Kollektiv angegriffen worden. Das hatte meistens gar keine Auswirkung.
+
+00:44:55.629 --> 00:45:24.909
+<v SPEAKER_2>Ich bin jetzt immer noch sozusagen am Rätseln, weil da sind ja sozusagen große Services in die Knie gegangen. Warum die nicht ein Interesse daran haben, dass das genauso läuft? Vielleicht ist es so, ich kann es mir nur ganz schnell vorstellen, wenn ich meine Webseite betreibe, dann macht halt jemand DNS für mich und ich will es auch gar nicht so genau wissen. Aber wenn ich sowas wie Twitter oder Amazon betreibe, dann gehe ich doch nicht hin und vertraue in einer der hergelaufenen Firmen und sage, mach das mal für uns. Das ist doch eigentlich ein Zeitalter in dem Rechnung.
+
+00:45:24.929 --> 00:45:27.189
+<v SPEAKER_3>Das sind ja die Profis gewesen, die auf die Nase gehoben sind.
+
+00:45:28.149 --> 00:45:29.429
+<v SPEAKER_2>Ach so, verstehe.
+
+00:45:29.449 --> 00:45:32.569
+<v SPEAKER_3>Das ist ja schon einer der größten Anbieter, die wir haben für sowas.
+
+00:45:32.589 --> 00:45:35.729
+<v SPEAKER_2>Na ja, größter, aber auch professionellster Anbieter.
+
+00:45:35.749 --> 00:45:36.489
+<v SPEAKER_1>Ja, offensichtlich nicht.
+
+00:45:39.009 --> 00:45:55.309
+<v SPEAKER_2>Das würde mich natürlich interessieren. Ist das aus eurer Perspektive, dass die in die Knie gegangen sind, ist das verständlich, weil das erste Mal eine Attacke auf diese Art und Weise und in der Größenordnung? Oder muss man schon sagen, das hätten die eigentlich besser machen müssen?
+
+00:45:55.329 --> 00:45:57.349
+<v SPEAKER_5>Die hätten das besser machen müssen.
+
+00:45:57.369 --> 00:47:00.909
+<v SPEAKER_1>Wenn ich die Welt regieren würde, dann würde ich auch ihr verbieten, dass sich diese Monopole bilden können. Also Google zerschlagen. Zum Beispiel. Das Problem an der Stelle ist, das hat ja jetzt diese eine Firma getroffen. Diese eine Firma konnte ungehindert so weit wachsen, wie sie gewachsen ist und hat quasi strukturelle Fehler gemacht in ihrer internen Infrastruktur, die dafür gesorgt haben, dass das Ganze zusammenbrechen konnte. Wenn du halt dein DNS selbst machst, dann musst du gezielt angegriffen werden, damit das kaputt geht. Und da hatte man einfach diesen schönen Shotgun-Effekt. Man muss diesen einen Anbieter angreifen, und schon ist alles kaputt. Und eigentlich wollte man das ursprünglich mal verhindern, als man das Internet designt hat. Deshalb kann ja jeder auch sein DNS selber machen. Deshalb gibt es ja diese Infrastruktur, wo du einfach nur sagst, okay, ich stelle mir diesen Server hin, und ich mache DNS für mich selber. Und eigentlich ist es vorgesehen, dass das jeder für sich selber machen kann. Und dass, wenn ein Punkt, ein Knotenpunkt sozusagen ausfällt, funktioniert der Rest weiter.
+
+00:47:00.929 --> 00:47:15.089
+<v SPEAKER_3>Es ist halt eigentlich ein super verteiltes System. Das ist eine wunderbare Baumstruktur, wo jeder nur für seinen eigenen Teil zuständig ist. Wie in das Beispiel Chaosradio.de, kann man wunderbar auf einen Rechner ausleibern. Wenn der ausfällt, ist wirklich nur alles unterhalb von Chaosradio.de weg.
+
+00:47:16.629 --> 00:47:25.829
+<v SPEAKER_2>Aber alles, was wir zu reden haben, ist so, wie hört es sich zu anderen so, im Prinzip müsste das alles nicht passieren, wenn man es richtig machen würde. So würde ich die Sendung in einem Satz zusammenfassen bis jetzt.
+
+00:47:25.849 --> 00:47:28.169
+<v SPEAKER_3>Das ist ja im Internet immer so.
+
+00:47:28.189 --> 00:47:32.109
+<v SPEAKER_1>Das ist der Bildungsauftrag des TTC.
+
+00:47:32.129 --> 00:47:47.289
+<v SPEAKER_3>Bitte immer alles richtig machen. Ich glaube, was halt passiert ist, es hat niemand damit gerechnet, dass es eine Attacke in diesem Ausmaß gibt. Die haben sich im Prinzip nur auf das, was sie bisher kannten, verlassen. Und das war einfach überraschend.
+
+00:47:47.309 --> 00:47:56.749
+<v SPEAKER_2>Also das war schon sozusagen was Neues. Also eine neue Qualität der Attacken. War das schon außergewöhnlich viel?
+
+00:47:56.769 --> 00:48:10.589
+<v SPEAKER_3>Nach dem, was ich gelesen habe, kam es von sehr vielen Amplifiern. Das heißt, es gab da so Zahlen, 150.000 bis 200.000 verschiedene Quellen, die da angegriffen haben. Also jetzt von diesen Reflection-Attacken.
+
+00:48:10.609 --> 00:48:15.609
+<v SPEAKER_2>Das war wie ein Versuch, das zu erklären. Die, die Reflection-Attacken ausgelöst haben?
+
+00:48:15.629 --> 00:48:18.109
+<v SPEAKER_3>Nee, das waren weniger.
+
+00:48:18.129 --> 00:48:20.069
+<v SPEAKER_2>Okay, also die Anfragen, die die DDOS sozusagen.
+
+00:48:20.089 --> 00:48:20.889
+<v SPEAKER_3>Genau.
+
+00:48:20.909 --> 00:48:28.969
+<v SPEAKER_2>Und gibt es denn einen Vergleich? Was ist normalerweise eine Anzahl zu sagen, wo man sagt, wow, das ist auch schon ganz krass gewesen in der Vergangenheit?
+
+00:48:31.889 --> 00:48:32.569
+<v SPEAKER_5>Nicht so wirklich.
+
+00:48:32.589 --> 00:48:35.009
+<v SPEAKER_3>Over 9000, keine Ahnung.
+
+00:48:35.029 --> 00:48:36.589
+<v SPEAKER_2>Was sagt das Bauchgefühl?
+
+00:48:36.609 --> 00:49:00.729
+<v SPEAKER_1>Disclosure Bauchgefühl? Bauchgefühlmäßig ist die Attacke, die wir jetzt hatten, kein Faktor 10 stärker als das, was wir bisher hatten. Das ist vielleicht dreimal stärker als die zweitstärkste Attacke. Das ist mein Bauchgefühl. Es ist nicht so, dass wir in ganz anderen Kategorien denken, aber es ist erstaunlich viel. Es ist irgendwie ein Hurricane der Kategorie, weiß ich nicht. Aber es ist immer noch ein Hurricane.
+
+00:49:00.749 --> 00:49:04.969
+<v SPEAKER_2>Verstehe, gut. Und das kann quasi jederzeit wieder passieren?
+
+00:49:05.469 --> 00:49:21.389
+<v SPEAKER_3>Es kann jederzeit wieder passieren. Die Attacke, die wir jetzt hatten, bestand aus zwei verschiedenen Arten von Attacken. Das eine waren ganz normale Bots, gekaperte Rechner. Und das andere waren eben, das, was jetzt auch so durch die Medien geht, diese IoT-Attacke, die Küchengeräte, die uns angreifen.
+
+00:49:21.409 --> 00:49:26.669
+<v SPEAKER_2>Okay, da reden wir auf jeden Fall gleich noch drüber. Was ich mit einer Frage so weiß, weiß man eigentlich, wer das war?
+
+00:49:28.249 --> 00:49:35.529
+<v SPEAKER_5>Die Russen. Das kann man im Endeffekt nur sehr, sehr schwer sagen.
+
+00:49:36.329 --> 00:50:26.709
+<v SPEAKER_3>Also es gibt verschiedenste Gerüchte. Natürlich, wenn so eine große Firma in die Knie geht, ist es immer sofort ein State... Da gab es noch ein... Ja, irgendwie so. Also irgendein Starter hinter, deswegen halt die Russen oder die Chinesen. Man hat da bestimmt auch irgendwelche kyrillischen Schriftzeichen irgendwo drin gefunden, deswegen müssen es dann. Weil man kann sich die Lösung nicht geben, dass das irgendwelche Script-Kiddies waren, aber wahrscheinlich waren es Script-Kiddies. Also es gab halt heute einen Artikel, wo gemutmaßt wird, dass es wahrscheinlich wirklich nur Script-Kiddies waren, weil einige von diesen Baukästen, von diesen Botnetzgeschichten, da ist der Quellcode veröffentlicht worden vor ein paar Monaten. Das heißt, jeder kann sich das jetzt selber nachbauen, die Sicherheitslücken finden und dann eben diese IoT-Geräte da kapern und missbrauchen. Und es kann sein, dass es schlicht und ergreifend Script-Kiddies waren, die das da mal ausprobiert haben und es hat halt BUMM gemacht.
+
+00:50:26.729 --> 00:50:31.429
+<v SPEAKER_2>Ist das so, dass die, gab es da so Forderungen oder Bekenner schreiben oder was auch immer?
+
+00:50:31.449 --> 00:50:44.629
+<v SPEAKER_3>Nix bekannt. Insbesondere war halt, was halt gegen irgendwie einen Staat oder gegen irgendwas Kommerzielles spricht, dass da Sachen angegriffen worden sind, die einfach nicht kommerziell sind, wo es auch keinerlei kommerzielles Interesse gibt.
+
+00:50:46.109 --> 00:50:48.189
+<v SPEAKER_2>Moment mal, hatte nicht Amazon Probleme?
+
+00:50:48.209 --> 00:51:05.749
+<v SPEAKER_3>Amazon und Twitter hatten Probleme, aber das waren wahrscheinlich einfach Kollateralschäden. Github zum Beispiel. Klar, es gibt da Firmen drin, die sind da ausgefallen, aber die Art des Angriffs soll nach amerikanischer Expertenmeinung oder so nicht unbedingt dafür sprechen.
+
+00:51:05.769 --> 00:51:09.749
+<v SPEAKER_1>Das war jetzt nicht Cloudflare oder so. Ich weiß nicht, ob Cloudflare DNS macht.
+
+00:51:09.769 --> 00:51:13.529
+<v SPEAKER_3>Cloudflare macht auch DNS, Cloudflare macht auch ganz viel DDoS-Protection.
+
+00:51:13.549 --> 00:51:14.789
+<v SPEAKER_1>Da würden die ganzen Shops sitzen.
+
+00:51:14.809 --> 00:51:17.089
+<v SPEAKER_2>Euch ist schon klar, dass jetzt der kleine Mut, dass Cloudflare ist.
+
+00:51:17.109 --> 00:51:50.929
+<v SPEAKER_3>Cloudflare ist ein Dienstleister, der dir anbietet, den Content für dich so zu hosten, dass du dir keine Gedanken drum machen musst. Das heißt, bleib mal bei Chaosradio. Chaosradio hat irgendwie ganz viele Videos auf MediaCCC.de. Und wenn man jetzt nicht weiß, wie viele Leute sich das angucken wollen und man nicht irgendwie ganz viele Server selber betreiben möchte, sagt man, na gut, ich lage das jetzt aus. Cloudflare kriegt eine Kopie von diesen Videos und Cloudflare sorgt dafür, dass immer genug Server im Internet verfügbar sind, die dieses Videos ausliefern, wenn jemand draufklickt. Das heißt, die sorgen dafür, dass das mehr oder weniger Server sind, wenn der Bedarf gerade ist.
+
+00:51:50.949 --> 00:51:53.089
+<v SPEAKER_2>Aber sagen die Kosten beim Minimum explodieren, oder doch?
+
+00:51:53.129 --> 00:52:06.529
+<v SPEAKER_3>Na, du bezahlst halt einen bestimmten Betrag dafür, der auch höher gehen kann. Aber du musst halt nicht konstant hunderte von Servern bereithalten. Das machen die für dich. Und dadurch, dass sie das für viele Kunden machen, die auch nicht alle gleichzeitig denselben Bedarf haben, verteilt sich das halt schön für die.
+
+00:52:07.489 --> 00:52:22.269
+<v SPEAKER_2>Verstehe, verstehe. Was mich noch interessiert ist, es ist ja nicht so, dass die Services ganz weg waren. Die haben ja so teilweise funktioniert, so Schluckaufmäßig. Woran liegt denn das?
+
+00:52:25.009 --> 00:53:02.909
+<v SPEAKER_3>Das kann ganz viele Kunden haben. Das eine ist, was ich früher sagte, wir haben dann so Nameserver, die weltweit verteilt sind mit Anycast. Es kann sein, dass der Angriff dann irgendwie dein, der in deiner Nähe war, gerade nicht betroffen hat. Vielleicht waren sie auch beim Filtern der Angriffe ganz erfolgreich, dass da die Anfragen mal wieder durchkamen. Es gab zwischendurch ganz abstruse Geschichten. Es gab wohl ein Plugin für Chrome, mit dem man eine Liste von IP-Adressen und Hostnamen fest im Chrome installieren konnte, damit man kein DNS mehr braucht, was halt auch nur so semi funktioniert. Aber, ja, also schlug auf. Na ja, manchmal sind die Leute eher frei.
+
+00:53:02.929 --> 00:53:09.449
+<v SPEAKER_2>Also ich konnte irgendwie lesen, also bei Twitter zum Beispiel konnte ich lesen, aber keine Bilder posten.
+
+00:53:09.469 --> 00:53:27.109
+<v SPEAKER_3>Wahrscheinlich, weil das im Hintergrund auf verschiedenen Servern liegt, die verschiedene Adressen haben. Und der Endpunkt, die AP zum Lesen, war halt verfügbar, die normale Webseite. Aber wenn du was hochladen wolltest, wurde das auf andere Server geschoben und die dann nicht aufzulösen waren. So was könnte ich mir vorstellen.
+
+00:53:27.129 --> 00:53:37.249
+<v SPEAKER_2>Also sozusagen für den nicht informierten Enter-Enter-Wender, ist es nicht so, dass ein Webservice eine Adresse hat, sondern die verschiedenen Dinge, die ich sozusagen machen kann, können auch verschiedene.
+
+00:53:38.169 --> 00:54:07.309
+<v SPEAKER_3>Also eine Webseite besteht aus dutzenden Diensten, die da aufgerufen werden. Das sind auch gerade durch diese ganze Werbung und die Ad-Netzwerke und die Tracker, VG, Word und IVZ, Zähler, wie viele Leute aufrufen. Kann es dir passieren, dass du da 200 Requests hast, wenn du eine Startseite von irgendeiner Zeitung aufruft oder so? Das heißt, dein Rechner macht da 200 Requests zu verschiedenen Diensten und Services und Hostnamen, um da irgendwie JavaScript-Bilder und irgendwelchen Kram nachzuladen?
+
+00:54:09.189 --> 00:54:28.469
+<v SPEAKER_1>Genau, ich habe gerade nachgeschaut, zum Beispiel bei Twitter, die Bilder werden gehostet bei pbs.tvimg.com anstatt bei twitter.com. Twitter-Images? Genau, das ist ein anderer Domainname. Der vermutlich einfach wurde von einem anderen, von dem, ne?
+
+00:54:28.489 --> 00:54:33.069
+<v SPEAKER_3>Deswegen passiert es auch, dass du in der U-Bahn manchmal zwar die Tweets lesen kannst, aber keine Bilder siehst.
+
+00:54:33.089 --> 00:54:49.749
+<v SPEAKER_2>Aha! So, jetzt wissen wir Bescheid. Also was ich vor allem gelernt habe, ist, das Internet ist so aufgebaut, dass es theoretisch eine gute Idee ist, aber praktisch erinnert es nicht immer mehr an so ein Auto, wo so irgendwie das Rad angetapet ist und das Dach so drauf genäht und...
+
+00:54:49.769 --> 00:54:51.249
+<v SPEAKER_3>Aber schön lackiert oben drüber.
+
+00:54:52.729 --> 00:54:54.549
+<v SPEAKER_5>Und viel Spachtelmasse.
+
+00:54:54.569 --> 00:59:47.895
+<v SPEAKER_2>Genau, und viel Spachtelmasse, gut. Wir haben jetzt sozusagen im Prinzip das Grundlegende ja geklärt. Also im Prinzip kann man damit alles beantworten. Also die DDOS-Attacke war vor einem sehr großen Netzwerk und ist, dass mehrere Service ausgefallen sind, daran, dass das DNS-Service angegriffen wurde und nicht sozusagen ein bestimmtes Angebot. Es fiel ein paar Mal schon dieses Internet of Things, also sagen, dass das Botnetz sich zusammengesetzt hat, nicht nur aus Computern, die gehackt wurden, sondern auch aus Geräten, die in einer bestimmten Art und Weise ans Netzwerk angeschlossen sind. Was damit genau auf sich hat, klären wir gleich. Herzlich willkommen zurück zum Chaosradio 228 mit Mutax, Bento und Sokrates. Hallo und guten Abend.
+
+00:59:47.895 --> 00:59:48.475
+<v SPEAKER_3>Na bent.
+
+00:59:49.695 --> 01:00:21.975
+<v SPEAKER_2>Und wir reden über die schlimme Internet-Attacke aus den letzten Tagen, die wir zu erklären versuchen. Wir haben schon erklärt, was eine DDOS-Attacke ist, was DNS ist und warum es schlimm ist, wenn das kaputt geht und wie man es kaputt machen kann. Und wir haben auch schon erklärt, dass zu einer DDOS-Attacke ein Botnetz gebraucht wird. Und jetzt möchten wir uns mal genauer damit beschäftigen, aus was dieses Botnetz eigentlich besteht. Also, ihr habt schon gesagt, gekaperte Computer. Und wir kommen gleich auf Internet of Things zu sprechen. Aber Bento wollte vorher noch was zu den gekaperten Computern sagen, wobei ich es richtig gehört hatte.
+
+01:00:22.295 --> 01:01:04.335
+<v SPEAKER_1>Ach so, ja, da habe ich mir gerade auch schon wieder anhören müssen, dass dieser Vergleich ja auch ein bisschen politisch unkorrekt ist. Aber diese gekaperten Computer, also viele von den Hörern zu Hause, werden eigentlich da nicht schuldig sein in der Teilnahme von diesen DDOS-Attacken, sondern vielleicht eher eurer Eltern zum Beispiel. Eure Eltern, die vielleicht in ihrem Browser keinen Adblocker haben oder so, wo dann irgendwo ein großes Banner blinkt, irgendwie sie haben ein Virus auf ihrem Rechner und dann klicken die da vielleicht drauf. Und dann werden sie in irgendeine einfache Installationsanleitung geleitet, um sich irgendwas zu installieren, was dann eventuell dafür sorgt, dass der Rechner Fernsteuerer wird.
+
+01:01:04.535 --> 01:01:11.275
+<v SPEAKER_3>Das ist das, was im Dezember immer weniger wird. Jeder zog in das Land, wo er geboren wurde und fixte die Computer der Eltern.
+
+01:01:11.295 --> 01:02:01.615
+<v SPEAKER_2>Aber ich kann verstehen, warum du jetzt Angst hast, dass das politisch Unkrieg genannt wird. Weil, also über die Wortwahl der Gespräche auch noch heute, du hast ja gesagt, schuldig sind, am Botnetz teilzuhaben. Und das ist ja schon victim blaming. Also deine Maschine ist gekapert worden, du bist also schuld. Und Eltern ist halt auch so, ich habe euch auch so einen Tweet gesehen, wo jemand gesagt hat, ja irgendwie meine, also weil jetzt irgendwie die Mutter, die es nicht kann oder so was, hat jemand gesagt, ja meine Mutter hat gerade irgendwie sich voller Begeisterung, keine Ahnung, was auch immer, so ein Video-Ding installiert und Video telefoniert jetzt mit ihren Enkeln. Aber sozusagen, es gibt halt einfach, es gibt halt Menschen, die sich für Technik interessieren, also die sie nicht nur benutzen, sondern auch das dahinterliegen. Es gibt halt Menschen, die sagen, ja das ist schön, dass das Ding bunt ist und Internet macht, aber mehr will ich darüber auch nicht wissen. Und das Problem ist, dass es angreifbar ist.
+
+01:02:01.635 --> 01:02:12.875
+<v SPEAKER_3>Ich finde das doch eigentlich völlig legitim, dass Leute diesen Kram einfach nur benutzen können wollen. Ich meine, wenn ich einen Führerschein mache und Auto fahre, dann möchte ich auch nicht irgendwie den Motor neu einstellen können müssen und so.
+
+01:02:12.895 --> 01:02:15.375
+<v SPEAKER_5>Aber dann hast du einen Führerschein.
+
+01:02:15.395 --> 01:02:16.635
+<v SPEAKER_3>Es gibt ja einen Computerführerschein.
+
+01:02:16.655 --> 01:02:39.235
+<v SPEAKER_2>Aber ich glaube tatsächlich nicht, dass der Führerschein der richtige Vergleich ist. Ich meine, wenn du Auto fährst, ist der Vergleich zum Computerding nicht, dass du einen Führerschein hast. Sondern der Vergleich ist, dein Auto hat TÜV. Also jemand anders kümmert sich darum, dass dein Auto in einem Zustand ist, dass du es auf der Straße bewegen kannst, ohne dass es eine Gefahr für andere ist.
+
+01:02:39.255 --> 01:02:58.695
+<v SPEAKER_5>Das ist aber leider etwas kaputt. Und zwar hast du mit einem Auto die Menge, die Menschen, die du damit verletzen kannst, theoretisch ist begrenzt, also stark begrenzt. Gehen wir mal von 2000 oder so aus. Mit einem Computer kannst du viel mehr machen.
+
+01:02:58.715 --> 01:03:15.775
+<v SPEAKER_2>Jeder Vergleich hinkt. Und natürlich hat ein einzelner Computer auch eine bestimmte Macht. Das Schlimme ist sozusagen, dass man aus vielen Computern, im Gegensatz zu vielen Autos, die sich nicht so am Optimus transformieren, sondern einfach einzelne Autos bleiben.
+
+01:03:15.795 --> 01:03:19.115
+<v SPEAKER_1>Und es sind vielleicht auch übers Internet bald fernsteuerbar.
+
+01:03:19.135 --> 01:03:23.015
+<v SPEAKER_2>Was für eine großartige Idee. Was kann da nur schiefgehen? Lass uns das Auto ans Internet anstehen.
+
+01:03:23.035 --> 01:03:25.115
+<v SPEAKER_1>Das war eine großartige Überleitung, meinst du?
+
+01:03:25.135 --> 01:03:45.075
+<v SPEAKER_2>Genau, wir wollen jetzt übers Internet of Things reden, was in den Schlagzeilen war aufgrund dieser Tacke. Und bevor wir das machen, wollten wir eigentlich noch eine Zuschauerfrage beantworten. Fällt mir jetzt gerade auf. Genau. Bitte stellen Sie die Zuschauerfrage. Jetzt ist das Mikrofon wieder weggenommen worden. Was ist denn da nur los? Meine Güte, eine Live-Sendung. Sie können zugucken an der Marienstraße 11. Eine Zuschauerfrage.
+
+01:03:45.235 --> 01:04:18.335
+<v SPEAKER_4>Die Frage war in Bezug auf das Problem der DNS-Störungen. Ob es nicht anratbar ist, einfach um sicher zu gehen, Dienste, die einem wichtig sind, sich die IP als Links hinterlegen, im Bookmarks-Liste oder sonst wo. Und andererseits auch für die Serverbetreiber irgendwo rechts unten überall ihre IP-Adresse direkt als Link anzubieten, damit man die bookmarken kann. Dann gäbe es das DNS-Problem ja in dem Moment dann nicht oder in den Fällen nicht.
+
+01:04:18.355 --> 01:04:31.575
+<v SPEAKER_2>Also mal abgesehen davon, dass das sozusagen eine technische Lösung ist, die glaube ich daran scheitert, dass das Konzept IP-Adresse auch erst mal vermittelt werden müsste. Also sagen für die Leute, die sich halt genau nicht für die Technik interessieren wollen. Aber ansonsten ist das eine gute Idee?
+
+01:04:31.595 --> 01:05:52.095
+<v SPEAKER_3>Es wird in der Praxis nicht funktionieren aus mehreren Gründen. Das eine ist eine IP-Adresse, ohne dass der Hostname vom Webbrowser angefragt wird, geht nicht, weil der dazu gebraucht wird. Das heißt, man müsste die dann noch mal irgendwo anders reinfriegeln, aber auch wenn man das hinbekommt, ist das ja so, dass die Angreifer den Server überlasten. Also in einem Fall, wo ich dann nicht das DNS-System angreife, sondern die Server funktionieren nicht, das ist das eine. Das andere ist, diese IP-Adressen von den Diensten ändern sich so schnell und sind auch für jeden, je nachdem, wo man es aufruft, andere, dass diese Liste innerhalb von wenigen Minuten veraltet ist. Als Beispiel zum Beispiel Google, wenn man zu Hause die IP-Adresse von www.google.de rausbekommt oder auflöst mit so einem kleinen Tool, dann kommen da sechs IP-Adressen raus. Wenn ich dieselbe Anfrage über www.google.de von meinem Handy stelle, kommen da sechs andere IP-Adressen raus. Google ändert ununterbrochen, je nachdem, von wo man anfragt, die Server-Adressen, auf denen die Suchseite ist, weil sie darüber die Lastverteilung machen, über die ganzen Anfragen. Das kann aber sein, dass morgen unter den selben IP-Adressen YouTube zu erreichen ist und nicht mehr die Google-Startseite. Weil die Dienste da ganz schnell durchrotiert werden, weil sie damit die ganzen Lastspitzen abfangen. Oder auch mal einfach solche Server in Wartung nehmen, die dann einfach nicht verfügbar sind, weil die vielleicht mal neu installiert werden.
+
+01:05:56.195 --> 01:06:06.895
+<v SPEAKER_2>Gut, das hilft auch nicht. Da kommen wir jetzt aber wirklich, nachdem wir es schon oft genug angekündigt haben, zum Internet of Things. Wir haben übrigens Internet of Things hier. Und wir haben ein Internet of Things.
+
+01:06:06.915 --> 01:06:09.035
+<v SPEAKER_3>Das ist eine sogenannte Dockstar.
+
+01:06:09.055 --> 01:06:09.835
+<v SPEAKER_2>Was macht das?
+
+01:06:09.855 --> 01:06:26.475
+<v SPEAKER_3>Das war mal von Siegert dafür gedacht, dass man seine Festplatte da reinsteckt, seine tragbare USB-Festplatte, das dann hinten mit dem Kabel in sein Internet steckt und dann zu Hause auf die Daten drauf zugreifen kann und auch von unterwegs. Also eigentlich total praktisch.
+
+01:06:26.495 --> 01:06:30.955
+<v SPEAKER_2>Klingt ja erstmal gut, aber wie kann ich damit den DNS-Service von Twitter angreifen?
+
+01:06:30.975 --> 01:07:04.195
+<v SPEAKER_3>Das Problem an dieser Klasse von Geräten ist, damit ich von außen darauf zugreifen kann, müsste man ja eigentlich zu Hause seinen Router umkonfigurieren, dass man von außen unter der Adresse zu Hause das Ding erreicht. Das ist aber technisch anspruchsvoll. Das müsste man ja Leuten beibringen und vermitteln und schwierig. Dann müsste man wissen, welche Router die da haben. Also hat Siegert sich was anderes ausgedacht. Dieses Ding baut einen VPN-Tunnel zum Hersteller auf. Man kann dann auf einer Webseite vom Hersteller in der Cloud auf die Daten zugreifen. Das heißt, Siegate kann auch auf alle deine Daten zugreifen. Oder einen Angreifer, der den Dienst drauf macht.
+
+01:07:04.715 --> 01:07:08.135
+<v SPEAKER_2>Das ist ja ganz großartig, aber das greift immer noch nicht den SRW-Computer an.
+
+01:07:08.155 --> 01:07:41.835
+<v SPEAKER_3>Genau, aber das war jetzt als Beispiel von Klasse von Geräten. Das, was angegriffen hat, waren wohl im Wesentlichen IP-Kameras und Babyfone. Also Webcams mit Internetanschluss oder so Überwachungskameras. Weil diese Geräte haben mit dem hier zu gemein, dass da drauf ein vollwertiges Linux, ein vollwertiges Betriebssystem, ein vollwertiger Rechner läuft. Mit allen Diensten, die man da so hat, mit Remote-Login, mit einem Web-Server, damit man sich die Bilder angucken kann und so weiter. Und was jetzt bei diesen Kameras passiert ist, die haben ab Werk einen bestimmten Nutzernamen und Passwort, um darauf zuzugreifen. Und die waren alle im Internet.
+
+01:07:45.875 --> 01:07:49.835
+<v SPEAKER_2>Also ich kaufe eine Kamera und die kann nicht in Internet hängen.
+
+01:07:49.855 --> 01:07:50.715
+<v SPEAKER_3>Genau.
+
+01:07:50.735 --> 01:07:54.275
+<v SPEAKER_2>Und die hat vom Werk vorhin gestelltenen Benutzernamen und Passwort.
+
+01:07:54.295 --> 01:07:56.575
+<v SPEAKER_3>Admin zum Beispiel, sehr gerne.
+
+01:07:56.595 --> 01:08:07.255
+<v SPEAKER_2>Warte, warte, meine Detailfrage wäre jetzt gewesen, hat die Kamera, die ich gekauft habe, eine Benutzername und Passwort, oder haben alle Kameras dieses Hersteller denselben Benutzernamen, denselben Benutzernamen?
+
+01:08:08.675 --> 01:08:24.255
+<v SPEAKER_3>Und das Problem gab es auch schon irgendwie bei einer Kamera, die bei Aldi verkauft wurde letztes Jahr, wo dann die Firmen einen Bug hatten und sie nicht wussten, wie sie den Kunden sagen sollen, dass sie jetzt mal updaten sollen, weil sie wissen ja nicht mal, wer ihre Kunden sind und Auto Update war kaputt.
+
+01:08:24.275 --> 01:08:33.155
+<v SPEAKER_5>Nur mal so, aber das haben so gut wie alle Devices. Es gibt ausnahmsweise mal so Fritz-Boxen oder so, die dich dazu zwingen, das zu ändern. Der Rest hat so ein Standardkram.
+
+01:08:34.315 --> 01:08:44.295
+<v SPEAKER_2>Tatsächlich habe ich in den letzten Jahren, jeder Router, den ich gesehen hatte, hatte ein eigenes Passwort. Da war dann so eine fiese Zeichenther, die man sich merkt.
+
+01:08:44.315 --> 01:08:58.355
+<v SPEAKER_3>Aber wenn du dir das genauer anguckst, gibt es durchaus Hersteller, wo dann dieses Passwort aus einem festen Präfix besteht. So abc, Unterstrich und dann der Rest von der MAC-Adresse, also von der Netzwerkadresse von dem Gerät.
+
+01:08:58.375 --> 01:08:59.855
+<v SPEAKER_2>Was ist eine Netzadresse von einem Gerät?
+
+01:09:00.695 --> 01:09:25.695
+<v SPEAKER_3>Das ist eine eindeutige ID, mit der dieses Ding im Netzwerk angesprochen werden kann, die MAC-Adresse. Das ist so ein hexadezimaler Zahlencode. Damit ist das im lokalen Netz identifizierbar. Das Problem ist, dass die auch per WLAN verschickt wird in jedem Datenpaket. Und wenn man das dann sieht, dann ist auch klar, wie das Passwort das ist.
+
+01:09:26.355 --> 01:10:01.415
+<v SPEAKER_2>Also entweder ist das Gerät, das bei mir zu Hause ans Netz hänge, und das ein vollwertiger Computer ist, zumindest was jetzt die Ausführung von DDOS-Attacken angeht, hat entweder ein gesetztes Standardpasswort, was auf allen Geräten gleich ist, nämlich Admin und Passwort 1, 2, 3, 4, oder es hat aus einem Algorithmus errechnet das Passwort, und der Algorithmus errechnet das aber aus einer Zahlenfolge, die das Gerät mit jedem Datenpaket in den Äther bläst. Zum Beispiel. Genau. Das macht doch gar keinen Sinn. Doch. Warum?
+
+01:10:01.435 --> 01:10:05.575
+<v SPEAKER_3>Na doch, für die Hersteller schon, weil es ist total einfach dem Kunden zu sagen, wie sein Passwort ist, wenn er es vergessen hat.
+
+01:10:08.655 --> 01:10:09.395
+<v SPEAKER_2>Aber das ist doch dumm.
+
+01:10:10.015 --> 01:10:10.715
+<v SPEAKER_5>Ja.
+
+01:10:10.735 --> 01:10:11.255
+<v SPEAKER_3>Ja, aber billig.
+
+01:10:11.275 --> 01:10:12.675
+<v SPEAKER_5>Da hat einer nicht weitergedacht.
+
+01:10:12.695 --> 01:10:15.255
+<v SPEAKER_3>Es ist halt billig. Es ist wenig Supportaufwand.
+
+01:10:15.275 --> 01:10:30.955
+<v SPEAKER_2>Entschuldigung, was mich jetzt ein bisschen irritiert, wir haben noch 50 Minuten bis Sendungsende. Und ich dachte sozusagen, ihr erklärt mir jetzt lang und ausführlich, was das grundlegende Problem sozusagen daran ist, warum so viele Internet of Things-Sachen gehackt haben. Jetzt sagt ihr, das liegt einfach nur daran, dass es passt.
+
+01:10:30.975 --> 01:10:58.215
+<v SPEAKER_1>Wir machen hier gerade die gleichen Fehler nochmal, wie wir sie mit den normalen Rechnern schon vor 20 Jahren hatten oder vor 15. So, ich sag nur so Windows 98, Windows XP. Also diese gleiche Klasse an Bugs, die sich irgendwie relativ leicht exploiten lassen, die führen wir jetzt alle wieder ein. Weil diese Devices müssen für wenig Geld verkauft werden. Dieser Stein hier, den wir hier liegen haben, der spricht Internet und der kostet drei Euro. Und für drei Euro...
+
+01:10:58.235 --> 01:11:03.835
+<v SPEAKER_3>Entschuldigung, was? Das ist der neueste Hype.
+
+01:11:03.855 --> 01:11:05.475
+<v SPEAKER_2>Könnte mal einer vom Publikum vielleicht kommen?
+
+01:11:05.495 --> 01:11:08.235
+<v SPEAKER_1>Das ist so groß wie eine halbe Briefmarke.
+
+01:11:08.255 --> 01:11:20.715
+<v SPEAKER_2>Wer traut sich in die Kamera? Einmal dieses kleine Ding nehmen und das mal ganz dicht in die Kamera halten, nur damit man eine Idee von der Größenordnung kriegt.
+
+01:11:20.735 --> 01:11:24.815
+<v SPEAKER_3>Auf dem Ding läuft jetzt kein volles Betriebssystem, aber das kostet drei Euro.
+
+01:11:24.835 --> 01:11:28.115
+<v SPEAKER_2>Na gut, lass mich fragen. Kann ich damit eine DDOS-Attacke machen?
+
+01:11:28.135 --> 01:11:33.395
+<v SPEAKER_3>Ja, es kann halt nicht sehr viel Daten senden. So ein 300-Kilo-Bit habe ich gestern mal ausprobiert.
+
+01:11:33.415 --> 01:11:34.095
+<v SPEAKER_2>Aber ist ja gar nicht.
+
+01:11:35.815 --> 01:11:56.355
+<v SPEAKER_3>Wenn die das amplifieren und reflekten und mit ordentlicher Verstärkung, wenn das viele von den Geräten machen, könnte das auch böse werden. Und die Dinger kannst du halt in Python programmieren, zum Beispiel in einer sehr einfachen Programmiersprache. Schließt man Rechner an, kann man programmieren und direkt loslegen. Die haben auch WLAN drin, das ist ein Access-Point.
+
+01:11:56.375 --> 01:11:57.655
+<v SPEAKER_2>Bitte, das Ding hat WLAN drin?
+
+01:11:57.675 --> 01:11:58.595
+<v SPEAKER_3>Das Ding hat WLAN drin.
+
+01:11:58.615 --> 01:12:00.355
+<v SPEAKER_5>Was ist dieses goldene Ding da drauf?
+
+01:12:00.375 --> 01:12:29.555
+<v SPEAKER_3>Das ist ein Access-Point. Das Ding, was jetzt Bento gerade hochhebt, ist derselbe Baustein nur mit ein bisschen Platine drumrum. Der hat übrigens hier gerade ein WLAN aufgemacht. IoT ESP 266. Passwort fürs WLAN ist dasselbe wie SSID. Ihr könnt versuchen, das zu hacken. Und das Ding macht selber ein Access-Point auf, vergibt eine IP-Adresse an dein Handy, wenn du dich damit verbindest. Kann auch selber in ein WLAN reingehen, kann dann da E-Mails versenden und kann auch auf eine WLAN scannen und so weiter.
+
+01:12:29.575 --> 01:12:32.815
+<v SPEAKER_1>Also das Ding kann vollwertige Dinge im Internet tun. Und das ist die Frage, von wohin war?
+
+01:12:32.835 --> 01:12:34.535
+<v SPEAKER_3>Es kann für dich twittern oder sonst was.
+
+01:12:34.555 --> 01:12:35.575
+<v SPEAKER_2>Und DDOSen?
+
+01:12:35.595 --> 01:12:39.015
+<v SPEAKER_3>Es könnte DDOSen, wenn es viele sind. Also die Performance von den Dingen reicht jetzt beim Item nicht.
+
+01:12:39.035 --> 01:12:41.815
+<v SPEAKER_2>Aber ich hab ja nicht nur eins, ich hab 150.000.
+
+01:12:41.835 --> 01:12:43.075
+<v SPEAKER_3>Raspberry Pi, sehr beliebt.
+
+01:12:43.095 --> 01:12:47.435
+<v SPEAKER_1>Oder noch mal in klein, den Raspberry. So groß wie eine halbe Kreditkarte.
+
+01:12:47.455 --> 01:13:16.395
+<v SPEAKER_2>Okay, also für die Leute, die jetzt wirklich... Entschuldigung, ich hab's vergessen. Ich war jetzt so fasziniert von der Technik, ich hab's vergessen. Es tut mir leid. Auch für die Leute, die jetzt nur den Podcast hören. Also dieses kleine Ding, würde ich sagen, aber jetzt zeigt das mal an die Kamera. Das ist halt wirklich sozusagen so groß wie ein Daumen. So einen Raspberry Pi kennt man. Da gibt's hier die eine Variante, die ist im Prinzip wie eine Checkkarte ein bisschen größer, weil noch eine SD-Karte rausguckt und ein bisschen höher, weil eine Netzwerkbuchse dran ist. Dann gibt's aber die nächste Version, die ist so...
+
+01:13:16.415 --> 01:13:17.495
+<v SPEAKER_3>Halbe Kreditkarte.
+
+01:13:17.515 --> 01:13:20.915
+<v SPEAKER_2>Genau, halbe Kreditkarte und auch ohne Netzwerkbuchse. Die kann aber auch WLAN vermutlich.
+
+01:13:21.235 --> 01:13:24.395
+<v SPEAKER_1>Die kann dann WLAN, wenn du einen WLAN-Stick für 3 Euro anschließt. Den hab ich auch dabei.
+
+01:13:24.415 --> 01:13:25.455
+<v SPEAKER_2>Ah, okay, verstehe.
+
+01:13:25.475 --> 01:13:30.915
+<v SPEAKER_3>Wie gesagt, du merkst, die Sachen sind halt billig. 3 Euro, 5 Euro, 10 Euro.
+
+01:13:31.235 --> 01:14:09.895
+<v SPEAKER_2>Ich finde es auch von der Größe her interessant, weil ich glaube, dass... Ich finde es interessant, dass ein vollwertiger Computer diese Größeordnung haben kann. Weil ich glaube, dass... Dass diese ganzen Dinge, die wir uns jetzt nach Hause holen sollen, wenn man der Industrie folgt, das Internet of Things ist das nächste große Ding und das wird alles ganz super. Du stellst dir deine Lampe, hängst sie dir rein, kannst sie dir ein paar Wehle anschauen und so was. Es gibt da eine gefühlte Wahrheit, wenn man sich nicht mit diesem Thema explizit beschäftigt hat, wo man denkt, na ja, das ist ja nur so klein.
+
+01:14:10.395 --> 01:14:11.675
+<v SPEAKER_3>Da kann ja nicht viel passieren.
+
+01:14:11.695 --> 01:14:27.275
+<v SPEAKER_2>Genau, da kann ja nicht viel passieren. Das ist ja nur ein Feuerzeug und nicht ein Herd. Ich finde es interessant, das wirklich mal explizit zu sehen, dass man sagen kann, okay, dieses Ding, das kann halt tatsächlich in der Glühlampe sozusagen, in dem Sockel einer Glühbirne, könnte man das unterbringen.
+
+01:14:27.295 --> 01:15:05.855
+<v SPEAKER_3>Wird es ja auch getan. Diese LED-Glühlampe, die es gibt, die haben dann ja WLAN drin. Die machen einen Access Point auf zum Konfigurieren. Dann hast du deine App auf deinem Handy, konfigurierst das Ding, danach ist das in deinem WLAN drin. Das Ding ist halt, das Zeug kostet nichts. Das sind 3 bis 5 Euro. Wenn du dir jetzt überlegst, dass die dann Geräte entwickeln, wo das drin ist, die Geräte kosten dann vielleicht 20 Euro, 30, 40, vielleicht auch mal 50. Das ist eine einmalige Einnahme von den Herstellern, wenn sie das Ding verkaufen. Aber um die Sachen sicher zu machen, müssen sie ja regelmäßig Firmenupdates bereitstellen. Weil du benutzt das Ding ja ein paar Jahre.
+
+01:15:07.795 --> 01:15:28.615
+<v SPEAKER_2>Also einerseits ja. Ich meine, okay, da ist halt Co drauf und Co, da werden vielleicht irgendwann Fehler gefunden. Und die müssen wir verbessern. Dann gibt es das Problem mit den Updates. Aber wir reden ja immer noch über diese Nummer, da wird ein Standardpasswort verwendet. Also eins für alle Geräte. Wie geht denn das überhaupt? Ihr seht mich sozusagen etwas fassungslos an die Webseite.
+
+01:15:28.635 --> 01:17:05.515
+<v SPEAKER_3>Es ist halt schwierig. Wenn du auf jedem Gerät ein anderes Passwort haben möchtest, musst du in der Fabrik, bei der Herstellung, für jedes Gerät die Firmware anpassen. Du kannst nicht überall eins zu eins die selbe drauf kopieren. Deswegen fangen sie halt an, ich nehme einen Algorithmus, der das aus der Markadresse oder aus irgendwas anderem ableitet. Dann habe ich den Vorteil, ich kann Aufkleber auf die Packung kleben. Da steht die Seriennummer drauf, da steht das Passwort drauf. Aber diese Algorithmen lassen sich sehr oft zurückrechnen. Das war auch bei diesen ganzen WLANs in den letzten Jahren immer mal wieder so, dass dann zum Beispiel ISPs, Kabelnetzbetreiber oder so, haben die Kunden WLAN-Access Points hingestellt. Da war ein Passwort dann gesetzt, was zufällig aussah, was sich aber aus der Seriennummer, der Markadresse, aus irgendwas ableiten ließ. Und dann gab es entweder nicht so viele Kombinationen dafür, oder man konnte eben aus dem, was im WLAN gesendet wurde, zurückrechnen auf das Passwort. Was halt eigentlich eine gute Idee ist, damit die Support-Leute den Leuten sagen können, dein Passwort ist dieses, wenn sie es nicht geändert haben, oder dass man nach dem Reset vom Gerät noch dran kommt, weil dann wieder das Passwort ist, was draufklebt. Und es einfach nicht zu verwalten ist, jedes Mal ein komplett zufälliges Passwort zu setzen, dann ein Label auszudrucken und auf das Gerät zu kleben. Und im Prinzip müssten die aber eigentlich alle so gestrickt sein, dass beim Einschalten des Gerätes zwangsweise ein Passwort gesetzt werden muss. Das muss man sich dann irgendwo aufschreiben und unten aufs Gerät draufkleben und das ist dann das Passwort. Nur dann müsstest du auch die Leute dazu zwingen, dass sie da immer ein sicheres Passwort für nehmen und nicht den Namen ihres Hundes. Deswegen ist eigentlich ein vom Hersteller vorgegebenes, zufälliges Passwort als Einstieg, als Default, wenn der Kunde nichts macht, eine gute Idee. Nur müssen die Algorithmen eben sicher sein.
+
+01:17:05.535 --> 01:17:42.695
+<v SPEAKER_5>Ich wollte gerade sagen, wenn es wirklich zufällig wäre, ich würde sogar dazu was sagen. Das sind jetzt alle Spielzeuge, die wir haben. Also Dinge, die, also bis auf die Seagate. Aber ja, noch so? Besser? Der Punkt ist, wir haben noch andere Sachen, wo der normale Benutzer das gar nicht vermutet, dass da sowas drin ist. Und zwar zum Beispiel ein Thermomix mit WLAN. Da denkt keiner drüber nach, was das ist. Genau, Fernseher, Kühlschränke mit Internet. Es gibt so viele Sachen, wo Internet drin ist, wo wir aber nicht drüber nachdenken, dass die auch ganz andere Sachen können.
+
+01:17:44.235 --> 01:17:59.215
+<v SPEAKER_2>Also, na okay, soweit war ich jetzt. Ausnahmsweise doch schon. Jedes Gerät, was ans Netzwerk angeschlossen ist, ist tendenziell sozusagen Netzwerk. Also, jetzt kriege ich jetzt total lobe, wenn man das so sagt. Aber im Prinzip ist das auch die Quintessenz.
+
+01:17:59.235 --> 01:18:06.275
+<v SPEAKER_3>Das ist halt das Internet of Things. Der Internetteil ist zwar durchaus ernst zu nehmen, ja.
+
+01:18:06.295 --> 01:18:13.255
+<v SPEAKER_5>Da steht aber nicht auf den Geräten meistens drauf. Sondern da steht dann Smart drauf.
+
+01:18:13.275 --> 01:18:17.395
+<v SPEAKER_2>Aber das heißt, diese Passwortfrage ist auch gar nicht zu klären?
+
+01:18:17.415 --> 01:18:44.955
+<v SPEAKER_1>Also Passwörter sind schwierig, TM. Also das ist ein bekanntes Problem. Wir schlagen uns jetzt schon seit jenseits der 20 Jahre mit der Problematik rum, wie wählt man starke Passwörter, die man sich noch merken kann. Da gibt es nichts von Ratiofarben, da weiß man nicht, gibt es keine einfache Methode, wie das sicher zu machen geht. Man hat diese drei Faktoren, man kann von denen immer nur zwei auswählen.
+
+01:18:45.535 --> 01:19:09.515
+<v SPEAKER_2>Aber es ist ja so, gerade bei diesen Smart-Home-Inseln, da muss man das Passwort ja nicht ständig eingeben. Das ist doch eigentlich so eine Sache, die vergibt man einmal und damit ist gut. Also ich verstehe, dass die Motivation, das zu ändern, deswegen noch geringer ist, weil man sich ja eh nicht damit auseinandersetzen muss. Aber im Prinzip wäre es doch da eigentlich am wenigsten ein Problem, sich ein ganz schwieriges Passwort auszudenken und dann halt irgendwo abzuspeichern und aufzuschreiben.
+
+01:19:09.535 --> 01:19:58.995
+<v SPEAKER_3>Du hast halt ein Problem. Beim normalen Rechner hast du Tastatur und Monitor dran. Das heißt, du kommst da auch irgendwie noch ran. Wenn du jetzt so ein smartes IoT-Device hast, wo du das Passwort vergessen hast, dann kommst du da unheimlich schwer ran, weil da ist keine Tastatur und kein Bildschirm dran. Das heißt, du musst irgendwie mit einer App, mit irgendwas von außen da drankommen, um auf das Gerät zugreifen zu können. Das heißt, du brauchst eine Möglichkeit, wie du das Gerät mit einem Reset-Knopf zurücksetzen kannst, auf irgendeinen bekannten Wert, der dann auf dem Gehäuse drauf steht. Und dieses Passwort ist halt eigentlich fast immer dann unsicher, weil das wird immer von irgendwas abgeleitet sein. Das wird nie komplett zufällig sein. Und die Faulheit der Leute, nachvollziehbar, das Ding funktioniert ja, ist halt, sie ändern das Standardpasswort nicht, was ab Werk da drin ist.
+
+01:19:59.015 --> 01:20:04.695
+<v SPEAKER_5>Naja, aber dieses wird unsicher sein, finde ich Quatsch, weil es gibt Dev Random und da kommt Random raus, Punkt.
+
+01:20:05.035 --> 01:20:07.375
+<v SPEAKER_3>Ja, aber wie willst du das in der Produktion machen?
+
+01:20:07.395 --> 01:20:09.115
+<v SPEAKER_2>Warte, warte, es gibt was?
+
+01:20:09.135 --> 01:20:16.875
+<v SPEAKER_5>Es gibt Dev Random, das ist ein Device, ein Character Device, aus dem man Daten, also wirklich random Daten rauslesen kann, Zufall.
+
+01:20:21.115 --> 01:20:23.375
+<v SPEAKER_2>Dev Random ist ein Character Device.
+
+01:20:23.395 --> 01:20:31.375
+<v SPEAKER_5>Unter Linux ist das ein Ordner oder eine Datei, die du lesen kannst. Und da kommen, da fallen halt so...
+
+01:20:31.395 --> 01:20:33.155
+<v SPEAKER_2>Da steht da eine zufällige Zahl drin.
+
+01:20:33.175 --> 01:20:34.095
+<v SPEAKER_5>Die fallen da so raus.
+
+01:20:34.115 --> 01:20:50.915
+<v SPEAKER_2>Okay, und dann wird immer noch die Problematik, die müsste man irgendwie dem User mitteilen. Wäre da eine Lösung, dass man sowas sagt wie, okay, wenn du ein Smart Home oder Internet of Things zu Hause hast, ist die Wahrscheinlichkeit hoch, dass du ein Smartphone hast? Wir machen das über so ein Nahbereichsding, also Bluetooth oder sowas.
+
+01:20:51.095 --> 01:21:27.355
+<v SPEAKER_3>NFC, sowas wäre in der Tat eine coole Geschichte. Du hältst dein Handy da dran und kannst dann auf das Gerät zugreifen im Notfallmodus. Das Problem ist nur auch da, das NFC-Tag muss erstmal beschrieben werden und du musst dann im Herstellungsprozess einen verdammt idiotensicheren Prozess haben, wie du von dem Gerät eindeutig diesen Tag schreiben kannst. Weil wenn dir in der Fabrik irgendwie die Sachen durcheinander kommen, hast du da draußen ein paar Zehntausend Geräte, wo die User nicht mehr darauf zugreifen können, weil dieses NFC-Tag nicht das Passwort gespeichert hat, was im Gerät drin ist. Das heißt, das Gerät müsste dieses NFC-Ding direkt irgendwie betreiben. Dann musst du das ins Gerät einbauen, dann wird es wieder teuer und komplizierter.
+
+01:21:27.775 --> 01:21:37.615
+<v SPEAKER_2>Es gibt keine Möglichkeit, sozusagen so eine Art Nahbereichsfunkstandard, wo man sagen kann, dass wenn das Gerät angemacht oder resettet wird, würfelt es sich ein Passwort aus.
+
+01:21:37.635 --> 01:21:44.695
+<v SPEAKER_3>Das könnte man bauen. Das könnte man sicherlich bauen, das muss aber in das Gerät eingebaut werden. Das kostet dann Geld, das macht die Geräte teuer.
+
+01:21:45.755 --> 01:21:48.195
+<v SPEAKER_2>Ja, eine Frage aus dem Publikum?
+
+01:21:48.215 --> 01:21:58.015
+<v SPEAKER_4>In der Tat tut das der Google WLAN-Router. Mit dem wird ohne Passwort ausgeliefert und du musst dich per Bluetooth mit dem Ding verbinden und dann ein Passwort setzen. Und vorher macht der erstmal gar nichts.
+
+01:22:00.015 --> 01:22:11.455
+<v SPEAKER_2>Also das sozusagen ist eine Möglichkeit, aber das ist sozusagen schon eine fortschrittene Technik, weil da muss halt Bluetooth drin sein und ich muss da sozusagen diese Kommunikation auch dann hinkriegen, oder wie? Aber das will man eigentlich?
+
+01:22:11.475 --> 01:22:25.155
+<v SPEAKER_3>Das will man eigentlich. Das ist eine eigentlich ganz gute Möglichkeit. Du könntest auch einen Barcode draufkleben, nur das hat halt das Problem der Zuordnung. Deswegen ist halt sowas, was das Gerät aktiv macht, zum Beispiel über Bluetooth, sicherlich eine ziemlich gute Sache dafür.
+
+01:22:25.235 --> 01:22:37.815
+<v SPEAKER_2>Ja, da könnte man nicht auch sozusagen machen, also das ist jetzt so ein bisschen Zukunftsmusik, aber man kann ja auch sagen, das Gerät hat ein kleines Display und darauf wird ein QR-Code abgebildet. Also das hat ja wirklich jedes Handy mittlerweile, einen QR-Code-Leser.
+
+01:22:38.215 --> 01:22:44.955
+<v SPEAKER_3>Ja, nur auf dem Router ein Display nur dafür zu haben, ist halt teuer. Also das kostet vielleicht dann 3-4 Euro nochmal extra.
+
+01:22:44.955 --> 01:22:47.075
+<v SPEAKER_5>Mit Displays kann man auch ganz viele andere schöne Sachen machen.
+
+01:22:48.695 --> 01:23:02.375
+<v SPEAKER_2>Also ja, aber das heißt auch tatsächlich sozusagen, dass die, sag mal jetzt, die Gefahr eines Internet of Things-Botnetzes billigend in Kauf genommen wird. Muss man mal so sagen, oder?
+
+01:23:02.395 --> 01:23:37.595
+<v SPEAKER_3>Im Prinzip ja. Du hast halt das Problem einerseits von Herstellern, die sich gerade zwar Gedanken machen, die aber dann eben diesen Supportaufwand haben. Dann hast du eine Klasse von Herstellern, die einfach nur billigst Geräte auf den Markt bringen. Das sind dann irgendwelche, ja, meist chinesischen AliExpress-Lieferanten oder so, wo du für ganz, ganz wenig Geld Geräte bekommst. Und dieser Hersteller existiert in drei Monaten schon gar nicht mehr. Die sich das irgendwo auf dem Restemarkt zusammenkaufen. Dann setzt sich jemand hin, baut das und lötet das irgendwie noch zusammen, dass es funktioniert und schmeißt es auf den Markt.
+
+01:23:37.615 --> 01:23:51.715
+<v SPEAKER_2>Kann man jetzt also bei dieser konkreten Attacke, die wir heute zum Anlass nehmen, um diese ganzen Dinge zu nehmen, es fällt ja gerade schon okay, dass bei anderen kleinen Kameras und Babyphones, war das jetzt nur die Geräteklasse oder kann man auch sagen, das war von Marke oder Bauteil sowieso?
+
+01:23:51.735 --> 01:23:52.695
+<v SPEAKER_5>Kann man.
+
+01:23:52.715 --> 01:23:53.375
+<v SPEAKER_2>Nämlich?
+
+01:23:53.395 --> 01:23:55.215
+<v SPEAKER_5>An den Mac-Adressen.
+
+01:23:55.235 --> 01:23:56.815
+<v SPEAKER_2>Aber welche? Also...
+
+01:23:56.835 --> 01:23:57.935
+<v SPEAKER_5>Von den Endgeräten, die da kommen.
+
+01:23:57.955 --> 01:24:01.575
+<v SPEAKER_2>Nein, nein, nein, ich meine, welche Marke war das? Oder war es eine oder waren es zwei oder drei?
+
+01:24:02.195 --> 01:24:08.675
+<v SPEAKER_5>Das hab ich jetzt nicht im Kopf, keine Ahnung. Also es gibt da wohl irgendwie Mirai oder so, keine Ahnung.
+
+01:24:08.695 --> 01:24:09.875
+<v SPEAKER_3>Mirai ist das Botnetz, ja.
+
+01:24:09.895 --> 01:24:14.055
+<v SPEAKER_5>Genau, aber ob das irgendwie in einer Geräteklasse ist, die irgendwie, hab ich jetzt nicht gelesen.
+
+01:24:14.075 --> 01:24:18.575
+<v SPEAKER_3>Also es gab auf jeden Fall einen Hersteller, der gesagt hat, wir ziehen jetzt mal alle unsere IP-Kameras zurück.
+
+01:24:18.595 --> 01:24:19.935
+<v SPEAKER_1>Und das war ein chinesischer.
+
+01:24:19.955 --> 01:24:21.515
+<v SPEAKER_3>Genau, weil die waren wohl hauptsächlich betroffen.
+
+01:24:21.535 --> 01:24:24.215
+<v SPEAKER_5>Die sind aber irgendwas mit Yum, Yum, Yum irgendwas.
+
+01:24:24.235 --> 01:24:32.475
+<v SPEAKER_3>Und die haben halt im großen Stil jetzt die Kameras zurückgezogen, weil sie feststellten, sie können da gerade keinen Firmware-Update rausrollen, weil sie können irgendwie nicht updaten oder so.
+
+01:24:32.495 --> 01:24:35.915
+<v SPEAKER_2>Weil jemand sich in die Geräte eingehakt hat und das Passwort geändert hat?
+
+01:24:35.935 --> 01:24:46.655
+<v SPEAKER_3>Nee, weil die wohl, weiß nicht, Auto-Update kaputt haben keine Auto-Update, ich hab das nicht genau verfolgt. Die haben auf jeden Fall die Geräte zurückgezogen, um auch irgendwie den größeren Schaden ihrer Marke abzuwenden oder so.
+
+01:24:46.675 --> 01:24:48.575
+<v SPEAKER_5>Ich glaub, die können gar kein Update.
+
+01:24:48.595 --> 01:24:50.075
+<v SPEAKER_3>Wahrscheinlich können die kein Update, genau.
+
+01:24:50.495 --> 01:24:52.355
+<v SPEAKER_2>Was, das wird ja mal wilder.
+
+01:24:52.375 --> 01:25:08.435
+<v SPEAKER_3>Na, Updates sind halt teuer, ne? Also was ich vorhin sagte, du bist Hersteller von so einem Gerät, du kriegst da einmal Geld für, irgendwie deine 40, 50 Euro, dann geht dafür Transport und so weiter alles runter. Es bleibt nicht mehr so viel übrig an dem Geld und dann da noch über Jahre Firmware-Updates raus.
+
+01:25:08.455 --> 01:25:11.335
+<v SPEAKER_1>Die Kundennachfrage dafür ist nicht da.
+
+01:25:11.355 --> 01:25:13.055
+<v SPEAKER_5>Vor allen Dingen installiert das keiner.
+
+01:25:13.075 --> 01:25:28.395
+<v SPEAKER_3>Vor allem erklärt man dem Kunden, dass das Gerät, im Regal gibt es ein Gerät für 40 Euro, das ist dann so ein Fernostding, oder es gibt das für 150. Das für 150 wird auch in zwei Jahren noch Firmware-Updates haben. Das andere nicht. Die Kunden kaufen nicht, das ist teurer.
+
+01:25:28.415 --> 01:25:36.995
+<v SPEAKER_1>Die Kunden kaufen ja selbst schon Telefone nicht, also kaufen die billigere Telefone, obwohl klar ist, dass das kein Betriebssystem abgeht.
+
+01:25:37.015 --> 01:25:40.115
+<v SPEAKER_5>Obwohl der Vergleich mit dem Preisrecht hinkt.
+
+01:25:40.135 --> 01:25:42.075
+<v SPEAKER_2>Ich wollte gerade fragen, ist der Preisentscheid wirklich so groß?
+
+01:25:42.095 --> 01:25:54.575
+<v SPEAKER_5>Ja, noch größer. Also wenn ich mir zum Beispiel eine Fritzbox, eine ordentliche, hole, dann kostet die 300 Euro. Und wenn ich etwas Vergleichbares kaufe, kriege ich das für 50, was keine Update kriegt.
+
+01:25:56.495 --> 01:26:04.855
+<v SPEAKER_2>Und ihr würdet aber auch sagen, dieser Aufpreis ist nicht der Markenname, sondern auch, man kauft da quasi mit, dass man sozusagen über Jahre Updates kriegt. Und ich finde das auch gerecht.
+
+01:26:04.875 --> 01:26:29.135
+<v SPEAKER_5>Ja, natürlich, wenn man wirklich ein kommerzielles Produkt kauft, wo man weiß, dass die wirklich Updates machen, und das macht zum Beispiel AVM, dann kauft man das. Aber da sollte man darauf achten. Das Problem ist, dass der normale Konsument, der guckt halt auf die Packung und sagt, hat dieses Gerät diese technischen Daten, die ich von irgendjemandem gesagt bekommen habe, das ich brauche?
+
+01:26:29.155 --> 01:27:01.595
+<v SPEAKER_2>Nee, aber ich glaube, das ist dann auch ein Problem. Das Problem ist sozusagen, der jemand, der dir das sagt, also die zu Weihnachten in die Ferne lande, ich hab das noch nicht, also weder in der Fachpresse, sondern noch sozusagen im Umfeld, ist die Firma updatefähig. Das kenne ich nicht als so ein grundsätzliches Kaufargument, das mitgibt. Das Einzige, wo man das hört, ist immer, wenn es um sozusagen iOS gegen Android geht. Da wird dann immer gesagt, ja, also Apple macht ja wenigstens Updates für seine Geräte und bei Android ist man halt so abhängig davon, ob der Hersteller irgendwas aussieht.
+
+01:27:01.615 --> 01:27:38.695
+<v SPEAKER_1>Naja, der Punkt ist, dass du als Benutzer von so einem IoT-Device nicht unbedingt merkst, dass da gerade noch Schadcode draufläuft. Also, es ist so wie mit den sprichwörtlichen Eltern zu Hause, die nicht wissen, auf welche Banner sie nicht klicken dürfen. Deren Computer funktioniert auch noch irgendwie, bis dann die Kinder Weihnachten nach Hause kommen und dann alles wieder schick machen müssen. Aber die Funktionalität, also wenn auch gerade als jemand, der so eine Mailware schreibt, ist das in deren Interesse, dass sie dafür sorgen, dass das Gerät noch weiter funktioniert. Das ist auch bei normalen Viren, die die Menschen normal so anstecken.
+
+01:27:38.715 --> 01:27:42.555
+<v SPEAKER_2>Wenn es nicht gerade ein Verschlüsselungs-Ding ist, dann will man so sagen, dass das Gerät weiter läuft.
+
+01:27:42.575 --> 01:27:45.615
+<v SPEAKER_5>Obwohl, der funktioniert weiter, nur da die Daten sind halt immer zugrufbar.
+
+01:27:45.635 --> 01:28:15.835
+<v SPEAKER_3>Aber erstmal funktioniert auch alles weiter, bis er alles verschlüsselt hat. Aber mit der Preisgeschichte kommt noch eine andere Sache dazu. Der ganze Kram ist so dermaßen komplex, dass du als normaler Konsument das überhaupt nicht mehr durchschaust. Du verstehst die ganzen Begriffe nicht, du verstehst nicht, was du brauchst, was da das Richtige ist. Und dann reduzierst du das Problem auf eine Sache, die du verstehen kannst. Und das ist zum Beispiel der Preis. Und dann kaufst du halt das, was für dich sich besser anfühlt, und das ist halt nur zweifach als günstigere. Da hast du auch das Gefühl, da kannst du nicht so viel falsch machen. Weil wenn das jetzt das Falsche war, hast du nicht so viel Geld dafür ausgeworfen.
+
+01:28:18.535 --> 01:33:49.235
+<v SPEAKER_2>Ich will gleich noch mit euch mal drüber genauer sprechen. Dann kommen wir zu dem, was Ben Tom am Anfang der halben Stunde gesagt hat, nämlich wer ist eigentlich schuldig. Und dann gucken, ob man das in Zukunft anders klären könnte. Vorher noch eine letzte Musik vom Chillhop-Album. Und das war ja alles nicht Musik, die man jetzt klischeemäßig mit Computer und Digital zusammenbringt. Der Track ist wenigstens im Namen. Floppy Circus ist es mit Safari Haze. So, letzte halbe Stunde im Chaosradio 228, wo wir über eine DDOS-Attacke aus einem Botnetz, das aus Internet of Things-Geräten zum großen Teil bestanden hat, reden. Und zum Schluss uns der spannenden Frage stellen wollen, wer ist denn jetzt eigentlich schuld daran und wie verhindert man das in Zukunft? Wir haben am Anfang schon ein bisschen drüber geredet, dass das DDOS sozusagen technisch aufhalten vielleicht geht, aber naja, und für die folgende halbe Stunde ist das Gedankenszenario das Folgendes. Also wir haben sozusagen, es gibt so eine große Attacke, die mittels vieler gehackter Geräte aus dem Internet of Things veranschaltet wird. Man will jetzt was dagegen übernehmen, wem hilft man das über? Und wir haben gerade festgestellt, also das wird so sein, dass es Geräte gibt, die regelmäßig keine, also nicht regelmäßig Updates kriegen und deswegen angreifbar sind oder halt einfach auch schlecht gemacht worden sind. Da wollte ich noch was zu sagen, dass es halt nicht ganz alleine der Preis ist. Weil ihr habt ja gerade gesagt, irgendwie teuer gleich viele Updates und so.
+
+01:33:49.255 --> 01:34:19.715
+<v SPEAKER_3>Genau, hier kam gerade berechtigt aus dem Publikum der Hinweis, dass der Preis nicht alleine ausschlaggebend sein kann dafür, ob es Updates gibt. Das ist richtig. Es gibt halt Firmen, die sind ein bisschen teurer, die haben Updates. Es gibt Firmen, die sind nicht so teuer, haben auch Updates. Man muss halt wirklich im Einzelfall gucken, ob es zum Beispiel auf der Webseite des Herstellers für diese Geräte so eine Rubrik gibt mit Updates, mit Firmware-Updates, ob da was veröffentlicht wird regelmäßig. Das muss man vor dem Kauf befürchtet tatsächlich tun. Nur zu sagen, dass es jetzt das teurere Gerät ist, keine Garantie dafür, dass es Updates gibt.
+
+01:34:20.515 --> 01:34:59.755
+<v SPEAKER_2>Also quasi, wenn das Gerät Geld kostet, das relevant ist, dann steigt die Wahrscheinlichkeit, dass der Hersteller es sich leisten kann, Updates zu machen. Aber ob er das tut, muss man nochmal nachgucken. Okay, so, jetzt haben wir also diese riesige Botnetzarmee von gehackten Internet of Things-Dingern, die dringend mal irgendwie entweder von Netz abgeklemmt oder......geupdatet....oder geupdatet werden müssen. So, dann gibt es ja verschiedene Parteien, die man in dieser Stelle sozusagen erfolgreich machen kann. Wir wollen mal sozusagen unten anfangen. Der Besitzer. Könnte man in Zukunft einfach sagen, so, lieber Besitzer, wenn du so ein Gerät kaufst, machen wir dich einfach haftbar dafür. Du bist dafür verantwortlich, das Gerät abzuklemmen.
+
+01:35:01.395 --> 01:35:32.895
+<v SPEAKER_3>Ja, bitte? Einerseits ist der Besitzer der Einzige, der auf das Gerät Einfluss nehmen kann. Ihm gehört das. Er hat das hoffentlich unter seiner Kontrolle zumindest. Er kann es ausschalten. Er hat physikalische Kontrolle über das Ding. Das Problem ist, der Besitzer selber hat nicht die Möglichkeit, zu überprüfen, ob das Gerät unsicher ist. Er weiß eventuell gar nicht, ob das Gerät an Angriffen mitwirkt. Und ihm da jetzt heftig Schadensersatz überzuhelfen, ist, glaube ich, nicht der richtige Weg. Das sorgt nämlich dafür, dass niemand mehr sich irgendwelche Geräte kauft. Und dann kann man das Internet auch einfach abschalten.
+
+01:35:32.915 --> 01:35:33.375
+<v SPEAKER_1>Bin ich dafür?
+
+01:35:38.155 --> 01:35:41.715
+<v SPEAKER_2>Nein. Aber gibt es nicht irgendeine Möglichkeit, dass man...
+
+01:35:44.475 --> 01:36:30.435
+<v SPEAKER_3>Wenn ich so darüber nachdenke, wahrscheinlich funktionieren würde oder könnte, wäre das, was zum Beispiel die Telekom bei Spamversand macht. Wenn die Telekom Beschwerden bekommt, dass von einem Kunden Spam verschickt wird, wird dieser Kunde, wenn es ein Privatkunde ist, partiell vom Internet abgeklemmt. Er kann keine Mails mehr senden und er bekommt den Hinweis, dass sein Rechner infiziert ist. Das sind Sachen, die durchaus passieren. Und das könnte da auch funktionieren. Das heißt, der ISP würde eine Alarmierung bekommen, dass von seinen Kunden Angriffe ausgehen. Also die Opfer erkennen ja durchaus, dass da eine DDOS-Attacke kommt. Die könnten dann die Angreifer-IP-Adressen, zumindest viele davon, an irgendeiner Clearance-Stelle melden und die informiert dann die Provider, dass von ihren Kunden zu einem bestimmten Zeitpunkt Angriffe ausgegangen sind.
+
+01:36:30.455 --> 01:36:32.495
+<v SPEAKER_5>Wenn sie die IP-Adressen nicht geändert haben.
+
+01:36:32.515 --> 01:37:11.375
+<v SPEAKER_3>Wenn sie die IP-Adressen, genau. In einer idealen Welt könnte der Provider dann rausbekommen, welcher Kunde das war und den Kunden mitteilen, pass mal auf, in deinem Netzwerk befinden sich unsere Geräte, wir verwahren dich, wenn das zu oft vorkommt, dann Konsequenz X, zum Beispiel Beendigung des Vertragsverhältnisses. Keine Ahnung. Das Problem ist, man muss bei den Endkunden und muss bei den Benutzern eine Sensibilisierung dafür schaffen, dass auch wenn sie selber gar nicht merken, dass da was im Argen ist, dass anderen Leuten Schaden zufügt und dass sie eigentlich selber Interesse daran haben, dass diese Geräte vom Netz kommen oder abgedatet werden, weil es eben auch sie selber mal betreffen könnte oder eben Dienste, die für sie wichtig sind.
+
+01:37:11.395 --> 01:37:28.355
+<v SPEAKER_5>Im Prinzip ist das richtig, aber das Problem dabei ist etwas größer. Und zwar gibt es nicht nur den Standardanschluss mit der Familie dahinter, sondern es gibt Anschlüsse, wo ganz, ganz, ganz, ganz viele Geräte dahinter sind. Und das dann wirklich jemandem aufzubürden und sagen, ja, hier, WG, XY, mach mal.
+
+01:37:28.375 --> 01:37:31.235
+<v SPEAKER_3>Oder Krankenhaus oder Arztpraxis oder so.
+
+01:37:31.255 --> 01:37:50.375
+<v SPEAKER_2>Entschuldigung, aber das klingt ja auch noch wie eine andere Sache komisch. Also in Deutschland würde ich mir vorstellen, wenn man diese Schritte macht, also Clearingstelle, ISP, Kunde, dann bis diese Nachricht beim Kunden ist, verdauert es ja irgendwie zwei Tage. Das hört sich ja behördlich an. Und dann ist diese DDOS-Attacke auch schon wieder gegessen.
+
+01:37:51.835 --> 01:37:56.795
+<v SPEAKER_3>Du willst ja, dass das Gerät geupdatet wird oder dass es vom Netz kommt.
+
+01:37:56.815 --> 01:37:58.895
+<v SPEAKER_2>Ja, genau, dass es vom Netz kommt und das geht zu schnell.
+
+01:37:58.915 --> 01:38:21.515
+<v SPEAKER_3>Aktuell läuft sowas ja wochenlang und monatelang. Die Geräte sind ja einfach in Betrieb, Wochen und Monate, Tag und Nacht, weil es ist halt so ein IoT-Gerät, das ist Tag und Nacht an. Und auch wenn das dann ein bisschen dauert, bis die Meldung beim Kunden ist, wirst du dann im Kundennetzwerk auch noch nachmessen können und sehen können, von welchen Geräten, von welchen IP-Adressen da immer noch Schleffik ausgeht.
+
+01:38:21.975 --> 01:38:22.855
+<v SPEAKER_5>Nicht unbedingt.
+
+01:38:22.875 --> 01:38:28.815
+<v SPEAKER_2>Da muss ich jetzt aber noch mal kurz fragen, warum hat denn die Idee des Attacker, über die wir heute reden, aufgehört?
+
+01:38:28.835 --> 01:38:34.495
+<v SPEAKER_3>Unklar. Also offensichtlich haben die Macher irgendwann einfach gesagt, wollen nicht mehr, machen wir nicht mehr.
+
+01:38:34.515 --> 01:38:36.695
+<v SPEAKER_5>Genau, weil die wahrscheinlich eine TTL hatte.
+
+01:38:36.715 --> 01:39:08.815
+<v SPEAKER_2>Und ich möchte den, haben wir am Anfang der Sendung erklärt, heißt sozusagen, dass es irgendwann automatisch aufhört. Aber ich möchte für das Gedankenexperiment schon annehmen, dass die sozusagen, also die pumpt einfach sozusagen weiter, bis wir die vom Netz genommen haben. Und die Frage ist sozusagen, wer ist das? Also was du jetzt beschreibst, ist sozusagen, ja, okay, das geht halt von alleine irgendwann vorbei, dann muss aber trotzdem das Ding noch vom Netz genommen werden. Was ich meine, ist wirklich der Fall. Diese Attacke macht halt sozusagen so lange weiter, bis sie zwangsausgeschaltet wird. Und dann ist ja sozusagen, dann reicht das halt nicht, wenn du dieses ISP-Ding sozusagen machst über, ja, wie ein Familienkunde...
+
+01:39:08.835 --> 01:39:17.555
+<v SPEAKER_1>Naja doch. Weil also wie ich ja anfangs schon meinte, das Internet ist halt best effort. Wie gesagt, das ist auch so ein bisschen der Bildungsauftrag des CCC.
+
+01:39:17.575 --> 01:39:19.555
+<v SPEAKER_2>Das ist kaputt.
+
+01:39:19.575 --> 01:40:01.795
+<v SPEAKER_1>Da können wir nicht unbedingt schnell was dran ändern. Wir können jetzt nicht irgendwie sagen, so Alarm, Feueralarm, alle auf Knöpfe drücken und dann ist das Thema gegessen. Sondern wir können halt sagen, okay, wir haben jetzt diese Attacke, da können wir jetzt erst mal zwei Tage lang nichts dran machen. Okay, müssen wir mitleben. Sondern wir gehen jetzt hin und gehen halt diesen Weg über den ISP, oder das Opfer, das sagt, okay, ich habe hier von folgenden IPs irgendwie Attacken bekommen, leite das doch mal bitte schon weiter an deine Heimat-ISP und dann ist der dafür verantwortlich, dann rauszufinden, wer das denn vielleicht war. Aber jetzt irgendwie hin zu sagen, okay, wir müssen jetzt hier Cyber-Cyber-Bundeswehr im Inneren, ist nicht zielführend.
+
+01:40:02.575 --> 01:40:27.615
+<v SPEAKER_2>Naja, aber das ist genau das, was ich gerade gemerkt habe. Die Gefahr gibt es natürlich doch, weil in dem Moment, wo ich sozusagen die ISPs dafür verantwortlich mache, passieren, kann ich mir zwei Dinge vorstellen. Das erste ist, ISPs fangen an, ihren Traffic zu monitorn, damit sie sozusagen schneller reagieren können. Und dann hat man was, was vorhin schon mal bei DNS noch sozusagen ein Gegenargument war, dass man sagt, okay, der ISP guckt jetzt in den Datenverkehr, um rauszufinden, wie nein.
+
+01:40:27.795 --> 01:41:17.435
+<v SPEAKER_1>Nein, das muss man ganz klar trennen. Einmal gibt es sogenannte Abuse-Nachrichten, dass man einmal sagt, okay, von folgender IP wurde ich geschädigt. Das hatte ich nicht zu interessieren, wie, sondern ich wurde von folgender IP geschädigt. Natürlich muss man da irgendwie Missbrauch vorbeugen, aber dazu muss der ISP nicht in meine Daten gucken. Das ist ja ähnlich wie mit Spam. Da wird gesagt, okay, von dieser IP wurde Spam gesendet. Das wird nicht kontrolliert, sondern wird erstmal irgendwie verwarnt. Also gerade bei den dynamischen IPs ist das weniger ein Problem, weil man kann ja gucken, bei den Kunden ändern sich ja die IPs über die 24 Stunden jeweils. Und wenn diese Attacke über diese 24 Stunden hinweg persistent bleibt für einen bestimmten Kunden über verschiedene IPs, kann man daraus zurückschließen, dass da was im Argen sein muss bei den Kunden.
+
+01:41:18.595 --> 01:41:40.775
+<v SPEAKER_2>Und das andere ist, wenn ein ISP das machen muss, dann steht ja viel mehr Aufwand. Es gab für diese Attacke, die wir hatten, gab es so Heatmaps, also wo kommen die Angriffe eigentlich her? Das war tatsächlich auch sozusagen, konnte man das lokal festmachen, wo ganz viele dieser Geräte gehackt wurden. Und da hat ein ISP ganz, ganz, ganz, ganz, ganz viel aufgerissen. Und dann sagt er, na gut, dann werden meine Kosten aber höher. Das wird dann irgendwie umgeschlagen.
+
+01:41:42.295 --> 01:41:43.815
+<v SPEAKER_3>Es gibt eine Buttikumsfrage.
+
+01:41:44.695 --> 01:41:53.075
+<v SPEAKER_2>Na, gleich, aber da möchte ich gerne, dass ihr erst mal auf diesen Punkt sozusagen eingeht. Das würde ja Internet teurer machen. Also, dann wird sich ISP wahrscheinlich irgendwas ausdenken von wegen...
+
+01:41:53.095 --> 01:41:56.795
+<v SPEAKER_1>Du hast aber die Forderung gestellt, dass wir jetzt unbedingt was machen müssen.
+
+01:41:57.275 --> 01:41:58.535
+<v SPEAKER_3>Er hat vor allem...
+
+01:41:58.595 --> 01:42:05.395
+<v SPEAKER_2>Nee, nee, nee, ich habe gesagt, ich möchte jetzt verschiedene Verantwortliche durchgehen und das für und wieder besprechen wollen.
+
+01:42:05.895 --> 01:42:07.095
+<v SPEAKER_3>Letztlich ist halt alles kacke.
+
+01:42:08.635 --> 01:42:13.135
+<v SPEAKER_2>Internet of Shit ist... Das würde ich gerne genauer erläutern.
+
+01:42:13.155 --> 01:42:16.555
+<v SPEAKER_3>Wenn du jetzt anfängst und sagst, der Provider ist verantwortlich, dann sagt das...
+
+01:42:16.575 --> 01:42:18.575
+<v SPEAKER_2>Was hast du gesagt? Das habe ich nicht gesagt.
+
+01:42:18.595 --> 01:43:02.495
+<v SPEAKER_3>Der Provider sollte seine Kunden informieren und die sollen das dann abklemmen. Was hast du gesagt? Das hast du auf mich nicht angeschlagen. Dazu brauchen wir bei den Kunden eine Änderung, eine Einstellung, dass sie sagen, mir ist das nicht scheißegal, mein Rechner läuft doch, sondern dass sie merken, dass man da zusammenarbeiten muss. Das ist ein soziales Problem, das man mit Technik mal wieder nicht lösen kann. Deswegen glaube ich auch nicht, dass das so schnell passieren wird, wenn überhaupt. Solange haben wir technische Krücken. Nur wenn wir jetzt hinkommen und sagen, der Provider ist verantwortlich, wird es eben genau zudem führen. Der Provider wird dann irgendwelche Filter und Monitoringlösungen installieren. Der wird sich angucken, ob er von seinen Kunden bekannte Alltage sieht und wird dann die Kunden abklemmen. Das ist eigentlich nicht eine Welt, in der wir leben wollen.
+
+01:43:03.555 --> 01:43:08.835
+<v SPEAKER_2>Also, weil dann gab es ja auch Kollateralschein, aber das habt ihr auch schon gesagt. Dann klemst du halt, sagen, an den ganzen Internetzugang ab.
+
+01:43:08.855 --> 01:43:13.935
+<v SPEAKER_3>Und dann ist halt plötzlich irgendeine Klinik offline oder irgendwas anderes. Das ist halt auch doof.
+
+01:43:16.615 --> 01:43:29.075
+<v SPEAKER_5>Nee, eigentlich mehr eine Aussage. Und zwar, inzwischen gibt es ja sogar Netzwerke, die proaktiv nach Sicherheitslücken zum Beispiel von Windows-Geräten oder sonstigen Scannen und daraus Abuse-Mails generieren.
+
+01:43:29.095 --> 01:43:30.795
+<v SPEAKER_6>Meine Frage ist, würde das dabei auch helfen?
+
+01:43:34.535 --> 01:43:56.315
+<v SPEAKER_1>Nee, weil vor allen Dingen ist halt die Angriffsfläche so unglaublich groß. Also ich meine, ok, du könntest vielleicht nach den Standard-Fehren suchen, wie irgendwie Standard-Passwörter vergeben. Aber das ist ja nur die am einfachsten verständliche Sicherheitslücke, da gibt es ja noch unglaublich viele andere, die da eventuell zum Tragen kommen. Wenn du sie nicht kennst, kannst du nicht danach suchen.
+
+01:43:56.715 --> 01:44:12.655
+<v SPEAKER_2>Aber wenn ich es richtig verstanden habe, sind ja diese ganzen riesigen Attacken nicht dadurch geschehen, dass irgendjemand einen total krass ausgefuchsten Fehler hat, sondern, wie habt ihr selber gesagt, dass mittlerweile spekuliert wird, das sind sozusagen Leute, die einfach irgendwie Baukastensysteme benutzt haben und Standard-Passwörter.
+
+01:44:12.675 --> 01:44:35.075
+<v SPEAKER_3>Es sind halt Standard-Sachen, auch diese Amplifier, das sind Protokolle wie NTP, die eigentlich zur Zeitsynchronisation da sind, oder auch DNS selber kann man für so eine Amplification-Attacke benutzen. Da sind zum Teil Schwachstellen in Protokollen, da sind zum Teil Server, die nicht gut gewartet sind. Da kommt sehr viel zusammen und deswegen werden wir die Ursachen oder die ausnutzbaren Systeme auf lange, lange Zeit nicht loswerden.
+
+01:44:35.175 --> 01:44:44.535
+<v SPEAKER_2>Aber dann könnte doch genau sowas helfen, was gerade vorgeschlagen wurde oder nicht. Also quasi, wenn wir schon mal die ganzen offensichtlichen Fehler dadurch sozusagen minimieren können, dass man aktiv danach sucht.
+
+01:44:44.555 --> 01:45:16.395
+<v SPEAKER_3>Du hast ein Problem. Das ist das, dass du sehr wenige, also im Vergleich sehr wenige Systeme brauchst, um eine Attacke fahren zu können. Das heißt, auch wenn du jetzt 80 Prozent der Systeme, die jetzt verwundbar sind, loswirst, es kommen ständig neue dazu. Und wenige Server oder wenige Systeme können ausreichen, um auch wieder Attacken zu fahren. Deswegen auch wenn du, also es ist ein relativ aussichtsloser Kampf gegen Windmühlen, die alle loszuwerden, die da so verwundbar sind. Das ist leider so.
+
+01:45:16.655 --> 01:45:19.415
+<v SPEAKER_5>Der beste Ansatz ist halt einfach, die Geräte sicherer zu machen.
+
+01:45:20.855 --> 01:45:50.055
+<v SPEAKER_2>Da wollte ich jetzt gerade darauf zu reden kommen, lasst uns doch einfach die Hersteller der Verfahren, was ich machen soll, liebe Hersteller, ihr dürft einfach keine Geräte mehr verkaufen, wo ihr nicht die Möglichkeit habt, per Auto-Update sozusagen genau so was abzuschalten oder halt aufzuspielen. So fertig ist die Kiste. Die Dinger sind am Netz, das ist das Argument, dem ihr das verkauft. Ihr müsst jetzt einfach dafür sorgen, dass da sicherer Code drauf ist. Und wenn ihr das nicht könnt, dann müsst ihr dafür sorgen, dass ihr jederzeit nachschieben könnt, wenn da die Erzeugungen sind.
+
+01:45:50.075 --> 01:45:57.135
+<v SPEAKER_3>Und dann machst du die nächste Box der Pandora auf. Dann hast du nämlich Geräte, die sich vom Hersteller aus der Ferne updaten lassen.
+
+01:45:57.155 --> 01:45:58.335
+<v SPEAKER_2>Was könnte da schon schief gehen?
+
+01:45:58.355 --> 01:46:47.675
+<v SPEAKER_3>Dann hast du halt einen Staat, der sagt, wir haben jetzt hier so einen Terroristen und wir möchten jetzt alles über diesen Terroristen wissen oder wir bezeichnen ihn als Terroristen. Und dann wird der Hersteller verpflichtet, dem eine ganz spezielle Firmware auf seine Geräte zugepacken. Das ist halt auch blöd. Auf der anderen Seite, ohne Auto-Updates ist es auch doof, weil die Leute die Updates nicht manuell einspielen werden. Beispiel von diesen Aldi-Kameras. Das heißt, auch da kommst du sehr, sehr schnell wieder in Bedrohliche. Was du da eigentlich möchtest, ist, dass die Leute im Prinzip eine informierte Entscheidung treffen können, dass sie diese Updates jetzt haben wollen. Das ist per Default gerne auch an, aber sie können es auch jederzeit abschalten, wenn sie der Meinung sind, dass zum Beispiel die Updates dafür sorgen, dass eine kritische Infrastruktur nicht mehr funktioniert. Was auch immer in dem Zusammenhang jetzt eine kritische Infrastruktur ist.
+
+01:46:47.695 --> 01:46:56.655
+<v SPEAKER_5>Diese Auto Updates haben aber noch andere Sachen, und zwar der Hersteller kann theoretisch dafür sorgen, dass nach dem fünften Update die Geräte sich ausschalten und nicht mehr funktionieren.
+
+01:46:56.835 --> 01:46:58.055
+<v SPEAKER_1>Nicht nur der Hersteller.
+
+01:46:58.075 --> 01:47:35.775
+<v SPEAKER_5>Ja genau, wenn diese Update-Funktion dann kaputt ist, kannst du selbst die Geräte dann auch kaputt machen. Also das ist irgendwie blöd. Das Beste, es gibt eine Möglichkeit. Und zwar gibt es ja Open Source Software. Es gibt so OpenWRT und so weiter. Und man kann, wenn der Hersteller sagt, ok, ich gebe meine ganzen Source Code an die freie Community, dann ist das, wenn er die Treiber zum Beispiel in den Körner packt, dann ist das fast schon garantiert, dass die Körner Community das weiter pflegt. Das heißt, er braucht sich da eigentlich nicht darum zu kümmern. Es muss dann nur von dem Besitzer darauf geachtet werden, dass die Updates eingespielt werden.
+
+01:47:35.795 --> 01:47:39.735
+<v SPEAKER_2>Aber da sind wir bei dem Punkt, wir haben ja gerade festgestellt, der Besitzer ist raus, weil er wird es wahrscheinlich nicht machen.
+
+01:47:43.555 --> 01:47:46.335
+<v SPEAKER_5>Aber dann bleibt nur Auto-Updates und Auto-Updates ist blöd.
+
+01:47:48.335 --> 01:47:55.915
+<v SPEAKER_3>Und diese Fire Software funktioniert leider auch nicht immer. Ich habe zu Hause einen Router, der war sehr verbreitet, da gibt es keine Updates mehr für. Auch nicht bei OpenWRT.
+
+01:47:55.935 --> 01:48:16.235
+<v SPEAKER_2>Kann man nicht einfach sagen, okay, ihr Hersteller, ihr seid nicht zur Auto-Updates verloren, aber wir machen euch für größere Schäden haffbar, wenn euch Fahrlässigkeit nachgewiesen werden kann. Also Beispiel, wenn ihr tatsächlich sozusagen so ein Ding ausliefert, das irgendwie offen ist wie ein Show & Tour und Admin als User und Passwort 1, 2, 3, 4 als Passwort hat, dann und daraus wird ein Botnetz gebastelt, dann seid ihr leider dran.
+
+01:48:16.395 --> 01:48:30.715
+<v SPEAKER_1>Ja, okay, aber jetzt hab ich meinen nicht in der Kühlschrank. Den hab ich mir jetzt gekauft. So, und dann, wie machst du jetzt den Hersteller, der vor zwei Jahren schon irgendwie Konkurs angemeldet hat und nicht mehr existiert, haffbar? Oder machst du einen Importeur, haffbar? Oder wie machst du, haffbar?
+
+01:48:31.055 --> 01:48:56.715
+<v SPEAKER_2>Es gibt, ich hab neulich gelernt sozusagen, dass es in Deutschland ein Elektro-Gesetz, Elektro-Geräte-Gesetz gibt und da ist das wie folgt geregelt, also Geräte brauchen Prüfzeichen und der Hersteller ist haffbar. Und wenn du als Händler Geräte verkaufst, die keinen sozusagen Kennzeichen haben, dann bist du, dann giltst du als Händler, als Hersteller. Also du hast dann auf jeden Fall sozusagen jemand, den du haffbar machen kannst. Also die Frage ließe sich zumindest juristisch auch klären.
+
+01:48:57.775 --> 01:49:18.515
+<v SPEAKER_3>Ja und dann bestelle ich bei Aliexpress in China direkt. Das Ganze wird über einen Freihaufen in England nach Deutschland geliefert. Es kommt hier eine LED-Lampe an, in meinem konkreten Beispiel. Die LED-Lampe ist außen blank mit 230 Volt, hat keine Prüfzeichen, darf eigentlich gar nicht in den Verkehr kommen, ist höchst illegal, kommt aber durch alles durch.
+
+01:49:18.535 --> 01:49:24.695
+<v SPEAKER_2>Naja, ist da aber auch sozusagen ein bedeutlicher Einzelfall. Das ist ja halt nicht so, dass wir dann sozusagen hunderte Geräte im freien Markt haben werden.
+
+01:49:24.715 --> 01:49:29.135
+<v SPEAKER_5>Ja, aber wenn wir das weiter spinnen, den Gedanken, dann haben wir irgendwann wieder die Grenzen zu. Das will auch keiner.
+
+01:49:32.255 --> 01:49:42.035
+<v SPEAKER_2>Aber generell, wenn man sozusagen Hersteller zu zwingen könnte, also es ist anscheinend nicht umsetzbar, aber die Idee, Hersteller haftbar zu machen, halte ich nicht für grundsätzlich falsch.
+
+01:49:42.055 --> 01:49:43.795
+<v SPEAKER_5>Nicht grundsätzlich, aber...
+
+01:49:43.815 --> 01:50:45.835
+<v SPEAKER_3>Es kommt auf die konkrete Ausgestaltung an. Also der Worst Case ist halt, du machst einen Hersteller von WLAN-Routern dafür verantwortlich, was da drauf an den Firmware läuft. Und die vernageln das Ding dann so, dass du auch keine freie Firmware mehr drauf machen kannst, auch nicht mehr als Experte, der sich da mit beschäftigt. Und dann haben wir halt irgendwie das Ende von freier Software auf WLAN-Routern. Weil der Hersteller sagt sich, ich bin dafür haftbar und im Zweifelsfall muss ich nachweisen, dass auf diesem einen Router da irgendwie meine Firmware drauf war und die sicher ist und nicht irgendwas anderes. Und wenn dann der Kunde kurzfristig meine Firmware wieder draufmacht, dann kann ich nicht nachweisen und hin und her. Das ist, glaube ich, eine Sache, die wir auch nicht haben wollen. Was wir halt bräuchten statt Industrie 4.0 und so weiter bräuchten, wäre sowas wie Brain 1.0. Also wir müssen halt echt den Leuten klar machen, was sie da haben, ein paar Grundkenntnisse vermitteln und sie in irgendeiner Art und Weise befähigen zu erkennen, wenn dieser Kram Mist baut.
+
+01:50:45.935 --> 01:50:48.795
+<v SPEAKER_2>Und deswegen machen wir dieses Chaosradio, es gibt noch eine Publikumsmeldung.
+
+01:50:52.275 --> 01:51:32.035
+<v SPEAKER_6>Wir gehen gerade den umgekehrten Weg mit dem Firmware-Lockdown. Wir werden eine Situation haben, dass immer mehr Geräte gar keine Firmware mehr haben, die man frei updaten kann. Und die Hersteller werden da nicht hinterher kommen. Verstehe ich nicht. Darf der Hersteller darauf verzichten, Updates für ein Gerät anzubieten? Wann ist die Obsoleszenz gegeben? Also wie alt darf das Gerät sein? Also wir müssen es alle drei Jahre wegschmeißen. Oder alle zwei. Oder soll der Hersteller verpflichtet sein, für zehn Jahre alte Geräte Updates anzubieten? Weil die Dinger gehen ja nicht kaputt.
+
+01:51:32.055 --> 01:51:42.955
+<v SPEAKER_3>Früher hatten wir sowas ja mal. Wir hatten ja früher durchaus den Fall, dass Hersteller damit geworben haben, wenn sie diese Schalter in ihr Haus einbauen, garantieren wir für die nächsten 20 Jahre, dass sie Ersatzteile bekommen.
+
+01:51:43.295 --> 01:51:46.195
+<v SPEAKER_2>Also ich finde das nicht undenkbar.
+
+01:51:46.215 --> 01:51:55.575
+<v SPEAKER_5>Nein, das gibt es ja auch in der Industrie. In der Industrie ist das Standard. Hier gibt es Laptops, wo der Hersteller sagt, 10 Jahre kriegst du die.
+
+01:51:55.595 --> 01:52:00.215
+<v SPEAKER_2>Ich muss dir das Auto als Vergleich bemühen, weil das hält ja auch ein paar Jahre. Oder Waschmaschinen oder sowas.
+
+01:52:00.235 --> 01:52:07.035
+<v SPEAKER_5>Auto geht ja noch viel länger. Die meisten Autos kriegen so 20, 25 Jahre Abteile.
+
+01:52:07.055 --> 01:52:13.415
+<v SPEAKER_2>Aber dass es garantiert wird sozusagen. Also es wird garantiert, so lange Waschmaschine garantiert.
+
+01:52:15.495 --> 01:52:32.535
+<v SPEAKER_5>Die muss aber nur weltweit sein, nicht unbedingt. Das muss aber dann weltweit funktionieren. Wenn ich jetzt nach Thailand in Urlaub fliege und sie da die Dollar Food device, total geil, kauf ich jetzt, nehm ich mit. Weil gibt's hier nicht.
+
+01:52:32.555 --> 01:52:35.975
+<v SPEAKER_2>Also ich seh schon, im Grunde genommen ist das alles schlimm.
+
+01:52:35.995 --> 01:52:37.115
+<v SPEAKER_5>Sehr schlimm.
+
+01:52:37.135 --> 01:52:47.635
+<v SPEAKER_2>Gut, wie gehen wir da jetzt weiter vor? Weil was ja nicht die Lösung sein soll, wir werfen mal alles weg. Also Bento war ja dafür, das Internet abzuschalten, alle Geräte zu verbrennen.
+
+01:52:48.455 --> 01:52:52.355
+<v SPEAKER_1>Ich seh einfach nicht ein, warum man einen Toaster-Wilhelm braucht.
+
+01:52:52.375 --> 01:52:53.575
+<v SPEAKER_2>Na gut, aber würdest du jemanden, der...
+
+01:52:53.595 --> 01:52:55.975
+<v SPEAKER_3>Damit der Wetterbericht drauf getoastet wird.
+
+01:52:55.995 --> 01:53:06.155
+<v SPEAKER_2>Genau. Du willst es nicht, aber würdest du sagen, jemandem die Begeisterung absprechen wollen, dass er sich dafür interessiert und einen coolen Hack findet, dass er einen Toaster-Wilhelm hat?
+
+01:53:06.175 --> 01:53:36.695
+<v SPEAKER_1>Das wäre Zensur. Ich will eigentlich eher nur davor warnen, dass man sich halt diesem ganzen Konsumerdrang irgendwie hingibt und jetzt nur, weil es eine App für deinen Toaster gibt, den ich jetzt diesen Toaster zu kaufen, der jetzt mit deinem Handy sprechen kann und einfach nur die ganz genaue braunen Note in deinen Toaster toastet, halte ich natürlich für drüber nachdenkenswert. Also ich würde den Leuten sehr stark raten, darüber nachdenken. Das ist schon okay.
+
+01:53:36.995 --> 01:53:45.655
+<v SPEAKER_2>Aber ganz ehrlich, es gibt viele Internet of Things-Ansätze, die finde ich total interessant und die mache ich nur nicht aus genau dieser Überlegung. Aber ich würde eigentlich gerne.
+
+01:53:47.935 --> 01:54:03.495
+<v SPEAKER_5>Das Problem ist, ich glaube, wir müssen einen ganz großen schönen Spagat hinkriegen. Und zwar müssen wir den Herstellern sagen, hey, pass mal auf, du kannst das mit den Updates, mit ein bisschen Sponsoring und so weiter und Open-Source-Software eigentlich ganz einfach haben.
+
+01:54:03.515 --> 01:54:05.235
+<v SPEAKER_3>Bau doch einfach geiler Hardware.
+
+01:54:05.255 --> 01:54:35.455
+<v SPEAKER_5>Genau. Und gib von der Hardware ein bisschen Sponsoring weg an die Open-Source-Community. Und dann machen die das für dich. Wenn du den kompletten Source freigibst, dann machen die das. Da sehen wir wunderbar, was zum Beispiel gerade gezeigt wurde, das Raspberry Pi oder Android-Handys. Mein Handy zum Beispiel kriegt offiziell von Google, es ist ein Google Nexus 5, kriegt offiziell kein neues Nougat. Ich habe aber ein Nougat drauf, weil die Community gesagt hat, ich habe davon eins, ich mache das. Und dann geht das.
+
+01:54:35.475 --> 01:54:39.735
+<v SPEAKER_2>Und der andere Punkt ist dann wahrscheinlich die User.
+
+01:54:40.655 --> 01:54:53.615
+<v SPEAKER_5>Ja, die sollte man so ein bisschen anstupsen, dass sie halt sagen, okay, ich kümmere mich drum, das ist halt auch ein Device, was ich beobachten muss, wo ich im Kopf haben muss, ich mache dafür Updates, ich muss da auch mal klicken.
+
+01:54:53.635 --> 01:55:08.475
+<v SPEAKER_3>Oder halt der totale Overkill-Ansatz, ich habe halt nicht mehr ein Netzwerk zu Hause, sondern das Netzwerk ist in mehrere Subnetze unterteilt und ich habe dann da so mein Entertainment-Netzwerk, da ist so der Fernseher drin und der ganz andere Scheiß, das darf aber nicht mehr so richtig, das ist ja nett.
+
+01:55:08.495 --> 01:55:09.235
+<v SPEAKER_5>Das ist ein Nerd-Ansatz.
+
+01:55:10.815 --> 01:55:15.295
+<v SPEAKER_3>Das macht die IETF. HomeNet, so was kommt.
+
+01:55:15.315 --> 01:55:20.855
+<v SPEAKER_2>Aber das hilft ja sozusagen nicht daran. Also warte mal, das grundlegende Ding ist doch, ich möchte...
+
+01:55:20.875 --> 01:55:23.095
+<v SPEAKER_5>So ein Local-Doment.
+
+01:55:23.115 --> 01:55:35.995
+<v SPEAKER_2>Bitte, wir müssen wirklich gleich los machen. Wenn ihr jetzt mit solchen Worten um euch wirft, dann würde das nicht funktionieren. Was ich fragen will ist, wenn so ein Gerät ins Internet will, dann muss es ja ins Internet, es ist ja egal, ob es in einem sozusagen Local, was auch immer ist.
+
+01:55:36.015 --> 01:55:36.995
+<v SPEAKER_3>Aber muss es alles dürfen?
+
+01:55:37.515 --> 01:55:41.575
+<v SPEAKER_2>Genau, aber wenn es irgendwas darf, ist das doch sozusagen fehleranfällig oder nicht?
+
+01:55:41.595 --> 01:55:42.195
+<v SPEAKER_3>Ja.
+
+01:55:42.215 --> 01:55:44.835
+<v SPEAKER_2>Also um die Nummer mit den Updates kommen wir noch nicht rum, oder?
+
+01:55:44.855 --> 01:55:45.495
+<v SPEAKER_3>Nö.
+
+01:55:45.515 --> 01:56:04.975
+<v SPEAKER_2>Gut, dann mache ich an dieser Stelle Schluss. Ich bedanke mich bei Sokrates, Bento und Montags. Und verabschiede mich mit dem gewohnten Song und den Worten. Mein Name ist Marcus Richter und ich habe eine Nachricht an euch. Verschlüsselt immer schön eure Backups und macht Gottverdammt nochmal eure Updates.

@@ -1,4 +1,4 @@
-from podcast_words.catalog import Catalog, Episode, STATE_DONE, STATE_NO_TRANSCRIPT, STATE_PENDING
+from podcast_words.catalog import Catalog, Episode, STATE_DONE, STATE_NO_TRANSCRIPT, STATE_PENDING, _prefer_episode_link
 from podcast_words.config import SourceConfig
 from podcast_words.models import Transcript, TranscriptCue
 from podcast_words.pipeline import episode_sync
@@ -193,3 +193,56 @@ def test_replace_skips_same_source(temp_podcast, monkeypatch):
     )
     assert summary["replace"]["replaced"] == 1
     assert summary["replace"]["skipped"] == 0
+
+
+def test_prefer_episode_link_keeps_page_url_over_audio():
+    page = "https://neuezwanziger.de/2019/12/eine-neue-zeit/"
+    audio = "https://audio.podigee-cdn.net/example.mp3?source=feed"
+    assert _prefer_episode_link(page, audio) == page
+    assert _prefer_episode_link(audio, page) == page
+
+
+def test_prefer_episode_link_podlove_wins_over_other_page():
+    podlove = "https://neuezwanziger.de/2019/12/eine-neue-zeit/"
+    apple = "https://podcasts.apple.com/de/podcast/id123?i=456"
+    assert _prefer_episode_link(podlove, apple, new_from_podlove=True) == podlove
+    assert _prefer_episode_link(apple, podlove) == podlove
+
+
+def test_upsert_keeps_page_link_when_apple_rediscovers(temp_podcast):
+    catalog = Catalog.load(temp_podcast.episodes_csv)
+    page = "https://neuezwanziger.de/2019/12/eine-neue-zeit/"
+    audio = "https://audio.podigee-cdn.net/example.mp3?source=feed"
+    catalog.upsert(Episode(number=1, title="A", link=page, source_id="9"))
+    catalog.upsert(
+        Episode(number=1, title="A", link=audio, source_id="1000460866307", transcript_source="apple")
+    )
+    assert catalog.get(1).link == page
+
+
+def test_fallback_keeps_podlove_link_without_transcript(temp_podcast, monkeypatch):
+    temp_podcast.sources.append(SourceConfig(type="apple", podcast_id="277518737"))
+    podlove_page = "https://example.test/fs2-two"
+    podlove_audio = "https://audio.podigee-cdn.net/fs2.mp3"
+
+    class PodloveNoTranscriptFake(TwoSourceFake):
+        def discover(self, podcast, source):
+            episodes = super().discover(podcast, source)
+            if source.type == "podlove":
+                for ep in episodes:
+                    if ep.number == 2:
+                        ep.link = podlove_page
+            else:
+                for ep in episodes:
+                    if ep.title == "FS2 Two":
+                        ep.link = podlove_audio
+            return episodes
+
+    fake = PodloveNoTranscriptFake()
+    _wire(monkeypatch, fake)
+
+    episode_sync.sync(temp_podcast, count=False, fallback=True)
+    catalog = Catalog.load(temp_podcast.episodes_csv)
+    assert catalog.get(2).state == STATE_DONE
+    assert catalog.get(2).transcript_source == "apple"
+    assert catalog.get(2).link == podlove_page

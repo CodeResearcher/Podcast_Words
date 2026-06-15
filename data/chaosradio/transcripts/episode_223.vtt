@@ -1,0 +1,1060 @@
+WEBVTT
+
+00:03:16.195 --> 00:04:22.575
+<v SPEAKER_2>Hallo und herzlich willkommen zum Chaos Radio 234. Mein Name ist Marcus Richter und ich spreche in Mikrofone und ich sitze im Chaos Computer Club zu Berlin in der Marienstraße 11, wo ihr gerne noch hinkommen könnt. Hier ist zwar ein großer Stahlträger durch die Decke gezogen, wo drauf steht Förderer Dezentralität, aber heute Abend gilt das nicht. Ihr dürft alle hierher kommen. Wir wollen über das, nee, wir wollen die letzte Sendung fortsetzen, könnte man eigentlich sagen. In der letzten Sendung haben wir nämlich darüber gesprochen, wie, naja, eigentlich auch nicht. Egal. Also wir haben darüber gesprochen, warum wir noch nicht dickes Internet zu Hause haben. Und zwar alle und symmetrisch und viel und billig. Und heute tun wir mal so, als hätten wir das Internet zu Hause, meine ich. Und gucken dann mal, was man dahinter machen kann. Also hinter diesem, wenn das Internet dann da aus der Wand fällt, was man da so anschließen kann und mit ein bisschen Glück gibt es vielleicht auch sozusagen die eine oder andere praktische Anwendung, die man auch mit einem schmalbandigeren VDSL Anschluss umsetzen kann. Zu Gast sind heute Danimo, Jasik und, ähm, Nickname vergessen? Es ist einfach Henrik, das ist manchmal verwirrend. Und Henrik, hallo und guten Abend.
+
+00:04:22.595 --> 00:04:23.455
+<v SPEAKER_3>Schönen guten Abend.
+
+00:04:23.475 --> 00:04:24.455
+<v SPEAKER_4>Schönen guten Abend.
+
+00:04:24.475 --> 00:04:25.375
+<v SPEAKER_5>Guten Abend.
+
+00:04:25.395 --> 00:04:40.855
+<v SPEAKER_2>Und wir reden heute zwei Stunden lang darüber, was man so in seinem heimischen Netz treiben kann, beziehungsweise wie man erst mal überhaupt dazu kommt, mal um sozusagen abzufragen, ob überhaupt geeignet seid heute hier fachliche Dinge zu sagen. Macht ihr noch mehr zu Hause als den Computer ins WLAN zu bringen?
+
+00:04:43.215 --> 00:05:11.975
+<v SPEAKER_3>Ja, also ich nutze mein heimisches LAN durchaus als Verlängerung, wo immer ich bin. Habe also einen VPN da rein und hab dort also auch Daten zu Hause liegen, die ich halt nirgendwo anders im Internet umzuliegen habe. Und ich würde sagen, ja, durchaus. Ich habe da allerlei Endgeräte angeschlossen. Und ja, ich würde schon sagen, es ist doch etwas mehr als nur Laptop und Plastirouter.
+
+00:05:12.055 --> 00:05:15.535
+<v SPEAKER_2>Verstehe. Also was das VPN nach Hause bedeutet, das klären wir auf jeden Fall heute noch. Yasik?
+
+00:05:17.255 --> 00:05:37.935
+<v SPEAKER_4>Ja, ich habe einen Computer. Nein, tatsächlich habe ich zwei Computer und ein Mobiltelefon. Das war's. Ich bin ein bisschen unterdurchschnittlich. Obwohl ich mich den ganzen Tag mit Computer beschäftige, habe ich irgendwie das Gefühl, dass ich so ein bisschen schei bin, mir dann tatsächlich größere Mengen davon nach Hause zu stellen. Und ich habe, was vielleicht später relevant wird, eine Offline-Nas-Lösung für Backups.
+
+00:05:38.295 --> 00:05:42.215
+<v SPEAKER_2>Eine Offline-Nas-Lösung, okay gut. Darüber wollen wir auf jeden Fall auch sprechen. Und Henrik?
+
+00:05:43.035 --> 00:05:50.255
+<v SPEAKER_5>Also ich habe gerade mal nachgeguckt mit meinem VPN nach Hause. Ich habe gerade 22 Geräte zu Hause online.
+
+00:05:50.275 --> 00:05:57.395
+<v SPEAKER_2>Wie viele davon sind Multipurpose Computer? Also Tablets, PCs, Smartphones, was auch immer?
+
+00:05:57.415 --> 00:06:00.275
+<v SPEAKER_5>Ein Computer, glaube ich. Ein Desktop-Rechner.
+
+00:06:00.295 --> 00:06:51.115
+<v SPEAKER_2>Okay, gut. Was das alles ist, ich weiß nicht, ob wir das heute alles klären, aber wir sprechen es auf jeden Fall an. Ich möchte anfangen an der Stelle, wo das Internet aus der Wand fällt. Das tut es ja entweder in Form eines, was auch immer aus der Telefonlose fällt. Früher waren da noch Splitter dran, aber wo man dann halt eine Router anschließt. Und da ist ja die erste Frage, so ist das schon dieses Gerät. Da kann man sich ja wahrscheinlich, also man kann natürlich einfach das nehmen, was einem der Internetanbieter mitgibt, weil da gibt es ja normalerweise irgendwie ein Gerät, was damit angeboten wird. Aber ich vermute, man kann sich damit auch sehr lange beschäftigen und ganz viel Wissenschaft betreiben und dann 30.000 Geräte rausfinden und dann daraus eine Auswahl treffen. Ist das sinnvoll oder sagt man einfach so, nee, Stand der Technik, das ist schon okay. So einfach das Ding, was der Internetanbieter da an Start bringt, ist okay.
+
+00:06:51.135 --> 00:07:08.295
+<v SPEAKER_3>Na, da gibt es eine ganz einfache Antwort darauf. Und die heißt, es kommt drauf an. Aber um da mal ein bisschen konkreter zu werden. Also es zählen halt zwei Sachen. Erstens, für wen ist es? Und zweitens, wer soll es hinterher betreuen?
+
+00:07:08.475 --> 00:07:25.875
+<v SPEAKER_2>Okay, also ich würde sagen, für die heutige Sendung nehmen wir uns vor, solange es nicht anders gesagt wird. Also Default ist Heimanwender. Also jemand, der dieses Ding sich hinstellen will und das vielleicht einmal einrichtet und dann keinen Ärger mehr damit haben will. Wir können Ausflüge sozusagen machen, aber erst mal der Standardfall ist das.
+
+00:07:29.235 --> 00:07:50.035
+<v SPEAKER_3>Genau, aber auch bei dem Heimanwender hängt es wieder davon ab, wie die Gegebenheiten sind. Und um jetzt einen zu großen Ausflug machen zu wollen, jeder, der sich so ein Gerät von seinem Provider ins Haus holt, holt sich damit etwas ins Haus, was viele Dinge gleichzeitig tut. Richtig? Also du, das macht, ja?
+
+00:07:50.055 --> 00:08:12.975
+<v SPEAKER_4>Das hängt halt auch davon ab. Anekdote, ein relativ großer deutscher Internetprovider geht gerade hin und vertreibt den Kunden kostenlose WLAN Modems, die tatsächlich komplette WLAN, kostenlose DSL Modems, VDSL Modems, die tatsächlich komplette VDSL WLAN Router eines großen deutschen Herstellers sind, bei dem nur das WLAN abgeschaltet wurde, weil das gibt es für kostenlos nicht.
+
+00:08:14.555 --> 00:08:27.775
+<v SPEAKER_3>Ja, genau. Also das Wesentliche ist halt, es sind halt Multipurpose Boxen, die halt verschiedene Funktionen ineinander vereinen. Wer jetzt so eine Einraumwohnung oder Zwei-Raumwohnung hat, für den ist das irgendwie wunderbar.
+
+00:08:27.795 --> 00:08:30.555
+<v SPEAKER_2>Welche sind das denn?
+
+00:08:30.575 --> 00:09:18.495
+<v SPEAKER_3>Nimm die Boxen, die halt von verschiedenen Providern gebrandet sind. Das sind üblicherweise zwei, drei Hersteller, die es so gibt. Die werden aber unter dem Markennamen der jeweiligen Zugangsanbieter vertrieben. Also Speedboard, Easybox, wie auch immer. Das Problem ist, man weiß nie so ganz, was man kriegt, weil je nach Modell ist da ein komplett anderer Anbieter drunter. Den einzigen Vorteil, den man bei den Modellen hat oder den zentralen Vorteil ist, dass es halt das Problem des Zugangsanbieters ist, die halbwegs sicher zu halten. Die Frage ist halt, wie groß das Interesse ist, jenseits von, die sollen wir das Netz nicht kaputt machen. Also es geht halt um die Sicherheit dieser Boxen.
+
+00:09:18.515 --> 00:09:21.455
+<v SPEAKER_2>Ich habe das Gefühl, dass meine Frage nicht beantwortet.
+
+00:09:21.475 --> 00:09:24.755
+<v SPEAKER_5>Ich glaube, ich habe deine Frage verstanden. Du hast gefragt, welche Funktionen da drin sind.
+
+00:09:24.775 --> 00:09:27.015
+<v SPEAKER_2>Genau, was machen die eigentlich?
+
+00:09:27.035 --> 00:09:32.195
+<v SPEAKER_5>Also früher hatte ich ein DSL Modem, das war ein Kasten. Dann hatte ich dahinter einen Switch, das war noch ein Kasten.
+
+00:09:32.355 --> 00:09:33.655
+<v SPEAKER_2>Ein Switch ist ein?
+
+00:09:33.675 --> 00:09:35.855
+<v SPEAKER_5>Ein Verteiler, Verteilerdose.
+
+00:09:35.875 --> 00:09:37.795
+<v SPEAKER_2>Für Netzwerke, für Netzwerkkabel. Genau.
+
+00:09:37.815 --> 00:09:59.335
+<v SPEAKER_5>Und dann hatte ich noch einen Rechner, der als Maske gerade in Getwege gearbeitet hat. Der dafür gesorgt hat, dass mehr als ein Rechner an diesen Internetanschluss rankam. Weil so ein DSL Modem ist halt nur ein Modem. Da kommt halt nur ein Internetanschluss bei raus. Und dann hatte ich gegebenenfalls, das hatte ich dann früher noch nicht, noch einen eigenen Access Point der WLAN-Macht. Das ist heutzutage ein Gerät.
+
+00:09:59.355 --> 00:10:03.655
+<v SPEAKER_2>Aber würde ich ja jetzt erstmal von ausgehen, das ist ja auch eine gute Sache.
+
+00:10:03.675 --> 00:10:52.075
+<v SPEAKER_5>Ja, allerdings, früher wie gesagt, hatten sich ja dann zum Beispiel ab und zu mal die DSL-Standards geändert. Und da hatte ich halt so ein Modem, das konnte halt nur DSL, also ADSL 2 Megabit. Und dann gab es aber plötzlich ein neues ADSL mit 16 Megabit. Und dann konnte ich mir einfach ein neues Modem daran stecken. Während ich dann etwas später so einen Fall hatte, da hatte ich mir tatsächlich etwas von einem großen deutschen pinken Hersteller, Anbieter zu Hause hingestellt. Mit der Hoffnung, später wenn dann VDSL kommen, kann ich da einfach das VDSM Modem ranstecken. Und dann haben sie mir gesagt, ja nö, das gibt es jetzt nicht mehr. Die gibt es nur noch als komplettes Gerät. Sie müssten jetzt einmal das Komplettpaket bitte kaufen. Das ist dieser klassische, wenn du alles in ein Gerät paust und eine Komponente kaputt ist oder ausgetauscht werden soll, musst du das gesamte Gerät wegtun.
+
+00:10:52.335 --> 00:11:02.775
+<v SPEAKER_2>Also das heißt sozusagen, was man technisch gerne hätte, ist die Trennung zwischen Modem. Also macht was auch immer aus der Wandfeld zu Netzwerk und dann der Rest in einem Extragerät?
+
+00:11:02.875 --> 00:11:13.475
+<v SPEAKER_5>Also heutzutage wahrscheinlich nicht mehr, weil sich das heutzutage nicht mehr ändert. Aber zum Beispiel WLAN-Standards werden jetzt ab und zu mal aktualisiert. Und wenn du halt so ein Komplettgerät hast, bist du halt auf dem WLAN-Standard von Dingsdata.
+
+00:11:14.135 --> 00:11:37.275
+<v SPEAKER_3>Genau und dazu kommt ganz viele Anbieter lassen dir, wenn sie dir ein Kombigarät geben, wo auch WLAN mit drin ist, gar nicht mehr die Wahl, was du mit diesem WLAN machst. Sie zwingen dich entweder dazu, teilweise ihr eigenes WLAN noch mit Huckepack zu nehmen, mit dem sie dann erreichen wollen, dass du stadtweit ein WLAN von Anbieter XY hast.
+
+00:11:37.295 --> 00:11:39.055
+<v SPEAKER_2>Ach so, dann können andere Leute mit drauf.
+
+00:11:39.075 --> 00:13:12.495
+<v SPEAKER_3>Genau, dann können andere Leute mit drauf. Das möchte man ja eventuell nicht haben. Dann bist du letztendlich gezwungen, so ein bisschen Features dir freischalten zu lassen. Das ist halt einfach ein Problem, ob du gewillt bist, da nochmal extra Geld dafür zu bezahlen, dass diese Box WLAN kann. Aber, und das ist eigentlich das viel spannende Argument, viele Leute wohnen jetzt nicht unbedingt in einem Altbau oder so, wo der Empfang noch relativ gut ist, sondern mit Stahlbeton und anderen Unschönigkeiten, wo du mit einem einzigen Gerät, das möglicherweise auch nicht schön zentral aufgestellt ist, weil der Router steht ja üblicherweise da, wo die Telekom den Übergabepunkt in der Wohnung hat. Und nicht unbedingt da, wo das für die WLAN-Verteilung am optimalsten wäre. Also unterm Strich hab ich es bisher ganz häufig erlebt, dass Leute gesagt haben, jehu ich hab jetzt hier so ein Kombi-Gerät und dann halt im zweiten Schritt tot traurig waren, dass jetzt einen Haufen Geld dafür ausgegeben haben, sogar noch beim Provider die größere Box geklickt haben, die dann ganz tolles WLAN macht und dann festgestellt, dass das WLAN gar nicht so toll ist, weil eben diese Box am völlig falschen Ort steht. Und alleine insofern sollte man sich halt gut überlegen, inwieweit man entweder einen Hersteller wählt, der einen zweiten Access Point möglich macht oder auf eine komplett eigene Lösung setzt und einfach sagt, ich nehme einen Router, der mit WLAN gar nichts am Hut hat. Das ist allerdings heute schwierig. Man würde eher dazu übergehen, das Feature WLAN dann auf dem Router komplett abzuschalten.
+
+00:13:13.275 --> 00:13:20.035
+<v SPEAKER_2>Okay, also sagen im Prinzip All-in-One-Gerät, solange es irgendwie nicht eine Wohnung mit dicken Mauern ist.
+
+00:13:20.055 --> 00:13:47.975
+<v SPEAKER_3>Solange es eine Wohnung mit dicken Mauern ist und ich würde auf jeden Fall zusehen, gerade dann, wenn man die Verantwortung fürs Updaten in irgendeiner Form hat, der hat man eigentlich immer, auch wenn der Provider eigentlich sagt, ja ich übernehme das für dich, immer darauf achten, dass man Geräte nimmt, die auch noch eine gewisse Zukunft haben. Also Beispiel, ich habe mir jetzt ein Netzwerkgerät gekauft, bei jetzt kein Router, aber egal, den habe ich, da habe ich mich erst gefreut. Na, der ist aber für das, was er kann, sehr günstig.
+
+00:13:47.995 --> 00:13:50.035
+<v SPEAKER_2>Lass mich raten, es gibt keine Updates mehr dafür?
+
+00:13:50.055 --> 00:14:02.555
+<v SPEAKER_3>Es gab keine Updates mehr dafür seit 2015. Das heißt, der Hersteller hat das Ding eigentlich seit 2015 intern abgekündigt gehabt, aber weil es eigentlich noch gut wegging, haben sie es bis zum heutigen Datum verkauft.
+
+00:14:02.775 --> 00:14:10.495
+<v SPEAKER_2>Aber ist es nicht sozusagen generell so, dass man sich heute Tage nicht mehr drauf erlassen kann, dass nach vier oder fünf Jahren noch Updates für solche Geräte rauskommen?
+
+00:14:10.915 --> 00:14:43.995
+<v SPEAKER_3>Ja, vier oder fünf Jahre sind aber auch eine relativ lange Zeit. Also wenn du das bei deinen Eltern deploys, die du vielleicht einmal im Jahr siehst, dann ist das vielleicht eine eher kurze Zeit und du willst auch nicht unbedingt deine Weihnachten oder wann immer man sie sieht, damit verbringen, dieses Gerät ständig zu aktualisieren und auszutauschen. Aber unterm Strich, also irgendwas, was zwei, drei Jahre Lebenszeit hat, also was jetzt vielleicht nicht erst gestern rausgekommen ist, weil dann hast du ganz oft Bananen-Hardware, die noch in deiner Wohnung reift.
+
+00:14:44.755 --> 00:14:56.955
+<v SPEAKER_2>Du hast schon wieder den Punkt, wo du denkst, ich mach das einfach nicht mit dem Internet, weil es scheitert ja schon daran, dass sie mir sozusagen eine gute Strategie empfehlen. Du hast mich gefragt. Wie ist die gute Strategie?
+
+00:14:56.975 --> 00:14:58.275
+<v SPEAKER_5>Kostet halt Geld.
+
+00:14:58.295 --> 00:14:58.975
+<v SPEAKER_3>Genau.
+
+00:14:58.995 --> 00:15:01.615
+<v SPEAKER_2>Wie ist die gute bezahlbare Strategie?
+
+00:15:01.635 --> 00:15:27.715
+<v SPEAKER_3>Auf Dinge achten. Also das ist genau der Punkt. Es spricht erst mal nichts dagegen, zu gucken, dass du das günstigste Gerät in einer Kategorie kriegst. Aber du musst dann auch bereit sein zu schauen, gibt es noch Updates? Ganz oft kannst du diesen Fehler, den ich gemacht habe, vermeiden und einfach mal auf der Seite des Anbieters gucken, wann ist das letzte Firmware Update zum Beispiel erschienen. Das hätte ich eigentlich auch machen können. Das ist mir nur völlig durchgegangen. Eigentlich gehört das zu meiner Routine.
+
+00:15:27.735 --> 00:16:21.815
+<v SPEAKER_4>ZB rausfinden, ob der Hersteller überhaupt dafür bekannt ist, Firmware Updates zu veröffentlichen oder nicht. Was bei Firmware Updates vielleicht auch noch interessant ist, die Geräte deines Internet-Providers, die du von deinem Internet-Provider kostenlos oder für einen monatlichen Betrag zur Verfügung gestellt kriegst, sind meistens relativ gut, was das angeht, weil dein Internet-Provider grundsätzlichen Interesse daran hat, dass an seinen Anschlüssen einigermaßen sichere Geräte sind. Eine Sache, die man dabei natürlich bedenken sollte, ist, dein Internet-Provider hat vor allem daran ein Interesse, dass deine Geräte von außen sicher sind. Was auf deiner Seite von dem Gerät passiert, z.B. ob dein Internet zackt oder nicht, das ist nicht unbedingt sein primäres Interesse. Das heißt, möglicherweise bist du trotzdem besser damit beraten, dich selber und diese Technik zu kümmern, weil du dann halt etwas kriegst, was deinen Anforderungen nicht denen deines Providers entspricht.
+
+00:16:22.375 --> 00:16:48.955
+<v SPEAKER_2>Der Trade-Off ist schon genau der, wenn ich das Providergerät nehme, dann muss ich mich weniger kümmern, aber dann kann ich mich auch weniger kümmern. Das heißt, im Prinzip wäre sozusagen die, also ich versuche es schon, etwas einigermaßen zu sagen, im Prinzip wäre sozusagen die Lieblingslösung, dass man sagt, okay, man holt sich den Anschluss bei einem Provider, nimmt aber ein Gerät, auf das man vollständigen Zugriff hat und kümmert sich dafür aber auch sozusagen ein oder zwei Mal im Jahr drum, dass da irgendwie die Firmware...
+
+00:16:48.975 --> 00:17:56.055
+<v SPEAKER_3>Genau und ich kann, weil du gesagt hast, wie sieht denn da der Goldstandard aus? Den Goldstandard kriegst du als Privatperson relativ selten. Das ist möglicherweise mit einigen regionalen Anbietern etwas anders. Nämlich im Geschäftsbereich, da ist es so, dass du ein sogenanntes CPE hast, ein Gerät, das auf Seiten des Kunden steht. Customer Premise Endpoint. Equipment, genau. Also das ist ein Gerät, ein Router oder so etwas, das stellte der Provider in deinen Serverraum oder in deinen Schuppen oder in deinen Abstellraum, wie auch immer, wo immer du deinen Netzübergabe Punkt hast. Und du stellst auf der anderen Seite deinen Router, deinen Modem dagegen und er muss dafür zusehen, dass seine Seite sauber ist, du musst zusehen, dass deine Seite sauber ist, das heißt security technisch und konfigurationstechnisch. Und damit kann jeder seine Interessen warnen. Und das Problem dabei ist natürlich, dass du runzelst schon die Stirn und hast das Problem direkt erkannt, dass es natürlich für den Durchschnitt zu aufwendig ist.
+
+00:17:56.075 --> 00:19:44.775
+<v SPEAKER_2>Super unrealistisch, wollte ich genau sagen. Genau. Und dann wahrscheinlich auch extra teuer, weil so ein Service lässt dir dann der Anbieter nochmal bezahlen, bloß weil ich muss dann auch noch mein eigenes Gerät bezahlen. Na gut. Aber gehen wir mal davon aus, dass wir sozusagen ein Gerät gekauft haben, das diese vier Dinge macht und halbwegs bezahlbar ist und mir trotzdem noch Kontrolle lässt. Dann ist ja die Frage, dann hab ich sozusagen viele Geräte dahinter, die diesen Internetanschluss irgendwie nutzen wollen. Und, tja, da ist ja so, eine WLAN will man ja haben, lässt man sich freischalten oder hat ein Gerät gekauft, was das von alleine kann. Jetzt ist die Frage, die sich mir da fortauchtet, sind zwei. Die eine ist, was wir schon angesprochen haben und vielleicht fangen wir damit an, wie kriege ich WLAN überall in die Wohnung? Also bei meiner Wohnung zum Beispiel ist es so, das ist eine zusammengelegte Wohnung, das waren früher mal zwei und in der Mitte dieser Wohnung verläuft die, ich weiß nicht, ob das Brandschutzmauer heißt, also so eine tragende Wand des Hauses und die schirmt relativ zuverlässig, also nicht nur den Mobilfunksendemast, der auf der anderen Seite des Hauses steht, ab, sondern auch das WLAN Signal. Die Lösung, die wir jetzt gemacht haben, die einfach daher kam, dass wir noch sozusagen ein bisschen Hardware rumliegen haben, es gibt jetzt in jeder Seite der Wohnung, also im West- und Ostflügel ein anderes WLAN, weil ich halt noch einen alten Router rumliegen hatte, das war eh ein Loch an der Wand, da war ein Netzwerkkabel durchgezogen, den anderen Router angehängt, jetzt gibt es halt drüben sozusagen ein eigenes Netzwerk. Macht man das so oder ist es, also es gibt ja sogenannte Repeater zu kaufen, die dafür da sind, einen WLAN sozusagen weiterzubringen, bringen die was oder ist es tatsächlich so, dass man einfach sagt, okay, wenn es so schwach ist, dann stell dir einfach noch so ein WLAN Device hin und hängen wir es an ein Kabel?
+
+00:19:44.795 --> 00:19:53.195
+<v SPEAKER_3>Da ist natürlich die zentrale Frage, hast du die Möglichkeit, diese beiden Router irgendwie mit einem Kabel zu verbinden? Das heißt, möchtest du dir den Aufwand machen durch diese dicke Brandschutzmauer oder oder oder?
+
+00:19:53.195 --> 00:19:56.775
+<v SPEAKER_2>Das war schon so, lieber Vermieter, wirklich.
+
+00:19:56.795 --> 00:20:39.315
+<v SPEAKER_3>Genau, möchtest du da ein Loch durchbauen, möchtest du eine schöne Kabelführung machen, empfiehlt sich grundsätzlich sowieso, weil dann kannst du auch direkt ein paar Überputzdosen setzen. Wenn du jetzt keine Lust hast, die Wand aufzumeißeln und hast auch direkt irgendwie richtiges, verdrahtetes Netz, dann ist entweder so was möglich, dass du zwei verschiedene Netze machen. Du kannst auch, es gibt auch Lösungen, die dir das erlauben, ganz einfach dieselbe SSID, also dieselbe WLAN-Bezeichnung zu nehmen und dann kriegt dein Endgerät das eigentlich automatisch hin, sich den jeweils stärksten zu suchen. Das funktioniert so im Regelfall, Semigut, das wird nicht immer 100% übernommen, aber wenn ich sag mal, du...
+
+00:20:39.335 --> 00:20:40.935
+<v SPEAKER_2>Du hast auch Geräte vom selben Hersteller, oder?
+
+00:20:41.375 --> 00:20:42.855
+<v SPEAKER_3>Nö, nicht. Also ja, ja.
+
+00:20:42.875 --> 00:20:48.635
+<v SPEAKER_5>Das funktioniert vor allen Dingen in deinem Fall ganz gut, wenn deine Mauer gut abschirmt, weil wenn das andere Netz komplett weg ist, dann nimmt er garantiert das Neue.
+
+00:20:51.055 --> 00:21:13.475
+<v SPEAKER_3>Also es gibt auch Standards, wo die Access Points aktiv sich unterhalten. Sag mal, hier der Kleine, der ist bei mir irgendwie ein bisschen schwach, kommt er bei dir stärker rein, dann krallt er den nochmal, ich schmeiß den mal bei mir raus und so. Aber mittlerweile können die meisten Endgeräte das auch zur Not ganz gut selber in den Griff kriegen. Was man immer nochmal machen kann, ist dann die Sendeleistung reduzieren auf beiden Seiten und dann...
+
+00:21:13.995 --> 00:21:18.455
+<v SPEAKER_5>Ich wollte gerade sagen, das ist der Haupttipp, wenn man mehrere Access Points beschreibt.
+
+00:21:18.475 --> 00:21:23.255
+<v SPEAKER_3>Nicht mit beiden Access Points auf Anschlag brüllen, das ist ja das, was man so normalerweise versuchen würde.
+
+00:21:23.275 --> 00:21:37.175
+<v SPEAKER_2>Das ist tatsächlich bei mir so zu sagen, dass das WLAN von gegenüber gerade noch stark genug ist, dass das Gerät nicht automatisch die Verbindung verliert. Ist das was, was man, also ich bin jetzt überrascht zu sagen, dass das geht, aber ist das was, was Geräte steilheitmäßig können, dass man sagt, Sende nicht so stark?
+
+00:21:38.175 --> 00:21:48.375
+<v SPEAKER_3>Also normalerweise kannst du, du darfst nicht über eine gewisse Sendeleistung drüber. Das ist gesetzlich reguliert. Das weiß ich ja sehr genau.
+
+00:21:48.395 --> 00:22:30.675
+<v SPEAKER_4>Also in Deutschland ist da die Regelung bei, ich weiß jetzt nicht, was so 5 Gigahertz ist, das ist glaube ich ein bisschen höher, aber auch 2, 4 Gigahertz, so der Klassischen WLAN-Frequenz, sind es 100 mW. EIRP, das ist ein bestimmtes Maß, das hängt noch von der Antenne ab. So wenn man eine Antenne hat, die ganz besonders stark in eine Richtung ist, eine ganz besondere Richtantenne zum Beispiel, dann darf man da nicht mit 100 mW, sondern nur mit 10 mW reinreden, weil dadurch, dass die Antenne in eine Richtung besonders stark ist, kriegt man in die Richtung scheinbar viel mehr raus. 100 mW ist nicht wirklich viel, aber ist vor allem wenig genug, dass man sich mit seinen Nachbarn im gleichen Gebäude oder so jetzt nicht zu sehr interferiert.
+
+00:22:31.395 --> 00:22:42.115
+<v SPEAKER_5>Deswegen wollte ich, habe ich auch gesagt, es ist ein sehr guter Tipp, wenn man ein guter Nachbar sein möchte, die WLAN-Leistung zu reduzieren. Weil, wenn dein Nachbar ein starkes WLAN-Signal von dir hat, von dem er das Passwort nicht kennt, bringt dem es ja auch nichts.
+
+00:22:42.135 --> 00:22:47.115
+<v SPEAKER_2>Das stimmt aber so zu sagen. Aber das ist in Routern sozusagen in diesem Web-Interface, wo du das mit dir an der Standard-Einstellung?
+
+00:22:47.135 --> 00:23:12.675
+<v SPEAKER_4>Tatsächlich, du findest es bei den allermeisten Routern. Du kannst halt normalerweise nicht über diese Obergrenze. Es gibt diese Obergrenze, die bei 20 dBm oder 100 mW liegt, die kannst du nicht überschreiten. Das ist auch einer der Gründe, warum sie jetzt tatsächlich gerade dabei sind, die Router-Firmware runterzulocken, dass man keine eigene Firmware mehr auf die Router tun kann, weil sie sagen, wir wollen wirklich nicht, dass jemand sein Gerät modifizieren kann und diese Grenze überschreiten kann.
+
+00:23:13.175 --> 00:23:14.415
+<v SPEAKER_2>Aber Runtersetzen geht?
+
+00:23:14.435 --> 00:23:27.395
+<v SPEAKER_4>Runtersetzen sollte immer möglich sein, ja. Was du auch theoretisch machen kannst, ist natürlich, du kannst am Ausgang an der Antenne das Signal abschwächen. Nur das Problem ist natürlich dann, dass das in beide Richtungen wirkt, also auch in die Empfangsrichtung. Das will man im Allgemeinen nicht.
+
+00:23:28.255 --> 00:23:34.395
+<v SPEAKER_5>Also ich hab bei mir gerade mal nachgeguckt, da steht halt maximale Sendeleistung, 100%, 50%, 25%, 12 und 6%.
+
+00:23:36.315 --> 00:23:42.235
+<v SPEAKER_2>Interessant. Muss ich mal probieren, ob das was bringt. So, diese...
+
+00:23:42.255 --> 00:23:43.615
+<v SPEAKER_3>Repeater wolltest du noch wissen, richtig?
+
+00:23:43.635 --> 00:23:57.335
+<v SPEAKER_2>Genau, ich wollte wissen, ich merkte keinen Aufwand, ich habe gelesen, da gibt es Geräte, die stecke ich in eine Steckdose, die machen das von alleine. Bringt das... Soll man sich auf die verlassen, oder ist das quasi rausgeschmissenes Geld, wo man nach einem halben Jahr denkt, okay, ich will das nicht selber machen?
+
+00:23:57.355 --> 00:24:13.355
+<v SPEAKER_5>Es gibt da so eine deutsche Firma mit Ausrufezeichen in vielen Namen. Ich glaube, die kriegen das hin, wenn man die Geräte vom gleichen Hersteller nimmt. Ansonsten hat man meistens das Problem, weil der Repeater ja das Signal auch wieder über WLAN rausgibt. Wenn da ein Problem ist, dass das WLAN-Band einfach voll ist.
+
+00:24:14.595 --> 00:24:16.635
+<v SPEAKER_2>Das heißt, dass zu viele Leute...
+
+00:24:16.655 --> 00:24:17.335
+<v SPEAKER_5>Genau.
+
+00:24:17.355 --> 00:24:18.935
+<v SPEAKER_2>Wie viele Kanäle gibt es im WLAN?
+
+00:24:18.955 --> 00:24:23.535
+<v SPEAKER_5>Drei. Also 2, 4 Gigahertz gibt es effektiv drei. Es ist dann schon nicht mehr so viel.
+
+00:24:23.555 --> 00:24:25.615
+<v SPEAKER_3>Die überlachen sich halt, das sieht man dummerweise nicht.
+
+00:24:25.635 --> 00:24:28.115
+<v SPEAKER_2>Ich wollte gerade sagen, in den Web-Interfaces, da ist ja so Kanal 12 oder so.
+
+00:24:28.135 --> 00:24:30.235
+<v SPEAKER_5>Es gibt 13 Kanäle und man kann drei benutzen.
+
+00:24:32.595 --> 00:24:37.215
+<v SPEAKER_3>Weil sich quasi immer zwei links, rechts überlappen sich immer.
+
+00:24:37.235 --> 00:24:59.495
+<v SPEAKER_5>Also eins, sechs und elf kannst du nehmen. Deswegen, wenn es nur um die Reichweite geht und du bist irgendwie auf freier Strecke, also ich hab das bei meinen Eltern hinter Tupfingen, da ist das alles weniger problematisch. Ansonsten ist es meistens, wie Daniel mir schon sagte, wenn du ein Kabel hinlegen kannst, lege immer ein Kabel hin, auch wenn es hässlich aussieht.
+
+00:25:00.395 --> 00:25:21.835
+<v SPEAKER_4>Kabel haben auch noch die Vorteile, dass sie sehr zukunftstauglich sind. Also wenn irgendwann, na gut, was ist jetzt mit den Zeiten des Gigabit Ethernet angesichts unserer Anschlusssituation nicht mehr so wichtig, aber grundsätzlich lässt sich bei einem Kabel leichter ein neuerer Standard drüber sprechen als bei einer Infrastruktur, wo du dann irgendwie deinen Access Point und deine 15 Endgeräte alle updaten musst.
+
+00:25:21.855 --> 00:25:26.315
+<v SPEAKER_2>Aber es ist schon so, es gibt Netzwerke auch in verschiedenen Dicken, ne?
+
+00:25:26.335 --> 00:25:27.775
+<v SPEAKER_5>Es gibt Kategorien.
+
+00:25:27.795 --> 00:25:44.055
+<v SPEAKER_3>Ja, es gibt da Kategorien. Es ist ein bisschen schwer zu erklären. Ich würde tatsächlich, also es gibt, man sagt so, Cut 6A ist eigentlich okay.
+
+00:25:44.075 --> 00:25:53.915
+<v SPEAKER_2>Momentan ist ja so irgendwie, dass die meisten, die Router sozusagen standardmäßig einen Gigabit sprechen. Welches Kabel muss da rein?
+
+00:25:53.935 --> 00:26:06.595
+<v SPEAKER_4>Das hängt von der Länge ab. Generell würde man sagen, ich denke wir können hier sagen, dass Cut 6A grundsätzlich eine gute Idee ist, weil das ist nicht abstrus teuer und das reicht für Gigabit über sinnvolle Strecken aus.
+
+00:26:06.615 --> 00:26:19.735
+<v SPEAKER_3>Und nicht wundern, es gibt bei den Verlegerkabeln, wenn man die kauft, dann heißen die meistens Cut 7. Es ist furchtbar egal, weil effektiv dieses Cut 7 ist noch mal so eine Geschichte für sich. Es reicht zu sagen, es geht auch.
+
+00:26:19.755 --> 00:26:28.155
+<v SPEAKER_2>Ich merke, Netzwerkkabeln gibt es in Kategorien. Die zählen anscheinend eine Nummer hoch. Und mit 6a bin ich momentan für sicheren Seiten. 7 kann ich auch kaufen.
+
+00:26:28.175 --> 00:26:38.975
+<v SPEAKER_3>Also es gibt da mittlerweile auch die Nachfolgestandards. Nicht kompliziert, nicht kompliziert, aber ja. Nachfolgestandards sind da auch mit abgedeckt.
+
+00:26:38.995 --> 00:26:53.755
+<v SPEAKER_5>Das war halt das Ding, was man nachher darüber machen will. Also wenn wir gerade bei Repeatern waren, dann gehen da ganz wenige Megabit wahrscheinlich am Ende noch durch. Da kannst du gerade noch so surfen, dein E-Mail klicken. Wenn wir später vielleicht noch dazu kommen, dass du Backups machen möchtest, möchtest du es eh nicht mehr durchs WLAN warten.
+
+00:26:53.775 --> 00:27:00.035
+<v SPEAKER_3>Eine andere Sache noch. Und zwar gibt es immer mal wieder die Frage nach Powerline-Adaptern, nämlich...
+
+00:27:00.055 --> 00:33:02.155
+<v SPEAKER_2>Darüber sprechen wir später. Jetzt machen wir nämlich die erste kleine Pause, die wie immer mit Musik gefüllt wird. Die kommt heute vom Volume 7 Sampler vom Midwest Collective und ist relativ entspannte Musik. Wir fangen an mit Shark Anthony und seinem All of My Hate. Spielt ja manchmal im Internet verlegen auch eine Rolle. Von Shark Anthony. MkS Radio 234, nee doch 234, wo es darum geht, das eigene Heimnetzwerk aufzubauen. Und wir haben angefangen mit darüber zu sprechen, wie die Plastikkisten hinter der Wand aussehen sollten, idealerweise. Und kommen jetzt gerade dazu, ob man lieber Netzwerkkabel zieht oder WLAN macht. Dazu begrüße ich nochmal herzlich Danimo, Jasik und Henrik. Guten Abend. Und bevor wir nochmal genau über diese WLAN Problematik sprechen, die vor allen Dingen Audiomenschen und Podcasts zentrifizieren dürfte, hatte Danimo gesagt, öfter errichten ihn Fragen nach Powerline Adapter. Das ist was, das finde ich immer so interessant, dass es das gibt. Das ist Netzwerk über Steckdosen. Was genau passiert da?
+
+00:33:02.175 --> 00:33:50.695
+<v SPEAKER_3>Genau. Also da wird genau das gemacht, was du letztendlich schon angesprochen hast. Man nimmt die ganz normale Stromverbindung und moduliert dort Datensignale auf. Und das funktioniert also unterschiedlich gut. Meistens mit interessanten Effekten aus zwei Gründen. Erstens, die Elektrounterverteilung, gerade in Altbauten, ist mitunter öfters abenteuerlich. Was dazu führt, dass erstaunlicherweise zwischen zwei Zimmern, die nebeneinander liegen, man eine schlechtere Verbindung kriegt als drei Zimmer weiter. Also das habe ich alles schon gehabt. Und wir reden hier wirklich davon, dass wir irgendwie so 50 MBit hinkriegen.
+
+00:33:50.855 --> 00:33:59.655
+<v SPEAKER_2>Warte, aber bedeutet das auch, dass quasi, wenn mein Nachbar sich, also wenn wir jetzt von einem Mietshaus sprechen, sich auch so ein Powerline-Adapter in die Steckdose steckt, dass er dann mit meinem Netzwerk ist?
+
+00:34:01.255 --> 00:34:16.535
+<v SPEAKER_4>Also theoretisch ja. Man kann ja hören, was dein Netzwerk tut. Grundsätzlich kann man sich das, was diese Adapter machen, so ein bisschen vorstellen wie WLAN. Das ist tatsächlich auf elektrischer und technischer Ebene sehr, sehr ähnlich. Und ähnlich WLAN kann man das auch mit Verschlüsselung kriegen.
+
+00:34:18.355 --> 00:34:23.355
+<v SPEAKER_5>Wobei es auch da, wie bei den frühen Zeiten von WLAN, unterschiedliche Grade von Kaputtheit gibt.
+
+00:34:23.575 --> 00:34:54.975
+<v SPEAKER_3>Also bei den Adaptern, die ich hatte, war es ganz spannend. Und da hieß es, sie würden beim ersten Verbinden sich finden und sinken und dann an Chaos handeln. In der Praxis stellte sich heraus, dass ich irgendwann gegen mir das Netz verloren. Und ich schaute nach, was los war und kriegte auf einmal IPs aus einem ganz anderen Netz und wunderte mich, was da denn los war. Und da hatte ich in der Tat irgendwie mit den Nachbarn gesüngt. Und das war der Moment, wo ich das ganze Zeug rausgeworfen habe und mir einfach ein Kabel durch die Wohnung gelegt habe.
+
+00:34:55.155 --> 00:35:02.775
+<v SPEAKER_2>Ich wollte gerade, ich bitte jetzt mal um Handzeichen. Wär es dafür, dass wir uns alle Powerline Adapter anschaffen? Ich sehe keine Hände für die Leute, die nicht so...
+
+00:35:02.795 --> 00:35:05.135
+<v SPEAKER_5>Also ich habe noch einen, aber den habe ich auch in einem anderen Folder an.
+
+00:35:05.635 --> 00:35:13.535
+<v SPEAKER_3>Ja, also ich habe hier, wer noch Powerline Adapter möchte, für mein E-Mail, an dem es ja lautet.
+
+00:35:13.555 --> 00:35:14.755
+<v SPEAKER_2>Genau, es ist immer...
+
+00:35:14.775 --> 00:35:28.315
+<v SPEAKER_5>Es gibt tatsächlich einen Anwendungsfall, den ich dann gefunden habe. Ich habe noch eine Backup Festplatte, die ich einfach in Keller getan habe, falls die Wohnung ausbrennt, so in etwa. Und mein Keller und meine Wohnung haben das gleiche elektrische Netz. Okay. Aber da ist halt Kabel verlegen schwieriger.
+
+00:35:28.335 --> 00:35:35.875
+<v SPEAKER_2>Ja, in der Tat. Aber es ist auch selten, ich habe es noch selten gesehen, dass der Keller eine eigene Steckdose hat. Das ist schon so Luxus auch.
+
+00:35:35.895 --> 00:35:46.635
+<v SPEAKER_5>Gut, im Neubau hat man schon Strom im Keller. Man möchte vielleicht eine Tiefgeldrühe drin haben oder so. Also so ein Kellerabteil. Licht hat man auf jeden Fall. Und das muss natürlich abgerechnet werden, geht dann über den gleichen Stromzähler und dann...
+
+00:35:46.995 --> 00:35:48.295
+<v SPEAKER_2>Aha, verstehe.
+
+00:35:48.315 --> 00:36:15.575
+<v SPEAKER_3>Und die andere Sache ist, viele Häuser, auch Mehrfamilienhäuser, gerade aber auch ältere Häuser, die jetzt schon ein paar Jahre auf dem Buckel haben, damals wurde gerne auf Vorrat gebaut. Und man hatte immer, man hat ganz oft die romantische Vorstellung, lass doch einen Doppelkamin einziehen. Dann bauen wir uns irgendwann in diesen Doppelkamin einen schönen gemütlichen, einen schönen gemütlichen Ofen ran und da machen wir dann Holzbefeuerung und Garnetik.
+
+00:36:15.595 --> 00:36:16.295
+<v SPEAKER_2>Wird man noch über Internet?
+
+00:36:17.355 --> 00:36:47.075
+<v SPEAKER_3>Jaja, da komm ich jetzt grad hin, weil diese romantische Idee mit dem Ofen, die ja gar nicht so romantisch ist aus Feinstaubsicht und so, erfüllt sich bei vielen nicht. Das heißt, du hast einmal ein komplettes Leerrohr quasi durch das Haus. Und das heißt, wenn du damit dann deinen Keller erschließen willst, kannst du das problemlos machen. Du kannst diesen Kamin überall anbohren und dann kannst du auch deinen Keller erschließen. Du hast gefragt, wer hat das in seinem Keller und genauso haben wir das gelöst.
+
+00:36:47.615 --> 00:36:55.875
+<v SPEAKER_2>Okay, gut, verstehe. Weil ich wollte jetzt gerade sagen, also wir waren von Standardfall ist der Heimannwende und wir bauen uns jetzt einen Kamin auf. Das sind zwar unterschiedliche Dinge, möchte ich sagen.
+
+00:36:55.895 --> 00:36:57.595
+<v SPEAKER_5>Also ja, das ist nicht mehr Berliner Mietswohnung, glaube ich.
+
+00:36:57.615 --> 00:37:01.775
+<v SPEAKER_3>Nein, wir reden. Aber es gibt ja auch durchaus Leute, die nicht in Berlin wohnen, die uns hier zuhören.
+
+00:37:01.795 --> 00:38:30.835
+<v SPEAKER_2>Durchaus. Apropos uns zuhören, ihr hört uns wahrscheinlich nicht live. Das Netzwerk, das ist übrigens sehr interessant, das passt ja. Ich muss kurz einen kleinen Ausflug machen. Gestern ist der Deutsche Computerspielpreis verliehen worden. Ein sozusagen ein Gipfelevent der deutschen Digitalbranche. Und sie haben es nicht hinbekommen, einen Livestream zu machen, der mehr als 1800 Leute gleichzeitig irgendwie von geguckt werden kann. Ähnliches heute hier. Wir sind beim Chaos Computer Club. Das Netzwerk ist so ein bisschen, also wir schieben das natürlich auf den Internet Provider. Ist ein bisschen pfleglich. Aber kommt das nächste Mal einfach live vorbei, wenn wir von hier sind. Da gibt es keine Ausfälle, also zumindest keine, die mit dem Netz zu tun haben. So, jetzt haben wir also festgestellt, wir haben entweder wie was, Kat 6A Kabel mindestens oder WLAN, keine Powerline Adapter. Jetzt würde ich gerne wissen, vor allen Dingen unter Podcastern ist dieses, wenn man live podcastet und streamt und dann sich noch zusammenschaltet, am besten über was, was richtig gute Audioqualität hat, dann soll der Rechner bitte am LAN hängen, also an einem Netzwerkkabel und nicht über WLAN drin sein. Und ich habe mich immer gefragt, ist das so eine magische Hypothese, damit man sich sozusagen besser fühlt oder ist tatsächlich Kabel, Internet oder Kabelnetzwerk besser als WLAN? Also ja, ich weiß, WLAN sozusagen hat von der Bandbreite sozusagen weniger, also kein Gigabit sozusagen, wo man dann, Workups kommen auch dazu, aber sozusagen für so, für allen normalen Kram und gerade auch Audio ist ja nicht sozusagen so doll breit. Reicht das ja theoretisch? Wie ist das praktisch?
+
+00:38:32.495 --> 00:39:05.675
+<v SPEAKER_3>Na ja, praktisch ist ja Bandbreite nicht alles, sondern was gerade für das gesprochene Wort und auch für Bild oder so gilt, ist, wenn zwei oder mehr Leute sich unterhalten, dann darf die Verzögerung, also die Zeit, die vergeht, wenn ich etwas in dieses Mikrofon sage und du es in deinem Kopfhörer hörst, die muss ja möglichst gering sein und vor allen Dingen soll sie auch gleich bleibend sein. Das sind Zusicherungen, die gerade WLAN nicht erfüllen kann, weil das ist keine dedizierte Leitung, sondern ein shared medium, also ein geteiltes Medium.
+
+00:39:05.695 --> 00:39:08.035
+<v SPEAKER_5>Und zwar geteilt mit der Mikrowelle deines Nachbarn.
+
+00:39:08.055 --> 00:39:09.375
+<v SPEAKER_3>Genau, unter Umständen.
+
+00:39:09.395 --> 00:39:10.315
+<v SPEAKER_4>Deiner 50 Nachbarn.
+
+00:39:11.755 --> 00:39:12.595
+<v SPEAKER_2>Die auch alle WLAN haben.
+
+00:39:15.535 --> 00:39:20.835
+<v SPEAKER_3>Ja, okay, also WLAN, decktelefon, schnulloses Telefon, alles mögliche.
+
+00:39:20.855 --> 00:39:49.135
+<v SPEAKER_2>Ich möchte jetzt noch mal kurz anhalten und das noch mal genauer erklären. Also einerseits haben wir schon gelernt, WLAN sind gerade, weil natürlich sich niemand die Mühe macht, in seinem Router nachzugucken, um die Sendestärke sozusagen ein bisschen herunterschrauben kann. Also alle im Haus senden auf derselben Sendestärke, möglicherweise dann irgendwie auch im selben Kanal, da stört man sich ein bisschen. Aber WLAN ist Funk, Funk findet auf bestimmten Frequenzen statt und die Frequenzen auf den WLAN funktionieren, da passieren auch viele anderen Dinge, nehme ich jetzt sozusagen diese Anspielung.
+
+00:39:50.115 --> 00:40:30.475
+<v SPEAKER_4>Tatsächlich, also WLAN funktioniert heute immer noch zu groß, im Teil noch 2, 4 Gigahertz. Das ist eine Frequenz, wo ganz, ganz, ganz viel passiert einfach deswegen, weil das eine von einer relativ kleinen Anzahl an Frequenzen ist, wo man kostenlos als Privatanwender etwas, was man gekauft hat, betreiben darf. So das ist der Grund, warum WLAN, Bluetooth, SIG B, ganz viele Funk-Tastaturen und Funkmäuse und so Dinge, Deckmobiltelefone, Modellflugzeuge, ganz, ganz, ganz viel auf genau dieser Frequenz aber auf der gleichen Frequenz ist, dass das eine von wenigen ist, die für solche private Nutzung kostenfrei reserviert wurde.
+
+00:40:32.455 --> 00:40:46.995
+<v SPEAKER_2>Wie musst du mir das vorstellen? Ist dann, wenn ein WLAN von so was betroffen wird, ist das dann so, dass quasi immer wieder Daten verloren gehen und dann nochmal gesendet werden müssen? Oder ist dann sozusagen jeder einmal dran?
+
+00:40:47.015 --> 00:41:36.735
+<v SPEAKER_5>Die Mikrowelle kann ja nicht, also versteht ja nicht, genau. Also es gehen Daten verloren, aber das Schöne ist ja in allen modernen Datenübertragungsverfahren, dass da immer irgendwelche Sicherungsmechanismen drin sind, dass das, was verloren geht, nochmal gesendet wird. Dann kommen wir dazu, wie das mit der Bandbreite ist. Also wenn du sagst, Podcasts kommen, also wenn du jetzt unkomprimiert sendest, ist vielleicht schon ein bisschen kritisch, aber WLAN hat nicht viel Bandbreite, aber doch schon deutlich mehr als ein Audiosignal. Das heißt, wenn es ab und zu mal alles zehnmal senden muss, ist das jetzt auch egal im Wesentlichen. Es dauert vor allen Dingen und dann kommen wir zu dieser Latenz. Also es kann halt sein, es kommt an irgendwann, das ist wie so ein Paket aus China, das kommt halt an. Wenn das nächste Schiff dann mal, kann auch drei Monate dauern. Und das ist dir dann wahrscheinlich nicht mehr lieb, wenn das irgendwie 100 Millisekunden später passiert.
+
+00:41:36.995 --> 00:42:39.795
+<v SPEAKER_3>Und dazu kommt noch was, nämlich die Übertragungsweise, die zwischen dir und deinen Mitpodcastern passiert, weil die ja wirklich sehr, sehr kurz sein muss, weil sonst, ihr wollt ja das Gefühl haben, ihr sitzt nebeneinander. Dieses Lagerfeuergefühl. Genau. Und das funktioniert eigentlich nur, wenn bei der Datumvertragung die Möglichkeit besteht, Sachen nicht nur zu senden, sondern auch mal was wegzuwerfen. Das passiert in der Tat, weil das Ohr, das menschliche Ohr relativ tolerant ist, darüber, wenn ich mal was zu sagen habe und dann mal weg bin. Das kriegt das Ohr relativ gut hin. Aber es klingt halt, man merkt es halt. Das Ohr kann das gut kompensieren, aber man merkt es halt nicht. Es ist eigentlich unangenehm. Deswegen, diese Codecs machen das. Die schmeißen halt wirklich Wortfragmente weg. Aber das möchte man halt auch nicht haben als Podcast. Man möchte ja die tolle Erfahrung eigentlich haben. Die Studioerfahrung.
+
+00:42:39.815 --> 00:42:44.855
+<v SPEAKER_2>Und in dem Moment, wo ich das über Kabel mache, verringere ich die Chance, dass der Codec gezwungen ist, Dinge wegzuwerfen.
+
+00:42:44.875 --> 00:42:45.375
+<v SPEAKER_3>Völlig korrekt.
+
+00:42:45.515 --> 00:42:47.735
+<v SPEAKER_2>Der Codec ist nochmal was?
+
+00:42:47.755 --> 00:42:54.375
+<v SPEAKER_3>Codec ist Encoding, Decoding. Also letztendlich die Umsetzung von Wort in Daten und zurück.
+
+00:42:54.815 --> 00:43:15.775
+<v SPEAKER_2>Okay, also quasi der Algorithmus, der dafür sorgt, dass das, was ich hier erzähle, in der Datenpakete gepackt und durch die Leitung geschickt wird und dann wieder auch zu hören ist. Na gut, dann will ich also tatsächlich fürs Podcasten lieber den Rechner am Kabel haben. Jetzt ist das ja vielleicht unter den Hörern dieses Podcasts nicht so sehr, aber im Allgemeinen doch eher eine Nischenbeschäftigung, also das Live-Podcasting zumindest.
+
+00:43:16.055 --> 00:43:18.795
+<v SPEAKER_3>Betrifft aber auch Gaming zum Beispiel.
+
+00:43:18.815 --> 00:43:42.375
+<v SPEAKER_2>Betrifft auch Gaming zum Beispiel. Das ist genau die, also jetzt wollte ich fragen, wir werden gleich schon nochmal hören, wenn man Backups macht übers Netzwerk, dann wird man natürlich auch ein Kabel, weil dann die Bandbreite, die nutzbare Bandbreite viel, viel breiter sein kann. Gaming wurde gerade schon angesprochen, da geht es ja auch vor allem ums Schnellsein. Wie ist denn das ansonsten so? Kann man dann sagen, es ist immer besser, den Rechner am Kabel zu haben?
+
+00:43:43.255 --> 00:43:54.855
+<v SPEAKER_4>Also grundsätzlich kann man vielleicht sagen, wenn du die Wahl hast, dann nimm das Kabel. Weil in Zweifelsfall, selbst wenn Kabel und WLAN gleich schlecht wären, hättest du dann immer noch den Vorteil, dass du nicht deine anderen WLAN-Geräte störst.
+
+00:43:57.135 --> 00:44:23.435
+<v SPEAKER_3>Und dazu kommt halt auch, du hast ja ganz viele Geräte, die an diesem Funkverkehr teilnehmen, die nicht alle immer den neuesten Standard unterstützen. Und es gibt dann immer die Möglichkeit, dass wenn du ein langsameres Gerät hast, dass dann alle deine anderen Geräte darauf gezwungen werden, so langsam zu werden wie dieses Gerät, was quasi den schlechtesten Standard unterstützt. Man muss auf dem gleichen gemeinsamen Nenner sein.
+
+00:44:23.455 --> 00:44:41.115
+<v SPEAKER_4>Wenn du ein WLAN-Gerät hast, die verschiedene Versionen der WLAN-Standards unterstützen, also die verschieden schnell senden können, dann muss im Zweifelsfall das schneller Gerät auf das langsamere warten, auf eine gewisse Art und Weise. Das bedeutet, wenn du jetzt ein sehr, sehr langsames Gerät hast, kann das sein, dass dein Netzwerk mit ganz vielen schnellen Geräten halt einfach sehr stark bremst.
+
+00:44:42.475 --> 00:45:09.175
+<v SPEAKER_3>Deswegen, wenn die Leute dann kommen, ich habe ein wahnsinnig tolles Laptop mit AC und hab mir einen neuen Router gekauft, dass das auch kann. Und dann hast du irgendwo noch ein Internetradio, das du dir vor sieben Jahren mal gekauft hast, was aber nur irgendwie einen uralten Standard kann. Dann kann das sein, dass alle deine Geräte, sobald du dieses Radio einschaltest, runtergehen müssen auf die Geschwindigkeit, die dieses Radio kann.
+
+00:45:09.195 --> 00:45:38.575
+<v SPEAKER_5>Da kommen wir aber noch zum anderen Teil mit den Frequenzen. Wir hatten das, glaube ich, noch nicht angesprochen. Was du nämlich machen kannst, in jedem Fall, können moderne Geräte 5 Gigahertz anschalten und benutzen, wenn es geht. Das hat den weiteren Vor- und Nachteil, dass die Reichweite geringer ist. Das heißt, es gibt mehr Kanäle auf 5 Gigahertz und es reicht weniger weit. Das heißt, dass mit den Störungen ist dann auch gleich noch wesentlich geringer. Und wenn du nur deine modernen Geräte in 5 Gigahertz tust, dann ist es halt gut.
+
+00:45:38.595 --> 00:45:43.155
+<v SPEAKER_4>5 Gigahertz hat auch noch die Eigenschaft, dass es deutlich schlechter durch Wände durchkommt als 2, 4 Gigahertz.
+
+00:45:43.275 --> 00:45:44.755
+<v SPEAKER_5>Also das war die Reichweite.
+
+00:45:44.775 --> 00:45:53.875
+<v SPEAKER_2>Genau, das kann man bei Rechnern auch einschalten. Gibt es im Betriebssystem Windows, OS X, was man einfach so macht?
+
+00:45:53.895 --> 00:46:22.435
+<v SPEAKER_5>Ja, es benutzt halt das, was geht. Also auf deinem WLAN-Router kannst du es halt irgendwie einschalten oder ist es halt normalerweise aktiviert. Der Rechner empfängt das, von dem er glaubt, dass er es nehmen soll. Ich hörte bei manchen Geräten, die nach einem Obststück benannt sind, war das früher immer sehr problematisch. Da gab es dann immer den Workaround, man kann unterschiedliche Namen verwenden. Das habe ich auch seit jeher bei mir so. Also mein 5 Gigahertz WLAN heißt anders als der 2, 4 Gigahertz WLAN. Und nur die besseren Geräte kriegen halt das 5 Gigahertz WLAN.
+
+00:46:22.455 --> 00:46:24.915
+<v SPEAKER_2>Da brauchen wir schon wieder zwei WLANs.
+
+00:46:24.935 --> 00:46:32.535
+<v SPEAKER_5>Ja, aber das kann dein Router auf jeden Fall, also in fast allen Fällen. Unterschiedliche Namen verteilen. Zumindest für 2, 4 und für 5 Gigahertz.
+
+00:46:32.555 --> 00:46:36.675
+<v SPEAKER_2>Also ein Router kann gleichzeitig auf zwei Frequenzen funktionieren.
+
+00:46:36.695 --> 00:46:39.575
+<v SPEAKER_5>Wenn er neu genug und teuer genug ist, ja.
+
+00:46:39.595 --> 00:46:56.975
+<v SPEAKER_3>Also das ist schon der Unterschied, wenn dein Provider dir zwei verschiedene Modems an, oder zwei verschiedene Router anbietet, dann ist meistens die Unterscheidung, das eine kann nur 2, 4 und das andere kann auch zusätzlich noch 5. Dasselbe gilt für billige Handys im Übrigen. Die können auch meistens nur 2, 4.
+
+00:46:58.215 --> 00:47:34.735
+<v SPEAKER_2>Verstehe, verstehe. So, bevor wir uns gleich noch den Geräten widmen, die dann wirklich auch ins Netzwerk angeschlossen sind, müssen wir noch zwei Dinge besprechen. Das eine ist Sicherheit. Ich hab schon angesprochen, dass die Firma update, dass das Gerät an sich irgendwie sicher ist, der Router. Und das andere ist, muss ich mich noch um irgendwas kümmern? Oder sind die meisten Router, wenn ich sie kaufe, schon so eingestellt, dass da von außen keiner irgendwie Unfug macht? Also ich red jetzt nicht davon, dass da ein Fehler im Gerät ist, der was macht, sondern muss ich da aktiv noch was machen? Also sowas wie die Luft beim Auto aufpompen.
+
+00:47:34.755 --> 00:47:39.775
+<v SPEAKER_4>Bei den meisten Leuten dürften die angeschlossenen Rechner die deutlich größere Gefahr sein als der Router.
+
+00:47:39.795 --> 00:48:00.035
+<v SPEAKER_5>Ja, also die meisten Hersteller, die meisten Hersteller sind mittlerweile so peinlich, wie sie in der Vergangenheit erwischt worden sind, dass sie von außen nicht mehr erreichbar sind. Es gibt häufiger mal das Problem, dass die Passwörter, die voreingestellt sind, eigentlich Standard-Passwörter sind. Das sollte man nach dem Auspacken schon machen. Alle Passwörter, die hinten aufgedruckt sind, ändern. Und dann die neuen Passwörter aufschreiben.
+
+00:48:01.555 --> 00:48:22.355
+<v SPEAKER_4>Vor allem WLAN-Passwörter gab es da. Es gab da in den letzten Jahren immer wieder Fälle, wo die WLAN-Passwörter vorhersagbar waren, die mitgeliefert kamen. Das heißt, da will man auf jeden Fall ein eigenes verwenden. Was man dann, keine Ahnung. Ich hab zum Beispiel bei mir zu Hause am Guter einen Zettel liegen mit dem Passwort drauf und jeder, der bei mir ist als Gast, kriegt diesen Zettel in die Hand gedrückt und hat dann das WLAN-Passwort.
+
+00:48:22.375 --> 00:48:25.455
+<v SPEAKER_5>Oder den Zettel fürs Gastnetz, da kommen wir später zu.
+
+00:48:25.475 --> 00:48:51.115
+<v SPEAKER_2>Das muss man natürlich noch mal sagen. Vielleicht kurz erklären, weil sich jetzt jemand fragt, man hat hinten auf dem Router aufgedruckt, ja, dein WLAN-Name ist so und das Passwort ist. Dann steht da so eine wilde, lange Zahlenfolge oder Zahlen und Buchstaben und sowas. Das sieht aus wie zufällig ausgewürfelt, aber es gibt halt immer wieder den Fall, dass man sozusagen, wenn man die Geräte, also den Namen des WLANs kennt oder die Identifikation des Geräts, dass man darauf dann das WLAN-Passwort errechnen konnte.
+
+00:48:51.995 --> 00:49:15.095
+<v SPEAKER_3>Weil der Hersteller natürlich auch das Problem hat, der muss in der Fabrik irgendwie Zufall erzeugen bei einem Prozess, der immer genau gleiche Geräte hervorbringen soll. Das heißt, die einzige Möglichkeit, die du hast, ist zu gucken, was unterscheidet sich von Gerät zu Gerät. Und das ist eigentlich nur die Adresse der WLAN-Chips. Und darauf wird dann das Passwort errechnet. Und das ist halt wieder irgendwie vorhersagbar.
+
+00:49:15.455 --> 00:49:25.055
+<v SPEAKER_4>Ja, und dazu kommt halt auch, dass dir das grundsätzlich Problem ist, dass der Hersteller dafür bezahlt wird, WLAN-Router zu verkaufen und nicht stark Krypto zu bauen oder sich sichere Passwörter auszudenken.
+
+00:49:25.075 --> 00:49:34.035
+<v SPEAKER_2>Also liebe Kinderinnen und Kinder, sehr schön immer das Passwort ändern. So, WLAN hast du gerade Gastbilan gesagt. Wie sinnvoll ist es sowas überhaupt zu haben?
+
+00:49:36.095 --> 00:49:38.195
+<v SPEAKER_4>Also ich brauch keins, weil ich hab nur einen Computer.
+
+00:49:39.295 --> 00:49:40.415
+<v SPEAKER_5>Ich hab mehr als einen Computer.
+
+00:49:40.435 --> 00:49:41.135
+<v SPEAKER_2>Und keine Freunde, oder?
+
+00:49:42.515 --> 00:50:24.255
+<v SPEAKER_4>Nö, aber ich mein, mein Computer, also es hängt halt davon ab, wenn du in deinem WLAN irgendwie das Gefühl hast, dass du da Datenverkehr hast oder Geräte hast, an die andere nicht heran sollen, dann ja, aber in Gastbilan. Zum Beispiel, wenn du ein NAS hast, an das alle deine Systeme angeschlossen sind, wo deine Linux-ISOs draufliegen und du willst nicht, dass deine Freunde da rankommen, dann solltest du dir ein Gastbilan zulegen, wo dann halt Leute Zugriff drauf kriegen, die nicht Zugriff auf alle deine Netzwerkeräte haben sollen. Du kannst es dir auch überlegen, wenn du sowas hast wie einen Drucker und du willst nicht, dass jemand an deinen Drucker rankommt.
+
+00:50:24.335 --> 00:50:36.955
+<v SPEAKER_2>Das muss man auch mal sagen, weil das ist vielleicht jemand, der sich nicht tagtäglich mit Netzwerken beschäftigt. Gleich klar, also Geräte, die im selben WLAN sind, das ist sozusagen schon eine Sicherheitsstufe, auf die man achten kann.
+
+00:50:36.975 --> 00:51:12.835
+<v SPEAKER_5>Jeder, der in deinem WLAN ist, kann erstmal auf alle deine Geräte zugreifen. Das ist bei Windows meistens zum Beispiel so eine Einstellung, wo du dann gefragt bist du zu Hause und sagst ja. Und dann ist plötzlich sehr viel möglich, sehr viel mehr möglich, als wenn du woanders wärst. Andere Geräte sind speziell so designt. Also von Google gibt es ja diesen Stick, den man in seinen Fernseher steckt. Und jeder, der im gleichen Netz ist, kann dann beliebig auf den zugreifen zum Beispiel. Bei Druckern war das das gleiche. Bei Druckern hat man noch das Zusatzproblem, dass deren Firmware meistens noch so viel schlechter ist als alle anderen Geräte. Also jeder, der Zugriff auf diesen Drucker hat, kann ihn in der Regel übernehmen und beliebige Dinge damit tun.
+
+00:51:13.235 --> 00:51:18.995
+<v SPEAKER_2>Okay, also ich gehe jetzt nicht davon aus, dass Leute, denen ich meinen WLAN-Passwort gebe, böse Menschen sind.
+
+00:51:19.015 --> 00:51:26.035
+<v SPEAKER_4>Aber es reicht, dass sie etwas schlecht koordinierte Menschen sind, die sich nicht gut mit Computern auskennen.
+
+00:51:26.055 --> 00:51:39.115
+<v SPEAKER_3>Also im Zweifelsfall musst du immer davon ausgehen, dass nicht sie die Bösen sind, sondern dass sie möglicherweise ein Endgerät mit sich tragen, wo jemand Böses vorher schon sich breit gemacht hat.
+
+00:51:39.135 --> 00:51:47.775
+<v SPEAKER_2>Verstehe, aber dieses, ich möchte einen Gast-WLAN haben, das ist ja beim Bruder sozusagen ein Klick in diesem Interface, das ist schon eine relativ sichere Trennung.
+
+00:51:47.795 --> 00:51:51.595
+<v SPEAKER_5>Ja, also da wo es implementiert ist, glaube ich ja, da ist mir jetzt nichts bekannt.
+
+00:51:51.615 --> 00:52:06.475
+<v SPEAKER_3>Ja, es ist halt etwas interessant implementiert, wenn man jetzt Netzwerker ist, dann sagt man, das könnte man aber noch schöner machen, aber so aus einer Reinsicherheitsperspektive ist das irgendwie schon okay.
+
+00:52:08.555 --> 00:52:21.855
+<v SPEAKER_5>Genau, man kriegt dann mindestens eine zweite SSID, also einen zweiten Netzwerkenamen mit einem zweiten Passwort, der dann nur für Gäste ist, der dann in der Regel so gemacht ist, dass er nur Internetverbindungen kriegt und keine Verbindung zu anderen Geräten im Heimnetz und auch keine Verbindung untereinander.
+
+00:52:22.395 --> 00:52:30.855
+<v SPEAKER_2>Was mich ein bisschen nervt, ist, dass die, bei meinem Router ist das so, wenn man das Gast-WLAN aufmacht, dann kann man darüber nicht VPNen.
+
+00:52:30.875 --> 00:52:54.915
+<v SPEAKER_5>Genau, das ist dann noch so eine Option. Also bei mir gab es dann auch die Option, da kann man Häkchen setzen, dass dann das ganz restriktiv macht, also wirklich nur Webseiten und Mail ging. Das war dann schon nicht mehr genug für SSH zum Beispiel und das hat mich dann auch ein bisschen genervt. Da muss man dann selber so ein bisschen sehen. Es gibt ja noch in Deutschland dieses doofes Störerhaftungsproblem. Also der Hauptgrund, das anzuschalten, dieses Restriktiv sein, ist natürlich, dass man seinen Gästen kein Falscharing machen lassen möchte.
+
+00:52:55.855 --> 00:53:46.335
+<v SPEAKER_2>Also kurz sozusagen, es gibt auch, glaube ich, ein ganzes Chaosradio dazu. Störerhaftung ist dieses, wenn über deinen Account jemand Falscharen hat, dann bist du als Internetanbieter, du als Account, ne Quatsch, als Anschlussinhaber sozusagen. Sollst du schuld sein können, ist bei manchen Menschen die Rechtsauffassung. Ich glaube, das ist so formuliert irgendwie das Richtige. Genau, da kann man dann so ein Gastronom machen. Aber jetzt waren wir gerade beim VPN. Dann kommen wir noch zu der anderen Nummer, die man mit dem eigenen Netzwerk machen kann. Das ist dieses von außen reine VPNen. Das wurde ganz am Anfang der Sendung schon gesagt. Was bedeutet das? Anscheinend bedeutet das, dass man, wo man nicht zu Hause ist, doch zu Hause ist, weil Henrik hat ja gerade in sein eigenes WLAN zu Hause geguckt und er ist nicht zu Hause, sondern er sitzt in der Marienstraße 11. Was ist nach Hause VPNen?
+
+00:53:47.055 --> 00:54:29.275
+<v SPEAKER_5>Na das ist es mit diesem ET, das hast du schon ganz richtig gesagt. Je nachdem, was man da hat. Also bei manchen dieser Geräte ist es schon eingebaut. Also früher hatte ich einfach einen Rechner zu Hause, der mich von außen erlaubt hat. Das hat mehrere Komplikationsstufen, aber im Wesentlichen bedeutet es, dass ich von meinem Laptop mich dorthin verbinden kann und der mich dann weiter verbindet. Also dass ich eine virtuelle Verbindung, dafür steht, dass V habe, in mein privates Netz, das ist das P und das N. Und das für diesen Rechner so weit aussieht, als ob ich im gleichen Netz wäre. Also ich sehe meinen Drucker, ich sehe mein Alles, ich könnte jetzt hier auf Drucken drücken, das kommt zu Hause raus. Und das ist eigentlich das.
+
+00:54:29.615 --> 00:54:36.395
+<v SPEAKER_2>Also das hat, wenn ich das richtig sehe, hat das irgendwie so zwei Vorteile. Das eine ist, ich bewege mich sozusagen in meinem Zuhause-Netzwerk.
+
+00:54:36.415 --> 00:54:38.875
+<v SPEAKER_5>Genau, ich kann auf mein Nass zu Hause zugreifen, da kommen wir später zu.
+
+00:54:39.735 --> 00:54:46.115
+<v SPEAKER_2>Und das andere ist, die Verbindung, die ich habe, ist erstmal verschlüsselt. Also da, wo ich bin, der in dem Netzwerk, kann ich sehen, was ich mache.
+
+00:54:46.235 --> 00:55:26.175
+<v SPEAKER_5>Das ist noch so eine Option. Also mindestens impliziert ist VPN, dass ich eine Verbindung zu einem anderen Netz habe, die irgendwie, ja man kann das theoretisch auch ohne Verschlüsselung machen, aber das ist so einfach mittlerweile, das korrekt zu machen, dass die Verbindung von hier zu meinem Heimnetz verschlüsselt ist und niemand da sie was sieht oder verändern kann. Und dann gibt es auch noch die Option, dass ich sagen möchte, dass dieser Rechner bitte schön, also mein Rechner, den ich hier, das sehen ja die Leute im Audio nicht, dass der Rechner, den ich hier habe, wenn er ins Internet geht, bitte durch die VPN-Verbindung und dann von zu Hause aus raus wieder kommen soll. Dann haben halt auch die Leute, die hier im bösen Chaos Computer Club das WLAN abhören, nichts zu sehen.
+
+00:55:26.195 --> 00:55:33.335
+<v SPEAKER_3>Und hat aber natürlich den Nachteil, du bist nur so schnell, wie das langsamste Richtung deines Heimnetzwerkes.
+
+00:55:33.695 --> 00:55:36.475
+<v SPEAKER_4>Halb so schnell, weil es muss einmal raus und einmal rein und wieder raus.
+
+00:55:36.755 --> 00:58:41.054
+<v SPEAKER_2>Aber es ist ja wahrscheinlich der Upload sozusagen. Genau. Darüber hat man in der letzten Sendung ja gesprochen, dass wir alle symmetrische Anschlüsse wollen. Genau, für sowas. Dass man genau das machen kann. Okay, so, jetzt haben wir eine Stunde drüber geredet, also eigentlich über das erste Gerät, was hinter dem Internetanschluss kommt und wie man das dann sozusagen weiter verkabelt. In der nächsten Stunde geht es dann darum, was man da alles Schönes dranhängen kann. Dann werden wir endlich erfahren, was dieses ominöse Nas ist. Vorher gibt es aber noch eine Musik und danach die Nerd News. Und die Musik kommt auch von diesem Midwest Collective Sampler und ist von Slow Ski und heißt Deep Face. Und das Chaos Radio 234 macht gerade eine kleine Pause, bevor wir darüber sprechen, welche Dinge man alle ins eigene Heimnetzwerk stecken kann, machen wir die Nerd News, die zusammengetragen und geschrieben wurden von Mo und vorgetragen von Evita.
+
+00:58:46.577 --> 01:00:41.057
+<v SPEAKER_1>Experten kritisieren Pläne für elektronischen Personalausweis. Die Gesetzespläne der Bundesregierung zum elektronischen Personalausweis wurden bei einer Anhörung im Bundestag von Experten scharf kritisiert. Die Regierung will die Beschränkungen des Datenabrufs für Geheimdienste aus dem bisherigen Gesetzesvorschlag herausnehmen, die Verbreitung von Onlinefunktionen fördern und die Anfertigung von Kopien erleichtern. Die Experten hielten in der Anhörung dagegen, die Begründung für dieses Vorhaben sei nicht überzeugend. Zudem bestehe die Gefahr, dass sich hintenrum Schatten-Datenbanken bilden. Tor Project veröffentlicht Finanzbericht 2015. Im Jahr 2015 hat der Anonymisierungsdienst Tor 3, 3 Millionen US-Dollar eingenommen. Demgegenüber stehen Ausgaben von 2, 9 Millionen Dollar. Die Zahlen wurden kürzlich vom Tor Project veröffentlicht. Das Budget des Projekts wurde zum großen Teil von Behörden der US-Regierung beigesteuert. Die Organisation ist schon seit Längerem bestrebt, den Anteil zu reduzieren. Uber wacht. Die iOS-App des Taxi-Anbieters Uber hat ihre Nutzer absichtlich auch dann weitergetrackt, wenn diese die App deinstalliert hatten. Diese Vorgehensweise verstößt gegen die App-Store-Richtlinien von Apple. Apple-Chef Cook drohte Uber daraufhin mit dem Rauswurf aus dem App-Store. Dieses ist der zweite Skandal, in den Uber in diesem Jahr verwickelt ist. Anfang des Jahres wurde bekannt, dass Uber, Polizisten und andere Beamte von der Beförderung ausschloss, wenn die Uberschaufförer ohne offizielle Genehmigung unterwegs waren. Google will minderwertige Inhalte verbannen. Der Suchmaschinenanbieter Google will gegen Fake-News und Hassbotschaften im Netz vorgehen. Am Dienstag kündigte Google das Project Owl an, mit dem der größte Teil der minderwertigen Inhalte aus den Suchergebnissen verbannt werden solle. Google und Facebook werden seit einiger Zeit für die Verbreitung von gefälschten Nachrichten im Netz mitverantwortlich gemacht.
+
+01:01:09.842 --> 01:01:16.942
+<v SPEAKER_2>Chaosradio 234, das süße Heimnetz und da wo ich heute mit Hendrik, Jasik und Danimo. Herzlich Willkommen zurück.
+
+01:01:16.962 --> 01:01:18.242
+<v SPEAKER_3>Hallo.
+
+01:01:18.262 --> 01:02:45.502
+<v SPEAKER_2>Und dem zahlreichen Publikum macht mal Krach. Das ist krass. Ich dachte, jetzt käme so ein Tumbleweed, weil wir sind heute echt nicht viel. Das nächste Mal müsst ihr wieder vorbeikommen in der Marienstraße. Alle zwei Monate senden wir live von vor Ort und man kann dabei sein und manchmal sogar alte gebrauchte Powerline Adapter von Danimo abgreifen. Aber nur fürs Publikum, wenn man da anwesend ist. Wir beschäftigen uns heute mit dem Heimnetzwerk und wollen über alles sprechen, was hinter dem Internetanschluss passieren kann. Wir haben die erste Stunde damit zugebracht, dass wir über den Router, der noch mehr ist, aber sozusagen das Gerät, was das Internet für unsere Wohnung bereit macht, gesprochen und auch, wie man in der ganzen Welt unterwegs sein kann und trotzdem in seinem eigenen Heimnetzwerk ist. Und jetzt kommen wir endlich dazu, dass man sagen kann, ok, was kann man denn noch damit machen, außer seinen Rechner möglichst schnell und dick an den Internetanschluss ranzukriegen. Es fiel schon oft der Begriff NAS. Ist die ältere unter uns erinnernd sicher ein Rapper, aber auch ein, ich bin der Kopf geschüttelt, oh Gott, ich bin der Älteste, aber auch ein Network Attached Storage heißt es eigentlich, oder? Genau. Im Prinzip eine Netzwerk Festplatte. Will man das? Was macht man damit? Und wie sieht das denn gut aus?
+
+01:02:45.522 --> 01:02:48.022
+<v SPEAKER_3>Will man das? Will man?
+
+01:02:48.042 --> 01:02:49.402
+<v SPEAKER_2>Was kann es denn eigentlich?
+
+01:02:49.422 --> 01:03:53.562
+<v SPEAKER_3>Es ermöglicht dir einfach einen Speicherplatz zu haben, der unabhängig von einem speziellen Gerät ist. Man kann das immer am besten aus der Zeit erklären. Früher hatte man den einen Rechner, der irgendwo im Büro stand, da war halt alles drauf. Das ist ja schon lange nicht mehr der Fall. Heute hast du dein Handy, mit dem du Fotos schießt, deine Digitalkamera, die möglicherweise sogar wählernfähig ist, dein Laptop und so weiter. Und alle, die produzieren Daten. Und die kannst du jetzt irgendwie in die Cloud versenden und bei verschiedenen Anbieter ablegen. Aber im Regelfall hast du ja noch viel mehr Daten, die jetzt irgendwo liegen sollen und die willst du vor allen Dingen schnell zugreifen können von zu Hause. Und die kannst du halt auf so einer netzwerkangebundenen Festplatte ablegen. Dabei ist das Ding aber auch noch viel mehr. Nämlich nicht nur eine Festplatte, sondern meistens ist es in der sinnvollen Ausbaustufe, so wie ich das jetzt empfehlen würde, mehrere Festplatten, die das auch vertragen können, wenn mal einer ausfällt.
+
+01:03:55.502 --> 01:04:02.762
+<v SPEAKER_5>Also und als Anwendungszweck kommt noch dazu, dass man vielleicht als moderner Benutzer eines Obstgerätes nicht mehr so viel Platz hat.
+
+01:04:02.782 --> 01:04:50.022
+<v SPEAKER_2>Ich wäre ein gewisser ein gewisse Missgunst oder? Aber so eine Art, also quasi man kann eine große Festplatte nicht machen, kann man entweder seine Superfotosammlung drauf abladen oder halt ein Backup machen, was man regelmäßig machen soll. Dazu komme ich am Ende der Sendung immer gerne. Also im Prinzip sind das ja kleine Computer, an die man mehrere Festplatten hängt, die dann so konfiguriert sind, dass man manchmal sogar während des Betriebes eine rausnehmen und austauschen kann, also dass quasi die Festplatte kaputt ist, sodass es geht. Das gibt es ja wie alles heutzutage auch als sozusagen fertige Lösung zu kaufen. Gibt es so zwei oder drei große Anbieter, also Cyanology, Western Digital und? So, das sind sozusagen die, die man machen kann.
+
+01:04:50.202 --> 01:04:51.102
+<v SPEAKER_3>Und Netgear.
+
+01:04:51.122 --> 01:04:52.702
+<v SPEAKER_5>Und Drobo für die Leute, die zu viel Geld haben.
+
+01:04:55.762 --> 01:05:25.602
+<v SPEAKER_2>Es ist immer klar sozusagen, es gibt keine Qualitätssiegel vom CCC, aber so generell gesagt, was ist denn von diesen Lösungen zu halten? Also weil die sind ja mehr als nur das Gerät. Die bringen ja immer auch sozusagen eine eigene Bediensoftware mit. Die haben ja auch so einen Web-Interface, über das man die ansteuern kann. Oder ein Programm sozusagen, was man auf dem Rechner laden muss, über das man die ansteuern kann. Ist das generell so was, dass man sagt, das will man eigentlich haben? Oder ist das schon wieder zu viel und der Purist sagt, nee, ich möchte mir das alles selber bauen. Nimm einen Raspberry Pi und stecke da per OSB eine Festplatte dran.
+
+01:05:25.622 --> 01:05:53.302
+<v SPEAKER_5>Also man will das natürlich selber bauen, aber wir haben ja am Anfang irgendwas von Heim-Usern gesagt und so. Und da finde ich das schon gar nicht so falsch. Also ich habe selber sowas nicht. Ich habe das bei Bekannten gesehen und war schon so milde ein bisschen beeindruckt. Wenn ich da an dem Web-Interface rumgeklickt habe, das haben offenbar auch Nerds gebaut. Also was da an Features und Funktionalität drin war, das hätte ich vielleicht auch eingebaut. Aber ich hätte jetzt nicht damit gerechnet, dass es ein Endkundenprodukt drin ist. Von daher sind zumindest manche der Teile offenbar doch durchaus brauchbar.
+
+01:05:53.422 --> 01:05:55.522
+<v SPEAKER_2>Dann immer?
+
+01:05:55.962 --> 01:07:05.302
+<v SPEAKER_3>Und bei diesen Geräten wird es eigentlich erst dann brandgefährlich, wenn man mal von so Kleinigkeiten absieht wie Bugs. Da muss halt auch ein Firmware-Update machen. Das kommt immer davor. Also QNAP hat jetzt letztens was, einen sehr schönen und schönen Incident gehabt. Aber das passiert halt laufend. Da hilft einfach nur updaten und diese Geräte können noch mittlerweile dir sagen, hier gibt ein Update, mach doch mal. Das heißt, das geht eigentlich schon sehr bequem. Wo es problematisch wird, ist, dass die letztendlich ja auch nur Computer sind und sich dementsprechend auch aktualisieren lassen. Da gibt es dann so Community-Apps, was nichts anderes ist als PAP-Myatmen oder so, die irgendwie als Pakete mit installierbar sind, nachträglich. Also du kannst dieses Gerät erweitern von einer reinen Datei-Ablage-Lösung zu einem kleinen Heim-Server mehr oder weniger und immer weiter ausbauen. Da gibt es fast keine Grenzen mehr heutzutage.
+
+01:07:06.122 --> 01:07:09.422
+<v SPEAKER_2>Das kann auch so ein E-Mail-Server sein.
+
+01:07:09.442 --> 01:07:50.522
+<v SPEAKER_3>Genau, ein Web-Server, wo man dann über sogenanntes, ich sag's nicht, ich schmeiß mal ins Raum Port Forwarding, auch vom Internet aus erreichbar machen kann. Und da wird es dann halt natürlich schnell beliebig anfällig. Das heißt, du machst das dann vom Internet aus direkt erreichbar ohne VPN. Das heißt, jeder kommt da drauf. Das klingt erstmal sehr bequem, aber das bedeutet halt auch, du hast sofort eine viel größere Angriffsfläche oder viel mehr Leute, die versuchen würden, da anzugreifen. Und das bedeutet halt auch, du benutzt ein Gerät für viele Zwecke. Und wie wir gerade auch schon besprochen haben, je mehr Zwecke ein Gerät erfüllt, umso angreifbar ist es.
+
+01:07:50.542 --> 01:07:52.522
+<v SPEAKER_4>Und das ist mehr Schmerz, wenn es nicht geht.
+
+01:07:52.542 --> 01:07:54.722
+<v SPEAKER_3>Genau, und so das ist halt die andere Sache.
+
+01:07:54.742 --> 01:08:27.062
+<v SPEAKER_2>Also seine Backup-Festparte sollte man nicht als Mehl-Server benutzen. Okay, jetzt gibt es ja immer diesen Zwiespalten. Also es gibt die Cloud und die hat sozusagen eine ganz praktische Eigenschaft ist, man hat halt Daten irgendwo und die werden automatisch synchronisiert. Und dazu könnte man so einen NAS auch benutzen. Man hat zu Hause eine Festplatte, da legt man Daten drauf, da kommt man von außen ran und dann gibt es irgendwie so verschiedene Programme, die auch man sagen kann, hier synchronisiere mal diesen Ordner auf meinem Rechner mit dem Ordner auf diesem NAS.
+
+01:08:27.082 --> 01:08:30.162
+<v SPEAKER_3>Das gibt es ja schon von den Anbietern der NASen.
+
+01:08:30.182 --> 01:08:47.242
+<v SPEAKER_2>Lassen sie mich bitte mal eine Frage zu unterstellen. Wir haben jetzt gerade schon gesagt, man kann das so einrichten, dass man von außen über das Internet auf diese Dinge zugreift. Man kann natürlich auch, was wir schon gelernt haben, über VPN ins Heimnetzwerk geben. Und dann sehe ich da natürlich meinen NAS. Was ist die bevorzugte Lösung?
+
+01:08:51.162 --> 01:09:01.862
+<v SPEAKER_5>Also wenn er sagt, das gibt es auch von den Herstellern, ich bin mir erstens nicht sicher, ob ich die Software von dem Hersteller auf meinem Rechner laufen lassen möchte. Und dann zweitens bin ich mir vergleichsweise sicher, dass es die nicht für meinen Rechner gibt.
+
+01:09:05.702 --> 01:09:07.942
+<v SPEAKER_2>Aber wie ist das denn jetzt mit so...
+
+01:09:07.962 --> 01:09:14.702
+<v SPEAKER_5>Es gibt da eine Hand voll offener Standards. Ja, es gibt immer eine Hand voll offener Standards, die man dann benutzen kann, die von solchen Geräten auch unterstützt werden.
+
+01:09:14.722 --> 01:09:24.262
+<v SPEAKER_2>Okay, aber gibt es sozusagen konkret eine Lösung? Also gerade für die Ordner-Synchronisation, wo man sagen kann, dass das funktioniert zwischen Rechner und NAS?
+
+01:09:25.602 --> 01:09:36.762
+<v SPEAKER_3>Du kannst als Third-Party-Apps auch irgendwie OnCloud, Nextcloud oder so was installieren. Und da gibt es ja auch relativ viel Client Support und Webinterface.
+
+01:09:36.782 --> 01:09:37.662
+<v SPEAKER_2>Will ich das?
+
+01:09:37.722 --> 01:10:01.922
+<v SPEAKER_3>Wenn du das übers VPN machst, ist das ja nichts anderes als... Also da hast du deine Angriffsfläche klein gehalten. Wenn du halt mit dem Updaten hinterher bist und ich kann leider nichts über den Stack unten drunter sagen, also irgendwie PHP-Version oder so, aber wenn du die App selber aktuell hältst, kannst du es notfalls auch ins Internet stellen. Aber VPN, du willst VPN.
+
+01:10:01.942 --> 01:10:14.022
+<v SPEAKER_2>Okay, also ich würde sowas wie OnCloud sowohl auf dem NAS installieren als auch auf meinem Rechner, das würde aber nur funktionieren, wenn ich über VPN zu mir nach Hause telefoniere.
+
+01:10:14.042 --> 01:10:19.162
+<v SPEAKER_5>Genau, aber das kannst du bei fast allen modernen Geräten konfigurieren, dass eine bestimmte VPN-Verbindung immer aktiv sein soll.
+
+01:10:20.082 --> 01:10:22.222
+<v SPEAKER_3>Ah ja, auch auf Telefonen.
+
+01:10:22.242 --> 01:10:24.702
+<v SPEAKER_2>Nur so die Geräte mit dem Obst haben da manchmal.
+
+01:10:24.742 --> 01:10:29.042
+<v SPEAKER_5>Ich dachte, da geht es sogar noch besser als auf allen anderen. Also hatte ich zumindest immer mir so gemerkt.
+
+01:10:29.062 --> 01:10:31.062
+<v SPEAKER_4>Telefone haben das.
+
+01:10:31.082 --> 01:10:42.942
+<v SPEAKER_5>Also auch die Obst-Telefone bei Dingen ist glaube ich sogar noch besser als bei den anderen. Achso, Computer weiß ich nicht. Ich weiß, dass es bei den Obst-Telefonen etwas besser geht als bei den Roboter-Telefonen, glaube ich.
+
+01:10:42.962 --> 01:11:16.482
+<v SPEAKER_2>Das mag sein. So, jetzt haben wir also dieses NAS da drin zu hängen und da sind die Fertiglösungen auch schon ganz brauchbar. Und was wollen wir denn noch machen? Also wir können, was man natürlich sagen kann, und wir verlassen jetzt mal sozusagen das Wesen des Heimanwenders, jetzt irgendwie das Technik sozusagen eigene Services zu betreiben, also den eigenen Web-Server. Mal abgesehen davon, dass ich dann, also dass ich sagen, selbst bei einem dickeren VDSL-Anschluss nicht will, dass da sehr viele Leute gleichzeitig drauf zugreifen, will ich das überhaupt, also will ich den Web-Server zu Hause betreiben?
+
+01:11:17.562 --> 01:11:30.782
+<v SPEAKER_4>Du hast grundsätzlich das Problem, dass bei einem, dass DSL, also gerade VDSL-Anschlüsse sind halt auch so ein bisschen je nachdem tageszeitabhängig. Das ist bei DSL nicht so schlimm wie bei zum Beispiel Kabel, hab ich gehört.
+
+01:11:33.382 --> 01:11:34.422
+<v SPEAKER_2>Ich kann das Gegenteil berichten.
+
+01:11:34.442 --> 01:12:44.142
+<v SPEAKER_4>Okay, im Endeffekt hängt das halt sehr, hast du halt das Problem, dass du eine sowieso schon schmale Leitung hast, die halt viel zu schmal ist. Also angenommen, du willst nur welche deinen Blog da hosten und du wirst jetzt irgendwo vertwittert und kriegst auf einmal ganz ganz viele Besucher dann und du hast nicht noch irgendwie ein Content-Delivery-Network irgendwie davor hängen, was die Bandbreite, die dann auf deinen Server landet, reduziert, kriegst du sehr schnell halt das Problem, dass deine 20 Megabit Upstream, die dein VDSL vielleicht kann, einfach schon ausreichen. Also bei mir wäre das halt so das Ende der Leitungskapazitäten. Also du kriegst halt sehr schnell einfach das Problem, dass deine Anbindung dann zu schmal ist und oder zu unzuverlässig. Dazu kommt das Problem, dass du bei Endkunden Anschlüsse im Allgemeinen wechselnde IP-Adressen hast, die sich wenigstens alle paar Wochen mal einfach wechseln. Da kann man dann irgendwie als Hack mit einem dünnen DNS Service auch von draußen drauf zugreifen. Aber insgesamt ist es so eine Sache, das kann man machen. Das ist vielleicht irgendwie für die drei Freunde okay, aber im Endeffekt...
+
+01:12:44.922 --> 01:13:04.562
+<v SPEAKER_2>Ich wollte mal sagen, dieser dünnen DNS Service, also um das zu kurz zu erklären, es gibt eine Möglichkeit, sozusagen Router machen das auch. Das ist ein Zusammenspiel zwischen man braucht einen Anbieter, der das für einen übernimmt und der Router muss das sagen können. Da kann man das so einstellen, dass automatisch kommuniziert wird, welche IP-Adresse hat der in der Anschluss gerade und dann gibt es eine Web-Adresse.
+
+01:13:04.582 --> 01:13:18.462
+<v SPEAKER_5>Genau, also das ist halt aus der Zeit entstanden, als die Telekom noch Endkunden keine Standleitung geben wollte und einfach jede Nacht einmal die Leitung durchgeschnitten hat. Das haben sie zum Glück aufgegeben, den Unfug mittlerweile, aber es ändert sich halt trotzdem ab und zu mal nach Stromausfall, wenn du am Kabel wackelst und was auch immer.
+
+01:13:19.102 --> 01:13:54.802
+<v SPEAKER_2>Und das wollte ich gerade sagen, so als Setting, also dieses irgendwie, okay, ich will ja nicht eine Webseite betreiben, wo vielleicht irgendwie mehr als fünf oder zehn Leute drauf zugreifen, aber so was wie, ich möchte eine gemeinsame Bildergalerie haben und ich traue halt nicht Flickr, Google, was auch immer, Dropbox, was auch immer das ist, sondern ich möchte das halt zu Hause über so ein Webinterface machen. Da würde ich schon gerne noch mal eine Einschätzung haben. Ist das das, wo man dann sagt, da macht man es dann doch, man kümmert sich selber und die Software sowas, oder ist das, wo ihr sagt, so nee, die technische Unzudenklichkeit und die Gefahr, da was Falsches zu machen, so groß, dass man doch lieber zu einem Cloud-Anbieter geht?
+
+01:13:54.822 --> 01:14:17.362
+<v SPEAKER_5>Ich würde sagen, Web-Server, gerade auch für solche Zwecke selber zu betreiben zu Hause, finde ich eher grenzwertig. Allein aus dem gesamten Unzufälligkeits-Ding. Und so teuer ist einfach ein virtuellen Server irgendwo zu mieten jetzt auch nicht. Ob das jetzt 5 oder 7 Euro sind. Und dann hat man alle Features, alles selber machen, alles wie vorher. Bloß man hat eine bessere Internetanbindung.
+
+01:14:17.642 --> 01:14:29.262
+<v SPEAKER_2>Ja, aber vom Sicherheitsgedanken würde ich das mal fragen wollen. Also ein virtueller Server, den ich mir miete. Das ist mal abgesehen davon, es gibt ja so NAS-Geräte, da kann man das einfach per Klick installieren, einen virtuellen Server.
+
+01:14:29.322 --> 01:14:31.102
+<v SPEAKER_5>Ja, aber die hängen wieder hinter der gleichen Internetverbindung.
+
+01:14:32.162 --> 01:14:45.102
+<v SPEAKER_2>Aber sozusagen ist es noch mal ein bisschen kompliziert zu bedienen. Aber von diesem Aspekt, das Ding steht bei mir zu Hause und physikalisch hab nur ich zu Griff. Und ein virtueller Server, das ist ein Rechner in einem Rechenzentrum, wo außerdem noch viele hundert andere Kunden drauf sind.
+
+01:14:46.322 --> 01:15:58.362
+<v SPEAKER_4>Also da ist halt grundsätzlich die gleiche Fragestellung, bietet sich da an wie bei allen Selbstmachprojekten. Die Frage ist, weniger kann das sicherer sein, sondern wirst du das in der Praxis besser machen, als wer auch immer du dafür bezahlen würdest. Und da würde ich sagen, im Allgemeinen, wenn es jetzt nicht um hochsensitive Daten geht, würde ich tatsächlich in Richtung Cloud gucken, weil die Cloud-Anbieter, ich meine klar, das ist nicht toll, dass deine Daten dann auf jemand anderes Computer liegen, deren du nicht unter deiner Kontrolle hast. Aber im Endeffekt ist die Wahrscheinlichkeit, dass die wissen, was sie tun und dafür sorgen, dass niemand deine Kundendaten klaut. Wenn du denen nur 5 Euro im Monat, ja, Henrik gibt Kontra. Wenn du denen nur einen 5er Monat rüberschiebst, schon ist der Wortwitz. Selbst wenn du denen nur einen 5er Monat rüberschiebst, ist die Wahrscheinlichkeit, dass die das richtig machen, meiner Meinung nach in vielen Fällen immer noch höher, als dass du das richtig machst, wenn du nicht von dir aus schon Spaß an der Sache hast.
+
+01:15:58.402 --> 01:16:34.982
+<v SPEAKER_5>Also da muss man jetzt aber auch noch ein bisschen unterscheiden zwischen Cloud und was auch immer ein virtuelles Server, also was wir unter Cloud verstehen. Weil die 5 Euro sind jetzt ein virtuelles Server, den ich selber betreibe, da kann ich dann irgendeine Software installieren, so ein On-Cloud-Nex-Cloud heißt das glaube ich jetzt, mit automatischem Update und alles wird gut. Und habe trotzdem dieses, was da oben steht, mit dem Dezentralität fördern. Weil das jetzt alles bei einem der drei großen Anbieter, auf wie auch immer deren Imaging-Plattform heißt, hoch zu tun, finde ich jetzt auch nicht so schlau. Abgesehen davon, dass es dann auch wieder nicht am guten Internet ist, weil das ist dann am anderen Ende des Atlantiks.
+
+01:16:36.022 --> 01:16:54.542
+<v SPEAKER_2>Man kann festhalten, von den drei Lösungen, nämlich zu einem richtigen Cloud-Anbieter zu gehen oder sich einen eigenen Server zu klicken oder es zu Hause zu betreiben, ist die mittlere Lösung, nämlich einen eigenen Server zu klicken, also einen virtuellen Server, die man machen soll. Es sei denn, man hat den Spaß am basteln. Also es ist nicht so, dass ihr komplett davon abratet und sagt...
+
+01:16:55.362 --> 01:17:46.042
+<v SPEAKER_4>Nein, überhaupt nicht. Also wenn du daran Spaß hast, dann ist die Wahrscheinlichkeit sehr hoch, dass du das gut machen kannst. Weil es ist jetzt nicht wirklich schwer, das richtig zu machen. Ich meine im Endeffekt, alles was ein guter Anbieter für dich machen wird, ein Großteil davon ist halt einfach nur immer schön Updates machen, immer schön Backups machen. Und wenn man das macht, gibt es nicht so viel mehr. Je nachdem, was man da natürlich für Technologie einsetzt, aber zum Beispiel sowas wie OnCloud, gibt es nicht so viel mehr, was man großartig falsch machen kann. Nur das Risiko ist halt, wenn du eigentlich nicht eine OnCloud administrieren willst, sondern wenn du eigentlich nur deine Fotos irgendwo ablegen möchtest, dann ist die Wahrscheinlichkeit hoch, dass du in vier Monaten oder so, wenn das nächste Update rauskommt, vielleicht einfach keinen Bock hast oder es nicht merkst und dann halt deine OnCloud nicht mehr sicher ist.
+
+01:17:46.062 --> 01:17:51.742
+<v SPEAKER_2>Wer OnCloud Horrorgeschichten hören will, dem empfehle ich einen Blick in mein Twitter Archiv.
+
+01:17:51.762 --> 01:19:20.962
+<v SPEAKER_3>Aber die andere interessante Lösung, nämlich Nummer vier, ist einfach nicht alleine machen, sondern wenn wir jetzt diesen Gedanken Dezentralität fördern wollen, ich habe zum Beispiel Infrastruktur, die ich mit Freunden teile. Also ich administriere das und benutze dafür. Und andere Leute dürfen bei mir dafür zum Beispiel meine Plattform, die ich für Blogs und Podcasts aufgesetzt habe, mit nutzen für ihre Blogs und Podcasts. Umgekehrt, ich stehe das bei dir zu Hause? Nee, steht auf einem virtuellen Server. Aber es geht jetzt um dieses Dezentralität fördern. Wir müssen hier alles in der Cloud machen. Umgekehrt, ich benutze der DNS, also diese IP zur Namensauflösung, Infrastruktur, auch von Bekannten. Das mache ich wiederum nicht selber, weil ich halt weiß, dass ich kann nicht alles selber machen. Und das ist so geteiltes Leid des Halbes Leid und man lernt halt auch relativ viel und man kommt halt nicht in die Verlegenheit, alles machen zu müssen und Hilfe. Mir wächst alles über den Kopf. Also das ist jetzt wirklich nur das Plädoyer für, macht auch mal was selber, traut euch, aber seid euch auch immer bewusst, wenn auch irgendwo sind halt die Grenzen eurer Leistung. Deswegen ist es sinnvoll, sich solche Aufgaben irgendwie zu teilen und so an Service Grenzen lässt sich das ganz gut machen. Du machst den Teil, ich mach den Teil oder man kann sich auch zusammensetzen. Wir administrieren das Ganze beide zusammen. Dann ist dieser, jemand kommt unter den Bus, wie schlimm ist das Faktor? Vielleicht etwas geringer, wenn mehr als eine Person weiß, wie man so ein Service administriert.
+
+01:19:21.362 --> 01:19:31.382
+<v SPEAKER_4>Man hat natürlich auch noch den Vorteil, dass man mit Freunden einen E-Mail-Server teilt, und der geht nicht. Dann hat man einen sehr guten Antrieb, den wieder gehen zu machen.
+
+01:19:31.402 --> 01:19:53.702
+<v SPEAKER_5>Also ja, ich betreibe auch eigentlich alle Services, die ich benutze selber, auf einem gemieteten Server, wo ich eine metrische Tonne virtuell Maschinen drauffahren lasse. Und ich mach das halt auch nicht nur für mich. Ich hab da so einen Verein befreundet, für den ich dann auch die Website und das ganze Zeug da noch mit drauf habe und dann halt alles, was ich selber benutze. Aber das ist jetzt, wir sind auf dem falschen Ende der Seite der Internetverbindung.
+
+01:19:53.722 --> 01:20:06.922
+<v SPEAKER_2>Ich wollte gerade sagen, lass uns zurückkehren ins Heimnetzberg. Da haben wir jetzt den Nas zu stehen. Das Nas, die Nas. Die Nas. Was denn noch, was stellen wir da noch so hin?
+
+01:20:06.942 --> 01:20:07.822
+<v SPEAKER_4>Die Glühbirne.
+
+01:20:07.842 --> 01:20:09.662
+<v SPEAKER_2>Die Glühbirne.
+
+01:20:09.682 --> 01:20:11.562
+<v SPEAKER_5>Oder ein paar davon ja. Wirklich?
+
+01:20:11.582 --> 01:20:17.442
+<v SPEAKER_4>Und den Ofen. Und den Isar. Und das Radio. Das Internet of Things.
+
+01:20:17.462 --> 01:20:24.262
+<v SPEAKER_5>IOT ist ja diese Abkürzung. Jaja, IOT ist short for Internet of Things that shouldn't be on the Internet.
+
+01:20:25.882 --> 01:20:27.442
+<v SPEAKER_2>Aber es macht trotzdem Spaß wahrscheinlich, oder?
+
+01:20:30.082 --> 01:20:31.882
+<v SPEAKER_3>Auf ein mobiler Art und Weise.
+
+01:20:31.902 --> 01:20:38.742
+<v SPEAKER_5>Das ist wie beim Sex, auf ordentlichen Schutz achten. Also ich hab da auch so ein Kondom zu Hause, dass ich also...
+
+01:20:40.782 --> 01:20:48.182
+<v SPEAKER_2>Ich hab auch das Bild, wie du eine Glühlampe in deinem WLAN erlogst und da dein Gummi drüber ziehst. Dabei ist wahrscheinlich nicht was passiert.
+
+01:20:48.202 --> 01:20:51.742
+<v SPEAKER_5>Das Gummi muss über die Kontakte.
+
+01:20:57.802 --> 01:20:59.502
+<v SPEAKER_2>Was eigentlich macht die Glühbohr in deinem WLAN?
+
+01:21:00.022 --> 01:21:01.162
+<v SPEAKER_4>Ja, das wissen wir auch nicht wirklich.
+
+01:21:02.402 --> 01:21:37.302
+<v SPEAKER_5>Na ja, also in einem so modernen Haushalt sind Lichtschalter so ein bisschen out. Das hat mehrere Gründe. Einer der Gründe ist, dass ich zum Beispiel bei mir am Bett habe ich Lampen. Ich habe auch so ein Deckenlicht, das habe ich kürzlich auch gelernt, das ist eigentlich auch fast nur in Deutschland verbreitet, dass man so eine Deckenbeleuchtung hat. In anderen Ländern ist es meistens eigentlich nur Standlampen. Dafür ist der Schalter aber neben der Tür. Nur ist die Tür vom Bett ein bisschen weit weg. Wenn ich also das Deckenlicht ausmache und zum Bett gehe, ist das doof. Umgekehrt, wenn ich an meinem Bett die angebrachten Lampen mache und zur Tür gehe, ist das doof.
+
+01:21:37.322 --> 01:21:41.422
+<v SPEAKER_2>Ich verstehe die Motivation, aber wieso sind diese Geräte im WLAN?
+
+01:21:41.442 --> 01:21:54.742
+<v SPEAKER_5>Weil der Schalter, mit dem ich das jetzt an und aus mache, den habe ich um den Arm. Ich habe so eine Uhr, wenn ich da eine der Knöpfe drücke, dann kommuniziert die mit meinem Handy, mein Handy kommuniziert mit meinem WLAN, kommuniziert mit der Heimautomatisierung und macht das Licht an und aus.
+
+01:21:55.362 --> 01:21:58.482
+<v SPEAKER_2>So, jetzt haben wir ja gerade schon darüber gesprochen, dass...
+
+01:21:58.502 --> 01:22:02.842
+<v SPEAKER_5>Und wenn ich gehe, dann macht die Heimautomatisierung das Licht auch aus, eines dieser Dinge.
+
+01:22:05.102 --> 01:22:25.622
+<v SPEAKER_3>Also früher war das tatsächlich mal komplett getrennt. Da gab es also irgendwie ein Bussystem, mit dem alle Geräte irgendwie miteinander geredet haben. Und da gab es dann einen sogenannten Gateway und der ging dann Richtung Internet. Und alles, was man tun musste, war quasi diesen Gateway irgendwie sauber zu halten. Das Problem ist, dass es dann wieder so ist.
+
+01:22:25.642 --> 01:22:28.942
+<v SPEAKER_2>Also warte mal, man hatte zu Hause einen Computer stehen, sag ich jetzt mal.
+
+01:22:28.962 --> 01:22:29.342
+<v SPEAKER_3>Genau.
+
+01:22:29.362 --> 01:22:38.342
+<v SPEAKER_2>Der hat sozusagen über etwas, was kein normales Netzwerk ist oder zumindest nichts mit dem normalen Netzwerk zu tun hatte, war der verbunden mit allen Geräten und den hat man dann angesteuert. Genau.
+
+01:22:38.362 --> 01:22:40.742
+<v SPEAKER_3>Das gibt es auch immer noch, aber es ist viel, viel, viel zu teuer.
+
+01:22:41.022 --> 01:22:46.282
+<v SPEAKER_2>Mittlerweile ist es sozusagen so, deswegen heißt es Internet of Things, dass jedes Ding selber am Netz ist.
+
+01:22:47.402 --> 01:22:51.242
+<v SPEAKER_5>Also das hat halt damit einzugehalten, dass die WLAN-Chips wesentlich günstiger wurden.
+
+01:22:51.782 --> 01:23:06.142
+<v SPEAKER_2>Aber die Frage, die ich jetzt habe, ist, wir haben ja gerade schon darüber gesprochen, dass ich bei meinem NAS entscheiden kann, also bohre ich da ein Loch in meinen Router und dann ist er von außen zugreifbar? Oder gehe ich übers VPN rein? Wie ist denn das mit diesen Internet of Things Sachen?
+
+01:23:06.162 --> 01:23:07.942
+<v SPEAKER_5>Ja, deswegen war ich beim C4Six.
+
+01:23:08.222 --> 01:23:58.582
+<v SPEAKER_4>Ja, also das Ding bei Internet of Things Sachen ist halt grundsätzlich das Problem, das wir momentan haben. Ich weiß jetzt, das war wahrscheinlich in der letzten Folge schon breitgetreten worden, ist, dass im Allgemeinen, wenn du so ein Gerät kaufst, kriegst du ein relativ modernes Stück Hardware mit einem fünf Jahre alten Linux Kernel und einem, wenn du Glück hast, weniger als fünf Jahre alten UserLand, wo ganz viel alte Software drauf läuft, die niemals ein Update erfahren wird. Du kriegst eine hast dich dahin geklatschte Android App. Und im Endeffekt ist der so State of the Art, wenn man sich mal umschaut, was die, vor allem die Firma von diesen Geräten angeht, häufig wirklich nicht das, was man eigentlich haben möchte.
+
+01:23:58.602 --> 01:24:00.562
+<v SPEAKER_5>Und vor allen Dingen nicht in seinem Netz haben möchte.
+
+01:24:00.722 --> 01:24:26.262
+<v SPEAKER_4>Ja, das heißt, man will so, also als Min, ich weiß nicht, das hängt natürlich ein bisschen davon ab, was man für Ansprüche an sein Netzwerk hat. Aber ich würde sagen, wenn man einen Gast-WLAN hat, dann sollte man auch einen IoT-WLAN haben, weil die durchschnittliche Internet-Klüböne vermutlich weniger sicher ist, als der durchschnittliche Windows-Rechner, der auf dem aktuellen Stand was Updates angeht, ist.
+
+01:24:26.282 --> 01:25:18.262
+<v SPEAKER_3>Deswegen mein Plädoyer an alle Router-Hersteller, wenn ihr ein innovatives Feature möchtet, bietet einen IoT-WLAN an. Und der zentrale Unterschied zu einem Gast-WLAN ist, ich möchte in der Lage sein, die Bandbreite bei diesem IoT-WLAN zu beschränken. Denn wenn so ein Ding mal gehackt wird, erstens soll es mich alarmieren, wenn auf einmal riesen Traffic dort herrscht. Und zweitens möchte ich einfach, dass diese Geräte nicht die Möglichkeit haben, mit voller Gewalt ins Internet zu pusten. Das ist nämlich genau das, was normalerweise passiert, wenn so ein Gerät, haben wir gerade gesagt, das ist eigentlich nur ein Linux-Computer drin letztendlich. Und wenn das Ding übernommen wird, weil es furchtbar alt ist und jeder weiß, wie man so ein Ding ownt, dann soll der Schaden möglichst begrenzbar sein. Und das machen die Hersteller dieser Geräte einfach nicht.
+
+01:25:18.622 --> 01:25:54.642
+<v SPEAKER_5>Oder es gibt vergleichsweise wenig Gründe, warum das Ding überhaupt eine Internetverbindung haben sollte. Also der Anwendungszweck, dass ich jetzt hier sitze und bei mir zu Hause Lampen an- und ausmache, ist grenzwertig sinnvoll. Das kann ich, wenn ich es möchte, immer noch über das VPN machen. Aber dass die App, die auf meinem Telefon läuft, sich zu einem Server des Herstellers verbindet und sich das Gerät auch zu dem Server des Herstellers verbindet, vorzugsweise mit einem Standardpasswort, und dann die Steuerung über Bande über den Hersteller stattfindet, ist eher sinnlos. Was ich bei mir deswegen zu Hause habe, ist, dass ich eine eigene SSID für nur die Internet-auf-Dings-Geräte habe.
+
+01:25:54.862 --> 01:25:57.222
+<v SPEAKER_2>Aber das heißt, du hast da noch einen Router dastehen?
+
+01:25:57.242 --> 01:26:24.002
+<v SPEAKER_5>Genau. Ich hab nämlich tatsächlich, mein WLAN kommt nicht aus meinem, ich hab tatsächlich eine von diesem Hersteller mit dem Ausrufezeichen, sondern da hab ich das WLAN ausgemacht. Ich hab noch mal so einen eigenen Access Point gekauft. Jetzt nicht die teure Variante, wie es hier zum Beispiel hängt, wo mehrere Access Points miteinander spielen, sondern nur eine. Aber der hat schon das Feature, dass er mehrere unterschiedliche WLAN-Namen aufmachen kann, die auf mehrere unterschiedliche VLANs geben kann.
+
+01:26:24.022 --> 01:26:25.622
+<v SPEAKER_2>Was ist ein VLAN?
+
+01:26:25.642 --> 01:26:49.442
+<v SPEAKER_5>Virtuelles LAN. Also ich kann auf dem gleichen Kabel mehrere fast physikalisch untereinander getrennte Netze fahren, die sich nicht gegenseitig sehen. Das ist der Haupttrick. Und dann habe ich das, also deswegen kommen bei mir zu Hause so viele Geräte zusammen. Dann habe ich das über mehrere Zwischengeräte. Liegt das dann auf einem Rechner, der davon Firewall technisch nur manches ins Heimnetz lässt und nichts ins Internet.
+
+01:26:50.522 --> 01:26:55.882
+<v SPEAKER_2>Wow, warte mal, also deine Internet of Things Geräte sind in dein extra Netzwerk eingesperrt?
+
+01:26:55.902 --> 01:27:05.682
+<v SPEAKER_5>Genau, von dem aus sie nicht ins Internet kommen. Wenn sie das versuchen, gibt es sogar ein Log-Eintrag und wird alarmiert. Bei einem der Geräte habe ich das Logging schon ausgemacht, weil das viel zu laut ist.
+
+01:27:05.702 --> 01:27:07.262
+<v SPEAKER_2>Aber wie steuert sie denn?
+
+01:27:07.282 --> 01:27:22.062
+<v SPEAKER_5>Mein Heimautomatisierungssteuerding hängt auch in diesem Netz. Und das hängt aber auch noch in meinem normalen Netz. Also die App auf meinem Telefon kann sich zu meiner Heimautomatisierung verbinden. Meine Heimautomatisierung kann sich zu dem Internet of Things-Gerät verbinden.
+
+01:27:23.702 --> 01:32:32.180
+<v SPEAKER_2>Und das kann die Glühweine ansteuern. Dann sind wir sozusagen an dem Punkt, wo ich sehe, wir haben sozusagen unser Default für heute verlassen. Das ist ja nicht mehr heimahmen, bin ja taugtäglich. Wir wollen gleich noch drüber sprechen, ob das überhaupt möglich ist. Was für ein gewaltiger Teaser. Und machen das nach der nächsten Musik. Die kommt von O'Neill, auch von einem Volume 7 Midwest Collective Sampler und heißt Lost Connection. Chaosradio, Chaosradio, Chaosradio 234. Wir reden über das Heimnetzwerk und naja, wie immer sozusagen gegen ein Internet Sendung denke ich so, ne, das mache ich alles nicht mehr. Ich ziehe den Internet Anschluss ab und dann ist es auch gut. Aber vielleicht ist es doch nicht ganz so schlimm.
+
+01:32:32.200 --> 01:32:33.680
+<v SPEAKER_3>Wir haben ja doch was mit Holz.
+
+01:32:33.700 --> 01:33:15.100
+<v SPEAKER_2>Doch was mit Holz. Holz oder Töpfern? Bücher über Töpfern. Da sollten wir mal ein Chaos Radio machen. Aber heute machen wir noch eine halbe Stunde zum Heimnetzwerk. Wir haben gerade angefangen, über das Internet of Things zu sprechen. Und naja, also das klingt erst mal schlimm. Henrik hat erzählt, dass er zu Hause viel Internet of Things hat, aber ein extra ein eigenes Netzwerk sozusagen eingerichtet hat, wo das alles eingesperrt ist. Und das ist natürlich sehr, was ich mich frage, kann ich das als Heimanwender überhaupt ein Internet of Things zu Hause haben, ein Thing of Internet, ohne dass ihr die Hände über den Kopf zusammenschlagt?
+
+01:33:15.120 --> 01:33:57.840
+<v SPEAKER_5>Na ja, wenn es nicht ganz so schlimm ist wie die meisten heutzutage. Also es gab da wohl kürzlich ein Gerät, das zumindest dadurch aufgefallen ist, dass es nicht ganz kaputt war. Es gibt da ein Hacker, der hatte sich der Reihe nach alle möglichen Internet of Things Geräte gekauft und Glühlamm und so weiter. Das ging vor drei Monaten dann mal ein bisschen durch die sozialen Medien, weil er bei Amazon einen Kommentar geschrieben hat und dann geschrieben bekam, bitte löscht den Kommentar, sonst verlier ich meinen Job, weil er halt drüber schrieb, was dieses Gerät so tut. Und der hatte sich kürzlich so ein IKEA Gerät, IKEA macht das jetzt auch, gekauft und meinte, also ist jetzt nicht offensichtlich kaputt, ne?
+
+01:33:59.200 --> 01:34:06.060
+<v SPEAKER_2>Warte, warte, warte. Das ist das Level, auf dem wir sind. Es ist eine positive Nachricht, wenn etwas nicht offensichtlich kaputt ist.
+
+01:34:06.080 --> 01:34:58.840
+<v SPEAKER_5>Also vor allen Dingen, weil sie es halt auch nicht so albern gebaut haben, wie manche dieser Lampen, dieses Magic Home oder so, wo halt die Lampe sich durch, das geht wie mit dem Internet, mit dem Server des Herstellers und dann die App auf deinem Telefon, mit dem Internet, mit dem Server des Herstellers. Und dann kannst du halt von hier, wie gesagt, das Licht zu Hause steuern oder auch von zu Hause. Das machen die Leute nicht, sondern sie haben wirklich bloß einen Service auf dem Gateway laufen, der wirklich nur für lokale Verbindungen da ist und das nicht über ein unsicheres Protokoll macht und auch mit sicherer Verschlüsselung und mit einem Passwort, das so aussieht, als ob es auch sicher wäre und wie gesagt halt nicht. Hab ich gestern getan. Zumindest testweise, aber ja. Also ich denke mal, das sah erstmal nicht schlecht aus.
+
+01:34:58.860 --> 01:35:00.200
+<v SPEAKER_2>Okay.
+
+01:35:00.220 --> 01:35:29.980
+<v SPEAKER_4>Dazu muss man sagen, ein interessanten, ja so ein bisschen Hintergrund zu diesem Ikea-Teil, das aus meinen Augen interessant daran ist vor allem, dass Ikea da denke ich unter den ersten großen Herstellern ist, die den, es gibt so eine Reihe von Protokollen für das Interfinks, die aus der IETF herauskommen, das ist so die Internet Engineering Task Force, das sind die, die an oder dazu mal so die ganzen Grundlagenprotokolle des Internets geschaffen haben.
+
+01:35:30.000 --> 01:35:33.320
+<v SPEAKER_2>Gibt es auch ein eigenes Chaosradio zu verlinken? Oder ein Blockboost?
+
+01:35:33.340 --> 01:36:00.780
+<v SPEAKER_4>Genau und die haben so eine Reihe von Protokollen, die für das IoT nutzbar sind gemacht und ich denke Ikea ist unter den ersten großen Herstellern, die diese Protokolle einsetzen. Das Problem bei Internet of Things ist, dass sehr viele Hersteller auch ihre eigenen Insellösungen bauen in der Hoffnung, dass alle Leute nur ihre Lösung kaufen und dann dort eingesperrt bleiben und nicht herauskommen, weil das soll ja alles miteinander weiter reden.
+
+01:36:00.800 --> 01:36:15.580
+<v SPEAKER_5>Naja oder der andere Grund ist, dass sie einfach das jetzt gleich machen wollen und sich dann einfach irgendwas runterschreiben. Also so Weitsicht bis zur Tischkante und dann ich programmiere das jetzt und morgen habe ich eh einen anderen Job und deswegen gibt es auch nie Updates.
+
+01:36:16.240 --> 01:36:23.060
+<v SPEAKER_3>Und bei der ITF müssen die müssen die sich halt auf den Standard einlegen und müssen sich überall gewisse Dinge Gedanken machen wie Security oder so.
+
+01:36:23.280 --> 01:38:13.080
+<v SPEAKER_4>Ja das interessante ist halt folgendes und zwar die Insellösungen waren dann zum einen ein Problem, dass die alle nicht miteinander reden und im Allgemeinen sehr schlecht Qualität haben. Dann gab es ja auch noch dieses SIGBI Ding. Das war was ein künstlerliederländischer Hersteller getan hat. Philips Huw verwendete das. SIGBI hatte allerdings halt das Problem, dass es, keine Ahnung, es hatte halt so ein bisschen das Problem, dass es so auf der physischen Ebene relativ schön war, aber so die Protokollebenden teilweise etwas dreckig waren. Vor allem halt war die ganze Verschlüsselungs- und Sicherungsangelegenheit teilweise etwas wenig elegant gelöst. Dazu kam dann noch, dass Philips sich natürlich, man kann nur spekulieren, aber was halt passiert ist, dass es irgendwie so geschehen ist, dass dann auf einmal Philips Geräte, obwohl sie eigentlich den herstellerübergreifenden Standard implementieren, nur noch mit anderen Philips Geräten redeten. Zumindest für einige Wochen, bis ihnen das zu peinlich wurde. Ich mein, kann mal passieren, die lernen halt auch, wie alle jetzt gerade erst mit dieser Technik klarzukommen. Ja, anyway, diese SIGB-Standards waren halt immer so ein bisschen, naja, man weiß nicht, wie gut die sind, vor allem wie sicher das alles nachher ist. Und das interessante denke ich an Ikea ist halt, dass sie unter den ersten sind, die halt diese wirklich offenen ITF-Standards einsetzen, an denen auch wohlgemerkt jeder mitarbeiten kann. Die Mailing-Listen, auf denen die entwickelt werden, sind offen, da kann man sich einfach subscriben, mitlesen und sogar kommentieren und mitarbeiten an diesen Standards, die da eingesetzt werden. Ich denke, das hat halt vielleicht Potenzial, dass das möglicherweise auch in drei Jahren noch funktioniert und möglicherweise sogar vielleicht von einer Herstellerin unterstützt wird.
+
+01:38:13.100 --> 01:38:14.420
+<v SPEAKER_5>Oder von offener Software.
+
+01:38:19.020 --> 01:38:33.180
+<v SPEAKER_2>Dann das wär ja mal was. So, jetzt haben wir also festgestellt, was wir im eigenen Heimnetzwerk haben wollen, ist ein Nas, aber keine Glühlampen. Also zumindest die meisten nicht. Haben wir noch was vergessen? Bestimmt.
+
+01:38:33.900 --> 01:38:40.320
+<v SPEAKER_5>Ach ja, es gibt da noch so Mediengeräte. Oh. So Streaming-Sticks und so. Die brauchen halt auch Internet.
+
+01:38:40.340 --> 01:38:41.920
+<v SPEAKER_2>Und Smart TVs und...
+
+01:38:41.940 --> 01:38:43.260
+<v SPEAKER_5>Ach ja, die sind ja noch schlimmer.
+
+01:38:43.280 --> 01:38:44.500
+<v SPEAKER_2>Und Verstärker, die Spotify...
+
+01:38:44.520 --> 01:38:45.800
+<v SPEAKER_5>Gut, die Smart TVs brauchen kein Internet?
+
+01:38:47.100 --> 01:38:47.600
+<v SPEAKER_4>Dürfen kann.
+
+01:38:48.520 --> 01:40:05.740
+<v SPEAKER_3>Also ich hab das tatsächlich so gelöst, ich habe ein sogenanntes Smart TV. Dann wurden irgendwann die Updates für dieses Smart TV eingestellt. Das war der Moment, wo dieses Smart TV bei mir zum DumpTV downgegradet wurde, indem ich den Netzwerkstecker gezogen habe. Und wenn es mich jetzt irgendwie nach Smarten-Inhalten und Netflix oder Amazon Prime oder was auch immer, es da für Anbieter gibt, gelöstet, dann mache ich das mit separater Hardware. Die gibt es ja von diversen Anbietern auch recht kostengünstig. Und die haben halt den Vorteil, also der Nachteil ist natürlich, ich bin, wenn ich da jetzt nichts komplett generisches kaufe, eigentlich immer darauf angewiesen, was der Hersteller will. Wenn ich mir jetzt einen Stick von Amazon kaufe, bin ich darauf angewiesen, dass Amazon in meinem Sinne handelt und nicht in seinem Sinne, was natürlich immer nur so beschränkter Fall ist. Dasselbe gilt für irgendwie ein Google Stick, wie auch immer, also ein Chromecast. Aber ich habe halt den Vorteil, diese Dinger kosten nur begrenzt viel Geld, im Gegensatz zu so einem komplett neuen Smart TV oder so. Und wenn das irgendwie doof ist, dann kann ich das weiterverkaufen, im schlimmsten Fall wegschmeißen. Und da ist nicht viel verloren gegangen. Und es ist zwar immer noch schlimm, dass man ein Gerät wegwerfen muss.
+
+01:40:05.760 --> 01:40:07.100
+<v SPEAKER_2>Weiterverkaufen ist aber schon ganz schön übel.
+
+01:40:07.420 --> 01:40:29.160
+<v SPEAKER_3>Schon hinterhältig. Aber wie gesagt, im schlimmsten Fall wirklich wegwerfen oder sonst irgendwas. Und es ist doof, immer doof, wenn man hat, wer wegwerfen muss. Aber ich finde, es ist im Vergleich zu ein komplettes TV-Gerät wegzuwerfen, jetzt auch nicht nur geldmäßig, sondern auch so umweltmäßig immer noch besser zu vertreten, so einen kleinen Stick wegzuwerfen.
+
+01:40:32.540 --> 01:40:34.520
+<v SPEAKER_2>Also jetzt noch in funktionierend am Start?
+
+01:40:35.920 --> 01:40:36.920
+<v SPEAKER_5>Nee, aber ich hab alles Ticks.
+
+01:40:38.340 --> 01:40:41.660
+<v SPEAKER_2>Die du dann bei Bedarf nur einschlägst oder sind die immer da?
+
+01:40:41.980 --> 01:40:48.080
+<v SPEAKER_5>Na ich hab auch so einen moderneren HDMI-Dingsbums, wo man halt mehrere HDMI-Eingänge hat. Der hängt auch am Netzwerk.
+
+01:40:49.440 --> 01:40:50.800
+<v SPEAKER_2>Aber in seinem eigenen?
+
+01:40:50.820 --> 01:41:06.480
+<v SPEAKER_5>In den Netflix-Media-Netzwerken? Nein, nein, also der hängt halt im normalen Netzwerk. Den kann ich auch mit der Fernbedienungs-App auf dem Telefon steuern. Das ist alles an meiner Heimat-Automatisierung dran, sodass das auch geräteübergreifend koordiniert werden kann. Das ist dann aber, glaube ich, eine andere Chaos-Radio-Sendung.
+
+01:41:14.120 --> 01:41:21.840
+<v SPEAKER_3>Aber das Gleiche gilt halt auch, du hast noch gefragt nach den Verstärkern, die Spotify machen oder Dollar-Streaming-Anbieter.
+
+01:41:21.860 --> 01:41:25.300
+<v SPEAKER_4>Also wir könnten da hier die Anekdote aus dem Chaos Computer Club Berlin anführen.
+
+01:41:25.320 --> 01:41:27.060
+<v SPEAKER_3>Ich hoffe darauf, dass das jetzt einer von euch tut.
+
+01:41:28.300 --> 01:41:30.920
+<v SPEAKER_2>Anekdoten aus dem eigenen Haus.
+
+01:41:30.940 --> 01:42:02.340
+<v SPEAKER_4>Ich weiß nicht, ich hab ja eben schon mal gut vorgelegt mit irgendwie, ich sitze hier beim Chaos Radio und besitze selber irgendwie gerade etwas mehr als einen Computer. Wir sind ja hier im Chaos Computer Club Berlin und der Chaos Computer Club Berlin ist ja immer auf der Höhe der Zeit. Wir haben jetzt seit einiger Zeit schon eine Netzwerk-steuerbares Licht-Dings da für die Raumbeleuchtung und wir hatten seit einigen Jahren ein Netzwerk-verbundenes Verstärker-HDMI-Bild zum Beamer-Weiterleitungs-Audio-Quell-Umschaltungs-Multifunktions-Alles-Gerät.
+
+01:42:03.860 --> 01:42:06.540
+<v SPEAKER_5>Ich glaube, AV-Receiver ist die generische Bezeichnung von zu teilen.
+
+01:42:09.400 --> 01:42:41.120
+<v SPEAKER_4>Ich weiß nicht, die kurze Story ist, die Software, die auf diesem Gerät lief, war unglaublich schlecht und dieses Gerät hat im Endeffekt 3 oder 4 Jahre funktioniert, bis es dann irgendwann nicht mehr funktioniert hat. Das haben Leute versucht, Firmware-Updates zu machen, die dann irgendwie nicht funktioniert haben und da mussten Firmware-Updates rückgängig gemacht werden und es musste ständig neu konfiguriert werden, weil Leute irgendwie Sachen verfrickelt haben und inzwischen steht wieder der alte nicht IoT dumme Verstärker im Chaos Computer Club Berlin, weil wir es nicht hinkriegen.
+
+01:42:41.160 --> 01:42:48.000
+<v SPEAKER_5>Also ich muss sagen, ich hab das Vorgängermodell von der gleichen Firma, also das schlaue Vorgängermodell und bei mir zu Hause funktioniert.
+
+01:42:48.020 --> 01:42:51.020
+<v SPEAKER_4>Es scheint zufriedene Kunden zu geben, wir gehören nicht dazu.
+
+01:42:52.220 --> 01:42:55.120
+<v SPEAKER_2>Das ist das Geheimnis, dass nur einer versucht, die Firmware Updates aufzuhalten. Egal.
+
+01:42:56.520 --> 01:43:44.860
+<v SPEAKER_3>Naja, es muss erstmal Firmware Updates geben und einen anderen Receiver haben wir mal gekauft, weil die Freunde des Obstes hier gerne Airplay haben wollten und nur dieser einen Receiver konnte Airplay. Das Ganze hat irgendwie so lange gut funktioniert, bis Apple sich mal überlegt hat, den Airplay Standard umzuschmeißen. Also es war halt kein Standard, sondern halt irgendwie die Idee, wie Apple gerne das möchte. Und das war dann so ein Vierteljahr nach Kauf war diese Idee, dass man doch Airplay nicht auf einem separaten Gerät haben muss, dann auch hinüber und seitdem steht hier nebendran per HDMI angeschlossen, oder stand dann per HDMI angeschlossen, ein Airplayfähiges Extragerät. Also auch da lernen wir, smarte Devices, die alles können wollen, sind meistens nicht die Investition, die man sich hier hofft.
+
+01:43:44.880 --> 01:43:46.600
+<v SPEAKER_5>Und geschlossene Standards sind doof, lernen wir auch.
+
+01:43:47.520 --> 01:45:23.260
+<v SPEAKER_4>Das ist halt so ein Separation of Concerns Ding. Also ich denke gerade bei so was teurem, also ich mein bei dem WLAN-Router hatten wir das ja eben schon, da haben wir ja dann den Schluss gefasst so ein bisschen, dass die Geräte halt einfach nicht so teuer sind, dass man sich das jetzt nicht leisten könnte, notfalls das komplette Teil auszutauschen. Allerdings bei so was wie einem Fernseher oder auch einem teuren AV-Receiver, was an sich ja problemlos 10 Jahre halten kann, wenn nicht länger, weil es auch eine relativ einfache Aufgabe erfüllt. Ich meine, gut, der Fernseher ist jetzt schon etwas komplexer, der muss immerhin ein Bild anzeigen auf zwei Dimensionen, aber der AV-Receiver muss ja wirklich nur irgendwie auf vier, fünf Kanälen Audio raus tun. Für diese relativ einfache Aufgabe, wenn man sich so ein teures Gerät dahinstellt, dann will man vielleicht nicht unbedingt das dann noch koppeln mit ganz, ganz, ganz vielen anderen Dingen, die alle relativ unwichtig im Gesamtbild sind, wenn man diese anderen Dinge halt auch irgendwie separat kriegt. Also zum Beispiel, wenn ich mir einen AV-Receiver hinstelle, dann will ich mir vielleicht lieber einen AV-Receiver holen, der möglichst wenig tut und ein separates Gerät zum Beispiel für Airplay, weil dann kann ich die beiden Teile unabhängig voneinander upgraden. Und wenn der AV-Receiver irgendwann scheiße ist, weil ich möchte mir größere Lautsprecher hinstellen, dann kann ich mir den austauschen und das Airplay-Device kann ich lassen. Während andererseits, wenn Apple sich das morgen anders überlegt und Airplay geht jetzt irgendwie auf einer anderen Portnummer oder was auch immer, kann ich halt auch nur dieses diskrete Device austauschen.
+
+01:45:23.320 --> 01:45:27.500
+<v SPEAKER_2>Jetzt wissen wir warum Henrik 22 Geräte hat.
+
+01:45:27.520 --> 01:45:54.700
+<v SPEAKER_5>Ja, da sind auch so ein paar Ähnliche dabei. Also ich hab irgendwie drei oder vier Raspberry-Pi's in der Gegend verteilt, um CO2-Messwerte aufzuzeichnen und mein Beamer zum Beispiel ist modern genug, um Computersteuerung zu haben, aber nicht so modern, als es IP hat, sondern es hat so einen seriellen Anschluss. Das heißt, der hängt auch an einem der Raspberry-Pi's dran und geht darüber dann in die Heimatomatisierung ein. Und ja, das summiert sich dann.
+
+01:45:55.500 --> 01:46:33.880
+<v SPEAKER_2>Da wollte ich natürlich auch noch fragen, wenn man jetzt basteln will, ist ja die Versuchung, sich vielleicht nochmal einen eigenen Rechner hinzustellen, der nur so eine Sache macht, vielleicht eine gute Versuchung. Und ist der Raspberry Pi jetzt irgendwie das Maß aller Dinge? Weil ich habe, würde sagen, auf einem harten Weg lernen müssen, dass man da auch Dinge falsch machen kann, mit denen man nicht rechnet. Zum Beispiel, wenn man das Betriebssystem, das man darauf installiert, auf USB-Sticks macht, dann können die relativ schnell kaputt gehen, weil die die vielen Schreibvorgänge nicht vertragen oder so. Also mit dem Kopf geschüttelt, nein, da kann man nichts falsch machen.
+
+01:46:33.900 --> 01:47:57.680
+<v SPEAKER_4>Also vielleicht grundsätzlich, was man sagen kann, ist, dass generell bei Raspberry Pi, wie bei ganz vielen anderen solchen Geräten gilt, dass es geschickt ist, wenn man einfach, wenn man vorausgesetzt, es passt zu den eigenen Anforderungen, wenn man das benutzt, was möglichst viele andere Leute auch benutzen. Und der Raspberry Pi ist halt unglaublich populär. Dementsprechend ist die Software, die man da so kriegt, wenn man das Teil einfach nur hinstellt und sich was irgendetwas runterlädt, irgendwie ein Debian oder Arch Linux oder was auch immer, man da drauf haben will, die ist ziemlich brauchbar. Gerade bei diesen Embedded-Geräten, die haben so ein bisschen das Problem, dass da alle sechs Monate ein neuer Chip rauskommt. Und jedes Mal, wenn ein neuer Chip rauskommt, hört der Hersteller im schlimmsten Fall auf, den alten Chips zu zertorten. Dazu kommt noch, dass generell diese Chips, wenn sie rauskommen, meistens so ein bisschen antike Software ab Werk mitbringen. Und sich die meisten Bordhersteller dann nicht die Mühe machen, die großartig anzupassen. Das heißt, da ist im Durchschnitt die Softwarequalität relativ gering, die man mit dem Gerät mitgeliefert kriegt. Und obwohl es ganz, ganz, ganz viele Alternativen zum Raspberry Pi gibt, von denen vor allem viele, viele günstiger sind, ist so, weiß jetzt nicht, es muss nicht der Raspberry Pi sein, aber zumindest ein vernünftig populäres Board, was keine Ahnung, eine gute Nutzerzahl weltweit hat.
+
+01:47:58.360 --> 01:48:16.900
+<v SPEAKER_2>Was gibt es da noch? Für mich ist das Ding sozusagen, also wenn ich mich sozusagen versuche damit zu beschäftigen, weiß ich das sozusagen technisch gesehen auch. Aber praktisch gesehen ist es für mich, was es aber anscheinend ja ist, nicht eine Gerätekategorie, kleine sozusagen Multifunktionscomputer, sondern es gibt halt den Raspberry Pi.
+
+01:48:16.920 --> 01:49:03.920
+<v SPEAKER_4>Ja, also es gibt halt, ich weiß nicht, es gibt zum Beispiel die von Olimex, die Olinoxino oder so heißen die Teile. Die sind, die hab ich gehört relativ gut. Es gibt die Beagle Board und Beagle Bone mit Texas Instruments Chips drauf. Die sind vor allem hardwaremäßig sehr, sehr, sehr cool. Also da kann man, da kann man, das Ding ist halt, der Raspberry Pi hat halt so ein mobil Telefon, primär für mobil Telefone entwickelten Chip drauf. Der kann ganz gut Video abspielen, aber der hat jetzt nicht so viele Hardware-Spielereien. Und währenddessen diese Beagle Bones, die haben dann von Texas Instruments Chips drauf, die wurden unter anderem für so Industriesteuerung und so Anwendungen in Autos entwickelt. Das heißt, die haben hardwaremäßig deutlich mehr Spielzeug mit dem dann, wenn man etwas tiefer in die Materie einsteigen will, man seinen Spaß haben kann.
+
+01:49:03.940 --> 01:49:40.520
+<v SPEAKER_3>Oder eine ganz andere Kategorie, wenn man jetzt weg will von diesen, das ist ja meistens armen, architekturbasierten Rechner, die auch sehr viel zum basteln sind, sondern wenn man jetzt die Anwendung hat, ich möchte jetzt keine Daten speichern, aber ich möchte so ein paar Dienste da drauf laufen lassen, dann ist immer noch so eine ganz gute Kategorie x86-kompatible passivgekühlte Rechner. Gibt zum Beispiel PC Engines, ist zum Beispiel ein Hersteller, der sowas baut. Das sind 64-bit Intel-kompatible CPUs. 64-bit Intel-kompatible, also das, was man auch durchaus, das ist das, was man...
+
+01:49:40.540 --> 01:49:41.440
+<v SPEAKER_5>Kein Mobiltelefon.
+
+01:49:41.460 --> 01:49:45.300
+<v SPEAKER_3>Kein Mobiltelefon, sondern eher die Architektur, die du in deinem Laptop hast.
+
+01:49:45.320 --> 01:49:47.120
+<v SPEAKER_2>Aber ist das dann auch sozusagen ein kleiner Computer als Gerät?
+
+01:49:47.140 --> 01:49:49.500
+<v SPEAKER_3>Das ist auch ein kleiner Computer, da kannst du...
+
+01:49:49.520 --> 01:49:51.900
+<v SPEAKER_4>Das ist einfach so groß wie so ein Router.
+
+01:49:51.920 --> 01:50:30.040
+<v SPEAKER_3>Genau, also so ist auch so eine kleine Box. Und das Schöne ist, die kannst du passiv kühlen, da musst du jetzt nicht irgendwie aufwendig, es ist sehr kompakt und du kannst dort tatsächlich auch Dienste laufen lassen. Und das ist ja gerade, wir haben gerade gesagt, du willst das meistens irgendwie nass haben. Und alles, was du nicht auf dem Nass laufen lassen willst, was jetzt nicht super rechneraufwendig ist, kannst du dort laufen lassen. Der Vorteil dabei ist, alles, was auf so einem normalen Computer läuft, läuft auch da im Gegensatz zu einem Platinencomputer, die meistens irgendwie ihr eigenes, angepasstes Linux irgendwie haben.
+
+01:50:30.060 --> 01:50:31.140
+<v SPEAKER_2>Wie ist das mit dem Stromverbrauch?
+
+01:50:31.240 --> 01:51:00.680
+<v SPEAKER_3>Genau, und das ist halt passiv gekühlt. Das heißt, du brauchst schon mal keinen Strom, der irgendwie so einen surrenden kleinen Lüfter laufen lässt. Es ist vielleicht, es tut sich nicht viel. Es ist wahrscheinlich, es braucht wahrscheinlich ein bisschen mehr. Ja, also da ist es halt auch wieder so ein Trade-off, was will ich. Wenn man lieber auf der PC-kompatiblen Schiene sein will und sagen, ich habe irgendwie keine Lust mit Arm und weiß nicht, auf was ich mich da einlasse, dann ist man mit solchen Boards wahrscheinlich deutlich besser beraten.
+
+01:51:02.120 --> 01:51:05.820
+<v SPEAKER_5>Und was du vorhin angesprochen hast, Probleme mit dem Flash-Speicher gibt, glaube ich, heutzutage nicht mehr.
+
+01:51:06.680 --> 01:51:09.320
+<v SPEAKER_2>Na toll, dann mach ich wieder die entscheidende Jahr zu früh.
+
+01:51:09.900 --> 01:51:18.680
+<v SPEAKER_5>Also ich habe es tatsächlich geschafft, beim Raspberry den Flash kaputt zu kriegen. Die sind nämlich modernerweise so, dass die Micro SD-Karten, mittlerweile die Micro SD-Karten, so ein Stückchen rausguckt.
+
+01:51:18.700 --> 01:51:19.620
+<v SPEAKER_4>Das habe ich auch schon geschafft.
+
+01:51:19.640 --> 01:51:30.040
+<v SPEAKER_5>Das ist mir aus einer, also ich hatte es an die Wand geklebt, weil das halt eines meiner Heimatautomatisierungs-Dinger war. Es ist runtergefallen und hat es tatsächlich geschafft, so drauf zu landen, dass die Micro SD-Karte damit durchgebrochen ist.
+
+01:51:30.260 --> 01:51:38.320
+<v SPEAKER_4>Ich habe literally meine Micro SD-Karte beim Aus-einem Raspberry Pi rauszuziehen versuchen abgebrochen.
+
+01:51:38.340 --> 01:51:57.300
+<v SPEAKER_3>Ich habe es mal geschafft, mit dem Ding als Hebel, mit den ganzen Reader rauszubrechen. Wer wissen möchte, wie man kostenlos oder kostengünstig einen Raspberry Pi SD-Kart Reader ersetzen will, kann bei mir im Blog vorbeigucken. Wir haben das hier im Club mal gemacht und ich habe das mal runtergeschrieben mit Bilderanleitung.
+
+01:51:58.920 --> 01:52:25.120
+<v SPEAKER_2>Zum Schluss, ich weiß gar nicht, ob wir das noch so kurz hinkriegen, aber es klang noch kurz an. Es gibt ja mittlerweile diese Assistenten, die auf dem V-Marsch sind, sowas wie ein Alexa von Amazon oder wer weiß, ob wir auch noch mal eine Siri zum hinstellen kriegen. Und heute ging es irgendwie durch, dass Amazon anscheinend daran arbeitet, eine Kamera ins Schlafzimmer zu kriegen, wie dann mich fotografieren und mir Kleidervorschläge machen soll.
+
+01:52:26.500 --> 01:52:28.500
+<v SPEAKER_3>Und die Daten nie wieder löschen will?
+
+01:52:28.520 --> 01:52:41.740
+<v SPEAKER_2>Und die Daten nie wieder löschen will. Ich würde mir aus grundsätzlichen Erwägungen so ein Ding nie in die Wohnung holen. Aber wie betreibt man so was? Macht man dann noch ein eigenes Netzwerk, das man dann nur anmacht, wenn man es benutzt? Oder wie läuft das?
+
+01:52:42.620 --> 01:53:25.080
+<v SPEAKER_5>Also ich hab so ein Alexa, einfach mal zu Testzwecken in dem IoT-LAN, WLAN hängen. Das hat halt auch nur eine Verbindung zu meiner Heimat-Dothematisierung und Internet blöderweise, weil das muss ja meine Sprache in den Sinn halten. Und kann aber ersetzen mir jetzt die Lichtschalter. Das ist so ungefähr der... Ich habe noch kein... Naja, du weißt ja, wie das mit Early Adopter ist. Mal so ausprobieren, was man damit tun kann. Ich habe keinen Anwendungsfall für einen Sprachassistenten gefunden, außer halt irgendwie Wecker und Licht. Aber alles, womit die so werben, ist halt so, ja, dann funktioniert die Spracherkennung nicht. Und da du ja kein Edit-Interface hast, musst du den gesamten Request wiederholen. Und das ist halt...
+
+01:53:25.100 --> 01:54:24.960
+<v SPEAKER_4>Also ich finde halt an diesen Assistenten vor allem interessant, dass wir halt da auch noch sehr stark, so finde ich, gesellschaftlich so ein bisschen lernen, damit umzugehen. Zum Beispiel eine Sache, die ich mir persönlich wünschen würde, also ich, das Closer, ich habe keinen solchen Assistenten zu Hause stehen und werde auch keinen zu Hause stehen haben, weil ich, weil da grundsätzlich ja das Problem ist, dass du den Dingern jetzt modulo, die Firmware, die da drauf läuft, nicht ansiehst, ob die jetzt gerade Sprache aufnehmen und ins Internet senden oder ob die gerade nichts tun. Das heißt, wenn du so einen Teil im Raum stehen hast, dann weißt du nicht, ob dieses Gerät jetzt gerade aufnimmt oder nicht. Und was ich jetzt mal einfach hier in den Raum stellen würde, ist, wenn ihr euch so einen Teil in den Raum stellt, dann überlegt euch doch mal, wenn ihr dann Leute zu Besuch habt, dann sagt denen das. Weil ich fände es tatsächlich komisch, wenn ich in einem Raum mit jemandem, gerade bei jemandem zu Hause, irgendwie was Privates bespreche und dann erfahre ich ja, hier steht das Internet of Things im Raum und hat uns zugehört.
+
+01:54:26.820 --> 01:54:32.180
+<v SPEAKER_2>Ja, deswegen habe ich das so gefragt zu sagen, weil im Prinzip will man für so eine Dinge an den Ausschalter.
+
+01:54:32.200 --> 01:54:45.700
+<v SPEAKER_3>Das gibt es im Prinzip. Ich habe so ein neues Fire TV da. Da gibt es das. Da muss man erst auf eine Taste drücken. Das Problem ist, ich habe keine Ahnung, ob das Ding nicht trotzdem zuhören kann.
+
+01:54:45.720 --> 01:54:50.460
+<v SPEAKER_5>Also bei dem Fire TV ist es nicht ganz so schlimm, weil es ist akkubetrieben, also die Fernbedienung.
+
+01:54:50.480 --> 01:55:52.400
+<v SPEAKER_4>Es gab ja vor ein paar Jahren schon so einen ähnlichen Fall. Und zwar gab es da, ich glaube auf dem Chaos Communication Congress, einen Vortrag, wo sie in der Lage waren, ein Cisco IP-Telefon, so ein Telefon, was irgendwie über Internet Telefonie macht, was so ein Speakerphone, also eine Freisprechfunktion hatte, so zu hacken, dass der Mikrofon von der Freisprecheinrichtung aktiv sein konnte, ohne dass die Hardware-Lampe, die das Teil eingebaut hatte, die signalisiert, dass das Mikrofon an ist, anging. Das hatte halt wirklich diese Lampe für so Unternehmen, damit man sich da sicher sein kann, dass das Gerät nicht aufnimmt und das Konten sie umgehen. Und ich denke, genau das ist das Problem bei jeder Lösung, wo so ein Gerät einen Du-darfst-aufnehmen-Schalter hat. Man muss halt darauf vertrauen, dass der Hersteller, ob aus Blödheit oder bösem Wille, das nicht falsch implementiert hat und dieser Schalter auch wirklich das tut, was draus steht. Was man natürlich machen kann, ist, man könnte die Idee haben, dass Amazon Echo dann an eine WLAN-Steckdose hängen und dann...
+
+01:55:52.420 --> 01:56:03.620
+<v SPEAKER_3>Und wir müssen uns zukünftig dann gewöhnen, analog zu den Kreditkarten, die wir jetzt alle in eine Hülle packen müssen, die Fernbedienung vom Amazon Fire TV in eine goldene Schatulle einzugraben.
+
+01:56:06.800 --> 01:56:43.180
+<v SPEAKER_5>Also da sehe ich das Problem ein bisschen kleiner, weil schon der Dashbutton hatte ja auch ein Mikrofon drin. Das sind aber beides akkubetriebene Geräte. Also selbst wenn das jemand von ferner hackt, ist halt die Aufzeichnungszeit eher begrenzt. Das Problem bei so einem Echo und bei so einem was auch immer ist halt doch schon, dass die strombetrieben sind. Und wenn die Firmen entsprechend böse es beliebig lange aufnehmen können, da wäre vielleicht interessant, dass wir in Zukunft Lösungen entwickeln, dass man mal den Internetverbrauch überwacht. Das ist natürlich auch nicht todsicher, weil das könnte ja Daten komprimieren und dann burstmäßig senden. Aber es wäre zumindest peinlich für den Hersteller, wenn das Ding dauerhaft Daten raussendet, obwohl es gar nicht rot leuchtet.
+
+01:56:43.200 --> 01:57:24.560
+<v SPEAKER_2>Na gut, ich nehme auf jeden Fall mal mit. Ich will mir so ein Ding bei Zeiten noch nicht in die Wohnung stellen. Und wenn, dann nur mit so einem Hardware-Click-Clack-An-Aus-Schalter, was natürlich total geil ist, weil dann geht man an den Tisch, macht so Klick und sagt dann so Jetzt möchte ich aber was sagen. Dann hätte ich es auch schon schnell eingetippt. Aber wir müssen jetzt zum Ende der Sendung kommen. Vielen Dank Danimo, Jasik und Henrik, dass wir einen kleinen Einblick gehabt haben, was man in einem Netzwerk machen kann und was man besser lassen sollte. Wie ich mal wieder gelernt habe, ist das der größere Teil dieser ganzen Geschichte. Wir verabschieden uns damit. Was habe ich gelernt? Also keinen digitalen Assistenten, Glühböen nur in einem extra Netzwerk.
+
+01:57:24.580 --> 01:57:26.080
+<v SPEAKER_3>Überhaupt Netzwerke trennen?
+
+01:57:26.100 --> 01:57:33.740
+<v SPEAKER_2>Überhaupt Netzwerke trennen. Und man sollte auf jeden Fall einen NAS dabei haben, denn das gilt auch nach diesem Chaosradio. Lasst euch nicht überwachen und verschüsselt immer schön eure Backups.
+
+01:57:33.960 --> 01:57:34.980
+<v SPEAKER_5>Und schön Backups machen. Genau.

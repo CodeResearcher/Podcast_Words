@@ -193,8 +193,10 @@ Find the Podcast ID in the show URL on
 `https://podcasts.apple.com/de/podcast/rasenfunk-trib%C3%BCnengespr%C3%A4ch/id916269734`
 → `916269734`.
 
-Episode discovery uses the public iTunes Lookup API (no authentication).
-Fetching the actual transcript requires the vendored `FetchTranscript` helper:
+Episode discovery uses the public iTunes Lookup API for shows with at most 200
+episodes. Larger catalogs fall back to paginated amp-api requests (same bearer
+token as transcript download). Fetching the actual transcript requires the
+vendored `FetchTranscript` helper:
 
 - **macOS 15.5 or newer only** (does not work on macOS 14.x or on Linux/CI)
 - Requires the Apple Podcasts app signed in on the machine (for the bearer token)

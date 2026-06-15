@@ -27,10 +27,15 @@ This produces the `FetchTranscript` binary that `apple.py` expects at
 ## Usage
 
 ```bash
-./FetchTranscript <episodeId> --cache-bearer-token
+./FetchTranscript <episodeId> [--cache-bearer-token]
+./FetchTranscript --bearer-token-only [--cache-bearer-token]
 ```
+
+`--bearer-token-only` prints a Bearer token for amp-api catalog requests (used
+by `apple_catalog.py` when a show has more than 200 episodes).
 
 The episode ID is the `?i=` query value from an Apple Podcasts share link, e.g.
 `https://podcasts.apple.com/us/podcast/.../id1728932037?i=1000714478537` →
 `1000714478537`. `podcast_words` discovers these IDs automatically from the show
-Podcast ID via the iTunes Lookup API, so you normally do not run this directly.
+Podcast ID via the iTunes Lookup API (and amp-api for larger catalogs), so you
+normally do not run this directly.

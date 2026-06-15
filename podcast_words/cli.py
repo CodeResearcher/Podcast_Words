@@ -122,6 +122,36 @@ def _cmd_count(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_reconvert_raw(args: argparse.Namespace) -> int:
+    from podcast_words.pipeline.reconvert_raw import reconvert_raw
+
+    podcast = get_podcast(args.podcast, args.config)
+    result = reconvert_raw(
+        podcast,
+        all_episodes=args.all,
+        dry_run=args.dry_run,
+    )
+    action = "Would reconvert" if args.dry_run else "Reconverted"
+    print(
+        f"{action} {result['updated']} episodes for {podcast.id} "
+        f"({result['skipped']} skipped, {result['errors']} errors)."
+    )
+    if args.dry_run and result["candidates"]:
+        preview = result["candidates"][:20]
+        suffix = "..." if len(result["candidates"]) > 20 else ""
+        print(f"  episodes: {preview}{suffix}")
+
+    if args.count and not args.dry_run and result["updated"]:
+        from podcast_words.pipeline.word_counter import count_words
+
+        count = count_words(podcast, rebuild=args.rebuild)
+        print(
+            f"Word count: {count['processed']} processed, "
+            f"{count['skipped']} skipped, {count['total_episodes']} episodes total."
+        )
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="podcast_words")
     parser.add_argument("--config", help="Path to podcasts.yaml (defaults to config/podcasts.yaml).")
@@ -177,6 +207,33 @@ def build_parser() -> argparse.ArgumentParser:
     p_count.add_argument("--podcast", required=True)
     p_count.add_argument("--rebuild", action="store_true")
     p_count.set_defaults(func=_cmd_count)
+
+    p_reconvert = sub.add_parser(
+        "reconvert-raw",
+        help="Re-convert transcripts/raw/*.ttml to WebVTT when VTT looks incomplete.",
+    )
+    p_reconvert.add_argument("--podcast", required=True)
+    p_reconvert.add_argument(
+        "--all",
+        action="store_true",
+        help="Re-convert every raw TTML file, not only those with fewer VTT cues.",
+    )
+    p_reconvert.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="List episodes that would be updated without writing files.",
+    )
+    p_reconvert.add_argument(
+        "--count",
+        action="store_true",
+        help="Run word counter after re-conversion.",
+    )
+    p_reconvert.add_argument(
+        "--rebuild",
+        action="store_true",
+        help="With --count, rebuild word_counts.csv from scratch.",
+    )
+    p_reconvert.set_defaults(func=_cmd_reconvert_raw)
 
     return parser
 

@@ -1,0 +1,592 @@
+WEBVTT
+
+00:00:20.280 --> 00:03:17.480
+<v SPEAKER_1>Hallo und herzlich Willkommen zum Chaosradio 259 aus den Zuhause-Studios. Wieder mal, weil es ist noch nicht vorbei. Und deswegen ist es heute auch hier Thema. Wir reden über ein Thema heute, das schon viel beredet wurde, das also fast schon zerredet wurde. So auch der Vorwurf einiger KritikerInnen. Trotzdem ist noch mal notwendig. Wir reden heute über die Corona Tracing App, die es ja noch gar nicht gibt. Aber zumindest das Konzept und die Idee davon, beziehungsweise mehrere miteinander widerstreitende Konzepte, vor allen Dingen ein zentrales und ein dezentrales. Und in dieser ganzen Diskussion gibt es so einen Punkt, der kommt da schon vor, aber der wird zumindest für mein Gefühl, wurde der immer nur gesagt, der ist halt da, da nicken alle mit dem Kopf. Manche sagen, ja vielleicht ist gar nicht das Richtige. Aber die großen Diskussionen gingen jetzt beim Contact Tracing, also die Frage, Leute haben Dinge auf ihrem Smartphone, dann werden Daten eingesammelt, die senden irgendwie Codes hin und her. Und dann kann man dann rausfinden, wer mit wem zusammen war, der möglicherweise infiziert war. Da wurde dann immer darüber geredet, wie werden diese Codes generiert, dass die möglichst anonym sind? Wo werden die gespeichert? Nur auf dem Gerät oder in einer zentralen Datenbank? Wer soll das eigentlich machen? Soll der Code-Quell offen sein? Alles total wichtige Fragen und auch wichtige Diskussionspunkte. Nicht umsonst waren die so im Rampenlicht. Aber es gibt die eine Sache, die, wie gesagt, für mein Gefühl so ein bisschen lapidar mitgenommen wurde. Das Ganze soll über Bluetooth laufen. Die Handys tauschen also über Bluetooth-Daten aus. Und daher weiß man dann, wer wen getroffen hat, aber anonym. Und dieses Bluetooth, das ist ganz spannend. Also kann man sich einmal fragen, was ist denn das, dieses Ding? Das haben wir alle in unserem Handy. Da könnte man vielleicht nochmal ganz allgemein raufgucken, was ist das überhaupt für eine Technologie? Dann ist die Frage bei diesem Contact Tracing, geht es ja darum, dass gemessen wird, wer in der Nähe war. Geht das überhaupt damit? Und dann ist das ja eine Technologie in einem Gerät. Und wenn man das Chaos Radio hört, dann geht es ja manchmal zumindest auch darum, dass man Dinge zerforschen kann und fragen kann, geht da was kaputt unter Umständen? Kann man da Unfug mitmachen? Oder was wäre, wenn böse Menschen sich wirklich Mühe geben? Und genau all das wollen wir heute besprechen, und zwar mit den beiden Gästen, die heute hier zu Gast sind. Und das ist einmal Jan und einmal Jiska. Hallo und herzlich willkommen. So, die sind beide vom Fach. Neulich haben wir gerade einen Vortrag gehalten auf dem D-Walk. Und Jiska ist beim Secure Mobile Network Working Lab an der TU Darmstadt, dort als Postdoc, also forschte in dem Bereich. Und Jan ist jetzt IT Security Analyst und Researcher, hat aber seine Master's thesis zu Bluetooth Firmware Analysis geschrieben. Ihr seid also wirklich sehr tief drin. Okay, die kurze Frage ist eigentlich beim Chaosradio immer Anzünden ja oder nein?
+
+00:03:22.460 --> 00:03:46.620
+<v SPEAKER_2>Unter Umständen. Also ich glaube, wenn man jetzt mal sagt, okay Contact Tracing wird kommen und man braucht irgendeine Technologie, um es umzusetzen, dann ist es mit mehr Abstand betrachtet, ist Bluetooth tatsächlich nicht die schlechteste Wahl dafür. Aber wenn man eben dann so sehr im Thema drin ist wie wir, dann hat man sehr häufig diese alles anzünden Momente.
+
+00:03:48.080 --> 00:04:27.960
+<v SPEAKER_1>Okay, naja, ich hab die meistens am Ende der Sendung mal gucken, wie das heute endet. Aber bevor es das tut, nämlich das Enden, fangen wir an. Und ich würde tatsächlich mal ganz am Anfang anfangen, weil ich finde, dass wir in einer Zeit leben, wo ganz viel Technologie eigentlich unsichtbar ist, weil sie ganz alltäglich in unserem Leben am Start ist und wir sie einfach so benutzen und unsere Bluetooth-Kopfhörer einschalten und unsere Bluetooth-Tastaturen benutzen und gar nicht mehr fragen, was dahinter eigentlich ist. Was ist eigentlich Bluetooth? Also das Partywissen ist ja Bluetooth, heißt Bluetooth, weil es einen König gab, der Blauzahn hieß und irgendwie, ich glaube, so ein Brandschatz in der Typ war, der einmal durch ganz Skandinavien gezogen ist. Er hat irgendwas vereinigt auf jeden Fall. Aber was ist Bluetooth technisch?
+
+00:04:29.840 --> 00:06:02.140
+<v SPEAKER_2>Ja, also vielleicht fange ich einfach mal, weil ich habe ja gerade noch eine Sache gesagt, die glaube ich noch fehlt vor der Frage, was ist eigentlich Bluetooth? Was sind so für drahtlose Technologien überhaupt in meinem Smartphone, mit denen ich letztendlich eine Position oder die Nähe zwischen zwei Geräten feststellen kann. Also das ist nämlich schon mal das erste Wichtige. Beim Contact Tracing geht es ja nicht darum, festzustellen, wo ich war, sondern mit wem ich an einem Ort war. Und das Problem ist also, für das wo ich war, da nimmt man ja klassisch eigentlich GPS. Aber GPS funktioniert erst mal indoor nicht so gut. Also ich meine Outdoor ist auch eine Variante, aber man will ja gerade, wenn man irgendwie in geschlossenen Räumen ist, hat man eine schlimmere Virus-Ausbreitung etc. Das heißt man möchte gerade in geschlossenen Räumen, wo GPS nicht so präzise ist, eine Position haben. Und man möchte auch keine absolute Position, sondern nur die Nähe. Also man braucht diese GPS-Koordinaten nicht. Und bei Wi-Fi, da kriegt man indirekt eine Position. Also zum Beispiel über Access-Points, Scans usw. da kriege ich ja auch eigentlich eine absolute Position, weil Access-Points sich nicht bewegen. Und eine relative Position kriege ich letztendlich über Bluetooth-Advertisements zum Beispiel. Weil Bluetooth die Eigenschaft hat, dass man ja nicht sich irgendwie in einen Access-Point oder sowas einwählen muss, sondern Bluetooth ist eben einfach an. Und dann kann sich jeder verbinden. Oder auch mit der Sehne.
+
+00:06:02.160 --> 00:06:15.500
+<v SPEAKER_1>Genau, aber das ist natürlich die Frage, wo du gerade wie lange gesagt hast, ginge das da nicht auch? Das Handy tut quasi alle zwei Sekunden so, als sei es ein Access-Point, alle anderen Handys in der Nähe gucken nach, guck mal, neue Access-Point, dann kann man davon irgendwie einen Log aufnehmen, könnte man da nicht genau dasselbe machen?
+
+00:06:17.620 --> 00:07:07.240
+<v SPEAKER_2>Also das Problem ist schon mal überhaupt, ein Smartphone im Access-Point-Modus und sowas zu schalten. Also das angenehme an Bluetooth ist, dass es mehrere Verbindungen eben gleichzeitig auch haben kann. Also es ist tatsächlich genau dazu gedacht, dass ich, was weiß ich, ich höre Musik über meine Kopfhörer und habe immer noch einen Fitness-Tracker und kann trotzdem auch noch von anderen Geräten gefunden werden. Und das ist eben diese Idee, dass man mehrere Verbindungen gleichzeitig haben kann. Also es wird von den meisten Geräten so unterstützt, zumindest von Smartphones. Und dass man eben dafür nicht im selben Netz sein muss und dafür auch nicht unbedingt vorher jetzt einen Kennwort für einen Access Point oder so ausgetauscht haben muss. Das ist so das, was Bluetooth an der Stelle auszeichnet und geeignet macht für die Technologie.
+
+00:07:07.260 --> 00:07:10.300
+<v SPEAKER_1>Die ihr jetzt noch mal im Grundsatz erklären wird. Was ist das eigentlich?
+
+00:07:18.000 --> 00:08:14.680
+<v SPEAKER_3>Im Prinzip ist es ja einfach nur eine Technologie, mit der irgendwie zwei Devices reden können. Also quasi funktioniert es auf dem selben Band wie WLAN, also Zeitpunkt von 4 Gigahertz. Und ich sage mal so, eine Grundfunktionalität von diesem Tracking, was wir da eigentlich schon haben wollen, ist ja auch dieses, ich suche nach Geräten in meiner Umgebung. Das heißt, jedes Bluetooth-Gerät, wenn es halt irgendwie sichtbar ist, kann dann von anderen Geräten gefunden werden. Und allein über so eine Scanning-Funktionalität habe ich eigentlich schon mal viel über das Bluetooth abgedeckt. Und auf Bluetooth selber gibt es halt diverse Services, also das unterstützt alles von Tessatur über Audio, also Audio Sinks, das heißt, ich kann halt einmal Bluetooth abspielen, auf meinen Kopf hören, aber andersrum auch, ich habe unter Umständen Mikrofone. Man kann darüber Netzwerk weiterleiten und das ist halt ein Riesensstandard.
+
+00:08:14.700 --> 00:09:17.840
+<v SPEAKER_1>Ich glaube, ich muss die Frage sozusagen ein bisschen einfacher stellen. Weil folgendes, ich versuche mal sozusagen das irgendwie nachzuvollziehen, dass man das verstehen kann, wenn man so ein bisschen Ahnung hat, aber eigentlich doch nicht. Zum Beispiel WLAN stelle ich mir jetzt nicht lachen wie ein Kabel vor. Nur halt, dass es drahtlos ist. Aber im Prinzip ersetzt es ein Kabel, wo ein Strom von links nach rechts und zurückfließt und dann Datenpakete hin und her gehen. Und dann habe ich sozusagen so eine grobe Vorstellung, was diese Verbindung ist. Und das habe ich bei Bluetooth eben nicht. Bei WLAN weiß ich auch, da hat man vielleicht schon mal gehört, okay, das gibt es im 2, 5 Gigahertz und 5 Gigahertz-Bereich. Da gibt es einen Standard, wie die Dinge miteinander sprechen. Und das kann man auch irgendwie verschlüsseln. Und wie ist das bei Bluetooth? Geht das über dieselbe Antenne? Ist das im Prinzip auch nur so eine Art WLAN-Protokoll, aber ein anderer Dialekt? Also was ist das Besondere an dieser Funktionalität? Was macht das andere, dass diese ganzen Funktionen, die ihr jetzt genannt habt, überhaupt ermöglicht werden?
+
+00:09:18.760 --> 00:10:28.440
+<v SPEAKER_2>Also in Combochip geht es tatsächlich über dieselbe Antenne. Und die teilen sich auch quasi dieselbe Luftschnittstelle und dieselbe Medium. Das soll heißen, es ist auch technisch sehr sehr ähnlich. Also auch über Bluetooth kann ich Daten übertragen, kann ich auch verschlüsselt Daten übertragen. Ich glaube, der zentrale Unterschied, den man an der Stelle zwischen Bluetooth und WLAN hat, ist, dass ich bei WLAN eben klassisch nur diese verschlüsselte Verbindung habe. Das heißt, dass ich am Anfang mich in den Access-Point einwähle und dann habe ich die Datenverbindung, wohingegen bei Bluetooth kann ich schon sehr viel machen vorher. Also so wie dieses ganze, also ich kann entweder nach Access-Point scannen, ja, aber dann muss ich mich einwählen. Und bei Bluetooth geht eben sehr viel an Austausch schon einfach nur über so Advertisements und auch sehr viel ohne externe Abhängigkeiten und sehr viele Verbindungen parallel. Also es ist einfach ein bisschen anders vom Anwendungsfall, einfach wie das Protokoll aufgebaut ist. Aber letztendlich ist beides Datenübertragungen auf 2, 4 Gigahertz.
+
+00:10:28.460 --> 00:10:45.520
+<v SPEAKER_3>Okay, vielleicht ein kleiner Punkt noch. Also es ist halt eigentlich vor allem auch nicht so aufgebaut wie die WLAN. Also WLAN ist halt relativ komplex, ist ja auch dafür gedacht, dass man halt sehr viel Daten pro Sekunde übertragen kann. Und Bluetooth ist halt einfach ein bisschen einfacher und lässt sich dadurch auch günstigeren Geräten verbauen als jetzt ein kompletter WLAN-Chip.
+
+00:10:47.600 --> 00:11:13.440
+<v SPEAKER_2>Und vielleicht auch noch wichtig, Bluetooth Classic versus Bluetooth Low Energy. Also das ursprüngliche Bluetooth ist ja primär gemacht worden für Musik oder sowas. Und Bluetooth Low Energy, das was jetzt auch benutzt werden wird zum Tracing, ist eine Technologie, die auf dem Physicolayer eigentlich anders aussieht. Also es heißt beides Bluetooth, aber es sind eigentlich andere Dinge. Und das Bluetooth Low Energy...
+
+00:11:13.460 --> 00:11:19.720
+<v SPEAKER_1>Was ist der... Entschuldigung, ich muss eine dieser Chaosradios mal rücken. Was ist das Physicolayer und in welcher Rolle spielt der diese Diskussion?
+
+00:11:19.960 --> 00:11:43.040
+<v SPEAKER_2>Genau, also Physicolayer ist letztendlich das, wie die Daten in der Luft oder über die Luft übertragen werden. Und da ist es bei klassischem Bluetooth so, man hat irgendwie... Also man hat in beiden Fällen erstmal ein 80 MHz breites Spektrum, wo man die Daten überträgt, deswegen, also irgendwo da bei 2, 4 GHz hat man irgendwo 80 MHz, in denen überträgt man Daten.
+
+00:11:45.780 --> 00:11:57.480
+<v SPEAKER_1>Also das heißt, es gibt nicht eine Bluetooth-Frequenz, sondern es gibt bei 2, 4 GHz ein 80 MHz breites Band, in dem das sich hin und her bewegen kann, oder das gleichzeitig benutzt wird?
+
+00:11:57.500 --> 00:12:36.720
+<v SPEAKER_2>Genau, aber auch wenn ich WLAN habe, dann habe ich da auch einen WLAN-Kanal und der ist 20 MHz breit, also auf 2, 4 GHz. Also auch das ist nicht irgendwie eine Frequenz, sondern ein Frequenzbereich. Wobei bei WLAN der komplette Frequenzbereich, also die ganze Bandbreite von den 20 MHz am Stück auch benutzt wird, wohingegen Bluetooth Hopping macht. Also wenn ich mir das anschaue und hab irgendwie so ein Software-Defined Radio oder so was, schau mir mal Spectrum an, und hab irgendwie sowohl WLAN als auch Bluetooth, dann sieht WLAN irgendwie mehr so wie große breite Blöcke aus. Und zwischendrin streut irgendwer mit so einem Salzstreuer, und der Salzstreuer, das ist quasi das Bluetooth.
+
+00:12:36.740 --> 00:12:56.560
+<v SPEAKER_1>Ich hab gerade ein anderes Bild in meinem Kopf. WLAN, wenn man jetzt sozusagen die Verbindung zwischen den Geräten hat, das ist im Prinzip so eine Art sehr langer Zug. Also da ist viel drauf, das geht sehr schnell. Und Bluetooth ist eher so eine Art Mofa-Armada? Auf der Autobahn so einher zwischen den Spuren wechselt?
+
+00:12:59.280 --> 00:13:37.020
+<v SPEAKER_2>Ja, die Mofa-Armada. Und warum ich noch sagte Salzstreuer, es hat halt mehr Energie in diesem Moment. Also man sieht es tatsächlich wie so kleine Sprinkel, die halt heller sind als das WLAN. Und die stören sich ein Stück weit natürlich, wenn sie beide im Spektrum sind. Aber es funktioniert mehr oder weniger gut, wenn man tatsächlich beide Technologien in der Luft hat. Und die versuchen dann auch, sich aus dem Weg zu gehen. Also da gibt es dann Blacklisting-Mechanismen, wo Bluetooth quasi merkt, auf welchen Kanälen es geradezu sehr von WLAN gestört wird und versucht dann andere zu nutzen, etc.
+
+00:13:37.940 --> 00:13:48.820
+<v SPEAKER_1>Okay, und jetzt hast du gesagt, es gibt zwischen Bluetooth und Bluetooth Classic und Bluetooth LE einen wichtigen Unterschied auf diese Art und Weise, wie sie im physikalischen Raum funktionieren.
+
+00:13:50.020 --> 00:14:51.300
+<v SPEAKER_2>Genau, also erstmal benutzen die beide so ein 80 MHz breites Spektrum, aber das klassische Bluetooth hoppt eben mit 1 MHz breiten Kanälen und so weiter und überträgt eben viele Daten, wohingegen das Bluetooth Low Energy seltener Daten überträgt, also auch ein größeres Intervall hat zwischen denen es überhaupt Daten überträgt und das benutzt auch nur 40 Kanäle, die dafür 2 MHz breit sind, anstatt 80, die 1 MHz breit sind und auch ein anderes Modulationsschema. Also dadurch kann man halt sagen, ja ok, es ist irgendwie beides im selben Spektrum und auch die Timings sind so, dass man klassisches Bluetooth und Bluetooth Low Energy sehr gut auf demselben Chip implementieren kann und auch im selben Spektrum und so weiter, aber es ist eben doch so gemacht, dass Bluetooth Low Energy deutlich weniger Energie braucht und deutlich einfacher auch zu implementieren ist.
+
+00:14:51.320 --> 00:15:02.760
+<v SPEAKER_1>Wenn ich versuche das zu verstehen von dem, was du gerade erzählt hast, verbraucht das weniger Energie, weil es weniger Daten überträgt oder ist auch sozusagen, wenn man viel Frequenz-Hopping, wie du es genannt hast, macht, kostet das auch Strom?
+
+00:15:02.780 --> 00:15:12.440
+<v SPEAKER_2>Das sollte eigentlich, also Frequenz-Hopping ist glaube ich nicht das Ausschlaggebende, sondern wirklich eher so das Timing, dass man eben seltener weniger Daten mit einer einfachen Modulationsart überträgt.
+
+00:15:12.560 --> 00:15:19.820
+<v SPEAKER_1>Und das ist ja das, worüber wir heute reden, weil das für dieses Contact-Tweeting auch benutzt wird. Aber was war der eigentliche Verwendungszweck dafür?
+
+00:15:21.380 --> 00:15:22.740
+<v SPEAKER_2>Für das Low Energy jetzt?
+
+00:15:22.760 --> 00:15:27.980
+<v SPEAKER_1>Ja, also warum hat man das erfunden?
+
+00:15:28.000 --> 00:16:08.840
+<v SPEAKER_2>Naja, man benutzt es halt für so die ganzen IoT-Geräte eigentlich. Also es soll heißen, für meinen Fitness-Tracker oder so, der eine Woche lang laufen soll. Also wenn man jetzt nicht gerade so eine Apple-Watch hat, sondern wenn man noch so ein Fitbit hat oder so, das nicht ganz so fancy ist, dann laufen diese einfachen Fitness-Tracker tatsächlich eine Woche lang aus so einer winzigen Batterie und sammeln meine Bewegungsdaten und übertragen das über Bluetooth Low Energy. Und auch genauso irgendwie Heizungs-Termos-Tate und ähnliches. Es gibt sogar Bluetooth-LE-Geräte, die quasi ein ganzes Jahr lang nur aus einer Knopfzelle betrieben werden können und regelmäßig Daten senden.
+
+00:16:08.860 --> 00:16:34.620
+<v SPEAKER_1>Und was genau macht jetzt diesen Modus? Obwohl, ich kann es ja eigentlich doch erklären, weil man will jetzt eine App bauen, die soll auf den Smartphones laufen und das möglichst immer. Und das will man natürlich möglichst energiesparsam tun, damit den Leuten, die ohnehin nicht besonders kräftig Smartphone-Batterien nicht sofort leergesaugt werden. Und deswegen hat man gesagt, Contact Tracing macht man mit Bluetooth-LE.
+
+00:16:36.220 --> 00:16:55.960
+<v SPEAKER_2>Ja, wobei die Sache auch dies, also wenn ich jetzt ein iPhone habe und hab da die ganzen Features aus dem Continuity-Framework, sprich, wenn ich da immer einen Bluetooth an habe, da werden so viele andere Bluetooth-LE-Sachen geschickt, dass es das Contact Tracing an der Stelle auch nicht mehr fett macht. Also man wird auf dem iPhone keinen Unterschied merken.
+
+00:16:55.980 --> 00:16:58.020
+<v SPEAKER_1>Wenn man stattdessen Bluetooth Classic genommen hätte?
+
+00:16:58.040 --> 00:17:03.560
+<v SPEAKER_2>Oder ist es schon sinnvoll, dass LE genommen wird?
+
+00:17:03.580 --> 00:22:04.150
+<v SPEAKER_1>Ich habe jetzt versucht, aus dem, was du mir bis jetzt erklärt hast, zu verstehen, warum die Entscheidung für Bluetooth-LE gefallen ist. Da wäre meine Vermutung gewesen, weil das Stromspannend ist und trotzdem die ganze Zeit laufen kann. Ich glaube, wir spielen jetzt mal eine kurze Musik, weil Jiska gerade von der Audioqualität, ich weiß nicht, ob da ein Frequenzhopping stattfindet, gerade ein bisschen abnimmt. Wir sind gleich wieder da. Die Musik kommt heute von Lova Tracks. Das ist eine Band, die ich bei Ronsons entdeckt habe, der den Machtdose-Podcast macht. Das Album heißt Hebefreni, ich glaube, es ist französisch klingt. In der Band-Selbstverschreibung stehen sehr viele Namen, die mir total unbekannt vorkommen. Ich würde sagen, es erinnert mich ein bisschen an Sisters of Mercy und The Cure. Das zeigt eigentlich nur, wie alt ich bin. Ich bin jetzt still und wir hören den ersten Track von diesem Album. Und das ist Prostration. So, herzlich willkommen zurück. Wir haben, ich weiß nicht, ob wir das Problem geklärt haben, aber wir benutzen jetzt eine andere Technologie und mal gucken, wie sie es anhört. Jiska, Jan, seid ihr da?
+
+00:22:04.170 --> 00:22:05.050
+<v SPEAKER_3>Ja.
+
+00:22:05.070 --> 00:23:00.790
+<v SPEAKER_1>Es ist aufregender als Radio, weil hier das sozusagen, also das Bild, das passt, die Studiogäste können einfach so aus dem Studio verschwinden und man hat es nicht gesehen. So, wo haben wir stehen geblieben? Wir waren stehen geblieben bei, warum wir Bluetooth Low Energy nutzen. Nämlich, das frisst weniger Strom. Und Geräte können ständig miteinander kommunizieren. So, und dann ist ja tatsächlich der eine kleine Kritikpunkt, der ja kam, ist, Bluetooth ist ja generell für kurze Verbindung gedacht, oder? Ja, also ich kann sozusagen nur von meinem, ich glaube, meinen Playstation-Controller, der geht auch über Bluetooth, der kann den, wenn ich den aus Versehen in die Küche nehme und dann zurückkomme, dann ist er weg.
+
+00:23:00.810 --> 00:23:38.150
+<v SPEAKER_2>Genau, aber das mit der Reichweite von Funk ist natürlich immer so eine Sache. Also gerade wenn ich jetzt draußen bin und so, und auch je nachdem, welche Antennen ich verbaut habe und so weiter, kriege ich auch natürlich größere Reichweiten hin. Und das jetzt noch nicht unbedingt in Smartphones, aber in den allerneuesten Varianten der Bluetooth-Spezifikation haben die sich auch neue Modulationsschema-Teile überlegt, also das, wie genau ich die Daten in die Luft bringe, so ein bisschen, sodass da auch nochmal höhere Reichweiten erreicht werden können. Also es geht schon mehr als 10 Meter und deswegen benutzt man aber zusätzlich die Signalstärke bei der Messung.
+
+00:23:39.090 --> 00:23:56.510
+<v SPEAKER_1>Ich wollte gerade sagen, eigentlich ist das ja sozusagen, wir leben ja immer in einer größer, schneller, höher, weiter Welt und jetzt will man ja eigentlich, was will man eigentlich bei den Contact-Tracing-Apps? Will man sagen, so dicht wie möglich oder innerhalb von diesen anderthalb Metern? Oder was für Werte will damit rausgefunden werden?
+
+00:23:59.790 --> 00:24:21.410
+<v SPEAKER_2>Also ich meine, alles, was man entscheiden muss, ist ja ein, war es mehr oder weniger als zwei Meter erstmal. Das ist ja eine binäre Entscheidung. Das heißt, wir müssen zum Glück keine exakte Distanzmessung von den, also ich muss jetzt nicht messen, war derjenige ein, zwei, drei oder vier Meter, sondern es muss nur zwei Meter, ja, nein.
+
+00:24:21.430 --> 00:24:43.390
+<v SPEAKER_1>Also so ein Trail-Wert. Ich möchte an dieser Stelle kurz einwerfen. Liebe Hörerinnen, wir werden heute nicht diskutieren, ob das aus virologischer oder epidemiologischer Sicht sinnvoll ist, das so zu machen, sondern wir reden heute darüber, dass wie Bluetooth benutzt wird, um das umzusetzen, und die Entscheidung ist offensichtlich zwei Meter ist unser Grenzwert. Das machen wir. So und wie genau geht das und für wie zuverlässig haltet ihr das?
+
+00:24:46.150 --> 00:25:43.510
+<v SPEAKER_2>Also es ist so, dass bei diesem Advertisement, wenn man das empfängt, ist schon in der Bluetooth-Spezifikation drin, dass das, was dann an den Host, also sprich das Smartphone weitergegeben wird, immer auch die 1.i drin steht, das ist der Received Signal Strength Indicator, sprich die Signalstärke. Und das ist einfach nur, ich glaube, ein Einweitwert, also zwischen 0 und 255 gar nicht so genau auflösend. Brauche ich ja aber auch nicht. Das Problem ist eher, also was die Messung ungenau macht an der Stelle ist, ich muss erst mal wissen, wie stark hat der Sender gesendet, weil der kann verschiedene Stärkeeinstellungen haben. Und das ist das, was sie jetzt auch in der neuesten Version von dieser Google-Apple-AP geändert haben. Da gibt es jetzt nämlich ein neues Feld, wo drin steht, wie stark der Sender gesendet hat, weil das steht nämlich sonst im Zweifelsfall nicht so mit drin, wie man es bräuchte.
+
+00:25:43.530 --> 00:25:58.630
+<v SPEAKER_1>Also ich, nur kurz zu meinem Verständnis, also diese SSI, was du sagst, das hat eigentlich erst mal nichts mit der Entfernung zu tun, sondern ist eigentlich erst mal nur sozusagen so eine Art Qualitätsbenotung, wie gut war denn das Signal, das ich empfangen habe?
+
+00:25:58.650 --> 00:26:13.510
+<v SPEAKER_2>Genau, ich glaube die Vergleiche mit Audio sind immer ganz gut in dem Bereich. Also es ist effektiv ein, wie laut höre ich dich? Und wie laut höre ich dich hängt natürlich auch davon ab, wie laut ich rede und hängt auch davon ab, ob du dir gerade die Ohren zuhältst.
+
+00:26:13.530 --> 00:26:17.630
+<v SPEAKER_1>Okay und sozusagen auch von der Entfernung.
+
+00:26:17.650 --> 00:26:18.730
+<v SPEAKER_2>Genau, auch von der Entfernung.
+
+00:26:18.750 --> 00:26:50.950
+<v SPEAKER_1>Aber wenn der Wind von meiner in deine Richtung bläst, dann hörst du mich auch lauter. Gibt es sowas für so Funksignale auch? Also es ist nicht Wind? Nein, genau nicht Wind. Aber ob es für das Bild etwas drauf passend ist. Das ist ja die eine Diskussion, die geführt wurde, dass man diese Entfernung gar nicht so genau messen kann. Und da wurde dann gesagt, ja und es gibt schon auch vorstellbare Idealvorstellungen, wo das mehrere hundert Meter weit reichen kann. Also gibt es da auch so eine Faktoren, die das Signal über eine ganz große Entfernung verstärken können?
+
+00:26:52.190 --> 00:27:42.010
+<v SPEAKER_2>Also für alle Aluhut-Träger, die Bluetooth-Chip, das sind die, die die Spezifikation auch herausgeben, postet immer so ein paar witzige Videos. Und die haben jetzt auch, also eben für diesen neuen Physical Layer, von dem ich sprach, haben die Videos gemacht, wo sie halt irgendwie den Sender an einer Drohne befestigen. Das heißt aber auch, dass die Antenne nicht weiter gestört wird und komplett frei in der Luft hängt. Und dann ist der Empfänger irgendwie auf einem gefrorenen See, was auch noch mal für Signalreflektion sehr vorteilhaft ist, an einem ausgefahrenen Stab und sagen, jetzt bekommen wir irgendwie einen Kilometer Reichweite hin. Dass es aber jetzt nicht das, wie der typische User sein Telefon hält und auch nicht, also man kann das schon hinbekommen, dass man über Reichweiten hinkriegt, aber eben auch nur mit den neuesten Technologien etc.
+
+00:27:44.670 --> 00:28:00.770
+<v SPEAKER_1>Okay, muss ich mir etwas später merken. Okay, so, jetzt, aber trotzdem, wie zuverlässig ist das jetzt? Also klar, wenn man jetzt sagt, okay, ich habe das Signal so laut gehört und du hast so laut gerufen, dann ja, aber ist das dann zuverlässig genug?
+
+00:28:03.430 --> 00:28:12.690
+<v SPEAKER_2>Naja, ich meine, die Sache ist die, du sollst ja primär, also jetzt müssen wir eigentlich doch wieder in diese virologische Anwendung gehen, von der du gerade sagtest, die ist eigentlich nicht so wichtig.
+
+00:28:14.330 --> 00:28:46.590
+<v SPEAKER_1>Nee, nee, nee, nee, stopp, das habe ich nicht gesagt. Ich will ja keine Stelle sagen, dass sie nicht wichtig ist, sondern wir diskutieren das heute nicht, weil dafür haben wir keine Fachleute da. Und tatsächlich würde ich nach wie vor dabei bleiben, sondern die Frage, weil wir diskutieren ja sozusagen das auf einer abstrakten Ebene, diese zwei Meter sind ja eine beliebige Grenze. Also das könnte ja für die Diskussion heute hier, könnte es auch drei Meter sein. Die Frage ist einfach nur, es gibt also eine festgesetzte Grenze und es gibt jetzt Methoden, wie versucht wird, rauszufinden, ob man da drunter oder drüber ist. Und meine Frage ist eigentlich nur, wie zuverlässig ist die?
+
+00:28:46.610 --> 00:30:04.050
+<v SPEAKER_2>Das hängt nochmal von weiteren Faktoren ab. Also was zum Beispiel auch noch diskutiert wurde, ist man kann ja über einen Beschleunigungs-Sensor dann feststellen, ob das Handy gerade in der Tasche ist oder in der Hand von jemanden. Und darüber wieder dann feststellen, so ein bisschen, wie sehr wird vielleicht gerade das Signal gedämpft. Man kann vielleicht auch Dinge machen über das konkrete Smartphone-Modell oder eben das, was jetzt schon in der Spezifikation mit drin ist, die Signalstärke, mit der gesendet wurde. Und das sind alles Faktoren, die es genauer machen. Natürlich bleibt da immer so ein gewisser Pi mal Daumen Faktor dabei. Aber das ist einfach aufgrund der Anwendung. Und deswegen sagte ich, die Anwendung ist hier schon auch wichtig. Ich meine, wie du schon gesagt hast, man legt quasi einen Schwellwert fest. Und jetzt sagt man, der Schwellwert ist zwei Meter. Und wir wissen aber gar nicht genau, hört das Virus jetzt bei exakt zwei Metern auf oder ist vielleicht auch nur ein Meter ein Problem. Und das heißt, so zum einen haben wir eine gewisse Ungenauigkeit von dem, was wir bisher wissen über das Virus und auch einfach kreative Bedingungen und genauso eine Ungenauigkeit auch im Signal. Und ich denke, solange es nur eine kleine Ungenauigkeit ist, tut es der Anwendung an der Stelle jetzt nichts ab.
+
+00:30:06.470 --> 00:30:55.650
+<v SPEAKER_3>Na gut, bezüglich Signalstärke. Also, Jiska hatte das ja auch schon so ein bisschen angesprochen, dass es halt natürlich vom Modell abhängt, also letztendlich im Audio-Kontext, wie gut sind deine Ohren? Das spielt dann natürlich mit rein. Dann halt alles Mögliche wie Wände, Dämpfens natürlich auch, wobei die halt, das Signal kann ja auch durch Wände durchgehen teilweise. Von daher, ja, das ist wieder diese virologische Ansicht. Und dann alles, was halt in der Umgebung ist, was halt irgendwie aus Metall ist, kann halt die Signalstärke beeinflussen. Das ist halt eigentlich schon relativ stark abhängig von der Umgebung. Also von daher hat man auf jeden Fall Ungenauigkeiten. Aber wie groß die jetzt sind, ist halt fraglich. Also ich weiß nicht, ob es da eigentlich Paper dazu gibt oder ob sich das jemand genauer angeguckt hat.
+
+00:30:55.670 --> 00:31:09.390
+<v SPEAKER_1>Diese Wandnummer ist auch eins der Argumente, dass, naja, also da schlafen halt, da sieht es halt für das Bluetooth-Ding so aus, als ob da zwei Leute nebeneinander sind direkt, aber die schlafen halt einfach nur zufälligerweise auf verschiedenen Seiten einer Wand. Das kann man auch über die Signalstärke feststellen oder nicht?
+
+00:31:14.370 --> 00:31:20.730
+<v SPEAKER_3>Ja, wenn die halt sehr dünn ist, dann wird es natürlich schwierig und die Handys direkt nebeneinander liegen, dann ja.
+
+00:31:20.750 --> 00:32:22.870
+<v SPEAKER_1>Also rückt euren Nachttisch von der Wand ab. Also da muss ich aber trotzdem mal nachfragen, die, also wenn man das jetzt so betrachtet, dann sagt, hier gibt es Unsicherheiten, letztlich so ein Pi mal Daumen-Ding. Und man würde ja, also das vielleicht ein kleiner Ausflug in dieser Argumentation, ja sagen wollen, okay, wir würden uns im Zweifel, also ich lass jetzt mal die harte Hand des Marktes außen vorn sagen, okay, wenn wir so ein Ding machen, dann wollen wir lieber false positives und keine false negatives, weiß nicht, ob ich das richtig rumgesagt hab. Also wir wollen lieber, dass die App sagt, hat jemand Kontakt, obwohl er das nicht hatte. Das wäre dann ein Test, der umsonst gemacht wurde, weil die App das falsch gesagt hat. Was wir aber auf gar keinen Fall wollen, ist, dass Leute Kontakt hatten und die App das nicht erkennt. Kann man das, also glaubt ihr, dass man das so, dass man die Werte so drehen kann, dass man sozusagen so genau über den Daumen peilen kann, dass ja, das Ergebnis ist nicht immer richtig, aber es ist auf gar keinen Fall falsch in dem Sinne, dass jemand, der Kontakt gehabt haben könnte, also dicht genug dran war, nicht erkannt wird.
+
+00:32:25.750 --> 00:32:58.290
+<v SPEAKER_3>Also ich würde sagen, das ist schon möglich. Alleine, wenn ich schon sehe, ich sehe ein Device, also jetzt mal so als absolute Obergrenze und sage so, okay, diese Person, die war wirklich infiziert und ich habe das Device gesehen, dann war ich zumindest in der Nähe. Also ich sag mal so, man weiß jetzt auch noch nicht genau, wie weit wird dieser Virus überhaupt durch die Luft getragen. Und da sind, keine Ahnung, sagen wir, reden wir jetzt mal von diesen klassischen 10 Metern von Bluetooth-Reichweite, da ist das auf jeden Fall ausreichend. Und je kleiner man das macht, desto ungenauer wird es dann natürlich.
+
+00:32:58.310 --> 00:33:38.470
+<v SPEAKER_2>Und was jetzt auch noch dazu kommt, ist also die aktuelle Version der API sieht so aus, dass man in fünf Minuten Schritten bis zu einer Obergrenze von 30 Minuten eine Auflösung kriegt, wie lange man diesen Kontakt hatte. Soll heißen, genauso wie eben eine Übertragung wahrscheinlicher wird, wenn ich mich länger mit einer Person aufgehalten habe, wird da eben auch die Dauer betrachtet. Und, und das ist jetzt der nächste Faktor, der hinzukommt, bei der Genauigkeit der Messung, je länger ich einen Signal empfange, desto mehr Bluetooth-LE-Beacons kriege ich, und desto, oder etwa 1000 in dem Fall, und desto genauer wird auch meine Messung. Also wenn ich mehr Pakete messen kann, messe ich am Ende genauer und kann das auch genauer sagen.
+
+00:33:39.290 --> 00:33:46.870
+<v SPEAKER_1>Das heißt, was ist die, wenn ich es richtig verstanden habe, heißt das also, wenn ich kürzer als fünf Minuten bei jemandem stehe, dann wird das möglicherweise gar nicht nachvollzogen?
+
+00:33:48.670 --> 00:34:06.150
+<v SPEAKER_2>In der aktuellen Variante, soweit ich es, na ist es natürlich alles noch, die Spezifikation ist ja auch nur vorläufig und alles, aber so wie es aktuell aussieht, ja. Das heißt, man braucht eben schon eine gewisse Dauer auch.
+
+00:34:07.390 --> 00:34:56.470
+<v SPEAKER_1>Ja, okay, jetzt würde mich ja fast interessieren, wie das denn ist in der Argumentation, weil man also in einem Raum ist, wo jemand lange drin war, der eine hohe Virenlast hinterlassen hat, aber dann geht... Na egal, das ist heute nicht unsere Aufgabe hier. So, jetzt gibt es ja für diese Fragen, also was ich von euch jetzt gerade mitnehme ist, diese Entfernungsmessung, die will man in binär, das ist nicht ganz einfach und geht sozusagen nicht absolut, aber es scheint zumindest technisch realisierbar, dass man das so einstellt, dass man sagt, wir erwischen schon alle Kontakte und im Zweifel, sozusagen wenn ein bisschen zu viel einsortiert, aber man könnte das sinnvoll hinkriegen, nachzuvollziehen, wen Infizierte gesehen haben. Also gesehen jetzt im technischen Sinne von, da war Kontakt potentiell da.
+
+00:35:00.770 --> 00:35:20.950
+<v SPEAKER_3>Ja, klingt eigentlich erst mal so für mich plausibel, aber man muss auch sagen, also angenommen, ich habe wirklich jetzt irgendwie so ein Prozent der Fälle, die ich irgendwie nicht erkenne oder ein paar Prozent. Ich glaube, der übergeordnete Nutzen ist halt trotzdem noch dann ausschlaggebend. Also ich glaube, das ist dann signifikant genug, dass es halt einen Vorteil bringen kann auf jeden Fall.
+
+00:35:22.250 --> 00:36:31.870
+<v SPEAKER_1>Ja, ich stelle gerade fest, in meinem Kopf sozusagen, also das, was du sagst, ist natürlich völlig richtig. In meinem Kopf war die Frage, so dann kann ich mich da drauf verlassen. Also werde ich auf jeden Fall informiert. Also jetzt ich ganz privat, Marcus werde ich auf jeden Fall informiert. Oder gibt es die Restchance, dass ich doch unerkannt, aber das ist wahrscheinlich, da gibt es eh kein perfektes System. Was mich jetzt allerdings noch interessiert ist, es kursieren so Zahlen, wie viele Leute das haben müssen, damit es im Großen und Ganzen überhaupt möglich ist. Und ich habe, was die Ausstattung mit den technischen Möglichkeiten angeht, auch verschiedene Dinge gehört, und zwar so verschiedene Extreme, dass ich das jetzt hier gar nicht sagen will, aber an euch die Frage stellen, die technischen Voraussetzungen, also dass man Bluetooth-LE in dieser Art und Weise kann, kann das mittlerweile eigentlich jedes Telefon, weil selbst die Dampfhones heutzutage irgendwie Bluetooth drin haben, oder ist das was, das können eigentlich nur die letzten zwei Generationen, und du brauchst schon irgendwie das große goldene Android oder iPhone, um da überhaupt mit am Start zu sein.
+
+00:36:31.890 --> 00:36:47.490
+<v SPEAKER_2>Das kann inzwischen jedes Telefon, also auch ältere. Also sobald man ein iPhone hat sowieso, ich glaube das iPhone 4, 4S oder so war das das erste, und auch die ganzen Android-Telefone können das schon seit vielen Jahren.
+
+00:36:48.250 --> 00:37:10.090
+<v SPEAKER_1>Und es gibt ja trotzdem dann die Überlegungen, was ist denn mit Leuten, die das A, aus Gründen nicht auf ihr Smartphone laden wollen, oder B, tatsächlich kein Smartphone haben. Wo wird denn von Beacons geredet, also kleine Geräte, Schlüsselanhänger, wenn ich es richtig verstehe, wo diese Technologie drin sein soll. Ist das ein realistischer Vorschlag oder ist das Quatsch?
+
+00:37:10.110 --> 00:37:57.870
+<v SPEAKER_2>Was es gibt, sind so Keyfinder, also zum Beispiel Tile zum Beispiel oder Nut, und da gibt es ganz viele. Das sind eigentlich Itemfinder und die machen genau das. Die laufen mit einer Knopfzelle und broadcasten eine ID, damit man sich das an seinen Schlüsselbund machen kann oder so. Und wenn man den verliert, dann auch ein Netzwerk hat von Leuten, die danach suchen. Also diese grundsätzliche Bluetooth-Tracing-Finding-Technologie, die gab es schon länger. Und Apple hat das zum Beispiel auch unter dem Namen FindMy, für wenn ich mein Telefon verliere, macht es auch Dinge mit Bluetooth. Das heißt, ja, das ist schon realistisch, dass man sowas eben auch statt eben in so ein Finder-Device, in ein Tracing-Device einbaut.
+
+00:38:01.530 --> 00:39:21.710
+<v SPEAKER_1>Na gut, dann scheint es ja zumindest sozusagen auf der technischen Ebene erstmal keine Idee zu sein, die man sofort anzünden muss. Jetzt wurde ja, ich will die Brücke an dieser Stelle einmal schlagen, viel diskutiert sozusagen der zentrale und der dezentrale Ansatz. Und da geht es ja letztlich darum, dass wenn dieses Contact-Tracing stattfindet, da wird ja nicht direkt der Name, also hier war Marcus Richter ausgetauscht, sondern da werden so Zahlenfolgen ausgewürfelt und da kann man dann irgendwann irgendwie zurückverfolgen, welche anderen Zahlenfolgen man gesehen hat. Da gibt es ja die beiden, das war ja die Hauptdiskussion, Ansätze. Man speichert das alles in einer zentralen Datenbank und pingt dann die Geräte an, die da waren oder man speichert es dezentral auf dem Gerät und das Gerät lädt sich dann immer die komplette Liste runter von den Leuten, die jetzt infiziert sind und weiß dann ah, da war ich in der Nähe, da sah ich mal Bescheid. Spielt das für unsere Diskussion heute auch eine Rolle, diese beiden Ansätze? Da gab es in den beiden Ansätzen verschiedene Dinge, die mit Bluetooth-L.E. gemacht werden sollten, die sagen, naja, das unterscheidet sich doch so sehr, dass eine Rolle spielt. Weil eigentlich, von dem, was ihr jetzt erzählt habt, wäre das technisch gesehen eigentlich getrennt, weil die Art und Weise, wie ich ein anderes Telefon sehe, ist die eine Sache und die Art und Weise, wie ich dann mit den Erkenntnissen, die ich daraus gewonnen habe, umgehe, ist eine andere Sache. Und ich hätte diese Diskussion jetzt eher in diesem, wie gehe ich mit den gewonnenen Daten um Dinge angesehen.
+
+00:39:24.190 --> 00:40:36.730
+<v SPEAKER_2>In der Theorie ja. In der Theorie könnte man sagen, ja, man sendet Bluetooth-Advertisements und das war's. Aber es ist so, dass gerade unter iOS diese ganze Bluetooth-Welt extrem verschlossen ist. Das heißt, man kommt gar nicht so tief ran, was eigentlich eine gute Sache ist. Das heißt, ich kann halt nicht mal eben ein Smartphone von jemanden, in dem ich eine App drauf installiere, plötzlich in ein Tracking Device verwandeln. Das funktioniert nur, wenn die App im Vordergrund offen ist, dass ich da Advertisements schicken kann oder dass ich da irgendwie Verbindungen machen kann. Und das ist eigentlich eine gute Sache. Also erst mal für die Privatsphäre ist jetzt aber natürlich ein Problem, weil das nämlich bedeutet, dass wenn man eben nicht die App, die jetzt kommen soll, benutzen würde, die App im Vordergrund laufen muss unter iOS und eine App, die man halt im Vordergrund offen haben muss, das wiederum frisst halt Energie. Und das ist genau das Problem, warum die Leute, die in Singapur diese App haben, die im Vordergrund läuft, sich eben auch über diesen Batterieverbrauch beschweren. Und der liegt eben nicht an der Technologie Bluetooth, sondern an der Implementierung und an der Wahrung der Privatsphäre von dem, wie es unter iOS implementiert ist.
+
+00:40:37.210 --> 00:41:10.370
+<v SPEAKER_1>Na, warte mal, das heißt ja, also das ist jetzt aber glaube ich, du hast jetzt gerade eine andere Frage beantwortet, als ich gestellt habe. Weil die, ich glaube, es liegt ja daran, Apple und Google haben gesagt, es gibt diesen zentralen, diesen dezentralen Ansatz. Wir machen euch was, das könnt ihr gleich nochmal genauer erklären. Wir machen euch was, aber das wird auf jeden Fall nur über den dezentralen Ansatz laufen. Und was ich meinte ist eher, es gibt diese beiden Konzepte. Und ist in diesen beiden Konzepten etwas anderes?
+
+00:41:10.390 --> 00:41:14.750
+<v SPEAKER_2>Also weil nochmal sozusagen gesagt, auf der Bluetooth-Ebene nicht.
+
+00:41:14.770 --> 00:41:17.850
+<v SPEAKER_1>Genau. Okay, das wäre erstmal meine Frage.
+
+00:41:17.990 --> 00:41:33.350
+<v SPEAKER_2>Solange man nicht von der API spricht, die dahinter ist, genau. In der rein Theorie der Technologie, wenn die APIs oder wenn die Schnittstellen unter iOS und Android beliebig offen wären, also sei es gegeben, dass man keine Ahnung.
+
+00:41:33.470 --> 00:42:00.930
+<v SPEAKER_1>Also beide Konzepte wollten eigentlich, liebe Handyhersteller, gebt uns Zugriff auf die Bluetooth-Low-Energy-Schnittstelle, damit wir das umsetzen können. So. Dann sind aber da diese APIs. Was genau machen die und warum sind die so wichtig und wieso haben die Hersteller die Macht zu sagen, nö, den Ansatz lassen wir gar nicht zu?
+
+00:42:00.950 --> 00:42:37.530
+<v SPEAKER_2>Ja, genau. Also das, was ich eben sagte, ist, dass unter Apple das eben schon die ganze Zeit sehr geschlossen ist, eben auch aus Privacy- und Security-Gründen. Und das Problem ist so ein bisschen, in dem Moment, wo die das öffnen, haben die eben auch die Gefahr, dass sie sich in diese Schnittstelle, also Sicherheits- und Privatsphären-Lücken einbauen. Und deswegen sind die natürlich entsprechend vorsichtig. Und das nächste, was es eben so vorher auch nicht gab, war diese Interoperabilität zwischen Apple und Google, weil die eigentlich, also gerade Apple eben immer sehr das System geschlossen hat und es eben nicht mal eben zwischen allen Geräten funktioniert hat.
+
+00:42:38.330 --> 00:42:47.610
+<v SPEAKER_1>Jetzt hast du gesagt, die Apple-Geräte sind ja sehr verschlossen, das darf man nur im Vordergrund benutzen. Das unausgesprochene ist, bei Android ist es anders?
+
+00:42:48.630 --> 00:44:51.390
+<v SPEAKER_2>Ja genau, bei Android geht da deutlich mehr. Das ist natürlich so ein bisschen so die, wie soll ich sagen, Technologie, Philosophie, wie auch immer, dass das Android immer deutlich offener war an vielen Stellen. Auf der anderen Seite ist es so, dass ich, ja, von der User-Sicht her ist es so, dass unter Android mit Bluetooth zwar mehr geht, aber auch vieles so überhaupt nicht, wie soll ich sagen, locker floggig läuft. Also Bluetooth ist immer so eine Erfahrung mit so, es funktioniert beim dritten Versuch irgendwie Geräte zu peeren. Wohingegen, also es in der, unter der Apple-Welt tatsächlich so ist, die haben so ein Framework, also Continuity Framework und das macht ganz viele Dinge über Bluetooth im Hintergrund. Das wissen die meisten Anwender vermutlich gar nicht. Aber wenn ich anfange, irgendwie eine Mail zu tippen auf ein Smartphone und die auf mein MacBook weiter tippe oder wenn ich irgendwie Dateien mit AirDrop austausche, dann passiert auch das Finden der anderen Geräte über Bluetooth, Low Energy und so weiter. Das passiert alles schon mit Bluetooth-LE-Advertisements und das funktioniert super gut. Und die sind auch alle irgendwie verschlüsselt und so weiter, weil Privacy etc. soll heißen. Da ist schon ganz, ganz, ganz viel unter, in der Apple-Welt, was die ganze Zeit läuft mit Bluetooth und was super, super smooth funktioniert und auch eben keine Batterie groß frisst oder so, was man gar nicht mitbekommt. Und einfach nur diese Tatsache, dass man ganz viele Dinge hat mit Bluetooth, die im Apple-Ökosystem funktionieren, liegen eben daran, dass Apple auch sehr, sehr, sehr penibel, sage ich mal, alles ausschließt und nichts Zugriff gibt, was eben nicht funktioniert. Das ist so ein bisschen so dieses Hannah-Eiding, aber dafür ist es halt so, dass irgendwie, wenn ich irgendwie hier meine Airpods benutze und so weiter, dass da eben eine ganze Menge auch proprietäre Features on top sind, die diese Erfahrung, das zu benutzen, so angenehm machen.
+
+00:44:51.410 --> 00:45:04.230
+<v SPEAKER_1>Das heißt aber, dass die, dass sie da jetzt überhaupt eine API machen, wo Zugriff gewährt wird und zwar in der dritten Partei möglicherweise und dann noch mit Google zusammengearbeitet wird, das ist schon ein großer Schritt.
+
+00:45:05.450 --> 00:45:15.910
+<v SPEAKER_2>Auf jeden Fall, ja. Das ist glaube ich auch das erste Dokument, wo überhaupt ein Apple- und Google-Logo direkt irgendwie so intim ineinander sind.
+
+00:45:15.930 --> 00:46:07.650
+<v SPEAKER_1>Wie ist es denn eigentlich bei der App? Da war ja eine unglaublich große Forderung, die man noch gut nachvollziehen kann, das gesagt wurde, die muss Open Source sein, weil da werden Daten gesammelt, die sind höchstpersönlich und die sind nur pseudonym und nicht anonym und wir wollen schon sehr genau wissen, was damit passiert und dann gab es ja auch schon so erste Dinge. Na ja, vielleicht machen wir nicht nur Contact Tracing, sondern sammeln noch so ein bisschen Fitness-Tracker-Daten dazu oder so. Das sollte also Open Source sein, war eine starke Forderung. Wie ist es denn mit den Apis? Wenn du jetzt gesagt hast, Apple ist da eher nicht so mit, lass mal reingucken, würde ich ja vermuten, die machen jetzt eine Schnittstellenspezifikation, wo sie sagen, also wenn ihr diese Art bauen wollt, dann müsst ihr das und das erfüllen, das muss man so und so programmieren, Punkt. Aber sie lassen sich dann nicht reingucken, was da innen drin passiert, oder?
+
+00:46:07.690 --> 00:46:13.650
+<v SPEAKER_2>Ja gut, aber das ist ja generell unter iOS so. Also ich sag's mal von der Vertrauens-
+
+00:46:13.670 --> 00:46:14.210
+<v SPEAKER_1>Ich wollte erst mal-
+
+00:46:14.230 --> 00:46:48.910
+<v SPEAKER_2>Sie werden es nicht öffnen. Also da glaube ich nicht dran. Der Assign-Zoo, der ist bei uns, er hat bei mir auch Master-Thesis geschrieben, ist inzwischen nicht mehr bei uns in der Gruppe, aber er hat sich das auch mal kurz angeschaut, weil das kam ja irgendwie gestern 1.13.5 raus und da war das mit drin und das hängt irgendwie alles mit im Bluetooth-Demon und der Bluetooth-Demon ist ein großes, ein sehr großer Demon, wo sehr viel Funktionalität auch mit drinsteckt und das wird so nicht open source rausgehen, da glaube ich nicht dran.
+
+00:46:48.930 --> 00:47:11.430
+<v SPEAKER_1>Was ich aber jetzt fragen wollte ist, weil wir ja immerhin auch das Chaos-Radio sind, mit dem Rahmen des Chaos Computer Clubs senden, wenn man an diese App die Forderung stellt, die muss aber open source sein, jetzt mal unabhängig davon, wie realistisch es ist oder nicht, müsste man dann nicht auch bei der Schnittstelle, die genau diese sehr höchstpersönliche Datenverarbeitung ermöglicht, auch sagen, na komm, das muss dann aber auch open source sein?
+
+00:47:11.450 --> 00:48:58.530
+<v SPEAKER_2>Eigentlich musst du dann auch bis runter auf den Chip gehen und sagen, auch die Firmware auf den Chip muss open source sein und die Frage ist eher, wo siehst du die Vertrauensgrenze? Und das ist eben so, wenn ich sage, ich bin jetzt iOS-User und der Bluetooth-Demon, in dem die Hauptfunktionalität von dem Contact-Tracing läuft, ist sowieso closed source, aber ich benutze ihn sowieso für ganz viele andere Dinge auch, dann ist die Sicherheitsproblematik sozusagen in diesem Teil eine, die sowieso schon der closed source Problematik ist. Und ich muss eben an der Stelle, das ist jetzt natürlich wieder so eine Philosophiesache, ich muss an der Stelle tatsächlich Apple vertrauen, dass sie über diese Schnittstelle nicht noch mehr einsammeln. Das muss ich Apple aber eigentlich sowieso, weil ich ja ihr komplettes Betriebssystem iOS an der Stelle benutze und die könnten ja auch weitere Ausspieldinge an beliebigen Stellen im Betriebssystem und jetzt nicht nur in Bluetooth einbauen. Deswegen ja, eigentlich sollte alles quelloffen sein, aber eigentlich muss dann auch komplett iOS-Quell offen sein. Eigentlich muss dann auch die Firmware des Bluetooth-Chips quelloffen sein und eigentlich müssen auch die Firmwares aller anderen Chips quelloffen sein und dann kommen wir irgendwo. Also man muss eben irgendwo diese Vertrauensgrenze ziehen und das heißt in dem Fall für einen iOS-User, er muss eben seinem Betriebssystem, was geschlossen ist, vertrauen. Wenn ich ein Android-User bin, ist die Grenze an einer anderen Stelle. Das Betriebssystem ist offen. Wenn ich jetzt ein Samsung-Telefon habe, ist dann aber vielleicht auch noch mal hier und da was sehr gutes. Das ist dann irgendwo so ein bisschen, kommt da auch Sauce raus und alles im Nachhinein, aber da ist dann vielleicht ein bisschen mehr schon geschlossen und spätestens alles, was in Firmware passiert und das ist alles, was drahtlose Chips sind, ist erstmal geschlossen.
+
+00:49:00.390 --> 00:49:08.050
+<v SPEAKER_1>Heißt das, alles, was die API betrifft, ist auch dann in der Firmware drin oder ist das noch Teil des Betriebssystems?
+
+00:49:08.070 --> 00:49:09.510
+<v SPEAKER_2>Das ist noch Betriebssystem.
+
+00:49:09.530 --> 00:49:38.050
+<v SPEAKER_1>Das heißt, unter Android wäre das offen? Ließen sich da, nee, na doch, ich bin noob, ich darf die Frage stellen, wenn also jetzt diese beiden Schnittstellen exakt dasselbe umsetzen und die Android Open Source ist und jetzt iOS nicht, kann man dann trotzdem Rückschlüsse schließen, wie das dann bei iOS umgesetzt werden müsste oder ist das so unterschiedlich, dass das eigentlich keinen Sinn macht, da zu spicken?
+
+00:49:38.070 --> 00:49:47.110
+<v SPEAKER_2>Naja, also was man halt macht, ist man zieht sich den Bluetooth-Demon irgendwie aus der aktuellen iOS-Beta und wirft den halt mal in IDA Pro und schaut halt rein.
+
+00:49:47.430 --> 00:49:50.070
+<v SPEAKER_1>Das muss jetzt für Leute erklären, die nicht wissen, was IDA Pro ist.
+
+00:49:51.230 --> 00:50:23.670
+<v SPEAKER_2>Ja, es gibt sozusagen den umgekehrten Prozess, also wenn man keinen Source-Code hat, braucht man ja immer noch Binaire-Code, den man irgendwie ausführen kann, also sprich Maschinen-Code, auf denen das Smartphone quasi versteht, wenn ich ihn ausführe und da kann man immer noch Analyse drauf machen, soll heißen, ja, das ist nicht so, als hätte ich den original Quellcode, aber man kann immer noch Rückschlüsse darauf ziehen, was es hinterher tut.
+
+00:50:24.090 --> 00:50:43.170
+<v SPEAKER_1>Das ist eine Frage, also die ist jetzt sozusagen, die spielt jetzt auch eine Rolle, aber die gilt ja generell, die wollte ich schon immer mal stellen, wenn man das macht, wenn ich das richtig verstanden habe, ist das doch, dann beobachtet der, die Compiler, wie auch immer das dann heißt, beobachtet das Programm, während es ausgeführt wird und schreibt sozusagen mit, was das Programm macht, oder?
+
+00:50:43.190 --> 00:50:50.730
+<v SPEAKER_2>Das sind jetzt zwei unterschiedliche Dinge, es gibt dynamische und statische Analyse, ich weiß nicht, der Jan, der hat schon lange nicht mal gesprochen, der Jan kann das auch erklären, glaube ich.
+
+00:50:50.750 --> 00:50:52.270
+<v SPEAKER_1>Sehr gerne.
+
+00:50:52.290 --> 00:51:20.490
+<v SPEAKER_3>Also das, was AIDA letztendlich, also AIDA prinzipiell macht, das ist statische Analyse, das heißt, es analysiert wirklich nur diesen Maschinencode und versucht den irgendwie wieder an den Menschen lesbare Formen zu überführen. Also wenn man gut in Assembly ist, dann kann man darauf auch verzichten, dass was AIDA jetzt so teuer macht oder was JIT 3 ist jetzt auch eine Alternative, die von der NSA rausgekommen ist, ist, dass es das halt diesen Maschinencode wieder in C-ähnlichen Syntax übersetzt, der halt für den Menschen einfacher zu lesen ist.
+
+00:51:20.510 --> 00:51:23.610
+<v SPEAKER_1>Also für Leute, die von programmierenden Ahnung haben.
+
+00:51:23.630 --> 00:51:52.870
+<v SPEAKER_3>Genau, also gut, man muss halt programmieren können, aber es ist halt trotzdem wesentlich einfacher noch als Maschinencode und aber AIDA kann auch zumindest so ein bisschen dynamische Analyse, das heißt, ich kann halt auch das Programm ausführen. Ich kann sagen, so die Stelle sieht interessant aus, halt mir halt mir hier das Programm an, zeig mir, wie was dort passiert, wie die Werte aussehen, dass ich dann halt zur Laufzeit halt auch gucken kann, was das Programm letztendlich macht.
+
+00:51:55.490 --> 00:52:10.830
+<v SPEAKER_1>Okay, das heißt also, wenn ich dann also das Binary, also den Binary-Code habe und den sozusagen rückübersetze, da kann man auch dann, also das geht bestimmt, aber dann ist es nicht so einfach, was zu verstecken, weil im Prinzip hat man dann auch das ganze Programm.
+
+00:52:13.290 --> 00:52:52.410
+<v SPEAKER_3>Genau, also im Prinzip alles, was das Programm tut, das liegt ja letztendlich irgendwie vor mir. Das habe ich in der Hand, das kann ich mir angucken und dort dann halt Dinge zu verstecken, ist relativ schwierig. Es gibt so ein paar Techniken, die jetzt z.B. Schadsoftware verwenden, dass sie halt einfach diesen Prozess versuchen, schwieriger zu machen, dass sie halt explizit irgendwie Code generieren, der halt sehr schlecht zu verstehen ist. Allerdings, wenn Apple sowas verwenden würde, das würde schon ziemlich das Vertrauen, also das wirkt dann immer so ein bisschen fishy. Deswegen gehe ich jetzt mal nicht davon aus, dass sie solche obfuscation, also Verschleierungsmethoden verwenden.
+
+00:52:52.430 --> 00:53:00.110
+<v SPEAKER_1>Spannende Frage. Inwiefern unterscheiden sich Verschleierungsmethoden von sehr schlechtem Programmierstil?
+
+00:53:00.130 --> 00:53:03.270
+<v SPEAKER_3>Das eine ist gewollt und das andere ist...
+
+00:53:03.290 --> 00:53:16.970
+<v SPEAKER_1>Aber könnte man es erkennen? Also du hast so ein Programm, nimmst das auseinander, rückübersetzt das und denkst dir, das sieht komisch aus, kann man das dann unterscheiden? Dass man denkt, naja, da hat jemand dran gearbeitet, der ist noch nicht so lange dabei, oder?
+
+00:53:16.990 --> 00:54:00.630
+<v SPEAKER_3>Ja, also ich sag mal so, was natürlich beim Programm Übersetzen halt rausfällt, das ist halt, zum Beispiel Variablen namen trauchen da nicht mehr auf. Oder also Kommentare, Rotkommentare werden komplett rausgefiltert. Von daher, ich sag mal so, das was man normalerweise am Programm sieht, so auch wie sieht das aus, wie ist es formatiert, das kann ich sowieso nicht sehen. Wenn ich jetzt aktiv Verschleierungen mache, dann ergibt das Ganze halt gar keinen Sinn. Bei Programmierung hat man ja auch das, zum Beispiel Funktionen, die man dann irgendwie aufruft und die werden dann komplett verstreut und durcheinander gewürfelt. Gegebenenfalls wird dann noch Code verschlüsselt. Und das ist halt dann so ein Punkt, wo man sagt, das geht wohl nicht mit rechten Dingen zu.
+
+00:54:02.370 --> 00:54:20.930
+<v SPEAKER_2>Na gut, ich würde jetzt... Noch dazu, wenn man in den Bluetooth-Demen reinschaut, ist es tatsächlich so, dass der nicht so groß obfuscated ist. Also da fehlen einige Funktionsnamen, aber auch nicht alle. Und da sind auch sehr, sehr viele Debug-Print-Statements noch drin. Also man kann da schon noch was sehen, wenn man das in EIDA oder Githra öffnet.
+
+00:54:20.950 --> 00:54:40.910
+<v SPEAKER_1>Aber dann frage ich mich jetzt aber sozusagen, wenn, also Apple wird das ja wissen. Apple wird ja wissen, wenn jetzt jemand diesen Demon irgendwo reinwirft, dann kann er sehr genau wissen, warum geben die denn nicht gleich den Code frei? Also ich verstehe schon, dass sie das nicht machen, aber was ist die Motivation dahinter?
+
+00:54:40.930 --> 00:55:03.950
+<v SPEAKER_3>Ich glaube, zum einen könnte ich mir vorstellen Copyright Dinge. Also dieses Reverse Engineering, wenn man das für sich selber macht, ist das halt alles noch legitim, aber sobald man dann irgendwie anfängt, Dinge zu veröffentlichen, läuft man dann eine sehr komische Grauzone. Und von daher, also wenn ich jetzt Code öffentlich mache, dann gebe ich ja implizit auch anderen Leuten die Möglichkeit und auch letztendlich irgendwo auch das Recht, so diesen Code dann irgendwie zu benutzen und für sich selber einzubinden.
+
+00:55:06.130 --> 00:55:32.210
+<v SPEAKER_1>Also, wenn ich es richtig verstanden habe, von der juristischen Seite aus gesehen, ist Open Source nicht automatisch, bedeutet das nicht automatisch, dass man das auch verwenden und verbreiten darf. Also wenn jetzt jemand Programmiercode veröffentlicht, kann man natürlich schlecht verhindern, dass jemand das bei sich zu Hause übersetzt, aber ich meine, das Programmcode veröffentlichen ist ja auch dann urheberrechtlich geschützt.
+
+00:55:33.430 --> 00:55:41.150
+<v SPEAKER_2>Ja genau, also was ich eben nicht machen darf, ist Code Reverse intonieren und dann irgendwie in großen Teilen dann halt online stellen.
+
+00:55:41.170 --> 00:55:58.150
+<v SPEAKER_1>Also ich meine, wenn du als Firma sozusagen, du gibst dein Programmiercode frei, du stellst ihn, also du machst, du gibst deine, also Open Source im wörtlichen Sinne, du gibst den Quellcode, den lässt du sozusagen öffentlich einsehen. Das heißt nicht, dass Leute den verwenden dürfen, das ist eine Frage der Lizenz.
+
+00:55:59.670 --> 00:56:42.670
+<v SPEAKER_2>Ja, wobei, was da halt noch dazu kommt und das ist auch wieder so Patenting und so weiter, dass das Apple wirklich sehr, sehr, sehr, sehr viel Technologie gebaut hat, die nicht in der Bluetooth-Spezifikation drin ist, die aber das Ganze wie eben Bluetooth so smooth läuft unter dem Apple-Ökosystem, also das ist so der Teil, der da mit in dem Code steckt und wo sehr viel Engineering-Aufwand drin steckt, wo sehr viele Patente auch drin stecken und das ist, denke ich, nichts, was man mal eben Open Source, ob nun mit oder ohne Nutzungsrecht, online stellt, einfach aufgrund der Ideen, die in diesem Code dann auch drin sind und die man dann direkt sehen würde, ohne sich den Aufwand des Reverse-Engineers zu geben.
+
+00:56:45.190 --> 00:56:55.690
+<v SPEAKER_1>Also so richtig klar wird es mir nicht, weil sozusagen, so wie ich es jetzt erzählt, kann jeder Reverse-Engineer, der sich mit dem Thema sozusagen so wie ihr beruflich oder sozusagen hauptsächlich beschäftigt.
+
+00:57:00.070 --> 00:57:02.070
+<v SPEAKER_3>Es kostet halt wesentlich mehr Zeit.
+
+00:57:02.090 --> 01:02:29.228
+<v SPEAKER_1>Also es geht letztlich nur darum, Arschloch zu sein, um es mal platt zu formulieren. Na gut, wollen wir es erstmal dabei belassen. Es gibt dann noch den spannenden Punkt, der ist das eigentlich, also kann man das vielleicht irgendwie angreifen oder kaputt machen, dazu kommen wir gleich. Ich würde vorher noch eine Musik hören, die dann auch passend zum nächsten Themenkomplex, also vom selben Album kommt von Lover Tracks, Herbe Frénie und der Titel, den wir jetzt hören, heißt Angst. So, Chaosradio 259. Wir reden über Bluetooth in der Contact Tracing App Konzept Studiendingsidee, aber auch über Bluetooth im Allgemeinen. Und wir haben jetzt schon ganz viel darüber gelernt, was Bluetooth überhaupt ist und wie das da gedacht ist, wie das umgesetzt werden soll und wollen noch mal ein bisschen über dieses kann das eigentlich kaputt gehen, fragen. Und da würde ich erst mal ganz allgemein fragen wollen, weil das ja man sozusagen so eine, ob das schon ein Aluhut ist, aber diese Frage Bluetooth auf dem Smartphone immer an oder immer aus, kann man sich ja manchmal stellen, weil das ja dann irgendwie eine Technologie und die funkt ja auch und so weiter und so fort. Und die eine, wenn ich das richtig verstanden habe, ist dieses wie kaputt ist das eigentlich dein Forschungsthema sozusagen?
+
+01:02:35.048 --> 01:02:59.148
+<v SPEAKER_3>Ich habe es also lange Zeit nie genutzt. Jetzt habe ich Kopfhörer, dafür benutze ich es häufiger. Aber ich muss auch sagen, ich habe halt einfach, ich vertraue dem Handy eh nicht. Also ich habe da keine kritischen Daten drauf, keine Passwörter, keine Zugangsdaten, nichts, was irgendwie mit Geld zu tun hat. Weil ich einfach auch irgendwie sage, das ist so ein Mobile-Device, das man halt immer mit sich rum trägt, was in jedes W dann reinkommt, das ist eh kaputt.
+
+01:03:00.948 --> 01:03:17.628
+<v SPEAKER_1>Okay, dann lass mich die Frage umfrollen. Gehen wir mal davon aus, dass alles außer Bluetooth an deinem Smartphone oder an Smartphones unfassbar super sicher wäre. Nur Bluetooth ist so, wie es jetzt ist. Würdest du es dann ändern oder wäre dann deiner Einschätzung immer noch dieselbe?
+
+01:03:22.728 --> 01:04:40.188
+<v SPEAKER_3>Bluetooth kommt halt schon mit so ein paar Problemen. Also ich sag mal so im klassischen Fall, wenn du es einfach nur anhast und es redet, du bist halt nicht per se sichtbar, zumindest auf den meisten Smartphones. Da gibt es auch ein paar andere, bei denen das so ist. Sobald du Bluetooth anhast, bist du für jedermann sichtbar. Also ja, also wenn du halt nicht sichtbar bist, dann geht es halbwegs. Von daher würde ich es vielleicht noch anlassen. Aber sobald jemand halt anfängt mit einem zu reden, kann es halt kritisch werden. Also sobald man anfängt, nach Geräten zu suchen, sobald man sichtbar ist, wird es halt kritisch. Weil? Kann kritisch werden. Also zum einen, also wir haben uns jetzt halt mal irgendwie die Firma so ein bisschen genauer angeguckt und die Firma ist halt letztendlich auch einfach nur ein Programm. Es kann halt Fehler haben. Und wenn du halt dann irgendwie Kontrolle über den Chip bekommen hast, dann bist du halt da drauf. Dann kannst du sämtliche Kommunikation von Bluetooth mitlesen, kannst Kontakte lesen. Das ist prinzipiell schlecht und du hast halt auch nicht so wirklich Zugang dazu. Also du bekommst die Firmware schlecht runter, du kannst nicht sehen, ob da jemand überhaupt drauf ist. Die Sicherheit von diesen Firmware-Chips ist halt eher so aus den 90ern. Das sieht eigentlich eher schon so ein bisschen grausam aus.
+
+01:04:40.528 --> 01:05:06.568
+<v SPEAKER_1>Aber was heißt das? Heißt das, wenn ich mir sozusagen irgendwie durch die Appstores oder Playstores streife und mir dann irgendwie das lustige neue Solitär runter lade, dass ich mir dann irgendwas einfange, weil da ein böser App-Programmierer Dinge zugreift oder ist das so ein Angriffspunkt, ich mache Bluetooth an und dann hat irgendwo jemand eine kleine Antenne und strahlt Dinge aus über Bluetooth, die ihm Zugriff auf meine Firmware erlauben?
+
+01:05:08.848 --> 01:05:33.268
+<v SPEAKER_3>Das ist dann eher so, also ein konkreter Fall, wenn man jetzt irgendwie nach Geräten sucht und irgendwie ein böswilliger Mensch ist gerade in der Umgebung, dann gibt es halt unter Umständen Wege auf den Chip zu kommen und das ist natürlich schlecht und wir haben auch Wege gefunden, dass du halt auf das Android-Phone selber kommen kannst, also jetzt gerade für Android selber drauf kommen kannst und da ist dann natürlich irgendwo vorbei.
+
+01:05:33.288 --> 01:05:51.188
+<v SPEAKER_1>Wie, was nochmal, also ich mache mein Handy an. Mein Handy sagt so, hey, ich bin hier, gibt es irgendwo Bluetooth-Geräte, meldet euch und dann sagt der böswillige Betreiberin, ja hier bin ich, du bist tot.
+
+01:05:51.208 --> 01:05:59.588
+<v SPEAKER_3>Ja genau, so was geht. Gerade ging, wir hatten Sachen gefunden, aber die sind mit der Zeit zum Glück behoben, zumindest für die Geräte, die jetzt Updates bekommen.
+
+01:06:01.888 --> 01:06:13.788
+<v SPEAKER_1>Kann man das so niedrigschwellig erklären, dass wir es heute hier verstehen, wie das funktioniert? Also was da genau schief läuft, dass man nur weil jemand sagt, hallo hier bin ich, auf einmal Zugriff auf mein ganzes Handy hat?
+
+01:06:16.508 --> 01:06:48.948
+<v SPEAKER_3>Also jetzt in dem Fall war das letztendlich für Classic Bluetooth, nicht für Low Energy. Und da war das halt wieder dieses klassische Problem. Ich würde ein Paket empfangen wollen, das hat halt irgendwie 200 Bites. Ich allokiere mit oder ich sage oder belege mir einen Speicher 200 Bites und dann werden halt einfach mehr reinkopiert als da rein gehören. Und dann fange ich halt an, Daten im Speicher zu überschreiben, die halt nicht überschrieben werden sollten. Und dann kann man, ja, kann man witzige Dinge tun.
+
+01:06:48.968 --> 01:06:52.108
+<v SPEAKER_1>Das ist dieses, wie heißt das, Buffer-Overflow?
+
+01:06:52.128 --> 01:06:53.848
+<v SPEAKER_3>Genau, Buffer-Overflow, Memory Corruption.
+
+01:06:54.528 --> 01:07:23.368
+<v SPEAKER_1>Also das ist, ich versuche mal, wie kann er ein Bild, ich glaube, ich hatte mal, irgendjemand hatte in irgendeiner der vergangenen Sendungen schon mal ein schönes Bild dafür. Aber letztlich ist es also, man, man eigentlich, also wenn alles sauber laufen würde, könnte ich nicht mehr Informationen annehmen, als mir eigentlich zustehen. Aber weil ich das kann, wird dann quasi in Dinge reingeschrieben, wo dann jemand anderes guckt, hey, was stehen hier für Befehle drin? Und dann kann ich sozusagen das deswegen übernehmen.
+
+01:07:25.988 --> 01:07:59.388
+<v SPEAKER_3>Also ja, klar, man kann natürlich immer erst mal sagen, so wenn jetzt alles perfekt, absolut fehlerfrei umgesetzt wird, dann ist alles gut. Das klingt eigentlich erst mal solide. Aber der Standard ist jetzt nun halt sehr lang, er ist komplex und es passieren halt einfach Fehler bei der Umsetzung. Und die Fehler können halt, also gerade, also vieles wird halt ins C geschrieben. C ist jetzt nicht die best oder sicherste Programmiersprache und da können halt kleinste Tippfehler halt schon sehr problematisch werden manchmal.
+
+01:07:59.408 --> 01:08:10.668
+<v SPEAKER_1>Dieser Fehler, den ihr da gefunden habt, war das so ein Ding, wo man sagt, naja, okay, das ist ungeil, dass es so ist, aber das kann passieren oder ist das Hände vorm Gesicht zusammenschlagen, weil da einfach jemand unsauber gearbeitet hat?
+
+01:08:12.808 --> 01:08:52.128
+<v SPEAKER_3>Also ich finde es immer schwierig, Leute zu blamen, es ist einfach so, dass Fehler passieren. In dem einen Fall war ich letztendlich selber auch faul, muss ich sagen, und ich wollte halt ein Längsfeld verändern und habe da nicht genau anstande geguckt und dann habe ich letztendlich irgendwo denselben Fehler gemacht, den der Entwickler gemacht hat und dadurch habe ich halt seinen Fehler gefunden, weil es dann plötzlich der Chip kaputt gegangen ist. Also von daher, ich kann die Faulheit verstehen, weil jetzt jedes Mal in dem 3000 Seiten-Standard nach irgendwelchen Paketformaten suchen, ist halt aufwendig.
+
+01:08:52.568 --> 01:09:13.328
+<v SPEAKER_1>Und jetzt ist das ja aber, was ihr da gefunden habt, das ist eine Sicherheitslücke. Und das kann ja mal passieren, jetzt ist die Frage, ist Bluetooth eher so das frühe WhatsApp unter den Funk-Technologien in meinem Smartphone oder hat das einen schlechten Ruf unter Sicherheitsforschern? Wie ist das so ganz generell?
+
+01:09:17.168 --> 01:10:25.028
+<v SPEAKER_3>Also wir hatten da so ein bisschen was gefunden. Also jung ist es ja jetzt auch nicht mehr gerade. Also ich weiß jetzt nicht genau, wann es hochgekommen ist. Ich glaube irgendwann 90ern oder so. Also es ist halt nicht mehr jung, aber es ist halt, ich sag mal jetzt in der Regel halt auch kein Protokoll, was irgendwie groß exponiert ist. Also wenn wir jetzt zum Beispiel sagen, dass jetzt mal mit irgendwie normalen Netzwerkverkehr vergleichen, jeder von uns geht ins Internet, das redet permanent mit irgendwie unauthentifizierten Services, das ist halt bei Bluetooth in der Regel nicht so. Also wenn ich mir jetzt mein Handy mit irgendwie meinen Kopfhörern pair oder mit meinem Fitness-Tracker, dann redet letztendlich mein Handy im Normalfall nur mit meinen Devices und im Normalfall bin ich auch nicht sichtbar. Das heißt, diese Technik ist halt einfach nicht so exponiert und dadurch halt auch gegebenenfalls nicht so getestet. Und wenn man die jetzt dann natürlich in gewissen Kontexten einfach komplett offen macht und dann plötzlich Handys anfangen untereinander zu reden, ist das unter Umständen halt problematisch.
+
+01:10:25.368 --> 01:10:42.008
+<v SPEAKER_1>Weil ich habe jetzt eine Verständnisfrage und zwar, wie du es gerade gesagt hast, scheint es so zu sein, mein Handy kann gleichzeitig mit Geräten verknüpft sein, also zum Beispiel meinem Funkheadset, aber für den Rest der Welt unsichtbar sein.
+
+01:10:42.028 --> 01:11:35.768
+<v SPEAKER_3>Unsichtbar, also ich sag mal so, wenn ich jetzt nach Device suche, dann muss das Device mir halt aktiv antworten, so hey ich bin hier oder das Device muss halt selber sagen, so hey, hier bin ich, verbinde dich zu mir. Das ist dann halt so vom Protokoll mäßig her quasi, du bist sichtbar. Allerdings natürlich klar, wenn ich halt anfange, teure Hardware auszukaufen und wirklich mal den Datenverkehr auf dem Physi-Calayer, also letztendlich wirklich mit einem teuren Radio mitschneide, bekomme ich unter Umständen halt schon mit, okay hier ist ein Bluetooth-Gerät und kann halt unter Umständen auch Rückschüsse auf die Adresse ziehen, aber das sind halt nicht so ganz so trivial wie einfach nach Geräten zu suchen und das ist halt auch eine Technologie, die jetzt vom klassischen Smartphone, oder?
+
+01:11:35.788 --> 01:12:20.428
+<v SPEAKER_1>Aber das verstehe ich trotzdem nicht, also Bluetooth ist ja eine Funk-Technologie, ja, und es gibt eine Verbindung mit einem Kopfhörer und das heißt, mein Telefon sendet Bluetooth-Signale aus zu dem Kopfhörer, um miteinander zu kommunizieren, um zum Beispiel die Musik hinzuspielen, die ich gerade hören will, so das wird per Funk ausgeschaltet, das heißt, das ist ja also dann auch im physikalischen Raum, das heißt, andere Geräte, die erreichen ja diese Bluetooth-Signale und unsichtbar müsste doch dann eigentlich heißen, das Gerät sieht zwar das Bluetooth-Signal, sieht aber auch, das ist nicht für mich gedacht und das Gerät will auch gerade nicht gefunden werden, ich gucke quasi nicht hin, das ist also, Das kommt mir eher so vor wie Augen zu halten. Oder wie stelle ich mir das falsch vor?
+
+01:12:20.428 --> 01:13:00.068
+<v SPEAKER_3>Genau. Dieses Augen zu halten ist allerdings schon relativ tief in der Firmware erst mal integriert. Also da muss man halt schon die Firmware selber modifizieren, dass man das überhaupt mitbekommt. Und zweiter Punkt, der eigentlich hier relevanter ist, ist das, was wir vorhin noch gesagt hatten, das sogenannte Frequency Hopping. Das heißt, ich habe halt irgendwie 80 Kanäle und ich habe halt eine zu viele Gesequenz, mit der ich über diese Kanäle einmal rüberspringe. Und dann halt die Chance, dass man dort ein Paket trifft und dann braucht man noch mehrere Pakete in der Folge, dass man entsprechend Rückschlüsse ziehen kann. Das ist halt technisch nicht ganz so einfach.
+
+01:13:00.088 --> 01:13:16.588
+<v SPEAKER_1>Das heißt, wenn das in der Firmware da ist, das heißt, der Hersteller eines Gerätes oder des Betriebssystems, der könnte das Gerät dazu benutzen, aber eine App zum Beispiel nicht, weil eine App sozusagen spricht nur mit der Bluetooth-Firmware und muss dann sozusagen das nehmen, was die Firmware ihr gibt.
+
+01:13:18.188 --> 01:13:28.008
+<v SPEAKER_3>Genau, also auf der Firmware läuft dann, also auf einem Controller läuft ein Programm und eigentlich nur der Hersteller von diesem Bluetooth-Chip ist dann halt in der Lage überhaupt so was durchzuführen.
+
+01:13:29.468 --> 01:13:52.168
+<v SPEAKER_1>Okay, dann hab ich das besser verstanden. Ach so, genau, dann die Nachfrage noch, wenn das so ist, kannst du dann vielleicht noch einen Schritt genauer erklären, was dieses, wenn das Gerät sagt, hey Leute, hier bin ich, heißt das dann, dass es auf einem bestimmten, gibt es dann irgendwie in diesem Frequenzspektrum einen Kanal, der ist der Hallo-Kanal und dann melden sich dann die Geräte oder strahlen darauf aus oder wie funktioniert das?
+
+01:13:52.188 --> 01:14:28.588
+<v SPEAKER_3>Bei Bluetooth Low Energy ist es in der Tat so, dass es da letztendlich so einen Hallo-Kanal gibt oder ein paar Hallo-Kanäle, wo dann halt immer mal wieder Geräte sagen so hey, ich bin hier. Und wenn ich dann nach Geräten suchen möchte, dann gehe ich halt auf diesen Kanal und höre einfach meine Zeit lang zu. Bei Classic Bluetooth ist es halt so, dass das Gerät, das halt gerade scannt, erst mal letztendlich überall wieder fragt so hey, ist jemand da? Und wenn zufällig mal eine Kollision da ist, dann sagt das andere Gerät so ja, hier bin ich und kriegt so dann entsprechend die Response.
+
+01:14:28.608 --> 01:14:29.988
+<v SPEAKER_1>Das müssen aber beide Geräte wollen?
+
+01:14:32.448 --> 01:14:33.548
+<v SPEAKER_3>Ja, das müssen beide wollen.
+
+01:14:34.328 --> 01:14:59.228
+<v SPEAKER_1>Okay, dann habe ich das verstanden. Dann ist ja noch die andere spannende Frage, wenn das Angriffsszenario, das eine, das wir hatten, war ja, das Gerät sagt hallo und jemand ist böswillig dabei und kann dann sozusagen solche Fehler wie, du zum Beispiel gerade oder wie ihren gefunden habt, machen. Die andere ist ja, wenn ich mich mit so einem Gerät verbinde, wie ist denn das, wenn das Gerät bösartig ist?
+
+01:15:02.908 --> 01:15:26.188
+<v SPEAKER_3>Also wenn man jetzt wirklich sagt, verbinden mit Pern, ist es halt so, dass man über Bluetooth halt schon, also kennt man ja manchmal, dass dann so gefragt wird, möchte die das, darf dieses Device auf deine Kontakte zugreifen, also prinzipiell Kontakte kann man zugreifen.
+
+01:15:26.208 --> 01:15:33.548
+<v SPEAKER_2>Auch noch Tethering, Internet, also da hängen ja sehr viele Services mit drin oder auch Tastatureingaben, also es gibt ja ganz viele Dinge, die Bluetooth kann.
+
+01:15:37.068 --> 01:15:41.788
+<v SPEAKER_1>Na, aber das ist ja sozusagen, da muss man dann entweder das zulassen, dass das so ist, oder?
+
+01:15:48.548 --> 01:16:42.928
+<v SPEAKER_2>Ja, genau, also in der Regel schon. Es gab Anfang letzten Jahres, ich glaube unter dem Stichwort Bad Bluetooth oder so, es gab jedenfalls unter Android das Problem, dass es damals, also es ist inzwischen auch gepatcht, aber dass es möglich war, dass ich z.B. einen Pairing anfange als Headset und wenn das Headset dann irgendwann sagt, na jetzt bin ich aber auch Tastatur, dass es auf einmal plötzlich auch Eingaben machen konnte als Tastatur. Das heißt, auch da können natürlich Logikfehler passieren und generell kann man sich das halt erstmal so vorstellen von der Angriffsoberfläche oder von der Protokolltiefe auch, in dem wir tief die Pasa sind und wie viele Sachen vielleicht irgendwie gegen komische Angriffe verhuntbar sind. In dem Moment, wo ich einen Pairing habe, kann natürlich im Pasa viel mehr erreicht werden und viel mehr an irgendwie ich prüfe irgendwas nicht schief gehen.
+
+01:16:42.948 --> 01:17:09.088
+<v SPEAKER_1>Wie ist das mit so Angriffen, wo ich versuche bereits bestehende Pairings zu übernehmen oder mich da reinzuklingen? Also ich stelle mir so etwas vor wie, hey, der hat ein Bluetooth-Headset, das finde ich voll interessant mitzuhören, was der so redet. Deswegen mache ich ein Device, das so tut, als wäre es auch sein Bluetooth-Headset und klone einfach die Information. Geht das oder ist die, wenn die erstmal ausgehandelt haben, dass sie miteinander reden, ist die Verschüsselung da so stark, dass man da eigentlich nicht reinkommt?
+
+01:17:11.128 --> 01:18:00.648
+<v SPEAKER_3>Also im Idealfall, wenn halt alles sauber implementiert ist und jetzt keiner irgendwie beim Pairing dabei war, der böswillige Dinge getan hat, kann man in der Regel schon davon ausgehen, dass die beiden Geräte halt irgendwie dann kiesig ausgehandelt haben, die Kommunikation verschüsselt ist, damit halt erst einmal nicht abhörbar. Und wenn ich mich recht erinnere, wird auch abhängig von diesem Key halt, oder abhängig von geheimen Informationen, dann diese Hopping-Sequenz mitgefolgt. Das heißt, ich kann A einmal die Daten nicht entschließen und B bin ich ohne massiven Aufwand auch nicht mal in der Lage, diese Daten überhaupt zu entempfangen. Und ja, wenn ich jetzt dann einfach sage, so hey, ich bin hier ein Headset, dann würde halt unter Umständen das Handy hingehen, würde versuchen, sich mit dem zu perren, merken, okay, der Key, den er hat, der stimmt irgendwie nicht und dann einfach das Pairing verwerfen.
+
+01:18:03.668 --> 01:18:22.768
+<v SPEAKER_1>So, gibt es jetzt bei diesem oder andersherum, doch erstmal Bluetooth Low Energy, ist das sozusagen grundsätzlich was anderes oder all das, was wir jetzt gesagt haben, trifft mehr oder weniger auf diese beiden Klassen von Funksignalverarbeitung zu?
+
+01:18:22.788 --> 01:18:49.428
+<v SPEAKER_3>Also Bluetooth Low Energy in den oberen Layern, also wenn es dann so Richtung Betriebssystem geht, hat dann schon sehr viele Gemeinsamkeiten mit Classic Bluetooth, aber sobald man dann halt weiter runtergeht, also gerade mit wie funktioniert das Scanning, wie funktioniert das Connection Setup, da sind die beiden Protokolle doch eher, oder die beiden Klassen schon eher unterschiedlich.
+
+01:18:49.448 --> 01:18:54.608
+<v SPEAKER_1>Das heißt auch, es gibt andere Dinge, die kaputt sind, oder?
+
+01:18:54.628 --> 01:19:07.748
+<v SPEAKER_3>Einmal gibt es andere Dinge, die kaputt sind, ich sag mal so auf Firmware-Ebene, aber auf den höheren Ebenen, gibt es dann halt auch eher gemeinsame Dinge, die kaputt sind.
+
+01:19:07.768 --> 01:19:39.128
+<v SPEAKER_1>Ich kann mich gerade nicht entscheiden zwischen so, also vor allem was sie gesagt haben, das klingt schon eigentlich alles ganz plausibel und auch relativ gut abgehangen, ich kann meinem Headset schon vertrauen, und eigentlich klingt das so, als ob das gar nicht mehr ganz wäre. Wie ist denn das jetzt so im Gesamteindruck als Technologie, so Bluetooth, ja oder nein? Also wird es, oder andersrum, ist Bluetooth, wo man deiner Meinung nach noch weiter dran arbeiten kann? Oder ist das, wo du sagst, also eigentlich bräuchten wir für die Aufgabe, die Bluetooth gerade so wahrnimmt, mal was komplett Neues?
+
+01:19:42.228 --> 01:20:17.968
+<v SPEAKER_3>Also ja, komplett neu, also das Zeug ist halt schon irgendwie historisch gewachsen, aber komplett neu, also etwas neu bauen, das birgt halt auch immer die Gefahr, dass dann irgendwie wieder viel neuer Code auf kurze Zeit entsteht, der dann halt wieder Fehler hat, also ich glaube halt irgendwie, sich den Kram mal richtig sauber angucken würde helfen und gerade halt dieses Problem, dass man dann irgendwie letztendlich ein Firmwetschip hat, wo halt irgendwie Software draufläuft, die ich mir nicht mehr angucken kann, das ist natürlich so ein bisschen problematisch. Also im Idealfall natürlich irgendwie so offene Hardware wäre eigentlich mal ein schönes Konzept, wenn es irgendwie mal umgesetzt werden könnte.
+
+01:20:19.808 --> 01:20:42.348
+<v SPEAKER_1>Wie ist denn das jetzt, um zurück zum Thema der Sendung zu kommen, wir haben also diese Tracing-App, die ja jetzt im Prinzip macht, Bluetooth Low Energy und zwar ständig am Gucken, wer ist denn da in der Nähe? Ist das ein besonderer Angriffspunkt oder ist das nur ein weiterer Use-Case für Bluetooth Low Energy und deswegen nichts Besonderes?
+
+01:20:52.788 --> 01:21:03.788
+<v SPEAKER_3>Also, ich würde sagen, für klassisches Bluetooth Low Energy, wenn du wirklich nur dieses Scanning machst und jetzt nicht anfängst, mit Devices zu reden, ist dieses Bluetooth Low Energy Scanning eigentlich unproblematisch.
+
+01:21:03.808 --> 01:21:13.908
+<v SPEAKER_1>Aber du musst doch mit Devices reden, oder? Weil, wenn ich es richtig verstanden habe, ist ja die Idee des Contact Tracings, dass man diese pseudonymen Zahlen kurz austauscht. Das heißt, da muss irgendeine Art von Kommunikation stattfinden, oder nicht?
+
+01:21:14.988 --> 01:21:23.128
+<v SPEAKER_3>Ja, aber ein Weg. Also ich höre einfach nur zu, wer ist da und nicht. Ich rede mit jemandem und frage, wer bist du und was hast du heute gemacht?
+
+01:21:23.148 --> 01:21:39.188
+<v SPEAKER_1>Achso, okay, in meinem Kopf war das sozusagen eine Kommunikation, aber im Prinzip macht jedes Gerät gleichzeitig. Es endet aus, ich bin ABC und es hört zu, dass andere Leute rufen, ich bin BID. Aber das ist sozusagen nicht eine Hin- und Herkommunikation, sondern zwei getrennte Einwegkommunikationen.
+
+01:21:45.948 --> 01:22:57.768
+<v SPEAKER_2>Ja, also das ist nämlich genau der Teil, wie das in der Google und auch in der Android API dann eben laufen wird, dass es nur über Advertisements ist. Und genau dieser Teil, dass es nur Advertisements sind, ist das, was unglaublich wichtig ist, um eben Exploitbarkeit zu verhindern. Also genau dieser Teil und es ist auch so der Angriff, den Jan auch halt implementiert hat und so weiter und der jetzt auch online ist. Das ist einer, der mit Bluetooth-LE-Advertisements so nicht funktionieren würde. Und der war ja schon bekannt. Also ich mein, Reported hat ja den Anfang November. Und das heißt, dass sowohl auf Google als auch auf Apple-Seite denen durchaus bewusst war, dass es diese Sorte Angriff gibt und dass man eben auf gar keinen Fall aktive Verbindungen nutzen sollte, um eben genau den Angriffstyp zu verhindern. Jetzt ist es aber natürlich so, dass mit einer aktiven Verbindung auch immer mehr geht. Also im Sinne von, wenn ich eine aktive Verbindung habe, dann kriege ich vielleicht auch nochmal genauere Messungen hin, dies das jenes. Aber eben immer um den Preis der Angreifbarkeit auf der Protokollebende.
+
+01:22:57.788 --> 01:23:23.068
+<v SPEAKER_1>Das heißt also, wenn man bei diesem ähnlichen Szenario bleiben würde, dann müsste man, wäre jetzt sozusagen ein Punkt, wo man gucken würde, ist dieses so, also ich schicke ja als Information die Stärke mit, wie ich gesendet habe und ich schicke auch meine ID mit. Das heißt, das sind die Dinge, wo man sagen könnte, okay, wenn die Art und Weise, wie der Empfangende sich das ins System schreibt, wenn da irgendwas falsch gemacht werden würde, wäre das ein Angriffspunkt.
+
+01:23:23.088 --> 01:23:44.728
+<v SPEAKER_2>Ja, aber das ist eben nur eine Einweginformation und man fängt jetzt nicht an eine aktive, also man hat ja keinen Rückkanal, der fehlt eben an der Stelle. Und für einen Angriff brauche ich, je nachdem, aber für die meisten komplexeren Angriffe brauche ich eben einen Rückkanal, wo häufiger was hin und her geht und die nächste Antwort von der nächsten Anfrage usw.
+
+01:23:44.748 --> 01:24:10.528
+<v SPEAKER_1>Also genau, das war jetzt sozusagen mein Denkfehler. Ich hatte jetzt gedacht, aha, der hat ja gerade erklärt, wenn ich da eine Information in den Speicher schreibe und das an die falsche Stelle tue, dann kommt das System durcheinander. Aber weil das nur diese eine kleine Information ist, wo das passieren kann, bringe ich bestenfalls das Betriebssystem aus dem Tritt, kann aber nicht ein System übernehmen, weil ich gar nicht genug Informationen übertragen kann, um Programmcode mit zu liefern, der da ausgeführt wird.
+
+01:24:12.288 --> 01:25:38.228
+<v SPEAKER_3>Also da muss man erstmal ein bisschen unterscheiden zwischen, ich würde mal sagen, Firmware und dem Betriebssystem. Also das, worüber wir eigentlich reden müssten in dem Zusammenhang, ist halt ASLR, also Address-Base-Anomisierung. Und das sieht halt so aus, dass wenn wir uns den Speicher von einem Programm angucken, dann haben wir so etwas wie Adressen, das heißt, jedes Byte im Speicher hat halt irgendwie eine Nummer, wo es halt liegt. Und auf der Firma ist es halt so, dass es ein relativ einfacher Chip ist, und da ist es halt statisch. Das heißt, ich weiß genau im Speicher, was wo liegt. Und da prinzipiell geht es dann halt schon so über einen, also einfach nur zu sagen, einfach nur einmal zu senden, dass ich halt gezielt Dinge im Speicher überschreiben kann und damit dann halt irgendwie mein Ziel, was ich als Angreifer verfolgen will, auch irgendwie nutzen kann. Und bei Android oder bei allen Betriebssystemen, auch Windows, Linux, Mac OS etc. Es ist halt so, dass für die Prozesse dieses Adresslayout randomisiert ist. Das heißt, ich als Angreifer, ich weiß halt nicht, wo Sachen im Speicher liegen. Und das ist halt eine essentielle Information, die ich halt brauche, um Angriffe durchzuführen. Und wenn ich halt nur eine Einwegkommunikation habe, dann bin ich halt nicht in der Lage, von dem anderen Gerät irgendwie Informationen zurück zu bekommen.
+
+01:25:38.548 --> 01:25:56.968
+<v SPEAKER_1>Und meine Frage wäre, die Einwegkommunikation ist so gestaltet, dass ich mittels dieses... Also ich sende eine Information auf einem Weg dorthin. Und das ist nicht genug, um das Gerät dazu zu bringen, mir was zurückzusenden, obwohl das eigentlich gar nicht soll.
+
+01:25:56.988 --> 01:26:32.088
+<v SPEAKER_3>Also das Einzige, was du halt hättest, das wäre halt irgendwie dieses Advertisement, was halt das Handy sendet, aber du weißt halt auch nicht, wo es liegt. Das heißt, du kannst es irgendwie nicht überschreiben und nutzen, um irgendwie Daten zurückzubekommen von dem Device. Das ist halt so ein Henne-Ei-Problem. Rein theoretisch, unter irgendwelchen witzigen Umständen wäre es unter vielleicht möglich, aber es macht es einfach um Größenordnung schwieriger, überhaupt so einen Angriff selbst theoretisch überhaupt nur sich auszumalen.
+
+01:26:32.528 --> 01:27:35.368
+<v SPEAKER_1>Das andere Bedenken, das ich hätte, wäre ja so ein Privatsfern-Gedenken. Nämlich, wenn mein Gerät die ganze Zeit sagt, ich bin hier, ich bin so und so. Das so und so ist ein pseudonymisierter Code, der auch ständig geändert wird, also der wird nicht. Was mich aber frage ist, wenn man Bluetooth, also aus einem Netzwerk habe ich gelernt, also wenn wir über WLAN oder verkabeltes Netzwerk sprechen, dass die Geräte, die Netzwerkkarten, die haben noch mal eine eigene Adresse, eine sogenannte MAC-Adresse und die ist eigentlich auch immer mit dabei, wenn Kommunikation stattfindet. Was ich mich jetzt frage ist, wenn mein Smartphone den ganzen Tag in Zukunft nichts anderes macht, dann zu sagen, hey, ich bin hier und mein Pseudonymakod ist jetzt ABC und fünf Minuten später ist er BDE und so was, gibt es da überhaupt keine Daten, dass irgendjemand dazuhören kann und dann irgendwann auf die Idee kommen kann, Mensch, ich kann doch eigentlich genau rausfinden, wo er die ganze Zeit ist, wenn ich an verschiedenen Stellen der Stadt zum Beispiel einfach zugehört habe, was Smartphones da so adverteisen.
+
+01:27:37.188 --> 01:28:31.948
+<v SPEAKER_3>Also erstmal sowas wie Mac-Adressen, das gibt es auch in Bluetooth, die sehen eigentlich auch mehr oder weniger genau so aus, sind so zeitlang. Aber wenn wir jetzt wirklich sagen, wir machen nur Low Energy Advertisements und keine aktiven Verbindungen, Low Energy bietet halt auch die Möglichkeit, a, einmal die Adresse zu randomisieren und b, halt auch noch eine Adresse dann oder von einer Adresse zu senden, wo halt keine eingehenden Verbindungen erlaubt werden. Wenn wir jetzt halt wiederum sagen, wir machen erlauben Verbindungen, dann kann ich halt auch mit dem Handy vielleicht reden und fragen so, hey, was kannst du eigentlich und was sind deine supporteten Features und alles Mögliche und kann halt darüber dann gegebenenfalls die weiße Finger printen. Aber wenn ich halt ein Paket sehe von einer random Adresse, wird es halt schwierig da Rückschlüsse ziehen zu können.
+
+01:28:31.968 --> 01:28:38.288
+<v SPEAKER_1>Gibt es da in den Konzepten, die jetzt verhandelt werden, eine Festlegung auf ein oder anderes Konzept?
+
+01:28:40.768 --> 01:28:52.308
+<v SPEAKER_2>Also es geht tatsächlich darum, dass man zufällige Adressen hat etc. Also genau die Idee ist, dass man anonyme Advertisements hat, die nicht connectbar sind und so weiter.
+
+01:28:52.328 --> 01:28:59.108
+<v SPEAKER_1>Okay, da sind wir also auch safe. Vielleicht?
+
+01:29:01.168 --> 01:29:02.268
+<v SPEAKER_3>Also wenn es zu verwende...
+
+01:29:04.828 --> 01:29:07.008
+<v SPEAKER_1>Nein, du!
+
+01:29:07.028 --> 01:29:10.188
+<v SPEAKER_3>Also wenn es zu verwende wird, dann ist es safe.
+
+01:29:11.508 --> 01:29:48.428
+<v SPEAKER_1>So, dann sind wir, also ich weiß nicht... Ach so, eine spannende Sache noch. Es klingt jetzt alles ganz gut, aber morgen ist auch noch ein Tag und dann findet vielleicht doch irgendjemand irgendwas, wie man alleine durch Bluetooth-Advertisements im Low-Energy-Bereich unfassbar viele Dinge anstellen kann. Also interessant wäre ja fast schon, also man muss ja nicht immer das Gerät übernehmen. Manchmal vielleicht reicht es ja, wenn ich meine Adresse auf einem seltsamen Art und Weise mache und das andere Gerät kommt so durcheinander, dass es sich ausschaltet. Da habe ich also eine Denial-of-Service-Attacke, in dem ich einfach durch die Stadt laufe. Nur eine theoretische Möglichkeit.
+
+01:29:48.448 --> 01:30:12.748
+<v SPEAKER_2>Also alleine fürs Ausschalten musst du schon ziemlich weit kommen, weil normalerweise, wie gesagt, ist es realistischer, was zu finden, was nur im Chip ist. Und dann geht der Chip kurz aus, der rebootet innerhalb von, keine Ahnung, ein, zwei Sekunden und der Bluetooth-Demon restartet sich auch. Also bis du was findest, wo das ganze Handy sich neu startet, da musst du schon ziemlich fies im Treiber hängen.
+
+01:30:12.768 --> 01:31:05.668
+<v SPEAKER_1>Ja, aber folgen sie mir. Irgendjemand findet raus, wenn der Bluetooth-Demon startet, dann gibt es ein Ding, was passiert, und wenn ich weiß, dass das passiert, dann kann ich das machen und so weiter und so fort. Worauf ich hinaus will ist, vielleicht findet irgendjemand irgendwas Schlimmes. Und dann ist ja die spannende Frage, wie schnell sind eigentlich die Hersteller der Geräte und der Betriebssysteme, wenn solche Sicherheitslücken rauskommen und die gepatcht werden? Also wenn ich jetzt Jan das von dir gehört habe, letztes November, das ist halt irgendwie zugemacht worden, oder andersrum, das ist doch erst mal vielleicht gefragt, wenn jetzt so eine App kommt, die wahrscheinlich auf mindestens 70% aller Smartphones, das ist ja die Forderung, 70% ist glaube ich die Zahl, wenn alle die Contact Tracing App haben, dann ist das sinnvoll. Das ist doch ein ziemlich interessanter Forschungsgegenstand, oder?
+
+01:31:09.468 --> 01:32:00.608
+<v SPEAKER_2>Also die Sache ist erst mal die, wo ist überhaupt diese neue Schnittstelle drin? Und unter iOS ist es eben so, dass die Geräte sehr schnell upgedatet werden und die wenigsten Leute haben irgendwie ein unglaublich unupgedatetes altes iOS. Die meisten sind einfach im Auto-Update und kriegen das über Nacht, wenn da was Neues kommt. Unter Android kann das komplizierter sein, aber jetzt wieder die Frage, wo ist die Lücke? Und das ist eben so, dass soweit ich es verstanden habe, das AP-Update, weil eben sehr viel so zugänglich ist unter Android, über den Play Store kommen wird. Und somit ist es eine Sache, also die meisten Dinge sollten relativ gut fixbar sein. Wenn es jetzt was unter Android auf Betriebssystem oder Chip-Ebene wäre, dann kann es eine Weile dauern.
+
+01:32:02.868 --> 01:32:23.008
+<v SPEAKER_1>Das ist ja generell, wenn ich so denke, was Leute über die verschiedenen Handybetriebssysteme sagen, also habe ich zumindest im Kopf, dass es bei Android immer so ist, es gibt immer so die aktuelle Generation, die relativ gut versorgt wird. Aber gerade die alten Geräte sind wohl so, dass da oftmals auch jahrelang irgendwie nichts passiert.
+
+01:32:24.908 --> 01:33:47.128
+<v SPEAKER_3>Ja, also bei Android, es hängt auch so ein bisschen damit zusammen, wenn wir jetzt eine Lücke haben, wird sie jetzt gerade aktiv ausgenutzt oder nicht. Wenn sie jetzt neu ist, nicht ausgenutzt ist, dann kann es halt, wie in unserem Fall schon mal gilt, jedenfalls 90 Tage dauern. Wenn jetzt wirklich aktiv etwas ausgenutzt wird, gerade in dem Corona-Kontext, was sehr viele Leute betrifft, kann ich mir schon vorstellen, dass Google selber relativ schnell einen Patch rausbringt. Dann kommt jetzt das Aber, dass die Vendoren, zum Beispiel jetzt Samsung, dann erstmal dann natürlich das Update, was dann sowieso schon öffentlich ist, wo halt man auch sehen kann, was wurde geändert, dann auch erstmal nehmen muss, es muss es lokal anpassen. Das dauert nochmal erstmal zwei Wochen selbst für die aktuellsten Smartphones. Und für die älteren Smartphones, also älter heißt halt irgendwie, die vielleicht anderthalb Jahre alt sind, die bekommen dann halt in der Regel nur noch quarterly Updates, das heißt alle drei Monate, was schon mal ein relativ langer Zeitraum ist. Und wenn es halt irgendwie älter als zwei Jahre ist, dann bekommst du eigentlich gar nichts mehr. Und das ist halt auch noch so ein gewissermaßen Problem, dass jetzt halt auch irgendwie viele Leute mit Handys rumlaufen, die lange keine Updates mehr gesehen haben. Und in dem Zusammenhang ist halt natürlich dann irgendwie Bluetooth und ich rede mit allem, also wirklich jetzt reden mit, ich verbau eine Verbindung auf, unter Umständen eine relativ schlechte Idee.
+
+01:33:49.068 --> 01:34:36.388
+<v SPEAKER_2>Aber es ist auch generell an der Stelle, wo ich schon sagen würde, ja, Bluetooth ist eine schlechte Idee, wenn ich ein Smartphone habe, was schon lange keine Sicherheitsupdates mehr gesehen hat. Aber auch im Internet surfen und auf irgendwelche Links klicken ist eine unglaublich schlechte Idee, wenn ich mein Handy schon lange nicht mehr abgedatet habe. Das heißt, das ist einfach so ein bisschen so, was ist eigentlich gerade mein persönliches Aluhut-Level. Und es ist eben leider so, dass Sicherheit eben tatsächlich kostet, und zwar den Preis, dass man aktuelle Chips hat und ein aktuelles Betriebssystem. Und das kostet eben Geld tatsächlich. Und auch, dass der Hersteller eine Updates rausbringt, auch das, da steckt ja jemand dahinter. Und das sind alles auch reale Kosten, die irgendwo dahinterstecken.
+
+01:34:36.428 --> 01:35:11.628
+<v SPEAKER_1>Na ja, aber da kommen wir dann schon irgendwann auf den Anzündenbereich, weil dann müsste man vielleicht doch wieder den Kapitalismus anzünden, weil es gibt ja einfach Leute, die können sich das gar nicht leisten. Das ist ja so, also ja, im Prinzip klar, weiß ich, wenn ich ein aktuelles Smartphone habe, dann ist das sicherer. Aber das ist ja schon so, dass wir in der Gesellschaft leben, wo wir jetzt sagen, also es gibt jetzt diese App, die solltet ihr gemöglich alle haben, wir verpflichten euch nicht gesetzlich, aber der soziale Druck ist schon ganz schön groß, dass ihr euch das jetzt mal bitte alle installiert. Das ist schon, finde ich, eine Zwickmühde, die nicht so ganz einfach ist.
+
+01:35:15.568 --> 01:35:37.388
+<v SPEAKER_3>Ja, also ich muss halt auch sagen, also wenn man jetzt mal irgendwie guckt, was so aktuelle Smartphones kosten, reden wir, keine Ahnung, so als Preis mal 500 Euro, als schöne Runde Zahl, hält dann irgendwie zwei Jahre. Das heißt, ich zahle dann letztendlich pro Jahr 250, also pro Monat letztendlich 20 Euro, dafür, dass ich dann hoffentlich halbwegs aktuelle Updates bekomme. Das ist halt natürlich ein schöner hoher Preis.
+
+01:35:37.408 --> 01:35:45.168
+<v SPEAKER_2>Das neue iPhone SE 2 kostet 400 Euro und das kriegt vermutlich eher eine 5 Jahre Update.
+
+01:35:45.188 --> 01:36:08.048
+<v SPEAKER_3>Ja, wenn es halt 5 Jahre hält, ist es ja auch noch ganz gut. Ich meine, jetzt irgendwie regelmäßig neue Smartphones herstellen, ist jetzt auch nicht sonderlich gut für die Umwelt irgendwo. Und da ist glaube ich dann gegebenenfalls wirklich so die beste Methode sagen, so ok, Hersteller, war nett mit dir, ich bügele jetzt was eigenes rauf. Was allerdings natürlich auch nicht für jedermann zwangsweise eine Lösung ist.
+
+01:36:08.068 --> 01:36:20.928
+<v SPEAKER_1>Wäre es denn dann sozusagen eine Idee oder bessere Idee zu sagen, wir lassen das mit der App, das kriegt einfach jeder so einen Token, so einen Schlüsselanhänger?
+
+01:36:20.948 --> 01:36:56.268
+<v SPEAKER_3>Ich weiß nicht gerade nicht, wie die Hardware-Lieferzeiten aus China sind oder ob wir das hier lokal herstellen können. Also wenn es dann halt auch wieder Monate dauert, also klar, wenn ich so einen Token habe und im Zweifelsfall was passieren kann, ist halt, dass der Token hochgenommen wird. Also dann sind zumindest keine persönlichen Daten wie Kontakte, Chatverläufe oder so betroffen. Er hat auf jeden Fall natürlich einen Sicherheitsvorteil, aber jetzt halt auch umweltstechnisch betrachtet, kostentechnisch betrachtet, da müssen wir gucken, was die Dinger kosten. Und wie lange das überhaupt dauert, so etwas zu realisieren, das stelle ich mir schon nicht gerade unaufwendig vor.
+
+01:36:56.288 --> 01:37:17.788
+<v SPEAKER_2>Okay, also diese Bluetooth-Finder-Devices, die es halt schon gibt, also die haben natürlich noch nicht die passende Firmware, aber die sind so im Kostenbereich von irgendwie 10 bis 30 Euro oder so. Aber das wäre halt was, was man sich nur dafür kauft und so. Also es ist halt wieder so, es ist das wert, weil ein Handy habe ich ja eh.
+
+01:37:17.808 --> 01:37:58.628
+<v SPEAKER_1>Ja, wäre die Idee, ob man nicht, ob der Starter nicht sagt, ne, also hier, da ist dein Token. Deswegen die Frage, dann würde das vielleicht zwangsweise, ah, das ist deine Bluetooth-Diskussion, vielleicht in einer anderen Stelle fühlen. Ich nehme aus dieser Bluetooth-Diskussion auf jeden Fall mal ein Ergebnis mit, was mich auch an den Rest der ganzen Sache erinnert, nämlich, also im Prinzip, wenn man so ganz die freie Wahl hätte, würde man das jetzt nicht unbedingt wollen, aber im Rahmen der Möglichkeiten, die wir haben und der Situation, die wir uns gerade befinden, ist es nicht die allerschlechteste Idee. Kann man das so zusammenfassen?
+
+01:38:01.048 --> 01:38:20.268
+<v SPEAKER_3>Ja, also, ich glaube, die Daten, die man da halt gewinnt, können halt schon auf jeden Fall helfen, das Ganze unter Kontrolle zu kriegen. Und ich weiß nicht, wenn halt der eine oder andere sowieso noch ein altes Smartphone rumliegen hat, was nichts kann, ist es vielleicht auch ein guter Zeitpunkt, das mal zu recyceln.
+
+01:38:20.288 --> 01:38:31.048
+<v SPEAKER_1>Oh Gott, ich hab noch so ein 100-Euro-Smartphone von vor acht Jahren oder so was. Kann bestimmt Bluetooth. Man weiß es nicht so genau.
+
+01:38:35.248 --> 01:38:39.668
+<v SPEAKER_2>Bei acht Jahren kommen wir langsam in die Region.
+
+01:38:39.688 --> 01:38:57.728
+<v SPEAKER_1>So, habe ich euch jetzt alles gefragt oder habt ihr noch Dinge auf dem Herzen gesagt, da müssen wir auf jeden Fall auch noch drüber sprechen? Yes, sehr gut. Okay, dann vielen Dank, dass ihr heute da wart.
+
+01:38:58.608 --> 01:39:10.108
+<v SPEAKER_2>Ich sehe gerade noch irgendwas, blinkt noch im Hack-In. Moment, Moment. Tolle Tipps, kauft ja ständig neue iPhones.
+
+01:39:10.128 --> 01:39:55.088
+<v SPEAKER_1>Kapitalismus anzünden ist die andere Variante, die steht immer auch immer offen. Jiska und Jan, vielen Dank, dass ihr heute da wart. Es war mir ein großes Vergnügen, dass ihr meine und ich hoffe auch die Behörer in eure Fragen so geduldig beantwortet habt. Kann man euch irgendwo folgen, euch zugucken, dreht ihr irgendwo auf demnächst? Kann man euch lesen, habt ihr Blogs? Na ja, auftreten, ihr wart auf dem Divog, dieser verteilten Konferenz vom Club. Das war auch ein Auftritt in diesem seltsamen Internet, von dem wir mal reden. Nein, aber kann man... Ich weiß auch nicht, ich habe nur davon gehört. Keine Blogs, Twitter-Accounts, wo ihr euch selbst empfehlen wollt.
+
+01:39:55.108 --> 01:40:19.428
+<v SPEAKER_2>Ich habe den öffentlichen Adnerdine, also N-A-E-H, wie das Nähen, also der Nähner sozusagen. Da müssen die Leute aber auch darunter leiden, dass die Hälfte der Tweets ich übers Nähen twittere und die andere Hälfte ist halt technisch. Und ich weiß nicht, Jan nutzt Twitter nicht so wirklich.
+
+01:40:20.508 --> 01:40:37.608
+<v SPEAKER_3>Also ja, ich weiß nicht, ich twitte halt irgendwie selten. Der ganze Trend ist mir vorbei gegangen. Also keine Ahnung, bollack42 findet man irgendwie. Also GitHub eigentlich. Da hatte ich auch mal irgendwie so aus dem Blog angefangen, der aber auch seit Jahren keine Abwärtsmöglichkeiten mehr gesehen hat. Gut.
+
+01:40:38.408 --> 01:40:43.268
+<v SPEAKER_2>Man könnte dir auf GitHub folgen. Vermutlich akkurater.
+
+01:40:43.288 --> 01:41:00.188
+<v SPEAKER_1>Okay, das kann man die Show notes schreiben. Und die andere Frage ist noch, wenn jemand diese Sendung gehört hat und noch nicht genug hat, sondern ein bisschen mehr sich tief in dieses Thema Bluetooth, Bluetooth LLE einlesen will. Habt ihr so eine Quelle, wo ihr sagt, das ist vielleicht für den interessierten Enthusiasten möglicherweise ein guter Anfang?
+
+01:41:04.968 --> 01:41:16.008
+<v SPEAKER_2>Ich meine, wir haben so ein paar Talks, also auf Medialzitze CDE, da ist ja auch der von Jan dabei, da sind ein paar von mir. Bluetooth ist halt sehr, sehr, sehr komplex.
+
+01:41:17.568 --> 01:41:19.768
+<v SPEAKER_1>Also wird auch schnell komplex.
+
+01:41:19.788 --> 01:41:26.108
+<v SPEAKER_2>Ja, wenn man sich einfach nur für Security interessiert, dann muss man halt eigentlich 3000 Seiten lesen.
+
+01:41:28.808 --> 01:42:04.588
+<v SPEAKER_1>Okay, ich sage, wir belasten das erstmal bei den Vorträgen, verlinken die vielleicht auch noch in den Show Notes. Danke euch nochmal recht herzlich, dass ihr heute da war. Da wart. Mal gucken, was das so alles bringt. Das freut mich sehr. Liebe Hörerinnen, dann verabschieden wir uns von euch. Vielen Dank, dass ihr dabei wart. Und wir hören uns vermute ich mal in einem Monat wieder. Und mir bleibt heute nur noch eine Sache zu sagen. Lasst euch nicht überwachen und verschlüsselt immer schön eure Backups.

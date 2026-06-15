@@ -1,0 +1,781 @@
+WEBVTT
+
+00:03:16.299 --> 00:03:40.279
+<v SPEAKER_2>Und damit herzlich willkommen zum Chaos Radio 236 live aus dem Chaos Computer Club in Berlin. Das heißt, wenn ihr gerade mit dem Auto irgendwie über die Friedrichstraße treibt und nicht wisst, wo ihr hin paddeln sollt, kommt vorbei, könnt ihr euch live angucken. Wir reden die nächsten zwei Stunden über Intrusion Detection und Incident Response. Und das ist seit langem mal wieder ein Titel, den ich, bevor ich ihn gesagt habe, eine Viertelstunde vor dem Spiegel geübt habe. Zum Gast sind heute Sebas, hallo.
+
+00:03:46.139 --> 00:03:46.699
+<v SPEAKER_3>Guten Abend.
+
+00:03:47.279 --> 00:03:55.819
+<v SPEAKER_2>So, und könnt ihr nochmal, also Intrusion Detection, Incident Response auf Deutsch übersetzen? Was ist das genau, Mirar?
+
+00:03:55.839 --> 00:04:05.659
+<v SPEAKER_4>Ja, das ist einfach die Fähigkeit, einen Eindringling oder einen Vorfall erst mal überhaupt zu erkennen und dann eben darauf zu reagieren. Also das Netzwerk wieder schön heile zu machen.
+
+00:04:05.679 --> 00:04:09.099
+<v SPEAKER_2>Ich wollte gerade sagen, ein Vorfall wo?
+
+00:04:09.119 --> 00:04:14.339
+<v SPEAKER_4>Allgemein im Computernetz, wobei man jetzt natürlich auch die Begrifflichkeiten sicherlich übersetzen kann.
+
+00:04:15.079 --> 00:04:30.259
+<v SPEAKER_2>Aber das ist schon ein wichtiger Unterschied. Wir reden heute nicht sozusagen, also nicht hauptsächlich zumindest darüber, was passiert, wenn ein einzelner Computer irgendwie befallen ist. Und es geht schon eher um die eine Ebene größer. Es gibt ja ein Netzwerk, das kaputt ist oder sozusagen oder mehrere Computer auf einen Schlag. Ist das richtig?
+
+00:04:30.499 --> 00:04:45.559
+<v SPEAKER_4>Ja, also wir sprechen ja heute auch nicht primär über private Netze, wie man sie in einem ein oder zwei Personenhaushalt vorfinden würde, sondern eher über Unternehmensinfrastrukturen und was dort alles passieren kann.
+
+00:04:45.579 --> 00:05:13.559
+<v SPEAKER_2>Und wir haben also extra sozusagen für das, also nicht wir, aber jemand hat extra für die heutige Sendung was vorbereitet und im Laufe der Woche einen riesigen Angriff gefahren auf verschiedene Computersysteme, die unter dem Namen Petya, Not Petya, läuft. Und das sah erst aus wie eine ganz normale Ransomware, also auch schöne Zeit in dem Leben, wenn man sagt schon so ganz normale Ransomware, also eine Software, die Rechner befällt und dann Inhalte verschlüsselt und sagt, gib mir Geld, dann entschlüssel ich deine Inhalte wieder.
+
+00:05:14.499 --> 00:05:16.559
+<v SPEAKER_3>Da war die Intrusion Detection echt einfach.
+
+00:05:17.879 --> 00:05:52.319
+<v SPEAKER_2>Da läuft man auf dem Monitor und dann hat man gesehen. Aber wir wollen, bevor wir sagen, über das, was dahinter liegt reden, hätte ich gerne noch, weil wir auch gerade diesen schönen aktuellen Anlass haben, genauer erklärt bekommen, was da genau passiert ist. Und dann im Nachhinein sozusagen gucken, was wäre denn der Job von jemand, der Intrusion Detecting und Incident Response macht. Jetzt hattet ihr mir im Vorfeld der Sendung schon gesagt, das ist gar keine normale Ransomware, sondern es ist ein bisschen mehr passiert, oder es ist ein bisschen anders. Was unterscheidet denn jetzt diesen Schädlingen von den Schädlingen, die ganz normale Ransomware sind?
+
+00:05:52.339 --> 00:06:25.659
+<v SPEAKER_4>Also aktuell scheint da Konsens zu sein zwischen allen größeren Analyse- und AV-Buden, dass das eben gar keine klassische Ransomware ist, also die jetzt hingeht und wirklich probiert Geld zu erpressen, sondern dass das ein sogenannter Wiper ist. Also in irgendeiner Form ein Tool, was eigentlich Schaden anrichten soll, indem Daten dann unzugänglich gemacht werden, eben durch Verschlüsselung oder eben durch überschreiben. Und dass der Angreifer da in dem Fall dann aber wirklich aktiv probiert hat, das Tool aussehen zu lassen, als wäre es jetzt eben Petya oder eben auch GoldenEye, also die klassischen Ransomware-Trojaner.
+
+00:06:26.359 --> 00:06:35.339
+<v SPEAKER_2>Aber warum? Also warum lässt man eine Software, die Dinge kaputt macht, aussehen, wie eine Software, die Dinge nur halb kaputt macht? Was ist der Vorteil davon? Was ist die Motivation dahinter?
+
+00:06:36.439 --> 00:07:08.919
+<v SPEAKER_4>Naja, das hat natürlich einen gewissen Impact, gerade auch pressetechnisch, weil jetzt in letzter Zeit relativ viel über Ransomware berichtet wurde, dass sich dadurch vielleicht einfach ein größeres Medienecho erhofft wurde, was ja auch offensichtlich funktioniert hat. Oder eben unter Umständen auch einfach so ein bisschen das Irreführen der AV-Vendoren, dass wenn vielleicht zuerst Signaturen anschlagen, die typischerweise auf irgendwie so ein altes Petia oder so was anschlagen, dass dann unter Umständen vielleicht erst mal diese Welle so gar nicht identifiziert wird, dass das wäre vielleicht ein anderer Beweggrund, der denkbar ist.
+
+00:07:08.939 --> 00:07:38.779
+<v SPEAKER_3>Also vielleicht kann man kurz erklären, warum man zu der Vermutung oder zu der relativ klaren Hypothese gekommen ist, dass es den Leuten dabei nicht darum geht, Dateien wieder zu entschlüsseln und und somit Geld zu verdienen. Die haben eine Reihe an ganz guten Kombinationen gemacht. Sie haben also einmal diese von WannaCry schon bekannten NSA Exploits genutzt, Eternal Blue. Also das, was wir damals schon gesehen haben, was auf die SMB-Fragamen geht.
+
+00:07:38.799 --> 00:07:56.659
+<v SPEAKER_2>Was ich damals nicht gesehen habe, es gibt ein Paket von Sicherheitslücken, das von dem oder dem, nee, doch dem oder dem. Shadow Brokers veröffentlicht wurde. Da ist eine Sicherheitslücke drin, die der NSA schon sehr lange kannte, was wiederum interessant ist, weil manche Leute argumentieren, dass Geheimdienste keine Sicherheitslücken horten sollen.
+
+00:07:56.679 --> 00:07:57.479
+<v SPEAKER_3>Ich zum Beispiel.
+
+00:07:58.179 --> 00:08:06.839
+<v SPEAKER_2>Und die wurden dann ausgenutzt, um so genau eine Ransomware an den Start zu bringen, diese WannaCry nämlich. Und das nutzen die aber nicht nur das, da war noch mehr drin.
+
+00:08:06.859 --> 00:08:42.519
+<v SPEAKER_3>Die haben also noch, also bei einem befallenen Rechner schaut sich das mit wahrscheinlich mit so einem Code, der aussieht, als wäre der aus dem, ja wie hieß das nochmal, was im Bundestag auch hing? Mirak, ich bin wegen deinem Namen irritiert. So ein Tool, was sich quasi in so einer Windows-Umgebung umschaut, was es da für andere Rechner gibt und die dann mit den Passwörtern, die es irgendwo andershergeholt hat, sich auf den anderen Rechnern noch umschaut. Also quasi die Lateral Movement Phase auch nochmal automatisiert.
+
+00:08:42.539 --> 00:08:43.199
+<v SPEAKER_2>Was ist deine Lateral?
+
+00:08:43.219 --> 00:09:11.859
+<v SPEAKER_3>Ich komme gerade zu, weil ich kenne, laterale Bewegungen heißt, du kommst quasi von außen in so ein Netzwerk rein und Lateral setzt du den Seiten. Das heißt, du vermutest, du bist in einem Unternehmensnetzwerk gelandet. Du hast jetzt Glück gehabt und einen von 1000 Rechnern infiziert. Und jetzt machst du etwas, was sich quasi Laterale Bewegung nennt, dass du also innerhalb dieses Netzwerkes dich umschaust und zusiehst, ob du andere oder attraktivere Ziele findest. Und diesen Prozess haben die auch automatisiert.
+
+00:09:11.879 --> 00:09:19.159
+<v SPEAKER_4>Man kann es mit Aufklärung zusammenfassen. Du betreibst quasi eigene Aufklärung als Angreifer in der Infrastruktur, um dir ein Schaubild darüber zu verschaffen.
+
+00:09:19.339 --> 00:09:20.679
+<v SPEAKER_2>Was hast du eigentlich in der Infrastruktur?
+
+00:09:20.699 --> 00:09:22.579
+<v SPEAKER_4>Alles für Komponenten und für Accounts.
+
+00:09:22.599 --> 00:09:28.479
+<v SPEAKER_2>Aber das ist nur, damit ich es richtig verstehe, du willst Aufklärung betreiben, deswegen sitzt aber niemand der Aufklärung betreibt.
+
+00:09:28.499 --> 00:09:29.459
+<v SPEAKER_4>Nein, das ist automatisiert.
+
+00:09:29.479 --> 00:10:24.099
+<v SPEAKER_3>Das macht ein Tool, ja. Du gehst davon aus, dass der erste Rechner, den du in diesem Netzwerk erwischt hast, nicht unbedingt der attraktivste für dich ist. Dass du jetzt was, weiß ich, du hast jetzt vielleicht irgendeinen normalen Mitarbeiter oder eine Mitarbeiterin oder was auch immer. Und du willst aber eigentlich irgendwo an so einen richtig schönen, saftigen Server, der sich vielleicht noch zwei Ebenen weiter befindet. Das haben sie schön da reingepflanscht. Und dann irgendwie noch, da sind aber die Analysen, die ich bisher gelesen habe, noch nicht so ganz eindeutig, eine Schwarzstelle genutzt in einer in der Ukraine verwendeten Steuer-Abrechnungssoftware namens MEDOC, die irgendwie bei ihrem Update-Prozess irgendwie die Signaturen nicht richtig geprüft hat. Also nicht sichergestellt hat, nicht ordnungsgemäß sichergestellt hat, dass dieses Update jetzt wirklich vom Hersteller kommt. Und diese Schwarzstelle haben sie da auch noch irgendwie drin. Das heißt, du hast eine große Kombination an Schwarzstellen.
+
+00:10:24.119 --> 00:10:42.959
+<v SPEAKER_2>Warte mal, da muss ich kurz eine Nachfrage stellen. Weil eine Software hat ein Update bekommen, dass das falsche Update war und hat dann sozusagen das falsche Update aber eingeladen, weil es sozusagen so gebaut war, dass es aussah wie ein richtiges Update für die Software zumindest. Die Frage ist, wie ist die Software verantwortlich, wofür hat denn dieses Update gekommen?
+
+00:10:43.239 --> 00:10:50.059
+<v SPEAKER_3>Also das ist der Teil, der glaube ich bisher noch nicht so hundertprozentig aufgeklärt wurde.
+
+00:10:51.339 --> 00:11:29.819
+<v SPEAKER_4>Man vermutet aktuell, aber wie gesagt, das sind Vermutungen, dass tatsächlich der Update-Server in irgendeiner Form dann komprimitiert wurde. Das wurde eben in den Raum gestellt, weil diese initiale Zahl von Erstinfektionen relativ hoch war. Also das waren halt so viele Rechner, dass man gesagt hat, so typische Drive-By- oder Mittelangriffe erreichen typischerweise nicht so eine Anzahl an Systemen direkt, dass man das irgendwie so sinnvoll machen könnte. Das heißt, es ist schon relativ wahrscheinlich, dass tatsächlich von eben dieser Steuersoftware, die so älsterartig ist, dass da irgendwie Infrastruktur kompromittiert wurde.
+
+00:11:31.039 --> 00:11:44.059
+<v SPEAKER_3>Die sagen natürlich, war nicht so. Aber jetzt um ganz kurz zu dem Punkt zu, du hast mehrere Schwachstellen, du hast so eine Software, die aussieht wie ein Ransomware-Trojaner, den man schon seit 2016, glaube ich, zum ersten Mal kennt.
+
+00:11:44.079 --> 00:11:48.019
+<v SPEAKER_4>Petya ist tatsächlich, also der Code, der wurde auch schon gehandelt.
+
+00:11:48.039 --> 00:11:57.119
+<v SPEAKER_3>Genau, das waren die, die auch irgendwann, die hatten irgendwann so ein, wie nennt man das, Affiliate-Modell, dass du irgendwie sagen konntest. Ja, das waren die.
+
+00:11:57.139 --> 00:12:14.459
+<v SPEAKER_2>Um das noch zu erklären, kurz gesagt, das waren die. Also es gab eine Ransomware, die hat Rechner verschlüsselt und hat gesagt, also entweder gibst du uns irgendwie, weiß ich nicht, X-Bitcoins oder aber du reichst diese Software, du infizierst andere Rechner und wenn zwei Zahlungen eingegangen sind, war es nicht so?
+
+00:12:14.479 --> 00:12:19.419
+<v SPEAKER_3>Das, was ich meinte, ist, die haben einfach angeboten, wir bauen dir deinen eigenen Petia.
+
+00:12:19.439 --> 00:12:21.099
+<v SPEAKER_2>Ach so, der.
+
+00:12:21.119 --> 00:12:30.999
+<v SPEAKER_3>Der hat dann eine spezifische ID, die uns sagt, dass das deiner ist. Und wenn du Leute damit infizierst, dann kriegen wir 30 Prozent und du 70 oder so.
+
+00:12:31.619 --> 00:12:35.139
+<v SPEAKER_2>Die Schlechtigkeit des Menschen ist unfassbar. Niemand würde sowas bauen, wenn er nicht glaubt, wo das geht.
+
+00:12:35.619 --> 00:13:06.919
+<v SPEAKER_3>Um das ganz kurz zu erklären, Leute massenhaft mit Ransomware zu infizieren, ist ein anderer Spezialbereich als Ransomware zu schreiben. Und Ransomware zu kombinieren mit mehreren verschiedenen Exploits und einer relativ guten Lateral Movement Routine, ist auch nochmal eine andere Aufgabe. Aber immer, wenn du Ransomware rausbringst, möchtest du ja eigentlich, dass deine Kunden eine Möglichkeit haben, dich zu bezahlen, weil du möchtest ja am Ende Geld haben. Ganz kurz, damit ich endlich zu meinem Punkt komme, Marcus.
+
+00:13:06.939 --> 00:13:11.439
+<v SPEAKER_2>Aber warte, nein. Kunden sind sozusagen die, die in den Rechtsabschlüssel wurden.
+
+00:13:11.979 --> 00:15:14.739
+<v SPEAKER_3>Genau, die Kunden, denen du ja die Dienstleistung erbringst, dass sie wieder in ihre Dateien kommen. Du möchtest natürlich, dass du relativ einfach denen helfen kannst, gegen Geld ihre Dateien wieder zu entschlüsseln. Und das, was wir bei diesem Partner sehen, ist, diese Verschlüsselung funktioniert gut, das Ding verbreitet sich automatisch weiter. Das ist alles sehr schön gemacht. Und für die Bezahlung haben sie dann irgendwie so was angegeben wie, ja, hier ist deine Kundennummer und jetzt schreib uns mal eine E-Mail und dann klären wir das mit der Bezahlung. So und wenn du, wie du ja gerade schon angesprochen hattest, wenn du am Anfang so hohe Infektionsraten hast und du weißt auch, dass du die erzielst, dann bist du echt ein bisschen verrückt, wenn du das per E-Mail abhandeln willst. Erstens, weil du das zeitlich nicht hinbekommen wirst. Zweitens, weil du einen sogenannten Single Point of Failure hast, weil nämlich der E-Mail-Anbieter, wie in diesem Fall auch geschehen, sagt, ne, das Konto machen wir zu. Und damit bist du quasi von deinen Kunden abgeschnitten und auch von deinem Geld. Und so einen Fehler machst du als fortgeschrittener Ransomware-Autor 2017 einfach nicht mehr. Man weiß einfach, wie das funktioniert und da gibt es gut abgehangene Systeme, um solche Zahlungen tatsächlich zu vollautomatisieren. Das haben wir zu ersten Mal, hab ich das irgendwie bei Loki gesehen. Loki konnte das mehr oder weniger dunkel durchmachen. Da musste niemand mehr irgendwo sitzen und irgendwas kontrollieren. Dann wurde einfach geguckt, hat diese Bitcoin-Transaktion stattgefunden? Ja, also Schlüssel rausgeben. Und all das gab es hier jetzt nicht. Du hast also eine hochspezialisierte, sehr schön gebaute Ransomware mit einem Bezahlprozess hintendran, der einfach den niemand ernsthaft so gestalten würde, der vorhat, sich zur Ruhe zu setzen oder einen Ferrari zu kaufen. Und daher kommt halt diese Hypothese, dass man hier sagt, das kann denen nicht darum gegangen sein, Geld zu verdienen, weil dann hätten sie nicht so viel Arbeit reingesteckt und am Ende so dilettantisch das in Kassos gemacht.
+
+00:15:15.099 --> 00:15:26.279
+<v SPEAKER_2>Der Dilettantismus ist aber auch so groß, dass man versucht, nicht durch eine Theorie zu erklären, was man auch durch Dummheit erklären kann. Aber das ist dann doch ein Schritt zu weit. Da sagt man dann doch so, nee, das ist zu absurd.
+
+00:15:26.299 --> 00:15:44.079
+<v SPEAKER_4>Das ist einfach ein operationeller Fehler. Normalerweise braucht man ja eben auch noch mehr als dieses eigentliche, ich hab jetzt irgendwo eine Bitcoin-Wallet, wo jetzt mein Geld reingeht, sondern was eben auch gerade schon erwähnt wurde, ich muss ja irgendwie meine Transaktion verifizieren, dass das jetzt von dem richtigen Kunden kam. Dann muss ich in der Regel meine Bitcoin nochmal waschen. Wenn ich jetzt einzelne Wallets habe.
+
+00:15:44.099 --> 00:16:03.199
+<v SPEAKER_2>Ich muss an dieser Stelle, weil ich immer versuche alles zu erklären, aber jetzt sozusagen jetzt noch Bitcoin zu erklären. Ich spiele davon aus, dass unsere Hörer das kennen. Das glaube ich natürlich nicht. Also das will ich nicht zwangsweise voraussetzen, aber wir haben ein eigenes Chaos-Radio zum Thema Bitcoin gemacht. Und an der Stelle nur kurz, es ist halt eine Möglichkeit, digital Geld zu überweisen. Ich glaube, dabei kann man es einfach mal verlassen.
+
+00:16:03.219 --> 00:16:56.819
+<v SPEAKER_4>Genau, und in einer anonymen, schrägstrich pseudonymen Art. Und jetzt habe ich halt schon das Problem, dass jetzt Impressiv-Wallets ist und so, das kann man schon von außen beobachten und das tun natürlich auch alle möglichen Leute. Das heißt, als geneigter Krimineller möchte ich jetzt nicht einfach meine selben Bitcoins im Prinzip immer in den gleichen Beträgen direkt weiter überweisen, bis ich dann irgendwann bei meinem Payment Provider bin, der mir das dann in echtes Geld auszahlt, sondern typischerweise ist das so eine ganze Kette an Zwischenschritten, um dann diese Bitcoins zu waschen, um halt diesen Trace zu mir selber als Betreiber dieser Infrastruktur irgendwie aufzuheben. Und das ist jetzt auch nichts, was jetzt so Szene-Einsteiger irgendwie dann selber bauen, sondern die mieten das dann eben irgendwo oder arbeiten irgendwo mit Leuten zusammen. Und diese Infrastruktur, die sieht absolut, die wir da jetzt sehen eben für das Not-Petia oder wie auch immer jetzt der aktuell gängige Name dafür ist, das sieht einfach nicht danach aus. Also das sieht so aus, es wird quasi das Backend fehlen.
+
+00:16:56.839 --> 00:17:33.939
+<v SPEAKER_3>Also vor allem kostet dich ja die Eröffnung eines Bitcoin-Kontos nichts, weshalb das Naheliegende ist, einfach für jeden deiner Kunden eines zu erstellen. Und dann musst du quasi, sagst du jedem Infektionsopfer überweise, den Betrag, was weiß ich, halber Bitcoin oder was auch immer, auf folgende Adresse. Und dann kannst du nämlich, wenn du da reinschaust, siehst du einfach eine leere Wallet-ID. Und sobald das Ding einen Füllstand aufweist, kann dir das völlig egal sein, dann zahlst du halt aus. Bei WannaCry haben wir es zum ersten Mal gesehen, die haben nur vier Wallet-IDs benutzt. Also alles Geld auf einen Haufen.
+
+00:17:33.959 --> 00:17:35.239
+<v SPEAKER_2>Die haben angeblich das auch per Hand gemacht.
+
+00:17:35.879 --> 00:17:43.799
+<v SPEAKER_3>Ja, das machst du nicht so. Da wär's ja blöd. Die haben ja das Potenzial gehabt, richtig viel Geld zu verdienen.
+
+00:17:43.999 --> 00:17:47.559
+<v SPEAKER_2>Aber war WannaCry vielleicht nur der Probelauf für Nordpatia?
+
+00:17:47.579 --> 00:17:54.299
+<v SPEAKER_4>Vielleicht war das ja nur eigentlich für Nordkorea und da gibt's so wenig Rechner, da kann man das per Hand machen.
+
+00:17:54.299 --> 00:19:09.859
+<v SPEAKER_2>Okay, also das ist unser aktueller Aufhängen. Da kann man aber sagen, tatsächlich gleich schön zum einen der Themen kommen, nämlich Incident Response. Das kann jetzt so, also sowas passiert in der Ukraine anscheinend ziemlich viele Leute, weil es auf die Steuersoftware geht. Aber es passiert halt nicht in einem einzelnen Rechner, sondern halt in großen Netzwerken. Und jetzt hab ich irgendwie auf Twitter gestern oder heute gelesen, so ja, was hilft ist, da geht ja so ein Bildschirm an, der so, der anzeigt, es würde ein Check-Dist, heißt das glaube ich, bei Windows machen. Und wenn das angeht, soll man den Rechner zumachen oder ausmachen, weil die Verschlüsselung dann noch nicht sozusagen fertig ist. Da kann man die Festplatte ausbauen und die Daten runterziehen. Das ist ja geil, wenn es ein Rechner ist. Aber Incident Response heißt ja, ich bin jetzt in einer Firma und da gibt es halt Rechner und die sind möglicherweise alle davon betroffen. Was genau passiert denn, also wenn man sozusagen, hat man, hat die Firma dann einen verantwortlichen? Was sozusagen in diesem Moment in einer Firma, was geht dann los? Oder nicht zwangsläufig in einer Firma, aber in einer Institution, die ein, was ist ein großes Netzwerk? Das ist ein typischer Netzwerk, über den wir heute reden, so größer. Ab wann sagt ihr, das ist nicht mehr der Privathaushalt, von dem wir gerade geredet haben? Oder wo wir am Anfang gesagt haben, darüber reden wir heute nicht so? Wie viele Computer sind das? Wie viele Maschinen?
+
+00:19:09.879 --> 00:19:34.179
+<v SPEAKER_4>Groß ist immer relativ. Also kommt drauf an, wie viele Personen man zur Betreuung hat. Wenn ich 100 Rechner habe und ich habe gar kein eigenes Personal, dann sind 100 Rechner schon sehr anspruchsvoll, weil man muss erst jemand anrufen, weil vielleicht eine Firma, die alle zwei Wochen mal vorbeischaut, dann kann 100 Rechner schon viel sein. Und wenn man gut vorbereitet ist und eine gute Mannschaft hat, dann können auch mal so 10.000, 20.000 oder mehr Rechner können dann wenig sein.
+
+00:19:34.199 --> 00:19:37.139
+<v SPEAKER_2>Aber was ist eine Größe, wo ihr sagt, ok, da fangen wir überhaupt an?
+
+00:19:37.919 --> 00:19:47.639
+<v SPEAKER_4>Ja, sagen wir es mal so, wenn man sagt, ok, eine Person wird es wahrscheinlich nicht schaffen, in dem Gebäude rumzulaufen und alle Rechner rechtzeitig abzuschalten, dann können wir eigentlich sagen, es ist groß.
+
+00:19:48.659 --> 00:19:57.559
+<v SPEAKER_2>Was passiert in so einem Fall? Also frühst um acht, die Leute kommen zur Arbeit, mache Rechner und überall läuft dieses Ding. Was ist dann die Incident Response?
+
+00:19:57.579 --> 00:21:17.439
+<v SPEAKER_4>Es kommt drauf an, wie gut ich vorbereitet habe. Wenn ich tatsächlich niemand habe, es gibt auch große Netze, also sag mal von Organisationen, wo wirklich einfach niemand da ist, der da eingreifen könnte, weil man eben sozusagen einige wenige Dienstleister hat, aber man hat niemanden Vollzeit, dann ist wohl das, dann kriegt man halt eins in die Fresse und muss dann eben danach gucken, wie man von hoffentlich vorhandenen Backups das wieder zusammenstellt. Und da ist dann wahrscheinlich das Einzige, dass man halt natürlich probiert einfach so viel wie möglich abschalten, in der Hoffnung, dass die Verschlüsselung nicht fortgeschritten ist. Na, man muss ja immer das machen, was machbar ist. Und wenn ich sage, ich hab keinen zentralen Netzwerknoten, den ich abschalten kann, oder ich kann meine Systeme nicht anders schützen, dann bleibt mir natürlich nichts anderes übrig, als in dem Fall einfach abzuschalten. Weil das Problem ist, bei Ransomware, da kann sich auch manchmal rausschalten, dass jemand später sagt, hey, passt mal auf, wenn ihr das Ding anlasst, dann könnt ihr euch irgendwie den Hauptspeicher sichern und den Schlüssel aus dem Hauptspeicher ziehen. Das bringt mir aber nichts, in dem Moment, wo ich da stehe, meine Rechner gehen kaputt und ich habe die Information noch nicht. Und da muss ich dann einfach eben sehr kurzfristig entscheiden, okay, was mache ich jetzt? Und klar, wenn natürlich, also nehmen wir an, ich habe keine anderen Mechanismen, ich habe sozusagen nur, ich habe den Ausschalt und mehr Kompetenz habe ich kurzfristig nicht. Auch zu sehen, was da genau passiert und einen anderen Mechanismus, der da angreifen könnte, dann Augen zu und durch, dann kann ich halt nur ausmachen.
+
+00:21:18.019 --> 00:21:34.679
+<v SPEAKER_2>Aber das ist im Gegensatz zu, bei Wondercry war es auch so, da gab es doch dann relativ schnell einen Tool, was wieder entschlüsselt hat, aber dazu musste man den Rechner nicht ausgemacht haben. Und jetzt bei Petya Not Petya ist es so quasi, wenn man es rechtzeitig ausgemacht hat, dann ist man noch davongekommen.
+
+00:21:34.699 --> 00:21:44.839
+<v SPEAKER_4>Das ist ja ein bisschen das Problem, wenn ich das in dem Moment weiß, wo es losgeht, dann ist ja in Ordnung, dann würde ich sagen, dann schalte ich vielleicht nur das Netz aus. Aber das ist ja genau das Problem, die Information, die kam ein paar Tage später.
+
+00:21:44.859 --> 00:22:00.279
+<v SPEAKER_2>Aber wie macht man das dann? Würfelt man? Also man steht vor diesem Netzwerk, die alles explodiert. Wie trifft man die Entscheidung an, lassen oder ausmachen? Also im Regelfall verfallen ja erstmal viele und die Entscheidungssträger in den Chicken Headless Mode.
+
+00:22:00.299 --> 00:22:01.399
+<v SPEAKER_4>Also keiner weiß, was zu machen.
+
+00:22:01.419 --> 00:22:02.299
+<v SPEAKER_2>Sie laufen herum und gackern.
+
+00:22:02.619 --> 00:24:13.779
+<v SPEAKER_4>Ja, sie laufen herum und gackern und keiner hat einen Plan. Da heißt es dann erstmal Ruhe bewahren. Und im Zweifelfall, wie wohl Patrusch schon sagte, erstmal ausschalten und einen Überblick über die Lage verschaffen. Also an den Systemen, wo man noch Informationen herbekommt, die man vom Netz separieren kann und trennen kann, da dann entsprechend schauen, was man an brauchbaren Informationen auch über andere Quellen sich erschließen kann. Also worauf es dann im Prinzip hinausläuft, ist man kann jetzt nicht davon ausgehen, dass es irgendwann so ein Tool gibt, was einem da jetzt hilft bei meinen Schlüsseln. Oder dass jetzt das zeitnah passiert oder dass eben überhaupt meine Systeme diese Bedingungen mitbringen, die ich brauche, damit ich dieses Tool benutzen kann. Jetzt im Beispiel von dem Monocry war das, wenn ich das noch richtig in den Kopf hab, dass man irgendwie ein älteres Windows braucht mit irgendwie einer alten Version, irgendeiner Krypt-API, damit noch bestimmte Spuren von dem Key-Material im Speicher bleiben. Das hilft mir jetzt aber erst mal nichts, wenn ich halt vorbildlich meinen schönen brandneuen Windows Server, weiß ich nicht, 2016 vielleicht schon hab, dann hab ich halt Pech gehabt. Und da jetzt dann irgendwie das betriebliche Risiko wirklich einzugehen, zu sagen okay, wir halten jetzt unseren Betrieb an, bis wir irgendwie so ein Tool haben, das macht fast nie Sinn. Also das wird man wahrscheinlich nie wagen. Wobei eine Option ist natürlich, wenn man genau, also man weiß ja sozusagen, dass wenn so ein Vorfall passiert und man ist nicht vorbereitet, dann hat man so ein bisschen so ein Adrenalin-Problem, ist eben aufgeregt und trifft falsche Entscheidungen. Das ist einfach so, das machen alle und das steckt auch an, also auch wenn man das gewohnt ist. Also wenn von acht Leuten irgendwie zwei sehr aufgeregt sind, dann fällt es den sechs anderen schwer, ruhig zu bleiben. Das Beste ist jetzt, wenn man jetzt gerade keine Petia-Problematik hat, dann einfach sich zu sagen, okay, was haben wir denn an Möglichkeiten da? Was können wir denn Sinnvolles machen, dass wir beispielsweise erstens, wenn irgendwo auf einem Rechner eine Rennzermäher ist, nicht in Panik unser komplettes Netz abschalten. Und was haben wir denn für Möglichkeiten vielleicht, wenn so ein Wurm bei uns aufschlägt, erstens mal zu gucken, ist der für uns überhaupt gefährlich? Und können wir den vielleicht irgendwie anders eindämmen, ohne uns halt selber zu sabotieren?
+
+00:24:14.019 --> 00:24:54.599
+<v SPEAKER_2>Aber das wollte ich gerade fragen. Also bei Subpetya, Nordpetya basiert er sozusagen auf ein paar Sicherheitslücken. Und die sind ja zum Beispiel, also die Eternal Blue heißt ja, glaube ich, die mit diesem NSA-Paket drin war, die ist ja, da gibt es ja sozusagen ein Sicherheitsupdate für. Jetzt ist ja der Fall denkbar, also jetzt nur mal theoretisch konstruiert. Ich bin sozusagen in einem großen Netzwerk unterwegs, wo ein Teil der Rechner das Update gemacht hat, ein anderer Teil nicht. Das heißt, frühs machen alle Leute ihre Rechner an. Die Hälfte davon, da läuft diese Verschlüsselung los, bei der anderen nicht. Jetzt weiß ich ja aber noch nicht, warum das so ist. Sag ich dann alle Rechner ausmachen? Oder dürfen die weiterarbeiten, wo sozusagen, wo erstmal nichts passiert ist?
+
+00:24:54.619 --> 00:26:10.119
+<v SPEAKER_4>Ja, wenn dir 50 Prozent deiner Systeme ausfallen, dann ist eigentlich meistens, wären auch so viele kritische Systeme dabei, dass normales Arbeiten nicht mehr möglich ist. Man könnte hier vielleicht empfehlen, wenn ein paar Rechner sich normal verhalten, dass man sagt, okay, die trennen sich vom Netz. Weil in dem Moment wissen wir ja noch gar nichts. Wir wissen ja nicht, ist das irgendwas Allgemeines, was wirklich automatisch läuft, wo der Täter auch gar keine Möglichkeit mehr einzugreifen? Oder ist das was, wo er nachlegt? Und wenn das beispielsweise nur bei mir passiert und bei niemand anderem sonst, dann sollte ich vielleicht nachdenken, okay, wenn ich jetzt ganz entspannt bin und sage, ich lasse die Leute weiterarbeiten, dann merkt die Person vielleicht, sie hat nicht genügend Schaden angerichtet und breitet sich noch weiter aus. Dann muss man eben so eine Trennung machen. Also geschickt ist es natürlich halt so früh wie möglich, jemanden zu haben, der einigermaßen ruhig bleibt und halt guckt, was passiert da so draußen im Internet, wenn mir irgendwie Twitter oder so zur Verfügung stellt, im Zweifelsfall heise, dann möchte man vielleicht das Forum vermeiden. Und dann einfach gucken, ist das ein allgemeines Problem, dann wissen wir die Chance, dass der Täter sich wirklich gerade um uns kümmert, die ist extrem gering und dann helfen auch wirklich so allgemeine Maßnahmen. Ich muss nicht befürchten, dass jemand bei mir nachlegt. Und wenn das sozusagen nur bei mir passiert, dann muss ich natürlich davon ausgehen, okay, kein anderer sagt irgendwas, da hat jemand mich persönlich auf dem Kieker.
+
+00:26:11.059 --> 00:26:40.799
+<v SPEAKER_2>Da wollte ich gerade fragen, ist das also die, jetzt Petia Not Petia war sozusagen, war groß genug, dass es sofort klar wurde, weil da ist irgendwie auch in der Werft oder in einem Hafen irgendwas aufgefallen, eine Pharma-Firma ist irgendwie mit draufgegangen und so. Ist es aber so, also jetzt in der Community der Incident Responder, dass man mit sowas an die Öffentlichkeit geht? Also wenn es jetzt nicht so groß ist wie dieses Petia-Ding, sondern sozusagen so eine Nummer kleiner. Es hat vielleicht mehrere Firmen erwischt. Also geht man jetzt hin und sagt so, uns hat es gerade erwischt, habt ihr auch ein Problem?
+
+00:26:40.819 --> 00:27:48.139
+<v SPEAKER_3>Bevor wir zur Öffentlichkeit kommen, lassen wir uns mal ganz kurz überlegen, dass du ja auch häufig sowas vielleicht ausgelöst hast, wo du gar nicht weißt, wann und ob das überhaupt passiert ist. Also so ein Wiper oder sowas, der wirklich sofort Schaden anrichtet, ist ja eine Sache. Die andere Sache, die du haben könntest, wäre, dass jetzt nicht unbedingt die Verfügbarkeit deiner Systeme verletzt ist, sondern dass du feststellst, dass die Vertraulichkeit verletzt wurde. Also sowas wie deine typischen, die Leute, die sich ein bisschen umschauen, haben festgestellt, dass deine Kundendatensätze im Darknet zum Kauf angeboten werden. Man macht einen Testkauf, was man ja eigentlich gar nicht darf. Und dann stellt sich heraus, irgendjemand hat Daten irgendwoher erlangt. Also du hast nicht immer nur etwas, dass du sagst, es steht imminent bevor, dass diese Firma den Bach runtergeht und nicht mehr funktioniert, sondern das gerne auch einfach mal so ein Fall, dass man einfach weiß, wir haben irgendwo Daten verloren, wir wissen überhaupt nicht, wo wir loslegen müssen. Also nicht immer hast du so eine sofortige Gefahr, diese Gefahrenabwehrkomponente dabei.
+
+00:27:48.159 --> 00:28:08.999
+<v SPEAKER_2>Ich wollte das quasi nach dem nächsten Schritt machen, nämlich zu fragen, was gibt es denn noch, wenn wir schon dabei sind, machen wir das noch schnell durch vor dem ersten Break. Also es gibt sozusagen mein Netzwerk oder Maschinen in meinem Netzwerk, wo so ein Nachhinein gelegt wird, dass ich nicht mehr arbeiten kann. Es gibt dieses, okay, bei uns funktioniert alles, aber irgendjemand kann da reingucken, der das nicht soll. Was gibt es noch so als Incident, dem ich responden muss?
+
+00:28:09.139 --> 00:28:50.459
+<v SPEAKER_4>Es gibt öfter dann noch den Fall, dass sich einfach einzelne Systeme irgendwie merkwürdig verhalten, dass man halt komische Muster in irgendwelchen Logs sieht, dass jetzt ein aufmerksamer Admin irgendwie sieht. Da hat sich gerade irgendwie jemand aus einem komischen Land irgendwie eingeloggt. Das sind so typische Punkte, wenn sich das dann häuft, dass man da irgendwie merkwürdige Muster sieht, dass man dann genauer mal hinschauen sollte noch. Also dass jetzt nicht direkt irgendwie der ganze Betrieb eingeschränkt ist oder irgendwie Dinge nicht funktionieren, sondern dass es vielleicht komische Crashes gibt oder irgendwelche komischen Log-in Versuche. Also Lockings auch von beispielsweise Nutzern, die im Urlaub sind oder Administratoren, die im Urlaub sind, von denen man zu der Zeit eigentlich gar keinen Lock-in erwartet.
+
+00:28:50.999 --> 00:29:00.459
+<v SPEAKER_2>Also das sind aber die Vorstufe, weil man guckt da nach, weil das möglicherweise zu einem von den beiden Szenarien führt, da macht jemand was kaputt oder da zieht jemand Daten ab.
+
+00:29:00.479 --> 00:29:04.319
+<v SPEAKER_4>Also wenn jemand das im Monitoring auf dem Schirm hat, schaut man nach, ja.
+
+00:29:04.339 --> 00:29:30.939
+<v SPEAKER_2>Genau, also das kann auch sein, der Typ im Urlaub hat irgendwie verpeilt, fertig zu machen, aber man guckt dann erstmal, was da so passiert. Okay, dann reden wir gleich darüber genauer weiter, wie das aussehen kann. Dann vielleicht stelle ich die Frage nach der Öffentlichkeit nochmal. Bis dahin gibt es ein paar Nerd-News, wie es jetzt für das Chaos-Radio gehört, die geschrieben wurden von Mo und präsentiert werden von Christina.
+
+00:29:30.959 --> 00:30:59.459
+<v SPEAKER_1>Ein Bug in Intels aktuellen Skylake- und Kabylake-Prozessor-Generation führt unter Umständen zu unvorhergesehenem Systemverhalten. Allerdings scheint er im Normalfall nur sehr selten aufzutreten und zeigt sich nur beaktiviert im Hyperthreading. BIOS-Hersteller haben Updates angekündigt. Linux-Nutze erhalten die sogenannten Microcode-Updates auch ohne BIOS-Update meist direkt über ihre Distribution. Das Debian-Projekt hatte das Problem eskaliert und empfohlen, Hyperthreading im BIOS vorsichtshalber abzuschalten, bis ein verifizierter Fix bereitsteht. Der NSR-Untersuchungsausschuss des Bundestags hat nach dreijähriger Arbeit seinen 1822-seitigen Abschlussbericht veröffentlicht, mit einigen Schwerzungen. netzpolitik.org konnte viele davon entfernen, vor allem solche, die die Beteiligung der Telekom betreffen. Das entschärfte Dokument steht auf netzpolitik.org zum Download bereit. Wer für die fehlerhafte Schwerzung verantwortlich ist und wieso mehrheitlich die Texte der Opposition davon betroffen sind, ist bislang nicht geklärt. Bundestag kämpft mit Staatstrojaner gegen IT-Sicherheit. Im Parlament wurde mit den Stimmen der Großen Koalition ein Gesetzentwurf zum Staatstrojaner verabschiedet, der die IT-Sicherheit weitestgehend untergräbt. In Zukunft darf die Polizei schon bei dem Verdacht auf ein Delikt die Kommunikation der Bürger heimlich überwachen und bei Verdacht auf besonders schwere Straftaten geheime Onlinedurchsuchungen auf Computern oder Smartphones durchführen. Dafür darf sie die Geräte mit Schadsoftware infizieren. Experten zufolge ist das Gesetz grundgesetzwidrig und mit der bisherigen Rechtsprechung des Bundesverfassungsgerichtes nicht vereinbar.
+
+00:35:01.182 --> 00:36:41.842
+<v SPEAKER_2>Und wenn du siehst, dann sagst du, dass du siehst. Damit herzlich willkommen zurück zum Chaos Radio 236, wo wir über Incident Response und Intrusion Detection sprechen. Und wir haben als praktisches Beispiel über PTH schon mal gesprochen und wollen das noch kurz zu Ende bringen. Wir waren jetzt gerade an dem Punkt zuletzt, was gibt es denn überhaupt für Sachen, die so aufpoppen können oder was passiert, wenn man für so ein Netzwerk zuständig ist und dann da sein muss, wenn was schief geht. Und es gibt also irgendwie die beiden großen Sachen. Jemand macht was kaputt oder jemand guckt rein. Und dann gibt es noch so dieses, woran kann man das vielleicht erkennen? Da kommt man nachher aber noch genauer zu. Es war ein Punkt, den ich noch mal ansprechen möchte, dass ihr gesagt habt, wenn in einem großen Netzwerk, was man betreut, was schief geht, dann guckt man mal auf Heise oder so im Internet, ob andere Leute auch davon berichten, weil dann weiß man, ich bin jetzt entweder die persönliche Attacke, also ich werde persönlich angegriffen oder die Firma wird angegriffen oder okay, hier explodiert gerade das ganze Internet. Ich muss mir keine, also ich muss mir schon Sorgen machen, aber nicht in dem Sinne, dass es jemand auf mich direkt abgesehen hat. Und dann ist die Frage, es gibt ja noch so ein Mittelding, also möglicherweise sind mehrere Leute oder mehrere Firmen oder mehrere große Netzwerke getroffen, aber jeder wartet, ob jemand anders rausgeht und als Erster zu gibt, dass er jetzt sozusagen nicht so gut ist, dass es gar nicht erst passiert ist. Gibt es da so eine Community? Gibt es da so Community-Standards, dass man da schnell mit rausgeht und sagt, hey Leute, bei uns ist gerade irgendwie die Kacke am Dampfen? Oder ist das eher so, dass man sich zurückhält, weil man sich keine Blöße geben will?
+
+00:36:41.862 --> 00:37:23.522
+<v SPEAKER_4>Also es kommt drauf an. Also wenn einem jemand, ich sag mal so jemand sabotiert einen, dann hat man ja als Organisation, die tut ja irgendetwas und wenn ich sabotiert werde, dann tue ich ja nicht mehr das, was ich eigentlich tue. Also wenn ich beispielsweise irgendwo da, wie in der Ukraine eben offensichtlich eine Fabrik bin, die was herstellt, dann stelle ich das erstens nicht mehr her und meine ganzen Lieferanten stehen Schlange, weil ich ihre Sachen nicht mehr verarbeite. Und dann kann man natürlich sagen, okay das Kind ist eh im Brunnen, wenn das, was meine Organisation tut, wenn sie es nicht mehr tun kann, ohnehin rauskommt, wenn ich mit ganz vielen Leuten kommunizieren muss und klarmachen, dass sich jetzt ganz viele Sachen verändern, weil wie gesagt, das bei mir nicht mehr läuft, dann ist es natürlich sinnvoll, so früh wie möglich Bescheid zu sagen.
+
+00:37:23.742 --> 00:37:46.882
+<v SPEAKER_2>Aber ich meine aber nicht die Fälle. Ich meine nicht die Fälle, wo sie sagen, wo sowieso quasi die Werft steht still, nichts geht mehr, wo man sowieso irgendwann drüber reden muss. Es gibt ja dieses Zwischending. Also keine Ahnung, ich bin halt vielleicht, sagen wir, ich bin eine Werbeagentur und ich habe nur einen Großkunden und die Deadline ist in einem Monat. Und wenn ich heute nicht arbeite und morgen auch nicht arbeite, dann kriegt das auch keiner mit. So.
+
+00:37:46.902 --> 00:37:50.242
+<v SPEAKER_4>Ja, dann habe ich ja von der Veröffentlichung nicht wirklich was, dann muss ich es auch nicht tun.
+
+00:37:50.262 --> 00:37:57.342
+<v SPEAKER_2>Na doch, du habt ja gesagt, es ist wichtig sozusagen zu gucken. Sagen auch andere was darüber, weil dann weiß ich erst, ob es eine große Attacke ist oder nicht.
+
+00:37:57.362 --> 00:39:20.542
+<v SPEAKER_3>Na, du hast ja, also du hast ja schon einfach einen entscheidenden, also es gibt einfach diesen Schwellwert, dass darüber berichtet wird, weil du irgendwie wie jetzt gestern ein weltweites Phänomen hast, wo irgendwie diese Werbung nicht mehr verheimlichen kann, dass sie nicht mehr funktioniert. Eine Nummer kleiner und ich glaube, da muss man vielleicht auch einfach mal abgrenzen. Du holst ja nicht bei jedem kleinen Scheiß die Incident Responder ins Haus. Du hast jetzt irgendwie, wenn wir jetzt von PC-Fleuten reden, von irgendwie in Richtung 1000 oder weit darüber, einen Incident, dass da irgendwie was rot ist und jemand irgendwas Falsches angeklickt hat, den hast du ja relativ häufig. Dass diese IT funktioniert ja nie, das wissen wir ja alle. Insofern hast du relativ viel und wenn wir jetzt von einem Incident reden, dann glaube ich, dann geht bei uns allen implizit damit einher, dass du so stark in deinen Produktionsabläufen oder in deinen Unternehmensabläufen, Organisationsabläufen gestört bist, dass du das nicht mehr verheimlichen kannst. Es gibt vielleicht einige wenige Organisationen, die das verheimlichen können, wenn sie einen Monat nicht funktionieren oder eine Woche. Das ist kein Problem, da machst du einfach weiter wie bisher. Aber dass du irgendwie einen kleinen Zwischenfall hast, ich glaube, das sind wir alle.
+
+00:39:20.562 --> 00:39:21.762
+<v SPEAKER_4>Wir müssen die Sachen einsortieren.
+
+00:39:21.782 --> 00:39:28.922
+<v SPEAKER_2>Also bei Incident. Ich möchte sagen, wir müssen noch mal Begriffsklärung machen. Was ist ein Incident eigentlich?
+
+00:39:28.942 --> 00:39:29.982
+<v SPEAKER_4>Ein Sicherheitsvorfall.
+
+00:39:30.002 --> 00:39:32.942
+<v SPEAKER_2>Und die Sicherheitsvorfälle musst du klassifizieren.
+
+00:39:32.962 --> 00:39:35.342
+<v SPEAKER_3>Da gibt es Low, Medium, High and Critical.
+
+00:39:35.942 --> 00:39:40.702
+<v SPEAKER_2>Und entsprechend der Klassifizierung ist halt deine Unternehmensinfrastruktur betroffen.
+
+00:39:41.102 --> 00:40:18.122
+<v SPEAKER_4>Also zum Beispiel, was so in die Kategorie Low fallen würde, ist die Virensignatur von dem Client bei irgendeinem Endnutzer bezieht automatisch keine neuen Updates mehr. Wäre auch schon ein kleiner Sicherheitsvorfall, geht irgendwo eine rote Lampe an, kümmert sich ein Atmendrum. Dann in dem Bereich, wo du die Incident Responder ins Haus holst, sind wir schon in dem Bereich Critical, weil viele Wagensysteme in der Infrastruktur hoffentlich angeschlagen haben und gesagt haben, pass mal auf, da werden Accounts von Administratoren oder von Supernutzern verwendet, obwohl die Leute gerade nicht im Unternehmen sind.
+
+00:40:18.222 --> 00:40:24.682
+<v SPEAKER_2>Also die sind im Urlaub. Und es sollten zur derzeit eigentlich gar keine Aktivitäten von dem Account ausgehen.
+
+00:40:24.702 --> 00:41:12.922
+<v SPEAKER_4>Heißt, es finden Verbindungen statt im Unternehmen auf unterschiedliche Server. Und man sieht, Daten werden von A nach B verschoben, die eigentlich zur derzeit gar nicht verschoben werden sollten. Genau, also es gibt ja eben Angriffe, die eben die eigene System-Integrität in irgendeiner Form schwächen. Also die jetzt hingehen und irgendwie mir Zeug kaputt machen, die irgendwie, weiß ich nicht, meinen Exchange kaputtpatschen und es funktioniert nicht mehr. Oder es gibt halt dann auch Angriffe, natürlich die einfach Daten klauen wollen, irgendwie Spionage im weitesten Sinne, die dann hingehen und mir irgendwelche Remote-Access-Tools im Netzwerk verstreuen und die wenig Pech habe, die ich dann ganz lange nicht sehe. Also ich merke ja nichts, ist ja nicht, dass irgendwie jetzt irgendwie meine E-Mails nicht mehr gehen oder irgendwie die Webseite down ist. Und solche Fälle, die werden natürlich typischerweise eher nicht publiziert, weil das wäre dann wahrscheinlich zu großer Image-Schaden einfach.
+
+00:41:13.862 --> 00:41:26.362
+<v SPEAKER_2>Ja, ich muss jetzt noch machen, lass uns erst mal die Definitionsphase fertig machen. Ihr seid jetzt zweimal gesagt, Incident Responder ins Haus holen. Das heißt, es gibt A, extra Leute, die das machen und B, man hat die nicht vor Ort.
+
+00:41:26.502 --> 00:41:31.162
+<v SPEAKER_4>Genau, also du hast ja als Unternehmen im Regelfall... Willst du nicht vor Ort haben?
+
+00:41:31.182 --> 00:41:36.762
+<v SPEAKER_2>Also, Incident Responder ist ja eine besondere Qualität von Mitarbeitern.
+
+00:41:36.782 --> 00:41:39.342
+<v SPEAKER_4>Und die kosten auch entsprechend Geld.
+
+00:41:39.682 --> 00:42:06.642
+<v SPEAKER_2>Heißt, die wachsen auch nicht an Bäumen. Und deshalb hat man die im Regelfall nicht im Haus sitzen. Aber was machen die denn? Also, ich stopp, halt, halt. Ich will nur so sagen, nur aus der Perspektive dieser Sendung. Aus der Perspektive dieser Sendung ist ein Incident Responder jemand, der kommt, wenn alles schlimm ist und entscheidet, ob wir die Rechner abschalten oder nicht. Also der Incident Responder, ja genau. Und dann sozusagen langfristig gesehen kann er vielleicht mal, was auch immer da passiert ist, auseinandernehmen und gucken, was da war.
+
+00:42:06.662 --> 00:42:18.982
+<v SPEAKER_4>Also, Incident Responder sind, wenn man es mal in einem verständlichen Sinne ausdrücken möchte, diejenigen, die sich mit Sondermüll in IT-Infrastrukturen auseinandersetzen und für die Trennung und Entsorgung sicherstellen.
+
+00:42:19.002 --> 00:42:23.382
+<v SPEAKER_2>Und ein bisschen Recycling. Und ein bisschen Recycling betreiben.
+
+00:42:23.402 --> 00:42:30.162
+<v SPEAKER_4>Das sind im Grunde genommen die Leute, die dir sagen, kaputt, kaputt, kaputt, kaputt, machst du neu, machst du neu, machst du neu, machst du neu.
+
+00:42:30.182 --> 00:42:32.382
+<v SPEAKER_2>Das brauchst du, das brauchst du, das brauchst du.
+
+00:42:32.402 --> 00:42:32.822
+<v SPEAKER_4>Mülltrennung.
+
+00:42:33.902 --> 00:42:35.522
+<v SPEAKER_2>Auf einem sehr hohen Niveau.
+
+00:42:36.182 --> 00:42:43.062
+<v SPEAKER_3>Das ist echt ein sehr schöner Vergleich. Du kennst ja auch, wie die in seinem Fließband stehen. An einem Müllsortier. Müssen wir mal gucken, ob vielleicht...
+
+00:42:43.082 --> 00:42:59.422
+<v SPEAKER_2>Aber mal ganz diskutierlich gefragt, im Zweifel kaufe ich halt die ganze Infrastruktur nochmal. Das ist billiger, als mir jemand einzukaufen. Lass mir die Gedanken sein. Das ist wahrscheinlich billiger, als jemand einzukaufen, der so teuer ist, dass ich es mir nicht leisten kann, den vor Ort zu haben.
+
+00:43:02.382 --> 00:43:52.982
+<v SPEAKER_3>Den vor Ort zu haben, würde überhaupt erst mal voraussetzen, dass es genug von diesen Leuten auf der Welt gibt. Zweitens, derjenige, den du die ganze Zeit vor Ort hast, der würde ja hoffentlich 3650 Tage da sitzen und gar nichts machen. Das heißt, wenn es dann wirklich das Kind in den Brunnen geklettert ist, Fallen, Gefallen, da klettert keiner mehr. Wenn das Kind endlich im Brunnen unten angekommen ist, dann weiß der dem gar nicht mehr zu helfen. Und genau deshalb willst du diese Leute nicht bei dir sitzen haben, damit die möglichst jeden Tag Erfahrungen sammeln, damit die alles gesehen haben. Und dann holst du die lieber, wenn es einmal der Fall ist, holst die teuer ins Haus, während du gleichzeitig in deiner Organisation dafür sorgst, dass alle fliegen, die so in den Brunnen landen und oben an der Oberfläche im Wasser schwimmen, dass du die selber mit dem Kescher rausholst.
+
+00:43:53.002 --> 00:43:55.542
+<v SPEAKER_4>Sehr schöne Analogie. Da ist dann das heimische Zert für zuständig.
+
+00:43:55.642 --> 00:44:31.122
+<v SPEAKER_2>Aber das heißt auch, dass es anscheinend, da muss es ja doch so eine Art Community-Kanal geben, weil in dem Moment, wo ein Incident Responder angefragt wird, ist ja schon klar, okay, da passiert irgendwas. Dann ist schon was passiert. Also wenn der angefragt wird, ist das Kind im Brunnen gefallen? Und hat jemand das Wasser gehört, was beim Aufschlagen des Kindes aufgewürgt wurde? Und die kopflosen Hühner, die dann aufliegen. Aber ist es dann so, dass jede Firma hat einen, den sie dann holt, und es ist dann eher so Blackboard-mäßig so, helft, helft, und dann kommt halt der, der am nächsten dran sitzt?
+
+00:44:31.142 --> 00:44:36.322
+<v SPEAKER_3>Also die Unternehmen haben schon in der Regel, wissen die schon, wen sie vertrauen.
+
+00:44:36.342 --> 00:44:40.362
+<v SPEAKER_2>Es gibt da eine Krisennummer, ähnlich wie der Herr de Maizière als Innenminister, die ihn angefragt hat.
+
+00:44:40.822 --> 00:44:43.822
+<v SPEAKER_4>Einige Leute haben da eine Krisennummer, und die ruft man dann an.
+
+00:44:43.842 --> 00:44:59.362
+<v SPEAKER_2>Okay, um zurück zur Frage zu kommen. Ich habe da dieses große Netzwerk. Dieses Netzwerk, da gehen gerade alle Rechner aus und werden geransomt wert. Und ich rufe meinen Incident Responder an. Und der hält da erstmal die Klappe. Also wenn das nur in meiner Firma passiert, dann hält er erstmal die Klappe, weil, mit Schaden.
+
+00:44:59.402 --> 00:45:04.402
+<v SPEAKER_3>Der hält sowieso die Klappe. Der hat ja ein NDA unterschrieben. Der macht einfach nur seine Arbeit. Der wird nicht fürs Reden bezahlt.
+
+00:45:05.822 --> 00:45:11.762
+<v SPEAKER_4>Ja, wobei Reden und Mitfühlendes zuhören, ist eine sehr wichtige Qualität.
+
+00:45:11.782 --> 00:45:26.022
+<v SPEAKER_2>Nee, aber noch mal. Das heißt, diese Dinge kommen nur dann in die Öffentlichkeit, wenn sie so schlimm sind, dass Produktionsabläufe empfindlich gestört werden. Das heißt, diese Berichterstattung, von der ihr redet, oder die Datenbank sozusagen.
+
+00:45:26.042 --> 00:45:56.742
+<v SPEAKER_3>Also die Dinge kommen dann an die Öffentlichkeit, wenn du es nicht mehr geheim halten kannst oder darfst. Wenn Produktionsabläufe zum Erliegen kommen, dann wirst du das nicht verheimlichen können. Du hast ja auch spätestens dann, wenn du eine massive Störung in Betrieb hast, hast du zu viele Mitarbeiter, die das einfach irgendwie ihren Freunden erzählen. Also dann musst du sowas natürlich früher später öffentlich machen.
+
+00:45:56.762 --> 00:46:00.182
+<v SPEAKER_4>Oder spätestens eine Gewinnwarnung an die Investoren.
+
+00:46:00.202 --> 00:46:53.702
+<v SPEAKER_3>Da sind wir im ganz schlimmen Bereich. Und wenn du jetzt so Datenschutzverletzung, also Vertraulichkeit hast, da haben wir ja, ich weiß gar nicht seit wann, auch entsprechend die Regulierung zu. Also die Gesetzgebung zu, dass du dann eben deine, die betroffenen Kunden informieren musst und so. Und dann gibt es noch diese dritte Schiene, dass du natürlich bei dieser Abhandlung, dieser Angelegenheit in der Öffentlichkeit bemüht sein möchtest, auch von Anfang an deinen Rufschaden gering zu halten. Und da ist leider häufig der Konflikt, dass du den natürlich gering hältst, indem du eben verantwortungsbewusst damit umgehst. Und verantwortungsbewusst damit umgehen heißt eben auch, früh Bescheid zu sagen und Dinge vernünftig zu klären und nicht einfach nur die ganze Zeit mit einem Arm wedeln, dazu stehen zu sagen, hier ist nichts passiert.
+
+00:46:53.722 --> 00:46:54.642
+<v SPEAKER_2>Hat sich das rumgesprochen?
+
+00:46:54.662 --> 00:48:11.922
+<v SPEAKER_3>Ja, das hat sich größtenteils rumgesprochen. Also das ist immer wieder, also ich erinnere immer wieder Situationen, wo dann irgendwie so, das verlässt diesen Raum nicht. Und du denkst, die Wette nehm ich. Wetten war schon, das hast du natürlich, weil da Menschen um ihren Job fürchten. Was aber einfach damit zu tun hat, dass den, also vielen, in vielen Firmenkulturen scheinen sie noch nicht rumgesprochen zu haben, dass natürlich deren Aufgabe ist, des IT-Managers oder so, diesen Schaden gar nicht erst entstehen zu lassen. Aber natürlich auch wenn er aufgetaucht ist, den zu beheben und nicht den unter den Teppich zu kehren. Aber da muss man, das gehört schon denke ich dazu. Und da gibt es aber jetzt auch schon einige Bereiche, wo du quasi, wo große Organisationen sich Krisen-Manager holen, die quasi mit diesen Incidents vertraut sind. Die quasi wissen, was man wann sagen muss und was nicht. Und wie man zum Beispiel so etwas koordiniert. Du hast halt einerseits, also Incident Response ist quasi so der technische Teil davon. Du hast ja dann noch einen rechtlichen. Du hast einen Kommunikations-Teil, den du schon ansprichst. Das wird relativ schnell ein relativ komplexes Thema.
+
+00:48:11.942 --> 00:48:18.622
+<v SPEAKER_2>Jetzt stell ich mir so eine Art A-Team vor. Dann kommt der Typ halt, der den Computer sauber macht. Dann kommt der Jurist, dann kommt der PR-Manager am Abend und sagt so.
+
+00:48:18.642 --> 00:49:20.922
+<v SPEAKER_3>So und jetzt musst du jetzt hast du, dann hast du die Situation, dass du den Techniker hast, der zwar genau weiß, was mit diesen Systemen los ist, auf einer technischen Ebene, der aber relativ wenig Verständnis dafür hat, was dieses System jetzt für dieses Unternehmen für eine Bedeutung hat. Der ist ja heute Morgen erst reingekommen. Dann hast du da, was weiß ich, die Fachseite sitzt, die sagen Oh Gott, oh Gott, oh Gott, oh Gott, oh Gott, oh Gott, oh Gott. Da ist, ich glaube, da ist meine ganze Filmsammlung drauf. Okay, ist da auch noch irgendwas anderes wichtiges drauf? Ja, vielleicht so ein paar Kundendaten, aber die sind ja eigentlich wertlos. Oh nee, dann sagt der Jurist, aber oh, oh, oh, oh Gott, oh Gott, oh Gott. Und dann sagt der PR-Manager, oh, jetzt müssen wir aber dann auch mal irgendwie anfangen, die großen Schuhe anzutreten, um das Feuer auszumachen. Und ein großer Teil der Incident Response, der jetzt glaube ich hier im technischen Bereich nicht so interessant ist, ist natürlich das auch zu koordinieren, dass halt irgendwie so ein Jurist, der sich mit den rechtlichen Bedingungen da auskennt, auch versteht, was da gerade technisch geht.
+
+00:49:20.942 --> 00:49:33.622
+<v SPEAKER_2>Aber arbeitet man dann zusammen? Haben Incident Responder sozusagen eine Art Team, dass das alles kann? Oder kommt man als Techniker dahin und dann gibt es sozusagen die anderen, also da kommt halt der Rechtsanwalt, Incident Responder und dann muss man sie da auch nochmal zusammenfinden.
+
+00:49:33.682 --> 00:49:35.482
+<v SPEAKER_3>Es kommt drauf an, wen du dir holst.
+
+00:49:35.502 --> 00:49:36.922
+<v SPEAKER_2>Okay, also es gibt beides sozusagen.
+
+00:49:37.562 --> 00:49:47.982
+<v SPEAKER_3>Ich kenne einige Organisationen, die das auch machen, die da wirklich einfach vollständig den Tisch übernehmen.
+
+00:49:48.002 --> 00:50:02.442
+<v SPEAKER_2>Jetzt klingt es aber so, Incident Response gibt es sozusagen nur in dem Bereich irgendwie Aktiengesellschaft aufwärts. Und die anderen gucken, also die kleineren sozusagen formatieren ihre Rechner und machen neu oder?
+
+00:50:02.462 --> 00:50:08.722
+<v SPEAKER_4>Tatsächlich oftmals, ja. Also es ist natürlich schwierig zu sagen, es gibt auch große Unternehmen, die nicht börsennotiert sind.
+
+00:50:10.522 --> 00:50:20.122
+<v SPEAKER_2>Ich wollte darauf hinaus sozusagen, dass es sich so anhört wie so Incident Response. Das gibt es eigentlich nur, wenn man richtig viel Asche hat. Und der kleine Mittelständler kann sich das eher gar nicht erst leisten.
+
+00:50:20.722 --> 00:50:23.702
+<v SPEAKER_4>Die Frage ist, bemerkt der kleine Mittelständler, dass er ein Problem hat?
+
+00:50:23.722 --> 00:50:26.822
+<v SPEAKER_2>Wenn die Rechner ausgehen und ranzimwert werden, auf jeden Fall.
+
+00:50:26.842 --> 00:50:31.242
+<v SPEAKER_4>Dann hat er ja eh nicht wirklich Bedarf für Incident Response. Dann macht er eine Schadensbegrenzung.
+
+00:50:31.262 --> 00:50:33.042
+<v SPEAKER_2>Wieso? Moment mal, haben wir eine Stunde umsonst geredet?
+
+00:50:34.082 --> 00:50:40.722
+<v SPEAKER_4>Wenn du eine Ranzimwehr hast, das ist ja eigentlich egal, ob du eine Ranzimwehr hast oder ob dein Rechenzentrum abbrennt, da geht es dir ja nur um Schadensbegrenzung.
+
+00:50:40.982 --> 00:51:08.562
+<v SPEAKER_2>Also über den Bereich, über den wir gerade ein Stück weit sprechen, ist Incident Response da, wo du klassisch Angreifer in deine Infrastruktur hast und die dabei sind, Daten, also Informationen aus deinem Unternehmen herauszutragen. Da wird gar nicht mit Ranzimwehr gearbeitet oder mit einer anderen Art und Weise das Unternehmen vom Betrieb abzulenken. Du willst im Grunde genommen als Angreifer ja gar nicht in der Infrastruktur entdeckt werden, weil du möchtest es unbemerkt machen. Aber Moment mal, das heißt, wir haben jetzt die erste 3-4 Stunden sozusagen über was geredet, was die eigentlich gar nicht macht?
+
+00:51:08.782 --> 00:52:16.842
+<v SPEAKER_4>Na ja, gut, also ich meine, wenn ich jetzt einen Großteil meiner Infrastruktur dysfunktional habe, also wenn jetzt ganz viele Computer auf einmal nicht funktionieren, wenn ich jetzt ein Unternehmen ab einer gewissen Größe habe, da kann es natürlich Sinn machen, dann zu sagen, okay, das macht jetzt Sinn, irgendwen zu holen, der jetzt so Mechanismen versteht, wie sich jetzt verschiedene Teile der Infrastruktur beeinflussen, wie das allein organisatorisch abläuft. Da kann man dann unter Umständen schon sinnvoll von Incident Response reden, wobei es dann mehr Management ist. Ein Incident Responder geht dann ja nicht hin und irgendwie schnippst mit dem Finger, und dann ist RSA kaputt, und dann kriege ich meine Dateien wieder. Das wird ja nicht passieren. Da ist es dann wirklich, wie gerade schon erwähnt, Schadensbegrenzung und Koordination. Wenn ich jetzt aber wirklich jemanden im Netzwerk habe, der da aktiv tätig ist, dann ist das ja nochmal eine komplett andere Geschichte. Dann habe ich ja wahrscheinlich erst mal selber gar nicht die Erfahrung und die Tools und die Methodik, um da jetzt genau rauszukriegen, was passiert denn überhaupt in meinem Netzwerk. Ich sehe ja nur so diffuses, da sind Dinge nicht normal. Und auf einmal baut, weiß ich nicht, dieser andere werft dieselben Schiffe wie ich. Das ist dann irgendwie doof und jetzt muss ich was machen. Das ist ja was, ein ganz anderes Bild, als irgendwie mir brennt der Saas Rechenzentrum.
+
+00:52:16.862 --> 00:52:45.202
+<v SPEAKER_2>Als Hintergrund vielleicht, im Regelfall hast du zwischen 150 und 200 Tage, wo sich Angreifer unbemerkt in deiner Infrastruktur bewegen. Also übersetzt, Leute schauen sich 150 bis 200 Tage bei dir in der Wohnung um und du kriegst gar nicht mit. Okay, dann merke ich, die Kaffeestasche steht falsch und dann rufe ich euch. Ja, du merkst halt an verschiedenen Stellen, der Kaffeebecher ist weg, deine Socken sind weg. Das erklärt einiges. War der Kugelschreiber auch?
+
+00:52:45.262 --> 00:52:47.122
+<v SPEAKER_4>Socken sind ein sehr wichtiger Indikator.
+
+00:52:47.482 --> 00:52:58.422
+<v SPEAKER_2>Genau, deine Hosen liegen auf alle, alle auf einmal plötzlich an der Eingangstür. Was macht ihr dann?
+
+00:52:58.442 --> 00:53:15.622
+<v SPEAKER_4>Das erste ist natürlich erstmal gucken, was läuft da wirklich. Wir haben ja jetzt beispielsweise immer davon ausgegangen, dass es so etwas wie Fehlarme nicht gibt. Das Problem ist, man hat ja jetzt ein bisschen so eine aufgeheizte Stimmung. Und dann ist natürlich immer die Frage, ob ich Remsen wäre oder ob ich Russen habe. Russen sind ja gerade sehr beliebt.
+
+00:53:19.482 --> 00:53:30.822
+<v SPEAKER_2>Du hast jetzt auf sarkastische Art und Weise aufs Korn genommen, dass man mittlerweile, wenn es Computerangriffe gibt, man immer sagt, die Russen waren es. Wie diese eine Figur von Brösel damals. Das war noch Zeiten.
+
+00:53:34.682 --> 00:53:36.382
+<v SPEAKER_4>Die möchten meinen Exchange schön machen.
+
+00:53:36.402 --> 00:53:50.262
+<v SPEAKER_2>Aber wir haben ja in der Sendung das schon am Anfang gesagt, dass es auch durchaus sein kann. Da passieren Sachen, man guckt sich an und dann war nur der Typ aus dem Monopolisier mal eingeloggt. Aber dann kommt ihr und dann passiert was?
+
+00:53:50.282 --> 00:56:00.002
+<v SPEAKER_4>Wie gesagt, das Erste ist, diese komplette Voraufklärung zu machen. Was ist da wehen, warum aufgefallen, warum ist man der Meinung, dass es ein Incident ist? Wie wir gesehen haben, sind die Definitionen unterschiedlich. Was ist schon gemacht worden? Hat man eventuell schon Maßnahmen ergriffen? Waren die sinnvoll, waren die nicht sinnvoll? Dann ergibt sich irgendwann ein vernünftiges Gesamtbild. Dann kann man überlegen, was man macht. Was man nicht machen möchte, sind Juristen, Kommunikationsexperten, sonstige Dritte in einen Raum stellen. Das sind Leute, die aus der Perspektive von einem IT-Mensch, die leben alle auf anderen Planeten. Die in einer Sitzung dazuzubringen, dass da ein sinnvolles Ergebnis rauskommt, das ist relativ schwierig. Da gehört auch eine Struktur dazu. Das gehört auch zu der Voraufklärung. Gibt es eine Struktur intern, die das behandeln kann? Wenn ich Leute hab, die sich in ihrem Netzwerk sehr gut auskennen, das ist natürlich sinnvoll. Die Person, die den besten Überblick hat, dass die da eben mitmacht. Dann teilt man da die Arbeit typischerweise auf, weil man braucht da eine Stelle, die entscheidet. Die eine Stelle im Optimum ist das sogar eine Person. Das ist kein Gremium, das sind nicht gestaffelte Gremien. Gestaffelte Gremien sind sehr beliebt, wenn man möchte, dass Dinge nicht funktionieren. Genau so was möchte man vermeiden. Das muss eine Person sein, die sollte ein gewisses Vertrauen haben. Dass die Leute glauben, wenn die eine Entscheidung trifft, dass die das akzeptieren, dass sie nicht loslaufen und andere Dinge machen. Die Person guckt erst dann mal, wenn die Bestandsaufnahmen durch sind, was sind jetzt die ersten Maßnahmen. Was man vermeiden will, man macht viel zu viel. Man hat ja immer eine begrenzte Anzahl von Leuten. Das kam ja schon raus, Incident Response wachsen nicht auf Bäume. Man muss einen Maßnahmenplan finden, die Leute, die man vor Ort hat, wer auch immer das sein mag, denen die abwirtschaften können. Und der dann auch ein Ziel macht. Gefährlich ist, dass man sich dann so... Man hat so seine 100 Sachen auf einem Zettel, was man tun möchte, um das Problem zu lösen. Und das ist dann meistens schon viel zu viel. Das ist einfach eine Krisensituation.
+
+00:56:00.782 --> 01:02:50.727
+<v SPEAKER_2>Mein Problem ist, das klingt jetzt, als ob man es auch in eine Broschüre schreiben könnte. Das ist aber auch sehr abstrakt erklärt, was da passiert. Ich würde es gleich gerne noch ein bisschen konkreter nachflagen. Vorher machen wir eine kleine Pause mit Musik von Clam, die jetzt Bubble Music heißt, genau das Album. Wir sind jetzt in der zweiten Halbzeit vom Chaos-Radio 236, wo wir über Incident Response und Intrusion Detection reden. Und ich jetzt an dem Punkt angekommen bin, wo es meinen Verständnisshorizont übersteigt und ich nochmal nachfragen muss genauer. Wir haben gerade abstrakt besprochen, was Incident Responder eigentlich machen und dass sie sozusagen versuchen, den oder die Übeltäter zu finden oder die Sachen, die sie machen. Also das ist quasi ja, aber so kann man sich es vielleicht auch zusammenreimen. Mich würde es tatsächlich mal ein bisschen handfest interessieren. Also jetzt hat Dinos ja vorhin gesagt, da unterschreibt man NDEs. Mir ist also klar, dass ihr jetzt nicht irgendwie erzählen könnt, wie jemand bei Bosch die Abgaswerte so manipuliert hat, dass auf einmal alle Autos dreckig sind. Aber ihr könnt ja sozusagen vielleicht euch mal ein Beispiel ausdenken, wie sowas passieren kann und was ihr dann macht. Also möglichst konkret und an der Stelle, wo es so kompetitiv wird, frage ich nochmal nach.
+
+01:02:51.007 --> 01:03:01.487
+<v SPEAKER_3>Ich habe einen Vorschlag. Da wir uns ja mit Intrusion Detection und Incident Response auseinandersetzen wollen, könnten wir uns ja mit dem Detection-Teil eher auseinandersetzen.
+
+01:03:01.507 --> 01:03:03.847
+<v SPEAKER_2>Du musst vor allem in deinem Mikrofon sprechen.
+
+01:03:03.847 --> 01:03:24.067
+<v SPEAKER_3>Da ist doch ein Mikrofon hier. Aber jeder Incident Response-Teil läuft eben nicht nach einem fertigen Ablauf. Du hast bei jedem Angriff und bei jeder betroffenen Organisation andere Schutzziele, andere Prioritäten. Das macht ja den Job auch so interessant.
+
+01:03:24.107 --> 01:03:30.127
+<v SPEAKER_4>Es ist ja ähnlich wie eine Partie Schach. Dein Gegner wählt immer andere Züge.
+
+01:03:30.147 --> 01:03:42.827
+<v SPEAKER_2>Aber ich würde gerne einmal ein konkretes Beispiel sagen. Es ist dann klar, dass nicht alles so abläuft. Aber einmal was Konkretes. Dann können wir davon gerne wieder hoch abstrehen. Wolpertule, hattest du gerade dir etwas ausgedacht?
+
+01:03:42.847 --> 01:04:15.327
+<v SPEAKER_4>Ein nicht ganz unrealistisches Beispiel ist, man hat irgendwo eine Störung und will die beheben. Und die geht irgendwie nicht weg. Dann holt man sich beispielsweise den Hersteller, der guckt sich das auch an, tauscht die Hardware. Die Störung tritt erneut auf. Und dann beginnt man halt mit Bordmilden zu gucken, was ist da? Und dann findet jemand auf seinem Windows-System eine Software, die angeblich zu Novell gehört. Und dann sagen alle auf einmal, Moment mal, wir haben gar kein Novell, was soll das werden, wenn es fertig ist? Dann macht jemand genau das, was man nicht tun sollte, lädt das zu Virus Total hoch und da sagt dann ein Viren-Scanner, okay, das ist böse.
+
+01:04:15.927 --> 01:04:17.527
+<v SPEAKER_2>Warum sollte man das nicht tun?
+
+01:04:17.547 --> 01:04:27.667
+<v SPEAKER_4>Weil Virus Total praktisch öffentlich ist. Wenn du eine Utility da hoch lädst, das ein Täter für dich gebaut hat, dann kann der Täter einfach bei Virus Total schön prüfen, ob du ihn gefunden hast.
+
+01:04:27.687 --> 01:04:34.787
+<v SPEAKER_2>Virus Total ist so ein Ding, da lädt man eine Datei hoch und dann guckt er bei verschiedenen Viren-Scanner-Maschinen, was die dazu sagen. Aber die Ergebnisse werden auch gepostet?
+
+01:04:34.807 --> 01:06:04.587
+<v SPEAKER_4>Die Ergebnisse sind eigentlich praktisch für jeden öffentlich. Das ist ja mehr oder weniger, das ist eigentlich genau der Sinn der Übung. Das ist nicht privat. Also auch wenn ich beispielsweise eine komische Datei per Mail kriege und ich lade da hoch und das war das Bewerbungsschreiben von jemandem, dann liegt da das Bewerbungsschreiben von jemandem auf Virus Total rum. Genau und jetzt als normaler Privatunwender sehe ich jetzt nur, okay, da gibt es irgendwie eine Datei, die heißt halt xyz.docx und da ist kein Virus drin. Aber es gibt eben auch noch professionelle Zugänge eben für Malwärner-Listen, für Incident Responder, die kosten halt eine Menge Geld. Aber da kommt man dann im Prinzip auch an den Content. Also da kommt man dann anhand von Signaturen. Also ich kann jetzt nicht sagen, ich möchte mal die Datei sowieso haben. Also man kann nach Kriterien suchen, aber man kann auch nach Signaturen suchen. Und gezielt natürlich auch nach Daten, die hochgeladen wurden, die vielleicht auch gar keine hatten. Das heißt, wenn ich jetzt irgendeine Signatur für irgendeine ganz spezifische Malware hab, die vielleicht jetzt nicht so allgemein bekannt ist und wo vielleicht so in den normalen AV-Signaturen gar nichts mehr drin ist, dann könnte ich trotzdem Hits bekommen, wenn eben jemand eine verdächtige Datei auf Virus-Total hochlädt und im Worst Case kriegt ein Analyst dann natürlich die Konfig raus. Also sieht dann, okay, da ist irgendwie ein Kampagnencode drin oder da ist irgendwie irgendwelche Domänen oder irgendwelche... Kampagnencode-Domänen sind, also Täter sind oft sehr beschäftigt und müssen viele Ziele angreifen, dann wissen sie manchmal nicht mehr, wem habe ich welche Malware gegeben. Deswegen schreiben sie einen Schlüssel in die Malware, dann ist es noch einiger und dann ist der Schlüssel eventuell der Name vom Opfer.
+
+01:06:04.607 --> 01:06:10.927
+<v SPEAKER_2>Die Kundennummer sozusagen. Aber zurück zum, ich entdecke auf meinem System eine Software von Novell, die da eigentlich gar nicht ist.
+
+01:06:10.947 --> 01:07:33.807
+<v SPEAKER_4>Genau, und dann merkt man, dass es irgendwie unlogisch und dann sagt jemand, hey, das ist doch hier ein Server, auf dem surft niemand, da kann sich niemand eine Malware einfangen. Und dann ist natürlich klar, die ist da nicht von außen drauf gekommen. Jemand kam von innen vom Netz und hat mir da eine Malware hingelegt. Und dann weiß ich natürlich, okay, wenn sich jemand in meinem Netz frei bewegen kann und mir da Tools installieren kann, dann ist eben offensichtlich mein Netzwerk eben kompromittiert. Und dann, klar, heutzutage ist man da natürlich weitaus verständnisvoll und sagt, okay, wenn ich nicht rausfinde, wie er da reinkommt, dann bringt es nichts, wenn ich diesen einen Server neu installiere, weil dann kommt er eben im Seiferts-Fall einfach wieder. Und ich muss wahrscheinlich mehr Sachen machen als nur hier so ein an ein, zwei Schräubchen drehen, weil ich weiß ja auch nicht, wie lange derjenige drin ist. Im Zweifelsfall sehe ich Zeitstempel und sehe, oh Gott, die Datei, die ist schon ein Jahr alt. Dann ist mir natürlich klar, okay, es bringt wahrscheinlich nichts, wenn ich mir hier zwei Systeme angucke und gucke, wo die Datei ist, und die lösche ich dann. Sondern da ist jemand da, der kennt ja meine Infrastruktur schon und der wird dann vielleicht auch andere Tricks drauf haben. Und genau in dem Punkt ist dann oft der Punkt da, wo jemand sagt, okay, jetzt hole ich mir da zusätzliche Leute rein. Nicht nur unbedingt, um sich um das Incident zu kümmern, sondern jemand sagt, hey, ich muss ja das Netz noch reparieren. Das heißt, ich brauche mehr Leistung als sonst. Da brauche ich dann vielleicht auch einfach Leute, die wirklich die allgemeinen Tätigkeiten machen, die man braucht, um so ein Netzwerk zu flicken.
+
+01:07:33.827 --> 01:07:46.547
+<v SPEAKER_2>Wenn man sowas entdeckt hat, ist das dann schon das Ziel, das möglichst schnell wegzumachen oder kann auch ein Teil sein, man beobachtet, was das macht und vielleicht auch sogar, wo das hingeht und forscht mal ein bisschen nach, was da passiert.
+
+01:07:47.227 --> 01:08:29.767
+<v SPEAKER_4>Das kommt auf die Lage an. Nimm mal an, man hat irgendwie jemand, der sitzt in einem kleinen Außenbüro, der hat da einen PC, hat gesagt, hat eine komische E-Mail gekriegt und schickt die weiter, dass sich die jemand anguckt. Und er sagt dann, sorry Leute, ich hab drauf geklickt. Und dann merkt man, okay, das ist irgendeine Spionage-Software. Wenn man jetzt weiß, der Kollege, der war gerade nicht im VPN, dann ruft man ihn natürlich an, hier, mach deinen Rechner aus. Und dann ist ja das sozusagen, ist erst mal das Problem gelöst, weil man weiß, das ist isoliert. Wenn man noch nicht weiß, wo der oder das überall gewesen sein kann, dann muss ich natürlich erst mal finden, okay, wo kommt es überall her, wohin hat es sich überall verbreitet, dann muss man erst, also das moderne Begriff, dann eben die Sichtbarkeit schaffen. Also ich muss wissen, wo sich die Täter überall bewegen.
+
+01:08:29.787 --> 01:08:49.127
+<v SPEAKER_2>Genau, was ich aber meinte ist, wenn ich dann weiß, also in meinem Netzwerk, was ich jetzt gerade betreue, da weiß ich jetzt, wo das überall sitzt, ist dann noch von Interesse zu verfolgen, wo der zum Beispiel Daten hinsendet und da Nachfragen anzustellen ist, dann ist eure Aufgabe eigentlich nur, okay, ich mach jetzt sozusagen, ich finde, also wenn ich gefunden habe, wo es über ist, dann mach ich das ganz.
+
+01:08:49.527 --> 01:10:23.367
+<v SPEAKER_4>Also die Information, was der Täter eigentlich will, die ist also wirklich ihr Gewicht in Gold wert, weil wenn du ein großes Netz hast, ab einer gewissen Größe sagt man heute, okay, da sind immer irgendwo Probleme. Also so wie man in Berlin nicht sagen kann, wir können hier irgendwann mal dafür sorgen, dass es keinen Taschendiebstahl mehr gibt, das geht nicht. Und dann dir gegenüber offenbart ja der Täter, was er will und dann weißt du, aha, Moment mal, vielleicht sind das Informationen, die kann ich irgendwie abschotten. Die sind nur begrenzt, Personen nutzen die, die sind auf begrenzt System und dann hat der Täter mir mehr oder weniger wirklich gesagt, genau das will ich und dann weiß ich, okay, für die Daten, für die investiere ich am meisten, weil die sind ihm am meisten wert und dann kann ich sozusagen im Zweifelsfall, wenn ich richtig Glück habe und er will nur was Bestimmtes, dann kann ich ihn ausheben, in dem ich sage, okay, ich entziehe ihm die Daten, ich ziehe die sozusagen aus dem jetzt kompromittierten, also aus dem verseuchten Netz raus, tue die in einen eigenen Bereich oder ich weiß sogar, vielleicht kann ich die Daten für eine Weile unzugänglich machen, weil die nicht immer gebraucht werden und dann habe ich sein Interesse unterlaufen. Das ist sozusagen das absolute Optimum. Es kann immer sein, dass das eine Weile dauert, weil die Täter wissen das und die probieren natürlich eine ganze Reihe von Strategien anzuwenden, um genau so etwas zu vermeiden, zum Beispiel indem sie sich einfach sehr aggressiv im Netz verbreiten. Wenn ich sie dann finde, sie sind hier, sie sind da, sie sind dort, dann kenne ich ja immer noch nicht das Interesse. Ich weiß nur, die wollen sich bei mir festsetzen und die meisten Täter, wenn sie nicht auf den Kopf gefallen sind, dann werden die auch sehr vorsichtig bei so was sein. Das ist ja ihr Job, ihr Job ist ja Daten zu stehlen. Die sollen nicht Trojaner machen, wo wir alle sagen, wow, ist der cool, der Trojaner, der ist so geil.
+
+01:10:24.067 --> 01:10:31.587
+<v SPEAKER_2>Also es geht ja eher darum, möglichst einfach Informationen zu beschaffen und nicht mit einem hohen Aufwand aus Angreifversicht.
+
+01:10:32.087 --> 01:10:45.767
+<v SPEAKER_4>Also was mich am meisten beeindruckt, das sind die einfachen Tricks, die trotzdem funktionieren. Also wenn Täter mit ganz wenig Aufwand sozusagen jemanden aufs Kreuz legen, wo man dann sagt, hey, das ist eigentlich schon clever, weil das ist ja kosteneffizient.
+
+01:10:47.047 --> 01:10:58.607
+<v SPEAKER_2>Aber ich weiß nicht, ob man das Hacking becken nennen soll, aber quasi nachforschen, wohin die Softwaredaten sendet und dann sozusagen versuchen, dem irgendwie auch eins oder zwei zu schieben, das ist nicht so von Interesse.
+
+01:10:58.627 --> 01:12:05.887
+<v SPEAKER_4>Das Problem ist, das ist extrem Zeit- und Ressourcenintensiv und auch, wie man schön sagen würde, rechtlich problematisch. Es besteht die Gefahr, wenn ich da zu viel mache, dann lasse ich mich ja von der Hauptaufgabe ablenken, nämlich das muss ja irgendwann geflickt werden und das soll ja auch irgendwann aufhören. Das ist also relativ diffizil und wie gesagt, es besteht dann die Gefahr, dass ich mich auf einen Aspekt des Problems total überfokussiere und dann beispielsweise vergesse, dass ich dann noch ein ganzes Netz habe, was ja irgendwie es braucht, eine gewisse Robustheit, damit es beim nächsten Mal nicht mehr passiert. Und das andere Problem ist, dass natürlich, es gibt ja da draußen, da kann man ja Berichte lesen, da gibt es ja schon, glaube ich, das Älteste, ne, das Neueste war, dass die das Amerikaner geschrieben haben, dass sie den Fall zurückgehackt haben. Das Problem ist, die Täter erwarten so was. Das heißt also, es besteht natürlich die Gefahr, dass man sie genau dann mit der Nase drauf stört, ich habe eure Tricks gefunden, ich weiß, wo ihr seid. Und was ein professioneller Täter macht, der zieht sich dann natürlich sofort zurück. Dann wartet er, bis das Drama vorbei ist, bis alle sozusagen sagen, wir haben jetzt keinen Bock mehr, das war so anstrengend. Und dann geht das Ganze wieder von vorne los.
+
+01:12:06.807 --> 01:12:40.147
+<v SPEAKER_2>Okay, vielen Dank, Fanny, für das konkrete Beispiel. Jetzt verstehe ich auch lange die Komplexität an dem Job. Also zu gucken, wo ein Programm läuft, das kann man sozusagen, wenn es ein einfaches Programm ist, relativ einfach, wenn man weiß, wie ein Betriebssystem funktioniert. Aber das gibt es dann wahrscheinlich in verschiedenen Abstufungen und wie man das versteckt und in verschiedenen Komplexitätsgraden. Dann können auch noch andere Dinge passieren. Jetzt zu dem, was Linus am Anfang der halben Stunde gesagt hat, Intrusion Detection ist sozusagen ein Werkzeugkasten. Was braucht man da alles? Was muss man alles können?
+
+01:12:40.687 --> 01:12:51.867
+<v SPEAKER_3>Na ja, du hast ja, wenn ich mir jetzt deinen Computer so anschaue, da ist diese Software drauf und du gehst jetzt irgendwie davon aus, dass der ordnungsgemäß funktioniert.
+
+01:12:51.887 --> 01:12:54.587
+<v SPEAKER_2>Meistens.
+
+01:12:54.607 --> 01:13:24.367
+<v SPEAKER_3>Wenn der jetzt irgendwie Probleme haben würde, was würdest du denn gerne als Informationen über diesen Computer haben? Wenn du sagst, du möchtest möglichst früh wissen, dass er das Ziel, dass der gehackt wurde. Also du möchtest, dein Ziel ist ja, du möchtest das früh wissen, damit du früh reagieren kannst, damit du Schaden abwenden kannst. Was würdest du denn wissen wollen über deinen Computer? Wenn ich sage, was wäre der einfachste Indikator für dich, für dein Risiko?
+
+01:13:24.387 --> 01:13:36.327
+<v SPEAKER_2>Das Lustige ist, da entscheide ich tatsächlich sozusagen häufig, weil man kann sich ja, also ich kann mir als einfacher User angucken, welche Prozesse in meinem Computer laufen und welcher Prozess Daten sendet.
+
+01:13:36.347 --> 01:13:37.847
+<v SPEAKER_3>Sagt dir aber nichts.
+
+01:13:37.867 --> 01:13:46.607
+<v SPEAKER_2>Genau, dann googelt man das und dann so, ja, das ist möglicher. Dann findet man sozusagen 30 andere Anfragen, wo auch Leute, das ist sozusagen gesucht haben, wenn niemand weiß, was es ist.
+
+01:13:46.627 --> 01:14:19.127
+<v SPEAKER_3>Würde es dich zum Beispiel weiterbringen, würde es dich weiterbringen, den Computer, wenn du den kaufst, guckst du dir an, welche Prozesse laufen da drauf und jedes Mal, wenn du irgendwie ein neues Programm installiert hast und der startet, guckst du dir das wieder an und führst darüber Buch. Was führt dieser Computer aus? Was gibt er mir auf seinen Diagnosetools aus, wenn, was weiß ich hier, was ist das für eine freie Software? Ableton Live. Was ist, wenn da Ableton Live drauf läuft und was ist, wenn da irgendwas anderes drauf läuft?
+
+01:14:19.327 --> 01:14:24.827
+<v SPEAKER_2>Das wäre meine Idee davon. Ich schreibe mir alle Prozesse auf, die es gibt und auch die, die Daten senden dürfen und empfangen dürfen.
+
+01:14:24.887 --> 01:15:04.307
+<v SPEAKER_3>Genau, dass du zum Beispiel sagst, was passiert, wenn hier jemand Daten rausschicken möchte. Du willst ja einfache, niedrigschwellige Indikatoren. Du könntest ja auch sagen, ich achte mal darauf, wie viel Internet-Traffic mein Computer so macht. Ich lade ja von mir aus den ganzen Tagen nur Chaos-Radien hoch. Insofern dürfte der eigentlich relativ wenig aus dem Internet laden, weil ich ja keine Updates mache oder vielleicht ist er auch umgekehrt. Und du sagst, der sollte eigentlich relativ wenig Traffic nach innen haben. Ich surfe nicht in Russland. Und so baust du dir eigentlich möglichst vielleicht ein bisschen Sichtbarkeit darüber, was dieser Computer macht.
+
+01:15:04.327 --> 01:15:48.667
+<v SPEAKER_2>Und jetzt hast du aber dieses Problem mal 1000. Das Problem mal 1000 ist ja dann wahrscheinlich auch eher eine Ressourcenfrage. Es gibt sozusagen eine gute Vorbereitung. Man kann Systeme gut vorbereiten, indem man genau so was macht. Du möchtest sowas halt automatisiert haben und an einer zentralen Stelle. Und das ist halt der wichtige Punkt, dass die Sachen an einer zentralen Stelle auflaufen und auch genügend Ressourcen da sind, wenn es zur Alarmierung kommt. Weil du kannst auch ein Benachrichtigungssystem dran knüpfen. Das heißt, wenn gewisse Unregelmäßigkeiten auftauchen, dass du auf einmal plötzlich einen relativ hohen Download hast.
+
+01:15:48.687 --> 01:15:50.467
+<v SPEAKER_4>Obwohl du eigentlich sonst nur Upload hast.
+
+01:15:50.487 --> 01:15:55.287
+<v SPEAKER_2>Weil du lädst ja nur Chaos-Radio Folgen hoch, aber lädst halt sonst nicht aus dem Netz runter.
+
+01:15:55.307 --> 01:16:04.807
+<v SPEAKER_4>Und dann haben wir ja schon eine Anomalie, die auftritt. Und dass du bei so einer Anomalie und bei allen anderen halt auch eine automatische Benachrichtigung vom System bekommst.
+
+01:16:04.827 --> 01:16:22.407
+<v SPEAKER_2>Und dann wirst du darauf schon aufmerksam. Und dann ist wieder eine Ressourcenfrage, ob du alle Unregelmäßigkeiten, die auftreten, tatsächlich auch in einer gewissen Zeitspanne bearbeiten kannst und den ganzen nachgehen kannst. Ich frage mich, warum gibt es das nicht für normale Computer?
+
+01:16:22.427 --> 01:16:24.487
+<v SPEAKER_3>Na ja, gibt's ja.
+
+01:16:24.507 --> 01:16:24.807
+<v SPEAKER_4>Was?
+
+01:16:25.867 --> 01:16:27.087
+<v SPEAKER_2>Wieso wurde ich nicht informiert?
+
+01:16:27.107 --> 01:16:33.427
+<v SPEAKER_3>Du würdest vielleicht sowas wie, was würde man nehmen? Also, Sort oder so.
+
+01:16:33.867 --> 01:16:35.367
+<v SPEAKER_2>Was für ein Ding?
+
+01:16:35.387 --> 01:17:55.547
+<v SPEAKER_4>Das Problem bei diesen ganzen Lösungen, also generisch gesprochen, ohne Brandnamen zu nennen, ist immer dieses Baselining. Also ich hab jetzt, wenn ich eine Firma hab, wo sich irgendwie alle Computer ein bisschen ähnlich verhalten, das sind jetzt alles, weiß ich nicht, Mailserver, Webserver, was auch immer, die haben irgendwo einen Pattern, was die immer machen und die haben bestimmte Dinge, die machen die nie. Und ich will jetzt bei einem vernünftigen Intrusion Detection System erstmal irgendwie schauen oder generell, also jetzt nicht nur die Software, sondern mein Gesamt-Setup, mein Intrusion Detection Setup, würde ich dann erstmal bei allen vorhandenen Komponenten, wo ich irgendwie Daten herbekomme, dann gucken, okay, wie ist meine Baseline, was ist überhaupt normal? Und wird dann von da aus loslaufen und diese Abweichung dann alarmieren lassen. Bei so einem normalen, ich sag mal General Purpose End-User Laptop, da ist viel mehr Varianz drin, was der so tut den ganzen Tag. Da ist das dann typischerweise auch in den Produkten so, dass ich dann nicht mehr nur darauf verlassen werde, dass jetzt irgendwie nur geguckt wird, wo surfe ich jetzt hin oder was habe ich in meinem Windows-Log stehen, sondern dass das eine Kombination dann ist, irgendwie mit Virenscannern, signaturbasierten, emulierten. Also, dass dann, was meine Binaries machen, die ich jetzt vielleicht nicht kenne, das wird dann so nachgestellt, geht dann auch schon mal kaputt, wie Tavis schon mal merkt. Und da wird dann eben Anomalie Detection gemacht. Dann wird noch mal geschaut, okay, wenn ich da sitze bei manchen Produkten in einer Sandbox, du machst das irgendwie ein komisches Funkt, also ist es dann immer eine Kombination von ganz vielen Technologien.
+
+01:17:55.667 --> 01:19:51.047
+<v SPEAKER_3>Du musst dir das so vorstellen. Du hast von mir ein Virenscanner auf dem Rechner. Jetzt geht dir das Unternehmen oder die Organisation hin und sagt, wir bauen aber auch noch mal ein Virenscanner auf den Mail-Server. Wir haben außerdem einen Web-Server, der irgendwas macht. Vor dem Web-Server haben wir eine Web Application Firewall. Dazu haben wir sowieso eine Firewall, auch in unserem System. All diese Systeme kommen von unterschiedlichen Herstellern und sind alle mit viel Geld bezahlt worden. Weil du ja, also der Prozess ist ganz klar von der Customer Experience, du kaufst dir so ein Ding und es ist eigentlich völlig egal, welches Security Appliance oder Produkt das ist. Die machen danach erst mal einen riesen Radau, um dir die ganze Zeit zu sagen, ich bin da, ich bin mein Geld wert. Also sowas wie, hier hat gerade ein Port Scan stattgefunden. Also hier hat jemand Verbindungen auf verschiedenen Ports gemacht, versucht. Das ist ein gescheiterter Angriff oder ein Angriffsversuch oder ein Port Enumeration oder was auch immer. Und jetzt hast du davon, ich glaube, wenn du so irgendwie Best Practice Bücher anschaust, dann hast du für jetzt eine größere Organisation sowas wie 32 dieser Dinge, also Firewall, Web Application, Firewall, irgendein Scheiß. Ich kenne die Liste selber nicht auswendig. Das heißt, du hast diese teilweise zentrale Systeme, teilweise aber auch verteilte Systeme. Und jetzt möchtest du irgendwie dafür sorgen, dass du überhaupt erst mal einen Überblick darüber beschaffst. Also sagst du denen, die sollen alle ihre Information an eine zentrale Stelle liefern. Dein Monitoring System. Und da prasseln dann irgendwie, also es ist echt im Normalbetrieb, wo du wirklich sagst, okay, wahrscheinlich geht hier gerade nichts schief, prasseln da trotzdem halt Unmengen an Alerts. Irgendwie viele Tausende bis hunderttausend oder zehntausende rein.
+
+01:19:51.267 --> 01:20:01.987
+<v SPEAKER_2>Also bei den Kollegen, die die Systeme betreuen, leuchtet halt die Lampe die ganze Zeit rot. Und die sind erst mal primär damit beschäftigt, entsprechend zu filtern, was ist kritisch, was ist unkritisch.
+
+01:20:02.007 --> 01:22:15.467
+<v SPEAKER_3>Also was ist gewollt und was ist ungewollt. Und dann bist du dabei zu sagen, okay vieles was jetzt hier gerade passiert ist, ist totaler Unsinn und dann fängst du an die Sachen wegzudefinieren. Zu sagen, okay ich möchte mich interessiert nicht, wenn ein Portscan stattfindet. Aber wenn ein Portscan stattfindet, dann interessiert mich alles, was die IP danach noch macht. Also die einfache Regel, die ich immer so als Erläuterung nehme, dich interessiert nicht, dass tausendmal versucht wurde, sich bei deinem System einzuloggen. Aber wenn es beim tausend und ersten mal passiert und funktioniert und der Login klappt, dann möchtest du, dass irgendwie so eine rote Lampe angeht und einen Alarm erört. Und diese Regeln schreibst du dir in einem Team möglichst selber. du willst erst mal dein Monitoring-System zum Schweigen bringen. Und dann machst du dir Gedanken darüber, was möchte ich denn hier überhaupt noch hören? Das sind dann individuelle Korrelationsregeln. Das ist Vorarbeit. Die aber, weil dieses Monitoring-System, nur weil es dir nicht sagt, die Support-Scan hat stattgefunden, weil es da nicht irgendwie die gelb oder rot, oder welche Farbe auch immer, die sich da ausdenken, tief lila oder so. Nur weil es diese Informationen dir nicht mehr anzeigt auf Anhieb, heißt das nicht, dass sie nicht trotzdem da drin ist. Das heißt, du hast einerseits ein kluges Monitoring und dann das, was man so Drill-Down nennt. Dass du dann eben sagst, ach okay, hier ist eine IP-Adresse, die interessiert mich. Und dann sagt dir die sofort, okay, die ist in diesem Land vermutlich lokalisiert. Die hat zuletzt die Webseite besucht und dann im Online-Shop fünfmal eine falsche Kreditkartennummer eingegeben. Beim sechsten Mal hat es geklappt oder solche Scherze, dass du dann halt wirklich die ganzen Informationen, die du da zentral sammelst, nachher möglichst schön wieder dir anschauen kannst. Weil was du nicht vergessen darfst, ist so eine große Organisationsinfrastruktur mit den ganzen Desktop-Rechnern, mit den ganzen Servern, mit den Tausenden von Services, die da irgendwo stattfinden. Die versteht einfach kaum noch jemand. Und diesen Überblick als Einzelperson wieder hinzukriegen, dabei helfen dir solche Monitoring-Geschichten.
+
+01:22:15.847 --> 01:22:25.187
+<v SPEAKER_2>Ich nehme den aber auch, das ist nur so ein kleiner Ranschlenker, Systeme, die eine gute Intuition-Detekte haben, sind nicht unbedingt durch Datensparsamkeit ausgezeichnet.
+
+01:22:26.047 --> 01:23:32.767
+<v SPEAKER_4>Das würde ich sagen auch jetzt eher nicht, aber es hängt schon, also es gibt bestimmte Merkmale, die klug sind zu erheben, die jetzt nicht direkt irgendwie sensitiv gegenüber dem Benutzer, der vielleicht ein System sitzt, aber die eben Sinn machen, um Angreifer zu erkennen. Und da jetzt irgendwie solche Datenpunkte dann zu definieren, und zu sagen, okay, das erhebe ich jetzt und das nicht. Das ist dann eben Aufgabe von einem guten Analysten, der dann eben dieses System mit einrichtet. Und natürlich auch teilweise abhängig von meinen Produkten, die ich dann im Endeffekt benutze. Also ich kann jetzt hingehen und kann halt irgendwie Sysmon oder sowas, also ein freies Microsoft-Tool aus der Sysinternal-Suite benutzen, um irgendwie das Logging hochzudrehen und da bestimmte Events zu definieren, die ich mir angucken will. Oder ich kann jetzt auch irgendwie so ein, irgendwas Enterprise-Produkt kaufen, was noch viel mehr tut. Und irgendwie, also jetzt nicht im Sinne von besser mehr, aber anders mehr. Und irgendwie jetzt dann noch, weiß ich nicht, irgendwelche Endpoints-Scanner ihren Geschichten macht und mir dann sowohl meine Info-Notifications macht. Also irgendwie so, da ist was passiert. Also nicht unbedingt, dass es jetzt evil und dann on top vielleicht noch so, okay, ich habe jetzt irgendeine Malwege gefunden.
+
+01:23:33.627 --> 01:23:50.487
+<v SPEAKER_2>Aber das ist sozusagen, das ist die Vorbereitung eigentlich. Also eigentlich das sozusagen, wenn dieses Regelset, was du beschrieben hast sozusagen, wenn das da ist, dann dann läuft das System erst mal. Und das heißt, man darf aber nicht vergessen, dass Regeln auch immer nachgeschärft werden müssen.
+
+01:23:50.507 --> 01:23:52.547
+<v SPEAKER_4>Also wann immer Veränderungen im Netzwerk stattfinden.
+
+01:23:52.567 --> 01:24:07.967
+<v SPEAKER_2>Lass mich mal bitte den Gedanken zuführen. Weil es gibt dieses Regelsystem und ja, das muss auch so sagen, nachgearbeitet werden, aber das ist ja nicht sozusagen, es gibt ja dann den Punkt, wo man die incident responder wiederholt. Weil man glaubt, also dann hat er dieses Regelwerk dann angeschlagen und hat gesagt, so jetzt ist aber wirklich was komisch.
+
+01:24:08.327 --> 01:24:11.047
+<v SPEAKER_4>Ja, dann hat ein Regelwerk auch fast schon versagt.
+
+01:24:13.067 --> 01:24:33.387
+<v SPEAKER_3>Also das System heißt, du baust deine eigene incident response Kapazitäten auf. Du willst ja als Organisation eigentlich in der Lage sein, dass die meisten Sachen gar nicht das sind, was wir als incident bezeichnen. Das heißt, du baust dir mit so einem Monitoring auf, dann passieren zum Beispiel so Sachen wie keine Ahnung.
+
+01:24:33.407 --> 01:24:36.927
+<v SPEAKER_2>Aber das heißt, wenn ihr kommt, dann hat jemand nicht das gebaut, was du gerade erklärt hast.
+
+01:24:36.947 --> 01:24:39.707
+<v SPEAKER_3>Oder nur unverständlich. Ja doch, der hat das vielleicht gebaut, er war einfach nur ein besserer Angreifer.
+
+01:24:43.847 --> 01:26:40.587
+<v SPEAKER_4>Gut, das war eben was, was Volper Tu auch ganz am Anfang gesagt hat. Man will natürlich bestehende Struktur nutzen. Das heißt, wenn ich jetzt irgendwo bei einem Kunden bin und der hat sich jetzt schon ein super tolles Syslog Collection System in irgendeiner Form gebaut, dann wird man das natürlich benutzen. Also dann wird man natürlich hingehend darauf aufbauen, vielleicht schauen, dass es da irgendwie eine sinnvolle Abdeckung von vielleicht Infrastruktur, die eventuell vergessen wurde oder aus irgendwelchen budgetären Gründen noch nicht eben wandelt wurde. Das wird man dann eben nachziehen und wird dann eben gucken, dass man zumindest die Bereiche, wo man meint, die interessant sind, dass die da mit drin sind, wird da drin dann eben nach Anomalien suchen. Also man arbeitet natürlich allein aus der Logik erst mal mit dem, was da ist. Und typischerweise, wenn jemand ein so gutes Monitoring hat, dass er den Angriff sehr gut selber eingrenzt, dann kann er das auch beheben. Dann kann er sagen, hier diese vier oder fünf Kleins, die hat es erwischt, da hat jemand eine Nachricht geschickt, eine Mail und diese fünf Leute haben drauf geklickt. Ich habe das rechtzeitig gesehen. Ich ziehe die Rechner aus dem Verkehr. Alles gut. Und vielleicht mache ich dann noch ein paar nachgelagerte Analysen, um einfach sicher zu sein, dass ich, was dieser Angreifer macht, noch mal kommt. Wenn jetzt irgendwelche Lücken drin sind, dass jemand sagt, ich habe hier was auf meinem Server gefunden. Also die ideal Standard-Anomalie ist wirklich, ich habe ein Antivirus-Alert auf einem Server im Netz, wo ich davon ausgehe, dass jemand das von innen gepusht haben muss. Und dann sind in dem Monitoring ja irgendwelche Lücken offensichtlich. Das heißt, ich habe die Bewegung dorthin nicht gesehen. Und dann guckt man, wie gleicht man die aus. Und wenn dann jemand sagt, mein Problem ist, ich würde ja gerne mehr Lock-Quellen anschließen, aber wie Linus gesagt hat, ich kriege so viele Events, die Büchse, die wir da haben, die kommt nicht hinterher. Dann muss man natürlich sagen, okay, dann brauchen wir Infrastruktur arbeiten und müssen gucken, dass das Gerät, was da vor Ort ist, einfach mehr Events verarbeiten kann. Oder wenn jemand sagt, ich habe mich da verhauen, ich habe eine Technologie genommen, mit der bin ich nicht zufrieden, dann sagt man, okay, wir arbeiten mit der bestehenden Technologie so lange wie es geht und gucken, dass man halt nebenher so YOLO-mäßig, würde man wahrscheinlich sagen, was Neues aufbaut.
+
+01:26:40.847 --> 01:27:18.067
+<v SPEAKER_2>Ich habe jetzt ein verständliches Problem, und zwar ich hätte, also weil du am Anfang dieses Beispiel gemacht hast, und jetzt sagen wir, wie man so ein System baut, dass man Dinge erkennen kann, dachte ich, dass eine Möglichkeit doch ist, okay, ich habe dieses Intrusion Detection sozusagen Automatisierung aufgebaut, dass es dann auch den Fall geben kann, das System erkennt, hier stimmt etwas nicht, und das kann ich abschalten, aber du hast ja vorhin gesagt, es kann ja immer sein, ich entdecke das etwas Falsches, ich weiß aber nicht, warum das da ist. Ich dachte, das kann auch passieren, dass das Intrusion Detection System sagt, okay, da ist was schief, und ich weiß auch, was schief ist, ich weiß dann aber nicht, wie es da passiert ist.
+
+01:27:18.087 --> 01:27:27.027
+<v SPEAKER_4>Das ist dann die typische Aufgabe eben von einem Zert. Typischerweise will man da jetzt nicht jedes Mal, wenn man irgendwas Komisches sieht. Also irgendeine Person muss ja eh davor sitzen.
+
+01:27:27.047 --> 01:27:42.527
+<v SPEAKER_2>Nein, ich meine sozusagen, das Intrusion Detection System entdeckt, da läuft was schief, also es gibt diesen Prozess, der Daten irgendwo hinschickt, und ich weiß auch, was da schief läuft und wo das hingeht, was ich nicht will, aber ich weiß aber nicht, wie es da hingekommen ist.
+
+01:27:42.547 --> 01:27:44.687
+<v SPEAKER_4>Von welchem Host das gekommen ist?
+
+01:27:44.707 --> 01:28:02.287
+<v SPEAKER_2>Welche Sicherheitslücke ausgenutzt wurde oder wie genau passiert das? Das kannst du ja vielleicht auch gar nicht wissen im Vorfeld, weil gegebenenfalls ein Angreifer einen Zero-Day-Exploit genutzt hat, dann wird eine Schwachstelle ausgenutzt, die bis dato nicht bekannt ist. Meine Frage ist ja genauso, gibt es das als Szenario?
+
+01:28:03.947 --> 01:28:47.427
+<v SPEAKER_4>Das muss ja noch nicht meine Zero-Day sein, das kann da einfach irgendwas sein, was jetzt irgendwie keine Events auslöst. Also ich weiß jetzt gerade nicht so ein Eternal Blue-Double-Pulser, ich weiß jetzt nicht, da wird wahrscheinlich keine Registry Keys anlegen oder irgendetwas tun, er schreibt halt in Memory irgendwie Zeug, führt das aus und wenn jetzt dem Angreifer nicht irgendwie seine Payload wegcrasht, dann sehe ich auch keine Events. Also selbst wenn ich ein ungepatchtes System hab, wird da kein, also selbst wenn es im Monitoring und sowas ist, dann sehe ich vielleicht andere Anualien, also irgendwie da ist, irgendwie der VESUS ist kaputt und da wurden keine Patches installiert oder sowas, aber ich sehe dann ja nicht unbedingt, dass jetzt da jetzt irgendwie jetzt gerade ein Event erzeugt wird, weil sich da ein Angreifer irgendwie drauf die Kiste aufgemacht hat. Das steht an dem Event leider nicht dran, ob es ein Angreifer war.
+
+01:28:47.447 --> 01:28:49.387
+<v SPEAKER_2>Genau, aber ist das dann auch eure Aufgabe auch rauszufinden?
+
+01:28:49.407 --> 01:28:50.587
+<v SPEAKER_3>Das ist ja aber echt ein Feature.
+
+01:28:52.707 --> 01:28:55.087
+<v SPEAKER_2>Aber ist es dann auch eure Aufgabe zu sagen, das dann rauszufinden?
+
+01:28:55.107 --> 01:28:55.307
+<v SPEAKER_4>Genau.
+
+01:28:55.367 --> 01:28:58.527
+<v SPEAKER_2>Diesen einen Schritt mehr zu gehen, der das System nicht kann.
+
+01:28:58.547 --> 01:29:37.387
+<v SPEAKER_4>Das ist dann halt genau die Handarbeit, also es ist mehr oder weniger immer zu gucken, was kann das bestehende System, was fehlt und dann natürlich aus was auch immer zur Verfügung steht, so viel wie möglich rauszukratzen, um die bestehenden Systeme zu verbessern oder eben wirklich sagen, okay, das ist irgendwie schiefgegangen. Wir haben hier ein Monitoring-System, das bringt die Leistung nicht, die das Opfer sich davon wünscht und dann kann man natürlich sagen, okay, das muss man irgendwie vielleicht anders aufbauen und man kann natürlich dann auch während einem Incident was aufbauen, was total hässlich ist. Das ist dann, dient eben einfach nur wirklich der Gefahrenabwehr und zu einem späteren Zeitpunkt macht man das dann sozusagen in hübsch, weil da soll es ja erst mal nur sozusagen halt mit dem Angreifer, den man da an der Backe hat, eben klarkommen.
+
+01:29:37.767 --> 01:29:47.727
+<v SPEAKER_2>Also das war jetzt sehr unterhaltsam, die eineinhalb Stunden, die wir jetzt schon hier sitzen, aber die Hauptmessage, die ich mitgenommen habe, ist, wenn man sich genug vorbereitet, dann braucht man das eigentlich nicht.
+
+01:29:47.747 --> 01:29:52.927
+<v SPEAKER_3>Das wäre der, wenn wir gut genug vorbereitet werden, bräuchten wir dich nicht. Natürlich.
+
+01:29:52.987 --> 01:29:53.607
+<v SPEAKER_2>Von der du träumst.
+
+01:29:53.627 --> 01:30:30.767
+<v SPEAKER_3>Wenn du gut genug vorbereitet bist, brauchst du irgendjemanden nicht. Aber man möchte ja schon irgendwie auch an den Stand kommen, dass man natürlich irgendwie eine eigene Abwehrkraft entwickelt. Und nochmal so eine große Organisation hat stündlich oder minütlich irgendwelche Alerts oder Incidents und das ist nicht immer so, dass dann hier, wie Cevas das gerade schon bemüht hat, die Klärschlammsortierer kommen müssen. Aber die Klärschlammsortierer haben eben echt Ahnung von Klärschlamm.
+
+01:30:30.787 --> 01:31:00.187
+<v SPEAKER_2>Ja, aber worauf ich noch was wollte, ist, man kann sich sehr gut vorbereiten und man kann sehr gut Vorsorge darauf treffen, was man machen kann, wenn es mal schief geht. Du musst ja entsprechend auch in deinem Monitoring, wie wir das eingangs schon mal gesagt haben, diese Kritikalität einsortieren bei Sicherheitsvorfällen. Also was ist Low, Medium, High und entsprechend critical, das musst du in deinem Alerting-System auch mit hinterlegen. Ich wiederhole die Frage nochmal, man kann sich sehr gut vorbereiten und dann kann man auch dafür Sorge tragen, dass man gut vorbereitet ist, falls es schief geht.
+
+01:31:00.207 --> 01:31:16.927
+<v SPEAKER_4>Ja, im Zweifel selbst. Wenn man jetzt ein super Log-Collection-System und Intrusion-Detection-System, das sind ja auch jetzt alles Werkzeuge, selbst wenn da mal was schief geht, dann bringt es einem immer noch was. Weil wenn dann jetzt die Instant Responder kommen, dann muss man das nicht erst dann teuer bauen, sondern dann kann man das eben direkt benutzen.
+
+01:31:17.127 --> 01:31:33.747
+<v SPEAKER_2>Also das Schöne ist ja auch, du hast dann schon gewisse Nachweise in deinem System, wo du nachvollziehen kannst, wie sich Leute bewegt haben, was von A nach B gewandert ist, was man dann halt auswerten muss. Aber das Schöne ist, du hast die Daten, was natürlich fatal ist in so einer Situation.
+
+01:31:33.767 --> 01:31:34.707
+<v SPEAKER_3>Du hast gar keine Daten.
+
+01:31:34.867 --> 01:31:50.687
+<v SPEAKER_2>Okay, also das heißt, man kann sie so vorbereiten, dass ihr möglichst wenig Arbeit habt, weil alle Vorbereitungen da sind. Und dann kann man sozusagen vielleicht auch für den Ernstfall vorsagen. Das beschreibe ich gleich in der letzten halben Stunde. Vorher noch einmal Nerd-News, geschrieben von Mo und präsentiert von Christina, und danach noch eine kleine Musik.
+
+01:31:56.112 --> 01:33:14.692
+<v SPEAKER_1>Die Bundesnetzagentur hat die Pflicht zur Vorratsdatenspeicherung ausgesetzt. Unter Berufung auf ein vorläufiges Urteil des Oberverwaltungsgerichts NRW hat die Regulierungsbehörde am Mittwoch angekündigt, sie werde derzeit keine Maßnahmen zur Durchsetzung ergreifen. Das Urteil galt nur für den Provider SpaceNet, der gegen das Gesetz geklagt hatte. Nach der Ankündigung der Behörde kündigten auch andere Provider an, bis zum Urteil im Hauptverfahren keine Verkehrsdaten zu erheben. Die Große Koalition hat sich auf eine Abschaffung der sogenannten Störerhaftung für WLAN-Betreiber verständigt. Wer ein offenes WLAN anbietet, kann damit nicht mehr abgemahnt werden, wenn über seinen Anschluss urheberrechtlich geschütztes Material verbreitet wird. Aber der Entwurf hat einen Haken. Stellt ein Rechtsinhaber künftig fest, dass über ein WLAN eine Urheberrechtsverletzung begangen wurde, kann er von dessen Betreiber verlangen, dass dieser den betreffenden Dienst sperrt, um eine Wiederholung der Rechtsverletzung auszuschließen. 50 Mbit pro Sekunde soll es bis Ende 2018 in jedem Haushalt geben. Das sagte Bundeskanzlerin Merkel zu. Auf einem Kongress der CDU-CSU-Fraktion zum digitalen Wandel räumte sie am Mittwoch ein, dass die Glasfaserverkabelung in Deutschland bisher – Zitat – vergleichsweise gering sei. Titel des Kongresses, Deutschland 4.0, das Potential der Digitalisierung nutzen. Bislang sind aber selbst die angestrebten 50 Mbit pro Sekunde erst für drei Viertel der deutschen Haushalte verfügbar.
+
+01:38:06.486 --> 01:38:29.466
+<v SPEAKER_2>Shell von Clam im Chaosradio 236, wo wir über Intrusion Detection und Incident Responding reden und beide am Ende angekommen sind. Und deswegen hätte ich noch eine kleine Insider-Frage, eine von mir, eine aus dem Publikum. Und zwar die von mir ist, wir haben jetzt die ganze Zeit darüber geredet und ihr habt mir schön erklärt, wie man Angriffe von außen erkennt. Wie oft ist es ein Angreifer von innen oder gibt es das gar nicht?
+
+01:38:30.566 --> 01:38:42.286
+<v SPEAKER_4>Ja, da gibt es ja immer diese Zahlen. So 80 Prozent der Angriffe sind Insider. Aber das ist eben oft eine Definitionsfrage. Und da hat auch nie jemand irgendwie belastbares Datenmaterial geliefert.
+
+01:38:42.306 --> 01:38:46.246
+<v SPEAKER_2>Aber anekdotische Evidenz eurer bisherigen Karriere?
+
+01:38:46.266 --> 01:39:21.806
+<v SPEAKER_4>Ja, sag mal so, das kommt wieder drauf an, was man als Incident definiert. Also wenn man Mobbing hat, dann kann ich sagen, auch Mobbing ist ein Incident, dann sind es natürlich immer Innentäter. Aber so der klassische Spionage-Kram, der kommt heute von außen, weil das skaliert besser. Also ich kann ja jemanden in ein Unternehmen einschleusen und die Person ist dann aber in einem Unternehmen und die muss ja dann dort auch mal die Karriereleiter hochkletteln, um an die entsprechenden Daten ranzukommen, sich ein bisschen gewöhnen. Wenn ich Hacken über Internet mache, dann können meine vier oder fünf Hacker, dann können die zehn Unternehmen gleichzeitig angreifen und die skalieren viel besser. Wobei es natürlich auch sein kann, dass man so Hybridgeschichten hat, dass sich das natürlich kombiniert.
+
+01:39:22.186 --> 01:39:26.266
+<v SPEAKER_2>Und so ein frustrierter Angestellter, der mal eben das heißt, wenn es gar eine Firma platt machen will.
+
+01:39:26.346 --> 01:39:35.346
+<v SPEAKER_4>Man spricht da bei diesen Intätern auch immer gerne von Leuten, die halt abgeworben werden von anderen Unternehmen und dann erst mal eine eigene Datensenke betreiben und alle Informationen, die sie irgendwie mitnehmen können.
+
+01:39:37.066 --> 01:39:42.466
+<v SPEAKER_2>Ist nicht Whistleblower, sondern nehmen wir einmal ein fiktives Beispiel.
+
+01:39:42.486 --> 01:39:59.846
+<v SPEAKER_4>Du arbeitest für ein Versicherungsunternehmen und nimmst die Datenbank aller deiner Kunden mit und wechselst zu einem anderen Versicherungsunternehmen. Dann bist du als Mitarbeiter natürlich bei dem neuen Unternehmen daran interessiert, dass alle deine Kunden, die du bei dem Unternehmen A hattest, jetzt zum Unternehmen B kommen, wo du jetzt arbeitest.
+
+01:40:00.106 --> 01:40:08.906
+<v SPEAKER_2>Also eigentlich ja, aber ich kann mir schon vorstellen, dass man auch in gewissen Nöte kommt, wenn man entdeckt, oh, dieses Ding, was ich verfolge, ist ein Whistleblower, der versucht, irgendwie schlimme Dinge aufzudecken.
+
+01:40:09.546 --> 01:40:34.326
+<v SPEAKER_4>Ich glaube typischerweise wird da jetzt nicht das Incident Response Team geholt, weil da ist es ja jetzt dann selten so, dass da großflächig irgendwelche Tools benutzt werden, die man nicht findet oder so. Also ich meine, falls uns mal jemand irgendwie, ich denke auch im Clubumfeld werden sich da viele Leute finden, falls mal irgendwer bei der NSA dazu kommt, da kleinere Tools zu installieren.
+
+01:40:36.586 --> 01:40:38.826
+<v SPEAKER_2>Oder nicht zu deinstallieren.
+
+01:40:38.846 --> 01:41:05.646
+<v SPEAKER_4>Das kann ja passieren, wenn man dann rüberwechselt und sich in die morale schaubere Ecke begibt und sinnvolle Dinge tut. Das wäre natürlich total bedauerlich, aber ich denke, dass das eher nicht so ist, dass man es typischerweise als Incident Responder als Case hat. Wenn man sagt, das soll irgendwie was mit Hacking zu tun haben oder mit Sicherheitslücken, dann kommt es in der Regel von außen. Wobei es natürlich auch in Netzen auch schon mal so erlebnisorientierte Personen gibt.
+
+01:41:08.706 --> 01:41:25.766
+<v SPEAKER_2>Feldef hat auf Twitter noch gefragt, inwiefern verhindert Hochmut des lokalen IT-Personals, dass so zeitnah wie möglich reagiert wird. Also ist euch das schon mal untergekommen, dass man sozusagen, man hätte euch schon vor einer Woche Bescheid sagen können, aber der Lokale hat man gesagt, nein, nein, das schaffe ich schon.
+
+01:41:25.786 --> 01:43:36.986
+<v SPEAKER_4>Das ist eigentlich normal. Also das ist ja auch der Punkt, warum wir da auch so am Anfang auch ein bisschen so Fragen angegangen sind wie Koordination. Da kann auf der Ebene gehen wirklich die meisten Sachen schief. Also erstens mal die Leute sind aufgeregt und das ist wirklich, das ist eben einfach ansteckend. Und dann trifft man falsche Entscheidungen. Auch routinierte Leute können sich davon anstecken lassen. Man muss dagegen echt ankämpfen. Und das ist dann eben einfach so nicht unbedingt, dass das Hochmut ist, sondern das ist einfach oft. Also ich würde da nie jemanden Vorwurf machen, weil er im Stress eine falsche Entscheidung trifft, weil das machen wir alle. Also so sind wir normal. Wenn jemand nicht in den Stress gerät, dann ist er routiniert. Und dann trifft er normalerweise keine falschen Entscheidungen mehr. Und da kann, es kann natürlich auch, also das Hauptproblem, glaube ich, ist immer, wenn man so diesen typischen, also was die Manager, glaube ich, so disconnect, zwischen Management und IT haben. Das heißt, da ist ein Admin bemerkt, oh, da geht was schief. Und er weiß aber oder befürchtet, dass wenn er da jemanden hinzuzieht, dass er dann derjenige ist, der eine auf den Deckel kriegt. Und so eine Situation, die ist natürlich, also die ist gelinde gesagt eine Katastrophe. Das darf eigentlich nicht passieren. Da sind das sozusagen die eine Ebene vor der anderen dann wirklich Angst hat oder eben in irgendeiner Form Repressalien befürchtet. Das kann auch unglaublich frustrierend sein, so ein Fall, wenn ein Admin sagt, ich wollte schon immer meinen Active Directory aufrollen, ich wollte schon immer patchen, man hat mir nie die Gelder, die Mittel gegeben. Jetzt fliegt mir alles um die Ohren. Jetzt würde ich am ersten nicht das Inzident behandeln, sondern ich würde gerne Leute umfausten. Und ja, das ist leider oft die Realität, wo viele Menschen arbeiten. Also IT ist ja nicht für viele Leute der Traumjob, das ist ganz schön stressig. Man hat Anforderungen von vielen Leuten, wo man weiß, dass sie manchmal nicht verstehen, was man wirklich leisten kann, was so machbar ist und was nicht. Das ist oft schon so eine Ecke, die ziemlich frustig ist. Und da hat man das Risiko, dass die daraus entstehenden Probleme, die vernünftige Behandlung des Inzidents verhindern, das ist leider Alltag. Das ist leider auch, glaube ich, in 50 Prozent der Fälle muss man mit so was rechnen.
+
+01:43:38.286 --> 01:43:47.786
+<v SPEAKER_2>Das ist ja ganz schön viel. Gibt es denn im Streben, sogar Handbücher auszugeben? Behandelt eure Atme jetzt besser? Dann passiert auch nicht so viel schlechtes Zeug?
+
+01:43:47.806 --> 01:45:17.606
+<v SPEAKER_4>Das wäre mal eine gute Idee. Also hier eine Idee von Mira ist natürlich auch so, was ja für einen Atmen oft frustrierend ist, wenn er was Neues lernt oder neue Sachen umsetzen soll, wo er merkt, hier, das würde mir was bringen. Also das Typische ist ein Atmen weiß, ich habe eine stundslangweilige Arbeit, die ich ständig machen muss, aber ich habe nicht die Zeit, sie zu automatisieren. Dann muss man dann eben auch mal gucken, okay, was hält meine Leute auf, wo sie wirklich sagen, wenn ich diese Arbeit mache, werde ich über die Jahre dümmer. Und dann genau dann eben den Leuten zuhören und zu sagen, okay, das irgendwie aus dem Weg räumen. Und klar, was natürlich dann auch die Realität ist, es gibt natürlich auch, also Geld liegt ja nicht auf der Straße, es gibt natürlich Unternehmen, wo einfach die Ressourcen nicht da sind. Das heißt, also da ist dann der Chef ist auch sozusagen Mitadmin, hat noch einen weiteren Kollegen. Und da ist dann natürlich einfach oft die Flexibilität nicht da. Da kann man dann irgendwie nichts weiter tun, als seinen Arbeitsablauf so gut wie möglich sozusagen zu organisieren. Aber sozusagen Frustration im IT-Bereich, das ist leider Alltag. Was natürlich auch immer ein wesentlicher Faktor ist, der da reinspielt, ist natürlich die Komplexität der IT-Umgebung. Also man möchte natürlich gerade bei knappen Ressourcen tendenziell dann eher einfache IT-Umgebungen haben, über die man dann auch mit dem kleinen Team einen Überblick behalten kann. Nicht, dass man sich irgendwie 5000 verschiedene Technologien ans Bein bindet, wo man jetzt gar nicht mehr irgendwie als Ganzes weiß noch, was da überhaupt steht im Netzwerk.
+
+01:45:18.726 --> 01:46:03.586
+<v SPEAKER_2>Ich will, weil wir jetzt bald schon wieder am Ende sind und mir schon hier in der Musikpause bedeutet wurde, wir müssten eigentlich noch sieben Tage alles verbrauchen zu haben. Ich will trotzdem noch mal fragen, die, also ich habe ja schon gesagt, im Vorfeld ist es gut, so ein Monitoring aufzubauen und da so, also, naja, nicht so viel, sondern so gezielt wie möglich Daten zu sammeln, die dabei helfen können, ein Incident, wenn es denn passiert, zu analysieren. Aber was ich auch sozusagen in den vergangenen zwei Stunden entnommen habe, ist, das Incident kommt. Egal wie gut du vorbereitest, das Incident kommt. Meine naive Annahme wäre sozusagen, okay, das ist möglicherweise schlimm, aber wenn ich ein Backup habe, ist alles nicht so schlimm. Muss man außer Backups noch irgendwas machen, um zu sagen, für den Fall eines Incidents gerüstet zu sein? Was braucht man da?
+
+01:46:03.606 --> 01:48:40.206
+<v SPEAKER_4>Also Backups helfen mir jetzt nicht, wenn mir Daten geklaut werden. Dann werden die vielleicht zweimal geklaut und in verschiedenen Versionen stellen. Aber natürlich macht es immer Sinn, eben wie schon vorhin erwähnt, einfach generisch in irgendeiner Form Monitoring und irgendwie so Collection-Infrastruktur, sag ich mal, dass ich irgendwie auf meinen Hosts Informationen bekomme, dass ich irgendeine Möglichkeit habe, sei es jetzt irgendwie Tools, sei es irgendwie von mir aus auch selbst gebaute PowerShell-Skripte, aber dass ich irgendwie meinetwegen Dateien von Hosts irgendwie einsammeln kann über so einen Audit-Account, dass ich in irgendeiner Form schnelle Zugriffsmöglichkeiten auf einzelne Systeme habe, um eben dann auch Alarmmeldungen zu verifizieren oder zu falsifizieren, die ich dann eben in meinem Sieben- oder in meinem anderen Monitoring irgendwie habe. Das macht natürlich auch im Incident-Fall dann einfach ganz viel Arbeit aus. Wenn man das schon hat, das ist dann schon super. Ja, und das andere ist halt auch, irgendwelche Fallstricke vermeiden. Also die meisten Angreifer sind darauf getrimmt, zu wissen, dass es schwierig ist, bestimmte Systeme auszutauschen. Das heißt, die verbreiten sich im Netz, sie machen jetzt nicht unbedingt Sachen, die super schwer zu erkennen sind, sondern verräsen sich einfach rein und verstecken sich und wissen einfach, okay, die wenigsten Organisationen können einfach mal ihr Netz so lange abschalten, bis man das eben alles behoben hat und bis man es dann wieder anfährt. Das heißt, man kann sich eben wirklich überlegen, okay, wie kann ich Systeme ersetzen, wenn man sagt, ich kann sie dann anders nicht mehr retten. Also der Angreifer hat mir sozusagen, wie man sagt, würde eben zu viele Changes gemacht, also dass ich die vernünftig zurückrollen kann. Wie kann ich diese Systeme ersetzen? Und halt, das ist wie im normalen Betrieb, wenn ich eine Infrastruktur habe, wo ich genau weiß, wenn ich hier eine kleine Änderung mache und ein System ersetze, dann kommt ein Bergarbeit oder Störung auf mich zu. Das ist dann genau die Sache, die mich bei einem Incident, wenn man es so deutlich sagen will, wirklich in den Hintern beißt. Weil dann habe ich den Angreifer auf einem System und ich kriege ihn nicht deswegen runter, weil ich nicht verstehe, was er macht, sondern weil ich, wenn ich das System austausche, einen Ausfall habe. Und genau diese Sollbruchstellen, da sind manche Angreifer relativ gut, sie zu finden. Da steht natürlich auch die Vermutung nahe, weil sie selber ehemalige Admins sind. Was vielleicht dann auch nicht so ganz uninteressant ist, ist, gerade wenn man eben irgendwie so Windows-basierte Infrastruktur hat, dass man da vielleicht mal so ein bisschen Ticket-Reset, also ein Kerberos Ticket-Ranting, Ticket-Account-Reset übt. Also so Reset der Authentifizierungs-Infrastruktur in so einer Windows-Domäne, wie man das sinnvoll tut.
+
+01:48:40.546 --> 01:49:01.146
+<v SPEAKER_2>Nutzer-Namen und Kenwörter für alle im Grunde genommen in der Infrastruktur einmal zurückzusetzen und einen Passwortwechsel durchzuführen, damit alte Nutzer-Credentials, mit denen man sich auf Systemen authentifizieren konnte, halt nicht mehr gültig sind, weil man diese als kompromittiert ansehen muss, da die dem Angreifer im Zweifelsfall in die Hände gefallen sind.
+
+01:49:01.826 --> 01:49:36.086
+<v SPEAKER_4>Ja, und eben es gibt noch so eine Art von Angriff, dass es genau auszuführen geht, vielleicht ein bisschen weit noch für die Zeit, die wir noch haben, aber eben so ein Golden-Ticket-Angriff, da kann man im Prinzip ohne aktiv auf dem Domain-Controller, zum Beispiel in einer Windows-Domain, irgendwie Spuren zu hinterlassen, sich ein Credential-Ticket, also in irgendeiner Form ein Kerberos-Ticket-Factory, ein Login ziehen, der irgendwie zehn Jahre gültig ist. Und den kann ich dann noch später benutzen, wenn ich einmal rausgeworfen wurde, um danach, wenn ich wieder irgendwo einen Host aufmachen konnte, mich direkt als privilegierter User wieder im System zu bewegen.
+
+01:49:36.106 --> 01:49:37.626
+<v SPEAKER_2>Und ich sehe aber auch gar nicht, dass es diesen User gibt.
+
+01:49:38.146 --> 01:50:11.206
+<v SPEAKER_4>Nee, den sieht man normalerweise nicht. Das ist eben ein technischer User, der lebt auf den Domain-Controllern. Und das ist halt auch so ein Account, den fasst man normalerweise einfach nicht an. Also es gibt keinerlei Grund, normalerweise, wenn man irgendwelche Microsoft-Dokumentationen liest, diesen User überhaupt anzufassen. Da können auch lustige Dinge passieren, wenn man das vorher nicht mal gemacht hat, wenn man den dann resetet. Und ja genau, den muss man eben im Fall, wenn man eben einen Goldenticketangriff vermutet oder vielleicht sinnvollerweise im Rahmen einer regelmäßigen Übung, dann zweimal resetten, um eben so ein Goldenticket dann zu invalidaten.
+
+01:50:12.586 --> 01:50:21.286
+<v SPEAKER_2>Meine Güte, je länger wir drüber reden, desto mehr habe ich den Eindruck, und das geht mir auch beim Chaos-Radio so, ich möchte mit der ganzen Sache eigentlich nichts zu tun haben. Bewarb bitte die Ruhe.
+
+01:50:21.306 --> 01:50:21.606
+<v SPEAKER_4>Genau.
+
+01:50:21.766 --> 01:50:31.326
+<v SPEAKER_2>Ich bin mir nicht sicher, ob mir das jetzt noch gelingt, weil was wir im Prinzip gesagt haben, es geht schief. Also es geht schief und es wird schlimm. Ja, deswegen ist es wichtig, in solchen Situationen einfach Ruhe zu bewahren.
+
+01:50:31.346 --> 01:50:52.686
+<v SPEAKER_4>Vielleicht in Entscheidungen, die man treffen möchte, nochmal zu überdenken und auch sich eine Strategie zu überlegen, wie man vorgehen möchte und nicht wie man im Regelfall handeln würde, sondern eigentlich davon umgekehrt zu handeln, um auch den Angreifer entsprechend den Angreifern haphaft zu werden.
+
+01:50:56.386 --> 01:51:03.366
+<v SPEAKER_2>Oder einfach auch mal warten, bis man gewisse Dinge durchführt, um entsprechend den Angreifer weiter beobachten zu können.
+
+01:51:03.446 --> 01:51:11.186
+<v SPEAKER_4>Also da ist sich ruhig verhalten, gucken, gucken, gucken und weiter gucken sehr wichtig.
+
+01:51:11.206 --> 01:51:35.206
+<v SPEAKER_2>Weil was? Damit man sieht, wie der Angreifer weiter vorgeht. Ach so, damit man dann sehen kann, wie er rein kann. Du willst dir ja auch einen Plan darüber machen, wie seine Strategie ist, vorzugehen. Und da möchtest du ihn natürlich packen und versuchen, die Strategie auszuhebeln. Und je mehr Informationen du über einen Angreifer hast, desto besser kannst du entsprechend gegen ihn vorgehen.
+
+01:51:35.226 --> 01:52:22.866
+<v SPEAKER_4>Was Zebras noch meinte, ist dann auch, wenn man eben dann einmal irgendwie weiß, ok, da springt jetzt irgendwo in diesem und diesem Netz ein Angreifer rum. Und ich habe so eine grobe Ahnung, auf welchen System, dass man dann auch hingeht und schaut, ok, was für Tools benutzt denn der Angreifer, wo kommuniziert er denn hin, eben wie ihr auch vorhin schon erwähnt, welche C2 Server benutzt er denn so, um da dann einfach so Signaturen und Footprint für den Angreifer zu bauen. Und das dann natürlich auch entsprechend auszurollen, im natürlich besten Fall im ganzen Netz, um dann eben alle Ecken zu finden, wo vielleicht der Angreifer sich nochmal bewegt hat, wo er vielleicht irgendwo eine Web-Share nochmal in irgendeine andere DMZ gelegt hat und so Dinge. Das will man dann schon systematisch machen und nicht direkt hoch irgendein komisches Tool, was vielleicht böse ist und jetzt nuke ich den Rechner und dann weiß ich aber immer noch nicht, ob vielleicht das nur ein Tool von sechs waren.
+
+01:52:22.886 --> 01:52:29.286
+<v SPEAKER_2>Also nicht rausschwerfen, sondern ein bisschen beobachten, um zu sehen, wo er überall hingeht und dann dort die Schlösser auszutauschen.
+
+01:52:30.126 --> 01:52:58.066
+<v SPEAKER_4>Und auch, um einfach eine sehr schön erklärte Set an Signaturen und an Eigenschaften, die der Angreifer typischerweise so mit sich bringt. Das kann alles Mögliche sein. Einfach Malversignaturen, komische Verhaltensweisen, Vorlieben für bestimmte Verzeichnisse, wo irgendwie Zeug hingelegt wird, die man sich dann natürlich anschauen will. Oder auch einfach irgendwelche User-Accounts, die der Angreifer anlegt, wenn er halt typischerweise irgendwie Rute auf irgendeinem System ist und sich da noch einen User anlegt.
+
+01:52:58.946 --> 01:53:19.286
+<v SPEAKER_2>Okay, das hat es nicht unbedingt besser gemacht, wenn man sozusagen eine der Strategien ist, wir lassen den Anbrecher einfach noch ein bisschen in unserer Wohnung. Wir sind fast am Ende der Sendung angekommen. Sebas, Mira, Rolper Tu und Dinos, vielen Dank schon mal an dieser Stelle. Ich würde aber noch ein paar, also so zwei, drei Minuten hätten wir noch, gibt es noch eine Sache, die wir jetzt nicht geschafft haben und die wir jetzt auch nicht ganz in Rollen können, aber die ihr unbedingt noch sagen wollt?
+
+01:53:19.306 --> 01:54:16.486
+<v SPEAKER_4>Es gibt, glaube ich, einen ziemlich banalen Trick, den man immer haben sollte. Man hat ja dann immer irgendwo bei einem Betroffenen so eine Betriebsmannschaft, die irgendwie den Überblick hat. Und die ist natürlich bei so einem Incident, wie es so schön heißt, unverzichtbar, weil die weiß, wie der Laden funktioniert. Und eine der ersten Sachen, die man tun kann, ist dann sofort diese Leute entlasten. Also zu gucken, dass die dann nicht mehr ihre Alltagsaufgaben machen, sondern dass man da jemand findet, damit die sich wirklich voll und ganz dem Sicherheitsvorfall widmen können. Denn in ihrem Kopf sind dann oft die wichtigsten und die besten Informationen. Also nimm mal an, du hast einen Admin, der muss für Außendienstler die Telefone einrichten. Dann kann man sagen, okay, da haben wir wahrscheinlich gute Chancen, jemanden zu finden, der ihn da entlasten kann, damit er einfach sagen kann, hey, mein Laden funktioniert so und so. Und da und da brauche ich Unterstützung, da und da brauche ich keine. Also das ist extrem hilfreich. Also dem heimischen IT-Personal ein artgerechtes und schöne Umgebung bieten. Also wenn die IT nicht glücklich ist, dann ist das nicht gut.
+
+01:54:16.606 --> 01:54:25.766
+<v SPEAKER_2>Das macht mir alles, also weil ich wieder denke so, hey, wenn meine Firma was explodiert, dann stelle ich natürlich die Leute frei, die am ehesten dabei helfen können. Aber es scheint nicht Standard zu sein, wenn wir das jetzt extra nochmal ansagen.
+
+01:54:25.786 --> 01:54:27.006
+<v SPEAKER_4>Es ist tatsächlich nicht Standard.
+
+01:54:27.026 --> 01:54:28.226
+<v SPEAKER_2>Und das ist eigentlich doch das Schlimme.
+
+01:54:28.246 --> 01:54:41.246
+<v SPEAKER_4>Und meine Empfehlung wäre da auch zu sagen, an das Management von einem Unternehmen, auf die Betriebsmannschaft hören. Auf die Leute, die zum Incident Response kommen und auf die Betriebsmannschaft hören.
+
+01:54:41.266 --> 01:54:46.286
+<v SPEAKER_2>Die Entscheidungen, die dort gefällt worden sind, sind umzusetzen und nicht mehr zu diskutieren.
+
+01:54:46.306 --> 01:54:47.486
+<v SPEAKER_4>Ende aus.
+
+01:54:47.506 --> 01:54:55.206
+<v SPEAKER_2>Warte mal, das Management soll auf die Leute hören, die die eigentliche Arbeit machen? Das wäre glaube ich zum ersten Mal. Das geht ja nur wirklich nicht.
+
+01:54:55.226 --> 01:55:05.966
+<v SPEAKER_4>Das rutscht in meinen Radikalismus ab. Man kann nicht überlegen, ob man die Incident Responder alle 200 Tage im Unternehmen haben möchte oder ob man das Ganze einfach mal lösen möchte.
+
+01:55:06.166 --> 01:56:08.126
+<v SPEAKER_2>Diese völlig weltfremden Technologien und Strategien. Wir müssen schnell die Sendung beenden. Vielen Dank, dass ihr da wart. Ich bin auch aufgetragen worden, eine Sache auszurichten, nämlich der Chaos Computer Club macht nicht nur das Chaos-Radio, sondern wird auch beim G20-Gipfel in Hamburg dabei sein. Fast. Es wird dort zwei Aktionen geben zum G20-Gipfel, nämlich vom FCMC und There Is No Time. FCMC ist ein freies Medienzentrum im Stadion des FC St. Pauli, für das sich die Journalisten auch akkreditieren können. Und der CCC unterstützt dort mit Video- und Netztechnik und helfenden Händen, sind also auch Leute vor Ort. Und There Is No Time will ebenfalls über den G20 berichten. Auch hier gibt es Unterstützung aus dem Chaos Computer Club. Und das Ganze geht los am Dienstag, den 11. Juli um 18 Uhr. FCMCTV oder There Is No time.net sind die Adressen, wo ihr das sehen könnt. Also das erstellte G20-Material mit technischer Unterstützung des CCC. Viel Spaß dabei. Mein Name ist Marcus Richter und ich kann nur noch eine Sache an dieser Stelle sagen, die möglicherweise schon gesagt worden ist. Lasst euch nicht überwachen und verschlüsselt immer schön eure Backups.
+
+01:59:14.515 --> 01:59:17.055
+<v SPEAKER_3>Don't forget I'm in your extended network.
