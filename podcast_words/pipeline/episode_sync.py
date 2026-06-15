@@ -66,15 +66,28 @@ def _merge_discovered(
     discovered: list[Episode],
     *,
     source: SourceConfig | None = None,
+    podcast: PodcastConfig | None = None,
 ) -> int:
     """Upsert discovered episodes; return the count of newly added ones."""
+    from podcast_words.episode_number import catalog_number_for_remote
+
     from_podlove = source is not None and source.type == "podlove"
     new_count = 0
     for episode in discovered:
-        existing = catalog.get(episode.number)
-        if existing is None and catalog.find_by_source_id(episode.source_id) is None:
+        merge_number = (
+            catalog_number_for_remote(podcast, episode)
+            if podcast is not None
+            else episode.number
+        )
+        if merge_number is None:
+            continue
+        merge_episode = episode
+        if merge_number != episode.number:
+            merge_episode = Episode(**{**vars(episode), "number": merge_number})
+        existing = catalog.get(merge_number)
+        if existing is None and catalog.find_by_source_id(merge_episode.source_id) is None:
             new_count += 1
-        catalog.upsert(episode, new_from_podlove=from_podlove)
+        catalog.upsert(merge_episode, new_from_podlove=from_podlove)
     return new_count
 
 
@@ -84,13 +97,26 @@ def _save_transcript(podcast: PodcastConfig, episode: Episode, transcript: Trans
     vtt.write_file(transcript, out_path)
 
 
-def _write_sync_state(podcast: PodcastConfig, episode_count: int) -> None:
-    state = {
+def _write_sync_state(
+    podcast: PodcastConfig,
+    episode_count: int,
+    *,
+    last_episode: Episode | None = None,
+) -> None:
+    state: dict[str, object] = {
         "last_sync_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "last_episode_count": episode_count,
     }
+    if last_episode is not None:
+        state["last_episode_number"] = last_episode.number
+        state["last_episode_title"] = last_episode.title or f"Episode {last_episode.number}"
     with open(podcast.sync_state_json, "w", encoding="utf-8") as f:
         json.dump(state, f, indent=2)
+
+
+def _catalog_last_episode(catalog: Catalog) -> Episode | None:
+    episodes = catalog.episodes()
+    return episodes[-1] if episodes else None
 
 
 def _discover_and_index(
@@ -104,7 +130,7 @@ def _discover_and_index(
         return 0, RemoteIndex()
     discovered = discover(podcast, source)
     index = build_remote_index(podcast, discovered)
-    new_count = _merge_discovered(catalog, discovered, source=source)
+    new_count = _merge_discovered(catalog, discovered, source=source, podcast=podcast)
     return new_count, index
 
 
@@ -178,6 +204,7 @@ def _run_replace(
         "skipped": 0,
         "errors": 0,
         "unsupported": False,
+        "last_considered": None,
     }
     _, index = _discover_and_index(podcast, catalog, source)
     catalog.save()
@@ -195,6 +222,7 @@ def _run_replace(
         total=len(targets),
     )
     for idx, episode in enumerate(bar, start=1):
+        result["last_considered"] = episode
         remote = index.find(episode)
         if remote is None:
             result["skipped"] += 1
@@ -245,7 +273,7 @@ def _run_fallback(
     """
     from podcast_words.sources.apple import AppleUnsupportedError
 
-    result = {"recovered": 0, "still_missing": 0, "unsupported": False}
+    result = {"recovered": 0, "still_missing": 0, "unsupported": False, "last_considered": None}
     other_sources = [s for s in podcast.sources if s is not primary_source]
     remaining = [e for e in catalog.episodes() if e.state == STATE_NO_TRANSCRIPT]
     if not remaining or not other_sources:
@@ -272,6 +300,7 @@ def _run_fallback(
             total=total,
         )
         for idx, episode in enumerate(bar, start=1):
+            result["last_considered"] = episode
             remote = index.find(episode)
             if not remote or not remote.source_id:
                 still.append(episode)
@@ -354,7 +383,10 @@ def sync(
             replace_if_from=replace_if_from,
             limit=limit,
         )
-        _write_sync_state(podcast, len(catalog))
+        last_considered = summary["replace"].get("last_considered") or _catalog_last_episode(
+            catalog
+        )
+        _write_sync_state(podcast, len(catalog), last_episode=last_considered)
         if count:
             from podcast_words.pipeline.word_counter import count_words
 
@@ -364,10 +396,15 @@ def sync(
         return summary
 
     # --- Discover ---
+    last_considered: Episode | None = None
     discover = _discover_fn(source.type)
     if discover is not None:
         discovered = discover(podcast, source)
-        summary["new_episodes"] = _merge_discovered(catalog, discovered, source=source)
+        summary["new_episodes"] = _merge_discovered(
+            catalog, discovered, source=source, podcast=podcast
+        )
+        if discovered:
+            last_considered = max(discovered, key=lambda ep: ep.number)
         catalog.save()
 
     # --- Import ---
@@ -384,6 +421,7 @@ def sync(
             total=total,
         )
         for episode in bar:
+            last_considered = episode
             if hasattr(bar, "set_postfix_str"):
                 bar.set_postfix_str(f"#{episode.number}")
             try:
@@ -406,11 +444,16 @@ def sync(
     # --- Fallback: recover no_transcript episodes from secondary sources ---
     if fallback:
         summary["fallback"] = _run_fallback(podcast, catalog, primary_source=source)
+        fallback_last = summary["fallback"].get("last_considered")
+        if fallback_last is not None:
+            last_considered = fallback_last
         catalog.save()
 
     summary["podlove_links"] = _refresh_podlove_links(podcast, catalog)
     catalog.save()
-    _write_sync_state(podcast, len(catalog))
+    if last_considered is None:
+        last_considered = _catalog_last_episode(catalog)
+    _write_sync_state(podcast, len(catalog), last_episode=last_considered)
 
     # --- Count ---
     if count:

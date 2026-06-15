@@ -53,6 +53,11 @@ def test_backfill_then_incremental(temp_podcast, monkeypatch):
     assert catalog.get(2).state == STATE_NO_TRANSCRIPT
     assert catalog.get(3).state == STATE_DONE
 
+    with open(temp_podcast.sync_state_json, encoding="utf-8") as f:
+        sync_state = __import__("json").load(f)
+    assert sync_state["last_episode_number"] == 3
+    assert sync_state["last_episode_title"] == "C"
+
 
 def test_force_refetches_everything(temp_podcast, monkeypatch):
     fake = FakeSource()
@@ -218,6 +223,30 @@ def test_upsert_keeps_page_link_when_apple_rediscovers(temp_podcast):
         Episode(number=1, title="A", link=audio, source_id="1000460866307", transcript_source="apple")
     )
     assert catalog.get(1).link == page
+
+
+def test_upsert_keeps_podlove_title_when_apple_rediscovers(temp_podcast):
+    catalog = Catalog.load(temp_podcast.episodes_csv)
+    catalog.upsert(
+        Episode(
+            number=30,
+            title="Künstliche Intelligenz",
+            link="https://example.test/cr221",
+            source_id="9",
+        ),
+        new_from_podlove=True,
+    )
+    catalog.upsert(
+        Episode(
+            number=30,
+            title="Keine Panik!",
+            link="https://podcasts.apple.com/de/podcast/keine-panik/id1?i=2",
+            source_id="1000423936344",
+            transcript_source="apple",
+        )
+    )
+    assert catalog.get(30).title == "Künstliche Intelligenz"
+    assert catalog.get(30).link == "https://example.test/cr221"
 
 
 def test_fallback_keeps_podlove_link_without_transcript(temp_podcast, monkeypatch):

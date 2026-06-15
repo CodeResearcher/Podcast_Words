@@ -10,7 +10,7 @@ import requests
 
 from podcast_words.catalog import Episode, STATE_PENDING
 from podcast_words.config import PodcastConfig, SourceConfig
-from podcast_words.episode_number import number_from_title
+from podcast_words.episode_number import number_from_episode
 from podcast_words.models import Transcript, TranscriptCue
 from podcast_words.progress import iter_progress
 from podcast_words.transcripts import vtt
@@ -35,7 +35,9 @@ def _fetch_episode(base: str, episode_id: str) -> dict | None:
     return payload if isinstance(payload, dict) else None
 
 
-def _episode_number(item: dict, podcast: PodcastConfig, fallback: int) -> int:
+def _episode_number(
+    item: dict, podcast: PodcastConfig, fallback: int, *, link: str = ""
+) -> int:
     if podcast.episode_id.type == "sequential":
         return fallback
     number = item.get("number")
@@ -44,7 +46,9 @@ def _episode_number(item: dict, podcast: PodcastConfig, fallback: int) -> int:
             return int(number)
         except (TypeError, ValueError):
             pass
-    extracted = number_from_title(podcast, str(item.get("title", "")))
+    extracted = number_from_episode(
+        podcast, title=str(item.get("title", "")), link=link
+    )
     if extracted is not None:
         return extracted
     return fallback
@@ -83,7 +87,7 @@ def discover(podcast: PodcastConfig, source: SourceConfig) -> list[Episode]:
                 if item.get("number") in (None, "") and detail.get("number") not in (None, ""):
                     item = {**item, "number": detail.get("number")}
 
-        number = _episode_number(item, podcast, fallback=idx)
+        number = _episode_number(item, podcast, fallback=idx, link=link)
         episodes.append(
             Episode(
                 number=number,

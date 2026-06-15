@@ -167,7 +167,12 @@ class Catalog:
             return stored
 
         # Merge metadata, preserve transcript state unless told otherwise.
-        existing.title = episode.title or existing.title
+        # Secondary sources (e.g. Apple) must not replace titles when episode
+        # numbers align by position but refer to different episodes.
+        if new_from_podlove or not existing.title:
+            existing.title = episode.title or existing.title
+        else:
+            existing.title = existing.title or episode.title
         existing.link = _prefer_episode_link(
             episode.link, existing.link, new_from_podlove=new_from_podlove
         )

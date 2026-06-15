@@ -31,6 +31,34 @@ def test_regex_number_from_title():
     assert number_from_title(podcast, "LNP357 Wie Autocorrect") == 357
 
 
+def test_regex_number_from_link():
+    podcast = PodcastConfig(
+        id="chaosradio",
+        name="Chaosradio",
+        language="de",
+        episode_id=EpisodeIdConfig(type="regex", pattern=r"(?:cr|chaosradio_)(\d+)"),
+    )
+    from podcast_words.episode_number import number_from_episode
+
+    assert (
+        number_from_episode(
+            podcast,
+            title="Künstliche Intelligenz",
+            link="https://chaosradio.de/cr221-kuenstlicheintelligenz",
+        )
+        == 221
+    )
+    assert (
+        number_from_episode(
+            podcast,
+            title="Keine Panik!",
+            link="https://chaosradio.de/chaosradio_42",
+        )
+        == 42
+    )
+    assert number_from_episode(podcast, title="Keine Panik!", link="") is None
+
+
 def test_normalize_title_strips_prefix():
     assert normalize_title("FS150 Syntactic Cancer") == "syntactic cancer"
     assert normalize_title("Syntactic Cancer") == "syntactic cancer"
@@ -95,6 +123,36 @@ def test_catalog_number_for_remote_skips_sequential_fallback():
     )
     ep = Episode(number=41, title="Syntactic Cancer")
     assert catalog_number_for_remote(podcast, ep) is None
+
+
+def test_catalog_number_for_remote_sequential_ignores_title_years():
+    podcast = PodcastConfig(
+        id="chaosradio",
+        name="Chaosradio",
+        language="de",
+        episode_id=EpisodeIdConfig(type="sequential"),
+    )
+    ep = Episode(number=118, title="Big Brother Awards 2006")
+    assert catalog_number_for_remote(podcast, ep) == 118
+
+
+def test_number_from_episode_unescapes_html_entities():
+    podcast = PodcastConfig(
+        id="chaosradio",
+        name="Chaosradio",
+        language="de",
+        episode_id=EpisodeIdConfig(type="regex", pattern=r"(?:cr|chaosradio_)(\d+)"),
+    )
+    from podcast_words.episode_number import number_from_episode
+
+    assert (
+        number_from_episode(
+            podcast,
+            title="Social Software &#8211; Social Networks",
+            link="https://chaosradio.de/chaosradio_89",
+        )
+        == 89
+    )
 
 
 def test_published_date_key_parses_rss_and_iso():

@@ -13,7 +13,6 @@ import requests
 
 from podcast_words.catalog import Episode, STATE_PENDING
 from podcast_words.config import PodcastConfig, SourceConfig
-from podcast_words.episode_number import number_from_title
 from podcast_words.sources.apple_auth import AppleUnsupportedError, get_bearer_token
 
 _LOOKUP_URL = "https://itunes.apple.com/lookup"
@@ -29,10 +28,14 @@ def _storefront(country: str) -> str:
     return (country or "US").lower()
 
 
-def _assign_number(podcast: PodcastConfig, title: str, sequential_index: int) -> int:
+def _assign_number(
+    podcast: PodcastConfig, title: str, sequential_index: int, *, link: str = ""
+) -> int:
     if podcast.episode_id.type == "sequential":
         return sequential_index
-    extracted = number_from_title(podcast, title)
+    from podcast_words.episode_number import number_from_episode
+
+    extracted = number_from_episode(podcast, title=title, link=link)
     if extracted is not None:
         return extracted
     return sequential_index
@@ -40,10 +43,11 @@ def _assign_number(podcast: PodcastConfig, title: str, sequential_index: int) ->
 
 def _episode_from_lookup(podcast: PodcastConfig, item: dict, sequential_index: int) -> Episode:
     title = str(item.get("trackName", "")).strip()
+    link = str(item.get("episodeUrl", "") or item.get("trackViewUrl", ""))
     return Episode(
-        number=_assign_number(podcast, title, sequential_index),
+        number=_assign_number(podcast, title, sequential_index, link=link),
         title=title,
-        link=str(item.get("episodeUrl", "") or item.get("trackViewUrl", "")),
+        link=link,
         source_id=str(item.get("trackId", "")),
         published_at=str(item.get("releaseDate", "")),
         state=STATE_PENDING,
@@ -56,7 +60,7 @@ def _episode_from_amp(podcast: PodcastConfig, item: dict, sequential_index: int)
     title = str(attrs.get("name", "")).strip()
     link = str(attrs.get("url") or attrs.get("websiteUrl") or attrs.get("assetUrl") or "")
     return Episode(
-        number=_assign_number(podcast, title, sequential_index),
+        number=_assign_number(podcast, title, sequential_index, link=link),
         title=title,
         link=link,
         source_id=str(item.get("id", "")),

@@ -50,3 +50,4 @@ extend this project with following features:
 - episode for last transcript
 - show number of transcripts by source
 - link to episodes from PodLove API response
+- list all episodes without transcripts at the end

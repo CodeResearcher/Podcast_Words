@@ -38,7 +38,7 @@ Each podcast keeps its own data under `data/{podcast_id}/`:
 | `transcripts/` | Canonical WebVTT transcripts (`episode_{n}.vtt`) |
 | `word_counts.csv` | Word-frequency matrix (one column per episode) |
 | `episode_stats.json` | Per-episode and aggregate statistics |
-| `sync_state.json` | Last sync timestamp and episode count |
+| `sync_state.json` | Last sync timestamp, catalog size, and last episode considered |
 
 Transcripts are collected from the configured source, normalized to WebVTT,
 lemmatized with spaCy (stop words removed), and aggregated into the word matrix

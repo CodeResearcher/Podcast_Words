@@ -6,7 +6,14 @@ import pandas as pd
 import plotly.graph_objs as go
 import streamlit as st
 
-from podcast_words.catalog import STATE_DONE, Catalog
+from podcast_words.catalog import (
+    STATE_DONE,
+    STATE_ERROR,
+    STATE_NO_TRANSCRIPT,
+    STATE_PENDING,
+    STATE_SKIP,
+    Catalog,
+)
 from podcast_words.config import load_config, sorted_podcast_ids
 from podcast_words.pipeline.word_counter import _read_word_counts_csv
 
@@ -18,6 +25,9 @@ st.markdown(
     [data-testid="stSidebar"] [data-baseweb="select"] input {
         caret-color: transparent !important;
         cursor: pointer !important;
+    }
+    [data-testid="stPlotlyChart"] {
+        width: 100% !important;
     }
     </style>
     """,
@@ -34,9 +44,92 @@ _SOURCE_LABELS = {
     "unknown": "Unknown",
 }
 
+_STATE_LABELS = {
+    STATE_PENDING: "Pending",
+    STATE_NO_TRANSCRIPT: "No transcript",
+    STATE_ERROR: "Error",
+    STATE_SKIP: "Skipped",
+}
+
+_MISSING_TRANSCRIPT_STATES = frozenset(
+    {STATE_PENDING, STATE_NO_TRANSCRIPT, STATE_ERROR, STATE_SKIP}
+)
+
 _AUDIO_SUFFIXES = (".mp3", ".m4a", ".wav", ".ogg", ".aac")
-_HOVER_EPISODE_COUNT = "Episode %{x}<br>%{y}<extra></extra>"
-_HOVER_BAR_COUNT = "%{y}<br>%{x}<extra></extra>"
+_HOVER_EPISODE_COUNT = (
+    "Episode %{customdata[0]}<br>%{y}<br>Source: %{customdata[1]}<extra></extra>"
+)
+_HOVER_BAR_COUNT = "Episode %{customdata[0]}<br>%{x}<br>Source: %{customdata[1]}<extra></extra>"
+_CHART_MARGIN = dict(l=48, r=24, t=36, b=48)
+_MAX_X_TICKS = 12
+
+
+def _source_label(source: str) -> str:
+    key = (source or "unknown").strip()
+    return _SOURCE_LABELS.get(key, key or "Unknown")
+
+
+def _line_customdata(meta: dict[int, dict[str, str]], episodes) -> list[list[object]]:
+    return [
+        [int(ep), meta.get(int(ep), {}).get("source", "Unknown")]
+        for ep in episodes
+    ]
+
+
+def _compact_episode_axis(episode_numbers: list[int]) -> tuple[list[int], dict]:
+    """Map sorted episode numbers to compact 1..N x positions with readable ticks."""
+    if not episode_numbers:
+        return [], {}
+    n = len(episode_numbers)
+    x = list(range(1, n + 1))
+    step = max(1, n // _MAX_X_TICKS)
+    tickvals = list(range(1, n + 1, step))
+    if tickvals[-1] != n:
+        tickvals.append(n)
+    ticktext = [str(episode_numbers[i - 1]) for i in tickvals]
+    return x, dict(tickmode="array", tickvals=tickvals, ticktext=ticktext)
+
+
+def _prepare_episode_line_chart(
+    episode_numbers: pd.Series,
+    meta: dict[int, dict[str, str]],
+) -> tuple[list[int], list[int], list[list[object]], dict]:
+    """Sort episodes and build compact x-axis coords plus hover customdata."""
+    nums = pd.to_numeric(episode_numbers, errors="coerce").dropna().astype(int)
+    order = nums.sort_values()
+    episodes = order.tolist()
+    x, xaxis_ticks = _compact_episode_axis(episodes)
+    return x, episodes, _line_customdata(meta, episodes), xaxis_ticks
+
+
+def _bar_customdata(meta: dict[int, dict[str, str]], episodes) -> list[list[object]]:
+    return [
+        [int(ep), meta.get(int(ep), {}).get("source", "Unknown")]
+        for ep in episodes
+    ]
+
+
+def _chart_layout(fig: go.Figure, *, height: int, uirevision: str, **extra) -> go.Figure:
+    """Responsive Plotly layout; uirevision keeps zoom/pan across fragment reruns."""
+    fig.update_layout(
+        height=height,
+        autosize=True,
+        margin=_CHART_MARGIN,
+        hovermode="closest",
+        uirevision=uirevision,
+        **extra,
+    )
+    return fig
+
+
+def _plotly_chart(fig: go.Figure, *, key: str) -> object:
+    return st.plotly_chart(
+        fig,
+        use_container_width=True,
+        on_select="rerun",
+        selection_mode="points",
+        key=key,
+    )
 
 
 def _is_audio_url(url: str) -> bool:
@@ -58,12 +151,7 @@ def _episode_url(episode, podcast) -> str:
     apple = podcast.source_of_type("apple")
     track_id = episode.source_id or ""
     # Apple track IDs are long numerics; PodLove/RSS internal IDs are shorter.
-    if (
-        apple
-        and episode.transcript_source == "apple"
-        and track_id.isdigit()
-        and len(track_id) >= 9
-    ):
+    if apple and track_id.isdigit() and len(track_id) >= 9:
         country = (apple.country or "US").lower()
         return (
             f"https://podcasts.apple.com/{country}/podcast/"
@@ -81,21 +169,42 @@ def _selection_points(selection) -> list:
     return getattr(selection, "points", None) or []
 
 
+def _episode_number_from_point(point, *, axis: str = "x") -> int | None:
+    if isinstance(point, dict):
+        custom = point.get("customdata")
+        raw = point.get(axis)
+    else:
+        custom = getattr(point, "customdata", None)
+        raw = getattr(point, axis, None)
+
+    if custom is not None:
+        value = custom[0] if isinstance(custom, (list, tuple)) else custom
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            pass
+        if isinstance(custom, (list, tuple)) and len(custom) >= 1:
+            try:
+                return int(custom[0])
+            except (TypeError, ValueError):
+                pass
+
+    if raw is None:
+        return None
+    try:
+        return int(raw)
+    except (TypeError, ValueError):
+        match = re.search(r"(\d+)", str(raw))
+        return int(match.group(1)) if match else None
+
+
 def _show_selected_episode_link(selection, meta: dict[int, dict[str, str]], *, axis: str = "x") -> None:
     points = _selection_points(selection)
     if not points:
         return
-    point = points[0]
-    raw = point.get(axis) if isinstance(point, dict) else getattr(point, axis, None)
-    if raw is None:
+    number = _episode_number_from_point(points[0], axis=axis)
+    if number is None:
         return
-    try:
-        number = int(raw)
-    except (TypeError, ValueError):
-        match = re.search(r"(\d+)", str(raw))
-        if not match:
-            return
-        number = int(match.group(1))
     row = meta.get(number, {})
     url = row.get("url", "")
     title = row.get("title", "") or f"Episode {number}"
@@ -114,7 +223,11 @@ def load_episode_meta(podcast_id: str) -> dict[int, dict[str, str]]:
     for ep in catalog:
         if ep.state != STATE_DONE:
             continue
-        meta[ep.number] = {"title": ep.title, "url": _episode_url(ep, podcast)}
+        meta[ep.number] = {
+            "title": ep.title,
+            "url": _episode_url(ep, podcast),
+            "source": _source_label(ep.transcript_source),
+        }
     return meta
 
 
@@ -147,6 +260,41 @@ def load_stats(podcast_id: str):
         stats = json.load(f)
     episodes_stats_df = pd.DataFrame(stats["episodes"])
     return stats, episodes_stats_df
+
+
+@st.cache_data
+def load_sync_state(podcast_id: str) -> dict | None:
+    config = get_config()
+    podcast = config[podcast_id]
+    path = podcast.sync_state_json
+    if not path.exists():
+        return None
+    with open(path, "r", encoding="utf-8") as f:
+        state = json.load(f)
+
+    last_at: datetime | None = None
+    raw_at = state.get("last_sync_at")
+    if raw_at:
+        last_at = datetime.fromisoformat(str(raw_at).replace("Z", "+00:00"))
+
+    number = state.get("last_episode_number")
+    return {
+        "last_sync_at": last_at,
+        "last_episode_number": int(number) if number is not None else None,
+        "last_episode_title": str(state.get("last_episode_title") or "").strip(),
+        "last_episode_count": state.get("last_episode_count"),
+    }
+
+
+def _last_sync_caption(sync_info: dict | None) -> str:
+    if not sync_info or sync_info.get("last_sync_at") is None:
+        return "Last sync: —"
+    when = sync_info["last_sync_at"].astimezone().strftime("%Y-%m-%d %H:%M %Z")
+    number = sync_info.get("last_episode_number")
+    title = sync_info.get("last_episode_title") or ""
+    if number is not None:
+        return f"Last sync: {when} — #{number} {title}".strip()
+    return f"Last sync: {when}"
 
 
 @st.cache_data
@@ -190,6 +338,37 @@ def load_coverage(podcast_id: str):
     }
 
 
+@st.cache_data
+def load_missing_episodes(podcast_id: str) -> pd.DataFrame:
+    """Episodes in the catalog that do not have a transcript yet."""
+    config = get_config()
+    podcast = config[podcast_id]
+    if not podcast.episodes_csv.exists():
+        return pd.DataFrame(columns=["Episode", "Title", "State", "Published", "Link"])
+
+    catalog = Catalog.load(podcast.episodes_csv)
+    rows: list[dict[str, object]] = []
+    for ep in catalog:
+        if ep.state == STATE_DONE:
+            continue
+        if ep.state not in _MISSING_TRANSCRIPT_STATES:
+            continue
+        url = _episode_url(ep, podcast)
+        rows.append(
+            {
+                "Episode": ep.number,
+                "Title": ep.title or f"Episode {ep.number}",
+                "State": _STATE_LABELS.get(ep.state, ep.state),
+                "Published": ep.published_at or "",
+                "Link": url or None,
+            }
+        )
+
+    if not rows:
+        return pd.DataFrame(columns=["Episode", "Title", "State", "Published", "Link"])
+    return pd.DataFrame(rows).sort_values("Episode").reset_index(drop=True)
+
+
 config = get_config()
 available_ids = sorted_podcast_ids({pid: p for pid, p in config.items() if p.has_data()})
 available = {pid: config[pid] for pid in available_ids}
@@ -211,6 +390,9 @@ podcast_id = st.sidebar.selectbox(
 
 podcast = available[podcast_id]
 coverage = load_coverage(podcast_id)
+sync_info = load_sync_state(podcast_id)
+
+st.sidebar.caption(_last_sync_caption(sync_info))
 
 if coverage:
     with_transcript = coverage["states"].get("done", 0)
@@ -235,10 +417,11 @@ if coverage:
         st.sidebar.caption("Transcripts by source: " + " · ".join(parts))
 
 df = load_data(podcast_id)
-stats, episodes_stats_df = load_stats(podcast_id)
-episode_meta = load_episode_meta(podcast_id)
+stats, _ = load_stats(podcast_id)
 
 st.title(f"🎙️ {podcast.name} — Word Analysis")
+
+st.caption(_last_sync_caption(sync_info))
 
 if coverage:
     with_transcript = coverage["states"].get("done", 0)
@@ -249,56 +432,179 @@ word_columns = df.columns.drop("Episode")
 default_words = [w for w in podcast.search_words if w in set(word_columns)]
 selected_words = st.multiselect("🔍 Choose words", word_columns, default=default_words)
 
-if selected_words:
-    df_selected = df[["Episode"] + selected_words]
+
+@st.fragment
+def _word_line_chart(podcast_id: str, selected: list[str]) -> None:
+    if not selected:
+        return
+    meta = load_episode_meta(podcast_id)
+    data = load_data(podcast_id)
+    df_selected = data[["Episode"] + selected]
 
     st.subheader("📊 Frequency of selected words across all episodes")
+    df_plot = df_selected.copy()
+    df_plot["_ep"] = pd.to_numeric(df_plot["Episode"], errors="coerce")
+    df_plot = df_plot.dropna(subset=["_ep"]).sort_values("_ep")
+    episodes = df_plot["_ep"].astype(int).tolist()
+    x, xaxis_ticks = _compact_episode_axis(episodes)
+    hover_custom = _line_customdata(meta, episodes)
     fig_line = go.Figure()
-    for word in selected_words:
+    for word in selected:
         fig_line.add_trace(
             go.Scatter(
-                x=df_selected["Episode"],
-                y=df_selected[word],
+                x=x,
+                y=df_plot[word].tolist(),
                 mode="lines",
                 stackgroup="one",
                 name=word,
+                customdata=hover_custom,
                 hovertemplate=_HOVER_EPISODE_COUNT,
             )
         )
-    fig_line.update_layout(xaxis_title="Episode", yaxis_title="Count", width=1000, height=400)
-    line_event = st.plotly_chart(fig_line, use_container_width=False, on_select="rerun", key="word_line")
-    _show_selected_episode_link(line_event.selection if line_event else None, episode_meta)
+    _chart_layout(
+        fig_line,
+        height=400,
+        uirevision=f"{podcast_id}-word-line",
+        xaxis_title="Episode",
+        yaxis_title="Count",
+        xaxis=xaxis_ticks,
+    )
+    line_event = _plotly_chart(fig_line, key=f"word_line_{podcast_id}")
+    _show_selected_episode_link(line_event.selection if line_event else None, meta)
+
+
+@st.fragment
+def _word_bar_chart(podcast_id: str, selected: list[str]) -> None:
+    if not selected:
+        return
+    meta = load_episode_meta(podcast_id)
+    data = load_data(podcast_id)
+    df_selected = data[["Episode"] + selected]
 
     st.subheader("🏅 Top 10 episodes for the selected words")
-    df_selected = df_selected.copy()
-    df_selected["total_selected"] = df_selected[selected_words].sum(axis=1)
-    top10 = df_selected.sort_values("total_selected", ascending=False).head(10)
-    top10["Episode_str"] = "Episode " + top10["Episode"].astype(str)
+    ranked = df_selected.copy()
+    ranked["total_selected"] = ranked[selected].sum(axis=1)
+    top10 = ranked.sort_values("total_selected", ascending=False).head(10)
     top10_sorted = top10.sort_values("total_selected", ascending=True)
+    bar_custom = _bar_customdata(meta, top10_sorted["Episode"])
 
     fig_bar = go.Figure()
-    for word in selected_words:
+    for word in selected:
         fig_bar.add_trace(
             go.Bar(
                 x=top10_sorted[word],
-                y=top10_sorted["Episode_str"],
+                y=top10_sorted["Episode"].astype(str).radd("Episode "),
+                customdata=bar_custom,
                 name=word,
                 orientation="h",
                 hovertemplate=_HOVER_BAR_COUNT,
             )
         )
-    fig_bar.update_layout(
+    _chart_layout(
+        fig_bar,
+        height=500,
+        uirevision=f"{podcast_id}-word-bar",
         barmode="stack",
         xaxis_title="Count",
         yaxis_title="Episode (top 10)",
-        width=1000,
-        height=500,
         yaxis=dict(type="category"),
     )
-    bar_event = st.plotly_chart(fig_bar, use_container_width=False, on_select="rerun", key="word_bar")
-    _show_selected_episode_link(bar_event.selection if bar_event else None, episode_meta, axis="y")
+    bar_event = _plotly_chart(fig_bar, key=f"word_bar_{podcast_id}")
+    _show_selected_episode_link(bar_event.selection if bar_event else None, meta, axis="y")
+
+
+if selected_words:
+    _word_line_chart(podcast_id, selected_words)
+    _word_bar_chart(podcast_id, selected_words)
 else:
     st.info("⬆ Please select one or more words above.")
+
+
+@st.fragment
+def _stats_total_chart(podcast_id: str) -> None:
+    meta = load_episode_meta(podcast_id)
+    _, episodes_stats_df = load_stats(podcast_id)
+    st.subheader("📈 Words per episode")
+    df = episodes_stats_df.sort_values("episode")
+    x, episodes, hover_custom, xaxis_ticks = _prepare_episode_line_chart(df["episode"], meta)
+    fig_total = go.Figure(
+        go.Scatter(
+            x=x,
+            y=df.set_index("episode").loc[episodes, "total_words"].tolist(),
+            mode="lines+markers",
+            customdata=hover_custom,
+            hovertemplate=_HOVER_EPISODE_COUNT,
+        )
+    )
+    _chart_layout(
+        fig_total,
+        height=320,
+        uirevision=f"{podcast_id}-stats-total",
+        xaxis_title="Episode",
+        yaxis_title="Words",
+        xaxis=xaxis_ticks,
+    )
+    total_event = _plotly_chart(fig_total, key=f"stats_total_{podcast_id}")
+    _show_selected_episode_link(total_event.selection if total_event else None, meta)
+
+
+@st.fragment
+def _stats_unique_chart(podcast_id: str) -> None:
+    meta = load_episode_meta(podcast_id)
+    _, episodes_stats_df = load_stats(podcast_id)
+    st.subheader("🔠 Distinct words per episode")
+    df = episodes_stats_df.sort_values("episode")
+    x, episodes, hover_custom, xaxis_ticks = _prepare_episode_line_chart(df["episode"], meta)
+    fig_unique = go.Figure(
+        go.Scatter(
+            x=x,
+            y=df.set_index("episode").loc[episodes, "unique_words"].tolist(),
+            mode="lines+markers",
+            customdata=hover_custom,
+            hovertemplate=_HOVER_EPISODE_COUNT,
+        )
+    )
+    _chart_layout(
+        fig_unique,
+        height=320,
+        uirevision=f"{podcast_id}-stats-unique",
+        xaxis_title="Episode",
+        yaxis_title="Count",
+        xaxis=xaxis_ticks,
+    )
+    unique_event = _plotly_chart(fig_unique, key=f"stats_unique_{podcast_id}")
+    _show_selected_episode_link(unique_event.selection if unique_event else None, meta)
+
+
+@st.fragment
+def _stats_new_chart(podcast_id: str) -> None:
+    meta = load_episode_meta(podcast_id)
+    _, episodes_stats_df = load_stats(podcast_id)
+    st.subheader("🆕 New words per episode")
+    df = episodes_stats_df.sort_values("episode")
+    x, episodes, hover_custom, xaxis_ticks = _prepare_episode_line_chart(df["episode"], meta)
+    fig_new = go.Figure(
+        go.Scatter(
+            x=x,
+            y=df.set_index("episode").loc[episodes, "new_words"].tolist(),
+            mode="lines+markers",
+            customdata=hover_custom,
+            hovertemplate=_HOVER_EPISODE_COUNT,
+        )
+    )
+    _chart_layout(
+        fig_new,
+        height=320,
+        uirevision=f"{podcast_id}-stats-new",
+        xaxis_title="Episode",
+        yaxis_title="New words",
+        yaxis_type="log",
+        title="New words per episode (logarithmic)",
+        xaxis=xaxis_ticks,
+    )
+    new_event = _plotly_chart(fig_new, key=f"stats_new_{podcast_id}")
+    _show_selected_episode_link(new_event.selection if new_event else None, meta)
+
 
 # General statistics
 st.header("📋 General statistics")
@@ -307,51 +613,9 @@ col1.metric("🎧 Episodes", stats["total_episodes"])
 col2.metric("🗣️ Total words spoken", f"{stats['total_words']:,}")
 col3.metric("🔤 Distinct words", f"{stats['total_unique_words']:,}")
 
-st.subheader("📈 Words per episode")
-fig_total = go.Figure(
-    go.Scatter(
-        x=episodes_stats_df["episode"],
-        y=episodes_stats_df["total_words"],
-        mode="lines+markers",
-        hovertemplate=_HOVER_EPISODE_COUNT,
-    )
-)
-fig_total.update_layout(xaxis_title="Episode", yaxis_title="Words", width=1000, height=300)
-total_event = st.plotly_chart(fig_total, use_container_width=False, on_select="rerun", key="stats_total")
-_show_selected_episode_link(total_event.selection if total_event else None, episode_meta)
-
-st.subheader("🔠 Distinct words per episode")
-fig_unique = go.Figure(
-    go.Scatter(
-        x=episodes_stats_df["episode"],
-        y=episodes_stats_df["unique_words"],
-        mode="lines+markers",
-        hovertemplate=_HOVER_EPISODE_COUNT,
-    )
-)
-fig_unique.update_layout(xaxis_title="Episode", yaxis_title="Count", width=1000, height=300)
-unique_event = st.plotly_chart(fig_unique, use_container_width=False, on_select="rerun", key="stats_unique")
-_show_selected_episode_link(unique_event.selection if unique_event else None, episode_meta)
-
-st.subheader("🆕 New words per episode")
-fig_new = go.Figure(
-    go.Scatter(
-        x=episodes_stats_df["episode"],
-        y=episodes_stats_df["new_words"],
-        mode="lines+markers",
-        hovertemplate=_HOVER_EPISODE_COUNT,
-    )
-)
-fig_new.update_layout(
-    xaxis_title="Episode",
-    yaxis_title="New words",
-    yaxis_type="log",
-    title="New words per episode (logarithmic)",
-    width=1000,
-    height=300,
-)
-new_event = st.plotly_chart(fig_new, use_container_width=False, on_select="rerun", key="stats_new")
-_show_selected_episode_link(new_event.selection if new_event else None, episode_meta)
+_stats_total_chart(podcast_id)
+_stats_unique_chart(podcast_id)
+_stats_new_chart(podcast_id)
 
 with st.expander("🔧 How this analysis is built"):
     st.markdown(
@@ -363,4 +627,20 @@ with st.expander("🔧 How this analysis is built"):
 
         See the project README for the full multi-podcast workflow.
         """
+    )
+
+st.header("📭 Episodes without transcript")
+missing_df = load_missing_episodes(podcast_id)
+if missing_df.empty:
+    st.success("All catalogued episodes have transcripts.")
+else:
+    st.caption(f"{len(missing_df)} episodes in the catalog without a transcript.")
+    st.dataframe(
+        missing_df,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "Episode": st.column_config.NumberColumn("Episode", format="%d"),
+            "Link": st.column_config.LinkColumn("Link", display_text="Open"),
+        },
     )
