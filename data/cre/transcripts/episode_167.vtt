@@ -1,0 +1,940 @@
+WEBVTT
+
+00:01:26.754 --> 00:02:51.054
+<v SPEAKER_2>Hallo, hier ist Chaos Radio Express, Ausgaben Nummer 167. Mein Name ist Tim Pritlove und heute hab ich mir, hab ich für euch meine tollste Schlafzimmerstimme ausgesucht, denn ich bin so ein bisschen hier vom Herbst eingefangen worden, aber ich denke für ein ausführliches Gespräch wird es noch reichen. Heute geht es mal wieder ab in den Technikkeller, da sind wir alle immer mal wieder ganz gerne. Und ich möchte auf ein Projekt zu sprechen kommen, was hier vor einigen Sendungen schon mal angestoßen wurde, was auch gerade da in dem Moment so meine Aufmerksamkeit ein bisschen auf sich gezogen hat, nämlich Node.js, da wo es die Aufmerksamkeit erzeugt hat, das war ca.i146 über JavaScript. Meiner Meinung nach eine der Bereiche, gerade so im Computer- und Internetbereich, wo einfach am meisten geht, wo einfach eine enorme Dynamik zu Tage tritt. Und na ja, das Thema des heutigen Tages ist so ein Ausdruck davon. Es geht um Node.js. Und um zu erklären, was das genau ist und was es damit auf sich hat und wie das alles funktioniert und wozu man das braucht, begrüße ich Felix Geisendörfer. Hallo.
+
+00:02:51.074 --> 00:02:51.634
+<v SPEAKER_1>Hallo.
+
+00:02:51.654 --> 00:02:59.294
+<v SPEAKER_2>Willkommen bei Chaos Radio Express. Du bist einer der Mitentwickler an diesem Projekt, richtig?
+
+00:02:59.634 --> 00:03:00.134
+<v SPEAKER_1>Richtig.
+
+00:03:00.154 --> 00:03:01.214
+<v SPEAKER_2>Aber du bist nicht der Einzige.
+
+00:03:01.234 --> 00:03:13.134
+<v SPEAKER_1>Ich bin nicht der Einzige und ich lasse bloß einen kleinen Beitrag. Also Ryan Dahl ist der Hauptentwickler, der da seine volle Zeit reinsteckt. Und ich versuche immer mal, einen Patch reinzubringen, damit das irgendwann möglich ist.
+
+00:03:13.154 --> 00:03:28.854
+<v SPEAKER_2>Aber du hast dich sozusagen mit der Software relativ intensiv beschäftigt. Was ist denn so dein Hintergrund eigentlich? Wo kommst du denn her? Du wirst ja nicht schon immer JavaScript gemacht haben, oder?
+
+00:03:28.994 --> 00:03:35.574
+<v SPEAKER_1>Nein, ich habe eine schlimme Vergangenheit. Ich habe mit Basic angefangen auf dem C64 und bin dann auch auf dem Computer.
+
+00:03:35.594 --> 00:03:36.334
+<v SPEAKER_2>Ist das so schlimm?
+
+00:03:36.894 --> 00:03:40.734
+<v SPEAKER_1>Nein, Basic auf dem C64 war noch gut. Das war noch rein und schön.
+
+00:03:40.754 --> 00:03:41.494
+<v SPEAKER_2>Das waren noch Zeiten.
+
+00:03:41.854 --> 00:04:38.414
+<v SPEAKER_1>Ja, das hat auch Spaß gemacht. Ich bin dann langsam reingeschlittert auf dem Computer. Das erste Mal dann mit Visual Basic in Kontakt gekommen. Da habe ich eigentlich schon damals gemerkt, dass das nicht wirklich beliebt war. Aber ich finde es nach wie vor ein sehr produktives Tool. Ich habe damit ewig nichts mehr gemacht. Aber damit habe ich lange Zeit einfach bloß aus Hobby programmiert vor mich hin. Und habe dann irgendwann in der Schule mal einen HTML-Kurs gehabt. Ich bin aufs Web gestoßen, habe damit angefangen rumzuspielen, habe kurz mit Perl geliebäuckelt, weil ich ein bisschen mehr machen wollte als eine statische Seite und bin dann schnell zu PHP gekommen. Ich habe dann bei PHP lange Zeit einfach mein eigenes Ding gemacht, auch mit niemandem darüber gesprochen, sozusagen mein eigenes Framework. Ich glaube, viele PHP-Entwickler sind so Eigenbrötler, die ihr eigenes Ding durchziehen und dann ihr Leben lang maintainen müssen. Und bin dann aber irgendwann auf Keg-PHP gestoßen. Keg-PHP. Das ist so ein Ruby-and-Rails-Clone in PHP.
+
+00:04:38.434 --> 00:04:39.254
+<v SPEAKER_2>Wie schreibt ihr das?
+
+00:04:40.754 --> 00:04:40.974
+<v SPEAKER_1>Genau.
+
+00:04:40.994 --> 00:04:41.874
+<v SPEAKER_2>C-A-K-E.
+
+00:04:41.894 --> 00:04:42.254
+<v SPEAKER_1>Genau.
+
+00:04:43.334 --> 00:04:43.734
+<v SPEAKER_2>Kuchen-PHP.
+
+00:04:43.754 --> 00:04:50.994
+<v SPEAKER_1>Kuchen-PHP. Genau. Ich glaube, der Autor, der es ursprünglich entwickelt hat, hieß Michael Pies.
+
+00:04:54.634 --> 00:04:55.274
+<v SPEAKER_2>Wie naheliegend.
+
+00:04:57.454 --> 00:05:30.074
+<v SPEAKER_1>Und zu der Zeit habe ich dann auch irgendwann angefangen, einen Blog zu starten, weil ich dachte, ich bin ein toller Entwickler, aber das lag hauptsächlich daran, dass ich keine anderen Entwickler kannte. Das habe ich so ein Jahr lang gemacht, habe da sehr viel über dieses Keg-PAP geschimpft und wie schlecht es doch ist. Und irgendwann hatten die Leute dann die Schnauze voll und haben gesagt, mach doch was, das ist ja auch Open Source. Und da bin ich dann reingekommen und habe damit contributed, war eine Zeit lang im Core-Team und bin dann über ein Ereignisprojekt, das wir gemacht haben, zu dem Node.js gestoßen, weil sich dafür PAP nicht so verbiegen wies, wie wir das gebraucht hätten.
+
+00:05:32.614 --> 00:05:36.674
+<v SPEAKER_2>Wofür benutzt man dieses Cake PAP?
+
+00:05:36.694 --> 00:06:11.374
+<v SPEAKER_1>Im Prinzip benutzt man das für alles, wo man auch Ruby and Rails einsetzen würde. Das heißt, man möchte eine neue Web-Anwendung schreiben, höchstwahrscheinlich eine spezielle, wo sich jetzt kein Joomla oder irgendein anderes CMS einsetzen lässt. Und es ist halt ein Framework, womit man dann kundenspezifische Anwendungen umsetzt. Hat halt so die Active Record-Geschichte mit drin, hat einen Controller, also MVC-Lehrer drin, ein bisschen Templating, ein bisschen Helpers und nimmt dann so die häufigen Aufgaben ab.
+
+00:06:11.394 --> 00:06:15.694
+<v SPEAKER_2>Also verfolgt sozusagen genau den selben Ansatz, den auch Rails da macht.
+
+00:06:15.714 --> 00:06:33.594
+<v SPEAKER_1>Genau, also ist auch nach Rails entstanden, hat eigentlich bloß gesagt, hey, was die in Ruby machen können, können wir in PHP auch. Und der Grund, warum ich dazu gekommen bin, ich hatte auch Ruby und Rails ausprobiert, aber das ließ ich damals, Ende 2005, nicht wirklich toll auf einem Windows-Rechner machen. Weil da bin ich nicht mehr auf Windows, aber...
+
+00:06:33.614 --> 00:06:35.794
+<v SPEAKER_2>Jetzt glaube ich auch heute noch so, wenn ich das richtig gehört habe.
+
+00:06:36.154 --> 00:06:43.974
+<v SPEAKER_1>Ja, ich war neulich auf der Ruby User Group und habe mal gefragt, wer auf Windows arbeitet, da hat sich kein einziger gemeldet. Also toll muss es nicht sein.
+
+00:06:43.994 --> 00:06:54.734
+<v SPEAKER_2>Ruby und Rails waren ja hier auch vor kurzem erst ein Thema, CI 163, da gab es auch so die Aussage, dass da eigentlich nur Macintoshes aufgeklappt werden. Auf solchen Veranstaltungen ist so, kannst du bestätigen.
+
+00:06:55.154 --> 00:07:04.874
+<v SPEAKER_1>Ja, also selbst auf der letzten PHP-Konferenz, wo ich gewesen bin, also scheint sich in dem Web-Entwicklungsbereich vor allem sehr stark durchzusetzen.
+
+00:07:04.894 --> 00:07:16.374
+<v SPEAKER_2>Interessant. Ja, und wie bist du dann davon weggekommen? Also was war jetzt so schlimm daran oder war gar nichts schlimm?
+
+00:07:17.754 --> 00:09:10.294
+<v SPEAKER_1>Also schlimm war daran nichts. Um Web-Anwendungen zu schreiben, nach wie vor ein produktives Tool. Und viele Leute rennen der neuesten Technologie her, einfach nur, weil es die neueste Technologie ist. Habe ich nicht immer so gemacht. Manchmal interessiert einen wirklich was und es sieht ganz toll aus. Deswegen muss man damit spielen, weil der innere Geek das einem so vorschreibt. In dem Fall von Node.js war es so, dass wir eine Idee hatten für ein Projekt, wo es um File Uploads geht. Und diese File Uploads sollten als Service auf einem Server dann entgegengenommen werden. Der Upload sollte in Echtzeit angezeigt werden, wie viel Prozent hochgeladen werden. Ohne Flash, nur mit JavaScript. Und dann sollte auch was mit den Dateien danach passiert. Also sprich, die Umwandlung von Videos und das Hochladen von Dateien in Amazon S3 sollte auch in Echtzeit angezeigt werden. Und um dieses Echtzeit-Feedback zwischen einem Client und einem Server hinzubekommen, hat sich PHP überhaupt nicht geeignet. Ich habe versucht, das mit Workup-Processes zu machen, die im Hintergrund diese Jobs abgearbeitet haben und dann versucht, über irgendeine Datenbank zwischendrin die Kommunikation laufen zu lassen und dann über Ajax-Long-Polling das hin und her zu bekommen. Und es hat sich überhaupt nicht gut angeführt. Ajax-Long-Polling. Also es fährt unter die Kategorie Comet, wo man versucht, nicht nur vom Surfer zum Client zu kommunizieren, sondern auch beide Wege, dass man die beide hinbekommt. Ja, und dann habe ich das versucht, mit PHP eine lange Zeit zu machen. Hat nicht richtig gut funktioniert. Und habe dann irgendwann dieses Node.js entdeckt und dachte mir, ja, das sieht eigentlich relativ ganz gut aus dafür. Das kann sehr schön diese Common-Line-Tools starten im Hintergrund. Kann mir in Echtzeit sagen, was das Common-Line-Tool macht. Und habe das ausprobiert, hat sehr gut funktioniert. Und so sind wir dann da reingekommen, haben es von PHP in Node.js umgeschrieben und sind seitdem eigentlich sehr glücklich damit.
+
+00:09:10.314 --> 00:09:16.874
+<v SPEAKER_2>Also so File Upload, wir reden jetzt von so was wie, was weiß ich, so was wie Rapid Share, so eine Anwendung war das, ja?
+
+00:09:16.894 --> 00:09:26.714
+<v SPEAKER_1>Ne, überhaupt nicht. Also nicht File Sharing im Sinne von, man lädt was hoch, damit es andere runterladen, sondern im Sinne von, man hat eine Anwendung, wo man möchte, dass der Benutzer Bilder hochlädt oder Videos.
+
+00:09:26.734 --> 00:09:28.554
+<v SPEAKER_2>Also eher so was wie Flickr, YouTube etc.
+
+00:09:28.574 --> 00:09:30.494
+<v SPEAKER_1>Genau, mal angenommen, wenn wir sein eigenes YouTube bauen.
+
+00:09:30.514 --> 00:09:56.514
+<v SPEAKER_2>Das ist ja ein richtiges Problem, dieser File Upload. Das war schon immer so eine kränkelnde Geschichte, weil es einfach schwierig ist, gerade über längere Zeit die Verbindungen dann stabil aufrechtzuerhalten. Dann bricht das irgendwie ab. Man hat auch eigentlich als Anwender, also als Anwendungsprogrammierer in der Regel darüber so recht keine Kontrolle, wenn das einfach nur über den normalen Browser-Upload weggeht. Das sind so die Probleme, ja?
+
+00:09:56.534 --> 00:11:19.174
+<v SPEAKER_1>Ja, also da gibt es viele Probleme. Einmal ist halt dieses Feedback, wie viel schon hochgeladen wird, das heißt, dafür kann man Flash einsetzen, weil Flash halt direkt den Upload schreiben kann und weiß, wie viel es schon rausgeschickt hat. Das hat man im Browser nicht, deswegen muss man als Browser, wenn man nur JavaScript einsetzen möchte, den Surfer ständig fragen. Hey, wie viel ist denn schon angekommen? Das ist eins der Probleme. Ein anderes Problem ist, dass man manchmal mehrere Dateien auf einmal hochladen möchte, was jetzt mit HTML5 von vielen Browsern unterstützt wird. Und dann möchte man eventuell auch, dass diese Dateien, während sie noch hochgeladen werden, schon irgendwo anders hingehen. Das heißt, mal angenommen, man würde die Datei jetzt zwar einmal umwandeln, möchte aber auch schon die Originaldatei irgendwie auf einen anderen Surfer schieben. Dann ist eines der Probleme, dass die Datei, während sie hochkommt, ja eigentlich auch schon woanders hingestreamt werden könnte. Wobei fast allen anderen Web-Stacks dieser Upload so als ein Request, eine Response gesehen wird. Das heißt, der ganze Upload geht hoch, dann mache ich was damit und dann antworte ich wieder zurück. Und dieses Modell ist eigentlich nicht dem Web entsprechend, sondern das ist eigentlich eher die Abstraktion der Frameworks oder der Plattformen, die sagen, hey, das ist doch schön, einfach, sich dieses HTTP als Request-Response vorzustellen. Aber vor allem, wenn man eine Datei hochstreamt, ist es das nicht. Es ist ein Stream, der hochkommt und den kann man auch woanders hinschicken. Und das ist mit dem Node Share auch ein sehr, sehr gut lösbares Problem.
+
+00:11:20.774 --> 00:11:26.634
+<v SPEAKER_2>Das heißt, du bist eigentlich sozusagen über den praktischen Anwendungsfall draufgestoßen und bist dann da irgendwie glücklich geworden.
+
+00:11:26.714 --> 00:11:38.514
+<v SPEAKER_1>Naja, also am Anfang war das Projekt noch sehr jung. Ich bin da zugestoßen, als die Mailing-List circa 30 Leute hatte. Jetzt sind wir bei 2.500. Und da ging noch nicht alles. Also da gab es definitiv noch viele.
+
+00:11:38.534 --> 00:11:40.954
+<v SPEAKER_2>Von welchem Zeitraum reden wir jetzt eigentlich gerade? Wann bist du da zugestoßen?
+
+00:11:41.854 --> 00:11:44.334
+<v SPEAKER_1>Das muss Juli 2009 gewesen sein.
+
+00:11:45.274 --> 00:11:50.794
+<v SPEAKER_2>Also alles noch recht frisch. Seit wann gibt es das Projekt so in etwa?
+
+00:11:50.814 --> 00:11:58.294
+<v SPEAKER_1>Ich glaube, der erste Commit ist der 30. Aber ich bin mir nicht ganz sicher, ob Brian schon zuvor angefangen hat, da dran zu arbeiten.
+
+00:11:58.994 --> 00:12:00.874
+<v SPEAKER_2>Also das Ding ist jetzt gerade mal ein Jahr alt so?
+
+00:12:01.214 --> 00:12:04.054
+<v SPEAKER_1>Ja, nicht wie älter. So maximal zwei.
+
+00:12:04.074 --> 00:12:04.354
+<v SPEAKER_2>Frisch.
+
+00:12:06.654 --> 00:12:26.254
+<v SPEAKER_1>Hat dafür aber schon von Anfang an eine ziemlich gute Reife gehabt. Einfach nur dadurch, dass es auch auf andere Komponenten aufsetzt, die nicht selber geschrieben wurden für Node.js und die schon lange stabil waren. Zum Beispiel die V8 JavaScript-Engine, die Event-Loop-Abstraction, lib.io und das sind noch ein paar andere Komponenten drin. Die haben das Ding von Anfang an.
+
+00:12:26.274 --> 00:12:43.194
+<v SPEAKER_2>Bevor wir auf diese Details kommen, sollten wir vielleicht nochmal überhaupt erstmal erklären, worum es sich hierbei eigentlich handelt. Also Node.js ist ein, was eine Umgebung, ein Framework, wie soll man, eine Plattform, was würdest du sagen ist die beste Bezeichnung dafür?
+
+00:12:44.454 --> 00:12:50.994
+<v SPEAKER_1>JavaScript-Runtime oder JavaScript-Plattform ist eigentlich schon ein ganz gut surferseitiges JavaScript.
+
+00:12:51.014 --> 00:13:10.614
+<v SPEAKER_2>Das heißt, Node.js ist also eine Programmierumgebung, in der man seine eigenen JavaScript-Software zum Laufen bringen kann, aber eben nicht typischerweise, wie man das so normalerweise macht, im Browser, weil da gibt es ja diese Umgebung sozusagen schon, sondern es ist quasi die fehlende Plattform für die andere Seite, für den Server, wo kein Browser läuft.
+
+00:13:10.974 --> 00:13:39.214
+<v SPEAKER_1>Genau. Also es ist ein Common-Line-Tool, man kompiliert das, also downloadet es, kompiliert es, und dann hat man halt eine ausführbare Datei, die als Node, die gibt man als Argument, die JavaScript-Datei, die man ausführen möchte, und dann läuft das JavaScript los und in den meisten Fällen startet man halt einen HTTP-Server oder macht irgendwas Netzwerkmäßiges damit, weil man meistens mit dem Browser kommuniziert, und dann läuft das Ding halt im Hintergrund, solange wie man das laufen lassen möchte. Man kann aber auch jede mögliche Art von Netzwerkprogramm damit bauen.
+
+00:13:40.234 --> 00:13:51.294
+<v SPEAKER_2>Das heißt, im Prinzip ist das Ganze vergleichbarer zum Beispiel auch mit einer Java VM. Das heißt, wenn man auf einem Server so eine Java Virtual Machine startet, hat man mit Node.js quasi eine JavaScript Virtual Machine.
+
+00:13:51.634 --> 00:13:52.694
+<v SPEAKER_1>Richtig.
+
+00:13:52.714 --> 00:14:02.974
+<v SPEAKER_2>Ist auch konzeptionell im Prinzip auf derselben Ebene. Nur, dass es das halt für JavaScript macht, was es so bisher nicht gab. Oder gab es noch andere Systeme, die sie schon mal als ich sah, versucht haben?
+
+00:14:03.314 --> 00:14:54.534
+<v SPEAKER_1>Ja, also da gibt es schon sehr viele Systeme. Ich glaube JavaScript ist 1995 erschienen. 1996 hat Netscape die erste Serverseitige JavaScript-Implementierung rausgebracht. Das hieß LiveWire oder irgend sowas. Und die Idee war eigentlich schon relativ lange da, dass man diese Technologie, die man jetzt auf einen Client in den Browser reinpusht, auch irgendwie auf den Server bringt, damit man den Code sharen kann, damit man sich Arbeiter spart, zwischen zwei Programmiersprachen hin- und herdenken zu müssen, etc. hat schon immer die Idee gegeben. Und da gibt es auch viele Implementierungen. Ich glaube, WGPT hat so 50, 60 Implementierungen gelistet von Projekten, die das schon mal versucht haben. Und Node share ist eigentlich so die erste, wo eine größere Mehrheit jetzt draufschaut und sagt, das könnten wir uns vorstellen, das auch wirklich ernsthaft einzusetzen.
+
+00:14:54.654 --> 00:14:59.914
+<v SPEAKER_2>Das heißt, bisher hat das alles noch gar nicht so richtig Akzeptanz gefunden? Woran lag das?
+
+00:14:59.934 --> 00:15:08.574
+<v SPEAKER_1>Das ist schwer zu sagen. Ein Grund war wahrscheinlich, dass JavaScript als Sprache nicht ernst genommen wurde, eine lange Zeit.
+
+00:15:08.594 --> 00:15:10.674
+<v SPEAKER_2>Weil es einfach im Browser so schlecht implementiert war?
+
+00:15:10.794 --> 00:15:20.854
+<v SPEAKER_1>Weil es im Browser verdammt schlecht implementiert war, weil der Browser drum herum noch schlechte Dinge getan hat, wie die DOM, mit der keiner arbeiten wollte. Und wenn man den Leuten JavaScript erzählt hat, konnten sie sich nicht davon trennen.
+
+00:15:20.874 --> 00:15:27.014
+<v SPEAKER_2>Das Document-Object-Model, mit dem man quasi so die Innereien der Webseite, die einen umgibt, bearbeiten konnte.
+
+00:15:27.734 --> 00:16:01.974
+<v SPEAKER_1>Und das konnten sich die Leute halt nicht so richtig vorstellen, wie man diese total vermurkste, hässliche Sprache mit all diesem Ballast nehmen könnte und auf dem Surfer damit sinnvolle Sachen machen können. Es war auch noch nicht die Zeit der dynamically typed languages. Ich glaube, auch dieses PAP und PUR hat dann auch noch ein kleines Stückchen gebraucht, bis es richtig Mainstream gefangen hat. Da waren halt noch viele oldschool Leute unterwegs, die meinten, so was wie Java oder C++ ist immer noch das Coolste, was es gibt, die wollten nichts davon hören, mit diesen neumodrigen Ansätzen zu tun zu haben.
+
+00:16:02.174 --> 00:16:26.414
+<v SPEAKER_2>Ja, es gibt ja auch immer das Performance-Argument, das hat ja auch damals, denke ich, durchaus gestochen, weil einerseits waren die dynamischen Sprachen ja selber in ihren Implementierungen nicht sehr schnell und andererseits, wie das eben so ist, die Computer hatten da noch einen langen Weg zu gehen und heute kommt das sozusagen zusammen, sowohl wenn die Implementierung immer schneller, als auch die Computer immer schneller, sodass eben über Anwendungen nachgedacht werden kann, die so vor zehn Jahren vielleicht noch überhaupt nicht wirklich da waren.
+
+00:16:26.434 --> 00:17:00.954
+<v SPEAKER_1>Genau. Ich glaube noch ein anderes Problem war, ich glaube viele der ursprünglichen Produkte waren kommerzielle Produkte und es gab, glaube ich, keine Open Source-Implementation vom Serverseitigen JavaScript, die zumindest es geschafft hätte, eine Community aufzubauen. Also da spielen ganz viele Faktoren hinein. Letztendlich, was, glaube ich, bei dem Node angeschlagen hat, ist, dass es wirklich gezeigt hat, dass es nicht nur cool, dass es nicht nur JavaScript, sondern es kann auch wirklich von der Performance her mit allen anderen Plattformen locker mithalten. Mit allen?
+
+00:17:00.974 --> 00:17:03.754
+<v SPEAKER_2>Mit allen anderen JavaScript-Implementierungen mithalten oder mit...
+
+00:17:03.774 --> 00:17:09.694
+<v SPEAKER_1>Nee, mit eigentlich allem, was derzeit im Web eingesetzt wird, um HTTP-Request zu beantworten.
+
+00:17:09.714 --> 00:17:12.974
+<v SPEAKER_2>Also was schließt du da jetzt mit einem? Also Java...
+
+00:17:12.994 --> 00:17:55.014
+<v SPEAKER_1>Das ist natürlich sehr weit gefasst. Mit C++, eine spezielle Anwendung, die nichts macht, als HTTP-Request für einen speziellen Service auszugeben, wird wahrscheinlich immer performanter sein. Aber sobald man irgendeine Abstraction drumherum hat, also so was wie Java mit den ganzen Libraries, die da mit rumschweben, nimmt man ja meistens sehr, sehr viel von dem Ballast mit, was dann alles so dranhängt. Python, PHP über, sei es Mod-PHP oder über Fast-DGI, Ruby, auf jeden Fall schneller als Ruby. Und man kann eigentlich sagen, dass bei solchen Geschichten wie Hello World, Benchmarks, NodeJS meistens auch sehr weit vorne liegt, was nicht unbedingt aussagekräftig ist.
+
+00:17:55.034 --> 00:17:56.894
+<v SPEAKER_2>Jetzt noch schneller als Hello World.
+
+00:17:56.914 --> 00:18:32.374
+<v SPEAKER_1>Ja genau, mit diesen Hello World Geschichten muss man aufpassen. Aber die Hello World Geschichten sind insofern interessant, weil es halt die Baseline-Performance irgendwie abbildet. Die wirkliche Frage ist natürlich, was passiert, wenn man mehr macht und man mehrere Dinge ausführt. Und da hat halt NodeJS auch ein sehr gutes Konzept auf der Seite, wie es dann damit umgeht, wenn viele Requests gleichzeitig reinkommen, was dann darauf hoffen lässt oder auch in der Praxis sich bisher so erweist, dass es dann auch mit sehr vielen kleinen, so komplexen Anwendungen Aufgaben sehr schnell erledigen kann. Und dann von der Performance her nach Hello World nicht sofort in den Keller geht, sobald man mehr tut.
+
+00:18:33.734 --> 00:19:20.294
+<v SPEAKER_2>Du sprichst jetzt etwas an, wofür ja NodeJS, also zumindest aus meiner Sicht heraus schon, na, berühmt vielleicht doch nicht so richtig der Ausdruck. Aber zumindest, was so ein ganz typisches Merkmal ist von NodeJS, ist, dass es eben den Begriff der Asynchronizität auf eine neue Ebene oder überhaupt erst mal auf ein Tablett stellt und sagt, wir kümmern uns da drum. Was steckt da jetzt sozusagen drin in dem NodeJS? Vielleicht kannst du auch erst mal ein bisschen erläutern, was es eigentlich ist, also woraus es gemacht ist und inwiefern das eben dann für diese Performance, die so gut sein soll, eine Rolle spielt.
+
+00:19:21.354 --> 00:20:26.994
+<v SPEAKER_1>Ja, ich würde es vielleicht von der Seite aufrollen, dass es zwei grundsätzliche Ansätze gibt. Das Problem an sich ist erst mal, man hat eine Anwendung, was auch immer von einer Anwendung das ist, die aber irgendwie übers Netzwerk mit Clients kommuniziert. Der Regel wird das ein Webbrowser sein, der einfach HTTP-Request schickt. Das Problem ist, was passiert, wenn man nicht nur einen von denen gleichzeitig hat, sondern 10, 100, 1000, 10.000. Sobald man dann auf eine große Anzahl von Clients kommt, die man versucht auf einer Maschine, denen ihre Anfragen zu beantworten, muss man sich für eine Strategie entscheiden, wie man das tut. Eine Strategie wäre, dass man für jeden Client, der kommt, einen eigenen Thread aufmacht, das heißt, über Threading könnte man dann jedem Client in seiner eigenen kleinen Welt die Anfragen beantworten. Eine andere Möglichkeit wäre ein Prozess, das wäre noch teurer. Der Weg, den NodeShare es macht, ist, alle Anfragen, die reinkommen, in einem Thread zu behandeln und dann quasi mit etwas, was ich Non-Blocking-IO nenne, sicherzustellen, dass trotzdem Zehntausende dieser Clients sehr schnell ihre Anfragen beantwortet bekommen.
+
+00:20:27.734 --> 00:22:04.114
+<v SPEAKER_2>Ok, nochmal kurz, das ist dieses Problem. Man kennt das ja sicherlich spätestens seit dem Slashdot-Effekt. Da kommt ja der Name, eines der ersten wirklichen Nerd-News-Portale, wo viele web-affine, netz-affine Leute immer gelesen haben und wenn etwas neu war, dann haben sie es auch alle sofort getan und wenn dann irgendwie The Cool Shit gepostet wurde und es ging dann irgendwie, ja, das müsst ihr auf dieser Webseite anschauen, dann war die Wahrscheinlichkeit sehr hoch, dass allein diese Horde von informationsgierigen Menschen, die dem jetzt hinterherklicken, diesen Server durch gleichzeitiges Beballern von einfachen, sag mir was du hast, Anfragen so in die Knie gebracht haben, dass einfach niemand mehr irgendetwas bekommen hat. Das ist ja so ein typischer Effekt und dann gibt es dann mittlerweile auch ein andere, ich weiß nicht, gespiegelt online kann man wahrscheinlich auch werden, aber dieser Begriff hat sich glaube ich nicht so etabliert, aber es gibt halt immer wieder mal so Portale, die eben einen ähnlichen Effekt haben. Und das ist einfach so ein generelles Skalierungsproblem, was Web-Anwendungen irgendwie haben, dass sie ja vielleicht in der Regel mal ein, zwei, drei Besucher pro Stunde haben und dann, wenn auf einmal das große Interesse ausbricht, eben ganz viele auf diese Maschine einschlagen und sie dann eigentlich gar nicht mal, also es ist ja gar nicht mal so jetzt die Netzwerkbandbreite oder so weiter. Also das kann natürlich auch ein Problem sein, aber das ist es meistens gar nicht, sondern es ist eigentlich, dass die Ressourcen des Computers nicht, ja, effektiv genutzt werden, kann man sagen.
+
+00:22:04.134 --> 00:22:23.634
+<v SPEAKER_1>Genau. Also man kann sich das so vorstellen, dass die Web-Anwendung vielleicht zum Ausliefern der Seite ein Query an die Datenbank schickt, mit den Einfachheitshalbern jetzt mal annehmen, sodass der 100 Millisekunden dauert, das heißt die Anfrage dauert 100 Millisekunden. Und wenn die Anwendung jetzt bloß in einem Prozess, in einem Thread läuft, kann sie maximal zehn davon pro Sekunde beantworten. Zehnmalhundertmal die Sekunde hat man die Sekunde voll.
+
+00:22:23.654 --> 00:22:32.174
+<v SPEAKER_2>Was jetzt so kein Problem ist, wenn zehn Leute kommen, dann dauert es mal eine Sekunde, aber dann hat man auch irgendwie seinen Ergebnis und eine Sekunde nimmt man vielleicht wahr, aber stört einen nicht.
+
+00:22:32.194 --> 00:22:32.474
+<v SPEAKER_1>Richtig.
+
+00:22:33.174 --> 00:22:35.894
+<v SPEAKER_2>Aber wenn jetzt tausend kommen, dann dauert es schon zehn Sekunden.
+
+00:22:36.294 --> 00:22:51.194
+<v SPEAKER_1>Ja, also dann wären wahrscheinlich die Verbindungen gar nicht mehr angenommen, je nachdem, wie das implementiert ist, welche Technologie das gerade macht, aber im Prinzip wird der Server dann komplett überlastet und für die meisten Leute wird überhaupt keine Webseite mehr sichtbar sein.
+
+00:22:51.214 --> 00:22:59.294
+<v SPEAKER_2>Obwohl ja dieses, ja, okay, was kann man da jetzt gegen tun? Was tut Node.js dagegen?
+
+00:22:59.314 --> 00:23:25.774
+<v SPEAKER_1>Was Node.js dagegen tut, ist im Prinzip alle Dinge, die normalerweise bei einem Computer verdammt langsam sind, über Non-Blocking-RO machen. Also was ist bei einem Computer verdammt langsam? Eigentlich zwei Sachen, Netzwerk und Festplatte. Sobald man Netzwerk und Festplatte anspricht, begibt man sich in einen Geschwindigkeitsverlust, der so circa bei drei bis sechs Größenordnungen liegt. Das heißt, man kommt da wirklich…
+
+00:23:25.794 --> 00:23:26.994
+<v SPEAKER_2>Größenordnung im Vergleich zu was?
+
+00:23:27.554 --> 00:23:31.494
+<v SPEAKER_1>Na, Potenzen von zehn. Also 1000 bis 1 Millionen.
+
+00:23:33.894 --> 00:23:37.554
+<v SPEAKER_2>Im Verhältnis zu wie die CPU eigentlich könnte, wenn es sowas nicht gäbe.
+
+00:23:38.554 --> 00:23:41.034
+<v SPEAKER_1>Zum Beispiel im Vergleich zum Zugriff auf den RAM.
+
+00:23:41.054 --> 00:23:52.534
+<v SPEAKER_2>Ja, also ich lese irgendwie einen String aus dem Speicher, geht mehr oder weniger schnell, lese ich denselben String von einer Festplatte, dann kann es 10, 100.000 oder 1 Millionen mal so lange dauern.
+
+00:23:52.554 --> 00:25:39.194
+<v SPEAKER_1>Genau, was sich jetzt immer noch relativ schnell anführt für uns, weil wir sehr langsam wahrnehmen, was der Computer uns ausgibt. Aber wenn man 10.000 von Verbindungen hat, sich natürlich diese kleinen Summen sehr stark summieren und man dann wirklich Performance-Probleme erleitet. Der Ansatz von Node Shares ist im Prinzip der Folgende. Das ganze Ding sitzt eigentlich schon in einer großen Vorschleife drin. Das heißt dann eine Wileschleife, die unendlich läuft. Das nennt sich die Event Loop. Und es fragt dann eigentlich ständig, mal angenommen, also erstmal wird das JavaScript ausgeführt, das Programm, das man da hat. Und jetzt mal angenommen, sagt das Programm in der ersten Zeile, lese diese Datei von diesem Pfad. Dann würde der jetzt im Prinzip normaler, bei einer normalen Programmiersprache, bei einer normalen Plattform, diese Datei von der Festplatte lesen. Und wenn er fertig ist, führt er in die nächste Zeile Code aus. Das nennt sich blocking.io, ist das Simpelste, was man sich vorstellen kann. Und wurde eigentlich bis jetzt von fast allen Programmiersprachen, die es gibt auf dem Markt, in die Standard-Library aufgenommen. Also es gibt keine Programmiersprache, die nicht blocking.io als Standard hat. Und dieses Node.js und JavaScript ist eigentlich das erste Mal, wo das nicht der Fall ist, da JavaScript selber sowas gar nicht definiert und Node.js quasi bloß die Libraries dafür liefert. Was bei den Node.js jetzt anders ist, ist, dass es halt in dieser großen While-Loop drin sitzt. Und in dem Moment, wo jetzt die Datei gelesen werden sollte, sagt dieses Node.js bloß dem Betriebssystem Bescheid, liest diese Datei aus und macht dann aber sofort weiter. Die nächste Zeile code wird sofort ausgeführt und im Hintergrund hat Node dem Betriebssystem Bescheid gesagt, diese Operation in Gang zu treten. Und dann, das nächste Mal, wenn er durch diese Weiloop kommt, fragt er halt, hey, wie sieht es denn aus mit dieser Datei? Die hatte ich dir gesagt, dass du lesen sollst. Hast du davon schon die ersten Bites für mich?
+
+00:25:39.214 --> 00:25:54.034
+<v SPEAKER_2>Wer fragt das? Das Programm? Das Node.js. Das Node.js, also nicht mein Programm. Also ich muss jetzt nicht sagen, liest mal die Datei und dann muss ich irgendwie alle fünf Sekunden fragen, ist es da, ist es da, ist es da, sondern das macht sozusagen das Subsystem für mich.
+
+00:25:54.054 --> 00:26:12.534
+<v SPEAKER_1>Genau. Je nachdem, was das Betriebssystem unterstützt, kann das mal mehr, mal weniger gut sein. Also es kann darauf hinauslaufen, dass Node wirklich das Betriebssystem ständig fragen muss, wie sieht es damit aus. Es kann aber auch sein, dass das Betriebssystem für gewisse Aufrufe direkt Callbacks definiert. Das heißt, das Betriebssystem meldet sich bei einem selber wieder.
+
+00:26:12.554 --> 00:26:17.554
+<v SPEAKER_2>Das heißt, es hängt extrem davon ab, auf welchem OS dieses Node.js konkret läuft.
+
+00:26:17.574 --> 00:27:49.654
+<v SPEAKER_1>Genau, aber die meisten Unix- oder Linux-Betriebssysteme haben das gut genug, also sind von den Libraries, die sie zur Verfügung stellen, brauchbar, um so etwas zu tun. Das einzige, wo es nicht so gut funktioniert, ist bei der Festplatte. Bei der Festplatte hat man nur Calls zur Verfügung, die tatsächlich Blocking sind. Das heißt, man kann der Festplatte nicht sagen, versuche so viel bytes zu lesen, aber wenn du es jetzt nicht mehr sofort schon liefern kannst, sprich, wenn du sie noch nicht gelesen hast oder irgendwo gebuffert hast, dann tue sie erstmal nicht, dann frage ich das nächste Mal wieder, ob du so weit bist. Das geht bei der Festplatte nicht, zumindest bei den meisten Betriebssystemen. Beim Netzwerk funktioniert das aber sehr gut. Da gibt es einen Call, der heißt Select. Und mit diesem Select-Call kann man das Betriebssystem fragen, ob von den Sockets und den Netzwerkverbindungen, die man momentan offen hat, eine neue Daten hat oder eine neue reingekommen ist. Und diesem Select-Call kann man einen Timeout geben, das heißt, wie lange man warten möchte, bis man neue Daten erhält. Und den kann man auf Null setzen. Und wenn man den auf Null setzt, dann gibt es entweder zurück, es gibt noch nichts Neues oder es gibt was Neues. Aber man muss im Prinzip nicht auf das Betriebssystem warten, bis es sich entschieden hat. Man kann einfach pollen, sozusagen. Genau. In der Zeit, bis man von dem letzten Mal, wo man gefragt hat, bis dahin merkt sich das Betriebssystem, was gerade reingekommen ist, und sagt einem dann an der Stelle quasi Bescheid. Und das Node.js tut das halt alles für den Benutzer so abstrahierend, dass er in seinem JavaScript plus noch sagen muss, lies mir diese Datei und wenn du damit fertig bist, tu dies.
+
+00:27:49.674 --> 00:27:51.674
+<v SPEAKER_2>Aber du hast gesagt, bei der Festplatte geht das nicht so einfach.
+
+00:27:51.694 --> 00:28:12.214
+<v SPEAKER_1>Genau, da geht es über eine Absaktion. Das heißt, im Hintergrund machen das dann Threads. Aber das Node.js löst das als Problem an sich erstmal. Genauso, wenn man jetzt ein Netzwerk anfragt, einen HTTP-Request irgendwo hinschickt, dann würde man sagen, mach einen GetRequest auf google.com und wenn du fertig bist, führ als nächstes das aus. Dieses als nächstes dann Callback.
+
+00:28:12.234 --> 00:29:49.314
+<v SPEAKER_2>Das heißt, um das nochmal zusammenzufassen. Das Ziel von Node.js ist, eine Programmierumgebung bereitzustellen für JavaScript-Programme, die weitgehend oder nahezu nicht Blocking ist. Dass es einfach keinerlei Operationen gibt, an denen man in irgendeiner Form irgendwo hängen bleibt. Vor allem nicht bei den Sachen, die traditionell langsam sind im Vergleich zu dem, was man sozusagen innerhalb des Computers schnell lösen kann. CPU, Speicherzugriff, Zugriff auf Chips etc. Also alles, was sich innerhalb dieses Mainboards in der Regel befindet oder an schnell angeschlossenen Geräten, mag auch Verzögerungen machen. Richtig dramatisch wird es aber bei all dem, wo man eben auf die Geschwindigkeit potentiell langsamer Dinge angewiesen ist. Festplatten sind irgendwie träge, Metallscheiben, wo Motoren erstmal die richtige Rotationsgeschwindigkeit herbringen müssen, wo so ein Kopf rübergeführt werden muss. Das ist alles in den Dimensionen einer schnell arbeitenden CPU. Das sind das Ewigkeiten. Und genauso ist es natürlich mit dem Netzwerk, weil man muss ja dann sozusagen auf Antwort anderer Computer warten, bzw. die eigene Anfrage muss überhaupt erstmal irgendwo landen, muss was weiß ich, fünfmal über den Teich etc. Und um all das schnell zu machen, ist das Prinzip von Node.js, zu sagen, wir können zwar alle starten, aber wir warten nicht auf ein Ergebnis, sondern wir machen einfach weiter und lassen uns Bescheid sagen, wenn es fertig ist und kommen dann klar.
+
+00:29:49.334 --> 00:30:40.634
+<v SPEAKER_1>Genau. Und das einfachste Beispiel, an dem man sich vorstellen kann, warum das nützlich sein kann, ist bei einer Web-Anwendung, hat man in der Regel Queries auf einer Datenbank. Man hat in der Regel nicht nur einen, sondern zum Beispiel zehn. Und bei allen anderen Plattformen ist das so der Fall, dass die Response-Time, also bis man die Anfrage, die reinkommt, beantwortet kann, beantwortet ist, muss man halt warten, bis alle zehn Queries hintereinander ausgeführt sind. Das heißt, wenn davon jeder zehn Millisegunden braucht, dann müssen wir insgesamt 100 Millisegunden warten. Bei Node.js können wir aber all diese zehn Queries an die Datenbank parallel schicken. Und angenommen, dass die Datenbank damit auch parallel umgehen kann, kann die uns alle diese Anfragen auch parallel beantworten. Sprich, die Response-Zeit, die wir haben, richtet sich jetzt nicht mehr nach der Summe aller Queries, sondern nach der Länge des längsten Queries, nach der Dauer davon. In dem Fall wären das dann 10 Millisekunden statt 100 Millisekunden.
+
+00:30:40.654 --> 00:30:42.554
+<v SPEAKER_2>Was schonmal Faktor 10 ist.
+
+00:30:42.574 --> 00:30:51.474
+<v SPEAKER_1>Genau. Und je nachdem, was die Anwendung tut, kann halt dieser Non-Blocking-Zugriff auf Datalsystemen und auf File-Systemen sehr, sehr nützlich sein.
+
+00:30:51.994 --> 00:31:07.594
+<v SPEAKER_2>Aber wenn, wie du sagtest, das Betriebssystem jetzt teilweise dieses Konzept von Non-Blocking IO so überhaupt gar nicht hat an einer bestimmten Stelle, was, wie kann Node.js denn an der Stelle das sicherstellen, dass es nach wie vor nicht blockierend ist?
+
+00:31:07.614 --> 00:31:21.614
+<v SPEAKER_1>Genau. Eigentlich ist das bloß beim Datalsystem der Fall. Und soweit ich weiß, sind da viele Linux und Unix leider nicht in der Lage, dann ein Non-Blocking-System-EPI dafür zur Verfügung zu stellen. Allerdings hat Solaris so eine API.
+
+00:31:22.354 --> 00:31:23.934
+<v SPEAKER_2>Solaris hat so was.
+
+00:31:23.954 --> 00:31:24.274
+<v SPEAKER_1>Genau.
+
+00:31:24.294 --> 00:31:25.894
+<v SPEAKER_2>Aber nur Solaris, oder wie?
+
+00:31:25.914 --> 00:31:27.094
+<v SPEAKER_1>Soweit ich weiß.
+
+00:31:27.114 --> 00:31:34.474
+<v SPEAKER_2>Ist das nicht eigentlich etwas, was fehlt? Ist das nicht etwas, was Betriebssysteme zu bieten haben?
+
+00:31:34.494 --> 00:31:35.174
+<v SPEAKER_1>Ja.
+
+00:31:35.194 --> 00:31:36.374
+<v SPEAKER_2>So aus deiner Sichtweise?
+
+00:31:36.394 --> 00:31:58.794
+<v SPEAKER_1>Das kommt halt drauf an. Das Betriebssystem kann halt genauso sagen, wenn du versuchst, mehrere Dateien gleichzeitig zu lesen und zu schreiben, dann nimm bitte schön Threads. Oder mehrere Prozesse, die das gleichzeitig tun. Das ist ja eigentlich die eigentliche Aufgabe des Betriebssystems, dass es sagt, wenn mehrere Programme das gleichzeitig tun wollen, dann herauszukriegen, wie es das zu verwalten hat. Und das in einem Prozess zu machen, war wahrscheinlich nicht wichtig genug.
+
+00:31:59.254 --> 00:33:37.874
+<v SPEAKER_2>Aber es ist doch eigentlich eine andere Granularität, die an der Stelle zu Tage kommt. Du hast das ja auch schon erwähnt. Kann man ja machen mit Threads. Aber so ein Prozess ist ja mehr als nur ein Ablauf. Das ist ja ein, nicht wahr, da gehört der Speicher dazu. Das ist mehr sozusagen der Kontext eines Programms. Und jetzt, ich meine, klar, es wird auch immer wieder mal gemacht. Hier Google Chrome ist das beste Beispiel der Browser von Google. Der eben für jede Webseite das macht. Aber der macht das ja nicht primär aus Performance-Gründen, sondern vor allem aus Sicherheitsgründen, weil man da eben so ein Shielding hat. Und Multithreading gibt es ja nun eigentlich auch schon lange, dass man eben sagen kann, liebes Betriebssystem, ich habe mehrere Abläufe. Aber auch so ein Ablauf ist ja ein komplexes Ding von verschiedensten Operationen. Und wenn ich das richtig verstehe, bei Node.js geht es ja eigentlich noch eine Granularitätsstufe tiefer, dass man einfach sagt, jede einzelne Operation, auch wenn sie so für das Betriebssystem nichts miteinander zu tun hat, ist asynchron. Weil Netzwerkzugriff ist das eine. File lesen, das liegt immer alles sehr nah bei Sam, in einem Thread, in einem konzeptionellen Ablauf meines Programms. Aber für das Betriebssystem sind das grundunterschiedliche Sachen. Und man kann ja wohl nicht sagen, oh, jetzt muss ich die Datei aufmachen, jetzt muss ich den Thread aufmachen, jetzt muss ich hier Netzwerkkommunikation machen, da muss ich den Thread aufmachen. Da muss man sich ja dann sozusagen auch darum kümmern, diese ganzen Threads irgendwie wieder zu koordinieren und sich miteinander zu synchronisieren und den Speicher untereinander zu verwalten und die Datenstrukturen kohärenz zu halten. Und das ist ja das, wo sehr viele auch scheitern.
+
+00:33:37.894 --> 00:34:48.274
+<v SPEAKER_1>Genau. Das ist aber in Node jetzt kein großes Problem, dass es das Betriebssystem nicht anbietet für den das Halszugriff, weil Node setzt auf eine Bibliothek auf, die heißt lib.eu. Und die Aufgabe dieser Bibliothek ist nichts anderes als diesen Makel des Betriebssystems, nämlich dass diese POSIX-Operationen, die mit dem Dateisystem zu tun haben, dass diese nicht immer non-blocking sind. Und das tut dann halt das so abstrahieren, dass es zwar im Hintergrund 1, 2, 3, 4 Threads oder sowas aufmacht, aber man dann eine Schnittstelle geboten kriegt, die sich genauso non-blocking anführt und im Prinzip auch fast ähnliche Charakteristiken aufweist, was dann jetzt die Performance anbelangt. Weil es ist nun mal bei so einer Festplatte so, die hat einen Kopf und wo der gerade ist, kann sie lesen und schreiben. Wo er nicht ist, kann sie es nicht. Das heißt, letztendlich wird das sowieso alles hintereinander ausgeführt. Und wichtig ist halt bloß, dass es für den eigentlichen Programmablauf keine Rolle mehr spielt, was die Festplatte gerade noch anderes tut, sondern man sagt dir, tu jetzt das und melde dich wieder bei mir, wenn du das getan hast. Und da gibt es diese Bibliothek von Marc Lehmann, der hat auch dir das LibF geschrieben, was das eigentliche Event-Lub ist, in der Node.js selber drin sitzt. Und das ist sehr solide, also da hat man keine Probleme als Benutzer von Node.js.
+
+00:34:48.294 --> 00:34:53.574
+<v SPEAKER_2>Also lib.io gab es schon vorher und ist sozusagen etwas, was Node.js nur herangezogen hat.
+
+00:34:53.594 --> 00:34:56.294
+<v SPEAKER_1>Genau, das war halt eine dieser Komponenten, die ich am Anfang erwähnt hatte.
+
+00:34:57.114 --> 00:35:03.754
+<v SPEAKER_2>Ich meine, stellt sich natürlich auch so eine grundsätzliche Frage, inwieweit eventbasiert das Programmieren nicht vielleicht sowieso the way to go ist.
+
+00:35:06.054 --> 00:35:57.374
+<v SPEAKER_1>Das weiß ich nicht, ich weiß nicht, ob es the way to go ist. Es hat Vorteile, die ganz klar auf der Hand liegen. Man hat ganz oft Code, wo man sagt, also mein Hauptproblem, warum ich es zur Not gefunden habe, war, ich hatte tatsächlich Code, wo ich mich geärgert habe, dass Dinge nicht parallel gelaufen sind. Das Problem hatte ich bei Web-Anwendungen vorher eigentlich nicht sehr oft. Aber als ich dann das eigene Projekt gemacht habe mit den File Uploads, wollte ich mehrere Common-Line-Tools parallel ausführen, mehrere Dinge tun und trotzdem den Überblick behalten, zwischen diesen Dingen kommunizieren. Dafür ist dieses Event-Trippen-Programming, dieses Asynchrone sehr, sehr gut. Manchmal ist es aber auch hinderlich. Manchmal möchte man Dinge wirklich hintereinander tun. Und dann muss man natürlich jetzt in Not gegen die Natur von JavaScript und Node ankämpfen, mit all diesen Callbacks und versuchen, sich zu merken, was wurde jetzt schon alles getan. Und erst wenn alle Conditions oder Voraussetzungen erfüllt sind, dann den nächsten Schritt zu tun.
+
+00:35:57.394 --> 00:36:08.314
+<v SPEAKER_2>Aber man kann sozusagen in Node gar nicht Blocking programmieren. Also es nimmt einem sozusagen den Block so weit raus, dass man ihn trotzdem haben will, dass man ihn nochmal explizit hinschreiben muss.
+
+00:36:08.854 --> 00:36:44.774
+<v SPEAKER_1>Also mit einer Ausnahme, ja. Also jeder Zugriff aufs Netzwerk und auf fast alle anderen APIs ist Non-Blocking. Fürs Datalsystem hat Node auch noch die Blocking-System-Codes. Der Hauptgrund dafür ist, dass das Modulsystem von Node, wenn man andere Bibliotheken einbindet, Blocking ist. Das heißt, man hat ja meistens bei so einem Programm eine Startphase, wo das Programm so ein paar Sachen sich zurechtlegt, vielleicht eine Config-Datei lädt, etc. Und halt andere Module einbindet. Das wird teilweise oder wird in Node mit Blocking-Io gemacht. Aber sobald das Programm dann anfängt zu laufen, verwendet man das eigentlich nicht mehr und hat dann bloß noch Non-Blocking-Io für alles.
+
+00:36:44.794 --> 00:36:46.234
+<v SPEAKER_2>Und warum wird das da Blocking gemacht?
+
+00:36:49.334 --> 00:37:07.454
+<v SPEAKER_1>Ja, am Anfang war es nicht so. Eine ältere Version von Node war tatsächlich, dass Module laden auch Non-Blocking. Es sah dann aber von der Syntex von JavaScript her so merkwürdig aus, dass es Leute wirklich abgestoßen hat. Und dass wirklich die Mailing-List eigentlich ständig von Leuten befüllt war, die gesagt haben, ich kann damit nicht leben.
+
+00:37:07.794 --> 00:37:09.934
+<v SPEAKER_2>Aber sie müssen es doch an anderen Stellen genauso benutzen.
+
+00:37:12.894 --> 00:37:50.094
+<v SPEAKER_1>Ja, aber was im Prinzip dabei entsteht, ist, dass man sagen würde, am Anfang hat man einen Call, einen Aufruf mit dem mal require. Und da würden dann halt die Dateien, die man laden möchte, als Liste angegeben. Und dann würde man dem eine Funktion geben, wenn all diese Dinge geladen sind. Und dann müsste man dieser Funktion wieder die Namen all dieser Module noch mal wiederholen als Argumente. Und sein eigenes Programm würde immer schon im ersten Tab-Level eingerückt sein. Das heißt, man ist immer schon eine Ebene eingerückt, obwohl man eigentlich noch gar nichts getan hat. Allein sich daran visuell zu gewöhnen, ist eigentlich den meisten Leuten, glaube ich, nicht gelungen.
+
+00:37:51.034 --> 00:37:57.094
+<v SPEAKER_2>Verstehe. Es sind sozusagen eigentlich eher kosmetische Probleme, die an der Stelle sagen, ah, scheiß drauf.
+
+00:37:57.114 --> 00:38:02.634
+<v SPEAKER_1>Kosmetische Probleme und auch Probleme, wie viel Code man eingeben muss. Es ist weniger Code, so wie es momentan ist.
+
+00:38:02.654 --> 00:38:11.974
+<v SPEAKER_2>Aber hätte man das ja nicht einfach nochmal kapseln können und sagen können, ja, hier, tu dies für mich. Blocking, auch wenn du es tatsächlich non-blocking machst und ich sehe es nicht.
+
+00:38:13.994 --> 00:39:17.514
+<v SPEAKER_1>Ja, das war der erste Ansatz. Das waren Coroutines, die dafür verwendet wurden. Das heißt, da wurde im Prinzip im Hintergrund non-blocking IOs geführt, aber es wurde dann wieder an die Stelle zurückgesprungen, wo dieser letzte Core gemacht wurde, der dann als Blocking kaschiert wurde. Man hatte das Gefühl, man benutzt Blocking IOs. Das Problem, das sich daraus ergeben hat, war aber im Prinzip, dass es den Programmablauf schwieriger zu verstehen gemacht hat. Es gab dann Situationen, es gibt ja diesen schönen Begriff, wenn man threading arbeitet, dass etwas thread safe ist. Das heißt, dass man auf ein Objekt oder irgendwas zugreifen kann, auch wenn das mehrere threads gleichzeitig tun. Genauso hat sich herausgestellt, dass man die Dinge dann coroutinesafe machen muss. Das heißt, man hat tatsächlich das Problem gehabt, dass man nicht mehr genau wusste, wann welcher Code ausgeführt wurde. Im Prinzip, diese Theorie principle of the least surprise, was auch bei anderen Programmiersprachen beliebt ist, wurde da sehr stark misshandelt. Deswegen haben da Leute Probleme in ihren Code reingemacht. Ich selber habe es gehabt, wo man stundenlang debuggt, bis man dann verstanden hat, was eigentlich passiert ist. Da war die Komplexität nicht wert.
+
+00:39:17.694 --> 00:39:22.174
+<v SPEAKER_2>Also coroutine ist sozusagen der Begriff für diese Nebenläufigkeit innerhalb von Node.js?
+
+00:39:23.054 --> 00:39:50.114
+<v SPEAKER_1>Nee, das macht Node.js nicht mehr. Aber coroutine sind im Prinzip, kann man sich so vorstellen, dass man den Code hat, der an irgendeiner Stelle irgendwas tut. Dann springt er aus diesem Code raus, macht jetzt dieses andere Ding. Wenn aber parallel jetzt noch eine Verbindung reinkommt, würde noch an einer anderen Stelle Code ausgeführt werden. Aber dann kann auch irgendwann zwischendurch wieder diese Coroutine an dieser Stelle weitergehen. Das wurde aus Not halt rausgeschmissen, weil es zu merkwürdig war.
+
+00:39:50.934 --> 00:39:55.254
+<v SPEAKER_2>Das heißt, es gibt sozusagen nur einen einzigen Programmflow.
+
+00:39:55.274 --> 00:39:55.434
+<v SPEAKER_1>Genau.
+
+00:39:55.454 --> 00:39:58.894
+<v SPEAKER_2>Also eigentlich ist das Programm Single-Threaded, aber immer Non-Blocking.
+
+00:39:58.914 --> 00:40:13.054
+<v SPEAKER_1>Genau. Man kann sich so vorstellen, in Node ist alles parallel, bis auf der Code. Es wird nie mehr als eine Funktion, einen Cursor im Code gleichzeitig ausgeführt. Das heißt, man muss sich nie Gedanken machen, dass wenn man auf irgendein Objekt zugreift, dass noch irgendwas anderes drauf zugreifen kann.
+
+00:40:13.074 --> 00:40:13.394
+<v SPEAKER_2>Verstehe.
+
+00:40:13.414 --> 00:40:15.114
+<v SPEAKER_1>Es läuft immer nur ein einziger Thread.
+
+00:40:15.134 --> 00:40:22.254
+<v SPEAKER_2>Das heißt, damit kann man dann auch so diese ganzen Fragen bezüglich Locking von Speicherbereichen et cetera gleich wieder beiseite legen.
+
+00:40:22.274 --> 00:40:26.954
+<v SPEAKER_1>Genau, das ist halt die Einfachheit, die Node mit sich bringt und was auch vielen Leuten gefällt.
+
+00:40:26.974 --> 00:42:14.174
+<v SPEAKER_2>Ich meine, dieses Event-basierte Programmieren, das ist ja, ich habe jetzt nicht den totalen Überblick, aber wenn ich mich richtig erinnere, kam das eigentlich erst mit User-Interfaces, insbesondere mit Maus-basierten, also GUIs oder Window-based User-Interfaces, kam das eigentlich erst so. Weil man ja da so ein ähnliches Problem hat, nicht wahr? Der Benutzer klickt mal irgendwo, das kann halt jederzeit kommen. Man kann jetzt nicht die ganze Zeit irgendwo warten, User, klick mal, hat er geklickt, hat er geklickt, hat er geklickt, ja, sondern er klickt halt irgendwann mal. Und er kann aber auch genau so, was weiß ich, Fenster verschieben oder andere Dinge können passieren. Das Betriebssystem will sich runterfahren, was weiß ich, Dinge passieren. Und das hat ja schon zu diesem Modell geführt, dass eben auch die Betriebssysteme selber eigentlich schon diese Asynchronizität übersetzt haben als Abstraktion für die Anwendungen, die eben jetzt im User Interface laufen, Events liefern und damit ja sozusagen an der Stelle auch schon so eine gewisse Nebenläufigkeit eingebracht haben. Ist natürlich jetzt nicht dasselbe wie Non-Blocking IO, weil IO war natürlich an der Stelle auch immer noch Blocking. Das kennt man ja auch, nicht? Programme zicken rum, man klickt da irgendwie rum auf seinen Webbrowser und ladet doch mal jetzt diese Webseite. Und dann steht irgendwie alles, aber wahrscheinlich steht es nicht, weil diese Webseite nicht reagiert, sondern weil er wahrscheinlich gerade irgendwie auf seine Festplatte warten muss und irgendwie Dinge nicht passieren. Also ist ja auch nicht so, dass es jetzt nur auf dem Server ein Problem wäre. Generell scheint mir das so, wenn ich mir das angucke, dass so Non-Blocking IO eher ein Auftrag ist für die Software im Allgemeinen und die Betriebssysteme im Besonderen.
+
+00:42:14.194 --> 00:42:50.734
+<v SPEAKER_1>Ja, das kann man auf jeden Fall so sagen. Bei diesen GUIs war das bestimmt am Anfang, der Anfang, wo das nach größeren Masse dann bekannt wurde. Vielleicht was schon zuvor ganz ähnliche Anwendungsbereiche hatte, war eine Kaffeemaschine, die kann ja auch irgendwas tun. Und dann drückt man auf den Knopf, mittlerweile haben die auch alle Schaltkreise. Aber im Prinzip jedes Gerät, mit dem der Benutzer jederzeit interagieren kann, das muss nicht unbedingt ein Programm auf dem Computer sein, das man jetzt mit einer Maus bedient. Und da hat halt JavaScript sich sehr, sehr gut angeboten. Warum das auch Ryan verwendet hat, weil das halt nur dafür geschrieben wurde. Es wurde von Anfang an für den Brause konzeptioniert.
+
+00:42:50.754 --> 00:42:53.654
+<v SPEAKER_2>Von vornherein für genau dieses Eventmodell gedacht, ja.
+
+00:42:53.674 --> 00:43:30.614
+<v SPEAKER_1>Und genau dafür gedacht. Und was die Betriebssysteme nun als ihre Aufgabe verstehen, kommt halt immer darauf an, was für Programme man auf diesem Betriebssystem schreiben möchte. Möchte man Programme schreiben, wo man solchen Benutzer-Input hat, dann wird das auf einmal sehr, sehr wichtig. Oder möchte man einfach bloß so schnell wie möglich irgendeine Datenmenge durchrechnen, dann ist das vielleicht nicht so wichtig. Es kommt immer auf die Problemdomäne an. Non-Blocking wird glaube ich nicht die Lösung für alle Probleme sein. Aber so wie es sich momentan entwickelt, kann es ein sehr, sehr großes Subset aller Probleme fassen. Beziehungsweise dafür sinnvolle Lösungen liefern. Das sind immer die besten, das ist die Frage. Aber zumindest so, dass es einem nicht in den Weg kommt.
+
+00:43:33.254 --> 00:44:32.294
+<v SPEAKER_2>Diese ganze Geschichte mit Effektivität und Nebenläufigkeit scheint aber die gesamte Softwarebranche doch erheblich in Wallungen zu bringen. Ich meine, Apple hat ja mit Lipdispatch jüngst in Meco S10 genau auch so ein Systemframework eingeführt, um genau solche Nebenläufigkeiten zu machen, ohne dass man sich mit Thread Management rumschlagen muss. Ähnlich wie du das jetzt für Node geschildert hast, verwaltet da sozusagen ein Subsystem, sein eigenes Redpool und macht die Dinge dann sozusagen autark, ohne dass man jetzt selber sich darüber informieren muss, wie viele Prozessoren denn jetzt gerade in diesem Betriebssystem bzw. auf dem Computer, wo man drauf läuft, auch wirklich vorhanden sind. Und wo du gerade Coroutinen erwähnt hast, Google hat ja auch vor kurzem so eine Poemiersprache vorgestellt, also eine neue Go, die ja auch so ein ähnliches Konzept anschlägt, allerdings da mit dem Konzept Coroutinen.
+
+00:44:32.314 --> 00:46:34.094
+<v SPEAKER_1>Genau. Ich habe mich mit Go noch nicht tief beschäftigt. Es sieht auf jeden Fall sehr interessant aus und es versucht teilweise die gleichen ähnlichen Probleme zu lösen, die NodeShares versucht zu lösen. Aber prinzipiell ist die Sprache nicht so wichtig, sondern die Ansätze sind wichtig. Es gibt halt diesen Ansatz des Threadings, wo man sagen kann, damit sind alle Probleme momentan lösbar, aber die Komplexität, eine größere Anwendung auf Threading basierend zu schreiben, ist so hoch, dass da sogar sehr gute Programmierer regelmäßig Probleme haben bzw. es einfach von der Entwicklungszeit her Monate dauert, bis man alle Race Conditions erforscht hat und alles, was man nicht vorher bedacht hat, mal aufgetreten ist und man das dann so heil gemacht hat, dass man sagen kann, das läuft. Deswegen wird das Modell momentan so ein bisschen von Leuten versucht zu vermieden, weil es einfach die Komplexität hat. Dann gibt es bei Node Share natürlich das Modell des Non-Blocking IOs. Aber dann gibt es auch noch ein drittes Modell, das zum Beispiel Erlang verfolgt, wo die Sprache an sich eventuell im Hintergrund auch Sweating und Non-Blocking IOs verwendet, aber es für den Programmierer so ausscheinen lässt, dass man ganz viele kleine Prozesse hat, die miteinander kommunizieren und so Message Passing machen. Und da ist natürlich der Vorteil daraus, dass wenn man eine Anwendung hat, die CPU-intensiv ist, dass man dann die Sprache dazu nutzen kann, das automatisch auf mehrere Cores zu verteilen. Das ist ja auch nochmal ein Problem für sich, ein Programm auf mehrere Cores zu verteilen, weil der Freelance mit den Prozessoren, die als einzelne Prozessoren immer schneller werden, ist so langsam ein Ende in sich. Zumindest wird das behauptet. Und deswegen geht der Trend dahin, viele Cores zu machen. Das ist aber ein Problem, womit Node.js nicht versucht, das hauptsächlich zu lösen, beziehungsweise wo Node.js einfach sagt, für jeden Core ein Prozess starten und dann halt diese Prozesse soten miteinander zu verbinden, dass sie kommunizieren können, ob das nun über ein Unix-Domain-Socket ist oder über ein Netzwerk, wie dem auch immer sei. Aber so eine Sprache wie Erlang macht das dann eher auf der Sprachebene, auf der Virtual Machine Ebene, wo man seinen Code irgendwie schreibt, so wie die Sprache ihm das vorschlägt und man dann automatisch diese Cores nutzen kann. Das bei Node.js nicht der Fall.
+
+00:46:34.114 --> 00:47:50.554
+<v SPEAKER_2>Erlang war hier bei CAE auch schon mal ein Thema. Muss ich gleich wieder darauf hinweisen. Chaosradio Express 82, schon eine Weile her, aber immer noch aktuell. Da geht es halt genau um diese Fragen, Erlang und Nebenläufigkeit etc. und diesen Ansatz. Es hat mal wieder erfrischend zu sehen, wie manche Sprachen und Subsysteme eben Dinge dann einfach mal so grundsätzlich anders machen und extrem effizient sind. Übrigens läuft Chaosradio Express, lässt sich ja unter anderem auch per BitTorrent beziehen. Das habe ich ja neulich eingeschaltet. Und das ist tatsächlich ein Erlang-Prozess, der halt da das BitTorrent macht und einfach performancemäßig einfach mal überhaupt gar kein Problem hat. Ja, ich würde gerne nochmal, also es gibt ja noch so einige Sachen, die wir nochmal ein bisschen genauer anschauen müssen, vielleicht nochmal so zu der generellen Struktur von Node, bevor wir nochmal so auf mögliche Anwendungen und vor allem auch so auf die reale Performance, die wir jetzt hier schon mehrfach beschworen haben, zurückzukommen. Woraus besteht denn Node.js? Also du hast ja schon eine Komponente mal nebenbei genannt, dieses lib-eio, aber das wird ja nun nicht alles sein.
+
+00:47:50.574 --> 00:48:07.454
+<v SPEAKER_1>Genau, also es gibt dieses lib-eio, was hat diese POSIX-Filesystem-Calls abstrahiert. Es gibt libf, das ist quasi diese Event-Loop-Geschichte, die dann immer unendlich durchläuft und dann noch viele Sachen abstrahiert. libf, e-v.
+
+00:48:07.474 --> 00:48:11.634
+<v SPEAKER_2>Ach so, e-v. Ah, okay, was sozusagen die Event-Geschichte macht.
+
+00:48:11.654 --> 00:49:19.314
+<v SPEAKER_1>Genau, das ist ein Beides von diesem Autor, Mark Lehmann, und ich glaube, der hat diese Bibliotheken geschrieben, um für Perl diese Abstraktionsverfügung zu stellen. Das heißt, man könnte eigentlich sagen, alles, was mit Node.js machbar ist, lässt sich auch mit Perl machen. Von diesem Mark Lehmann dieses Modul verwendet. Ich glaube, AIO oder sowas bei C-SPAN oder wie auch immer. Das ist eine Komponente, und die sind halt sehr, sehr gute Komponenten. Ich glaube, die Vorgängerversion davon wurde unter anderem verwendet, um Memcache, was vielleicht vielen bekannt ist, zu implementieren. Das sind sehr hochqualitätische oder sehr gute Libraries, um sowas aufzubauen. Und dann ist wahrscheinlich noch die wichtigste Komponente diese JavaScript-Engine von Google, dieses V8, die dahinter steckt. Das hat halt von Anfang an geholfen, weil man nicht versuchen musste, selber JavaScript zu implementieren. Das wäre als Open-Source-Projekt sehr, sehr gewagt. Die meisten anderen Open-Source-Sprachimplementierungen haben da sehr viele Jahre gebraucht, bis sie sehr gut geworden sind oder ähnlich gut. Dieses JavaScript wird halt extrem oder dieses V8 sehr, sehr stark von Google entwickelt mit einem großen Team in Dänemark.
+
+00:49:22.014 --> 00:49:27.414
+<v SPEAKER_2>Weißt du, warum die Wahl auf V84 nicht die einzige Open-Source-Implementierung von JavaScript?
+
+00:49:28.914 --> 00:49:58.274
+<v SPEAKER_1>Ich glaube, die Wahl ist hier darauf, weil das V8 von Anfang an so konzeptioniert war, dass es sich leicht im Betten lässt. Es gibt halt von Mozilla noch Spider Monkey und dann gibt es noch Rhino, was so eine Java-Geschichte ist. Und die sind alle mehr oder weniger auch dafür brauchbar. Aber die sind zumindest Spider Monkey sehr stark auf den Browser geeist gewesen und vom Embedding her schwieriger. Und dieses V8 stellt halt speziell eine Schnittstelle, sogar ein bisschen Dokumentation zur Verfügung.
+
+00:49:58.294 --> 00:49:59.954
+<v SPEAKER_2>Sogar ein bisschen Dokumentation?
+
+00:50:00.274 --> 00:50:07.934
+<v SPEAKER_1>Ja, in Anführungsstrichen muss man aus dem Code generieren, sonst ist es nicht die Welt. Aber es ist halt wirklich für diesen Anwendungsfall gedacht, dass man es irgendwo anders einbaut.
+
+00:50:07.954 --> 00:50:55.514
+<v SPEAKER_2>Verstehe, das heißt, im Prinzip ist es so, mit V8 schafft man das eigentliche Rantam-Environment für das JavaScript und hat automatisch quasi alle Features, die eben V8 bietet. Das ist ja so wenig nicht. Definitiv eine der moderneren JavaScript-Implementierungen. Und wahrscheinlich auch immer mal wieder die schnellste. Es gibt ja ein sehr offenes Rennen derzeit auf dem Markt. Da lässt sich das glaube ich im Einzelnen immer nicht so ganz beantworten. Auf jeden Fall performt das alles ganz ordentlich. Und darunter ist quasi so ein C-basierter Unterbau, der im Wesentlichen die Aufgabe hat, das Betriebssystem von diesem V8 fernzuhalten. Kann man das irgendwie so sagen? Also zu verhindern, es sozusagen, also dieses Blocking zu verhindern.
+
+00:50:56.614 --> 00:52:38.494
+<v SPEAKER_1>Eigentlich ist es genau andersrum, nämlich das Betriebssystem in das V8 reinzubringen, dass man auf Befehle des Betriebssystems zugreifen kann, die man sonst in JavaScript nicht hat. JavaScript ist ja als Sprache dadurch einzigartig, dass es eigentlich eine der kleinsten Standard-Libraries überhaupt hat. Das kann man eigentlich fast nicht so nennen. Die ist auch teilweise kaputt. Da hat man so ein bisschen Date-Objekt, noch ein paar Mathe-Funktionen, aber das war es dann im Prinzip, noch reguläre Ausdrücke. Das Node.js stellt dann für dieses JavaScript ein paar Objekte parat, über die man dann Methoden aufrufen kann, die das Betriebssystem ansprechen. Das tut dann natürlich das Betriebssystem insofern fernhalten, dass man versucht, dieses Blocking-IO entweder zu vermeiden komplett oder zumindest so wegzuabstrahlen, dass es einen nicht mehr beschäftigen muss als Entwickler. Aber im Prinzip ist das Node.js dafür verantwortlich, diesem V8, diesem JavaScript beizubringen, wie es mit einem Netzwerk, wie es mit einer Festplatte reden kann. Und die Geschwindigkeit ist vielleicht auch noch ein wichtiger Grund, warum V8 von Ryan Dahl gewählt wurde. Soweit ich weiß, hat er zuvor an einem Webserver für Ruby gearbeitet. LibApp hat er den genannt. Und er hat dann immer weiter optimiert, hat immer mehr Sachen in C geschrieben. Und irgendwann ist er dann zu der Überzeugung gekommen, der Grund, warum es nicht schneller geht, ist tatsächlich Ruby als Sprache. Und dass keine der momentanen Implementierungen die Geschwindigkeit bietet, die man brauchen würde, um zumindest Teil der Aufgaben, die man mit C, C++ noch machen würde oder mit Java, auch mit Ruby zu machen. Und hat dann halt gesehen, dass V8 wirklich sehr stark auf Geschwindigkeit ausgelegt ist. Und hat deswegen die Idee, die er da in Ruby verfolgt hat, damit JavaScript weitergemacht.
+
+00:52:38.514 --> 00:52:54.334
+<v SPEAKER_2>Und das ist es aber eigentlich auch schon. Man hat V8 und darunter hat man diesen Unterbau, der sich halt darum kümmert, so ein Thread-Pooling zu machen, um sozusagen so viele Threads vom Betriebssystem anzufordern, wie man braucht, um diese Asynchronizität sicherzustellen. Aber geht das eigentlich immer?
+
+00:52:54.354 --> 00:53:19.694
+<v SPEAKER_1>Um das nochmal richtig zu stellen, die Threadings werden wirklich bloß für die Festplatte benutzt. Und für Solar ist es in Zukunft auch nicht mehr. Alles andere, alles was mit Netzwerk zu tun hat, und das ist in der Regel das Bottleneck, das ist in der Regel das, wo man sehr, sehr viele Verbindungen hat. Ich meine, es ist nicht schlau, bei 10.000 Clients, für jeden Clienten irgendwas mit der Festplatte auszuhandeln. Das wird nicht skalieren, egal wie man die Festplatte anspricht. Und das Netzwerk läuft tatsächlich nicht über Threading. Das läuft in einem Thread.
+
+00:53:21.474 --> 00:54:16.234
+<v SPEAKER_2>TCP-IP, das war ja schon immer so, dass man da eigentlich Non-Blocking-Eigenschaften hat. Da gab es zwar auch diverse Blocking-Dinge, die über die Zeit dann aber auch rausgefallen sind. Weil, dass eine Festplatte langsam ist, das mag vielleicht diskutierbar sein, aber dass ein Netzwerkzugriff ewig dauern kann, das hat sich halt schon sehr früh herausgestellt. Und deswegen ist da, glaube ich, nicht so das Problem. Okay, aber auch für... Ich meine, was wäre jetzt, wenn das Programm, keine Ahnung, 100 Dateien lesen will? Und sozusagen, die auch alle, und zwar parallel, die sozusagen alle anstößt, ist es dann nicht auch ein bisschen ineffizient, sozusagen gleichzeitig zu suchen und reichen dann sozusagen dieses Rätts auch aus. Es gibt ja auch Limitierungen in so einem Betriebssystem, wo man sagt, du darfst nicht mehr als so und so viel Rätts aufmachen pro Prozess.
+
+00:54:16.634 --> 00:54:20.594
+<v SPEAKER_1>Ja, natürlich, also es wird auf jeden Fall dann irgendwann zum Problem werden.
+
+00:54:20.614 --> 00:54:22.394
+<v SPEAKER_2>Was heißt denn das, dass es dann doch irgendwann blockt?
+
+00:54:22.414 --> 00:55:40.294
+<v SPEAKER_1>Äh, nee, blocken wird es nie. Aber es wird einfach eine Warteschlange geben von Sachen, die noch nicht wirklich parallel laufen. Wo man dann zwar 100 Dateien gleichzeitig parallel laufen lesen möchte, aber man dann vielleicht bloß 10 oder so tatsächlich parallel liest, was natürlich auch falsch ist, weil der Festblatt im Kopf macht es nacheinander, aber zumindest von geführten Corebacks, die man gleichzeitig kriegt, dass dieses Gefühl da ist. Ähm, letztendlich ist das aber nicht das Problem, weil Node versucht nicht, die Festplatten anders aufzubauen oder die Festplattenproblematik zu lösen, sondern die Hauptproblematik und der Schwerpunkt liegt auf dem Netzwerk Zugriff. Und wenn man eine Web-Anwendung oder irgendeine Web-Anwendung baut, wo dann eine sehr, sehr große Anzahl von gleichzeitig kleinen auf die Festplatte zugreift, braucht man sowieso andere Strategien. Dann möchte man wirklich kontrollieren, wie der Lesekopf über die Festplatte kleidet, wo er als nächstes hinspringt, damit man so wenig wie möglich Siegs hat. Und das ist dann schon wieder eine andere Problematik, die Node nicht unbedingt versucht zu lösen. Wofür sich Node auch eignen kann, wenn man weiß, was man tut. Aber hauptsächlich versucht Node, die Netzwerk-Thematik zu lösen und den Fallzugriff so angenehm zu gestalten, dass er auch bis zu einer gewissen Parallelität sehr performant läuft. Und irgendwann wird dann aber die Festplatte das Bottleneck, nicht der Ansatz von Node. Das wird sich dann ergeben.
+
+00:55:40.314 --> 00:56:02.574
+<v SPEAKER_2>Was ja bei dynamischen Sprachen dann auch mal schönes Bottleneck sein kann, denke ich mir zumindest, ist diese Garbage-Collection. Das fällt doch hier auch noch mit rein. Speicher, die freigegeben wurden, Variablen, die nicht mehr benutzt werden, die man nicht explizit freigibt, sondern wo man sagt, ja, hat sein Wert gehabt und wird jetzt nicht mehr referenziert, fällt irgendwann weg, da greift dann diese Garbage-Collection. Ist das irgendwie ein Problem bei Node?
+
+00:56:03.074 --> 00:58:26.494
+<v SPEAKER_1>Das ist definitiv eins der aktuellen Probleme. V8 implementiert so einen Stop the World Garbage-Collector. Das heißt, in dem Moment, wo V8 sich entscheidet, Garbage-Collection zu machen, hält er das ganze Programm an, guckt durch seinen Heap durch, wo Objekte, Variablen, was auch immer liegen, die nicht mehr verwendet werden und nicht mehr darauf zugegriffen werden kann, löscht die raus und dann geht das Programm weiter. Und das kann in einem sehr stark belasteten Node-Share-Surfer auch zum Problem werden, weil dann manchmal V8 sogar auf Ideen kommt und eine Garbage-Collection macht, die über 100 Millisekunden dauert. Was natürlich absolut nicht akzeptabel ist für viele Anwendungen. Da muss man natürlich sehen, dass V8 hauptsächlich für den Pause entwickelt ist, wo die Garbage-Collection anders stattfinden kann und anders problematisch ist es, 100 Millisekunden Pause zu machen. Auf der anderen Seite sind die V8-Leute auch sehr drauf verpischt, diese Garbage-Collection nichtdestotrot sehr effizient zu machen. Was V8 auf jeden Fall kann, ist so eine teilweise Garbage-Collection, das heißt, dass es nur so ein bisschen Garbage-Collected und dann aufhört. Das heißt, dann macht es halt immer wieder ganz viele kleine, aber wenn jetzt so ein, zwei Millisekunden jedes Mal sind, in größeren Abständen ist das für viele Programme noch sehr akzeptabel. Und das ist auch was meistens der Fall ist. Das Node.js-Team arbeitet halt auch mit einigen der Entwicklern der V8, zumindest nicht zusammen, aber man hört den Node.js-Leuten zu. Und man versucht auch, wenn möglich, die Probleme, die Node.js hat, zu lösen, wenn sie sich auch irgendwie mit dem Browser überlappen. Und eine Sache, die jetzt auch gerade auf der Mailinglist war, dass viele dieser langen Garbage-Collections eigentlich nur deshalb stattfinden, weil eigentlich gar nicht so viel zu tun ist, aber trotzdem alles durchsucht werden muss. Und in diesem Fall könnte halt V8 noch eine Optimierung machen, dass wenn das merkt, 90% der Objekte, über die ich gerade drüber gehe, müssen noch nicht collectet werden, höre ich einfach auf. Und das nächste Mal, wenn ich anfange, mache ich das erst ab mit einem gewissen Threshold. Ist auf jeden Fall ein Problem und es wird dran gearbeitet. Also die V8 Leute sind auch offen dafür, wenn man Patches liefert für die V8. Die werden natürlich refued und die werden nicht alles reinnehmen. Vor allem nicht, wenn es sich nicht mit dem Browser irgendwie übereinstimmen lässt. Aber die Hoffnung, also es sieht momentan eigentlich nicht schlecht aus, dass die meisten dieser Probleme gelöst werden kann, sodass zumindest für die meisten Anwendungsklassen die Garbage Collection nicht zum Problem wird. Sie kann aber definitiv ein Problem werden. Und es wird definitiv auch immer mal ein Anwendungsfall geben, wo es vielleicht ein Dealbreaker sein wird.
+
+00:58:26.514 --> 00:58:55.814
+<v SPEAKER_2>Ja, so Realtime Garbage Collection, das ist ja auch noch so ein Bereich, wo viel geforscht wird, durchaus absehbar, dass das vielleicht auch mal in solche Environments reinkommt. Hat man denn so den Eindruck, dass bei Google Node.js schon irgendeine Rolle spielt? Dass da so, was weiß ich, dass da irgendwelche Glocken geklingelt haben, als das Projekt gestartet ist und die sich gedacht haben, es lohnt sich, dafür auch mal ein bisschen Arbeit zu leisten, oder ist das unklar?
+
+00:58:56.214 --> 00:59:48.514
+<v SPEAKER_1>Ja, also ich denke, dass es bei Google auf jeden Fall angekommen ist, dass es dieses Node.js gibt. Die einen zwei Entwickler sind auch ab und zu auf der Node.js Mailing-Liste, beantworten Fragen zu V8, zu der Garbage Collection. Das heißt, die haben schon Interesse an dem Projekt. Aber Google an sich, glaube ich, als Firma hat noch nicht von der Policy her irgendwelche Entscheidungen getroffen, die dieses Node-Projekt jetzt fördern würden. Natürlich könnte man von Google jetzt fordern, dass eine ihrer Behauptungen eher ist, dass sie das Web schneller machen wollen. Und da tun sie auch sehr viel dafür. Man kann natürlich sagen, Node ist so eine Technologie, die das leisten kann. Das heißt, es wäre nicht undenkbar, dass Google sich irgendwann mal entscheidet und sagt, so ein Projekt zu fördern, macht definitiv Sinn. Aber momentan ist eher der Stand so, die Entwickler von V8 finden Node.js interessant, die hören zu. Wenn wir einen Bug-Report an die schicken, gucken sie sich das auch ernsthaft an, weil sie halt wissen, dass Node.js...
+
+00:59:48.534 --> 00:59:49.734
+<v SPEAKER_2>Das kann sie auch betreffen, ja.
+
+00:59:49.834 --> 01:00:04.974
+<v SPEAKER_1>Ja, und Node.js ist halt für sie auch sehr interessant, weil da ihre Engine mehr bis aufs letzte ausgetestet wird, als in vielen Pouserszenarien. Weil da halt jetzt wirklich ganz andere Klassen von Programmen, die sehr, sehr viel mehr...
+
+01:00:04.994 --> 01:00:06.474
+<v SPEAKER_2>Stimmt, da rennt immer was, ne?
+
+01:00:06.494 --> 01:00:48.774
+<v SPEAKER_1>Genau, da rennt immer was und wird halt die Engine schon an ihr Limit gepusht mit Node. Deswegen ist es natürlich für die V8-Leute auch ein interessantes Anwendungsbereich, ein interessanter Anwendungsbereich, wo die hinschauen. Neben der garbage collection gibt es von V8 noch einen sehr, sehr großen Showstopper für manche Problemfälle. Und zwar ist die V8-Engine auf x64 momentan so ausgelegt, dass sie maximal einen Gigabyte an Heap haben kann. Das heißt, sobald man mehr als einen Gigabyte an JavaScript-Objekten allokieren möchte, sagt die Tschüss, das war's. Mein Programm stürzt komplett ab. Da haben wir aber jetzt auf der Chairs Conf mit einem der Entwickler geredet, das ist ein Problem, das sie gerne lösen würden. Sie sind sich noch nicht ganz sicher, wie schwierig das ist.
+
+01:00:48.794 --> 01:00:52.214
+<v SPEAKER_2>Aber was ist denn da überhaupt der Grund dafür?
+
+01:00:52.234 --> 01:01:11.094
+<v SPEAKER_1>Der Grund dafür, soweit ich das verstanden habe, ist, dass in ihrer Verwaltung, wie sie die Objekte allokieren, irgendwo nicht genügend Bits gesetzt sind, um einen größeren Bereich zu machen. Und das wiederum hat wahrscheinlich irgendwo Performance-Gründe gehabt. Bei V8 ist Performance nicht nur wichtig, sondern es ist eigentlich momentan alles, was sie tun.
+
+01:01:11.234 --> 01:01:13.214
+<v SPEAKER_2>1 GB should be enough for everybody, ja?
+
+01:01:13.234 --> 01:01:23.054
+<v SPEAKER_1>Naja, also wenn in den Browser ein Prozess über 1 GB an JavaScript-Objekten allokiert, dann möchte ich den eigentlich auch getötet sehen.
+
+01:01:23.074 --> 01:01:30.734
+<v SPEAKER_2>Das ist alles relativ, ich meine, vor ein paar Jahren waren es noch andere Größen, von denen wir dachten, dass sie irgendwie nie zur Stadt kommen könnten.
+
+01:01:30.934 --> 01:02:02.294
+<v SPEAKER_1>Genau, aber das ist auf jeden Fall nicht akzeptabel, dass alle Programme mit 1 GB Speicher laufen sollten. Aber auf der anderen Seite, man kann das Problem jetzt schon umgehen auf zwei Arten. Man kann mehrere Prozesse von Node statten, die dann miteinander kommunizieren. Wenn man sowieso acht Cores hat, möchte man auch acht Prozesse, falls man die ausnutzen möchte. Und anders kann man auch einfach Buffer in Node allokieren. Das sind quasi reine Memory-Bereiche aus C, die man wie ein Array anspricht. Jedes Element ist halt ein Byte und die fallen auch nicht in dieses 1 GB Limit rein.
+
+01:02:02.314 --> 01:02:14.394
+<v SPEAKER_2>Aber das ist natürlich schon so ein bisschen gehackt. Man will das ja auch jetzt nicht unbedingt so machen. Wie ist denn so die Code-Qualität von diesem V8?
+
+01:02:14.414 --> 01:03:48.534
+<v SPEAKER_1>Da bin ich auf jeden Fall kein Experte, um das einschätzen zu können. Von den Leuten, die mehr Experte sind als ich, die sich das angeguckt haben, die meinen, dass es von der Code-Qualität natürlich sehr hoch ist, aber auch eine sehr verrückte Welt. So eine JavaScript-Engine, darüber haben wir noch gar nicht gesprochen, aber die im Prinzip den JavaScript-Code nimmt und den Maschinencode umwandelt, das ist einfach mal aus Geek-Sicht so hardcore, wie man eigentlich nur programmieren kann. Viel krassere Projekte fahren mir spontan nicht ein. Das heißt, die Komplexität da drin muss sehr hoch sein. Alleine für Strings gibt es, glaube ich, sechs verschiedene Implementierungen, wie ein String dort im Speicher abgebildet werden kann, je nachdem, wie lang der ist, wie oft er gerade zusammengesetzt wird. Das auf jeden Fall schwingt eine sehr, sehr hohe Komplexität mit. Was auf jeden Fall für die Qualität spricht, ist, dass die Entwicklung halbwegs offen stattfindet. Man kann da sehr gut verfolgen, was die auf der Mailing-List diskutieren. Da läuft sehr viel Kommunikation öffentlich ab. Jeder Patch, der da reingeht, hat, so wie ich das mitgekriegt habe, mindestens einen Refure. Das heißt, da gibt es eine URL, wo man den Patch refuehen kann. Dann tun ein, zwei Entwickler, die auch in dem V8-Team sind, kommentieren, sagen, es sieht gut aus, oder machen wir noch das. Da gehen auf jeden Fall Best Practices mit ein bei der Entwicklung, soweit man das von außen beobachten kann. Ich denke, das ist von den bisherigen JavaScript-Engines ein sehr, sehr professionell entwickelter Engine. Ich mache mir keine Sorgen, dass die Qualität von dem V8-Code nicht stimmt. Node hat garantiert eine simplere Codebase, aber die von V8 ist definitiv konsistent. Die Leute wissen auf jeden Fall, was sie tun. Das sind die besten Entwickler.
+
+01:03:48.554 --> 01:03:56.994
+<v SPEAKER_2>Aber Dokumentation, hast du schon angedeutet, könnte ein bisschen, ich meine, Dokumentation kann immer besser sein. Das ist auch schon so dahergesagt.
+
+01:03:57.014 --> 01:04:25.154
+<v SPEAKER_1>Genau, das ist jetzt auch kein End-User-Produkt, was Google im Prinzip irgendwo schippt und dann ihre Hilfscenter reinbaut und sagt, wenn du eine Frage hast, schreib mir. Die haben halt so grob die Methodensignaturen dokumentiert, was schonmal gut ist. Die Begleitexte dafür sind meistens kurz gehalten. Und man findet auch hier und da im Code mal noch mal Kommentare. Aber es ist jetzt nicht so, dass es ein Buch gibt, V8 in C++-Anwendungen embedden.
+
+01:04:25.174 --> 01:04:26.434
+<v SPEAKER_2>V8 for Dummies.
+
+01:04:26.454 --> 01:04:33.894
+<v SPEAKER_1>V8 for Dummies. Für ein Open Source Projekt ist das eigentlich schon ganz gut gemacht. Damit lässt sich leben.
+
+01:04:34.554 --> 01:05:54.874
+<v SPEAKER_2>So, jetzt wollte ich aber noch mal auf das eigentliche Versprechen von Node.js kommen und mal ein bisschen herausfinden, wie man denn das, also diese Performance, die du angesprochen hast, an welcher Stelle sich denn das jetzt eigentlich äußert, beziehungsweise wie sich das äußert. Ich erinnere mich noch, als ich hier mit dem Malte die Sendung zu JavaScript gemacht habe, bzw. in Hamburg, habe ich das mit ihm gemacht, hat er, war das so? Ich glaube, er hat zum Beispiel genannt, dass er damit mal so einen URL-Shortener sozusagen mal schnell implementiert hat und berichtete einfach von absurder Performance sozusagen, was er in der Lage war, gleichzeitig zu machen, weil eben auch solche Sachen wie DNS-Zugriffe eben auch asynchron sind, was so der klassische Roadblock ist, wo man immer wieder reinläuft. Also man gibt irgendwie eine URL in seinem Browser ein, und dann hat man erst mal so eine Gedenksekunde, einfach um überhaupt erst mal die Adresse zu bekommen, die man danach kontaktiert. Das heißt, da ist noch überhaupt kein Web-Server involviert und schon muss man warten. Das ist ja so ein ganz typisches Ding für dieses Warten im Netz. Was ist jetzt sozusagen die reale Performance? Was ist jetzt sozusagen, inwiefern Delivered Node.js jetzt da an dieses Performanceversprechen? Kann man das irgendwie mal greifbar machen?
+
+01:05:54.894 --> 01:06:49.554
+<v SPEAKER_1>Ja, also ich kann ein paar Zahlen nennen, aber unter dem Vorbehalt, dass Benchmarks sehr schwierig sind. Man muss immer genau gucken, was vergleicht man miteinander. Und wenn man nicht genau die gleichen Dinge miteinander vergleicht, was bei komplexen Systemen sehr schwierig ist, sind Benchmarks mal mehr oder weniger aussagekräftig. Eigentlich sind die mehr dazu tauglich, das eigene Projekt zu schauen, wie sich da die Performance entwickelt über einem Zeitraum. Aber was vielleicht ein Beispiel ist, was man sich relativ gut vorstellen kann, ist, Rindahl hat mal einen Benchmark gemacht, wo er Node.js gegen Engine X, was auch ein sehr, sehr schneller Webserver ist, gebenchmarkt hat. Und da war Node.js tatsächlich in der Lage, ca. 5-10% schneller an den statischen Buffer, das war einfach bloß eine Datei, die aber zuvor in Memory gecached war, schneller raus zu pushen auf eine Socket mit 200, 300 concurrent clients, die gleichzeitig darauf zugegriffen haben, als dieses Engine X im Vergleich.
+
+01:06:49.574 --> 01:06:51.594
+<v SPEAKER_2>Engine X ist in C geschrieben, oder?
+
+01:06:51.614 --> 01:07:26.354
+<v SPEAKER_1>Engine X ist komplett in C geschrieben. Und das heißt, für den Anwendungsfall einfach einen feststehenden Memory-Bereich schnell in das Socket rein zu pushen, ist momentan notverdammt schnell. Da kann man wirklich sagen, da kann man so schnell wie mit C, C++, teilweise Netzwerkverbindungen, den gleichen Inhalt rausgeben. Auch bei Hello World, wo man, was weiß ich, Hello World zurückgibt, ist es sehr schnell. Also zum Beispiel auf meinem lokalen Computer, das ist überhaupt kein Problem, was weiß ich, 8000, 9000 Requests pro Sekunde auszuführen mit Hello World.
+
+01:07:26.374 --> 01:07:28.954
+<v SPEAKER_2>Wenn du das jetzt mit PHP machen würdest, dasselbe?
+
+01:07:28.974 --> 01:07:29.174
+<v SPEAKER_1>Genau.
+
+01:07:29.194 --> 01:07:30.374
+<v SPEAKER_2>Wollen wir mal so einen Vergleich zu haben?
+
+01:07:32.574 --> 01:08:08.194
+<v SPEAKER_1>Vom Vergleich her, vom Gefühl her würde ich sagen, dass wir mit PHP wahrscheinlich eher so auf 5000, 6000 kommen auf der gleichen Maschine. Ist aber bei PHP jetzt auch wieder eine schwierige Aussage, weil da kann man ja auch noch mit Upcode-Cachern und allen möglichen Tricks arbeiten, um das auch noch besser hinzubekommen. Wo ich tatsächlich mal ein paar Vergleiche geschrieben habe von der Sprache war, wie oft kann man auf ein Objekt Property zugreifen, wie oft kann man auf einem Array einen Wert setzen, einen Key. Das habe ich mal so ein bisschen gebenchmarkt zwischen PHP und V8 in dem Fall. Da konnte man sagen, dass man...
+
+01:08:08.214 --> 01:08:13.434
+<v SPEAKER_2>Also jetzt sozusagen nur innerhalb des Programms selber, ohne dass jetzt IO stattfindet.
+
+01:08:14.634 --> 01:08:39.634
+<v SPEAKER_1>Also von der Sprache her hat V8 geschafft, 172 MHz an Zugriffen auf ein Objekt Property hinzubekommen. Das heißt, 172 Millionen Mal pro Sekunde. Und da hat PHP zum Beispiel plus 8 geschafft. Das heißt, da sind teilweise wirklich großen Ordnungen im Spiel. Das kann man vielleicht auch mit... Ich weiß nicht, ob ich eine Obcode-Cache anhalte bei PHP, aber es wird auf jeden Fall schneller sein mit V8.
+
+01:08:40.094 --> 01:08:44.174
+<v SPEAKER_2>Das ist aber jetzt sozusagen eher eine Aussage über die Performance von V8 als solche.
+
+01:08:44.194 --> 01:08:55.174
+<v SPEAKER_1>Genau. Und an sich, was halt bei PHP immer das Limit sein wird, ist, dass wenn man die Konkurrenz sehr hochgeht und man tatsächlich was tut außer Hello World. Bei Hello World ist die Konkurrenz hier noch meistens kein Problem.
+
+01:08:55.194 --> 01:09:01.054
+<v SPEAKER_2>Also mit Hello World muss man noch mal sagen, du meinst einfach nur das Ausgeben des Strings. Man macht einen Request und dann kommt Hello World in den Web-Browse und fertig.
+
+01:09:01.214 --> 01:09:38.774
+<v SPEAKER_1>Dafür ist auch PHP teilweise schnell. Aber sobald man jetzt einen Datenbank-Query oder irgendwas tatsächlich Echtes machen würde, dann hat man in PHP das Problem, dass PHP eigentlich so funktioniert, dass man da immer mehrere PHP-Prozesse hat, sei das jetzt über Fast-DGI oder Threads in Mod-Phrp. Und wenn da jeder einzelne Request 100 Millisegunden braucht und man plus 10 von diesen Workern oder was auch immer hat, ist man sofort bei einer Concurrency, wo man plus 10 Request pro Sekunde schafft. Und deswegen, wenn ich jetzt Web-Anwendungen mit Kikphp oder sowas geschrieben habe, bin ich dann sehr, sehr schnell durch genau dieses Problem auf Performance gekommen, auf meinem lokalen Computer von 30 Request pro Sekunde für einfache Anwendungen.
+
+01:09:39.634 --> 01:09:42.014
+<v SPEAKER_2>Request von was, gib ein Beispiel.
+
+01:09:42.034 --> 01:09:46.974
+<v SPEAKER_1>Was weiß ich, von einem Blog, einen Layout rendern und dann die 10 neuesten Blog-Posts anzeigen.
+
+01:09:47.954 --> 01:09:49.174
+<v SPEAKER_2>Ja, die Hauptseite sozusagen.
+
+01:09:49.194 --> 01:11:29.094
+<v SPEAKER_1>Genau, und das Problem war halt, dass man da dieses Framework hat, und dieses Framework macht halt Haufen Mist, und dann hat man halt irgendwann so eine Summe an Dingen, die getan werden mit den Queries, die dann an 100 Millisegunden ranreicht, und dann ist automatisch PAP mit 10 Worker Processes bloß noch bei 10 Request pro Sekunde oder was auch immer dabei. Und bei diesen Node Chairs kann man zum Beispiel ein ganz einfaches Gedankenexperiment machen, dass man da bei jedem Request eine Sekunde Delay macht, bevor man den beantwortet. Das heißt, man macht sozusagen sleep oder bei JavaScript setTimeout 1000 und dann beantwortet man den Request erst nach einer Sekunde. Wenn man das gleiche bei PAP tut, dann hat man natürlich ein Request pro Sekunde, beziehungsweise wenn man 10 Worker hat, hat man noch 10. Und bei Node Chairs leidet die Konkurrenz hier fast überhaupt nicht darunter. Node Chairs kann prima damit umgehen, dass Tausende von diesen Verbindungen zwar offen sind, aber gerade nichts tun. Und wenn dann die Nachricht zurückkommt, wird halt die Verbindung abgearbeitet. Und das ist halt zum Beispiel für so einen Anwendungsfall sehr interessant, wie einen Ajax-Chat zu schreiben, wo man halt verschiedene Methoden einsetzt, um mit dem Client und Surfer zu kommunizieren. Aber eine ganz häufige ist dieses Ajax-Long-Polling. Das heißt, der Browser sendet einen Request an den Surfer und wartet eigentlich so lange auf den Surfer, bis der eine neue Nachricht hat. Das würde im Chat heißen, jemand anders hat geschrieben. Und so lange wird halt die Verbindung aufrecht erhalten. Und dann antwortet der Surfer wieder an den Client zurück. Das geht mit Node wunderbar, wird auch genauso skalieren wie Hello World, kann man sich fast vorstellen. Also wird nur sehr, sehr langsam in der Performance von diesem Hello World dekraten. Und jede andere Plattform, wie PRP, die halt auf solche Worker setzt, auf mehrere Threads, wird das sehr, sehr schnell dekraten. Und da geht es dann rapide den Berg runter.
+
+01:11:29.114 --> 01:12:00.514
+<v SPEAKER_2>Dieses Long-Polling ist ja deshalb erforderlich, weil der Server ja gar nicht den Client ansprechen kann. Genau. Es ist immer Client-Server, das heißt der Client muss immer der erste sein. Und man kann nicht vom Server zum Client gehen und da eine neue Verbindung aufmachen. Das heißt, dieses Long-Polling ist sozusagen, der Client sagt schon mal, okay, hier, ich komme schon mal zu dir, auch wenn noch gar nichts zu tun ist. Aber für den Fall, dass was zu tun ist, kannst du das dann ja sozusagen dann einfach mal beantworten. Das ist dann sozusagen das Einfallstor, was aufgemacht wird.
+
+01:12:01.194 --> 01:12:58.454
+<v SPEAKER_1>Und das ist halt bei vielen Pausen momentan noch der einzige Weg, überhaupt vom Surfer mit dem Client Kontakt aufzunehmen. Und muss deswegen eigentlich auch immer mitimplementiert sein. Noch eine ganz andere Geschichte sind Websockets. Das ist so ein neuer Standard, der quasi sagt, der Client macht eine Verbindung mit dem Surfer auf und hält die dann aufrecht. Und dann können die wirklich wie mit einer TCP-Verbindung hin und her Datenpakete schicken. Da ist ein Notarier natürlich auch wieder sehr gut, weil die ganzen anderen Plattformen eigentlich nur darauf passieren, dass so ein HTTP-Request reinkommt. Der kommt rein, dann kommt eine Antwort zurück und dann passiert nichts zwischendrin. Und bei dem Node.js wird das halt genauso. Über den gleichen HTTP-Surfer gibt es halt nur ein Event-Upgrade. Das heißt, die Verbindung ist jetzt ein Duplex TCP-Stream. Und dann kann man da halt reinschreiben bzw. vom kleinen Datenempfang. Das ist mit dem Node.js überhaupt kein Problem, da auch 1000, 10.000 solcher Verbindungen gleichzeitig offen zu haben, über die kommuniziert wird. Und das würde man mit PHP wahrscheinlich gar nicht hinkriegen momentan. Und mit vielen anderen Plattformen auch nicht.
+
+01:12:59.314 --> 01:13:11.674
+<v SPEAKER_2>Diese Web-Suggets finden sozusagen gerade Einzug in die aktuelle Browser-Welt, was weiß ich hier, Firefox, VIA und Google Chrome, Safari glaube ich. Seit fünf, ja, Opera.
+
+01:13:11.694 --> 01:13:42.574
+<v SPEAKER_1>Genau, und da ist eigentlich momentan Node.js der Vorredner, das auf dem Surfer zu implementieren. Da gibt es auch andere, die das implementieren. Man kann das auch super mit Java oder was auch immer tun. Aber da ist gerade die ganze Community, die sich für diesen Bereich interessiert, Echtzeitwebanwendungen. Die schauen eigentlich alle auf Node.js, weil das wirklich diese neuen Technologien sehr einfach zur Verfügung stellt. Websocket sind quasi schon im Node.js-Core mit drin. Zumindest ist der Grundteil dieser Verbindung zu Upgrade.
+
+01:13:43.074 --> 01:14:08.794
+<v SPEAKER_2>Sehe ich das richtig, dass man sozusagen vor allem dann mal Node.js erwägen sollte, wenn man so eine Anwendung hat, wo sehr viele Clients, aber relativ wenig Serverinfrastruktur involviert ist. Wo man sozusagen, was weiß ich, ich will ein Kunstprojekt machen und ich möchte, dass irgendwie 30.000 Leute gleichzeitig Dinge tun oder was weiß ich, irgendwelche Sachen austauschen. So ein Chat ist ja so eigentlich ein relativ einfaches Modell. Ah ja, richtig, Spiele haben ich noch gar nicht drüber nachgedacht.
+
+01:14:09.234 --> 01:14:25.614
+<v SPEAKER_1>Wenn man sieht, was gerade bei Singer und Facebook für Geld gemacht wird mit Online-Spielen, dann ist natürlich Node.js für die nächste Welle von Online-Spielen, wo Echtzeit-Elemente mit reinkommen soll, wo man wirklich mal so einen Shooter oder sowas im Browser spielt. Da gibt es ja auch mit OpenGL die ersten Ansätze, sowas zu machen.
+
+01:14:30.974 --> 01:14:37.834
+<v SPEAKER_2>Genau, weil da zählt sowohl das Skalieren als auch eben die Performance beziehungsweise die niedrige Latenz bei dem ganzen Kram.
+
+01:14:42.794 --> 01:15:20.214
+<v SPEAKER_1>Ja, dafür ist eigentlich momentan, würde ich sagen, wenn man solche Anwendungsbereiche hat, wo man entweder sehr viele Dinge parallel tun möchte oder mit sehr vielen gleichzeitigen Connections umgehen möchte, ist Node wirklich einer der einfachsten Technologien, mit der man arbeiten kann und von der Performance her immer sehr, sehr nah dran, als wenn man das fast in C machen würde. Man hat natürlich mit dem V8, ist man langsamer als mit C und C++, aber ganz oft der Teil, der wirklich performant sein muss, ist eigentlich bloß die Interaktion mit den Netzwerksystemcalls und die macht Node shares und die macht sehr performant, das ist noch ein ganz dünner Layer. Und da muss man schon sehr viel JavaScript dann noch oben drauf ausführen, damit man diese Performance erstmal wieder ruiniert hat.
+
+01:15:21.054 --> 01:16:32.974
+<v SPEAKER_2>Jetzt hast du ja vorhin schon angedeutet, und das kam auch in dem JavaScript-Podcast schon mal zur Sprache, JavaScript ist ja so ein bisschen so das, so ein bisschen lange Zeit das schwarze Schaf gewesen, so ein bisschen vernachlässigt und während es halt jetzt für Environments wie Ruby, für PHP etc. ein, ja, unendliches Füllhorn an Bibliotheken und Libraries für jeden möglichen Scheiß gibt, scheint das ja bei JavaScript noch relativ gering ausgeprägt zu sein. Du hast ja vorhin gesagt, die Sprache kommt ja an sich mit extrem wenig daher, was ja auch klar ist, weil das Minimum sozusagen, was im Web Browser implementiert werden muss, um überhaupt erstmal JavaScript zu sein, das ist eben ganz wenig. Aber man will ja dann doch auch mal ein bisschen aus dem Vollen schöpfen. Man will was weiß ich, gerade wenn man eben auf dem Server ist, muss man ja vielleicht auch mit anderen Backends kommunizieren, keine Ahnung, vielleicht mal Bittorren sprechen oder so. Was gibt es denn da schon? Was gibt es irgendwie Bibliotheken, die jetzt konkret auch für Node.js gemacht sind? Lässt sich ohnehin alles, was JavaScript ist, dort einsetzen? Wie sieht die Welt da aus? Ist da alles nackt und kahl?
+
+01:16:32.994 --> 01:16:43.094
+<v SPEAKER_1>Ja, also es wird momentan so geschätzt, dass es so etwa 1000 Module gibt für Node schon. Mit natürlich sehr schwankender Qualität und werden nicht alle geupdatet sein. Node hat sich doch auch teilweise sehr schnell von der EP entwickelt.
+
+01:16:43.914 --> 01:16:48.754
+<v SPEAKER_2>Also die jetzt ganz speziell für Node.js gemacht sind.
+
+01:16:48.774 --> 01:17:01.674
+<v SPEAKER_1>Es gibt natürlich auch die Möglichkeit, jeder JavaScript-Bibliothek, die man so irgendwie findet, in diesem Node laufen zu lassen. Das funktioniert immer dann gut, wenn diese JavaScript-Bibliothek nicht auf die DOM zugreift, also auf das, was der Browser ist. Das gibt es in Node überhaupt nicht.
+
+01:17:01.694 --> 01:17:06.314
+<v SPEAKER_2>Also es gibt kein Document-Object-Model, weil es gibt kein Document und von daher braucht man auch kein Object-Model.
+
+01:17:06.334 --> 01:17:58.934
+<v SPEAKER_1>Richtig, aber wenn da irgendwo auf das Window-Element oder so zugegriffen wird, was das auch nicht gibt, dann fliegt die einem schon auseinander, da muss man die vielleicht nochmal anpassen. Da muss man aber auch wieder sagen, dass es die ersten Leute gibt, die jetzt daran arbeiten, einen HTML-Parser und so ein Document-Object-Model für Node.js in JavaScript zu implementieren. Und das ist mittlerweile so gut, dass man da zum Beispiel Sizzle, was bei jQuery diese CSS-Selector-Engine ist, Sizzle nennt die sich S-I-Z-Z-L-E, glaube ich. Oder E-Z. Auf jeden Fall läuft dieses Ding mittlerweile schon komplett auf Node. Das heißt, wenn man so viel so Sachen machen möchte wie Web Scraping, kann man mit Node.js zwischen einer HTML-Seite von irgendwo laden, kann dann mit diesem HTML-Parser da draußen eine DOM bauen und kann dann mit der quasi JQuery auf dieser DOM interaktieren auf dem Server.
+
+01:17:58.954 --> 01:18:10.114
+<v SPEAKER_2>Ah, verstehe. Das heißt, man kann sozusagen Webseiten parsen, Dinge raus. Also was weiß ich, wenn man jetzt so einen Scraper machen möchte, der Inhalte parsen und dann als RSS oder was weiß ich.
+
+01:18:10.134 --> 01:18:26.494
+<v SPEAKER_1>Oder eine Suchmaschine bauen, eine ganz kleine für irgendwas Spezielles. Das funktioniert schon sehr gut. Und dann der nächste Schritt wäre natürlich jetzt auch noch auf dieser Webseite dann die Ressourcen zu laden. Das JavaScript, das CSS, etc. Und das auch noch auf dem Server auszuführen und dann quasi in einem kompletten Brause auf einem Server zu simulieren.
+
+01:18:26.514 --> 01:18:27.894
+<v SPEAKER_2>Weil man halt ja JavaScript.
+
+01:18:27.914 --> 01:18:29.674
+<v SPEAKER_1>Genau, das wäre dann zum Testen sehr interessant.
+
+01:18:30.914 --> 01:18:38.154
+<v SPEAKER_2>Ah, verstehe. Man könnte sozusagen automatisiertes Testen mit Node.js durchführen, weil man hat ja die Web-Engine, man hat das ganze JavaScript.
+
+01:18:38.174 --> 01:18:45.674
+<v SPEAKER_1>Man hat nicht die Rendering-Engine, aber da kann man halt auch viele Sachen simulieren. Aber das ist noch ein langer Weg, bis es wirklich so ein ganzer Brause ist.
+
+01:18:46.474 --> 01:18:58.534
+<v SPEAKER_2>Man hat nicht die Rendering-Engine, aber man hat sozusagen alles, um das JavaScript im Kontext dieses Doms laufen zu lassen. Auch wenn da jetzt keine Pixel bei entstehen. Aber man sieht, das Programm stürzt ab oder man kann es profilen.
+
+01:18:58.554 --> 01:19:02.634
+<v SPEAKER_1>Wenn auf irgendeiner Liste ein Element hinzugefügt oder entfernt wird, das könnte man ohne Probleme testen.
+
+01:19:02.654 --> 01:19:05.054
+<v SPEAKER_2>Sicherheitsüberprüfungen machen, ob da irgendwas ausbricht.
+
+01:19:07.114 --> 01:19:53.834
+<v SPEAKER_1>Und genau andersrum, was auch viele Leute interessiert ist, dass man JavaScript-Code für Node.js schreibt auf dem Surfer und man vielleicht für irgendeinen Model eine Validierung hat. Also man hat eine Person, die man an der Datenbank speichelt, die hat einen Vornamen, Nachnamen, etc. Und man schreibt diese Regeln in JavaScript auf dem Surfer. Und jetzt kann man auf einmal die gleiche JavaScript-Datei nehmen und auch auf dem Client ausführen. Und dann kann man es quasi schon gucken, ob das Formular richtig validiert, bevor man es an den Surfer schickt, ohne den Code zweimal schreiben zu müssen. Und man kann im Prinzip allen Code, den man auf dem Surfer ausführt, auch auf dem Client ausführen. Halt mit den Abstrichen, dass man bei Node.Share natürlich schon neuere JavaScript-Funktionen verwenden kann. ECMA 5 ist fast komplett implementiert mittlerweile von V8. Wo man dann halt schauen muss, ob der Client das jeweils auch unterstützt. Gibt noch so einen Internet-Grund?
+
+01:19:53.854 --> 01:20:00.794
+<v SPEAKER_2>Ja, habe ich auch schon verhört. Taucht immer wieder mal auf. Aber die ignorieren wir jetzt einfach mal, oder?
+
+01:20:00.814 --> 01:20:23.034
+<v SPEAKER_1>Genau, aber in der schönen neuen Welt funktioniert es dann so, dass man problemlos seinen Code zwischen dem Surfer und dem Client, wie man gerade lustig ist, austauschen kann und sich dadurch auch viel Arbeit erspart. Auch Arbeit im Sinne, dass wenn man mit zwei Programmiersprachen ständig hin und her springt, man bei dem einen das Semikolon so setzen muss oder diesen kleinen mentalen Overhead hat, zwischen zwei Dateien hin und her zu springen.
+
+01:20:23.354 --> 01:20:52.894
+<v SPEAKER_2>Siehst du, dass das ganze Modell eine Anwendungsentwicklung befördert, die gerade diese Schnittstelle zwischen Client und Server sehr flexibel handhat? Im Prinzip hast du das ja eben schon so angedeutet, dass man im fortwährenden Redesign, was man ja eigentlich immer betreiben muss seiner Software, sich in zunehmendem Maße dann entscheiden kann, was ich jetzt hier noch auf dem Server mache, das verlagere ich auf dem Client. Und etwas, was ich hier auf dem Client mache, das verlagere ich jetzt mal auf dem Server.
+
+01:20:52.914 --> 01:22:27.454
+<v SPEAKER_1>Theoretisch genau da soll es hingehen. Da wird auch noch viel entwickelt. Also es gibt für dieses Node Share momentan noch keinen, ich nenne das jetzt mal Ruby und Rails, so ein Framework, was alle verwenden, wo alle glücklich sind damit. Aber ich denke mal, das ist auf jeden Fall ein Ansatz, der zwischen all diesen Frameworks, die da momentan entwickelt werden, irgendwo niederschlagen wird. Dass man halt Logik hat, die man auf dem Client oder auf dem Surfer hin und her schieben kann. Und je nachdem, wo sich gerade das Sinn macht, führt man sehr aus. Und man muss sich bei der Anwendungsentwicklung nicht so viele Gedanken darüber machen. Brauche ich das vielleicht auch noch mal auf dem Client? Muss ich den Code duplicieren? Nein, man muss den Code eigentlich bloß zu schreiben, dass er auf dem Client irgendwie läuft. Was in der Regel leicht ist, wenn man jetzt auf so einen Array.forEach verzichtet, bzw. teilweise kann man ja auch das JavaScript auf dem Client dann reparieren mit irgendeinem Zusatzmodul. JavaScript ist ja wie so ein Teig, den man kneten und ziehen kann, wie man will. Wenn man dann halt so ein Objekt auf dem Client noch manipulieren will und die Sprache so ein bisschen erweitern will, geht das. Bin ich momentan in der Regel kein Freund davon, aber für so eine Kompatibilität würde das schon Sinn machen. Was vielleicht auch noch eins dieser Konzepte ist, die sich bei den Node.js widerspiegeln werden, ist das Streaming. Momentan ist halt dieser Request-Response-Zyklus bei allen so drin im Kopf von wegen schickenden Request und dann render ich ein Template und dann schicke ich das Template komplett gerendert zum Client raus. Für Node.js gibt es jetzt schon die ersten Frameworks, wo die Templates an sich asynchron gerendert werden. Das heißt, man schickt da schon diesen Hatter-Element und die JavaScript-Dateien, die eingebunden werden sollen, bis hin zum Body-Tag an den Client raus. Der kann schon anfangen, das zu verarbeiten, schon anfangen, das JavaScript zu laden, das CSS zu laden.
+
+01:22:27.474 --> 01:22:31.114
+<v SPEAKER_2>Aber man hat vor allem schon mal die Latenz der eigentlichen Datenübertragung schon mal weg.
+
+01:22:31.134 --> 01:23:00.154
+<v SPEAKER_1>Genau. Beziehungsweise man fängt halt schon an zu betragen, sobald man irgendwas rausschicken kann. Und alle Browser können ja eigentlich so ein inkrementelles Rendering von so einer HTML-Seite, die noch nicht ganz da ist, aber trotzdem schon anfangen aufzubauen. Und das kann man halt mit diesem Node in Zukunft wahrscheinlich sehr gut nutzen. Und dann wird halt im Buddy-Element, dann halt der Reihe nach, die Elemente kommen dann rein, die gerade fertig sind, wo der Datenbank-Query fertig geworden ist. Und bis dann die Seite komplett durch ist. Und man hat aber die Seite halt nicht in einem Ding rausgepustet, sondern man fängt schon eher an. Das ist auch noch ein sehr...
+
+01:23:00.174 --> 01:23:22.774
+<v SPEAKER_2>Es gibt ja auch im HTML5 Standard, glaube ich, in diesem Skriptelement, mit dem man JavaScript sozusagen in den Kleint reinholt, ja auch schon dieses Attribut Asynchron, nur ja auch schon so solche Überlegungen mit drin sind, Zeit zu sparen, dass hier mal geladen wird. Aber er weiß Asynchron, das heißt er kann schon mal anfangen, die anderen auch noch alle zu laden und muss das nicht erst zu Ende laden. Aber dein Ansatz geht ja im Prinzip noch einen Schritt weiter, dass man eben generell...
+
+01:23:22.794 --> 01:23:24.734
+<v SPEAKER_1>Dass man eben schon raus streamen kann.
+
+01:23:24.754 --> 01:23:49.954
+<v SPEAKER_2>Dass eigentlich auch Webseite, also wahrscheinlich stirbt einfach der Begriff Webseite dann irgendwann. Man hat eigentlich gar nicht eine Seite. Man lädt nicht eine Seite. Sondern man hat eigentlich nur noch so einen Canvas, nicht wahr? So eine Leinwand, auf der gemalt wird. Aber man hat die ganze Zeit so aktives Programm, was sich eben mit seinem Server im selben Maße austauscht, wie so ein Videostream. Der eigentlich ja nur davon lebt, dass die ganze Zeit eben irgendwas gepusht wird.
+
+01:23:51.434 --> 01:24:22.934
+<v SPEAKER_1>Also ich denke mal, da werden viele Web-Antwendungen in die Richtung hingehen. Es wird auch noch lange diese News-Seite geben, wo du hingehst, die lädt und dann liest du News oder was weiß ich. Aber für viele Anwendungen, wo gerade noch Desktop-Produkte sind, die man sich noch nicht auf einen Client vorstellen kann, in dem Browser, wird es dann halt in Zukunft dahin gehen, dass man diese Barriere zwischen diesem Request-Response-Zyklus nicht nur so ein bisschen wegkaschiert, wie man es momentan mit A-Tricks macht, sondern tatsächlich wirklich wegbekommt, indem da nur noch ein Datenstrom hin und her geht, der die ganze Zeit offen ist mit diesen Web-Sockets.
+
+01:24:22.954 --> 01:24:39.954
+<v SPEAKER_2>Vor ein paar Tagen war ja die JavaScript-EU-Konferenz. Eine weitere hier in Berlin, wo wir uns auch getroffen haben. Da gab es ja noch so eine andere lustige Anwendung von Node.js, um die Internetversorgung der Konferenz sicherzustellen. Was war das?
+
+01:24:39.974 --> 01:24:53.094
+<v SPEAKER_1>Also, so wie ich das verstanden habe, haben die Node.js verwendet, um die Datenpakete von allen Konferenz-Teilnehmern über verschiedene Uplinks zu verteilen. Das heißt, die hatten da mehrere Uplinks drum eingerichtet.
+
+01:24:53.114 --> 01:24:54.434
+<v SPEAKER_2>Verschiedene DSL für den Download.
+
+01:24:54.554 --> 01:25:05.594
+<v SPEAKER_1>Und die haben quasi so einen Load-Belling damit gebaut, der den gesamten Traffic von der ganzen Konferenz auf vier Verbindungen verteilt hat. Zumindest den ausgehenden Traffic, so wie ich das verstanden habe. Was schon mal sehr beeindruckend war.
+
+01:25:06.034 --> 01:25:13.354
+<v SPEAKER_2>Ja, ich habe gehört, das Ding soll irgendwie ein problemlos 800 Megabit Durchsatz gehabt haben.
+
+01:25:13.374 --> 01:25:51.034
+<v SPEAKER_1>Ja, also es ist wirklich sehr, sehr schnell. Und wenn man jetzt einfache Operationen macht und ein Datenpaket einfach weiterleiten muss, eine sehr einfache Operation, dafür ist Node.js auch sehr, sehr gut geeignet. Also theoretisch so etwas wie einen kleinen Load Balancer, ein Node Schreiben ist durchaus denkbar. Load Balancer Schreiben ist natürlich trotzdem schwierig, weil man da noch viele Dinge beachten muss und vielleicht auch Sicherheitsdinge beachten muss, wie viele Verbindungen man wirklich annehmen will, wenn da mal so ein DDoS-Attack hereinkommt. Aber an sich die Technologie macht solche Dinge erstmal möglich. Was ich vielleicht auch noch sagen kann, ich habe so einen kleinen Passer mal geschrieben in Node.js, der File Uploads passt. Und den habe ich gebancht, der schafft 500 Megabyte pro Sekunde.
+
+01:25:51.674 --> 01:25:53.074
+<v SPEAKER_2>Was passt der da?
+
+01:25:53.214 --> 01:26:18.734
+<v SPEAKER_1>Das sind Multipart, Formdata Multipart. Das heißt, da hat man immer eine Zeichenkette, eine lange, was weiß ich, 30 Zeichen. Die ist so der Separator zwischen einzelnen Dateien. Dann kommt die Datei an sich, einfach nur bytes. Und dann kommt wieder dieses Separator. Und da kann man natürlich viel optimieren. Da gibt es Boyer-More, das ist ein String-Algorithmus, womit man sehr schnell einen Sub-String suchen kann. Wie heißt der? Boyer-More heißt der. Der eignet sich halt unter einem sehr großen Text.
+
+01:26:19.094 --> 01:26:20.454
+<v SPEAKER_2>Wie schreibst du das?
+
+01:26:20.474 --> 01:26:47.234
+<v SPEAKER_1>Ich glaube, das schreibt sich B-O-Y-E-R. Und ein More heißt M-O-O-R-E. Der eignet sich halt zum Beispiel dafür, in einem großen Text einen gewissen Subtext zu finden. Und je länger der Subtext ist, desto schneller wird der Algorithmus. Und das ist halt bei diesen File Uploads genau der Fall. Und da sieht man halt, dass man mit Nodes, sogar mit so einem binären Datenstrom, eigentlich mit so einem File Upload 500 MB pro Sekunde locker passen kann. Da muss man erstmal eine Netzwerkverbindung finden, die einem das liefert.
+
+01:26:47.294 --> 01:27:13.274
+<v SPEAKER_2>Ja, das ist schon ganz ordentlich. Ja, gibt es denn, wir haben jetzt viele über mögliche Anwendungen gesprochen und auch über so kleinere Hugs hier und da. Gibt es denn schon so nennenswertere Applikationen, die jetzt auf Node.js aufsetzen, die gestandene Webdienste bereitstellen oder sonst irgendwelche pfiffigen Sachen machen? Gibt es eine Blog-Software? Keine Ahnung, gibt es irgendwas?
+
+01:27:13.294 --> 01:28:28.494
+<v SPEAKER_1>Ja, es gibt schon so eine Blog-Software. Das ist einer, der sehr viele Artikel über Node.js schreibt. Er hat auch eine Open Source Blog-Engine geschrieben dafür. So einen großen Firmen gibt es Plurk. Das ist Twitter in Asien im Prinzip. Die haben Node.js eingesetzt, um ihren Stream asynchron zu machen. Die haben das von Anfang an, also vor noch vielen Monaten, als Node noch viel jünger war, Millionen von Nutzern drüber gejagt. Ich habe hier in Berlin für eine Seite, die auch Echtzeit-Updates auf ihrer Webseite machen, den geholfenen Java-Anwendungen auf Node.js zu portieren, die dann ein Zehntel des Memory-Bedarf hatte und Performance wesentlich besser kam, in dem Spezialfall als Java. Ansonsten experimentiert Yahoo viel mit Node.js. Das Yahoo Mail-Team wird wahrscheinlich jetzt eine neue Version von Yahoo Mail rausbringen, wo Node.js in manchen Teilen sehr einfließt. Das kenne ich nicht die Details davon. Palm hat jetzt auf seinem neuen Smartphone mit dem WebOS Node.js mit reingebracht. Das heißt, alles, was bei Palm Web-Anwendungen sind, die da nativ laufen, die irgendwie IO machen, läuft durch Node.js.
+
+01:28:28.954 --> 01:28:33.174
+<v SPEAKER_2>Ach, das heißt, Node.js ist ein fester Bestandteil von WebOS.
+
+01:28:33.194 --> 01:28:36.294
+<v SPEAKER_1>Genau, mit der neuesten Version, die, glaube ich, noch nicht public ist.
+
+01:28:38.974 --> 01:28:40.154
+<v SPEAKER_2>Aber jetzt ist es so.
+
+01:28:40.414 --> 01:28:42.014
+<v SPEAKER_1>Ich bin mir auch nicht ganz sicher.
+
+01:28:42.034 --> 01:28:43.254
+<v SPEAKER_2>Eine neue Version, ja.
+
+01:28:43.274 --> 01:28:49.114
+<v SPEAKER_1>Also, ich kriege vielleicht mal die Gelegenheit, mit so einem Ding zu spielen, dann kann ich dazu mehr sagen. Genau.
+
+01:28:49.134 --> 01:28:53.114
+<v SPEAKER_2>Das macht natürlich gerade auf so einem kleinen Gerät, was ressourcenarm ist, natürlich besonders.
+
+01:28:53.814 --> 01:29:18.834
+<v SPEAKER_1>Ja, da hat man dann natürlich wieder andere Sachen. Da muss man auch aufpassen mit Prozessor, wie viel ausgelastet wird, damit man nicht die Batterienmitleidenschaft zieht. Aber ich habe mich mit den Leuten von Palm jetzt bei der JSConf EU unterhalten. Und die meinen, die sind sehr zufrieden damit. Also es ist für in ihrem System kein Performance-Buttleneck. Soweit ich weiß, haben die einen Fork von Node gemacht und auch noch Optimierungen gemacht, die mobil mehr Sinn machen. Aber an sich größtenteils nehmen die das Node so, wie das ist.
+
+01:29:18.854 --> 01:29:24.994
+<v SPEAKER_2>Das heißt, da läuft dann sozusagen auch V8. Basiert ihr den WebOS schon immer auf V8?
+
+01:29:25.014 --> 01:29:25.994
+<v SPEAKER_1>Das kann ich gar nicht sagen.
+
+01:29:27.014 --> 01:29:31.874
+<v SPEAKER_2>Ich bin nämlich jetzt auch gerade unklar, was sie eigentlich als JavaScript-Engine hatten.
+
+01:29:35.314 --> 01:29:53.114
+<v SPEAKER_1>Man hört halt von vielen anderen großen Firmen, wo auch mit Node momentan experimentiert wird. Sogar Nokia und was auch immer. Kenne ich keine Details von diesen Projekten, aber man hört aus allen Ecken eigentlich die Vögel zwitschern, dass viele größere, ernstzunehmende Projekte vielleicht in Zukunft Teile davon mit Node gemacht werden.
+
+01:29:55.954 --> 01:31:05.094
+<v SPEAKER_2>Wenn man sich jetzt so ein Node.js erst einmal so schnappt und installiert, was für ein Setup würdest du da so raten? Also was ich gehört habe, ein Freund von mir, der benutzt das zum Beispiel auch für so Embedded-Entwicklung, weil er dann einfach sich so eine kleine ARM-basierte Maschine nimmt, wo halt Ethernet dran ist, was halt irgendwie Netz kann, und wo, ich weiß jetzt gerade gar nicht, welches OS darauf fährt. Im Zweifelsfall irgendein Linux, das weiß ich nicht so ganz genau, weil das hat man ja nun meistens für solche Embedded-Plattformen irgendwie immer. Und fährt halt einfach Node.js da drauf, und dann ist das irgendwie sozusagen eigentlich sein OS und kann das eben auch schön vom Client her debuggen, was ja auch so ein Vorteil ist. Vielleicht kannst du dazu noch mal ein bisschen was sagen, wie so ein typisches Programmierer-Setup da aussehen kann. Weil er sagte, dass er das sozusagen mit den Tools, die im Web Browser sind, dass er die dafür benutzt, um serverseitige Entwicklungen zu machen.
+
+01:31:05.114 --> 01:31:52.494
+<v SPEAKER_1>Genau. Im Prinzip hat dieses V8 einen Debugger eingebaut, der so funktioniert, dass man dann beim Starten von Node eine Option setzt, Debugger an oder was auch immer. Und dann macht er auf einem Pod per TCP eine Verbindung auf. Dann nimmt er halt Verbindungen an. Und dann kann sich halt ein Client damit verbinden und halt Debugging-Sachen darüber ablaufen lassen. Und ein Client dafür ist halt tatsächlich Google Chrome drin mit dem Web Inspector, oder wie die das nennen, der eigentlich dafür gedacht ist, in so einer Seite das JavaScript zu debuggen. Aber dem kann man auch sagen, verbinde dich doch mal mit dem Pod hier, mit meiner Node.js-Instanz. Und dann läuft das genauso. Dann kann man sehen, was da für Dateien gerade geladen sind, kann da einen Breakpoint setzen, dann wird angehalten, dann sieht man die Variablen, die im Scope sind und kann das Ding eigentlich sehr komfortabel debuggen.
+
+01:31:53.834 --> 01:32:07.914
+<v SPEAKER_2>Das ist ja wirklich sehr komfortabel, weil da kann man dann vor seiner großen Lampe sitzen sozusagen, voller Auflösung, dicker Bildschirm, alles super und auch die Performance von so einem Rechner. Aber man debuggt tatsächlich den Code über das Netzwerk auf seiner kleinen Embedded-Mühle, die dann Dinge tut.
+
+01:32:08.354 --> 01:33:13.434
+<v SPEAKER_1>Richtig. Das ist ein Ansatz, den man fahren kann. Persönlich mache ich es gar nicht so viel. Ich bin wirklich sehr, sehr testgetrieben. Und das finde ich hat auch bei Node noch Vorteile, die es bei anderen Sprachen nicht gibt. Und zwar dadurch, dass das JavaScript sich dazu kneten und ziehen lässt, kann man ganz leicht mal eine Methode überschreiben und hier mal das und da ausstappen. Das ist ein Teil. Der zweite Teil ist dadurch, dass man all diese Coreback-Funktionen hat, die dann immer wieder auf so einen Event warten, wie eine Datei wird geladen. Kann man sich auch immer beim Testen Referenzen auf diese Unterfunktion von einer Klassenmethode holen und die nochmal separat testen. Deswegen komme ich eigentlich da hin momentan, dass ich ohne großen Aufwand 100% des Codes testen kann, den ich schreibe und dann gar nicht so viel vor einem Debugger sitze, sondern eher, wenn irgendwas nicht stimmt, in meinen Test reingucke, überlege, was könnte es sein, schreibe dafür einen Test und der Test beweist mir dann quasi, ist das das, was ich gedacht habe und wenn ja, habe ich gleich ausgeschlossen, dass es nochmal auftritt, wir haben den Fehler und alles ist gut. Deswegen brauche ich den Debugger gar nicht so oft. Wenn man natürlich eine Anwendung hat, die man nicht so geschrieben hat, dann bleibt dann eigentlich bloß dieses Echtzeit-Debugging, wo man guckt, hey, was ist hier los?
+
+01:33:13.454 --> 01:33:19.374
+<v SPEAKER_2>Ja klar, vor allem, wenn es mit Netzwerk-Treffung zu tun hat, weil man nicht weiß, was kommt und es kommt immer wieder was anderes oder es kommt auch mal nichts.
+
+01:33:19.394 --> 01:34:37.134
+<v SPEAKER_1>Genau und man hat halt trotzdem, man hat jetzt nicht diese Rates-Condition, wie man es beim Thread hat, dass man auf ein Objekt gleichzeitig zugreift und dann eine Memory Access Error oder sowas kommt und das ganze Ding in die Luft fliegt. Aber was man sehr oft hat, ist, es passieren Sachen parallel und die können dann die nächsten Sachen in unterschiedlichen Reihenfolgen anstoßen. Das Programm muss natürlich immer so geschrieben sein, dass es damit umgehen kann. Und das ist einfach bloß erfordert eine gewisse Disziplin. Was ich da eigentlich den einfachsten Ansatz finde, ist, man hat eigentlich eine Klasse und die hat dann eigentlich ein paar Eigenschaften, die hat sagen, was jetzt bisher schon alles passiert ist. Und immer bevor man den nächsten Schritt dann ausführt, checkt man halt diese Voraussetzungen, ist dieser Query schon ausgeführt worden, ist schon so viel vom Upload gelesen worden. Und wenn die drei Sachen gepasst haben, dann macht ihr den nächsten Schritt, was weiß ich, den Benutzenden, eine Antwort zurückschicken. Aber es können halt alles Sachen in allen möglichen Reihenfolgen passieren. Das muss man sich bewusst sein. Deswegen sage ich halt auch, dieses Event-Schriffen-Programming, ich habe auch ein Stückchen gebraucht, um da reinzukommen. Mittlerweile finde ich das sehr natürlich, es macht auch sehr viel Spaß. Aber es ist anders als dieses sequenzielle. Man kann beim sequenziellen leichteren Programmen runterschreiben, als bei diesen Asynchronen, da muss man halt immer noch ein bisschen mehr mitdenken. Finde ich aber auch eine schöne Herausforderung.
+
+01:34:37.214 --> 01:34:39.694
+<v SPEAKER_2>Ja, mitdenken ist sowieso ein Programmieren eigentlich.
+
+01:34:39.714 --> 01:35:03.894
+<v SPEAKER_1>Es ist gut, wenn man das macht, ja. Aber es ist halt nochmal ein anderes Mitdenken, was man nicht so trainiert ist. Man hat vielleicht schon 10 Jahre lang klassisch programmiert, so Zeile bei Zeile, und auf einmal fängt man an, sich Gedanken zu machen, dass ein Query läuft, noch ein HTTP-Request reinkommt und noch, keine Ahnung, eine Mondfinsternis ansteht und man die Events halt alle gleichzeitig handhaben muss.
+
+01:35:03.914 --> 01:35:32.514
+<v SPEAKER_2>Ja, naja, jetzt haben wir ja schon eine ganze Menge hier zusammengefasst und besprochen. Haben wir denn irgendwas ganz Wichtiges unerwähnt gelassen? Ich glaube, du hast irgendwie nochmal, ich glaube in so einem kurzen Vorgespräch, so Reverse Engineering nochmal so als Thema genannt. Wie passt das hier mit rein?
+
+01:35:33.274 --> 01:36:45.274
+<v SPEAKER_1>Also, was es für Node mittlerweile gibt, ist so ein Binding zu einer Library, die nennt sich PCAP. Und damit kann man Netzwerk-Traffic wie bei, was weiß ich, Wireshark oder was es da gibt, sniffen. Und das Schöne ist halt, dass man in Echtzeit in JavaScript sniffen kann. Das heißt, man kriegt tatsächlich Events, wenn irgendein Paket ankommt, kann das Paket reingucken, kann die Buffer auslesen, kann damit natürlich auch skripten, was man liest. Ein großes Problem ist ja, das rauszufiltern, was Müll ist und das, was einem gerade interessiert, gut visuell zu verstehen zu können, wie die Abläufe sind bei irgendeinem Protokoll. Und da gibt es natürlich dieses sehr schöne PCAP-Modul, was man da einsetzen kann. Das habe ich zum Beispiel benutzt für einen projektgeschreibenden MySQL-Treiber für Node.js, komplett in JavaScript, ohne auf LibMySQL zuzugreifen. Und das MySQL-Protokoll ist zwar größtenteils dokumentiert, aber es gibt auch ein paar Spezialfälle, die es eben nicht sind. Und da habe ich Node.js einfach auch dafür verwendet, das Protokoll reverse zu ingenieren, indem ich mir den command-line MySQL-Client genommen habe, das getan habe, was ich nicht verstehe, wie es das Protokoll abbildet, nebenbei noch eine Notinstanz laufen lassen habe, die mir angezeigt hat, was da für Pakete fließen, habe in den Byte Stream reingeguckt und so lange draufgeschaut, bis es angefangen hat, Sinn zu machen.
+
+01:36:46.894 --> 01:36:51.654
+<v SPEAKER_2>Hm, ist das so schlecht dokumentiert, dass man da auf solche Dinge angewiesen ist?
+
+01:36:51.674 --> 01:37:37.174
+<v SPEAKER_1>Also der Teil, der schlecht dokumentiert ist, ist die Authentifizierung. Und zwar gibt es eine neue Authentifizierung, die basiert auf SHA-1. Die ist eigentlich sehr einfach und auch dokumentiert. Und dann haben die noch eine alte Authentifizierung. Und da steht im Prinzip los, schau in den MySQL-Sourcecode rein, wie das gemacht ist. Und ja, frag nicht weiter. Und da stellt sich dann heraus, dass es irgendein prophetärer Hashing-Algorithmus ist, den mal irgendeiner einen C verbrochen hat, wo er noch so tut, dass da ein Random-Number-Generator dabei ist, wo man sich auch erst mal überhaupt ein Beispielpaket suchen muss, um das nachvollziehen zu können. Und dann ist auch noch nicht ganz klar, dass wenn auf diesen alten Mechanismus zurückgefallen wird, wie dann die Abfolge ist, was der nächste Befehl ist. Und das war auch nirgendswo dokumentiert. Ich hab bis heute keine Dokumentation gefunden. Und das hab ich wirklich bloß so rausbekommen.
+
+01:37:37.194 --> 01:38:22.254
+<v SPEAKER_2>Das heißt, solche Dinge sind auch unklar, weil natürlich gerade dieser Glucode, der jetzt so Subsysteme miteinander verbindet, häufig einfach genommen wird, so wie er eben ist. Also dieses MySQL-Software wird halt überall einfach rangeklatscht. Aber das ist ja bei Node eigentlich überhaupt nicht wünschenswert, weil man dann sich eben in der Regel gleich wieder Blocking-Aspekte mit reinholt. Das heißt, eigentlich muss man quasi an alle Subsysteme, mit denen man kommunizieren möchte, auch nochmal ein Non-Blocking-Interface auch über das Netz haben. Also wenn es jetzt sozusagen ein Subsystem ist, das man über das Netz anspricht, wie zum Beispiel ein Datenbank-Server, ist denn das immer gegeben? Gibt es irgendwelche Systeme, die von Haus aus schon Non-Blocking sind? Ist denn MySQL jetzt die einzige Option, eine SQL-Datenbank zu verwenden derzeit?
+
+01:38:22.274 --> 01:38:45.594
+<v SPEAKER_1>Ähm, ja, nochmal anders gesagt, man muss nicht unbedingt auf diese bestehende Infrastruktur verzichten. In Fakt, es gibt auch schon ein anderes MySQL-Modul, was dir das lib-MySQL nimmt und dann eigentlich bloß diesen gleichen Trick nimmt, wie das lib-EEO macht für den Datalsystemzugriff und der halt die MySQL-Verbindung in dem Swap macht, aber man trotzdem dieses Non-Blocking-Interface dafür bekommt.
+
+01:38:45.614 --> 01:38:51.594
+<v SPEAKER_2>Aber das ist jetzt ein Modul, was in C geschrieben ist, was sozusagen in den Core von Node.js reingeht, nicht wie in JavaScript selber gemacht ist.
+
+01:38:52.314 --> 01:38:56.014
+<v SPEAKER_1>Teil ist in JavaScript, Teil ist in C geschrieben. Man muss es kompilieren.
+
+01:38:56.034 --> 01:39:01.894
+<v SPEAKER_2>Und dein Ansatz war, das komplett innerhalb von JavaScript zu machen, ohne dass man das Node.js selber ändern muss.
+
+01:39:01.914 --> 01:39:02.014
+<v SPEAKER_1>Genau.
+
+01:39:02.034 --> 01:39:04.874
+<v SPEAKER_2>So dass es auch in jedem Node.js ladbar und ausführbar ist.
+
+01:39:04.894 --> 01:39:10.374
+<v SPEAKER_1>Genau, hat halt Portabilitätsvorteile, hat Vorteile, dass man es leichter in die Community hacken kann.
+
+01:39:10.394 --> 01:39:12.494
+<v SPEAKER_2>Kann man in seinen Palm reinladen dann demnächst.
+
+01:39:12.514 --> 01:39:16.394
+<v SPEAKER_1>Zum Beispiel. Ja, ansonsten gibt es, glaube ich, noch ein...
+
+01:39:16.814 --> 01:39:17.434
+<v SPEAKER_2>Läuft denn das schon?
+
+01:39:17.894 --> 01:39:20.174
+<v SPEAKER_1>Ja, das Ding läuft. Läuft sogar ziemlich gut.
+
+01:39:20.194 --> 01:39:23.214
+<v SPEAKER_2>Und kann alles, was es können muss.
+
+01:39:24.034 --> 01:39:37.454
+<v SPEAKER_1>Ja, es fehlen noch ein paar Sachen. Es fehlen noch so Prepared Queries. Es fehlen noch ein bisschen das Reconnect-Verhalten, aber im Prinzip so eine Datenbank querying, Einträger stellen, Escaping, Verbindungen aufbauen, funktioniert alles super.
+
+01:39:37.474 --> 01:39:39.694
+<v SPEAKER_2>Und wie ist das so mit anderen Datenbanken?
+
+01:39:39.714 --> 01:41:33.034
+<v SPEAKER_1>Also, die viele Leute, die zu Node.js kommen, die Leute, die Early Adapters sind, noch zu dem Zeitpunkt, da sind sehr viele Leute mit NoSQL-Datenbanken unterwegs. Das heißt, es gibt gute Treiber für CouchDB, für MongoDB, für React, für Redis, was also diese modernen K-Value-Stores sind. Für die klassischen Datenbanken sieht es momentan noch ziemlich arm aus. Da ist, glaube ich, mein MySQL-Modul und noch ein anderes MySQL-Modul am Start, die brauchbar sind für einen richtigen Einsatz. Bei Postgres SQL gibt es auch ein Modul, da bin ich mir nicht ganz sicher, ob das schon so ausgefeilt ist. Aber da kann es einem halt immer mal passieren, dass wenn man auf irgendeine Legacy-Datenbank irgendwas zugreifen muss, dass man dann tatsächlich erstmal den Treiber entwickelt. Ist nicht jedermanns Sache. Deswegen empfehle ich momentan auch Node noch nicht jedem unbedingt. Ich sage nicht, du musst Node verwenden, weil es so toll ist und was ich damit zu tun habe. Sondern ich sage, guck dir genauer an, was du für Libraries brauchst. Wenn deine Libraries noch nicht da sind, dann musst du dir Zeit nehmen, um die zu schreiben. Ich persönlich finde das echt cool. Dann hat man schon mal eine Chance, für irgendwas ein Binärprotokoll zu implementieren. Das tut einfach den inneren Geek irgendwie mal richtig happy machen. Aber aus Business-Sicht ist es nicht unbedingt für mich praktisch, jetzt ein MySQL-Modul zu entwickeln. An der Stelle vielleicht noch sagen, dass der Arbeitgeber von Rindal, Joint, mir das ein bisschen sponsert, was cool ist. Da steckt halt auch mittlerweile eine Firma dahinter, die Node.js sehr stark sponsert. Und da sicherstellt, dass es nicht nur ein kleines Open Source-Projekt ist, was dann irgendwann der Entwickler keine Lust mehr hat und aufhört damit. So sieht es nicht aus. Aber ansonsten kann es einem schon passieren, dass man da irgendwas noch schreiben muss, was es nicht gibt. Und auch Sachen, die kritisch sind wie Datenbanktreiber. XML gibt es zum Beispiel momentan auch nur zwei Module. Ich glaube, es gibt einen guten puren JavaScript XML-Parser und einmal gibt es noch ein Binding zu lib.xml. Und braucht dann aber natürlich wieder ein C-Modul, was kumpliert werden muss.
+
+01:41:33.054 --> 01:41:37.274
+<v SPEAKER_2>Aber man kann auch ohne das C-Modul schon XML lesen.
+
+01:41:37.474 --> 01:41:53.714
+<v SPEAKER_1>Ja, aber das würde ich einfach mal in Abstrichen sagen, weil XML ist so ein vermungster riesiger Standard. Klar, das, was wir als XML jetzt erkennen würden und was für uns wie XML aussieht, läuft damit sicherlich super. Aber wenn man da irgendwelche Spezialfälle hat, irgendwelche noch komischen Zeichensätze, dann kann das auch schnell heißen, dass da irgendwas nicht geht.
+
+01:41:53.754 --> 01:41:56.634
+<v SPEAKER_2>Ja, Namespaces, Inquests, das ist alles recht komplex.
+
+01:41:56.654 --> 01:42:44.474
+<v SPEAKER_1>Genau, was weiß ich, was die für Schemas noch haben. Das ist kein einfaches Problem. Deswegen, für sowas ist es dann teilweise wirklich noch sinnvoll zu sagen, man bindet so eine C-Library an, die einfach mal ein Proven Record hat von, ich meine, egal wie toll die neue Sprache ist, ein Stück Software, was zehn Jahre lang entwickelt und debugged wurde, ist immer noch sehr gut. Man sollte nicht immer den alten Code wegschmeißen, bloß weil man mit was Neuem anfängt. Der Grund, warum ich das mit MySQL mache, ist einfach bloß, dass ich mir die Speck angeguckt habe und gesagt habe, der LibMySQL-Klient hat irgendwie 100.000 Zeilen Code oder jetzt übertrieben, aber sehr viele, ist dafür noch nicht mal Non-Blocking und ich kann ihn auch nicht debuggen, wenn da irgendwas fehlschlägt, ich muss dafür was kompilieren und haben mir gesagt, das ist eine schaffbare Aufgabe, das in JavaScript zu portieren und das ist ja eigentlich auch genau dieses Non-Blocking-Zugriff auf eine Netzwerkverbindung, die in JavaScript gehen sollte.
+
+01:42:44.494 --> 01:42:46.754
+<v SPEAKER_2>100.000 Zeilen Code?
+
+01:42:46.774 --> 01:43:05.494
+<v SPEAKER_1>Also, das ist schwierig zu sagen. MySQL an sich, das Projekt, wenn man das downloadet, hat ca. eine Million Zeilen Code. Und ich weiß nicht, wie viel davon der LibMySQL klein ist, aber im Prinzip werden da alle Teile auch vom Surfer wieder im Kleint irgendwie mit verworstelt und das ist ein ganz schön abenteuerlicher Source Code, wenn man sich da mal durchkämpft.
+
+01:43:05.514 --> 01:43:09.314
+<v SPEAKER_2>Wie groß ist denn dein Protokoll, deine Implementierung davon geworden?
+
+01:43:10.034 --> 01:43:26.834
+<v SPEAKER_1>Wir sind momentan so bei 3000, 4000 Zeilen oder so. Ja, ich glaube der Großteil davon sind eigentlich nur so riesen Konstantenlisten mit Error-Meldungen. Ich glaube, man sieht halt irgendwie so 300, 400 Error-Meldungen, die man zurückwerfen kann.
+
+01:43:26.854 --> 01:43:29.434
+<v SPEAKER_2>Wichtig, dass man die Fehlermeldung sicherstellt.
+
+01:43:29.454 --> 01:44:11.634
+<v SPEAKER_1>Und dann habe ich auch nochmal doppelt so viel Testcode wie eigentlichen Code, den habe ich jetzt auch noch mit reingerechnet. Also so an sich der reine Parser ist glaube ich so 600 Zeilen Code, überschaubar. Genau, was es auch noch für ein Node gibt, ist vielleicht noch interessant zu wissen, es gibt einen Package Manager. Die Leute, die von der Ruby Web kommen und ihre Ruby Gems suchen und wieder lieb haben wollen, die können das verwenden in Node, das nennt sich NPM. Und das ist eigentlich der Package Manager, den jetzt so alle verwenden. Der hat sich ganz gut etabliert. Das heißt, selbst wenn man so ein kompiliertes Modul hat, sagt man eigentlich NPM, Insta, bla bla bla, und der zieht das runter, kompiliert es und macht das. Das läuft schon ziemlich gut.
+
+01:44:11.654 --> 01:44:14.494
+<v SPEAKER_2>Wie viel gibt es da so?
+
+01:44:14.514 --> 01:44:27.254
+<v SPEAKER_1>Müssen wir mal reingucken, aber ich glaube, da drin gepublished sind ein paar hundert momentan. Dann gibt es halt noch Projekte auf GitHub, wo der Autor das nicht dort reingestellt hat. Oder wo es halt wirklich bloß ein kleineres Snippet ist, aber... Keine Ahnung, so 200, 300 oder so.
+
+01:44:27.274 --> 01:44:41.994
+<v SPEAKER_2>Und jetzt ein Modul in Node selber zu benutzen, da lädt man sich das einfach über das Netz. Und dann muss man da irgendwie auch noch... Es gibt ja in dem Sinne keine... Also diese Module, von denen du sprichst, sind ja Module, die dann in den Node-Core reingehen, C-Code enthalten...
+
+01:44:42.014 --> 01:44:43.014
+<v SPEAKER_1>Ach so, nee.
+
+01:44:43.034 --> 01:44:45.894
+<v SPEAKER_2>Und davon ein Teil werden, oder reden wir wirklich von Libraries?
+
+01:44:45.914 --> 01:44:55.314
+<v SPEAKER_1>Libraries. Also ein Modul ist eigentlich immer eine Library. Und wenn diese Library jetzt noch irgendwie ein C++-Teil hat, dann erzeugt das in Node momentan Addon.
+
+01:44:59.214 --> 01:45:00.954
+<v SPEAKER_2>Aber ein normales Modul muss doch nicht compiled werden.
+
+01:45:01.794 --> 01:45:03.334
+<v SPEAKER_1>Nee, normales muss bloß installiert werden.
+
+01:45:03.354 --> 01:45:06.054
+<v SPEAKER_2>Weil du meinst, es wird runtergeladen und dann compiled.
+
+01:45:06.074 --> 01:45:08.854
+<v SPEAKER_1>Nee, nur bei einem Addon.
+
+01:45:08.874 --> 01:45:24.274
+<v SPEAKER_2>Okay, also wenn es sich bei dem Modul um einen Addon handelt, dann muss es compiled werden. Okay, das macht es automatisch. Ansonsten holt sich das rein. Das heißt, diese Bibliotheken, die installiert man dann auch mit diesem Package-Manager. Und dann sind die quasi beim Start des Programms einfach da.
+
+01:45:24.674 --> 01:45:37.854
+<v SPEAKER_1>Ja, man muss dann noch sagen, require. Das ist der Column, das einzubinden. Und dann der Name des Pakets, des Moduls. Und dann hat man halt ein Objekt, was dann all die Methoden hat, die dieses Modul zur Verfügung stellt.
+
+01:45:37.874 --> 01:46:19.834
+<v SPEAKER_2>Gibt es denn auch schon ein bisschen, also gerade dieses Beispiel mit dem Embedded, mag jetzt vielleicht nicht so das Premiere sein, aber auch das ist ja auch populäre Bastelplattform, wo so ein elegantes, performantes Subsystem, was man so leicht debuggen kann, ja auch interessant sein kann, so als Alternative zu anderen Sachen. Auch so in dieser Arduino-Welt, sind ja auch schon so JavaScript-artige Sprachen ohnehin unterwegs, sodass da, glaube ich, die Learning-Curve jetzt so groß gar nicht wäre. Da will man ja dann aber auch ein bisschen mit der Hardware reden. Ist dir das einfach, dem Node quasi da Device Driver oder Zugriff auf Device Driver oder Devices irgendwie zukommen zu lassen? Und welchen Aufwand muss man da treiben, damit das Non-Blocking ist?
+
+01:46:21.654 --> 01:47:01.574
+<v SPEAKER_1>Also ja, also im Prinzip, wenn man irgendeine C-Library hat, auf die man zugreifen will, dann kann man die sehr leicht mit dem Node verwursteln, indem man da einfach dieses Addon-System nimmt und sich ein bisschen anguckt, wie man jetzt die Brücke schlägt zwischen dem JavaScript und dem C bzw. V8 ist in C++ geschrieben. Aber man kann da in der Regel sehr gut existierende Sachen einbinden. Wenn man jetzt selber einen Treiber dafür schreiben muss, wo man kein Modul hat, das ist ein bisschen schwieriger. Wenn man diesen Treiber nur in Blocking-Variante hat und den Non-Blocking gerne hätte, dann ist das einfachste, den halt mit in diesen Sweat Pool auszulangen, der für das File-System verwendet wird. Da gibt es aber auch schon ein paar Beispiel-Addons, die das machen, wo man sich den Source anguckt und das relativ gut reingehackt hat.
+
+01:47:01.594 --> 01:47:07.074
+<v SPEAKER_2>Aber was ist jetzt mit so Standard-Chat-Channels? Was weiß ich, sowas wie USB zum Beispiel?
+
+01:47:07.494 --> 01:47:22.494
+<v SPEAKER_1>Es gibt ein paar Leute, die spielen damit. Ich weiß nicht, was da der aktuelle Stand ist, aber ich habe mir auch vorgenommen, irgendwann in einer Zukunft, wo ich mehr Zeit habe, so eine fliegende Drohne zu basteln, die mit Node.js läuft. Aber es gibt auf jeden Fall Leute, die da schon dran entwickeln. Ich kann nicht sagen, was der aktuelle Stand ist.
+
+01:47:22.514 --> 01:47:24.194
+<v SPEAKER_2>Bluetooth?
+
+01:47:24.214 --> 01:47:30.294
+<v SPEAKER_1>Ebenfalls. Ich weiß es nicht. Aber ich denke, es ist nur eine Frage der Zeit, bis die Bastler kommen und das auf diese Plattformen unterbrechen.
+
+01:47:30.314 --> 01:47:34.694
+<v SPEAKER_2>Wir haben hier auf dem Tisch auch so schöne, asynchrone Bluetooth-Geräte.
+
+01:47:35.314 --> 01:48:22.494
+<v SPEAKER_1>Also bei der GSConf EU gab es schon einen Talk, wo sie mit dem Arduino in dem Node gespielt haben. Aber ich glaube, das lief noch so weit, dass sie das Node auf einem Rechner laufen lassen hatten und dann bloß übers Netzwerk mit dem Arduino kommuniziert haben. Was auch schon cool ist, aber richtig cool wäre es, eine Hardware zu haben, wo das Node selber draufläuft. Da kann man sich jetzt entweder so ein Smartphone nehmen oder versuchen, einen kleinen Embedded-Chip zu finden, wo so ein Linux draufläuft. Aber an sich müsste es da relativ leicht kompilieren. Was da noch so ein Vorteil ist, ist, dass es notwendig externe Dependencies hat. Eigentlich braucht es bloß Python fürs Build-System. Aber ansonsten kann man Node installieren, ohne dass man irgendwelche Dependencies auf dem System haben muss. Das heißt, es kommt auf die meisten Plattformen relativ schnell zur Rande.
+
+01:48:22.514 --> 01:48:23.634
+<v SPEAKER_2>Verstehe.
+
+01:48:23.654 --> 01:48:32.634
+<v SPEAKER_1>Natürlich nur, wenn V8 diese Plattform unterstützt. Das sind nur ein paar Prozessortypen, dieses Arm und die normalen Intel-Geschichten, die da unterstützt werden. Aber so ein Power-PC würde es zum Beispiel nicht mehr laufen.
+
+01:48:35.854 --> 01:48:51.554
+<v SPEAKER_2>Ja, Felix, ich glaube, jetzt haben wir es, wa? Nicht, dass man hier nicht noch stundenlang weiter reden könnte. Aber bevor wir jetzt hier nur noch einen Library-Aufzählungs-Podcast machen, denke ich mal, bringen wir mal die Sache langsam zu Ende.
+
+01:48:51.574 --> 01:49:21.614
+<v SPEAKER_1>Kann ich noch das Projekt erwähnen, wo wir Node Shares einsetzen? Oh ja, bitte. Und zwar machen wir ein Projekt, das nennt sich transloaded.com. Wir setzen Node Shares ein, um File Uploading und Video-Encoding als Service anzubieten. Das heißt, wenn man eine Webseite hat, die so was wie YouTube machen soll, setzen wir Node Shares ein, um die Uploads entgegenzunehmen, das umzuwandeln, alle Webformate und dann wieder zurück zu der Seite zu schicken. Viele der Sachen sind Open Source, z.B. der File Upload-Parser und das MySQL-Modul, was wir da einsetzen. Genau, also falls sich das jemand anschauen will.
+
+01:49:21.614 --> 01:49:25.434
+<v SPEAKER_2>Okay, super. Aber jetzt haben wir es.
+
+01:49:25.454 --> 01:49:26.074
+<v SPEAKER_1>Ja, jetzt haben wir es.
+
+01:49:26.094 --> 01:50:54.134
+<v SPEAKER_2>Okay, das war jetzt dann doch ein echt schöner Überblick über ein Environment, was ja Potenzial hat, wenn ich das mal so sagen darf. Also ich denke, da ist irgendwie vor allem viel Neues drin. Viel Neues, vielleicht nicht unbedingt jetzt immer neu, im Sinne von da hat es noch nie gegeben, aber diese spezifische Kombination von der Nützlichkeit von JavaScript gepaart, eben mit dieser Eigenschaft des asynchronen Redens mit allem, was einfach ganz andere Ressourcenausnutzung verspricht, das denke ich mal, das hat noch eine ganze Menge Potenzial. Und ich habe auch schon so von vielen Orten und Stellen irgendwie gehört, wo halt so Freunde von mir, die immer so ein bisschen auch so an der Front rumbasteln, sagen so, ja, da tauche ich jetzt gerade mal ein, weil da könnte was gehen. So, naja, und jetzt weiß ich auch warum. Das war Chaos Radio Express, Ausgabe Nummer 167. Und dieses Mal wieder, wie es doch immer wieder auch mal nachgefragt wird, mal in 100% Geek-Mode, nachdem wir jetzt gerade hier jüngst wieder viel Kultur und Gesellschaft abgefeiert haben. Aber so ist es halt hier. Die Untertitel Technik, Kultur, Gesellschaft, dem versuche ich hier immer wieder gerecht zu werden. Und ich hoffe, euch hat es gefallen. Und jetzt sage ich Tschüss und bis bald bei Chaos Radio Express.

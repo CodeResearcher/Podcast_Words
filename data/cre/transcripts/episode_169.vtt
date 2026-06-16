@@ -1,0 +1,1267 @@
+WEBVTT
+
+00:01:02.164 --> 00:01:33.804
+<v SPEAKER_2>Hallo, hier ist Chaos Radio Express, Ausgabe Nummer 169 am Apparat Tim Pritlove. Und Chaos Radio Express ist mal wieder im Express unterwegs und tut durch die Lande. Und heute hat es mich mal wieder, muss ich sagen, nach München getragen. Bin gleich auch mein Gesprächspartner nicht aus München gekommen. Wir haben uns sozusagen auf halbem Weg getroffen, kann man sagen. Ja, ich stelle dich gleich mal vor, ich begrüße Martin Herfurt.
+
+00:01:34.424 --> 00:01:35.464
+<v SPEAKER_1>Hallo, grüß dich.
+
+00:01:35.484 --> 00:01:37.764
+<v SPEAKER_2>Du bist eigentlich, wo bist du eigentlich her?
+
+00:01:37.784 --> 00:01:44.584
+<v SPEAKER_1>Ursprünglich bin ich aus Berlin. Ich wohne nur die längste Zeit schon in Österreich, habe dort auch studiert. In Salzburg bin ich daheim.
+
+00:01:45.024 --> 00:02:29.904
+<v SPEAKER_2>Guck an, Berlin wusste ich gar nicht. Ja, worum soll es gehen? Ich dachte mir, ich denke mir immer was und diesmal dachte ich mir, ich könnte mal die Serie fortsetzen, so ein paar Basistechnologien vorzustellen, die wir alle benutzen. Das hatten wir ja schon ein paar Mal, ob es USB oder TCP-IP ist, immer wieder kommen diese Networking-Stacks ins Bild und die stecken ja heutzutage überall drin. Und so eine Sache, die halt überall drin steckt, ist Bluetooth. Jeder mal gehört, keiner weiß, wie es funktioniert. Das ist halt immer so das Ding. Ja, und du Martin, du hast ja einen Teil deiner Lebenszeit, dem Blauzahn, gewidmet, kann man sagen, ne?
+
+00:02:29.924 --> 00:02:31.004
+<v SPEAKER_1>Kann man so sagen, ja.
+
+00:02:31.024 --> 00:02:36.724
+<v SPEAKER_2>Ja, was ist eigentlich so, ich meine, wie bist du da überhaupt so in dieses Feld gekommen mit den Computern und all dem?
+
+00:02:36.744 --> 00:02:56.084
+<v SPEAKER_1>Ach, das mit den Computern hat ganz früh angefangen. Mein Vater hatte damals so ein Sharp PC, also Pocket Computer, basic programmierbar. Da war ich gerade in der Grundschule und das hat mich irgendwie fasziniert, das wollte ich auch probieren. Ich durfte dann... Oh nee, also ich bin 1976 geboren, das war einfach...
+
+00:02:56.104 --> 00:02:59.784
+<v SPEAKER_2>Also die späteren Scharfs, okay, alles klar. Die haben ja recht früh angefangen.
+
+00:02:59.804 --> 00:03:04.224
+<v SPEAKER_1>Oh ja, nee, also der hatte den auch schon sehr lang zu dem Zeitpunkt, als ich den dann mal anfassen durfte.
+
+00:03:04.244 --> 00:03:06.324
+<v SPEAKER_2>Okay, war nicht brandneu.
+
+00:03:06.444 --> 00:03:39.764
+<v SPEAKER_1>Nee, nee, nee. Und da hat das angefangen bei mir. Und dann die übliche Entwicklung, C64 hatte ich natürlich auch. Der hat wenig Spaß gemacht, weil ich eigentlich immer programmieren wollte und das irgendwie mit C64 nicht so leicht war, wie ich mir das erhofft habe. Und dann einen PC Amiga habe ich ausgelassen. Also da war irgendwie kein Budget da in der Familienkasse. Aber dann eben PC von meinem Konfirmationsgeld, so wie das eben läuft. Und da habe ich dann eben sehr gern und sehr viel programmiert. Und eben auch in der Schule.
+
+00:03:40.584 --> 00:03:43.724
+<v SPEAKER_2>Und wie bist du dann später auf das Thema Bluetooth gestoßen?
+
+00:03:44.164 --> 00:03:55.084
+<v SPEAKER_1>Ich meine, ich habe natürlich Informatik studiert, beziehungsweise an der FH Salzburg habe ich Telekommunikationstechnik und Systeme studiert. Habe da eben dann auch unterrichtet an der FH und wir haben...
+
+00:03:55.104 --> 00:03:55.924
+<v SPEAKER_2>Hast du es abgeschlossen?
+
+00:03:59.264 --> 00:04:00.444
+<v SPEAKER_1>Ist schon länger her, also...
+
+00:04:00.464 --> 00:04:03.004
+<v SPEAKER_2>Okay, muss man sich ja nicht verschämen.
+
+00:04:03.024 --> 00:04:29.824
+<v SPEAKER_1>Okay, auf jeden Fall war das so, dass Handys immer schon irgendwie eine gewisse Faszination auf mich ausgeübt haben. Und da war es dann eben so mit Studenten, mit Studierenden, da hat man eben wireless security gemacht. Ich habe damals am Kongress von Tobias Engel einen sehr, sehr guten Vortrag gehört. Der hat mich dann eben auch so ein bisschen für das Labor, das ich da in der FH gehalten habe, inspiriert. Und da waren AT-Befehle.
+
+00:04:29.844 --> 00:04:33.164
+<v SPEAKER_2>Weißt du noch, auf welcher Vortrag das jetzt war?
+
+00:04:33.184 --> 00:04:47.184
+<v SPEAKER_1>Ich glaube, der hieß SMS and all its features. Features, genau, das war der. Und der war schon ziemlich beeindruckend für mich, dass er damals schon gehört hat, dass es das gibt, aber noch nie wirklich was damit ausprobiert hat.
+
+00:04:47.284 --> 00:05:28.484
+<v SPEAKER_2>Ja, Tobias ist ja so der Club-Spezi für Telefonfreund. Schon mal gewesen, war auch zweimal schon zu Gast, kann ich gleich mal erwähnen. Zwei sehr gute Sendungen, die ich mit ihm gemacht habe. Vor einiger Zeit schon, einiger Zeit ist gut, vor vier Jahren CAE 040, ganz frühes Ding, digitale Telefonnetze, so eine ganze Zeitreise da, von ISDN bis so den aktuellen Mobilfunkstandards. Damals war so UMTS the latest shit. Und später haben wir dann noch mal ein Update gemacht, Chaos Radio Express, 110 Next Generation Networks. Da ging es dann sozusagen um diesen Umbruch mit IP-basierten Netzen und ähnlichen Klimpeln. Ja, das mal so als kurzen Einwurf.
+
+00:05:28.504 --> 00:05:31.044
+<v SPEAKER_1>Du musst diese Gelegenheiten immer nutzen.
+
+00:05:31.064 --> 00:05:35.404
+<v SPEAKER_2>Für die Hyperlinks. Hyperpodcast wäre vielleicht mal ein ganz guter Begriff.
+
+00:05:38.824 --> 00:05:39.424
+<v SPEAKER_1>Okay.
+
+00:05:39.444 --> 00:05:41.824
+<v SPEAKER_2>Klingt aber scheiße, wenn wir uns etwas anderes vereinfachen lassen.
+
+00:05:45.284 --> 00:06:50.764
+<v SPEAKER_1>Nee, und da hat das dann angefangen, dass ich das eben teilweise in die Vorlesung übernommen habe oder in die Lehrveranstaltung. Und irgendwann war es dann so, da haben wir eben WLAN-Audits gemacht mit Studenten und mit selber gebastelten Antennen. Also da war CCT immer für mich so die Inspirationsquelle und das macht den Studierenden dann auch sehr viel Spaß, also wenn die dann wirklich Hands-on-Experience haben und sowas selber bauen können. Und das war wirklich spaßig und dann hatten wir eben das Fernsehen da, irgendwie ORF Salzburg, die haben da was drüber gedreht, dass hier die Studenten in Salzburg rumlaufen und offene Netzwerke aufzeigen. Auch ganz lustig, dass da eben die meisten, die betroffen waren, irgendwie vom ORF nicht offiziell denunziert werden durften, weil die irgendwas gesponsert haben, so viel zur Unbefangenheit. Also das war witzig, auf jeden Fall aufgrund dieses Medienauftritts damals eben in Lokal Salzburg, war es dann so, dass ich eben zu so einer Jahresveranstaltung erfahren habe.
+
+00:06:51.044 --> 00:06:55.264
+<v SPEAKER_2>WLAN-Audits, wir reden von War Driving, also okay gut.
+
+00:06:55.284 --> 00:07:33.144
+<v SPEAKER_1>Ja, das war aber damals schon nicht mehr neu, also das war mir eigentlich selber zu langweilig, dass ich darüber jetzt bei dieser Jahresveranstaltung irgendwas erzählen soll, den Leuten, die das eh schon wissen. Aber natürlich, weil es im Fernsehen war, wollte man, dass da ein bisschen mehr passiert und dass man es ein bisschen verkauft für den Studiengang und so weiter. Und damals war es so, dass ein guter Freund mich darauf aufmerksam gemacht hat, dass es da Bluetooth-Sicherheitslücken gibt. Und das war so, Adam Laurie hat eben, den ich damals noch nicht kannte, natürlich einen Artikel auf Slashdot gehabt. Und den habe ich dann auch gelesen und habe eben mal so angefangen mit solchen Tic.
+
+00:07:33.164 --> 00:07:34.304
+<v SPEAKER_2>Bluetooth Security.
+
+00:07:34.324 --> 00:08:01.584
+<v SPEAKER_1>Bluetooth Security, genau. Und da hat man eigentlich gedacht, naja, WLAN Security kennt jeder schon. Schaue ich mir das mal an. Und habe eben die Geräte recherchiert, die er da verwendet hat, die er eben auch geschrieben hat, dass die offenbar Probleme haben. Und habe einfach mal rumgestochen und bin dann eben, und deshalb habe ich das auch erzählt mit Tobias Engel, auf eine Schnittstelle gekommen, die AT-Befehle angenommen hat. Habe das eben gedacht, okay, so hat...
+
+00:08:01.604 --> 00:08:08.964
+<v SPEAKER_2>Also die alten Modem-Befehle, Strings von den Haze Modems, mit denen man halt so wählen konnte, Settings machen konnte, etc.
+
+00:08:08.984 --> 00:08:44.984
+<v SPEAKER_1>Genau, richtig. Dieser Befehlssatz ist ja um einiges erweitert worden für GSM und da ist einiges möglich und dann auch noch viel mehr abhängig vom Hersteller. Also da gibt es ungeschrieben die meisten Sachen, also da kann man sehr viel Zeit verbringen. Auf jeden Fall war das eine Überraschung und ich habe sofort gewusst, okay, so hat das gemacht Adam Laurie und habe eben so ein kleines Programm geschrieben, eben für diese Veranstaltung. Hab dann eben auch bei diesem Vortrag oder während dieses Vortrags eben mein Programm laufen lassen und habe eben zum Teil, also ich glaube fünf Handys auslesen können.
+
+00:08:45.564 --> 00:08:49.924
+<v SPEAKER_2>Also was hat diese Sicherheitslücke jetzt konkret offenbart und wie kann man da rein?
+
+00:08:50.204 --> 00:08:52.484
+<v SPEAKER_1>Na ja, AT-Befehle ist ja wie du gesagt hast.
+
+00:08:52.504 --> 00:08:55.744
+<v SPEAKER_2>Okay, aber da muss man ja erstmal Zugang haben zu irgendeinem Gerät.
+
+00:08:55.764 --> 00:11:07.444
+<v SPEAKER_1>Richtig, aber im Publikum sah es nur eben genug, aber ich habe mir ein solches Gerät ausgesucht und habe eben rumgestochen und habe festgestellt, okay, AT-Befehle kann man ausführen ohne dass dieser Gegenstelle, auf deren Basis das eben ausgeführt wird, irgendwie authentifizieren zulassen muss. Also das war einfach ein Fehler, den lustigerweise Sony Ericsson und Nokia aber komplett gleich hatten. Also die haben wahrscheinlich beim selben INDA zugekauft. Und naja, so war das und ich war eben der Meinung, ich habe nichts Neues entdeckt. Ich habe das mitgenommen dann auf die Cebit Salzburg Research, mein damaliger Arbeitgeber hatte auf der Cebit über drei, vier Jahre immer so einen Forschungsstand und ich hatte immer die große Ehre, die Firma dann zu vertreten und das war irgendwie strategisch klug. Wir waren direkt neben den Toiletten dieser Forschungshalle und da musste jeder irgendwann mal vorbei. Und auf unserem Stand, da lief eben dieser Laptop und hat eben alle auditiert. Und da habe ich dann eben diesen Field Report verfasst und habe eben Adam Lorry komplette Referenz gegeben, bis sich er einfach bei mir gemeldet hat und gemeint hat, hey Martin, wollen wir uns nicht mal treffen? Wir haben uns dann in Salzburg getroffen und haben eben darüber geredet. Und du hast dann rausgekommen, Adam hat das komplett anders gemacht und seine Sicherheitslücke war irgendwie auf Basis von OBEX. Darüber sprechen wir nachher noch. Und er hat nicht so viel Zugriff auf das Gerät ermöglicht. Also ihm war es nicht möglich, dass er eben potenziell Kosten verursachen kann. Und das war glaube ich auch so ein bisschen der Knackpunkt, dieses Kosten verursachen können, warum dann überhaupt Nokia und so weiter überhaupt Schritte dagegen ergriffen hat. Weil bis dahin war es irgendwie lustig, okay, was ist ein Telefonbuch wert? Banker wissen, dass das viel wert sein kann. Wir haben dann auch sehr viele Anfragen bekommen, so in der Richtung. Aber prinzipiell ist es eben nicht so schnell argumentiert, wie eine Rechnung, wo einfach nur hoher Beklagung steht.
+
+00:11:07.464 --> 00:11:09.844
+<v SPEAKER_2>Okay, ihr habt euch dann später so ein bisschen zusammengetan.
+
+00:11:09.864 --> 00:12:57.184
+<v SPEAKER_1>Mhm, das ist richtig. Also wir haben uns da damals getroffen, ich glaube, das war irgendwie, weiß ich gar nicht mehr, 2003 Ende. Und haben da drüber gesprochen, haben uns ausgetauscht. Und irgendwie war ich dann der Meinung, okay, erledigt. Aber da hat sich Adam wiedergemeldet und meinte, er hätte da irgendwie mit der Bluetooth SIG telefoniert, also dieses Special Interest Group, die diesen Bluetooth Standard eben entwirft und weiterführt und neu standardisiert, eben wenn es was Neues gibt. Und diese Bluetooth SIG, die veranstaltet weltweit, Asien, Europa, Amerika, immer unplugfest. Das sind so Veranstaltungen, wo alle Hersteller hinkommen, die sich das leisten wollen und untereinander testen. Weil Bluetooth ist ja ein Gerätehersteller übergreifender Standard. Das heißt, man kann ein Nokia-Headset mit einem Sony Ericsson-Telefon verbinden oder man sollte das einfach können. Und dass das klappt, deshalb macht eben die Bluetooth SIG, ähnlich wie die USB-Gruppe, bei denen heißt es Plugfest. Bei der Bluetooth SIG heißt es eben Unplugfest. Und dort wird getestet, da unterschreibt jeder ein NDA. Niemand darf über irgendwelche Fehler sprechen, die da eben auftreten. Vor allem nicht im Zusammenhang mit dem Unternehmen, das diese Fehler begangen hat oder eben falsch implementiert hat. Und naja, da wurde eben getestet und da haben wir eben die Möglichkeit bekommen, Security Audits zu machen für Geräte, die noch nicht am Markt waren. Und das war den Herstellern eben schon sehr viel wert. Beziehungsweise Nokia hat sich sehr gefreut, dass da jetzt was getan wird von offizieller Stelle. Weil für die war das natürlich nicht sehr gut, was da in Nachrichten passiert ist.
+
+00:12:57.204 --> 00:13:03.064
+<v SPEAKER_2>Ja, dann ist ja irgendwann diese Gruppe daraus entstanden.
+
+00:13:03.084 --> 00:13:28.904
+<v SPEAKER_1>Genau, das hatte eigentlich den Hintergrund, dass mein damaliger Arbeitsgeber eigentlich nicht wollte, dass ich irgendwie zu Konferenzen fahre und wollte das eigentlich so nicht unterstützen. Und da habe ich mir gedacht, okay, solange ich die Möglichkeit habe, das zu machen, mache ich das auch auf eigene Faust und habe eben diese Gruppe gegründet zusammen mit Colin Mallener, den du ja kennst. Der lebt auch in Berlin, ist jetzt bei der Telekom. Ja, vom Sehen kennst du ihn. Natürlich.
+
+00:13:28.924 --> 00:13:30.104
+<v SPEAKER_2>War er hier noch nicht zu Gast?
+
+00:13:30.724 --> 00:13:32.184
+<v SPEAKER_1>Ja, lad ihn mal ein.
+
+00:13:32.204 --> 00:13:33.244
+<v SPEAKER_2>Okay.
+
+00:13:33.244 --> 00:15:59.444
+<v SPEAKER_1>Und auf jeden Fall haben wir da die Gruppe gegründet. Adam und Marcel waren dann eben auch dabei. Adam und Marcel waren eben so nach der Reihenfolge war das dritte und vierte, aber der Colin hatte eben damals irgendwie, hat in Santa Barbara studiert und war eben nicht so wirklich fähig, dass er da überall mitfährt, weil er einfach seine Studiengeschichten am Laufen hatte. Und jetzt war das eben so, dass Adam, der eigentlich den Deal mit der SICK aufgemacht hat, der Marcel, eben der Maintenor von Bluesy, den kennst du aber schon, Holtmann Marcel. Genau und ich eben zu diesen Bluetooth SICK-Veranstaltungen gefahren sind und eben wirklich dann zusammen getestet haben. Und diese Gruppe, Triphanite Org, die hat sich dann eben auch vergrößert. Wir haben natürlich immer mal geguckt, wenn da irgendwie wer was veranstaltet hat oder eben veröffentlicht hat zum Thema Bluetooth Security, dann haben wir einfach mal geguckt, passt der dazu, kann man da was machen. Und dann gab es eben auch den Joshua Wright, der hat eben WLAN Security viel gemacht und hat sich natürlich Wireless auch mal Bluetooth angeschaut, dann eben auch so einen Pin Cracker irgendwie verbessert. Dann war da der Kevin, der hat damals für Mac OS einen Bluetooth Wurm geschrieben. Da hat er ziemlich Wind gemacht, natürlich die ganzen Anti-Vir-Leute, die haben ihn geächtet dafür, dass er den Schritt eins, also das war so, er hat einen funktionierenden Prototyp gehabt und da ist es wohl so, wenn man das hat, dann hört man auf, den weiterzuentwickeln. Kevin ist ein Perfektionist, hat sich gedacht, das geht ja auch noch besser und hat eben den Code verfeinert, worauf eben die Anti-Vir-Community geschrien hat und gesagt, nee, also jetzt ist er über die rote Linie getreten, jetzt ist er einer von der dunklen Seite. Und das war nicht so schlimm, das war dann gleich mal wieder vorbei, aber er ist damit irgendwie auffällig geworden. Dann war Tim Herrmann noch dabei und Mark Rowe, die beiden haben auch mal was zu Pin Cracking veröffentlicht. Und da haben wir uns einfach irgendwie so zusammengesammelt, wobei, muss ich ganz ehrlich sagen, so Tim und Mark, haben wir uns mal getroffen, so in London, aber da war einfach irgendwie das Dabeisein wichtiger, als irgendwie ein bisschen was zu contributen.
+
+00:15:59.464 --> 00:17:00.844
+<v SPEAKER_2>Das heißt, Triphanite ist sozusagen so eine Gruppe von Leuten, die sich einfach mit Bluetooth auseinandergesetzt haben, oder sagen wir mal generell mit Wireless Security, die aber dann sozusagen sich vor allem um Bluetooth gekümmert haben. Es gab ja beim Kongress auch eine ganze Reihe von Vorträgen über einen Zeitraum, wo dann eigentlich jedes Mal immer wieder komplett alles auseinandergenommen wurde. Ich erinnere mich, ich habe glaube ich bei einem oder zwei da auch selbst dabei gesessen. Das war dann ganz putzig, wie dann sozusagen direkt im Raum dann so die ganzen Geräte auseinandergenommen werden. Und Wireless Security hat natürlich auch immer so ein bisschen was. Jetzt will ich aber erstmal gar nicht so sehr auf diese Security-Aspekte raus, sondern erstmal ein bisschen versuchen zu verstehen, was eigentlich dieser Standard umfasst. Ich meine, ja, Computer, jedes Handy hat das heutzutage drin. Man weiß, man kann irgendwie seine Geräte miteinander koppeln, man kann darüber Internet machen, man kann darüber auch andere Dinge tun. Im Spielekonsolenbereich ist es auch recht verbreitet, vor allem natürlich die Nintendo Wii mit ihrer Wii Remote. Das ist da sehr bekannt, aber die PS3 hat auch Bluetooth, hast du?
+
+00:17:00.864 --> 00:17:03.584
+<v SPEAKER_1>Ja, habe ich gelesen. Ich habe selber keine PS3.
+
+00:17:03.604 --> 00:17:25.504
+<v SPEAKER_2>Ja, ich auch nicht. Deswegen war das jetzt gerade für mich, das muss man nochmal nachschlagen, wie auch immer. Auf jeden Fall ist Bluetooth generell eine Methode, wo man halt Wireless ganz gut so, naja, so wie soll ich sagen, Adaptergeräte miteinander, kleinere Geräte miteinander verbinden kann und das Ganze dann eben auch noch unter dem Aspekt, dass es möglichst wenig Strom verbrauchen sollte.
+
+00:17:25.664 --> 00:17:26.624
+<v SPEAKER_1>Das hat der Chen gesagt.
+
+00:17:26.644 --> 00:18:08.164
+<v SPEAKER_2>Sollte. Ohne dass ich viel darüber weiß, aber das ist mal einfach meine Vermutung. Ja, vielleicht um Bluetooth ein bisschen zu verstehen, sollte man sich den Bluetooth Stack, also die Architektur dieses Protokolls, selber mal anschauen. Letzten Endes ist es wahrscheinlich an vielen Stellen auch vergleichbar zu anderen Protokoll Stacks. Das heißt, wenn man VIP kennt und wenn man was weiß ich, Apple Talk und wie sie alle heißen. Die haben ja dann meistens gemeinsam, dass sie eben mit so einem Layer-System aufgebaut sind, so ein Schichtensystem, was vor allem erst mal Hardware und Software voneinander trennt, aber dann eben so verschiedenste Abstraktionsebenen einführt. Das ist ja hier auch so.
+
+00:18:08.844 --> 00:18:44.564
+<v SPEAKER_1>Ja klar, also das macht ja auch absolut Sinn, sowas so aufzuzeichnen. Da kann man dann gleich abchecken, wo kommt was her und das gibt es natürlich auch für Bluetooth. Bluetooth Protocol Stack braucht man nur googeln, dann kriegt man gleich eine Menge Bilder. Und da sieht man eben recht schön, wie das aufgebaut ist. Unten ist eben, wie auch bei anderen OSI-Schichtenmodellbildern, die physikalische Schicht. Das heißt, wie wird das Medium zugegriffen. Oder die unterste Schicht ist eben bei Bluetooth, 2,4 Gigahertz, ISM-Band, ähnlich wie WLAN eben auch und viele andere Anwendungen.
+
+00:18:44.584 --> 00:18:51.664
+<v SPEAKER_2>Aber nicht derselbe Frequenzbereich von WLAN, sondern in dem Bereich halt.
+
+00:18:51.704 --> 00:19:23.504
+<v SPEAKER_1>Das überschneidet sich so, natürlich. Das ist aber nicht gut. Nee, ist nicht gut und darum hat man da auch in den Standardisierungen darauf Rücksicht genommen. Also wenn man das verfolgt hat, Bluetooth 1 hatte da gar nichts, den gab es auch nicht sehr lang als offiziellen Standard. Bluetooth 1.1 hatte das nicht. Diese sogenannte Frequency Avoidance. Es ist so, dass mit 1.2...
+
+00:19:24.644 --> 00:19:29.884
+<v SPEAKER_2>Also ich meine, im Standard sind auch die Frequenzen, die konkret verwendet werden sollten, genannt.
+
+00:19:30.184 --> 00:19:36.284
+<v SPEAKER_1>Na ja, gut, jetzt macht WLAN, teilt ihr dieses Band, das da frei ist, in ich glaube 13 Kanäle auf.
+
+00:19:36.304 --> 00:19:37.104
+<v SPEAKER_2>Ja.
+
+00:19:37.124 --> 00:20:07.384
+<v SPEAKER_1>Setzt die ganze Zeit auf dem selben Kanal und weißt ja, stellt man einen am Access Point, ich hätte gern automatisch oder Kanal Nummer 5 und da funktioniert die Kommunikation. Bei Bluetooth ist das anders. Bluetooth hat in dem selben Bereich 79 Kanäle. Jeder Kanal ist eben ein Megahertz breit und dort wird eben nicht wie bei WLAN auf einem Kanal gesprochen, sondern 1600 Mal pro Sekunde wird der Kanal gewechselt.
+
+00:20:07.624 --> 00:20:09.744
+<v SPEAKER_2>Also Frequency Hopping, wie man das nennt.
+
+00:20:09.764 --> 00:21:07.184
+<v SPEAKER_1>Richtig, das macht das Protokoll sehr robust im Vergleich zu anderen, weil es eben das ganze Band nutzt und eben auch die Hopping Sequenz ist nicht vorbestimmt, die wird eben vom Master, das Bluetooth Pico Netz und hier greife ich schon ein bisschen vor, wird die vorgegeben, aber auch dieser Master, fragt erstmal rum mit dem Kommunikationspartnern oder dem Kommunikationspartner, der da eben auch Bluetooth spricht, sag mal, siehst du irgendwas, was uns stören könnte beim Reden? Jetzt sagt dieses andere Gerät, ja ich habe hier so ein lästiges WLAN, das ist auf Kanal 5 und dann schaltet der Master und sagt ja hier ist auch so ein WLAN auf Kanal 6, diese Kanäle werden von unserer Hopping-Sequenz ausgeschlossen, Und das leg ich jetzt als Master fest. Und da wird dann eben so ein Frequency Hopping Table maintained und auf dem wird dann eben gehoppt. Nach einer Sequenz, die der Master, also der Chef dieser Verbindung vorgibt.
+
+00:21:07.544 --> 00:21:19.964
+<v SPEAKER_2>Das heißt, das ist auch schon mal ein Vorgriff. Es gibt immer einen Chef. Es gibt sozusagen jemanden, der ein Bluetooth Netzwerk überhaupt erst mal quasi regiert, eröffnet, aufmacht. Oder wie das ist dann so was wie der Computer oder was?
+
+00:21:20.404 --> 00:21:44.464
+<v SPEAKER_1>Naja, muss nicht der Computer sein. Also Bluetooth-Geräte, das oft spiegelt die Rolle, Master oder Slave, schon wieder, wie viel das Gerät kann. Also es ist jetzt nicht immer so, dass wenn ich jetzt mit meinem Headset zum Handy verbinde, ist es nicht so, dass automatisch das Handy der Master der Verbindung ist. Also das regelt der Chip irgendwie.
+
+00:21:44.484 --> 00:21:45.304
+<v SPEAKER_2>Kann jeder sein?
+
+00:21:45.324 --> 00:21:46.024
+<v SPEAKER_1>Kann jeder sein.
+
+00:21:46.044 --> 00:21:46.984
+<v SPEAKER_2>Nur einer muss es sein.
+
+00:21:47.004 --> 00:22:11.284
+<v SPEAKER_1>Man kann aber auch, und das müssen die Geräte unterstützen, einen sogenannten Roll-Switch vornehmen. Also kann man sagen, hey, pass mal auf, ich habe zwar jetzt verbunden, bin aber nur ein Headset, mach du mal das lieber, du bist hier das Handy, mach mal einen Roll-Switch. Und wenn das das andere Gerät unterstützt, kann das durchgeführt werden. Und dann ist eben die Verantwortung eben für gewisse Hoppingsequenz-Vorgaben und so weiter beim anderen Gerät.
+
+00:22:12.164 --> 00:22:18.324
+<v SPEAKER_2>Wo befinden wir uns jetzt in diesem Layering? Ist das sozusagen alles noch jetzt so auf der niedrigsten Hardware-Ebene?
+
+00:22:18.944 --> 00:23:04.464
+<v SPEAKER_1>Naja, das ist dann schon irgendwie eine Ebene höher, weil Radio ist ja wirklich nur, wie funktioniert es über die Luftschnittstelle? Und da ist eben klar, ISM-Band und für die Leute, die es interessiert, also in der Grundversion von Bluetooth wird GFSK verwendet, also Gaussian Frequency Shift Keying, ja, verwendet WLAN auch nichts besonderes. Um schnellere Transmissionen zu machen, gibt es dann eben auch andere Codings oder andere Modulationsarten, die dann eben höhere Raten erlauben, aber die sind eben dann auch später eingeführt worden. Das heißt dann Enhanced Data Rate ist, glaube ich, mit Standard 2.0, soweit ich weiß, mit dabei.
+
+00:23:06.964 --> 00:23:45.304
+<v SPEAKER_2>Okay, das heißt, das ist so eine Art Linklayer-Control, der da sozusagen gesprochen wird. Also man hat sozusagen ab dem Moment, wo das erste Mal quasi Protokoll, wo Daten hin und her geschickt werden, auf der allerniedrigsten Ebene, sind die Geräte untereinander in der Lage, sich abzustimmen. Und eine Option, so was denn im Standard vorgesehen ist, und die Geräte das implementieren, ist zum Beispiel, sich darüber im Klaren zu werden, welchen Frequenzbereich man nutzt. In dem Moment, wo irgendwas gesehen wird, so da brummt irgendwas, das ist nicht gut, man empfängt da irgendwas, das ist irgendwie so fu und nicht das, was man erwarten würde. Dann geht man eben einfach aus dem Weg und sagt, wir haben ja noch 1.698 andere Kanäle.
+
+00:23:45.324 --> 00:23:49.524
+<v SPEAKER_1>Ne, 79 Kanäle insgesamt, aber gehoppt wird 1.600 Mal.
+
+00:23:49.544 --> 00:23:52.264
+<v SPEAKER_2>Achso, die Zahl war, wie viele waren es?
+
+00:23:52.284 --> 00:23:53.124
+<v SPEAKER_1>79 Kanäle.
+
+00:23:53.144 --> 00:24:01.384
+<v SPEAKER_2>79, okay, alles klar. Wir haben immer noch 78 über. Lass mal nur die nehmen und so weiter. Wir können natürlich auch irgendwann mal geiler Öfnung behalten.
+
+00:24:01.404 --> 00:24:53.984
+<v SPEAKER_1>Das war auch so eine Idee, zu sagen, okay, was passiert denn jetzt, wenn wir... Ich meine, ein bisschen Vorgriff, Sniffing ist schwierig bei Bluetooth. Eben, wegen dieser Hopping-Sequenz, das geht wirklich rasch. Man braucht sehr teure Geräte oder einfach irgendwie eine Software, die das ganz gut umsetzt. Aber um das einfacher sniffen zu können, hatten wir damals die Idee, um zu sagen, okay, wir sagen jetzt einfach, hier ist überall Lärm, bis auf den einen Kanal, den wir eben irgendwie eintunen können mit unserem GNU Radio und da zuhören können. Und das läuft so nicht. Also Bluetooth lässt sich zwar ein auf gewisse Störquellen, aber Bluetooth weiß genau, es kann eigentlich besser als WLAN, stabiler und robuster, und lässt sich, glaube ich, maximal auf 23 Kanäle reduzieren. Ja, vielleicht auch mehr. Also ich glaube, das ist eine Zahl, die mir hängen geblieben ist.
+
+00:24:54.004 --> 00:25:00.744
+<v SPEAKER_2>Ja, ich stoppe die Zahl jetzt mal einfach. Wie wird denn überhaupt determiniert, wer am Anfang der Master ist?
+
+00:25:00.764 --> 00:25:07.504
+<v SPEAKER_1>Meistens ist es das verbindende Gerät. Also das Gerät, das die Verbindung aufbaut, ist der Master, aber dann wird eben ganz oft ein Roll Switch durchgeführt.
+
+00:25:08.564 --> 00:25:18.904
+<v SPEAKER_2>Ja, was heißt das verbindende Gerät? Also ich meine, alle fangen irgendwie erst mal an auf irgendwelche Frequenzen. Wenn ich jetzt so einen Teil einschalte, sagen wir mal, was wäre das beste Beispiel?
+
+00:25:22.644 --> 00:25:57.584
+<v SPEAKER_1>Ist eigentlich egal, ne? Ja, Auto hat eine Freisprecheinrichtung und du hast dein Handy in der Hosentasche. Obwohl du hast ein iPhone, oder? Obwohl das geht, glaube ich, sogar mit Handsfree. Ja gut, du steigst ein, dein Bluetooth ist aktiviert. Du hast in dem Moment, in dem Szenario, von dem wir jetzt sprechen, hast du das vorher schon mal verbunden, dein Gerät. So, und jetzt startest du dein Auto. Du hast kein Auto, oder? Ich dachte, du bist so ein Stadtmensch, der wirklich nur mit den Öffis unterwegs ist. Was ja nicht schlimm wäre, aber...
+
+00:25:57.604 --> 00:26:04.064
+<v SPEAKER_2>Na, ich habe ja auch Kinder, da hat man auch ein Auto, aber... Denken wir uns das einfach mal, es muss ja auch jetzt nicht nur von mir abhängen.
+
+00:26:04.544 --> 00:26:58.544
+<v SPEAKER_1>Es gibt Leute, die haben sowas. Du steigst ins Auto und dein Gerät, also betätigst die Zündung. Und jetzt wird dein Bluetooth Handsfree im Auto verbaut. Du würdest sagen, ok, das letzte Mal habe ich mit dem Handy, mit dem Gerät, mit der Bluetooth-Geräte-Adresse nur mal sowieso geredet, schauen wir mal, ob es da ist. Versuch das eben zu finden und eine Verbindung herzustellen. Da passiert dann ein Paging, sag mal, bist du da? Ok, ich bin da, wir reden jetzt miteinander. Und weil das Gerät schon mal verwendet wurde, ist es auch gepairt. Das heißt, es liegen auf beiden Seiten Linkies vor, die eben ident sind. Wieder ein kleiner Vorgriff. Und dann fangen die Geräte an zu reden. Das heißt, dann steht die Verbindung. Und wenn du einen Anruf bekommst, schaltet sich das Radio ab, je nachdem, wie das eben im Auto implementiert ist. Und du hörst alles so, wie es eben bei einer Freisprecherrichtung ist.
+
+00:26:58.564 --> 00:27:00.944
+<v SPEAKER_2>Aber wer wäre jetzt der Master sozusagen in dem Moment?
+
+00:27:00.964 --> 00:27:07.044
+<v SPEAKER_1>In dem Moment ist das verbindende Gerät, das heißt ein Hands-free Set. Genau, das ist dann das Master Gerät.
+
+00:27:07.064 --> 00:27:14.284
+<v SPEAKER_2>Weil es der erste ist, der sozusagen auf dem Netzwerk einen anderen sucht. Weil ich würde gerne mit irgendeinem von euch verbinden.
+
+00:27:14.284 --> 00:27:14.844
+<v SPEAKER_1>Genau.
+
+00:27:16.284 --> 00:27:26.644
+<v SPEAKER_2>Naja, aber bleiben wir erstmal bei dem Protokoll als solchen. Wie entwickelt sich das? Also wollen wir jetzt mal so von unten nach oben marschieren?
+
+00:27:28.024 --> 00:27:28.824
+<v SPEAKER_1>Ja, es gibt eben...
+
+00:27:28.844 --> 00:27:30.184
+<v SPEAKER_2>Denseits der Frequenzen.
+
+00:27:30.204 --> 00:27:59.724
+<v SPEAKER_1>Es gibt eben die Frequenzen und eben diese Absprache-Mechanismen. Und dann kommt die Baseband-Layer. Dort sind dann eben zwei dominante Verbindungstypen. Das eine sind eben synchrone Pakete, die eben für Sprachübertragung verwendet werden. Die sind fix getaktet mit 64 Kilobit pro Sekunde. Das verwenden Headsets zum Beispiel. Gerade bei Audio, das wirst du wissen, ist es so, dass jede kleine Latenz auffällt. Oder jeder Jitter, so muss man sagen, oder? Korrekt.
+
+00:27:59.744 --> 00:28:24.324
+<v SPEAKER_2>Sowohl als auch. Die Latenz würde einem dann auffallen, wenn man sich selbst hört. Aber klar, wenn es jittert, also wenn es mal schneller, mal langsamer wird, dann hat man halt dieses Geier. Also definitiv klar, Audio ist ein typischer synchroner Dienste-Typ. Das ist hier sozusagen schon auf der allerniedrigsten Schicht über der Hardware sozusagen.
+
+00:28:24.344 --> 00:28:55.124
+<v SPEAKER_1>Also es ist in der Hardware implementiert. Es ist im Chip drin. Da gibt es eben die SCO-Pakete. Das sind eben die Synchronous Connection Oriented. Und dann gibt es die ACL-Pakete, die sind eben Asynchronous Connection-less. Also wie ein bisschen TCP-UDP, aber eben mit dieser Synchronisation. Und das sind so die Hauptpaket-Typen, die eben Sachen transportieren von A nach B.
+
+00:28:55.144 --> 00:29:11.244
+<v SPEAKER_2>Interessant. Also das heißt, Bluetooth geht sozusagen von vornherein schon mal zwei Wege und hat expliziten Support eben für diesen Audiogramm. Da merkt man halt einfach wofür es gemacht war. Meines Wissens ist das Erste, was mit Bluetooth gemacht wurde, waren einfach diese Headsets. Oder?
+
+00:29:11.264 --> 00:29:19.604
+<v SPEAKER_1>Das war ganz, ganz sicher der große Treiber für Bluetooth-Technologie. Autoindustrie hat das eingebaut und damit war es klar, dass das ein Handy sein muss.
+
+00:29:20.984 --> 00:29:22.284
+<v SPEAKER_2>Ach so, die Autoindustrie hat angefangen.
+
+00:29:22.304 --> 00:29:53.984
+<v SPEAKER_1>Autoindustrie, naja, ich meine, Headsets gab es vorher schon, aber als die Autoindustrie das für sich erkannt hat, dass das praktisch ist, da habe ich den Eindruck, das war dann der große Durchbruch, dass das wirklich praktisch ist. Und natürlich eben diese herstellerübergreifende Geschichte, ich muss jetzt nicht mehr alles beim selben Hersteller kaufen, du kennst das ja als Apple-Fan, das fällt eben zum Teil bis hin weg. Und das war vielen Consumern sehr recht, natürlich. Und wenn es dann auch funktioniert, ist es eine schöne Sache.
+
+00:29:57.024 --> 00:30:10.484
+<v SPEAKER_2>Das heißt, an dieser Stelle gibt es, also wenn man von einer Verbindung spricht, auf der Ebene des Baseband-Layers, dann meint man eine Audio-Verbindung. Und zwar ganz konkret eine 64 Kbps.
+
+00:30:10.504 --> 00:30:26.664
+<v SPEAKER_1>Nee, Baseband kennt beide Arten von Verbindungen. Also Synchrone, das ist meistens Audio, kann auch für andere Payload hergenommen werden. Und dann gibt es eben diese Connectionless. Das ist das, was eben alles andere abdeckt. Also wenn man jetzt zum Beispiel, wie wir vorher schon geredet haben, AT-Befehle...
+
+00:30:26.684 --> 00:30:29.224
+<v SPEAKER_2>Also das heißt, Synchronos ist nicht nur für Audio?
+
+00:30:29.244 --> 00:30:37.444
+<v SPEAKER_1>Ist nicht nur für Audio. Alles, was eben von der Datenmenge da reinpasst, wird auch für Video verwendet. Allerdings eben erst mit sehr schnelleren Versionen.
+
+00:30:37.604 --> 00:30:46.764
+<v SPEAKER_2>Ja, okay, gut, verstehe. Also generell wird zwischen Synchronen- und Asynchronenverbindungen, also zwischen Synchronenverbindungen und Asynchronen-Nichtverbindungen unterschieden.
+
+00:30:46.784 --> 00:30:47.084
+<v SPEAKER_1>Genau.
+
+00:30:48.464 --> 00:30:50.704
+<v SPEAKER_2>Gibt es auch asynchrone Unverbindungen? Gibt es nicht?
+
+00:30:50.724 --> 00:31:01.124
+<v SPEAKER_1>Ich denke nicht. Das liegt dann weiter drüber, dass man da eben so eine Reconnect oder Re-Transmission irgendwie implementiert. Aber gibt es da jetzt nicht.
+
+00:31:01.144 --> 00:31:03.144
+<v SPEAKER_2>Das war es sozusagen mit diesem Baseband-Layer.
+
+00:31:03.164 --> 00:31:04.564
+<v SPEAKER_1>Das war die Baseband-Layer.
+
+00:31:04.584 --> 00:31:06.244
+<v SPEAKER_2>Und was setzt das darauf auf?
+
+00:31:06.264 --> 00:31:36.324
+<v SPEAKER_1>Darauf aufsetzt dann der Link-Manager. Link-Manager ist auch noch in Hardware implementiert, also in den meisten Fällen. Und der kümmert sich jetzt um Verschlüsselung. Da werden quasi über die Betriebssystem abgefragte Informationen zum Beispiel beim Pairing an den Link-Manager übergeben. Und der ist dann wiederum verantwortlich für Verschlüsselung der Sachen, die übertragen werden oder eben nicht Verschlüsselung der Sachen, die übertragen werden und fürs Generieren dieser Keys zuständig.
+
+00:31:37.484 --> 00:31:39.264
+<v SPEAKER_2>Was ist das für eine Verschlüsselung?
+
+00:31:39.284 --> 00:32:12.824
+<v SPEAKER_1>Die Verschlüsselung ist eigentlich ähnlich wie bei WLAN auch. Das ist einfach ein XOR auf einem Keystream, die mit der Datenmenge überlagert wird. Aber die Key Generation ist halt unterschiedlich. Das ist ja so, jeder kennt das, der schon mal ein Headset angeschlossen hat. Man pairt und das Pairing involviert bei den älteren Geräten eben diese Sache mit der Pin. 4x0, 1, 2, 3, 4. Oder wenn man zwei Geräte pairt, die eben nicht voreingestellte Pins hat, dann kann man diese Pins selber festlegen.
+
+00:32:12.844 --> 00:32:15.604
+<v SPEAKER_2>Beziehungsweise man kriegt irgendwas angezeigt, was man eingeben soll.
+
+00:32:15.624 --> 00:32:26.804
+<v SPEAKER_1>Das ist das neue Pairing, da reden wir nachher drüber. Aber dieses Pairing, das erzeugt eben diesen symmetrischen Link-Key, der dann eben auf beiden Seiten draufgexort wird.
+
+00:32:26.864 --> 00:32:34.664
+<v SPEAKER_2>Okay, das heißt, dass das sozusagen für das Pairing auch dieser Link-Manager, dieser Layer, zuständig ist? Das Pairing findet auf dieser Link-Manager-Ebene statt?
+
+00:32:34.684 --> 00:32:57.164
+<v SPEAKER_1>Genau, passiert im Chip. Und diese Abfragedialoge, die dich fragen, welche PIN hättest du gerne oder was willst du eingeben, das wird über die HCI-Schnittstelle, die eben direkt oberhalb des Link-Managers liegt, quasi nach unten vom Betriebssystem teil übergeben. HCI, Host Control Interface. Genau.
+
+00:32:57.184 --> 00:32:59.844
+<v SPEAKER_2>Bezieht sich das auf ein spezielles Protokoll?
+
+00:33:00.804 --> 00:33:32.584
+<v SPEAKER_1>Nee, bezieht sich nicht. Das ist einfach so die Trendlinie. Hier hört die Hardware auf. Und darüber fängt die Software an. Also im Regelfall. Und da wird eben zum Beispiel die PIN übergeben. Dort kann aber auch das Betriebssystem Sachen steuern wie, okay, ich möchte jetzt mal eine Verbindung aufbauen. Also das funktioniert alles über diese Schnittstelle. Da gibt es gewisse Events und Funktionen, die eben in beide Richtungen funktionieren. Und so kommuniziert eben der Host-Teil vom Stack mit dem Hardware-Teil vom Stack.
+
+00:33:32.764 --> 00:33:46.364
+<v SPEAKER_2>Und damit im Wesentlichen mit dem Link-Manager, der eben wie dein Name schon impliziert, eben für die Beiführung von Links zuständig ist. Heißt das, dass dann bei Bluetooth alle Verbindungen generell bei Design immer verschlüsselt sind?
+
+00:33:46.384 --> 00:34:19.624
+<v SPEAKER_1>Nein, also da gibt es verschiedene Security-Modes, die der Standard festlegt. Es gibt eben, ich glaube Security-Mode 1 heißt keine Verschlüsselung. Mode 2 heißt Verschlüsselung auf Basis der Applikation. Die kann dann sagen, ok, ich bin ein unverschlüsselter Service oder ich bin ein verschlüsselter Service. Das steht dann quasi, beim Verbindungsaufbau wird das abgeklärt. Und dann gibt es Mode 3, das eben für jede Verbindung der Pin erfordert, also eine Link-Key-Generation erfordert. Das hat vorher Nachteile.
+
+00:34:19.644 --> 00:34:28.504
+<v SPEAKER_2>Was heißt denn Mode 2, die Applikation macht selber das Krypto, das heißt sie muss selber die Encryption machen oder sie sagt nur, was der Key ist?
+
+00:34:28.524 --> 00:34:44.064
+<v SPEAKER_1>Nein, das bedeutet, du hast auf deinem Handy verschiedene Services und einer sagt, bei mir sollte verschlüsselt werden. Diese Information geht runter an den Link-Manager und der sagt, der User greift drauf zu und wünscht, dass das verschlüsselt wird und ich kümmere mich darum.
+
+00:34:44.084 --> 00:35:00.004
+<v SPEAKER_2>Und dieser Mode wird quasi einmal gesetzt, das ist sozusagen der Betriebsrahmen, in dem das alles ist. Das heißt, die Software könnte auch daherkommen und sagen, hier Mode 1, Krypto aus. Und andere Geräte würden einfach sagen, okay, alles klar, wenn du keine Krypto willst, dann will ich auch keine Krypto. Oder sagen die dann so, nee, kommen wir nicht so?
+
+00:35:00.024 --> 00:35:13.224
+<v SPEAKER_1>Es ist schon so, dass wenn ein Gerät Krypto will, das andere nicht, dass dann Krypto gemacht wird. Also das ist ein typischer Fall, wenn man eben ein Gerät hat, was Mode 3 implementiert ist, dann kann man noch so ein Mode 1 Gerät haben, das wird immer link gemacht.
+
+00:35:13.244 --> 00:35:17.884
+<v SPEAKER_2>Okay, verstehe. Man kann also nicht einfach sagen, ich kann eh kein Krypto und dann...
+
+00:35:17.904 --> 00:35:22.984
+<v SPEAKER_1>Das wäre zu leicht. Die müssen alle Krypto kommen, können sie auch alle, weil es eben im Chip drinsteckt.
+
+00:35:23.164 --> 00:36:04.464
+<v SPEAKER_2>Okay, im GSM-Netzwerk ist das anders. Naja, der sagt, ach nee, Krypto heute, Samstag Nachmittag, nö. Lass mal stecken. Okay, verstehe, alles klar. Also, wir haben diese Frequenzlayer, pure sozusagen Physik, darüber Baseband, der sozusagen generell zwischen synchronen und asynchronen Verbindungen unterscheidet und darauf werden dann die eigentlichen Verbindungen zwischen Geräten gemacht. Das heißt, an der Stelle kommt dann wahrscheinlich auch die MAC-Adresse sozusagen mit ins Spiel, also die Geräteadresse, die Adresse eines spezifischen Devices, so wie man sie aber bei Ethernet, bei WLAN etc. überall auch hat. Ist das richtig?
+
+00:36:04.484 --> 00:36:09.744
+<v SPEAKER_1>Die kommt eigentlich schon weiter unten im Spiel. Also, ich nehme an, die wird im Baseband verwendet schon, sehr Media Access.
+
+00:36:09.764 --> 00:36:10.384
+<v SPEAKER_2>Ja, stimmt.
+
+00:36:10.404 --> 00:36:10.604
+<v SPEAKER_1>Genau.
+
+00:36:10.624 --> 00:36:30.584
+<v SPEAKER_2>Das Media Access-Control müsste eigentlich darunter sein. Okay, wie auch immer. Auf jeden Fall dort wird sie dann verwendet, um Verbindungen zu machen. Und dieser Layer macht halt auch sozusagen Krypto, das ist meistens schon in der Hardware implementiert. Und wie diese Krypto gemacht wird, ist im Prinzip wählbar, hängt aber auch davon ab, wie die anderen im Netzwerk sich verhalten.
+
+00:36:30.604 --> 00:36:36.244
+<v SPEAKER_1>Also, ob diese Krypto gemacht wird. Also, es gibt entweder Krypto oder nicht, aber nicht unterschiedliche Krypten.
+
+00:36:36.264 --> 00:36:41.904
+<v SPEAKER_2>Was ist denn diese Krypto konkret? Also, welcher Krypto-Verschlüsselungs-Algorithmus wird denn da verwendet?
+
+00:36:41.924 --> 00:36:46.164
+<v SPEAKER_1>Also, für die Link-Key-Erstellung wird der Safer-Plus-Algorithmus verwendet.
+
+00:36:46.184 --> 00:36:47.364
+<v SPEAKER_2>Safer-Plus?
+
+00:36:48.424 --> 00:36:59.984
+<v SPEAKER_1>Also, das ist ein AES-Krypto, 128-Bit Blocklänge. Ich habe da selber gestern nochmal geguckt, weil Krypto ist nicht so meins. Also, so dünnes Eis bei mir.
+
+00:37:00.004 --> 00:37:02.204
+<v SPEAKER_2>Secure and Fast Encryption-Routinen.
+
+00:37:02.224 --> 00:37:02.544
+<v SPEAKER_1>Genau.
+
+00:37:02.884 --> 00:37:05.484
+<v SPEAKER_2>Aber basiert sozusagen auf AES.
+
+00:37:05.504 --> 00:40:03.924
+<v SPEAKER_1>Das ist ein AES-Krypto. Also, da gibt es, glaube ich, diese Gruppe von AES-Kryptos und da ist der dabei. Das ist irgendwie zertifiziert oder anerkannt oder, weiß ich nicht, für sicher befunden und gut. Und da gehört er dazu, gilt eigentlich auch als sicher. Eben mit der Ausnahme, dass man so jetzt um den Punkt der Sicherheit und Link-Key oder Pairing mal kurz anzusprechen, da gab es eben sehr viele Attacken, wo dieser Link-Key rekonstruiert wurde. Das geht allerdings nur, wenn ein Angreifer über das Equipment verfügt, das es braucht, um Bluetooth abhören zu können. Das ist eben, wie vorher schon erwähnt, nicht ganz billig. Es sei denn, man kennt Leute, die Leute kennen, die dann so eine Software gecrackt haben, die auch 10.000 Dollar kostet. Und natürlich so Frequency Analyzers von Rode und Schwarz oder anderen Herstellern, die kosten natürlich auch so viel. Und wer sowas hat, kann dann eben im Moment des Pairings alle Zutaten bis auf die PIN, die eben für den Linky verwendet werden, abfangen. Also die werden in dem Standard plain übermittelt. Und wenn man das dann hat, dann braucht man eigentlich nur noch raten. Und da kommen eben diese PIN-Cracker ins Spiel, die machen dann einfach einen Brute Force. Und für eine 4-Digit-PIN ist das schnell passiert. Und da ist eben der Punkt, wo man gesagt hat, Pairing Bluetooth ist unsicher auf einer konzeptionellen Ebene. Da gab es eine Attacke, wo so ein Pairing entforst werden konnte. Das war dann 2005, glaube ich. Shake It and Wool, die haben dann eben probiert, dass man eben auf dieser niederen Ebene sagt, okay, ich bin jetzt ein Gerät und ich habe den Link hier vergessen. Also, das war einfach so eine Impersonation. Da hat man eben die MAC-Adresse des Kommunikationspartners gespooft und gesagt, ich weiß nichts mehr. Und dann hat das andere Gerät gesagt, okay, da machen wir nochmal neu. Und in dem Moment, wo dann eben nochmal neu so ein Pairing-Prozess durchgeführt wird, in dem Moment hätte eben der Angreifer die Möglichkeit, die allerdings sehr theoretisch ist. Was heißt nicht mehr? Die ist möglich, aber eben nicht so praktikabel. In dem Moment würde dann je nach Implementierung nochmal neues Pairing gemacht werden. Und unter Umständen könnte ein Angreifer eben diese Zutaten rauswischen und sich dann einfach mit der Pin ganz einfach das hinwürfeln und die Verbindung abhören. Allerdings war das eben auch Teil unserer Test-Suite auf diesem Unplug-Fest, dass man, wenn man eben so eine Verbindungsamnesie vortäuscht, dann ist das nicht so, dass alle Partner dann sagen, ok, dann machen wir nochmal ein neues Pairing. Manche machen das eben nicht. Wenn du so blöd bist, dir das zu merken, dann darfst du mit uns auch nicht spielen. Genau, richtig.
+
+00:40:03.944 --> 00:40:14.984
+<v SPEAKER_2>Habt man denn so den Eindruck, dass so diese ganzen Player in diesem Bluetooth-Bereich da auch irgendwie ausreichend Hirnschmalz in ihre Implementierung hineinversenken? Oder ist das alles so ein Wildwuchs?
+
+00:40:15.004 --> 00:42:01.444
+<v SPEAKER_1>Also da bin ich mir ziemlich sicher, dass da viel Hirnschmalz reingeht. Ich kenne viele Leute von der Bluetooth-SIG bzw. von Partnerfirmen, die wirklich gute Leute haben. Also die, die die Spezifikation mitschreiben, die wissen wirklich, was sie tun. Ein bisschen problematisch ist es schon, weil der Standard viele so Freiheitsgrade hat. Hat man ja gesehen, also es gibt ein paar Sachen, die stehen eben nicht drin, dass man sie nicht macht. Aber wenn sie gemacht werden, ist blöd. Und die großen Player, die wissen das mittlerweile. Also wir haben damals sehr, sehr wichtige Aufklärungsarbeit geleistet, glaube ich. Oder glaube ich, darf ich sagen. Aber es ist natürlich so, dass eben durch das ganze Offshore-Development und so weiter einfach mindere Qualität zugekauft werden. Ich sage das jetzt wirklich wertfrei, aber wir haben damals auch Tests mit Leuten gemacht, die eben noch nicht so lange dabei waren und haben uns wirklich am Kopf fassen müssen. Und haben uns gewundert, dass die Anfängerfehler nochmal neu gemacht werden. Und ich weiß nicht, wie es mittlerweile ist. Ich bin da ein bisschen raus schon aus dieser ganzen Situation, wo die Geräte wirklich alle an meinem Schreibtisch waren. Also bei diesem Anplugfest hatte man alle Geräte da und konnte wirklich frei testen. Und wenn ich das jetzt machen wollte, dann müsste ich viel Geld investieren. Das geht nicht. Aber ich möchte nicht wirklich wissen, wie viele Geräte am Markt sind, die eben vielleicht irgendwie Anfängerfehler neu implementiert haben oder einfach so Sachen zu wenig Beachtung geschenkt haben. Also ich traue es mich gar nicht sagen, dass es so ist. Ich könnte es nur vermuten. Und vielleicht hat die Bluetooth-SICK eben unser Team von damals ersetzt durch irgendwelche anderen Mechanismen, die eben solche Fehler aufdecken.
+
+00:42:03.024 --> 00:42:11.124
+<v SPEAKER_2>Vorhin hast du jetzt den Begriff Piconet fallen lassen. Sind wir da jetzt schon? Fällt das jetzt hier in diesen Bereich, so was wir jetzt vorgehören?
+
+00:42:11.144 --> 00:42:22.944
+<v SPEAKER_1>Na ja, klar. Also jede Verbindung, die mit Bluetooth passiert, ist eigentlich schon Piconet. Selbst wenn es nur zwei Kommunikationspartner sind. In unserem Beispiel waren das eben die Hands-free-Einrichtung von deinem Auto und dein Handy.
+
+00:42:22.964 --> 00:42:24.884
+<v SPEAKER_2>Okay, aber es könnten auch mehrere daran teilnehmen.
+
+00:42:24.904 --> 00:43:06.124
+<v SPEAKER_1>Können mehrere daran teilnehmen. Theoretisch eben bis zu 255. Aber das ist natürlich so, dass nur acht dieser 255 theoretischen Partner gleichzeitig aktiv sein können. Also man sagt, es geht um diese acht Geräte, das glaube ich weiß man. Das sind eben die aktiven Teilnehmer in einem Piconet. Einer von diesen acht ist der Master, der eben alles regelt. Und der multiplex, der jetzt, wenn er mit den anderen redet, aber meistens redet er nur mit einem anderen. Also es gibt wenige Implementierungen, wo halt wirklich mehrere, mehr als drei Geräte überhaupt miteinander reden können, weil auch die Chips damals zumindest nicht wirklich mehr als zwei gleichzeitig verbündete haben.
+
+00:43:06.844 --> 00:43:15.864
+<v SPEAKER_2>Was heißt denn untereinander? Das heißt, dass wenn einer was sagt, dann empfangen das quasi alle. Dann verwenden sie sozusagen denselben Krypto-Schlüssel?
+
+00:43:16.084 --> 00:43:52.264
+<v SPEAKER_1>Nö. Also Krypto ist immer gerätespezifisch. Also das Gerät merkt sich einen Schlüssel zusammen mit einer eindeutigen Bluetooth-Hardware-Adresse. Wenn die jetzt ein PicoNet machen, haben die jeweils zwei Geräte einen eigenen Schlüssel. Und dann gibt es verschiedene encryption-Modes, wo eben einmal heißt, okay, wir reden hier bei uns im PicoNet unverschlüsselt oder es heißt Broadcast unverschlüsselt, direkte Kommunikation verschlüsselt oder es heißt alles verschlüsselt. Aber dafür muss eben der Master wirklich jedem das neu quasi alles sagen, auch die Broadcasts.
+
+00:43:53.024 --> 00:44:05.984
+<v SPEAKER_2>Na was ist denn dann der Sinn von diesem PicoNet-Konzept? Warum redet man überhaupt von so etwas? Und was heißt es, dass man dann mehrere Geräte in ein Netz packen kann? Was ist da so die Intention?
+
+00:44:06.004 --> 00:45:17.224
+<v SPEAKER_1>Na ja, die Intention ist klar. Man möchte natürlich gerade, wir haben ja im Vorgespräch schon ein bisschen über diese Wireless Personal Area Networks gesprochen. Das war ja so eine Vision, dass man eben alle Geräte, die irgendwie intelligent sind und am Körper trägt, miteinander reden sollen, dass einem das Leben schöner wird und alles besser. Und das war eben so dieser Ansatz, den man da verfolgt. Und da ist man vielleicht davon ausgegangen, dass acht Geräte für so ein einfaches Szenario schon ausreicht. Und natürlich kann man mit Bluetooth auch größere Verbände machen von Geräten. Also es gibt zumindest im Standard diese Möglichkeit, die heißt dann nicht Piconet, sondern Scatternet. Scatternet ist eben eine Verbindung von Piconets, wo dann eben einer der Slave Nodes in einem Piconet ein Master in einem anderen Piconet ist. Also das klappt und so wären eben dann so Verbunde von Netz, von Piconetzen möglich. Und theoretisch können das bis zu 10 solcher Piconets in einem Scatternet sein, was eben 255 mal 10 Geräte ausmachen würde.
+
+00:45:19.704 --> 00:46:33.824
+<v SPEAKER_2>Wenn ich jetzt, es bin mir nicht ganz so sicher, ob ich es verstanden habe. Du hast gesagt, dieses Pairing hat sich einmal geändert in der Art und Weise, wie es läuft. Wenn ich jetzt heute, also angenommen, ich nehme jetzt meine, ich habe so eine Wii zu Hause, habe ich auch, aber nehmen wir es mal theoretisch an. Beziehungsweise mittlerweile verwende ich ja die Wiimotes hier auch mit meinem Mac ganz erfolgreich. Zwar jetzt nicht gerade in diesem Moment, aber so beim Podcasting ist das ganz hilfreich. So, das ist jetzt auch ein Bluetooth Device. Hat eine eigene Mac-Adresse, einen gewissen Typ hat auch einen Namen. Wie, also was tun diese Geräte jetzt genau, bis sie eine funktionierende Verbindung haben, über die sie Daten austauschen können und was verwenden sie dann, um diese Daten auszutauschen? Also, gehen wir vielleicht mal los. Ich schalte irgendwie an meinem Rechner Bluetooth ein und sonst ist kein anderes Gerät zu sehen. So, und hat auch noch nie ein anderes Gerät gesehen. Verinnern wir ja diesen Fall mit, kennen sich alle schon. Jetzt schalten wir mal irgendwie alles auf dunkel. Vollkommen jungfreundlicher Computer. Blickt das erste Mal in die Welt des Bluetooths. Was tut er dann?
+
+00:46:33.844 --> 00:46:41.184
+<v SPEAKER_1>Also, erstmal tut er nichts. Er hat sein Interface aktiviert und verbraucht erstmal Strom. Das kennen alle, die Bluetooths kennen.
+
+00:46:41.204 --> 00:46:42.364
+<v SPEAKER_2>Aber er ist doch so stromsparend.
+
+00:46:42.604 --> 00:47:10.444
+<v SPEAKER_1>Ja, es gab eine Zeit, wo Bluetooth stromsparender war als WLAN. Aber WLAN-Chips haben sich auch verbessert. Durch das Frequency Hopping braucht Bluetooth, je nach Sendeleistung natürlich auch, da gibt es auch verschiedene Klassen, mehr oder weniger Strom, vielleicht gleichauf, aber wenn man es nicht braucht, braucht man es nicht anmachen. Hält länger der Akku. Aber du hast recht, du schaltest ein und möchtest jetzt mit einem anderen Gerät, mit deiner We-Mode oder mit einer We-Mode verbinden.
+
+00:47:12.324 --> 00:47:32.024
+<v SPEAKER_2>Na ja, erstmal kann ich mich ja überhaupt, wie sagt man so schön, discoverable machen. Also ich kann ja sozusagen überhaupt erstmal entscheiden, ob ich meine Identität im Netzwerk preisgebe. Das ist ja so eine Funktionalität wie Bonjour, Service Discovery im weiteren Sinne. Das ist quasi bei Bluetooth schon Teil des Systems.
+
+00:47:32.044 --> 00:47:49.904
+<v SPEAKER_1>Also da ist das Stichwort Autoconfiguration, das ist da dabei. Und dieses discoverable oder nicht bedeutet eigentlich nur, dass du eben über diese vorher erwähnte Host-Control-Interface-Schnittstelle dem Chip sagst, reagier bitte auf Inquiry-Requests oder nicht.
+
+00:47:51.284 --> 00:47:53.764
+<v SPEAKER_2>Eine Inquiry-Request ist was genau?
+
+00:47:53.784 --> 00:48:25.684
+<v SPEAKER_1>Das ist genau das, was dein Rechner macht, um andere oder dein Bluetooth-Interface im Rechner macht, um andere Geräte zu entdecken. Wenn du jetzt diese Inquiry startest, fängt dein Gerät, dein Interface zu schreien an, genau eben hier auf dieser definierten Radioschnittstelle, und sagt, hallo, ist hier irgendwie ein anderes Bluetooth-Gerät. Und alle, die jetzt den Befehl haben, zu sagen Inquiry oder Discoverable, sagen dann, ja, ich bin hier. Das ist meine Adresse.
+
+00:48:25.704 --> 00:48:38.064
+<v SPEAKER_2>Das heißt, man schreit nicht regelmäßig raus, dass man da ist, sondern man reagiert auf Anfragen, die quasi explizit verlangen, zu wissen, wer da ist.
+
+00:48:38.084 --> 00:48:41.504
+<v SPEAKER_1>In dem Moment bist du ja noch in keiner Verbindung. Da bist du einfach nur on.
+
+00:48:41.524 --> 00:48:53.144
+<v SPEAKER_2>Das heißt, es schreit einfach... Also, wenn ich Discoverable bin, macht der Rechner sozusagen erst mal eigentlich gar nichts, außer dass, wenn jetzt irgendein anderes Gerät kommen würde und fragen würde, wer ist denn hier, dass es dann antworten würde.
+
+00:48:55.584 --> 00:49:43.584
+<v SPEAKER_1>Und dann gibt es eben noch dieses Discoverable und dann gibt es noch ein Pageable Flag, das bedeutet, Leute dürfen verbinden. Das sind, wenn man Linux mit den Konfigurationsdaten oder auch bei anderen spielt, dann gibt es da eine Unterscheidung. Das ist nicht in allen Stacks so implementiert, aber bei Linux sieht man eben recht schön, was eigentlich möglich ist oder was es da überhaupt zu drehen gibt. Und genau, jetzt bist du Discoverable oder ein anderes Gerät ist Discoverable. Du machst so einen Inquiry Scan und alle Geräte in deiner Reichweite schreien, hier bin ich. Dann wird der Name aufgelöst, was dir hilft, deine Geräte zu identifizieren. Diese Bluetooth Device Address ist übrigens im selben Register geführt, wie eben auch die MAC-Adresse von Netzwerkarten. Jetzt habe ich einen Namen vergessen, da gibt es so eine Liste von der IEEE.
+
+00:49:45.404 --> 00:49:50.564
+<v SPEAKER_2>Ja, die man immer nicht weiß, wenn man irgendwas...
+
+00:49:50.584 --> 00:51:26.204
+<v SPEAKER_1>Da habe ich jetzt echt zu viele Abkürzungen im Kopf. Ja, egal. Da wird dir geführt, dass es dasselbe Gremium ist, das diese Nummern vergibt. Da suchen eben Hersteller drum an und kriegen dann eben die drei Prefix-Bytes zugeteilt und den Rest dürfen sie selber einzahlen. Also es sind sechs Bites, die so eine Geräte-Adresse lang ist. Auf jeden Fall kriegt die das suchende Gerät zurück. Verbindet dann hin und fragt mal, wie heißt du überhaupt? Und dann sagt die V-Mode, ich bin die V-Mode. Zusammen mit der Information, bzw. bevor der Name noch übertragen wird, sondern in dem Schritt vorher, wo die Adresse übertragen wird, sagt die V-Mode auch noch ungefähr, was sie denn so ist. Da gibt es eine Geräte-Klasse. Die Device-Klasse ist unterteilt in Major und Minor Parts. Es gibt da im Internet ganz viele Generatoren für die richtige Device-Klasse. Da kann man dann sagen, ich bin General Purpose oder ich bin Joystick, je nachdem, was das Gerät kann, oder ich bin eine Tastatur. Es gibt sich grob zu erkennen, bevor das Gerät noch suchen muss, was kann es sonst im Detail, sagt das Gerät schon mal, was es ist. Das kann man natürlich vorgeben, die meisten Geräte legen darauf wenig Wert, weil sie einfach mal sehen wollen, welche Profile kann es überhaupt. Aber diese Device-Klasse ist schon ein erster Suchfilter. Wenn man sagt, ich suche jetzt nur Headsets, dann suche ich eben nur Geräte, die Headset-Klasse haben.
+
+00:51:26.224 --> 00:51:28.364
+<v SPEAKER_2>Was ist denn dann so eine Remote-Finder?
+
+00:51:28.384 --> 00:51:39.664
+<v SPEAKER_1>Ja, wahrscheinlich ein Human Interface Device, Joystick, passt jetzt am ersten. Ich habe jetzt die Liste nicht komplett im Kopf, aber man kann da gucken, da gibt es so lustige Kombinationen auch.
+
+00:51:39.684 --> 00:51:43.784
+<v SPEAKER_2>Aber es ist unwahrscheinlich, dass jetzt Nintendo dafür eine eigene Device-Klasse registriert hat?
+
+00:51:43.804 --> 00:51:50.584
+<v SPEAKER_1>Also das kann man auch nicht selber registrieren. Das ist ein Byte insgesamt, 4-Bit Major, 4-Bit Minor und da ist dann auch schnell mal fertig.
+
+00:51:52.824 --> 00:51:57.904
+<v SPEAKER_2>Das ist also sozusagen erst mal die grobe Unterscheidung. Und dann muss man das Gerät selber nochmal genau fragen.
+
+00:51:57.924 --> 00:52:14.344
+<v SPEAKER_1>Genau, und dann fragt man üblicherweise das Gerät, wenn man das nicht schon kennt oder die Adresse irgendwie zuordnen kann, wie heißt denn das überhaupt? Das ist ein extra Request und dazu muss das Gerät pageable und verbindbar sein, weil es eben schon der erste inhaltliche Request ist.
+
+00:52:14.364 --> 00:52:32.664
+<v SPEAKER_2>Das sieht man ja meistens so beim Scannen, wenn man so nach Bluetooth-Geräten ausschaut. Dann tauchen da erstmal die ganzen MAC-Adressen auf. Und dann erst später kommt der Name dazu. Das heißt, man sieht erstmal, ah, da ist ein, mit der MAC-Adresse lalala. Und dann müssen die explizit eins nach dem anderen gefragt werden, du übrigens, du mit der MAC-Adresse lalala, wie heißt denn du? Und was bist denn du überhaupt?
+
+00:52:33.164 --> 00:53:51.744
+<v SPEAKER_1>Genau, darum dauert der Prozess auch meistens ein bisschen länger. Genau, das passiert. Und ja, nächster Schritt ist eben Verbindung. Und da kommt jetzt darauf an, wie der Linkmanager gepfohlt ist, ob der eben Security Mode 1, 2 oder 3 ist oder ob das Gerät, also jetzt wenn das Gerät, das du um den Namen fragst, sogar schon Security Mode 3 wäre, dann müsstest du für diese Namensauflösung auch schon ein Pairing machen. Das ist natürlich lästig. Und darum wird dieser Security Mode 3 fast nicht mehr eingesetzt. Hat auch eine sehr negative Annotation dieser Security Mode 3, aber dazu später ein bisschen mehr. Auf jeden Fall, du hast geredet, weißt jetzt, wie das heißt, das Gerät, was da in deiner Nähe ist, oder wie die Geräte heißen, was für eine Sorte sie sind, und weißt einfach mal, wer da ist. Darauf kann man natürlich dann sagen, okay, machen wir Presence-Checks und schauen, wann unsere Mitarbeiter mit ihren Handys irgendwie auftauchen. Idealerweise kann man eine Zeiterfassung darauf aufbauen, wenn die Leute ihr Bluetooth immer anlassen würden. Das war einfach mal so, oder das war eins der ersten Bedenken, die da viele geäußert haben. Mensch, wenn ich das anhabe, dann kann ja jeder sehen, auch hier der Bürobesitzer über mir, ob ich da bin oder nicht. Und das ist ja blöd und so.
+
+00:53:52.044 --> 00:54:13.884
+<v SPEAKER_2>Ich hatte mal so eine ganz pfiffige Software für meinen Mac, wo ich sozusagen den Screen lock automatisch aktiviert, wenn mein Handy nicht mehr zu sehen ist und dann sich automatisch wieder entlockt, wenn ich in den Raum komme. Aber auch ganz gut funktioniert. War bloß ein bisschen blöd, als ich mal jemand andern den Rechner zum Surfen überlassen habe und dann mal aufs Klo gegangen bin.
+
+00:54:13.904 --> 00:54:17.404
+<v SPEAKER_1>Dann war das natürlich praktisch, aber kein echter Schutz.
+
+00:54:17.424 --> 00:54:19.804
+<v SPEAKER_2>Nee, das stimmt schon, das war eher so Convenience.
+
+00:54:19.824 --> 00:54:21.524
+<v SPEAKER_1>Ja klar, ne, verstehe ich schon.
+
+00:54:21.544 --> 00:54:24.904
+<v SPEAKER_2>Weil wer lockt schon immer seinen Screen, wenn er irgendwie weggeht, ne?
+
+00:54:24.924 --> 00:54:40.684
+<v SPEAKER_1>Nein, bei Netzwerkkarten ist ja ein Feature, dass man die Mac-Adresse setzen kann. Und bei Bluetooth ist das eigentlich nicht vorgesehen, aber es gibt auch da Tools, wo man eben die neu schreiben kann. Das ist aber herstellerabhängig, diese Byte-Sequenz, die man da immer antwortet.
+
+00:54:40.704 --> 00:54:49.784
+<v SPEAKER_2>Also sicher, in Anführungsstrichen wäre es dann, wenn man quasi eine Applikation auf dem Gerät, auf dem Telefon laufen hätte, was eben auch auf eine komplexere Anfrage reagieren kann.
+
+00:54:49.804 --> 00:55:14.404
+<v SPEAKER_1>Also es gibt da eine Firma in Österreich, die macht Türschlösser auf der Basis. Also das heißt, naja, aber die machen das richtig, insofern, dass sie eben nicht sagen, okay, Gerät mit der Nummer da ist jetzt hier, ich sperre die Tür auf, sondern die machen Challenge-Response mit einem vordefinierten Link-Key. Also das heißt, die Verschlüsselung mit Link-Key ist ja eigentlich sicher. Und die sagen, okay, schick uns was, und wenn es stimmt, darfst du rein.
+
+00:55:16.124 --> 00:55:20.964
+<v SPEAKER_2>Also sozusagen auf Basis eines Pairings mit einem langen Key.
+
+00:55:20.984 --> 00:55:32.904
+<v SPEAKER_1>Genau, richtig. Und da kann man eigentlich nichts gegen sagen. Es ist eigentlich so weit okay von Sicherheitsaspekten. So viel, wie man eben von so einem Token auch verlangen kann. Genau.
+
+00:55:32.924 --> 00:55:36.924
+<v SPEAKER_2>Wenn die Software an sich beständig ist gegen Denial of Service-Attacken zum Beispiel.
+
+00:55:36.944 --> 00:55:39.524
+<v SPEAKER_1>Ja, das sind dann andere Fragestellungen.
+
+00:55:42.204 --> 00:55:44.144
+<v SPEAKER_2>Vor allem, keine Illusionen streuen.
+
+00:55:44.164 --> 00:55:48.644
+<v SPEAKER_1>Nee, aber die haben das recht pfiffig gemacht. Aber so viel hört man jetzt auch nicht mehr.
+
+00:55:48.664 --> 00:55:57.184
+<v SPEAKER_2>Na gut, das hängt ja auch immer davon ab, was man da mit sich hat. Seine Goldbestände sollte man da vielleicht nicht mit sichern. Aber wenn man dabei seinen Rechner screenlockt, dann ist da schon mal was zu holen.
+
+00:55:57.284 --> 00:57:58.084
+<v SPEAKER_1>Der Pilotprojekt damals war, glaube ich, ein Baumarkt, wo Geschäftskunden die Tür aufgemacht kriegen oder auch zu irgendwelchen Nichtöffnungszeiten da irgendwie ins Lager dürfen oder irgendwie so. Dafür hat man das hergenommen. Diebstahlmöglichkeiten hätte es dort gegeben, glaube ich. Aber eben nicht so leicht, weil es eben nicht auf der niedrigsten Ebene authentifiziert, sondern tatsächlich eben mit Link hier gearbeitet hat. Ja, jetzt haben wir die Situation, um so dem Szenario von vorher zurückzukehren. Du hast die Geräte entdeckt und möchtest jetzt mit deiner Wiimote verbinden. Ja, so deine Wiimote, und das ist wahrscheinlich schon eine, die Noise Pairing unterstützt. Sagen wir mal, du hast eine Wiimote gesehen und ein Headset auch noch, das eben noch so auf die alte Tour sich Pairen lässt. Da sagst du jetzt, okay, Headset, ich möchte mit Skype über meinen Bluetooth-Headset telefonieren. Ich möchte dich jetzt verbinden zu dem Zweck. Jetzt kommt eben dieser Request, du möchtest verbinden. Und jetzt sagt dein Headset, okay, ich bin so gepolt Security Mode 3 bei Headsets ganz oft. Bei uns wird verschlüsselt. Das heißt, der Pairing-Prozess wird eingeleitet Über die HCI-Schnittstelle kriegt jetzt dein Betriebssystem die Anforderung, okay, die Gegenstelle hätte jetzt gerne Pin, gib die doch bitte ein. Du gibst viermal die Null ein, weil du weißt, bei deinem Headset ist es die Standard-Pin. Und jetzt wird eben dieser Link-Key erzeugt und auf beiden Seiten liegt der selbe Key vor. Und jetzt wird alles, was eben hier über die Basement geschickt wird, verschlüsselt mit diesem Schlüssel. Und jetzt telefonierst du. Oder du telefonierst noch nicht, dein Headset ist jetzt verbunden. Und sobald ein Anruf kommt, kannst du dir mit dem Headset entgegennehmen, weil das sich einfach sicher verbinden kann. Habe ich was ausgelassen?
+
+00:57:58.104 --> 00:58:01.764
+<v SPEAKER_2>Mir ist noch nicht so ganz klar, warum jetzt diese 4 Nullen irgendwie so sicher sein sollen.
+
+00:58:02.004 --> 00:59:07.544
+<v SPEAKER_1>Ja, das ist ja das Problem. Oder ein Problem mit diesem Standard-Pin. Ich kann mich erinnern, ich habe damals von einem Projekt gemacht, CarbisBurr, wo das eben thematisiert wurde. An sich ist es kein Problem, wenn da 4x0 die Pin ist. Aber wenn ein Gerät immer sichtbar ist oder immer verbindbar ist und dann die Standard-Pin 4x0 ist, dann ist es ein Problem. Das war bei manchen Autoherstellern damals der Fall, dass die einfach mit Betätigung der Zündung haben die eben ihr Headset angemacht oder ihr Hands-free-Unit. Und solange sich kein Handy verbunden hat, war es an und sichtbar. Und wenn man dann eben auf einer Autobahnbrücke steht mit einer Antenne und solche Klassen sucht, also Hands-free-Unit sucht, Geräte-Klasse, und sagt, okay, ich verbinde mich jetzt mal und aufgrund der MAC-Adresse, diesem Prefix weiß ich auch, was für ein Hersteller das ist und welche Standard-Pin dieser Hersteller einsetzt, dann könnte ich mich doch eigentlich verbinden und eine Nachricht absetzen in das Gerät und vielleicht hören, was die Leute darauf antworten. Und das hat auch funktioniert und das war eben das Problem mit Standard-Pin.
+
+00:59:07.604 --> 00:59:13.404
+<v SPEAKER_2>Du hast sozusagen Leuten dann direkt in ihr Bluetooth-Headset oder in ihre Stereo-Anlage im Auto reingefunkt. Auf der Autobahn.
+
+00:59:13.424 --> 00:59:14.744
+<v SPEAKER_1>Auf der Autobahn.
+
+00:59:14.764 --> 00:59:15.904
+<v SPEAKER_2>Was habt ihr gesagt?
+
+00:59:15.924 --> 00:59:47.244
+<v SPEAKER_1>Also ich habe damals eine Computer-Festival-generierte Sprachnachricht abgesetzt, bitte Fahrt vorsichtig. In dem Moment machst du dir halt echt Sorgen, weil du möchtest das irgendwie schon ausprobieren, aber andererseits könnte es natürlich passieren, dass du die Leute erschreckst. Weil die wissen oft gar nicht, dass sie sowas in ihrem Auto haben. Und dann verreisen sie das Lenkrad und fahren gegen den Brückenpfeiler. Und du wirst dann irgendwie in der Verlegenheit ganz schnell wegfahren zu müssen. Und das willst du nicht.
+
+00:59:48.404 --> 00:59:51.824
+<v SPEAKER_2>So digitale Wackersteine, die man auf einer Brücke schmeißen kann.
+
+00:59:52.484 --> 01:00:05.284
+<v SPEAKER_1>Eben, aber die meisten Leute waren dann vielleicht auch schon ein bisschen gewarnt, weil wenn da irgendwie eine lange Antenne auf Autos ausgerichtet ist, dann fahren die schon mal vorsichtig, weil sie denken, das ist eine Verkehrsmessung oder so.
+
+01:00:05.304 --> 01:00:11.144
+<v SPEAKER_2>Na, wenn sie es gesehen haben. Die Hälfte der Betroffenen war wahrscheinlich am nächsten Tag beim Psychiater. Ich höre Stimmen.
+
+01:00:11.724 --> 01:00:17.684
+<v SPEAKER_1>Naja, bei einem hat es ja auch nicht funktioniert. Das waren eben nur die gewissen Autos, die das fix verbaut haben.
+
+01:00:18.384 --> 01:00:45.504
+<v SPEAKER_2>Es ist so, mehrere kommen zusammen, bevor das wirklich richtig unsicher ist. Also man hat erst mal diese Default-Pin, die meistens vielstellig ist und die eben in 99 Prozent der Fälle von den Geräten, die keinerlei Eingabemöglichkeit haben, 000 ist, weil man könnte zwar ab Werk noch irgendwie eine vierstellige Pin vielleicht draufkleben, aber dann finden die Leute das immer nicht und es würde wahrscheinlich zu zu viel Supportanfragen führen, deshalb hat man das einfach so gemacht. Aber so ein Kopfhörer zum Beispiel ist ja nicht unbedingt auch immer pairbar.
+
+01:00:45.524 --> 01:00:45.984
+<v SPEAKER_1>Genau.
+
+01:00:46.004 --> 01:00:58.684
+<v SPEAKER_2>Das heißt, dieses Pairing ist ja sozusagen, mit einer anderen MAC-Adresse baue ich zu einem bestimmten Zeitpunkt ein Pairing auf und damit wird ja ein neuer Key sozusagen generiert auf Basis dieser ursprünglichen Pin, aber die Pin ist ja nicht der Key.
+
+01:00:59.304 --> 01:00:59.644
+<v SPEAKER_1>Genau.
+
+01:00:59.664 --> 01:01:09.924
+<v SPEAKER_2>Das heißt, das funktioniert dann nicht mit einem anderen Gerät, wenn das da herkommt und es würde auch nichts bringen, sich mit dem Teil zu verbinden, weil es sozusagen nicht bereit ist, neu zu pairen, bevor ich nicht irgendeine Taste gedrückt habe.
+
+01:01:10.224 --> 01:01:10.564
+<v SPEAKER_1>Genau.
+
+01:01:11.344 --> 01:01:16.904
+<v SPEAKER_2>Okay, und was hat dann der neue Pairing-Mechanismus im Standard, wann kam der überhaupt dazu?
+
+01:01:16.924 --> 01:01:20.404
+<v SPEAKER_1>Der kam mit Standard 2.1.
+
+01:01:20.424 --> 01:01:23.124
+<v SPEAKER_2>Und was war dann konkret anders?
+
+01:01:23.144 --> 01:01:24.024
+<v SPEAKER_1>Wir haben ja vorher geredet.
+
+01:01:24.044 --> 01:01:26.704
+<v SPEAKER_2>War das dann verboten, diese Standard-Pins zu verwenden?
+
+01:01:26.784 --> 01:01:33.464
+<v SPEAKER_1>Nein, das ist ja tatsächlich ein Problem. Es gibt ja Geräte, die haben kein Display. Oder keine Tastatur, wo man dann eine eigene Pin eingeben kann.
+
+01:01:33.484 --> 01:01:34.244
+<v SPEAKER_2>Kopfhörer zum Beispiel.
+
+01:01:34.264 --> 01:02:36.124
+<v SPEAKER_1>Kopfhörer zum Beispiel, richtig. Darum hat eben die Bluetooth SIG eben auch aufgrund dieser Situation, dass während des Pairings jemand, der mit Snift den Link-Key wiederherstellen könnte, das Pairing komplett neu gemacht. Das heißt dann Simple Pairing. Es gibt immer noch dieselbe Algorithmik zum Erzeugen des Link-Keys. Aber von den Schritten, die notwendig sind, ist es anders. Es erfolgt zum ersten Mal so ein Diffy Helm & Key Exchange. Das heißt, selbst wenn jemand mit Snift, dann ist das schon mal nicht so leicht oder nicht lesbar. Und jetzt ist es so, dass eben Information kommuniziert wird mit dieser Verschlüsselung schon, die der beliebte Cryptography, ich sage jetzt Worte, die mir nichts sagen, also das passiert sicher, ist verschlüsselt, und die handelt sich ein Link-Key aus. Und jetzt gibt es Geräte, die beide ein Display haben. Das ist Simple Pairing. Ich habe das hier aufgeschlagen, das White Paper. Das ist Numeric Comparison. Jetzt haben zwei Geräte ein Display und zeigen jetzt ein sechsstelliges Artefakt des Link-Keys an.
+
+01:02:36.144 --> 01:02:37.344
+<v SPEAKER_2>Das muss sechsstellig sein?
+
+01:02:37.364 --> 01:02:40.684
+<v SPEAKER_1>Das ist sechsstellig. Der Link-Key ist länger.
+
+01:02:40.704 --> 01:03:16.564
+<v SPEAKER_2>Also wenn ich jetzt zum Beispiel mein iPhone mit meinem Mac kombinieren will, um darüber dann Internet zu machen, dann ist so ein Pairing halt einmal erforderlich, und dann kann ich das von beiden Seiten her initiieren. Und wenn ich dann halt das auf meinem Rechner mache, dann sagt der, jetzt guck doch mal auf deinem iPhone, ob da diese sechsstellige Nummer auch angezeigt wird, weil dann ist es auch das Richtige, die weiß nicht, dass ich mit irgendeinem anderen, der mich gerade versucht, sozusagen da mittelmäßig da reinzukommen, dann vergleiche ich das, sage, okay, alles klar, das ist diese Nummer, und dann ist diese sechsstellige Nummer auch quasi der Seat für diese Kryptoverbindung.
+
+01:03:16.584 --> 01:03:24.184
+<v SPEAKER_1>Andersrum, also diese sechsstellige Nummer sagt genau das, was du gesagt hast, es ist no man in the middle, oder die Chance, dass einer da ist.
+
+01:03:24.204 --> 01:03:26.404
+<v SPEAKER_2>Also das ist sozusagen schon Ergebnis eines Krypto.
+
+01:03:26.424 --> 01:03:33.844
+<v SPEAKER_1>Genau, also der Linky ist erzeugt, und diese sechsstellige Nummer, die dann verglichen wird, ist ein Artefakt, das aus dem Linky gebildet wird.
+
+01:03:33.864 --> 01:03:55.884
+<v SPEAKER_2>Ah, okay, verstehe, also das heißt, der Unterschied zu der alten Methode ist nicht, dass ich eine Pin habe, aus der dann der Key kommt, sondern dass man so einen geheimen Key Exchange macht, und dann zeigt man einen Teil davon an, und wenn ich den verifiziere, sozusagen sage, okay, alles klar, auf beiden Geräten dasselbe, ihr seid die beiden, die miteinander reden, dann ist irgendwie arm, und die beiden wissen, okay, alles klar, uns hat jetzt weder einer zugehört, und wir sind aber auch jeweils mit dem Gerät verbunden.
+
+01:03:56.284 --> 01:03:58.324
+<v SPEAKER_1>Also mit höchster Wahrscheinlichkeit.
+
+01:03:58.344 --> 01:04:00.124
+<v SPEAKER_2>Also mit sehr hoher Wahrscheinlichkeit.
+
+01:04:00.144 --> 01:04:56.524
+<v SPEAKER_1>Genau. Aber was ist jetzt, wenn nur ein Gerät ein Display hat? Dann kann es jetzt sein, dass das andere Gerät kein Display, aber eine Tastatur hat, wie eine Bluetooth-Tastatur zum Beispiel. Da wäre es dann der Fall, das heißt hier, Pass-Key-Entry, das ist auch ein Szenario für Simple Pairing. Dann gibt man das einfach ein, was man am Bildschirm sieht. Und wenn das dann richtig ist, also beide Seiten können ja einen Artifakt bilden aus diesem Link-Key. So eine feste Funktion, die aber nur in eine Richtung geht, angeblich. Und dann ist es verglichen und dann stimmt das auch. Und dann gibt es die Situation, dass keines der Geräte irgendwie eine Eingabemöglichkeit oder ein Display hat. Und dann gibt es die Just Works Pairing Methode. Aber die wird eben eingesetzt, sehr selten eben. Weil meistens hat man ja ein Gerät, das ein Display hat zumindest.
+
+01:04:56.544 --> 01:05:02.284
+<v SPEAKER_2>Aber wenn ich jetzt eine Maus pare, dann kann ich natürlich weder da was eingeben, noch... Richtig.
+
+01:05:02.304 --> 01:05:26.344
+<v SPEAKER_1>Also wahrscheinlich... Schauen wir mal gerade, ob da die Maus als Use Case dabei steht. A good example of this model is the cell phone mono headset scenario, where most headsets do not have a display. Okay, bei einem Headset, das nicht die Standard PIN 4x0 hat, ist das Just Works Szenario wahrscheinlich ähnlich wie bei der Maus, das was zu anwenden kommt.
+
+01:05:26.364 --> 01:05:37.544
+<v SPEAKER_2>Das war einfach eine Tasse mit ich will jetzt mal pairen und wer auch immer jetzt gerade mich paiert, ist der Richtige. Einfach davon ausgehen, dass sonst keiner weiß, dass ich jetzt gerade in diesem Moment pairen will. Was wahrscheinlich auch ganz gut funktioniert.
+
+01:05:38.144 --> 01:05:50.344
+<v SPEAKER_1>Das ist so eine theoretische Synchrotik. Man packt das aus, man ist daheim unter Weihnachtsfraumen vielleicht und schließt das an und in dem Moment hat man meist Glück. Und da ist niemand in der Nähe.
+
+01:05:52.264 --> 01:06:42.144
+<v SPEAKER_2>Okay, das habe ich verstanden. Das heißt, Bluetooth Version 1 war sozusagen schon mal der erste Schuss. Da hat man so die Basis gelegt. Da war dieses mit Synchrone und Asynchrone Kommunikation auf den nächsten Ebenen möglich. Man hatte irgendwie schon mal Krypto vorgesehen, aber man hat sich noch dieses komische PIN-basierte Modell vorgestellt und später erkannt, welche Lücken das hat. Und ist dann in Version 2 quasi zu einem more sophisticated Procedure übergegangen, wo dann eben das erstens mit dem Linkmanager und den krypto-fizierten Verbindungen besser gelöst ist. Dazu gab es noch mal extra Zucker hier mit diesem Enhanced Data Rate, also dass man auf einer höheren Geschwindigkeit kommunizieren konnte. Das war dann aber erst, sagst du nicht, 2.1?
+
+01:06:42.164 --> 01:06:44.464
+<v SPEAKER_1>Nein, das ist 2.0 schon passiert.
+
+01:06:44.484 --> 01:06:46.424
+<v SPEAKER_2>Okay, wie schnell waren wir denn vorher?
+
+01:06:46.444 --> 01:07:03.044
+<v SPEAKER_1>Wie schnell ist denn das Data Rate? Wir waren vorher eine Netto-Datenrate, und ich schaue es besser nach, um es genau sagen zu können, ungefähr 700 Kilobit, das natürlich für große Dateien jetzt gerade irgendwie im Fotografiebereich oder auch Audiobereich einfach zu wenig ist, dauert zu lange. Und, ähm, na, verstehe ich.
+
+01:07:03.064 --> 01:07:07.724
+<v SPEAKER_2>In der R sehe ich gerade, 3 Megabit ist das so Brutto und 2 Megabit Netto 2.1.
+
+01:07:07.744 --> 01:07:52.284
+<v SPEAKER_1>Genau, 2.1 Netto. Das ist eben aufgrund einer anderen Modulationsart. Und da hat man aber acht gegeben darauf, dass das abwärts kompatibel ist. Das heißt, wenn du jetzt ein 1.2-Gerät hast, was eben bei 1.2 neu war, war eben diese Frequency Mapping, also dieses Adaptive Frequency Hopping, AFH heißt das in Abkürzung. Das war bei 1.2 neu. Aber wenn du jetzt so ein Gerät hast, was noch nicht so schnell reden kann wie die anderen, dann wird darauf Rücksicht genommen. Da wird eben beim Aushandeln der Verbindungsparameter, die werden immer in dieser langsamen Rate, die alle verstehen können, gesendet. Und erst wenn klar ist, das andere Gerät kann auch diese neue, schnellere Art der Modulation.
+
+01:07:52.324 --> 01:07:53.404
+<v SPEAKER_2>Dann fährt man sich hoch.
+
+01:07:53.424 --> 01:08:12.964
+<v SPEAKER_1>Genau, richtig. Und da gibt es eben zwei verschiedene Modulationsarten, die da zum Einsatz kommen. Und die sind irgendwie Differential, Face-Shift-Keying für Leute, die es besser interessiert. Steht aber auch auf Wikipedia.
+
+01:08:12.984 --> 01:08:53.084
+<v SPEAKER_2>Ja, wenn sozusagen diese Verbindungen hergestellt sind, also wenn Geräte untereinander hier ihr PicoNet aufgebaut haben, indem sie sich auf welchem Weg auch immer über die richtige Krypto geeinigt haben und dann in der Lage sind, Pakete auszutauschen. Und das gilt dann sozusagen sowohl für die asynchrone als auch für die synchrone Kommunikation. Dann ist natürlich die Frage, was bringt Bluetooth jetzt noch mit da drauf an fertigen Protokollen und Applikationslayern, mit denen man so redet. Man hat sich ja so einiges abgespielt, was weiß ich, was ihr hier erkennt, wie Visitenkarten tauschen, zum Beispiel so ganz einfache Sachen, sind ja auch Teil des Standards geworden, oder?
+
+01:08:53.104 --> 01:09:54.964
+<v SPEAKER_1>Das stimmt. Also wir haben vorher schon kurz erwähnt, Autokonfiguration ist eben das, was eben im Mittelpunkt stand beim Entwurf des Standards, dass eben niemand irgendwie eine Portnummer eingeben muss oder so, sondern die Geräte haben sogenannte Profile, Bluetooth-Profile, davon gibt es eine ganze Menge. Und jedes Profil ist mit einer gewissen Anwendung verknüpft. Zum Beispiel dieses Visitenkarten-Austauschen ist eben OBEX Push. Das heißt, man erfordert dafür üblicherweise keine Authentifikation, kein Pairing, weil das ein Prozess ist, der auch im Real Life irgendwie so stattfindet, wir kennen uns nicht und ich gebe dir deshalb meine Karte. Und auch dort möchte man sich gar nicht genau erkennen im ersten Moment, wenn man eigentlich nur die Adressdaten der anderen Person haben will. Das ist eben OBEX Push. OBEX Push impliziert schon, okay, OBEX ist so ein unterliegendes Protokoll, das manche vielleicht schon vom Infrarot ihr da kennen, dass da eben auch wieder Verwendung findet. Object Exchange, genau. So ein bisschen FTP-Binary eben.
+
+01:09:56.244 --> 01:10:00.544
+<v SPEAKER_2>Das kann mein iPhone nicht. Haben sie weggelassen?
+
+01:10:00.584 --> 01:10:26.024
+<v SPEAKER_1>Nee, die haben das anders gemacht. Die haben das mit dem Game-API implementiert. Das wiederum schränkt natürlich die Verwendung unserer Geräten ein. Also du kannst, wenn du was schicken willst, von iPhone zu iPhone schicken, aber nicht so leicht auf ein Standardgerät, das eben die Standards richtig implementiert hat. Genau. Aber das ist eben Strategie. Das ist so eine dieser Punkte, die mich ein bisschen nerven.
+
+01:10:26.504 --> 01:10:35.004
+<v SPEAKER_2>Das ist unpraktisch, weil das ja eigentlich sehr verbreitet ist. Ist ja jetzt irgendwie so ein latentes Security-Problem da mit dem OBEX verbunden?
+
+01:10:37.344 --> 01:11:22.144
+<v SPEAKER_1>Also Adam Laurie, wir haben vorher über seine Lücke gesprochen. Die hat nicht eben auf AT-Befehlen aufgesetzt, sondern auf dieser OBEX-Schnittstelle. Auch da sind Fehler passiert. In dem Fall war es so, dass man bei OBEX, wo man sich eben verbindet und so eine Art FDP vorfindet, einfach mal so gestochen hat, sag mal, hast du das File mit dem Telefonbuch? Das ist ein Standard-Name, der ist eben auch in diesem IRDA-Standard festgeschrieben. Wenn man den einfach mal so fragt, sag mal, gibt es das bei dir? Dann hat eben dieser Service gesagt, der Service hat nicht gesagt, Moment mal, ich bin hier nur zum Empfang da. Dann hat er gesagt, oh ja, das hab ich, ich mags das. Und das war eben die Lücke, die eben über OBEX passiert ist.
+
+01:11:23.724 --> 01:11:30.724
+<v SPEAKER_2>Aber es ist natürlich so ein bisschen so ein Default-Einfallstor, über den halt einfach so Anfragen kommen und mit dem man dann auch irgendwie umgehen muss.
+
+01:11:31.264 --> 01:11:40.544
+<v SPEAKER_1>Na ja, da ist es jetzt bei neuen Geräten so, dass da immer ein kleines Dialogfenster kommt. Also ich kenn kein aktuelles Gerät, wo das nicht so ist.
+
+01:11:40.564 --> 01:11:52.904
+<v SPEAKER_2>Aber das ist natürlich dann wieder eine potenzielle Denial-of-Service-Attacke, weil man ja so ein Gerät dann einfach zu spammen kann mit so hier OBEX, OBEX, OBEX und dann hast du da nur noch so ein Dialog irgendwie, da will einer, da will einer, da will einer. Das gab's auch schon häufiger.
+
+01:11:52.924 --> 01:12:07.904
+<v SPEAKER_1>Das gibt's, aber wahrscheinlich hat man das auch schon gelöst dadurch, dass immer nur ein Dialog zu einer Zeit ist. Und wenn du den nicht siehst, dann kommt kein zweiter. Natürlich, wenn du ihn wegdrückst und dein Verbindungspartner lästig genug ist, dann kommt das immer wieder. Und ich glaube, das ist auch immer noch möglich.
+
+01:12:08.684 --> 01:12:21.044
+<v SPEAKER_2>Ich erinnere mich gerade ganz, ganz dunkel, mal irgendwo auf irgendeinem Flughafen ist mir das mal passiert, dass da tatsächlich so ein, so ein OBEX-Gewitter über mein Nokia-Telefon eingebrochen ist.
+
+01:12:21.064 --> 01:12:24.704
+<v SPEAKER_1>Ja, das war mal eine Zeit sehr innen, dass man eben so Werbung auf die Weise verschickt.
+
+01:12:24.884 --> 01:12:29.224
+<v SPEAKER_2>Ja, das auch noch. Das ist ja schon mal ein extrem guter Grund, dass Fieter wäre.
+
+01:12:30.204 --> 01:12:31.924
+<v SPEAKER_1>Ich meine, das Fieter...
+
+01:12:31.944 --> 01:12:36.084
+<v SPEAKER_2>Ach ja, diese ganzen Mitfassollen, die man auf die Hände hat. Das heißt, das sind alles so OBEX-Dinge?
+
+01:12:36.104 --> 01:13:05.824
+<v SPEAKER_1>Das sind OBEX-Push-Sachen. OBEX-Push hat fast jedes Gerät. Und deshalb wird das dafür verwendet. Früher war es eben so, dass dieses OBEX-Push nicht mit einem Dialog abgefragt wurde, sondern da war das einfach so, okay, du hast es jetzt. Naja, bei manchen Geräten, aber eben auch die andere Richtung. Okay, ich hab dir jetzt ein 5 Megabyte Bild geschickt. Genau, und dein Speicher ist voll. Also das war da auch möglich. Aber das ist eben dadurch abgefangen worden. Genau.
+
+01:13:06.584 --> 01:13:21.284
+<v SPEAKER_2>Na gut, aber OBEX ist natürlich jetzt nur so ein... Gut, das fand man dann sozusagen ganz praktisch und kommt ja eigentlich aus der Infrarotwelt. Was sind denn jetzt so mehr die Bluetooth-siegeren Anwendungen?
+
+01:13:21.304 --> 01:13:58.784
+<v SPEAKER_1>Klar, also Headsets und Hands-free-Units in Autos, wie erwähnt, waren eben so die großen, wichtigen Profile, am Anfang zumindest, dass man gesagt hat, okay, jetzt wollen wir das verwenden. Und da hat es eben angefangen, dass man im Auto ein Hands-free-Profile implementiert, wo dann ein Gerät sich hinverbinden kann und sagt, okay, ich will jetzt hier über meine Freisprecheinrichtung telefonieren. Das basiert eben auf AT-Befehlen, eben die Kommunikation zwischen Gerät und Headset oder Hands-free-Unit sind AT-Befehle. Und der Audio-Kanal wird parallel dazu diesem Control-Channel eröffnet.
+
+01:13:59.884 --> 01:14:03.204
+<v SPEAKER_2>Wieso? Wieso AT-Befehle für so was?
+
+01:14:03.224 --> 01:14:08.264
+<v SPEAKER_1>Weil das Standard ist. Also, ja, sage ich jetzt mal.
+
+01:14:08.284 --> 01:14:11.444
+<v SPEAKER_2>Ja, ich meine, das kommt von Modems. Ich meine, das ist zur Datenertraue.
+
+01:14:11.464 --> 01:14:22.164
+<v SPEAKER_1>Ja, klar, aber die sind ja nicht schlecht. Sie sind so klein und kurz, wie sie sein müssen. Sie sind eindeutig. Und ohne die AT-Befehle wäre viel, viel weniger Schabernack möglich gewesen.
+
+01:14:23.744 --> 01:14:33.424
+<v SPEAKER_2>Okay, aus sportlichen Erwägungen kann man sich natürlich darüber freuen. Aber auch rein aus Implementierungsgründen sehe ich jetzt nicht die Notwendigkeit, da auf so was zurückzugreifen.
+
+01:14:33.444 --> 01:14:35.264
+<v SPEAKER_1>Was kann ich dafür machen? Na ja, aber um das Rad neu erfinden.
+
+01:14:35.964 --> 01:14:37.364
+<v SPEAKER_2>Ist das ein Rad gewesen?
+
+01:14:38.324 --> 01:14:52.084
+<v SPEAKER_1>Ja, also das kannte jeder. Und warum baut man das nicht ein, da wo es auch jeder kennen sollte? Also das ist einfach Telefonie. Das hängt vielleicht einfach damit zusammen, dass das immer schon für so Sachen verwendet wurde.
+
+01:14:55.264 --> 01:15:02.184
+<v SPEAKER_2>Mag verwandt sein. Aber das war ja dann auch gleich deine Supersicherheitslücke, die du gefunden hast, mit der du das Thema eingestiegen bist.
+
+01:15:03.224 --> 01:15:53.944
+<v SPEAKER_1>Es wurde tatsächlich während der Verbindung ein Headset-Symbol angezeigt, aber das war ja eben eine Implementierungs-Macke. Aber klar, da hat man auch nicht unterschieden. Ist das tatsächlich ein Headset? Warum will das Headset auf einmal eine SMS verschicken? Das wurde nicht hinterfragt. Klar, war eins der ersten Geräte, da wusste man einfach nicht, wie viel Zeit man dafür testen verbringen soll. Man musste das auf den Markt, und da hat man nicht aufgepasst. Dann gibt es natürlich jetzt andere Profile, eben mit Enhanced Data Rate, sehr viel so Audio-Kopfhörer. Du hast vielleicht daheim, oder es gibt, Audio-Equipment, was relativ gute Qualität liefert. Ganz kein Problem mit der Datenrate, kann man natürlich komplette HIFI-Qualität übertragen.
+
+01:15:53.964 --> 01:15:57.964
+<v SPEAKER_2>Also Stichwort A2DP, das ist glaube ich die Bezeichnung.
+
+01:15:59.324 --> 01:16:03.544
+<v SPEAKER_1>Ich habe sie jetzt stehen. Es steht für Advanced Audio Distribution Profile.
+
+01:16:05.344 --> 01:16:07.844
+<v SPEAKER_2>Ach so AA wurde dann zu A2, ja.
+
+01:16:07.864 --> 01:16:26.304
+<v SPEAKER_1>Das machen die auch, vielleicht nochmal um auf das Protokoll-Stack zurückzukommen, machen die auch bei der ersten Layer vom Host-Stack, die heißt L2-Cup, und das habe ich mir auch aufgeschrieben, heißt Logical Link Control and Adaptation Layer. Also auch zweimal L und L2.
+
+01:16:27.864 --> 01:16:29.644
+<v SPEAKER_2>27C3, sage ich nur.
+
+01:16:29.664 --> 01:16:37.564
+<v SPEAKER_1>Naja, okay, das ist wohl etwas anderes bedeutet. Ja, aber selbe Idee natürlich, klar.
+
+01:16:37.584 --> 01:16:38.204
+<v SPEAKER_2>Zusammenfassen.
+
+01:16:41.504 --> 01:16:57.584
+<v SPEAKER_1>Naja, vielleicht vorher noch, die L2-Cup-Layer ist eine sehr wichtige. Und bevor wir über Protokolle sprechen oder Profile sprechen, die eigentlich alle darauf aufbauen, sollten wir vielleicht mal die Grundlagen erklären, wie überhaupt Profile entdeckt werden. Das haben wir nämlich noch gar nicht gesagt.
+
+01:16:57.604 --> 01:17:05.364
+<v SPEAKER_2>Also die Profile sind sozusagen die Visitenkarten eines Hosts. Da steht sozusagen drauf, wenn du mit mir kommunizieren willst, dann hättest du folgende Möglichkeiten.
+
+01:17:05.384 --> 01:17:06.164
+<v SPEAKER_1>La, la, la, la, la.
+
+01:17:06.184 --> 01:17:11.004
+<v SPEAKER_2>Obex haben wir schon erwähnt, das ist so eins, was da drauf steht. Andere Angebote stehen sozusagen auch noch zur Verfügung.
+
+01:17:11.024 --> 01:17:12.284
+<v SPEAKER_1>So eine Speisekarte, genau.
+
+01:17:12.304 --> 01:17:37.644
+<v SPEAKER_2>Genau, dann kann sich der andere sozusagen auswählen, so alles klar, du kannst das und das und das. Das ist natürlich auch schon mal eine schöne Hacker-Einladung. Man kriegt sozusagen gleich die Ports, über die man seine Kriegsschiffe einfallen lassen kann. Dann kriegt man sozusagen gleich auf ein Goldtablet serviert. Andererseits Autodescovery, Autoconfiguration erfordert sowas natürlich auch. Und wenn man seine Türen nicht ordentlich geschlossen bekommt, dann hat man eh ein Problem.
+
+01:17:37.664 --> 01:19:31.024
+<v SPEAKER_1>Genau, es gab damals bei manchen Geräten, die haben dir das nicht gesagt. Die haben nicht gesagt, was sie haben, weil Inquiry heißt nicht nur, hallo, ich suche alle Geräte, die hier in der Gegend sind, sondern Inquiry kann auch so sein, hallo, ich suche hier alle Geräte, die in Headset sind. Und die dieses Profil anbieten. Das heißt, wenn ich schon weiß, was ich suche, dann haben die Geräte auch geantwortet, aber die Speisekarte haben sie denen nicht gezeigt. Und dieser Profil-Informationsaustausch, der funktioniert über das STP-Protokoll, Service Discovery Protocol. Und wie gesagt, da liefert dein Kommunikationspartner dir alle Telefonbucheinträge, die nicht notwendigerweise mit einem echten Service hinterlegt werden müssen, aber idealerweise sind, liefert dir der zurück. Und das wiederum passiert eben über die L2K-Player, die eben die erste Datenschicht oberhalb dieser Host-Control-Interface-Linie ist. Und das ist so der Packesel, weil da eigentlich alles drüber muss, bis auf Audio. Also Packesel für alle Asylkronen, verbindungslosen Verbindungen. Also die L2K-Player, die hat zum Beispiel eine Paketgröße von maximal, ich glaube, 56 Kilo weit. Genau. 65, Entschuldigung. Ja, genau. Und das wurde auch nachher zum Problem. Es gibt da gewisse Primitive, die eben implementiert sind, wie bei IP, zum Beispiel das ICMP, dass man mal pingt und schaut, wo ist die Gegenstelle. Das kann man da auch machen. Über die L2K-Player. Es gibt einen L2-Ping. Und Ping of Death kennst du ja. Und das war da auch möglich, weil...
+
+01:19:31.044 --> 01:19:33.744
+<v SPEAKER_2>Also ich kenne das, ich habe es schon mal gehört, aber du kannst es trotzdem noch mal erklären.
+
+01:19:34.584 --> 01:19:42.644
+<v SPEAKER_1>Okay, Ping of Death war mal eine recht... Ich glaube, bei Windows 95 war das eine recht lustige Methode, um einen anderen Rechner zu blue-screenen.
+
+01:19:42.824 --> 01:19:45.204
+<v SPEAKER_2>Das war so ein Ping-Paket, das besonders groß ist, oder?
+
+01:19:45.224 --> 01:20:38.344
+<v SPEAKER_1>Genau, ein großes Ping-Paket. Und da braucht man nicht viel Fantasie, um zu sagen, okay, L2-Ping, was passiert, wenn ich da mal ein großes Paket drüber lasse? Und zum Teil recht fatal eben Geräte. Ja, gerade so kleine Geräte, die eben Headset sind, die einfach mit wenig Ressourcen klarkommen müssen, weil sie einfach billig sein sollen. Die waren dann mal Buffer-Overflow und kaputt, oder man musste sie neu starten. Zum Teil auch Batterie raus. Ob es bei Headset oder iPhones schwierig wäre. Da war viel möglich. Es war dann sogar mal so, dass ein ganz bekannter Hersteller von Windows Bluetooth Stacks, viele Hersteller von USB-Dongeln, haben dann für Windows einen eigenen Stack entwickelt, der eben mit der Hardware gut klarkommt.
+
+01:20:38.424 --> 01:20:39.164
+<v SPEAKER_2>Weil es keinen gab?
+
+01:20:40.464 --> 01:21:02.804
+<v SPEAKER_1>Es gab ja bis Windows XP Service Pack 2 keine native Unterstützung von Windows. Und da gab es, glaube ich, eine Handvoll. Auf Wikipedia steht eine Liste. Ritcom fällt mir ein, war ein ganz bekannter Stack. Und Toshiba hat zum Beispiel auch einen eigenen Stack gehabt. Der Totale Wildwuchs.
+
+01:21:02.824 --> 01:21:07.984
+<v SPEAKER_2>Die schon vorher im Übrigen auch mit IP ja auch lange Zeit in der Windows-Welt und DOS-Welt.
+
+01:21:09.684 --> 01:21:11.724
+<v SPEAKER_1>Jeder Hersteller hat seinen eigenen Stack dazu gegeben.
+
+01:21:11.744 --> 01:21:13.544
+<v SPEAKER_2>Weil das Betrieb das Thema selber gar nicht gehabt hat.
+
+01:21:13.564 --> 01:21:26.804
+<v SPEAKER_1>Klar. War vermutlich ganz selbe Entwicklung. Und dann gibt es das jetzt, wobei auch jetzt immer noch die Hersteller zum Teil eigene Stack-Implementierung dazugeben. Weil sie glauben, das besser zu machen als Windows. Und da haben sie meistens auch recht.
+
+01:21:27.824 --> 01:21:28.524
+<v SPEAKER_2>Immer noch?
+
+01:21:28.544 --> 01:24:05.044
+<v SPEAKER_1>Immer noch. Also Windows-Implementierung vom Bluetooth Stack ist eben oder war die längste Zeit, ich weiß jetzt wirklich nicht, wie es bei Windows 7 aussieht. Also wirklich so das Allernötigste. Dateiempfang, Dateisenden und alles Weitere. Vielleicht ist jetzt schon Headset dabei, weil es eben praktisch ist. Vielleicht ist jetzt schon A2DP dabei. Aber es war so in den ersten Versionen wirklich so das Allernotwendigste. Hauptsache wir haben es jetzt mal, dass das auch irgendwie ohne Hersteller-Software geht. Weil wiederum diese Host-Control-Interface-Layer ist ja auch wieder standardisiert. Und wenn man dann einmal so ein Gerät hat, was da irgendwie richtig erkannt wird, dann sollte da jeder Driver drauf passen. Das sieht man auch bei Linux recht schön. Da braucht man nicht irgendwie einen speziellen Driver für einen USB-Bluetooth-Chip. Also das funktioniert meistens ohne Probleme. Genau, nur bei Windows war eben dann dieser Driver hick-hack. Und da gab es eben einen Hersteller, der richtig Mist gebaut hat. Obwohl die schon lange bekannt war, diese Sicherheitslücke mit diesem A2-Cup-Ping of Death. Dass da einfach auch ein Bluescreen möglich war. Eben auch am Flughafen, unheimlich lustig. Aber naja, das haben die eben auch mittlerweile gefixt. Das war ein Problem, was bei denen entstanden ist, als sie umgestiegen sind von, ich glaube, 1.2. auf Enhanced Data Rate. Da haben die irgendwie einen alten Code mit verwendet, nehme ich an. Also so richtig weiß man es ja nicht, aber das ist eine Vermutung. Und da ist dann einfach ein alter Fehler wieder neu eingeführt worden. Zu dem Zeitpunkt waren das eben sehr viele betroffene Rechner, weil eben dieser Bluetooth-Stack standardmäßig auf, ich glaube, ganz vielen Dell-Rechnern war, die eben das Bluetooth-Modul dazu bestellt haben. Und eben Sony und Acer auch. Also das war schon ein relativ großer Impact und eigentlich peinlich, weil das hätte man vermeiden müssen. Na ja, gut, und dann gab es natürlich L2-Cup. Was passiert, wenn man einen Ping-Flat macht? Also analog zu diesen IP-Sachen, die mit ICMP möglich sind, hat man das eben auch mit L2-Cup gemacht, also ganz viele Pings hintereinander. Das hat auch manche, vor allem kleine Headsets, irgendwie zum Exit gebracht. Dann waren die einfach eben auch nicht mehr ansprechbar. Dann haben manche Hersteller angefangen, so eine Art Low-Level-Firewall zu machen auf dieser L2-Cup-Player. Und haben einfach geschaut, wenn da viel passiert, was irgendwie nicht so normal aussieht, also viele Nullgroßpakete, die einfach wie Maschinengewehr über mich herfallen, dann lasse ich diesen Kommunikationspartner nicht zu.
+
+01:24:05.064 --> 01:24:06.504
+<v SPEAKER_2>So eine Denial of Service-Connection.
+
+01:24:06.524 --> 01:24:37.444
+<v SPEAKER_1>Genau, und das war dann meistens so für zehn Minuten, dass die eben das geblockt haben. Aber natürlich ein zusätzlicher Aufwand und eigentlich ziemlich speziell auf so eine Attacke, die zwar effektiv ist, aber sonst auch nichts anrichtet. Also Denial of Service, aber sonst schon nichts. Und das war dann, finde ich, ein bisschen nicht so elegant. Na ja, gut. SDP-Protokoll, Service Discovery. Über L2Cup liefert dir das die Speisekarte oder den Service, nach dem du gefragt hast.
+
+01:24:37.464 --> 01:24:40.124
+<v SPEAKER_2>In Form von Profilen oder einer Auskunft.
+
+01:24:43.444 --> 01:26:15.444
+<v SPEAKER_1>Ein Profil wiederum ist eben so ein fixes Set von Informationen. Dort ist, wie du eben vorher schon erwähnt hast, ganz oft so eine Art Portnummer drin. Bluetooth hat eben nicht Ports, sondern Channels. Also für L2Cup zumindest. Da gibt es 32 und hinter jedem dieser 32 könnte eben ein anderer Service gebunden sein. Ähnlich wie bei IP. Und jetzt weiß ich das als Kommunikationspart. Und suche mir aus, was ich eben mache. Schicke ich dir eine Visitenkarte über Obex Push? Oder schaue ich mir dein Dateisystem an, wenn ich darf, über Obex FTP? Also eben in beide Richtungen, ähnlich wie ein Loggen auf einem FTP-Server. Dann gibt es eben neuerdings in der Telefonie verwendet, bei Autos ist eben jetzt nicht mehr das Hands-free-Profile, sondern die sagen jetzt, okay, das ist uns irgendwie zu billig hier, diese Verbindung, wir müssen ja dann eine SCO, also so eine Synchronous-Verbindung für Audio aufbauen. Das brauchen wir eigentlich gar nicht. Eigentlich wollen wir nur von dir wissen, was auf deiner SIM-Karte steht, damit wir uns gegenüber dem GSM-Netzwerk authentifizieren können. Das ist das sogenannte SIM-Access-Profile. Und ich glaube, da hat man sehr aufgepasst bei der Standardisierung. Da war anfangs Pflicht bei dem frühen Pairing, dass man eine 16-Digit-Pin innerhalb von 30 Sekunden eingeben muss. Das war irgendwie ein Knieschuss, weil das hat natürlich keiner geschafft.
+
+01:26:16.664 --> 01:26:23.664
+<v SPEAKER_2>So eine Handy-Tastatur 16 Digits eingeben und dann vielleicht auch noch alphanumerisch. Super.
+
+01:26:23.684 --> 01:26:36.124
+<v SPEAKER_1>Aber das war eben mit sehr viel Sicherheit bedacht. Zu viel Sicherheit, ja. Ganz viel Sicherheit, weil eben gerade die SIM-Information wertvoll ist.
+
+01:26:36.144 --> 01:26:47.164
+<v SPEAKER_2>Profile gibt es eine ganze Menge. Man kann darüber Audio machen, man kann darüber drucken, man kann darüber Gateway-Geschichten machen zu ISDN.
+
+01:26:47.904 --> 01:26:50.004
+<v SPEAKER_1>Klar, man kann Dial-up-Networking machen.
+
+01:26:50.324 --> 01:27:32.764
+<v SPEAKER_2>Im Prinzip die Idee von Bluetooth ist, alle Geräte mit allen Diensten in irgendeiner Form wireless zu machen, die man so gemeinhin so vorfindet und so in so einem Office-Networking-Kontext hat. Das ist die Idee. Ob das erfüllt wird, steht natürlich noch auf dem anderen. Aber alles eben auf dieser Profile-Geschichte, was dann immer so eine spezielle Anpassung eines Gerätes eben auch erfordert. Das heißt, man kann nicht so generische Software einsetzen, die dann halt einfach alles über Internet macht, wie das ja so heutzutage der Trend ist. Sondern man hat sozusagen direkt in den Protokoll-Stack eben diese ganzen Anwendungen auch fest verankert.
+
+01:27:35.924 --> 01:28:13.064
+<v SPEAKER_1>Also das ist auch irgendwie verbunden. Man macht dieses Profil, wenn man das machen will, weil alles andere wäre irgendwie ein bisschen missverständlich. Da hält man sich an Standards, um eben herstellerübergreifend funktionieren zu können. Ireda ist das erste Protokoll, das komplett weggefallen ist mit Bluetooth. Du erinnerst dich vielleicht noch, Einwellen ins Internet über Infrarotschnittstelle beim Handy. Das war immer eine ganz wackelige Partie. Irgendwie so am Schoß, das Handy liegen und dann je nachdem, und wenn dann irgendein Ruckel kommt, dann bist du offline. Na gut, hat funktioniert, aber äußerst schlecht.
+
+01:28:13.084 --> 01:28:20.104
+<v SPEAKER_2>Das Analogon zu dem Akustik-Koppler, wo man auch nicht so viel husten durfte, wenn man dann so online war.
+
+01:28:20.124 --> 01:28:25.604
+<v SPEAKER_1>Vermutlich ähnlich, aber Datenraten ganz sicher ähnlich.
+
+01:28:25.624 --> 01:28:28.824
+<v SPEAKER_2>Fehlerquelle auf jeden Fall auch.
+
+01:28:28.844 --> 01:28:59.664
+<v SPEAKER_1>Aber solche Dienste hat man eben mit Bluetooth recht erfolgreich ersetzt. Ich kann mich auch erinnern, als dann Bluetooth, das wurde von Leuten, die eben vorher mit ihr da und Infrarot über ihr Handy ins Internet gegangen sind, dann ganz schnell Bluetooth, weil das einfach viel einfacher ist. Man kann das Handy in der Tasche lassen. Das waren so die ersten Services. Drucken natürlich auch. Generell Cable Replacement, wie du gesagt hast, möglichst wenig Kabel, das war das Ziel. Und es gibt eben auch entsprechende Profile für all diese Sachen, wo man keine Kabel haben will.
+
+01:28:59.684 --> 01:29:40.284
+<v SPEAKER_2>Ja, aber gerade dieser Zugang zum Internet, ich meine, das ist ja so ein bisschen ein Schmerz im Arsch, weil das ja dann eigentlich ganz bekloppt funktioniert hat. Ich meine, wir kommen da vielleicht auch gleich nochmal drauf. Heutzutage ist ja so State of the Art, das ist eigentlich dieses Personal Area Networking, wo sozusagen dieses Bluetooth-Gerät quasi sich verhält wie eine Ethernet-Karte. Aber das wurde ja nun bisher und wird auch teilweise von vielen Telefonen ja noch so gemacht, dass man, ähm, tja, dass das Telefon eher sich wie ein Modem verhält und dann eben auch über eine, wie heißt dieses Profil, äh, dass das Telefon sozusagen... Dial-up-Networking. Dial-up-Networking.
+
+01:29:40.304 --> 01:29:41.544
+<v SPEAKER_1>Also DUN ist die Abkürzung.
+
+01:29:41.544 --> 01:29:56.704
+<v SPEAKER_2>Ah, DUN. Genau, Dial-up-Networking-Profile, das heißt, dass man eigentlich eine serielle Schnittstelle quasi simuliert über Bluetooth. Das ist ja eigentlich nochmal ein anderes Profil, ne? Also dieses Serial-Port.
+
+01:29:56.724 --> 01:30:17.544
+<v SPEAKER_1>Also Serial-Port ist fix vorgesehen. Da gibt es das RF-COM-Protokoll, was eine 1 zu 1 Nachbau von diesen Kabeln in einem seriellen Kabel ist. Genau, RS232 ist da 1 zu 1 nachimplementiert worden in diesem RF-COM-Protokoll. Und wie man hier in diesem Protocol-Stack auch sieht...
+
+01:30:17.564 --> 01:30:19.924
+<v SPEAKER_2>So mit den einzelnen Kabeln sozusagen, die man so setzen kann.
+
+01:30:19.944 --> 01:31:49.824
+<v SPEAKER_1>Also habe ich gelesen. Ich weiß nicht, wie es dann im Code aussieht, aber es ist wirklich ganz 1 zu 1. Und auch die AT-Befehle werden eben klassischerweise über RF-COM ausgeführt. Und natürlich auch für deine Modem-Verbindung. Das ist natürlich ein bisschen ärgerlich, weil es gibt ein Profil, das eben BNAP heißt, Bluetooth Network Encapsulation Protocol, das aber Linux unterstützt, ganz sicher. Ich weiß nicht, wie viele andere das jetzt verwenden, weil ich es eben auch selten hernehme. Ich habe in meinem Laptop so einen SIM-Kartenadapter drin und das läuft irgendwie ohne Bluetooth. Und WLAN-Access-Points sind auch überall. Also dieser Netzwerkzuganggedanke über Bluetooth, der war früher vielleicht mal wichtiger, aber da war eben nur das Dial-up-Networking im Einsatz. Und das BNAP, da kann man über Bluetooth zwei Rechner verbinden. Das ist vielleicht praktisch, wenn man kein WLAN hat und kein Kabel dabei, dann kann man sich so eine Verbindung schnell herstellen, die ist aber dann auch nicht so flott. Was dann natürlich auch wieder möglich ist, sind so ganz normale Attacken, IP. Aber das hat ja nichts mit Bluetooth zu tun. Also das kommt dann raus als IP über Bluetooth und geht dann auch im Betriebssystem auf den IP-Stack. Genau. Dann hätten wir eigentlich eh schon die wesentlichen Protokolle besprochen, die da auf meinem Zettel stehen. Das heißt TCS, also Protokolle, und drüber liegen ja die Profile.
+
+01:31:49.844 --> 01:33:36.664
+<v SPEAKER_2>Also ich habe mich da halt auch mal mit beschäftigt, warum das eigentlich immer alles so bekloppt ist. Da ist mir ja selber komplett was aus dem Gesicht gefallen, als ich erst mal verstanden habe, wie das sozusagen funktioniert. Also dieser Zugang zum Internet über das Handy über Bluetooth, das muss man sich mal klar machen. Das heißt, das Telefon ist mit Bluetooth verbunden. Also man hat sozusagen schon so einen modernen Networking Stack, womit die Geräte direkt miteinander reden können. Jetzt wird aber darüber ein serieller Port simuliert, sodass das Betriebssystem sozusagen, als hätte ich jetzt noch so eine V24-Schnittstelle, manche haben ja auch noch eine, aber als wäre sozusagen eine da, auf einmal existiert, ohne jetzt zu wissen, dass das eigentlich über Bluetooth geht. Dann wird darüber AT gesprochen, als würde sich sozusagen da ein Modem dran befinden, was ja auch nicht der Fall ist, weil das Ding ist ja selber auch schon in einem Datennetzwerk und macht ja auch irgendwie IP heutzutage. Nein, dann muss man sozusagen noch diesen alten AT-Command das fünfte Mal ausgraben. Das ist ja auch wirklich so ein Ding, das geht einfach nicht weg. Und als wäre das noch nicht genug, muss man dann aber auch noch PPP sprechen. Also was man ja heute sinnloserweise auch noch auf DSL reden muss, obwohl es dafür eigentlich auch keinen guten Grund gibt. Also zumindest keinen guten, es gibt einen Grund, aber es gibt keinen guten Grund. Und redet dann aber ja nicht mit irgendeinem Provider, in dem man sich einloggt, wie das so früher der Fall war, wo man so mit Modem ja einen Telefonanruf gemacht hat, sondern die Telefonnummer, die man dann da wählt, ist so eine dummy Telefonnummer, um wiederum mit einem PPP-Server auf dem Telefon zu reden, nur um Daten zu übertragen, was man sowieso schon die ganze Zeit tut, um dann von da aus dann den Internetdienst zu nutzen. Also sowas beklopptes.
+
+01:33:38.544 --> 01:33:57.424
+<v SPEAKER_1>Den nicht guten Grund, den du erwähnt hast, ist natürlich ganz klar, das kann jedes Betriebssystem, weil es eben so ein alter Hut ist. Das können alle. Mode im Einwahl können alle. Und warum sollte man jetzt hier was Mords implementieren, wenn es eben auch billig und auf die alte Tour geht? Natürlich ist es ein ziemlich Umstand, wie du sagst. Das ist nicht schön.
+
+01:33:57.444 --> 01:34:55.204
+<v SPEAKER_2>Aber ich meine, da kommt ja jetzt Pan mit ins Spiel, das Personal Area Networking, was jetzt bei den neueren Bluetooth-Devices halt da ist. Und in dem Moment bildet sich eben dieses Bluetooth-Gerät eben wie so eine Ethernet-Karte, wie eine Netzwerk-Karte ab, die einfach den Vorteil hat, dass sie mir eben auch sofort anzeigen kann, wenn da ein Link ist, nicht wahr? Wenn ich ein Ethernet-Kabel in Ethernet reinstecke, dann weiß der Rechner sofort, ah ja, da ist wieder eine Verbindung. Da könnte ich ja mal versuchen, hier DHCP zu machen oder so was. Und genauso ist es ja dann beim Bluetooth auch. Ah, ich habe jetzt hier wieder mal Verbindung zu meinem Provider. Da kommt das Internet aus der Luft. Zack, der Link geht hoch und dann kann der Rechner halt reagieren. Jeder, der schon mal im Zug gesessen hat und diesen PPP-Scheiß erleiden muss, der hat dann immer dieses Problem, dass er dann halt permanent immer wieder einen Dial-Up in seinen Telefon machen muss, nur um zu gucken, ob jetzt vielleicht rein zufällig, vielleicht wenn da ein Netz da ist. Aber das Gerät ist halt nicht in der Lage, einem selber Netz zu sagen. Da musste ich mich jetzt mal grad mal eh schon fühlen.
+
+01:34:55.224 --> 01:34:55.604
+<v SPEAKER_1>Zu Recht.
+
+01:34:56.064 --> 01:35:31.364
+<v SPEAKER_2>Ja, das sind immer so Sachen. Also das verstehe ich auch immer. Mir ist schon klar, warum das so gemacht wurde. Das kann ich alles nachvollziehen. Aber ich vermisse in dieser Softwareindustrie manchmal auch einfach den Mut, dass man einfach mal sagt, hier Leute, da sind auch irgendwie Chancen, wir müssen die alten Zöpfe abschneiden, weil dieses Fehlerpotenzial in dieser ganzen Kette, das fängt ja erstmal schon mal an mit diesen, wie viele Stunden und Lebenszeit die Leute investieren mussten, um das richtige Modemprofil für ihre bekloppte Software zu finden, um mit diesem Telefon zu reden. Was hat einen das aufgehalten? Dann diese ganzen Fehlerketten, die das alles so nach sich zieht. Man weiß irgendwie überhaupt gar nicht, wer jetzt hier eigentlich mit wem redet.
+
+01:35:32.104 --> 01:35:42.824
+<v SPEAKER_1>Ich rede mich jetzt wieder ab. Stichwort Telefonie, das sind einfach die Leute, die damals AT-Modems gemacht haben. Die machen jetzt Handys und das kennen sie halt schon. Ja, nichts Neues.
+
+01:35:46.564 --> 01:35:52.084
+<v SPEAKER_2>Bloß keine Zukunft. Gefährlich. Man müsste was lernen.
+
+01:35:52.104 --> 01:36:38.624
+<v SPEAKER_1>Klar, warum, wenn man es vermeiden kann. Aber gerade diese Personal Area Network-Geschichte, die ist ja jetzt eben auch mit dem neuen Bluetooth-Standard, der eben Ende letzten Jahres formell verabschiedet wurde, also das Low-Energy-Profile, Low-Energy-Bluetooth, da wurde das ja nochmal eben um eine neue Dimension erweitert. Wir kennen ja alle schon diese anziehbaren Geräte, Variables, die eben meine Herzfrequenz messen und direkt an meinen Arzt schicken usw. Da gibt es eben jetzt den Ansatz von Bluetooth, von der Bluetooth SICK zu sagen, okay, wir machen Geräte, die extrem wenig Strom brauchen. Und das glaube ich erst, wenn ich es gesehen habe, die über Jahre mit einer Knopfzelle auskommen.
+
+01:36:38.644 --> 01:36:39.824
+<v SPEAKER_2>Und Bluetooth sprechen.
+
+01:36:39.844 --> 01:36:58.724
+<v SPEAKER_1>Und Bluetooth sprechen. Und die SICK sagt da so spaßhaft immer dazu, ja, das ist unser Hornmark-Feature. Hornmark ist eben diese Grußkartenfirma. Und deren Vision ist natürlich, dass sie da überall einen Bluetooth-Chip einbauen. Wobei ich mir nicht sicher bin, ob da die Adressierung ausreicht.
+
+01:36:58.744 --> 01:37:01.124
+<v SPEAKER_2>Grüße vom Herzschrittmacher.
+
+01:37:01.144 --> 01:37:15.704
+<v SPEAKER_1>Das wäre mal witzig. Naja, das fühle ich jetzt nicht aus. Unbeliebte Verwandte mit Herzschrittmacher. So einen speziellen Gruß zu kommen lassen. Das kann man wahrscheinlich einiges erspinnen jetzt.
+
+01:37:16.164 --> 01:38:36.684
+<v SPEAKER_2>Der ganze Wireless-Markt ist auf jeden Fall schwer in Bewegung. Jetzt, wo diese kleinen Embedded-Chips immer kleiner werden, kommt auch diese Aircof-ID-Technologie hoch. Man hat also verschiedene Methoden ausgefuchst, wie man mit noch weniger Energie mehr Computing-Power in kleine Chips reinbekommt. Das wird natürlich ein Riesenthema. Da fällt mir gerade mal wieder ein schöner Chaos-Radio Express zu dem Thema ein, wo das auch ein Thema war. Und zwar hatte der einen unangemessenen Namen. Jetzt muss ich mal nachdenken. Verdammt, wie ist denn der? Ich hab's gleich. Worauf ich anspiele ist Sensor-Networks. Dass man überhaupt dahin geht, Netzwerke aufzubauen, wo jeder Sensor, von dem du im Prinzip gerade gesprochen hast, eine eigene kleine Intelligenz ist, und die Dinge dynamische Funknetze untereinander aufbauen. Dass man eben auch solche dynamische Netzwerke hat. Das war ein Thema in Carsradio Express 116, Mobile Ad-hoc-Netzwerke. Da kommt ja das jetzt an, wo so halt das alles auch besprochen wurde. Das war ein guter Podcast, müsst ihr euch unbedingt mal anhören, falls ihr noch nicht gehört habt. CRI 116.
+
+01:38:36.704 --> 01:38:50.484
+<v SPEAKER_1>Den hab ich angehört, glaub ich. Ich hab viele angehört jetzt in letzter Zeit, viel mehr. Aber ich glaub, der war nicht......schlecht. Natürlich wie keiner deiner Podcasts.
+
+01:38:50.504 --> 01:38:51.784
+<v SPEAKER_2>Ich bin auch nicht so fair, oder?
+
+01:38:51.784 --> 01:39:37.424
+<v SPEAKER_1>Nee, da attackiert Bluetooth eben mit diesem Low-Energy-Bluetooth sehr wohl eben andere Protokolle wie SIGBII. Genau. Oder eben auch... Ich mein, die ganze Low-Energy-Geschichte kommt ja eigentlich, wenn man genau ist, von Nokia. Die haben damals eben so ein Low-Energy-Dings quasi schon für sich gemacht. Das haben die Vibri genannt. Ich hab da echt mal nachgeschaut gestern, warum Vibri klingt irgendwie so komisch. Vibri ist eine Stadt beim Herr der Ringe, da wo das tänzelnde Pony diese Gaststätte ist, wo die Hobbits erstmals übernachten so auf ihrer Tour. Ich weiß auch nicht, warum das Vibri deshalb heißt. Das Y natürlich für Wireless.
+
+01:39:41.864 --> 01:39:44.764
+<v SPEAKER_2>Das Merch steht sozusagen in Bluetooth 4.0 dann mit rein.
+
+01:39:44.784 --> 01:40:43.164
+<v SPEAKER_1>Genau, das haben die jetzt mitgenommen, weil es natürlich sinnvoll ist und weil es eben gerade so im Gesundheitsbereich, eben Herzfrequenzmessung, Blutdruckmessung unheimlich viel Sinn machen kann. Und eben auf die Weise, dass die Geräte, die man dann am Körper trägt, irgendwie relativ wartungsfrei sind. Man kennt das ja, wenn man eine Pulsuhr hat, dann hat man so einen Dingsumbauch und da muss man dann auch irgendwann die Batterie wechseln, aber die hält eben auch sehr lange. Und ich glaube, genau solche Anwendungen, die derzeit noch irgendwie 244 Megahertz proprietär oder 443, eine dieser anderen ESM-Frequenzen, die es da noch so gibt, verwendet und eben eine ganz proprietäre Sprache darüber sprechen, auch die Sachen zu standardisieren. Und das geht eben eindeutig in die Richtung, die eben andere schon versucht haben, für sich zu claimen. Aber ja, da wird wahrscheinlich Bluetooth nicht direkt unerfolgreich sein, würde ich mal vermuten.
+
+01:40:43.464 --> 01:40:45.704
+<v SPEAKER_2>Ja, das bleibt auf jeden Fall erstmal noch eine Weile.
+
+01:40:45.724 --> 01:41:53.344
+<v SPEAKER_1>Genau, und was die eben machen, um Strom zu sparen, ist eben jetzt nicht so, dass die ständig eben ihre Verbindung halten, sondern es gibt da gewisse Energiesparmodi, die eben die Geräte einschlagen können, und da gibt es auch eine Art Option, dass man eben, also die Anforderungen, die man sich da gesetzt hat, heißt, irgendwie innerhalb von Millisekunden eine Verbindung zum Gerät über bis zu 100 Meter aufzubauen. Das ist halt schon sehr mutig, so was zu sagen, in so einem Standard. Aber das ist eben mitstandardisiert und hat man eben probiert und dazu hat man den Standard insofern verändert, dass eben nicht mehr alle Kanäle für Inquiry verwendet werden, sondern nur noch ein Subset, dass sich die einfach viel sparen können. Und auch eine große Portion der Intelligenz ist quasi auf dem Host gelandet. Also die erkennen sich selber diese Bluetooth-Geräte als minderwertig an und sagen, du, ich kann das nicht, mach du das alles, was ich sonst auch hätte machen müssen. Und dadurch sparen die natürlich viel Computing-Power ein und auch sehr viel Strom somit. Und so wird es dann möglich, dass sie wirklich länger leben mit so einer Knopfzelle.
+
+01:41:53.364 --> 01:43:01.384
+<v SPEAKER_2>Verstehe. Vielleicht haben wir nochmal so einen kurzen Blick auf die vorhandenen Implementierungen von Bluetooth machen und an welcher Stelle man sozusagen pfiffigerweise ansetzen sollte, wenn man jetzt mal selber darüber nachdenkt, Bluetooth in eigene Anwendungen zu integrieren. Ich finde das ja immer noch so ein bisschen, das ist so Unexploited Land, das habe ich gerade gemerkt, als ich mit dieser Remote rumgespielt habe. Es gibt einfach viel zu wenig Software, die damit irgendwas macht, weil natürlich so ein Teil, was einfach so geile Sensordaten in Echtzeit liefert, mit Knöpfen drauf und so weiter an allen möglichen Stellen und so, da ist ja, da platzt einem ja das Hirn, wenn man darüber nachdenkt, was man da sozusagen alles Pfiffiges mit machen könnte, wenn man denn eben in der Lage ist, Geräte zu bauen oder Computer zu programmieren, die dann eben damit auch pfiffig umgehen können. Zunächst einmal vielleicht noch mal zu den Stacks. Also heutzutage kommt jedes ordentliche Betriebssystem oder jedes große Betriebssystem, hat jetzt seinen eigenen Stack. Windows hat es auch geschafft. Der Mac hatte das schon immer einen eigenen Bluetooth Stack. Da hat sich nie ein anderer durchgesetzt. Bei Linux gibt es im Prinzip auch nur einen, richtig?
+
+01:43:01.384 --> 01:43:09.764
+<v SPEAKER_1>Es gab früher mal Fx oder so. Das wurde dann aber bald eingestellt bzw. ersetzt durch BlueZ, weil da einfach die größere Community war.
+
+01:43:09.864 --> 01:43:11.204
+<v SPEAKER_2>BlueZ, Blue mit Z.
+
+01:43:11.224 --> 01:43:12.404
+<v SPEAKER_1>Genau, richtig.
+
+01:43:12.424 --> 01:43:13.684
+<v SPEAKER_2>BlueZ, sagt man ja?
+
+01:43:13.704 --> 01:43:15.404
+<v SPEAKER_1>Ja, so habe ich das bisher immer gesagt.
+
+01:43:15.424 --> 01:43:18.124
+<v SPEAKER_2>Okay, deswegen ist der Z wahrscheinlich auch groß. Ist es groß?
+
+01:43:18.144 --> 01:43:18.424
+<v SPEAKER_1>Ja.
+
+01:43:18.444 --> 01:43:19.644
+<v SPEAKER_2>Ist es groß?
+
+01:43:20.924 --> 01:43:57.904
+<v SPEAKER_1>Genau. Und deshalb ist das so. Also da hat sich vorher ein anderes Stack eben dann nicht behauptet. Angefangen für Linux hat das, glaube ich, damals Qualcomm. Genau. Da gibt es irgendwie im Sourcecode noch immer Referenzen an den Herrn Krasniansky, so heißt er. Der hat damals angefangen, für Qualcomm eben so einen Linux-Bluetooth-Stack zu entwickeln. Und irgendwann hat das Marcel Holtmann dann eben auch übernommen. Und ich glaube, der macht das bisher immer noch. Aber ich habe eben wenig geguckt, was da jetzt so neu ist in letzter Zeit. Ich bin da eben auch schon nicht mehr up to date so 100 Prozent.
+
+01:43:58.644 --> 01:44:00.624
+<v SPEAKER_2>Wie sieht das in der BSD-Welt aus, hast du das?
+
+01:44:00.644 --> 01:44:24.324
+<v SPEAKER_1>In der BSD-Welt gibt es einen Port für BlueZee mittlerweile. Das ist natürlich irgendwie GPL und nicht BSD, die Lizenz dafür. Das schränkt es ein bisschen ein. Es gibt, glaube ich, einen BSD-Stack, der wiederum auf FX aufsetzt. Aber ich bin kein BSD-Jünger. Ich kenne mich damit nicht aus. Und deshalb kann ich es dir auch nicht besser sagen als das, was ich eben vom Hören sagen weiß.
+
+01:44:24.364 --> 01:44:39.044
+<v SPEAKER_2>Okay. Aber so in der Linos kann man ja mal schön vor allem Embedded-Geräte hacken. Da passt natürlich Bluetooth wunderbar rein. Da könnte man sozusagen mit dem Bluesie-Protokoll-Stack gleich loslegen und pöffige Scanner bauen und...
+
+01:44:39.064 --> 01:45:12.384
+<v SPEAKER_1>Ja, kann man. Wobei das in letzter Zeit ein bisschen umständlicher geworden ist. Also es gibt da irgendwie, verglichen mit ersten Versionen, Bluesie 1, Bluesie 2, da war es eben sehr viel mehr möglich, mehr über die Konsole zu machen. Einfach so ein Inquiry-Scan, das geht heute auch noch. Aber was jetzt eben irgendwie besser geworden ist eigentlich als Anwender, Anwendungsprogrammierer oder auch, es gibt da eben das D-Bus-Interface, womit Linux sehr viel macht, wo eben dann auch zum Beispiel diese PIN beim Pairing abgefragt wird und das macht es halt schon ziemlich klumpig. Also wenn man…
+
+01:45:12.404 --> 01:45:16.404
+<v SPEAKER_2>Also wenn man sozusagen über andere Subsysteme geht, also D-Bus ist dieser Desktop-Bus.
+
+01:45:16.424 --> 01:45:57.944
+<v SPEAKER_1>Genau, richtig. Das ist einfach so ein Message-Bus, wo man eben sich registriert und gewisse Dinge draufschickt und eben auch abfrägt und eben solche HCI-Requests eben auch draufkommen. Und das macht es ein bisschen umständlicher, also es ist auch nicht schlimm, aber vorher war es einfach so, dass man einfach mit Pipes arbeiten konnte und irgendeinen Standard-Pin irgendwo hin piped und das geht jetzt nicht mehr ganz so leicht. Man bräuchte sich ja glaube ich nur ein bisschen Zeit nehmen und man kann sich dann so einen Bluetooth-Pin-Helper, der mit D-Bus geht, kann man sich ganz leicht basteln, habe ich eh auch schon gemacht, aber das stört natürlich erstmal, das ist nicht so schön, muss man programmieren können.
+
+01:45:58.104 --> 01:46:08.024
+<v SPEAKER_2>Ja, naja, wir wissen ja früher, war ja immer alles besser. Genau, wir haben einfach immer alles mit AT-Commandos steuern.
+
+01:46:08.044 --> 01:46:08.624
+<v SPEAKER_1>Das war toll.
+
+01:46:08.644 --> 01:46:15.684
+<v SPEAKER_2>Tja, haben wir noch was ganz wichtiges ausgelassen?
+
+01:46:15.704 --> 01:46:18.144
+<v SPEAKER_1>Ja, ich meine, Bluetooth 3.0 haben wir bisher übersprungen.
+
+01:46:19.844 --> 01:46:22.724
+<v SPEAKER_2>Das ist so das, was jetzt so gerade an die Tür klopft, ne?
+
+01:46:22.744 --> 01:47:21.084
+<v SPEAKER_1>Ja, obwohl es eben auch schon länger fertig spezifiziert ist. Da muss ich schon sagen, da sind die sehr eifrig bei der Bluetooth-Sig. Die machen sehr viele neue Standards, aber irgendwie gibt es dann schon Anwendungsfälle, aber nicht so die Mörderanwendung, wo dann alle sagen, boah, cool, jetzt machen wir das auch, sondern 3.0 ist schon seit über einem Jahr fertig. Ich weiß das Datum gar nicht genau. Und jetzt habe ich im August ein Handy gekauft, was das als erstes Handy hatte. Das war eben so ein Android-Gerät und da ist das jetzt zum ersten Mal drin und die sehen eben vor, dass wenn Daten übertragen werden, die ganz groß sind, warum sollte man da jetzt nicht andere Sachen einsetzen und die setzen jetzt zum Beispiel WLAN als Highspeed-Kanal ein. Dazu haben sie jetzt in diesem Protocol-Stack eine neue Layer eingezogen, die eben ähnlich wie die HCI-Schnittstelle Software von Hardware trennt. Die heißt aber AMP, also Alternate Mac-Fi, also andere Media Access, physikalisch.
+
+01:47:21.684 --> 01:47:28.464
+<v SPEAKER_2>Das heißt, man nimmt sozusagen den Frequenzbereich und die Art und Weise, wie man bei WLAN kommuniziert, als Subsystem und macht dann einfach WLAN oder was?
+
+01:47:29.084 --> 01:47:36.184
+<v SPEAKER_1>Und auf die Weise kann man jetzt auch auf WLAN Bluetooth-Profile fahren, theoretisch.
+
+01:47:36.204 --> 01:47:39.844
+<v SPEAKER_2>Obex Push über WLAN sozusagen, Visitenkarten schnell verschickt.
+
+01:47:40.184 --> 01:48:08.084
+<v SPEAKER_1>Also probiert habe ich es noch nicht. Angeblich ist das möglich und es ist wohl auch möglich, wenn man ein Gerät hat, das Bluetooth 2.1 hat, also eben das IDEA Bluetooth und eben mit den Features, die 2.1 haben und ein WLAN-Interface im Rechner, dann kann man softwaremäßig Bluetooth 3.0 implementieren. Ja, das ist natürlich schön zu wissen, wenn man das beides hat, dann kann man das. Und wenn man große Dateien hat, die eben unbedingt über Bluetooth übertragen werden wollen, dann ist das gut.
+
+01:48:10.244 --> 01:48:25.104
+<v SPEAKER_2>Was heißt das, dass die Geräte sich dann sozusagen in dem normalen Frequenzband darauf verständigen können, weil sie beide dieses High-Speed-Profile können, dass sie dann sozusagen auf einen ganz anderen Physical Layer wechseln und dann das einfach mal schnell austauschen untereinander?
+
+01:48:25.124 --> 01:48:43.124
+<v SPEAKER_1>Genau, also es ist ähnlich wie die Einführung von EDR, also dieser Enhanced Data Rate, wo man sich erstmal klar wird, sag mal, kannst du das auch. Das wurde eben aus Abwärtskompatibilitätsgründen ja mit der langsamen Rate immer kommuniziert. Also sag mal, kannst du das? Das wurde so auf allgemein verständlich gefragt.
+
+01:48:43.164 --> 01:48:46.264
+<v SPEAKER_2>Das muss ja auch kompatibel sein.
+
+01:48:46.284 --> 01:49:13.964
+<v SPEAKER_1>Und das wurde jetzt aber eine Ebene hochgesetzt. Jetzt fragt man nicht mehr auf 1.0-Kompatibilitätslevel nach, sag mal, kannst du auch High-Speed über WLAN, sondern man fragt auf Standard 2.1 nach. Also eh schon mit EDR, da handelt man sich dann eben auch die Verbindungsparameter aus, weil auch da kann man sich eben eine Verschlüsselung über den schon sicheren Kanal neu vereinbaren. Also da gibt es sicher auch viele Einfallstore, wenn man Security denkt.
+
+01:49:16.044 --> 01:49:23.884
+<v SPEAKER_2>Also über WLAN heißt es aber jetzt nicht über WLAN-Protokoll, genauso wie es im WLAN spezifiziert ist, sondern sozusagen über diesen Frequenzbereich?
+
+01:49:24.764 --> 01:49:38.444
+<v SPEAKER_1>Doch schon, also es wird der WLAN-Standard verwendet, aber eben im Ad-hoc-Mode wahrscheinlich. Und eben nicht so, dass du sagst, okay, ich bin hier in dem Netz eingebucht, mach du das mal auch und dann wären wir uns schon einig, sondern da heißt, pass mal auf, Ad-hoc.
+
+01:49:38.464 --> 01:49:55.524
+<v SPEAKER_2>Also der physical part sozusagen, also der wie werden die Frequenzen benutzt und aufgeteilt und die Kanäle zugewiesen etc., das wird von WLAN übernommen. Darüber hinaus halt nichts, also nicht die Art und Weise, wie man im WLAN untereinander High-Level kommuniziert und sich austauscht. Okay, verstehe.
+
+01:49:55.544 --> 01:50:09.644
+<v SPEAKER_1>Genau, aber das wäre dann interessant, Bluetooth Network Emulation Protocol über WLAN zu machen. Malkovich, Malkovich.
+
+01:50:09.664 --> 01:50:28.864
+<v SPEAKER_2>Das wird bestimmt noch ganz putzig. Na gut, 3.0 steht vor der Tür. Du hast gesagt, vor einem Jahr ist es fertig geworden. Da müssen wir jetzt auch nochmal sagen, was wir für ein Jahr gerade haben. Wir sitzen hier im Oktober 2010, ich muss darauf immer hinweisen, weil ja, was jetzt? Ja, ihr werdet ja auch noch in 500 Jahren gehört. Die Leute wissen, auf welchen Bluetooth-Standard sie jetzt hoffen können. In 500 Jahren wahrscheinlich schon.
+
+01:50:28.884 --> 01:50:34.064
+<v SPEAKER_1>Ich weiß nicht, wenn die so weitermachen, sind wir da schon überhalb der natürlichen Zahlen von der Versionsnummer.
+
+01:50:34.084 --> 01:50:37.864
+<v SPEAKER_2>Ja, da heißt es wahrscheinlich Red Tooth oder sowas.
+
+01:50:41.244 --> 01:50:42.744
+<v SPEAKER_1>Das klingt gefährlich, auf jeden Fall.
+
+01:50:48.204 --> 01:50:50.944
+<v SPEAKER_2>3.0 kommt sozusagen und 4.0 ist noch so total in der Zukunft.
+
+01:50:50.964 --> 01:51:04.824
+<v SPEAKER_1>4.0 ist fertig spezifiziert und würde eben glaube ich in speziellen Bereichen schon eingesetzt. Erste Prototypen, das ist im Dezember 2009 wie gesagt fertig geworden. Aber es braucht immer eine gewisse Zeit, bis dann die Geräte wirklich am Markt sind.
+
+01:51:04.824 --> 01:51:10.864
+<v SPEAKER_2>Ja klar, ich meine wer jetzt 4.0 verwendet, muss ja im Prinzip dann auch 3.0 komplett implementieren. Oder ist das nochmal so separat?
+
+01:51:10.884 --> 01:51:32.884
+<v SPEAKER_1>Nee, ich glaube das ist so. Also 3.0 ist Voraussetzung. Das stimmt. Aber die haben wiederum dann eben das Protokoll adaptiert. Da ist dann schon ein bisschen mehr noch dabei. So genau kann ich es nicht sagen, nachdem es da kaum Informationen auch noch gibt. Also es gibt meistens nur diesen Marketing-Kanal der Bluetooth-SIG, die eben angibt, wie toll das jetzt ist. Aber so richtig über Details zu sprechen, die noch nicht.
+
+01:51:34.444 --> 01:51:54.684
+<v SPEAKER_2>Was ist dir denn so, ich meine jetzt mal so abgesehen von diesen Security-Sachen, ist dir denn so bei der Behandlung von Bluetooth, gibt es denn eigentlich noch so pfiffige Geräte, die mit Bluetooth ausgestattet sind, die man jetzt so normalerweise gar nicht so offen zeigen kann. Ich meine, V-Mode, das ist immer so das Paradebeispiel, die Computer haben es natürlich, alles, die Handys auch.
+
+01:51:54.704 --> 01:52:04.704
+<v SPEAKER_1>Ja, bald eben Grußkarten. Ja, bin ich ehrlich gesagt ein bisschen überfragt, also mir fällt jetzt nichts ein.
+
+01:52:04.724 --> 01:52:15.564
+<v SPEAKER_2>Also ich weiß, es gibt so Presenter-Dinger, die so auf Bluetooth basieren, die fangen an, wenn man so seine Profi-Position halten soll, hat aber dann natürlich den, ja, wie eine Maus, aber hat halt mehr Tasten, wobei...
+
+01:52:15.584 --> 01:52:23.644
+<v SPEAKER_1>Aber die gibt es schon lange, glaube ich. Also die gibt es sehr früh, haben die schon angefangen, dass das praktisch ist, weil ist ja auch praktisch.
+
+01:52:23.784 --> 01:52:24.884
+<v SPEAKER_2>Ja, ist praktisch.
+
+01:52:24.904 --> 01:52:37.384
+<v SPEAKER_1>Ja, nee, wo man es nicht vermutet, wer damals beim Kongress unsere Präsentationen aufmerksam verfolgt hat, weiß, dass es sogenanntes Sexspielzeug gibt für Frauen, das mit Bluetooth ansprechbar ist.
+
+01:52:37.504 --> 01:52:38.004
+<v SPEAKER_2>Ernsthaft?
+
+01:52:38.024 --> 01:52:38.724
+<v SPEAKER_1>Über AT-Codes.
+
+01:52:39.864 --> 01:52:40.784
+<v SPEAKER_2>Schon wieder?
+
+01:52:40.804 --> 01:52:50.784
+<v SPEAKER_1>Schon wieder. Nee, da war die Idee, dass du, ich selber habe es noch nie ausprobiert, so ein Dildo für Frauen oder ja.
+
+01:52:50.804 --> 01:52:51.644
+<v SPEAKER_2>Oder für Männer?
+
+01:52:51.664 --> 01:53:07.024
+<v SPEAKER_1>Ja, oder für Männer. Und der war verkoppelt mit dem Handy. Und wenn jetzt eine bestimmte Telefonnummer auf dieses Handy eine SMS geschickt hat mit einer speziellen Sequenz von Buchstaben, hat man dann einen gewissen Effekt erzeugt.
+
+01:53:07.884 --> 01:53:12.004
+<v SPEAKER_2>Das ist der Vibrationsalarm sozusagen auf eine neue Dimension.
+
+01:53:12.024 --> 01:53:17.644
+<v SPEAKER_1>Ja, aber eben mit dieser Nummernbeschränkung, sonst wäre es lustig.
+
+01:53:17.664 --> 01:53:20.024
+<v SPEAKER_2>Man weiß dann sozusagen, woher es kommt.
+
+01:53:20.044 --> 01:53:24.684
+<v SPEAKER_1>Oh ja, also ich weiß nicht, wie viele Telefonnummer man da einstellen kann.
+
+01:53:24.704 --> 01:53:26.584
+<v SPEAKER_2>Liebes Grüße aus Moskau sozusagen.
+
+01:53:26.604 --> 01:53:38.704
+<v SPEAKER_1>Aber also idealerweise oder monogamistischerweise nur eine Nummer. Wie unflexibel. Ja, vielleicht kann man auch mehr einstellen. Ich habe es nie getestet.
+
+01:53:38.724 --> 01:53:39.044
+<v SPEAKER_2>Okay.
+
+01:53:39.064 --> 01:53:57.704
+<v SPEAKER_1>Und ich habe, also wir wollten es ja wirklich als Sample haben, zum Security-Check. Das heißt The Toy. Also ich weiß nicht, ob es das noch gibt. The Toy C-O-U-K. Und da würde man es wahrscheinlich nicht vermuten, aber das ist eigentlich auch schon ein alter Hut. The Toy gibt es noch, okay.
+
+01:53:58.264 --> 01:54:01.524
+<v SPEAKER_2>Tease, please, excite, control.
+
+01:54:01.544 --> 01:54:04.584
+<v SPEAKER_1>Schauen, das gibt es auch in blau und in rosarot. Also auch für Jungs.
+
+01:54:04.604 --> 01:54:08.224
+<v SPEAKER_2>Das ist auch für Jungs. Und black. Und orange.
+
+01:54:08.244 --> 01:54:13.384
+<v SPEAKER_1>Oh ja, stimmt. Passt uns zum Handy wahrscheinlich so.
+
+01:54:13.404 --> 01:54:15.284
+<v SPEAKER_2>Hammer. Großartig.
+
+01:54:15.304 --> 01:54:24.304
+<v SPEAKER_1>Nee, geht aber wahrscheinlich nicht mit dem iPhone. Nee, wenn es mit dem iPhone ginge, wäre das mit abgebildet. So bin ich mir sicher. Da sind alle immer stolz, wenn es mit dem iPhone funktioniert.
+
+01:54:24.664 --> 01:54:26.624
+<v SPEAKER_2>Das ist ja riesig.
+
+01:54:29.544 --> 01:54:37.224
+<v SPEAKER_1>Ich habe nur mal so einen Marketingtext gesehen, wie viele verschiedene Kombinationen da jetzt möglich sind von Arousal.
+
+01:54:37.904 --> 01:54:39.804
+<v SPEAKER_2>Arousal Levels.
+
+01:54:39.924 --> 01:54:44.504
+<v SPEAKER_1>Genau. Ja, da würde man es nicht vermuten, aber ehrlich gesagt, man kann nicht wirklich viel damit machen.
+
+01:54:44.524 --> 01:55:03.824
+<v SPEAKER_2>Aber wenn man jetzt, ähm, hast du da ein bisschen Erfahrung, weil man, also sozusagen, wenn man jetzt mal so die kleinstmögliche, sind ja schon so Embedded-Hardware-Geräte, die sozusagen mit Bluetooth-Chip on Board daherkommen, ist sowas verbreitet? Also wenn man jetzt nämlich wirklich mal so sich seinen eigenen Vibrator da bauen möchte.
+
+01:55:03.844 --> 01:55:12.264
+<v SPEAKER_1>Also es gibt sehr viel, wenn man jetzt Embedded denkt, dann gibt es fast nur USB-Geräte, die da eben verfügbar sind, natürlich in verschiedenen Größen.
+
+01:55:12.284 --> 01:55:16.644
+<v SPEAKER_2>Aber man kann ja über USB auch so ein Bluetooth-Stick draufstecken, ne?
+
+01:55:16.744 --> 01:55:21.764
+<v SPEAKER_1>Ja, klar. Und sehr viele solcher Module, die man kauft, werden über USB angesprochen.
+
+01:55:21.784 --> 01:55:27.704
+<v SPEAKER_2>Und dieser Bluesy-Stack, der macht dann auch über USB sozusagen, der benutzt dann dieses Device über USB?
+
+01:55:27.724 --> 01:55:42.844
+<v SPEAKER_1>Kann er. Kann er auch anders, aber USB ist das supergängige, das machen alle. Also wenn man jetzt irgendwie für Mini-PCI was sucht zum Beispiel, dann hat man Pech. Also dann kann man eben den Umweg gehen, USB, Mini-PCI, Bluetooth, aber nicht direkt.
+
+01:55:42.864 --> 01:55:50.504
+<v SPEAKER_2>Ja, aber was weiß ich, wenn man jetzt so einen Arduino hat, der hat halt USB, so, dann kann man irgendwie so einen Bluetooth-Dongle ranstecken und dann plättet man sozusagen auch gleich.
+
+01:55:51.964 --> 01:56:16.684
+<v SPEAKER_1>Also ich habe eben auch selber schon für meinen, ich habe da so etwas entwickelt, mal für Veranstaltungsfotografie, wo eben Leute mit ihrem Handy Fotos auf Display schicken und da habe ich OpenWrt eingesetzt und das funktioniert toll mit USB-Dongles. Standard. Man muss eben ein bisschen die Pakete reinbauen und ein bisschen Zauber-Salz drüber und dann geht das irgendwie.
+
+01:56:16.704 --> 01:56:43.464
+<v SPEAKER_2>Tolle Vorlage. Kann ich gleich noch mal auf den nächsten CRE verweisen. CRE 076 ging nämlich über OpenWrt, wobei Bluetooth da keine Rolle gespielt hat, aber alle anderen Details darüber hat der Felix Vietkow da ausführlich mit mir durchgekaut. Jetzt haben wir es aber, oder? Ja, vielen Dank, Martin. Das war eine schöne Reise hier durch die Welt des blauen Zahns. Warum heißt das eigentlich so?
+
+01:56:44.124 --> 01:56:46.984
+<v SPEAKER_1>Tja, das ist normalerweise die Einstiegsfrage, Tim.
+
+01:56:47.064 --> 01:56:48.404
+<v SPEAKER_2>Ja, ich weiß.
+
+01:56:48.424 --> 01:56:52.504
+<v SPEAKER_1>Ich bin froh, dass du die nicht gestellt hast, weil das einfach so eine abgedroschene Geschichte ist.
+
+01:56:52.524 --> 01:56:52.824
+<v SPEAKER_2>Wirklich?
+
+01:56:53.004 --> 01:57:26.604
+<v SPEAKER_1>Jaja, also das Bluetooth-Symbol, das kennt ja jeder, dieses Runensymbol, das ist eine Überlagerung von den runischen Buchstaben H und B. Und vielleicht blitzt jetzt irgendwie aus deiner Erinnerung auf, Harald Blattland war eben so ein dänischer König, der im Mittelalter alle möglichen, also ganz Dänemark quasi christianisiert hat und so unter ein Regime gebracht hat. Und nachdem natürlich Nokia und Ericsson so die treibenden Kräfte aus Skandinavien waren bei der Standardisierung, hat man den eben so als...
+
+01:57:26.624 --> 01:57:29.544
+<v SPEAKER_2>Also Blattand heißt Blauzahn. Alles klar.
+
+01:57:29.564 --> 01:57:35.324
+<v SPEAKER_1>Heißt Blauzahn? Ich dachte, der heißt nur so und isst gerne Blaubeeren. Und hatte deshalb immer blaue Zähne.
+
+01:57:35.344 --> 01:57:39.244
+<v SPEAKER_2>Ach so. Also ich weiß, der Wikipedia-Eintrag ist gleich Harald Blauzahn.
+
+01:57:40.324 --> 01:57:47.704
+<v SPEAKER_1>Wobei, da sieht man mehr Versionen. Und eine dieser Versionen ist die, die du bei Wikipedia liest. Und die andere ist, dass der eben...
+
+01:57:47.724 --> 01:57:50.024
+<v SPEAKER_2>Da gibt es ja immer mehrere Realitäten und Wahrheiten.
+
+01:57:50.044 --> 01:57:54.364
+<v SPEAKER_1>Ja, und natürlich ist die einzige Wahrheit die, die ich erzählt habe. Wie immer.
+
+01:57:54.384 --> 01:57:57.824
+<v SPEAKER_2>Verstehe. Also das ist sozusagen hier das skandinavische HB-Männchen und danach ist es benannt worden.
+
+01:57:57.904 --> 01:58:07.244
+<v SPEAKER_1>Genau, richtig. Und eben die Idee, mehrere zu vereinen unter einem Ding, das macht ja Bluetooth auch. Mehrere Hersteller unter einem Protokoll.
+
+01:58:08.384 --> 01:58:12.644
+<v SPEAKER_2>Na, da haben sie sich ja bemüht, hier skandinavische Kultur und der zu bringen.
+
+01:58:12.664 --> 01:58:14.944
+<v SPEAKER_1>Den wird sonst niemand kennen, glaube ich, diesen Harald.
+
+01:58:14.964 --> 01:58:16.384
+<v SPEAKER_2>Ja, jetzt ist er aber ganz berühmt.
+
+01:58:16.384 --> 01:58:18.244
+<v SPEAKER_1>Oh ja.
+
+01:58:18.264 --> 01:58:32.724
+<v SPEAKER_2>Und jetzt auch bei Chaos Radio Express zu Gast gewesen, Harald. Na dann sage ich mal vielen Dank, Martin. Und vielen Dank an alle Hörer beim Zuhören hier wieder eine Nerd-Sendung. Und so geht es auch weiter.
+
+01:59:02.117 --> 01:59:02.777
+<v SPEAKER_1>Bis dann, tschüss.

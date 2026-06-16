@@ -1,0 +1,217 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.260
+<v SPEAKER_1>Die menschliche Erfindung ist wie ein Computer.
+
+00:00:53.948 --> 00:01:11.528
+<v SPEAKER_2>Hallo, hier ist Chaosradio, Ausgabe Nummer 25. Heute direkt ein Interview vom Linux-Tag 2006 in Wiesbaden. Und mit mir ist Volker Lendecke vom Samba-Projekt. Hallo Volker.
+
+00:01:11.548 --> 00:01:12.388
+<v SPEAKER_1>Hallo.
+
+00:01:12.408 --> 00:01:38.388
+<v SPEAKER_2>Du bist einer der Mitentwickler des Samba-Projektes, der Open-Source-Lösung, um die Windows-Welt näher an die UNIX-Welt zu bringen, so würde ich das mal bezeichnen. Kannst du mal vielleicht mit deinen eigenen Worten umschreiben, was alles zu diesem Samba-Software-Paket dazu gehört? Und vielleicht auch kurz, was deine Aufgabe da in dem Projekt ist?
+
+00:01:39.728 --> 00:02:35.688
+<v SPEAKER_1>Ja, Samba ist historisch entstanden, um wirklich Laufwerke, Laufwerk D, Laufwerk E, wie auch immer, übers Netz von einem UNIX-Rechner zu beziehen. Das ist überhaupt noch nichts, hat zunächst nichts mit Windows zu tun gehabt. Das war ganz ursprünglich eine Digital-Pathworks-Geschichte mit DOS-Clients. Dass das auch Windows funktioniert, haben wir erst sehr viel später herausgefunden, oder viel mehr. Andrew Tritschel hat es sehr viel später herausgefunden. Heutzutage beschreibe ich Samba immer gerne damit, dass Samba bewirkt, dass ein Linux-Rechner in der Netzwerkeumgebung von Windows auftaucht. Man kann Doppelklick drauf machen, man kriegt Shares, man kriegt Drucker, man kriegt Authentifizierung. Das ist quasi die einfachste Methode, wie man das beschreiben kann. Also alle Dienste, die ein Windows-Client von einem Windows-Server erwartet, stellen wir zur Verfügung oder versuchen es so gut wie möglich zur Verfügung zu stellen.
+
+00:02:35.828 --> 00:02:37.968
+<v SPEAKER_2>Aber das geht über das Filesharing hinaus?
+
+00:02:37.988 --> 00:03:35.748
+<v SPEAKER_1>Das geht deutlich über das Filesharing hinaus. Wir haben mit Filesharing begonnen und haben jetzt als nächstes dann irgendwann die Drucker-Unterstützung gehabt. Da gibt es allein zwei verschiedene Varianten, die sich komplett unterscheiden. Und als wichtigstes weiteres Feature haben wir dann einen Domänen-Controller implementiert. Das heißt, wir können mit Samba die zentrale Benutzer-Authentifizierung für ganz großes Netz machen. Ein prominentes Beispiel ist der Bundestag, der jetzt seine Domänen-Controller komplett auf Samba mit Linux umgestellt hat. Tatsächlich? Ja. Das ist Mitte letzten Jahres durch die Presse gegangen. Die haben auch die Fileserver und die Druk-Server umgestellt und die ganze Serverlandschaft läuft jetzt komplett auf Linux mit Samba drauf. Und der Punkt ist halt, der Windows-Client hat während dieser Umstellung nichts davon gemerkt.
+
+00:03:35.768 --> 00:03:54.448
+<v SPEAKER_2>Das ist der wesentliche. Spezifikationsgemäß wäre ja etwas übertrieben ausgedrückt als offensichtlich eine solche Spezifikation. Ich gebe das gleich nochmal zu kommen. Aber grundsätzlich geht es darum, einen Windows-Server auf der anderen Seite zu ersetzen.
+
+00:03:55.628 --> 00:03:57.948
+<v SPEAKER_1>Das ist die wesentliche Idee von Samba.
+
+00:03:57.988 --> 00:04:22.888
+<v SPEAKER_2>Dann kommen wir gleich nochmal zu dieser Spezifikationsproblematik. Es ist ja eigentlich so, dass die Protokolle, die dort von Samba implementiert werden, eigentlich gar keine wirklichen Standards sind oder zumindest nicht wirklich gut beschrieben. Kannst du mal kurz aufschüsseln, was es tatsächlich an verbindlichen Dokumenten zu dem Thema gibt und wo man die nachschlagen kann?
+
+00:04:22.908 --> 00:06:35.788
+<v SPEAKER_1>Verbindliche Dokumente zu diesem Thema gibt es überhaupt nicht. Das einzig verbindliche Dokument ist der Windows-2003-Server-Quelcode. Darauf haben wir natürlicherweise keinen Zugriff. Darauf hat niemand wirklich Zugriff, sodass das frei verwenden könnte. Selbst irgendwelche Shared-Source-Geschichten sind sehr eingeschränkt darin, was sie damit tun können. Aber in der Summe gibt es dazu zu diesem Protokoll überhaupt keine Spezifikation. Wir gehen davon aus, dass selbst Microsoft, wenn sie denn gefragt würden und sie sind im Moment von der EU-Kommission gefragt, Protokollspezifikationen zu machen, dass sie extrem große Schwierigkeiten hätten, das genau zu spezifizieren. Wir glauben sogar, dass sie es möglicherweise gar nicht schaffen können, weil dieses Protokoll oder die Basisprotokolle einfach so verwinkelt sind und somit historischem Ballast überfrachtet sind, dass man einfach das nicht spezifizieren kann. Microsoft ist immer extrem gut darin, und das muss man ja auch wirklich hoch anrechnen, dass sie Kompatibilität bis in die Steinzeit zurück garantieren oder vielleicht nicht garantieren, aber herstellen. Das heißt, im Grunde muss ein Windows, ein uralter DOS-Client noch dazu gebracht werden können, heute mit einem Windows-203-Server zu reden. Und da sind sie eigentlich recht gut drin. Man wird heutzutage ein Windows-203-Server mit Registrierungsanträgen anpassen müssen, weil sie Sicherheitseinstellungen dichter gemacht haben, aber im Prinzip kann man noch mit uralten OS-2-Geschichten auf einen Windows-203-Server zugreifen. Dadurch, weil sie zusätzlich im gleichen Protokoll ständig Ausbau ausgebaut haben und neue Features implementiert haben, hat sich einfach eine unglaubliche Menge an historischem Ballast angesammelt. Und wir können dem Protokollelemente zeigen, wo wir ziemlich sicher sind, dass der entsprechende Codeteil auf Serverseite das implementiert, seit zwölf Jahren, 15 Jahren nicht mehr angefasst wurde. Wo Microsoft sich auch nicht mehr traut, da noch irgendwas dran zu drehen, weil sie nicht wissen, wen sie damit kaputt machen, wenn sie da was aufräumen würden. Und insofern, dieses Protokoll ist nicht spezifizierbar. Es gibt Teilbereiche...
+
+00:06:35.808 --> 00:06:53.828
+<v SPEAKER_2>Handelt es sich denn eigentlich um ein Protokoll, oder kann man nicht schon fast von einer Protokollfamilie sprechen dabei? Also SMB ist ja die eigentliche Technik, die jetzt Samba implementiert, daher ja auch der Name. Das steht für Server Message Block. Was drückt sich damit aus?
+
+00:06:53.848 --> 00:07:08.248
+<v SPEAKER_1>Ursprünglich hieß das Protokoll BAF-Protokoll, weil der Mensch, der es entwickelt hat, Barry A. Feigenbaum heißt, von IBM. Aber das war dann doch etwas... Naja, das wollte IBM dann doch nicht. Und deswegen haben sie halt einen Namen gesucht, das ganze Server Message Block genannt.
+
+00:07:09.988 --> 00:07:13.168
+<v SPEAKER_2>Sagt das was über die Art und Weise aus, wie das Protokoll funktioniert?
+
+00:07:13.328 --> 00:08:41.508
+<v SPEAKER_1>Ja, das ist einfach im Prinzip Request-Response wie HTTP auch. Ich schicke ein Request an einen Server und der antwortet irgendwie. Das haben sie dann Message Block genannt, warum auch immer. Das ist die Basis von allem. Und über dieses Protokoll, auf diesen Protokoll aufsetzend, gibt es einiges an weiteren Protokollen. Insbesondere zum Beispiel machen sie allgemeine Remote-Procedure-Call-Geschichten. Remote-Procedure-Call heißt einfach, ich habe einen sehr reichhaltigen Satz von Anfragen, die ich an einen Server stellen kann, sehr viel reichhaltiger als im SMB-Protokoll, wo es einfach heißt, mach eine Datei auf. Die RPCs heißen zum Beispiel, liste mir aller User oder ändere von einem User ein Passwort oder gib mir eine Druckertreiberinformation zu diesem Drucker. Das heißt, sie haben einen allgemeinen Mechanismus hergenommen und das ist das DCE, Distributed Computing Environment, RPC-Infrastruktur, mit der sie sehr flexibel reichhaltige Interfaces machen können und das wird über SMB transportiert. Jetzt dieser Zwischenlayer, DCE, der ist relativ gut spezifiziert, kann man öffentlich nachlesen. Was nun wieder inhaltlich über diese DCE Transport letztendlich transportiert wird, das ist wiederum nicht spezifiziert. Das heißt, man hat da so eine Zwischenschicht, die man nachlesen kann und wo sie sich auch relativ gut dran halten, wo sie natürlich wieder selber erweitert haben mit Authentifizierungsmechanismen, die nirgendswo dokumentiert sind. Aber gewisse Teilelemente sind durchaus spezifiziert.
+
+00:08:41.528 --> 00:08:59.428
+<v SPEAKER_2>Wie mächtig muss man sich das vorstellen? Also wenn das jetzt so ein Remote Procedure Call ist, also quasi eine Liste von Funktionen, dann sprechen ja im Prinzip zwei Programme miteinander so, als wären sie auf einem Rechner. Das ist zumindest die grundsätzliche Idee, wie groß ist der Funktionsumfang, der dort abzubilden ist, um da kompatibel zu sein.
+
+00:08:59.448 --> 00:10:14.768
+<v SPEAKER_1>Ich müsste es nachlesen, aber ich würde mal grob schätzen, dass wir im Moment in Samba 3 irgendwo zwischen 250 und 500 RPC-Aufrufe unterstützen müssen. Wenn man einen Windows-Server scant nach den Aufrufen, die er unterstützt, landet man mit Sicherheit beim Zehnfachen. Das liegt aber auch daran, dass dieses DECOM-Programmiermodell von Microsoft im Prinzip ein objektorientiertes Modell ist, das auf RPC aufsetzt. Das heißt, jedes DECOM-Objekt, das sich unter HKEY-CLASSES-ROOT, oder sowas wie auch immer dieser Registrier-Schlüssel heißt, registriert, ist ein DECOM-Interface und damit ein RPC-Interface. Und damit werden unglaublich viele von diesen RPC-Interfaces einfach publiziert. Und da muss man sich halt einfach angucken, was man davon unterstützen muss, will, wie auch immer. Also DECOM ist im Grunde einfach nur RPC in objektorientiert eingepackt. Auch Exchange zum Beispiel. Exchange nutzt letztendlich auch RPC-Mechanismen. Nur dieses MAPI-Protokoll ist wieder was ganz Eigenes. Was aber über RPC mich in das Initiative transportiert?
+
+00:10:14.788 --> 00:10:20.908
+<v SPEAKER_2>Also MAPI ist dieses Messaging-API, mit dem man so Nachrichten hin und her schickt, eben so eine Kernfunktionalität von Exchange.
+
+00:10:20.928 --> 00:10:33.028
+<v SPEAKER_1>Richtig, genau. Das ist das, was Outlook letztendlich nutzt, um eine Mail zu schicken, um einen Kalendereintrag anzuschauen. Das ist wiederum ein ganz anderes Interface, was auf RPCs aufsetzt, was wieder völlig undokumentiert ist.
+
+00:10:36.548 --> 00:11:09.508
+<v SPEAKER_2>Auf mich klingt das relativ komplex. Wenn ich davon ausgehe, 500 bis zu 5.000 Calls, um so etwas Einfaches zu machen wie Dateien öffnen, zu schließen und File-Logging zu machen, steckt denn da jetzt eigentlich irgendein Voodoo in diesem ganzen SMB, was jetzt ein herausragendes Protokoll macht, was anderen Protokollen überlegen ist, oder kann es im Prinzip auch nicht mehr als die üblichen Contender wie NFS oder AFP?
+
+00:11:09.528 --> 00:12:34.088
+<v SPEAKER_1>Ob es nun unbedingt mehr kann, weiß ich nicht. Es bildet halt das Win32-API sehr gut ab. Wir haben zum Beispiel, wenn wir auf MSDN gucken, sehen wir den Create File Aufruf. Ich öffne oder ich erzeuge eine Datei. Und den sehen wir ziemlich gut aus Netz abgebildet, eins zu eins. Und mit allen Flags, die man dort abbilden kann, sind wir dort abgebildet. Das heißt, letztendlich, was wir mit dem SMB-Basis-Protokoll sehen, ist NTFS auf dem Netz. Das zeigt sich auch an wahnsinnig vielen Stellen, dass man sagt, wir haben NTFS-Semantik mit allem Locking, mit allen Dateistreams, File Streams. All diese Eigenschaften müssen wir letztendlich auch remote über SMB zur Verfügung stellen. Und das ist schon der herausragende Teil. Wenn man zum Beispiel hergeht und sagt, WebDAF wird auch von Windows in irgendeiner Weise unterstützt. Man kriegt aber für den Windows Klein, für einen Excel, für einen Outlook, für einen Excess nur ein Bruchteil der Funktionalität, die man auf einem lokalen Dateisystem hätte. Und das ist einfach die hundertprozentige Unterstützung von Windows. Das ist das einzig wirklich herausragende. Selbst wenn man PC-NFS auf Windows installieren würde, oder was weiß ich, einen AFS oder selbst wenn es einen AFP-Kline gäbe, den es glaube ich gar nicht gibt, man würde deutlich reduziert... Ja. Doch gibt es. AFP-Server gibt es, aber AFP-Kline weiß ich nicht.
+
+00:12:34.108 --> 00:12:35.428
+<v SPEAKER_2>Nee, es gibt doch AFP-Klines.
+
+00:12:35.448 --> 00:12:39.468
+<v SPEAKER_1>Aber man kriegt zumindest deutlich reduzierte Funktionalität. Und...
+
+00:12:39.728 --> 00:12:43.008
+<v SPEAKER_2>Also reduzierte Funktionalität aus Sicht des Windows sozusagen.
+
+00:12:43.028 --> 00:12:43.668
+<v SPEAKER_1>Richtig, genau.
+
+00:12:43.688 --> 00:13:16.908
+<v SPEAKER_2>Und wie gut funktioniert das bei Samba mit dem Abbilden, weil ich meine, wenn ich sage NTFS auf dem Netz, dann habe ich ja noch auf dem Linux-Server nicht automatisch auch ein NTFS-Dateisystem sollen. Üblicherweise hat man eben das normale Linux-File-System oder welches System man auch mal einsetzt. Es gäbe zwar auch die Möglichkeit, NTFS zu machen, aber es bricht ja meiner Auffassung nach, vielleicht kannst du da was zu sagen, allein schon daran, dass natürlich Linux auch ein komplett anderes Security- und Authentication-Modell hat als Windows. Wie geht das zusammen? Wie weit könnt ihr da mit Samba wirklich dem Windows entgegenkommen, um auf der Serverseite das abzubilden, was das Windows erwartet?
+
+00:13:18.588 --> 00:14:41.228
+<v SPEAKER_1>Also wir arbeiten grundsätzlich auf erstmal POSIX-basiertem Dateisystem, wo zum Beispiel drin steht, dass Groß- und Kleinschreibung unterschieden wird. Das ist einer der wesentlichen Unterschiede. Das heißt, Makefile mit kleinem M und Makefile mit großem M sind auf UNIX zwei Dateien, unter Windows wäre es eine Datei. Da haben wir für diesen Aspekt einfach Mechanismen entwickelt, dass wir einfach das ganze Directory scannen. Um zu gucken, wenn jemand eine Datei mit kleinem M aufmacht, dann müssen wir, wenn es die Datei nicht gibt, das ganze Directory scannen, um zu schauen, ob es die mit großem M vielleicht auch gibt. Das ist ein Performance-Problem, was wir haben, für Verzeichnisse mit vielen Dateien drin. Dann andere Eigenschaften, wie zum Beispiel diese System-Read-Only-Archive- und Hidden-Attribute. Da ist es so, dass wir die historisch in UNIX-Permissions abgelegt haben, was nicht wirklich schön ist, was aber ganz gut funktioniert hat. Und was wir heutzutage machen, ist, dass wir dort die external Attributes von UNIX-Dateisystemen nutzen. External Attributes sind einfach zusätzliche Informationen, die man an einen Dateinamen dran hängen kann. Und die sind in der Größe in der Regel beschränkt, aber für eben 4-Bit für die DOS-Attribute reicht es halt. Und das ist ein Weg, den wir immer weiter beschreiten werden, dass wir eben Eigenschaften, wie zum Beispiel NTFS-Speichert-Vierzeit-Stempel, unter UNIX-Speichern nur 3-Zeit-Stempel.
+
+00:14:41.248 --> 00:14:42.748
+<v SPEAKER_2>Was kommt da nochmal dazu?
+
+00:14:42.768 --> 00:14:54.828
+<v SPEAKER_1>Die richtige Create-Time. Also unter UNIX haben wir keine eigentliche Create-Time, die für die gesamte Lebenszeit der Datei konstant bleibt. Und die müssen wir dann halt auch irgendwann in so einem Extended Attribute abspeichern.
+
+00:14:54.968 --> 00:15:38.488
+<v SPEAKER_2>Okay, das heißt, man könnte zumindest über diese erweiterten Attribute, also Extended Attributes, vielleicht nochmal kurz dazu erläutern, ist ja ein Modell, was in den letzten Jahren eigentlich betriebssystemübergreifend den Weg eigentlich in alle Computer findet, dass man eben an eine Datei noch weitere beliebige Daten anhängen kann, also Metadaten anhängen kann, die jetzt nicht den eigentlichen Inhalt der Datei verändern. Und wenn man dort halt alles abbilden kann, könnte man eben so sicherstellen, dass eben zumindest über das Netz sich dieser Share soweit identisch verhält. Inwieweit sich das dann eben auf dem Rechner dann noch mit den Permission-Modellen in anderen Programmen vereinbaren lässt, ist natürlich eine andere Sache. Aber darum geht es ja eigentlich auch meistens gar nicht.
+
+00:15:38.508 --> 00:17:21.828
+<v SPEAKER_1>Eine spannende Sache sind jetzt demnächst die sogenannten NTFS Streams. Die sind ursprünglich in NTFS eingebaut worden, wirklich für den AFP-Server, um die ResourceFork für Macintosh abzubilden. NTFS hat dieses Modell deutlich erweitert. Man kann wirklich unter unterschiedlichen Namen oder beliebigen Namen an einen Dateinamen weitere Datenströme dranhängen. Das sieht man heutzutage zum Beispiel auf einem XP beim Internet Explorer. Wenn der mal Dateien aus dem Internet runterlädt, dann wird an der Datei in einem weiteren Alternate Data Stream diese Datei aus dem Internet abgelegt. Ist aus dem Internet. Wenn du jetzt doppelte drauf machst, dann ist das gefährlich. Wir kriegen eine Meldung. Willst du wirklich diese Datei öffnen? Wenn man das zum Beispiel auf einem FAT-Dateisystem dann ablegt, auf einem USB-Stack zum Beispiel, geht diese Information verloren, weil FAT keine Data Streams kann. Das ist eine interessante Entwicklung, die wir immer wieder sehen. Das ist jetzt ein sehr prominentes Beispiel. Sobald Microsoft auf Serverseite voraussetzen kann, dass es zum Beispiel keine Fileserver mehr gibt, die FAT-basiert sind, dass es keine Fileserver mehr in Produktionen gibt, die zum Beispiel OS2-basiert sind, dann können sie hergehen und wirklich auch im Protokoll Applikationen publizieren, die diese Features voraussetzen. Bis vor wenigen Jahren musste Microsoft immer noch damit rechnen, dass es Fileserver gibt, die keine Streams können. Und so sind wir bis jetzt auch mit Samba davor weggekommen, unbedingt Streams implementieren zu müssen. Jetzt geht es wirklich langsam los, dass Applikationen rauskommen, die Streams voraussetzen. Das heißt, wir werden es irgendwann implementieren müssen. Und das wird mit anderen Features von NTFS möglicherweise auch weitergehen.
+
+00:17:23.288 --> 00:18:36.428
+<v SPEAKER_2>Okay, vielleicht sind jetzt schon relativ tief in die Technik und Funktionsweise von Samba eingestiegen. Das ist ja auch sehr interessant. Aber was mich noch ein bisschen mehr interessieren würde, ist einerseits, welche Verbreitung SMB bisher gefunden hat und vor allem, welche Fragen sich ergeben aus dieser Situation, dass das eigentlich ja gar nicht richtig dokumentiert ist. Also ich finde das ja persönlich ehrlich gesagt ziemlich verstörend, dass man eben so breitbandig auf einen Protokoll setzt, für den es noch nicht mal ein ordentliches Dokument gibt, wo drin steht, so funktioniert das. Und wie du ja gesagt hast, es ist eigentlich fast überhaupt nicht möglich zu sein, scheint so ein Dokument überhaupt zu produzieren, selbst wenn alle beteiligten Parteien im besten Willen darauf hinarbeiten würden, weil einfach mittlerweile jeder den Überblick verloren hat. Das ist ja nicht unbedingt jetzt gerade so der Parameter, den man für eine kritische Infrastruktur haben möchte, so normalerweise. Es gab ja da ein Ruling von der EU, die Microsoft zur Veröffentlichung von einzelnen Dokumenten um die SMB-Technologie herum gezwungen hat. Was war das genau?
+
+00:18:36.448 --> 00:20:05.468
+<v SPEAKER_1>Das ist eine Entscheidung der EU-Kommission vom Frühjahr 2004. Ich glaube, es war im April oder März. Die Entscheidung sagt Folgendes. Microsoft hat auf dem Desktop ein Monopol. Sie haben deutlich über 90% Marktanteil. Das ist nach allen Marktdefinitionen ein Monopol. Das ist an sich nicht illegal. Dann hat nach Auffassung der EU-Kommission Microsoft dieses Monopol benutzt, um in einem angrenzenden Marktsegment, nämlich File-Print-Authentifizierungs-Server, die EU-Kommission nennt das Workgroup-Server, dort auch eine marktbescherschende Stellung zu erlangen. Das heißt, sie haben versucht oder sie sind dabei, durch dieses Monopol das Monopol auf andere Marktsegmente auszuweiten. Und das ist eine missbräuchliche Nutzung ihres völlig rechtsgültig erlangten Monopols. Daraufhin hat die EU-Kommission diese sehr berühmte Strafe von 497 Millionen Euro verhängt und sich Maßnahmen überlegt, um zu verhindern, dass das wieder passiert. Eine Maßnahme ist eben, dass Microsoft die Schnittstellen, die eben, nein, die Protokolle, mit denen ein Windows-Client, mit einem Windows-Server und im Unterschied zur USA, da hat es eine ähnliche Verfahren gegeben, auch wie Server mit anderen Servern reden, offenlegen muss. In den USA ist es nur, dass ein Client mit Server reden muss. In Europa, da sagen sie auch, okay, wir brauchen auch die Server zu Server-Protokollen.
+
+00:20:05.528 --> 00:20:07.848
+<v SPEAKER_2>Und wem mussten sie das offenlegen?
+
+00:20:07.868 --> 00:20:31.488
+<v SPEAKER_1>Konkurrenten. Im Grunde muss Microsoft ein Angebot offenlegen, nach noch zu definierenden Bedingungen, wo jemand zu Microsoft gehen kann, holt sich die Lizenzbedingungen und sagt, okay, das ist für mich akzeptabel. Im Grunde der Öffentlichkeit, jedem. Ob diese Lizenzbedingungen gültig dafür sind, dass auch die freie Software spricht, Samba das nutzen kann, das ist noch unter Diskussion.
+
+00:20:31.508 --> 00:20:36.668
+<v SPEAKER_2>Haben Sie das jetzt schon getan? Oder hat diese Offenlegung schon stattgefunden? Oder ist das noch im Fluss?
+
+00:20:36.688 --> 00:23:06.228
+<v SPEAKER_1>Das ist im Fluss. Die Prozedur ist im Moment so, dass Microsoft Dokumente produziert hat. Und die EU-Kommission im Moment dabei ist, zu bewerten oder diesen Bewertungsprozess, dessen, was Microsoft vorgelegt hat, diesen Bewertungsprozess hat die EU-Kommission abgeschlossen. Das hat für die EU-Kommission ein externer Gutachter getan. Daniel Barrett aus, ich glaube, London. Ein Britter auf jeden Fall. Und dieser externe Gutachter ist von Microsoft vorgeschlagen worden. Die EU-Kommission hat ihn akzeptiert. Und Neil Barrett hat gesagt, diese 12.000 Seiten Dokumentation, die Microsoft geliefert hat, taugen nichts. Und das hat er, glaube ich, mehrfach gesagt. Und sie haben immer wieder verbessert. Daraufhin hat die EU-Kommission gesagt, so Microsoft, jetzt hast du noch eine Gnadenfrist. Wir haben nochmal geliefert. Und das ist dann diese Strafe von zwei Millionen am Tag. Weil sie eben auf fortlaufender Basis eine Entscheidung der EU-Kommission nicht erfüllen. EU-Recht brechen. Jetzt ist es so, diese Entscheidung der EU-Kommission, dagegen hat Microsoft natürlicherweise geklagt. Und das ist bis heute nicht höchstrechtlich entschieden. Da hat es gerade in der letzten Woche, Ende April, letzte Aprilwoche hat es dort eine Anhörung in Luxemburg gegeben, über diese Klage. Microsoft hat also grundsätzlich diese Forderung der EU-Kommission, dass sie die Schnittstellen offenlegen müssen, grundsätzlich einfach mal dagegen geklagt. Und die Entscheidung darüber, über diese Klage, die wird Ende des Jahres, Anfang nächsten Jahres erwartet. Und auch diese Entscheidung des sogenannten Court of First Instance in Luxemburg ist noch nicht höchstrichterlich. Das heißt, beide Parteien, egal wie es ausgeht, haben noch die Möglichkeit, beim Europäischen Gerichtshof Berufung einzulegen. Das heißt, ob das überhaupt rechtsgültig ist, was die EU-Kommission entschieden hat, ist überhaupt noch nicht höchstrichterlich entschieden. Und die höchstrichtliche Entscheidung wird wahrscheinlich nicht vor 2008 oder 2009 kommen. Und dann müssen wir sehen, als nächste Frage ist halt, wie müssen die Lizenzbedingungen aussehen? Da muss ich im Moment passen, das weiß ich nicht, was die EU-Kommission da entschieden hat, müsste ich nachlesen. Aber im Moment ist es so, der Vorschlag, den Microsoft vorgelegt hat, zur Lizenzierung dieser Protokolle, schließt dediziert und explizit freie Software aus. Ob das wiederum mit dem Wettbewerbsrecht der EU vereinbar ist, das müssen wiederum andere Richter entscheiden.
+
+00:23:06.248 --> 00:23:08.708
+<v SPEAKER_2>Ja, aber zumindest probieren sie es erstmal zu verhindern.
+
+00:23:08.728 --> 00:23:38.808
+<v SPEAKER_1>Natürlich, richtig, weil der Punkt ist halt einfach, wenn man dieses Verfahren anschaut, sie haben zwei Milliarden an Sun gezahlt in der Größenordnung, sie haben viele hundert Millionen an Novell gezahlt, alles potenzielle Konkurrenten, derer sie mit Geld habhaft werden konnten. Die einzige wirkliche Konkurrenz ist die freie Software und die kann man nicht kaufen. Und natürlich versuchen sie da auf juristischem Wege mit allen Mitteln, die freie Software eben aus diesem Lizenz, davon abzuhalten, eine solche Lizenz nutzen zu können.
+
+00:23:41.548 --> 00:24:02.848
+<v SPEAKER_2>Ich kann das eigentlich gar nicht so richtig nachvollziehen, die Position von Microsoft, weil wenn man sich so anschaut, Samba hat ja im Prinzip auch komplett neue Märkte erschlossen, wenn ich da jetzt an solche Geräte denke, wie diese Network Appliances, so kleine Maschinen, die halt eine Ethernet-Stecker dran haben, wo eine Festplatte drin ist und die man einfach mal so ins Netz anschließt. Und dann hat man da eben so eine Festplatte im Netz, ohne dass man jetzt noch mal einen Computer aufsetzen muss.
+
+00:24:02.868 --> 00:24:05.228
+<v SPEAKER_1>Für die Kosten einer Festplatte plus ein paar Euro mehr, ne?
+
+00:24:05.248 --> 00:24:39.508
+<v SPEAKER_2>Genau, da ist dann in der Regel ein Linux drauf, eben mit Samba. Und das Ding macht dann halt eigentlich nicht mehr, als eine Ethernet-Schnittstelle zu bedienen. Ich weiß nicht, haben die ja auch noch ein Display, keine Ahnung. Also mag es in allen Ausführungen dann auch irgendwann mal geben, aber im Prinzip sind solche Produkte ja von Microsoft nicht zu kaufen. Wahrscheinlich wäre es noch nicht mal möglich, die Technik von ihnen zu lizenzieren, weil sie gar nicht in der Lage wären, eine Technik bereitzustellen, die dann auf so einem Device läuft. Von daher würde ja sozusagen das Entfernen von Samba von dem Markt zu einer extremen Verstörung führen, in meinen Augen. Oder wie siehst du das?
+
+00:24:39.728 --> 00:25:23.348
+<v SPEAKER_1>Dem kann ich nur zustimmen. Microsoft hat Angebote für sogenannte Network-Attached-Storage-Geräte. Microsoft adressiert eben diesen viel zitierten WLAN-Router, diesen WRT-Router, der dann ein Active Directory-Domain-Controller ist. Das adressiert Microsoft nicht. Microsoft adressiert deutlich größere Geräte, die irgendwo in Rechenzentren stehen. Es gibt von Microsoft Angebote, mit denen man auch ohne eine Grafikkarte ein Windows-Doputen kann, was sich komplett remote administrieren lässt, genau für den Markt Network Assets, Zaubergeräte. Nur halt diesen Markt der sehr kleinen Geräte, was man heutzutage in ein Heimnetzwerk reinstellen würde, den adressiert Microsoft überhaupt nicht.
+
+00:25:23.368 --> 00:25:30.428
+<v SPEAKER_2>Was ich mich auch frage ist, meine Samba ist ja nun eigentlich so ein ganz prototypisches Re-Engineering-Projekt.
+
+00:25:30.448 --> 00:25:36.488
+<v SPEAKER_1>Darf ich da gleich reingehen? Was wir nicht betreiben, ist Reverse-Engineering.
+
+00:25:36.788 --> 00:25:38.148
+<v SPEAKER_2>Das wäre meine Frage gewesen.
+
+00:25:38.168 --> 00:25:55.328
+<v SPEAKER_1>Da sind wir sehr sensibel, weil Reverse-Engineering in der Regel impliziert, dass ich mir Code von einer Microsoft-CD nehme und diese Objektdateien tatsächlich anschaue. Mit welchen Mitteln auch immer. Das tun wir nicht. Das haben wir nie getan, das tun wir nicht.
+
+00:25:55.348 --> 00:26:00.408
+<v SPEAKER_2>Aber es findet natürlich schon ein Re-Engineering statt, in dem Sinne, als dass man sich den Datenstrom anschaut, der eben real übers Netz geht.
+
+00:26:00.428 --> 00:26:54.128
+<v SPEAKER_1>Wir nennen das Netzwerkanalyse. Wenn man sagt Re-Engineering im Sinne von, dass wir hinter etwas herprogrammieren, was schon existiert, dann würde ich dem zustimmen. Aber was wir eben nicht tun, ist, wir gehen nicht her und wir gucken keinen Code von Microsoft im Sinne einer Datei an, sondern was wir machen, wir haben mehrere Techniken da, einmal rein zuhören. Wir hängen uns zwischen zwei Windows-Maschinen dazwischen, hören zu, was sie tun und versuchen, das nachzumachen. Eine andere sehr wirkungsvolle Technik ist, dass wir kleine Testprogramme schreiben und einfach zufälliges Zeug an einen Windows-Server schicken und die Antworten beobachten. Oder auch sehr genau spezifiziertes Zeug an einen Windows-Server schicken, um zum Beispiel herauszubekommen, in welchen Situationen welche Fehlermeldung geschickt wird, was ein extrem wichtiger Bestandteil des Protokolls ist. Das heißt, wir generieren bewusst Fehlersituationen und versuchen sie gegen, um einem Windows-Server nachzustellen und gucken dann, was für Fehlermeldungen rauskommen.
+
+00:26:54.148 --> 00:26:56.768
+<v SPEAKER_2>Damit sich das System auch im Fehlerfall identisch verhält.
+
+00:26:57.148 --> 00:26:57.608
+<v SPEAKER_1>Ganz genau.
+
+00:26:57.628 --> 00:27:04.368
+<v SPEAKER_2>Damit die darauf ein bestimmtes Fehlerverhalten ausgehen, dann eben auch genau so schlecht funktionieren.
+
+00:27:04.388 --> 00:27:13.828
+<v SPEAKER_1>Aber wie gesagt, nochmal, wir haben sicherlich Windows-Rechner irgendwo im Netz stehen und wir gucken sie ausschließlich über ihr Ethernet-Interface an. Und das ist ein ganz wichtiger Aspekt.
+
+00:27:13.848 --> 00:27:21.248
+<v SPEAKER_2>Würdet ihr ansonsten in Probleme geraten, was so amerikanische Gesetzgebungen betrifft?
+
+00:27:21.268 --> 00:28:04.448
+<v SPEAKER_1>Das ist nicht nur amerikanische Gesetzgebung, das ist europäische Gesetzgebung. Dieses sogenannte Reverse-Engineering, nach meinem Rechtsverständnis, aber ich bin kein Anwalt, ist erlaubt, das heißt, man darf sich eine Objektdatei anschauen, ist erlaubt, for interoperability purposes, um Interoperabilität zu stellen. Genau unser Feld. Das Problem ist, man darf die Ergebnisse, die man aus diesem Reverse-Engineering gewinnt, nicht publizieren. Sondern man darf sie nur intern verwenden, firmenintern. Und das ist genau unser Punkt. Wir müssten es publizieren, weil wir freie Software sind. Und wir können nicht hergehen und ein so ergelangtes Ergebnis publizieren. Und deswegen tun wir es nicht.
+
+00:28:04.468 --> 00:28:10.808
+<v SPEAKER_2>Also mit anderen Worten, die Gesetzgebung ist sozusagen nicht im Interesse von freier Software an der Stelle?
+
+00:28:10.828 --> 00:28:55.608
+<v SPEAKER_1>Die Gesetzgebung ist wahrscheinlich einfach deutlich älter als die Tatsache, dass die freie Software überhaupt relevant geworden ist. Ich meine, das ist genau letztendlich im Moment in der Diskussion mit irgendwelchen Digital Rights Management Geschichten, mit der ganzen Diskussion, wie soll überhaupt mit dem Begriff des Intellectual Property umgegangen werden. Und das ist im Moment der spannende Teil, wie wirkt sich das Internet und die Informationsgesellschaft überhaupt auf Dinge wie Urheberrecht, um das Wort zu benutzen, wie Patente, wie Geschäftsgeheimnisse, wie wirkt sich das überhaupt aus. Und da sind wir gerade in einem wirklich spannenden Prozess. Und das ist überhaupt nicht klar, wie die Welt in 20 Jahren aussieht.
+
+00:28:55.628 --> 00:29:36.228
+<v SPEAKER_2>Oh ja, auf die Zukunft wollt ihr auch nochmal zu sprechen kommen, aber vorher vielleicht noch mal ein kleines technisches Detail, was sicherlich viele Leute interessiert und auch verwirrt. Bevor ich das vergesse, es gibt ja noch diesen schönen Begriff von CIFS, es kommt ein Internet-Filesystem, ein Begriff, den Microsoft irgendwann mal auf den Markt geworfen hat. Viele Leute verwechseln mich eingeschlossen immer gerne, was jetzt das mit SMB zu tun hat. Ist das jetzt dasselbe? Ist das was anderes? Ist es dasselbe in grün? Woher kommt dieser CIFS-Begriff? Was ist das genau und inwiefern ist das offener als SMB?
+
+00:29:36.248 --> 00:30:04.528
+<v SPEAKER_1>Die Geschichte ist relativ einfach. Das ist Mitte der 90er gewesen, da war Internet völlig im Hype. Microsoft hatte damals das SMB-Protokoll überall eingesetzt. Die Protokolle mussten dann irgendwann Internet im Namen haben. Deswegen haben sie das ganz einfach im Wesentlichen umbenannt. Es gibt ein paar sehr kleine Details, wo sich CIFS und SMB unterscheiden. Aber sobald man sozusagen eine Verbindung zu einem Server hat, sind diese Details nicht mehr da.
+
+00:30:06.028 --> 00:30:09.028
+<v SPEAKER_2>Also im Prinzip ist CIFS erst mal ein anderer Name für SMB?
+
+00:30:09.048 --> 00:30:17.848
+<v SPEAKER_1>Ja, also das eigentliche Protokoll ist komplett das gleiche. Für alle Anwendungen ist das Protokoll komplett gleich. Das ist eine reine Umbenennung.
+
+00:30:17.868 --> 00:30:24.468
+<v SPEAKER_2>Aber ein Internetprotokoll muss ja auch in irgendeiner Form spezifiziert sein. Oder gibt es da etwas?
+
+00:30:25.808 --> 00:32:08.008
+<v SPEAKER_1>Zu dieser Zeit, um 1996 herum, hat es von Microsoft Internet-Drafts gegeben. Man kann auch noch im Internet nachlesen. Sie haben versucht, das zu spezifizieren. Es gibt verschiedene Bewertungen darüber, wie gut diese Dokumentation ist. Aber im Wesentlichen ist sie völlig unbrauchbar. Microsoft hat auch versucht, einen Prozess anzustoßen, einen Community-Prozess, im besten Sinne eines Internet-RFCs, das weiter zu spezifizieren. Man muss aber dazu wissen, dass das zu Zeiten war, als sie diesen Markt des Fileservers noch nicht beherrscht haben. Damals war Novell-Netware noch tatsächlich relevant im Markt. Microsoft hat eine Dezivskonferenz, das ist eine alljährliche Konferenz zu diesem Protokoll, ins Leben gerufen. Die ersten zwei Konferenzen waren in Seattle. Die Konferenz gibt es noch. Der Punkt ist, seit ungefähr sechs Jahren hat Microsoft daran nicht mehr teilgenommen. Eines stellen wir Böses dabei denk, weil sie inzwischen diesen Markt übernommen hatten. Das heißt, Microsoft ist wirklich aktiv gewesen, an der letztendlich Weiterentwicklung von CIFS. Sie haben zumindest die Konferenz besucht, sie haben Vorträge gehalten. Nur als sie diesen Markt hatten, hat es sie nicht mehr interessiert. Und letztendlich die Dokumente, die es seit damals gab, die spiegeln auch wirklich nicht wirklich wieder. Die sind nicht von einer Qualität, wie man sie von einem Internet-RFC, wie zum Beispiel zu Altab, zu Kerberos, zu HTTP erwarten würde. Das heißt, man kann nicht hergehen und anhand dieser Dokumente eine Implementation machen und erwarten, dass irgendein Microsoft-Tlein das Zeug spricht. Dann hat man zwar ZIFS implementiert, bloß kein Mensch auf der Welt spricht ZIFS nach der Spezifikation.
+
+00:32:08.028 --> 00:32:23.588
+<v SPEAKER_2>Wie geht es denn weiter mit dem Samba-Projekt? Du hast ja schon erwähnt Samba 3, Samba 4. Wie ist da der Stand der Dinge, der Entwicklung? Was sind sozusagen die nächsten Schritte, die man jetzt vom Samba-Projekt erwarten kann?
+
+00:32:23.608 --> 00:36:19.468
+<v SPEAKER_1>Also die aktuelle Samba-Version, die wir für die Produktion empfehlen, heißt im Moment 3022. Wir sind dabei im Release-Prozess zur 3023. Das heißt, wir haben eine Version 3.0 letztendlich, die wir in allen Distributionen haben, die wir stabil sozusagen als Produkt quasi rausbringen. Vor zwei Jahren ungefähr hat Andrew Tritschel einen kompletten Neuanfang gewagt, weil am Samba-Code sieht man an vielen Stellen, dass wir während wir diesen Code geschrieben haben, nicht genau wussten, wo wir hinwollen, weil wir nicht wussten, wie Windows funktioniert. Wir wissen bis heute nicht in allen Aspekten, wie Windows funktioniert, aber wir wissen es zu einem sehr viel größeren Teil. Und Andrew Tritschel hat sich eben gesagt, okay, den historischen Ballast, der auch letztendlich im Samba-Code über die 10, 12, 15 Jahre drin war, den möchte ich hinter mir lassen, um das Protokoll letztendlich vollständig zu implementieren, auf der Basis dessen, was ich jetzt weiß, mit 10 Jahren, 12 Jahren Erfahrung. Und da hat er gesagt, okay, ich mache das komplett neu. Damals im Grunde auch mit dem Anspruch, letztendlich irgendwann mal Samba 3 zu ersetzen. Nun ist es so, dass Samba 3 auch sich dramatisch weiterentwickelt und letztendlich ist auch Samba 3 ein bewegtes Ziel. Wenn man sagt, ich will Nachfolger von Samba 3 werden. Deswegen in den letzten Monaten hat ein gewisses Umdenken im Samba-Team stattgefunden, dass wir Samba 4 nicht mehr unbedingt als den gültigen Nachfolger von Samba 3 sehen, sondern wirklich Samba 4 als Forschungslabor ansehen, wo sich Ideen, um rauszufinden, wie das Protokoll funktioniert, sehr viel einfacher installieren lassen, implementieren lassen. Das heißt, wenn wir herausfinden, wie File Change Notify, ein aktuelles Forschungsobjekt von Andrew Tritschel, wenn wir jetzt implementieren wollen, wie File Change Notify wirklich funktioniert, dann lässt sich das in der sehr viel schlankeren Samba 4 Basis einfacher machen. Die Information darüber, wie es tatsächlich funktioniert, können wir aber genauso in Samba 3 implementieren. Das heißt, wir sehen im Moment Samba 4 wirklich als Architektur, wie Samba eigentlich sein sollte. Und ob wir dann irgendwann sagen, Samba 3 wird zu Samba 4 gemorft, oder wir implementieren alle hässlichen Samba 3 Features, die für viele Leute aber viele Probleme lösen in Samba 4, das ist heute offen. Eine wichtige Frage ist, wir wollen dieses Protokoll 100% unterstützen, und dazu gehört heutzutage auch das vielgefragte Feature des Active Directory Domain Controllers. Und das ist eine Sache, die zunächst definitiv auch unter dem Bereich Forschung fällt, weil wir einfach nicht wissen, was wir wirklich machen müssen, um einer Windows-Workstation deutlich zu machen, dass wir ein Active Directory Domain Controller sind. Wir sind dazu schon zu gewissen Erfolgen gelangt, aber dass wir es vollständig können, das können wir heute noch nicht behaupten. Das wird definitiv in Samba 4 implementiert werden. Und es ist stand heute völlig offen, ob wir zum Beispiel diesen Domain Controller als Teilkomponente aus dem Samba-4-Projekt herauslösen und zusammen mit Samba 3 auf einem Rechner laufen lassen, ob wir hergehen und die entsprechenden Komponenten auf Samba 3 portieren, oder ob wir da irgendeine andere Form der Kooperation finden, oder ob wir jetzt wirklich hergehen und sagen, Open-LDAP-Leute, bitte implementiert diese und jene Features, dann seid ihr Active Directory Domain Controller. Das ist stand heute völlig offen. Samba 4 ist aber definitiv unser Forschungslabor, wo wir es im Sinne einer prototypischen Implementation erst mal implementieren. Gerald Cuthart, der letzte Woche in Göttingen auf der Samba Expedie war, hat sehr nett gesagt, dass wir auf jeden Fall 3 bis 4 Iterationen brauchen. Ein bestimmtes Feature müssen wir 3 bis 4 mal komplett neu implementieren. Dann können wir es auf Dauer verkaufen. Natürlich gehen wir auch her und der Code wird dann irgendwann geschippt, an die Kunden ausgeliefert. Aber es kann halt passieren, dass es mit einer nächsten Release einfach mal komplett neu geschrieben wird.
+
+00:36:19.488 --> 00:36:39.268
+<v SPEAKER_2>Okay, also auf jeden Fall kann man feststellen, dass Samba nicht nur in weiter Verbreitung ist und vielen Leuten eine Menge Probleme sozusagen vom Hals schafft, sondern dass auch noch weiter dran gearbeitet wird. Ich denke mal, neue Entwickler könnt ihr auf jeden Fall auch immer gebrauchen, falls Leute Interesse haben.
+
+00:36:39.288 --> 00:37:14.288
+<v SPEAKER_1>Wobei sozusagen, wir haben bei den Entwicklern immer so ein Problem, auch Gerald Carter wie gesagt in seinem Vortrag letzte Woche hat gesagt, we have no shame to implement everything dirty that Windows does. Man muss also wirklich jedes Problem, man muss sämtliche Schamgefühle ablegen, jedes dreckige Feature, was Windows irgendwie braucht und implementiert, nachzuprogrammieren. Und zum Beispiel die Open-Elder-Community, zum Beispiel die Kölberos-Community hat mit einer völligen Berechtigung damit gewisse Probleme. Aber wenn man sich wirklich tief auf Samba-Entwicklung einlässt, darf man diese Probleme einfach, diese Berührungsängste einfach nicht haben.
+
+00:37:14.308 --> 00:37:52.748
+<v SPEAKER_2>Ja, das ist ein bisschen der Unterschied, ob man nur im Elfenbeinturm sitzt oder irgendwie unten im Matschwild. Und da ist man natürlich auf jeden Fall näher an den realen Problemen. Das kennt man ja. Man gibt ja auch noch andere Projekte, die sich versuchen, mit diesem Windows-Problem auseinanderzusetzen, auf eine andere Art und Weise. Ich denke da jetzt an solche Sachen wie Wine zum Beispiel. Und ja, also ich denke, es muss halt beides geben. Und gut, aber wer Interesse hat, sich in das Projekt mit einzubringen, kann das nachschlagen bei samba.org. Das ist die Hauptwebseite, wo alles zusammenfindet. Was für ein Samba XP erwähnt? Was ist das, eine Developer-Konferenz?
+
+00:37:52.768 --> 00:38:32.668
+<v SPEAKER_1>Ja, das ist in Göttingen. Wir treffen uns ein- bis zweimal im Jahr. Also einmal im Jahr auf jeden Fall in Göttingen. Das gesamte Samba-Team, so ist dann die Möglichkeit da zu reisen. Das ist halt immer im Frühjahr, April, Anfang Mai in Göttingen von der Firma Service Network, zufällig auch mal ein Arbeitgeber. Und dann gibt es eben noch diese genannte Zilfs-Konferenz, die ist immer im August, September in San Jose in Kalifornien. Die findet auch noch statt. Wir treffen uns dann zweimal im Jahr, um halt mal von Angesicht zu Angesicht, nicht nur irgendwelche komischen IRC-Kanäle Designentscheidungen zu treffen und Leute auf ihre Bugs hinzuweisen, die sie programmiert haben.
+
+00:38:33.728 --> 00:38:39.868
+<v SPEAKER_2>Okay, ich denke, damit haben wir eigentlich ganz gut mal zusammengefasst, worum es sich bei Samba handelt. Ich danke dir, Volker, für die Ausführung.
+
+00:38:40.208 --> 00:38:40.668
+<v SPEAKER_1>Ich danke.
+
+00:38:40.688 --> 00:39:08.488
+<v SPEAKER_2>Ich habe mich noch irgendwas Wichtiges vergessen, worüber man vielleicht darauf hinweisen sollte. Das Thema ist natürlich auch endlos. Wenn ihr Fragen habt zur Sendung, wie immer chaosradio.rccc.de. Wir sind für alle Fragen offen und natürlich auch für Feedback, falls ihr es mal wieder besser wisst, was ja auch nicht so selten vorkommt. Ansonsten verabschiede ich mich bis zum nächsten Chaosradio Express. Bis bald. Am Mikrofon war der Brüttler und zum Gast war Volker Lendecke vom Samba-Projekt.

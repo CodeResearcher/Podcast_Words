@@ -1,0 +1,799 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:43.260
+<v SPEAKER_1>Eine der tollsten Dinge bei diesem ganzen Netzwerk der Trust ist, dass es nicht einfach ist, das technisch zu tun ist. Das ist, wie wir denken. Wir kennen nicht 100 Menschen. Aber das ist eigentlich, wie Menschen arbeiten, dass wir diese Menschen haben, die wir wirklich vertrauen. Und es passt wirklich. Es gibt große Vorteile für das ganze Modell der Routen von Vertrauen.
+
+00:01:10.924 --> 00:01:54.744
+<v SPEAKER_3>Hallo, hier ist Chaos Radio Express, Ausgabe Nummer 116. Mein Name ist Tim Pritlove und ich begrüße euch ein weiteres Mal an den Hörgeräten hier bei Chaos Radio Express. Und naja, euch dürfte es ja schon aufgefallen sein, ich bin sehr reiselustig geworden und ihr wisst auch schon warum. Und ja, heute hat es mich nach Ulm getragen. Wo ich ein Thema und ein Gesprächspartner nachsuche, der auch schon ganz lange auf meiner Liste steht. Und das Thema soll sein heute, Ad-Hoc Networking. Und der Gast dazu ist Frank Kargl, hallo.
+
+00:01:54.764 --> 00:01:55.884
+<v SPEAKER_2>Hallo Tim.
+
+00:01:55.904 --> 00:02:16.004
+<v SPEAKER_3>Ja, du bist ja, du beschäftigst dich sehr intensiv mit diesem Thema. Du beschäftigst dich auch sehr intensiv mit anderen Themen. Du bist auch, sagen wir mal, generell der Chaos-Landschaft ja durchaus verbunden und auch schon seit langer, langer Zeit hier. Eine der, wie kann man sagen, Mitinitiatoren, kann man das sagen? Das kann man sagen.
+
+00:02:16.024 --> 00:02:16.664
+<v SPEAKER_2>Kann man so sagen.
+
+00:02:16.684 --> 00:02:18.504
+<v SPEAKER_3>Das Chaos-Computer-Club in Ulm.
+
+00:02:18.524 --> 00:02:24.084
+<v SPEAKER_2>Seit 1991 hier in Ulm mit dabei und das ist schon relativ lang her.
+
+00:02:24.104 --> 00:02:31.384
+<v SPEAKER_3>Genau, eine der ältesten Splittergruppen und Widerstandsnester des CCC.
+
+00:02:31.724 --> 00:02:33.784
+<v SPEAKER_2>Genau, wir halten das Chaos hoch.
+
+00:02:35.324 --> 00:02:49.444
+<v SPEAKER_3>Genau, aber in deinem richtigen Leben bist du an der Universität Ulm tätig, schon seit längerer Zeit, dort als wissenschaftlicher Assistent und so. Ad-Hoc Networking ist so eins deiner Forschungsgebiete, kann man sagen.
+
+00:02:49.464 --> 00:03:34.824
+<v SPEAKER_2>Genau, das ist so mein Schwerpunkt in allen möglichen Facetten und ja, da bin ich vor mittlerweile auch schon neun bis zehn Jahren irgendwie draufgekommen, dass es doch ganz nett wäre, wenn man nicht immer irgendwelche Basis-Stationen bräuchte, sondern wenn in diese ganzen mobilen Geräte, die ja alle irgendwie Funk eingebaut haben, wenn die doch direkt miteinander reden würden und sich auch gegenseitig Verkehr weiterleiten würden und wie das auch häufig in der Forschung ist, wenn man denkt, man hat eine ganz tolle Idee, stellt man kurze Zeit später fest, die Idee hatten auch schon andere und die läuft eben unter dem Schlagwort mobile Ad-Hoc Netze, kurz MANET abgekürzt und da habe ich mich dann drauf gestürzt und mich in verschiedensten Variationen ausgetobt.
+
+00:03:34.844 --> 00:03:54.624
+<v SPEAKER_3>Nähren wir uns doch diesem Thema mal in kleinen Schritten. Also Ad-Hoc Networking ist so ein Begriff, den hört man immer wieder, den hört man zum Beispiel auch im Kontext von Wireless-Lanen. Was genau macht denn ein Ad-Hoc Netzwerk eigentlich aus? Also worum geht es dabei? Was bedeutet das Ad-Hoc?
+
+00:03:54.644 --> 00:04:44.024
+<v SPEAKER_2>Steckt eigentlich bereits im Namen drin. Es geht darum, Geräte zu vernetzen und das Ganze eben nicht mit Infrastruktur, sondern spontan, also Ad-Hoc eben, d.h. zwei Geräte, die in gegenseitigere Funkreichweite kommen, die stellen das eben fest und fangen dann an miteinander zu reden. Und da gibt es jetzt eben unterschiedlichste Variationen, also ein ganz einfaches Beispiel für ein Ad-Hoc Netzwerk ist Bluetooth. Auch da brauche ich keine Infrastruktur, ich kann zwei Geräte, die Bluetooth sprechen, ich kann die Pairing, die finden sich gegenseitig, baue eine Verbindung auf und schon habe ich ein ganz triviales, einfaches Ad-Hoc Netz, was allerdings jetzt eben in der Reichweite sehr beschränkt ist, weil eben beide Geräte, je nachdem, welche Class-Devices ich habe, eben 10 Meter, magst nicht an Entfernung überschreiten dürfen.
+
+00:04:44.444 --> 00:04:58.644
+<v SPEAKER_3>Also Ad-Hoc bezieht sich sozusagen auf das Netzwerk Infrastruktur, nämlich insofern, als dass es im Idealfall eigentlich keine benötigt, sondern dass um ein Ad-Hoc-Netzwerk zu betreiben, man eigentlich nur alle die Geräte braucht, die eben auch wirklich in ihm kommunizieren wollen.
+
+00:04:58.664 --> 00:05:12.824
+<v SPEAKER_2>Genau, also das ist so die Gegenthese zu GSM, wo ich ja, wenn ich nicht irgendwo in den Funkmass stehen habe, schlichtweg mein Handy nicht benutzen kann. Und hier ist die Idee eben, die, solange ein anderes Handy in der Nähe ist, dann können wir auch miteinander kommunizieren.
+
+00:05:13.584 --> 00:05:15.484
+<v SPEAKER_3>Nennt man das dann hier auch Peer-to-Peer-Networking?
+
+00:05:17.084 --> 00:06:00.064
+<v SPEAKER_2>Es ist von der Idee her verwandt mit Peer-to-Peer-Networking, wobei Peer-to-Peer eher ein logischer Begriff ist. Also wenn ich jetzt mal so in die Firesharing-Welt oder so gehe oder generell im Bereich des Internet, dann ist eben Peer-to-Peer-Networking nicht dieses klassische Client-Server, wo eben der eine der Client den Server kontaktiert und der Server erbringt eine gewisse Leistung, sondern das ist eben Peer-to-Peer. Also beide erbringen wechselseitig einen gewissen Dienst. Also eher so aus dieser Anwendungs- und Dienstesicht wird eben dieser Peer-to-Peer-Begriff verwendet. Wenn ich jetzt eben diese Idee alles im Gleich und es gibt eben keine ausgezeichnete Basisstation, wenn ich das jetzt auf Funkkommunikation übertrage, dann bin ich genau bei den Ad-Hoc Netzen.
+
+00:06:00.084 --> 00:06:06.404
+<v SPEAKER_3>Wobei ja bei Peer-to-Peer durchaus auch zentrale Instanzen noch notwendig sind oder so sein können.
+
+00:06:06.644 --> 00:06:17.864
+<v SPEAKER_2>Also so ganz ohne Trecker kommt auch ein Beton und nicht aus, ja aber ich sag mal je mehr zentrale Instanzen ich hab, desto weniger ist es dann halt eben noch Peer-to-Peer.
+
+00:06:17.884 --> 00:06:19.984
+<v SPEAKER_3>Umso mehr man hat, umso weniger ist es.
+
+00:06:20.004 --> 00:06:26.984
+<v SPEAKER_2>Also je mehr zentrale Instanzen ich hab, desto weniger bleibt halt von diesem ursprünglichen Peer-to-Peer-Gedanken übrig.
+
+00:06:27.004 --> 00:06:38.804
+<v SPEAKER_3>Also mit einigen Worten ist es eigentlich ein fließender Übergang. Aber Ad-Hoc Networking geht schon grundsätzlich davon aus, dass es eigentlich keine zentrale Instanz gibt. Das ist also sozusagen extrem Peer-to-Peer.
+
+00:06:38.824 --> 00:06:50.784
+<v SPEAKER_2>Es ist extrem infrastrukturlos und treibt sozusagen diesen Gedanken, alle sind gleichzeitig Netzwerkinfrastruktur und Nutzer dieser Netzwerkinfrastruktur auf die Spitze.
+
+00:06:50.804 --> 00:07:01.144
+<v SPEAKER_3>Alle sind gleich, wie schön. Seit wann gibt es denn diesen Gedanken? Ich meine, so richtig was Neues ist das ja nun eigentlich auch nicht, oder?
+
+00:07:01.164 --> 00:08:13.124
+<v SPEAKER_2>Nein, eigentlich nicht wirklich, also den Gedanken, den gibt es solange, wie es Funk gibt. Ich meine, wenn man mal die Rechner beiseite lässt, so der gute alte CB-Funk oder so, das ist ja auch eine Peer-to-Peer-Kommunikation. Die sind im Prinzip alle auf, also da gibt es keine Infrastruktur, sondern jeder tut halt mit seinem Funkgerät einfach senden und empfangen und sowas ähnliches hat man auch schon sehr früh mit Computern probiert. So Ende der 70er Jahre gab es in den USA in der Bay Area ein Experiment, das sogenannte Packet Radio Network, PR-Net und da ist man hergegangen und hat versucht, genau so ein Ad-Hoc-Netzwerk zu bauen mit mobilen Knoten. Diese mobilen Knoten waren damals LKWs des Militärs und da waren dann hinten auf der Ladefläche große Schränke mit entsprechenden Funkmodulen. Damals war das alles noch nicht so hoch integriert, wie wir das heute haben und die sind dann eben rumgefahren und haben sich gegenseitig Daten geschickt, Datenpäckchen geschickt und das war dann auch schon so weit, dass sie auch Daten für andere weitergeleitet haben, also das, was man heute dann als Multi-Hop-Relaying bezeichnet.
+
+00:08:13.144 --> 00:08:21.984
+<v SPEAKER_3>Wer hat denn das betrieben? War das jetzt so eine Horde Freaks oder war das auch schon so ein Universitärer oder meditärischer Forschungsbereich?
+
+00:08:22.004 --> 00:09:37.144
+<v SPEAKER_2>Wenn ich mich jetzt nicht ganz falsch erinnere, dann war das auch ein Projekt, was von der DARPA gesponsert war, also diese amerikanische Forschungsförderungsinstitution, die auch so ein bisschen militärna ist und eben alle möglichen Projekte bis hin zum Vorläufer des Internet gesponsert hat und da war das einfach auch ein Teil oder so ein Forschungsprojekt, wo es eben um Packet Networking ging. Also Packet Networking war so Ende 60er, Anfang 70er ganz neu in Mode. Dann hat man eben angefangen, so Dinge wie Apernet aufzubauen auf diesem Gedanken, dass ich eben nicht eine dauerhafte Verbindung habe, sondern alles schön in kleinen Päckchen unabhängig voneinander verschicken kann und dem Rahmen gab es immer auch Forschungsprojekte, wo man das versucht hat, über Funk zu machen oder auch über Satelliten und anderes. Irgendwann ist man dann auch auf die Idee gekommen, jetzt haben wir diese ganzen Packet Networks. Wir haben unser PR-Network für die Funkkommunikation, wir haben unser ARPANet. Es gab SatNet, um Paketkommunikation über Satellitenstrecken zu machen. Da gab es dann auch schon Standorte, nicht nur in den USA, sondern zum Beispiel auch in England. Und irgendwann ist man dann auch auf die Idee gekommen, Mensch, das wäre doch schön, wenn all diese Netze, die jetzt erstmal ganz unterschiedliche Paketformate und alles nutzen, wenn die miteinander reden können.
+
+00:09:37.304 --> 00:09:48.864
+<v SPEAKER_3>Wie viele Teilnehmer hatten diese Netze? Ich meine, war das jetzt wirklich nur so wieder experimental und dann waren dann so fünf dabei und die haben sich so ein paar Pakete geschickt, so testweise, oder hat das schon so ein gewisses Deployment gehabt?
+
+00:09:48.884 --> 00:09:52.504
+<v SPEAKER_2>Nee, nee, also es war wirklich testweise. Das war ein Testfeld.
+
+00:09:52.524 --> 00:09:53.564
+<v SPEAKER_3>Okay.
+
+00:09:53.584 --> 00:09:55.764
+<v SPEAKER_2>Und ich weiß nicht, wie die genau zahlen waren, aber...
+
+00:09:55.784 --> 00:09:59.024
+<v SPEAKER_3>Also ein kleines Rudel, vertige Akademiker, die das alles ganz toll fanden.
+
+00:09:59.044 --> 00:10:39.944
+<v SPEAKER_2>Ja, und also ich denke, ich gehe auch nicht davon aus, dass wir da irgendwie 100 LKWs hatten, sondern es waren eine Handvoll. Okay. Ja, und wie gesagt, und dann ist man irgendwann auf die Idee gekommen, Mensch, wäre doch toll, wenn man das alles mal verbinden könnte und die Pakete auch zwischen Netzwerken austauschen könnte. Und hat dann kurzerhand ein Protokoll entwickelt, das sich TCP, zwischen Kontrollprotokollen nannte, wurde dann verwendet, um zum Beispiel ein Experiment zu machen, wo eben einer dieser LKWs aus San Francisco per Funk erst, dann über das Apernet, dann über Satnet mit einem Rechner in England geredet hat. Und ja, das war so ein bisschen auch mit der Geburtsstunde des Internets, wie wir heute kennen.
+
+00:10:39.964 --> 00:10:42.564
+<v SPEAKER_3>Also wir reden von dem TCP.
+
+00:10:42.584 --> 00:10:45.524
+<v SPEAKER_2>Das TCP, das Transmission-Transport-Protokoll.
+
+00:10:45.544 --> 00:10:58.684
+<v SPEAKER_3>Und du sagst, dass das TCP jetzt im Wesentlichen auch was mit der Tatsache zu tun hatte, dass sie dort diese Packet-Radio-Networks hatten oder generell, dass sie sich eigentlich auf Paket-Kommunikation geeinigt haben, als das ist ja schon wahrscheinlich der Weg, mit dem man gehen will.
+
+00:10:58.704 --> 00:11:38.644
+<v SPEAKER_2>Die Paket-Kommunikation, die gab es ja schon früher, die gab es im Apernet. Aber der entscheidende Gedanke, und da war eben dieses PR-Network so ein Puzzle-Stein dabei, der entscheidende Gedanke war, wenn ich jetzt schon paketorientierte Netze habe, dann wäre es doch nett, wenn ich da irgendwie so ein einheitliches Adressformat, einheitliches Paketformat hätte, so einen Overlay, was mir eben es erlaubt, diese ganzen Netzwerke zu verbinden und Pakete zwischen den Netzwerken hin und her zu schicken. Und das ist genau Internetworking. Das hieß zunächst mal TCP und später hat man dann, um noch ein bisschen mehr Struktur reinzubringen, das dann in TCP und IP aufgesplittet. Ah, verstehe.
+
+00:11:38.664 --> 00:11:55.944
+<v SPEAKER_3>Deswegen auch diese gängige Bezeichnung, dass man von TCP-IP spricht, auch wenn man eigentlich IP meint, beziehungsweise die gesamte Suite, wo ja auch noch UDP dazugehört. Das heißt, TCP war mal der Name, bis man dann die Notwendigkeit gesehen hat, genauer zwischen Layer 3 und Layer 4 zu unterscheiden.
+
+00:11:55.964 --> 00:12:14.204
+<v SPEAKER_2>Genau, da ursprünglich sagte man halt, okay, das ist so die Transportschicht für Pakete zwischen Netzen und dann kam irgendwann die Leute von Iso-OSI und haben gesagt, das müssen wir noch viel genauer in Layers unterteilen und dann hat man das Ganze eben auch bei TCP-IP nochmal gesplittet.
+
+00:12:14.224 --> 00:12:15.524
+<v SPEAKER_3>Okay, verstehe.
+
+00:12:15.544 --> 00:12:16.864
+<v SPEAKER_2>Aber das ist noch eine Rantnotiz.
+
+00:12:16.884 --> 00:12:23.764
+<v SPEAKER_3>Von welchem Zeitraum reden wir denn jetzt eigentlich? Also dieses PR-Net, ist das dann wieder so auch Ende der 60er, Anfang der 70er Jahre?
+
+00:12:23.784 --> 00:12:40.404
+<v SPEAKER_2>Das war so 1976, 1977 rum. Genau, das war schon ein bisschen später und dann wurden eben diese Protokolle entwickelt auch und so weiter und irgendwann, 1981, 82, wurde ja dann das Internet auch komplett auf TCP-IP umgestellt.
+
+00:12:41.424 --> 00:13:03.604
+<v SPEAKER_3>Aber dann kann man ja nicht unbedingt davon reden, dass jetzt so dieses Ad-Hoc-Networking als solches einen besonderen Siegeszug davon getragen hat. Du hast ja schon erwähnt, so GSM und der gesamte Mobilfunk heutzutage, der ist ja alles andere als infrastrukturlos, sondern ganz im Gegenteil, man fährt durch die Lande und am laufenden Meter kriegt man irgendwelche dicken Antennen vor die Nase geknallt. Das ist wahrscheinlich auch der einzige Weg, wie das funktioniert hätte, oder?
+
+00:13:05.124 --> 00:14:23.924
+<v SPEAKER_2>Ja gut, die Sache mit den Basis-Stationen und den zellulären Netzen hat natürlich den Vorteil, das kann ich viel besser auch in ein Geschäftsmodell gießen. Da kann ich eine Infrastruktur aufbauen, mit der ich dann auch eine gewisse Dienstequalität garantieren kann, nämlich da wo eine Basis-Station steht, da kann man dann auch telefonieren. Das ist natürlich mit so einem Ad-Hoc-Netzwerk alles viel zufälliger. Ein anderer wichtiger Grund ist auch der gewesen, diese Datenkommunikation über Funk. Wie ich gesagt habe, Ende der 70er Jahre, da waren das also noch irgendwelche Schränke auf LKWs. Da waren wir also von dem WLAN-Modul, was irgendwie in mein iPhone oder Handy eingebaut ist, noch meilenweit weg. Und das hat eigentlich so bis Mitte, Ende der 90er Jahre gedauert, bis eben einfach die Integration im Mikroelektronikbereich so weit fortgeschritten war, dass man solche Techniken, wie wir sie heute mit WLAN nutzen, auch tatsächlich in irgendwelche kleinen Funkmodule bauen konnte. Und das war dann eigentlich auch so der Punkt, wo dann diese Ad-Hoc-Vernetzung auch an Pfad aufgenommen hat. Also es gab dann zwar eben 70er-, 80er Jahre durchaus einiges an Experimenten, auch das Militär war da ziemlich daran interessiert, aber so richtig los ging es eigentlich Mitte der 90er Jahre.
+
+00:14:24.924 --> 00:15:15.804
+<v SPEAKER_3>Und dann, wodurch? Also ich meine, wir haben es ja schon erwähnt, also das WLAN, das wir alle irgendwie kennen und schätzen, hat ja auch einen Ad-Hoc-Modus. Das heißt, normalerweise ist ja auch das WLAN-System, also alles, was so 802.11 ist, geht davon aus, man hat eine Access Point, also so ähnlich jetzt wie bei GSM, es gibt einfach eine Infrastruktur. Und in die bucht man sich ein und der Access Point verwaltet den Zugang, gibt einen Key aus und so weiter. Und dann kann man aber jetzt auch an jedem Laptop in den Ad-Hoc-Modus wechseln. Das heißt jetzt vielleicht nicht bei jedem Rechner irgendwie so, sondern es gibt da, was weiß ich, alle möglichen Marketing-Terms, die noch drübergelegt werden. Und dieser Modus ist ja im Prinzip dieses ich mache selber ein Netz auf. Oder sagen wir mal, ich nehme einfach an, dass eins da ist. Wie unterscheidet sich denn das technisch von dem Infrastruktur-Modus? Da muss ja schon selber auch jeder senden.
+
+00:15:15.824 --> 00:16:22.804
+<v SPEAKER_2>Genau, also letztlich gibt es eben in diesem 802.11 Standard die zwei Betriebsmodi, es gibt eben dieses Basic Service Set, wo an Access Point eben eine bestimmte Anzahl von Stations versorgt. Und es gibt eben dieses Independent Basic Service Set, wo eben mehrere Rechner zum Beispiel direkt miteinander reden können. Ich sage mal, so auf den unteren Ebenen, Medienzugriff und so weiter, unterscheidet sich das zunächst mal überhaupt nicht. Wo es sich unterscheidet, so ein Access Point, der hat so ein paar organisatorische Management-Aufgaben, so ein bisschen Zeit-Synchronisation, Beacons senden regelmäßig, Power-Management. Und das gibt es eben in diesem Independent Basic Service Set, also in diesem Ad-Hoc-Modus. Da gibt es dann jeweils immer ein dezentrales Pornon dazu, wo das eben die Stationen untereinander ausmachen müssen. Und das ist dann eigentlich auch schon alles. Und dann können eben Rechner, die in gegenseitiger Funkreichweite sind, auch direkt miteinander reden, ohne über den Access-Point zu müssen.
+
+00:16:22.824 --> 00:16:32.524
+<v SPEAKER_3>Aber eigentlich ist es ja komplexer für den Kleinen. Vorher gibt es diese Infrastruktur, da bucht man sich ein, dann hat man alles und jetzt muss man ja sich dann auch mit den anderen abstimmen. Das ist ja schon mehr Aufwand.
+
+00:16:32.544 --> 00:17:08.784
+<v SPEAKER_2>Ja, wobei, weil das Laden eigentlich auf diesen unteren Ebenen, wie gesagt, Medienzugriff und so, schon relativ dezentral funktioniert. Das ist nicht so wie bei GSM, dass zum Beispiel die Basis-Station oder der Access Point eine besondere, herausragende Rolle bei Medienzugriff hätte und bestimmen könnte, wer darf wann senden oder so. Sondern das machen die im Normalfall schon dezentral untereinander aus. Da gibt es dann so ein DFW-MAC nennt sich das, also so ein Zugriffsverfahren, was halt auf letztlich so einem CSMA-CA ähnlichen Verfahren beruht. Jedenfalls...
+
+00:17:08.804 --> 00:17:10.164
+<v SPEAKER_3>Was heißt denn das, DFW-MAC?
+
+00:17:10.744 --> 00:17:42.984
+<v SPEAKER_2>Distributed Foundation Wireless Medium Access Control. Also letztlich ist es einfach so oben, um es jetzt ein bisschen vereinfacht zu sagen, man schaut nach, ist das Medium frei, hat dann noch gewisse Wartezeiten und wenn das Medium frei ist, dann sendet man einfach los und dann gibt es noch Acknowledges und so weiter. Aber letztlich, wie gesagt, Carrier Sense Multiple Access und es gibt dann noch ein paar Zusatz-Features für Collision Avoidance, dass also nicht zu zu vielen Kollisionen kommt.
+
+00:17:43.004 --> 00:17:45.444
+<v SPEAKER_3>Also im Prinzip so wie Internet.
+
+00:17:45.464 --> 00:18:14.464
+<v SPEAKER_2>Aber eben ohne Collision Detection, weil das in einem Wireless-Medium nicht funktioniert. Genau, aber ist ein ähnlicher Ansatz und wie gesagt, das funktioniert auch im WLAN vollkommen paritätisch. Also der Access Point, der muss sich genauso um den Medienzugriff bemühen, wie alle Stationen, der darf also nicht irgendwie da das koordinieren oder bevorzugt senden oder so, sondern das ist peer-to-peer, um den Begriff nochmal aufzunehmen.
+
+00:18:14.484 --> 00:18:24.464
+<v SPEAKER_3>Ist es dann langsamer? Ich meine, ist es sozusagen prinzipbedingt langsamer oder hängt das einfach nur von den Kleins ab?
+
+00:18:25.244 --> 00:19:25.924
+<v SPEAKER_2>Also ich kann natürlich, wenn ich eine zentrale Koordinierung des Medienzugriffs habe, kann ich natürlich mein Medium effizienter verwalten, weil dann einfach einer weiß, wann ist frei und wann ist nicht frei. Während in diesem verteilten Verfahren, da kann es natürlich dann doch auch mal zu Kollisionen kommen und so weiter, die ich in einem zentral koordinierten Medienzugriff eigentlich ausschließen kann. Aber man sieht ja bei WLAN, dass das doch recht gut und recht problemlos funktioniert. Und wie gesagt, der Ad-Hoc-Modus ist da eigentlich kein großer Unterschied, der funktioniert ganz genau so. Und lediglich so ein paar Management-Aufgaben muss ich halt ein bisschen anders lösen, weil es eben nicht den einen Access Point gibt, der als Beacons verschickt, um zum Beispiel das Netzwerk zu annoncieren. Da gibt es dann einfach gewisse Zeitschlitze und dann sendet halt eine der Stationen so einen Beacon randomisiert und nicht mehr der Access Point. Das sind so Kleinigkeiten, aber im Wesentlichen funktioniert das. Das ist ganz genau so.
+
+00:19:25.944 --> 00:19:50.804
+<v SPEAKER_3>Jetzt ist es natürlich so, dass dieser Ad-Hoc-Modus, der bezieht sich ja sozusagen auch dann nur auf das Leben innerhalb eines Netzes mit einem Namen. Das heißt, da können dann irgendwie zehn Kleines zwar drin sein, aber eigentlich können die nur so miteinander kommunizieren. Du hast ja schon angedeutet, dass ja auch sozusagen Networks mit mehreren Hops über Ad-Hoc gebildet werden können. Das erfüllt ja das normale WLAN-Ad-Hoc in dem Sinne nicht.
+
+00:19:50.824 --> 00:22:31.764
+<v SPEAKER_2>Genau, also das, worüber wir jetzt geredet haben, Bluetooth, das normale WLAN-Ad-Hoc-Netz, das sind eben alles solche One-Hop-Networks, das heißt Sender-Empfänger müssen direkt in Reichweite sein. Und es gibt eben viele Beispiele, wo man eben auf die Idee kommen könnte, ein bisschen mehr Reichweite wäre eigentlich ganz nett. Das war so auch eines der ersten Projekte, wie wir in diese Ad-Hoc-Vernetzung reingekommen sind bei uns an der Uni. Da hatte ich eben die Idee, das war, keine Ahnung, 1998 oder 1999 um den Dreh rum, als Bluetooth ziemlich neu war. Es wäre doch cool, wenn man jetzt nicht immer mit GSM über Infrastrukturen teuer telefonieren müsste, sondern wenn man jetzt eben schon Bluetooth im Telefon hat, dann könnte man auf die Idee kommen, ich telefoniere auch über Bluetooth mit einem Handy in meiner Nachbarschaft und wenn das jetzt eben ein bisschen weiter weg ist, dann suche ich mir halt ein Handy dazwischen und schicke meine Daten erstmal an dieses Handy und das schicke das dann entsprechend weiter. Also Telefonie über ein Bluetooth-Ad-Hoc-Netzwerk, was ich jetzt plötzlich als Multi-Hoc-Netzwerk betreibe. Das haben wir dann auch versucht. Das war damals technisch nicht ganz trivial und wir hatten ein System am Laufen, aber so ganz Tolle war es nicht von der ganzen Qualität her. Aber das waren so die ersten Ideen eben. Ich nehme einfach Knoten dazwischen, die die Daten für andere Knoten, die Pakete für andere Knoten weiterleiten. Und das waren oder was einem dann natürlich sofort auffällt ist, ja ich brauche irgendwie ein Routing-Protokoll. Also irgendwie müssen die Knoten dazwischen ja wissen, wo müssen sie denn jetzt diese Daten, die sie von anderen bekommen, hin schicken. Und das war auch so der Schwerpunkt, mit dem man sich, auch mal seit Mitte der 90er Jahre, eigentlich in dem Bereich Ad-Hoc Netze beschäftigt hat. Da hat sich dann auch in der IETF eine Arbeitsgruppe dazu gebildet, die also alle möglichen Routing- Verfahren entwickelt und vorgeschlagen hat. Ja, Routing-Verfahren kennt man auch schon aus dem Internetbereich. Da gibt es ja so Sachen wie OSPF und ähnliches, was also hauptsächlich im LAN eingesetzt wird oder BGP dann eben eher so im Backbone-Bereich im Internet. Nur haben die alle ein Problem damit, wenn ich die jetzt plötzlich in einem Ad-Hoc-Netzwerk laufen lassen will. In einem Ad-Hoc-Netzwerk, gerade wenn ich von mobilen Knoten ausgehe, die sich bewegen, habe ich eben plötzlich, habe ich immer wieder neue Verbindungen, die auftauchen oder existierende Verbindungen, die deshalb eben, die down gehen, weil eben die Knoten sich voneinander entfernen zum Beispiel. Und wenn ich da so ein normales OSPF drauf fahre, dann kommt es also einfach nicht mehr hinterher und erzeugt einen Unmengen-Traffic im Netz, nur um diese Routen zu verwalten.
+
+00:22:31.784 --> 00:22:35.344
+<v SPEAKER_3>Das ist sozusagen für feste Netze gedacht und gebaut.
+
+00:22:35.364 --> 00:22:59.844
+<v SPEAKER_2>Genau. Und im Festnetz, ich meine, da geht ein Link vergleichsweise selten mal dauernd, vielleicht weil ein Admin mal ein Kabel zieht oder ein Bagger irgendwo eine Leitung durchtrennt, aber im Normalfall, wenn ein Link da ist, dann ist er relativ stabil und hält relativ lange und das ist halt im Ad-Hoc-Netzwerk überhaupt nicht der Fall und deshalb hat man sich da komplett neue Ansätze überlegt, wie man so Routing organisieren kann.
+
+00:23:00.504 --> 00:23:19.464
+<v SPEAKER_3>Aber da gibt es ja auch im WLAN-Bereich einige Ansätze. Was mir jetzt als erstes einfällt, ist ja auch die Standardisierungsbemühungen 802.11s, dass, wenn ich das richtig erinnere, versucht dieses Problem dann so auf dem Link-Level zu erschlagen.
+
+00:23:19.944 --> 00:23:57.364
+<v SPEAKER_2>Gut, da kann man jetzt natürlich wieder die philosophische Diskussion führen, auf welche OSI-Schicht gehört das Ganze. Aber logisch gesehen, nachdem mehrere Links beteiligt sind, ist es natürlich ein Routing und wenn ich das jetzt trotzdem in den Link-Layer packe, dann ist es deshalb trotzdem immer noch ein Routing. Aber ich verberge sozusagen diesen Routing-Vorgang vor den höheren Schichten. Also 80211S ist eben genau ein Beispiel für ein Routing-Protokoll für Ad-Hoc Netze, wobei 11S spezifisch für sogenannte Mesh Networks gedacht ist. Da hattest du ja auch schon mehrere Sendungen zum Thema.
+
+00:23:59.784 --> 00:24:38.744
+<v SPEAKER_3>Die Open Source Ansätze haben wir schon zweimal hier besprochen, einmal in CAE Nr. 16, da ging es vor allem um OLSR und CAE 045, um ein Nachfolgerprotokoll, das Batman-Protokoll, beides Gespräche mit Elektra, beides auch Sachen, die im Wesentlichen auf den Erfahrungen dieser Freifunk-Community basieren, die ja im Prinzip mit die lebendigsten Mesh Networking-Gruppen auch nach wie vor sind und da alternative Netzzugänge machen, die vielleicht nicht ganz so mobile Knoten haben, aber doch zumindest sich am laufenden Meter ändernde Infrastruktur, also Infrastruktur im Sinne von teilnehmende Knoten, da kommt mal einer dazu, fällt mal einer weg.
+
+00:24:38.764 --> 00:25:00.864
+<v SPEAKER_2>Genau, und diese ganze Idee des Mesh Networking hat sich auch aus dieser Ad-Hoc-Netzwerk-Bewegung heraus entwickelt. Man hat dann halt irgendwann überlegt, wofür wollen wir dieses Ad-Hoc-Netzwerk überhaupt? Und eine Idee war eben, das können wir wunderbar verwenden, um eben infrastrukturlos, auch über größere Entfernungen hinweg, ganze Stadtteile zum Beispiel mit Netzwerk zu versorgen.
+
+00:25:00.984 --> 00:25:08.944
+<v SPEAKER_3>Wo siehst du jetzt den Unterschied zwischen so einem Multi-Hoc-Ad-Hoc-Network und Mesh-Networking? Ist das jetzt nicht eigentlich dasselbe?
+
+00:25:08.964 --> 00:25:18.324
+<v SPEAKER_2>Also, so wie ich es definieren würde, ist ein Mesh-Network ein Spezialfall von Multi-Hoc-Ad-Hoc-Netzwerken.
+
+00:25:18.344 --> 00:25:21.864
+<v SPEAKER_3>Und wodurch kennzeichnet sich dieser Spezialfall, dass er nicht der generelle Fall ist?
+
+00:25:22.024 --> 00:25:49.144
+<v SPEAKER_2>Insbesondere dadurch, dass eben die Knoten-Mobilität typischerweise sehr gering ist oder nur ein kleiner Prozentsatz der Knoten mobil ist, weil die meisten Knoten eben irgendwo auf einem Hausdach stationär aufgebaut sind. Andere Eigenschaften bei Mesh-Networks typischerweise haben die Router, die da zum Einsatz kommen, eine Stromversorgung. Das heißt, ich muss mir nicht so sehr um Energieverbrauch Gedanken machen, wie ich das vielleicht bei einem Netz aus Handys machen müsste.
+
+00:25:53.724 --> 00:26:12.224
+<v SPEAKER_3>Das heißt, dein Forschungsbereich, das Thema, was wir im Prinzip auch besprechen, ist Ad-Hoc-Networking im Allgemeinen. Und im Besonderen, auch unter diesen Voraussetzungen, dass man eben nicht so eine stabilen Knoten hat, die irgendwie beliebig Power haben. Sondern dir geht es tatsächlich vor allem um die mobile Komponente.
+
+00:26:12.244 --> 00:26:34.544
+<v SPEAKER_2>Genau, also insbesondere eben der Fall, wenn wir sehr mobile Knoten haben. Und auch da bin ich eigentlich noch weiter spezialisiert. Also ich habe mich so bis 2003 schwerpunktmäßig mit Sicherheitsfragen und auch Privacy-Fragen in solchen MANETs beschäftigt. Habe da dann auch in 2003 meine Dissertation drüber verfasst.
+
+00:26:34.564 --> 00:26:37.824
+<v SPEAKER_3>Also MANET steht für Mobile Ad-Hoc Network.
+
+00:26:37.844 --> 00:28:00.444
+<v SPEAKER_2>Genau, und da taucht dann eben dieser Begriff mobile auf. Und deshalb ist halt ein Mesh-Network eher kein MANET, sondern einfach ein Multi-Hoc-Ad-Hoc-Netzwerk. Also das war so bis 2003 meine Richtung, wobei ich da eben diese MANETs noch sehr generisch betrachtet habe. Und viele Leute, die in dem Bereich generisch mit MANETs angefangen haben, haben sich dann so um den Dreh herum halt auch überlegt, naja, was wollen wir denn jetzt eigentlich? Jetzt haben wir uns die ganze Zeit überlegt, wie wir solche abstrakten generischen Ad-Hoc-Netze aufbauen, aber zu irgendwas müssen die auch gut sein. Und deshalb haben sich so, es gab eine ganze lange Liste von Ideen, was könnte man damit machen, aber letztlich haben sich so drei, vier große Themen rausgeschält. Eines sind die Mesh Networks, wo sehr viel dran gearbeitet wird. Ein anderer Bereich, wo eben diese Ad-Hoc-Vernetzung sehr stark zum Einsatz kommt, sind sogenannte Wireless Sensor Networks. Dann gibt es den Bereich, wo ich jetzt seit 2003 auch verstärkt drauf arbeite, die sogenannten Fahrzeug-Ad-Hoc-Netze. Ja, und dann, ja, vierte können wir eigentlich weglassen. Also das sind so aus meiner Sicht die drei Erfolgsmodelle, wo man wirklich sagen kann, ok, da zeigt man, da lässt sich wirklich gut zeigen, dass diese mobilen Ad-Hoc Netze auch Sinn machen und man damit tolle Anwendungen machen kann.
+
+00:28:00.904 --> 00:28:10.564
+<v SPEAKER_3>Also Fahrzeugnetze, Sensornetze, was war das dritte? Ok, also auch das siehst du sozusagen im Sinne von Mesh Networks, die mobil sind.
+
+00:28:10.724 --> 00:28:11.944
+<v SPEAKER_2>Ja, ich meine in Mesh Networks...
+
+00:28:11.964 --> 00:28:14.064
+<v SPEAKER_3>Da spricht sich das ja nicht, ich meine, dann ist es ja wieder...
+
+00:28:14.084 --> 00:28:45.784
+<v SPEAKER_2>Ja, in Mesh Networks gibt es ja immer oder häufig auch die Idee, dass eben nicht nur diese Router auf dem Dach stehen, sondern dass auch jemand, der mit einem Notebook durch Stadtviertel läuft, an diesem Netzwerk teilnehmen kann. Entweder nur als Klient oder aber eben auch teilweise als aktiver Router. Da spricht es von der Architektur her auch gar nicht unbedingt was dagegen, den dann auch zum Beispiel zum Weiterleiten von Datenverkehr zu nutzen, außer dass der halt auf Batterie läuft und deshalb irgendwann seine Batterie schneller leer ist, wenn der die ganze Zeit Pakete vorbauen muss.
+
+00:28:45.804 --> 00:29:12.764
+<v SPEAKER_3>Wenn jetzt, also wir hatten ja schon so OSPF, BGP, haben wir gesagt, okay, alles klar, die sind irgendwie überhaupt nicht von dem Konzept zu überzeugen, dass irgendwas mobil ist. Bei den anderen Protokollen, die jetzt in den Freifunknetzen zum Einsatz kommen, OLSR oder auch dieses Batman, wie siehst du das da? Also wird da diesem Aspekt auch zu wenig Aufmerksamkeit gezollt oder wären die im Prinzip dafür auch tauglich?
+
+00:29:13.004 --> 00:30:15.324
+<v SPEAKER_2>Die sind zum Teil schon dafür tauglich. Also dieses OLSR, das ist ein Protokoll, das auch im Rahmen dieser IETF MANET Working Group entwickelt und standardisiert wurde. Diese Working Group hat also einen ganzen Zoo von Protokollen untersucht. Wenn man also heute bei Wikipedia nach MANET Routing-Protokollen sucht, dann kann man da irgendwie drei Seiten runterscrollen. Es gibt, glaube ich, keine Idee, die da noch nicht ausprobiert wurde. Aber es haben sich so ein paar Grundprinzipien rausgebildet. Also es gibt einerseits die sogenannten proaktiven Protokolle und andererseits die reaktiven Protokolle. Proaktive Protokolle zeichnen sich dadurch aus, dass sie eigentlich die ganze Zeit versuchen, die Netzwerktorbologie aktuell zu halten und herauszufinden. Und in die Schiene gehört OLSR zum Beispiel. Und das funktioniert relativ gut, wenn ich ein vergleichsweise statisches Netzwerk habe. Weil dann ist einfach dieser Overhead, den ich dadurch generiere, und dieser Aufwand, den ich da reinstecke, die Routen aktuell zu halten, der ist dann auch gerechtfertigt.
+
+00:30:15.344 --> 00:30:34.204
+<v SPEAKER_3>Und natürlich auch, dass die Netze nicht zu groß werden. Weil umso größer sie sind, es geht ja sozusagen davon aus, dass ja jeder einzelne Teilnehmer des Netzes eine vollständige Vorstellung davon hat, wie die gesamte Topologie ist. Das heißt, mit jedem weiteren Teilnehmer wächst für alle auch die Komplexität dieser Abbildungen.
+
+00:30:34.224 --> 00:30:36.164
+<v SPEAKER_2>Genau, genau.
+
+00:30:36.184 --> 00:30:38.664
+<v SPEAKER_3>Und Reaktiv heißt dann?
+
+00:30:38.684 --> 00:32:13.764
+<v SPEAKER_2>Reaktiv heißt, ich kümmere mich erstmal überhaupt nicht drum, wie mein Netzwerk aussieht. Also wenn mein System sagt, ich bin A und ich will ein Paket an B senden, dann reagiere ich darauf, daher auch reaktiv. Und ich gehe dann mal her und schaue mal, finde ich denn irgendwo eine Route zu B? Das wird dann häufig so gemacht, dass ein sogenannter Route-Request im Netzwerk geflutet wird. Und irgendjemand, der dann eine Route zu B kennt, der antwortet dann mit einem sogenannten Route-Replay. Und es gibt verschiedene Varianten. Manche mit Source-Routing, manche dann auch Distance-Vector angelehnt. Jedenfalls wird dann in dem Moment eine Route von A nach B etabliert. Und solange sich das eben nicht zu viel bewegt, hält die eine Weile. Wenn sich dann die Knoten bewegen, dann bricht so eine Route irgendwann auseinander. Und dann muss ich halt wieder suchen. Das ist so vereinfacht die Grundidee der reaktiven Protokolle. Was sich eben zeigt, ist, dass wenn ich mehr Mobilität habe, dann funktioniert so ein reaktives Protokoll tendenziell ein bisschen besser als ein proaktives Protokoll. Weil wenn ich viel Mobilität habe, da ist so ein proaktives Protokoll sonst irgendwann nur noch dabei, das ganze Netzwerk mit den Updates zu fluten. Und ich mache dann irgendwann nichts mehr anders als Routing-Protokoll. Während Reaktiv halt, das hängt dann auch ein bisschen davon ab, wer will eigentlich in dem Netz mit wem reden, wenn also immer nur gelegentlich mal zwei Knoten miteinander reden wollen, dann spart mir einfach so ein reaktives Protokoll einen ganzen Haufen an Overhead.
+
+00:32:13.784 --> 00:32:19.764
+<v SPEAKER_3>Das heißt, die Zukunft gehört diesen reaktiven Protokollen oder gibt es für beides Einsatz und Rechtfertigung?
+
+00:32:19.784 --> 00:33:16.724
+<v SPEAKER_2>Nein, überhaupt nicht. Es hängt eben wirklich ausschließlich vom Einsatzzweck, vom Einsatzzenario, den genauen Parametern meines Netzwerks ab, was mehr Sinn macht. Ob proaktiv oder reaktiv. Und es gibt dann auch Hybridformen, die zum Beispiel in einem gewissen Radius um den Knoten eher proaktiv arbeiten. Also, wenn ich die Idee habe, dass Knoten typischerweise eher mit ihrer eigenen, mit der unmittelbaren Nachbarschaft kommunizieren, dann rentiert es sich vielleicht so drei, vier Hobbs proaktiv zu roten. Wenn ich dann doch mal weiter weg muss, dann mache ich das Ganze reaktiv. Oder es gibt hierarchische Ansätze, wo dann eben so in einer kleineren Umgebung proaktiv gearbeitet wird. Da wird dann einer ausgewählt. Der ist dann der Repräsentant. Und der muss dann dafür sorgen, dass er die weiteren Routen pflegt und verwaltet. Also da gibt es, wie gesagt, Unmengenansätze.
+
+00:33:16.744 --> 00:33:23.024
+<v SPEAKER_3>Okay, und es gibt auch nicht so jetzt die goldene Lösung, sondern es gibt verschiedene Ansätze, und die kann man dann auch beliebig miteinander kombinieren.
+
+00:33:23.804 --> 00:33:24.064
+<v SPEAKER_2>Genau.
+
+00:33:24.744 --> 00:33:51.964
+<v SPEAKER_3>Gibt es denn dann sozusagen auch daraus jetzt schon irgendwelche Standardisierungsansätze, die jetzt diese Aspekte vielleicht mit berücksichtigen? Also gibt es irgendein IETF-Wirkung-Grupp, hast du gesagt, gibt es? Ich meine, gibt es da irgendeinen Konsens oder produzieren eine ganze Latte von verschiedenen Protokollen, die es vielleicht mal sein könnte, und dann darf man selber die Münze werfen? Oder ist das alles zu unterschiedlich, als dass man sich da auf irgendwas einigen sollte?
+
+00:33:52.504 --> 00:34:47.464
+<v SPEAKER_2>Also was es gibt, es gibt eine Reihe von RFCs, die einzelne solcher Protokolle spezifizieren. So das Gesamtdokument, was praktisch sagt, okay, wenn Parameter A, dann den Protokoll hier, und wenn Parameter B, dann ein anderes Protokoll, oder was dann auch diese ganzen Protokolle irgendwie versucht, in ein einheitliches Protokoll zu fusionieren, das gibt es so in der Form noch nicht. Also momentan muss man sich eben wirklich genau anschauen, was will ich denn eigentlich machen, wie sieht mein Netzwerk aus, und dann kann man sich das Protokoll, was einem passt, rauswählen, und genau das haben die Leute im Mesh-Networking-Bereich gemacht. Die haben eben festgestellt, okay, für uns passt jetzt OLSR zum Beispiel viel besser als so ein anderes reaktives Protokoll, AO, DV oder DSR, und haben deshalb OLSR genommen und das natürlich jetzt dann auch noch weiterentwickelt. Da gibt es jetzt eben Batman und ähnliches.
+
+00:34:48.184 --> 00:34:55.324
+<v SPEAKER_3>Grundsätzlich wird da noch viel geforscht. Also das ist auch wirklich noch ein Bereich, der eigentlich voll im Fluss ist, oder?
+
+00:34:55.344 --> 00:37:09.704
+<v SPEAKER_2>Jaja, auf jeden Fall. Also die Routing-Ecke, würde ich jetzt mal behaupten, die ist jetzt langsam ein bisschen durchgenudelt. Also da ist noch komplett neue Ideen zu finden, wird schwierig. Aber es gibt natürlich in diesem Konglomerat Ad-Hoc Netze noch eine ganze Reihe von offenen Fragestellungen. Manche Leute wollen dann irgendwie Medienströme, Videos und so weiter darüber übertragen, nämlich den ganzen Quality-of-Service-Bereich, Multicast-Routing wäre noch so eine Fragestellung. Aber auch so ganz triviale Dinge wie, wie verteile ich eigentlich in so einem Netz Adressen? Also DHCP ist vielleicht da nicht so gut geeignet dafür, weil dann bräuchte ich wieder irgendwie jemanden, der Zentraladressen verteilt, also wie kriege ich die Knoten dazu, dass sie sich eine Adresse holen? Dann will ich vielleicht aus so einem Ad-Hoc-Netzwerk raus auch mit dem Internet reden, dann brauche ich irgendwelche Gateways. Wie funktionieren die denn? Und wie finde ich aus einem Ad-Hoc-Netzwerk raus überhaupt so ein Gateway? Das sind also alles Fragestellungen, wo es noch relativ viele Aspekte gibt, die man untersuchen kann. Auch dann in Richtung, welche Anwendungen fahre ich eigentlich drüber? Was machen die Anwendungen? Wie ist auch zum Beispiel die Kapazität in so einem Netzwerk? Da hat man schon relativ früh festgestellt, naja, wenn ich jetzt ein Paket, also ich habe so eine Kette A, B, C, D, Knoten hintereinander und A will an D schicken, dann schickt er an B, jetzt muss B gleichzeitig Pakete empfangen und weiterleiten. Er empfängt die Pakete von A und schickt sie nach C weiter. C dann das Gleiche, empfängt Pakete von B, muss er an D weiterleiten. Da gibt es auch theoretische Untersuchungen drüber, da geht meine Bandbreite ganz gewaltig in den Keller. Also nette Anekdote am Rande. Ich war 2000, war das glaube ich, auf einer Konferenz, wo es aus dem Ad-Hoc-Netzwerk ging, und da hat dann eine Frau einen Vortrag gehalten, die also genau so eine Weiterleitungskette mal untersucht hat und das auch mal in der Praxis ausprobiert hat. Und ihr Ergebnis war, also damals war es noch 802.11b, wo man ja nominell doch auch einiges an Durchsatz hinkriegt. Aber sie hat dann ausprobiert und ist also draufgekommen, dass sie in dieser Kette dann effektiv 7 Kilobyte pro Sekunde durchleiten kann.
+
+00:37:10.544 --> 00:37:11.624
+<v SPEAKER_3>Auf einem 10 Megabit?
+
+00:37:11.644 --> 00:37:20.264
+<v SPEAKER_2>Genau, auf einem 802.11b Netzwerk, wo Netto ja so 6 Megabit übrig bleiben.
+
+00:37:20.284 --> 00:37:24.964
+<v SPEAKER_3>7 Kilobyte pro Sekunde? So wenig?
+
+00:37:24.984 --> 00:38:06.324
+<v SPEAKER_2>Genau, wegen eben diesen Effekte. Ich muss Pakete empfangen, ich muss sie weiterleiten. Während ich ein Paket weiterleite, kann es passieren, dass ein Paket, das ich empfange, durch meine Sendung dann gleich wieder zerstört wird, weil es doch mal zu einer Kollision kommt und so weiter. Genau, da blieb nicht viel übrig. Da hat man mittlerweile auch dran gearbeitet. Das kriegt man auch schneller hin. Aber je länger meine Weiterleitungskette wird, desto mehr Performanceverlust habe ich. Und am Ende bleibt dann gar nicht mehr so viel übrig. Das ist auch so ein Punkt, den man sich anschauen muss. Und wo man zum Beispiel feststellt, dass dieser Medienzugriff von 802.11 eigentlich für solche Weiterleitungsszenarien überhaupt nicht ausgelegt ist. Da gibt es auch bessere Verfahren.
+
+00:38:06.344 --> 00:38:10.864
+<v SPEAKER_3>Also mit Medienzugriff meinst du jetzt sozusagen auf das Kabel oder auf die Luft?
+
+00:38:10.884 --> 00:38:26.124
+<v SPEAKER_2>Genau, wer darf wann senden. Da gibt es auch im Forschungsbereich viele Vorschläge, wie man das besser machen könnte. Aber in die Chips ist halt 802.11 eingebaut. Und das ist die Hardware, die man sich leisten kann. Und deshalb machen alle ihre Experimente mit 802.11.
+
+00:38:26.144 --> 00:38:32.724
+<v SPEAKER_3>Okay, könnte aber durchaus sein, dass da auch nochmal ein ganz anderer Ansatz gefunden wird, weil man an der Stelle zu viele Verluste hat.
+
+00:38:32.744 --> 00:38:34.044
+<v SPEAKER_2>Wäre zumindest technisch sinnvoll, ja.
+
+00:38:34.784 --> 00:38:41.464
+<v SPEAKER_3>Was wäre das dann? So was wie Token-Passing? Kommt ein Token-Ring wieder zurück? Solche Geschichten?
+
+00:38:41.484 --> 00:38:42.564
+<v SPEAKER_2>Das ist ein Ansatz.
+
+00:38:42.984 --> 00:38:44.304
+<v SPEAKER_3>Bestes Timing?
+
+00:38:44.324 --> 00:39:12.064
+<v SPEAKER_2>Oder dass eben der, der weiterleitet, sozusagen dem dahinter sagt, erst leite ich mal weiter und danach dürfte eben das nächste Paket schicken. Das könnte ja theoretisch der, der dann eben das nächste Paket schicken soll, das könnte der mithören, im Promiscuous-Mode, wenn so ein Paket weitergeleitet wurde und solange wartet der halt mal mit Senden. Also da gibt es ganz viele Varianten und Vorschläge.
+
+00:39:12.084 --> 00:39:25.644
+<v SPEAKER_3>Vielleicht kurz zurück, du hast ja auch gesagt, Adresskonfiguration ist so eine grundsätzliche Frage. Inwieweit kommen denn zum Beispiel jetzt IPv6 an der Stelle einem entgegen? Gibt es da irgendwelche Konzepte, die das einfacher machen?
+
+00:39:27.504 --> 00:40:10.564
+<v SPEAKER_2>Also was generell die Sache erst mal relativ einfach macht, ich brauche in so einem Ad-Hoc-Netzwerk eindeutige Knoten-IDs. Ich brauche nicht ein hierarchisches Netzwerk oder so mit Netzwerkpräfix usw., wie ich das im Internet ja typischerweise habe, wo hinter jedem Router dann auch ein neuer Netzwerkpräfix ist. Aus Sicht des Routing-Protokolls sieht so ein Ad-Hoc-Netzwerk erst mal flach aus. Das heißt, alles, was ich brauche, sind eindeutige Knoten-IDs für diesen Routing-Prozess. Da kann ich natürlich zum Beispiel die MAC-Adressen nehmen oder ich kann IPv6-Stateless-Autoconfiguration hernehmen.
+
+00:40:10.584 --> 00:40:12.464
+<v SPEAKER_3>Die letzte ist ja auch darauf zu greifen.
+
+00:40:12.484 --> 00:41:02.084
+<v SPEAKER_2>Die genau mit EUI64 das ja genau daraus ableitet. Und dann kann ich mein Routing schon machen. Die andere Frage ist, wenn ich dann über so ein Gateway ins Internet will, dann muss mein Knoten im Ad-Hoc-Netzwerk plötzlich doch wieder weltweit adressierbar sein. Und dann reicht es mir halt nicht, wenn ich mit so einem Site-Local oder Link-Local-Prefix in diesem Ad-Hoc-Netzwerk arbeite. Ja, dann können zum Beispiel Sachen wie Mobile IP oder Mobile IPv6 zum Einsatz kommen. Das heißt, ich betreibe zum Beispiel auf diesem Gateway einen entsprechenden Foreign-Agent, der die Daten dann ins Internet weiterleitet, zu einem Home-Agent. Und der verwaltet sozusagen meine weltweit ruhtbare Adresse.
+
+00:41:02.104 --> 00:41:04.984
+<v SPEAKER_3>Das ist dann schon wieder fast wie bei NAT.
+
+00:41:05.004 --> 00:41:28.444
+<v SPEAKER_2>Das ist so ein bisschen wie NAT, nur dass ich NAT mit Tunnel nach Hause sozusagen. Und ich bin dann also trotz allem eben weltweit erreichbar. Aber um mich eben in diesem Ad-Hoc-Netzwerk zu erreichen müssen, eben alle, die mir ein Paket schicken wollen, den Umweg über den Home-Agent gehen. Wobei, da kann man dann auch mit Binding-Updates und so weiter ein bisschen was optimieren.
+
+00:41:28.724 --> 00:41:49.384
+<v SPEAKER_3>Also IPv6 macht die Sache ein bisschen einfacher, aber löst jetzt auch nicht unbedingt gleich bei Design alle Probleme, die man jetzt bei Ad-Hoc Netzwerken hat. Man muss sich nach wie vor um eine Adressdistribution bemühen und die ist bei Ad-Hoc Netzen generell knifflig, weil man ja Wege und eben diese dynamische Konfiguration berücksichtigen muss eigentlich.
+
+00:41:49.584 --> 00:42:30.824
+<v SPEAKER_2>Gut, ich habe eigentlich nicht. Also ich habe einerseits eben diese Anforderung, ich brauche eine eindeutige ID, aber das kriegt man hin. Die andere Geschichte ist eben, wenn ich jetzt so ein Netzwerk habe und ich will nach draußen, dann brauche ich eben irgendwie ein Gateway und dieses Gateway und auch der Rest draußen müssen eben wissen, wie sie mich erreichen. Und da spielt es die Dynamik wieder ein bisschen rein, weil so ein Netzwerk, das kann sich ja auch beliebig irgendwie positionieren und da gibt es vielleicht auch in so einem Netzwerk mehrere Gateways. Und jetzt rede ich über ein Gateway, aber dann bricht irgendwie meine Route zu dem Gateway, weil sich irgendjemand bewegt hat und ich denke, das Gateway gar nicht mehr reiche, dann muss ich über ein anderes Gateway gehen. Ja, also solche Probleme hat man da dann.
+
+00:42:35.384 --> 00:42:51.724
+<v SPEAKER_3>Ja, jetzt hast du vorhin so potenzielle Anwendungen aufgezählt, Mesh-Networks, so wie wir sie kennen, waren eine davon. Zwei andere Sachen hast du noch genannt, die würde ich jetzt nochmal hinterfragen. Was du gesagt hast, waren Sensornetworks, was muss man darunter verstehen?
+
+00:42:53.104 --> 00:44:15.124
+<v SPEAKER_2>Ja, die Grundidee ist bei einem Sensornetwork, ich will irgendwas messen und dazu nehme ich einen Sensor. Also ich will, nehme mal ein Beispiel, Luftverschmutzung in der Stadt messen. So, das kann ich dann natürlich an fünf Stellen, irgendwelche großen Messstationen hinstellen und die bin ich dann über ein Kabel oder über ein GSM an und dann messe ich an diesen fünf Stellen irgendwie meine Luftverschmutzung. Viel besser wäre es ja eigentlich, wenn ich nicht nur an fünf Stellen, sondern an 5.000 Stellen in der Stadt messen könnte, weil ich dann ein viel genaueres Bild kriege. Aber jetzt will ich nicht an 5.000 Stellen solche Messstationen aufbauen, aber was ich ja vielleicht machen könnte, ist, ich nehme so ganz kleine miniaturisierte Geräte, die batteriebetrieben autark für sich hinarbeiten und davon nehme ich 5.000 und die verteile ich einfach mehr oder weniger zufällig in der Stadt. Jeder dieser Sensorknoten, wie man die dann auch nennt, hat einen Sensor natürlich, hat einen kleinen Mikroprozessor, hat ein bisschen Speicher, Funkmodul natürlich und eben eine Batterie. Ja, und der misst jetzt Daten und die muss er jetzt natürlich irgendwo an der Basisstation, oder was ist Basisstation? Das ist ein schlechter Begriff. Die muss er natürlich irgendwo da abliefern, wo dann irgendwelche Menschen auf diese Daten zugreifen.
+
+00:44:15.144 --> 00:44:16.964
+<v SPEAKER_3>Der Server, der die Statistik umsammelt hat.
+
+00:44:19.684 --> 00:44:48.004
+<v SPEAKER_2>Wenn ich jetzt aber so einen kleinen Knoten baue, dann wird der nicht die riesen Funkreichweite haben, weil riesen Funkreichweite heißt, ich brauche viel Strom, viel Energie, meine Batterie ist schnell leer. Was mache ich? Ich baue ein Ad-Hoc-Netzwerk auf. Der sendet es dann zu einem Nachbarknoten, der vielleicht nur 5 Meter weiter ist, und der sendet es dann wieder zum Nachbarknoten. Und am Ende kommt es dann wieder an so ein Gateway, wo dann mein Server drauf zugreifen kann. Das ist so die Grundidee von Wireless-Sensornetworks.
+
+00:44:48.024 --> 00:45:09.524
+<v SPEAKER_3>Das heißt, diese Sensoren selber müssen nicht besonders intelligent sein, aber sie müssen zumindest schon mal in der Lage sein, halt so ein Mesh-Protokoll zu sprechen, oder ein Ad-Hoc-Routing-Protokoll. Was könnte man konkret nehmen? Ich wollte jetzt etwas wirklich aufbauen. Welcher dieser Myriaden von Standards würde sich da anbieten?
+
+00:45:11.084 --> 00:45:59.324
+<v SPEAKER_2>Von denen, die wir besprochen haben, eigentlich gar keiner. Die Sensornetworks sind wieder ein wunderbares Beispiel dafür, dass ich eigentlich auch auf dieses Routing anwendungsabhängig drauf schauen muss. Wenn ich nämlich jetzt bloß die Anforderung habe, ich will irgendwie einen Messwert Richtung Gateway transportieren, dann interessiert mich eigentlich der ganze Rest der Topologie überhaupt nicht. Wie ich jetzt zu anderen Sensorknoten komme, interessiert mich jetzt nur für diesen Kommunikationszweck überhaupt nicht. Also kann ich eigentlich ein viel einfaches Verfahren machen. Dieses Gateway flutet Nachricht im Netz. Ich baue einen Spannbaum auf, einen Spanning Tree, und entlang dieses Spanning Tree liefern meine Sensoren die Datenrichtung.
+
+00:45:59.344 --> 00:46:00.284
+<v SPEAKER_3>Was ist das Spanning Tree?
+
+00:46:01.384 --> 00:46:07.204
+<v SPEAKER_2>Spannbaum, das ist einfach ein zyklenfreier Baum.
+
+00:46:07.224 --> 00:46:20.204
+<v SPEAKER_3>Was heißt das? Das muss man mal erklären. Ein Spannebaum, wo ist Spannebaum?
+
+00:46:20.224 --> 00:46:55.184
+<v SPEAKER_2>Es ist ein Baum. Bäume in der Informatik sind einfach Datenstrukturen, die so ähnlich wie ein Baum in dem Feld, Wald und Wiese ausschauen. Nur, dass der Informatiker das Ganze ein bisschen schräg macht. Der malt nämlich die Wurzel oben. Von da verästelt sich das dann immer weiter nach unten bis zu den sogenannten Blattknoten. Das Wichtige bei so einem Spannbaum ist, es dürfen da keine Zyklen drin sein, also letztlich keine kreisförmigen Verbindungen, sondern von jedem Blattknoten geht immer genau ein Weg Richtung Wurzel.
+
+00:46:55.204 --> 00:46:58.324
+<v SPEAKER_3>Das heißt, es ist eigentlich nur ein ganz normaler hierarchischer Baum?
+
+00:46:58.344 --> 00:46:58.984
+<v SPEAKER_2>Genau.
+
+00:46:59.004 --> 00:47:10.444
+<v SPEAKER_3>Wo ist jetzt das eigentliche Problem, dass man so etwas verhindern muss? Beim Meshnetworking muss man sozusagen verhindern, dass man nicht mit irgendjemandem spricht, der mit irgendjemand anders verbunden ist, damit man keine Kreiskommunikation macht.
+
+00:47:10.464 --> 00:47:32.184
+<v SPEAKER_2>Genau, wenn ich jetzt eben so eine Information einfach in so einem Spannbaum Richtung Wurzel schicke und ich habe da eben irgendwelche Zyklen drin, dann kann es eben passieren, dass so eine Information im Kreis läuft. Also letztlich kann ich mit so einem Spannbaum eindeutige Wege zu einer Wurzel garantieren.
+
+00:47:32.384 --> 00:47:44.764
+<v SPEAKER_3>Ach so, obwohl unter Umständen so doppelte Wege drin sind und die potenziell die Gefahr birgen, dass man sich in so einen Kreisverkehr da einpflanzt und das Spannbaum verhindert von seiner Struktur her, dass das ein Problem wird.
+
+00:47:46.884 --> 00:48:00.644
+<v SPEAKER_2>Einfaches Beispiel für alle, die noch IRC nutzen. Die IRC-Server zum Beispiel, die haben sich auch in so einem Spannbaum verbunden oder verbinden sich in so einem Spannbaum, um eben eindeutig Nachrichten dann auch an alle anderen Server ausgefahren zu können.
+
+00:48:00.664 --> 00:48:04.544
+<v SPEAKER_3>Aber zu verhindern, dass die Nachrichten irgendwie ewig im Kreis geschickt werden und immer wieder irgendwo hinkommen.
+
+00:48:04.564 --> 00:48:04.744
+<v SPEAKER_2>Genau.
+
+00:48:04.884 --> 00:48:17.004
+<v SPEAKER_3>Ist das nicht das, was man eigentlich auch mit so einer Time-to-Live-Geschichte ganz gut verhindern kann, dass man sagt, irgendwie dieses Paket darf maximal so und so häufig von einem Hopp zum nächsten Hopp gehen und wenn du das auf Null runtergezählt hast, wird es einfach weggeschmissen?
+
+00:48:17.024 --> 00:48:27.364
+<v SPEAKER_2>Kann ich natürlich machen, nur wenn dann gleich sozusagen am nächsten Hopp so ein Kreisel anfängt, dann geht es halt im Zweifelsfall noch 90-mal im Kreisel rum unnötig, bevor dann der TTL irgendwie runtergezählt hat.
+
+00:48:27.384 --> 00:49:06.664
+<v SPEAKER_3>Also die Daten kommen nicht an. Das führt nur nicht zu Katastrophen. Okay, verstehe, klar. Wie kann man denn sicherstellen, dass in so einem Wireless-Sensor-Network, insbesondere wenn der Sensor selber so wenig Intelligenz hat, dass die Daten auch zuverlässig ankommen? Kann man das überhaupt gewährleisten? Ich meine, gerade bei solchen Sensor-Informationen, wenn sie jetzt nicht hochgradig redundant sind, wenn der jetzt alle fünf Sekunden einen Messwert liefert, und eigentlich ist es ausreichend, wenn man einmal pro Stunde einen hat, dann werden natürlich unter Umständen genug ankommen. Aber vielleicht sind ja solche Daten auch kritisch in irgendeiner Form. Kann man das irgendwie garantieren in so einem Ad-Hoc-Netzwerk?
+
+00:49:07.804 --> 00:50:55.424
+<v SPEAKER_2>Du hast schon den richtigen Begriff gewählt, Redundanz. Die Grundidee bei Sensornetzwerken ist, dass die Geräte so klein und billig sind, kann ich so viele davon deployen, dass ich diese Redundanz eigentlich immer habe. Deshalb gehen viele Verfahren davon aus, wenn mal ein Paket verloren geht, wenn mal Daten verloren gehen, ist nicht schlimm, dann wird es beim nächsten Mal geschickt oder ein anderer Knoten schickt es. Generell ist es ja so, wenn ich jetzt eine große Zahl solcher Sensorknoten verteile, irgendwann wird es auch mal passieren, dass bei einem die Batterie ausgeht, dann fällt der aus, aber die Grundidee ist eben, durch Redundanz organisiert sich das Netzwerk, das Sensornetzwerk selber neu und funktioniert weiter. Und wie gesagt, wenn immer so ein Knoten ausfällt, dann ist er halt weg, dann wird halt beim nächsten Mal, wenn er halt nochmal neue Sensoren verteilt. Also ein nettes Beispiel, was ich dann immer bringe an der Stelle, wofür man Sensornetzwerke auch nutzen kann. So kam ja jetzt in jüngerer Zeit in Nachrichten immer wieder Buschbrände in Australien. Und oft ist es ja so, bis dann irgendjemand da draußen im Busch merkt, dass es da brennt, hat sich das vorher schon so immens ausgebreitet, dass es löschen halt wirklich schwierig wird. Und da gab es auch schon Projekte dazu, wo man sich überlegt hat, Sensornetzwerknoten zu verwenden, um relativ schnell solche Brände zu erkennen. Das heißt, ich baue mir eben diese kleinen Teilchen. Die Fernvorstellung in der Zukunft ist, dass die wirklich so ein Würfel mit einem Millimeter Kantenlänge sind. Da gibt es dann auch den Begriff Sensordust, also so mein Sensorenstaub. Und die nehme ich und dann fliege ich irgendwie mit dem Flugzeug über den Busch.
+
+00:50:56.184 --> 00:50:58.804
+<v SPEAKER_3>So wie diese Löschflugzeuge, bloß, dass man irgendwie Sensoren auskriegt?
+
+00:50:58.824 --> 00:51:08.684
+<v SPEAKER_2>Schmeiße ich Sensoren raus, genau. Die liegen dann da einfach rum. Und wenn irgendwann so ein Sensor feststellt, hoppla, hier wird es heiß, dann sagt der Piep, Piep, Piep, Piep und funkt das einfach weiter.
+
+00:51:08.784 --> 00:51:11.884
+<v SPEAKER_3>Und dann kommen die anderen und sagen, oh, da sagt einer Piep, Piep, Piep.
+
+00:51:11.904 --> 00:51:25.544
+<v SPEAKER_2>Und die leiten das dann so lange weiter, bis es irgendwo halt bei einer Feuerwehrstation aufgefangen wird. Dann brauche ich noch ein bisschen Magic. Ich muss nämlich irgendwie die Position natürlich von diesen Knoten lokalisieren können.
+
+00:51:25.564 --> 00:51:29.684
+<v SPEAKER_3>Brauchen die dann GPS oder kann einem da das Netzwerk dann sozusagen auch schon weiterhelfen?
+
+00:51:29.704 --> 00:51:56.424
+<v SPEAKER_2>GPS ist einfach. Wenn ich ein bisschen mehr Intelligenz investiere oder Gehirnschmalz investiere, können die sich auch natürlich relativ positionieren, indem sie einfach die Netzwerktopologie erkennen. Und wenn ich dann in dieser Netzwerktopologie ein paar absolute Positionen kenne, weil eben ein paar dieser Knoten, die vielleicht ein bisschen besser ausgestattet sind, doch GPS haben, dann kann ich die Positionen dazwischen ganz gut interpolieren.
+
+00:51:56.444 --> 00:52:20.404
+<v SPEAKER_3>Das ist natürlich pfiffig und ist wahrscheinlich noch gar nicht mal so teuer. Also ich meine, vorausgesetzt, dass die jetzt einerseits nicht sehr weit senden müssen. Ich meine, was für Abstände könnte es sich... Ich meine, gut, Australien ist groß, wenn man das jetzt wirklich da halbwegs hilfreich machen will und auch sicherstellen will, dass dieses Signal weitergeht. Wie weit könnten so kleine Teile mit einem Zentimeter Kantenlänge, mit Batterie drin?
+
+00:52:22.004 --> 00:52:32.784
+<v SPEAKER_2>Ja, also das große Problem ist, je kleiner ich die Teile mache, ich brauche, um vernünftig senden zu können, immer noch Antennen und die sind dann doch wieder relativ groß.
+
+00:52:32.804 --> 00:52:42.004
+<v SPEAKER_3>Aber ich meine, die müssen ja auch nicht so super klein sein. Ich meine, dann wären sie wahrscheinlich auch alle nur gefressen. Aber so Tennisball-Groß-Teile würde ja nun auch funktionieren.
+
+00:52:42.024 --> 00:53:24.384
+<v SPEAKER_2>Gut, und Tennisball-Groß, wenn ich jetzt mit einer sehr niedrigen Datenrate nur senden will, gibt es auch Verfahren, die einigermaßen energieeffizient sind. Also was oft eingesetzt wird, ist zum Beispiel ein Funksystem namens ZigBee. Und ja, so sagen wir mal 100 Meter komme ich damit dann schon. Wobei, Funkreichweiten, das ist immer so ein bisschen Voodoo, wie weit ich da wirklich komme. Das hängt davon ab, wie hoch ist meine Antenne, wie ist meine Antenne ausgerichtet und so weiter. Aber Pauschaleangaben sind da wirklich schwierig. Aber gehen wir mal davon aus, sie kommen so 100, 150 Meter vielleicht weit. Und ja, dann muss halt in 100 oder 150 Metern Entfernung mein nächster Tennisball liegen, mein nächster Sensorknoten.
+
+00:53:24.404 --> 00:53:54.724
+<v SPEAKER_3>Aber immerhin, die Dinger könnten sich ganz gut testen. Man weiß dann zumindest schon, wo Löcher sind. Ich meine, wenn die Dinger dann erstmal so eine Woche lang Testfeuer sozusagen und jeder meldet mal irgendwas oder sie stellen gemeinsam ihre relative Position zueinander fest, dann hat man ja quasi als Außenbetrachter, der diese ganzen Informationen einsammelt, dann irgendwann auch eine sehr gute Vorstellung davon, wer wo ist, in welchem Abstand die sind, wo sie wirklich genau sind und dann eben entsprechend auf eine Karte projiziert, wo dann noch eine Lücke ist und wo man vielleicht noch mal bei muss.
+
+00:53:54.744 --> 00:53:58.324
+<v SPEAKER_2>Genau, da wirft man dann einfach noch mal ein paar mehr hin.
+
+00:53:58.344 --> 00:54:01.384
+<v SPEAKER_3>Warum macht man das nicht schon längst? Das ist doch cool.
+
+00:54:01.404 --> 00:54:09.404
+<v SPEAKER_2>Ja gut, also die Dinger kosten natürlich heutzutage trotzdem noch eine ganze Menge. Also soweit ist die Integration...
+
+00:54:09.424 --> 00:54:17.804
+<v SPEAKER_3>Na ja, weil wir mal eine Relation gesetzt zu dem Schaden, den zum Beispiel jetzt die Feuer in Australien eingesetzt, ausgerichtet haben, angerichtet haben.
+
+00:54:18.664 --> 00:54:20.284
+<v SPEAKER_2>Also was man heute...
+
+00:54:20.304 --> 00:54:27.464
+<v SPEAKER_3>Das ist ja immer so die tolle Argumentation. Ah, es ist viel billiger. Kauft unseren Scheiß.
+
+00:54:27.484 --> 00:55:41.364
+<v SPEAKER_2>Irgendwann muss man es natürlich doch dann initial bezahlen. Und wie gesagt, um dann wirklich ganz Australien abdecken zu können, das wäre richtig teuer. Also was man heute mit Sensornetzwerken macht, wo zum Beispiel Sensornetzwerke sehr häufig eingesetzt werden, sind im Bereich Umweltmonitoring, auch im Bereich zum Beispiel Biologie, Verhaltensforschung. Also es gab mal ein Projekt, da gibt es eine Insel, und auf der Insel brüten irgendwie seltene Sturmschwalben. Und Biologen wollten wissen, wie brüten die denn? Wie oft sitzen die denn auf einem Nest oder eben nicht? Und was die gemacht haben, die haben also so einen Nest-Sensor entwickelt, den sie einfach unten ins Nest reingebracht haben und der eben über einen Lichtsensor festgestellt hat, Vogel sitzt drauf oder Vogel sitzt nicht drauf. Und damit haben sie jetzt eben Nester ausgestattet, noch ein bisschen Relay-Knoten dazwischen, um dann die Weiterleitung zu garantieren. Und dann haben sie also mit so einem Sensornetzwerk so eine ganze Insel abgedeckt und hatten am Ende ihre Daten für ihre wissenschaftlichen Forschungen wussten, wie so das Brutverhalten dieser Vögel ist. Also sowas wird heute mit Sensornetzwerk-Technologie gemacht. So die Bush-Überwachung, einfach so aus dem Flugzeug rauskippen, ist ja auch eine Frage der mechanischen Stabilität. Das ist eher noch so Zukunftsmusik. Aber was man natürlich machen könnte, ist...
+
+00:55:41.384 --> 00:55:47.684
+<v SPEAKER_3>Also man muss es ja nicht mit dem Flugzeug machen, man kann ja auch einfach durch die Wälder latschen und die Dinger einfach in die Bäume tackern.
+
+00:55:47.704 --> 00:55:49.404
+<v SPEAKER_2>Genau, also sowas.
+
+00:55:49.424 --> 00:55:54.204
+<v SPEAKER_3>Und ich meine, bei 100 Metern Abstand, naja, das ist ja dann so viel auch nicht.
+
+00:55:54.224 --> 00:55:56.264
+<v SPEAKER_2>Aber der australische Bush ist groß.
+
+00:55:56.524 --> 00:56:04.104
+<v SPEAKER_3>Ja gut, der ist groß, aber jeder Quadratkilometer, der gerettet wird, ist dann auch schöner was wert.
+
+00:56:05.144 --> 00:56:13.984
+<v SPEAKER_2>Also sowas kann man sich durchaus vorstellen, dass man die Dinger dann wirklich an die Bäume ranmacht, weil wenn die ein bisschen höher hängen, dann ist auch die Reichweite besser.
+
+00:56:14.024 --> 00:56:23.464
+<v SPEAKER_3>Oder man macht mal einen Feiertag in Australien, dann müssen sie halt alle mal weg vom Strand. Dann kriegt jeder so ein Ding in die Hand und muss jeder irgendwo in den Wald ballern. Naja, ich träume.
+
+00:56:23.484 --> 00:56:27.284
+<v SPEAKER_2>Kommt vielleicht noch. Die Australier sind da momentan, glaube ich, noch zu relaxt dazu.
+
+00:56:27.284 --> 00:56:45.204
+<v SPEAKER_3>Naja, ich glaube, das hat sie schon ganz schön geklickt mit den Bränden. Aber ich habe da auch keine Vor-Ort-Berichte. Wie auch immer. Du hast SIGBI genannt als Funknetz-Standard. Das hört man in letzter Zeit immer häufiger für so kleine Sensoren und so weiter. Funk, hast du da vielleicht noch ein bisschen was dazu sagen? Welche Bedeutung das so genießt?
+
+00:56:47.004 --> 00:58:01.184
+<v SPEAKER_2>Gut, SIGBI wurde ursprünglich entwickelt als Universal-Funk-Standard für Systeme, also für zum Beispiel irgendwelche Fernbedienungen, die heutzutage noch über proprietäre Funksysteme laufen, wo ich relativ wenig Strom nur brauchen darf. Ich stelle mir das mal vor, meine TV-Fernbedienung oder meine Universal-Fernbedienung zu Hause läuft heute meist noch über Infrarot. Infrarot ist Käse, weil das muss ich mir immer aufs Gerät zeigen, möchte ich besser mit Funk machen, gibt es auch schon Funk-Fernbedienungen, aber dann habe ich halt die Fernbedienungen für mein Licht und ich habe die Fernbedienungen für meine Stereo-Lage und so weiter. Hätte ich am liebsten alles in einem Gerät und dann sollten natürlich alle Geräte das gleiche Funk-System nutzen. Für sowas wurde SIG B entwickelt, relativ niedrige Datenraten, 100 Kb, 150 Kb, sowas in Größenordnung. Und trotzdem soll eben so eine Fernbedienung, wenn ich da meine Batterien rein tue, ein Jahr oder zwei halten, bis ich wieder wechseln muss.
+
+00:58:01.424 --> 00:58:12.084
+<v SPEAKER_3>Also so ein bisschen so ähnlich wie Bluetooth, aber noch energiesparender. Genau. Also da kann man auch von so einem Personal Area Network reden, wie man das bei Bluetooth auch macht.
+
+00:58:12.104 --> 00:58:45.564
+<v SPEAKER_2>Es geht auch in die Richtung, genau. Wobei die Reichweiten bei SIGBIT teilweise sogar ein bisschen höher sind. Dafür wurde es ursprünglich entwickelt, wurde auch bei der IEEE und der 802.15.4, glaube ich, standardisiert. Zumindest die unteren Schichten. IEEE standardisierte immer nur die unteren Schichten. Und dann so die ganzen Anwendungsprotokolle, so ähnlich wie bei Bluetooth auch. Das macht dann eben in einem Fall die Bluetooth-Stick, im anderen Fall eben das SIGBI-Konsortium. Wo war ich stehen geblieben? Egal.
+
+00:58:45.584 --> 00:58:50.944
+<v SPEAKER_3>Ich hatte mal das SIGBI einfach jetzt hinterfragt. Wir sind im Prinzip immer noch bei den Sensornetworks.
+
+00:58:50.964 --> 00:59:20.144
+<v SPEAKER_2>Ja, kurz noch zu SIGBI. Also aus der Ecke kam es ursprünglich, Fernbedienung usw. Die Leute, die eben so Sensornetzwerke machen, die haben festgestellt, weil da ist eigentlich der Energieverbrauch immer so das K.O.-Kriterium, haben wir festgestellt, SIGBI eignet sich so ganz gut als Funksystem für solche Sensorknoten. Deshalb kann ich mittlerweile solche Sensorknoten von verschiedenen Herstellern kaufen, die SIGBI oder zumindest eben diese unteren Schichten, 802, 15, 4, fertig eingebaut haben.
+
+00:59:20.524 --> 00:59:27.344
+<v SPEAKER_3>Ist das absehbar, dass das jetzt zu einem nennenswerten Standard wird in dem Bereich? Also gibt es da noch Contender? Gibt es da noch andere Sachen, die da SIGBI...
+
+00:59:28.784 --> 00:59:53.704
+<v SPEAKER_2>Also als Standard gibt es keine Konkurrenz. Es gibt halt teilweise noch proprietäre Funkmodule von bestimmten Herstellern, die halt auch in diesem freien ESM-Band bei 2,4 GHz dann senden oder auch dann bei niedrigeren Frequenzen. Aber wie gesagt, da bin ich dann halt immer auf die Chips von diesem Hersteller irgendwie festgenagelt. Also von daher denke ich schon, dass sich da vorläufig mal SIGBI durchsetzen wird.
+
+00:59:55.444 --> 01:00:02.184
+<v SPEAKER_3>Ich meine, gerade wenn man jetzt selber mal drüber nachdenkt, so Nierfield kommunikationstechnisch irgendwelche Anwendungen zu bauen.
+
+01:00:02.204 --> 01:00:07.704
+<v SPEAKER_2>Na gut, Nierfield Kommunikation geht ja, so NFC geht ja, was man so in Handys und so hat, geht ja nicht sehr über die Geschichte.
+
+01:00:07.724 --> 01:00:11.004
+<v SPEAKER_3>Das ist noch kürzer. Okay, das ist ein falscher Begriff.
+
+01:00:11.024 --> 01:00:11.204
+<v SPEAKER_2>Genau.
+
+01:00:11.224 --> 01:00:12.884
+<v SPEAKER_3>Also in meiner Umgebung sozusagen.
+
+01:00:13.104 --> 01:00:16.144
+<v SPEAKER_2>Personal Area Networks mit niedrigem Energieverbrauch wäre momentan.
+
+01:00:16.164 --> 01:00:17.764
+<v SPEAKER_3>Zehn bis 50 Meter, so eine Sache.
+
+01:00:17.964 --> 01:00:21.284
+<v SPEAKER_2>Ja, dann wäre SIGBI momentan, glaube ich, das Mittel der Wahl.
+
+01:00:22.924 --> 01:00:37.544
+<v SPEAKER_3>Was gibt es denn noch so für Sensoren? Ich meine jetzt so, das mit dem Feuer war ja eigentlich schon mal ein gutes Beispiel. Das ist irgendwie extrem nachvollziehbar, wie dann auch, warum dann sozusagen diese Ad-Hoc-Netzwerkinfrastruktur und das Routing und so weiter da notwendig ist und dass es was bringt.
+
+01:00:37.944 --> 01:03:57.964
+<v SPEAKER_2>Also ich habe gerade schon gesagt, es gibt solche Wireless-Sensor-Knoten auch kommerziell zu kaufen. Hauptsächlich werden die natürlich momentan von Forschungsgruppen gekauft, weltweit, die dann damit arbeiten. Ja, losging das Ganze ganz stark auch in den USA an der Uni Berkeley und die haben ein Betriebssystem auch für solche Knoten entwickelt. Das nennt sich TinyOS und haben dann auch verschiedene Systemarchitekturen für solche Modes entworfen. Also bei denen heißt in so einem Sensor Knoten Mode. Und die vertreiben über einen Spin-off eine Firma namens Crossbow, findet man unter expo.com auch im Internet, vertreiben die solche Sensornetzwerk-Knoten auch kommerziell. Da kann ich mir dann also irgendwie so ein Classroom-Kit mit zehn von den Teilen plus ein paar Gateways kaufen. Und die meisten dieser Sensornetzwerk-Knoten, dieser Modes, die haben modulares Design. Das heißt, ich habe erstmal die Grundunit, Batterie, CPU, Speicher und Radio. Und dann habe ich einen Erweiterungsbus. Und da kann ich dann Sensormodule draufstecken. Und je nachdem, was ich machen will, gibt es eben Sensormodule, mit denen ich irgendwie Wind und Wetter messen kann. Oder es gibt ein Sensormodul, mit dem ich dann meine Position mit einem kleinen GPS-Empfänger messen kann. Oder, das haben wir auch schon gemacht, man baut sich dann eben selber Sensoren, die beispielsweise im medizinischen Bereich irgendwelche Vitalfunktionen messen, Pulsschlag, Sauerstoffsättigung des Blutes oder so. Dann kann ich eben so eine Mode an irgendwie einer Person ranhängen und kann die dauerhaft überwachen. Und wenn dann zum Beispiel der Puls nach unten geht, einen Alarm auslösen oder sowas. Also je nach Anwendungsfall kann ich dann eben Sensoren entweder fertig kaufen, solche Sensorboards, oder ich musste mir halt selber basteln. Es gibt dann auch Sensorboards, die haben einfach eine ganze Reihe von analog-digital-Wandlern drauf. Und da kann ich dann mit allen möglichen Sensoren, also alles, was mir so mein Grundradkatalog oder so hergibt, kann ich dann in diese Modes reinfahren. Oder Mikrofone. Mikrofone gibt es auch. Also es gibt auch so eine Platine, die ein Mikro drauf hat, wobei ich da dann normalerweise eher darauf beschränkt bin, zum Beispiel Lautstärkepegel zu messen. Also jetzt richtig Audioverarbeitung auf so einer Mode ist eine kritische Sache. Es gibt auch Leute, die wollen dann mit Bildverarbeitung so machen. Also ich habe da typischerweise irgendwie so einen 8-Bit-Atmel-Prozessor drauf, der mit, keine Ahnung, Megahatze oder so getaktet ist. Also und habe auch von Speicherressourcen, ich habe zwar irgendwie so ein, zwei Megabyte Flash-RAM, um irgendwelche Messwerte vielleicht zu speichern, aber mein eigentlicher Arbeitsspeicher bewegt sich dann eher so in der Größenordnung von 4 Kilobyte oder so. Also es ist eine extrem beschränkte Plattform, immer mit dem Hintergrund, die darf so wenig Strom nur wie möglich verbrauchen. Und ja, so großartig Medien-Daten da verarbeiten, da halte ich jetzt nicht so viel davon.
+
+01:03:57.984 --> 01:04:19.804
+<v SPEAKER_3>Naja, gut, aber ich meine, das ist natürlich auch absehbar, dass diese Prozessoren in absehbarer Zukunft deutlich leistungsfähiger werden. Und da kann man sich irgendwie alle möglichen bösen Szenarien vorstellen, wie man mit solchen Roboter-Armeen von Sensoren natürlich alles Mögliche geografisch auch einsammeln kann. Ich will jetzt hier auch keine Horror-Szenarios...
+
+01:04:19.824 --> 01:04:27.084
+<v SPEAKER_2>Ja, es gibt durchaus Leute, die sich schon damit beschäftigen, wie ich sowas dann für ubiquitäre Überwachungssysteme benutzen kann.
+
+01:04:27.824 --> 01:04:32.644
+<v SPEAKER_3>Ich meine, es gibt ja sicherlich auch ein nennenswertendes militärisches Interesse bei solchen Ad-Hoc-Netzwerken.
+
+01:04:32.664 --> 01:07:13.444
+<v SPEAKER_2>Natürlich. Also bei Ad-Hoc-Netzwerken allgemein, ich habe ja gesagt, es kommt auch aus der Richtung, wird auch schon eingesetzt. Also ich habe mal irgendwo einen Bericht gelesen, die denken dann zum Beispiel darüber nach, ganze Gruppen von Soldaten oder dann eben auch Panzerdivisionen, was auch ich, was weiß ich immer, ad hoc zu vernetzen, sodass dann irgendwo an einem Befehlsleitstand oder so, die jederzeit mit jedem kommunizieren können, taktische Informationen einsammeln können und so weiter. Und in Afghanistan zum Beispiel hat wohl das amerikanische Militär schon Leute, also schon Soldaten eingesetzt, die dann im Rucksack eben solche Ad-Hoc-Netzwerken-Units dabei hatten. Also das wird gemacht und das war auch, ich sage ja, das fing ja schon Ende der 70er Jahre an, das war auch die ganze Zeit eigentlich so ein Thema, was das amerikanische Militär bearbeitet hat. Also ich halte mich lieber an die zivilen Anwendungen, aber es gibt durchaus Leute, die da in dem Bereich arbeiten. Es gibt auch Leute, die sich mit sogenannten taktischen MANETs beschäftigen. Das ist dann nicht nur der militärische Bereich, sondern das ist auch der ganze Bereich Katastrophenschutz. Also ich muss ja immer davon ausgehen, egal ob im Krieg oder im Katastrophenfall, keine Ahnung, Erdbeben, Vulkanausbruch, meine Infrastruktur, die ist dann einfach weg. Die funktioniert nicht mehr. Tsunami und so weiter. Also Beispiele gibt es viele. Und das ist natürlich immer ein Problem für irgendwelche Rettungskräfte, die zum Beispiel, wenn sie ein bestimmtes Gebiet absuchen müssen, sich koordinieren müssen, wer hat denn jetzt wo schon gesucht. Also diese Koordination von Rettungskräften im Notfall, das ist ein Thema, das natürlich nach Kommunikation schreit. Und was bietet sich da besser an als ein Ad-Hoc-Netzwerk, weil das eben keine Infrastruktur braucht. Und da gibt es also, wie gesagt, Leute, die beschäftigen sich damit. Da gab es auch schon Demos, wo man also versucht hat, dann Rettungsübungen mit solchen Ad-Hoc-Technologien zu unterstützen. Also so Rettungskräfte, THW und so weiter, die machen ja regelmäßig Katastrophenschutzübungen. Und da haben sich durchaus auch schon Forscher dran beteiligt und haben gesagt, so jetzt rüsten wir mal ein paar von den Leuten mit unserer Technologie aus. Und dann können die zum Beispiel, wenn sie ein Gerät brauchen, also ich habe da irgendwie so ein Feld, wo dann THW oder das Kreuzhunderte von Leuten irgendwie versuchen, Verletzte zu versorgen. Und jetzt stellt einer fest, Mensch, ich brauche jetzt ganz dringend einen Stromgenerator oder ich brauche bestimmt ein medizinisches Gerät. Und dann könnte ich zum Beispiel mit so einem Ad-Hoc-Netzwerk eine Suchnachricht irgendwie rumschicken. Hey Gerät, melde dich mal, wo bist du denn? Wer hat denn gerade so ein Gerät, das du nicht brauchst?
+
+01:07:13.464 --> 01:07:21.064
+<v SPEAKER_3>Das heißt, die eigene Infrastruktur wäre sozusagen mit diesen Sendern ausgestattet, schlicht um einfach Position melden zu können, Verfügbarkeit melden zu können.
+
+01:07:21.084 --> 01:07:27.504
+<v SPEAKER_2>Zum Beispiel. Und ich habe eben nicht das Problem, dass irgendjemand am Anfang, bevor das losgeht, erstmal eine Basisstation aufstellen muss.
+
+01:07:27.524 --> 01:08:03.384
+<v SPEAKER_3>Oder eine Telefonnummer rauskriegen. Jetzt hast du ja schon ein paar mal erwähnt, also gerade diese Katastrophenschutzgeschichte, ich meine, das ist natürlich jetzt so weniger eine Anwendung für so ein Sensornetzwerk. Ich meine, da weiß man eh, dass alles einmal ist, da muss man jetzt nicht noch irgendwelche Erdbebenfühler aussenden. Da geht es dann, glaube ich, eben sehr viel mehr auch in diesen vollmobilen Bereich. Dass Leute selber das haben. Das hast du, glaube ich, schon erwähnt. Das läuft ja dann sozusagen unter dem Begriff... Also sind das dann diese VANets? Also ist das sozusagen jetzt das schon, wo es um mobile...
+
+01:08:05.304 --> 01:08:36.264
+<v SPEAKER_2>Diese taktischen VANets, die laufen noch unter diesem Mobile Ad-Hoc-Network-Begriff. Und diese Vehicular Ad-Hoc-Networks, diese VANets, das ist jetzt nochmal ein komplett eigener Bereich, wo ich mich, wie gesagt, ein paar Jahren tummle und den ich auch für sehr spannend halte, weil das könnte so neben den Mesh-Networks der Bereich sein, wo, sagen wir mal, ein Autonomalbürger in absehbarer Zukunft tatsächlich auch mit Ad-Hoc-Netzwerk-Technologie konfrontiert ist.
+
+01:08:36.284 --> 01:08:37.804
+<v SPEAKER_3>Also sprich in seinem Auto.
+
+01:08:37.824 --> 01:09:01.024
+<v SPEAKER_2>Genau, also die Grundidee dahinter ist, ich bau so ein WLAN-System, eine Funkkarte in mein Auto ein und dann kann mein Auto plötzlich mit anderen Autos oder mit irgendwelcher Infrastruktur am Straßenrand reden. Und ja, dann stellt sich natürlich erstmal die Frage, warum will man sowas überhaupt haben? Also warum sollen Fahrzeuge mit anderen Fahrzeugen reden?
+
+01:09:01.724 --> 01:09:08.804
+<v SPEAKER_3>Ja, damit man so einen Film drehen kann wie Cars von Disney, dass die sich alle unterhalten können und verabreden.
+
+01:09:08.824 --> 01:09:10.864
+<v SPEAKER_2>Ich sehe schon, du hast das Szenario voll durchschaut.
+
+01:09:12.244 --> 01:09:18.184
+<v SPEAKER_3>Sag doch mal, warum? Ich meine, was haben die miteinander zu tun? Geht es dir jetzt um Stauwarnung?
+
+01:09:18.204 --> 01:10:40.084
+<v SPEAKER_2>Also es gibt eine Stauwarnung, es gibt eine ganze Reihe von Anwendungen, die man sich vorstellen kann, wenn jetzt mein Fahrzeug plötzlich funken kann. Und so die größte Triebfeder, die kommt aus einem Bereich, den nennt man e-Safety. Da geht es schlichtweg darum, das Fahren sicherer zu machen. Und da steckt zum Beispiel auch die EU wirklich nennenswerte Summen an Forschungsförderung in diesem Bereich mit dem Ziel, Fahren sicherer zu machen. Ich hole ein bisschen aus. Wir haben in Europa immer noch ziemlich hohe Zahlen an Verkehrstoten. Je nachdem, auf welche Gruppe von Ländern man das Ganze bezieht, sind es mehr oder weniger. Aber wenn ich jetzt mal die Kernstaaten oder die ursprünglichen europäischen Staaten nehme, sogenannte EU-15, dann war es so, 1970 hatte man in diesen 15 EU-Staaten ungefähr 80.000 Verkehrstote. Das ging dann 80.000 Tote und natürlich noch viel, viel mehr Verletzte und Unfälle usw. Und das ging also über die Jahre eigentlich kontinuierlich linear zurück, bis wir im Jahr 2000 ungefähr so bei 40.000 waren.
+
+01:10:40.484 --> 01:10:43.404
+<v SPEAKER_3>Und das, obwohl natürlich sehr viel mehr Autos unterwegs waren.
+
+01:10:43.424 --> 01:13:08.384
+<v SPEAKER_2>Genau und jetzt könnte man euch auf die Idee kommen, die Leute fahren vielleicht vorsichtiger, aber dafür gibt es also keine Hard-Evidence, im Gegenteil. Man kommt relativ schnell drauf, dass das unter anderem was mit Technologie zu tun hat. Unsere Autos sind einfach sicherer geworden. Da gibt es zwei Bereiche, nämlich erst einmal die passive Sicherheit, die einfach dafür sorgt, dass selbst wenn ich einen Unfall habe, ich am Ende noch einigermaßen heil aus meinem Auto aussteigen kann. Das sind die Sicherheitsgurte, die haben einen nennenswerten Anteil an diesem Rückgang gehabt. Und dann zum anderen die sogenannten aktiven Sicherheitssysteme, die in mein Fahrverhalten eingreifen, um zum Beispiel auch schon einen Unfall zu verhindern. Das sind dann ABS, ESP, genau, und diese Systeme, das sind Autonomiesysteme. Das ist erstmal alles, was nur in meinem Fahrzeug passiert. Drumherum spielt das Fahrzeug dafür eigentlich keine Rolle. Also auch so ein ESP reagiert einfach auf Umdrehungssensoren in den Rädern. Und jetzt zeigt sich irgendwie so langsam, na okay, diese Systeme gibt es. Mittlerweile hat fast jedes neue Fahrzeug das auch alles drin. Man kann natürlich noch mehr Airbags in ein Auto einbauen, aber irgendwann ist dieser Effekt, den man damit hat, ein bisschen am Ende. Und gleichzeitig hat sich jetzt die EU vorgenommen im Jahr 2000, als wir so ungefähr 40.000 Verkehrstote in diesen 15 EU-Staaten hatten im Jahr. Bis 2010 wollen sie das auf 20.000 reduzieren. Wenn man sich das vornimmt, muss man natürlich irgendwie eine Antwort liefern. Ja, wie soll das denn gehen? Und da wurde eben das Schlagwort e-Safety geboren. Wir wollen Fahren sicherer machen durch Elektronik. So, und da gibt es jetzt zwei grundsätzliche Arten, wie man da rangehen kann. Das eine ist, ich kann meinen... Also letztlich will ich mein Fahrzeug intelligenter machen. Intelligenter ist ein schwieriger Begriff. Kommunikativ. Ja, ich will meinem Fahrer mehr Informationen liefern. Typisches Beispiel, das heute auch immer noch zu Unfällen führt, und wo mir ABS und ESP auch nicht so viel bringen. Ich habe ein Stauende im Nebel und es rast einer hinten drauf. Dann gibt es diese grauenhaften Massenauferunfälle. Wenn ich jetzt wüsste, dass 500 Meter vor mir ein Stauende ist, dann würde ich da natürlich nicht reinrasen.
+
+01:13:08.404 --> 01:13:11.904
+<v SPEAKER_3>Beziehungsweise das Auto könnte auch selber schon...
+
+01:13:11.924 --> 01:13:14.804
+<v SPEAKER_2>Ja, Auto selber ist eine Sache, da müssen wir noch drüber reden.
+
+01:13:14.824 --> 01:13:20.644
+<v SPEAKER_3>Auf jeden Fall, man hat eine große Lampe, Stauende, vor dir stehen Autos, obwohl du sie nicht sehen kannst.
+
+01:13:20.884 --> 01:13:21.624
+<v SPEAKER_2>Genau, 500 Meter.
+
+01:13:21.644 --> 01:13:24.404
+<v SPEAKER_3>Die Resse mit Bremsen könnte lebensverlängernd wirken.
+
+01:13:24.424 --> 01:13:29.764
+<v SPEAKER_2>Genau, und ich gehe mal davon aus, dass eine signifikante Mehrheit das dann auch tun würde.
+
+01:13:29.784 --> 01:13:30.804
+<v SPEAKER_3>Piep, piep, piep.
+
+01:13:30.824 --> 01:14:19.144
+<v SPEAKER_2>Genau, also, ja, und wie kann ich das erreichen? Ich kann das natürlich erreichen, indem ich zum Beispiel ein Radar in mein Auto einbaue. Und das kann ich ja in den Oberklassewagen mittlerweile auch schon als Sonderzubehör kaufen. Dann habe ich irgendwie vorne ein Radar, und der schaut halt auch durch den Nebel durch und erkennt, da steht irgendwas vorne auf der Fahrbahn und warnt mich dann halt und piept. Und wenn ich dann noch nicht anfange zu bremsen, dann wird halt irgendwann, wenn ich nämlich den Ding immer weiter nähere, auch wenn ich nur leicht die Bremse antippe, wird dann Notbremsung ausgelöst. Ganz automatisch bremsen ist eine schwierige Sache, insbesondere wegen haftungsrechtlichen Fragen. Weil wenn das System mal schief geht und mein Auto bremst irgendwie, ohne dass ich auch das Bremspedal nur angetippt habe, wer ist denn dann eigentlich dafür verantwortlich?
+
+01:14:19.164 --> 01:14:22.184
+<v SPEAKER_3>Klar, da ist dicke Diskussion am Start.
+
+01:14:22.484 --> 01:15:21.144
+<v SPEAKER_2>Auf jeden Fall arbeitet man eben dran. Das gibt es heute teilweise, wird es aber in nächsten Jahren noch viel, viel mehr geben, dass man das Fahrzeug mit Sensorik ausstattet, die sozusagen meine begrenzten Sinne erweitern, dass ich eben auch bei Nebel sehen kann oder dass ich zum Beispiel auch Abstandsmelder in alle Richtungen habe, sodass ich weiß, rechts hinter mir fährt jemand oder so. Das ist der eine Teil, aber diese ganze Sensorik hilft mir nicht wirklich, wenn ich zum Beispiel ein Stauende hinter einer Kuppe habe oder irgendwas, wo auch diese Sensor nicht hinzieht. Und da kommen jetzt die Fahrzeugnetze ins Spiel. Ich könnte nämlich mir genau so überlegen, wenn jetzt zum Beispiel hinter einer Kurve im Wald zwei Fahrzeuge einen Unfall haben, dann stellen die das fest, weil die müssen ja auch Airbags auslösen und so weiter. Und wenn dann nach dem Crash das Funkmodul noch heil ist, dann könnten die Fahrzeuge hergehen und können einfach Funknachrichten verschicken. Vorsicht hier an den und den Koordinaten.
+
+01:15:21.164 --> 01:15:24.824
+<v SPEAKER_3>Und digitales Warndreieck, was dann einfach gleich sagt, hier Unfall.
+
+01:15:24.844 --> 01:15:31.184
+<v SPEAKER_2>Genau. Und genau das wollen wir mit diesen Fahrzeugnetzen realisieren.
+
+01:15:31.204 --> 01:15:31.884
+<v SPEAKER_3>Verstehe.
+
+01:15:31.904 --> 01:16:05.744
+<v SPEAKER_2>Dann empfängt mein Fahrzeug das, zeigt mir eine Warnung an. Ich bin vielleicht noch 100 Meter weg und kann noch relativ bequem bremsen. Und jetzt kommen wir wieder zu diesen Multi-Hop-Netzwerken. Mein Fahrzeug könnte das ja dann auch gleich noch weiterleiten. Und dann kriegt der nächste das vielleicht schon in 300 Metern Entfernung oder noch mal jemand in 500 Metern. Und irgendwann kriegt sogar jemand in einem Kilometer Entfernung, der weiß, da ist ein Unfall, der muss es nicht irgendwie großartig bremsen, aber der könnte zum Beispiel eine Umgehungsroute nehmen. Und dann kommen wir dann von dem Safety-Bereich nahtlos in den Telematikbereich rüber.
+
+01:16:05.764 --> 01:16:06.684
+<v SPEAKER_3>Also Verkehrssteuerung.
+
+01:16:07.204 --> 01:16:07.784
+<v SPEAKER_2>Genau.
+
+01:16:12.784 --> 01:17:23.744
+<v SPEAKER_3>Das ist natürlich, wenn man jetzt anfängt, darüber nachzudenken, dass Autos selber mit so einem Netzwerk ausgestattet werden. Oh Gott, da kommen natürlich eine ganze Menge Ideen. Ich meine, auf der einen Seite ein Netzwerk zu bauen, was im richtigen Moment das Richtige tut, das denke ich mal ist noch so das Einfachste an der ganzen Geschichte. Aber wie du ja schon gesagt hast, man hat ja schon mal so ein kleines Haftungsproblem. Was ist denn, wenn sozusagen hier Fehlwarnungen ausgesendet werden? Was ist, wenn Warnungen auch falsch verstanden werden, sozusagen falsch interpretiert werden? Wir haben es ja hier dann immer mit Software zu tun und entsprechend dann eben auch mit der Fehlerhaftigkeit von Programmierern. Man muss sagen, oder zumindest ist das meine Sicht der Dinge, ich bin schon relativ beeindruckt, wenn ich mir so die typische Softwarequalität im PC-Bereich anschaue, egal welches Modell, welches Betrieb, die Software, mit der man täglich arbeitet, wenn man so produktiv an einem Rechner sitzt, da wird man also wirklich mit Fehlern überschüttet. Wenn ich mir dagegen aber die Elektronik anschaue, in so Autos, hat man nicht so das Gefühl, dass da dieselben Qualitätsmaßstäbe gelten, sondern eben bessere.
+
+01:17:25.644 --> 01:18:05.724
+<v SPEAKER_2>Dem ist definitiv so und deshalb sind gerade die Fahrzeughersteller natürlich extrem konservativ, was irgendwelche neuen Funktionen in Fahrzeugen angeht. Deshalb, obwohl also alle großen Fahrzeughersteller auch in diesem e-Safety-Bereich und Fahrzeugkommunikationsbereich mitarbeiten, mitforschen, zum Teil sogar auch schon an Standardisierungsarbeiten von Kommunikationsprotokollen, ist trotzdem die Devise ganz klar, die Entscheidung, die Haftung bleibt beim Fahrer, wir unterstützen nur. Also wir zeigen eine Warnung an und dann muss der Fahrer eben entscheiden, wie er jetzt damit umgeht.
+
+01:18:07.184 --> 01:18:38.844
+<v SPEAKER_3>Ja gut, aber man kann natürlich die Leute damit schon ein bisschen wahnsinnig machen. Man muss ja zum Beispiel auch verhindern können, dass jetzt irgendeiner, ich meine, dann ist mal so ein schlecht gelaunter Hacker da am Start, der kennt irgendwie die Funkprotokolle, der weiß auf welcher Frequenz er sich da irgendwie tummeln muss, der baut sich einfach selber was, stellt sich neben die Autobahn und sendet irgendwie Stau- oder Unfallwarnungen raus. Man erzeugt dann natürlich dann auch wiederum einen Chaos und unter Umständen auch nimmt er auch irgendeine Überreaktion in Kauf, die dann wiederum zu Unfällen führt. Was auch wiederum zu Unfällen führen kann. Wie kann man sowas verhindern?
+
+01:18:39.164 --> 01:22:54.084
+<v SPEAKER_2>Also wir bewegen uns da eben in einem extrem sensitiven Bereich, weil es ist eben nicht mehr so, wenn der Rechner abstürzt zu Hause, ist ärgerlich okay, aber wenn halt so ein Auto Mist baut, dann ist halt am Ende vielleicht wirklich jemand tot dabei oder es kommt zu einem Unfall zumindest. Ja und also dieser ganze Security-Bereich, das ist natürlich ein Thema, mit dem muss man sich beschäftigen und da gibt es auch eine ganze Reihe von Arbeiten, das sind unter anderem auch wir in einigen Projekten mit beteiligt, wo wir uns eben genau Gedanken machen, wie mache ich so, also wie kriege ich so ein System sicher und das ist also alles andere als trivial, weil ich habe im Prinzip ein kooperatives System, wo jedes Fahrzeug gleichwertig ist und gemeinsam eigentlich erst diese Funktion nicht gerne hätte, zum Beispiel eine Unfallwarnung erbringt, auch wenn es dann darum geht, Datenpakete weiterzuleiten, könnte ja irgendjemand von dir kommen zu sagen, ich leite nicht weiter oder ich leite gefälschte Daten weiter etc. Zum Teil kann ich da natürlich mit dem klassischen Krypto Toolbox draufhauen, also was ich zum Beispiel machen kann, um zu verhindern, dass der Hacker am Straßenrand so eine gefälschte Warnung schickt, ist, ich lasse halt alle Pakete signieren von den Fahrzeugen. Ich habe eine PKI im Hintergrund, also eine Zertifizierungsinfrastruktur, die mir für jedes Fahrzeug ein Zertifikat ausstellt, wo dann im Zertifikat bestelligt wird, ja du bist ein Fahrzeug. Wenn jetzt eben jemand einfach sein Notebook am Straßenrand aufklappt, dann hat er halt erstmal nicht das Zertifikat. Das wäre mal so ein Basisschutz. Es könnte aber natürlich trotzdem ein findiger Hacker hergehen und baut mal so eine Unit aus seinem Fahrzeug aus und manipuliert die direkt und dann hat er auch das passende Zertifikat. Da schlagen wir dann vor, dass es da tatsächlich so temporisisten Hardware gibt, die dann im Fahrzeug auch das entsprechende Key-Material, also das kryptographische Schlüssel, absichert. Aber selbst, also gehen wir mal davon aus, worst case, so ein System wird auch noch geknackt und es hat plötzlich einen Angreifer eben so Schlüsselmaterial. Und was könnte der jetzt zum Beispiel machen? Der könnte jetzt hergehen und könnte Nachrichten verschicken, die gefälscht sind, die zum Beispiel falsche Position melden, die irgendwie sagen, also ich bin jetzt irgendwo ganz anders, nicht da, wo es in meinem Fahrzeug wirklich befindet. Und da kommen wir jetzt in einen Bereich, wo wir auch im Security-Bereich wirklich Neuland betreten, wo wir sagen uns, okay, da komme ich jetzt kryptographisch nicht mehr weiter, sondern was ich da machen muss, ist, ich muss tatsächlich mir die Inhalte anschauen, die da kommuniziert werden und muss die auf Plausibilität prüfen. Das heißt, mein System hat so ein Weltmodell, wo gewisse Regeln hinterlegt sind, wie funktioniert die Welt, da kommen jetzt weitere Informationen von draußen rein, von anderen Fahrzeugen und dann muss ich versuchen, die abzugleichen und festzustellen, sind die konsistent oder versucht da irgendjemand mich zu betrügen. Ich wollte gerade ein Beispiel machen, genau. Gehen wir mal von aus, diese Fahrzeuge schicken die ganze Zeit irgendwie Positionsinformationen an ihre benachbarten Fahrzeuge, damit eben diese anderen Fahrzeuge wissen, wo man sich selber gerade befindet. Dann habe ich eine Art kleine digitale Karte, wo ich genau weiß, wo vor mir ist einer und links vor mir ist einer. Jetzt fängt da einer an, irgendwie Positionen zu fälschen. Er behauptet, er wäre ganz woanders. Jetzt kann ich eben hergehen und schauen, ok. Behauptet er zum Beispiel, dass er 900 Meter von mir entfernt ist. Dann weiß ich, 900 Meter ist relativ weit. Meine Funkreichweite ist gar nicht so weit. Wenn ich von dem trotzdem Pakete empfange, dann stimmt irgendwas nicht. Dann baue ich auf Basis solcher Prüfungen ein Reputationssystem, wo ich überprüfe, welchen Informationen traue ich eigentlich. Letztlich nähert man sich da im Security-Bereich ein bisschen dem an, was wir Menschen ständig machen. Wenn uns jemand irgendwelchen Unsinn erzählt, dann fragen wir uns auch selber, kann das denn überhaupt sein? Je suspekter das ist, desto eher sind wir geneigt, dem nicht zu glauben. Solche Arten von Systemen wollen wir dann eben auf Fahrzeugnetze übertragen.
+
+01:22:54.884 --> 01:24:11.564
+<v SPEAKER_3>Okay, verstehe. Aber jetzt so abgesehen von dieser eSafety-Unfallwarnung, was natürlich jetzt auf den ersten Blick auf jeden Fall schon mal sehr sinnvoll klingt und sich ja vor allem auch mit ein paar Sachen schon ganz gut verheiratet, die es schon gibt. Du hast ja schon erwähnt, der Unfall als solcher kann heutzutage schon ganz gut festgestellt werden, weil in dem Moment, wo ein Airbag losknallt, ist so eine Situation gekommen. Und die Zahl der Vorfälle, wo ein Airbag losgeht und es ist jetzt eigentlich nicht wirklich was Wildes gewesen, naja, keine Ahnung, wie groß da die Dunkelziffer ist, ist, weiß ich nicht, ich unterstelle das jetzt mal, überschaubar. Ich meine, aus den ersten Tagen habe ich noch so Geschichtenerinnerungen, dass so diese Systeme, die ja auch versuchen, dann immer so die, wie soll ich sagen, den Notfallwert eines Unfalls zu bewerten, so in Abhängigkeit, ist derjenige angeschnallt oder nicht, und dann hat man noch mal so eine Einkaufstüte auf dem Beifahrer sitzt, die den Sensor auslöst, hier sitzt einer, aber der hat natürlich dann keinen Gurt um, und für die Einkaufstüte wurde dann sozusagen, als er in den Graben gefahren ist, der Airbag ausgelöst, aber eben für den Fahrer nicht, weil es irgendwie nicht nötig war. Na gut, so eine Sache.
+
+01:24:11.584 --> 01:24:12.144
+<v SPEAKER_2>Kann passieren.
+
+01:24:12.164 --> 01:24:25.624
+<v SPEAKER_3>Aber auf jeden Fall, diese Infrastruktur existiert sowieso schon, und man könnte sie einfach kommunizieren, das macht Sinn. Aber was könnte man denn jetzt in solchen VANets, also insbesondere auch mit dem Hinblick einer Vernetzung für Anwendungen noch machen, die daraus hinausgehen?
+
+01:24:25.864 --> 01:25:04.004
+<v SPEAKER_2>Gut, es gibt eigentlich drei, vier große Blöcke von Anwendungen im e-Safety-Bereich. Dann haben wir vorhin schon kurz angesprochen, so der ganze Telematikbereich. Wenn also meine Fahrzeuge die ganze Zeit funken, kommunizieren, dann können die zum Beispiel auch an eine Verkehrszentrale ihre Position, ihre gefahrene Geschwindigkeit melden. In so einer Verkehrszentrale kriegt man sozusagen wirklich up-to-date, aktuelle Informationen, wo wird wie schnell gefahren. Damit habe ich natürlich ein viel feinkranulareres Bild über die Verkehrssituation, über Staus und so weiter.
+
+01:25:04.024 --> 01:25:12.564
+<v SPEAKER_3>Das heißt, man muss auch nicht mehr geblitzt werden, sondern man liefert sozusagen die aktuelle Geschwindigkeitsübertretung gleich schön signiert direkt an die Stellen.
+
+01:25:13.444 --> 01:27:04.784
+<v SPEAKER_2>Das Ticket wird dann auch voll automatisch ausgestellt. Da kommen wir wieder in den Bereich Privacy, wo wir uns auch eben mit beschäftigen. Also wie kann ich denn so ein System überhaupt bauen, ohne dass es eben zu einem Datenschutz-Albtraum wird, weil ich eben jeden ständig überwachen kann, wer fährt wohin. Und wenn ich Autos überwachen kann, kann ich Autos benutzen, weil ich so ein Auto typischerweise von zwei, drei Leuten benutze. Und dann weiß ich auch, wo sind die. Das darf natürlich nicht passieren. Deshalb wollen wir da in dem Bereich mit Pseudonymen arbeiten. Das heißt, wenn ich meine Pakete schicke, schreibe ich da eben nicht rein. Das ist der Wagen von Frank Kargl. Oder der Wagen hat das Nummer anstellt sowieso. Oder Fahrzeug-ID sowieso. Sondern das wird eben ein Stück weit anonymisiert. Ja, also privacy ist ein Bereich, weiß nicht, können wir vielleicht später nochmal kurz drauf eingehen. Das ist noch ein relativ großes Thema. Jedenfalls, wir waren in dem Bereich Telematikanwendungen. Jetzt kommen diese ganzen Informationen in einer Verkehrszentrale zusammen. Die merkt, auf der A8 Richtung München bildet sich gerade ein Stau. Bisher können das existierende Systeme, da gibt es immer an den Brücken auch entsprechende Sensoren oder Induktionsschleifen in der Straße. Und zwar die können das, wenn auch viel grob Granulare heute auch schon feststellen. Oder von Hubschrauber aus oder so. Was aber jetzt mit den Fahrzeugnetzen zum Beispiel neu möglich wird, ist, jetzt kann die Verkehrszentrale, die weiß ja jetzt wirklich, welche Fahrzeuge fahren da. Die können jetzt natürlich auch wieder Nachrichten zurückschicken. Sie können zum Beispiel sagen, die eine Hälfte der Fahrzeuge nimmt die Umleitung 15 und die andere Hälfte der Fahrzeuge, die leiten wir vorher schon auf eine andere Umleitung. Sodass es dann auch auf den Umleitungen nicht wieder zu Staus kommt, weil ich eben den Verkehr sehr genau steuern kann. Andere Anwendungen in dem Bereich, Verkehrssteuerung.
+
+01:27:06.464 --> 01:27:20.764
+<v SPEAKER_3>Das Interessante ist ja auch, das würde ja auch noch funktionieren, wenn nur 5% aller Autos mit so einem Netz ausgestattet sind. Dass wirklich alle Autos über diese Netzwerkinfrastruktur funktionieren, das ist ja erstmal illusorisch.
+
+01:27:21.524 --> 01:27:25.704
+<v SPEAKER_2>Ja, also insbesondere am Anfang. Ich meine, später haben wir natürlich schon die Hoffnung, dass es irgendwann kommt.
+
+01:27:25.724 --> 01:27:34.464
+<v SPEAKER_3>Klar, aber so eine Stauerkennung würde ja auch funktionieren, wenn jetzt nur so ein paar Autos in diesem Stau sind, weil ja so ein typisches Beschleunigungsmuster erkannt wird.
+
+01:27:34.484 --> 01:29:46.984
+<v SPEAKER_2>Genau, also ich brauche einfach nur sozusagen so Monte-Carlo-mäßig einen Snapshot, einen bestimmten Anteil, zufällig gewählt aus den Fahrzeugen, dann weiß ich auch, wie schnell wird da gefahren. Ja, das ist natürlich ein großes Thema. Wie kriege ich so ein System in den Markt rein? Gerade bei diesem ganzen eSafe. Die Anwendung ist es nämlich so, solange irgendwie nur 5% der Fahrzeuge so etwas haben, nützt mir das relativ wenig, weil selbst wenn ich das habe, wenn die zwei Autos, die da den Unfall haben, das nicht haben, und die haben das mit relativ großer Wahrscheinlichkeit nicht, dann kriege ich von denen auch keine Warnung. Und dann nützt mir mein ganzes System nichts. Und jetzt ist noch die Frage, wie bringt das ein Automobilhersteller einem Kunden bei, dass er vielleicht 300 Euro zusätzlich für so eine Onboard-Unit, wie man das dann auch nennt, bezahlen soll, wenn er da eigentlich zumindest im Safety-Bereich nichts davon hat. Und ja, die Idee ist jetzt, also diese Systeme werden auch kompatibel sein mit bestehenden WLANs, obwohl sie einen eigenen Substandard 802.11p verwenden und auch auf einer eigenen Frequenz 5,9 GHz arbeiten werden, die sich auch mit einem normalen WLAN verbinden können. Und das ist jetzt so ein weiterer Bereich, sagen wir mal so Komfort- und Medienanwendungen, wo man hofft, solche Systeme in nennenswerter Verbreitung in den Markt zu kriegen. Also jetzt machen wir ein paar Beispiele. Ich habe bei mir so ein WLAN-Modul im Auto. Jetzt fahre ich daheim in die Garage. Das Auto redet kurz mit meinem Netz zu Hause und singt zum Beispiel irgendwelche Playlists mit meiner MP3-Sammlung. Oder ich fahre an eine Tankstelle und kriege kurz mal ein Informationsupdate über Staus in der Umgebung, Straßensperrungen, Baustellen oder vielleicht auch Points of Interest. Ich meine, ich werde vielleicht nicht alles Kartenmaterial an Bord haben, sondern ich fahre irgendwo hin und mache einen kurzen Download und bekomme dann eben zum Beispiel aktuelle Feste in umgeblichen Städten angezeigt, wo ich sage, oh, da fahre ich jetzt nochmal schnell zu einer Karnevalsveranstaltung oder was auch immer.
+
+01:29:47.004 --> 01:30:00.244
+<v SPEAKER_3>Warte mal, dieses 802.11p. Du sagst, das ist zum WLAN-kompatibel. Also wie verhält sich das jetzt? Inwiefern ist es anders? Inwiefern ist es dasselbe? Was macht diese Kompatibilität aus und wo sind die Unterschiede?
+
+01:30:00.464 --> 01:30:12.704
+<v SPEAKER_2>Okay, es ist erstmal, es arbeitet im eigenen Frequenzbereich. 5,9 Gigahertz, hatte ich schon gesagt. Einfach damit sich die Kommunikation nicht mit dieser ganzen anderen ISM-Bandkommunikation in die Quere kommt.
+
+01:30:12.724 --> 01:30:16.024
+<v SPEAKER_3>Das ist ja auch ein regulierter Frequenzbereich.
+
+01:30:16.044 --> 01:32:15.184
+<v SPEAKER_2>Genau, und da wurden also in den USA bereits 75 MHz Spektrum dediziert für diese sogenannte Dedicated Short-Range Radio-Communication freigegeben, schon vor einigen Jahren. In Europa ist jetzt seit ein, zwei Jahren so, dass wir auch zumindest mal 30 MHz dedizierte Spektrum für solche Anwendungen haben. Das ist ein Unterschied. Der andere Unterschied ist, 802 FP arbeitet grundsätzlich in diesem Ad-Hoc-Modus von WLAN, dem wir ganz am Anfang der Sendung besprochen haben. Jetzt ist es aber so, dieser Standard-Ad-Hoc-Modus, da gibt es noch relativ viel Kommunikation oder Management-Overhead. Da gibt es also Assoziationen, da gibt es diese Beacons und so weiter. Das führt dazu, dass sich so klassisches 802.11 Ad-Hoc-Netz relativ schlecht für diese Multi-Hoc-Ad-Hoc-Netzwerke eignen. Da seid ihr, glaube ich, auch in der Mesh-Network-Sendung mal drauf eingegangen. Und was man jetzt bei 802.11p macht, ist, man wirft sozusagen diese ganzen Management, diese Assoziation, Disassociation, wer tritt wann dem Netz, wie bei, das wirft man alles einfach weg. Es wird einfach gesendet, Punkt. Und es wird eben empfangen oder auch nicht. Aber der ganze Management-Overhead, den wirft man weg, weil den kann man bei diesen schnellen Verbindungsauf- und Abbauten einfach nicht brauchen. Und jeder, der also schon mal praktisch mit Ad-Hoc Netzen gearbeitet hat, der weiß, in diesem Standard-Ad-Hoc-Netzwerk-Modus, was mir also diese WLAN-Karten bieten, da funktioniert also so Multi-Hoc-Networking überhaupt nicht. Das bricht ständig zusammen, die Konnektivität ist nicht stabil und so weiter. Und was man dann typischerweise macht, ist, manche Karten bieten einen sogenannten Ad-Hoc-Demo-Modus, der ungefähr diesem 802 FP entspricht. Insofern, als da eben auch diese ganze Management-Overhead einfach weggelassen wird. Und dann funktioniert das gleich viel besser.
+
+01:32:15.204 --> 01:32:50.744
+<v SPEAKER_3>Mehr Stille. Okay, das heißt, neben der Telematik und dieser Unfallgeschichte gibt es auch einfach so Komfort-Features, sage ich mal. Also es geht sozusagen auch darum, dass man sein Auto besser ans Heim, was weiß ich, und auch an seine mobilen Geräte vielleicht. Ich meine, es kann ja auch sein, dass die Dinger, also die wären dann sozusagen mit Dual-Frequency, die würden sozusagen sowohl das normale WLAN können, aber eben dann nicht um mit Autos zu kommunizieren, sondern, was weiß ich, mit meinem iPhone, oder mit meinem Heim, oder meiner Garage, oder was weiß ich. Und dann hätte man dann so gleich Playlists, Syncing und diesen ganzen Fu.
+
+01:32:50.764 --> 01:33:17.504
+<v SPEAKER_2>Ob man das dann noch mit dem gleichen Chip hinkriegt, oder ob man da noch mal einen zweiten Chip einfach einbauen muss, einen zweiten WLAN-Chip, das wird noch diskutiert. Aber das ist so eine Idee, wie kriege ich das Ganze überhaupt mal in den Markt. Das heißt, ich verkaufe das eben nicht als Safety-System, sondern ich verkaufe das so als WLAN fürs Auto. Und wenn dann mal irgendwie 10-15% der Fahrzeuge das haben, dann gibt es halt ein Software-Update. Und plötzlich können die auch Safety-Funktionen.
+
+01:33:18.724 --> 01:33:44.244
+<v SPEAKER_3>So Netze ins Auto bringen, ist ja auch in anderen Bereichen ein Trend, wenn man sich so die Navigationssysteme heutzutage anschaut. Hier so neuste Generation von TomTom, die kommt schon irgendwie serienmäßig mit einer GSM-Datenkarte, um dann eben auch sich Updates zu ziehen vom aktuellen Verkehrsgeschehen und dann noch besser Routen vorschlagen zu können. Spielt das jetzt bei diesem VANets auch ne Rolle?
+
+01:33:46.044 --> 01:34:30.224
+<v SPEAKER_2>Ja, also es gibt tatsächlich viele von den Anwendungen, die ich über verschiedene technische Lösungen realisieren kann. Zum Beispiel Vodafone ist da in diesem eSafety-Bereich auch ganz stark interessiert und aktiv, weil die sich natürlich auch vorstellen können, ihr Netz natürlich gegen irgendwie Bezahlung letztlich dann für bestimmte Nachrichten, zum Beispiel Stauwarnungen und so zu nutzen. Und Vorteil ist natürlich, die Infrastruktur ist da, ist mehr oder weniger auch flächendeckend, also zumindest entlang größerer Straßen. Es gibt vielleicht im Bereich von kleinen Landstraßen noch einzelne Flecken, die nicht funkversorgt sind, aber im Wesentlichen ist die Infrastruktur da und die könnte man natürlich dafür nutzen.
+
+01:34:30.764 --> 01:34:32.964
+<v SPEAKER_3>Aber das ist ja dann UMTS oder GSM?
+
+01:34:32.984 --> 01:34:34.964
+<v SPEAKER_2>UMTS, GSM, genau, oder GPRS.
+
+01:34:34.984 --> 01:34:36.444
+<v SPEAKER_3>Das hat ja jetzt erstmal mit diesem VANets zu tun.
+
+01:34:36.464 --> 01:35:00.964
+<v SPEAKER_2>Nein, ich sage ja, das ist im Prinzip eine andere technische Basis, um zum Teil ähnliche Anwendungen machen zu können. Und das, was mit TomTom passiert, zum Beispiel, das geht ja genau in die Richtung, ich will feingranularer mein Verkehrsgeschehen sehen, um dann letztlich auch besser darauf reagieren zu können. Gut, und das kann ich machen über VANets, das kann ich machen über Infrastruktur.
+
+01:35:02.164 --> 01:35:11.904
+<v SPEAKER_3>Aber wo kommt jetzt bei so einem VANet für mich eine Information in meinem Auto an, die mir jetzt bei meiner Navigation hilft, außer jetzt konkret da ist ein Stau?
+
+01:35:11.924 --> 01:35:30.544
+<v SPEAKER_2>Was ich dazu eben noch bräuchte, wären jetzt nicht nur die Funkmodule in den Fahrzeugen, sondern ich brauche natürlich zumindest in gewissen Abständen auch sogenannte Roadside-Units, also letztlich ExisPoints oder eben WLAN-Basis-Stationen entlang der Straße, um dann auch mit anderen Systemen irgendwo im Internet kommunizieren zu können.
+
+01:35:30.564 --> 01:35:38.944
+<v SPEAKER_3>Also wie jetzt regelmäßig Telefone zum Notruf an der Straße stehen, dass die dann auch mit uns ausgestattet werden.
+
+01:35:38.964 --> 01:36:56.824
+<v SPEAKER_2>Genau, über diese Gateway könnte man dann kommunizieren. Das sind auch so die zwei großen Lager in dem Bereich Fahrzeugkommunikation. Es gibt also Leute, die tendenziell eher ein sogenanntes Car-to-car machen wollen. Also Fahrzeuge reden direkt miteinander. Und dann gibt es eben die Fraktion Car-to-Infrastructure. Fahrzeuge reden eigentlich primär hauptsächlich mit Verkehr, mit Infrastruktur, also mit diesen Roadside-Units. Und das war so lange Jahre, war das so der große Unterschied. Forschung in den USA, Forschung in Europa. Wir in Europa waren alle eher so die Car-to-car-Fraktion. Während in den USA hat man gesagt, wir pflastern das Land flächendeckend mit Roadside-Units, mit Infrastruktur. Da gab es sogar schon mal Geld irgendwie bewilligt vom Kongress. Also Hunderttausende der wichtigsten Kreuzungen im Land mit so einem Access-Point auszustatten. Das wurde dann aber irgendwie doch wieder gekippt. Das sind so die unterschiedlichen Ansätze. Und daneben gibt es eben noch den Ansatz zu sagen, bestimmte Anwendungen mache ich gar nicht über WLAN, sondern die mache ich über GSM oder OMS. Und was sich da jetzt für was am besten eignet, das ist momentan auch noch Gegenstand der Diskussion.
+
+01:36:56.844 --> 01:37:00.064
+<v SPEAKER_3>Ein offenes Rennen.
+
+01:37:00.084 --> 01:38:11.204
+<v SPEAKER_2>Dazu vielleicht ganz kurz noch ein Kommentar. Der große Vorteil von WLAN-Kommunikation ist, ich habe, gerade wenn es um sicherheits- und zeitkritische Dinge geht, kürzere Delays. Also wenn ich jetzt so direkt von Fahrzeug zu Fahrzeug schicke, dann bin ich halt im Bereich von Mikro bis Millisekunden. Während, wenn ich halt den Umweg über eine GSM-Infrastruktur gehen muss, dann sind meine Delays halt deutlich größer. Und deshalb ist also so relativ klar, es gibt Anwendungen, wenn es wirklich zeitkritisch ist, dann werde ich das eher über WLAN oder im 8x211P machen, direkt Fahrzeug zu Fahrzeug. Wenn ich sehr viel Zeit habe und umgekehrt, aber sowieso mit irgendwelcher Backend-Infrastruktur reden muss, irgendwas im Internet, und ich habe auch, es ist auch mal nicht so schlimm, wenn ich mal in einem Funkloch bin und gerade mal keine Kommunikation möglich ist, dann bietet sich aus meiner Sicht sicherlich diese Zellulärennetze, GSM, OMTS an und dann gibt es eben so einen Zwischenbereich, wo noch nicht so richtig ganz klar ist, was eignet sich besser und was wird sich auch durchsetzen.
+
+01:38:11.984 --> 01:39:26.044
+<v SPEAKER_3>Aber es gibt auf jeden Fall für beides in Zukunft einen Bedarf in diesem Verkehrsbereich absehbar. Da ist jetzt gerade in diesem Moment ein Unfall passiert. Vorsicht, das lässt sich sicherlich nur mit solchen VANets lösen. Genau. Vielleicht mal so als letzten Punkt. Man sieht ja jetzt auch gerade wieder, in letzter Zeit, wir hatten das hier auch bei Chaos Radio Express, Technologien, die einmal eingeführt sind, tendieren dazu, irgendwann auch mal einen schnellen Tod zu erleiden. Jetzt sind gerade die schnullos Telefone dran, die ECT, und man stellt dann irgendwie fest, oh hoppala, wir haben da ja einen Fehler gemacht, da hätten wir mal früher drüber nachdenken sollen, haben wir aber nicht, jetzt müssten wir das mal alles ändern. Und dann guckt man sich so die Landschaft an und stellt fest, naja, 99 Prozent der Geräte sehen noch nicht mal vor, dass man da die Software nachträglich ändert. Jetzt ist es natürlich bei so einem Deployment in vielen Autos, auch wenn die natürlich nur eine begrenzte Lifetime haben, kann es natürlich auch sein, dass man irgendwann feststellt, so, ups, da ist uns aber jetzt mal ein Lapsus passiert, könnt ihr euch auch vorstellen, dass man sozusagen da auch das Software-Update macht. Das geht natürlich auch wieder in diese Security-Frage rein, weil kann sowas von außen überhaupt erst mal angesteuert werden, dann kann man damit natürlich auch Schindloul ausfragen.
+
+01:39:26.064 --> 01:41:54.424
+<v SPEAKER_2>Genau, da ist dann die Büchse der Pandora relativ schnell geöffnet, und dann geht es natürlich los. Also dieser Software-Update von außen ist tatsächlich eine Anwendung, die auch auf dieser Liste von Dingen, die man mit solchen Systemen machen kann, draufstehen. Die Idee oder die Motivation dafür ist einfach, die in einem Fahrzeug ist sowieso immer mehr Software. Also ich habe jetzt neulich irgendwie die Zahl gelesen, in der neuesten S-Klasse sollen dann irgendwie 2 GB Software drinstecken. Ich muss gerade überlegen, ob das sein kann. Ich glaube, die Zahl ist gerade nicht da. Also auf jeden Fall gewaltige Mengen. Ich glaube, in der neuen E-Klasse sind es 500 MB und in der S-Klasse sollen es dann 2 GB Software sein. Auch wenn im Automobilbereich natürlich ganz andere Maßstäbe und Qualitätsanforderungen an Software Engineering gelten als jetzt bei Windows oder so, bleibt es nicht aus, dass da Fehler gibt. Wenn es dann mal einen Fehler gibt, dann landet er immer gleich in der Presse. Da gab es Fälle, wie irgendjemand legt in seinem Auto mit Automatikgetriebe einen Rückwärtsgang ein und plötzlich schießt das Ding wie eine Rakete nach vorne los oder so. Also sowas sollte und darf aber eigentlich nicht passieren. Deshalb stellt man da entsprechend andere Anforderungen. Aber es passiert. Jetzt haben natürlich die Automobilhersteller ein Problem, wenn sie nämlich so einen Fehler sehen. Was müssen sie denn machen? Eine Rückrufaktion. Das heißt, sie müssen alle Fahrzeuge in die Werkstätten holen, Kabel reinstecken, neue Software einspielen und tschüss. Das nervt natürlich die Fahrer, aber es kostet vor allem auch richtig Geld für die Hersteller. Und deshalb denken die natürlich drüber nach, einen Software-Update im Feld. Zum Beispiel eben über solche Basisstationen. Wenn halt ein Fahrzeug vorbeifährt, was diesen Fehler noch hat, dann kriegt er eine neue Software. Darüber wird nachgedacht. Aber damit habe ich natürlich genau dieses Problem. Ich baue mir einen Pfad ins Fahrzeug. Und wenn es jetzt zum Beispiel eine Software-Komponente für die Motorsteuerung ist, dann kann ich mir natürlich schlimmste Szenarien ausdenken, was passiert, wenn es irgendeinem Angreifer gelingt, diese Software, die da ins Fahrzeug reinkommt, zu manipulieren. Weil wenn ich die Motorsteuerung kontrolliere oder Brennsteuersystem kontrolliere, dann mache ich mit dem Auto, was ich will. Dann macht es plötzlich eine Vollbremsung. Oder der Motor geht auf der Autobahn plötzlich aus. Oder es fährt mal ein bisschen schneller.
+
+01:41:54.444 --> 01:41:58.384
+<v SPEAKER_3>Oder wird als Getaway-Kafl im nächsten Bankraub umprogrammiert?
+
+01:41:58.404 --> 01:43:15.564
+<v SPEAKER_2>Wie auch immer. Da muss ich natürlich höllisch aufpassen, wie ich damit umgehe. Der naive Ansatz ist natürlich, die Software zu signieren und so weiter. Aber auch da haben wir schon gesehen, das ging schon schief. Da muss man sich wirklich überlegen, wie sichere ich diesen Kanal ab. Die andere Geschichte ist die, wenn man sich gerade zum Beispiel überlegt, Krypto-Verfahren, die wir da einsetzt. So ein Fahrzeug hat eine Lebensdauer von 10, 20 Jahren. Wenn ich mir heute so ein System baue und ich mache dafür Signaturen in Algorithmen rein, dann kann niemand garantieren, dass er in 10, 20 Jahren noch sicher ist. Deshalb werde ich natürlich hergehen und werde die Systeme so bauen, dass ich dort Algorithmen, aber auch die Software im Laufe der Zeit aktualisieren kann. Der Vorteil im Vergleich zu den Decktelefonen ist, so ein Fahrzeug muss eigentlich weltweit alle paar Jahre zu einer technischen Kontrolluntersuchung. Das heißt, ich habe immerhin die Chance, in Abständen von ein paar Jahren, jedes Fahrzeug mal in die Finger zu kriegen. Und so kann man sich dann vorstellen, dass man auch eine Infrastruktur und eine Systematik aufbaut, wie sichergestellt werden kann, dass, wenn es ein Problem gibt, innerhalb von drei, vier Jahren, sämtliche Fahrzeuge dieses Problem wieder los sind.
+
+01:43:15.584 --> 01:43:24.584
+<v SPEAKER_3>Und ansonsten haben wir auch solche Fahrzeuge, die sind ja nicht die ganze Zeit in Betrieb, sondern können ja, wenn sie abends in der Garage stehen, dann auch mal sagen, ich mache erst mal zwei Stunden Software-Update.
+
+01:43:24.604 --> 01:43:29.044
+<v SPEAKER_2>Wenn ich per Funk rankomme, ja. Und wie gesagt, mit all den Einschränkungen bezüglich der Sicherheit.
+
+01:43:31.064 --> 01:43:40.064
+<v SPEAKER_3>Ja, Frank, das haben wir jetzt schon ganz gut ausgeholt. Haben wir noch etwas ganz Wichtiges vergessen? Vielleicht noch erwähnen sollten?
+
+01:43:40.104 --> 01:45:37.924
+<v SPEAKER_2>Ich würde vielleicht ganz gerne nochmal auf das Thema Privacy kurz zu sprechen kommen. Weil das ist, denke ich, ein Thema, was auch gerade so im CCC-Umfeld wirklich wichtig ist. Und wo wir uns vielleicht auch gar nicht richtig Vorstellungen, richtige Vorstellungen machen, was da eigentlich in Zukunft auf uns zukommt. Also du hattest TomTom erwähnt. Da fängt das an. Es gibt jetzt auch bei verschiedenen Versicherungen so Pay-as-you-drive-Insurance-Modelle. Also ich baue mir eine kleine Blackbox in mein Auto, die überwacht die ganze Zeit, wo fahre ich rum. Und am Ende meldet sie das dann mehr oder weniger detailliert an die Versicherung. Und wenn ich mich halt immer brav an irgendwelche Spielregeln halte, kriege ich einen zusätzlichen Rabatt bei meiner Versicherung. Also beispielsweise, ich darf nur dreimal im Jahr die Geschwindigkeit übertreten oder so. Und wenn ich da nicht aufpasse, dann wird da... Und das hat jetzt ja mit den VANets noch gar nichts zu tun. Wenn jetzt die VANets noch dazukommen und mein Fahrzeug sendet die ganze Zeit, wo fahre ich eigentlich längs, dann kann ich mir vorstellen, dass da Bewegungsprofile erstellt werden, wo wirklich jeder genau weiß, oder was jeder, also die das interessiert, wo fahre ich jetzt mit meinem Auto rum. Ja, und das alles zusammengenommen ist natürlich so ein Worst-Case-Szenario, weil ich mich eigentlich gar nicht mehr frei mit meinem Auto bewegen kann, ohne irgendwo Datenspuren zu hinterlassen. Und da ist die Frage, wie geht man damit um? Wie ist da denn eigentlich so die Strategie für die Zukunft? Und wenn man das natürlich jetzt einfach nur den Firmen überlässt, dann besteht halt die große Gefahr, wie es bei manchen von diesen Pay-as-to-drive-insurance-Modellen schon passiert ist. Ja, die machen natürlich die für sich einfachste Lösung. Die gehen her und sagen, diese kleine Blackbox, die nimmt einfach regelmäßig GPS-Samples und die schickt sie dann halt im Blog an uns. Und wir haben dann einen dicken, fetten Server. Und Plattenplatz ist billig. Da speichern wir erstmal alles. Und am Ende werden wir das dann aus- und schauen, wo ist der längst gefahren.
+
+01:45:37.944 --> 01:45:39.884
+<v SPEAKER_3>Und die Daten sind sicher, da kommt auch keiner ran.
+
+01:45:39.904 --> 01:46:22.484
+<v SPEAKER_2>Haben wir bei der Telekom gesehen. Genau. Und das ist so ein Ansatz, der einfach so nicht funktionieren kann. Wo aber momentan, obwohl es ja durchaus Datenschutzgesetz und rechtliche Beschränkungen gibt, wo es nicht so richtig funktioniert, solche Daten zu schützen. Und dieser Trend hin zu, wir bewegen uns in einer komplett IT-sierten Gesellschaft oder Umgebung, wo wir auch ständig irgendwelche Sensoren haben, die feststellen, wo wir sind, was wir tun und so weiter. Das ist ja nicht nur im Automobilbereich so, sondern das ist auch in vielen anderen Bereichen so. Von daher ist das sicherlich auch mal ein Bereich, wo man sich wirklich Gedanken machen muss.
+
+01:46:22.504 --> 01:46:42.464
+<v SPEAKER_3>Auto ist natürlich schon ein besonders sensitives Thema. Ich meine, wenn man sich so vorstellt, wo man so überall hinfährt. Der Klassiker ist so, was ist jetzt, wenn der Politiker dann so seine GPS-Logs abgibt und dann schaut da mal jemand drauf, dann sind wir so, aber im Rotlichtviertel sind sie dann aber auch alle zwei Wochen immer schön langsam Schritt gefahren, die lange Straße entlang. Was treiben sie denn da so?
+
+01:46:42.484 --> 01:46:52.704
+<v SPEAKER_2>Das ist so das klassische Beispiel. Wobei Politiker natürlich ein gutes Beispiel sind, weil die sind natürlich diejenigen, die zumindest auf der Gesetzesseite was dagegen machen können.
+
+01:46:53.004 --> 01:46:55.944
+<v SPEAKER_3>Genau, die Daten von Politikern dürfen nämlich nicht ausgewertet werden.
+
+01:46:55.964 --> 01:48:21.244
+<v SPEAKER_2>Politiker sind toll, aber Ärzte und so weiter, genau, und Journalisten. Wir kennen das. Wo wir jetzt momentan aktuell bei uns an der Uni dran arbeiten, ist auch mal Ideen zu entwickeln, wie man das vielleicht umdrehen könnte. Letztlich ist es ja so, wenn ich jetzt solche Daten verteile in einem Netz und zum Beispiel an TomTom liefere, dann sind das erstmal personenbezogene Daten. Das sind meine Daten. Ich gebe die TomTom für einen bestimmten Zweck, nämlich zum Beispiel Verkehrsanalysen zu machen. Und dafür gebe ich die ja auch meinetwegen gerne her. Nur es kann eben niemand kontrollieren, was TomTom jetzt mit den Daten macht. Und da kann man sich mal überlegen, ob man nicht Systeme bauen kann, die das Ganze mal umdrehen. Die also sagen, okay, ich gebe meine Daten her, da hänge ich eine Policy an. Und dann wird diese Policy aber auch durchgesetzt. Und TomTom kann die Daten zum Beispiel auf seinem Datenbank-Server nur zur Aggregation verwenden, aber nicht für Einzelinformation. Und da versuchen wir gerade, die böse Technik, DRM, Digital Rights Management, mal umzudrehen. Also es geht nicht darum, dass irgendjemand kontrolliert, was kann ich mit deren Musikstücken auf meinem Rechner machen. Sondern wir verwenden ähnliche Technologien, um sicherzustellen, dass TomTom mit unseren Daten eben auch nur Dinge machen darf, die quasi im grünen Bereich sind und sich mit uns verpauden.
+
+01:48:21.264 --> 01:48:22.984
+<v SPEAKER_3>So eine Art Digital Privacy Management.
+
+01:48:23.004 --> 01:48:45.604
+<v SPEAKER_2>Das ist genau der Begriff, den ich dafür geprägt habe. Also das ist mal so eine Denke, wo es sicherlich auch mal wieder von der technischen Ecke her ein bisschen Innovation, ein bisschen Energie reingesteckt werden könnte, mal die Systeme so zu bauen. Das muss ich eben nicht darauf verlassen, dass irgendjemand sich an Gesetze hält, sondern dass man die Leute ein Stück weiter zuzwingt.
+
+01:48:45.624 --> 01:48:51.384
+<v SPEAKER_3>Dass man das sozusagen entforsten kann. Wie könnte das so technisch aussehen, ohne zu sehr ins Detail gehen zu wollen?
+
+01:48:51.404 --> 01:48:53.384
+<v SPEAKER_2>Ja, Beispiel ist...
+
+01:48:53.404 --> 01:49:02.164
+<v SPEAKER_3>Normalerweise muss man dafür eine relativ große Infrastruktur haben. Wenn man jetzt mit DAM vergleiche, dann muss man eine relativ große Infrastruktur aufrechterhalten, um das sozusagen sicherzustellen.
+
+01:49:02.184 --> 01:50:04.484
+<v SPEAKER_2>Ich muss es natürlich so machen, wenn ich meine Daten jetzt an TomTom schicke, dann muss ich die Daten so verschlüsseln, dass erst mal nur eine bestimmte Anwendung bei TomTom, also einen Datenbankserver, der halt diese Auswertung macht, die überhaupt anfassen kann, dass also niemand anders an diese Daten rankommt. Das kriege ich gerade mit diesen Technologien im TPM-Bereich relativ gut hin, mit Ceiling. Das heißt, da kommt dann in diesen Datenbankserver ein kleiner Chip rein, der stellt sicher nur diese Datenbank, darf die Daten überhaupt lesen. Und dann muss ich natürlich dafür sorgen, dass niemand diese Datenbank modifiziert. Da brauche ich dann irgendjemanden, der das zertifiziert, dass diese Datenbank tatsächlich okay ist. Und dann brauche ich natürlich in der Datenbank einen Kontrollmonitor, der eben die Policies auswertet. Und zum Beispiel, wenn jetzt eine SQL-Anfrage reinkommt, die nach einer Durchschnittsgeschwindigkeit auf einem bestimmten Stück Straße fragt, die nur rausgibt, wenn eben mindestens 50 Fahrzeuge da aggregiert geantwortet haben. Aber das ist nur so ein ganz grober Outline. Da stecken natürlich im Detail noch viel mehr Dinge drin.
+
+01:50:04.644 --> 01:50:41.064
+<v SPEAKER_3>Mit TPM hast du ja im Prinzip noch mal so ein anderes Reizwort. Der Privatsphären-Szene genannt. Insofern würde es an der Stelle auch umdrehen. Also dieses Trusted Platform Module, das ist das, was hinter TPM steckt. So eine Technologie, die in manchen PCs auch schon verbaut ist. Ich in allen. Die im Prinzip sicherstellen soll, dass eben auch Software sozusagen nur auf einem Computer ausgeführt werden darf und so. Was ja eigentlich auch schon ein Privacy-Feature ist, wenn man das jetzt mal aus dem Blickfeld von großen Firmen sieht, die sozusagen damit sicherstellen, dass wenn jetzt irgendwie die Software genommen wird, die Festplatte geklaut wird oder so, und es auf anderen Computern laufen soll, tut es dann nicht und so.
+
+01:50:41.084 --> 01:50:41.964
+<v SPEAKER_2>Genau. Und auch der......
+
+01:50:41.984 --> 01:50:43.164
+<v SPEAKER_3>hat ja ähnliche Effekte.
+
+01:50:43.184 --> 01:50:55.024
+<v SPEAKER_2>Der Admin, der eben zum Beispiel in diese Datenbank rankommt, der kann halt auch nicht um diese Beschränkungen drum rum. Wenn natürlich jemand dann ganz unten rangeht und diesen TPM-Chip aushebelt, dann...
+
+01:50:55.044 --> 01:51:19.104
+<v SPEAKER_3>Genau. Also eine hundertprozentige Sicherheit, wie das immer so schön heißt, kann es nicht geben. Aber man kann natürlich zumindest schon mal diesen totalen Wildwuchs, der derzeit, also wo sozusagen einfach überhaupt gar nichts, durch überhaupt nichts begrenzt ist, kann man irgendwie reduzieren und man macht sozusagen auch den Firmen klar, dass sie einem bestimmten Zertifizierungsprotokoll folgen müssen, um überhaupt erst mal ihre Tätigkeit aufnehmen zu können.
+
+01:51:19.124 --> 01:51:32.464
+<v SPEAKER_2>Genau, genau. Also man baut eben Systeme, die es zumindest billiglich schwer machen, bestimmte Privacy-Anforderungen zu umgehen. Das ist aber schon relativ weit von den Ad-Hoc-Netzen weg.
+
+01:51:32.484 --> 01:52:17.844
+<v SPEAKER_3>Klar, aber damit sind wir dann auch, glaube ich, am Ende angekommen von unserer kleinen Sendung hier bei Chaos Radio Express. Nummer 116 war das. Ad-Hoc-Networking, VANets und VANets war das Thema. Frank, vielen Dank für die Ausführung. Ja, das war's. Ich hoffe, es hat euch gefallen. Wie immer, ich ersehne eure Kommentare im Blog unter blog.chaosradio.ch. Bei weiterführenden Fragen könnt ihr auch die E-Mail bemühen, chaosradio.ch. Aber wenn es um Sendung geht, dann schaut auch am besten mal im Blog vorbei. Das ist am besten, dann können auch andere Leute antworten. Dann bleibt es nicht immer nur an einer Person hängen. Frank wird sicherlich auch noch ein bisschen ins Blog reinschauen und da eure Fragen mit beantworten. Ja, dann würde ich sagen, sagen wir Tschüss. Tschüss, bis bald bei Kraus Radio Express.

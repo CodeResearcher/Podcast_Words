@@ -1,0 +1,517 @@
+WEBVTT
+
+00:00:01.740 --> 00:00:06.680
+<v SPEAKER_1>Und Freiheit ist wundervoll. Aber wir werden es tun.
+
+00:00:36.977 --> 00:03:22.213
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 22. Unser Thema heute ist Windows Security. Zu Gast ist FX und ein Mikrofon wie gewohnt. Tim Pritlove. Dann, tschüss. Ja, willkommen bei Chaosradio Express. Wieder einmal hab ich hier mit fortgesetzten technischen Feinheiten zu kämpfen, aber man schlägt sich so durch. Ich sitz jetzt hier mit FX. FX, hallo, kannst du mich hören? Super, alles klar, jetzt funktioniert das hier alles. Und unser Thema soll heute sein, Windows Security. Das ist natürlich ein heißes Thema, schon immer gewesen und vor allem auch in der Öffentlichkeit mehrfach durchgerollt. Microsoft als Hersteller von Windows hat dann natürlich ein bedeutend schlechtes Image, gegen das sie kräftig versuchen anzukämpfen, insbesondere in der letzten Zeit. Und da scheint sich so einiges zu tun. Und um dort mal einen kleinen Realitätsabgleich zu machen, wie denn das eigentlich genau aussieht, hab ich mal FX gebeten hier zum Gespräch, da er dort einige Einblicke besitzt, die ich nicht habe. Ja, also das hoffe ich doch zumindest. Hast du ein paar Einblicke, FX? Ja, Windows, das Betriebssystem. Die alten Versionen von Microsoft Windows 95, 98 und so weiter, wie sie heißen, sind nicht gerade besonders dafür bekannt, viel Sicherheit zu bieten. Einerseits schon nicht den Programmen selber. Programme können sich gegenseitig überschreiben und überall reinklinken, wo es mir irgendwie geht, weil allein schon so etwas Simples, wie effektiver Speicherschutz selten gefehlt hat. Das hat sich dann Schritt für Schritt von Version zu Version gebessert. Aber auch XP war, nachdem es rauskam, eigentlich von einer ganzen Menge Fehler geplagt. Wie bewertest du denn so die aktuelle Situation derzeit? Und seit wann hast du denn das erste Mal dich wirklich mit Windows auseinandergesetzt?
+
+00:03:22.733 --> 00:03:28.273
+<v SPEAKER_1>3.1, 3.0.
+
+00:03:28.293 --> 00:03:33.133
+<v SPEAKER_2>Also schon so ein bisschen länger. Und in welcher Form?
+
+00:03:33.153 --> 00:03:59.233
+<v SPEAKER_1>Naja, erstmal anschauen. Also das ist eine ziemlich amüsante Geschichte. Und zwar hat mir der Z damals das erste Corridor gegeben. Gegen einen Vektor-Grafik. Und er meinte, du brauchst da halt noch so ein Stück Software, das heißt Windows. Das musst du mit installieren, sonst funktioniert das nicht. Und das war dann sozusagen mein Grafiktreiber für Corridor.
+
+00:03:59.253 --> 00:04:12.873
+<v SPEAKER_2>Aber zu dem Zeitpunkt warst du aber ein reiner Anwender. Jetzt bist du ja selber eigentlich eher im Security-Business tätig und nimmst solche Systeme auf der niedrigsten Ebene auseinander. Was war da deine erste Begegnung mit Windows?
+
+00:04:12.893 --> 00:04:28.613
+<v SPEAKER_1>Na, das war so die Größenordnung 95, NT4, sowas. Das war auch sehr lustig. Also Windows ist durchaus nicht ganz unschuldig daran, dass ich mit diesem Security-Gramm angefangen habe. Jetzt will der Moderator hier eine Zigarette von mir haben.
+
+00:04:28.633 --> 00:04:39.053
+<v SPEAKER_2>Nein, ich will keine Zigarette. Ich möchte, dass du deinen Mikrofon einen Zacken heran nimmst. Wir testen nämlich hier gerade die tollen neuen Headset-Kopfhörer, aber die Einstellungen finden sie das besser. Das ist schon viel toller, ja.
+
+00:04:39.213 --> 00:05:15.533
+<v SPEAKER_1>Gut, das bräuchte hier jetzt noch so einen Zigarettenhalter. Anyway, ja, dieses Windows war dann nicht so ganz unschuldig daran, dass ich angefangen habe mit Security zu spielen, weil ich zu der Zeit bei einem ISP gearbeitet habe und denen sind immer die Windows-Kisten abgeschossen worden von Leuten, die das halt lustig fanden. Und ich habe, weil gerade kein anderer da war, die Aufgabe bekommen, rauszufinden, was das Problem ist. Es stellte sich dann durchaus raus, dass es dieser berühmte Ping of Death war, also ein Ping mit einem ziemlich großen Payload. Ja, und das war sozusagen der Einstieg in mal gucken, was es da noch so gibt.
+
+00:05:15.593 --> 00:05:27.553
+<v SPEAKER_2>Du kannst mir noch etwas ändern. Das war eigentlich so die erste wirkliche Wahrnehmung auch in der Öffentlichkeit, dass so Sicherheitslücken von außen reale Bedrohungen sind. Da kommt halt einfach so ein kleines Netzwerkpaket und es schießt die ganze Maschine so komplett in den Blue Screen.
+
+00:05:27.573 --> 00:05:53.253
+<v SPEAKER_1>Na gut, das gab es ja schon vorher. Also in der Öffentlichkeit vielleicht, aber ich meine, zu der Zeit gab es ja schon Security-Scanner und so eine Geschichten. Also damals war, wie hieß das Kind? Asmodeus? War ein Security-Scanner so ein Ultra-Vorläufer von Nessos, so Podscanner, der dann halt noch so ein bisschen Banner-Grabbing gemacht hat und so. Das gab es alles eigentlich schon. Also es war nicht mehr so die große News, aber vielleicht in der Öffentlichkeit.
+
+00:05:53.273 --> 00:06:09.033
+<v SPEAKER_2>Ja, das meine ich. Also Ping of Deaths war so der erste Trademark, der es dann halt auch mal wirklich so richtig in die News geschafft hat. Und es war auch einfach zu verstehen, da kommt ein Paket, es ist einfach nichts anderes als groß und schon geht die Maschine in die Knie. Und warum war Windows da so anfällig? Was war da der Fehler?
+
+00:06:09.313 --> 00:06:43.873
+<v SPEAKER_1>Und das ist eine relativ gute Frage, das weiß ich im Detail gar nicht. Also ich vermute mal, das kann man ja relativ einfach vermuten. Ich denke mal, du brauchst da für so ein Ping, musst du da ein Reply schicken. Und in dem Reply, das ist der Sinn der Nummer, schickst du halt genau den Payload mit, den du bekommen hast. Das heißt, das, was an dem Ping-Paket dranhing, an dem Echo-Request, musst du halt wieder zurückschicken, damit man auf der anderen Seite gucken kann, ob die Leitung geht. Und wenn dieser Payload halt entsprechend groß ist, dann brauchst du halt, naja, du brauchst halt eine Waffe, um das Ding kurz mal zu halten und da das neue Paket zu bauen. Wahrscheinlich, wie so häufig, war der Waffe zu klein.
+
+00:06:43.893 --> 00:06:52.293
+<v SPEAKER_2>Das heißt, die haben sich einfach nicht darum gekümmert, dass die Daten, die da auch ankommen, auch wirklich reinpassen, weil normalerweise passiert das halt nicht, ne?
+
+00:06:52.313 --> 00:06:55.693
+<v SPEAKER_1>Wenn du halt 64K reinpackst, ist halt einiges mehr.
+
+00:06:55.713 --> 00:07:05.133
+<v SPEAKER_2>Wie kommen die anderen überhaupt darauf, solche Daten zu schicken? Genau, damit hat aber so ein gewisses Erwachen eingesetzt. Das war ja schon festzustellen. Aber die Maschinen waren natürlich dann erstmal angreifbar.
+
+00:07:05.573 --> 00:07:53.393
+<v SPEAKER_1>Ja, naja, das Hauptproblem bei dem Windows Zeug eigentlich immer, also, nee, nicht immer, aber in der Zeit, so als das gerade richtig losging, war eigentlich die Vollkonfiguration. Also du konntest die Dinger schon zuziehen und die ganze Default-Konfiguration so umbiegen, dass man da erstmal so mitten mit Standard-Browser-Tools nicht mehr rangekommen ist. Aber das war halt das Hauptproblem, dass die halt wirklich eine reine Convenience-Software gebaut haben und die halt so geschippt haben. Und das ist halt das Betriebssystem. Und wenn das Ding installiert ist, dann hat halt jeder Zugriff auf alle Files von C runter. Und jeder hat irgendwie Zugriff auf die Shares und tralala. Und Security kam halt zum Beispiel in diesen MCSE-Zertifizierung. Kam Sicherheit fast gar nicht vor.
+
+00:07:54.093 --> 00:07:57.473
+<v SPEAKER_2>Also MCSE, das ist dieses Ausbildungsprogramm von Microsoft?
+
+00:07:57.493 --> 00:08:00.693
+<v SPEAKER_1>Na, das ist eine von vielen Zertifizierungen, die es bei Microsoft gibt.
+
+00:08:00.713 --> 00:08:02.113
+<v SPEAKER_2>Aber die bekannteste, ne?
+
+00:08:02.133 --> 00:08:32.773
+<v SPEAKER_1>Die bekannteste hat halt auch sehr viele Spaßnamen bekommen. So Mouse-Clicking-Setup-Engineer, das durfte ich auch mal genießen für NT4. Solches Training und so eine Zertifizierung, da kommt da halt Security nicht vor. Also das heißt, es ist auch nicht ganz richtig, wenn es dann so um die Domain-Konzepte geht und so was, dann schaut man da schon ein bisschen drauf, aber auch mehr in der Größenordnung. Wie baut man das so, dass man es managen kann und nicht? Wie macht man es denn sicher?
+
+00:08:34.753 --> 00:08:40.333
+<v SPEAKER_2>Jetzt reden wir ja so von Ping-of-Desk, das waren aber noch die Windows 98-Zeiten, oder betraf das in dem Moment schon?
+
+00:08:40.353 --> 00:08:41.613
+<v SPEAKER_1>Nee, nee, das war NT4.
+
+00:08:41.633 --> 00:08:46.673
+<v SPEAKER_2>Das war schon NT4. NT4 ist ja schon deutlich moderner aufgebaut gewesen als diese neuen X-Reihe.
+
+00:08:46.693 --> 00:09:11.213
+<v SPEAKER_1>Also die neuen X-Reihe kannst du eigentlich abhaken, weil das ist tatsächlich bloß ein 32-Bit-Extension für ein 16-Bit-Betriebssystem. Die hat die Geschichte mit dem Protected Mode, also Speicherschutz zwischen Applikationen, wirklich nur dafür verwendet, damit sie Programme laden kann, die größer als 640 Kbytes sind. Also es war nicht wirklich ein Security-Feature in any way.
+
+00:09:11.233 --> 00:09:16.373
+<v SPEAKER_2>Aber NT ist ja schon deutlich moderner aufgebaut gewesen im Vergleich dazu, aber war trotzdem angreifbar.
+
+00:09:16.393 --> 00:09:51.793
+<v SPEAKER_1>Ja, NT ist vom Design her extrem cool eigentlich. Das Problem war glaube ich eher, naja, erstmal so ein IP-Stack ist ja noch was anderes als der Kernel. Und NT war eigentlich mehr der Fokus auf ein neues Kernel-Design, was halt so ein bisschen beyond Unix geht. Höhere Granularität in verschiedenen Bereichen erlaubt und so weiter. Und ich denke mal, dass wir bei dem Kernel relativ viel Gutes gemacht haben. Also was man so heute von dem Kernel sieht, der ja eigentlich immer noch ein NT-Kernel ist, ist schon extrem anständig.
+
+00:09:52.713 --> 00:09:56.033
+<v SPEAKER_2>Also XP ist im Prinzip die direkte Weiterentwicklung von der NT-Linie?
+
+00:09:56.373 --> 00:10:13.633
+<v SPEAKER_1>Also NT-Linie kann man so, Microsoft-Experten könnten mich jetzt korrigieren, aber generell kann man sagen, es sieht so aus, dass von NT-Kernel das einfach eine direkte Linie war. NT4 2000 XP 2003.
+
+00:10:13.653 --> 00:10:22.293
+<v SPEAKER_2>Aber die Security-Probleme sind ja geblieben. Also NT hatte schon seine Probleme, 2000 hatte seine Probleme oder siehst du da schon?
+
+00:10:22.313 --> 00:11:27.673
+<v SPEAKER_1>Da muss man unterscheiden, was kaputt war. Also bei NT ist es definitiv so, dass es noch reichlich Probleme hatte, schlicht nur gerade weil Microsoft sich auch noch nicht um Security in dem großen Maße gekümmert hat, wie sie das heute tun. Die 2000er-Geschichte, da ist es so, dass auf der Kernel-Seite extrem wenige Verwundbarkeiten waren. Also die haben halt wirklich von unten angefangen und haben halt erstmal den Kernel zugezogen und sichergestellt, dass der macht, was er soll. Weil klar, wenn dir das Ding auf die Füße fällt, dann hast du halt vollständig verloren. Und dann ein Stück weit weiter, also bei NT und 2000 ist es halt durchaus so, dass der Internet-Information-Server zum Beispiel ein größeres Einfalltor ist. Die Geschichte ist aber natürlich, das ist ein Dienst, der auf dem NT obendrauf läuft, also auf dem Kernel obendrauf läuft. Und da sind dann halt, so in Windows 2000 sind halt die Dienste die großen Angriffsflächen geworden. Für den latest IES, den wir im Moment haben, also Internet-Information-Server, für den Web-Server, gibt es noch keine anständigen Angriffe. Und den gibt es schon eine Weile.
+
+00:11:27.693 --> 00:11:29.653
+<v SPEAKER_2>Der jetzt unter XP...
+
+00:11:29.733 --> 00:11:31.113
+<v SPEAKER_1>Na der jetzt...
+
+00:11:31.133 --> 00:11:34.173
+<v SPEAKER_2>Wo ist der sehr mäßig dabei?
+
+00:11:34.193 --> 00:11:38.653
+<v SPEAKER_1>2000 XP und 2003.
+
+00:11:38.673 --> 00:11:39.813
+<v SPEAKER_2>Also die Server-Variante.
+
+00:11:39.833 --> 00:11:50.113
+<v SPEAKER_1>Genau. Und den hat bis jetzt noch keiner kaputt bekommen. Also die ziehen die Sachen so langsam von unten nach oben zurecht.
+
+00:11:51.093 --> 00:11:55.233
+<v SPEAKER_2>Wann denkst du, hat er denn so das Umdenken eingesetzt bei Microsoft?
+
+00:11:55.253 --> 00:12:16.153
+<v SPEAKER_1>Ja, das ist eine schwere Frage. Ich denke mal, also der Hauptdruck warnt tatsächlich die ganzen Wurmgeschichten. Also als die Leute dann anfingen, Würmer zu schreiben, weil das ist wirklich ekelhaft, das geht dann immer voll durch die News und alle Leute haben einen Arsch voll Ärger damit. Und es ist ein riesen Aufwand irgendwie, das wieder sauber zu machen. Und dann müssen alle patchen.
+
+00:12:16.733 --> 00:12:22.293
+<v SPEAKER_2>Also die Programme, die sich nicht nur in ein System reinfressen, sondern von dort auch gleich weiter verteilen.
+
+00:12:22.313 --> 00:13:45.593
+<v SPEAKER_1>Die Würmer waren halt das Problem, weil die waren halt echt ein PR-Super-Go für Microsoft. Und ich glaube, da waren sie schon dabei, sich das anzugucken, aber dann haben sie angefangen, die richtigen Leute zu fragen. Sie haben halt, von dem, was ich mitbekomme, also man kriegt ja nicht alles mit, es ist ein riesen Unternehmen und die erzählen einem ja auch nicht alles. Aber von dem, was ich mitbekommen habe, haben sie dann tatsächlich angefangen, den Weg zu gehen, dass sie sagen, wir holen uns jetzt erstmal Leute rein, die wissen, wovon sie reden. Also sie haben sich dann erstmal Security-Leute rein geholt, von außen. Und haben die eingestellt, haben die gut bezahlt und gefragt, was müssen wir denn jetzt machen? Und dann mussten diese Security-Leute sozusagen, diesen ganzen Konzern Microsoft überzeugen, dass Security wichtig ist. Einerseits haben sie das natürlich erstmal nach oben gemacht. Dann gab es diesen berühmten Security-Push von Billy, wo alle gelacht haben. Als er gesagt hat, wir machen jetzt unser Zeug sicher. Aber das meinte der durchaus ernst. Und dann mussten sie halt sozusagen die ganze Organisation erstmal überzeugen, dass das gut und wichtig ist. Und das hat echt eine ganze Weile gedauert. Jetzt haben sie es so weit hingekriegt, dass sie sich auf die echte Arbeit konzentrieren können. Also ich würde mal über den Daumen sagen, vielleicht seit fünf Jahren machen sie das.
+
+00:13:45.613 --> 00:13:50.653
+<v SPEAKER_2>Wobei sie jetzt in den letzten fünf Jahren zumindest in der Öffentlichkeit noch nicht so sehr viel davon gehabt haben, was ihr Image betrifft.
+
+00:13:51.013 --> 00:14:01.753
+<v SPEAKER_1>Nee, jetzt fangen sie an rauszugehen. Also im letzten anderthalb Jahren sind sie angefangen rauszugehen und zu sagen, hier, passt auf, wir haben was gemacht. Und so geht das jetzt halt los.
+
+00:14:01.773 --> 00:14:05.533
+<v SPEAKER_2>Rausgehen heißt, sie sprechen auch ganz explizit jetzt die Security-Szene an?
+
+00:14:06.133 --> 00:15:08.513
+<v SPEAKER_1>Na, sie machen auch durchaus PR damit. Also ich meine, man muss ja zum Beispiel, wenn man sich überlegt, dass sie jetzt mittlerweile in ihren Compilern Sicherheitsfeature mitliefern. Im 2003er Visual Studio haben sie angefangen, Stack-Henrys mitzuliefern. Das ist halt ein Sicherheitsmechanismus, der für Stack-Buffer-Overflow-Protection da ist. Der hat tatsächlich auch funktioniert. Und dann jetzt mit dem neuen Compiler, der mit dem 2005er Visual Studio rausgeliefert wurde, haben sie die Tools, die sie extrem teuer eingekauft haben. Also sie haben Companies gekauft, die so Code-Validation-Tools bauen. Haben die ganze Company gekauft, haben die Technologie eingeliefert in ihren eigenen Produktionsprozess und haben damit sehr große Erfolge gehabt. Weil der Code wird einfach automatisch beim Compilen schon mal gecheckt, ob er einen bestimmten Satz von Fehlerquellen hat. Und dem Programmierer wird das halt direkt vorgeworfen. Und was sie jetzt machen, ist diese Tools...
+
+00:15:08.573 --> 00:15:14.053
+<v SPEAKER_2>Also die verhindern nicht richtig automatisch was, aber sie geben zumindest Warnungen raus und Fehler raus.
+
+00:15:14.073 --> 00:16:32.753
+<v SPEAKER_1>Was ja sehr viel besser ist. Also es ist ungefähr so wie ein höheres Warning-Level bei einem Compiler. Also du kannst einem Compiler sagen, irgendwie compiles, wenn du es irgendwie hinkriegst, oder was die Standard-Einstellung und die sinnvolle Einstellung ist, du kannst sagen, lieber Compiler, wenn dir irgendwas komisch vorkommt, ja dann sag mir mal Bescheid. Und dann sagt der Compiler halt, hier hast du eine Variabeln nicht initialisiert und da hast du irgendwie Implicit Cast gemacht, der nicht so sauber aussieht und so eine Geschichten. Und genau in diesem Prozess integrierst du solche Code-Checking-Tools. Und das haben sie tatsächlich gemacht, haben das bei ihren eigenen Leuten halt durchgebracht, sodass das halt für die eigene Software verwendet wird. Und jetzt gehen sie da her und shippen das mit ihrem Compiler, sodass die Leute, die Applikationen auf Windows bauen, halt auch von dieser erhöhten Sicherheit und den erhöhten Sicherheitsprüfungen eigentlich profitieren. Das ist sehr interessant, weil eigentlich hätte man schon gedacht, dass sie diese Technologie weiterentwickeln und schön für sich behalten, weil das ist nicht etwas, was man an jeder Ecke kaufen kann. Aber sie machen das tatsächlich publik und dazu gehört natürlich auch, dass man jetzt die ganze Entwicklergemeinde da mit reinholen muss ins Boot und denen erklären muss, warum sie das Ding benutzen sollen. Warum sie nicht überall einfach dranschreiben, hier, ignorier das. Dieser Code ist sicher, weil ich weiß das.
+
+00:16:33.813 --> 00:16:37.033
+<v SPEAKER_2>Aber letzten Endes leiden sie natürlich auch alle gemeinsam darunter, nicht?
+
+00:16:37.053 --> 00:17:11.173
+<v SPEAKER_1>Ja, na sicher, ich meine, wenn irgendwie, keine Ahnung, ein schönes Beispiel, wenn Adobe-Software auf Windows halt irgendwie angreifbar ist, und da jemand einen Wurm schreibt, dann ist es in der Presse halt trotzdem ein Windows-Wurm. Da kann sich Microsoft zwei hinstellen und technisch korrekt sagen, Leute, wir haben nichts falsch gemacht, irgendwie geht bei Adobe klingeln. Aber was wird der Bildleser davon verstehen? Gar nichts. Für den ist es halt ein Windows-Wurm. Und gerade bei solchen Sachen ist es natürlich doof, weil Microsoft dann auch keine Patches dafür schippen kann, weil es eigentlich ihr Produkt ist.
+
+00:17:11.193 --> 00:17:18.493
+<v SPEAKER_2>Klar, es sei denn, sie bauen irgendwelche Obscure-Workarounds in ihr Betriebssystem ein, die versuchen, sowas zu verhindern, aber das ist ja eigentlich auch Quatsch.
+
+00:17:18.513 --> 00:18:21.073
+<v SPEAKER_1>Nee, das ist gar nicht Quatsch. Es ist ein relativ guter Ansatz. Es gab ja vor zwei oder drei Jahren so den Push, der ist eigentlich von den OpenBSD-Leuten gekommen, Prozessor-Features ein bisschen aufzubohren und zu sagen, wir haben halt Speicherbereiche, die sind für Daten da und die sollen gefälligst nicht ausführbar sein. Was ein ziemlich sinnvoller Ansatz ist, weil normalerweise willst du dein Word-Dokument oder deinen Textfall nicht ausführen, aber bei einem Exploit macht man genau das. Weil was du reinschickst, sind ja erstmal Daten und wenn du es dann geschafft hast, den Code-Fluss umzubiegen, dann wird es halt zu Code und dann führst du halt deine Daten aus. Und die OpenBSD-Leute haben halt erkannt, dass es eine relativ coole Idee wäre, zu sagen, hier das geht nicht, haben aber festgestellt, dass die CPUs das aber nicht so richtig unterstützen und haben dann einen Push gemacht. Das heißt, sie sind tatsächlich zu den einzelnen CPU-Herstellern gegangen, haben gesagt, hier, also x86-Plattform, und haben gesagt, hier könnt ihr das nicht einfach einbauen.
+
+00:18:21.533 --> 00:18:25.873
+<v SPEAKER_2>Ja, was ja halt auch so schwierig nicht ist, wenn man erstmal darüber nachdenkt, oder?
+
+00:18:25.893 --> 00:18:38.173
+<v SPEAKER_1>Nö, aber so eine Modifikation einer CPU, ein weiteres Bit, zu haben auf einer Speicherseite und das dann auch zu checken, ist auch nicht so ganz ohne. Microsoft hat das dann aufgenommen und unterstützt.
+
+00:18:38.193 --> 00:18:39.273
+<v SPEAKER_2>Moment, hat das auch stattgefunden?
+
+00:18:39.613 --> 00:18:40.573
+<v SPEAKER_1>Das hat stattgefunden.
+
+00:18:40.593 --> 00:18:43.853
+<v SPEAKER_2>Ab welcher Prozessor-Generation sind dann solche Features mit dabei?
+
+00:18:43.873 --> 00:18:49.633
+<v SPEAKER_1>Das ist das sogenannte NX-Bit hier, mein Pentium 4 hat das, die AMD-Kisten haben das.
+
+00:18:49.633 --> 00:18:51.213
+<v SPEAKER_2>Okay, also schon seit einiger Zeit.
+
+00:18:51.233 --> 00:18:54.533
+<v SPEAKER_1>Schon einiger Zeit, ja. Also moderne CPUs, das was da heute im Laden kommt.
+
+00:18:54.553 --> 00:18:56.213
+<v SPEAKER_2>Aber dann muss das Betriebssystem das auch nutzen.
+
+00:18:56.493 --> 00:19:16.093
+<v SPEAKER_1>So, und da kommt genau der Punkt. Die BSD-Leute haben das natürlich für ihre eigenen Geschichten sich ausgedacht. Und MS hat das halt aufgegriffen. Und hat das jetzt auch. Mit dem XP-SP2 hast du halt genau diese, im Deutschen heißt es so schön, Datenausführungsverhinderung. Das ist so ein Wort.
+
+00:19:16.113 --> 00:19:21.033
+<v SPEAKER_2>Datenausführungsverhinderung? Super. Das klingt wie so eine neue Gesetzesinitiative des Bundestags.
+
+00:19:21.913 --> 00:19:25.573
+<v SPEAKER_1>Ist auch unglaublich schwer zu finden, wenn man nicht weiß, wonach man sucht.
+
+00:19:25.593 --> 00:19:28.253
+<v SPEAKER_2>Aber man muss es nicht erst einschalten, sondern es ist einfach da.
+
+00:19:28.273 --> 00:19:55.033
+<v SPEAKER_1>Man muss es nicht erst einschalten. Es ist standardmäßig enabled für, sie nennen es bestimmte Windows-Programme. Ich habe versucht, herauszufinden, was das ist, aber auch nur mit den On-Board-Mitteln. So aus Spaß. Ich wollte einfach mal wissen, ob sie es irgendwo auf einer Installation Windows ohne Internetzugang dokumentiert haben, welche Programme das denn so wären. Steht nicht da. Man kann es aber auch anmachen für alle Programme.
+
+00:19:58.353 --> 00:20:06.793
+<v SPEAKER_2>Also, ich bin nicht derjenige, der das anbietet, ich kann es mit meinem installierten Rechner einschalten und da gibt es irgendwo eine Box, die ich anklicken muss und dann ist das so?
+
+00:20:06.813 --> 00:20:08.293
+<v SPEAKER_1>Genau so sieht das aus.
+
+00:20:08.313 --> 00:20:10.113
+<v SPEAKER_2>Warum ist das nicht sowieso an?
+
+00:20:10.133 --> 00:21:17.433
+<v SPEAKER_1>Das ist sowieso an, aber das Problem ist natürlich, wenn Sie das für andere Programme als Ihre eigenen machen, dann laufen Sie in etwas, was Kompatibilitätsissues heißt. Und eigentlich so viel heißt wie, die Leute verwenden alle total dreckige Software, die nicht von Microsoft geliefert wurde und die eigentlich ständig Mist macht, aber weil sie einfach Glück hat, passiert dabei nichts. Also Leute coden halt echt brutale Scheiße. Ich gebe ein Beispiel, du nimmst ein Stück Software und schreibst einen Plug-in-Mechanismus. Nun kann man das sinnvoll bauen oder nun kann man einfach dahergehen und sagen, na, ich lade dieses File, kopiere das hier in diesem großen Speicherbereich und calle dann diesen Speicherbereich als Code. Da würde so eine Datenausführungsverhinderung natürlich sagen, du spinnst wohl. Das geht nicht und würde dein Programm sofort beenden. Weil was anderes kann sie nicht tun. Sie kann ja nicht analysieren, ist das jetzt ein Angriff oder nicht. Sie kann einfach mit einem großen Hammer draufhauen und sagen, aus, vorbei und das Programm umbringen. Und dann rennen Microsoft irgendwie die Leute die Tür ein und sagen, meine Software läuft nicht mehr. Und deswegen haben sie es die Fortmäßig nur für ihren eigenen Entscheidsang.
+
+00:21:17.453 --> 00:21:20.533
+<v SPEAKER_2>Das heißt, ich muss es für jedes einzelne Programm einschalten?
+
+00:21:20.553 --> 00:21:26.393
+<v SPEAKER_1>Nein, du kannst sagen, nur für Microsoft-Geraffel oder für alle meine Programme, die ich ausführe, außer folgende.
+
+00:21:26.413 --> 00:21:28.893
+<v SPEAKER_2>Okay, und welche Art von Programm wird dann wahrscheinlich Probleme haben?
+
+00:21:29.973 --> 00:21:31.453
+<v SPEAKER_1>Alles.
+
+00:21:31.473 --> 00:21:41.293
+<v SPEAKER_2>Alles. Aber jetzt vor, wenn wir das, gestern kamen irgendwie die News raus von der Black Hat, dass ein paar Jungs diese Skype mal ein bisschen genauer angeschaut haben. Ich weiß nicht, ob das schon an dir vorbeigerauscht ist, wahrscheinlich.
+
+00:21:41.313 --> 00:21:44.713
+<v SPEAKER_1>Ich war auf der Black Hat. Ich habe den Vortrag gesehen, ja.
+
+00:21:44.733 --> 00:21:56.833
+<v SPEAKER_2>Und was hältst du davon? Also, um vielleicht mal vorwegzugreifen, um mich das jetzt erwähnen, also wenn ich es richtig gesehen habe, haben die Skype-Leute versuchen, das Re-Engineering ihrer Software auch aktiv zu unterbinden in ihrer Software.
+
+00:21:56.853 --> 00:21:58.113
+<v SPEAKER_1>Und das ist gut, ja.
+
+00:21:58.133 --> 00:22:13.753
+<v SPEAKER_2>Indem sie halt auch selber Programmcode erst zur Laufzeit auspacken. Benutzen die dann im Prinzip diese Methode mit, wir schreiben uns mal selbst in Daten und führen uns dort aus? Das heißt, man könnte an der Stelle Skype zum Beispiel grundsätzlich nicht verwenden?
+
+00:22:13.773 --> 00:22:17.873
+<v SPEAKER_1>Könnte man schon, aber man hat halt diese Sicherungsmechanismen dann für Skype nicht.
+
+00:22:17.893 --> 00:22:25.733
+<v SPEAKER_2>Aber kann man es nur für Skype ausschalten? Das ist so eine Liste von Programmen. Dieses Programm Ja, dieses Programm Nein.
+
+00:22:25.753 --> 00:22:32.913
+<v SPEAKER_1>Nein, du kannst einfach Exceptions deklarieren. Das ist wie bei einer Firewall. Du kannst sagen, irgendwie alle müssen sich anständig benehmen, außer das Skype, weil das funktioniert sonst nicht.
+
+00:22:33.213 --> 00:22:40.813
+<v SPEAKER_2>Ah ja, das heißt, Skype ist prinzipbedingt quasi auch angreifbar weiterhin auf dieser Basis, weil man es einfach gar nicht ausschalten kann.
+
+00:22:40.833 --> 00:23:13.253
+<v SPEAKER_1>Wahrscheinlich schon. Ich weiß aber nicht. Also ich meine, du kannst natürlich auch, wenn du so was programmierst, es auch anständig programmieren. Das kann durchaus sein, dass die Skypler das anständig gemacht haben. Du kannst natürlich zum Betriebssystem gehen und beantragen, liebes Betriebssystem, ich hätte jetzt gerne eine Memorypage, die war vorher Daten, aber die wird jetzt Code, weil ich weiß, was ich hier tue. Sonst könntest du ja zum Beispiel gar keine Emulatoren oder sowas bauen. Also man muss schon noch eine software-seitige Möglichkeit haben, dem Betriebssystem zu sagen, du, ich weiß, was ich hier mache, das ist schon in Ordnung. Das ist jetzt kein Angriff. Das können die genauso gut gemacht haben.
+
+00:23:13.453 --> 00:23:19.953
+<v SPEAKER_2>Okay, aber das ist dann natürlich auch wiederum eine Methode, die auch ein potenzieller Angreifer verwenden könnte. Oder kann man das ausschließen?
+
+00:23:20.453 --> 00:23:29.393
+<v SPEAKER_1>Nein, kann man nicht ausschließen. Natürlich würde ein potenzieller Angreifer das tun. Es wäre ja schade, wenn die das Problem für immer gelöst hätten.
+
+00:23:29.413 --> 00:23:42.253
+<v SPEAKER_2>Das spricht der Sportler. Also mit anderen Worten, du hältst SP2 von Windows XP für spürbar sicherer als die Vorgängerversion.
+
+00:23:43.433 --> 00:23:49.013
+<v SPEAKER_1>SP2 besteht eigentlich fast nur für mich aus Security-Features.
+
+00:23:49.033 --> 00:23:53.653
+<v SPEAKER_2>Also sonst keine, abgesehen von ein paar Änderungen, es ist im Wesentlichen ein Security Update gewesen.
+
+00:23:53.673 --> 00:24:02.333
+<v SPEAKER_1>Keine Ahnung, da hat es ja Tausende Fixes drin in solchen Service Packs. Aber die prinzipiellen Sachen, die sie damit eingeführt haben, waren schon ein ziemlicher Sprung nach vorne.
+
+00:24:03.633 --> 00:24:15.013
+<v SPEAKER_2>Microsoft macht sich ja ziemlich breit auf Security-Konferenzen, wenn ich das richtig beobachtet habe. Einerseits treten sie gerne als Sponsor auf und werfen eine ganze Menge Geld auch auf diese Veranstaltungen, damit die stattfinden.
+
+00:24:15.853 --> 00:24:17.473
+<v SPEAKER_1>Auch nicht so viel.
+
+00:24:17.493 --> 00:24:31.313
+<v SPEAKER_2>Nicht so viel, aber zumindest sind sie überhaupt schon mal da. Sehr breit gefächert. Welche Wirkung hat das so? Wie ist so das Verhältnis von der Security-Szene zu Microsofts Treiben? Wie wird das bewertet?
+
+00:24:31.333 --> 00:25:03.893
+<v SPEAKER_1>Ich kann nicht für die Security-Szene sprechen. Sie haben relativ früh das Kernproblem in der Security heutzutage erkannt. Es gibt keine guten Leute. Es gibt einfach keinen Manpower. Microsoft ist nun mal ein Riesenladen. Die haben einen verdammten Riesenhaufen Code. Sie haben nun mal beschlossen, dass sie diesen kompletten Haufen Code sicher kriegen wollen. Dafür brauchen sie relativ gute Leute. Dafür brauchen sie sehr viel mehr, als es eigentlich auf der ganzen Welt gibt.
+
+00:25:05.273 --> 00:25:20.473
+<v SPEAKER_2>Aber mit guten Leuten allein ist es sicherlich auch nicht getan. Es gibt ja diesen schönen Satz, Sicherheit ist kein Zustand, sondern ein Prozess, an dem sicherlich viel Wahres dran ist. Bei so einer großen Softwaremaschine, wie es Microsoft ist, geht es sicherlich auch für andere Firmen, aber sicherlich für keinen so sehr wie für Microsoft.
+
+00:25:20.493 --> 00:25:31.973
+<v SPEAKER_1>MS ist im Moment, was diese ganze Security in Large Scale angeht, doch ein absoluter Vorreiter. Also was das angeht, sind sie wahrscheinlich fünf bis zehn Jahre vor der restlichen Softwareindustrie.
+
+00:25:31.993 --> 00:25:43.433
+<v SPEAKER_2>Und wie gehen sie davor? Ich meine, du hast es ja schon erwähnt, der Compiler, da packen sie das Problem ja schon mal ziemlich an der, vielleicht nicht an der Wurzel, aber auf jeden Fall im Wurzelbereich an.
+
+00:25:43.453 --> 00:26:55.993
+<v SPEAKER_1>Nein, sie packen genau alle Wurzeln an. Also mal sehen, ob ich das vollständig zusammenkriege. Sie haben erweiterte Sicherheitsfeatures im Kernel. Die hatten sie aber schon immer, die hat niemand benutzt. Also du hast eine viel höhere Granularität, zum Beispiel was rechter angeht in so einem Windows-Kernel im Vergleich zum Beispiel zu einem Linux-Kernel. Kannst du halt einfach sagen, okay, dieser Benutzer hat diesen Prozess ausgeführt, aber das heißt noch lange nicht, dass er den auch debuggen darf. So eine Geschichte. Und dann die Compiler-Nummer. Dann haben sie natürlich auch an diesem rechte Konzept und an diesem Ausführungskonzept ein bisschen was geändert. Das sind Sachen, die erst in Vista kommen werden. Du hast sogenannte Low-Write-Prozesse. Das heißt, du kannst einem Prozess wie einem Browser zum Beispiel sagen, du lieber Browser, hast mal exakt gar keinen Grund, in meiner Registry-Rum zu fummeln, außer hier in deinem kleinen Zweig. Und wenn du das unbedingt machen willst, also zum Beispiel irgendein bescheuertes Browser-Plugin oder sowas da in der Registry-Rum vorwerfen will, dann muss man das halt explizit zulassen. Das ist aber auch nicht so gebaut. Also ich meine, es ist ja auch alles nicht so ganz einfach. Du kannst ja dann auch nicht ständig den User mit Pop-Ups nerven.
+
+00:26:56.153 --> 00:26:57.933
+<v SPEAKER_2>Genau, und der sagt sowieso immer Ja.
+
+00:26:57.953 --> 00:28:11.633
+<v SPEAKER_1>Genau, oder naja, oder er ist halt total genervt. Also das bringt es halt nicht. Das kann man schon alles relativ cool tunen. Aber es geht halt vor allem um die Benutzungsszenarien, die sie nun mal haben und die kannst du nicht ändern. So wie die ganzen Leute, die sich eine Suse im Laden kaufen und dann irgendwie als Root auf ihrer Kiste rumturnen. Und das Einzige, was ein Linux machen kann, ist eine große rote Bombe im Hintergrund hinmalen und sagen, äh, solltest du hier eigentlich nicht? Und naja, die machen den Browser auf und dann sehen sie den Hintergrund nicht mehr. Das Problem haben die auf der Microsoft-Seite ja genauso. Es gibt einfach Situationen, du administrierst eine Kiste, bist natürlich als administrativer User angemeldet, weil das macht überhaupt keinen Sinn, das als jemand anderes zu machen. Und führst dann deinen Browser aus, weil du mal schnell was nachgucken willst und wirst dann hops genommen. Das ist ja auch relativ doof. Das heißt, wir haben jetzt Mechanismen, die Prozesse ein bisschen einzuschränken. Und nicht nur, also die erhöhen wiederum die Granularität. Du hast halt nicht diese Regel, wenn es unter dem User-Kontext von irgendwem läuft, darf der auch alles, was der User darf. Zum Beispiel so ein normaler Prozess kann halt einfach nicht dahergehen und irgendwie auf dem Netzwerk rumquatschen und sagen, hier, ich bin doch hier der Hardman und ich kann hier sowieso alles. Darf er einfach nicht, kriegt er auf die Finger.
+
+00:28:12.393 --> 00:28:17.973
+<v SPEAKER_2>Wie feingliedrig ist das? Ist das auch so mit... Dieser Prozess darf jetzt überhaupt keine Dateien schreiben.
+
+00:28:18.193 --> 00:30:31.813
+<v SPEAKER_1>Ja, das ist extrem feingliedrig. Ich habe selber noch keinen Überblick, was da alles geht bei Vista, aber es ist doch sehr viel feingliedriger. Dann haben sie auf der Codesicherheitsseite einerseits für den normalen, also den nennen sie mittlerweile Native Code oder Unmanaged Code, halt die Geschichte. Auf der anderen Seite haben sie natürlich.NET gebaut. Und.NET ist einfach mal im Moment die sicherste Runtime-Umgebung, die wir so auf gängigen Betriebssystem-Plattformen haben. Also es ist ja vom Prinzip her eine Virtual Machine, ähnlich wie Java, aber sie haben extrem viel Zeit damit zugebracht zu gucken, was muss man bei.NET besser machen, was haben wir aus Java gelernt. Weil Java war der erste Push in Virtualisierung von Prozessausführungen, Sandboxing und so was. Die haben natürlich dafür, dass sie die ersten sind, auch einen relativ hohen Preis bezahlt. Und MS macht das ja gewöhnlich immer so. Die lehnen sich ja immer zurück, gucken sich an, was die anderen so machen. Und wenn sie dann von irgendwas überzeugt sind, schmeißen sie so lange Geld drauf, bis sie die besten sind. Das funktioniert auch ziemlich gut. Und genau so haben sie das mit dem.NET-Zeug auch gemacht. Und da geht die Granularität so weit, dass ein Stück Code, also eine Funktion zum Beispiel, kann sagen, das nennt sich Code Access Security. Diese Funktion kann zum Beispiel sagen, wer mich aufruft, muss folgende Rechte haben. Und das heißt, die Funktion kann zum Beispiel sagen, ich kann nur von einem Stück Software irgendwo aufgerufen werden, was folgende administrative Rechte seine Eigen nennt. Und das kann einen kompletten Call-Stack hochmachen. Das kostet natürlich ein bisschen Performance, das heißt, das macht man nicht ständig. Aber es geht. Das heißt, du kannst in dieser Funktion sozusagen als Entwickler sagen, wer diese Funktion aufruft, muss irgendwie in dem und dem Kontext laufen oder die und die Rechte haben oder sowas. Und dich dann nie wieder darum kümmern. Das heißt, heutzutage musst du das ja in einem Prozess machen. Der Prozess muss halt gucken, hat er oder sie die ganzen Rechte, blablabla, und dann die ganzen Funktionen ausführen. Oder du hast dann irgendwann mittendrin so ein Permission Denied Popup, weil das jemand halt vorher nicht gemacht hat.
+
+00:30:31.833 --> 00:30:35.133
+<v SPEAKER_2>Und dann von dem Programmierer halt in einem Design, wo man es nicht versteht.
+
+00:30:35.153 --> 00:30:35.553
+<v SPEAKER_1>Genau.
+
+00:30:35.993 --> 00:30:38.993
+<v SPEAKER_2>Und weiß ja gar ja, ob das Wort richtig programmiert wurde.
+
+00:30:39.013 --> 00:33:30.213
+<v SPEAKER_1>Richtig. Und da ist es halt so, dass die Funktion das machen kann. Und damit dir das halt eben nicht passiert, also damit dir eben nicht passiert, dass so ein, naja, sagen wir mal, du hast eine Textverarbeitung, und willst Dateien speichern. Und dann stellt es halt fest irgendwie, die Speichernfunktion, die ruft halt aus dem Framework was auf, was eine Datei aufmachen will. Und das Ding sagt hier Demand Write File. Und deine Software hat halt irgendwie diesen Demand nicht erfüllt. Und jetzt kannst du deinen Scheiß nicht speichern. Das ist natürlich auch kacke. Das heißt, man kann das schon irgendwie in dem Programm, in dem Code dann ansagen. Und beim Compiler, also für die Assembly, kann man sagen hier folgende Funktion, dann folgende Demand und sowas. Also es ist eigentlich schon eine ziemlich vollständige Geschichte. Und dann machen sie natürlich intern viel. Also wie du schon gesagt hast, kein Zustand, sondern ein Prozess. Und was macht man? Man fängt natürlich an und überlegt sich, okay, wie entwickelt man denn Software richtig? Das heißt, wir haben ja als allerersten Move von ihrem Security Push erstmal für ein bis drei Monate abhängig vom Projekt, also abhängig auch von der Größe, komplett ihre Softwareentwicklung auf Pause gesetzt und die Jungs alle zur Schule umgeschickt und Mädchen. Und das heißt, jeder Entwickler musste durch eine Secure Coding-Schulung. Ich weiß nicht, wie lange die gingen, aber die sind ziemlich intensiv. Also es gibt da auch das entsprechende Stück Buch von Microsoft Press, das heißt Writing Secure Code. Ein ziemlich anständiges Stück Buch. Was das alles noch mal so auseinandernimmt und so was, das haben die dann alle in die Hand bekommen. Und das mussten sie dann verinnerlichen. Haben sie natürlich mehr oder weniger gemacht. Das sind Menschen, sehr viele Menschen. Und die haben auch andere Interessen als sicheren Code zu schreiben. Aber es war zumindest ein Ansatz. Und dann das nächste Ding, was sie gemacht haben, und da haben sie ziemlich lange dran gearbeitet, ist etwas, das nennt sich SDL. Security Development Lifecycle. Oder Secure Development Lifecycle. Und das ist ein recht umfangreicher Prozess. Das ist einfach ein Produktionsprozess, den sie in ihre normale Softwareproduktion mit eingegliedert haben. Wo es einfach darum geht, sicherzustellen, dass der Kram sicher ist. Das heißt, ein Teil davon ist, dass jeder, jede Projektgruppe, die ein Stück Software schreibt, muss ein Thread Model selber machen. Das heißt, die müssen, die schreiben ja ihre eigene Software, die müssen sagen, was ist das Schlimmste, was uns so passieren kann, was haben wir dagegen gemacht? Können wir dagegen irgendwas machen? Es gibt natürlich Situationen, wo du sagst, das geht halt nicht. Kann ich nichts dagegen tun? Muss jemand anderes machen oder muss ich mitleben? Weil die wollen ja halt auch noch was anderes als nur sicher. Das Ding soll ja auch performen und das soll nicht irgendwie Milliarden von Gigabyte Hauptspeicher fressen. Ich meine, du hast ja noch andere Anforderungen, Features.
+
+00:33:34.053 --> 00:33:43.193
+<v SPEAKER_2>Ich wollte nochmal nachfragen zu dem.NET. Du hast jetzt.NET als besonders sicher gekennzeichnet, im Wesentlichen, weil es halt als Virtual Machine läuft.
+
+00:33:43.213 --> 00:33:49.713
+<v SPEAKER_1>Es wird versucht, besonders sicher zu sein. Also es ist vom Design her sehr auf Sicherheit ausgelegt.
+
+00:33:49.733 --> 00:33:55.053
+<v SPEAKER_2>Und wie viel Prozent der Anwendungen von Microsoft basieren auf.NET?
+
+00:33:55.073 --> 00:34:19.513
+<v SPEAKER_1>Im Moment noch nicht so viele. Das wird sich aber mit Vista massiv ändern. Man spricht dann eigentlich nicht mehr von.NET in dem Sinne, sondern man spricht von Managed Code. Es läuft natürlich auf einer.NET JVM, aber die Microsoft Termini sind halt Managed und Unmanaged Code. Unmanaged ist hier das Native, was wir hier so als normale Files irgendwie...
+
+00:34:19.533 --> 00:34:23.253
+<v SPEAKER_2>Also geben die auch schon eine gewisse sicherheitsorientierte Diktion an der Stelle.
+
+00:34:23.253 --> 00:34:49.493
+<v SPEAKER_1>Klar, wenn man so viel Arbeit da reingesteckt hat, kann man auch anfangen zu vermarkten. Das machen sie halt genau jetzt. Und wie gesagt, du musst halt die Entwickler auch überzeugen davon, also die externen Entwickler. Ist ja wichtig, weil wenn es keiner benutzt, ist halt auch doof. Ich denke, bei Vista wird ein sehr, sehr großer Time-Managed-Code dabei sein. Gute Frage, wahrscheinlich nicht.
+
+00:34:50.313 --> 00:34:52.873
+<v SPEAKER_2>Der hat noch zu viel Codebase.
+
+00:34:52.893 --> 00:35:04.233
+<v SPEAKER_1>Der ist auch ganz schön massiv. Dafür haben sie gerade diese Prozess-Einsperr-Technologien vorne und hinten. Das IE war da die treibende Kraft.
+
+00:35:04.913 --> 00:35:13.933
+<v SPEAKER_2>Also ist es nicht nur so, dass nur der Managed-Code eine Sicherheitsverbesserung darstellt, sondern auch im Unmanaged-Code haben sie vom Compiler nach oben eine ganze Menge verbessert?
+
+00:35:14.413 --> 00:35:47.333
+<v SPEAKER_1>Die nageln wirklich alles zu, was man als Quelle für Security-Probleme haben kann. Und versuchen es zumindest. Auf der anderen Seite haben sie natürlich ein riesen Problem mit der Komplexität. Das Ding ist halt riesig. Und du hast trotzdem Security-Issues damit. Selbst mit diesem ganzen Aufwand, sie kriegen es halt nicht perfekt. Niemand kriegt perfekte Sicherheit hin, schon gar nicht, wenn du ein Betriebssystem hast, was auch noch Leute benutzen sollen, was auch noch convenient sein soll.
+
+00:35:48.033 --> 00:35:51.093
+<v SPEAKER_2>Und was vor allem auch noch kompatibel sein soll, ist der bestehende Software.
+
+00:35:51.113 --> 00:36:26.433
+<v SPEAKER_1>Das ist gar nicht das Problem. Also die Kompatibilitätsseite ist schon relativ schön. Die bestehende Software ist halt tatsächlich da ein Problem, wo die Software total räudig ist. Also alles, was auf dem Grafiksoftware-Markt ist, ist halt dermaßen räudig, dass du keine Sicherheitsfeatures einbauen kannst, weil das geht halt einfach kaputt. Schönes Beispiel, ich habe mit einem Kunden, ich kann sicher nicht sagen wem, gesprochen, als dieser Compiler-Switch, der erste Compiler-Switch, da ein GS rauskam, von Microsoft, der halt diese Stack-Henneries, also diese Stack-Protection einbaut.
+
+00:36:27.033 --> 00:36:31.093
+<v SPEAKER_2>Also das Verhindern von Buffer-Overflows.
+
+00:36:31.113 --> 00:37:44.893
+<v SPEAKER_1>Aber nur auf dem Stack. Das heißt, was da passiert ist, zwischen dem Buffer und den wichtigen Daten, die du so hast, so Rücksprungadresse und sowas, wird halt so ein Kanadienvogel gesetzt, also ein zufälliger Wert, der beim Start des Programms halt zufällig gewählt wird. Und bevor die Funktion returnt, d.h. bevor sie irgendwie diesen potenziell überschriebenen Rücksprungadresse verwenden würde, was ja dann zur Kurtausführung des Angreifers kommt, wird halt geguckt, ob dieser zufällige Wert noch da ist. Das heißt deswegen Canary, weil die Reuter sind halt früher auch mit dem Kanadienvogel in den Bergbau gegangen. Und wenn das Ding nicht mehr jeep-jeep gemacht hat, sondern unten lag, dann sind sie rausgerannt. Genau. Und das heißt, wenn du damit ein Stück Software kompilierst, sollte eigentlich gar nichts passieren, es sei denn, irgendein Buffer läuft über. Soweit irgendwie klar. Das heißt, für ein Stück produktives Software, also ein Softwareprodukt, was du verkaufst, sollte da eigentlich keinen Unterschied machen. Du sagst halt einfach, mach den Canary an und fertig. Das kostet 0,0% Performance und das war's. Was passiert ist, der Mann erzählte mir dann, dass sie das in der Firma eingesetzt haben und 30% ihrer geschippten Software schlicht und greif nicht mehr lief.
+
+00:37:45.813 --> 00:37:46.813
+<v SPEAKER_2>Und warum?
+
+00:37:46.833 --> 00:37:55.613
+<v SPEAKER_1>Ganz einfach, weil da standardmäßig permanent Buffer übergelaufen sind, aber das halt nie aufgefallen ist, weil es halt andere Technologien gibt, wie Exception-Händler, die sowas abfangen können.
+
+00:37:56.633 --> 00:38:02.153
+<v SPEAKER_2>Da liegen so einige Zombies da draußen und ziehen durch die Straßen.
+
+00:38:02.173 --> 00:38:23.793
+<v SPEAKER_1>Fast alles, was da draußen liegt, sind solche Zombies. Ich meine, MS ist halt, deswegen meine ich, die sind halt wirklich fünf bis zehn Jahre vorne weg. Die wissen mittlerweile ungefähr, was in ihrem Code abgeht. Also der 2003er-Server ist komplett. Das ganze Produkt ist mit dem JS-Flag, also mit diesen Canaries übersetzt. Alles. Ich glaube, bis runter zum Solitär.
+
+00:38:23.813 --> 00:38:30.953
+<v SPEAKER_2>Und das hat eine gewisse Auswirkung auch auf die Performance, aber die muss dann halt einfach bezahlt werden.
+
+00:38:31.193 --> 00:38:46.373
+<v SPEAKER_1>Das hat vor allem eine Auswirkung auf die Qualität. Du kriegst halt extrem hochwertige Software im Vergleich zu dem Rest, der da draußen rumliegt. Und das kleine bisschen Performance. Ich meine, unsere 3 Gigahertz CPUs, die sitzen auch sowieso den ganzen Tag da und langweilen sich.
+
+00:38:46.393 --> 00:38:56.893
+<v SPEAKER_2>Die haben nichts zu tun, genau. Und ja, das heißt, die Security-Hacker können sich ein anderes Hobby suchen.
+
+00:39:00.433 --> 00:39:51.153
+<v SPEAKER_1>Nee, wie gesagt, also ich meine, der Rest ist halt noch so schrecklich. Das heißt, es ist halt nicht mehr der komplette Software-Markt, den man hacken kann, sondern der komplette Software-Markt minus Microsoft. Ist jetzt nicht so langweilig, weil es läuft dermaßen viel Kram auf Windows, das auch natürlich ein Windows-System weiterhin angreifen kann. Also es gibt natürlich auch Exploits, die um Data Execution Prevention herumkommen, diese Datenausführungsverhinderung. Das gibt es natürlich auch. Und natürlich ist da auch der sportliche Ehrgeiz. Was die, glaube ich, vor allem wollen, ist einfach, das dermaßen schwierig zu machen, stabile Angriffe zu schreiben, dass man halt keine Würmer mehr ständig an der Backe hat.
+
+00:39:51.173 --> 00:39:53.133
+<v SPEAKER_2>Dass zumindest nicht gleich ganze Netzwerke hops gehen.
+
+00:39:53.153 --> 00:40:04.913
+<v SPEAKER_1>Und mal ganz ehrlich, wenn du dich so umguckst, irgendwie das letzte Jahr, große, fette Windows-Wurmenprobleme. Nicht so richtig. Keine neuen Klassen.
+
+00:40:04.933 --> 00:40:25.333
+<v SPEAKER_2>Okay, also es ist auf jeden Fall erkennbar, dass Microsoft so ein bisschen den Zeitgeist aufgenommen hat und zumindest was tut. Wie ist das so mit den anderen großen Playern im Vergleich dazu? Welche Ist-Situation siehst du zum Beispiel im Linux-Bereich? Oder generell im Unix-Bereich?
+
+00:40:25.353 --> 00:40:34.413
+<v SPEAKER_1>Oh mein Gott, dann kriege ich doch weh. Nächstes Mal, wenn ich in eine Bar gehe, stehen da Horden mit Leuten, die mit Pinguinen nach mir werfen, wenn ich jetzt das Falsche sage.
+
+00:40:34.433 --> 00:40:37.093
+<v SPEAKER_2>Na ja, man darf die Realität nicht ausblenden.
+
+00:40:37.113 --> 00:41:25.473
+<v SPEAKER_1>Ja, also die Realität ist schon gerade im Linux-Bereich ganz schön schrecklich. Das ist wirklich so. Ich meine, das, was echt weh tut, sind einerseits von der Architektur. Du hast halt das Problem, es gibt Körner-Root oder Loser. Es gibt nichts anderes. Du kannst halt keine andere Granularität fahren. Und die andere Alternative ist halt irgendwie ganz rechts außen SE Linux, wo selbst Experten wochenlang da sitzen und SE an, SE aus, OK, SE an. Weiß ich gerade gar nicht. Das ist von der NSA, glaube ich, mal angetreten. Eine Linux-Entwicklung, das ist B2-compliant. Ah, genau.
+
+00:41:27.653 --> 00:41:28.853
+<v SPEAKER_2>Na, das klingt doch nach Vertrauen.
+
+00:41:29.373 --> 00:42:04.993
+<v SPEAKER_1>Das ist tatsächlich relativ gut, aber es ist halt nach Common Criteria gebaut und nach Militärvorgaben gebaut. Und da gibt es halt auch verschiedene Stufen. Und der SE ist halt auf einer Stufe mit trusted Solaris Pitbull-Geschichten. Und das ist halt die Hölle. Da musst du halt wirklich jeden Pups, den ein Stück Software machen kann, anhaken und sagen, das darf es und überhaupt. Und der managt sich zur Tode. Also ich habe noch nie jemanden gesehen, der einen SE irgendwo live am Laufen hatte und produktiv für irgendwas eingesetzt hat.
+
+00:42:05.333 --> 00:42:08.153
+<v SPEAKER_2>Okay, also es gibt theoretisch was, aber es ist nicht wirklich in Benutzung.
+
+00:42:08.853 --> 00:42:19.053
+<v SPEAKER_1>Es rennen Leute in der Welt rum, die sowas haben und die behaupten auch, dass die Server damit irgendwo im Internet stehen haben und total glücklich damit sind, aber die machen auch echt nichts anderes in ihrer Freizeit jetzt, dieses Teil zu managen.
+
+00:42:19.913 --> 00:42:30.193
+<v SPEAKER_2>Das heißt, du siehst auch keinen wirklichen Trend dahin, dass man drüber nachdenkt, dem Unix eine ähnliche Granularität auf Prozess-Ebene hinzuzufügen?
+
+00:42:30.213 --> 00:43:16.333
+<v SPEAKER_1>Nein, keinen. Das liegt auch wieder daran, dass es nicht so besonders viele Leute gibt, die sich anständig damit auskennen. Und dann musst du ja auch noch irgendwie gut entwickeln können. Und ich glaube, da hast du einfach... Einerseits mit dem Linux hast du halt diesen Float-Zirkus-Problem. Also das jetzt allen zu erklären, warum man jetzt den Körner architekturmäßig umbaut, ist halt mal ganz schön schwierig. Die BSD, also gerade OpenBSD, hat ja da innen, ich weiß nicht, seit sie sich damit massiv auseinandersetzen, haben da auch sehr viel gemacht. Theo ist eine sehr komische Persönlichkeit, aber der hat schon sehr über die Probleme seines Kindes danach gedacht, da ja auch die Nummer mit zu den CPU-Herstellern ging.
+
+00:43:16.593 --> 00:43:20.653
+<v SPEAKER_2>Theo de Raad, der Gründer des OpenBSD-Projektes.
+
+00:43:20.673 --> 00:43:23.833
+<v SPEAKER_1>Hat er das gegründet? Ich glaube, der ist einfach bloß Frontmann.
+
+00:43:27.713 --> 00:43:36.993
+<v SPEAKER_2>Für die Geschichte will ich jetzt auch nicht einstehen. Aber er ist auf jeden Fall die sichtbarste Persönlichkeit dort und vertritt das natürlich auch laut als.
+
+00:43:37.013 --> 00:44:06.493
+<v SPEAKER_1>Und die machen sich da schon relativ viele Gedanken. Aber naja, du stößt halt an Architekturgrenzen. Es gibt halt so ein paar Grundprinzipien, auf denen dieses Unix aufgebaut ist. Und wenn du die beibehältst, dann hast du bestimmte Probleme standardmäßig mit dem Paket. Das geht halt nicht anders. Da sehe ich nicht so viele Entwicklungen. Da sehe ich aber auch ganz ehrlich niemanden, der sich damit so richtig, zumindest öffentlich beschäftigt.
+
+00:44:06.513 --> 00:44:23.193
+<v SPEAKER_2>Zumindest gibt es ja Mono und.Gnus, die ja auf Basis der Ideen von dem.NET-Framework auch Anwendungsentwicklung betreiben und auch versuchen da Cross-Plattform-Entwicklungen zu machen. Die würden natürlich insofern von den grundlegenden Sicherheitsvorteilen schon mal Vorteile ziehen können.
+
+00:44:23.213 --> 00:45:51.593
+<v SPEAKER_1>Das ist genau der Move. Also ich muss sagen, diese.NET-Geschichte, es gibt die Common Language Specification, das ist das, was nicht.NET heißt, aber eigentlich.NET im Bauch hat. Das Ding offen zu machen und da auch keine Patentgeschichten ran zu hängen, war ein extrem smarter Move von MS Die scheinen auch immer mehr einzusehen, dass sie nicht für alles Geld haben müssen, weil sie es eigentlich nicht nötig haben. Also die neuen Compiler Visual Studio 2005 Express Edition kriegst du halt auch alle for free, kannst du komplett runterladen mit GUI und allem drum und dran. Das gibt es halt for free dazu. Und das Public zu machen und zu sagen, hier, ihr könnt das bauen und wir wollen das auch, dass das irgendwie auf einem Unix läuft und dass es da andere Virtual Machines als unsere gibt usw. War ein bewusster Move, weil sie einfach gesagt haben, pass auf, wir bauen jetzt irgendwie diese Tools um dort net rum und wir wollen natürlich, dass Leute dort net auf unserer Plattform fahren, weil wir das besonders gut können. Aber wir wollen nicht mehr das so machen, dass wir sagen, alle müssen unsere Plattform verwenden, um irgendwie cooles dort net zu haben, weil das setzt sich nicht durch. Auch eine Sache, die sie von Java gelernt haben. Sun war immer ziemlich restriktiv mit ihrem Java-Zeugs. Du konntest halt auch, du konntest weiter hergehen und einen JVM bauen. Aber wenn du die richtigen leckeren Sachen haben wolltest, dann musstest du halt auch mit Sun reden. Und Lizenz und tra la la. Und hat sie nicht gesehen.
+
+00:45:51.613 --> 00:45:52.933
+<v SPEAKER_2>Und die entsprechenden Schwierigkeiten.
+
+00:45:53.273 --> 00:46:00.313
+<v SPEAKER_1>Und die haben es halt einfach nicht mehr nötig. Und ich muss sagen, Mono rockt ganz schön. Das ist eine ziemlich gute Geschichte.
+
+00:46:00.333 --> 00:46:08.533
+<v SPEAKER_2>Was ist so von den Gerüchten zu halten, dass Microsoft viel OpenBSD-Code auch übernommen hat für bestimmte Teile des Betriebssystems?
+
+00:46:08.553 --> 00:46:39.153
+<v SPEAKER_1>Das wird zu NT-Vier-Zeiten sicherlich der Fall gewesen sein. Also, ich meine, als die Därme bekanntermaßen das mit dem Internet so ein bisschen verpennt, als sie dann irgendwie vor der Situation standen, wir brauchen jetzt einen IP-Stack, haben sie sich sicherlich nicht den Code geklaut, sondern haben sicherlich genau das gemacht, was sie heutzutage auch machen. Sie haben halt einfach Leute eingekauft, die davon Ahnung haben. Und Leute, die zu der Zeit von IP-Stacks Ahnung haben, haben halt irgendwie BSD-Stacks geschrieben. Das ist eine ziemlich klare Sache und deswegen denke ich auch, dass da viel BSD-Code......
+
+00:46:40.333 --> 00:46:42.593
+<v SPEAKER_2>drin ist, wenn noch nicht unbedingt der konkrete Code.
+
+00:46:42.613 --> 00:46:50.353
+<v SPEAKER_1>Aber heutzutage wäre es für Microsoft irgendwie ein großer Schritt zurück, fremden Code zu verwenden.
+
+00:46:50.373 --> 00:46:55.813
+<v SPEAKER_2>Ja, zumal auch ihr Betriebssystem intern wirklich auch sehr viel anders strukturiert ist, als das Unix ist.
+
+00:46:55.833 --> 00:47:45.973
+<v SPEAKER_1>Ja, das kann man aber auch. Für so abgegrenzte Sachen wie einen Stack oder sowas kann man das schon. Könnte man das theoretisch klauen. Du hast ja klare Interfaces zum Körner und kriegst irgendwo von einem Api-Core dein Raw-Frame und dann musst du das halt parsen und irgendwie das Date halten und deinen Kram machen. Das könnte man schon klauen, aber es würde ihnen einfach nichts bringen, weil sie so viel rein investiert haben in Code-Qualität. Das würde zum Beispiel schon voll aus ihrem STL-Lifecycle rausfallen, wenn sie da so große Code-Blöcke importieren würden. Das heißt, sie hätten überhaupt keine Kontrolle mehr darüber. Was da jetzt eigentlich drin ist, entspricht das ihren Security-Anforderungen, Qualitäts-Anforderungen, Performance-Anforderungen. Die könnten die Performance nicht anständig messen, weil sie nicht wissen, wie der Code sich verhält und so weiter. Das machen die einfach nicht mehr.
+
+00:47:47.593 --> 00:47:57.653
+<v SPEAKER_2>Okay, ich denke, wir haben jetzt mal diese Themenwelt ganz gut aufgerollt. Fällt dir noch irgendwas ein, was man zu dem Thema noch unbedingt sagen müsste?
+
+00:47:57.873 --> 00:48:23.953
+<v SPEAKER_1>Naja, das klingt ja jetzt vielleicht alle so, als wenn irgendwie Microsoft die Ultra Fortress baut. Sie geben sich schon Mühe. Aber das Ziel ist natürlich bei denen auch keine perfekte Sicherheit. Das Ziel ist halt irgendwie, die Hauptschwachstellen zuzudrehen. Und sie laufen jetzt halt in neue Probleme rein. Und das wird, was das Hacken angeht, schon sehr interessant.
+
+00:48:23.973 --> 00:48:25.293
+<v SPEAKER_2>Was ist da im Wesentlichen?
+
+00:48:25.313 --> 00:48:50.973
+<v SPEAKER_1>Na, ein Problem ist zum Beispiel, was ich sehe, wo ich noch nicht weiß, wie sich das etablieren wird. Also, die ganzen Features müssen natürlich benutzt werden. Also, diese Hochgranularität im Kern, zum Beispiel, gab es schon in NT4. Gab es schon Security-Talks, kann man schon alles Mögliche machen. Hat nie jemand benutzt. Wenn du dir jetzt anguckst, irgendwie ASPNET zum Beispiel, was so auf gehosteten Webseiten oder so läuft, gibt es...
+
+00:48:50.993 --> 00:48:55.773
+<v SPEAKER_2>Also, im Prinzip ist das.NET für Web-Server-Seiten, für Web-Anwendungen?
+
+00:48:55.793 --> 00:48:57.813
+<v SPEAKER_1>Genau, für ASP, also Active Server Pages.
+
+00:48:57.833 --> 00:48:59.513
+<v SPEAKER_2>Hat aber nichts mit.NET zu tun, sondern heißt das auch.
+
+00:49:00.233 --> 00:50:22.813
+<v SPEAKER_1>Das ist schon Virtual Machine und so weiter. Gab es eine Survey von Griechen, dessen Namen ich leider immer vergesse, der sich mit, also der gehört zu dieser OWASP, also Web Application Security Gruppen, und macht halt OWASPNET. Und der hat eine Survey gemacht und hat geguckt, wo denn die sinnvollen Security-Features eingesetzt werden bei großen Hostern. Man stellt sich raus, unsere oft gescholtener 1&1 war global die einzige Bude, die das komplett richtig implementiert hat. Da ist halt das Problem, also man muss diese Features einerseits kennen, andererseits richtig einsetzen, dazu brauchst du gutes Personal, was schwer zu finden ist. Und du musst sie natürlich auch managen können. Und so eine Sachen wie Code Access Security, wenn jetzt jede Funktion ihre eigenen Ansprüche an Rechte stellen kann, überleg mal, wie viele Funktionen so ein normales anständiges Stück Software hat. Die ganzen Abhängigkeiten, da zu sehen, das überhaupt zu managen, überhaupt sich das anzugucken und zu sagen, okay, welche Rechte braucht denn jetzt das ganze Stück Programm hier eigentlich, um zu laufen? Dann musst du entweder automatische Code-Analyse machen, vollständige, und gucken, wo sagt denn hier jemand Demand? Oder dann kriegst du eine Riesenliste raus oder sowas.
+
+00:50:22.833 --> 00:50:29.793
+<v SPEAKER_2>Kann man die Programme nicht in so einem Learning-Modus laufen lassen, wenn man sie entwickelt, sodass man immer, wenn ihm ein Recht fehlt, dass man dann sagt, ja, okay, alles klar.
+
+00:50:29.813 --> 00:50:32.973
+<v SPEAKER_1>Dafür gibt es aber noch keine Tools, die ich gesehen hätte.
+
+00:50:33.793 --> 00:50:37.513
+<v SPEAKER_2>Also es gibt noch nicht so ein Pop-up mit, das Programm will jetzt auf Datei schreiben. Darf es auf die verkehrte Datei schreiben?
+
+00:50:37.533 --> 00:51:00.913
+<v SPEAKER_1>Doch, doch, das Pop-up gibt es schon, aber wenn du 30.000 Funktionen hast, wie viele Pop-ups willst du wegklicken, bis du das Ding releasest? Also es ist halt auch so eine Geschichte. Die Leute haben natürlich weiterhin ihre Software-Release-Cycle und sowas. Das geht halt nicht so ohne Weiteres. Und das zu managen wird ziemlich schwierig. Und die Angriffe werden wahrscheinlich einfach auf höheren Leveln passieren.
+
+00:51:00.933 --> 00:51:24.353
+<v SPEAKER_2>Und sich vielleicht auch mehr auf die Endanwendungen konzentrieren. Ich meine, das ist ja eh schon zu sehen, dass eigentlich die ganzen Angriffe, die wir heute wirklich richtig stressen, das ist PHP als Einfallstor. Wir kennen fast keine PHP-Anwendungen, die nicht jede Woche mit neuen Security-Fixes daherkommt, weil es halt einfach an der Stelle überhaupt gar kein Verständnis für sicherheitsorientiertes Programmieren gibt.
+
+00:51:24.353 --> 00:52:47.893
+<v SPEAKER_1>Richtig. Aber das ist genau das Problem. Also, du kannst halt irgendwie Leute, es gibt diesen schönen Sozialdavinismus oder, nee, nicht Sozialdavinismus, wie heißt denn das? Den Softwareentwicklungsdavinismus möchte ich es fast nennen. Wenn du versuchst, irgendwas idiotensicher zu machen, dann beweist dir die Natur, dass sie noch coolere Idioten bauen kann. Also das ist halt mit Programmiersprachen genauso. Das kann man halt nicht verhindern. Aber die Angriffe werden schon mehr von den unteren Ebenen, also diesen Geschichten, wir greifen einen Server an, also einen Server-Prozess, so wie einen Web-Server-Prozess, finden, da waren Abilities drin. Das sieht man an solchen Sachen wie IES oder Apache. Das kommt aus der Mode, weil die Dinge sind halt irgendwie doch recht hochqualitativ. So ein Stück Browser ist ein Monster an Code. Und er kriegt wahrscheinlich jede Woche ein neues Feature, wenn du ein fleißiger Plugin-Installierer bist. Da hast du natürlich dann deine Probleme sofort mit installiert. Also den Trend sieht man auch an den Vulnerability-Reporting-Zahlen. So was pro Jahr reportet wird, wenn man sich das so mal in der Grafik anschaut, ist sehr interessant. Also da geht es dann ab 2002 halt massiv von den Servern weg auf sogenannte Non-Server-Anwendungen, also Client-Anwendungen.
+
+00:52:48.553 --> 00:53:07.553
+<v SPEAKER_2>Was ja auch noch so eine Bedrohung im Netz darstellt, sind diese ganzen Bot-Netzwerke, die ja für einen Großteil des Spam-Versandes und was weiß ich, für Angriffe noch alle zuständig sind. Glaubst du, dass da jetzt mit neuen OS-Releases von Microsoft zumindest ein bisschen Einhalt geboten werden kann?
+
+00:53:09.013 --> 00:54:09.833
+<v SPEAKER_1>Na, das ist ein bisschen schwierig, weil ich meine, die Geschichte ist, wenn du als Angreifer irgendwo einen Fuß drin hast, dann hast du den drin. Also stell dir mal ein größeres Unternehmensnetz vor. Oder ein Datacenter. Das sind ja so beliebte Angriffsziele, gerade für Bot-Netz, weil die sind anständig angeboten. Das sind Rechner, wo nicht jeden Tag jemand ransitzt. Wenn die weiter ihre Arbeit machen, guckt die Dinger nie wieder jemand an. Und wenn die natürlich eine Kiste nach der anderen auf den Vista oder 2003 Server ziehen, dann ist es natürlich trotzdem so, dass die Benutzer, die es auf diesem System gibt, natürlich in der Domain drin hängen. Der Angreifer ist sowieso schon lange Domain-Admin. Das heißt, er hat mit einem Klick irgendwie seinen Bot auch wieder drauf installiert. Da wäre ich mir nicht so sicher, dass das direkt sichtbare Auswirkungen hat. Das wird sicherlich Auswirkungen haben auf die Neuinfektionen.
+
+00:54:11.573 --> 00:54:13.633
+<v SPEAKER_2>Okay, es bleibt spannend.
+
+00:54:13.653 --> 00:54:14.433
+<v SPEAKER_1>Das auf jeden Fall.
+
+00:54:14.533 --> 00:54:59.433
+<v SPEAKER_2>Ja, FX, vielen Dank für den Einblick. Ich denke, jetzt haben wir es auch umfassend behandelt. Und damit endet Chaosradio Express, Ausgabe Nummer 22. Wenn ihr Fragen, Hinweise und sonstige Kommentare habt zu der Sendung, dann freuen wir uns wie immer über E-Mail an chaosradio.ccc.de oder vielleicht auch einen Audio-Kommentar gleich mit in die E-Mail reinschmeißen. Und wenn ihr wollt, könnt ihr auch unsere Telefonnummer benutzen. 018 01 99 33 22 99 55. Auch das erreicht uns und wir freuen uns über jedes Feedback. Ansonsten sagen wir erstmal Tschüss. Tschüss und bis bald auf diesem Kanal.

@@ -1,0 +1,1378 @@
+WEBVTT
+
+00:00:27.777 --> 00:01:46.177
+<v SPEAKER_1>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 141. Mein Name ist Tim Pritlove und ich begrüße alle zu einer neuen Ausgabe. Hier im tollen neuen Jahr 2010 hat eine Weile gedauert, bis hier mal eine Sendung an Start ging. Ich hatte schon eine ganze Reihe von Terminen, die allerdings alle nacheinander abgesagt wurden wegen Krankheit und anderen Sachen. Offensichtlich hat der Winter hier so einigen Haar zugesetzt. Aber nicht mal im heutigen Gast, den ich hier begrüßen möchte, das ist Fabian Yamaguchi. Und mit dir möchte ich reden heute über ein viel gewünschtes Thema, was schon ganz lange auf der Liste von allen ist, was mich allerdings immer so ein bisschen abgeschreckt hat. Nicht, weil ich es nicht für erwähnenswert halte, sondern weil es einfach einen gewissen Grad an Komplexität hat, wo man sich dann schon noch mal ein bisschen Gedanken machen möchte, wie man das dann eigentlich am besten adressiert. Kurz gesagt, es geht um TCP-IP, die Grundlage des Internets, wie wir es heute alle kennen und wie es uns voraussichtlich auch noch eine ganze Weile lang begleiten wird. Ja, Fabian, vielleicht mal zu dir. Du bist wie lange schon mit den Rechnern unterwegs?
+
+00:01:48.917 --> 00:02:02.017
+<v SPEAKER_2>Ja, ich habe mit zwölf angefangen, meine ersten kleinen Basic-Programme zu schreiben. Und seitdem habe ich nicht mehr wirklich die Finger davon lassen können.
+
+00:02:02.037 --> 00:02:05.617
+<v SPEAKER_1>Und was hat dich sozusagen zum Rechner getragen?
+
+00:02:11.457 --> 00:02:43.037
+<v SPEAKER_2>Ich hatte damals einen guten Freund, der hatte das Hobby, alle möglichen Dinge kaputt zu machen. Später hat er dann irgendwann irgendwelche lustigen kleinen Bomben in seinem Garten gebaut. Und damals hat er angefangen, ein bisschen im Schulnetz rumzuhacken. Und das fand ich total spannend und wollte dann unbedingt erstmal so mitmachen. Und das hat mich dann dazu gebracht, naja, nachdem wir dann einigen Ärger bekommen haben, hat man für uns eine Programmier-AG eingerichtet.
+
+00:02:44.417 --> 00:03:02.197
+<v SPEAKER_1>Damit ihr euch am Rechner in Ruhe beschäftigt und nicht anfängt, die Gärten anderer Leute zu sprengen. Das ist ja weise. Du hast ja so einen dualen Kulturhintergrund. Du hast in Deutschland aber auch in Japan Zeit verbracht. Wo habt ihr die Bomben steigen lassen?
+
+00:03:02.837 --> 00:03:06.117
+<v SPEAKER_2>Das war in Japan.
+
+00:03:06.137 --> 00:03:11.137
+<v SPEAKER_1>Ist denn dann so die japanische Gesellschaft empfällig für solche Tätigkeiten?
+
+00:03:11.157 --> 00:03:21.577
+<v SPEAKER_2>Ich glaube, so etwas wird nirgends gern gesehen. In Japan dann ganz besonders nicht. Aber naja, wir waren ja noch ganz klein und niedlich. Und da dachte man sich, naja.
+
+00:03:21.597 --> 00:03:23.137
+<v SPEAKER_1>Die wollen ja nichts Böses. Die wollen nur spielen.
+
+00:03:23.157 --> 00:03:26.957
+<v SPEAKER_2>Genau, die wollen nur spielen, so sieht's aus.
+
+00:03:26.977 --> 00:03:41.037
+<v SPEAKER_1>Ja, die mentale Grundeinstellung hast du dir offensichtlich erhalten. Denn du bist jetzt auch weiterhin im Computer-Business tätig. Konkret hat es dich mehr in die wirrende Security-Branche verschlagen.
+
+00:03:41.057 --> 00:04:04.237
+<v SPEAKER_2>Ja, das kann man eigentlich gar nicht ganz so sagen. Also ich studiere momentan noch und da mache ich eigentlich was ganz anderes mit Computern. Da mache ich Computer-Vision hauptsächlich. Nie, ja, quasi Objekterkennung, Objektverfolgung, solche Geschichten.
+
+00:04:04.257 --> 00:04:08.237
+<v SPEAKER_1>Ah okay, Vision im Sinne von der Computer-Site-Wahrnehmung.
+
+00:04:08.257 --> 00:04:16.357
+<v SPEAKER_2>Ja, aber in meiner Freizeit und in meinem Job mache ich Security.
+
+00:04:16.377 --> 00:04:28.657
+<v SPEAKER_1>Und das heißt, dass du dich mit so einigen Niederungen der Computerrealität ausführlich beschäftigst. Du hast ja auch schon auf dem Kongress Vorträge gehalten. Ich glaube, zwei waren es bisher, richtig?
+
+00:04:28.677 --> 00:04:29.077
+<v SPEAKER_2>Drei.
+
+00:04:29.097 --> 00:04:34.577
+<v SPEAKER_1>Drei schon? Die Themen kannst du auch gleich noch mal runterrasseln?
+
+00:04:34.597 --> 00:05:09.857
+<v SPEAKER_2>Das allererste war ein Vortrag zu Portscanning. Da hatten wir einen Portscanner gebaut, der eine ordentliche Überlastkontrolle implementieren soll. Dann ging es um TCP, Denial-of-Service-Angriffe, also Sicherheit in TCP, sozusagen. Diesmal war das eine wilde Mischung aus verschiedenen Lücken vom Linklayer über den Stack hoch bis zu Proxy-Servern.
+
+00:05:09.877 --> 00:06:43.277
+<v SPEAKER_1>Spätestens sollte jedem Hörer auch klar sein, warum ich der Meinung war, dass wir uns mal unterhalten sollten über dieses Thema. Du hast da schon so einen Einblick. Du hast da so ein bisschen die Ungnade der späten Geburt, wie wir auch gerade noch mal im Vorgespräch festgestellt haben. Und da das auch so ein weites Feld ist, haben wir jetzt beschlossen, hier nicht wieder, wie ich das so häufig mache, im Urschleim der Netzwerkgeschichte einzusteigen. Das wäre, glaube ich, auch ein bisschen übertrieben, sondern was wir mal versuchen wollen, ist so ein bisschen die IP-Realität aktueller Stand 2010 wiederzugeben, was man sozusagen wissen muss. Da gehört natürlich auch ein bisschen Geschichte dazu, aber auch ein bisschen Zukunft. Wenn so die Ura-Entwicklung des Internets, wie sich das alles mal so entwickelt hat und aus dem Murast gehoben hat, wenn denen das interessiert, der sei auch nochmal auf Ausgabe Nummer 100 von Chaosradio Express verwiesen, wo ich mich mit Hans Hübner so ein bisschen über Internetgeschichte und auch Hackergeschichte unterhalten habe. Mehr so ein kultureller Rückblick, aber das spielt dort halt auch noch eine Rolle. Ja, TCPIP, das weiß jeder, ist die Grundlage aller Kommunikation im Internet. Allerdings ist das eben so ein beliebtes Buch mit sieben Siegeln. Jeder verwendet es, keiner weiß so richtig Bescheid, auch wenn es natürlich eine Menge Leute gibt, die so wahrscheinlich ein gepflegtes Halbwissen aufbringen. Was ist denn so dein One-Liner, um irgendwie TCPIP zu erklären?
+
+00:06:43.297 --> 00:06:44.617
+<v SPEAKER_2>Mein One-Liner?
+
+00:06:44.637 --> 00:06:48.997
+<v SPEAKER_1>Genau, du hast doch mal das Internet in einem Satz zu sagen.
+
+00:06:49.017 --> 00:06:53.377
+<v SPEAKER_2>Oh nein, ich wollte gerade sagen, TCPIP ist das Internet, aber wenn du jetzt sagst, hast du das Internet.
+
+00:06:53.397 --> 00:07:29.577
+<v SPEAKER_1>Das ist auch ein Wunder. Da habe ich dich sozusagen gelinkt. Na gut, aber es geht um das Verbinden von Computern. Genau. Kurz gesagt, TCPIP ist eine Sammlung von Protokollen oder wie man so schön sagt, eine Protokollsuit. Wo fängt man da an? Was muss man wissen? Wovon muss man ausgehen? Was ist sozusagen die Essenz oder der beste Weg, sich diesem komplexen Thema zu nähern?
+
+00:07:31.177 --> 00:08:38.457
+<v SPEAKER_2>Also ich würde sagen, man sollte vielleicht davon ausgehen, sich zu fragen, warum man denn eine Technologie gebraucht hat, also wie sah es aus und warum brauchte man etwas, um die Situation jetzt mit einer Technologie zu regeln? Und die Situation, von der wir ausgehen, sind verschiedene Datennetze, in denen man es irgendwie erreicht hat, Bits von einem Host zu einem anderen zu bewegen. Und jetzt möchte man diese vielen Datennetze endlich miteinander verbinden, also man möchte ein Netz der Netze, ein Internet. Und dazu braucht man einen kleinsten gemeinsamen Nenner, also so eine Art Sprache, die sie alle verstehen, mit der sich die einzelnen Netze austauschen können. Und das ist letztendlich das, was wir mit TCP IP bekommen haben. Also das ist hauptsächlich der IP-Aspekt.
+
+00:08:38.477 --> 00:09:08.057
+<v SPEAKER_1>Jetzt gibt es ja dieses schöne Bild mit dem, also wenn man so die Bücher aufschlägt, dann das erste, was man um die Ohren gehauen bekommt, ist so das Osi-Schichtenmodell, was ja so angeblich Pate steht für alles. Grundsätzlich gibt es also so dieses Bild der Ebenenabstraktion, sprich wenn zwei Computer miteinander reden wollen, dann tun sie das über verschiedene Layer. Wo fängt denn das an?
+
+00:09:08.077 --> 00:09:56.657
+<v SPEAKER_2>Ja, das ist eigentlich eine ganz spannende Sache. Dieses ISO-OSI-Modell ist ja wirklich nur eine Referenz. Also bei jedem Protokoll-Stack, den man dann bekommt, sieht das dann auch wieder ein bisschen anders aus, und das ist bei TCPIP ähnlich, aber es fängt natürlich prinzipiell erst mal damit an, sich die Frage zu stellen, wie kann ich denn elektrisch überhaupt die Signale von einem Ort zum nächsten bringen. Das ist der sogenannte Physical Layer, also wo man sich mit diesen elektrotechnischen Dingen auseinandersetzt. Gleich darüber fängt man dann an, diese Bits und Bytes, die man jetzt versenden kann, in logische Einheiten zu verpacken. Das ist dann der sogenannte Link Layer, das ist da, wo heute in den meisten Netzen das Ethernet lebt.
+
+00:09:57.237 --> 00:10:23.077
+<v SPEAKER_1>Also, Physical Layer muss man kurz zu sagen, ist das Kabel, der Strom oder die Luft, wenn man von WLAN redet, also da, wo es wirklich angeht. Das heißt, das ist eigentlich das Einzige, auf das man so direkt keinen Einfluss hat, das findet einfach statt. Und das ist auch nicht unbedingt Teil der TCP-IP-Welt, sondern das ist ja eigentlich außen vor. Das existiert da und man muss bloß damit klarkommen.
+
+00:10:23.477 --> 00:11:10.957
+<v SPEAKER_2>Also man hat diese zwei großen Blöcke. Man hat einmal den Physical und den Linklayer, den man eigentlich zusammenfassen kann, zu einem miteinander harmonisierenden Teil und dann eben den Teil darüber, IP und TCP, die man ja deswegen auch gemeinsam nennt, weil sie eben auch aufeinander abgestimmt sind. Ja und IP müsste jetzt nicht unbedingt auf dem Ethernet-Linklayer laufen, da gibt es viele andere Technologien, die man da drunter einsetzen könnte. Oh, wenn das ja häufig ist. Momentan, die ganzen LANs, das ist schon alles Ethernet.
+
+00:11:10.977 --> 00:11:13.437
+<v SPEAKER_1>Weil das so ein Erfolg gehabt hat.
+
+00:11:13.457 --> 00:11:15.437
+<v SPEAKER_2>Hat gut funktioniert.
+
+00:11:15.457 --> 00:11:56.377
+<v SPEAKER_1>Kann man nicht anders sagen. Ja, Ethernet ist in seiner Zeit so von Xerox geschenkt worden, wie eigentlich alles. Ich zitiere aber ganz gerne, dass das schöne Unix-Programm user BinForgeun was einem immer so lustige Sprüche und Erkenntnisse der Vergangenheit vorwirft, wenn man es aufruft, hatte dann unter anderem diesen Satz, Xerox does it again and again and again and again. Das ist so die die verkannteste Firma irgendwie der der Frühzeit eigentlich, weil sie eigentlich so viele Dinge pioniert hat und kaum in der Lage war, irgendetwas wirklich langfristig auch selber zu ihrem eigenen Erfolg zu nutzen.
+
+00:11:57.337 --> 00:11:58.957
+<v SPEAKER_2>Haben die nicht auch die Maus entwickelt?
+
+00:11:59.697 --> 00:13:13.397
+<v SPEAKER_1>Also diese Sachen. Den Kopierer und so. Beim Kopierer haben sie es ja irgendwie geschafft. Nicht unbedingt in unserem Sprachraum. Xerox ist ja im Englischen da durchaus der gängige Begriff. Aber unter anderem haben sie halt auch dieses Internet erfunden, was visionär genug war, damals schon mit relativ großen Adressierungsräumen daherzukommen. Nicht immer gelingt es den Leuten, die Popularität der eigenen Entwicklung ausreichend vorrauszusehen. Das werden wir auch noch feststellen, ist ja auch bei RP der Fall. Das heißt, die Protokollfamilie, die versucht, Daten zu übertragen über physikalische Netze, wie auch immer sie sein würden, kabelgebunden, nicht kabelgebunden, stoßen auf diese physikalischen Medien. Und diese erste Abstraktionsschicht, die man sieht, stellt sozusagen die Verbindung her zwischen Software und Hardware. Und deswegen heißt sie Linklayer. Wie ist die denn beschaffen, diese Ebene? Was sieht denn die Software oder was schafft ein Betriebssystem üblicherweise für eine Abstraktion dazu?
+
+00:13:13.417 --> 00:13:54.337
+<v SPEAKER_2>Na ja, die Abstraktion, man möchte eigentlich nur von dem speziellen Gerät weg abstrahieren. Man möchte am Ende die Möglichkeit haben, irgendwie Rahmen von Bytes, also Packungen von Bytes zu verschicken. Und das ist das, was man nach oben bereitstellen muss. Zur Hardware hin muss man sich jetzt natürlich mit den ganzen Details der Hardware beschäftigen. Was tut denn die Hardware, wenn so ein Frame ankommt? Wie erkennen wir, ob ein Frame zu Ende ist?
+
+00:13:54.337 --> 00:13:58.657
+<v SPEAKER_1>Also Frame ist so der gängige Begriff für dieses Datenpaket auf dieser Ebene.
+
+00:13:58.857 --> 00:14:14.737
+<v SPEAKER_2>Genau, das ist vielleicht auch ein bisschen fett. Man sagt ab IP Paket und vorher sagt man Frame, also Rahmen. Das hat sich ein kleines bisschen so ergeben.
+
+00:14:15.677 --> 00:14:34.737
+<v SPEAKER_1>Das ist auch wichtig zu verstehen. Man kann ja auch sehr schnell klarmachen, von welcher Ebene man redet, weil man das eben explizit unterscheidet. Paket ist im Prinzip schon mal so ein versatilerer Ausdruck. Das soll wahrscheinlich sehr viel weiter reisen, während er so ein Frame, sein Medium eigentlich nicht verlässt.
+
+00:14:35.017 --> 00:14:36.397
+<v SPEAKER_2>Ja, das könnte man so sagen.
+
+00:14:36.997 --> 00:14:47.257
+<v SPEAKER_1>Das heißt, wie sehe ich das? Ich habe dieses Medium und kann sagen, hier ist ein Ethernet. Wirf doch da mal einen Rahmen drauf, einen Frame.
+
+00:14:47.277 --> 00:15:15.697
+<v SPEAKER_2>Genau. Dieser Frame besitzt erstmal natürlich, wie bei Paketen auch, einen Header, der so ein bisschen die Meta-Informationen enthält. Also sprich, wo soll denn das Ding überhaupt hin? Und von wem ist es denn? Und es gibt auch noch ein Längenfeld, wie lang ist das Ding? Aber das wird eigentlich im Ethernet nicht mehr wirklich verwendet. Na ja, warum gehe ich eigentlich immer von Ethernet aus?
+
+00:15:16.817 --> 00:15:26.637
+<v SPEAKER_1>Na gut, ich meine, man kann ja auf jeden Fall sagen, dass eine Ethernet zu betonen ist ja nicht unangemessen, weil es eben so häufig verwendet wird. Also das Absenderadresse und Zieladresse.
+
+00:15:26.657 --> 00:15:27.017
+<v SPEAKER_2>Genau.
+
+00:15:27.037 --> 00:15:30.817
+<v SPEAKER_1>Und was für ein Format liegt diese Adresse vor?
+
+00:15:30.837 --> 00:15:58.397
+<v SPEAKER_2>Na ja, das sind Hardware-Adressen. Also sprich, jeder Adapter bekommt so eine Adresse, wenn er gebaut wird, geboren wird. Und diese Adresse ist wirklich dann eindeutig für den Adapter. Und man sagt jetzt wirklich, so, ich möchte jetzt gerne mit dem Adapter da drüben reden. Und entsprechend wird das Netz dann versuchen, den Frame eben an diesen Adapter zu bringen.
+
+00:15:58.757 --> 00:16:06.137
+<v SPEAKER_1>Das heißt, jedes Ethernet-Interface, jedes WLAN-Interface kommt sozusagen mit seiner Adresse schon eingebaut.
+
+00:16:06.157 --> 00:16:06.357
+<v SPEAKER_2>Genau.
+
+00:16:06.477 --> 00:16:12.677
+<v SPEAKER_1>Die ist da reingestanzt und die bekommt ja quasi vom Hersteller schon direkt hinein indiziert.
+
+00:16:12.697 --> 00:16:13.217
+<v SPEAKER_2>Genau.
+
+00:16:13.237 --> 00:16:29.017
+<v SPEAKER_1>Das heißt, es gibt einen Teil, der den Hersteller auch identifiziert. Und einen Teil, den der Hersteller dann einfach selber hochzählen kann, damit das nicht jemand anderes für ihn tut. Genau. Das heißt, man sieht auch jedem Gerät immer sofort an, wer es ist. Aber es gibt jetzt auch keinen Schutz, sich irgendwie als jemand anderes auszugeben.
+
+00:16:29.037 --> 00:16:42.677
+<v SPEAKER_2>Doch, doch. Also man kann natürlich die MAC-Adresse auch ändern, wie man möchte. Was man ja auch häufig tun muss, wenn ein Netz eben so konfiguriert ist, dass nur bestimmte MAC-Adressen.
+
+00:16:42.697 --> 00:16:44.657
+<v SPEAKER_1>MAC-Adresse hat nichts mit Macintosh zu tun?
+
+00:16:44.677 --> 00:18:07.037
+<v SPEAKER_2>Nee, gar nichts. Das ist Medium Access Control. Naja, das ist heute im heutigen Ethernet nicht mehr so wichtig, aber im WLAN zum Beispiel. Also es passiert ja nun ständig, dass mehrere Parteien das Medium auf einmal benutzen wollen. Und gerade im WLAN kann man sich ja vorstellen, das ist natürlich problematisch. Also wenn die da auf der gleichen Frequenz funken, dann kollidieren die Rahmen, dann sind die Daten ja sozusagen vernichtet. Das heißt, man muss sich irgendwie überlegen, wie man es bewerkstelligt, dass zu jedem Zeitpunkt immer nur eine Partei sendet und dass die Parteien sich miteinander in irgendeiner Form absprechen, wer jetzt wann das Medium verwenden darf. Und das ist die sogenannte Medium Access Control. Und daher kommt eben auch dieser Name MAC. Heutzutage im Internet ist das nicht mehr... Also früher war das ein sehr, sehr wichtiger Teil der Ethernet-Specification, das sogenannte CSMA-CD. Heute ist das nicht mehr so wichtig, weil wir eigentlich Full Duplex-Links haben, das bedeutet, jeder hat in jeder Richtung einen dedizierten Link. Das heißt, er kann eigentlich immer auf diesem Link senden.
+
+00:18:07.057 --> 00:18:09.977
+<v SPEAKER_1>Das heißt, es kann keine Kollision in der Pakete mehr geben?
+
+00:18:09.997 --> 00:18:22.817
+<v SPEAKER_2>Genau. Man sagt, es gibt keine Kollisionsdomäne mehr, so richtig. Und aus diesem Grund muss man sich auch nicht mit anderen absprechen, wann man sein Stück Medium verwenden darf, weil es eben einem gehört.
+
+00:18:22.837 --> 00:18:24.457
+<v SPEAKER_1>Gut, aber bei WLAN ist das durchaus noch der Fall.
+
+00:18:24.477 --> 00:18:26.217
+<v SPEAKER_2>Bei WLAN ist es durchaus noch der Fall.
+
+00:18:26.237 --> 00:19:29.737
+<v SPEAKER_1>Und wenn ich irgendwie noch einen alten Computer habe, wo noch das Internet kein bidirektioneller geswitchter Cat-5-Stecker ist, sondern halt noch das alte Wackel-Koaxialkabel, damit durfte ich mich früher auch noch mit rumschlagen, ja, da war Kollisionen vorprogrammiert sozusagen. Okay, das heißt, also dieser MAC-Bereich definiert sozusagen Zugriff auf das physikalische Medium und bietet sozusagen auch gleich Strategien, wie man mit solchen Kollisionen umgeht, wenn sie vorhanden sind. Das hängt dann immer sehr von der Architektur ab. Manche Architekturen schließen das ja sozusagen von vornherein aus. Was weiß ich, so Tokenringen zum Beispiel, heute überhaupt nicht mehr populär. Das war ja dann immer gleich so ein Busverkehr, wer nicht das Token hat, der darf auch gar nicht senden. Während Ethernet da eigentlich total ketzerisch rangegangen ist und gesagt hat, sendet mal, das wird schon in den meisten Fällen irgendwie gut gehen.
+
+00:19:29.757 --> 00:19:32.617
+<v SPEAKER_2>Ansonsten probieren wir es halt nochmal und warten dazwischen.
+
+00:19:32.637 --> 00:20:03.077
+<v SPEAKER_1>Hauptsache, wir kommen damit klar. Ich finde das eine ganz interessante technische Entwicklung, weil man natürlich, als das mit dem ganzen Networking sich so entwickelt hat, da war ja überhaupt nicht klar, welche Strategie jetzt die beste ist. Und da einfach zu sagen, geht schon irgendwie. Hauptsache, wir kommen wieder irgendwie zurück, wo wir angefangen haben, um wieder neu anzufangen, könnte man ja auch sagen, okay, das könnte ja das totale Chaos führen.
+
+00:20:03.097 --> 00:20:25.977
+<v SPEAKER_2>Das Lustige ist ja, dass man das Gleiche bei IP dann auch nochmal gemacht hat. Also IP ist ja auch der sogenannte Best-Effort-Ansatz, dass man einfach sagt, naja, wir senden mal und hoffen mal, dass es ankommt. So in etwa. Da gibt es ja andere Technologien, wo man wirklich auf dieser Ebene schon zugesichert bekommt, das Paket wird auch tatsächlich ankommen. Aber man hat sich dann eben doch für diese Best-Effort-Variante entschieden.
+
+00:20:25.997 --> 00:21:28.457
+<v SPEAKER_1>Aber bleiben wir vorher nochmal bei diesem Link-Level. Und vielleicht auch bei Ethernet im Besonderen, weil es einfach so eine große Wichtigkeit hat. Das heißt, wenn man, ich meine, am Ethernet sind sie ja alle angeschlossen. Heutzutage hat man irgendwie da seine Switche stehen. Jeder hat irgendwie so ein Kabel hinten im Rechner. Und das geht dann halt hin. Alternativ bei WLAN hat man irgendwie die Base Station. Da ist das Kabel halt die Luft. Aber auch da gibt es irgendwie diese Verbindung. Und jetzt muss da irgendwie kommuniziert werden. Und vor allem der Sinn der ganzen Geschichte ist ja, Pakete von A nach B zu sehen. Und jetzt muss man ja erstmal wissen, wo ist eigentlich B? Und dazu braucht man natürlich auch eine Adresse. Man muss ja irgendwie erstmal wissen, was ist. Und wenn jetzt die Adresse vom Hersteller da irgendwie fest eingebaut ist, dann steht die ja erstmal nirgendswo drin. So wenn ich jetzt irgendwie von meinem Laptop auf meinem Desktop-Computer Paket senden will, dann weiß er ja nicht, welche Adresse das ist, weiß er nicht, was der Hersteller da eingebaut hat. Wie löst sich das?
+
+00:21:29.057 --> 00:21:57.777
+<v SPEAKER_2>Ja, also es gibt da das sogenannte Address Resolution-Protokoll. Also es gibt nochmal ein Protokoll, was dafür zukommt, dass man zuständig ist, einem diese Adressen zu vermitteln. Und zwar, also es übernimmt das Übersetzen zwischen dieser Hardware-Adresse, also dieser Medium-Access-Adresse, MAC-Adresse und dann eben einer IP-Adresse. Also auf IP sind wir jetzt noch nicht weiter eingegangen.
+
+00:21:57.797 --> 00:22:01.557
+<v SPEAKER_1>Hören wir das erstmal außen vor, weil das gilt ja im Prinzip auch für andere Protokoll-Familien.
+
+00:22:01.577 --> 00:22:27.257
+<v SPEAKER_2>Genau, also prinzipiell kann man sagen, es gibt diese Hardware-Adresse und es gibt eine logische Adresse, diese IP-Adresse. Und dieses Address Resolution-Protokoll ist ein Verfahren, um zwischen den einzelnen Parteien die Informationen auszutauschen, wo denn jetzt der Host mit der IP-Adresse so und so ist, also sprich, welche Hardware-Adresse er hat.
+
+00:22:29.357 --> 00:22:47.297
+<v SPEAKER_1>Das heißt, man kann quasi auf dem Medium fragen, für meine Protokollfamilie, wo ich folgendes Adressschema einsetze, wüsste ich jetzt ganz gerne, in welche tatsächliche Hardware-Adresse sich das übersetzt. Und dann sendet man das sozusagen, man schreit es einfach auf den Flur?
+
+00:22:47.317 --> 00:22:49.377
+<v SPEAKER_2>Genau, auf das Ether.
+
+00:22:49.397 --> 00:22:59.157
+<v SPEAKER_1>Auf das Ether, genau, in den Ether hinein. Und dann antwortet wer?
+
+00:22:59.177 --> 00:23:35.017
+<v SPEAKER_2>Also es soll natürlich derjenige, der diese logische Adresse hat, der soll antworten. Das Problem an der Sache ist natürlich, es darf prinzipiell jeder antworten. Und naja, das ist ein gängiges Security-Problem gewesen. Und eigentlich ist es das auch immer noch. Also es gibt natürlich jetzt verschiedene Lösungen dafür. Aber man findet doch noch viele Netze, bei denen man halt einfach, wenn jemand fragt, wer ist das und das, dann sagt man einfach, ich bin das. Und schon ist man das.
+
+00:23:35.037 --> 00:23:37.197
+<v SPEAKER_1>Das basiert also auf Vertrauen sozusagen.
+
+00:23:37.217 --> 00:23:55.117
+<v SPEAKER_2>Genau, kann man schon sagen. Also es gibt da keine Art der Authentifizierung oder sowas. Das ist wirklich noch eins von diesen Urschleimprotokollen, die auch so designed sind, dass man sich sagt, naja, die Leute sind schon gutartig. Man antwortet halt, wenn man die Adresse hat.
+
+00:23:55.137 --> 00:23:55.797
+<v SPEAKER_1>Die wollen nur spielen.
+
+00:24:00.637 --> 00:24:10.897
+<v SPEAKER_2>Ja, und dann tritt natürlich die Situation ein, wo man Pakete bekommt, die man nicht bekommen sollte. Und das ist natürlich immer sehr praktisch, wenn da irgendwie unverschlüsselte Passwörter verschickt werden oder so.
+
+00:24:13.117 --> 00:24:28.637
+<v SPEAKER_1>Wobei es ja auch ein Feature sein kann. Also es gibt ja auch so, was weiß ich, so Failover-Strategien. Ich greife jetzt ein bisschen voraus. Aber so, was weiß ich, wenn der eine Server ausfällt und ein anderer ist so auf Standby, dann hat er eben auch die Möglichkeit zu sagen, ich bin jetzt der.
+
+00:24:29.077 --> 00:24:57.477
+<v SPEAKER_2>Ja, man kann viel damit machen. Ich habe mal so ein Buch gelesen, da ging es um Angriffe von innen. Und da hieß es, na ja, der Angreifer könnte ja jetzt genau das tun, also sich als jemand anders ausgeben und dann quasi der Computer sein zwischen zwei anderen, na ja, aber das kann man ja als Administrator dann auch. Das ist vielleicht sogar ganz hilfreich, wenn man verstehen will, was der Angreifer in diesem Netz denn gerade so tut.
+
+00:24:57.497 --> 00:25:51.137
+<v SPEAKER_1>Und vielleicht auch insofern gar nicht so schlimm, als dass man eben schon mal grundsätzlich eigentlich auch immer davon ausgehen muss, was jetzt die Sicherheit betrifft, schon auf der niedrigsten Ebene kann im Prinzip schon alles anders sein. Also es gibt da gar keine vorgegaukelte Sicherheit, sondern wenn du irgendwas sicherstellen musst und das irgendwie für dich auch relevant ist, dass das sichergestellt wird, dann musst du einfach auch schon bei deinem allernächsten Partner davon ausgehen, dass du hier betrogen wirst. Das ist ja eigentlich auch eine interessante Lehre, die man da schon ziehen kann. Gut, das heißt aber, in der Regel antwortet der Host auch selber. Das könnte ja auch jemand anders antworten. Das findet so in der Regel nicht statt.
+
+00:25:51.157 --> 00:25:57.317
+<v SPEAKER_2>Also bei ARP, beim Address Resolution Protokoll, ist es tatsächlich so, dass der Host selbst antwortet.
+
+00:25:57.897 --> 00:26:38.817
+<v SPEAKER_1>Okay, zumindest ist es so gedacht. Das heißt, durch die Antwort, er sagt dann einfach, ja ich bin der und der und dann steht ja ja sozusagen seine Hardware-Adresse zwangsläufig mit drin, weil in jedem Frame immer auch die Absender-Adresse drin steht. Und er antwortet einfach dem, der ihn gefragt hat. Das heißt, das ist sozusagen die generische Methode, wie man das herausfindet. Und das funktioniert für TCP IP genauso wie für andere Protokollfamilien. Und das ist eigentlich auch schon, was der Linkler ja so macht. Der ist ja eigentlich nicht besonders intelligent. Oder bietet er auch irgendwelche anderen Dienstleistungen?
+
+00:26:38.837 --> 00:26:54.877
+<v SPEAKER_2>Also man macht noch eine Flusskontrolle. Das bedeutet, man kümmert sich schon darum, dass die Partei, die sendet, die Partei, die empfangen soll, nicht überschwemmt mit Daten. Das ist eine Sache.
+
+00:26:54.897 --> 00:26:55.777
+<v SPEAKER_1>Wie stellt man das denn sicher?
+
+00:26:58.577 --> 00:27:39.937
+<v SPEAKER_2>Man braucht natürlich eine Rückmeldung. Ich weiß gar nicht, im klassischen Ethernet gab es das, glaube ich. Aber ich weiß gar nicht, ob es das heute noch gibt. Es gibt diese Flusskontrolle später nochmal bei TCP. Vielleicht wollen wir sie da nochmal genauer betrachten. Der wichtige Begriff an der Stelle ist Sliding-Window-Technik. Man hat so eine Art Feedback-Loop, wo man sagt, wir schicken jetzt erstmal nur so viel. Und wenn dann das Signal vom Receiver kommt, bei dem man sagt, mehr kann ich nicht.
+
+00:27:39.957 --> 00:27:42.857
+<v SPEAKER_1>Das gibt es auch schon auf dieser Frame-Ebene.
+
+00:27:42.877 --> 00:27:57.897
+<v SPEAKER_2>Das gibt es auch schon da. Wird das auch genutzt? Ja, manchmal. Ich glaube, im Gigabit-Ethernet, ich müsste noch mal nachgucken da. Aber es gibt es tatsächlich auch schon auf dem Link-Layer.
+
+00:28:00.377 --> 00:28:50.037
+<v SPEAKER_1>So, jetzt kommen wir sozusagen an einen Punkt an, wo wir feststellen, wir haben hier ein Medium, das kann die Daten schon mal zwischen den Rechnern vermitteln. Im Prinzip, um ein Netzwerk herzustellen, ist das ja eigentlich alles, was man braucht. Also man kann Daten irgendwie austauschen und indem man jetzt weitere Schichten nur hinzufügt, fügt man dem ganzen ja eigentlich nur noch Komfort hinzu. Aber so frühe Netzwerke, ich habe mich damit jetzt auch nicht so beschäftigt, aber im Prinzip, wenn man sich vorstellt, irgendwann gab es mal ein paar Computer und dann hat man angefangen, Daten untereinander auszutauschen, da gab es wahrscheinlich nicht sehr viel mehr als diesen Link-Layer. Also man hat halt einfach dem anderen was geschickt und dann war das halt so. Wie geht jetzt TCP-IP daran?
+
+00:28:50.057 --> 00:28:50.957
+<v SPEAKER_2>Wir haben noch was vergessen.
+
+00:28:50.977 --> 00:28:51.497
+<v SPEAKER_1>Oh ja, bitte.
+
+00:28:51.577 --> 00:29:18.857
+<v SPEAKER_2>Ja, die Fehlerkontrolle haben wir noch vergessen. Sprich, was man auf der Ebene auch zum ersten Mal tut, ist Prüf-Summen einführen, um zu verifizieren, ob das, was angekommen ist, dann auch tatsächlich das ist, was gesendet wurde. Denn die Bits könnten ja auf dem Kanal kippen. Also sie könnten ja durch irgendwelches Rauschen verändert werden. Und auf dem Link-Layer macht man häufig auch schon den Raw-Control.
+
+00:29:18.877 --> 00:29:19.557
+<v SPEAKER_1>Das heißt?
+
+00:29:19.577 --> 00:29:44.237
+<v SPEAKER_2>Das heißt, man berechnet über den Frame eine Prüf-Summe. Die wird mitgeschickt und am anderen Ende dann ausgepackt. Und dann überprüft der Receiver, ob denn die Prüf-Summe auch zu dem Frame passt. Das ist CSC32. Also, ja, was kann man dazu sagen?
+
+00:29:44.257 --> 00:29:45.177
+<v SPEAKER_1>32 Bit lang.
+
+00:29:45.197 --> 00:29:46.417
+<v SPEAKER_2>32 Bit lang.
+
+00:29:46.437 --> 00:29:47.297
+<v SPEAKER_1>Und irgendwie eine Summe.
+
+00:29:47.317 --> 00:29:51.157
+<v SPEAKER_2>Und irgendwie eine Summe, genau. Also alles andere geht so weit.
+
+00:29:51.177 --> 00:29:55.657
+<v SPEAKER_1>Damit findet man die meisten Fehler aber wahrscheinlich nicht alle, oder?
+
+00:29:55.677 --> 00:30:30.377
+<v SPEAKER_2>Nee, natürlich nicht alle. Also, CRC ist so gebaut, dass man hauptsächlich Burstfehler erkennen kann. Das heißt, Fehler, die in großen Gruppierungen auftreten. Das ist auch sehr gerechtfertigt, wenn man sich den Kanal anguckt. Also sprich, es kippen nicht einfach so randommäßig mal Bits, sondern wenn ein Bit kippt, dann kippen die Nachbarn meistens alle mit. Also man hat halt Störungen, die über einen bestimmten Zeitraum gehen, deswegen kippen dann meistens mehr Bits auf einmal. Und das kann CRC32 relativ gut erkennen.
+
+00:30:30.397 --> 00:30:33.277
+<v SPEAKER_1>Und es ist vor allem nicht so berechnungsaufwendig wahrscheinlich.
+
+00:30:33.297 --> 00:30:33.457
+<v SPEAKER_2>Genau.
+
+00:30:33.917 --> 00:30:38.117
+<v SPEAKER_1>So dass es sich schnell realisieren lässt, ohne viel CPU-Power zu verbraten.
+
+00:30:38.677 --> 00:31:00.757
+<v SPEAKER_2>Und da sieht man eigentlich auch einen interessanten Aspekt, nämlich dass man natürlich den Link-Layer eigentlich nicht definieren möchte, wenn man den Physical-Layer dazu nicht kennt. Weil wenn dieses Medium sich jetzt anders verhalten würde, dann wäre es ja möglicherweise gar nicht gerechtfertigt, diese Prüf-Summe zu verwenden. Also Link-Layer und Physical-Layer werden eigentlich immer im Paket spezifiziert.
+
+00:31:03.717 --> 00:31:07.417
+<v SPEAKER_1>Anderes Physical-Element, anderes Verhalten auf Link-Layer.
+
+00:31:07.437 --> 00:31:20.837
+<v SPEAKER_2>Genau, und dann eben auch anderes MAC-Protokoll. Vielleicht braucht man ja gar kein MAC-Protokoll, wie zum Beispiel beim Full Duplex Ethernet. Ein Link-Layer-Protokoll wird immer dem Medium angepasst.
+
+00:31:20.857 --> 00:32:11.537
+<v SPEAKER_1>Das heißt, man könnte sich vorstellen, dass wenn man, was weiß ich, denken wir mal in die Zukunft, irgendwann in Frequenzbereichen gefunkt wird, von denen wir heute nur träumen können, wo aber Millionen an Rechnern direkt zu erreichen sind, weil es einmal quer um den Planeten geht, oder so viele, die weiß, dass mittlerweile rumstehen, dass man die Tür nicht zukriegt, dass halt diese alten Strategien so nicht mehr ausreichen. Und dann bräuchte man irgendwie ein anderes Adressierungsschema und vielleicht auch solche Probleme, wie dass das Ab sich nicht authentifiziert, dass man es auf niedrigster Ebene sicherstellen kann, dass derjenige, mit dem man redet, auch derjenige ist, mit dem man das möchte. Jetzt so rein hypothetisch. Dann müsste das im Prinzip komplett neu aufgerollt werden, und man müsste auch diesen Link-Layer an der Stelle neu definieren und neu implementieren.
+
+00:32:11.557 --> 00:32:18.817
+<v SPEAKER_2>Also es ist sicherlich nicht so, dass man einfach den Physic-Layer unten drunter wegtauscht und sagt, naja, und da packen wir jetzt irgendwie unseren Ethernet-Link-Layer drauf.
+
+00:32:19.577 --> 00:32:45.357
+<v SPEAKER_1>Das heißt, die Geschichte, wie wir das jetzt gerade beschrieben haben, mit AAP, das ist halt so, wie das jetzt bei Ethernet derzeit so läuft und bei WLAN sich auch ähnlich verhält. Aber, und auch wenn noch absehbar ist, dass Ethernet uns noch lange erhalten bleiben wird, danach sieht das nun wirklich sehr aus. Aber könnte sein, dass andere Transportwege andere Anforderungen haben und sich dann auch entsprechend anders verhalten.
+
+00:32:45.477 --> 00:32:45.737
+<v SPEAKER_2>Genau.
+
+00:32:47.937 --> 00:33:44.517
+<v SPEAKER_1>So, das ist also diese Schicht zwei. Eins ist irgendwie Physical Layer, das Kabel, die Luft, was auch immer. Schicht zwei ist das, was quasi unseren Rechner mit den eigenen Arten und Spezifika dieses Layers verheiratet. Sprich, an der Stelle gibt es eine Adressierung. An der Stelle gibt es irgendwie eine Art und Weise, diese Adressierung auszutauschen, Pakete zu versenden, aber auch sicherzustellen, dass diese Pakete richtig angekommen sind oder zumindest einen Ansatz dafür, dass man das schon mal von vornherein feststellen kann, was natürlich auch sehr effizient ist, weil wenn ich schon auf der Ebene feststellen kann, dass mit dem Paket irgendwas nicht in Ordnung ist, dann wird es halt schon fallen gelassen, ohne dass sich der Rechner in irgendeiner Form damit noch weiter auseinandersetzen muss. So, das heißt, jetzt beschreiten wir dann die nächste Schicht. Was warten dafür Drachen auf uns?
+
+00:33:44.537 --> 00:34:55.697
+<v SPEAKER_2>Jetzt fängt eben TCP-IP an, also mit IP fängt es an. IP ist das sogenannte Internetprotokoll. Und mit Internet ist jetzt eben gemeint, dass man diese einzelnen Netze, in denen mit irgendeiner Technologie es jetzt funktioniert, dass man Rahmen überträgt, dass man die jetzt miteinander verbindet, über wie gesagt ein Protokoll, was so den kleinsten gemeinsamen Nenner darstellt. Das kann man sich jetzt so vorstellen, das was in dem Rahmen stand als Payload, also das was hinter dem Header kam, also Payload sind die eigentlichen Daten in einem Frame und der Header ist sozusagen das andere. Genau, das ist jetzt das IP-Paket, das ist das was sich jetzt auf die Reise machen soll in dieses andere Netz. Jetzt schneidet man quasi diesen Link-Layer-Teil wieder ab und hat jetzt nur noch das IP-Paket in der Hand und das wird jetzt weiter versendet.
+
+00:34:56.137 --> 00:35:15.177
+<v SPEAKER_1>Das geht ja sozusagen vom Empfang aus. Aber kein Empfang ohne Versand, das heißt der eigentliche Weg ist, man hat Daten und wenn man sie nach unten reicht, muss man ihm sozusagen diesen Layer-2-Header und die Prüf-Summe da draufpacken und auf der anderen Seite wird es wieder abgestellt. Das ist so dieses Grundprinzip, einpacken und wieder auspacken.
+
+00:35:15.197 --> 00:35:19.937
+<v SPEAKER_2>Das ist wie Weihnachten eigentlich.
+
+00:35:19.957 --> 00:35:56.197
+<v SPEAKER_1>Man muss ja auch Bilder liefern, die die Leute verstehen. Also jeder von euch, der schon mal unter einem Tannebaum gesessen hat, ist im Prinzip mit Netzwerktechnologie vertraut. Da werden die Pakete erst eingepackt, dann muss man sie auspacken und dann die eigentliche Payload, auch Weihnachtsgeschenk genannt, heranzukommen. Das sind aber plastische Bilder liefern. Da muss man erst mal die verpacken, entfernen. Die wirft man danach aber auch einfach weg. Die braucht man sozusagen nur, um erst mal festzustellen, dass es auch für einen selbst ist, weil da der eigene Name drauf steht. Und weil es irgendwie hübsch genug ist. Und danach hat es irgendwie keinen Wert mehr.
+
+00:35:57.317 --> 00:36:21.837
+<v SPEAKER_2>Ja, und jetzt haben wir dieses Paket in der Hand. Und haben eine Adresse. Und fragen uns natürlich, wo soll das hin. Und eine der wichtigen Aufgaben, die die IP jetzt übernimmt, ist das Routing. Also sprich, es kümmert sich darum, dass das Paket mit dieser logischen Adresse jetzt auch an den Ort gelangt, wo es hin soll.
+
+00:36:21.857 --> 00:37:05.257
+<v SPEAKER_1>Jetzt kommen wir sozusagen an den Punkt, wo wir eben das neue Adressschema haben. Also neu im Sinne von, die Hardware hat ihr eigenes. Aber die erstreckt sich ja dann sozusagen auch immer nur innerhalb eines Kabels. Habe ich jetzt unterschiedliche Netze, die eben nicht am selben Kabel dranhängen. Ich meine, heutzutage ist so ein Ethernet-Netzwerk mit diesen ganzen Switches. Also früher musste man dann wahrscheinlich auch noch über mehrere Rechner übertragen. Aber heutzutage hat man einfach diese Switches und obwohl man viele unterschiedliche Kabel hat in so einer Firma, ist eigentlich alles wie ein Kabel. Jeder sieht jeden, aber irgendwo ist da ja auch eine Grenze, wo man es eben nicht mehr will, auch aus Performance-Gründen.
+
+00:37:05.277 --> 00:37:54.197
+<v SPEAKER_2>Das ist ja auch deswegen heute ein bisschen problematisch. Also ich führe ja jetzt gerade das Routing an und sage, IP kümmert sich darum, dass Pakete von einem Ort zum anderen gelangen. Andererseits haben wir ja gerade schon gesagt auf dem Layer darunter, dass man sich natürlich auch irgendwie darum kümmern muss, wie die Frames von einem Ort zum anderen gelangen. Aber das hat sich eben eher so entwickelt. Also man betrachtet schon das lokale Netz, wie du gerade gesagt hast, mehr so als eine Domäne, ein Kabel. Was jetzt entsprechend komplizierter geworden ist durch Bridges und was man da alles einfrimmelt, um diese Domäne zu vergrößern. Aber prinzipiell geht man von diesem Begriff des ETAs aus. Also dieses eine Medium, dieses eine Kabel, wo wir alle drauf brüllen.
+
+00:37:54.217 --> 00:38:22.157
+<v SPEAKER_1>Und wenn man mehr als einen ETA hat, dann muss man zwischen diesen verschiedenen ETAn vermitteln. Das heißt, der ETA ist eigentlich das Netzwerk. Und dann habe ich zwei Netzwerke. Und wenn ich die miteinander verbinden will, dann brauche ich eben ein Inter dazwischen. Und das ergibt dann das Internetworking. Genau. Und damit auch den Namen. Internetprotokoll ist sozusagen ein Protokoll, was dazu gedacht ist, mehr als ein Netzwerk miteinander zu verbinden.
+
+00:38:22.177 --> 00:38:37.757
+<v SPEAKER_2>Genau. Und es dürfen eben auch verschiedene Technologien sein, die in diesen verschiedenen Netzen, in den ETA... Also es muss eben nicht Ethernet sein, sondern es kann eben auch irgendwas anderes sein. Und IP bildet die Brücke zwischen diesen Netzen.
+
+00:38:39.697 --> 00:38:50.417
+<v SPEAKER_1>Wie ist jetzt so ein IP-Layer dann aufgestellt? Also was definiert der jetzt Neues, um diese Kommunikation zwischen den Rechnern zu ermöglichen?
+
+00:38:51.937 --> 00:38:59.837
+<v SPEAKER_2>Wie gehen wir da am besten dran? Gut, also die Adressen haben wir schon.
+
+00:38:59.857 --> 00:39:00.937
+<v SPEAKER_1>Na eigentlich haben wir sie noch nicht.
+
+00:39:00.957 --> 00:39:01.917
+<v SPEAKER_2>Ach, haben wir sie noch nicht?
+
+00:39:01.937 --> 00:39:06.077
+<v SPEAKER_1>Naja, ich meine, es ist klar, dass jetzt neue Adressen dazukommen müssen, aber dazu haben wir ja noch nichts gesagt.
+
+00:39:06.337 --> 00:39:07.697
+<v SPEAKER_2>Ja, also...
+
+00:39:07.717 --> 00:39:09.017
+<v SPEAKER_1>IP-Adresse, das...
+
+00:39:09.037 --> 00:39:10.937
+<v SPEAKER_2>Das ist sowieso, ja, das ist sehr spannend.
+
+00:39:10.957 --> 00:39:25.217
+<v SPEAKER_1>Ja, das ist sehr spannend. Alle sparen darüber. Das ist ein heißes Thema, nicht wahr? Also gerade was so unsere Datenschutzdiskussion betrifft und so weiter, das sind ja nur die IP-Adressen und so, da kann ja eine ganze Menge dahinter stecken.
+
+00:39:25.237 --> 00:39:26.097
+<v SPEAKER_2>Ja.
+
+00:39:26.117 --> 00:39:37.297
+<v SPEAKER_1>Also was steckt drin? Wir müssen ja jetzt auch erstmal noch voranstellen, wir reden von IP, aber genau genommen gibt es mittlerweile zwei davon. Es gibt das, was derzeit alle verwenden.
+
+00:39:37.417 --> 00:39:38.277
+<v SPEAKER_2>IPv4.
+
+00:39:38.297 --> 00:40:11.717
+<v SPEAKER_1>Genau. Und dann gibt es das, was eigentlich alle verwenden sollten, aber noch keiner tut, IPv6. Das heißt, die aktuelle Version ist Version 4, warum auch immer. Da waren wohl mal drei Fehlversucher und bei 4 ist man dann hängen geblieben. Und 5 wollte man auch aus irgendwelchen Gründen nicht verwenden. Ich weiß nicht, da gab es wohl auch mal einen Fehlversuch. Und um dann vorne rein auszuschließen, dass man jetzt nicht diesen Fehlversuch meint, sondern irgendwas, was richtig funktioniert, ist halt 6. Aber genau genommen ist eigentlich, v4 ist eigentlich Version 1, und v6 ist eigentlich Version 2, wenn man mal davon ausgeht, dass es in real world use ist. Kann man so sagen, oder?
+
+00:40:11.737 --> 00:40:12.357
+<v SPEAKER_2>Das kann man so sagen.
+
+00:40:12.737 --> 00:40:33.797
+<v SPEAKER_1>Das muss ja auch mal gesagt werden, weiß ja sonst irgendwie keiner. Sonst wollen die noch IPv5 verwenden. Also im upper management könnte so eine Botschaft wirklich ankommen. Aber wir konzentrieren uns jetzt erstmal, würde ich sagen, auf IPv4 und schauen dann mal, was später damit IPv6-Veränderungen gekommen sind.
+
+00:40:33.817 --> 00:40:49.777
+<v SPEAKER_2>Na gut, also wie gesagt, wir haben diese Adressen. Und das, was problematisch an diesen Adressen ist, sie sind eben nur 32-Bit groß. Und wenn man sich überlegt...
+
+00:40:49.877 --> 00:40:51.517
+<v SPEAKER_1>Was heißt nur?
+
+00:40:51.537 --> 00:41:02.357
+<v SPEAKER_2>Na ja, 32-Bit bedeutet, dass wir de facto 2 hoch 32 verschiedene Adressen haben können. Und wie gesagt, das sind jetzt...
+
+00:41:02.377 --> 00:41:03.337
+<v SPEAKER_1>4 Milliarden?
+
+00:41:03.357 --> 00:41:04.237
+<v SPEAKER_2>Genau, das ist aber jetzt...
+
+00:41:04.257 --> 00:41:05.317
+<v SPEAKER_1>Das ist eine Menge Holz.
+
+00:41:05.337 --> 00:41:18.637
+<v SPEAKER_2>Das ist eine Menge Holz für ein kleines Netz, aber nicht für ein weltumspannendes Netz. Man muss jetzt verstehen, das Internet soll ja gerade diese ganzen Netze verbinden. Das heißt, eine Adresse da drin muss jetzt auch wirklich eindeutig sein.
+
+00:41:18.657 --> 00:41:23.957
+<v SPEAKER_1>Das heißt, bei IPv4 gibt es noch nicht mal eine Adresse für jeden Menschen?
+
+00:41:23.977 --> 00:41:37.497
+<v SPEAKER_2>Nein, das auf keinen Fall nicht. Und das ist ja auch eigentlich das, warum man sich schon früh mit der Frage beschäftigt hat. Oder, naja, vielleicht hätte man es früher machen können. Nee, keine Ahnung. Ich nehme das früh zurück.
+
+00:41:37.517 --> 00:41:41.137
+<v SPEAKER_1>Wahrscheinlich haben sich die Leute schon früh darüber Gedanken gemacht, aber dann wollte ihnen keiner glauben.
+
+00:41:45.197 --> 00:42:01.257
+<v SPEAKER_2>Ja, auf jeden Fall hat man sich natürlich gefragt, was passiert denn jetzt, wenn die IP-Adressen ausgehen? Und das ist ja das, was wir mit v6 eigentlich lösen wollen. Wir wollen einfach sagen, naja, dann brauchen wir ein Protokoll, das so ist wie IP, aber irgendwie...
+
+00:42:01.277 --> 00:42:27.417
+<v SPEAKER_1>Ja gut, aber das ist ja jetzt so ein bisschen die Zukunft. Lass uns erstmal so ein bisschen die Realität beleuchten, wie es denn jetzt eigentlich ist. V4 hat da so ein Kapazitätsproblem, aber es ist ja nicht so, dass es nicht funktionieren würde. Also das Internet ist ja ganz ordentlich am Rauschen und Brummen und verbraucht auch eine Menge Strom. So schlimm kann es ja gar nicht sein. Also was für eine Welt entfaltet die IP-Adresse? Was steckt da drin? 32-Bit haben wir schon.
+
+00:42:27.437 --> 00:43:38.057
+<v SPEAKER_2>Was ist drin? Es geht darum, man hat jetzt natürlich, wie gesagt, diese verschiedenen Netze. Und was man tut, ist, man sagt, es gibt in jeder Adresse einen Netzteil. Der Teil, der beschreibt, mit welchem Netz sich denn kommunizieren will. Und es gibt einen sogenannten Host-Teil. Und der Host-Teil beschreibt dann den genauen Rechner, den man in diesem Netz arrestieren will. Und das Routing funktioniert jetzt so, dass man sich erstmal tatsächlich nur den Netzteil anguckt und sagt, wo muss denn das hin? Welches Netz muss das denn jetzt überhaupt hin? Und in dieses Netz wird es dann geroutet. Und wenn es dann da ist, dann fragt man sich, zu welchem Host muss es denn? Und dann wird das allerdings intern vorgenommen. Das hat natürlich den großen Vorteil, dass wenn man einen Rechner dazuschaltet, dann muss man nicht der anderen Seite vermitteln, welchen Rechner man dann jetzt hinzugeschaltet hat. Sondern man sagt halt einfach, naja, du weißt ja, ich werde mich darum kümmern, wenn es ein Paket für dieses Netz hier gibt. Und entsprechend muss man eben nur diesen Eintrittsrouter umkonfigurieren.
+
+00:43:38.337 --> 00:44:09.897
+<v SPEAKER_1>Also als so ein bisschen wie, wenn man jetzt mal den Vergleich mit dem Postsystem üben möchte, der ja manchmal ganz angemessen ist, vielleicht nicht immer, aber an dieser Stelle sicherlich noch. So der Netzteil ist sozusagen die Straße. Im Netz steckt so viel drin, dass man in der Lage ist, den Brief in die richtige Straße zu bringen. Aber damit man weiß, in welches Haus das dann konkret in dieser Straße rein muss, braucht es dann halt auch noch eine Hausnummer. Und das ist dann sozusagen der Hostanteil. Genau.
+
+00:44:09.917 --> 00:44:59.417
+<v SPEAKER_2>Und früher war es so, dass man gesagt hat, wir haben jetzt unsere vier Byte, 32 Bit. Und wir teilen jetzt drei verschiedene Arten von Netzen aus. Wir teilen solche Netze aus, wo die ersten drei Byte der Netzteil sind und der letzte Teil, der Hostteil. Das heißt, man kann in diesem Netz 254, auf jeden Fall in der Größenordnung von 2 hoch 8 verschiedene Hosts haben. Das reicht natürlich nur für kleine Netze. Dann gab es eben diese anderen Netze, wo man gesagt hat, gut zwei Byte Hostteil, zwei Byte Netzwerkteil und dann eben noch die dritte Kombination.
+
+00:45:02.157 --> 00:45:24.757
+<v SPEAKER_1>Also die dritte Kombination, sehr wenig Netze, nämlich dann maximal wieder 2 hoch 8, aber dafür eben sehr viele Rechner da drin. Aber sowas gibt es ja eigentlich gar nicht. Was gibt es nicht? Kennst du ein Ethernet-Netzwerk, wo wirklich so viele 2 hoch 24 Rechner drin sind? Gibt es sowas?
+
+00:45:24.777 --> 00:45:25.797
+<v SPEAKER_2>Ja, ein Ethernet.
+
+00:45:27.097 --> 00:45:37.317
+<v SPEAKER_1>Das war wahrscheinlich das, was man damals gedacht hat. Wenn man jetzt davon ausgeht, dass so ein Netzwerk auch ein Ethernet ist, aber genau genommen ist es das ja eigentlich auch nicht.
+
+00:45:37.337 --> 00:46:16.177
+<v SPEAKER_2>Auf jeden Fall, das große Problem ist natürlich, gut 255, das macht noch irgendwie Sinn. Es gibt eine Menge Organisationen, die irgendwie gerade so über 200 Rechner haben. Das Problem ist nur, wenn sie jetzt knapp darüber sind, da müssen sie ja ein Netzwerk bekommen, was 2 hoch 16, also 65.000 Rechner hat. Der Schritt von 255 zu 65.000 ist halt ein bisschen groß. Sprich, wenn man dann solche Netze vergeben hat, dann waren auch schon wieder 65.000 Vergeben-Adressen. Aber eigentlich wurden davon kaum welche verwendet. Dann hatten sie vielleicht 1.000 Rechner da drin.
+
+00:46:16.197 --> 00:46:19.557
+<v SPEAKER_1>Aber wie sieht man denn eine Adresse jetzt an, in was für einem Netzwerk sie ist?
+
+00:46:20.097 --> 00:47:33.197
+<v SPEAKER_2>Na ja, da gibt es Konventionen. Bestimmte Netze haben bestimmte Zahlenkombinationen bekommen. Es gibt wie gesagt diese Klasse A-, B- und C-Netze, also die großen Netze, die mittleren Netze und die kleinen Netze. Die haben sich bestimmte Adressbereiche dafür reserviert. Das große Problem ist, wie gesagt, zwischen einem Block C, also dem kleinen Netz, und dem mittleren Block, Block B, wählen zu können. Da würde man dann in weiser Voraussicht den Block B nehmen, nimmt aber damit 65.000 Adressen, die es ja global nur einmal gibt, sich da aus dem Pool raus und benutzt davon die meisten überhaupt nicht. Und deswegen hat man sich überlegt, als die Adressen dann knapp wurden, dass man die Netze auch in anderen Blockgrößen vergeben sollte.
+
+00:47:33.217 --> 00:49:08.957
+<v SPEAKER_1>Das Grundprinzip war, man hat immer ein 32-Bit-Wert, das ist die Adresse. Das heißt, wenn ich von einer IP-Adresse, also von einer IPv4-Adresse rede, meine ich immer vier Bytes. Aber es ist vollkommen egal, wie viele von diesen Bytes das eigentliche Netzwerk des Rechners adressieren und wie viele davon den konkreten Rechner machen. Das heißt, ich habe immer vier Bytes. Welcher Teil jetzt wie viel ausmacht, ist sozusagen variabel. Dieses Klasse ABC ist sozusagen dieses erste simple Schema, das mal so in drei große Bereiche aufzuteilen. Und weil man einfach dachte, na ja, es gibt halt große Netze mit vielen Hosts, es gibt kleine Netze und so weiter, und es gibt natürlich mehr kleine Netze und so weiter. Das heißt, das passt schon irgendwie ganz prima. Aber irgendwann hat man gemerkt, dass einfach dieser Übergang zu unflexibel war. Aber dass man überhaupt erst mal das unterscheiden konnte, waren diese Netzwerk-Zahlen-Bereiche quasi festgelegt. Das heißt, man brauchte sich eigentlich nur so die ersten Bits anschauen und dann wusste man, ist das jetzt eine A-, oder C-Geschichte. Und das jetzt zu flexibilisieren bedeutet im Prinzip, dass man das nicht in solchen 8-Bit-Schritten irgendwie macht, sondern im Prinzip muss man sich das ja sozusagen vorstellen, dass man da so einen Schieberegler hat, der so von links nach rechts irgendwie den Host-Teil größer bzw. kleiner macht. Und habe ich sozusagen mehr Hosts, wird die Netzwerken nur mal kleiner usw. Und dann wollte man das Ganze auf Bit-Level machen. Das ist dieses, wie hat man das genannt? CIDR.
+
+00:49:08.977 --> 00:49:12.837
+<v SPEAKER_2>Ja, da gibt es verschiedene Aussprachen für, genau.
+
+00:49:12.857 --> 00:49:17.477
+<v SPEAKER_1>Also CIDR. Hab ich doch richtig gesagt, oder?
+
+00:49:17.677 --> 00:49:18.497
+<v SPEAKER_2>Ja, ist richtig.
+
+00:49:18.517 --> 00:49:32.517
+<v SPEAKER_1>Classless Interdomain Routing. Weg mit den Klassen sozusagen. Das war eigentlich dieses ABC, ist eigentlich Vergangenheit. Aber dann sieht man es ja der Adresse nicht mehr an.
+
+00:49:32.537 --> 00:49:43.097
+<v SPEAKER_2>Naja, dann muss halt mehr Logik in den Routern sein, also mehr Intelligenz sozusagen. Klar, also dann wird es halt komplizierter.
+
+00:49:43.117 --> 00:50:06.657
+<v SPEAKER_1>Das heißt, das war sozusagen eine signifikante Änderung in der Art und Weise, wie IP-Pakete in andere Netze weitergerutscht hat. Weil was man vorher einer Adresse noch ansehen konnte, ist ja jetzt sozusagen eine Zusatzinformation. Das heißt, man braucht zu der IP-Adresse dazu auch noch eine zusätzliche Information, wo nämlich dieser Schieberegler steht.
+
+00:50:06.677 --> 00:50:36.617
+<v SPEAKER_2>Also was man jetzt eben noch braucht, sind sogenannte Netzmasken. Diese Masken beschreiben, welcher Teil jetzt der Hostteil ist und welcher Teil der Netzwerkteil ist. Man muss jetzt eben auch tatsächlich sagen, ich möchte mit diesem Netzwerk kommunizieren und das ist meine Netzwerkmaske. Also das ist so viel Hostteil, so viel Netzteil.
+
+00:50:36.637 --> 00:50:43.037
+<v SPEAKER_1>Aber diese Informationen bekommt man ja normalerweise gar nicht, wenn ich jetzt irgendwie im Internet sage, ich will das Host sowieso.
+
+00:50:43.057 --> 00:51:11.477
+<v SPEAKER_2>Das übernehmen natürlich im Internet dann die Router. Also die wissen halt, es gibt diese und diese Netze mit dieser und dieser Netzwerkmaske und wenn ich eine Adresse kriege, dann gucke ich, dann lege ich meine Netzwerkmaske auf und gucke, ach so, das ist der Netzteil, okay, das kenne ich, da ruht ich hin und um die letzten paar Bits, die nach der Anwendung meiner Maske, um die ich mich nicht kümmern muss, um die kümmer ich mich auch nicht.
+
+00:51:11.497 --> 00:51:26.677
+<v SPEAKER_1>Das heißt, du sagst Router, aber diese Router sind ja eigentlich auch nur ganz normale Computer. Normalerweise, also jetzt rein von wie das Internet aufgebaut ist, gibt es ja gar keine Unterscheidung zwischen einem normalen Computer und einem Router.
+
+00:51:27.517 --> 00:52:11.897
+<v SPEAKER_2>Ja, also es gibt schon diese Unterscheidung, dass man sagt, man hat die Endsysteme, also das, was am Ende steht, und man hat eben das Netz. Und diese Unterscheidung trifft man deswegen, weil das Netz selbst häufig nur viel weniger von der Kommunikationslogik implementieren muss als jetzt die Endsysteme. Also es kann man sich so vorstellen, während ein Router vielleicht nur IP verstehen muss, muss das Endsystem auch noch TCP sprechen, muss vielleicht HTTP sprechen können, um dann irgendwie Websites auszutauschen. Also diese Unterscheidung macht man schon, aber prinzipiell ist das natürlich recht. Also die implementieren alle IP.
+
+00:52:11.917 --> 00:53:17.497
+<v SPEAKER_1>Gut, sagen wir mal, ich denke mir jetzt irgendeine IP-Adresse aus, ziehe mir die einfach aus der Nase, dann muss ich keinen anderen Rechner befragen. Also ich umschiffe jetzt hier das Thema DNS. Das nehmen wir jetzt einfach mal raus, weil das spielt hier irgendwie keine Rolle. So, und jetzt zeige ich meinem Computer, stell doch mal bitte eine Verbindung her. Was weiß ich, Web-Server oder sowas. Was es jetzt eigentlich ist, ist ja eigentlich auch egal. Ich gehe eigentlich zu meinem IP hin und sage, ich möchte gerne mit diesem Rechner kommunizieren. Was macht der Lehrer dann? Was passiert? Kann man da mal irgendwie durchmarschieren? Also ich habe jetzt so eine Payload. Ich habe da so Daten, vollkommen unabhängig davon, was das irgendwie ist. Und ich möchte, dass das jetzt zu irgendeinem anderen Rechner geht. Und der wird schon wissen, was er damit zu tun hat. Das heißt, ich habe ja irgendwie so einen Blob von Daten und gebe dem irgendwie meinen IP, was ja hier in meinem Computer darauf lauert, mir Dienste zu erweisen. Und alles, was du wissen musst, ist ja eine IP-Adresse, wenn ich es richtig sehe. So, also gebe ich ihm diese Daten und sage, bitte mal einmal dahin schicken.
+
+00:53:17.517 --> 00:53:19.137
+<v SPEAKER_2>Genau, an den nächsten Router.
+
+00:53:19.157 --> 00:53:25.237
+<v SPEAKER_1>Was macht jetzt der IP-Layer? Muss er sich nicht erstmal die Adresse anschauen?
+
+00:53:26.177 --> 00:53:27.417
+<v SPEAKER_2>Ja, natürlich, beim Routing.
+
+00:53:27.437 --> 00:53:30.417
+<v SPEAKER_1>Und was sieht er da?
+
+00:53:30.417 --> 00:53:39.757
+<v SPEAKER_2>Na, da sieht er, ob er weiß, von welchem Netz wir reden oder ob er weiß, an welchem anderen Router er das wiederum delegieren kann.
+
+00:53:39.777 --> 00:53:41.817
+<v SPEAKER_1>Wann weiß er das und wann weiß er das nicht?
+
+00:53:41.837 --> 00:53:50.017
+<v SPEAKER_2>Na ja, er hat Tabellen. Und in diesen Tabellen sieht er, von welchen Netzen er weiß und von welchen nicht.
+
+00:53:50.037 --> 00:53:51.617
+<v SPEAKER_1>Wo kommen diese Tabellen her?
+
+00:53:51.637 --> 00:53:53.817
+<v SPEAKER_2>Ach so, die muss man da rein konfigurieren.
+
+00:53:53.937 --> 00:53:55.577
+<v SPEAKER_1>Ich muss sie in meinen Computer rein konfigurieren?
+
+00:53:55.597 --> 00:53:59.657
+<v SPEAKER_2>Nein, natürlich der, der den Router zu konfigurieren hat.
+
+00:53:59.677 --> 00:54:27.177
+<v SPEAKER_1>Ich rede jetzt erstmal nur von meinem Computer. Ich gebe ja meinem Programm, sage meinem Rechner, meinem IP hier bitte, ich will einen Brief losschicken. Dann muss er ja erstmal gucken, wo das überhaupt hingeht. Wohin er das jetzt schicken soll. Und ob überhaupt kann ja auch sein, dass ich die Adresse von meinem eigenen Computer angegeben habe.
+
+00:54:27.197 --> 00:54:30.117
+<v SPEAKER_2>Kannst du mir mal ein Stichwort geben, worauf du gerade hinaus willst?
+
+00:54:30.137 --> 00:55:18.837
+<v SPEAKER_1>Ich will darauf hinaus, wie diese Adresse sozusagen ausgewertet wird. Weil wir haben ja dieses Ding jetzt mit Classnet, Interdomainrouting, lalala. In dieser Adresse ist halt irgendwie Netzwerk und Host drin. Irgendwie muss er jetzt wissen, ist das irgendwie mein eigener Rechner, mit dem ich jetzt hier reden will? Also muss ich das gar nicht erst auf irgendein Kabel geben, sondern möchte ich hier vielleicht auf demselben Computer mit irgendjemandem reden? Kann ja auch sein. Oder ist das irgendwie ein Rechner, der nur zwei Meter weiter entfernt am selben Kabel hängt? Oder ist das irgendeiner in der anderen Etage in meinem großen Firma? Oder ist der auf der anderen Seite des Planeten? Worauf ich hinaus will ist, wie sehr kümmert sich sozusagen mein eigener Computer um diese Fragen? Und wie sehr überlässt er es anderen darüber zu entscheiden?
+
+00:55:20.617 --> 00:55:40.357
+<v SPEAKER_2>Also er kümmert sich selber eigentlich relativ wenig. Wie gesagt, man stellt sich einen Default Gateway ein und übergibt dem dann eigentlich, und der ist ja Teil des Netzes, übergibt dem dann eigentlich die Aufgabe, Route das Paket mal da, wo es hin soll.
+
+00:55:40.377 --> 00:55:43.977
+<v SPEAKER_1>Aber das muss ja nicht unbedingt so sein. Ich kann ja auch mit mehreren Netzwerken gleichzeitig verbunden sein.
+
+00:55:44.737 --> 00:55:54.097
+<v SPEAKER_2>Ja, natürlich. Also dann hat man eben mehrere Router konfiguriert und überlegt sich dann halt anhand der Adresse, zu welchem es hin soll.
+
+00:55:54.677 --> 00:55:56.737
+<v SPEAKER_1>Aha, das heißt, er schaut sich schon die Adresse an.
+
+00:55:57.357 --> 00:55:59.317
+<v SPEAKER_2>Ja, er kann sich schon die Adresse angucken, ja.
+
+00:55:59.337 --> 00:56:31.017
+<v SPEAKER_1>Okay, also ich meine, das ist ja das Ding, er muss ja irgendwie feststellen, was sozusagen der richtige Weg ist. Ich kann ja sein, über WLAN irgendwie mit einem Netz verbunden sein, ich kann über Ethernet mit einem anderen Netz verbunden sein, wo unter Umständen auch mehrere Netze dranhängen, aber die gar nicht ins Internet führen, sozusagen. Also ich meine, der Default Gateway, den du ansprichst, ist ja sozusagen nur so dieses, wenn ich nicht mehr weiter weiß, dann delegiere ich den ganzen Scheiß. Aber eigentlich hat ja der Rechner auch Kenntnis darüber, womit er verbunden ist.
+
+00:56:31.117 --> 00:56:41.657
+<v SPEAKER_2>Jaja, also jede Netzwerkkarte, die man verwendet, jedes Interface, das konfiguriert man halt mit einer Adresse und einer Netzwerkmaske.
+
+00:56:41.677 --> 00:56:43.637
+<v SPEAKER_1>Oder mehreren Adressen.
+
+00:56:43.657 --> 00:57:12.297
+<v SPEAKER_2>Oder mehreren Adressen, genau. Und so weiß man, zu welchen Netzwerken man gehört. Und ob man, wenn, also man weiß dann, auf welchem Interface man Pakete in dieses Netzwerk rausschicken müsste. Und wenn man es eben nicht weiß, also wenn es eine Adresse ist eines Netzwerkes, zu dem wir nicht gehören, dann schicken wir es an Default Gateway und hoffen, dass der es irgendwie routen kann.
+
+00:57:12.477 --> 00:57:30.777
+<v SPEAKER_1>Und der Default Gateway ist sozusagen, oder Default Router sagt man ja auch, ist sozusagen einfach ein anderer Computer, mit dem ich direkt verbunden bin. Also der, wie auch alle anderen Rechner, die am selben Kabel sind, irgendwie für mich direkt sichtbar ist und dem ich sozusagen diese Entscheidung des Weiterleitens überlasse.
+
+00:57:30.797 --> 00:57:47.937
+<v SPEAKER_2>Genau, vielleicht ist der ja mit anderen Netzen verbunden als ich. Oder ist er vermutlich definitiv, nämlich mit dem Internet. Und weiß dann eben, wem er diese Aufgabe erteilen kann, dieses Paket weiterzuleiten.
+
+00:57:48.297 --> 00:58:58.117
+<v SPEAKER_1>Also, muss man mal zu sagen, mit mehreren Netzen jetzt verbunden zu sein, ist nicht unbedingt üblich. Normalerweise, was weiß ich, man hat irgendwie sein iPhone, zack, wo man rein ins WLAN, dann ist das halt irgendwie das Netz. Aber es kann ja auch noch irgendwie über OMTS auch noch verbunden sein und so. Oder wenn ich hier, wie gesagt, Firmennetzwerk, da hat man irgendwie ein Kabel drin. Da sind so diese ganzen sensitiven Rechner, auf die man vielleicht von außen gar nicht zugreifen kann. Aber über WLAN gibt es dann irgendwie das Internet. Also sind da schon so Entscheidungen, die da gefällt werden können. Und das geht halt. Das heißt, man kann mit mehreren Netzwerken gleichzeitig verbunden sein. Das ist sozusagen eine Grundfähigkeit von dem IP. Aber die Regel ist, man hat eigentlich einen Port. Und die weitere Regel ist, man weiß eigentlich wenig über das Netz und überlässt das Weiterleiten an die Rechner, die ja dann auch in den meisten Fällen, wenn man jetzt so ein Netz braucht, dann hat man halt die ganze Zeit Rechner, die irgendwo sind, überlässt man das diesem Default Gateway, von dem der Rechner einmal irgendwie Kenntnis erhalten hat. Wie erhält denn der Rechner überhaupt seine eigene Adresse?
+
+00:59:00.157 --> 01:00:21.597
+<v SPEAKER_2>Also es gibt zwei Möglichkeiten. Entweder man konfiguriert diese Adressen statisch, d.h. man geht von Rechner zu Rechner und überlegt sich selbst als Administrator, dieser Rechner soll jetzt die und die IP-Adresse haben. Fertig. Oder aber man verwendet ein Protokoll, was es einem erlaubt, dynamische Adressen zu beziehen. Der Administrator hat einen Bereich von Adressen beiseite gelegt für die Rechner, die sich an dieses Netz anschließen. Wenn man sich dann angeschlossen hat, verwendet man dieses Protokoll, um zu sagen, ich bin jetzt hier und hätte jetzt gerne eine Adresse. Das ist das sogenannte DHCP-Protokoll. Das ist zum Beispiel eine Möglichkeit. Dieses Protokoll erlaubt es, auch gleich Gateways auszutauschen. Zu sagen, du hast jetzt die und die Adresse, und dein Gateway ist der und der, das ist deine Netzwerkmaske. Du brauchst jetzt wirklich nur noch deine Pakete immer schön an den Default-Gateway schicken, und dann werden wir uns darum kümmern, dass das auch alle schön ankommt. Also das ist so der Standardfall.
+
+01:00:21.617 --> 01:00:36.297
+<v SPEAKER_1>Also so ist es meistens. Man macht irgendwie DHCP, aber es müsste nicht sein. Bloß wenn man es nicht macht, dann ist man, zumindest bei IPv4, gezwungen, das irgendwie selber zu konfigurieren, weil es sonst einfach keine Möglichkeit gibt.
+
+01:00:36.317 --> 01:00:58.917
+<v SPEAKER_2>Genau. Und gerade wenn man sich öffentliche Netze anguckt, wenn man sich jetzt überlegt, ich gehe jetzt in die Uni und schließe meinen Rechner an, dann ist es natürlich doof, wenn jeder eine IP-Adresse haben muss, die er sich merken muss, die er dann konfigurieren muss. Und da läuft dann eigentlich fast immer DHCP. Das heißt, man sagt einfach, ich bin jetzt hier, gib mir doch bitte eine Adresse und sag mir, wohin ich meine Pakete leiten soll.
+
+01:01:03.517 --> 01:01:38.717
+<v SPEAKER_1>So, jetzt sind wir im Prinzip nochmal an diesem Punkt mit dem Routing. Also ich habe meine Adresse bekommen. Und jetzt habe ich mir eine IP-Adresse ausgedacht und die ist jetzt irgendwo in Australien. Was passiert üblicherweise mit meinem Datenpaket? Ich übergebe das meinem eigenen IP und der sagt, okay, Adresse kenne ich nicht, wird wohl irgendwo sein, schicke ich jetzt hier mal auf meinem Ethernet zu meinem Router. Und dann? Wie geht es dann weiter?
+
+01:01:41.137 --> 01:03:35.997
+<v SPEAKER_2>Also wir haben jetzt das Paket per Ethernet an den Router geschickt. Und jetzt, wie kommt es jetzt da drüben an? Ja, also jetzt verwenden wir, das ist schwer zu sagen, weil jetzt kommt dieser ganze Breitband-Netzteil, wo die verschiedensten lustigen Technologien eingesetzt werden. Also meistens sieht es so aus, wir verschicken jetzt über eine Punkt-zu-Punkt-Verbindung dieses IP-Paket an unseren Provider. Das passiert heutzutage meistens mit einer Variante von Ethernet. Also ja, doch kann man so sagen, wir verwenden eigentlich schon Ethernet und darauf ein weiteres Protokoll, ein Punkt-zu-Punkt-Protokoll, was es zwischen Provider und uns, was es dem Provider erlaubt, dass wir uns authentifizieren, dass wir sagen, ich bin der und der und du kannst jetzt anfangen abzurechnen, sowas in der Richtung. Und dann wird dieses Paket eben an den Provider versendet und jetzt beginnt der Technologie-Zoo, der Breitbandvermittlung, SoNet, SDH, ATM, alle möglichen lustigen Technologien, die jetzt dazu verwendet werden, das Paket über die weiten Strecken zu transportieren. Irgendwann kommt es dann wieder raus beim Provider des Netzes, das man interessiert hat, und wird dann vom Provider wieder an den Zielrechner geroutet. Das wäre jetzt ein Ablauf, wenn wir jetzt von einem Haus zum nächsten über das Internet ein Paket übertragen.
+
+01:03:36.577 --> 01:03:56.737
+<v SPEAKER_1>Und dann ganz am Schluss, irgendwann gibt es dann sozusagen einen Rechner, der dieses Netz auch kennt oder der in diesem Netz dann auch ist. Das heißt, das Paket wird so lange weitergeleitet, bis es dann endlich mal irgendwo ist, wo sich jemand auskennt. Und die Straße kennt und irgendwie weiß, wo die Hausnummern sind.
+
+01:03:56.757 --> 01:04:13.177
+<v SPEAKER_2>Ja, das mit der Post ist eigentlich ein gutes Bild, weil da hat man ja auch die Postleitzahl. Und am Anfang guckt man sich halt nur die Postleitzahl an und überlegt sich nicht, ob man diese Straße kennt. Dann wirft man den Brief einfach in die Richtung. Und dann kommt irgendwann die Straße und dann auch tatsächlich die Hausnummer.
+
+01:04:13.857 --> 01:04:47.017
+<v SPEAKER_1>Genau, man muss immer erst sozusagen gegen Ende es dann auch immer genauer wissen. Erst mal hat man das Land, dann hat man die Postleitzahl, dann weiß man so ungefähr, wo man ist, dann hat man die Straße und dann wird es genauer. Und wo dann wirklich der Briefkasten ist, das muss dann eigentlich erst der Postbote wissen, mit dem man aber am Anfang gar nicht redet, sondern man einfach nur abstrakt irgendwie die Adresse mitteilt. Das ist ja eigentlich ein ganz erfolgreiches Modell, kann man ja sagen. Das hat gut funktioniert.
+
+01:04:47.037 --> 01:04:49.137
+<v SPEAKER_2>Das funktioniert auch jetzt noch.
+
+01:04:49.157 --> 01:04:50.757
+<v SPEAKER_1>Ja, aber es gibt Probleme.
+
+01:04:51.957 --> 01:05:44.657
+<v SPEAKER_2>Ja, also ein Problem haben wir schon kurz angesprochen. Die Adressen gehen einfach aus. Da hat man sich ein paar lustige Lösungen ausgedacht. Ja, das können wir eigentlich. Sollen wir kurz die Nattgeschichte machen? Also es sieht ja so aus. Wir haben nur diese 4 GB an Adressen, die man verwenden könnte. Und jetzt ist es ja gar nicht nötig, dass wir jeden Laptop auf dem Planeten tatsächlich auch von außen erreichen müssen mit einer eindeutigen IP-Adresse. Sondern, das ist schwer zu erklären.
+
+01:05:44.677 --> 01:06:00.717
+<v SPEAKER_1>Da kann man jetzt trefflich diskutieren, ob das nicht nötig ist. Ich finde das ja eigentlich schon nötig. Aber das ist sozusagen der Workaround, dass man sagt, naja, wir können darauf verzichten. Wir behaupten jetzt mal, dass das nicht nötig ist.
+
+01:06:00.737 --> 01:06:18.437
+<v SPEAKER_2>Genau. Was man sich jetzt überlegt hat, ist, nehmen wir doch mal einen Teil der Adressen und sagen, das sind lokale Adressen. Das sind Adressen, die sind im Internet nicht gültig. Die sind immer nur in einem Netz gültig.
+
+01:06:19.277 --> 01:06:24.037
+<v SPEAKER_1>Da gibt es ja auch reservierte Bereiche. Das kennt man wahrscheinlich von der Einstellung des eigenen Routers.
+
+01:06:24.057 --> 01:06:27.037
+<v SPEAKER_2>192, 168 und so weiter.
+
+01:06:27.057 --> 01:06:35.117
+<v SPEAKER_1>Genau. Oder 10, und was war der dritte? 172, irgendwas. Genau.
+
+01:06:37.537 --> 01:07:02.017
+<v SPEAKER_2>Ja, und dann bedeutet das natürlich auch, dass die Adressen, die man intern verwendet, dass die im Internet keine Bedeutung haben. Und jetzt braucht man noch einen Übersetzer. Also wenn man jetzt tatsächlich ein Paket aufs Internet schicken will und man hat eine lokale Adresse, dann schickt man sein Paket an diesen Übersetzer. Und der wiederum hat eine IP-Adresse, die im Internet gültig ist. Aber eben nur eine.
+
+01:07:02.037 --> 01:07:08.117
+<v SPEAKER_1>Üblicherweise ist das so der Router, den man zu Hause hat, der irgendwie das DSL bedient.
+
+01:07:08.137 --> 01:07:54.397
+<v SPEAKER_2>Genau. Und jetzt kann man eben in seinem privaten Netz beliebig viele Rechner anschließen. Und die haben alle keine tatsächliche Adresse, die im Internet gültig wäre. Sondern sie schicken ihre Pakete alle an diesen Übersetzer. Und der wiederum trägt an der Stelle, wo früher die lokale Adresse war, seine öffentliche Adresse ein, also die, die im Internet tatsächlich gültig ist. Das bedeutet, von außen sieht es so aus, als wäre da nur ein Rechner, nämlich dieser Übersetzer. Tatsächlich verstecken sich dahinter aber beliebig viele Rechner. Und so hat man natürlich das...
+
+01:07:54.417 --> 01:07:56.017
+<v SPEAKER_1>Wir sollten den Teufel auch beim Namen nennen.
+
+01:07:57.077 --> 01:08:30.197
+<v SPEAKER_2>Ja, Network Address Translation. So heißt diese Übersetzung. Und das bedeutet jetzt natürlich, dass man in jedem Netzwerk eine ganze Menge Laptops anschließen kann, die brauchen überhaupt keine Adresse nach draußen haben. Kann man trefflich drüber schreiben, genau. Ohne dass man dafür jetzt eine Adresse braucht, die wirklich global gültig ist.
+
+01:08:31.357 --> 01:09:43.857
+<v SPEAKER_1>Das Problem der ganzen Geschichte ist natürlich, wenn man so von innen nach außen eine Verbindung aufbaut. Dieses Nutt, ich finde das ja ganz furchtbar. Es ist wirklich furchtbar und hat viele, viele Probleme. Gut funktioniert das eigentlich nur in den Tätigkeiten, von denen man so gemeinhin annimmt, dass der Internet-User sie so durchführt, wie du klickst im Web. Dann bin ich derjenige, der auf meinem Rechner eine Verbindung nach außen anstößt und sagt, ich will jetzt hier zu www.tolle-produkte.irgendwas. Dann geht das über meinen Router. Der ersetzt meine interne IP-Adresse durch seine IP-Adresse und tut nach außen so, als wäre er ich. Baut diese Verbindung auf, alle Antworten kommen dann wieder zurück zu diesem Rechner. Und nur weil ich ja vorher mit ihm geredet habe und ihn überhaupt erst veranlasst habe, irgendetwas zu tun, weiß er ja, wie er diese Antwort zuordnen kann. Wie funktioniert diese Zuordnung an der Stelle eigentlich, dass das auch zuverlässig funktioniert?
+
+01:09:46.497 --> 01:10:46.177
+<v SPEAKER_2>Es ist ja so, also wie du es gerade schon angesprochen hast, wir haben auf der Ebene von TCP ein Client-Server-Modell. Das heißt, derjenige, der die Anfrage stellt, ist der sogenannte Client, der, der sie erhält, ist der Server. Und mit NAT, mit diesem klassischen NAT, was wir gerade beschrieben haben, es ist eben wirklich nur möglich, dass wir der Client sind mit unserer nicht gültigen Adresse. Wir schicken das jetzt raus, denn der NAT muss sich merken, hier hat jemand gerade eine Verbindung aufgebaut zu dem und dem Server. Wenn jetzt eine Antwort zurückkommt von dem und dem Server auf dem und dem Port, dann muss sich das an so und so leiten, denn er hat die Anfrage gestellt. Also das muss man sich wirklich merken. Also das muss der NAT sich merken.
+
+01:10:47.017 --> 01:10:48.777
+<v SPEAKER_1>Und er muss es sich auch lang genug merken.
+
+01:10:48.797 --> 01:10:49.537
+<v SPEAKER_2>Genau.
+
+01:10:49.557 --> 01:10:50.937
+<v SPEAKER_1>Und irgendwann vergisst er es dann wahrscheinlich.
+
+01:10:50.957 --> 01:11:20.817
+<v SPEAKER_2>Irgendwann muss er es vergessen, weil sonst geht ihm irgendwann der Speicher aus. Also Soft-State. Das heißt, man bekommt jetzt für einen kurzen Zeitraum diese Route, sprich alles was jetzt reinkommt von dem Host auf dem Port, das kriegen wir. Aber nach drei Stunden oder so sollte er das auch spätestens vergessen haben, denn vielleicht will ja auch mal jemand anders mit genau dieser Konfiguration kommunizieren.
+
+01:11:21.737 --> 01:11:28.977
+<v SPEAKER_1>Aber wenn jetzt zwei Rechner von innen mit derselben Rechner kommunizieren wollen, vielleicht sogar auf dieselbe Ressource zugreifen, also dieselbe Webseite anklicken?
+
+01:11:28.997 --> 01:11:47.957
+<v SPEAKER_2>Ja, also es ist jetzt nicht so, dass man das nur anhand des Hosts festmacht. Wir haben ja bei TCP noch eine Menge, also wir haben einen Quellport, wir haben einen Zielport, wir haben Sequenznummern. All diese Dinge werden eingesetzt, um zu erkennen, um welche Verbindung es sich handelt.
+
+01:11:48.837 --> 01:11:57.157
+<v SPEAKER_1>Aber dazu muss das NUT eine ganze Menge darüber wissen, wie eigentlich diese Kommunikation läuft. Und kommt eigentlich schon komplett davon ab, dass man eigentlich alles nur noch auf IP-Level macht.
+
+01:11:57.177 --> 01:12:35.897
+<v SPEAKER_2>Genau, also NUT implementiert TCP und UDP auf jeden Fall noch mal in irgendeiner Form mit. Also braucht ein Verständnis davon zumindest. Und es geht sogar noch weiter, es gibt dann auch Protokolle auf den höheren Layern, also über TCP und UDP, für die man dann noch so einen kleinen Hack implementieren muss, damit die dann auch übers NUT funktionieren. Also es ist sehr hässlich und man weiß auch, dass es hässlich ist, aber es war halt ein Hotfix. Denn eine Standardisierung von einem neuen IP-Protokoll und dann auch eine Umsetzung, das dauert halt. Und in der Zeit muss man sich ja irgendwie aushelfen.
+
+01:12:36.857 --> 01:12:57.997
+<v SPEAKER_1>Gut, Nat muss mehr wissen darüber, was über IP denn tatsächlich gesprochen wird. Das geht uns ja jetzt genauso. Kommen wir noch mal zu den anderen Komponenten. Man sagt ja immer TCP-IP. Genaugenommen spricht man ja eigentlich von drei Protokollen. Da gibt es dann auch noch UDP. Welche Rolle übernehmen die und wie verhalten die sich zu IP?
+
+01:13:02.877 --> 01:13:20.737
+<v SPEAKER_2>Wir haben ja jetzt mit IP die Möglichkeit, Pakete von einem Ort der Welt zum nächsten zu bringen. Allerdings haben wir überhaupt keine Art von Zusicherung, dass diese Pakete auch jemals ankommen. Wir geben IP das Paket und sagen, probiere mal dein Bestes.
+
+01:13:24.997 --> 01:13:34.717
+<v SPEAKER_1>Auch ein schönes Bild eigentlich für Encapsulation. Der Zettel ist die Payload und irgendwie die Flasche ist der Header.
+
+01:13:34.737 --> 01:13:54.277
+<v SPEAKER_2>Was man jetzt eigentlich haben will, ist, man möchte ja schon sagen, ich schicke jetzt meine Daten und ich möchte auch, dass sie ankommen. Und es wäre auch ganz schön, wenn sie in der richtigen Reihenfolge ankommen. Denn wenn ich jetzt einen Text geschrieben habe und die Wörter verwürfelt an, dann ist das irgendwie auch relativ unschön.
+
+01:13:55.337 --> 01:14:14.037
+<v SPEAKER_1>Aber wenn ich jetzt erstmal nur auf IP-Level ein Paket verschicke, und das kann nicht zugestellt werden, weil es diese Adresse nicht gibt, weil es keinen Rechner gibt, der dann tatsächlich darauf reagiert, weil das kann ja erst außerhalb meines Netzes überhaupt festgestellt werden, welche Art Rückmeldung gibt es denn dafür überhaupt? Keine?
+
+01:14:18.117 --> 01:14:43.537
+<v SPEAKER_2>Häufig keine, allerdings gibt es natürlich das sogenannte ICMP-Protokoll, das ist so der Diagnoseteil der TCPIP-Protokollfamilie. Wir könnten jetzt zum Beispiel gemeldet bekommen von einem Router über ein solches ICMP-Paket, dass es diesen Host einfach nicht gibt zum Beispiel.
+
+01:14:43.557 --> 01:14:47.817
+<v SPEAKER_1>Was heißt, man könnte gemeldet bekommen? Bekommt man?
+
+01:14:47.837 --> 01:15:28.837
+<v SPEAKER_2>Das hängt eben von der Konfiguration ab. Also ursprünglich war es so gedacht, dass die Hosts auch tatsächlich antworten und sagen, ja, ich habe hier gerade entdeckt, du wolltest das da und da hin routen, aber das gibt es gar nicht. Also hier gibt es nicht. Das Ding ist nur, das ist natürlich auch Information für jemanden, der möglicherweise Informationen über das Netzwerk einsammeln möchte, die er nicht haben sollte. Sprich, dieses Diagnose-Feature wollen viele Leute dann auch abschalten, um ihr Netzwerk davor zu schützen, dass jemand dann diese Information gelangt.
+
+01:15:28.857 --> 01:15:29.637
+<v SPEAKER_1>Wer will das abschalten?
+
+01:15:30.937 --> 01:15:32.597
+<v SPEAKER_2>Systemadministratoren, exakt.
+
+01:15:32.617 --> 01:15:33.677
+<v SPEAKER_1>Das tun sie dann auch?
+
+01:15:33.697 --> 01:15:45.497
+<v SPEAKER_2>Das tun sie dann auch. Sie können natürlich jetzt sagen, sämtliche ICMP-Kommunikation will ich eigentlich nicht in mein Netz lassen.
+
+01:15:45.517 --> 01:15:47.537
+<v SPEAKER_1>Ist das die Regel?
+
+01:15:47.557 --> 01:15:58.317
+<v SPEAKER_2>Sämtliche vielleicht nicht, aber ja, doch. Ich würde fast schon von der Regel sprechen. Das ist schwer.
+
+01:15:58.337 --> 01:16:00.517
+<v SPEAKER_1>Was machen denn diese normalen Nattrauter?
+
+01:16:01.977 --> 01:16:16.717
+<v SPEAKER_2>Beim Natt ist ja sowieso noch mal das Problem. Du schickst ja was und wenn er keinen Eintrag in seiner Tabelle hat, für wen das sein könnte, dann sagt er sich natürlich, naja, okay, gibt's nicht, ich lass das mal fallen.
+
+01:16:17.237 --> 01:16:31.557
+<v SPEAKER_1>Also wenn irgendeine Anfrage kommt und die kann nicht zugestellt werden, dann schickt er eben kein ICMP-Paket. Weil das so sein soll oder weil das einfach so ist? Oder weil man so viel Angst hat?
+
+01:16:31.577 --> 01:17:06.057
+<v SPEAKER_2>Teils, teils. Also ICMP ist mehr oder weniger, also ich würde schon sagen, dass man es aus Sicherheitsgründen mehr oder weniger disabled hat. Natürlich nicht überall, aber in der Summe dann schon. Also gerade weil man eben nicht will, dass jemand dahergeht und zu viel über die interne Netzstruktur herausfindet. Und ein Protokoll, was nur dafür gedacht ist, solche Anfragen zu stellen, wie gibt es diesen Host oder nicht, das will man dann natürlich abschalten.
+
+01:17:06.077 --> 01:17:10.377
+<v SPEAKER_1>Aber es gibt auch andere Möglichkeiten, herauszufinden, ob es irgendeinen Host gibt oder nicht.
+
+01:17:10.397 --> 01:17:37.417
+<v SPEAKER_2>Ja, natürlich. Also man könnte zum Beispiel einfach versuchen, sich mit diesem Host zu verbinden. Allerdings, ja, da müsste man natürlich dann auch wissen, auf welchen Ports dieser Host mit welchem Protokoll antwortet. Es gibt sicher Möglichkeiten, herauszufinden, ob es einen Rechner gibt.
+
+01:17:37.437 --> 01:17:44.637
+<v SPEAKER_1>Macht es dann überhaupt Sinn, dieses ICMP an der Stelle zu blockieren? Findest du das gut? Findest du das nachvollziehbar?
+
+01:17:45.057 --> 01:18:16.257
+<v SPEAKER_2>Auf jeden Fall. Ich finde es nachvollziehbar. Man möchte einen potenziellen Angreifer nur so schwer wie möglich machen. Wenn man da zig Tricks ausprobieren muss, um zu erkennen, wo ein Host online ist und wo nicht, dann dauert das natürlich. Natürlich ist es besser zu sagen, wenn es eine Standard-Methode gibt, um solche Dinge herauszufinden, die Ihnen vielleicht wenige Millisekunden kosten, im Gegensatz zu stundenlang rumprobieren.
+
+01:18:17.017 --> 01:19:05.657
+<v SPEAKER_1>Okay, dann ist das schon mal so ein Punkt. Das heißt, die gewünschte Sicherheitslücken, die man so hat, erfordern drastische Maßnahmen, sodass eine Fehlerbehandlung über das Internet eigentlich fast schon ausgeschlossen ist. Das heißt, wenn ich mit irgendetwas kommuniziere im Internet und mein Paket losschicke in Erhoffnung auf Antwort, dann muss ich einfach mit allem rechnen. Ich muss damit rechnen, dass mein Paket schon auf dem Weg dorthin irgendwo versandet ist und mir keiner erzählt. Ich muss damit rechnen, dass es vielleicht angekommen ist und auch tatsächlich irgendeine Reaktion hervorgebracht hat, aber diese Reaktion es nie zu mir geschafft hat. Und was weiß ich, oder dass ich vielleicht auch Antworten kriege, für die ich nie eine Anfrage gestellt habe, etc. Also man muss eigentlich mit allem rechnen. Kann man das so zusammenfassen?
+
+01:19:06.697 --> 01:19:28.197
+<v SPEAKER_2>Es ist wie gesagt ein Best-Effort-Netz. Das heißt, man probiert es mal und vielleicht kommt es auch an und vielleicht nicht. Und das ist ja, das ist letztendlich der Grund dafür, warum wir sicher noch irgendwie mehr Logik brauchen auf den Layern da drüber. Um TCP jetzt mal anzusprechen. Was TCP ja eigentlich macht ist...
+
+01:19:28.217 --> 01:20:02.117
+<v SPEAKER_1>Bevor wir da hinkommen, das ist immer so ein unbeleuchteter Aspekt von ICMP. Aber wo... also gut, es kann im Internet, wird es kaum bedient und es wird häufig geblockt aus Sicherheit, okay. Aber was soll denn das ICMP dann überhaupt noch machen? Kann man das komplett weglassen oder tut es tatsächlich einen Dienst? Und auf welcher Ebene tut es diesen Dienst? Es ist sozusagen nur, wenn es dann verschickt wird und nicht geblockt ist, was ja vielleicht üblicherweise in meinem internen Netzwerk der Fall ist, dann bietet es mir sozusagen die Möglichkeit, schnell Fehler zu erkennen.
+
+01:20:02.137 --> 01:20:02.617
+<v SPEAKER_2>Genau.
+
+01:20:02.637 --> 01:20:10.497
+<v SPEAKER_1>Aber ich muss auch damit rechnen, dass es keine Rückmeldung gibt über ICMP, um diese Fehler dann auch noch irgendwie zu erkennen.
+
+01:20:10.517 --> 01:20:15.197
+<v SPEAKER_2>Ja, wenn man eine Antwort bekommt, ist gut. Aber wenn man keine bekommt, dann sagt einem das einfach nichts.
+
+01:20:15.217 --> 01:20:41.717
+<v SPEAKER_1>Okay, das heißt in einem internen Netz, wo ich sage, ich will jetzt zu diesem Server, wo ich eben noch mit ihm geredet habe, will ich was schicken. Und der Router, über den ich das schicke, stellt fest, der ist gerade ausgeschaltet worden. Oder ich habe eben schon festgestellt, dass es den nicht mehr gibt. Dann schickt der mir gleich eine Antwort per ICMP und sagt, den gibt es nicht mehr. Das heißt, ich klicke da drauf und dann sofort kommt irgendwie die Meldung, die dann auch im Idealfall in mein User-Interface übersetzt wird mit, kannst vergessen, da.
+
+01:20:42.137 --> 01:20:56.037
+<v SPEAKER_2>Also im LAN ja auch durchaus noch eine Sache, die dann auch enabled ist, auf die man zählen kann, aber im Internet, nee, vergesst es.
+
+01:20:56.057 --> 01:20:59.537
+<v SPEAKER_1>Wie groß kann ich denn diese Pakete machen, die da verschickt werden?
+
+01:20:59.557 --> 01:22:58.137
+<v SPEAKER_2>Die IP-Pakete jetzt? Die können, also das Längenfeld sind 16 Bit, das heißt, man kann maximal 65.000, 65.000 Byte etwa verschicken. Das Ding ist nur, man möchte ja auch, also man schickt in der Regel kleinere Pakete, weil man ja nicht weiß, ob alle auf dem Weg, alle Router auf dem Weg auch in der Lage sind, so riesige Pakete zu verarbeiten. Es gibt natürlich, also wenn ein Router jetzt so ein riesiges Paket bekommt, dann hat er eigentlich zwei Möglichkeiten. Er kann zum einen sagen, das ist mir einfach zu groß, damit will ich nicht arbeiten, das solltest du in Stücke schneiden, oder aber er macht das tatsächlich selbst. Beides ist nicht so schön. Also das ist die sogenannte IP-Fragmentation, man fragmentiert seine Pakete. Und das Problem daran ist natürlich, wir schreiben mir bei IP nicht wirklich vor, welche Route die Pakete zu gehen haben. Das heißt, wenn wir ein Paket in mehrere Fragmente aufteilen, dann kann es sein, dass das eine Fragment über den einen Pfad zur Destination wandert, also zum Receiver, und das andere Paket über einen anderen Pfad. Das heißt, die Pakete können sich vermischen, es können Teile, es können Fragmente des Pakets verloren gehen. Und irgendwann muss man das ja wieder zusammensetzen, vermutlich schon an irgendeinem Router. Das heißt, dieser Router muss jetzt darauf warten, dass diese ganzen Fragmente wieder ankommen, um es dann wieder zusammenzusetzen. Und deswegen, wenn es nicht unbedingt sein muss, dann fragmentiert man auch nicht groß.
+
+01:22:58.157 --> 01:23:00.037
+<v SPEAKER_1>Wer entscheidet denn, ob gefragmentiert wird oder nicht?
+
+01:23:00.417 --> 01:23:11.577
+<v SPEAKER_2>Ja, der Sender. Ich? Genau, außer wenn der Router sofort sagt, ne, das, also irgendwie, Fragmentation erlaube ich nicht, aber meistens ist es nicht der Fall.
+
+01:23:12.297 --> 01:23:20.017
+<v SPEAKER_1>Aber das weiß ich ja als Sender überhaupt gar nicht, wie groß die Pakete jetzt eigentlich sein dürfen. Wovon kann man denn ausgehen?
+
+01:23:20.037 --> 01:23:52.957
+<v SPEAKER_2>Doch, doch, also das IP-Protokoll enthält einen Teil, die sogenannte PATH MTU Discovery. Da kann man ermitteln, wie groß denn die Pakete sein dürfen. In der Regel ist es nicht so das Problem, denn wir müssen ja sowieso erstmal unser Paket per Ethernet an unseren Router bringen. Und Ethernet hat ja da eine feste Limitierung. Ja, nicht fest, aber... Ja, ein Default, genau.
+
+01:23:52.977 --> 01:23:54.257
+<v SPEAKER_1>Was war das? 1500 Bytes?
+
+01:23:54.277 --> 01:24:27.057
+<v SPEAKER_2>1500 Bytes, genau. Das wird eben gerade überarbeitet, wir bekommen Jumbo-Frames usw. Aber prinzipiell motiviert das Medium erstmal, dass wir sowieso nur Pakete schicken, die irgendwie 1500 Bytes groß sind. Dann ist es ja auch so, man möchte ja auch... Man möchte ja jetzt nicht erst ewig warten, bis man eine ganze Menge Bytes beieinander hat, die dann in einen Container packen und losschicken und hoffen, dass das auch noch ankommt. Sondern es ist wahrscheinlich eher schlau zu sagen, naja, ich schicke jetzt erstmal ein bisschen, dann schicke ich noch was, und am Ende wird es sowieso wieder zusammengesetzt.
+
+01:24:30.177 --> 01:24:43.737
+<v SPEAKER_1>Aber ich könnte mir vorstellen, dass ich jetzt durchaus den Bedarf habe, auch größere Pakete zu verschicken. Wenn ich mir jetzt vorstelle, ich schreibe irgendwie Daten schnell auf einen Server, der irgendwie in meinem Laden ist, dann möchte ich natürlich da so wenig Overhead haben, wie irgendwie möglich.
+
+01:24:45.837 --> 01:24:46.797
+<v SPEAKER_2>Das ist so so.
+
+01:24:46.817 --> 01:24:50.637
+<v SPEAKER_1>Und was kann man da tun? Jumbo-Frames, hast du gesagt, gibt es?
+
+01:24:50.657 --> 01:26:27.917
+<v SPEAKER_2>Ja, Jumbo-Frames, das ist jetzt wieder auf dem Link-Layer. Also da sind wir wieder bei Layer 2, beim Ethernet. Da ist es so, dass wir im 10-Ambit und im 100-Ambit Ethernet immer Frames hatten, die bis zu 1500 Byte groß sind. Das liegt einfach daran, dass es natürlich auch eine bestimmte Zeit braucht, einen Byte zu versenden. Und wenn wir jetzt zu große Frames bauen, dann blockieren wir ja möglicherweise die Bridges und Router und so weiter in diesem Netzsegment zu lange. Und wenn dann jetzt beispielsweise jemand anderes gerade eine Voice-over-IP oder so am Laufen hat und wir blockieren da ewig den Switch und er erfährt eine unglaubliche Verzögerung bei seinen Voice-over-IP-Paketen, dann ist das suboptimal. Entsprechend hat man sich gesagt, naja, wir limitieren das auf 1500 Bytes. Jetzt haben wir allerdings Gigabit-Ethernet und da braucht natürlich ein Byte viel weniger Zeit, um übertragen zu werden. Entsprechend kann man jetzt auch die Frame-Größe entsprechend anpassen. Da ist man jetzt bei 9000 Bytes. Warum 9000 und nicht mehr? Das liegt dann nicht mehr an der Geschwindigkeit, sondern an der Prüf-Summe. Die Prüf-Summe ist ab 9000 Bytes einfach nicht mehr effektiv.
+
+01:26:27.937 --> 01:26:33.557
+<v SPEAKER_1>Das CRC32. Das hat man so herausgefunden durch mathematische Betrachtung?
+
+01:26:33.577 --> 01:26:41.657
+<v SPEAKER_2>Durch mathematische Betrachtung, genau. Deswegen ist das neue Limit bei 9000 Bytes pro Frame.
+
+01:26:41.677 --> 01:26:50.617
+<v SPEAKER_1>Echt ausgerechnet 9000? Das passt ja dann gleich zu diesem Over-9000-Meme, was sehr populär ist.
+
+01:26:51.937 --> 01:26:53.377
+<v SPEAKER_2>Das sind genau 9000.
+
+01:26:54.537 --> 01:28:02.077
+<v SPEAKER_1>It's insecure, because it's over 9000. Gut, also wir müssen zusammenfassen. Also, Pakete werden verschickt, wie die Router, können sie sich mit das weiterleiten, am Ende, da wo sie ankommen, werden sie in die richtige Stelle zugestellt. Auf dem Weg dahin gibt es verschiedene Hürden zu nehmen, neben dem Routing und dem Feststellen, ob Pakete überhaupt angekommen sind oder nicht. Da kann einem ICMP manchmal helfen oder nicht, wenn es nicht gefiltert wird. Im Internet wird es eher gefiltert, im lokalen Netz ist es eher da. Und auf dem Weg dahin habe ich wenig Möglichkeiten, Einfluss zu nehmen, aber eine der Sachen ist halt, dass ich diese MTU, Maximum Transfer Unit heißt das glaube ich, dass man die irgendwie noch variieren kann. So, üblicherweise ist es auf dem Ethernet 1500 Bits, kann aber auch mehr sein. Wenn ich jetzt so ein Jumbo-Paket verschicke mit 9000 Bits und ich schicke das ins Internet, ist da nicht die Wahrscheinlichkeit sehr groß, dass es dann auf der anderen Stelle wieder in kleinere Teile zerhackt wird. Und ich finde, dass diese Fragmentierung dann nicht automatisch stattfindet.
+
+01:28:02.097 --> 01:28:04.077
+<v SPEAKER_2>Richtig, die muss dann im Netz stattfinden.
+
+01:28:04.097 --> 01:28:27.597
+<v SPEAKER_1>Und ist da nicht dann der Transfer durch die ganzen Probleme, die du benannt hast, dann irgendwie gefährdet? Kommen groß verschickte Pakete schlechter an? Kann man so etwas daraus folgern? Und ist das irgendwie doof? Oder ist das zu viel Paranoia? Und diese Fragmentierung, diese automatische, funktioniert in der Regel ganz gut.
+
+01:28:27.617 --> 01:28:45.757
+<v SPEAKER_2>In der Regel schon. Also man kann halt damit viele lustige Dinge tun als Angreifer mit dieser Fragmentierung. Weswegen sie im Allgemeinen als eine der hässlicheren IP-Features betrachtet wird. Aber es funktioniert schon.
+
+01:28:45.777 --> 01:29:27.557
+<v SPEAKER_1>Was steckt denn jetzt noch drin in diesem IP-Paket? Ich meine, wir haben jetzt gesagt, ok, da ist halt die Adresse drin, da ist die Prüf-Summe drin. Für diese Fragmentierung gibt es dann auch noch die entsprechende Durchnummerierung. Da steht drin, wie groß das Ding irgendwie ist. Da steht dann auch noch drin in etwa, was in diesem Paket drin ist, damit man die auch noch unterscheiden kann. Das ist dieser Type of Service. Da können wir gleich nochmal dazu kommen. Aber bevor wir zu Ports und TCP und UDP dann vielleicht nochmal genauer kommen, da gibt es ja dann noch diese TTL-Information. Time to Live. Was steckt dahinter?
+
+01:29:29.757 --> 01:30:02.417
+<v SPEAKER_2>Es geht darum, man möchte, das Internet ist ja so aufgebaut, wie gesagt, wenn wir nicht wissen, wie wir an einen Punkt kommen, dann delegieren wir die Aufgabe. Dann sagen wir, probier du mal, das Paket irgendwie zu versenden. Es kann da natürlich das Problem auftreten, dass man im Kreis läuft, dass man halt einfach ein Paket weiterleitet, jetzt an A und A an B und B sagt sich wiederum an C und C wieder an A. Und dann läuft das Paket ewig im Kreis.
+
+01:30:02.437 --> 01:30:05.377
+<v SPEAKER_1>Weil was falsch ist, sozusagen.
+
+01:30:05.697 --> 01:30:07.617
+<v SPEAKER_2>Genau, weil etwas falsch konfiguriert ist.
+
+01:30:09.217 --> 01:30:12.257
+<v SPEAKER_1>Oder kaputt ist oder Software Scheiß funktioniert.
+
+01:30:12.277 --> 01:30:40.457
+<v SPEAKER_2>Genau, Dinge passieren. Und deswegen möchte man in dem Paket vermerken, pass mal auf, du darfst das Paket hier fünfmal routen, aber danach ist auch Schluss, dann verwirfst du bitte einfach, damit es nicht ewig im Kreis läuft. Ja, und das ist dieses Time-to-Live-Feld. Time ist eigentlich komisch an der Stelle, weil es sind die Anzahl der Hops. Also es geht darum, wie viele Router dürfen das in der Hand gehabt haben, bevor das Paket einfach am Router verworfen wird, weil es nicht angekommen ist.
+
+01:30:40.477 --> 01:30:48.137
+<v SPEAKER_1>Also ein Hop ist sozusagen, das Paket geht von einem Router zum nächsten. Also sozusagen ein Hüpfer, ein Netzhüpfer.
+
+01:30:48.157 --> 01:30:49.277
+<v SPEAKER_2>Genau, ein Netzhüpfer.
+
+01:30:49.297 --> 01:30:50.717
+<v SPEAKER_1>Und wie viele Netzhüpfer sind erlaubt?
+
+01:30:51.957 --> 01:30:53.637
+<v SPEAKER_2>Na ja, das stellt man der TTL ein.
+
+01:30:53.657 --> 01:30:54.597
+<v SPEAKER_1>Wie groß ist die?
+
+01:30:54.617 --> 01:31:00.157
+<v SPEAKER_2>In der Regel groß genug. Wie groß ist die so? Gucken Sie, ich glaube.
+
+01:31:00.177 --> 01:31:16.997
+<v SPEAKER_1>0 bis 3, 4 bis 7 steht hier. Das sind wahrscheinlich 8 Bit. Das heißt, theoretisch könnte es irgendwie 255 Hüpfer machen. Aber so viel ist es in der Regel nicht, oder? Es war mal 30, glaube ich, so als Standard. Ist das noch so?
+
+01:31:17.017 --> 01:31:20.217
+<v SPEAKER_2>Das kann ich jetzt nicht sagen.
+
+01:31:20.237 --> 01:31:50.577
+<v SPEAKER_1>Irgendwas habe ich Leuten hören, dass das nicht mehr so die richtige Zahl ist. Früher ist man davon ausgegangen, und dann wahrscheinlich auch zurecht, dass etwas, was mehr als 30 Wege nimmt... Ich sehe es richtig, die TTL wird am Anfang auf einen Wert gesetzt, und jedes Mal, wenn es weitergereicht wird, wird es runtergezählt. Das heißt, der Router, der das auf Null sieht, sagt Schluss.
+
+01:31:50.597 --> 01:31:50.977
+<v SPEAKER_2>Genau.
+
+01:31:50.997 --> 01:31:58.977
+<v SPEAKER_1>Und dann wird das Ding einfach feiern gelassen, wie eine heiße Kartoffel. Wenn man erst mal anfängt, es zurückzuschicken, dann dreht sich alles im Kreis.
+
+01:31:58.997 --> 01:32:11.137
+<v SPEAKER_2>Nicht ganz. Es kann auch sein, man darf oder sollte vielleicht sogar ein ICMP-Paket zurückschicken und sagen, dieses Paket war zu lange im Netz.
+
+01:32:11.157 --> 01:32:12.157
+<v SPEAKER_1>Es ist zu alt, zu viel gehüpft.
+
+01:32:13.237 --> 01:32:51.117
+<v SPEAKER_2>Ich habe es weggeworfen, denn es ist zu viel gehüpft. Allerdings ist das natürlich auch für einen Angreifer relativ interessant. Denn wenn er die TTL auf 1 setzt, das Paket verschickt und dann diese Antwort bekommt, dann weiß er natürlich, einen Hopp entfernt steht dieser Gateway. Wenn er jetzt die TTL auf 2 setzt, weiß er dann, zwei Hops weiter ist der und der Gateway. Das ist natürlich auch wirklich Information, die ihn weiterbringen kann. Wenn er zum Beispiel wissen will, was ist denn der Router, der jetzt in dem Netz da drüben steht.
+
+01:32:51.137 --> 01:32:55.257
+<v SPEAKER_1>Aber dagegen kann man sich auch gar nicht... also ich meine, das funktioniert so.
+
+01:32:55.277 --> 01:33:00.217
+<v SPEAKER_2>Ja, außer man firewallt es eben. Außer man sagt, ich schicke halt einfach keine ICMP-Pakete zurück.
+
+01:33:00.237 --> 01:33:06.397
+<v SPEAKER_1>Aber funktioniert nicht auch Ping auf Basis dieser TTL? Nie, nie, nie.
+
+01:33:06.417 --> 01:33:09.457
+<v SPEAKER_2>Der normale ICMP-Echo?
+
+01:33:09.477 --> 01:33:18.017
+<v SPEAKER_1>Also das Ping-Commando? Genau. Irgendwie ist der andere da, verschickt was? Wenn ich jetzt sage Ping, dieser andere Computer?
+
+01:33:18.037 --> 01:33:20.417
+<v SPEAKER_2>Genau, also das hat mit der TTL nichts zu tun.
+
+01:33:20.477 --> 01:33:28.177
+<v SPEAKER_1>Achso, oder war das MTR, dieses Tool, was das macht? Es gibt irgend so ein Tool, was meines Wissens...
+
+01:33:28.197 --> 01:33:39.777
+<v SPEAKER_2>Also TraceRoot verwendet dieses Schema, was ich gerade beschrieben habe. Ah, TraceRoot macht das. Genau, aber bei einem Ping ist das ganz egal. Also setzt man die TTL halt so hoch, wie man möchte, damit...
+
+01:33:39.797 --> 01:34:08.797
+<v SPEAKER_1>Ja, okay, ich habe es auch verwechselt. Ich meinte TraceRoot und dachte, MTR macht es anders. Das heißt, das ist sozusagen wieder Debugging und Sicherheitsprobleme in allem. Das ist eigentlich ein genereller Widerspruch. Umso mehr Features und Bequemlichkeit man haben will, umso mehr Usability man eigentlich von dem Netzwerk erwartet, das es von sich berichtet, umso mehr öffnet man quasi auch die Bücher für potenzielle Attacken. Ist böse da draußen, die Welt, oder?
+
+01:34:08.817 --> 01:34:09.617
+<v SPEAKER_2>Schon so ein bisschen.
+
+01:34:09.637 --> 01:35:37.317
+<v SPEAKER_1>Internet? Aber macht auch Spaß. Macht auch Spaß. Gut. Das heißt, jetzt denke ich, jetzt haben wir ja im Prinzip einmal alles beschrieben. Jetzt wo ich das sage, haben wir wahrscheinlich wieder irgendwas Wichtiges weggelassen. Ich fasse jetzt noch, ja genau, um erstmal überhaupt dieses IP. Also ich meine, ich sage zum Beispiel immer gerne, ich rede immer gerne von IP, ohne TCP zu sagen, um dann einfach auch klar zu machen, worüber ich rede, nämlich über diesen Network-Layer. Und wir haben dem jetzt relativ viel Raum gegeben, weil das ja nun eigentlich auch das Herz der ganzen Geschichte ist. Also wenn man verstehen will, wie das Internet funktioniert, dann ist ja eigentlich dieser Kernpunkt, dieser Netzwerk-Layer, der heißt ja auch noch so, repräsentiert ja im Prinzip die nahezu vollständige Funktionalität des Internets. Und alles, was dann da drüber ist, ist ja bereits zugestellt. Also alles, was irgendwie über den Layer 3 hinausgeht, was sozusagen ankommt, da ist das Netzwerk als solches ja bereits am Leben. Da sind Pakete in die richtige Richtung geschickt worden, Rechner können sich irgendwie unterhalten und ab da geht es eigentlich los mit dem, wie quatschen wir eigentlich miteinander? Und man könnte ja jetzt auch sagen, warum noch mehr definieren? Warum sind wir nicht glücklich mit IP? Und IP ist halt einfach nur IP. Warum ist es jetzt noch erforderlich, da noch oben was draufzusetzen?
+
+01:35:39.557 --> 01:36:28.617
+<v SPEAKER_2>Na, es ist sicherlich so, dass man nicht damit leben kann, dass das Paket manchmal ankommt und manchmal nicht, zumindest nicht in jeder Anwendung. Dazu kommt noch, man möchte ja sicherlich auch, dass man einen Kanal hat, bei dem man weiß, ich packe jetzt hier Paket A rein und dann packe ich da Paket B rein und dann kommt auch auf dem anderen Ende erst A raus und dann kommt da B raus. Und das bietet ja eigentlich IP nicht. Das müssen wir jetzt irgendwie logisch herstellen. Wir müssen diesen Kanal jetzt erst bauen, auf IP drauf. Und das ist das, was TCP macht. Und deswegen ist TCP das zweite wichtige Protokoll in der TCP-IP-Familie. Und deswegen auch der Name TCP-IP.
+
+01:36:28.637 --> 01:37:33.337
+<v SPEAKER_1>Das IP kann man sich eigentlich vorstellen wie so eine Herrscher von Schülernlotsen, die schon irgendwie sagen, du gehst jetzt hier über die Straße, aber die Schülernlotsen garantieren mir nicht, dass die Schüler auch an der Schule ankommen oder dass sie in einer bestimmten Reihenfolge ankommen. Sondern da bedarf es sozusagen anderer Maßnahmen. Das heißt, es gibt jetzt auf TCP im Wesentlichen zwei Protokolle. Es gibt auf IP zwei Protokolle. IP ist Layer 3, also von diesem OSI-Modell ausgehen. Das kann man diskutieren, inwieweit das jetzt da genau passt oder nicht. Aber ich glaube, für diese Zwecke sollte das reichen, das so zu beschreiben. Ich habe jetzt diesen Netzwerk-Layer, da drüber gibt es den nächsten Layer, und dieser Layer heißt Transport-Layer. Das heißt, hier geht es um den tatsächlichen Transport von Daten. Also hier geht es nicht so sehr um das Routing und um das Vernetzen. Die Logistik. Schön gesagt, die Logistik. Und da gibt es zwei Erlei, UDP und TCP. Was machen die beiden?
+
+01:37:33.357 --> 01:38:44.857
+<v SPEAKER_2>UDP ist wirklich nur ein sehr, sehr dünner Layer auf IP. Bei UDP ist es genauso wie bei IP. Man schickt sein Paket los und man weiß nicht, ob das ankommt. Das ist aber auch nicht in jedem Fall erforderlich. Es gibt ja solche Anwendungen wie zum Beispiel Voice-over-IP. Das ist eigentlich eines der klassischen Beispiele. Internet-Telefonie. Da ist es einem gar nicht so wichtig, dass man wirklich die genaue Folge der Pakete hatte, die der andere geschickt hat. Sondern es dürfen durchaus mal ein paar Pakete verloren gehen. Dann hört der halt kurz nichts. Viel wichtiger ist, dass man möglichst schnell, also dass man wenig Verzögerung hat, dass man möglichst schnell die Pakete, die man bekommt, auch an die Soundkarte weitergibt, so jetzt mal ein bisschen übersprungen, aber an die Soundkarte weitergibt, um dann möglichst schnell das Audio zu spielen. Denn nichts ist schlimmer, als wenn man mit jemandem telefoniert und man hat irgendwie eine halbe Sekunde Verzögerung dazwischen. Und da ist das, was IP macht, eigentlich vollkommen gerechtfertigt. Einfach zu sagen, naja, was du bekommst, das bekommst du, und was du nicht bekommst, das bekommst du halt nicht.
+
+01:38:45.077 --> 01:38:52.277
+<v SPEAKER_1>Du hast den Motto, wenn dieses Stück Audio jetzt nicht sofort angekommen ist, dann hilft es mir später auch nichts mehr.
+
+01:38:52.517 --> 01:38:52.837
+<v SPEAKER_2>Genau.
+
+01:38:52.857 --> 01:38:54.417
+<v SPEAKER_1>Also es muss dann auch nicht zweimal gesendet werden.
+
+01:38:55.437 --> 01:39:02.257
+<v SPEAKER_2>Richtig, richtig. Das ist UDP und ja, es ist eigentlich eine relativ rohe Verwendung von IP.
+
+01:39:02.277 --> 01:39:10.357
+<v SPEAKER_1>Aber trotzdem will ich natürlich bei Voice over IP auch schon so die Vorstellung einer Verbindung zwischen zwei Programmen haben. Das leistet dieser Layer ja nicht.
+
+01:39:10.377 --> 01:39:55.877
+<v SPEAKER_2>Richtig. Was beide, also sowohl TCP als auch UDP, tun, ist, sie erlauben es nochmal, dass wir, dass nicht nur zwei Rechner miteinander kommunizieren können, sondern dass die auch noch jeweils verschiedene Dienste haben können, die miteinander kommunizieren. Also es macht eine Art Multiplexing. Wir haben eigentlich nur diese beiden Rechner da. Aber wir würden gerne mehr als eine Sache auf einmal tun. Dann sollten wir das irgendwie logisch trennen. Und da kommt der Begriff des Ports zum Einsatz. Also jetzt fängt man an zu sagen, naja, dann modellieren wir den Host so ein bisschen so, als ob wir da verschiedene Türen dran haben.
+
+01:39:55.897 --> 01:40:03.097
+<v SPEAKER_1>Oder Briefkästen. Oder Briefkästen. Welches Vergleichsbeispiel wir jetzt heranziehen. Oder verschiedene Häfen.
+
+01:40:05.457 --> 01:40:06.437
+<v SPEAKER_2>Genau, Häfen.
+
+01:40:07.317 --> 01:40:50.977
+<v SPEAKER_1>Na ja, aber Flughäfen und so haben wir das ja auch. Moment, das heißt, über UDP kann man zwar Pakete, also UDP ist eigentlich die Dienstleistung, oder ist eigentlich die Abwesenheit von Dienstleistung, weil man benutzt das IP eigentlich nur so, wie es eben ist, in seiner ganzen Unzuverlässigkeit und so weiter. Aber man zieht das dann quasi auch als Dienstleistung an, dass man das eben einfach auch genau nur so nackt nutzt, weil es einem eben gerade in den Kram passt. Aber es bietet mir zumindest die Möglichkeit, verschiedene Ein- bzw. Ausgangskanäle zu definieren, damit mehrere Programme gleichzeitig von diesem Rechner aus mit anderen Programmen kommunizieren können.
+
+01:40:51.337 --> 01:41:04.797
+<v SPEAKER_2>Ja, und das hat man eben bei beiden Protokollen. Also UDP kann man sich wirklich so vorstellen. Da kommen mir jetzt halt diese Bezeichner dazu, mit welchem Port man quatschen möchte. Aber ansonsten ist das IP.
+
+01:41:04.817 --> 01:41:06.297
+<v SPEAKER_1>Das heißt, ein Port ist auch nur eine Zahl?
+
+01:41:06.757 --> 01:41:08.237
+<v SPEAKER_2>Ja, genau.
+
+01:41:08.257 --> 01:41:09.377
+<v SPEAKER_1>Und zwar eine?
+
+01:41:09.397 --> 01:41:10.217
+<v SPEAKER_2>16-Bit-Zahl.
+
+01:41:10.237 --> 01:41:19.117
+<v SPEAKER_1>16-Bit-Zahl. Das heißt, mehr als 65.535 Programme können nicht gleichzeitig über dasselbe Protokoll kommunizieren?
+
+01:41:19.137 --> 01:41:21.817
+<v SPEAKER_2>Zumindest bei zwei Haustieren, ja genau.
+
+01:41:21.837 --> 01:41:29.537
+<v SPEAKER_1>Hat sich aber bisher noch nicht unbedingt als Flaschenhals herausgestellt. Die Rechner sind einfach zu langsam.
+
+01:41:35.717 --> 01:41:52.617
+<v SPEAKER_2>Ja, und TCP, da wird es jetzt halt komplexer. Also da will man jetzt wirklich diese Röhre realisieren, wo man an der einen Seite was reinpackt und es auf der anderen Seite in dieser Reihenfolge auch wieder ankommt.
+
+01:41:52.637 --> 01:42:08.317
+<v SPEAKER_1>Vielleicht mal kurz in den Abkürzungen. UDP, User, Datagramm, Protokoll. Dieser Begriff Datagramm, das ist ja wieder yet another name for the same thing. Wir hatten mal den Frame, wir hatten mal das Packet. Jetzt ist es auf einmal ein Datagramm.
+
+01:42:10.097 --> 01:42:12.077
+<v SPEAKER_2>Ja, und bei TCP werden es dann Segmente.
+
+01:42:12.437 --> 01:42:16.037
+<v SPEAKER_1>Aber Datagramm ist im Prinzip auch nichts anderes als so ein Paket sozusagen.
+
+01:42:16.057 --> 01:42:18.037
+<v SPEAKER_2>Ist auch ein Paket, genau.
+
+01:42:18.057 --> 01:42:30.057
+<v SPEAKER_1>Und TCP steht für Transmission Control Protocol. Das heißt, hier geht es schon darum, dass diese Verbindung auch kontrolliert wird. Wir brauchen mehr Kontrolle, sowieso.
+
+01:42:30.077 --> 01:42:43.917
+<v SPEAKER_2>Vor allem, du sprichst es ja gerade an, wir haben eine Verbindung. Das haben wir bei UDP gar nicht. Bei UDP ist es so, wie gesagt, du bist einfach nur IP. Und wir hatten ja bisher noch überhaupt keine Art von Verbindung. Das heißt, kein...
+
+01:42:43.937 --> 01:42:48.737
+<v SPEAKER_1>Ja, man schickt das Paket halt zu irgendeinem Rechner, zu irgendeinem Port und da kommt es an oder auch nicht.
+
+01:42:48.757 --> 01:42:49.477
+<v SPEAKER_2>Oder auch nicht, genau.
+
+01:42:49.497 --> 01:42:51.997
+<v SPEAKER_1>Und das war es. Und bei TCP?
+
+01:42:52.677 --> 01:43:55.637
+<v SPEAKER_2>Bei TCP ist es jetzt so, dass wir sagen, es gibt zwei Parteien. Wir haben den Server und den Client. Der Server ist derjenige, der da sitzt und darauf wartet, dass der Client anfängt, ihm eine Anfrage zu schicken. Und Server und Client können jetzt eine Verbindung aufbauen, können sagen, so, wir kommunizieren jetzt miteinander und wir verwenden dazu folgende Bezeichnung für unsere Pakete. Also wir nummerieren unsere Pakete folgendermaßen. Und wenn diese Verbindung dann steht, dann hat man jetzt anders als bei UDP seine Pakete mit einer Nummer versehen. Das heißt, man hat jetzt die Möglichkeit zu gucken, in welcher Reihenfolge die Pakete denn überhaupt gesendet wurden am Empfänger. Und dementsprechend auch die Möglichkeit, es wieder umzusortieren, damit es in der richtigen Reihenfolge nach oben gereicht wird. Also an die Anwendung darüber. Zum Beispiel klassischerweise jetzt irgendwie ein Webserver.
+
+01:43:56.197 --> 01:44:47.497
+<v SPEAKER_1>Also während ich UDP verwende, ich eigentlich die Sprache von IP verwende. Das heißt, ich habe in sich abgeschlossene Datenpakete, am Anfang und am Ende, kann ich über TCP einen Datenstrom anlegen. Das heißt, ich lasse die Bytes da einfach reinfließen. Und es gibt erstmal kein Ende, solange bis ich sage, das Ende ist. Und der TCP-Layer entscheidet selbstständig, wie er das in Pakete zerlegt. Und während er das tut, holt er auf jeden Fall auf jedes Paket ein Stempel drauf, sodass er weiß, in welcher Reihenfolge die jetzt gedacht sind. Schickt sie idealerweise dann auch in dieser Reihenfolge raus. Und geht davon aus oder hofft zumindest, dass sie dann auch in dieser Reihenfolge auf der anderen Seite ankommt.
+
+01:44:47.517 --> 01:45:11.317
+<v SPEAKER_2>Genau. Wenn sie es aber nicht tun, dann ist es nicht so problematisch. Denn der Empfänger sieht ja, ach, das hier ist die 2, das hier ist die 5 und dann sollten wir vielleicht noch auf die 3 und die 4 warten, bis wir das Puzzle zusammen haben. Oder das hier ist die 3 und das hier ist die 2. Also sortieren wir sie um.
+
+01:45:11.377 --> 01:45:15.817
+<v SPEAKER_1>Was macht er, wenn ich sage, das ist die 2 und das ist die 20.000?
+
+01:45:15.837 --> 01:46:58.717
+<v SPEAKER_2>Ja, das haben wir alles durchprobiert. Mittlerweile kommt er mit so etwas ganz gut klar. An den Stellen einfach zu erkennen, hey, Blödsinn. Es gibt ein gewisses Fenster von Sequenznummern, also von Stempeln, die er zu jedem Zeitpunkt akzeptiert. Und wenn du ihm dann sagst, das ist irgendeine riesige Zahl, die überhaupt nicht dazu passt, dann wird er das Paket einfach verwerfen. Dann wird er sagen, das ist nicht das. Das ist ja auch wichtig, denn das ist eine der wenigen Möglichkeiten, die wir gerade haben, um auf der Ebene schon die Verbindung zu sichern. Das heißt, uns davor zu schützen, dass jemand anders einfach in unsere Leitung quatscht. Also auf den Layern darüber passiert natürlich alles Mögliche, SSL, HTTPS und so weiter. Aber wenn man jetzt nur eine TCP-Verbindung hat, vollkommen unverschlüsselt, da muss natürlich jemand, der da Daten in diese Leitung reinkriegen möchte, da müsste er eigentlich nur wissen, wer will ich denn versuchen zu sein, also wer ist der Absender? Wo will er hin kommunizieren? Zu welchem Host und zu welchem Port? Und von welchem Port tut er das so? Das wäre noch nicht besonders viel Information, und das ist aber Information, an die man rankommen kann. Jetzt kommt aber noch dazu, dass er diese Sequenznummern kennen muss oder zumindest den Bereich, um erfolgreich ein Datenpaket einzuschleusen.
+
+01:46:58.737 --> 01:47:46.897
+<v SPEAKER_1>Lassen wir mal diesen Sicherheitsaspekt erst noch mal raus und die eigentliche Funktionalität. Ich meine, wenn ich jetzt einen Datenstrom habe, der erzeugt Pakete, die gehen jetzt irgendwie raus und die werden alle durchnummeriert, Stempel, Stempel, Stempel, Stempel, Stempel. Was passiert da? Also auch dieses Konzept einer Verbindung. Also wie wird die aufrechterhalten? Was passiert konkret, wenn ich irgendwie eine Verbindung zu einem Server aufnehme, also eine TCP-Verbindung aufbauen will zur anderen Seite? Wann, inwiefern gibt es da noch einen Overhead? Und wann werden wirklich Daten gesendet? Und wie lange sendet der, bevor er, also dieses Kontroll, dieser Transmission, was findet da statt?
+
+01:47:46.917 --> 01:47:56.357
+<v SPEAKER_2>Das erste Wichtige ist, was wir bei UDP ja nicht hatten, wir bekommen tatsächlich Antworten und die sagen uns, ob unser Paket angekommen ist oder nicht.
+
+01:47:56.377 --> 01:47:57.677
+<v SPEAKER_1>Das ist dieser Kontrollaspekt.
+
+01:47:57.697 --> 01:48:43.877
+<v SPEAKER_2>Das ist der Kontrollaspekt, genau. Und dann ist es auch noch so, dass wir, also der zweite große Kontrollaspekt ist, dass die Verbindung versucht, das Netzwerk nicht zu überschwemmen. Also dass wir sowohl vom, also vom, na, das ist ein bisschen falsch, nochmal umformulieren, wir überschwemmen das Endsystem nicht. Darum kümmert sich das Endsystem, also der Receiver, indem es uns tatsächlich auch sagt, wenn es die Backen voll hat, also wenn es jetzt nicht mehr, wenn es gerade keine Pakete mehr processen kann, weil eben gerade noch genug zum dran arbeiten da ist.
+
+01:48:43.897 --> 01:49:20.437
+<v SPEAKER_1>Lass uns doch mal, lass uns doch mal wirklich so auf die einzelnen Schritte gehen. So, ich will jetzt eine Verbindung aufbauen. Was passiert? Was macht der TCP-Layer? Ich sage dem einfach, das ist ja überhaupt erst mal das neue, Verbindung gibt es ja nicht. Diese Idee einer Verbindung muss ja irgendwie erst mal entstehen. Und es muss ja in irgendeiner Form im Konsens mit der Gegenseite entstehen. Wenn ich also jetzt sage, bitte schön zu diesem Web-Server hätte ich jetzt gerne eine Verbindung, was tut mein TCP-Layer, um diese Dienstleistung für mich zu erbringen?
+
+01:49:20.457 --> 01:50:02.177
+<v SPEAKER_2>Also er sendet ein spezielles Paket, ein TCP-Paket, bei dem ein bestimmtes Kontrollflag gesetzt ist, das sogenannte Synflag, was so viel bedeutet wie, ich würde mich gerne mit dir synchronisieren, also ich möchte gerne mit dir eine Verbindung aufbauen. Das schickt er an den Server. Der Server bekommt das und schickt jetzt ein Paket zurück, in dem er zwei Flags setzt, einmal Synchronize und einmal Acknowledge. Also sprich, hiermit bestätige ich, dass ich deinen Acknowledgement, dass ich deinen Synchronisierungsrequest erhalten habe.
+
+01:50:02.197 --> 01:50:03.557
+<v SPEAKER_1>Oder wenn er nicht will.
+
+01:50:03.577 --> 01:50:13.117
+<v SPEAKER_2>Oder wenn er nicht will, also wenn da zum Beispiel kein Dienst ist, dann hat er zwei Möglichkeiten. Eins, er schickt ein Reset Acknowledgement zurück.
+
+01:50:15.537 --> 01:50:17.157
+<v SPEAKER_1>Das heißt, ich will die Verbindung auflösen?
+
+01:50:17.177 --> 01:50:20.597
+<v SPEAKER_2>Genau, ich will sie resetten.
+
+01:50:20.617 --> 01:50:21.217
+<v SPEAKER_1>Oder?
+
+01:50:21.237 --> 01:50:37.257
+<v SPEAKER_2>Oder aber, er schickt überhaupt nichts zurück, mit entsprechendem Firewalling. Das macht man, weil jemand ja dahergehen könnte und sagen könnte, ich würde jetzt gerne wissen, auf welchen Ports denn überhaupt Dienste zu erreichen sind.
+
+01:50:37.277 --> 01:50:38.057
+<v SPEAKER_1>Portscanning.
+
+01:50:38.077 --> 01:50:38.817
+<v SPEAKER_2>Genau, Portscanning.
+
+01:50:39.097 --> 01:50:42.637
+<v SPEAKER_1>Können wir gleich noch mal drauf separat kommen. Gehen wir erstmal von dem Normalfall aus.
+
+01:50:43.397 --> 01:50:47.737
+<v SPEAKER_2>Ja, also der Normalfall ist, wie gesagt, jetzt kommt dieses SYN-AC zurück.
+
+01:50:47.757 --> 01:50:55.957
+<v SPEAKER_1>Aber er kann ja auch sagen, ich will nicht mit dir. Ist das dann dieses Reset? Okay, gut. Also es gibt diese beiden Möglichkeiten eigentlich.
+
+01:50:55.977 --> 01:50:57.677
+<v SPEAKER_2>Genau, das sind so die Standardmöglichkeiten.
+
+01:50:57.697 --> 01:51:02.757
+<v SPEAKER_1>Gut, das heißt, er sagt jetzt irgendwie, okay, mit dir will ich. Und dann kriege ich das und dann geht's los.
+
+01:51:03.717 --> 01:51:08.297
+<v SPEAKER_2>Sagt man noch mal einmal AK, so von wegen, ich habe deinen Syn-AK auch erhalten.
+
+01:51:08.317 --> 01:51:13.117
+<v SPEAKER_1>Das heißt, der Server weiß auch, dass ich jetzt weiß, dass er mit mir reden will.
+
+01:51:13.137 --> 01:51:26.677
+<v SPEAKER_2>Genau. Jetzt hat der sogenannte drei-Wege-Handshake stattgefunden. Also drei Pakete wurden ausgetauscht und wir sind beide miteinander, also beide Server sind mit, äh, der Server und der Client sind miteinander synchronisiert.
+
+01:51:26.797 --> 01:51:36.857
+<v SPEAKER_1>Das heißt, vor jedem Web-Click sozusagen gehen auf jeden Fall immer erst mal drei Pakete Minimum hin und her, bevor irgendwelche wirklichen Daten ausgetauscht werden.
+
+01:51:37.097 --> 01:52:07.457
+<v SPEAKER_2>Ja, außer die Verbindung steht schon, aber eigentlich schon. Und in diesem Handshake setzt ja auch jeder schon die Startnummer für die Pakete, die er dann verschicken wird. Also wie gesagt, wir haben ja gesagt, die Pakete werden durchnummeriert. Und da sagt jetzt der eine, ja, ich möchte gerne mit dir eine Verbindung aufbauen und ich werde anfangen mit dem Paket Nummer 100. Und dann sagt der andere, okay, ich weiß, du willst mit dem Paket 100 anfangen und ich fange übrigens mit der 1000 an.
+
+01:52:07.477 --> 01:52:10.297
+<v SPEAKER_1>Das ist so ein Sicherheitsaspekt?
+
+01:52:10.317 --> 01:52:14.077
+<v SPEAKER_2>Ja, aber es geht natürlich auch darum, dass sie dann ordnen können.
+
+01:52:14.837 --> 01:52:16.057
+<v SPEAKER_1>Also sie können ja einfach bei Null anfangen.
+
+01:52:16.077 --> 01:52:42.357
+<v SPEAKER_2>Sie können bei Null anfangen, richtig. Hat man früher auch gemacht, solche Sachen. Naja, nicht bei Null, weil man hat ja... Naja, man hat halt irgendwie linear hochgezählt oder solche Geschichten. Heute ist es an der Stelle wirklich wichtig, dass es kryptographisch sicher ist, also dass man da richtige random numbers hat. Aber ja, es geht eigentlich prinzipiell nur darum zu sagen, ich fange jetzt an, meine Pakete so zu bezeichnen und so.
+
+01:52:42.377 --> 01:53:06.737
+<v SPEAKER_1>Okay, das heißt, dann fange ich an, jetzt dem Server was zu schicken. Im Falle von Web muss ich ihm ja das übliche irgendwie gib mir die Daten dieser URL rüberpfeifen, eben die ganzen HTTP-Zahlen. Darauf wollen wir jetzt nicht eingehen. Das heißt, ich schicke jetzt erstmal ein Datenpaket los. Und dann wartet er erstmal?
+
+01:53:08.397 --> 01:53:15.197
+<v SPEAKER_2>Ja, er sitzt jetzt gerade da und wartet. Und jetzt kommt das Datenpaket an. Und jetzt sieht er, oh, ich habe ein Datenpaket bekommen, wunderschön.
+
+01:53:15.217 --> 01:53:21.317
+<v SPEAKER_1>Ich meine, was macht der Client? Wenn er jetzt mehr als nur ein Paket zu verschicken hat?
+
+01:53:21.337 --> 01:53:23.437
+<v SPEAKER_2>Ja, du schickst es erst untereinander, oder?
+
+01:53:23.457 --> 01:53:27.737
+<v SPEAKER_1>Der schickt dann einfach so lange Pakete, wie er will?
+
+01:53:27.757 --> 01:53:38.477
+<v SPEAKER_2>Also es ist so, wir wollen ja das Netzwerk nicht überlasten. Aus diesem Grund, man schickt erst ein Paket und wartet auf eine Antwort.
+
+01:53:38.497 --> 01:53:41.137
+<v SPEAKER_1>Das heißt, es geht erstmal genau ein Paket raus?
+
+01:53:41.157 --> 01:54:37.357
+<v SPEAKER_2>Genau, dann wartet man auf eine Antwort. Und jetzt kommt die Antwort zurück. Und jetzt sagt man sich, oh, das ging also. Dann schicke ich doch mal zwei Pakete, also sofern ich das überhaupt noch senden will. Also bei einer Web-Session ist das ja häufig relativ kurz. Also nicht, dass man nicht noch ein zweites Paket senden will, aber das baut sich jetzt so auf. Man schickt jetzt zwei Pakete und guckt, ob er die auch bekommt. Also kriegt eben wieder eine Antwort. Und man macht das so lange, bis der Fall eintritt, dass Pakete verloren gehen, dass man keine Antwort bekommt. Und an der Stelle sagt man sich, oh, vielleicht sollte ich nicht irgendwie 60 Pakete auf einmal schicken. Das wäre vielleicht keine gute Idee. Und dann regelt man runter, dann halbiert man und fängt jetzt nur noch an, alle so und so viele Pakete ein Paket mehr zu verwenden.
+
+01:54:37.377 --> 01:54:46.557
+<v SPEAKER_1>Das heißt, die Anzahl von Paketen, die ausstehend sind, bevor sie von der Gegenseite bestätigt werden müssen, ist eine Variablegröße.
+
+01:54:46.577 --> 01:54:47.077
+<v SPEAKER_2>Genau.
+
+01:54:47.097 --> 01:55:04.637
+<v SPEAKER_1>Das ist das, was man als Sliding Windows bezeichnet? Und umso schneller das sozusagen geht, umso mehr Pakete werden das. Das heißt, umso mehr Vorlauf hat man. Und dadurch weniger Latenz auch beim Hin und Her Schicken von Daten.
+
+01:55:04.657 --> 01:55:14.357
+<v SPEAKER_2>Ja, und insgesamt wird das Ganze natürlich schneller. Also wenn ich immer warten muss, bis ich eine Antwort bekomme, dann kann ich ja nur ein Paket pro Roundtrip-Time schicken.
+
+01:55:14.377 --> 01:55:24.817
+<v SPEAKER_1>Das heißt, das ist eigentlich der Grund dafür, dass man, wenn man jetzt so ein Upload macht auf irgendein Server, FTP oder so, dann geht es am Anfang erstmal langsam.
+
+01:55:24.837 --> 01:55:25.077
+<v SPEAKER_2>Genau.
+
+01:55:25.097 --> 01:55:38.537
+<v SPEAKER_1>Und dann wird es nach einer Weile immer schneller und dann bleibt es auch schnell. So lange, bis irgendwie Fehler auftreten und dann wird es wieder langsamer und dann brauchst du dir eine Weile, sich zu erholen. Also dieses Ein- und Ausatmen der Bandbreite ist sozusagen ein wesentliches Merkmal von TCP an sich.
+
+01:55:38.557 --> 01:55:47.577
+<v SPEAKER_2>Genau. Das ist die Congestion Control, nennt man das, also Überlastkontrolle, und das ist ein wesentlicher Teil der TCP-Spezifikation.
+
+01:55:52.757 --> 01:55:53.577
+<v SPEAKER_1>Das ist es eigentlich.
+
+01:55:54.437 --> 01:56:32.457
+<v SPEAKER_2>Lass mich mal überlegen. Also was hatten wir denn jetzt? Wir hatten Ports, also Multiplexing irgendwie, hatten wir Congestion Control. Wir haben jetzt auch noch mal Flusskontrolle, also dass wir den Sender nicht überschwemmen. Das ist lustigerweise, das muss man sich ein bisschen durch den Kopf gehen lassen, es gibt einen Unterschied zwischen das Netz überschwemmen und den Empfänger überschwemmen. Dann haben wir Wiederprüf-Summen, Wiedererror-Control, Acknowledgements, also das Paket ist angekommen, Reordering, ja, ist eigentlich alles soweit da, glaube ich.
+
+01:56:32.477 --> 01:57:29.197
+<v SPEAKER_1>Das heißt, TCP ist quasi so ein Dienstleister für alles, was eine Verbindung haben will und was auch Flusskontrolle haben will. Weil Flusskontrolle gehört da irgendwie so dazu. Genau, und das hat den Vorteil, dass man sich nicht mehr drum kümmern muss, dass die Pakete in der richtigen Reihenfolge sind und dass man sich auch nicht mehr darum kümmern muss, ob sie überhaupt ankommen oder nicht. Aber es hat auch genau diesen Nachteil, was ja vorhin Voice-over-IP benannt, dass man lieber UDP benutzt, weil da diese Flow-Control, wo diese Retransmission nicht stattfindet, so nach dem Motto, wenn das Paket nicht ankommt, dann muss ich es nochmal schicken. Also das ist ja auch noch so ein Teil bei TCP. Aber im Falle von Voice-over-IP stört das ja eigentlich bei TCP. Andererseits will man schon eine Verbindung haben. Was ist mit diesem Prinzip, ich will eine Verbindung haben, aber ich will diese Wiederholung der Pakete nicht haben?
+
+01:57:29.217 --> 01:58:21.317
+<v SPEAKER_2>Ja, es gibt da verschiedene Ansätze. Die Leute fangen dann ja auch an, kreativ zu werden. Zum Beispiel gibt es acknowledged datagrams, also es gibt quasi UDP, aber man bekommt Antworten. Man bekommt gesagt, ist angekommen, oder man bekommt eben nichts gesagt, sprich, ist nicht angekommen. Dadurch hat man schon so eine Art Verbindung, weil man ja darüber informiert wird, was denn da gerade so mit den Paketen passiert. Aber man hat eben nicht diesen Charakter, dass man erst so lange warten muss, falls da irgendein Paket in der Mitte verloren gegangen ist, bis das retransmitted wurde. Das sind so Ansätze, aber nichts Größeres. Also es gibt da jetzt nicht noch so ein großes Protokoll, was man da noch nennen müsste.
+
+01:58:21.437 --> 01:58:24.557
+<v SPEAKER_1>Aber es gibt verschiedene Ansätze, solche Protokolle zu liefern.
+
+01:58:24.577 --> 01:58:33.057
+<v SPEAKER_2>Genau. Und die finden dann auch hier und da Anwendung. Aber innerhalb dieser Protokollfamilie gibt es da eigentlich nichts mehr.
+
+01:58:38.097 --> 01:59:43.337
+<v SPEAKER_1>Also wir hatten es ja vorher im Vorgespräch schon mal kurz angerissen. Es gibt ja so Ideen, ich weiß jetzt gar nicht ganz genau. Ich glaube, stand da sogar der Google dahinter, SCTP, also sozusagen so Protokolle, die so best of both worlds machen, die irgendwie versuchen, dann neue Sachen anzumachen. Wenn man jetzt sozusagen ein neues Protokoll auf dieser Transportebene einführen wollen würde, findet ja statt, also es gibt Leute, die würden das gerne einführen, dann bedeutet das ja, dass man ein IP-Paket verschickt, was einen anderen Protokoll-Typ ist, das fällt glaube ich, quasi in diesem Paket mit rein markiert. Also wo drin steht, das ist ein TCP-Paket, das ist ein UDP-Paket oder das ist ein ICMP-Paket, würde ja dann eine andere Zahl drin stehen. Wie ist denn das so in der Real World, wenn solche Pakete ankommen, die zu einem Protokoll gehören, von dem eigentlich keiner was weiß? Haben die überhaupt eine Überlebenschancer?
+
+01:59:43.357 --> 02:01:33.797
+<v SPEAKER_2>Ja, da ist eben wieder das Security-Problem, was uns da in den Weg kommen kann. Also der Ansatz ist ja heute mehr, naja, wir lassen durch, was wir kennen und wenn wir irgendwas sehen, was irgendwie bösartig aussieht, wollen wir das dann wirklich weiterleiten? Hm, eher nicht. Das ist ein großes Problem, was diese Art von Protokollen, mit dem die dann zu kämpfen haben. Anderes großes Problem ist, meistens wollen die dann irgendwo noch was in den IP-Header reinschreiben in irgendeiner Form. Meistens ist es irgendwie nötig. Und da gibt es jetzt ein so ein Feld, das könnten sie verwenden, dass das sogenannte Type of Service fällt. Also nicht das Protokoll fällt, sondern......nur das Thema. Ja, das ist ein Typ-of-Service-Feld. Das ist dafür da, um eben diese Dinge unterzubringen, wo man nicht genau wusste, wie man es sonst machen soll. Das ist das Schlimme. Wenn man sich die RFCs dazu anguckt, da gibt es eine Reihe von RFCs zum Type-of-Service-Feld und immer haben sie die Felder nochmal komplett angeglichen. Also irgendwer anders hat das jetzt reserviert. Zum Beispiel ein großer Kandidat, das lief lange, war Explicit Congestion Notification. Da ging es darum, dass die Router explizit sagen, so das Netz ist voll, bitte schick weniger. Weil bei der normalen TCP Congestion Control wartet man ja darauf, dass irgendwelche Pakete einfach aus dem Netz fallen. Und die hatten Teile des TOS-Felds für sich reserviert. Großes Problem daran ist nur, na ja, bei diesem TOS-Feld, man weiß halt nicht so ganz genau, was es heißt und was es nicht heißt. Und im Zweifelsfall sagt man sich dann, nee.
+
+02:01:33.817 --> 02:01:38.297
+<v SPEAKER_1>Ist das jetzt, Moment, ist das jetzt ein, reden wir von einem Feld in IP oder von TCP?
+
+02:01:38.317 --> 02:01:38.917
+<v SPEAKER_2>Von IP.
+
+02:01:40.357 --> 02:01:44.297
+<v SPEAKER_1>Das heißt, geht jetzt nicht nur für TCP.
+
+02:01:44.317 --> 02:01:44.577
+<v SPEAKER_2>Genau.
+
+02:01:45.537 --> 02:01:50.977
+<v SPEAKER_1>Und die Intention von dem TOS-Feld war?
+
+02:01:50.997 --> 02:01:59.957
+<v SPEAKER_2>Ja, das ist ein Unklar. Ja, okay. Vielleicht guckst du mal nach, aber es hat sehr unklare Anwendungen gefunden.
+
+02:01:59.977 --> 02:02:02.077
+<v SPEAKER_1>Ja, sind auch so 8-Bit.
+
+02:02:02.097 --> 02:02:29.757
+<v SPEAKER_2>Genau. Also was man darüber gemacht hat, ist Quality of Service zum Beispiel auch. Man hat sich gesagt, ich möchte beschreiben können, ob diese Daten, die ich hier gerade versende, wenn sie die Wahl hätten, möchten sie möglichst schnell ankommen oder möchten sie möglichst wahrscheinlich ankommen, dann können sie das hier im TOS-Feld sagen.
+
+02:02:29.777 --> 02:02:31.277
+<v SPEAKER_1>Das steht ja normalerweise drin.
+
+02:02:31.297 --> 02:02:44.917
+<v SPEAKER_2>Ja, da ist dann irgendein Flag gesetzt, da heißt es dann, ich bin ein Paket, was möglichst kleine Latenz erfahren will. Ja, das würde jeder haben, genau.
+
+02:02:45.697 --> 02:03:05.957
+<v SPEAKER_1>Setzt das dann nicht sowieso einfach jeder? Kommt ein neues OS-Core, noch schnelleres IP, keiner beachtet das. Ich kann es setzen, aber das, was am wahrscheinlichsten passiert ist, ist wie ein Bitte-nicht-werfen-Aufkleber auf dem Postpaket. Das wird dann einfach trotzdem in die Ecke geknallt.
+
+02:03:06.137 --> 02:03:16.897
+<v SPEAKER_2>Und schlimmer noch, wenn man dieses Feld setzt, das, was am wahrscheinlichsten passiert ist, dass das Paket irgendwo gedroppt wird, weil jemand sagt, nee, ich möchte keine Tossfelder, die nicht Null sind.
+
+02:03:16.917 --> 02:04:46.517
+<v SPEAKER_1>Das ist bestimmt irgendeine Sicherheitsschwankung. Das heißt, man kommt hier eigentlich an so einen Punkt, wo der Sicherheitsaspekt oder die Angst, die da draußen ist, die ja nicht ganz unbegründet ist, weil das Bedrohungsszenario ist ja real, wie wir alle wissen, eigentlich das Potenzial hat oder vielleicht nicht nur sogar das Potenzial, sondern auch konkret dazu führt, dass bestimmte Features so gar nicht genutzt werden können, die derzeit nur vorhergesehen sind, wie zum Beispiel das Type-of-Service-Teil, wie zum Beispiel die Congestion-Notification, also das ist ein Bit in diesem Type-of-Service, oder eben auch ein anderes Protokoll zu verwenden, wo die Leute auch sagen, alles, was nicht TCP, IP oder ODP oder ICMP ist, hat hier nichts zu suchen. Irgendwie bitte weitergehen, mit euch wollen wir nichts zu tun haben, sodass neue Protokolle eigentlich gar keine Chance haben. Ist das nicht eigentlich dann so ein Punkt, wo man sagen muss, Netzwerkneutralität kann gar nicht garantiert werden, weil es da zu viel Angst gibt? Ich weiß, das ist jetzt so ein bisschen die politische Aktion, die ich aufmache, aber die eigentliche Frage in technischer Hinsicht ist, ist es wirklich so blockiert und so unmöglich, mit diesen Feldern irgendetwas zu machen, oder siehst du durchaus die Möglichkeit, dass sich das noch mal entwickelt?
+
+02:04:48.077 --> 02:05:32.937
+<v SPEAKER_2>Es ist schon relativ zu, also die TCP-IP-Box ist schon zu, kann man schon sagen. Also es werden ja jetzt, also was so Netzwerkentwicklungen angeht, das geht ja meistens eher in Richtung anderer Stacks. Dass man zum Beispiel sagt, die ganze WPAR-Geschichte, die drahtlosen Sensornetze, und da geht man ja nicht daher und nimmt sich jetzt irgendwie diese Protokolle und entwickelt dann einfach Neues da drauf, sondern man sagt sich, na wir machen das von Grund auf neu und bauen jetzt eben Protokoll speziell für Sensornetze. Und das hat dann auch ein anderes Referenzmodell und so weiter. Also das ist wie Protokollentwicklung so läuft. Aber dass man jetzt sowas wie TCP-IP nochmal so richtig...
+
+02:05:32.957 --> 02:05:45.557
+<v SPEAKER_1>Das heißt da ist dann sozusagen schon auf Link-Level-Ebene, auf Frame-Ebene ein ganz anderer Protokoll-Stack sozusagen kodiert. Das ist nicht IP, sondern das ist something completely different.
+
+02:05:45.577 --> 02:06:03.677
+<v SPEAKER_2>Genau, zum Beispiel SIGBEE. Das ist ein gutes Beispiel für Sensornetze jetzt eben. Wenn man den TCP-IP-Stack nimmt und den SIGBEE-Stack und so nebeneinander hält, dann verschiebt sich dann auch einiges. Das ist halt ganz anders. Fertig. Und so, also solche Protokolle entstehen ja viel.
+
+02:06:03.697 --> 02:07:08.497
+<v SPEAKER_1>Muss ich mal kurz den Werbeblock einschmeißen. Sensornetze waren hier auch schon mal ein Thema. Werden das interessiert, Chaosradio Express 116, Mobile Atomic Networks war da so das Oberthema, aber da waren genau solche Sachen drin. Weniger jetzt auf Protokoll-Ebene, sondern vielmehr so, wie es benutzt wird, das noch mal so nebenbei, die Ungelegenheit muss genutzt werden. Kommen wir doch vielleicht zum Abschluss noch mal auf die Sicherheitsaspekte. Ich habe das jetzt immer so ein bisschen zur Seite geschoben, aber das ist ja jetzt auch so deine Stärke. Vielleicht mal, was wir vorhin schon erwähnt haben, Portscanning als Werkzeug, was siehst du für Schwachstellen in dem IPv4-Gerüst heute real, die wirklich ein Problem sind? Also wie sicher ist dieses ganze Gebäude?
+
+02:07:09.577 --> 02:07:39.917
+<v SPEAKER_2>Also es ist so, viele der Probleme, die da waren, sind mittlerweile abgegessen. Also ich glaube, wir sind gerade an einem Punkt, wo man die größten Dinge geschlossen hat. Das, was wirklich bei TCP am Anfang beunruhigend war, war wie einfach es war, letztendlich in eine Verbindung einzubrechen. Das ist mittlerweile nicht mehr drin.
+
+02:07:39.937 --> 02:07:40.717
+<v SPEAKER_1>Warum?
+
+02:07:40.737 --> 02:09:17.617
+<v SPEAKER_2>Weil man, wie gesagt, angefangen hat, Felder zu nehmen, die eigentlich ursprünglich nur so einen Zweck hatten, wie zu identifizieren, welches Paket das denn nun ist, also dieser Stempel. Und man hat das jetzt dazu verwendet, um zusätzlichen Zufall einzubauen, eine zusätzliche Zahl, die ein Angreifer raten müsste. Das heißt, das große Problem bei TCP IP insgesamt, denke ich, ist, wir fangen an, Felder und Funktionalitäten für Sicherheit zu verwenden, die ursprünglich nicht dafür gedacht waren. Bestes Beispiel sind ja Ports und Sequenznummern. Früher wäre keiner auf die Idee gekommen zu sagen, ich generiere mir jetzt einen Source-Port zufällig. Denn das bedeutet ja zusätzliche Arbeit für den Kernel, das heißt für jede Verbindung, die er aufbauen will, muss er ja nochmal eine Zufallszahl auswählen, hat keiner gemacht. Man hat die Ports einfach hochgezählt. Und das ist ja auch eigentlich berechtigt, denn das ist ja wirklich nur eine Bezeichnung für die Tür, die man gerade verwenden will. Und heute geht man daher und sagt, naja, aber wenn ich diese Tür nicht zufällig wähle, dann ist es für einen Angreifer viel zu einfach zu raten, welche Tür ich jetzt benutze. Also auf einmal ist das ein Security-Feature, obwohl es ursprünglich überhaupt keins war.
+
+02:09:17.637 --> 02:09:21.897
+<v SPEAKER_1>Und mittlerweile haben die Betriebssysteme nachgerüstet, dass sie das alles per Zufall machen?
+
+02:09:22.517 --> 02:09:54.317
+<v SPEAKER_2>Ja, genau. Das ist ja auch eine neue Entwicklung. Also wenn man sich zum Beispiel die DNS-Schwachstelle anguckt, die Kaminsky gefunden hat, da ging es ja letztendlich dann darum, also der Patch, den man am Ende hatte, war zu sagen, TCP-Sourceports sind schon zufällig, aber UDP-Sourceports meistens nicht. Also machen wir die jetzt auch zufällig. Und haben damit das Problem zumindest soweit aufgeschoben, bis wir irgendwie eine ordentliche Lösung haben.
+
+02:09:54.337 --> 02:09:54.697
+<v SPEAKER_1>Verstehe.
+
+02:09:56.157 --> 02:10:12.697
+<v SPEAKER_2>Und da geht einem langsam der Raum aus. Also sowohl für den Angreifer als auch für den, der dann patchen möchte. Also wir haben nicht unendlich viele Felder, die wir jetzt für Security verwenden können. Und wir haben aber auch nicht unendlich viele, die wir angreifen können.
+
+02:10:15.937 --> 02:10:25.637
+<v SPEAKER_1>Dein Vortrag vor zwei Jahren war irgendwie ein neuer Ansatz zum Thema Portscanning. Worum ging es dabei?
+
+02:10:25.657 --> 02:10:39.737
+<v SPEAKER_2>Was wir gemacht haben, war Folgendes. Wenn man einen Portscan startet, dann kann man ja nicht davon ausgehen, dass die Gegenseite auch tatsächlich immer brav sagt, dieser Port ist zu.
+
+02:10:39.757 --> 02:11:01.557
+<v SPEAKER_1>Vielleicht sagen wir kurz nochmal den Begriff, Leute. Also Portscanning ist sozusagen das in einer Reihe Abfragen von Ports, um zu gucken, ob dahinter irgendein Dienst tatsächlich irgendetwas anbietet. Also reagiert auf eine Anfrage. Und wenn man weiß, da läuft ein Webserver, dann kann man dann entsprechend den nächsten Schritt machen, beziehungsweise man will überhaupt erst mal rauskriegen, was ist denn das für ein Pöcksel. So, das vielleicht mal vorweg.
+
+02:11:07.097 --> 02:12:01.877
+<v SPEAKER_2>So, und was war das Problem? Das Problem war, genau, auf einmal stellen alle ihre Paketfilter auf, ihre Firewalls, und da heißt es einfach, Skandal, keiner will mehr nackt sein. Und da hieß es dann einfach, wenn du ein Paket bekommst an einen Port, der geschlossen ist, dann sag einfach nichts dazu. Früher hat man einfach gesagt, ich bin geschlossen. Und das war natürlich wunderschön, denn dann konnte man so schön abklappern und man hat sogar immer noch eine tolle Antwort bekommen. So von wegen, ich bin zu, ich bin auf und so weiter. Das bedeutete natürlich auch, man konnte eine Überlastkontrolle bauen, weil wenn man keine Antwort bekommen hat, dann wusste man, naja, da sind Pakete verloren gegangen, weil ich zu viel auf einmal schicke.
+
+02:12:01.897 --> 02:12:04.517
+<v SPEAKER_1>Wir reden ja jetzt von ICMP-Antworten.
+
+02:12:04.857 --> 02:12:12.517
+<v SPEAKER_2>Nee, wir reden von Antworten auf TCP-Verbindungsantworten. Also man schickt ein TCP-Syn-Paket.
+
+02:12:14.987 --> 02:12:18.227
+<v SPEAKER_1>Diese Aussage gilt jetzt nur für TCP?
+
+02:12:18.247 --> 02:14:03.497
+<v SPEAKER_2>Ja, man kann das Prinzip gut übertragen, aber wir haben es für TCP gemacht. Also wir schicken ein TCP-Syn-Paket und bekommen eben entweder ein RST-ACK zurück, das heißt, ich porte es zu, oder aber ein Syn-ACK heißt, Port ist offen. Gut, wenn jetzt aber nichts zurückkommt, dann wissen wir heutzutage nicht mehr, ob das Paket verloren gegangen ist oder ob der Port einfach zu war. Und das Problem, was es mit den Portscannern gab, war, die haben dann einfach gesagt, naja, dann ist vermutlich ein Paket verloren gegangen. Das ist ein schlechter Ansatz, weil das natürlich bedeutet, dass man jetzt auf einmal der Meinung ist, fast alle Pakete gehen verloren. Und dann sendet man entsprechend langsam. Und dann braucht so ein Portscan Stunden. Also wir uns überlegt, wie kann man denn eine ordentliche Überlastkontrolle basteln, die in der Lage ist, wirklich zu unterscheiden, ob das Paket jetzt, ob es keine Antwort gab, weil das Paket verworfen wurde, oder weil der Port so war. Wie wir das gemacht haben, ist folgendermaßen, wir haben uns am Anfang Pakete gesucht, die auf jeden Fall eine Antwort provozieren. Das konnte irgendwas Beliebiges sein, das konnte jetzt auch ein Ping sein oder so. Und jetzt haben wir jeweils eine Gruppe von Anfragen, eine Gruppe von TCP-Syn-Paketen an verschiedenen Ports, haben wir immer eins von diesen Paketen angehängt, was auf jeden Fall eine Antwort provoziert. Und weil wir wissen, dass da eine Antwort zurückkommt, Verstehe ich.
+
+02:14:04.457 --> 02:14:11.457
+<v SPEAKER_1>Sozusagen müsste das Paket ja eigentlich durchgegangen sein, und wenn nichts kommt, dann ist es wahrscheinlich einer, der meint, mich gibt es nicht, aber ich sag es dir nicht.
+
+02:14:12.497 --> 02:14:21.697
+<v SPEAKER_2>Verstehe. Und so konnte man dann tatsächliche TCP-Congestion-Control-Algorithmen implementieren, aber eben fürs Portscanning.
+
+02:14:21.717 --> 02:14:31.677
+<v SPEAKER_1>Das zeigt mir dann auch eigentlich immer wieder, dass es eigentlich immer auch wieder einen Weg drumherum gibt. Von daher wundert mich so ein bisschen deine Einschätzung, dass jetzt irgendwie bei IPv4 alle Türen geschlossen sind.
+
+02:14:31.697 --> 02:14:34.877
+<v SPEAKER_2>Nee, naja, alle Türen geschlossen sicherlich nicht, aber es wird enger.
+
+02:14:34.897 --> 02:14:35.097
+<v SPEAKER_1>Okay.
+
+02:14:35.577 --> 02:15:04.217
+<v SPEAKER_2>Also, es gibt immer noch was. Zum Beispiel hat jetzt vor einer Weile, es gibt ja dann immer noch ein Feld, hat jemand TCP-Verbindungen aufgemacht, indem er dann nochmal die IP-ID sich angeguckt hat und die wurde wieder linear hochgezählt und hat dann da mit diversen Rundgespiele es dann doch wieder hinbekommen. Weil man eben doch was predikten konnte. Na ja, aber langsam sind die Felder halt weg.
+
+02:15:05.417 --> 02:15:41.817
+<v SPEAKER_1>Aber es ist die generelle Schwäche. Der Netzwerkprotokoll hat sich im Wesentlichen eigentlich durch die Vorhersagbarkeit von Werten ergeben. Man konnte einfach Verbindungen übernehmen, indem man halt einfach schon vorher wusste, was wahrscheinlich passieren wird, weil sich die Dinge einfach zu nachvollziehbar verhalten haben. Das heißt, die Überlebensstrategie eines Rechners im Internet basiert vor allem darauf, nicht vorhersagbar zu sein. Möglichst alles, was in irgendeiner Form rausgegeben wird, in regelmäßiger Folge, so fuzzy und random, wie es irgendwie möglich ist, zu generieren.
+
+02:15:41.837 --> 02:16:13.917
+<v SPEAKER_2>Genau. Der andere Aspekt ist natürlich, man möchte sich irgendwie vor Denial-of-Service-Angriffen schützen. Da muss man nochmal viel Energie reinstecken, obwohl in der Vergangenheit auch getan. Das bedeutet, man möchte es einem anderen Rechner so schwer wie möglich machen, einen komplett zu überlasten mit Daten. Oder mit Speicher, den man für ihn reservieren muss. Da ist ja so der Klassiker der SYN-Flat, wo man eben einem Rechner einfach ganz viele Anfragen auf einmal geschickt hat.
+
+02:16:13.937 --> 02:16:17.757
+<v SPEAKER_1>Also hier beziehen wir uns auch wieder auf dieses TCP-SYN-Paket, das erste.
+
+02:16:17.777 --> 02:16:18.577
+<v SPEAKER_2>Genau, genau, genau.
+
+02:16:18.597 --> 02:16:21.377
+<v SPEAKER_1>Das heißt, man sagt einfach, hallo, ich will eine Verbindung aufbauen.
+
+02:16:21.397 --> 02:16:24.417
+<v SPEAKER_2>Genau, und das sagt man tausendmal oder nicht tausendmal, aber sehr oft.
+
+02:16:24.437 --> 02:16:26.457
+<v SPEAKER_1>Und der sagt dann immer wieder, ja, mach.
+
+02:16:26.477 --> 02:17:18.157
+<v SPEAKER_2>Genau, und dann antwortet man nicht. Das Dove war, früher ist man nicht so richtig davon ausgegangen, dass das ein Problem darstellt, wenn man jetzt schon anfängt, für denjenigen Speicher zu reservieren. Also zu sagen, ach, du willst eine Verbindung mit mir aufbauen? Na ja, wenn wir dann gleich eine Verbindung haben wollen, dann sollte ich vielleicht mal ein bisschen was hier bereitstellen, wo ich speichern kann, wer du denn so bist und was denn deine Nummer ist, mit der du deine Pakete verwaltest. Und ja, solche Dinge. Und das waren dann schon richtig ordentliche Strukturen, weil so ein TCP muss eben auch mehrere Timer haben und hier noch eine Queue für eingehende Pakete und da noch eine Queue für ausgehende Pakete. Und man konnte eben einfach sagen, ich hätte gerne Verbindung. Und dann wurde schon Speicher reserviert. Das Schlimme daran ist...
+
+02:17:18.177 --> 02:17:19.757
+<v SPEAKER_1>Keine dieser Verbindungen kamen immer zustande.
+
+02:17:20.237 --> 02:17:39.377
+<v SPEAKER_2>Genau. Einmal das und man musste ja noch nicht mal, man konnte das von beliebigen IPs, beliebigen Absender-IPs machen. Also konnte so tun, als wäre man irgendjemand anders. Denn man brauchte die Antwort ja sowieso nicht. Die Antwort wurde dann an irgendjemand anders geschickt, aber das machte ja nichts, weil man ja den Speicher schon reserviert hatte.
+
+02:17:39.397 --> 02:17:44.037
+<v SPEAKER_1>Der andere kriegt eine Antwort und wusste gar nicht, von wem und warum, was das soll. Dann hat es auch einfach verworfen.
+
+02:17:45.017 --> 02:18:01.757
+<v SPEAKER_2>Genau, entweder verworfen oder kurz gesagt, nee, Reset. Man hat die Angriffe dann natürlich auch so gefahren, dass die andere Seite nicht Reset sagt, damit der Angegriffene auch nicht weiß, dass da eigentlich niemand ist.
+
+02:18:01.777 --> 02:18:15.937
+<v SPEAKER_1>Das heißt ungefähr so, als ob ich zu irgendjemand hingehe und ihm so einen dicken Stein in die Hand drücke und sage, halt mal, ich komme gleich wieder. Dann steht er da mit dem Stein und dann kommt der nächste und gibt ihm noch einen Stein und irgendwann hat man nur noch Stein in der Hand, bricht zusammen und keiner kommt.
+
+02:18:15.957 --> 02:18:35.517
+<v SPEAKER_2>Genau, so in etwa. Das Problem hat man dann umschifft. Mehr oder weniger sah es dann so aus, dass man eben erst wirklich die ganzen Ressourcen alluziert hat, also die großen Blöcke, wenn man dann auch tatsächlich das AK bekommen hat. Also SYN, SYN-AK und dann nochmal AK und dann wird reserviert und nicht...
+
+02:18:36.277 --> 02:18:48.957
+<v SPEAKER_1>Ja, macht ja eigentlich auch Sinn. Erst, wenn man zur Kenntnis genommen hat, dass der andere auch wirklich zur Kenntnis genommen hat, aber könnte man nicht auch darüber dann sozusagen so eine Denial-of-Service-Attacke fahren, dass man das dann so weit treibt und dann irgendwie...
+
+02:18:48.977 --> 02:19:52.817
+<v SPEAKER_2>Das war letztes Jahr ganz groß, ja. Connection-Flooding, also eigentlich schon längst im großen Maßstab durchgeführt, aber es gab ja dann letztes Jahr diese riesige Diskussion über, oh nein, das Internet wird sterben, weil es TCP, Denial-of-Service-Angriffe gibt. Und da ging es ja gerade darum, dass Leute wieder entdeckt hatten, dass man ja auch einfach ganz viele Verbindungen aufbauen kann und dass man dazu ja selbst eigentlich sich gar nichts merken muss. Also dass man selbst keinen Speicher alluziieren muss im großen Maßstab, um diesen Angriff durchzuführen und stattdessen einfach ganz viele Verbindungen hintereinander aufmacht. Ob das allerdings erfolgreich ist, hängt dann nicht nur vom TCP-Teil ab, sondern auch noch von der Applikation darüber. Wenn die zu langsam abbaut, dann ist es ein sehr erfolgreicher Angriff. Und das ist auch nach wie vor noch sehr erfolgreich. Also da gibt es dann verschiedene Variationen von, aber der prinzipielle Gedanke ist genau das.
+
+02:19:52.837 --> 02:20:10.337
+<v SPEAKER_1>Das heißt, auch wenn man jetzt selber Anwendungen entwickelt, gerade wenn man irgendwie an neuen Protokollen baut, sollte man das vielleicht gleich so im Hinterkopf behalten, wenn die bösen Männer kommen, dass man sozusagen nichts, dass man immer erst dann irgendwie eine Aktion einleiten sollte, wenn man sich auch wirklich sicher ist, dass es jetzt hier substanziell vorangeht.
+
+02:20:10.357 --> 02:20:46.037
+<v SPEAKER_2>Auf jeden Fall. Ja, also das sieht man auch, wenn man gute und schlechte DNS-Server vergleicht. Ich kann ja mal einen guten nennen, das ist DJB-DNS. Der ist wirklich so paranoid, dass er jedes, erst wenn er bestimmte Bites gelesen hat, die wirklich ganz genau sagen, so jetzt macht es Sinn, dann alluziiert er den Block, den er unbedingt braucht, um das jetzt zu handeln, damit er auf keinen Fall irgendwo schon Speicher reserviert, bevor man den wirklich braucht. Das ist also typischer paranoider Security Code.
+
+02:20:46.057 --> 02:20:54.637
+<v SPEAKER_1>Versus wahrscheinlich der internetweitgehend etablierte DNS-Server Bind, der irgendwie regelmäßige Quelle...
+
+02:20:54.657 --> 02:21:40.797
+<v SPEAKER_2>Ja, in Bind will ja leider keiner reingucken. Na gut, aber zum Beispiel Squid. Squid ist ein gutes Beispiel, wenn man sich... Also ein Proxy-Server. Wenn man ihm eine Anfrage schickt, wenn man ihm eine UDP-Antwort schickt, eine DNS-Antwort, dann fängt er erst mal an zu sagen, na gut, okay, bevor ich mir überhaupt angucke, ob dieses Paket ganz vorne die richtige ID hat, also ob es das richtige Paket ist, packe ich es erst mal komplett aus und belege da ordentlich Speicher und verwende da ordentlich CPU drauf, um das erst mal komplett auszupacken. Dann, wenn es ausgepackt ist, gucke ich es mir an und sehe, oh, das ist ja gar nicht mein Paket und schmeiße es weg.
+
+02:21:40.817 --> 02:21:42.037
+<v SPEAKER_1>Das ist immer noch so?
+
+02:21:42.057 --> 02:21:42.737
+<v SPEAKER_2>Das ist immer noch so, ja.
+
+02:21:43.237 --> 02:21:47.657
+<v SPEAKER_1>Ändert das keiner? Wenn das so bekannte Probleme sind?
+
+02:21:48.397 --> 02:21:50.937
+<v SPEAKER_2>Na ja, also, ich weiß nicht, ob das so bekannt ist.
+
+02:21:50.957 --> 02:21:53.517
+<v SPEAKER_1>Sind doch nicht genau raus in die Knie gegangen.
+
+02:21:53.537 --> 02:21:54.097
+<v SPEAKER_2>Vermutlich nicht.
+
+02:21:54.117 --> 02:22:02.397
+<v SPEAKER_1>Da werden wir schon bei Chaosradio Express darüber reden. Ist das nicht jetzt auch schon auf vielen Kongressen und Security-Kongressen alles mehrfach dargelegt worden?
+
+02:22:02.417 --> 02:22:04.237
+<v SPEAKER_2>Also ich vermute doch ganz stark, ja.
+
+02:22:04.257 --> 02:22:06.617
+<v SPEAKER_1>Na ja, hört da keiner zu?
+
+02:22:06.637 --> 02:22:17.197
+<v SPEAKER_2>Ich denke mal, Squid, das ist nochmal so eine andere Geschichte, weil das einfach nicht wirklich... Ja, es wird noch maintained, aber es interessiert halt keinen mehr so richtig.
+
+02:22:17.217 --> 02:22:18.577
+<v SPEAKER_1>Ah, das ist unspannend.
+
+02:22:18.957 --> 02:22:32.617
+<v SPEAKER_2>Ja, genau. Man möchte ja irgendwann noch was anderes machen. Das heißt, der Wind ist nur noch ab und zu so ein paar Patches reingeworfen. Aber so hat man es halt früher gebaut und so ist es halt immer noch. Also wenn man sich heute in Squid hinstellt, dann ist das halt so.
+
+02:22:35.277 --> 02:23:41.357
+<v SPEAKER_1>Ja, Fabian, ich denke, jetzt haben wir es irgendwie ganz gut durchmarschiert, oder? Das war der Versuch, IPv4 ein bisschen zu erläutern, sozusagen der Stand der Dinge. Ein Ausblick in die Zukunft in Form von IPv6 und anderen Strategien, die dieses Netz noch braucht, steht hier sozusagen noch aus. Ist natürlich auf meiner Liste, bevor ihr mir jetzt wieder böse Mails schickt. Das wird natürlich schon lange genannt, aber ich dachte mir, bevor ich irgendwie mit IPv6 anfange, muss man auch erstmal den Stand der Dinge zusammenfassen. Das haben wir jetzt gemacht. Ja, und das war Ausgabe Nummer 141. Wie gesagt, die erste, aber beileibe nicht die letzte in 2010. Stellt euch auf eine erhöhte Schlagzahl ein. Ich denke, jetzt müssten alle wieder gesund sein, mit denen ich so Termine gemacht habe und hoffe davor, dass sie auch gehalten werden können. Ja und ich sage tschüss und bis bald bei Chaosradio Express.

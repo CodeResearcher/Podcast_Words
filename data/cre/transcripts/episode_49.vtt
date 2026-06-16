@@ -1,0 +1,1042 @@
+WEBVTT
+
+00:01:08.047 --> 00:01:49.687
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express und zwar die Ausgabe Nummer 49. Ein bisschen experimental heute, weil wir während der Aufzeichnung auch noch versuchen das Ganze ein bisschen live im Internet zu streamen. Das ist nur ein Experiment und ich bin mir sicher, es wird nach einer halben Stunde nicht mehr funktionieren. Aber nichtsdestotrotz, wir sind ja hier ein Podcast und zeichnen alle schön auf und deswegen sind wir auf Live-Experimente nicht wirklich angewiesen. Ich bin wieder einmal nicht alleine, sondern ich habe einen Gast und der Gast ist Denis. Hallo Denis. Moin moin. Können wir dich laut und deutlich hören?
+
+00:01:50.167 --> 00:01:51.027
+<v SPEAKER_1>Ich höre mich.
+
+00:01:51.047 --> 00:02:13.927
+<v SPEAKER_2>Du hörst dich, aber ich glaube, du musst dein Mikrofon noch ein bisschen näher machen. So genau und jetzt? Viel besser mein Freund. Unser Thema heute soll sein ZFS. ZFS ist eine Abkürzung. Steht, glaube ich, offiziell, steht das noch für?
+
+00:02:13.987 --> 00:02:15.007
+<v SPEAKER_1>Nee, nicht mehr wirklich.
+
+00:02:15.027 --> 00:02:20.567
+<v SPEAKER_2>Nicht mehr, genau. Irgendwann meinte man mal, es würde heißen Z-Habit Filesystem.
+
+00:02:22.087 --> 00:02:48.187
+<v SPEAKER_1>Aber er hat mehrere Buchstaben überlegt, was man machen könnte nach FFS und UFS und wie sie alle heißen, HFS, welchen Buchstabe man nehmen könnte und es ist nichts richtig schickes eingefallen und YFS hörte sich irgendwie blöd an und XFS gab es schon und das nächste wäre dann auch Z gewesen, weil es musste ja noch besser sein als alles andere, also ein höherer Buchstabe, da bleibt ja nur noch das Z übrig und er hat es eigentlich, glaube ich, genommen am Ende, weil es einfach cool klingt.
+
+00:02:49.287 --> 00:04:57.807
+<v SPEAKER_2>Und wer ist er? Genau, Sun Microsystems ist verantwortlich letztlich für ZFS. Es ist ein Projekt von Sun und es ist Software, die entstanden ist für Solaris, das Open Solaris, die offene Variante von Solaris und ich glaube, Sun wirbt auch selber mit, ganz großkotzig, mit the last word in file systems, also sie haben sich den letzten Buchstaben für das letzte Wort ausgesucht und ihr Anspruch ist sehr hochgesteckt, sie wollen damit quasi alle Antworten liefern für die immer noch offenen Fragen in Bezug auf Speicherverwaltung auf Festplatten, denn darum geht es im Wesentlichen bei einem Dateisystem, wie teile ich Festplatten auf, wie greife ich darauf zu, wie speichere ich Daten wirklich so ab, dass sie schnell kommen und B, schnell wiederkommen, genau, nicht weggehen und auch schnell gesucht werden können und so weiter. Tatsächlich ist die Liste an Anforderungen, die man an Fallsystemen hat, sehr, sehr, sehr lang und viele Fallsysteme existieren, es gibt viele Abkürzungen, die auf FS enden oder auch nicht und für irgendwelche neuen Fallsystem-Experimente stehen. Ja, da wäre sicherlich an dieser Stelle erstmal ein kleiner Blick in die Geschichte angemessen, ohne das jetzt zu sehr vertiefen zu wollen, aber Dateisysteme gibt es so lange, wie es Betriebssysteme gibt, sicherlich ist jeder damit vertraut, dass es so Anfänger-Fallsysteme gibt, wie das sagenumwobene FAT-Fallsystem von MS-DOS, was uns heute noch fast auf jedem USB-Stick verfolgt. Weil das kann halt jeder, das ist sozusagen der kleinste gemeinsame Nenner, das 8.3, so. Die Länge der Dateinamen war ja auch lange Zeit so ein entscheidendes Kriterium, also dass Unix am Anfang schon mit seinem Fallsystem 14 zeichenlange Dateinamen unterbringen konnte, das war ja schon Revolution und man hat schon mit dem Finger immer oft ausgezeigt, dass sie ja nur 8 haben.
+
+00:04:58.227 --> 00:05:02.767
+<v SPEAKER_1>Ja, das verfolgt uns heute noch in Form von Punkt HTM.
+
+00:05:02.787 --> 00:05:35.547
+<v SPEAKER_2>Genau, Punkt HTM ist auch noch so ein Thema, also überhaupt die Sachen mit diesen Extensions, das war bei DOS halt fest eingebaut und das war bei Unix eigentlich immer nur eine Konvention der Dateiname selbst, sah nicht diese Aufspaltung in Kern-Dateiname und Extensions vor. Ja, später kamen dann eben die BSD-Unyx auf, die dann auch relativ schnell diese Limitierung von 14 Zeichen beendet haben, ich glaube das war dann auch Sun zu verdanken, das weiß ich jetzt nicht ganz genau, ein BSD-Filesystem, auf jeden Fall war man dann relativ schnell bei 256 Zeichen.
+
+00:05:35.567 --> 00:05:42.027
+<v SPEAKER_1>Das waren aber alle Filesystems, die da nachgezogen haben, also da kommt man ja sonst gar nicht mehr weit mit, wenn man sowas nicht anbietet.
+
+00:05:42.267 --> 00:05:52.107
+<v SPEAKER_2>Ja, das war auch echt konsequent, beim Apple hat's ein bisschen länger gedauert, HFS hatte da am Anfang noch die Limitierung auf 32 oder effektiv 31 Zeichen plus ein Byte für die Länge.
+
+00:05:52.127 --> 00:05:54.667
+<v SPEAKER_1>Das ist aber auch schon zehn Jahre her.
+
+00:05:54.687 --> 00:07:05.987
+<v SPEAKER_2>Zehn Jahre sind das jetzt her, dass HFS Plus gekommen ist. Boah, so lang ist das schon her, verdammt. Genau, also auf Macintosh war halt immer HFS das Fallsystem, unter Windows war es eben lange Zeit nur das FAT-Fallsystem, später kam dann NTFS dazu und unter Unix gibt es eine Vielzahl von Dateisystemen, die nicht auch immer Namen haben. UFS ist glaube ich recht bekannt, also dass unter BSD-Unix groß geworden ist, ich weiß jetzt gar nicht, ob es einen speziellen Namen für das Ur-Fallsystem von Unix gab, ich glaube, das hatte so explizit keine Bezeichnung, wie auch immer. Später gab es dann auch weitere Projekte, die versucht haben, dann aber die Leistungsfähigkeit zu erhöhen. Genau, Linux kam dann auf die Bühne und hat mit seinem Fallsystem, aber im Wesentlichen glaube ich, jetzt eigentlich erst mal so dieselbe Feature-Sichthöhe erreicht, also dass man im Prinzip dasselbe tun konnte. Das weiß ich jetzt gar nicht so ganz genau.
+
+00:07:06.007 --> 00:07:09.947
+<v SPEAKER_1>Ja, die müssen sich an den POSIX-Standard halten und Dateien speichern.
+
+00:07:09.967 --> 00:07:25.347
+<v SPEAKER_2>Genau, also es ging erst mal nur um das übliche, Direktories und so weiter. Und 256 Zeichen auch hier. Alle haben so ihre Liebesmüh mit Unicode gehabt, also mit Umlauten in Dateienamen, aber das ist ja noch mal ein ganz anderes Problem.
+
+00:07:25.367 --> 00:07:30.387
+<v SPEAKER_1>Eigentlich hatten sie keine Mühe, sondern es gab einfach gar keine Vorgabe. Feilnahme besteht aus Beiz.
+
+00:07:30.407 --> 00:07:47.107
+<v SPEAKER_2>Genau, das stimmt. Was natürlich aber auch ein Problem ist, in dem Moment, wo man halt sucht und wirklich sortieren möchte und so weiter, möchte man natürlich schon, dass so ein Dateisystem auch eine gewisse Vorstellung davon hat. Ja, und dann hast du ja schon erwähnt, XFS war ein Vorstoß von...
+
+00:07:47.847 --> 00:07:48.467
+<v SPEAKER_1>Gibt es die noch?
+
+00:07:51.187 --> 00:08:09.687
+<v SPEAKER_2>Gibt es die denn überhaupt noch? Das weiß ich jetzt ehrlich gesagt auch nicht mehr. Und spielen auf jeden Fall keine große Rolle mehr. Das Fallsystem sei wohl gar nicht so schlecht. Und SGI war ja auch eine der Firmen, die sehr große Computer gebaut haben, so wie Sun, die einfach ein Interesse daran hatten.
+
+00:08:09.707 --> 00:08:12.147
+<v SPEAKER_1>Also Sun macht ja viel Storage halt.
+
+00:08:12.167 --> 00:08:30.827
+<v SPEAKER_2>Genau, und heute ist Sun eigentlich allein auf weiter Flur, was Unix Workstations betrifft. Sie sind eigentlich die Einzigen, die diese ganze Phase wirklich so überlebt haben. Und jetzt haben sie dieses Problem gesehen mit dem Fallsystem, dass es ihm halt noch nötig ist.
+
+00:08:30.847 --> 00:08:33.027
+<v SPEAKER_1>Dieses Jetzt ist ja schon eine Weile her.
+
+00:08:33.047 --> 00:08:34.187
+<v SPEAKER_2>Wie lange ist das her?
+
+00:08:34.207 --> 00:08:58.607
+<v SPEAKER_1>Das war, glaube ich, 2000 oder 2001, wurde begonnen mit fünf Leuten. Dann wurde fünf Jahre entwickelt, muss dann 2000 gewesen sein, bis 2005, glaube ich, oder Ende 2005. Und da kam dann das erste Release in Open Solaris angefangen, und später dann in einem Solaris-Update.
+
+00:08:58.627 --> 00:09:04.727
+<v SPEAKER_2>Ach, das wird zuerst in Open Solaris verflogen? Ja, klar, erst mal zum Testen sozusagen.
+
+00:09:04.747 --> 00:09:13.887
+<v SPEAKER_1>Erst mal auf die Leute loslassen, die nichts bezahlt haben. Dann?
+
+00:09:13.907 --> 00:09:19.007
+<v SPEAKER_2>Aber dann ging es auch an sich, ich habe viel Gutes gehört von ZFS schon am Anfang.
+
+00:09:19.027 --> 00:09:37.307
+<v SPEAKER_1>Bei ZFS hat eine interne Versionsnummer, die kann man erhöhen mit neuen Features. In welche Richtung ist es denn kompatibel? Ich weiß nicht, auf jeden Fall kann die neueste Version immer die alten lesen, aber andersrum natürlich nicht. Aufwärts kompatibel? Ja, genau. Es gibt zwei Richtungen.
+
+00:09:37.327 --> 00:09:40.047
+<v SPEAKER_2>Oder heißt es abwärts kompatibel? Ich glaube, das weiß auch keiner.
+
+00:09:40.067 --> 00:10:01.687
+<v SPEAKER_1>Kommt immer auf die Sichtweise an. Auf jeden Fall kann das Neue natürlich das Alte lesen. Ist ja klar. Und sie hatten wohl bisher, weil sie haben ja schon den Mund sehr voll genommen, noch nie einen Fehler in ihrer internen Disk-Struktur, also ein Fehler in der Software, der die Daten wirklich zerstört.
+
+00:10:01.707 --> 00:10:05.467
+<v SPEAKER_2>Hatten sie nie. Das ist diese Geschichte mit ihren permanenten Tests.
+
+00:10:05.487 --> 00:10:17.287
+<v SPEAKER_1>Ganz am Anfang, genau. Und da gab es mal einen Fehler, der sozusagen nicht repariert werden konnte, aber der wurde sofort behoben und den gibt es auch nicht in einer freien Wildbahn, wenn ich es richtig verstanden habe. Das war noch in einer ganz anderen Zeit.
+
+00:10:17.307 --> 00:10:25.707
+<v SPEAKER_2>Also das heißt, sie haben die ganze Zeit so eine Farm, wo überall ZFS drauf ist und wo sie die ganze Zeit nichts anderes machen als datenschreiben und lesen und wieder schreiben und wieder lesen?
+
+00:10:25.727 --> 00:10:56.447
+<v SPEAKER_1>Das Tool wird, glaube ich, auch mitgeliefert. Ich muss ganz kurz mal gucken. Das ist nämlich das Z-Test, das gibt es auch. Ich habe es hier gerade nicht. Ich habe hier gerade nur einen Nicht-Sun-Computer. Ich weiß nicht, ob die das damit liefern. Es ist egal. Jedenfalls gibt es ein Tool, das heißt Z-Test. Damit kann man alle Features durchtesten. Und da werden auch schnell mal 10.000 Snapshots erzeugt und wieder gelöscht und gemacht und getan. Und das muss halt immer funktionieren. Das ist halt ein Fallsystem. Jeder Fehler ist tödlich.
+
+00:10:56.467 --> 00:11:05.267
+<v SPEAKER_2>Genau. Also ich meine, wenn man irgendwas vertrauen möchte, dann doch bitte sein Dateisystem. Ich glaube, wir sprechen da alle so ein bisschen aus einer leidenden Perspektive, weil...
+
+00:11:05.287 --> 00:11:07.487
+<v SPEAKER_1>Du besonders?
+
+00:11:07.507 --> 00:11:26.127
+<v SPEAKER_2>Ich besonders, aber eigentlich... Ich weiß nicht, also ich meine, wenn ich mir so die letzten Jahre anschaue, es hat sich extrem verbessert. Also auf Mac hat es sich extrem verbessert mit dem Schritt zu HFS+. So und eigentlich auch auf allen anderen Systemen hat es sich verbessert. Früher waren einfach so korrupte Dateisysteme auch so ein echtes Thema.
+
+00:11:26.147 --> 00:11:30.327
+<v SPEAKER_1>Aber liegt es am Dateisystem oder liegt es da drin, dass die Rechner weniger crashen?
+
+00:11:30.347 --> 00:11:54.227
+<v SPEAKER_2>Das ist auch eine gute Frage. Da sind wir jetzt aber auch beim Punkt, was muss eigentlich ein Dateisystem wirklich leisten und inwieweit ist das eigentlich alles nur eine Aufgabe vom Betriebssystem? Läuft dasselbe Dateisystem auf einem anderen Betriebssystem besser? Oder heißt gutes Dateisystem alles prima? Was würdest du sagen?
+
+00:11:54.247 --> 00:12:38.987
+<v SPEAKER_1>Das kommt auf den Anspruch an. Es gibt ja verschiedene. Die einen wollen möglichst schnell Milliarden von Files erzeugen können. Da war ReiserFS wohl ziemlich flott. Die anderen wollen halt Sicherheit. Denen ist egal, wie schnell es ist. Aber es muss halt sicher sein. Und was geschrieben wird, muss sicher wiederkommen. Oder das Filesystem muss sagen können, tut mir leid, aber das ist nicht mehr das, was da mal ankam. Das Filesystem kann ja auch nichts für, wenn die Platte nicht mehr mitmacht. Aber das Filesystem kann wenigstens sagen, das ist nicht das, was ich da mal hingeschrieben habe. Und da gibt es halt verschiedene Ansprüche. Und ZFS kann bestimmt auch nicht alles abdecken. ZFS geht halt in Richtung Sicherheit, würde ich mal behaupten. Aber 100.000 Files erstellen, denke ich mal, müssen die dann ein bisschen Kompromisse eingehen.
+
+00:12:39.787 --> 00:13:01.647
+<v SPEAKER_2>Okay, also was, jetzt sollten wir vielleicht mal so ein bisschen drauf kommen, was eigentlich der Grund ist. Warum hat Sun sich hingesetzt und noch ein weiteres Dateisystem entwickelt? Es gab ja irgendwie schon viele zur Auswahl. Und die konnten auch schon 256 Zeichen im Datein namenspeichern. Also was braucht man denn sonst noch?
+
+00:13:01.667 --> 00:13:26.247
+<v SPEAKER_1>Na, ein Grund war, dass Sun ja auch eine Menge Großkunden hat, die viel Speicher brauchen. Und laut einem Sun hat die Mitarbeiter alle in einen Blog geschickt. Dort wird berichtet, dass halt die Großkunden die nächsten 10, 15 Jahre oder so die 64-Bit-Grenze durchbrechen. Und heutzutage gibt es ja schon viele File-Systems mit 64-Bit und das hört sich alles ganz toll an.
+
+00:13:26.267 --> 00:13:30.607
+<v SPEAKER_2>Also du meinst, die Größe der Festplattenkapazität, wenn man alle...
+
+00:13:30.627 --> 00:13:33.267
+<v SPEAKER_1>Na nicht alle, aber von einem File-System oder von...
+
+00:13:33.287 --> 00:13:40.167
+<v SPEAKER_2>Also alles das, was man adressiert, sozusagen vom Nolten bis zum letzten Byte, wenn man die alle durchzählt, dann kommt man mit zwei hoch 64 nicht mehr aus.
+
+00:13:40.727 --> 00:13:59.447
+<v SPEAKER_1>Na, zurzeit kommen die schon noch aus, aber in 10 Jahren dann vielleicht irgendwann nicht mehr. Und Sun wollte halt ein File-System bauen, was halt ein bisschen länger hält als 10 Jahre. Wenn wir jetzt schon gehört haben, das HFS Plus von Apple ist auch schon wieder 10 Jahre alt. Dann sieht man ja, wie lange File-Systems halten. Vielleicht fällt es ja demnächst nicht mehr so lange.
+
+00:13:59.527 --> 00:14:08.807
+<v SPEAKER_2>Halten, weil sie einfach mit den wachsenden Zahlen an Datenmengen nicht mehr klarkommen. Woran liegt das?
+
+00:14:08.827 --> 00:14:10.107
+<v SPEAKER_1>Da werden wir immer mehr brauchen.
+
+00:14:10.127 --> 00:14:30.287
+<v SPEAKER_2>Naja, aber ich meine, warum versagt das File-System? Was hält sie davon ab, mit großen Platten klarzukommen? Also ist es jetzt nur die Adressierung, was sozusagen die Höchstgröße Zahl ist? Oder ist es so, dass einfach der Algorithmus, mit dem diese Daten verwaltet werden, nicht so gut skaliert, dass es mit großen Platten noch mithält?
+
+00:14:30.307 --> 00:14:53.647
+<v SPEAKER_1>Die Pointe oder die Strukturen, die im File-System zur Verfügung stehen, um alles anzusprechen, sind halt zu klein. Das heißt, mehr als 64 bits oder die entsprechende Menge auf riesengroße Storage-Systeme zu halten, ist einfach vom File-System nicht vorgesehen gewesen. Deswegen ist es irgendwann bei 2 auf 64 zu Ende. Wie viel auch immer das jetzt in Worten genau war, ich kenne die, das weiß ich nicht.
+
+00:14:53.667 --> 00:14:59.087
+<v SPEAKER_2>Dann könnte man ja einfach hergehen und sagen, ok, dann machen wir jetzt alles, was irgendwie 64 bit ist, machen wir 128 bit und fertig.
+
+00:15:00.067 --> 00:15:09.767
+<v SPEAKER_1>Das würde wahrscheinlich so gehen, aber es wäre auch mehr oder weniger ein neues File-System. Aber dann hat man eine Menge Arbeit reingesteckt, hat es doppelt so groß, aber man hat halt sonst keine neuen Features.
+
+00:15:09.787 --> 00:15:16.727
+<v SPEAKER_2>Und man hat vor allem das Problem, dass es auch auf kleinen Platten dann doppelt so viel Platz wegnimmt, weil irgendwie alle Pointer und Blöcke irgendwie größer sind?
+
+00:15:18.727 --> 00:15:28.087
+<v SPEAKER_1>Die Daten, also hauptsächlich, der Platz wird hauptsächlich von den Daten belegt, die Metadaten zur Verwaltung der Daten, sind ja nicht so viel.
+
+00:15:28.107 --> 00:15:36.927
+<v SPEAKER_2>Also brauchen wir eigentlich gar kein neues, ZFS brauchen wir eigentlich nicht. Ja, das war Chaosradio Express 49. Vielen Dank.
+
+00:15:36.947 --> 00:15:42.347
+<v SPEAKER_1>Es ist ja nur ein Aspekt. Ein wichtiger natürlich.
+
+00:15:42.367 --> 00:15:51.647
+<v SPEAKER_2>Okay, also die Größe ist ein Ding und man will auf 128-Bit-Adressierungen gehen und man muss halt das Richtige tun. Was sind die weiteren Aspekte?
+
+00:15:51.667 --> 00:17:28.667
+<v SPEAKER_1>Das war sozusagen noch der 128-Bit-Aspekt, war noch der einfachste zu erkennende Grund, den man in ein neues File-System stecken will. Also das war ja klar, da guckt man ein bisschen in die Zukunft und dann weiß man, okay, größer brauchen wir auf jeden Fall. Das ist schon mal klar. Aber es gibt halt noch andere Sachen. Zum Beispiel ist es so, dass jetzt bei Daten, die von einer Platte kommen, kümmert sich das Protokoll zur Platte, sagen wir mal SATA oder Firewire oder USB, so ein bisschen um Shack-Summing, dass auf der Leitung zum Beispiel nichts kaputt geht. Die Platte kümmert sich vielleicht auch noch ein bisschen, dass dort Prüf-Summen sind, dass der Blog der gleiche ist und dass er nicht irgendwie defekt ist. Aber es kann halt trotzdem immer mal wieder passieren. Und dann könnte das File-System nicht feststellen, dass der Blog, der irgendwie vor fünf Jahren geschrieben wurde, ob es der gleiche ist, der jetzt gelesen wurde oder nicht. Und das sind sogenannte Silent Errors. Das heißt, mein Programm würde Daten laden, vielleicht sogar nur ein Movie. Dann wäre vielleicht ein Pixel irgendwie falsch, weil MPEG ist auch wieder fehlerausgleichend oder Musik. Aber sagen wir mal an einer riesengroßen Datenbank oder bei einer richtigen Bank oder einer Versicherung, dann gibt es den Tattel-Battel-Fehler. Den kennen wir alle. Und das könnte halt passieren. Und das darf eigentlich nicht sein. Und das wollte man bei Sun auch verhindern. Und deswegen wird jeder Blog, und Blöcke sind dort nicht mehr nur 512 bytes groß, sondern auch variabelgroß. Und deren Einheiten sind auch ein bisschen anders strukturiert. Ist mit einer Check so mal belegt. Und zwar irgendeiner.
+
+00:17:28.687 --> 00:17:29.687
+<v SPEAKER_2>Was heißt irgendeiner?
+
+00:17:29.707 --> 00:17:39.667
+<v SPEAKER_1>Na, der Hash ist ja auch noch nicht vorgegeben. Sie haben drei dabei in ihrer Initialversion von ZFS. Aber es könnten in der Zukunft, falls auch mal einer getragt wird und so, ein anderer kommen.
+
+00:17:39.687 --> 00:17:57.247
+<v SPEAKER_2>Das heißt, jeder Blog von Daten, dazu muss man vielleicht grundsätzlich nochmal erklären, ein Filesystem, also eigentlich, soweit ich weiß, alle Filesysteme funktionieren erst mal auf der Basis. Man hat da einfach viel Platz auf der Festplatte und man teilt sich das ein in Blocks.
+
+00:17:57.267 --> 00:17:59.267
+<v SPEAKER_1>Genau, deswegen nennt man das ja auch Block-Devices.
+
+00:17:59.287 --> 00:18:23.067
+<v SPEAKER_2>Genau. Und wie groß diese Blöcke jetzt sind, ist eine Frage der Abwägung. Umso mehr Kleine man hat, umso mehr muss man eben Metadaten, um sie miteinander zu verbinden und zu Dateien als zugehörig zu kennzeichnen, schreiben. Man kann aber dafür eben auch kleinere Dateien passen, sozusagen einfacher wegspeichern.
+
+00:18:23.087 --> 00:18:27.147
+<v SPEAKER_1>Dateien, die 200 bytes groß sind, in 512 bytes packen.
+
+00:18:27.167 --> 00:18:34.047
+<v SPEAKER_2>Genau. Wenn jeder Block gleich einen Megabyte fressen würde und man hat fünf Dateien, die einen byte groß sind, dann wäre es viel Verschwendung.
+
+00:18:34.067 --> 00:18:38.567
+<v SPEAKER_1>Aber man will halt Filme speichern, dann wird es sich andersrum wieder los. Es kommt immer drauf an, also man muss halt gucken, was man braucht.
+
+00:18:38.827 --> 00:18:58.347
+<v SPEAKER_2>Das heißt, toll ist es, wenn ein Fallsystem an der Stelle schon mal variabel ist. Aber du meinst jetzt gerade, es gibt Check-Summen, wir waren ja gerade eigentlich bei den Fehlern. Das heißt, in dem Moment, wo ein solcher Blog geschrieben wird, wird er nicht nur geschrieben, sondern es wird auch gleich eine Prüf-Summe darüber berechnet, diese Check-Summe, und die wird dann mit in diesen Blog abgelegt.
+
+00:18:58.927 --> 00:19:03.607
+<v SPEAKER_1>So dass man in der Zukunft, wenn man wieder liest, prüft man die Check-Summe, stimmt noch oder stimmt nicht.
+
+00:19:03.627 --> 00:19:13.747
+<v SPEAKER_2>Das heißt, beim Lesen der Daten prüft, also immer, prüft ZFS. Und was ist jetzt, wenn der irgendwie kaputt ist, dann weiß man zumindest, dass er kaputt ist.
+
+00:19:13.767 --> 00:20:26.507
+<v SPEAKER_1>Das ist schon mal sehr wichtig, weil dann gibt es halt diesen Silent Error nicht, weil was nützt einem das, wenn es geprüft wird, wenn man es trotzdem nicht mitbekommt. Also man will das ja wissen. Das ist ja nicht so schlimm, wenn man was kaputtet, weil wenn man schlau ist, hat man halt einen Backup, aber man weiß es halt wenigstens. Dann, das weiß ich nicht, ob wir gleich einsteigen oder erst später, kann man ja, ZFS ist halt eben nicht nur ein Pfeilsystem, sondern ist ja ein Zusammenspiel mehrerer Komponenten, sogenannt das, was andere bei Linux mit dem LVN machen, diesen Logical Volume Manager. Das ist ja auch ein bisschen ins ZFS mit rein integriert. Und man kann auch Rates erstellen. Und wenn man mit ZFS einen Rate erstellt, dann hat man eventuell ein Mirror oder ein Rate 5, was bei ZFS Rate Z heißt oder Rate Z2. Dann hat man redundante Daten. Und dann kann man, wenn ein Block defekt ist, kann das ZFS von der anderen Mirror-Hälfte den korrekten Block finden. Und da ist auch schon wieder die Sache, wenn zwei Blöcke in einem Mirror bei einem anderen System nicht gleich sind, welcher ist dann der, der kaputt ist. Bei ZFS ist anhand der Prüfstufe ganz klar zu erkennen, welcher der korrekt und welcher nicht der korrekt ist.
+
+00:20:26.527 --> 00:21:34.027
+<v SPEAKER_2>Okay, jetzt haben wir einiges vorweggenommen. ZFS ist ja sehr viel mehr als die bisherigen Dateisysteme, weil es eben nicht nur das eigentliche Speichern der Dateien auf der Festplatte sich drum kümmert und dafür ein neues Layout wählt, was es für angemessen hält, sondern es übernimmt auch eine ganze Menge Funktionalitäten, die man traditionell eigentlich außerhalb der Dateisysteme gesehen hat. Es gab auch da eine sehr auffällige Diskussion, glaube ich, in der Szene darüber losgetreten. Die Rampant Layering Violation von Andrew Morton, den Linux-Könner da betreut. Er meinte halt, das ist ja alles Unfug. Und überhaupt, da werden ja die ganzen Layer durcheinandergebracht. Was er meint, ist, dass Betriebssysteme, eben um mehrere Platten zu verwalten, eben solche Volume-Manager haben, wo man sagen kann, okay, ich blicke jetzt hier auf 10 Festplatten und die sind für mich wie eins. So, und dann will man einfach nicht, dass das Dateisystem etwas darüber weiß, weil wenn es Annahmen darüber macht, wie das Betriebssystem damit umgeht, dann kriegt man das nicht so gut.
+
+00:21:34.047 --> 00:22:36.487
+<v SPEAKER_1>Hat er auch erst mal recht eigentlich, weil man kann schön modularisieren. Das File-System muss sich ja nicht ändern, weil sich der Volume-Manager ändert und andersrum. Hat aber auch Nachteile, wenn die halt nicht so schön miteinander zusammenarbeiten, dass sich dort, ich sag's jetzt mal, Synergien ergeben. Weil bei ZFS ergeben sich halt Synergien, dass das ZFS weiß halt, also wenn sich das ZFS um das RAID-System kümmert und bei einem normalen RAID z.B. stürzt der Rechner ab und er fährt wieder hoch und er ist nicht mehr in Sync, also der Mirror ist nicht mehr klargestellt, dass alles auf beiden Platten ist. Da muss halt ein Resilvering stattfinden oder ein Remirroring oder wie auch immer man das nennt. Und da aber das RAID-System, das File-System nicht kennt und gar nicht weiß, welche Blöcke belegt waren und welche nicht, heißt es alles klar, die komplette Platte, das komplette System wird resilvert. Man hat irgendwie, sagen wir mal, zwei 500 GB Platten, da müssen halt 500 GB von einer Platte auf die andere geschrieben werden.
+
+00:22:36.787 --> 00:23:39.367
+<v SPEAKER_2>Resilvert heißt, man muss ein Backup einspielen. Man muss die Daten abgleichen, man weiß nicht ganz genau. Bevor wir, ich glaube, bevor wir das im Detail noch mal auseinandernehmen, sollten wir vielleicht wirklich noch mal genau zu Ende bringen, was die Features sind, die jetzt bei ZFS damit reinspielen. Also wir hatten erwähnt, es ist ein 128-Bit-Fall-System, das heißt, ZFS kann sehr große Daten speichern. Dafür ist es gedacht, riesige Festplatten bzw. riesige Pools von Festplatten. Ich denke, das ist halt auch so ein Kernkonzept von ZFS. Genau, das heißt, ein RAID, also ein System, wo man eben mehrere Festplatten kombiniert, sodass sie wie eine große fungieren, auf verschiedene Art und Weise. Das ist zum Beispiel etwas, was ZFS eben mit übernimmt. Es nimmt halt mehrere Platten mit rein. Und ich glaube, das ist auch das Erste, was man macht, wenn man jetzt so ein ZFS-System hat.
+
+00:23:39.567 --> 00:23:43.087
+<v SPEAKER_1>Man erstellt sich einen sogenannten Z-Pool oder ein Pool halt.
+
+00:23:43.107 --> 00:23:44.167
+<v SPEAKER_2>Ein Storage-Pool.
+
+00:23:44.187 --> 00:23:44.767
+<v SPEAKER_1>Genau.
+
+00:23:44.927 --> 00:23:47.227
+<v SPEAKER_2>Und der besteht dann am Anfang erst mal aus einer Festplatte.
+
+00:23:47.767 --> 00:23:48.867
+<v SPEAKER_1>Oder aus mehreren.
+
+00:23:48.887 --> 00:23:53.147
+<v SPEAKER_2>Oder aus mehreren. Aber aus mindestens einer Festplatte sollte er schon bestehen, damit man irgendwas machen kann.
+
+00:23:53.167 --> 00:24:06.027
+<v SPEAKER_1>Zum Testen kann man sogar Files nehmen. Wenn man in ZFS noch nicht so zu Hause ist, könnte man theoretisch 10 Files, 1 Gigabyte nehmen, um mal ein bisschen rumzuspielen. Dann hat man eine Simulation in Files. Die Files stellen dann eine Festplatte da.
+
+00:24:06.047 --> 00:24:06.807
+<v SPEAKER_2>So ein Disk-Image.
+
+00:24:08.507 --> 00:24:10.647
+<v SPEAKER_1>So könnte man schon mal loslegen. So Traumübungen.
+
+00:24:12.167 --> 00:24:31.047
+<v SPEAKER_2>Okay. Und wie muss man sich jetzt so einen Storage Pool vorstellen? Der ist sozusagen ein Metafilesystem. Das ist jetzt erst mal, bevor es überhaupt das eigentliche Dateisystem gibt, kümmert sich das ZFS um die Verwaltung dieses Pools.
+
+00:24:31.067 --> 00:25:00.667
+<v SPEAKER_1>Da sagt man dem ZPool-Commando, welches Format man denn gerne hätte. Also ob man einfach nur haben möchte, oder einfach nur eine Platte oder zwei Platte im Stripe, oder ob es ein Ray-Z sein soll. Je nachdem, welche Sicherheitsstufe man haben möchte, stellt man sich das zusammen, kommt ja auch darauf an, welche Hardware man so hat. Und dann entsteht erst mal ein Pool mit der Größe, die halt die Platten darstellen, und abzüglich der Redundanz, die man gewählt hat.
+
+00:25:00.687 --> 00:25:11.367
+<v SPEAKER_2>So, und dann liegen die da so rum, und dann hat man schon mal den Vorteil, dass man eben auch mehrere Platten wie eine verwenden kann. Also wenn man jetzt noch so hier noch eine 300er, und dann noch eine 400er, und dann nochmal eine 100er.
+
+00:25:11.387 --> 00:25:17.867
+<v SPEAKER_1>Kann man die auch dynamisch während der Laufzeit addieren, und die werden einfach mit rangegangen. Der Pool wird automatisch größer.
+
+00:25:17.887 --> 00:25:28.767
+<v SPEAKER_2>Das heißt, das ist alles dynamisch. Man kann mit ZFS generell zur Laufzeit Fertplatten hinzufügen und quasi auch den Programm unter dem Arsch, das Dateisystem, vergrößern.
+
+00:25:28.787 --> 00:26:07.827
+<v SPEAKER_1>Also vielleicht für die Leute zu Hause, weil wir haben eine Menge vielleicht höherer, die es zu Hause machen. Wenn man zwei Platten hat, macht man sich einen Z-Pool und zwei Jahre später stellt man fest, reicht irgendwie von der Größe nicht mehr. Dann geht man hin, kauft sich zwei neue Platten, hängt die mit dran, sagt man vielleicht wieder als Mirror und schwupp, sind die mit dran. Und das File-System, was dort drin ist, da kommen wir gleich noch zu, kann einfach den neu dazugekommenen Platz nutzen, ohne dass man irgendwie den Rechner runterfahren muss oder das File-System kurz anmountain muss oder so eine Programme, die da drauf auch aktuell gerade laufen. Vielleicht der Film, der gerade gespeichert wird, der speichert einfach weiter und on the fly wird halt der neue Platz genutzt. Man muss nichts machen, nichts anhalten, sondern...
+
+00:26:07.847 --> 00:26:52.367
+<v SPEAKER_2>Hast du das auch schon mal ausprobiert? Nö. Ja, dazu braucht man natürlich auch einen Rechner, bei dem man so ohne Weiteres mal eben das machen kann. Klar, so über Firewire oder USB extern ranklicken, das geht, aber man kennt das ja, dieses Elend mit externen Festplattengehäusen. Aber gut, grundsätzlich, das ist halt erstmal das Grundprinzip. ZFS verwaltet Storage-Pools unabhängig jetzt von dem eigentlichen Dateisystem, kümmert sich schon mal um diese ganze Plattengeschichte und da kommt es eben dann auch im Konflikt quasi mit den Betriebssystemen, die dafür eben auch Fähigkeiten haben, wenn man das eben auch mit Dateisystemen machen kann, die sowas nicht vorsehen. Überhaupt denke ich, ist ZFS das erste Fallsystem, was dieses Prinzip des Poolings realisiert, oder liege ich da falsch?
+
+00:26:54.087 --> 00:26:54.807
+<v SPEAKER_1>Gute Frage.
+
+00:26:54.827 --> 00:27:00.127
+<v SPEAKER_2>Ich glaube, bei XFS war das noch nicht drin. Na ja, wie auch immer. Auf jeden Fall ist das eine ganz wichtige Geschichte dabei.
+
+00:27:00.147 --> 00:27:07.667
+<v SPEAKER_1>Dynamische Features haben schon andere Sachen auch. Also auch andere File-Systemen lassen sich live resizen. Das geht schon.
+
+00:27:07.687 --> 00:28:01.147
+<v SPEAKER_2>So, jetzt hatten wir nun mehrfach schon das Thema RAIDs. Was heißt eigentlich RAID? Ein Sammelbegriff, wie man Festplatten, Redundant Array of Independent Drives oder so, dass man die zusammen hängt, wie eine Platte betreibt. Das haben wir schon ein paar Mal vorweggenommen. Ein RAID ist aber nicht wie das andere, sondern ein RAID kann so und so konfiguriert werden. Ich glaube, die einfachste Methode ist, dass man ein RAID benutzt, um einfach so ein Mirroring zu machen, wie wir es auch schon gemacht haben. Das heißt, man hat zwei Platten und man möchte gerne die Ausfallsicherheit erhöhen. Und dann sagt man einfach, okay, das, was auf der einen Platte steht, das soll auch immer auf der anderen Platte stehen.
+
+00:28:01.227 --> 00:28:07.147
+<v SPEAKER_1>Es ist zwar ein bisschen mehr Arbeit beim Schreiben, aber dafür kann beim Lesen wiederum von beiden gelesen werden.
+
+00:28:07.167 --> 00:28:08.027
+<v SPEAKER_2>Und ist schneller.
+
+00:28:08.047 --> 00:28:09.107
+<v SPEAKER_1>Und ist schneller.
+
+00:28:09.127 --> 00:28:10.527
+<v SPEAKER_2>Das macht ZFS auch.
+
+00:28:10.547 --> 00:28:11.767
+<v SPEAKER_1>Das macht ZFS auch.
+
+00:28:11.787 --> 00:28:37.787
+<v SPEAKER_2>Und jetzt kommen wir wieder zu diesem Punkt mit der Redundanz und dieser Prüfsumme. Das heißt, da jeder Datenblock mit einer Prüfsumme geschrieben wird bei ZFS, kann man beim Lesen nicht nur feststellen, dass es kaputt ist, sondern in dem Moment, wo man so ein Mirror hat, hat man unter Umständen auf der anderen Platte, oder vielleicht sogar auch in der Regel, auf der anderen Platte den Block ohne Prüfsummenfehler. Und was macht das ZFS dann? Damit kriegt man von dem Fehler gar nichts mit.
+
+00:28:37.807 --> 00:29:05.947
+<v SPEAKER_1>Man kriegt den mit. Das gibt, man gibt es natürlich auch in den Kommandos für ZFS, den sogenannten Z-Pool-Kommando, gibt es natürlich auch den Status, das Status-Kommando. Und der sagt einem dann, dass dort ein Lesefehler oder ein Prüfstum, also kann sogar zwischen Lesefehler und Prüfstumfehler unterscheiden. Und da erhöht sich dann einfach der Counter. Und dann steht so eine schicke Zeile da, was man machen soll. Und sogar eine Uhr, wo man klicken kann, wo Sun das noch ein bisschen genauer machen kann. Vielleicht kommen die dann sogar da internationalisiert.
+
+00:29:06.447 --> 00:29:11.287
+<v SPEAKER_2>Aber sie korrigieren das auch? Also in dem Moment, wo es auf der einen Platte falsch ist?
+
+00:29:11.307 --> 00:30:10.167
+<v SPEAKER_1>Wenn es wirklich nur ein Bitfehler auf der Platte war und nicht der physikalisch die Stelle defekt ist, dann repariert sich das auch. Wenn natürlich die Platte an der Stelle sagt, da geht nichts mehr, dann ist das ein Fehler, den man natürlich nicht ausgleichen kann. Er kann natürlich trotzdem die richtigen Daten von der anderen Seite lesen, aber man wird halt ein bisschen stärker gewarnt. Und dann müsste man halt die Platte tauschen und eine andere einsetzen. In Zukunft dann, das strebt den Zahnentwicklern vor, habe ich schon gelesen, weil die erzählen ja auch ein bisschen aus dem Nähkästchen, dass auch das ZFS, so wie man es schon von den Festplatten kennt. Festplatten haben ja, weiß nicht, was kann man kaufen? Jetzt 500 Gigabyte steht drauf. In Wirklichkeit sind es wahrscheinlich irgendwie 600 oder so. Und die 100 Gigabyte werden als Ausfallblöcke benutzt, falls einer kaputt ist, dass sie einen Bereich haben, wo sie denn ausweichen können. Da reichst du doch. Dass die Festplatten keine Ersatzblöcke haben.
+
+00:30:12.067 --> 00:30:13.947
+<v SPEAKER_2>Wie meinst du das jetzt, dass sie keine Ersatzblöcke haben?
+
+00:30:14.127 --> 00:30:20.967
+<v SPEAKER_1>Na, dass wenn die Festplatte feststellt, oh hier, die Spur ist im Eimer, ab sofort benutzen wir die nicht mehr. Wir benutzen jetzt hier unsere Ersatzblöcke.
+
+00:30:21.087 --> 00:30:25.367
+<v SPEAKER_2>Ach so. Okay, aber mir war nicht bewusst, dass es irgendwie ein Fünftel der Kapazität ist.
+
+00:30:25.387 --> 00:30:26.287
+<v SPEAKER_1>Das war jetzt mal geschätzt.
+
+00:30:26.307 --> 00:30:30.487
+<v SPEAKER_2>Ach so, okay. Ich dachte schon, dann kauft er sozusagen gleich zwei Festplatten in einer.
+
+00:30:30.507 --> 00:30:32.407
+<v SPEAKER_1>Nein, das ist wie mit der CD.
+
+00:30:32.427 --> 00:30:34.927
+<v SPEAKER_2>So, das heißt, bei ZFS möchten sie das sozusagen roh nutzen komplett?
+
+00:30:34.947 --> 00:30:54.847
+<v SPEAKER_1>Möchten sie das Feature auch haben, aber softwaremäßig. Also das ZFS merkt, ups, hier ist ja ein Block kaputt. Die Stelle benutzen wir nicht mehr und wir mapten das jetzt mal woanders hin. Dass du da nicht mehr sozusagen die Platte tauschen musst, sondern das ZFS einfach ummappen kannst. Wobei natürlich erst ein Block kaputt geht, wenn die Platte es schon nicht mehr schafft. Wenn die Platte es schon nicht mehr schafft, will man sie vielleicht doch irgendwann loswerden.
+
+00:30:55.047 --> 00:31:00.407
+<v SPEAKER_2>Das ist ja nur wirklich kein neues Feature. Das haben wir ja auch ganz alte Dateisysteme schon früher gehabt.
+
+00:31:00.427 --> 00:31:00.807
+<v SPEAKER_1>Welches denn?
+
+00:31:00.827 --> 00:31:22.027
+<v SPEAKER_2>Ähm, duhst dich nämlich jetzt nicht? Du brümmst mich ins Grübeln, aber ich kann mich erinnern, war das nicht schon bei, äh, na, im Prinzip kann man das ja auch bei Fett drehen, also dass man die Feinde...
+
+00:31:22.047 --> 00:31:31.207
+<v SPEAKER_1>Klar, da gab es immer so Tools, die einfach in der Block-Bitmap irgendwie die Blöcke gesetzt haben, aber es war eigentlich rein gefuscht.
+
+00:31:31.947 --> 00:31:44.167
+<v SPEAKER_2>Na gut, wir reden auf jeden Fall davon, dass es sozusagen die Platte automatisch tut. Das heißt, die Festplatte merkt, dass sie irgendwie von ihrem eigenen Block nicht mehr lesen kann. Das ist ja nicht so, dass das Fallsystem der Festplatte sagt, sie soll das jetzt ummappen, sondern sie tut es selber.
+
+00:31:44.947 --> 00:31:51.747
+<v SPEAKER_1>Ja, aber es ist ja eine Festplatte. Ich sage ja, dass ZFS das in Zukunft selbst mit ihren Daten machen kann.
+
+00:31:54.627 --> 00:32:34.047
+<v SPEAKER_2>Ein, ähm, ja, ich denke, das mit den Pools ist jetzt klar und auch mit der Redundanz. Ähm, wenn jetzt so ein, was ist denn das nächste? Also ich habe jetzt irgendwie meine zwei Platten, die habe ich jetzt irgendwie da angeschlossen, jetzt habe ich irgendwie einen Pool erzeugt, der besteht jetzt aus diesen zwei Dingern. Also wir mirrorn jetzt die beiden Platten, damit man irgendwie auf beiden das Gleiche hat. Und weil uns geht es vor allem um Datensicherheit, schnell genug sind die Platten sowieso und ich hoffe, das kommt ihr nicht hinterher. Was mache ich dann? Jetzt brauche ich ja auch irgendwann mal so ein Fallsystem.
+
+00:32:34.727 --> 00:32:35.987
+<v SPEAKER_1>Das ist schon da.
+
+00:32:36.007 --> 00:32:38.047
+<v SPEAKER_2>Das ist schon da? Wo kommt das her?
+
+00:32:38.067 --> 00:32:57.967
+<v SPEAKER_1>Das ist, dem Pool gibt man einen Namen. Und das erste Fallsystem heißt so, wie du den Pool genannt hast, üblich ist in den Examples immer, die nennen ihr Pool immer Tank. Und das erste Fallsystem wird gemountet unter slash Tank. Und da kannst du schon drin loslegen. Da hast du schon einen Terabyte jetzt.
+
+00:32:57.987 --> 00:33:05.987
+<v SPEAKER_2>Okay. Und das sieht dann erstmal so aus, wie man sich das so vorstellt. Man hat so Verzeichnisse und kann da so rein gehen.
+
+00:33:06.007 --> 00:33:06.807
+<v SPEAKER_1>Ist erstmal leer.
+
+00:33:06.827 --> 00:33:10.127
+<v SPEAKER_2>Und hat Dateien. Ja gut, aber das ist das, was man dann irgendwie anlegen kann.
+
+00:33:10.147 --> 00:33:30.967
+<v SPEAKER_1>Kannst du Sachen drin speichern. Dann wird es ja theoretisch schon aufhören, wenn es halt nicht ZFS wäre. Weil ZFS ist ja mehr als nur ein Fallsystem. Dann kann man zum Beispiel einen Quoter setzen. Lohnt sich natürlich nicht, weil das Tank ist ja das Hauptfallsystem. Aber man könnte sich ja zum Beispiel noch ein weiteres erstellen, wenn man zum Beispiel möchte.
+
+00:33:30.987 --> 00:33:32.607
+<v SPEAKER_2>Was ist Quoter?
+
+00:33:32.627 --> 00:33:42.007
+<v SPEAKER_1>Quoter ist, ich sage, ich habe hier noch ein weiteres Fallsystem und ich möchte nicht, dass da drin mehr als, sagen wir mal, 50 GB gespeichert wird. Dann setzt man einen Quoter von 50 GB.
+
+00:33:42.027 --> 00:33:46.007
+<v SPEAKER_2>Also eine Begrenzung, dass ein Dateisystem über eine bestimmte Größe nicht anwachsen darf.
+
+00:33:46.027 --> 00:34:14.767
+<v SPEAKER_1>Genau, das haben andere Fallsystems aber natürlich auch. Aber ZFS muss ja mindestens alles das haben, was die anderen auch können. Sonst kommt man da nicht weit. Das wäre das Quoter. Dann haben sie noch eine Reservation. Da kann man sagen, dieses Fallsystem hier soll 100 GB haben und zwar reserviert. Das heißt, alle anderen dürfen zwar wachsen, die noch parallel zu diesem Fallsystem liegen. Aber nicht so weit, dass dieses nicht auf 100 GB wachsen könnte. Das ist die Reservierung.
+
+00:34:14.787 --> 00:34:16.627
+<v SPEAKER_2>Und das kann man immer Profilesystem machen?
+
+00:34:16.907 --> 00:35:20.687
+<v SPEAKER_1>Das kann man Profilesystem machen. Jetzt muss man sich vorstellen, man hat ja, man denkt, oder man muss so ein bisschen eine neue Denkweise entwickeln, wenn man ZFS benutzt. Weil früher war es so, man hat eine Platte, dann hat man überlegt, wie mache ich das? Mache ich irgendwie 5 GB für die Root-Partition und dann mache ich mir noch für User irgendwie noch 10 GB und der Rest ist irgendwie Data und so. Muss man überlegen und muss Entscheidungen treffen und später ändern sich die Bedingungen und Mist, Root-Pilesystem ist zu klein, Mist, war es übergelaufen und Temp reicht auch irgendwie nicht und das mache ich nicht. Ich muss alles neu machen, habe ja auch keinen Bock. Und dann machen manche Leute keinen Bock mehr auf verschiedene Pilesystems und dann machen sie nur ein großes, hat auch wieder einen Nachteil, läuft eins voll, ist das gesamte voll, ist auch Feierabend, finden sie auch nicht toll. Also wie macht man es? Weiß man nicht. Man kann es vorher nicht wissen. So bei ZFS kann man halt dynamisch ein Pilesystem machen und ein Pilesystem ist halt, man gibt dem keine Größe aus, man hat halt diese Reservierung oder man kann halt einen Quoter setzen, aber es ist einfach erst mal nur da und hat keine Größe, sondern es ist so groß wie der Platz, den der Inhalt belegt.
+
+00:35:20.707 --> 00:35:21.867
+<v SPEAKER_2>Das Terabyte halt.
+
+00:35:21.887 --> 00:35:35.887
+<v SPEAKER_1>Das Terabyte, genau. Und dann denkt man sich, ok, ich habe hier 100 User, eigentlich würde ich es ja cool finden, wenn jeder User sein eigenes Pilesystem hat. Und weil bei ZFS die Erstellung von einem Pilesystem so eine, wie sagt man, cheap operation ist.
+
+00:35:35.907 --> 00:35:39.487
+<v SPEAKER_2>Das sind diese Light-Wide Pilesystem Creation, wie sie es da selber nennen.
+
+00:35:39.507 --> 00:37:04.067
+<v SPEAKER_1>Man setzt das Kommando ab und es macht Klick und das Pilesystem ist da. Ja, wie man Make-Deer macht, kann man hier, machen wir mal ein Pilesystem. Kann man auch die Parameter setzen schon, manche, wo es gemountet werden soll. Und zack, ist so ein Pilesystem da. Und das ist dann in, wenn man jetzt erstmal nichts Besonderes einstellt, wir hatten ja unser Tank Pool, den wir so genannt haben, dann wäre es jetzt Tank Tim und Tank Denis und Tank Tom und Steffi und wie es alle heißen, die ganzen User, die wir so haben. dann hätte man viele Pilesystems. So, und jetzt gibt es, bei ZFS gibt es Properties für jedes Pilesystem. Es gibt zum Beispiel, das kennen die ganzen Unix-Nutzer, es gibt dieses Access Time, oder auch A-Time genannt. Und wenn man sein Pilesystem ein bisschen schnell haben will, dann schaltet man das Speichern der Last Access Time ab, weil sonst auch bei jedem Lesen irgendwie das gespeichert wird, wann es denn zum letzten Mal gelesen wurde, was ja doch wieder Schreiben ist. Und Schreiben ist ja eigentlich nicht so schnell, will man da vielleicht gar nicht haben. Auf dem Webserver zum Beispiel ist es mir egal, weil man ja zum letzten Mal irgendwie Favicon gelesen hat. Also schaltet man das erstmal aus. Jetzt haben wir aber 100 User. Also wir schalten ihn jetzt einfach aus, wir fragen jetzt mal nicht. Und ich will nicht das bei jedem Einzelnen ausschalten. Und deswegen kann man die Property für A-Time auf dem Tank setzen und das wird vererbt an alle darunter liegenden Pilesystems.
+
+00:37:04.087 --> 00:37:45.987
+<v SPEAKER_2>Also grundsätzlich gibt es also das Prinzip, dass ein Pilesystem in dem Pool so erstellt wird, wie man das von Ordnern im Pilesystem kennt. Und außerdem haben sie noch bestimmte Eigenschaften, wie sie sich verhalten, wir haben es schon angesprochen, so Quota, Reservation und so weiter. Und die werden vererbt. Das heißt, ich habe so ein Top-Level-Pilesystem und kann darunter dann sagen, ok, hier kommen jetzt alle Home Directory-Pilesysteme und die haben aber schon mal die Eigenschaften und dann kommen darunter konkret dann auch die Pilesysteme für den einzelnen User und die haben dann irgendwie so nicht mehr als 100 GB, aber sollen immer 5 MB frei sein, so eine Sachen lassen sich damit realisieren?
+
+00:37:47.687 --> 00:38:01.307
+<v SPEAKER_1>Das ist sozusagen die Pilesystems werden verwaltet wie Files in einem Pilesystem, könnte man so sagen. Und da gibt es halt, jetzt müssten wir, weil das sind ja auch die Features von ZFS, die Properties so ein bisschen durchgehen.
+
+00:38:02.047 --> 00:38:09.867
+<v SPEAKER_2>Ja, also Quota und Reservation waren jetzt sozusagen schon solche Properties. Was gibt es da noch?
+
+00:38:09.887 --> 00:39:07.247
+<v SPEAKER_1>Dann gibt es zum Beispiel noch was auch interessant ist, was auch ein großes Verschlüsselung. Verschlüsselung gibt es noch nicht, ist aber schon in Arbeit und wird irgendwann kommen. Sun ist noch nicht ganz fertig, die Verschlüsselung an sich funktioniert, nur das Key-Management muss noch in die ZFS-Admin-Tools integriert werden. Oder wahrscheinlich in Solaris insgesamt, die haben ja da ein bisschen größeres Sicherheits-Framework und dort soll das integriert werden. Aber dem Developer, der kann schon mit seinen Kommandos irgendwie verschlüsselte Filesystems oder Pools mounten und starten und verschlüsseln und lesen und so weiter und so fort, das geht alles schon. Die Block-Struktur und das On-Disk-Format, so genannt, ist dafür schon vorbereitet. Wenn wir schon bei Encryption sind, da gibt es was, was ziemlich ähnlich ist. Vom Aufbau her ist die Verschlüsselung, ne Quatsch, das hat man gerade nicht, die Verschlüsselung, sondern die Komprimierung. Und die existiert auch schon.
+
+00:39:07.267 --> 00:39:12.487
+<v SPEAKER_2>Das heißt, die Daten werden verschlüsselt, äh Quatsch, man, schon wieder. Verkleinert.
+
+00:39:12.687 --> 00:39:13.367
+<v SPEAKER_1>Verkleinert, ja.
+
+00:39:13.387 --> 00:39:17.347
+<v SPEAKER_2>Auf welcher Basis? So wie MP3 oder was?
+
+00:39:17.367 --> 00:39:27.087
+<v SPEAKER_1>Nee, ist natürlich ein sogenanntes lossless-Komprimierungsverfahren. Könnte man wahrscheinlich auch reinbauen und gucken, was passiert.
+
+00:39:27.107 --> 00:39:29.907
+<v SPEAKER_2>Wir optimieren ihre Daten automatisch.
+
+00:39:29.927 --> 00:39:46.647
+<v SPEAKER_1>Ich meine, es wurde auch schon angedacht, dass das ZFS eines Tages so schlau ist und erkennt, was gespeichert wird, zum Beispiel Musik. Und dann natürlich jetzt nicht MP3-Encoder darauf losjagt, aber halt vielleicht den FLEG einsetzt.
+
+00:39:46.667 --> 00:39:47.087
+<v SPEAKER_2>Den FLEG?
+
+00:39:47.667 --> 00:39:50.227
+<v SPEAKER_1>Ja, FLEG ist ja ein lossless-Audio-Encoder.
+
+00:39:50.247 --> 00:39:54.627
+<v SPEAKER_2>Ach so, diesen FLAC, FLAG. Ah, das ist die DAT.
+
+00:39:55.567 --> 00:40:05.667
+<v SPEAKER_1>Aha, hier kommt irgendwie Audio. Und wir komprimieren jetzt mal Audio. Das wäre theoretisch in der Zukunft machbar. Natürlich auch bei jedem anderen Fallsystem, dass man es irgendwie komprimieren kann, nicht nur bei ZFS.
+
+00:40:05.687 --> 00:40:06.687
+<v SPEAKER_2>Ob das performt?
+
+00:40:07.907 --> 00:41:32.247
+<v SPEAKER_1>Ja, manchmal ist den Leuten Performance ja nicht wichtig. So eine Riesenfirma, die so ein Audioarchiv hat, da gibt es ja so ein paar, die online Musik verticken zum Beispiel. Die könnten ja sowas brauchen. Vielleicht brauchen die es ja gar nicht so schnell. Vielleicht haben die ja keinen Bock, so riesengroße EMC-Schränke zu kaufen, mit so viel Daten und die brauchen es ein bisschen kleiner. Ja, so eine Idee. Jedenfalls gibt es bei ZFS Komprimierung. Und es gibt bisher zwei Komprimierungsalgorithmen, die sie einsetzen. Das eine heißt lustigerweise LZJB. Und das LZ steht für diese Lampel-ZIP, so wie bei auch LZIP und LZO und wie sie alle heißen. Und das JB steht, wie hieß der Developer von Sun nochmal? Jeff Bonwick. Weil der hat den irgendwann mal geschrieben, weil er Colonel Dumps oder so schnell speichern wollte. Und er brauchte ein Komprimierverfahren, was irgendwie richtig, richtig schnell ist. Es war nicht allzu doll, aber es ist wirklich rattenschnell. Und dann gibt es seit einer Weile noch, hat einer mal schnell reingeguckt auch von Sun, gibt es noch Gzip. Das ist nicht mehr ganz so schnell komprimiert, aber ziemlich gut, da kann man sich das dann ausholen. Weil man ja ein File-System so billig erstellen kann, macht man sich ein File-System nur für seine Log-Files. Man sagt, man hätte da gerne Gzip, weil da wird ja immer nur angangen, da passiert nicht allzu viel. Und die werden dann schön komprimiert abgelegt.
+
+00:41:33.107 --> 00:41:46.407
+<v SPEAKER_2>Also ZFS bringt grundsätzlich die Intelligenz mit oder die Möglichkeit für Intelligenz mit, dass man eben die Daten auch in Abhängigkeit von ihnen selbst spezifisch speichert.
+
+00:41:46.427 --> 00:41:56.767
+<v SPEAKER_1>Das war in die Zukunft geschaffen. Aber das Komprimieren ist natürlich dauerhaft. Da guckt er nicht nach. Sondern wenn man es einschaltet, legt er los. Und wenn man es abschaltet, hört er wieder auf.
+
+00:41:56.787 --> 00:42:01.847
+<v SPEAKER_2>Ja gut, also Kompression ist ja in dem Sinne nichts Neues. Das hat es ja schon gegeben.
+
+00:42:01.867 --> 00:44:16.507
+<v SPEAKER_1>Das haben wir, weiß ich noch nicht, gesagt. ZFS ist eigentlich sowieso insgesamt schon. Aber einzeln betrachtet nichts Neues. Also Kompression gibt es. Raid-Systeme gibt es schon. Check-Summen gab es schon beim Amiga auf den Diskblöcken, bis sie es mal abgeschafft haben, weil sie mehr Speicher brauchten. Aber auch da gab es schon Check-Summen. Aber das alles in einen Topf zu packen und als Einheit wirken zu lassen, das gibt es noch nicht. Und das ist der große Unterschied von ZFS. Und da kommen wir auch wieder auf die Rampant-Layering-Violation zurück. Das ist halt eben schon ein Vorteil, wenn das Filesystem weiß, was das RAID macht, und wenn das RAID weiß, was das Filesystem macht. Dann kann man sich das zu Ende erklären, was wir vorhin hatten. Nämlich, dass wenn so ein Mörer, dein Mörer, den du hast mit deinen zwei Platten, mit dem Terabyte, wenn das nicht mehr in SYNC ist, wenn du jetzt unter FreeBSD mit diesem Geom einen Geom-Mörer hättest, ich habe mit dem letzter Zeit so viel Ärger, deswegen muss ich jetzt mal ein bisschen uprenten, wenn der nicht in SYNC ist, dann musst du halt da irgendwie stundenlang sich SYNC bei 500 Gigabyte mal so schnell umgeschrieben, das geht halt nicht so flott, das dauert irgendwie ein, zwei, drei Stunden, bei größeren Systemen eh denn nicht länger. Und auch noch in dieser Zeit ist dein System mehr oder weniger lahmgelegt, weil die Platten laufen ja auf Volllast, weil der eine liest Volllast, der andere schreibt Volllast, da geht nix mehr, also nicht viel. So, bei ZFS ist es aber so, unser Terabyte-Rate, also unser Terabyte-Mörer in ZFS ist noch nicht ganz voll. Und wenn sich da, wenn dein Rechner crasht und das ZFS muss mal gucken, ob alles okay ist, dann guck da halt nur nach bei den Daten, die belegt sind, weil das Rate weiß ja, das kennt das Pfeilsystem ja, und deswegen werden nur die Sachen geprüft, die belegt sind. Und der Rest ist ja egal. Und der Geomörer, der weiß nicht, was belegt ist und was nicht, der muss die gesamte Platte prüfen. Das heißt, der Geom braucht irgendwie, obwohl die Platten vielleicht leer sind, die sind ja irgendwie gleich nach dem Erstellen, ist dir der Rechner abgestürzt, musst du das Terabyte rüberkopieren. Bei dem ZFS bootest du und der ist schon fertig mit Prüfen, weil es ja noch leer war. Der prüft da gar nichts, weil nix da ist. Das ist der Unterschied. Weil ZFS weiß sozusagen die eine Hand, was die andere macht und bei den Modulen ist es nicht ganz der Fall, weil die Kommunikation zwischen den Modulen halt nicht so schön sein könnte. Und zwar ist ja kein Problem.
+
+00:44:16.607 --> 00:44:49.047
+<v SPEAKER_2>Ja, das ist auch so in der öffentlichen Diskussion, aber wenn es darum geht, so ist ZFS nicht eine riesen aufgeblasene, eierlegende Wollmilchsau. Schon immer die Antwort von Sun gewesen. Ja, mag erst mal so scheinen, aber unsere Sichtweise ist, wir packen einfach das rein, von dem wir glauben, dass es da einfach reingehört, dass man das jetzt einfach mal braucht. Und wir reden eigentlich auch nicht mehr, also ZFS ist eigentlich ein Scheißname, weil es irgendwie ein...
+
+00:44:49.067 --> 00:44:50.627
+<v SPEAKER_1>Weil es ist halt nicht nur ein Fallsystem.
+
+00:44:50.647 --> 00:46:14.627
+<v SPEAKER_2>Genau, es ist nicht nur ein Fallsystem, sondern es ist ein Fallsystem-System. Es ist mehr ein Poolsystem. Aber ich glaube, die Diskussion um ZFS wäre auch nicht so, wenn es nicht so heißen würde. Und das zweite Argument, was sie halt bringen, was ich auch durchaus nachvollziehen kann, ist, dass eben bei diesen vielen Layern, die sie in einem Blick sehen, man einfach Informationen ganz unten oben braucht. Ein anderes Beispiel, was genannt wurde, war jetzt so bei Streaming. Wenn man einen Streaming-Server hat, man hat große Dateien, und dann lesen oben einfach 20 Prozesse, lesen dieselbe Datei an unterschiedlichen Stellen. Weil der eine ist bei dem Stream da, und der andere ist bei dem Stream da, und der andere ist bei dem Stream da, wie das eben so ist. 30 Leute hören irgendeine Datei übers Internet. Das heißt, das Fallsystem muss unten 20 verschiedene Klienten auf die gleiche Datei schicken. Aber jeder liest an einer anderen Stelle. Und die lesen natürlich dann vollkommen unkoordiniert, je nachdem, der eine mal vorne, der andere mal hinten und so. Und dass man an der Stelle eine sehr viel sensiblere Caching-Strategie an den Tag legen kann, wenn man eben sowohl über diesen Kontext oben Bescheid weiß, als auch über den Kontext auf der niedrigsten Ebene, ist nachvollziehbar. Ich meine, ob sie das jetzt schaffen, das ist eine andere Frage.
+
+00:46:17.007 --> 00:46:57.567
+<v SPEAKER_1>ZFS hat da schon Algorithmen drin, um diese Leseverhalten, diese random aussehenden Leseverhalten, schon zu optimieren. Das ist der sogenannte Elevator-Mode oder Elevator-Algorithmus, dass nicht in random Access auf die Platte zugegriffen wird, sondern die Zugriffe werden nach physikalischen Blöcken sortiert, sodass der Kopf einmal hin und einmal herfährt und dabei alles einsammeln kann, was unterwegs liegt, ohne dass er dauernd 20, 30 Mal für die einzelnen Streaming-User hin und her springen muss. Sondern das wird in einem Rutsch durchgelesen. Und damit können die Access-Zeiten verringert werden. Wie weit das funktioniert, weiß ich noch nicht, weil so tief habe ich es noch nicht getestet. Das ist wahrscheinlich auch gar nicht so einfach möglich. Das bräuchte man auch erst mal.
+
+00:46:59.647 --> 00:47:58.207
+<v SPEAKER_2>Ja, ich meine, am Ende macht so ein Rechner dann auch noch ganz andere Sachen. Ob er es dann immer geschafft hat, er dann immer schafft, das alles zu optimieren, weiß der Geier. Das werden dann die sogenannten Real-World-Tests zeigen. Eine Sache, die mich sehr berührt hat, als ich das erste Mal über ZFS gelesen habe oder gehört habe vielmehr, ich habe mal so eine Präsentation gesehen, da war ich schon recht angetan, ist die Fähigkeit, Snapshots zu machen. Auch das ist nichts Neues. Auch das gab es in anderen Dateisystemen. Ich glaube, unter FreeBSD geht das schon länger auch mit UFS. Also ein Snapshot ist die Möglichkeit, den gesamten Zustand eines File-Systems ab zu einem bestimmten Zeitpunkt einfach einzufrieren. Und zu sagen, der Zustand, den es jetzt hat, der möchte ich jetzt gerne bleiben, aber alles soll weiterlaufen. Wie funktioniert das? Das gibt es auch bei ZFS.
+
+00:47:58.547 --> 00:48:08.827
+<v SPEAKER_1>ZFS ist auch der Hauptfeature. Und zwar erstellt man halt einen, ich weiß nicht, ob man es jetzt leicht erklären kann, man erstellt halt einen Snapshot, der jetzt die aktuelle Zeit abbildet.
+
+00:48:08.847 --> 00:48:14.787
+<v SPEAKER_2>Das heißt, man sagt jetzt einfach, jetzt ist Mitternacht, irgendwie Montag, ich mach meinen wöchentlichen Snapshot.
+
+00:48:14.807 --> 00:48:53.407
+<v SPEAKER_1>Genau, man hat irgendwie, sagen wir mal, seine 1000 Mails nachts, da macht man einen Snapshot und der Snapshot hält diese 1000 Mails und die Blöcke, die dadurch belegt sind, fest. Wenn jetzt noch Mails dazukommen, sind die in diesem Snapshot natürlich nicht enthalten. Aber angenommen, nachdem der Snapshot erstellt wurde, werden aussersehen 10 Mails aus den ersten 1000 gelöscht. Dann werden die ja theoretisch weg. Da aber der Snapshot die Blöcke festhält, weil er die ja braucht, werden die im Snapshot nicht gelöscht. Deswegen kann man weiterhin auf die Blöcke zugreifen. Ich weiß nicht, ob du es jetzt gut erklärt hast.
+
+00:48:53.427 --> 00:48:56.407
+<v SPEAKER_2>Das ist ein bisschen schwierig.
+
+00:48:56.427 --> 00:48:59.847
+<v SPEAKER_1>Oder auch, wenn danach eine Mail verändert wird, oder eine Datei, lassen wir die Mails mal weg.
+
+00:48:59.927 --> 00:49:32.287
+<v SPEAKER_2>Ich meine, was er ja macht, ist, dass er sich im Prinzip... Die Blöcke, wo die Daten sind, das ist das eine. Das Wichtige ist ja immer das Verzeichnis der Dateien. Das, was sozusagen sagt, was es überhaupt gibt. Im Prinzip ist ab dem Moment, wo man einen Snapshot macht, hat man dann einfach zwei vollständige Verzeichnisse. Das Alte zum Zeitpunkt des Snapshots und das Aktuelle, was sich halt weiter laufend ändert, wo Dateien hinzukommen und wegfallen, neue Ordner und unbenannt werden und pipapo. Letztlich verweisen die aber auf dieselben Blöcke.
+
+00:49:32.307 --> 00:49:44.907
+<v SPEAKER_1>Also ein Snapshot belegt erst mal keinen Extraplatz, sondern in dem Augenblick, wo man einen Snapshot erstellt, werden sich nur alle Blöcke gemerkt, die zu diesem Zeitpunkt existierten. Und es werden keine neuen erzeugt wegen des Snapshots, sondern erst danach.
+
+00:49:44.927 --> 00:50:00.347
+<v SPEAKER_2>Das ist diese Copy-and-Write-Geschichte. Das heißt erst in dem Moment, wo wirklich auf einen Blog neu zugeschrieben wird und da würde sich jetzt irgendwas ändern. In dem Moment wird er kopiert. Das heißt, die eine Kopie ist für den Snapshot. Oder für viele andere Snapshots, wo der auch noch mit...
+
+00:50:00.367 --> 00:50:07.587
+<v SPEAKER_1>Das wird ja nicht noch richtig kopiert, sondern das hat sich ja wohl was geändert an dem Blog. Dann wird die neue Änderung... Das neue wird geschrieben, das alte wird gelassen.
+
+00:50:07.607 --> 00:50:11.767
+<v SPEAKER_2>Aber man nennt das ja Copy-and-Write.
+
+00:50:11.787 --> 00:50:54.627
+<v SPEAKER_1>Das stimmt schon. Und bei einem Snapshot wird halt die alte Kopie weiter festgehalten, weil man hat ja gesagt, man möchte sie festhalten. Aber auch grundsätzlich, selbst wenn man keine Snapshots anlegt, wird trotzdem mit Copy-and-Write gearbeitet. Immer. Es wird bei ZFS immer mit Copy-and-Write gearbeitet. Na ja, damit... bei auch wieder, sagen wir mal, einem Absturz von deinem Rechner. Und du bist gerade dabei, du hast gerade den Blog so halb rausgeschrieben, aber noch nicht ganz. Dann kommt dein System wieder hoch und dann liegt dort so ein halber Blog. Und wenn, wie bei anderen Systemen, der über das Original drübergeschrieben worden wäre, dann wäre das Original weg und der Neue wäre noch nicht da, kaputt.
+
+00:50:55.947 --> 00:51:06.807
+<v SPEAKER_2>Das heißt, jeder geschriebene Blog, der nur eine Änderung darstellt, ist immer erst mal ein neuer Blog, solange bis der fertig ist, und dann wird der alte weggeworfen, weil es ja auch eigentlich wirklich egal ist.
+
+00:51:06.827 --> 00:51:32.627
+<v SPEAKER_1>Nee, der wird nicht weggeworfen, sondern... Jetzt wird es ein bisschen kompliziert. Das ZFS hat durch die Check-Summen, also alle Datenblöcke zusammen haben eine Check-Summe, und die Blöcke, die diese Datenblöcke verwalten, haben die Check-Summe, die sich aus diesen Check-Summen ergibt. Und so vererbt sich das bis nach oben hoch, bis zu dem sogenannten Überblock, dem Rootblock.
+
+00:51:33.347 --> 00:51:34.207
+<v SPEAKER_2>So heißt der auch.
+
+00:51:34.227 --> 00:51:57.627
+<v SPEAKER_1>Der heißt auch so. Der ist auch die Rootblock. Wenn man in das On-Disc-Format guckt von ZFS, dann gibt es ja so ein Hex-Code, wie der erkannt wird, die ID von Überblock. Und es ist so, dass es, so wie Dead Cafe und Deadbeat, haben die halt den Überblock genannt mit, ich weiß nicht mit welchen Zahlen und Buchstaben, aber so, dass halt Überblock da steht.
+
+00:51:58.247 --> 00:51:59.167
+<v SPEAKER_2>Ein U in Hex?
+
+00:52:03.847 --> 00:52:11.247
+<v SPEAKER_1>Nein, ein U war es nicht, aber da gibt es auf jeden Fall was. Können die Leute ja auch so rausfinden. Aber es ist halt der sogenannte Überblock.
+
+00:52:11.807 --> 00:52:19.487
+<v SPEAKER_2>Okay, wir haben einen Link in den Show Notes. Der Hinweis auf die tollen Show Notes bei Chaos Radio Express.
+
+00:52:19.507 --> 00:52:20.727
+<v SPEAKER_1>Die werden dann nachgeliefert, ja?
+
+00:52:20.747 --> 00:52:32.467
+<v SPEAKER_2>Ja, die werden sogar mitgeliefert, weil ich schreibe die ja vorher noch alle schön in die Datei rein, bevor das hier gepostet wird. Und das heißt, jetzt in diesem Moment, wo man das gerade hört, kann man auf seinem iPod schön auf die Lyrics scrollen.
+
+00:52:32.487 --> 00:52:35.047
+<v SPEAKER_1>Für den User Life.
+
+00:52:35.067 --> 00:53:20.127
+<v SPEAKER_2>Ja, genau, aber natürlich auch auf der Webseite. Zu Chaos Radio, die übrigens bei Chaos Radio CCCDE, jetzt kann man auch einen kleinen Werbeblock hier einführen, bei Chaos Radio CCCDE abliegt. Chaos Radio Express 0490. Und auch wenn ihr natürlich Feedback habt zu dieser Sendung. Zu dieser und wie auch anderen Sendungen immer Chaos Radio CCCDE. Gut, aber das geht ja eigentlich an Anfang oder ans Ende, bevor ich es wieder komplett vergesse. Lieber so, also wir haben Snapshots. Und Copy-on-Write. Und Copy-on-Write. Sprich, erstens, ich fasse mal ein bisschen zusammen. Man kann das ein beliebiges ZFS-Filesystem zu jedem Zeitpunkt komplett einfrieren und sagen, diesen Zustand, den es jetzt hat, den möchte ich gerne erhalten. Warum auch immer.
+
+00:53:20.147 --> 00:53:20.667
+<v SPEAKER_1>Durch die Snapshots, ja.
+
+00:53:20.687 --> 00:53:36.747
+<v SPEAKER_2>Einfach nur, um mal später nachzuschauen, wie das war. Also auch so zu Debugging-Zwecken oder so. Aber es ist natürlich auch eine wunderbare Sache für langsame Backups, weil man hat immer das Problem, wenn man irgendwie auf dem Rechner irgendwas aktiv tut, irgendein Programm arbeitet, was weiß ich.
+
+00:53:36.767 --> 00:53:42.427
+<v SPEAKER_1>Wenn man nicht nur einmal nachts backupen möchte, sondern jede halbe Stunde macht man jede halbe Stunde einen Snapshot.
+
+00:53:42.447 --> 00:53:47.927
+<v SPEAKER_2>Und dann kann man in Seelenruhe diesen Snapshot backupen. Wie greift man darauf zu, auf diesen Snapshot?
+
+00:53:47.947 --> 00:54:03.327
+<v SPEAKER_1>Da gibt es auch so einen. Und zwar in unserem Userfile-System in unserem Tank Tim. Und in Tank Tim gibt es einen Ordner, der ist nicht sichtbar.
+
+00:54:03.347 --> 00:54:04.287
+<v SPEAKER_2>Panzer Tim.
+
+00:54:04.307 --> 00:54:19.887
+<v SPEAKER_1>Nee, der heißt Punkt ZFS. Der ist aber nicht sichtbar. Auch nicht, wenn man LS-LA macht, den sieht man nicht. Aber man kann halt mit CD reingehen und dann ist man drin. Dort gibt es wieder einen Ordner, der Snapshots heißt. Da geht man rein und da liegt dann ein oder...
+
+00:54:19.907 --> 00:54:33.007
+<v SPEAKER_2>Das heißt, alle Snapshots werden transparent in das Fallsystem mit eingeblendet. Und ein Programm, das weiß, dass es auf einem ZFS ist, kann einfach durch Anwahl von Punkt ZFS, Snapshot, tralala, Montag, was weiß ich.
+
+00:54:33.027 --> 00:54:33.687
+<v SPEAKER_1>Könnte da sein.
+
+00:54:33.707 --> 00:55:09.527
+<v SPEAKER_2>Den gibt man dann einfach irgendeinen Namen, dem Snapshot. Genau. Und schon kann man in Seelenruhr ein Backup starten. Und diese ganze Copy-and-Write-Geschichte wird hier verwendet, um einfach auch Platz zu sparen. Das heißt, Daten werden nicht komplett dupliziert, sondern erst in dem Moment, wo sie geändert werden. Und dieser selbe Mechanismus sorgt auch dafür, dass grundsätzlich, wenn ich das richtig verstanden habe, ein ZFS-Fallsystem zu jedem Zeitpunkt immer konsistent ist. Weil der eigentliche Änderung am Dateibaum ist ein atomarer Schritt. Also entweder er findet nicht statt, und wenn er stattgefunden hat, dann hat er auch nicht offen lassen.
+
+00:55:09.547 --> 00:55:24.387
+<v SPEAKER_1>Entweder er findet komplett statt, dann gibt es auch komplett die Prüfnummer bis oben zum Überblock durch. Oder er hat nicht stattgefunden, dann ist ja wegen Copy-on-Write der alte Block noch da und hat der noch seine Prüfnummer bis oben zum Überblock. Also entweder oder.
+
+00:55:24.407 --> 00:55:32.587
+<v SPEAKER_2>Also man kann, das Fallsystem kann sozusagen beim, was weiß ich, Strom fällt aus, er macht es gut, er weiß ganz genau, was gültig ist und was nicht.
+
+00:55:32.607 --> 00:55:35.287
+<v SPEAKER_1>Also die bei Sun sagen, du kriegst einen ZFS nicht kaputt.
+
+00:55:36.947 --> 00:55:39.767
+<v SPEAKER_2>Das ist ja ein bold move.
+
+00:55:39.787 --> 00:55:41.247
+<v SPEAKER_1>Statement.
+
+00:55:41.267 --> 00:55:42.247
+<v SPEAKER_2>Das ist ein Statement.
+
+00:55:42.267 --> 00:57:09.787
+<v SPEAKER_1>Aber es geht noch ein Stück weiter. Das können wir gleich hier anhängen, weil es passt gerade ganz gut. Weil die Leute, die sich vielleicht mit Datenbanken auskennen, wissen ja, dass auch Postgres zum Beispiel, da heißt es WAL, das ist das Write Ahead Log. Dort werden alle Sachen reingeschrieben, die die Datenbank machen wollte. Dadurch sind dann halt Transactions möglich. Also dass dem Programm, wenn das Programm sagt, ich will hier meine, meine Datenbankänderung vornehmen, dass es auch sicher davon ausgehen kann, dass die Statt gefunden hat, die Änderung. Und das ZFS macht das ähnlich. Es gibt das sogenannte ZIL, das ist das ZFS Intention Log, was das ZFS vorhatte. Und das wird auch irgendwo im Pool gespeichert. Man kann sogar externe zum Beispiel so schnell einen RAM-Speicher nehmen als Device. Also es wird irgendwo gespeichert. Und selbst beim Absturz, wenn das ZFS wieder hochkommt, kann es nachgucken, was war denn meine letzte Intention. Ja, das ist jetzt der neueste Scheiß in die Datenbanken, damit es flott ist. Aber eigentlich ist es innerhalb des Pools, wird es gespeichert. Damit kann die letzte Transaktion, weil ZFS arbeitet halt ein bisschen Datenbank-ähnlich, kann die letzte Transaktion nachgeholt werden. Und damit ist sichergestellt, dass auch alle Schreibaktivitäten, die zum Zeit des Absturzes eigentlich stattfinden sollten, auch nachträglich noch zu Ende geführt werden können. Das heißt, wenn auch ein Programm was schreiben wollte und dem schon okay gesagt wurde, dass es da ist, dann ist es auch da.
+
+00:57:09.807 --> 00:57:19.427
+<v SPEAKER_2>Also super robust und platzsparend. Und um nochmal diese Snapshots aufzugreifen.
+
+00:57:19.447 --> 00:57:20.607
+<v SPEAKER_1>Die findest du toll, ne?
+
+00:57:20.627 --> 00:58:37.867
+<v SPEAKER_2>Die finde ich total toll. Und zwar aus einem anderen Grund noch, weil, wie man ja weiß, sehr sensitives Thema. Man braucht ja immer gute Backups. Und heutzutage schleppt man ja als moderner Datenkrieger doch immer eine ganze Menge Zeug mit sich rum. Und es ändert sich auch viel pro Tag. Das heißt, wenn man wirklich immer up to date sein will, muss man eigentlich inkrementelle Backups fahren. Und es gibt sehr wenig gute Lösungen für inkrementelle Backups, die schnell sind. Weil Hauptproblem bei diesen ganzen Lösungen, also mein letztes Backup-Skript, was ein inkrementelles Backup gemacht hat, also was sozusagen immer nur geschaut hat, hier ist das alte Backup, hier ist der aktuelle Stand der Platte, speichere nur, was sich geändert hat. Weil was will man den Rest noch kopieren? Nur ist gut. Nur ist gut. Nur muss man erst mal wissen, was hat sich denn überhaupt geändert. Dann marschieren diese Skripte irgendwie los. Bei mir war das dann so, dass ich irgendwie meinen Daily-Backup brauchte, irgendwie 48 Stunden, um erst mal festzustellen, was sich überhaupt geändert hat. Aber wenn jetzt ein Daily-Backup schon mal zwei Tage zum Nachdenken braucht, bevor es anfangen kann, kann man es halt auch gleich sein lassen. Und ich denke, ZFS bietet eben die Möglichkeit, durch diese Snapshots diese Information automatisch bereitzustellen. Das heißt, in dem Moment, wo ich einen Snapshot mache, habe ich quasi die Differenz.
+
+00:58:37.887 --> 00:58:42.107
+<v SPEAKER_1>Du hast noch kein Backup gestartet, aber du hast zumindest erst mal die Differenz.
+
+00:58:42.127 --> 00:58:51.127
+<v SPEAKER_2>Der alte Stand ist gesichert, aber es bietet einem auch noch die Differenz. Und es gibt ja ein inkrementelles Backup als eingebautes Kommando in dieses ZFS-Admin-Interface.
+
+00:58:52.067 --> 00:59:24.887
+<v SPEAKER_1>Genau, man kann Filesystems mit dem Send-Kommando irgendwo hinschicken und mit dem Receive-Kommando, das ist wie eine Art Pipe eigentlich, wieder empfangen. Und wenn das Filesystem noch nicht am Zielort war, dann wird es erstellt, dann ist es nicht inkrementell, sondern initial. Wenn es schon da war, darf es nicht gemountet sein, oder es wird automatisch unmountet. Und dann werden die Änderungen vorgenommen, und dann ist es danach wieder da im gleichen Zustand wie auf der Play-Plattform.
+
+00:59:24.907 --> 00:59:35.607
+<v SPEAKER_2>Also ich kann meinen Backup auf irgendeinem Server haben, und ich lasse bei mir einen Skript laufen, das sagt, sende mal jetzt diesen Snapshot dahin. Und zwar nur die Differenz vom letzten Mal.
+
+00:59:35.627 --> 00:59:37.787
+<v SPEAKER_1>Ob man jetzt Snapshots...
+
+00:59:37.807 --> 00:59:39.027
+<v SPEAKER_2>Ich glaube, das basiert auf Snapshots.
+
+00:59:39.047 --> 00:59:44.967
+<v SPEAKER_1>Ja, aber man kann Filesystems auch... Ja, es müssten auch Snapshots gehen, weiß ich jetzt nicht ganz genau, aber ich denke schon, ja, wäre ja blöd wenn nicht.
+
+00:59:44.987 --> 00:59:55.047
+<v SPEAKER_2>So habe ich das mal gesehen in einer Präsentation, dass man im Prinzip sagt, jetzt mache ich hier meinen Snapshot und den kann man dann eben über das Netz, auch über eine verschlüsselte SSH-Verbindung rüber schicken.
+
+00:59:55.067 --> 00:59:58.527
+<v SPEAKER_1>Ja, einfach reinpipen auf der anderen Seite. Das kann man in einem One-Liner machen, also auf jeder Seite.
+
+00:59:58.787 --> 01:00:11.767
+<v SPEAKER_2>Ja, und dann ist ja... Und wenn das Backup dann fertig ist, braucht man den Snapshot unter Umständen gar nicht mehr und dann kann man den auch gleich wieder fallen lassen. Sodass man eigentlich nur für den Zeitpunkt des incrementellen Backups kurz die Luft anhält, das rüber schiebt und...
+
+01:00:11.787 --> 01:00:17.567
+<v SPEAKER_1>Du könntest auf dem Rechner, wo du es hingeschoben hast, den Snapshot noch machen, dann hast du da noch ein bisschen mehr Sicherheit.
+
+01:00:17.587 --> 01:01:01.087
+<v SPEAKER_2>Dass man dann diesen Zustand dann auch einmal einfriert, klar. Ja, aber das Schöne ist, dass man dann im Prinzip eine Basis hat für ein System, das sich eigentlich die ganze Zeit backupen kann, ohne dass es irgendeinen unanständigen Overhead gibt. Also der Overhead ist natürlich da, weil auf einmal muss der Rechner die ganze Zeit alle Daten, die er auf die Platte schreibt, auch nochmal irgendwo ins Netz senden. Aber was gibt es Cooleres als ein Backup, was nur eine halbe Stunde alt ist? Und inkrementell, wenn die Daten kaputt sind. Tja, also ZFS ist halt wirklich, wie soll ich sagen, es hat schon ein bisschen was von eierlegender Wollmilchsau. Was sind denn die Nachteile von ZFS?
+
+01:01:03.687 --> 01:02:04.507
+<v SPEAKER_1>Ja, lass mal nachdenken. Also ich würde behaupten, dass es erstmal nicht ganz so schnell ist wie so ein, sagen wir so, mit jedem neuen Feature, was ZFS mehr kann, geht erstmal ein bisschen Performance drauf. Man kann den natürlich vielleicht mit intelligenten Caching-Algorithmen und so weiter, kann man es halt ausgleichen. Aber ich würde mal behaupten, Leute, die normalen Read-Through und Write-Through-Tests machen, also nur einen Stream lesen, so schnell wie möglich, dass ZFS da nicht so nachkommt wie X3 oder wahrscheinlich ist in so einem Fall HFS sogar schneller. Aber wenn es darum geht, zum Beispiel einen Mirror zu sinken oder Snapshots zu erstellen oder Filesystems zu erstellen, dann ist ZFS wiederum weit vorne. Weil du kannst halt 10.000 Filesystems erstellen und das kommt auf den Rechner irgendwie keine 1-2 Minuten.
+
+01:02:05.127 --> 01:02:07.907
+<v SPEAKER_2>Wobei das macht man natürlich jetzt nicht besonders häufig.
+
+01:02:07.927 --> 01:02:08.947
+<v SPEAKER_1>Ja, wieso?
+
+01:02:08.967 --> 01:02:10.967
+<v SPEAKER_2>Weil es 10.000 Dateisystem erstellen.
+
+01:02:10.987 --> 01:02:11.347
+<v SPEAKER_1>Wieso nicht?
+
+01:02:11.627 --> 01:02:13.027
+<v SPEAKER_2>Wozu bräuchte die denn?
+
+01:02:13.047 --> 01:02:35.847
+<v SPEAKER_1>Stell dir vor, du bist bei Google. Ich glaube, sie machen es anders. Aber die haben irgendwie ihre Mail-User. Und du machst jedem User sein eigenes Filesystem. Zum Beispiel. Die machen es nicht so. Aber irgendeine andere Firma, die haben 100.000 Mitarbeiter und jeder soll sein eigenes Filesystem haben, aber irgendwie einen riesigen Storage-Teil.
+
+01:02:35.867 --> 01:02:40.927
+<v SPEAKER_2>Ach so, du meinst jetzt, um diesen einmaligen Vorgang zu machen, geht es schnell, aber man muss ja nicht am laufenden Meter.
+
+01:02:40.947 --> 01:02:43.547
+<v SPEAKER_1>Nee, nee, nicht am laufenden Meter. Aber man muss es ja vielleicht irgendwann mal machen.
+
+01:02:44.647 --> 01:03:05.187
+<v SPEAKER_2>Aber das ist jetzt vielleicht mal ganz interessant, weil von ZFS wird ja immer so ein bisschen gesprochen, als wäre es die Zukunft. Es ist ja auch ein bisschen die Gegenwart. Wo gibt es ZFS heutzutage in Laufend? Nee, das haben wir noch nicht besprochen. Also wir hatten besprochen, dass es bei Solaris und Open Solaris da ist, aber nicht wo es sonst noch verfügbar ist.
+
+01:03:05.207 --> 01:03:12.847
+<v SPEAKER_1>Okay, seit, was haben wir jetzt 2007? Letztes Jahr 2006 hat der...
+
+01:03:12.867 --> 01:03:21.287
+<v SPEAKER_2>Willkommen, hier ist Chaosradio Express 049 und wir haben den 20. Oktober 2007, damit wir hier einen Zeitstempel haben.
+
+01:03:21.287 --> 01:03:23.047
+<v SPEAKER_1>Ist ja auch bald wieder vorbei, das Jahr.
+
+01:03:23.067 --> 01:03:26.207
+<v SPEAKER_2>Ja, das geht immer so schnell. Genau.
+
+01:03:26.227 --> 01:04:18.267
+<v SPEAKER_1>Es gibt den Pavel Jakub Davidek auf Freebies, er ist dort ein sehr aktiver Programmierer, Developer. Und der hat, weiß nicht, Sommer letzten Jahres oder ein bisschen früher angefangen, ZFS nach FreeBSD zu portieren. Und war dann nach... Ich glaube, er hat irgendwas von 10 Tagen geschrieben, soweit, dass er seine Command Line Tools schon so ein bisschen benutzen konnte. Es ging natürlich noch nichts, aber er konnte schon mal bauen und hatte eine Basis, wo er dann sozusagen anpassen konnte. Das waren, glaube ich, wirklich 10 Tage und haben alle erst mal gestaunt. Leider hat es dann halt bis vor zwei Wochen gedauert, dass er noch mal so einen Patch rausgetan hat, dass es auch wirklich einigermaßen stabil ist. Vorher hatte er so ein Problem, was er selber nicht hatte, aber viele andere. Jedenfalls, lange Rede kurzer Sinn, unter FreeBSD kann ich seit zwei Wochen bisher stabil meine eigenen Erfahrungen mit ZFS benutzen.
+
+01:04:23.767 --> 01:04:25.207
+<v SPEAKER_2>Angeblich doch unkaputtbar.
+
+01:04:25.307 --> 01:04:43.747
+<v SPEAKER_1>Die Daten sind mir noch nie kaputtgegangen. Ich habe vorher schon damit rumgespielt und das FreeBSD hatte dann immer Colonel Panic, weil ein K-Mem zu wenig und so weiter. Das war dieser Bug, der noch genervt hat seit Monaten. Und mein Rechner ist ein bisschen älter und hat zu wenig Speicher. ZFS ist sehr speicher und CPU-hungrig natürlich durch die Komprimierung, durch die Hashes.
+
+01:04:43.767 --> 01:04:46.687
+<v SPEAKER_2>Hier setzt du ein. In Kompression setzt du ein.
+
+01:04:52.387 --> 01:04:58.007
+<v SPEAKER_1>Ich habe eine Komprimierungsrate bei meinen Mails von zwei oder so.
+
+01:04:58.027 --> 01:05:00.767
+<v SPEAKER_2>Das heißt, du legst nur die Hälfte des Platzes?
+
+01:05:00.787 --> 01:05:13.407
+<v SPEAKER_1>Ja, für meine Mails. Also, das ist so ein Firm Dingens. Und die Logfiles werden auch darauf gespeichert. Und weil Logfiles sowieso immer das Gleiche drin steht, weil es sind ja immer die gleichen Klicker, ist es eine Komprimierungsrate von fünf.
+
+01:05:16.507 --> 01:05:40.307
+<v SPEAKER_2>Das heißt, man spart sich automatisch, ohne dass man irgendwas auf Anwendungsseite machen muss, einfach Platz. Okay, das ist cool. Und wie sieht dein Backup-Setup so aus? Also, was nutzt du dann noch von FreeBSD, also von ZFS aus unter FreeBSD, um dein Backup jetzt zu machen? Also, ist das jetzt auch so ein Increment-Headers-Backup?
+
+01:05:40.327 --> 01:07:10.027
+<v SPEAKER_1>Ich habe auch so einen Tank, der heißt auch so, weil ich finde es toll. Da drin habe ich verschiedene File-Systems für die verschiedenen Rechner, die gebackupt werden, wie Mail und Web und was gibt es noch, wie Wiki, Blog und die ganzen Standardsachen. Und da benutze ich halt Komprimierung für alles, was Text ist, so Mails und Logfile. Und es ist so, dass ich vom Original-Rechner mit R-Sync eine Kopie auf den ZFS-Rechner schiebe. Also, der Original-Rechner ist halt irgendwas, das ist kein ZFS, sondern halt ein Filesystem. Und per R-Sync wird eine Kopie rübergeschrieben und natürlich auch inkrementell. Und nachdem ich das getan habe, das passiert alle Stunde bei den Mails, wird ein Snapshot erzeugt. Bei den Logfiles ist es genau das Gleiche. Und ich mach das mit einem Kollegen zusammen, und dann hieß es erst, guck mal hier, das Logfile ist 800 Megabyte groß und jedes Snapshot ist aber auch immer wieder 800 Megabyte groß. Also man kann die Differenz sehen, wie viel jedes weitere Snapshot an Platz belegt. Haben wir kurz nachgeguckt, gibt es in R-Sync eine Option, die in-place heißt. Es soll keine neue Datei angelegt werden, sondern ein Rangang werden. Sonst kommt der Snapshot durcheinander. Aber wenn sich alle Blöcke ändern, ist das für den Snapshot halt eine riesengroße Änderung. Also kann R-Sync in-place und schwupp schon mal die Änderung um ein paar hundert K, weil sich ja nicht so viel ändert. Und so mache ich meine Backups. Das heißt, ich kann auf die letzte Woche stündlich auf jede Datei zugreifen.
+
+01:07:10.047 --> 01:07:17.307
+<v SPEAKER_2>Das heißt, auf allen deinen Rechnern, die jetzt diesen Backup-Server verwenden, läuft einfach dasselbe Skript, was einfach immer per Sync...
+
+01:07:17.327 --> 01:07:39.507
+<v SPEAKER_1>Ja, so ganz easy rüberschiebt. Das geht doch ganz schnell, weil es ist ja nur die Änderung. Und dann wird ein Snapshot gemacht auf dem ZFS-Rechner oder auf dem Backup-Rechner und dann ist der dann festgehalten, eine Woche lang. Nach einer Woche lösche ich die Stunden-Snapshots und dann werden nur noch die Tages-Snapshots übrig behalten und später werden dann die Tages-Snapshots irgendwann gelöscht und dann werden nur noch die Monats-Snapshots übrig behalten und so weiter und so fort.
+
+01:07:39.527 --> 01:07:51.967
+<v SPEAKER_2>Das heißt, wenn man jetzt heute ZFS verwenden will und man hat keine Sun mit Solaris oder man verwendet nicht Open Solaris, dann kann man auch FreeBSD in der Version 7 nehmen, die noch Beta ist.
+
+01:07:51.987 --> 01:08:08.387
+<v SPEAKER_1>Die noch Beta ist und das ZFS dort ist auch noch, wie sagen sie, ich glaube sie nennt es Experimental oder irgendwie so, also es ist noch nicht production safe. Okay, wir garantieren für nichts. Also mein Backup-Server ist auch noch das Backup vom Backup.
+
+01:08:08.407 --> 01:08:10.847
+<v SPEAKER_2>Ja super, man kann ja gar nicht vorsichtig genug sein.
+
+01:08:10.867 --> 01:08:22.647
+<v SPEAKER_1>Genau. Und ja, das war FreeBSD. Da müssen wir mal dem Pavel danken, der hat da echt irgendwie sich zu Tode gekodet das letzte Jahr, könnte man sagen, und ein bisschen länger.
+
+01:08:22.667 --> 01:08:32.067
+<v SPEAKER_2>Aber der ist auch Sun-Mitarbeiter? Nicht? Ah, hat ich verwechselt. Oder ist das jemand beim FreeBSD-Core-Team?
+
+01:08:32.087 --> 01:09:19.867
+<v SPEAKER_1>Das ist jemand vom FreeBSD. Ich weiß nicht, ob er was da core ist oder nicht. Aber er ist auf jeden Fall richtig, richtig aktiv. Der ist auch für den Gehr-Umbührer zuständig, mit dem ich so viel Sorgen habe. Das hat er vorher gemacht und macht er immer noch auch. Aber er ist halt da filesystemmäßig sehr aktiv. So, und dann gibt es noch unter Linux, die haben relativ zur gleichen Zeit angefangen letztes Jahr. Im Sommer war das halt. Gibt es noch ZFS-on-Fuse, das ist Filesystem-on-Userland. Die Linuxer haben Probleme mit der, wer ist die Lizenz von Sun? Die mögen die bei Linux nicht. Und deswegen können sie es nicht in den Kernel einbauen. Und deswegen ist es halt ZFS-on-Fuse in Filesystem in New Zealand. Da dürfen sie nämlich nicht.
+
+01:09:20.107 --> 01:09:41.587
+<v SPEAKER_2>Also Fuse, um zu erklären, das ist dieser Hack, mit dem man Filesysteme in Betriebssysteme einbinden kann, in dem man ganz normale Programme, die jetzt gar nichts mit dem Kernel zu tun haben. Normalerweise muss ein Filesystem eigentlich Kernel-Code sein, Teil des Betriebssystems sein. Aber mit diesem Fuse kann man das quasi aus dem Betriebssystem wieder herausleiten.
+
+01:09:41.607 --> 01:09:45.767
+<v SPEAKER_1>Das ist bestimmt auch ein Rampant Layering-Violation.
+
+01:09:45.767 --> 01:10:00.687
+<v SPEAKER_2>Unter Garantie ist es das. Es ist aber sehr praktisch, also will ich jetzt nicht zu sehr darauf eingehen, aber Fuse bietet auch die Möglichkeit, Filesysteme zu machen, die SSH, FTP und andere lustige Sachen machen. Google verwendet das sehr viel. Die haben ja auch diesen Mac-Port unterstützt.
+
+01:10:01.527 --> 01:10:03.187
+<v SPEAKER_1>Für das SSH-Filesystem.
+
+01:10:03.207 --> 01:10:13.887
+<v SPEAKER_2>Genau, und haben auch da großes Interesse daran, weil sie eben mit Fuse auch ihre Online-Docs und diese ganzen Services halt als Filesysteme darstellen können.
+
+01:10:14.127 --> 01:10:16.927
+<v SPEAKER_1>Weil die ja bei dem User nicht den Kern ändern können.
+
+01:10:16.947 --> 01:10:29.287
+<v SPEAKER_2>Genau, und weil es auch schneller zu schreiben ist. Da schreibt man so ein kleines Programm und das kann auch mal abstürzen und dann geht nicht gleich das ganze Betriebsdemo ab. Also Fuse ist irgendwie so eine schöne Toolbox, mit der man sowas machen kann. Aber das ist die einzige Möglichkeit, in der Dienungsleiter ZFS zu benutzen?
+
+01:10:29.307 --> 01:10:30.047
+<v SPEAKER_1>Auf Lizenzgründen.
+
+01:10:30.587 --> 01:10:37.227
+<v SPEAKER_2>Ach, nur aus Lizenzgründen. Ah, das ist ja doof.
+
+01:10:37.247 --> 01:10:43.727
+<v SPEAKER_1>Die haben ja auch einen ZFS dadurch. Ist halt vielleicht ein bisschen langsamer, weil sie durch mehr Schnittstellen durch müssen.
+
+01:10:46.547 --> 01:10:51.807
+<v SPEAKER_2>Common Development in Distribution License, heißt diese Lizenz, unter der ZFS steht.
+
+01:10:52.707 --> 01:10:55.567
+<v SPEAKER_1>Es gibt aber glaube ich auch Pläne bei Sun, die Lizenz zu ändern.
+
+01:10:55.587 --> 01:11:15.027
+<v SPEAKER_2>Und es basiert auf der Mozilla Public License, sagt die allwissende Müllhalde. Also ich benutze den Term sehr gerne für die Wikipedia. Das ist eigentlich so. Finde ich trifft die Sache ganz gut.
+
+01:11:15.047 --> 01:11:29.147
+<v SPEAKER_1>Jedenfalls habe ich mal gelesen, ich weiß nicht, wie aktuell es ist, aber Pläne, die Lizenz von ZFS oder vom gesamten Open Solaris zu ändern. Wenn es das gesamte Open Solaris ist, weiß ich nicht, ob es ZFS dann auch betreffen würde, aber es unter die GPL zu stellen.
+
+01:11:29.487 --> 01:11:30.807
+<v SPEAKER_2>Ja, die Diskussion gibt es schon länger.
+
+01:11:30.847 --> 01:11:32.747
+<v SPEAKER_1>Da würden sich die Linuxler bestimmt freuen.
+
+01:11:34.767 --> 01:12:14.187
+<v SPEAKER_2>Na gut, diese Lizenz-Diskussion, das passt jetzt hier nicht hin, aber das ist natürlich so ein Elend. Grundsätzlich muss man sagen, die BSD-Welt ist da sehr viel entspannter und sind das halt einfach mal ganz einfach. Nämlich frei ist einfach frei, macht auch was ihr wollt. Das hatten wir jetzt auch schon letztes Mal, als ich hier mit Krücks Free BSD diskutiert habe. Und da fällt das halt sehr viel mehr in diesen Bereich rein. Ich meine, der Weg von Sun ist mir nicht so ganz klar, wo sind sie jetzt eigentlich wollen. Mit Java haben sie sich halt auch auf den GPL zugesetzt, aber traditionell kommen sie natürlich auch aus der BSD-Unix-Welt. Letztlich ist Sun ja die Firma gewesen, die diese Unix-Maschinen zubereitet hat.
+
+01:12:14.207 --> 01:12:20.447
+<v SPEAKER_1>Zumindest ist alles aufgemacht, das heißt, die wollen mehr an der Hardware vertecken.
+
+01:12:20.467 --> 01:12:46.007
+<v SPEAKER_2>Ja, und das ist insofern auch sehr interessant. Also das ist wirklich mal eine Contribution, und es sieht ganz so aus, als ob ZDF, äh, ZDF, ZFS, die, also das ist mein Eindruck, ich weiß nicht, wie du das siehst, aber ich habe so den, das Gefühl gewonnen, es gibt da wenig andere Projekte, die diese Durchschlagskraft haben von ZFS derzeit. Also wenn man über Zukunft von Fallsystemen redet, wollen das eigentlich alle haben.
+
+01:12:46.387 --> 01:13:13.667
+<v SPEAKER_1>Das ist ja auch deswegen schon leicht erklärbar, weil anderes, was irgendwie diesen Umfang hat, kenne ich zurzeit nicht. Also Gerüchte küchemäßig, oder ich weiß nicht, die anderen können alle weniger oder nur mit Hilfe halt von Tools zusammen, und dann gibt es halt wieder diese Symbiose. Und ZFS ist halt in Entwicklung seit 2001 von einer Firma, die die Angestellten bezahlt, die sich vor ihren Kopf machen, was sie da tun.
+
+01:13:13.687 --> 01:13:16.007
+<v SPEAKER_2>Und vor allem deren Business Storage ist.
+
+01:13:16.027 --> 01:13:46.607
+<v SPEAKER_1>Deren Business Storage ist, genau. Und es hat halt fünf, sechs Jahre gedauert. Das heißt, selbst wenn die jetzt anfangen oder seit ein, zwei, drei Jahren dabei sind, dauert es halt noch mal dementsprechend lange. Klar mag irgendwie der Open-Source-Ansatz manchmal ein bisschen schneller funktionieren, weil die keine bürokratischen Hürden haben und so weiter, was die bei Sun bestimmt haben. Und die haben bestimmt vielleicht auch noch andere Sachen zu tun. Aber es ist schon erstmal ein Aufwand, so ein Fallsystem mit dem ganzen Drumherum zu erstellen.
+
+01:13:47.567 --> 01:14:06.387
+<v SPEAKER_2>Es gab ja diverse Projekte, ein zukünftiges System herzustellen. Das hast du schon erwähnt, Reiser FS zum Beispiel. Ja, nur dass jetzt irgendwie der Autor im Gefängnis sitzt, weil er deine Frau ermordet hat, ist ein bisschen unpraktisch.
+
+01:14:07.107 --> 01:14:08.507
+<v SPEAKER_1>Wir wollen ja kein schlecht reden.
+
+01:14:08.527 --> 01:14:24.987
+<v SPEAKER_2>Nein, wir wollen kein schlecht reden, Alex. Ich habe mir mal die Umstände schildern lassen und da kommt man schon ins Grübeln. Wie auch immer. Wir bleiben bei Reiser. Nein, wir bleiben bei ZFS. Ja, dann gibt es natürlich noch eine andere, sehr populäre Implementierung, die jetzt ins Haus steht.
+
+01:14:25.007 --> 01:14:27.247
+<v SPEAKER_1>Wir haben ja dann noch so einen Außenseiter-OS vergessen.
+
+01:14:27.267 --> 01:14:29.667
+<v SPEAKER_2>Genau, da gibt es ja noch so ein Randgruppenbetriebssystem.
+
+01:14:30.287 --> 01:15:24.107
+<v SPEAKER_1>Und zwar, ich glaube, das war auch der Grund, warum ich mich beschäftigt habe mit dem ZFS. Und zwar, weil, wann war es? Anfang 2006 schrieb ein Sun-Mitarbeiter, glaube ich, auf einer Sun-Mailingliste oder auf der ZFS-Mailingliste, dass ein Apple-Mitarbeiter ja um Zusammenarbeit gebeten hat für oder um ZFS. Das stand da nicht. Aber es war natürlich, die Gerüchteküche brodelte gleich los. Und das neue Macintosh OS X steht ja auch nächste Woche ins Haus. Darum ging es, dass alle schon vermuteten, da müsse es ja dann wohl rein. Manche dachten, es schaffen ja zeitlich nie. So wie es aber jetzt aussieht, ist es als Read-Only-Implementierung erstmal dabei.
+
+01:15:24.347 --> 01:15:32.647
+<v SPEAKER_2>Also das neue Betriebssystem ist Mac OS 10.5, Codename Leopard, was jetzt released wird.
+
+01:15:32.667 --> 01:15:33.927
+<v SPEAKER_1>Nächsten Freitag.
+
+01:15:33.947 --> 01:15:44.827
+<v SPEAKER_2>Nächsten Freitag. Der Podcast dürfte es noch vorher schaffen. Und dort ist im Prinzip ZFS implementiert. Allerdings haben sie die Möglichkeit, das zu schreiben, ausgeschaltet.
+
+01:15:44.987 --> 01:16:17.347
+<v SPEAKER_1>Ja, das ist ein bisschen ein komischer Move, finde ich. Weil ein Filesystem und überhaupt das Ganze lebt ja davon, dass man schreiben kann. Aber wahrscheinlich wollen sie wirklich erstmal los testen, weil ein Filesystem muss halt... Das ist ja ein Port, das ist ja nicht der Original. Also schon der Original Sun-Codes, das ZFS halt. Aber es ist natürlich doch ein bisschen eine Anpassung ans Betriebssystem. Die bei Sun haben auch schon irgendeine Änderung für Apple vorgenommen, weil irgendwie es gibt einen Directory-Typen, oder bei Apple gibt es halt verschiedene Directory-Typen, da gibt es eine Anpassung. Da kann man auch schon sehen, dass sie es ernst meinen.
+
+01:16:17.367 --> 01:16:23.467
+<v SPEAKER_2>Ich glaube, das ist die Case Insensitivity. Weil bei dem HFS Plus hast du ja die Eigenschaft, dass du auf ein Dateinamen zugreifen kannst.
+
+01:16:23.487 --> 01:16:25.107
+<v SPEAKER_1>Aber es ging gar nicht um Directory-Typen.
+
+01:16:25.127 --> 01:16:26.047
+<v SPEAKER_2>Ach so, okay.
+
+01:16:26.067 --> 01:16:31.027
+<v SPEAKER_1>Weil Case Insensitivity würde ja auch die Files an sich betreffen.
+
+01:16:31.607 --> 01:16:33.807
+<v SPEAKER_2>Ja, aber das war auch ursprünglich nicht drin in ZFS.
+
+01:16:36.207 --> 01:16:42.847
+<v SPEAKER_1>Das war aber, glaube ich, was anderes. Jedenfalls ist es als real only dabei. Und ich denke mal, es ist halt wirklich aus Testgründen.
+
+01:16:42.867 --> 01:16:48.587
+<v SPEAKER_2>Aber die Entwickler haben Zugriff auf die Schreibversion. Also es gibt schon eine Implementierung, die auch schreibt.
+
+01:16:48.607 --> 01:16:57.887
+<v SPEAKER_1>Die Entwickler, die von Apple auch immer die neuesten Beta-Versionen und die sogenannten Seedings kriegen, haben auch ein ZFS Kernel-Extension, die auch schreiben kann.
+
+01:16:57.907 --> 01:17:07.047
+<v SPEAKER_2>Das heißt, es ist eigentlich davon auszugehen, dass es schnell die Runde macht. Und jeder, der das jetzt irgendwie benutzen möchte, kann eigentlich auch auf dem Mac demnächst mit ZFS arbeiten.
+
+01:17:07.067 --> 01:17:16.247
+<v SPEAKER_1>Na ja, jeder noch nicht. Aber ich gehe davon aus, dass es mit 10.5.1 oder irgendwann Wochen später irgendwann auch schreibbar sein wird und dann kann man loslegen.
+
+01:17:16.287 --> 01:17:24.487
+<v SPEAKER_2>Ah, du meinst nicht, dass sie noch ein komplettes Release warten, sondern dass es jetzt erstmal nur so eine kleine Verzögerung ist?
+
+01:17:24.507 --> 01:17:29.387
+<v SPEAKER_1>Habe ich doch gesagt, dass es mit dem nächsten Release kommt. Meinte ich doch. Ja gut, also 10.5.1 oder so.
+
+01:17:29.407 --> 01:17:35.967
+<v SPEAKER_2>Ja, ich dachte jetzt, es kommt eher an 10.6 oder so was. Dass sie da sozusagen jetzt nochmal komplett warten. Du meinst, das ist nur eine kurze Verzögerung?
+
+01:17:35.987 --> 01:17:38.867
+<v SPEAKER_1>10.6 kommt bestimmt erst drei Jahre später. Das machen die nicht.
+
+01:17:40.827 --> 01:17:41.007
+<v SPEAKER_2>Ja.
+
+01:17:41.027 --> 01:18:21.067
+<v SPEAKER_1>So wie damals das HFS kam auch irgendwie mit 8.1, dann noch nicht mit 8.0. Dann müssen wir noch eine Sache erwähnen, warum wir denn so ein schickes File-System haben wollen. Also ich bin halt auch Mac-User. Und ich bin aber auch Freebies-User. So wie kriege ich jetzt immer Daten von meinem Mac auf meinen Freebies-D und vielleicht auch auf meinen Kumpel, der irgendwie einen Linux hat und ich habe aber eine externe Platte, weil Gigabit-Netzwerk ist zwar ganz toll, aber meine HD-Movies, da ist irgendwie doch zu langsam. Und dem würde ich gerne mal meine Platte geben. So, dann sagt der Linuxer, hast du einen X3? Ich sage, nein. Dann sage ich, hast du HFS? Dann machen wir das, stehen wir da.
+
+01:18:21.087 --> 01:18:23.607
+<v SPEAKER_2>Und Freebies-D hat auch beides nicht.
+
+01:18:23.627 --> 01:19:18.847
+<v SPEAKER_1>Und Freebies-D hat auch beides nicht. Was haben die UFS? Mac hat auch UFS, aber irgendwie anders oder weiß ich nicht, geht irgendwie alles nicht. Dann gibt es auch noch Partitionstypen und Zeug und das ist alles eine Katastrophe. So, dann denkt man sich jetzt, ZFS ist ja schick, gibt es unter Mac bald, gibt es auf Freebies-D schon, gibt es unter Open Solaris, dass ich mir mal eine Platte mache mit einem ZFS drauf, die überall funktioniert. Oder auch ein USB-Stick zum Beispiel, ist ja egal. So, da weiß ich aber noch nicht, wie die Kompatibilität zwischen den einzelnen Plattformen ist. Die On-Disk-Struktur von dem ZFS an sich ist natürlich kompatibel auch irgendwie Engine Safe und so weiter und so weiter. Aber man kann natürlich so einen ZFS innerhalb von so einer Partition erstellen. ZFS muss ja nicht die gesamte Platte kriegen, sondern man könnte ja sagen, ich habe hier erstmal meine, wie heißt der neue Partitions-Typ da, oder nicht der Partitions-Typ, sondern...
+
+01:19:18.867 --> 01:19:20.647
+<v SPEAKER_2>Die Partitions-Tabelle.
+
+01:19:20.667 --> 01:19:22.047
+<v SPEAKER_1>Das ist die Apple Partition Map.
+
+01:19:22.067 --> 01:19:26.747
+<v SPEAKER_2>Die Apple Partition Map ist die alte, und jetzt gibt es das neue, dieses GUID-Ding von Intel.
+
+01:19:26.767 --> 01:19:49.927
+<v SPEAKER_1>Genau, das ist ja auch ganz modern. Und da gibt es wiederum EFI-Partitionen drin. Und auf Mac zum Beispiel wird das ZFS innerhalb von so einer EFI-EFI-Partition abgelegt. Und bei FreeBSD ist es vielleicht dann doch die Whole-Disk, die gesamte, bin mir aber auch nicht ganz so sicher. Und bei Open Solaris und Solaris weiß ich es auch nicht. Also ob das mit dem Plattentauschen am Anfang so einfach sein wird, ist mir noch nicht sicher.
+
+01:19:49.947 --> 01:20:39.487
+<v SPEAKER_2>Aber es ist zumindest absehbar, dass man jetzt mal überhaupt ein Fallsystem hat. Ich meine, selbst wenn es jetzt mit dem Randstecken nicht geht, man kann zumindest auch sozusagen von ZFS zu ZFS die Daten natürlich sehr viel einfacher übertragen durch die in diese ZFS-Administrationsoberfläche eingebauten Fähigkeiten, also auch so mit inkrementellen Abgleichen. Man kann das sehr schnell sünden. Ja, das ist in der Tat ein echtes Argument. Und endlich mal so ein bisschen der Lichtblick, dass man auch mal einheitliche Dateisysteme bekommt. Zumindest mal ein einheitliches Dateisystem. Also gibt es doch noch dieses andere Betriebssystem. Und hier ist es noch gleich. Genau das Windows. Und? Hat das auch ZFS?
+
+01:20:39.507 --> 01:20:42.967
+<v SPEAKER_1>Nein. Nee, die haben...
+
+01:20:42.987 --> 01:20:44.607
+<v SPEAKER_2>Also Sun macht keinen Windows-Port, oder?
+
+01:20:44.627 --> 01:20:45.867
+<v SPEAKER_1>Ach nee, doch nicht.
+
+01:20:46.027 --> 01:20:47.987
+<v SPEAKER_2>Es sitzt niemand an einem Windows-Port.
+
+01:20:48.007 --> 01:20:50.367
+<v SPEAKER_1>Nicht, dass ich wüsste, nee.
+
+01:20:50.387 --> 01:20:54.147
+<v SPEAKER_2>Hat Sun da nicht ein großes Interesse daran? Oder ist ihm das egal?
+
+01:20:54.167 --> 01:21:00.187
+<v SPEAKER_1>Na, ich weiß nicht. Vielleicht hält ja Microsoft da die Finger drauf, weil die entwickeln ja vielleicht immer noch an diesem WinFS.
+
+01:21:00.207 --> 01:21:05.247
+<v SPEAKER_2>Haben sie das noch nicht aufgegeben? Wir wissen es nicht.
+
+01:21:05.267 --> 01:21:39.247
+<v SPEAKER_1>Aber ich will dir ja gar nicht so schlecht reden, weil ich muss noch eine kleine Sache erzählen. Wir wollen ja nicht alles nur sagen, dass ZFS das Tollste ist und da gibt es nichts Besseres. Also wenn du dir vorstellen musst, deine Datenbank schreibt gerade, oder nicht deine Datenbank, aber du schreibst so ein Projekt raus, was aus mehreren Files besteht. Und du hast so ein paar Files geschrieben und dann setzt du zufällig dein Backup-Script ein und machst einen Snapshot. Aber du hast noch nicht alle Files von deinem Projekt geschrieben. Das heißt, das Snapshot ist an sich filemäßig gesehen schon valide. Aber dein Projekt ist nur zur Hälfte drin im Snapshot.
+
+01:21:39.267 --> 01:21:39.827
+<v SPEAKER_2>Klar.
+
+01:21:39.847 --> 01:21:56.247
+<v SPEAKER_1>So, und jetzt gibt es wohl bei Windows, ich weiß nicht, ob es ein Extras oder ein Feature von dem WinFS, aber da kann man den Programm wohl sagen, dass jetzt ein Snapshot ansteht und dass der Snapshot dann passiert, während die Programme sagen können, meine Speicherung ist jetzt in einem validen State.
+
+01:21:56.967 --> 01:22:05.447
+<v SPEAKER_2>Also, du könntest sagen, ich fange jetzt hier mit einer Transaktion an. Und wenn du jetzt einen Snapshot machst, dann ist das alles noch nicht drin, sondern nur, wenn ich komplett fertig bin, dann darf das damit einfallen.
+
+01:22:05.467 --> 01:22:18.527
+<v SPEAKER_1>Genau, das heißt, da ist noch, wie sagt man, interagiert sozusagen das Snapshot-System auch noch mit dem US oder mit den Programmen, dass das auch in einem ordentlichen State gemacht wird. Und das kann ZFS wiederum nicht.
+
+01:22:18.547 --> 01:22:46.347
+<v SPEAKER_2>Gut, aber das würde ja dann auch explizit eine Unterstützung im Betriebssystem erfordern, weil alles andere, die ja derzeit eigentlich so richtig, also die normalen Programme, die jetzt mit Dateien arbeiten, merken eigentlich von diesem ZFS herzlich wenig. Ja, das heißt, man benutzt eigentlich nur als Administrator die Tools. Da hat man irgendwie Pools in diesem ganzen Kram, aber im Ende kommt einfach ein Fallsystem dabei raus und die Programme sind nicht ZFS-aware sozusagen. Also überhaupt dieses Konzept einer Transaktion.
+
+01:22:46.567 --> 01:22:48.987
+<v SPEAKER_1>Das ZFS hat halt auch so ein Prozex.
+
+01:22:49.007 --> 01:22:59.667
+<v SPEAKER_2>Aber das könnte man ja relativ einfach hinzufügen, wenn das Fallsystem das macht, weil ich meine, wenn, ja, keine Ahnung, dann müsste das ZFS so ein Per-Prozess-Snapshot irgendwie prävizieren.
+
+01:22:59.687 --> 01:23:15.607
+<v SPEAKER_1>Könnte sich ja das OS-Drum kümmern und dann im richtigen Augenblick natürlich einen Snapshot auslösen. Das würde schon gehen. Aber dem anderen ist es wohl mehr integriert. Und es ist ja das, was wir sagen, was an ZFS so toll ist. Die ist mehr integriert und das ist halt bei ZFS noch nicht ganz so drin. Aber es ist halt nur so eine Randnote.
+
+01:23:15.627 --> 01:23:26.647
+<v SPEAKER_2>Ja, das stimmt aber auch. Worüber wir noch nicht gesprochen haben, sind Metadaten, die gibt es ja sicherlich auch bei ZFS. Also so Extended Attributes und so.
+
+01:23:26.667 --> 01:23:33.647
+<v SPEAKER_1>Habe ich mich noch nicht ganz doll mit beschäftigt, aber diese Properties, die es pro... Du meinst natürlich auf Files und nicht auf Filesystems.
+
+01:23:33.667 --> 01:23:37.107
+<v SPEAKER_2>Ich rede jetzt eigentlich eher mit Files als für Filesystems, ja.
+
+01:23:37.127 --> 01:23:45.287
+<v SPEAKER_1>Sonst weiß ich noch, dass man pro Filesystem auch User-Properties anlegen kann. Also nicht nur die vorgegebenen, sondern auch eigene für späteren Benutzungen.
+
+01:23:45.307 --> 01:25:52.667
+<v SPEAKER_2>Auf den Filesystemen. Aber du willst jetzt auf die File-Ebene. Ich geh mal davon aus, dass sie generell mit so was umgehen können, weil External Attributes natürlich nichts Neues. Hätte mich jetzt bloß noch interessiert, ob es da so Sachen gibt, wie zum Beispiel seinerzeit, was mich ja immer nicht so ganz losgelassen hat, ist dieses BFS, das Fallsystem von dem BOS. Diesen leider gescheiterten, aber echt sexy Operating System. Was einfach, wo eine Suche auf Fallsystem-Ebene wie so eine Datenbankanfrage bearbeitet wurde. Das heißt, wenn man wie gesagt halt, ich suche jetzt mal nach Dateien, so, dann wurde diese Suche auch offen gehalten und wenn sich irgendwas geändert hat im Dateisystem und diese Suche quasi berücksichtigt, dann wird das Programm, was darauf wartet, auf diese Ergebnisse davon in Kenntnis gesetzt. So, hier, es gibt jetzt noch mehr Dateien, die deiner Suche entsprechen und das ging halt dann auch über alle Metadaten hinweg, also nicht nur, wie heißt die Datei, sondern halt auch alle sonstigen Attribute. Also Spotlight unter Mac OS X macht ja so was Ähnliches, aber es macht das halt, indem es da nochmal so ein extra Index erzeugt und wenn es diesen Index nicht gibt, so, dann kann es das eben nicht machen, das heißt, schließt eine Platte an, man muss ja erst mal halbe Stunde warten, das ist erst mal so brrrrrrrrrr, so und es wäre ja eigentlich sehr schön, so etwas auch mal in einem Fallsystem zu sehen. Ich bin jetzt aber auch nicht gerade im Bilde, ob da ZFS schon irgendeine Antwort hat, aber es macht auf jeden Fall den Eindruck, als ob ZFS auf jeden Fall auch so der Ort ist, wo solche Systeme gut reinkommen könnten, wenn man sich diese Module anschaut. Das ist also an sich wie so ein modulares Dateisystem, Betriebssystem ist, wo man jetzt weitere Konzepte und Features drinnen versenken kann, eingebettet in die Möglichkeit, eigentlich alles zusammenzuziehen, was derzeit so im Angebot ist. Die erlegene Wollmilchsau und noch größer Wagen. Jetzt neu auf unseren Computern. Ja, haben wir denn jetzt schon alles erzählt zum Thema ZFS?
+
+01:25:52.687 --> 01:25:54.327
+<v SPEAKER_1>Dann guck dir mal die Liste.
+
+01:25:54.347 --> 01:25:57.927
+<v SPEAKER_2>Ich habe hier alle Häkchen gesetzt, also mir fällt jetzt nichts mehr ein.
+
+01:26:02.567 --> 01:26:11.607
+<v SPEAKER_1>Ein Feature gibt es noch bei, was man auch erwähnen muss, das ist ein bisschen Untergang. Die können natürlich nicht nur Raid 0 und 1, sondern es gibt ja auch noch Raid 5.
+
+01:26:11.627 --> 01:26:15.107
+<v SPEAKER_2>Also 0 ist was?
+
+01:26:16.047 --> 01:26:47.527
+<v SPEAKER_1>0 und 1 kann ich immer nicht mehr merken. Das ist ein Mirror und das andere ist Stripe. Welches ist es? Okay. Jedenfalls gibt es auch noch Raid 5, kennen ja sicher viele. Und können auch ganz billig. Raid Controller und die teuren natürlich auch. Kann irgendwie Raid 5. Steckt man irgendwie 5 Platten ran, man sagt, man hat einen Raid 5. Und dann wird die Parity, also auch die Prüf-Summe über die Daten auf einer Platte abgelegt und das aber wiederum verteilt, damit man überall gleichmäßig...
+
+01:26:47.547 --> 01:26:55.427
+<v SPEAKER_2>Das heißt, man hat irgendwie 5 Platten, aber man kann jede einzelne wegschießen, weil die Daten so redundant über alle verteilt sind.
+
+01:26:55.447 --> 01:26:56.087
+<v SPEAKER_1>Höchstens eine.
+
+01:26:56.107 --> 01:26:57.487
+<v SPEAKER_2>Dass eine rausfallen darf.
+
+01:26:57.507 --> 01:28:03.527
+<v SPEAKER_1>Es kann eine rausfallen und über die redundanten Daten auf den anderen 4 Platten ist sichergestellt, dass alle Daten noch da sind. Redundanz ist dann aber keine mehr da. Ist nicht klar, weil die ist ja weg, die Platte. So, das kann ZFS natürlich auch. Das heißt, RAID Z, die machen das halt in Software und eine Platte kann wegfallen und alle Daten sind noch da. Da kann man eine neue nachstecken und dann resilvert sich das auch. Und zwar auch wieder so schnell, wie Daten vorhanden sind. Wenn der Pool leer ist, dann geht es halt ganz schnell. Wenn er halb voll ist, dauert es nur die halbe Zeit, wie das ein normaler Controller bräuchte. Dann gibt es aber jetzt noch den neuesten Scheiß, seit, weiß nicht, so richtig innen benutzbar seit einem Jahr. Und zwar ist es RAID 6. Da ist das Gleiche über für mich komplizierte Algorithmen, dass zwei Platten ausfallen können, und zwar zwei beliebige. Man hat zehn Platten und zwei davon können ausfallen, ohne dass Daten verloren gegangen sind. So und das Gleiche sind ZFS auch implementiert. Das heißt RAID Z2. Das wollte ich mal noch erwähnen, weil es ist schon ein nettes Feature, weil es ist nicht so...
+
+01:28:03.547 --> 01:28:18.567
+<v SPEAKER_2>Ihr habt schon von einigen Leuten gehört, die auch Daten auf ihrem RAID 5-System verloren haben, weil ihnen tatsächlich zwei Platten kaputt gegangen sind. Das klingt immer so unwahrscheinlich, aber wenn man mal überlegt, was die Gründe dafür sein können, sowas wie Hitze zum Beispiel, da sind die Platten doch echt nah beieinander.
+
+01:28:18.587 --> 01:28:37.907
+<v SPEAKER_1>Oder halt Produktionsfehler aus der gleichen Serie, wo die Fliege mal auf der gleichen Stelle gelandet ist oder wo halt auch immer die LBS-Cane fliegen. Aber Tuttlebuttel weißt schon. Und deswegen gibt es halt RAID Z2. Vielleicht gibt es sogar irgendwann mal einen RAID Z3. Ich weiß nicht so genau, wie weit man das treiben kann, aber bisher erst mal nur mit zwei Platten, die ausfallen können.
+
+01:28:38.527 --> 01:28:49.187
+<v SPEAKER_2>Ja, aber das ist schon gar nicht so doof, wenn irgendwie eine wirklich kaputt ist. Man weiß, eine darf jetzt noch kaputt gehen, bis ich irgendwie den Weg zum PC-Händler und wieder in den ESP gefahren bin.
+
+01:28:49.207 --> 01:29:05.907
+<v SPEAKER_1>Ja, und natürlich kann ZFS auch irgendwie Hotspare-Platten verwalten. Das heißt Platten, die schon im System stecken und nur darauf warten, dass eine andere ausfällt, die dann automatisch irgendwie integriert werden. Da sagt man dann Replace, alte Platte, neue Platte, und dann nimmt er automatisch die und legt los.
+
+01:29:05.927 --> 01:29:11.367
+<v SPEAKER_2>Das heißt, man kann eh schon mal so zehn Platten irgendwie drin stecken haben und die anderen laufen auch gar nicht?
+
+01:29:11.387 --> 01:29:32.967
+<v SPEAKER_1>In ganz großen Storage-Firmen gibt es dann halt die Platten-Monkeys, die nichts weiter zu tun haben, anhand von einer Liste irgendwie am Schrank lang zu rennen, bestimmte Platten rauszuziehen und neue nachzuschieben. Und das System sucht immer die Hotspeer-Platten und integriert die an die Stelle, wo eine Platte ausgefallen ist. Ich glaube, der muss nur da Platte rausziehen, wo es rot blinkt und eine saubere nachschieben. Das ist bestimmt ein ganz toller Job.
+
+01:29:35.707 --> 01:29:39.187
+<v SPEAKER_2>Na, dann haben wir es doch jetzt beisammen, oder?
+
+01:29:39.207 --> 01:29:44.267
+<v SPEAKER_1>Ja, kann natürlich dann noch unendlich erzählen. Also man kann zum Beispiel Snapshots klonen.
+
+01:29:44.287 --> 01:29:45.947
+<v SPEAKER_2>Was ist denn das?
+
+01:29:47.227 --> 01:29:52.127
+<v SPEAKER_1>Na, stell dir vor, du hast jetzt irgendwie dein System frisch installiert. Du bist ja auch so ein Frisch-Installierer.
+
+01:29:52.807 --> 01:29:54.127
+<v SPEAKER_2>Ja, von Zeit zu Zeit.
+
+01:29:54.147 --> 01:30:07.367
+<v SPEAKER_1>Und dann hast du wieder eine komische Live-Beta-Software installiert. Und das war voll für den Arsch. Du willst zurück, du willst aber nicht neu installieren. Dann hast du ja einen Snapshot gemacht vorher, nachdem du frisch warst mit deiner ersten Installation. Und dann springst du zudem zurück.
+
+01:30:08.107 --> 01:30:14.907
+<v SPEAKER_2>Ah, das heißt, ich kann sagen, ich habe jetzt nicht nur den Zugriff auf die alten Daten, sondern ich möchte, dass das auch der aktuelle Status ist.
+
+01:30:14.927 --> 01:30:23.227
+<v SPEAKER_1>Der Snapshot von gestern soll der aktuelle werden. Alles, was danach interessiert, mich nicht mehr. Ich will in der Zeit zurückspringen. Instant Operation.
+
+01:30:23.247 --> 01:30:33.867
+<v SPEAKER_2>Und dann ist einfach einmal von einer Sekunde auf die nächste alles beisammen. Das ist doch praktisch. Ich will das haben. Ich will das hier auf diesem Computer haben. Sofort.
+
+01:30:33.887 --> 01:30:37.207
+<v SPEAKER_1>Man kann bestimmt noch ein paar tolle Sachen vergessen, aber ich weiß jetzt auch nicht.
+
+01:30:37.227 --> 01:31:32.307
+<v SPEAKER_2>Genau, aber wir fangen auf jeden Fall schon mal an, das zu installieren. Ich denke, das war es jetzt erst mal. Danke, Denis. Chaosradio Express 049. Bald haben wir sie zusammen, die Guelin M50. Und in letzter Zeit gibt es ja neue Folgen in großer Zahl. Und das soll jetzt auch so bleiben. Das kleine Streaming-Experiment ist, glaube ich, etwas auf halber Strecke hängen geblieben. Wir arbeiten noch dran. Und vielleicht sollten wir demnächst auch mal eine Sendung über Streaming machen. Da ist auf jeden Fall auch noch mal ein bisschen Klärungsbedarf. Vielleicht lerne ich dann irgendwie die restlichen Sachen hier mal Setupbiss festzukriegen. Ja, das war's. Chaosradio Express. Ich sage Tschüss, wenn ihr Kommentare habt, wie schon erwähnt. Chaosradio at ccc.de ist eure Adresse. Und ich sage Tschüss, Denis.

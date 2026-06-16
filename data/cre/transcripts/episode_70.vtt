@@ -1,0 +1,1672 @@
+WEBVTT
+
+00:00:30.580 --> 00:00:35.440
+<v SPEAKER_1>Die Wesen finden ihre Realität durch Schmerzen und Schmerzen.
+
+00:01:18.282 --> 00:03:01.922
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 70. Wir haben einen Dezimalsprung. Wie schön. Und ich bin immer noch in München. Und wie schon im letzten Podcast angedeutet, ist das Thema auch dieses Mal ein Thema, was sich um den Macintosh dreht. Und nachdem wir zuletzt den Kern einer näheren Betrachtung unterzogen haben, geht es jetzt darum, sich mal die andere Seite der Medaille anzuschauen, nämlich wie ist es, auf dem Macintosh Softwareentwicklung zu betreiben. Ja, habe ich mich schon vorgestellt. Nö, ich bin schon wieder total durcheinander. Es ist noch mal Tim Pritlove. Und ich vergesse auch diesmal das Datum nicht. Haha, denn wir schreiben mittlerweile den 22. Ihr werdet merken, dass die Sendung sehr verspätet erscheinen. Das hat damit zu tun, dass der Server etwas überlastet ist und ich euch auch nicht eine Sendung pro Tag zumuten möchte. Aber das ist in etwa die Frequenz, mit der derzeit aufgenommen wird. Aber das wird sich auf jeden Fall bald wieder ändern. Trotzdem geht es hier immer weiter. Aber jetzt bleiben wir erst mal beim Thema. Und ihr hört schon im Hintergrund, es gibt Gäste, wie immer. Ich darf vorstellen, von links nach rechts zunächst einmal Martin Pittenauer. Hallo Martin und Dominik Wagner. Und ihr seid ja auch ein Team. Ihr seid bekannt als die Coding Monkeys. Das ist eure kleine Software-Schmiede, wo ihr Softwareentwicklung betreibt. Sicherlich auch einem Podcast-Publikum schon bekannt, weil ihr auch regelmäßig zu Gast seid bei Bits und so, dem Podcast von Timo Hitzel, wo es um den Mac geht. Aber weniger um die Programmierseite, sondern mehr eigentlich um die Anwendungs- und Genussseite, sag ich jetzt mal so.
+
+00:03:01.942 --> 00:03:03.662
+<v SPEAKER_1>Genau, das bleibt ein bisschen an der Oberfläche im Vergleich.
+
+00:03:04.562 --> 00:03:18.422
+<v SPEAKER_2>Und trotz alledem habt ihr natürlich eine Menge Einblick in die Materie und deswegen freue ich mich sehr, dass wir jetzt hier mal zusammenkommen. Ihr habt ja auch, also ich weiß nicht seit wann, seid ihr so in der Softwareentwicklung zugange?
+
+00:03:18.442 --> 00:03:20.822
+<v SPEAKER_1>In der Softwareentwicklung eigentlich schon, ja.
+
+00:03:20.842 --> 00:03:23.722
+<v SPEAKER_3>Ja, das ist schon länger. Softwareentwicklung 95.
+
+00:03:23.742 --> 00:03:26.402
+<v SPEAKER_2>Da länger ist ja relativ, ne?
+
+00:03:26.422 --> 00:03:39.542
+<v SPEAKER_3>Ja, okay, gut für unsere bescheidene Lebenszeitraum, die wir schon nie auf Erden weilen. Aber 95, glaube ich, oder so habe ich angefangen, sinnvolle Software zu machen. Und auf dem Mac so seit 2001, glaube ich.
+
+00:03:39.562 --> 00:03:41.022
+<v SPEAKER_1>Genau, das ist bei mir genauso.
+
+00:03:41.042 --> 00:03:44.342
+<v SPEAKER_2>Sinnvolle Software hast du aber vorher gemacht auf einem anderen System?
+
+00:03:44.362 --> 00:03:49.842
+<v SPEAKER_3>Ja, genau. Ich habe vorher sinnvolle Software auf dem Akkorn gemacht, auf dem Archimedes. Mehr oder wenig sinnvoll.
+
+00:03:49.862 --> 00:03:57.582
+<v SPEAKER_2>Wie ist denn das so gewesen auf dem Archimedes? Das ist ja so wirklich so eine Plattform, über die man eigentlich wenig weiß. Also ich weiß auf jeden Fall wenig darüber.
+
+00:03:57.782 --> 00:04:19.382
+<v SPEAKER_3>Ja, da hat man entweder in BASIC, BBC BASIC, ein sehr gutes BASIC programmiert und dann die Sachen in Inline Armorsampler optimiert, die man gebraucht hatte. Das hat sehr gut funktioniert. Oder man hat dann in C programmiert und man hat immer mit den Systembibliotheken mit Softwareinterrupts gesprochen. Also das war egal, welche Sprache man benutzt hat. Zum Beispiel im Betriebssystem konnte man immer lustig reden und hat Spaß gemacht.
+
+00:04:19.582 --> 00:04:21.822
+<v SPEAKER_2>Das ist eine performanceorientierte Geschichte gewesen.
+
+00:04:21.842 --> 00:04:58.602
+<v SPEAKER_3>Der Archimedes, ja, das ganze Betriebssystem war fleißig in Assemblern programmiert. Deswegen war eben sämtliche Betriebssystem-Interfaces alles eben über die Softwareinterrupts und man musste wissen, in welchen Register man welche Parameter übergibt und so. Aber es war halt auch so performanceoptimiert, dass du mehrere verschiedene von diesen Interrupts hintereinander hängen konntest und die haben dann immer schon das, was in den Register stand, einfach übernommen, ohne dass du jetzt nochmal die Parameter ummodeln musstest und so weiter. Also das hat man wirklich an jeder Ecke gespürt, dass das Performance optimiert ist. Auch das Vektor, das Grafikformat, das dabei war, war direkt so, das ist so in den Speicher gewandert und dann durch die Software Interrupts auf den Bildschirm, also das war wirklich klasse.
+
+00:04:58.622 --> 00:05:44.702
+<v SPEAKER_2>Ja, also alle Archon-User und Programmierer waren immer große Fans ihrer Plattform, die es dann aber doch nicht geschafft hat. Trotzdem gibt es ja so einige Heritage und das führt ja uns im Prinzip auch wieder zu Apple zurück, weil das war ja die erste Maschine, wo dieser Arm-Prozessor, diese neue Architektur überhaupt zum Einsatz kam und damit läuft heute das iPhone. Und auch die iPods, glaube ich, laufen mit Arm-7-Architektur, wenn ich es richtig weiß. Das war glaube ich nicht von Anfang an so beim iPod, aber so die letzte Generation und die neuere auf jeden Fall natürlich auch das iPhone. Das heißt, da läuft auch OS X drauf, nicht Mac OS X, aber OS X. Ich weiß nicht, gibt es da schon Erkenntnisse, wo die wirklichen Unterschiede liegen, außer dass es nicht auf dem Mac läuft?
+
+00:05:44.722 --> 00:06:07.742
+<v SPEAKER_3>Ja, ein großer ist das im Moment einfach mal alles als Routes läuft, der nicht so schön ist. Ich hoffe, dass es sich bis zum SDK noch ändert. Ich habe auch schon so unkern gehört, dass es passiert. Und ansonsten ist es sehr, sehr ähnlich. Also sie haben ein bisschen aufgeräumt, die Dateistrukturen sind ein bisschen flacher geworden. So dieses Content-Verzeichnis, das man als Mac-User gerne mal kennt, ist verschwunden bei diesen ganzen Bundles. Was ist noch so alles passiert?
+
+00:06:07.762 --> 00:06:11.022
+<v SPEAKER_2>Ist das sowieso das Einzige, das da drin war, das haben sich gespart?
+
+00:06:11.042 --> 00:06:27.662
+<v SPEAKER_1>Wobei da weiß man immer nicht, ist das jetzt was, was irgendwie noch aus dem, das geschuldet ist, dass das ja irgendwie nicht fertiger entwickelt worden ist, und dass sich mit dem SDK da nochmal was ändert, oder ist es so gedacht? Also ich hoffe, dass es so gedacht ist. Weil es fühlt sich alles sehr an, als wäre es mit heißer Nadel gestrickt. Also wenn man da mal tiefer reinguckt.
+
+00:06:28.362 --> 00:07:11.702
+<v SPEAKER_2>Naja, das werden wir dann sehen, wenn das SDK, wie du schon sagst, jetzt im Februar wahrscheinlich angekündigt werden rausgebracht wird. Da warten natürlich viele Leute drauf, auch wenn es jetzt schon Leute gibt, die da ganz emsig dabei sind mit den, ja, mit dem Dosenöffner aufgemachten iPhones und iPods, da schon fleißig Anwendungsentwicklung zu machen. Was interessant ist, schon mal ein interessanter Blick, finde ich auch, auf diese Entwicklerszene bei Macintosh, die einfach enthusiastisch es einfach nicht erwarten kann, für dieses Gerät zu entwickeln und dabei einfach bereit ist, da jegliche Anstrengungen in Kauf zu nehmen, das sich selber zu reverse zu inszenieren und so schon beeindrucken. Aber jetzt haben wir noch mal kurz auf dich zurückkommen, Martin. Du hast ja auch ein bisschen Programmierhistorie. Was ist so dein Weg zum Macintosh gewesen?
+
+00:07:11.722 --> 00:07:35.902
+<v SPEAKER_1>Ich habe dann irgendwie auch in der Schule angefangen, Tour Pascal zu programmieren, habe dann ein bisschen C gemacht und habe dann irgendwie an der Uni erst den ersten Mac gesehen wirklich und bin dann da hängen geblieben. Also ich habe ein Praktikum gemacht mit QuickTime und Java. Und das war alles schrecklich eigentlich. Aber der Mac als Plattform war so interessant, dass ich dann einen Administratortop an dem Lehrstuhl gemacht habe, wo die Macs waren und da bin ich dann eingebrutscht.
+
+00:07:35.922 --> 00:07:37.162
+<v SPEAKER_2>Das war schon Mac OS X oder das war noch?
+
+00:07:37.182 --> 00:07:38.982
+<v SPEAKER_1>Das war dann gerade Mac OS X 10.0.
+
+00:07:39.002 --> 00:07:40.262
+<v SPEAKER_2>Als es losging sozusagen.
+
+00:07:41.182 --> 00:07:44.202
+<v SPEAKER_3>Also schrecklich. Was war schrecklich?
+
+00:07:45.502 --> 00:08:39.622
+<v SPEAKER_2>Ach so, ja die erste Version. Ja, aber da hat sich eine Menge getan. Also wenn man sich so die Entwicklung von Mac OS X anschaut, sieht man schon von Release zu Release ist es eigentlich immer schneller geworden, finde ich. Also es braucht vielleicht mehr Speicher, aber den nutzt es dann auch ganz gut aus. Ja, und das kann man vielleicht auch nochmal zur Sprache bringen. Das steht jetzt erstmal nicht so im Mittelpunkt, aber da kann man auch ganz gut sehen, Apple gibt sich eine ganze Menge Mühe, das ja nicht nur das System schneller zu machen, sondern vielleicht auch den Programmierern einfacher zu machen. Man merkt, dass von Release zu Release dann immer mehr Komfort einsteigt. Ja, vielleicht dann nochmal so zu eurem gemeinsamen Werk. Ihr entwickelt ja selber eine Software, die ihr auch verkauft unter dem Namen SubEtherEdit, die einige Aufmerksamkeit aufsichtigezogen hat, schon relativ früh kurz nach seiner Vorstellung. Ihr habt da einen Preis abgeräumt sogar auch. Was war das noch gleich?
+
+00:08:39.642 --> 00:08:40.522
+<v SPEAKER_1>Den Apple Design Award.
+
+00:08:40.542 --> 00:08:43.542
+<v SPEAKER_2>Den Apple Design Award für...
+
+00:08:43.562 --> 00:08:47.802
+<v SPEAKER_1>Also in Student Category war das damals noch. Also da waren noch Studenten.
+
+00:08:47.822 --> 00:09:08.342
+<v SPEAKER_3>Es ist ein Award, der jedes Jahr auf der WWDC, also der Apple Entwickler Konferenz verteilt wird. Und die Kategorien ändern sich jedes Jahr, aber in Studenten Kategorie gibt es eigentlich auch immer. Und wir haben interessanterweise genau auf diesen Zweck hin programmiert. Also das war so der Motivator, dass man was, ein richtiges Produkt macht. Weil an der Uni hat man oft nicht so, nicht so die Muße, was fertig zu machen und deswegen...
+
+00:09:08.362 --> 00:09:12.182
+<v SPEAKER_2>Ihr habt auf den Zweck hin, dass es ein Programm wird oder dass ihr diesen Design Award bekommt?
+
+00:09:12.202 --> 00:09:18.882
+<v SPEAKER_3>Dass wir das einreichen für diesen Wettbewerb. Ja, das war so die Hauptmotivation, dass man ein fertiges Produkt macht und...
+
+00:09:18.902 --> 00:09:21.062
+<v SPEAKER_2>Und dann seid ihr da irgendwie aufgeschlagen und wart vielleicht die Kings.
+
+00:09:22.862 --> 00:09:48.522
+<v SPEAKER_1>Also ich glaube, das hat halt vor allem geholfen, weil wenn man so ein Ding macht, dann braucht man eine Deadline. Sonst wird das nicht fertig. Und da war halt der Apple Designer Award großartig, weil da war halt irgendwie der Abgabeschluss irgendwann und da musste FedEx kommen und das mitnehmen nach Cupertino. Und da war das ein vorigener Motivator eben, um dann irgendwie zu sagen, so wir machen jetzt ein Programm, das wird rund, das wird eine schöne Applikation. Und das kann man dann auch wirklich shippen und sagen, so jetzt ist 1.0 fertig.
+
+00:09:48.542 --> 00:09:54.202
+<v SPEAKER_2>Habt ihr denn da Feedback bekommen, warum sozusagen die Wahl da auf euch fiel? Oder war das dann nur so, wenn der Winner ist und tschüss?
+
+00:09:55.342 --> 00:10:12.642
+<v SPEAKER_1>Also zu dem Zeitpunkt war die Konkurrenz da jetzt noch nicht so wahnsinnig groß. Das liegt zum einen einerseits daran, dass das eben viel Einzelne gemacht haben. Also wir waren da mehr oder weniger das einzige Team tatsächlich, das da was eingereicht hat. Und auf der anderen Seite war das halt auch viel so Temperaturkonverter.
+
+00:10:12.662 --> 00:10:15.142
+<v SPEAKER_2>Er war das einzige Team, er war der einzige Container in dem Endeffekt.
+
+00:10:15.162 --> 00:10:28.762
+<v SPEAKER_1>Nein, nein, nein, das war es nicht. Nein, nein, aber die Konkurrenz war halt vergleichsweise auf einem eher niedrigeren. Ich meine, so ein bisschen kollaborativ editieren, ohne Locking übers Netzwerk, das ist ja schon was, was wir jetzt nicht irgendwie aus der Händsel schütteln.
+
+00:10:28.782 --> 00:10:45.102
+<v SPEAKER_2>Ja, da muss man ja noch dazu sagen, das ist ja das eigentliche Ding gewesen. Ihr habt im Prinzip einen Text-Editor gebaut, aber der eben dieses Feature hat, dass man eben über das Netzwerk mit mehreren anderen Installationen derselben Software gemeinsam an einem Dokument arbeiten kann.
+
+00:10:45.122 --> 00:11:34.882
+<v SPEAKER_3>Genau, und da ist eigentlich ein Feedback, das wir wirklich bekommen haben, dann war es, das war ja gerade irgendwie 10.2 draußen, da ist damals hieß es noch Rondevo mit ausgeliefert worden und das haben wir ja gleich benutzt und das war was, was sie schon überrascht hat, weil sie haben sich gedacht, okay, wir machen halt Drucker ins Netz und fertig und dass da jemand eine Applikation baut, die wirklich das als Kernbestandteil nimmt, um eben beliebige Netzwerkverbindungen lokal aufzubauen, um einfach mal so loszutexten, ohne dass man sich Gedanken darüber macht, das war schon ein Feedback, das wir bekommen haben, das sie sehr begeistert hat. Und daraufhin gab es inzwischen nicht viel Neues. Ich meine, sie haben iTunes und iPhoto auch entsprechende Broschure-Features eingebaut, aber so wirklich kreativ genutzt wurde Broschure jetzt eigentlich nicht mehr seitdem, oder?
+
+00:11:34.902 --> 00:11:37.922
+<v SPEAKER_2>Naja, mein Drucker spricht das, das finde ich schon ganz toll.
+
+00:11:37.942 --> 00:11:44.122
+<v SPEAKER_1>Und halt so diese Sharing-Geschichten, also wenn du irgendwie so in der Mediathek mit ITV shares, das läuft ja auch in Broschure an.
+
+00:11:44.142 --> 00:12:04.402
+<v SPEAKER_2>Also auf jeden Fall eine sinnvolle Technologie, die auch nötig war, weil es war ja im Prinzip das Hinzufügen eines Features in die TCP-IP-Welt, die vorher schon bei Apple Talk selbstverständlich war. Da gab es ja diese Service Discovery schon immer. Wer früher schon Macintosh gearbeitet hat, und da gehöre ich zum Beispiel dazu, also ich hätte den Mac mit TCP-IP nicht ernst genommen, wenn sowas nicht gäbe.
+
+00:12:04.422 --> 00:12:23.222
+<v SPEAKER_3>Hat auch interessante Verwucherungen geführt. Also wir haben oft Feedback bekommen, so von wegen, ja wir nutzen ja Broschure und deswegen müssen wir uns über Netzwerke ja kein Gedank mehr machen. Also das ist eben nur diese Service Discovery-Komponente vom Netzwerk und man trotzdem drunter noch alles selber machen muss. Das ist gerade dem ganzen Leuten, mit dem wir da gesprochen haben, von Apple schon, aber den anderen Entwicklern nicht so bewusst gewesen.
+
+00:12:23.242 --> 00:12:40.942
+<v SPEAKER_1>Ja, es gibt auch da natürlich dann denken, diese ganze Mechanik von Text, eben Merge und so, dass es konsistent bleibt. Das würde auch schon Ronde, Ronde Vue beziehungsweise Broschure machen. Was natürlich damit überhaupt nichts zu tun hat, aber da wird lustigerweise, das ist so die magische Technologie, die alles macht, wenn man von außen drauf guckt.
+
+00:12:40.962 --> 00:12:52.962
+<v SPEAKER_2>Wenn man jetzt auf dem Macintosh entwickelt und das ist jetzt auch mal so ein bisschen unser Fokus hier sein, also euch macht das Spaß. Also das ist irgendwie immer so mein Gefühl gewesen. Ihr habt da richtig Fun bei der ganzen Geschichte.
+
+00:12:53.082 --> 00:13:23.902
+<v SPEAKER_1>Ja, auf jeden Fall. Was, warum? Das hängt an mehreren Sachen. Also einerseits ist es eine sehr schöne Community. Du kannst wirklich auch mit Shareware in einem kleinen Rahmen dein Leben bestreiten, weil eben viele Macintosh-User auch gewohnt sind für Software-Sozahlen. Und ich glaube, das ist bei Windows. Da gibt es zwar mehr Leute, aber da zahlen nicht so viele. Und da hast du halt einen direkten Kontakt zu deinen Kunden und hast halt irgendwie so dieses Community-Gefühl trotzdem, obwohl du jetzt Software-Hersteller anfangs bist.
+
+00:13:23.922 --> 00:13:25.362
+<v SPEAKER_2>Das heißt, ihr kriegt auch viel Feedback.
+
+00:13:25.382 --> 00:13:44.882
+<v SPEAKER_1>Ja, definitiv. Also nicht immer nur positiv natürlich. Da gibt es dann immer diese klassische Formel, ich finde euch super, aber, Komma, folgendes Feature, Doppelpunkt. Das finde ich gut, da kann man dann auch schön sagen, so 20.000 Leute wollen jetzt dieses Feature und wir wollen es eigentlich nicht, aber wir müssen es implementieren, weil das wollen unsere Kunden und dann hast du auch nicht wissen.
+
+00:13:44.902 --> 00:13:48.122
+<v SPEAKER_2>Was habt ihr da für Kommunikationskanäle? Das finde ich ja auch nochmal interessant.
+
+00:13:48.142 --> 00:13:49.942
+<v SPEAKER_1>Das läuft in der Hauptsache über E-Mail.
+
+00:13:49.962 --> 00:13:52.082
+<v SPEAKER_2>Das heißt, ihr habt eine Mailing-Liste für einen Beta-Kreis?
+
+00:13:52.102 --> 00:14:04.762
+<v SPEAKER_1>Wir haben eine Mailing-Liste für Beta-User. Wir haben ein Feedback-Formular, wo die Leute eben ankratzen können, was sie haben wollen, oder reinschreiben können, was sie haben wollen. Also direkt im E-Mail Feedback schicken. Und das wird gerne angenommen.
+
+00:14:05.342 --> 00:14:10.482
+<v SPEAKER_2>Also bei eurer Beta-Liste bin ich nicht drauf. Allerdings kenne ich das von anderen...
+
+00:14:11.802 --> 00:14:12.522
+<v SPEAKER_1>Du bist gerne drauf.
+
+00:14:12.542 --> 00:14:47.562
+<v SPEAKER_2>Ach so, ja. Ich bin einfach noch nicht auf die Idee gekommen. Aber ich bin halt bei ein paar anderen Programmen, die mir irgendwie immer schon sehr am Herzen lagen, da drauf. Und ich stelle dann mal wieder fest, dass es dann sehr auffällig ist, und ich meine, ich kenne wirklich andere Mailing-Listen, dass da immer ein extrem, also ein betont freundlicher Ton am Start ist. Und dass da eigentlich auch immer extrem viel in Richtung der Programmierer auch an Vorschlägen und so weiter. Es geht dann mal so, ja, ich hätte gern dieses Feature, aber es ist halt nicht nur so, ich hätte gern Feature-Request, sondern dann kommen dann so Mock-up-Screenshots und so weiter, wie sich das neue User-Interface vorstellen und so weiter. Da bin ich teilweise wirklich baff.
+
+00:14:49.602 --> 00:15:01.822
+<v SPEAKER_1>Also die Qualität des Feedbacks ist sehr hoch im Regelfall. Es gibt natürlich hin und wieder immer mal einen, der halt da ein bisschen nörgelt. Aber das ist eher die Ausnahme. Das Feedback an sich ist sehr hochwertig.
+
+00:15:02.142 --> 00:15:31.962
+<v SPEAKER_3>Ja, anstatt zu nörgeln, wird meistens um Hilfe gebeten. Klar, da kommt ab und zu mal so ein Back-Report rein, wo dann so, wo dann, vielen Dank dahinter steht. Aber meistens ist es halt wirklich ein netter Ding und Hilfe. Und wenn man dann hilft und wirklich schnell reagiert, was bei uns hauptsächlich Martin macht und ziemlich zügig, dann kriegt man auch immer sehr schöne, dann nochmal Bedankungs-E-Mails hinterher. Also das hat mich auch überrascht, weil ich kenne sonst auch eher so aus dem Internet und aus den ganzen Foren eher die Flamewars, die sich schnell loslösen.
+
+00:15:32.382 --> 00:15:51.002
+<v SPEAKER_1>Es ist halt auch dieses Indie-Feeling, ja. Also was in der Macintosh-Entwicklerszene irgendwie so rumspuckt als Begriff, Indie sein und Indie-Firma. Und ja, das ist irgendwie so ein ganz eigenes Gefühl als Firma, in Anführungszeichen, dann aber trotzdem noch die Guten zu sein, ja.
+
+00:15:51.862 --> 00:16:24.702
+<v SPEAKER_3>Ja, und was wahnsinnig viel Spaß macht, finde ich, ist, dass man so viele schöne Frameworks an die Hand gelegt bekommt, dass man wirklich mit wahnsinnig wenig Aufwand viel reißen kann. Also ich kann mir nicht vorstellen, dasselbe jetzt woanders zu machen, in einem ähnlichen Zeitaufwand, der Spaß macht auch. Also das ist, wobei das so lange, ich mache jetzt wirklich seit den letzten paar Jahren fast nur Mac, deswegen bis auf PHP und den komplett üblen Wust, habe ich nicht so die Vergleichsmöglichkeiten. Aber es ist wirklich einfach immer der Wahnsinn, wie viel man gerissen kriegt innerhalb kurzer Zeit.
+
+00:16:24.722 --> 00:18:23.322
+<v SPEAKER_2>Ich meine, das ist ein interessanter Trend. Da wollen wir jetzt auch gleich nochmal genauer drauf ausgehen, aber das können wir schon mal vorziehen, fällt mir jetzt gerade auf. Das Arbeiten mit Frameworks, das werden wir ja sicherlich gleich noch ein bisschen erläutern, aber das ist ja glaube ich das, was die Entwicklung unter Mac OS X im Wesentlichen ausmacht. Das ist ja nun auch wirklich ein Trend, der auch in der Open Source-Szene in zunehmendem Maße ins Spiel kommt. Es gab so zum Beispiel, fällt mir jetzt gerade ein, bei Ruby, der Programmiersprache, wurde dann eben von, wie hieß diese Bande noch gleich? 37signals? Ja, genau. Die haben halt dieses Rails-Framework gestartet, wo man sozusagen, und das ist ja auch mal die Sache, was ist denn eigentlich jetzt der Unterschied zwischen normalen Libraries, wo ich so eine Funktionalität durch Aufrufen von Code habe, zu einem Framework. Das Gute ist, ein Framework funktioniert erst mal aus sich heraus. Also das ist etwas, was an sich schon mal ein funktionierendes Programm ist. Das heißt, mit Null-Zeilen-Code habe ich eine funktionierende Software. Und dann fängt man eben an, das schrittweise zu erweitern. Und man hat ja gesehen, was das bei Ruby on Rails auf einmal für einen unglaublichen Schub gab. Das hat ja dieses ganze Web 2.0-Development extrem nach vorne gebracht, so sehr, dass jetzt auch dieses Prinzip der Web-Frameworks in einer Scriptsprache auf Python, auf Perl und so weiter an ganz viele andere Bereiche auch zurückgeschwappt ist. Ähnlich hatte ich ja auch hier bei Chaosradio Express vor kurzem KDE als ähnlich gelagertes Frameworksystem für Linux-Desktops. Geht ja im Prinzip genauso heran. Das heißt, man hat diese ganze Funktionalität und man erhabt sich da so herein. Jetzt habt ihr ja so rund, also sozusagen von Beginn an mit Mac OS X entwickelt und dann auch diese Entwicklung gemacht. Eure Software zu schreiben heißt ja, in Objective-C zu schreiben. Also die Programmiersprache, die ihr verwendet, ist Objective-C. Was muss man sich unter Objective-C vorstellen? Was ist das eigentlich?
+
+00:18:23.342 --> 00:18:40.262
+<v SPEAKER_1>Objective-C ist im Prinzip eigentlich nur eine ganz dünne Schicht auf C oben drauf, die ermöglicht, Objekte anzusprechen und Objekte zu generieren. Und der Syntax-Teil, den du dafür verstehen musst, ich weiß nicht, das ist ein Lernaufwand von zwei Stunden oder so.
+
+00:18:40.322 --> 00:18:56.402
+<v SPEAKER_3>Ja, es ist vor allem irgendwie kein, es ist mehr ein Einstellungsaufwand als ein Lernaufwand. Also mal zu akzeptieren, dass man mit eckigen Klammern Methoden aufruft und so, das ist ein bisschen schwierig, wenn man von anderen Sprachen kommt, also die jetzt nicht gerade aus derselben Linie sind. Was, was...
+
+00:18:56.422 --> 00:19:02.722
+<v SPEAKER_2>Mit eckigen Klammern. Also im Prinzip schreibe ich ein normales C-Programm und dann macht man eckige Klammer auf und dann...
+
+00:19:02.742 --> 00:19:31.622
+<v SPEAKER_3>Nee, man schreibt mehr oder weniger ganze Sätze, das heißt, man hat eine eckige Klammer auf, dann hat man das Subjekt, um das es geht, in dem man eine Nachricht schickt. Und die Nachricht heißt dann irgendwie Show Window, ganz einfach. Dann heißt es eben My Window, Show Window, und eckige Klammer zu und dann passt es, was noch einfach ist. Was schöner ist, wenn man Code liest, wenn er komplizierter ist, also wenn es mehrere Parameter gibt, dass es dann der Satz weitergeführt wird. Das heißt dann, was haben wir denn für ein gutes Beispiel? NS String with Format ist ein schlechtes Beispiel.
+
+00:19:34.982 --> 00:19:58.502
+<v SPEAKER_1>Um etwas aus der Luft zu greifen, eben MyWindowShowWindow, Doppelpunkt Parameter. Und da geht eben der Satz quasi weiter und man kann es wirklich durchlesen. Und die Parameter stehen auch an der Stelle, wo sie hingehören. Das heißt, ich referenziere mit dem Metoden-Namen teil den Parameter und dann kommt der Parameter und dann kommt wieder der Rest von der Methode.
+
+00:20:00.502 --> 00:20:34.322
+<v SPEAKER_2>Also, es ist ja im Prinzip, Objective-C bedient sich dort bei Smalltalk. Smalltalk 80 hat ja diese Syntax im Prinzip erfunden und Objective-C ist eigentlich nichts anderes als diese Smalltalk-Syntax in C, richtig? Und dann hat man halt so eine Methode, die irgendwas tut, die dann mit Doppelpunkten getrennt ist und überall, wo ein Doppelpunkt im Namen steht, fügt man dann im konkret geschriebenen Code seinen Parameter ein. Oder dann hat man so diese Satzstruktur, wie the object, irgendwie creates, lalala, with, bum, bum, und so weiter. Das heißt, singt ihr dann euren Code auch manchmal? Wir haben das irgendwie in einem Smalltalk-Projekt gemacht.
+
+00:20:34.342 --> 00:20:37.202
+<v SPEAKER_1>Ja, nee, das höre ich auch gerade jetzt. Aber das ist eine schöne Anregung, das mal zu singen.
+
+00:20:37.222 --> 00:20:40.402
+<v SPEAKER_2>Könnte man machen, weil das ist ja so Satzbau.
+
+00:20:40.422 --> 00:20:48.502
+<v SPEAKER_3>Man flucht es ab und zu, aber wenn es da doch nicht geht. Oder vor sich selber hin, weil man wieder was umgedreht hat, was mal anders war.
+
+00:20:50.642 --> 00:21:09.862
+<v SPEAKER_2>Ich fluche in Objective-C. Und ja, also ich meine, das klingt natürlich jetzt so dünner, leer und man hat da so ein paar Objekte. Was für eine Mächtigkeit steckt denn jetzt eigentlich drin in Objective-C? Also warum kann man jetzt auf alles andere verzichten und wie viel C schreibt man dann noch?
+
+00:21:11.462 --> 00:21:15.302
+<v SPEAKER_1>Ja, also wie viel C schreibt man dann noch, ist eine schwierige Frage.
+
+00:21:15.322 --> 00:21:32.762
+<v SPEAKER_3>Ja, die Frage ist, was ist dann C davon? Also dazwischen den Methoden fühlt man natürlich mit Standard-C-Code aus, wie man das in Java auch noch macht eigentlich. Aber man macht eigentlich schon alles in Objekten. Und was ist von C?
+
+00:21:32.782 --> 00:22:16.702
+<v SPEAKER_1>Lass uns doch mal von der anderen Seite herkommen. Also die Mächtigkeit an sich von Objective-C ist schon eine erstaunlich große dafür, dass es eigentlich syntaktisch relativ wenig Zucker auf C oben drauf ist. Und die bringt halt Dynamiken mit, die ich so in anderen Sprachen, die tatsächlich für Applikationsentwicklung verwendet werden, im großen Stil noch nicht gesehen habe. Also da ist wirklich, da hast du dynamische Objekte, du hast keine strikte Typisierung. Du kannst Objekte im Nachhinein noch mit anderen Methoden versehen. Das heißt dann Category. Du kannst noch irgendwie Methodenzeiger umbiegen. Du kannst in der Laufzeit quasi die Objekte ändern, das Verhalten verändern. Also das bringt Sachen mit, die sind sehr schön.
+
+00:22:17.042 --> 00:22:39.182
+<v SPEAKER_2>Also Objective-C kann man festhalten. Das ist auf jeden Fall eine dynamische Programmiersprache. Das heißt, Typentscheidungen und so weiter. Also Methodenentscheidungen werden zur Laufzeit gemacht. Man legt relativ wenig fest zum Zeitpunkt der Übersetzung des Programms. Und kann von daher, wie wirkt sich das dann konkret in der Programmierung aus? Also welchen Service bietet euch das, wo ihr sonst Klimmzug machen müsstet?
+
+00:22:39.702 --> 00:22:45.842
+<v SPEAKER_3>Es gibt ein ganz einfaches Beispiel. Wenn man zum Beispiel Andu machen will, dann kann man das machen, indem man…
+
+00:22:45.862 --> 00:22:47.882
+<v SPEAKER_2>Als Andu, habe ich nicht verstanden.
+
+00:22:47.902 --> 00:22:49.742
+<v SPEAKER_3>Also rückgängig machen und wiederholen.
+
+00:22:49.762 --> 00:22:50.962
+<v SPEAKER_2>Im Editor nicht ganz unwichtig.
+
+00:22:50.982 --> 00:23:11.562
+<v SPEAKER_3>Im Editor nicht ganz unwichtig, aber auch in jeder GUI-App wichtig. Dann kann man das ganz einfach machen, indem man vorher dem Andu-Manager-Objekt sagt, ok, zeichne jetzt auf. Und dann schickt man dem Andu-Manager-Objekt einfach die Methode, die man dem Objekt schicken würde, um das rückgängig zu machen. Also dem Ziel-Objekt. Man sagt einmal einen Call mit Andu-Manager.
+
+00:23:11.702 --> 00:23:18.262
+<v SPEAKER_2>Also Andu-Manager ist eine Funktionalität aus Mac OS X. Das heißt, es ist ein Andu-Framework, wieder so ein Framework.
+
+00:23:18.282 --> 00:23:27.862
+<v SPEAKER_3>Genau, und das ist dann einfach ein Objekt, das da rumlebt. Und dem sagt man dann Prepare with Invocation Target und gibt das Objekt, auf das es dann praktisch das Andu anwenden soll.
+
+00:23:27.882 --> 00:23:30.862
+<v SPEAKER_2>Was ist das für ein Objekt?
+
+00:23:30.882 --> 00:23:50.742
+<v SPEAKER_3>Das wäre zum Beispiel mein Dokument. Ich habe die Hintergrundfarbe geändert, mal ganz einfach als Beispiel. Und dann schicke ich einfach mit dem Ruhgabewert von diesem Call SetColor auf den alten Wert. Und dadurch, dass Objective-C so dynamisch ist, kann jetzt der Andu-Manager das abfangen und aufzeichnen. Das heißt...
+
+00:23:50.762 --> 00:23:51.782
+<v SPEAKER_2>Wie so eine Bandmaschine.
+
+00:23:51.802 --> 00:24:04.522
+<v SPEAKER_3>Genau, ich schicke dann einfach die Invocation auf, die ich da abgesetzt habe, ich als ganz normalen Method-Call, so wie ich ansonsten das auch mache. Und dann habe ich meinen Andu damit erledigt. Das muss ich einfach nur in meiner Methode machen, die eben die Farbe setzt.
+
+00:24:04.542 --> 00:24:18.622
+<v SPEAKER_2>Das heißt, ich kann so Farbe setzen, irgendwie 30 Zeichen eingeben, irgendwas markieren da drin, löschen. Und jeder einzelne Schritt, den man sozusagen am Dokument vornimmt, dem sagt man auch noch diesem Andu-Manager. Und wenn dann der User Z drückt, dann sagt man, du weißt ja, was zu tun ist.
+
+00:24:18.642 --> 00:24:21.262
+<v SPEAKER_1>Dann kann sich das dynamisch zusammenbauen, was er jetzt tun soll.
+
+00:24:21.282 --> 00:24:28.622
+<v SPEAKER_3>Genau, in jeder Aktion muss man die Gegenaktion aufzeichnen, aber eben genauso wie man eine richtige Aktion aufzeichnen würde. Man muss da nicht irgendwie komplizierte Dinge machen.
+
+00:24:28.642 --> 00:24:40.782
+<v SPEAKER_2>Und die Dynamik kommt natürlich an der Stelle zu spüren, weil ja der Andu-Manager eigentlich vorher von diesen ganzen Objektypen gar nichts weiß. Man kennt die Tode nicht, man hat das nicht irgendwie reinkompiliert, es gibt auch keine Beschreibungssprache, die man übersetzen muss.
+
+00:24:40.802 --> 00:24:45.442
+<v SPEAKER_1>Jetzt baut sich dann das erst zu dem Zeitpunkt, wo er tatsächlich was rückgängig machen muss, baut er sich dann zusammen, was er jetzt tun soll.
+
+00:24:46.262 --> 00:25:03.602
+<v SPEAKER_2>Das ist natürlich ein schönes Beispiel, wo so ein Framework einem auch das Leben leicht machen kann, weil Andu ist ja nur eine Funktion, die eigentlich in viel zu viel Software sträflich vermisst wird. Aber eigentlich gibt es jetzt auf Mac relativ wenig Gründe, nicht irgendwie alles Andu-fähig zu machen, oder hat das seine Grenzen, die schnell einsetzen?
+
+00:25:04.302 --> 00:25:14.982
+<v SPEAKER_3>Nö, eigentlich nicht. Speicher irgendwann mal, aber die Operation, die man als Benutzer ausführt, im Endeffekt maximal doppelt so viel Speicher, wie das Dokument eh braucht, so ungefähr.
+
+00:25:15.002 --> 00:26:10.582
+<v SPEAKER_2>Jetzt gibt es ja eine Menge Konfusionen, wenn man sich Mac OS X anschaut und die Developer-Dokumentation anschaut, dann kommt erst mal Apple auf einen zu und sagt, naja, schön, dass du da bist, und guck mal, wir haben ganz viele verschiedene Programmierschnittstellen, mit denen du arbeiten kannst, such dir doch eine aus. Da gibt es dann sowas wie Carbon, und dann gibt es dann sowas wie Cocoa geschrieben, und dann gibt es BSD, und dann gibt es auch noch irgendwas mit Java, aber ich glaube, das gibt es jetzt mittlerweile nicht mehr. Was steckt da jetzt hinter? Also der Ursprung von Mac OS X, das weiß man ja heute, ist so eine Verschmelzung des alten Mac OS und von Next Step, was ja im Wesentlichen die Kerntechnologie ist, die Mac OS X ausmacht, und man hat so das Gefühl, von jedem wurde so 50 Prozent zusammengeballert, aber eigentlich passt das kaum zusammen.
+
+00:26:11.762 --> 00:26:16.602
+<v SPEAKER_1>Ja, ob es jetzt zusammenpasst oder nicht, das ist glaube ich eher eine philosophische Frage. Man hat es auf jeden Fall versucht, ja.
+
+00:26:16.622 --> 00:26:20.562
+<v SPEAKER_2>Das ist auf jeden Fall Chaosradio Express der Ort für philosophische Fragen, da hatten wir ja schon verschiedene.
+
+00:26:24.822 --> 00:27:07.522
+<v SPEAKER_1>Apple ist bei solchen Sachen immer gerne dabei, man macht fließende Übergänge, dass sich die Leute nicht komplett vor den Kopf gestoßen fühlen. Klar gab es auch schon Phasen, wo Apple gesagt hat, so, die Technologie ist jetzt plötzlich tot. Aber in neuere Zeit ist es so, dass sie tatsächlich Wert darauf legen, ein langsames Face-out und ein langsames Face-in zu machen, und dass man sich halt noch zurechtfindet. Und gerade mit Mac OS X war man ja an einem Scheideweg, wo man hoffen musste, dass möglichst viele Developer mitkommen. Nicht zu einer anderen Plattform wechseln, sondern tatsächlich eben auch den Weg mitgehen zu Mac OS X. Und dann braucht man da halt einen relativ einfachen Migrationsweg. Und das war halt Carbon. Und das ist Carbon nach wie vor eigentlich.
+
+00:27:07.542 --> 00:27:21.922
+<v SPEAKER_3>Zu großen Teilen. Carbon ist im Endeffekt das, was von der Mac OS 9 API übrig geblieben ist. Was da dann noch mal teilweise schon auch alles neu gemacht und aufgeräumt dabei. Aber es ist so grundsätzlich der Mac OS 9 Programmierweg gewesen.
+
+00:27:21.942 --> 00:27:32.042
+<v SPEAKER_2>Und was ja auch am Anfang noch die Möglichkeit gegeben hat, wenn man gegen diese Carbon-Spezifikation programmiert hat, tatsächlich ein Binary auszuliefern, was sowohl auf dem neuen Mac OS X schon lief, als auch noch unter Mac OS 9.
+
+00:27:32.062 --> 00:27:36.762
+<v SPEAKER_3>Genau. Das lief dann auf Mac OS X mit ein bisschen anderem Unterbau, aber es lief grundsätzlich mal gleich.
+
+00:27:41.682 --> 00:28:24.602
+<v SPEAKER_2>Ich beschließe jetzt, Mac OS X Entwickler zu werden, krempel die Ärmel hoch, habe irgendwie eine tolle Idee. Ich will ein Apple-Design-Wort gewinnen, damit ich auch eine Deadline habe. Jetzt setze ich mich davor und frage mich natürlich, ob Objective-C in irgendeiner Form eine Rolle spielen wird. Ich nehme das jetzt erstmal als neue Programmiersprache an. Ich gehe davon aus, dass ich das eben leicht erlernen lasse. Was sind jetzt sozusagen die ersten Wende, gegen die ich laufe? An was muss ich jetzt undocken, um diese Software zum Laufen zu kriegen? Suche ich mir jetzt Carbon oder Coco aus?
+
+00:28:30.322 --> 00:28:51.002
+<v SPEAKER_1>Wenn ihr jetzt ein neues Programm anfängt und nicht irgendwelchen Legacy-Code mitnehmt, dann macht bitte Coco. Weil Carbon auf lange Sicht als Applikationsunterbau, und gar nicht so sehr als API, weil da muss man auch noch mal unterscheiden, Carbon als API kannst du auch aus Coco raus benutzen. Carbon als Applikationsunterbau ist etwas, was langsam stirbt.
+
+00:28:51.022 --> 00:28:52.702
+<v SPEAKER_2>Das sind zwei Sachen, die man unterscheiden muss.
+
+00:28:52.722 --> 00:28:57.062
+<v SPEAKER_1>Das wird auch gerne verwechselt und dann in Internetstreiten durch die Gegend geworfen.
+
+00:28:57.082 --> 00:28:59.622
+<v SPEAKER_3>Heißt, glaube ich, in der GUI-Ecke auch HIToolkit, oder?
+
+00:28:59.642 --> 00:29:04.662
+<v SPEAKER_1>Genau, HIToolkit ist das, was man unter Carbon versteht als Applikationsunterbau.
+
+00:29:04.962 --> 00:29:10.142
+<v SPEAKER_2>Human Interface Toolkit, das ist noch das alte Mac OS 9, was da spricht.
+
+00:29:10.162 --> 00:29:19.862
+<v SPEAKER_3>Eigentlich schon sauberer, aber das ist trotzdem eine andere Art, Fenster zu machen, eine andere Art, überhaupt mit Events umzugehen, als jetzt in Coco. Das sind so die zwei Player, die man da hat.
+
+00:29:20.862 --> 00:29:27.702
+<v SPEAKER_1>Und Apple sagt, wenn du eine neue Applikation machst, bitte Coco, und guck dir AppKit und Foundation Kit an.
+
+00:29:27.722 --> 00:29:44.762
+<v SPEAKER_2>Was ist da der fundamentale Unterschied? Ist das im Prinzip damals noch das alte Prozedale programmieren, und wenn ich irgendwie ein Fenster haben will, dann sag ich ihm mal jetzt mal ein Fenster, während man bei Coco schon vorher in der User-Interface-Gestaltung gesagt hat, es gibt Fenster, und dann sind die einfach da, und wenn irgendwas mit denen passiert, dann reagier ich da drauf?
+
+00:29:45.282 --> 00:29:50.762
+<v SPEAKER_1>Im Prinzip ist das richtig, ja. Also Carbon ist halt auch noch C, also da ist nichts mit Objective-C zu tun.
+
+00:29:50.782 --> 00:29:54.562
+<v SPEAKER_2>Also dieser Framework-Charakter, der kommt sozusagen durch Coco erst voll zum Tragen.
+
+00:29:56.662 --> 00:30:17.542
+<v SPEAKER_3>Jein, da kann man sich jetzt glaube ich immer so einen langjährigen Carbon-Programmierer hätte ziemlich rein reiten, weil es wurde zu Carbon auch schon viel aufgeräumt. Also es wurde viel eventbasierter alles, es wurde alles viel sauberer gemacht, aber halt prozedural. Also das ist wirklich so die Hauptgeschichte. Es sind zwar dann auch irgendwelche Objekte und so, aber immer mehr Handles halten.
+
+00:30:17.562 --> 00:30:20.342
+<v SPEAKER_2>Aber man hat immer diese superlangen Funktionsnamen.
+
+00:30:20.362 --> 00:30:28.462
+<v SPEAKER_3>Genau, mit 10 bis 20 Parametern, die man alle nicht kennt und immer in der API nachschlagen muss.
+
+00:30:29.882 --> 00:30:38.322
+<v SPEAKER_2>Ok, also Carbon API, Carbon Unterbau. Der Unterbau ist das, was ausstirbt. Die API, wann benutze ich die dann?
+
+00:30:38.342 --> 00:31:00.382
+<v SPEAKER_3>Wenn man Dinge machen will, die man jetzt mit Coco noch nicht machen kann. Früher waren es Sachen mit HFS, also wenn man mit einem Dateisystem was machen will und da auf interne Informationen zugreifen will, da gibt es den NS-File-Manager in Coco und der konnte halt nicht dir alles geben. Da konnte dir zum Beispiel glaube ich nicht die HFS-ID geben, wenn du die brauchst oder so Dinge. Also es gibt Dinge, vor allem...
+
+00:31:01.282 --> 00:31:03.522
+<v SPEAKER_2>Mittlerweile kann er das.
+
+00:31:03.542 --> 00:31:05.562
+<v SPEAKER_3>Bin ich mir nicht ganz sicher. Ich brauche das meiste Zeug nicht.
+
+00:31:05.582 --> 00:31:20.282
+<v SPEAKER_1>Das ist auf jeden Fall so, dass das Framework, also Upgrade und Foundation immer mehr wächst und immer mehr abstrahiert von dem, was Carbon auch kann. Und man immer weniger eigentlich auf die C-Ebene von Carbon runterbrechen muss und immer mehr die Abstraktionen nutzen kann.
+
+00:31:20.302 --> 00:31:42.662
+<v SPEAKER_3>Man gibt sich auch auf ein bisschen gemischtes Tara, weil es gibt auch einige C-APIs, die jetzt nicht unbedingt Carbon heißen, die aber eigentlich auch eben prozedural funktionieren und die man auch wieder benutzen muss, wenn man Coco braucht. Also zum Beispiel die Keychain. Da gibt es auch keinen Coco-Rapper dafür. Es gibt mehrere Dinge, da muss man runtergehen auf die C-Ebene, auf die prozedurale Ebene. Und die heißen nicht alle Carbon, aber einige davon schon.
+
+00:31:42.682 --> 00:31:45.662
+<v SPEAKER_2>Das klingt aber ein bisschen hässlich, oder?
+
+00:31:45.682 --> 00:31:46.502
+<v SPEAKER_1>Ja, ich weiß nicht.
+
+00:31:47.782 --> 00:31:50.562
+<v SPEAKER_2>Lämmt das jetzt nicht den Spaß wieder irgendwie raus?
+
+00:31:50.582 --> 00:31:57.402
+<v SPEAKER_1>Finde ich eigentlich nicht, nee. Also es sind vereinzelte Dinge. Es ist nicht so, dass man wirklich bei jedem zweiten jetzt irgendwie auf C-Ebene runter muss.
+
+00:31:57.422 --> 00:31:58.082
+<v SPEAKER_2>Ja.
+
+00:31:58.102 --> 00:32:07.202
+<v SPEAKER_1>Und da, wo man noch in Anführungszeichen... Das ist ja auch nichts Schlimmes. Also das macht ja auch mal Spaß, irgendwie mit Pointer noch dagegen zu werfen.
+
+00:32:11.202 --> 00:32:14.722
+<v SPEAKER_2>Damit man auch besser abstürzen kann, oder was?
+
+00:32:15.762 --> 00:32:46.682
+<v SPEAKER_3>Die Schönheit von den Frameworks resultiert auch daraus, dass sie nicht die eierlegende Wollmichsau sind, sondern dass sie ganz schön einen Zweck machen. Die haben jetzt nicht einfach alles, was jetzt Mac OS 9 war, in diese nächste Bibliotheken mit reingepackt, sondern die nächste Bibliotheken so gelassen wie sie sind und ein bisschen angepasst. Und es kommt halt Schritt für Schritt da, wo es passt rein. Und wenn man ein schönes Framework haben will, mit dem es Spaß macht, dann muss man das so machen. Langsam. Wenn man es einfach nur reinkippt, alles, dann wird es einfach unübersichtlich.
+
+00:32:46.742 --> 00:32:59.962
+<v SPEAKER_1>Das ist auch etwas, was mich fasziniert an Cocoa und eben an UpKit und Foundation, dass man sich da reinfindet und dass man dann irgendwann ein Gespür dafür bekommt, es müsste jetzt eigentlich diese Funktion, diese Methode geben. Und dann guckt man und dann gibt es die halt.
+
+00:33:01.922 --> 00:33:30.102
+<v SPEAKER_3>Genau, das ist ein Vorteil und ein Nachteil. Der Vorteil ist wirklich diese Konsistenz. Wenn man was auf eine Art und Weise macht, dann macht man das im ganzen Framework auf diese eine Art und Weise. Der Nachteil ist, diese Art und Weise und dieses Gefühl für dieses Framework, das ist nichts, was man schnell lernen kann. Das kriegt man mit der Zeit. Ich habe zwei Jahre nachdem Sabiseite draußen war, eine Methode entdeckt, die was gemacht hat, was ich selber gemacht habe, weil ich sie nicht gefunden habe vor einem Jahr. Und das ist so ein weiterläufiger Prozess.
+
+00:33:30.122 --> 00:33:34.782
+<v SPEAKER_2>Warum hast du sie nicht gefunden? Ist die Dokumentation nicht so gut oder hast du einfach nicht gelesen?
+
+00:33:34.782 --> 00:33:50.702
+<v SPEAKER_3>Damals war die Dokumentation nicht so gut, aber ich bin noch nie auf die Idee gekommen, dass es an der Stelle hätte sein können. Man muss ja schon immer die Idee haben, wo was ist. Man will eine bestimmte Sache machen, mit was wird man das dann machen und dann muss es da sein.
+
+00:33:50.722 --> 00:33:54.042
+<v SPEAKER_2>War es jetzt noch zufällig, warum es sich dabei gehandelt hat, oder ist das jetzt irrelevant?
+
+00:33:54.642 --> 00:34:13.702
+<v SPEAKER_3>Das war was im Textsystem. Das war was im Textsystem und hatte was mit der Selektion zu tun. Die wurde an der Stelle irgendwann mittendrin gemacht. Das Textsystem ist ziemlich kompliziert, aber eigentlich schon sehr konsistent. Da habe ich auf einer Entwicklerkonferenz einmal den Gefragten das gemacht habe. Da habe ich mich geärgert, dass ich das seit einem Jahr selber irgendwie versuche zu machen und nichts gefunden habe.
+
+00:34:13.722 --> 00:34:16.462
+<v SPEAKER_2>Wie ist grundsätzlich die Dokumentation?
+
+00:34:16.482 --> 00:34:33.262
+<v SPEAKER_1>Die Dokumentation war zu einer Zeitung, als wir angefangen haben, sehr schlecht. 50 Prozent war nur Description Force coming. Mittlerweile ist sie aber ziemlich vollständig. Ich habe in letzter Zeit niemanden mehr gesehen, der sich über die Doku beschwert hätte.
+
+00:34:33.282 --> 00:34:54.042
+<v SPEAKER_3>Mit einer Meile, würde ich sagen, ist man gut ausgestanden mit Doku. Das ist eigentlich das Meiste beschrieben. Man findet das Zeug schön. Man hat in Xcode, in dem Tool, das man wahrscheinlich verwendet, auch einen tollen Assistenten, der einem immer die Informationen an die Hand legt. Ich bin inzwischen sehr zufrieden mit der Dokumentation.
+
+00:34:54.062 --> 00:35:17.062
+<v SPEAKER_2>Wo wir jetzt gerade noch bei den Apis sind oder waren, Apple hat ja eine Weile lang Java als mögliche vollwertige, wie auch immer, Schnittstelle zum Mac OS X, also zur Anwendungsentwicklung gepusht. Das hat vor kurzem ein Ende gefunden. Es scheint wenig Zukunft zu haben.
+
+00:35:17.082 --> 00:35:40.002
+<v SPEAKER_1>Ich denke, es war eine Sicherheitsgeschichte zu sagen, wenn sich die Welt auf Java einigt als das Nonplusultra, dann sind wir da mit dabei. Da hatte Apple wahrscheinlich ein bisschen Angst. Die Angst ist jetzt weg. Deswegen fällt diese Bridge, um die es geht, die Bridge von Java nach Coco, die fällt jetzt weg. Die wird nicht mehr weiterentwickelt. Weil das auch Ressourcen frisst ohne Ende.
+
+00:35:40.062 --> 00:36:04.882
+<v SPEAKER_3>Ich hatte schon immer das Gefühl, dass es eher eine Totgeburt war. Coco und die Art und Weise, wie das Framework Sachen macht, verträgt sich auch nicht mit dem, wie Java Sachen macht. Man hat ja in Java auch Basis-Frameworks, wo Dinge auf eine gewisse Art und Weise laufen. Und die sind halt anders. Deswegen einen Java-Programmierer macht er dann zwingend. Der will gar nicht Coco machen. Und wenn jemand nur Mac OS X machen will, dann macht er auch Objective-C. Die Zielgruppe gab es auch nicht wirklich.
+
+00:36:04.902 --> 00:36:22.862
+<v SPEAKER_1>Es hat auch nicht wirklich zusammengepasst. Cyber Duckie. Cyber Duckie ist ja dieser FDP-Client, der mehr oder weniger die einzige Applikation ist, die in Coco Java zumindest mal angefangen wurde, zu schreiben. Mittlerweile hat er, glaube ich, auch irgendwie 80 Prozent schon rausgeworfen und Objective-C ersetzt.
+
+00:36:22.882 --> 00:36:32.182
+<v SPEAKER_2>Ich habe mich mal gefragt, wie das überhaupt funktionieren soll, weil die Frameworks von Mac OS X benutzen ja auch diese Dynamik. Haben wir ja gerade gesehen mit dem Ando-Framework. Und das ist ja in Java eigentlich gar nicht möglich.
+
+00:36:33.602 --> 00:36:44.322
+<v SPEAKER_1>Und wenn, dann ist es halt sehr viel langsamer, weil Java nicht auf diese Introspection ausgelegt ist. Und da kommt halt unter anderem auch her, dass sich solche Applikationen eher, naja, gemütlich anfühlen.
+
+00:36:47.762 --> 00:37:17.322
+<v SPEAKER_3>Ich denke, der Appeal war halt, bei Java wurde gehypt und ich meine, wir müssen ja auch eine Sache, die ein bisschen negativ ist, Memory-Management selber machen. Und in Java muss man das nicht. Und deswegen, sie haben schon die Foundation nach Java portiert, mehr oder weniger, wie sie Web-Objects portiert hatten damals. Das ist ja auch was, was mit Objective-C begonnen hatte. Und erst irgendwann später auf Java umgestellt wurde. Das heißt, die haben die Hälfte, die unten drunter war, haben sie schon gehabt. Dann haben sie es wahrscheinlich einfach gemacht, um mehr Angebot zu haben, weil Mac OS X muss funktionieren.
+
+00:37:17.342 --> 00:37:32.622
+<v SPEAKER_1>Ich glaube aber auch, dass es um 2000 diese Phase bei Apple gab, wo die Leute, ich weiß nicht, ob sie Angst hatten oder ob sie drauf gehofft haben, aber sie haben auf jeden Fall darauf spekuliert, dass Java irgendwie prominenter wird und dass Java sich als Standard etabliert. Und da wollte man vorne mit dabei sein. So habe ich das wahrgenommen.
+
+00:37:32.882 --> 00:37:39.682
+<v SPEAKER_2>Und überhaupt generell, glaube ich, auch attraktiv zu einer möglichst großen Gruppe von Entwicklern, aus welchen Gründen auch immer.
+
+00:37:39.702 --> 00:37:53.302
+<v SPEAKER_3>Das merkt man ganz deutlich. In dem Zeitraum, da waren wir als Entwickler noch wirklich, da wurde man ziemlich umgarrent mit Informationen und mit Zeugen. Und das ist inzwischen ein bisschen anders geworden. Es ist immer noch okay, es ist immer noch ganz gut, aber es ist schon ganz anders geworden.
+
+00:37:53.322 --> 00:38:04.962
+<v SPEAKER_1>Ja, es ist halt einfach auch was anderes, ob auf so eine Konferenz wie die WTC irgendwie 800 Leute kommen oder 5000. Da kannst du halt einfach auch nicht mehr so zuvorkommen sein dann irgendwann.
+
+00:38:04.982 --> 00:38:08.602
+<v SPEAKER_2>So hat sich das entwickelt, ja? Also vor fünf Jahren waren das noch so wenige, und jetzt sind es so viele.
+
+00:38:08.622 --> 00:38:11.082
+<v SPEAKER_1>Ich hab die genauen Zahlen jetzt im Kopf, aber so gefühlt ist es so, ja.
+
+00:38:11.562 --> 00:38:13.922
+<v SPEAKER_2>Ihr wart eigentlich auf jeder jetzt, oder wie?
+
+00:38:13.942 --> 00:38:17.082
+<v SPEAKER_1>Seit 2002, glaube ich, war ich auf jeder.
+
+00:38:17.102 --> 00:38:19.762
+<v SPEAKER_2>Und das war sozusagen das, was ihr mitgenommen habt, dass immer mehr Leute auftraten.
+
+00:38:19.782 --> 00:38:28.322
+<v SPEAKER_1>Genau, also meine erste WTC, die war noch in San Jose, in einem relativ kleinen Convention-Center. Und dann sind sie halt umgezogen nach San Francisco. Und seitdem wird es immer mehr.
+
+00:38:28.342 --> 00:38:39.902
+<v SPEAKER_2>Ich finde es ja auch echt erstaunlich, wie viel Software mittlerweile auf Mac rauskommt. Das hat ja unglaublich zugenommen. Also noch am Anfang konnte man sie ja wirklich noch mit Tomaten bewerfen.
+
+00:38:40.922 --> 00:38:44.382
+<v SPEAKER_3>Da hat man so auf Versionschecker jeden Tag geguckt, was gibt es denn Neues heute?
+
+00:38:44.402 --> 00:38:44.902
+<v SPEAKER_2>Genau.
+
+00:38:44.922 --> 00:38:48.222
+<v SPEAKER_1>Das sind auch die Zeiten, wo ich vermisse, wo man das noch überblicken konnte, was da so im Grunde rauskam.
+
+00:38:48.242 --> 00:39:45.542
+<v SPEAKER_2>Und jetzt klotzest du es raus. Aber auch immer wieder sehr interessant, halt diese Konsistenz der Software, also vor allem die Software, die jetzt in den letzten ein, zwei Jahren rauskommt, das ist wahrscheinlich aber auch dem geschuldet, dass man mittlerweile eben auf Mac OS X 4 und jetzt auch auf Mac OS X 5 aufsetzt, wo nochmal ein ganz anderer Komfort herrscht. Programme kommen einfach extrem unified daher. Und dieser Ease of Use, den man schon immer auf Macintosh, also ich zumindest auf Macintosh immer sehr geschätzt habe, der erreicht auf einmal so eine ganz andere Höhe. Jetzt, bevor wir dann nochmal auf die Frameworks genauer eingehen, es gab ja jetzt mit dem letzten Schritt zu Mac OS 10.5 oder Leopard, wie man es mal nennen möchte, auch eine neue Version von der Programmiersprache Objective-C, die sich eigentlich lange, lange Zeit nicht groß geändert hatte. Also erfunden, wo sie ja im Prinzip von Apple selbst, also bei Next. Deswegen heißen ja auch alle Klassen, das ganze Klassensystem.
+
+00:39:45.562 --> 00:39:50.202
+<v SPEAKER_1>Ich glaube, die Sprache gab es glaube ich schon vorher.
+
+00:39:52.022 --> 00:39:53.962
+<v SPEAKER_3>Ich glaube, die haben die Sprache schon auch nur adaptiert von jemandem.
+
+00:39:53.982 --> 00:40:00.662
+<v SPEAKER_2>Okay, aber das lebt ja sozusagen mit dieser Core, wie nennt man dieses NS-Tralala, diese Grundlage?
+
+00:40:00.682 --> 00:40:08.642
+<v SPEAKER_3>Das ist das Foundation-Framework wirklich. Und das NS-Object ist so die Grundlage. Es ist wirklich schon ein NS-Object, auf das alles aufbaut.
+
+00:40:08.662 --> 00:40:36.822
+<v SPEAKER_2>Genau, das ist ja auch so eine Eigenschaft der Sprache, genauso wie auch bei Smalltalk. Auch Smalltalk ist ja eine Sprache, die ohne sein Klassensystem nicht vorstellbar ist. Das gehört sozusagen inherent dazu. So ist es dann eben auch bei Objective-C gewesen. Und das ist natürlich dann mit Next-Step groß geworden. Es gab in dem Sinne ja überhaupt keine andere Plattform, auf der Objective-C genutzt wurde. So, viel Zeit ist vergangen. Und jetzt mit 10.5 gibt es eine neue Version. Was hat sich denn da jetzt geändert, auch für die Anwendungsentwicklung?
+
+00:40:36.842 --> 00:40:38.942
+<v SPEAKER_1>Version ist halt auch viel zu nennen.
+
+00:40:38.962 --> 00:40:44.662
+<v SPEAKER_2>Apple nennt es so. Aber es ist ja schon mal ein interessanter Schnitt, weil es ja auch in der Sprache selber was ändert.
+
+00:40:44.682 --> 00:41:02.222
+<v SPEAKER_1>Ja, richtig. Es kommen halt Features dazu, die auf deinen Seiten schon lange gewünscht wurden. Und auf der anderen Seite das Programmieren sehr leichter. Auf deiner Seite haben wir jetzt endlich mit Leopard eine Garbage-Collection. Das heißt, wenn du dich nicht mehr darum kümmern willst, wie dein Memory so gemanagt wird, dann kannst du sagen, mach das mal für mich.
+
+00:41:02.242 --> 00:41:07.342
+<v SPEAKER_2>Automatische Speicherverwaltung, wie das ja alle Sotsprachene in der Regel haben.
+
+00:41:07.962 --> 00:41:20.922
+<v SPEAKER_1>Vorher hatten wir auch schon eine Halbautomatik, die heißt dann Autorelease Pools. Da hast du dann Objekte angemeldet. Und irgendwann, wenn du sie nicht mehr gebraucht hast, es gibt da so Regeln.
+
+00:41:20.942 --> 00:41:29.642
+<v SPEAKER_3>Ich bin nicht so weit geworfen, eine Halbautomatik zu nennen. Also es gibt ein einheitliches System, wie man mit Speicher umgeht, was es in vielen anderen Sprachen nicht gibt, die kein Speichermanagement komplett haben.
+
+00:41:29.842 --> 00:41:34.262
+<v SPEAKER_1>Genau, es gibt ein Framework-inherentes System, wie man eben so Objekte released oder auch nicht.
+
+00:41:34.282 --> 00:41:41.862
+<v SPEAKER_3>Ist auch recht eingängig, aber führt auch dazu, wenn man was vergisst, dann stürzt es halt ab. Und das passiert jetzt nicht mehr. Das war eine Geschichte.
+
+00:41:41.882 --> 00:41:51.202
+<v SPEAKER_1>Wobei man sagen muss, so ganz ausgereift ist es halt auch nicht, wie bei Apple-Technologien bei 1.0, also in der ersten Iteration manchmal noch übel.
+
+00:41:51.222 --> 00:41:53.842
+<v SPEAKER_2>Das hast du schon ausprobiert, aber ihr seid noch nicht so ganz gut.
+
+00:41:53.862 --> 00:42:03.402
+<v SPEAKER_1>Es gibt halt so Grenzfälle, wo du mit Garbage-Collections und der Leopard noch nicht arbeiten willst. Also z.B. wenn du viel mit Quartz zeichnest, dann hast du mit der Garbage-Collection einen wesentlichen Performanceverlust.
+
+00:42:03.482 --> 00:42:07.042
+<v SPEAKER_3>Ja, irgendwie so 20% ist, glaube ich, die Aussagen wirklich. Und das ist ordentlich.
+
+00:42:07.062 --> 00:42:14.202
+<v SPEAKER_2>Und deswegen ist es aber vorstellbar, dass das jetzt durch Software-Updates eingefangen wird, oder ist das ein konzeptionelles Problem?
+
+00:42:14.222 --> 00:42:20.422
+<v SPEAKER_1>In der Regelfall macht Apple solche Updates nur zu Punkt-Releases von einem Betriebssystem. Also nicht bei kleinen.
+
+00:42:20.442 --> 00:42:32.122
+<v SPEAKER_3>Also das wäre nur ein Geschwindigkeitsabgleich. Die Frage ist wahrscheinlich, wie Quartz mit den Datenstrukturen umgeht, wie viele Objekte es anlegt und dann, wie sich der Garbage-Collector da entsprechend verhält. Und das haben sie wohl falsch eingeschätzt.
+
+00:42:32.142 --> 00:42:35.662
+<v SPEAKER_2>Die Frameworks sind auch sozusagen darauf ausgelegt auf ein bestimmtes Verhalten der Software.
+
+00:42:35.682 --> 00:43:06.182
+<v SPEAKER_3>Eine zweite Geschichte, die noch recht schön ist bei Objective-C 2.0, ist jetzt, dass man Properties definieren kann. Also bei Objective-C ist es ja grundsätzlich so, man hat keine Instanzvariablen, muss man immer über Methoden aufrufen. Also es gibt nicht so diese Geschichte, dass man Instanzvariablen mit Punkt-Schreibweise einfach direkt drauf zugreift, sondern man hat immer einen Setter und einen Getter. Also das muss man machen in Objective-C, man hat gar keine andere Möglichkeit. Man könnte auf diese C-Struktur zugreifen, aber es geht halt wirklich nicht.
+
+00:43:08.222 --> 00:43:10.102
+<v SPEAKER_1>Ich kann auch direkt auf eine Instanzvariable zugreifen.
+
+00:43:10.722 --> 00:43:14.102
+<v SPEAKER_3>Es ginge, okay. Es ginge, aber es ist nicht...
+
+00:43:14.122 --> 00:43:27.182
+<v SPEAKER_1>Also du schießt dir halt damit in den Fuß, wenn du eben das Framework benutzen willst und eben darauf vertraust, dass Key-Value-Observing funktioniert und Key-Value-Coding. Stimmt euch ein, oder reden wir gerade voneinander vorbei?
+
+00:43:27.202 --> 00:43:37.122
+<v SPEAKER_3>Nein, okay, grundsätzlich ginge es schon, weil so ein Objective-C-Objekt ist natürlich auch nur ein C-Strukt, und man konnte auf die Instanzvariablen direkt auf zugreifen, aber es ist in der Sprache eigentlich nicht vorgesehen, dass man es tut.
+
+00:43:37.722 --> 00:44:15.602
+<v SPEAKER_2>Das heißt, man hat eine Eigenschaft, also eine Instanzvariable, ich will es mal kurz übersetzen. Man hat halt sozusagen von einer abstrakten Klasse dann auch ein konkretes Objekt im Speicher. Das hat eben dann Eigenschaften, sprich Variablen, die in diesem Objekt gespeichert sind. Und um die jetzt auszulesen, hat man dieses Konzept, was ja auch in vielen anderen Sprachen gibt, der Getter- und Setter-Funktion. Das heißt, im Prinzip ist der Zugriff auf den Wert sozusagen unter diesem abstrakten Konzept, der ich muss dafür dann aber auch eine Funktion bereitstellen, damit man das kapseln kann. Kapseln ist ja an sich keine schlechte Idee, aber das ist dann Aufwand. Und jetzt gibt es sozusagen die Möglichkeit, das zu automatisieren.
+
+00:44:15.622 --> 00:44:23.982
+<v SPEAKER_3>Und jetzt gibt es einerseits die Möglichkeit, diese Instanzvariablen zu deklarieren, als Properties wirklich. Das heißt, man hat ein bisschen mehr Meta-Information in der Runtime, die man auch nutzen kann.
+
+00:44:24.002 --> 00:44:26.142
+<v SPEAKER_2>Und dadurch hat man diese Setter- und Getter-Funktion automatisch.
+
+00:44:26.162 --> 00:44:33.202
+<v SPEAKER_3>Genau, und die Runtime bastelt einem auch die Setter und Getter und auch in einer Art und Weise, dass die sogar schneller sind, als wenn man die selber basteln würde.
+
+00:44:33.482 --> 00:44:37.302
+<v SPEAKER_2>Weil mehr Wissen darüber ist beim Compiler, in der er das optimieren kann.
+
+00:44:37.322 --> 00:44:37.682
+<v SPEAKER_3>Genau.
+
+00:44:37.802 --> 00:44:47.182
+<v SPEAKER_1>Du kannst natürlich noch auswählen, ob die jetzt thread-safe und langsam oder nicht thread-safe und schnell haben, und solche Geschichten. Also da kannst du auch nochmal feintunen.
+
+00:44:47.202 --> 00:44:49.582
+<v SPEAKER_3>Ob die nur read-only ist, ob es eine...
+
+00:44:49.602 --> 00:44:55.202
+<v SPEAKER_2>Das heißt, es kommt auch generell das Konzept von Multithreading mit in die Sprache mit rein? Oder ist das jetzt ein bisschen zu weit?
+
+00:44:56.102 --> 00:45:12.942
+<v SPEAKER_1>Ja, im Prinzip war das ja vorher schon drin. Also das ist ja inherent mehr oder weniger. Du kannst ja Threads da benutzen. Und es ist so, dass jetzt mit den letzten Releases immer mehr thread-safe wird. Und jetzt gibt es in 10.5 gibt es ja auch ein objektführendes Thread, das halbwegs umfangreich ist.
+
+00:45:12.962 --> 00:45:15.882
+<v SPEAKER_3>Aber von der Sprache her ist es praktisch nur, dass die Properties eben...
+
+00:45:16.842 --> 00:45:21.882
+<v SPEAKER_2>Das heißt, die Sprache selber kennt Threads in dem Sinne nicht, aber die Frameworks...
+
+00:45:21.902 --> 00:45:22.362
+<v SPEAKER_1>Richtig, ja.
+
+00:45:22.382 --> 00:45:34.542
+<v SPEAKER_3>Also das Einzige, was es kennt, ist ein unsynchronisiertes Keyword, um eben Zeug zu synchronisieren. Das gibt es schon, aber das nutzt... Das gab es schon immer. Also das gibt es nicht erst seit 20.
+
+00:45:34.562 --> 00:46:26.562
+<v SPEAKER_2>Okay, dann vielleicht nochmal weg von Objective-C als Sprache, mehr so zu eben diesem Framework-Unterbau. Mehrfach erwähnt haben wir jetzt schon, alles fängt an mit der Foundation, was anfängt mit einem Objekt, das heißt NS-Object, was sozusagen die Ursuppe aller anderen Objekte ist. Alles ist irgendwie letzten Endes auch immer ein NS-Object und dann hat man eben seine ganze Klassenstruktur darunter. Objective-C macht ja Single Inheritance, also Mehrfachvererbung gibt es nicht, oder? Genau. Viele Leute sind der Meinung, das reicht. Ich bin mir da nicht so sicher, aber ist auch egal. Was steckt denn da jetzt alles drin in dieser Foundation und wie hat sich denn das so entwickelt? Also was bietet das einem jetzt, was die Anwendungsentwicklung unterstützt? Also gibt es da auch irgendwas, woraus ihr euren Spaß zieht, oder ist das langweilig?
+
+00:46:26.582 --> 00:46:50.182
+<v SPEAKER_3>Also in der Foundation sind halt die Basisklassen, die man so braucht, sprich Arrays, Dictionaries, dann Enumeratoren dazu. Was gibt es da noch alles? Logs zum Beispiel auch, wenn man malchen wollen machen will. Strings natürlich, ganz, ganz wichtig. Das macht viel Spaß in Objective-C Strings, weil das eine tolle Stringklasse macht, die mit UTF-8 und UTC grundsätzlich super umgehen kann.
+
+00:46:50.202 --> 00:46:59.082
+<v SPEAKER_2>Das heißt, man kann irgendeinen UTF-8 Unicode-String nehmen und er weiß, wie lang der ist, wie viele Zeichen da drin sind, auch wenn das aus mehreren Unicode-Bytes zusammengesetzt ist.
+
+00:46:59.082 --> 00:47:35.162
+<v SPEAKER_3>Genau, die Foundation ist komplett encoding aware und ist ja wirklich sehr gut drin. Ist auch wirklich eine sehr schöne Stringklasse, weil die hat nur eine Methode, um sie zu verändern, also es gibt eine Nadelöhr-Methode in dieser Stringklasse, wenn man Strings verändert. Das heißt, einen Bereich ersetzen mit einem anderen String. Und wenn man irgendwas rausholen will, also gerade für uns war das super wichtig, weil wir können so praktisch bei jeder Stringoperation alle abgreifen an einer einzigen Methode. Und man muss da nicht mehrere verschiedene Methoden überschreiben. Das ist zum Beispiel, was mir an Foundation Spaß macht.
+
+00:47:35.182 --> 00:47:51.522
+<v SPEAKER_1>Was auch schon in Foundation auftritt und was framework-inherent auch ist, ist immer die Unterscheidung in normales Objekt und mutable Objekt. Das heißt, das Objekt, das ich per se nicht verändern kann und dann eben die Gegenvariante dazu, dass es eben ns.mutable-String noch gibt, wo ich dann eben auch drauf suchen und ersetzen kann und solche Geschichten.
+
+00:47:51.542 --> 00:47:53.782
+<v SPEAKER_2>Was auch für Performance sicherlich nicht ganz unwichtig ist.
+
+00:47:53.802 --> 00:48:09.982
+<v SPEAKER_3>Richtig, ja. Genau. Dann Basis-Speichermanagement passiert natürlich auf der Ebene schon, was wir vorher gemeint haben, die Autorelease-Pools, also diese bisschen quasi-Automatismen, die man dann mit dieser Variante benutzt.
+
+00:48:10.002 --> 00:48:14.622
+<v SPEAKER_2>Das ist ja so für einen Text-Editor. Klingt das ja schon mal alles noch alles im Wunderland, oder?
+
+00:48:15.442 --> 00:48:21.002
+<v SPEAKER_1>Ja, also gerade das Textsystem, das ist definitiv das Beste, das ich bis jetzt gesehen habe.
+
+00:48:21.242 --> 00:48:29.962
+<v SPEAKER_3>Das wollten wir nicht selber machen. Ich meine, die größere Geschichte kommt natürlich auf der Darstellungsseite noch, aber schon allein mit allen Encodings und so.
+
+00:48:29.982 --> 00:48:35.122
+<v SPEAKER_2>Habt ihr denn wirklich die vollständige Funktionalität, die das Betriebssystem an der Stelle bereitstellt?
+
+00:48:36.402 --> 00:48:37.302
+<v SPEAKER_1>Ja.
+
+00:48:37.322 --> 00:48:48.062
+<v SPEAKER_2>Also auch so, ich weiß nicht, es gibt da ja so ganz fancy Sachen so wie Vertikalselektion zum Beispiel, dass man so wirklich so spaltenweise selektiert. Geht das bei euch auch? Ich habe es noch gar nicht ausprobiert.
+
+00:48:48.082 --> 00:48:54.502
+<v SPEAKER_3>Das geht bei uns im Moment nicht. Das könnten wir erben, aber da wir andersrum angefangen haben, müssten wir das ja auch unterstützen. Und wir müssen das über unser Protoboll durchleeren.
+
+00:48:54.522 --> 00:49:10.062
+<v SPEAKER_2>Das ist später dazu gekommen, alles klar. Okay, ich habe nichts gesagt. Das habe ich nicht bedacht. Das ist natürlich ein Ding, durch diese Netzwerksgeschichte müsst ihr das natürlich auch alles im Netzwerk übersetzen. Aber grundsätzlich, wenn man jetzt einfach so einen Text-Editor schreibt, gibt es eigentlich keinen Grund, warum man sowas nicht automatisch mit reinkriegt.
+
+00:49:10.082 --> 00:49:11.822
+<v SPEAKER_3>Kann man Word und Office Dokumente auch lesen und und und.
+
+00:49:11.842 --> 00:49:18.182
+<v SPEAKER_2>Verstehe. Ah ja, stimmt. Genau. Die ganzen Translaturen kommen noch da mit rein. Also es werden diverseste Dateiformate auch unterstützt.
+
+00:49:18.342 --> 00:49:19.702
+<v SPEAKER_3>Ja, NSXML ist zum Beispiel...
+
+00:49:19.722 --> 00:49:24.322
+<v SPEAKER_2>Stimmt, da ist es jetzt dabei, seit 10.05. Lesen und schreiben, oder?
+
+00:49:27.442 --> 00:49:30.802
+<v SPEAKER_1>Und du wolltest dann noch sagen, NSXML ist jetzt auch endlich was, was man benutzt kann.
+
+00:49:30.842 --> 00:49:32.682
+<v SPEAKER_3>Genau, das ist auch in der Foundation, oder?
+
+00:49:32.702 --> 00:49:33.522
+<v SPEAKER_1>Das ist auch Foundation.
+
+00:49:33.542 --> 00:49:34.342
+<v SPEAKER_3>Genau, das heißt man halt...
+
+00:49:34.362 --> 00:49:35.362
+<v SPEAKER_2>Also ein XML-Parser.
+
+00:49:35.382 --> 00:49:38.982
+<v SPEAKER_3>Genau, ein kompletter XML-Parser, gewrappt in schöne Coco-Klassen.
+
+00:49:39.022 --> 00:49:43.942
+<v SPEAKER_2>Das heißt, man kann sagen, hier ist eine XML-Datei, liest mal, und dann kann man da wie über ein Objekt...
+
+00:49:44.182 --> 00:50:17.742
+<v SPEAKER_3>Über Storm oder über Expand, wie man will, mit der entsprechenden Art und Weise, wie es im Objective-C läuft. Genau, das kann man auf der Ebene auch schon sehen. Man hat viel läuft über Delegates, das heißt, man lässt praktisch den Paser drüber laufen und kriegt dann eben Callbacks, wenn was passiert, und das sind dann ganz normale Delegate-Methoden, da spielt wieder die Dynamik eine große Rolle, wenn man die überschreibt, dann werden die aufgerufen, wenn man die nicht überschrieben hat, dann juckt es auch keinen. Man muss ja nicht ein komplettes Protokoll immer implementieren, sondern nur das Sub-Set, das man selber haben will.
+
+00:50:17.762 --> 00:50:27.002
+<v SPEAKER_1>Also das Delegate-Konzept ist ja mehr oder weniger, du sagst einem Objekt, ich bin dein Chef, und wenn du irgendwas zu fragen hast, oder wenn du irgendwas zu melden hast, dann komm bitte zu mir.
+
+00:50:27.022 --> 00:50:28.602
+<v SPEAKER_2>Und was hat es zu melden?
+
+00:50:28.622 --> 00:50:39.702
+<v SPEAKER_1>Dann sagt halt der XML-Paser meinetwegen, hier habe ich einen Error. Dann schickt er dir halt als Delegate-Objekt, also seinem Chef, schickt halt dann die Nachricht, found XML-Error-Zeile sowieso, blablabla.
+
+00:50:39.722 --> 00:50:42.062
+<v SPEAKER_3>Genau, und dann fragt er dich zum Beispiel, ob er weitermachen soll oder so.
+
+00:50:42.082 --> 00:50:49.142
+<v SPEAKER_2>Okay, aber man muss nicht irgendwie, if dieses hat Error ergeben, if dieses hat Error ergeben, sondern man sagt, mach einfach mal, sag mir Bescheid, wenn was schief gelaufen ist.
+
+00:50:49.162 --> 00:51:10.082
+<v SPEAKER_3>Zum Beispiel, ja. Oder es ist egal, wenn ein Objekt irgendwas tut, wo Dinge passieren können, zum Beispiel auch NS File Manager ist auch in der Foundation drin, da kann man iterieren über komplette Verzeichnissebene und dann kriegt man Callbacks über das, was für ein Objekt zurückkommt. Und wenn irgendwas schief läuft, zum Beispiel beim Kopieren oder so, dann fragt er halt, okay, soll er jetzt abbrechen oder nicht und so Geschichten.
+
+00:51:10.182 --> 00:51:15.202
+<v SPEAKER_1>Er meldet sich dann natürlich auch, wenn es nicht schief läuft, und wenn es fertig ist, ist dann einfach dann eine andere Methode.
+
+00:51:15.222 --> 00:51:57.362
+<v SPEAKER_2>Hier zeichnet sich ja schon ein ganz interessantes Modell ab, weil wir reden jetzt von Foundation. Und im Prinzip reden wir ja von etwas, was anfängt bei NS-Object, also bei der nacktesten Datensstruktur, die man sich überhaupt nur vorstellen kann beim Programmieren. Trotzdem geht es so weit hin bis, ich habe einen kompletten XML-Parser. Vermutlich kann man auch genauso XML wieder wegschreiben. Das ist alles gekapselt. Wie weit erstreckt sich jetzt diese Foundation? Was kommt da noch alles, bevor andere Frameworks anfangen? Also was ist alles drin? Das ist natürlich auch immer eine schöne Definitionsfrage, die Apple wahrscheinlich dann auch im Laufenden schaltet. Eine ganz andere Struktur, als man jetzt unter Unix oder so.
+
+00:51:57.382 --> 00:52:05.922
+<v SPEAKER_1>Nach oben kannst du auf jeden Fall abgrenzen. Alles, was jetzt keine Grafik erzeugt, was keine Applikation, was keine Fenster macht. Vor allem auch keine braucht.
+
+00:52:05.942 --> 00:52:15.922
+<v SPEAKER_3>Es ist, glaube ich, auch auf der Ebene angesiedelt, ich will jetzt ein Kommando-Zeintool schreiben. Was kann ich dem alles geben, was noch nicht die GUI braucht? Und das ist Foundation.
+
+00:52:15.942 --> 00:52:32.422
+<v SPEAKER_2>Das heißt, man kann auch extrem coole Command-Line-Tools machen. Es muss nicht alles klickbar sein auf dem Mac, sondern wenn man irgendwie ein Tool schreiben will, was irgendwie eine Batterie von XML-Dateien liest und vielleicht rausschreibt. Gibt es das LT? Ist da auch schon mit drin?
+
+00:52:34.142 --> 00:52:37.922
+<v SPEAKER_3>Das ist XML2, was da mit drin ist.
+
+00:52:37.942 --> 00:52:40.202
+<v SPEAKER_2>Ach so, das basiert auf LibX, SLT und LibXA.
+
+00:52:40.222 --> 00:52:47.202
+<v SPEAKER_3>Das ist ja auch so eine klassische Mac-Geschichte. Wir nehmen Open Source-Grab mit rein und das bieten wir an.
+
+00:52:47.222 --> 00:53:04.462
+<v SPEAKER_1>Bei der ersten iteration haben sie, glaube ich, in 10.2 oder 10.3 versucht, einen XML-Parser reinzubauen ins Framework. Das ist komplett in die Hose gegangen, weil das konnte nichts und konnte eben nur Sex-Parsing, kein Dom-Parsing und das haben alle nur gehasst. Und jetzt eben mit 10.4, glaube ich, kam dann der richtige XML-Parser, den alle gut finden.
+
+00:53:04.482 --> 00:53:35.362
+<v SPEAKER_3>Da sieht man auch, wenn wir nochmal ein bisschen abschweifen können zwischen den Frameworks, eben was es vorher gab. So in Core Foundation, was wiederum die prozedurale Unterbau ist, auch wieder von, also in Mac OS X zumindest von Foundation, gibt es auch den CFXML-Parser. Und das ist eine prozedurale API für XML. Und jeder, der die schon mal benutzt hat und danach NSXML, der weiß, warum er lieber NSXML benutzt und warum er lieber in der Coco-Welt lebt als in der prozeduralen.
+
+00:53:35.382 --> 00:53:54.682
+<v SPEAKER_1>Also um mal eine Kenngröße zu sagen, ich habe letztens unseren Configuration File-Parser umgeschrieben von eben CFXML, also Core Foundation XML-Parser, auf den NS-Parser. Und es waren, glaube ich, vorher waren es die acht, neunhundert Zeilen grob in dieser Datei. Und es ist runter auf dreihundert Zeilen.
+
+00:53:54.702 --> 00:54:11.202
+<v SPEAKER_2>Jetzt müsst ihr mir nochmal erklären, wo jetzt der Unterschied ist zwischen Foundation und Core Foundation. Also was ist das eine, was ist das andere? Also Foundation verstehe ich jetzt als sozusagen da, wo die Programmiersprache im Prinzip direkt andockt, von ganz unten nach auf eine bestimmte Höhe. Und Core Foundation?
+
+00:54:11.222 --> 00:54:21.062
+<v SPEAKER_1>Foundation ist implizit objektorientiert und Objective-C. Genau. Und wenn da Core davor steht, dann ist es prozedural. Meistens, meistens.
+
+00:54:21.082 --> 00:54:22.182
+<v SPEAKER_3>Das kann man auch nicht mehr so sagen.
+
+00:54:24.122 --> 00:54:26.462
+<v SPEAKER_2>Aber das ist sozusagen nochmal ein Subset davon.
+
+00:54:26.482 --> 00:54:31.042
+<v SPEAKER_1>Ja, es ist quasi der Layer, auf dem dann die objektorientierte API aufbaut.
+
+00:54:32.022 --> 00:55:15.802
+<v SPEAKER_3>Also es ist eher so, bei dem Übergang von Mac OS 9 auf Mac OS X haben sie ja schon gewusst, sie machen jetzt Carbon und sie machen Coco. Und dann sind sie hergegangen und haben den Unterbau, den sie in beiden Seiten brauchen, für Strings, für und so weiter, das haben sie in Core Foundation gegossen. Das heißt, wenn ich in Carbon einen String benutze, dann ist es im Endeffekt auch ein CF-String und der CF-String, von Core Foundation kommt es, ist auch die Basis für einen NS-String. Das heißt, wir haben praktisch so die Gemeinsamkeiten rausfakturiert in die Core Foundation und in eine API gegossen, die prozedural funktioniert, aber eben auch schnell in die Objekte übersetzt werden kann.
+
+00:55:15.942 --> 00:55:18.782
+<v SPEAKER_1>Die Core Foundation sind übrigens auch Open Source, die kann man sich komplett angucken.
+
+00:55:19.822 --> 00:55:20.422
+<v SPEAKER_3>Genau.
+
+00:55:20.442 --> 00:55:22.742
+<v SPEAKER_2>Das heißt, sie ist bei Darwin beim Release mit dabei?
+
+00:55:23.462 --> 00:55:24.502
+<v SPEAKER_1>Die ist da in der Torbundung mit drin.
+
+00:55:24.522 --> 00:55:25.842
+<v SPEAKER_3>Hab ich mir schon mal angeguckt.
+
+00:55:25.862 --> 00:55:36.622
+<v SPEAKER_2>Das heißt, ich frage mich immer noch so ein bisschen, wer wird jetzt mit dieser Core Foundation adressiert? Für wen ist das noch wichtig, wenn man auch Foundation benutzen kann?
+
+00:55:36.642 --> 00:55:41.042
+<v SPEAKER_1>Solange du keinen ordentlichen NSXML-Parser hattest, hast du halt die Core Foundation-Methoden benutzt.
+
+00:55:41.982 --> 00:56:12.882
+<v SPEAKER_3>Also da sind halt auch Funktionen drin, die in Carbon weiter oben... Ich weiß nicht, ist XML-Parser gab es vorhin in Carbon auch schon? Weiß ich nicht. Ich weiß nicht. Es ist halt so eine Mischung. Sie wurde eingeführt als Zwischenschicht, um das rauszuholen. Und jetzt ist es so, dass wenn es... Ein möglicher Client ist jemand, der nur C sprechen kann, der kein Objective-C sprechen kann, aber trotzdem Systemfunktionen nutzen will. Dann gibt es noch einen Layer, der über dem BSD-Kram liegt. Der Mac OS X-spezifisch ist.
+
+00:56:12.902 --> 00:56:15.702
+<v SPEAKER_2>Aber den einen noch nicht dazu zwingt, wirklich mit Objective-C zu arbeiten.
+
+00:56:15.722 --> 00:56:16.022
+<v SPEAKER_3>Genau.
+
+00:56:16.042 --> 00:56:26.842
+<v SPEAKER_1>Aber trotzdem kann man so... Es gibt einen erodimentierenden Zugriff auf die Frameworks. Man hat eine schöne String-Klasse zum Beispiel schon mal, die du sonst ja auch suchen müsstest. Da kannst du wenigstens auf CF-String zugreifen, was auch schon viel besser ist als andere.
+
+00:56:27.182 --> 00:56:32.642
+<v SPEAKER_2>Marscheling von Daten ist da, glaube ich, auch mit drin. Dass man so Daten rausschreiben kann auf Platte und so.
+
+00:56:32.662 --> 00:56:33.302
+<v SPEAKER_1>Kann sein.
+
+00:56:33.322 --> 00:56:36.922
+<v SPEAKER_3>Ja, also Property-Lists und so kann man damit auch basteln. Und lesen.
+
+00:56:37.542 --> 00:57:12.422
+<v SPEAKER_2>Gut, aber gut, das spielt also nicht eine große Rolle jetzt auch bei eurer Anwendungsentwicklung, nehme ich mal an. Also hier und da braucht man es, aber im Wesentlichen, man setzt auf Foundation auf. So, jetzt sind wir sozusagen an dem Punkt angekommen, wo man jetzt auch mal Macintosh sein will. Das heißt, eure Anwendung geht ja auch ins User-Interface. Ist schon ein paar Mal gefallen. Jetzt kommen diese ganzen Kits, die auch Frameworks sind, aber irgendwie Kit heißen, weiß nicht, ab wann heißt das Kit. Es gibt da eine klare Linie bestimmt nicht, ich frag gar nicht erst. Aber es gibt UpKit.
+
+00:57:12.442 --> 00:57:12.682
+<v SPEAKER_1>Genau.
+
+00:57:12.722 --> 00:57:16.082
+<v SPEAKER_2>Und das tut was?
+
+00:57:16.102 --> 00:57:31.562
+<v SPEAKER_3>Das UpKit macht grundsätzlich mal die Basis, die man für eine GUI-App braucht. Da sind Fenster drin, da ist die App grundsätzlich drin, da sind die Views drin, da ist alles, was man als Benutzerinteraktion braucht.
+
+00:57:31.582 --> 00:57:34.242
+<v SPEAKER_2>Das heißt, das UpKit macht aus einem Programm eine Applikation.
+
+00:57:34.502 --> 00:57:35.242
+<v SPEAKER_3>Richtig. Genau.
+
+00:57:35.262 --> 00:57:42.062
+<v SPEAKER_2>Und eine Applikation ist etwas, was Präsenz hat, was irgendwie sichtbar ist, ein Menü hat, was klickbar ist.
+
+00:57:42.082 --> 00:57:51.902
+<v SPEAKER_3>Genau. Ohne irgendwas zu tun wird dann, wie du es vorher schon gesagt hast, hat man schon oben ein Menü, das irgendwas macht. Also die Basisfunktionalität von Applikationen passiert schon mal.
+
+00:57:51.922 --> 00:58:11.762
+<v SPEAKER_2>Das heißt, ich gehe irgendwie in meine Entwicklungsumgebung, sage guten Tag, ich hätte gerne eine Applikation. Dann bindet sich das sozusagen automatisch mit diesem UpKit. Und ohne, dass ich nur eine Zeile geschrieben habe, sage ich Run und dann ist auf einmal eine Menüzeile da mit Hallo, ich bin Programm sowieso, mit Copy und Paste im Edit-Menü und in einem leeren Fenster. Und das war's.
+
+00:58:11.782 --> 00:58:14.662
+<v SPEAKER_1>Das war's dann erst mal. Das ist für keinen Code hier schon ganz gut.
+
+00:58:14.682 --> 00:58:22.302
+<v SPEAKER_2>Ist ja schon mal was. Weil das hat früher die Klimmzüge auf dem Atari irgendwie.
+
+00:58:22.322 --> 00:58:24.502
+<v SPEAKER_3>Auch auf Acorn war es sehr, sehr lustig, so etwas zu machen.
+
+00:58:24.522 --> 00:58:30.202
+<v SPEAKER_2>Da musste man ganz schön lange Wege durchschreiten, tausend Sachen initialisieren und so weiter. Und jetzt mal auch mal ein Fenster hin.
+
+00:58:30.702 --> 00:58:34.982
+<v SPEAKER_3>Da war man schon froh, wenn es irgendwelche Ressourcfiles gab, die GUI gebastelt haben.
+
+00:58:35.002 --> 00:58:54.902
+<v SPEAKER_2>Das heißt, dieses Framework beinhaltet nicht nur Funktionalität, die benutzt werden kann, sondern auch Funktionalität, die von dem Betriebssystem automatisch aktiviert wird. Da werden automatisch Events gehandhabt, da wird auf Dinge reagiert. Ich meine, ich kann das Fenster wahrscheinlich auch schließen, und dann geht das irgendwie weg und tut das ja sozusagen.
+
+00:58:54.922 --> 00:58:55.962
+<v SPEAKER_1>Das gibt mir so ein Gerüst.
+
+00:58:55.982 --> 00:59:00.022
+<v SPEAKER_2>Das abgeht für mich, weil ich nicht gesagt habe, dass ich mich darum kümmern möchte.
+
+00:59:02.022 --> 00:59:10.642
+<v SPEAKER_1>Also das sprichwertlich zu nehmen, Framework, Gerüst, also dass man wirklich sagt, hier hast du deinen Stall, Käfig, da kannst du jetzt Zeug reinschrauben.
+
+00:59:10.662 --> 00:59:21.722
+<v SPEAKER_3>Wie du auch vorher schon gemeint hast, Copy und Paste funktioniert auch schon. Das leere Fenster, das da ist, hat, glaube ich, einen Text drin stehen, den kann man auswählen und kopieren schon und irgendwo anders verwenden. Das geht auch schon. Drag und Drop funktioniert schon raus von den Standard-Widgets.
+
+00:59:21.742 --> 00:59:28.022
+<v SPEAKER_2>Also das ist so ein bisschen das GUI-Hello World. Und fürs GUI-Hello World braucht man genau keinen zeilen Code.
+
+00:59:28.042 --> 00:59:32.802
+<v SPEAKER_3>Da braucht man drei Klicks in Xcode und dann Compile und Run.
+
+00:59:32.822 --> 00:59:50.722
+<v SPEAKER_2>Xcode ist die Entwicklungsumgebung, die Apple gleich mitliefert auf der Standard-Installations-CD. Wird nicht gleich installiert, aber ist mit drauf und kann man dann einfach sich irgendwie aus dem Ordner holen. Also wenn man sozusagen den Schritt geschafft hat, diesen Ordner auf der Installations-Dist zu finden, dann ist man schon qualifizierter Entwickler.
+
+00:59:50.742 --> 00:59:53.542
+<v SPEAKER_3>Oder im Applications-Verzeichnis, je nachdem, welchen Mac man so hat.
+
+00:59:54.662 --> 01:00:03.842
+<v SPEAKER_2>Und ja, wie geht man dann jetzt so ran? Also ich meine, was muss ich jetzt machen, wenn ich meinen eigenen Texteditor programmieren will?
+
+01:00:03.862 --> 01:00:36.042
+<v SPEAKER_3>Man kauft sich das Hilleges Buch. Mac OS X Programming von Aaron Hilleges, das Standardwerk. Der hat schon für Next die Kurse gegeben und der hat eine ganz schöne High-Level-Geschicht-Erklärungsweise, wie er an das Zeug rangeht. Und das kann ich nur empfehlen. Es ist inzwischen ein bisschen veraltet, weil es die aktuellste Information nicht mehr hat. Aber es führt einem auch an die Frameworks ran, an die Grundgedanken, die hinter dem Frameworks stecken. Es ist ja immer wichtig, wenn man Frameworks benutzt, dass man nicht gegen das Framework arbeitet, sondern mit ihm.
+
+01:00:36.062 --> 01:00:38.982
+<v SPEAKER_2>Dass man pilt, worum es da eigentlich geht.
+
+01:00:39.282 --> 01:00:50.982
+<v SPEAKER_3>Also wenn man mal PAP gemacht hat, ist es sehr schwer, sich dann umzustellen, oder wenn man von einer anderen Ecke kommt. Es sind eigene Konzepte. Auch wenn man von Java kommt, lohnt es sich, erst mal aufs Framework einzulassen.
+
+01:00:51.002 --> 01:01:09.082
+<v SPEAKER_1>Genau. Aber wenn man jetzt anfängt, so ich mache jetzt eine Applikation, dann macht man sich im Regelfall erst mal einen Controller. Das Ganze funktioniert, also das Framework funktioniert zu großen Teilen nach dem Model-View-Controller-Prinzip, das man ja auch so aus Smalltalk und sonst woher kennt. Und dann baut man sich halt erst mal einen Controller und der macht dann irgendwas.
+
+01:01:09.102 --> 01:01:16.062
+<v SPEAKER_2>Kannst du das mal erst mal erläutern, was hinter diesem Model-View-Controller oder MVC, sagt man ja auch, was da so dahinter steckt?
+
+01:01:16.722 --> 01:01:29.782
+<v SPEAKER_1>Model-View-Controller ist eine Abstraktion, wo du eben sagst, ich habe drei Klassen von Dinge. Die eine Klasse zeigt mir was an, das ist eine View. Die andere Klasse ist quasi die abstrakte Modellierung dessen, was da angezeigt wird, das ist das Model.
+
+01:01:29.802 --> 01:01:30.542
+<v SPEAKER_2>Also die Daten?
+
+01:01:30.562 --> 01:01:36.362
+<v SPEAKER_1>Genau. Und ich brauch was, was die beiden Dinge miteinander abgleicht. Und das macht der Controller.
+
+01:01:36.382 --> 01:01:49.562
+<v SPEAKER_2>Das heißt, man entkoppelt das Datenmodell von seiner Darstellung und schafft so eine Zwischenebene. Und das ist der Controller. Das heißt, in diesem Controller, dort liegt dann der Großteil des Programms?
+
+01:01:49.582 --> 01:01:54.462
+<v SPEAKER_1>Jein. Also der Großteil des Glucose liegt im Controller mehr oder weniger.
+
+01:01:55.862 --> 01:01:57.882
+<v SPEAKER_2>Also auch im Model muss was reinpugeln.
+
+01:01:57.902 --> 01:02:02.902
+<v SPEAKER_1>Genau. Das Model ist im Prinzip …Auch im View wahrscheinlich, ja. Das …Okay.
+
+01:02:02.922 --> 01:02:03.642
+<v SPEAKER_2>Ja, ich verstand jetzt.
+
+01:02:03.662 --> 01:02:10.702
+<v SPEAKER_1>Okay. Und du baust eben dann erstmal den Controller, der eben dann mit diesem Fenster, das du eben kriegst, dann irgendwie verbunden werden muss.
+
+01:02:10.722 --> 01:02:15.762
+<v SPEAKER_2>Aber dann brauchen wir doch auch einen Model. Mussten wir da nicht erstmal einen Model bauen? Also ich meine, was macht der Controller, wenn es keinen Model gibt?
+
+01:02:15.782 --> 01:02:17.622
+<v SPEAKER_3>Es kommt drauf an, was du im Moment gerade bastelst.
+
+01:02:17.642 --> 01:02:21.862
+<v SPEAKER_2>Also wenn du jetzt nur eine …Bleiben wir mal bei Text-Editor, das kennt ihr ja ganz gut.
+
+01:02:21.882 --> 01:02:42.502
+<v SPEAKER_3>Gut, ein Text-Editor, dann braucht man als Modell natürlich irgendwie so ein Text wirklich. Selber, das wäre dann eine NS Text Storage. Das ist mir schon …Vom System kriegt man ein Objekt, wo wirklich …Also wieder Foundation sozusagen. Wenn die Text-Storage ist, ist schon ein Up-Kit, aber das wäre eine NS Mutable String …Also also auch …Okay, also nicht alles, was …Weil die Attribute und Fonts und so ist schon wieder im Up-Kit.
+
+01:02:42.982 --> 01:02:47.882
+<v SPEAKER_2>Also nicht alles, was mit NS anfängt, ist Foundation, sondern fast alles …Alles fängt mit NS an?
+
+01:02:47.902 --> 01:02:49.482
+<v SPEAKER_3>Up-Kit und Foundation fängt mit NS an.
+
+01:02:49.502 --> 01:02:53.802
+<v SPEAKER_1>Die anderen Kids fangen mit …Die neueren Sachen …Foundation fängt mit CA an.
+
+01:02:53.822 --> 01:02:59.982
+<v SPEAKER_2>NS muss man auch noch mal sagen …Next Step. Next Step. Das ist also einfach …Genau. Hat sich so entwickelt.
+
+01:03:00.502 --> 01:03:03.202
+<v SPEAKER_3>Genau. Und das heißt …NS Text Storage.
+
+01:03:03.222 --> 01:03:15.202
+<v SPEAKER_2>Das ist ja schon eine relativ abstrakte Geschichte. Vielleicht mal kurz beleuchten, wenn das jetzt sozusagen mein Modell ist. Was hilft mir diese Funktion? Was nimmt die mir ab? Nur mal so als Beispiel.
+
+01:03:15.222 --> 01:03:38.982
+<v SPEAKER_3>Die NS Text Storage, die macht wahnsinnig viel. Also an sich steckt da erstmal ein Attributed String drin. Und ein Attributed String ist einfach ein Text, der auf gewisse Bereiche gewisse Attribute angewendet bekommen hat. Sowas wie Fett, sowas wie anderer Font, sowas wie Unterstrichen …Aber eben auch selbst definierte Attribute wie ich hab hier schon fertig koloriert, ich muss hier nicht nochmal kolorieren.
+
+01:03:40.102 --> 01:03:42.182
+<v SPEAKER_1>Hyperlink, diverser anderer Sachen.
+
+01:03:42.242 --> 01:03:51.842
+<v SPEAKER_3>Also einfach eine beliebige Menge von Attributen auf Bereiche und die dann auch verwaltet, weil so ein String, wenn man da in der Mitte was rauslöscht, dann müssen ja alle Attribute irgendwie schrumpfen oder die dahinter nach vorne schieben und so weiter.
+
+01:03:52.542 --> 01:03:55.882
+<v SPEAKER_1>Da hängen quasi Objekte an Text-Teilstrings.
+
+01:03:55.902 --> 01:04:01.802
+<v SPEAKER_3>Genau. Und diese ganze Verwaltung, die macht eine NS Text Storage oder ein NS Mutable Attributed String.
+
+01:04:01.822 --> 01:04:11.002
+<v SPEAKER_2>Das heißt, ich erzeug mir da so ein Objekt von und dann habe ich da sozusagen ein komplettes Dokument, was auch vollständig von uns und alles dran haben kann.
+
+01:04:11.022 --> 01:04:16.542
+<v SPEAKER_3>Du kannst zum Beispiel ein Open-XML-Office-Dokument da reinladen in so einen NS Text Storage.
+
+01:04:16.562 --> 01:04:31.682
+<v SPEAKER_2>Ich sage irgendwie, hier ist eine Open Office-Datei auf der Festplatte, lad die mal in den Speicher und dann liegt es als dieses NS Text Storage-Objekt vor. Und ich kann da genauso drüber abstellen, als hätte ich gerade so ein RTF-Dokument oder ein Word-Dokument oder einfach nur einen normalen Text aufgemacht.
+
+01:04:31.702 --> 01:04:51.942
+<v SPEAKER_3>Jetzt kommt ja unser Text-Editor-Teil. Du setzt es einfach auf der View, auf der Text-View, es gibt eine schöne Text-View, setzt du dieses Text-Storage und schon hast du einen kompletten Text-Editor. Dann bist fertig. Du musst dich mal mit dem Controller was machen. Also im Controller musst du praktisch nur sicherstellen, dass beim Laden auch wirklich das dann reinwandert. Aber das war es dann schon beim Speichern.
+
+01:04:51.962 --> 01:04:59.702
+<v SPEAKER_2>Ach, das heißt, ich mache jetzt irgendwie fünf Zahlen Code, die nichts anderes sagen als lad mal die Datei und zeig die mal an und ich habe einen kompletten Open-Office-Dokument-Editor?
+
+01:04:59.722 --> 01:04:59.902
+<v SPEAKER_3>Genau.
+
+01:05:00.462 --> 01:05:03.402
+<v SPEAKER_1>Du kannst halt noch nicht laden und speichern kannst du noch nicht.
+
+01:05:03.822 --> 01:05:09.982
+<v SPEAKER_3>Laden kannst du schon. Editieren kannst du schon, Copy-and-Paste kannst du schon machen. Speichern kannst du. Du kannst bei Copy-and-Paste zur Not speichern sogar.
+
+01:05:11.022 --> 01:05:14.022
+<v SPEAKER_2>Okay, dann muss ich also noch was dazuschreiben.
+
+01:05:14.042 --> 01:05:28.302
+<v SPEAKER_3>Genau. Da musst du beim Speichern müsstest du eben noch zusätzlich das Speichermenü-Item mit einer Methode verbinden, die du aufrufen lässt. Und dann würdest du da drin im Endeffekt nur aber eine Methode auf der Textzeuge aufspeichern.
+
+01:05:28.322 --> 01:05:36.002
+<v SPEAKER_2>Die Personalität des Speicherns ist auch schon da. Ich muss nur dafür sorgen, dass das auch im User-Interface angeboten wird. Und dann ist fertig.
+
+01:05:36.022 --> 01:05:37.662
+<v SPEAKER_3>Dann ist mehr oder weniger fertig.
+
+01:05:37.682 --> 01:05:43.842
+<v SPEAKER_2>Das heißt, in 20 Minuten habe ich so mein Open-Office.
+
+01:05:43.862 --> 01:05:47.502
+<v SPEAKER_1>Ja, das ist halt dann schon sehr fair bei uns.
+
+01:05:47.522 --> 01:05:50.402
+<v SPEAKER_2>Aber es geht. Es ist ja nicht wenig, was man dadurch bekommt.
+
+01:05:50.422 --> 01:06:26.742
+<v SPEAKER_3>Du müsstest natürlich trotzdem aber noch viel mehr von diesen ganzen... Du müsstest ein Fontpennel... Nein, das Fontpennel ist standardmäßig auch schon bei Edit mit drin im Formatmenü. Da musst du ein Formatmenü reinziehen. Genau, aber dann kommen wir zu der anderen Ecke. Du musst ein bisschen GUI basteln natürlich. Ich meine, du musst so eine Text-View in dein Fenster bringen. Wie machst du das auf dem Mac, wenn du programmierst? Du nimmst den Interface-Bilder her. Das ist ein zweites Tool. Das bearbeitet sogenannte NIP-Files. In den NIP-Files ist zum Beispiel eben dieses Fenster drin. Wenn du ein Projekt angelegt hast, ist standardmäßig ein NIP-File mit einem leeren Fenster drin. Und da kannst du dann mit so einem schönen UI einfach die Text-View da reinziehen und dann ist sie da drin.
+
+01:06:26.762 --> 01:06:51.142
+<v SPEAKER_2>Also der Interface-Bilder ist sozusagen das Programm, mit dem ich mein ganzes User-Interface zusammenklicke. Da habe ich so schöne Fensterchen, wo irgendwie alle Buttons und alles, was das User-Interface auf dem Mac anbietet, kann ich mir dann irgendwie mit Dreck und Trock in meine Fensterchen ziehen. Und dann liegt das so in diesem NIP-File vor. Das heißt, diese eine Datei speichert quasi mein gesamtes User-Interface. Und dann muss ich aber noch Code schreiben, der das dann sozusagen auf den Bildschirm wirft.
+
+01:06:54.442 --> 01:07:12.122
+<v SPEAKER_1>Die Besonderheit an der Geschichte ist, dass du da wirklich in diesem NIP-File wirklich Objekte drin hast. Nicht nur der Beschreibung von wie sieht es aus und was ist wo. Sondern du hast da wirklich in Anführungszeichen gefriergetrocknete Objekte in diesem NIP-File. Und wenn du das lädst, dann poppen die Objekte automatisch in den Speicher hoch. Und zeichnen dann. Was heißt denn NIP? NIP heißt...
+
+01:07:12.142 --> 01:07:13.422
+<v SPEAKER_3>Also Interface-Bilder ist hinten, glaube ich.
+
+01:07:13.442 --> 01:07:14.982
+<v SPEAKER_1>Das ist wahrscheinlich wieder Next Step.
+
+01:07:15.002 --> 01:07:17.222
+<v SPEAKER_2>Okay, also Interface-Bilder-Files.
+
+01:07:17.322 --> 01:07:18.362
+<v SPEAKER_1>Das hat schon keine Rolle.
+
+01:07:18.382 --> 01:07:23.122
+<v SPEAKER_2>Okay, da sind komplette Objekte drin. Und wenn ich das lade, dann werden die sozusagen...
+
+01:07:23.142 --> 01:07:28.682
+<v SPEAKER_1>Genau, du brauchst halt irgendjemanden, der das NIP verlädt. Genau. Und die werden dann einfach hochgepoppt.
+
+01:07:28.702 --> 01:07:45.222
+<v SPEAKER_3>Und in der Standard-Variante ist es so, dass es ein Main-Menu-NIP gibt. Und dieses Main-Menu-NIP wird von der Applikation standardmäßig beim Laden geladen. Da ist das Hauptmenü drin. Da kannst du alles verändern. Und vielleicht auch ein Fenster. Und das Fenster hat eine Option, dass es dargestellt werden soll, wenn es geladen ist.
+
+01:07:45.242 --> 01:07:52.362
+<v SPEAKER_2>Also da kommt dieses leere Fenster her, wenn ich sozusagen gar keinen Code schreibe, weil in diesem Menü ist ein leeres Fenster drin und das wird dann einfach geladen.
+
+01:07:52.582 --> 01:07:53.422
+<v SPEAKER_3>Genau, und dargestellt.
+
+01:07:54.042 --> 01:07:56.142
+<v SPEAKER_2>Aber das kann man dann auch anders machen, wenn man es anders machen will.
+
+01:07:56.162 --> 01:08:34.882
+<v SPEAKER_3>Genau, dann haben wir den Controller gebastelt. Im Controller kann man Instanzvariablen definieren, die dann sogenannte Outlets sind. Und ein Outlet ist eine Variable, mit der ich, wenn ich eine NIP verlade, was zuweisen kann. Ich kann zum Beispiel sagen, im Interface-Bilder, ich habe ein Outlet, das heißt Window, und dieses Outlet Window verbinde ich mit dem Fenster im Interface-Bilder, dann ist es so, dass in meiner Klasse, in der Variable Window, in der Instanzvariable Window, dieses Window gespeichert ist. Und das kann ich dann direkt ansprechen. So kann ich als Controller mit meinem Window interagieren, wenn ich will. Also wenn ich irgendwas mit dem machen will, zum Beispiel eben...
+
+01:08:34.902 --> 01:08:47.242
+<v SPEAKER_2>Das heißt schon in dem Interface-Bilder, in diesem interaktiven Tool, sage ich, es gibt ein Fenster, das sieht so und so aus, und ich kann auch sagen, und wenn das dann geladen wird, dann erzeuge bitte ein Objekt namens...
+
+01:08:47.262 --> 01:08:49.842
+<v SPEAKER_3>Genau, das wäre jetzt unser Abcontroller, klassischerweise nimmt man den.
+
+01:08:49.862 --> 01:08:57.482
+<v SPEAKER_2>Okay, und das heißt, ich kann dann in meinem Code gleich losgehen und sagen, das kann ich jetzt voraussetzen, das wurde irgendwie geladen, das ist jetzt da, und dann kann ich da drin rumbohren und dann...
+
+01:08:57.502 --> 01:09:11.042
+<v SPEAKER_1>Genau, und du hast halt im Interface-Bilder auch gleich eine grafische Repräsentation deines Controllers, das ist dann so ein blauer, translizenter Würfel, und da siehst du eben dann, was für Instanz-Maria abnimmt, was für Methoden hat der, und kannst halt diese Methoden gleich direkt mit Dingen in deinem Interface-Bild verbinden.
+
+01:09:12.282 --> 01:09:13.342
+<v SPEAKER_3>Genau, das kannst du dann machen.
+
+01:09:13.362 --> 01:09:23.582
+<v SPEAKER_2>Alles mit der Maus. Also alle Formwürfe, in Bezug auf den Macintosh, mit Clicky Bunti, das ist alles wahr, aber es erschreckt sich sozusagen auch auf die Programmierung. Das ist ja schon mal was.
+
+01:09:23.922 --> 01:09:52.222
+<v SPEAKER_3>Und das Einzige, was du machen musst, ist im Source-Code, als solches deklarieren. Also du musst eine Methode als solche deklarieren, die du aufrufen können willst aus dem Interface-Bilder. Das heißt, ein IB-Action als Rückgabewert, was void ist. Also die haben keinen Rückgabewert. Oder du musst vor deiner Variabel noch mal IB-Outlet schreiben, damit die auftaucht im Interface-Bilder. Das sind so die zwei Geschichten, die du per Hand machen musst. Und dann kannst du die im Interface-Bilder per Klickgebund verbinden, wie du willst, von einem Menu-Item, von einem...
+
+01:09:52.242 --> 01:10:01.682
+<v SPEAKER_1>Also um mal ein Beispiel eben zu sagen, du hast ein Fenster mit einem Knopf, und da steht eben, weiß nicht, Drucken drauf. Und dann verbindest du eben den Knopf mit der Methode Drucken von einem Controller und alles ist gut.
+
+01:10:01.702 --> 01:10:17.742
+<v SPEAKER_2>Das heißt, da wird das Nipp geladen, irgendjemand klickt da drauf und dann bedeutet das sofort, dass meine Methode aufgerufen wird. Das heißt, ich muss noch nicht mal eine Funktion schreiben, die sagt, wenn da ein Mausklick getan wurde, finde raus, wohin, sondern der landet sozusagen schon genau da, wo er hingerechnet ist.
+
+01:10:17.762 --> 01:10:34.922
+<v SPEAKER_3>Das kann man noch weiter noch perverser machen. Wenn man das Webkit einbindet, das ist ja eben auf dem Safari auch basiert, also HTML-Seiten darstellt, kann man allein über Zusammenklick von User-Interface-Widgets einen kompletten Browser bauen.
+
+01:10:34.942 --> 01:10:43.682
+<v SPEAKER_2>Das habe ich auch mal gemacht. Das fand ich wirklich erstaunlich. Das hat keine zwei Minuten gedauert und ich hatte so einen vollständigen Browser, wie man sich das so vorstellt, mit Zeile und so.
+
+01:10:43.702 --> 01:11:01.582
+<v SPEAKER_3>Genau, man schiebt da ein Textfeld rein, man schiebt da eben so eine Browser-View rein, dann verbindet man das Textfeld mit der Browser-View mit einer entsprechenden Methode. Das heißt, man kann einfach eine URL eintippen, dann wird diese Action, so heißt eben diese Verbindung, aufgerufen auf der Browser-View.
+
+01:11:01.602 --> 01:11:03.762
+<v SPEAKER_2>Also diese Action reagiert sozusagen auf das Return drücken.
+
+01:11:04.042 --> 01:11:16.302
+<v SPEAKER_3>Genau, das kann man auch einstellen. Das ist ein Attribut von dem Textfeld, ob das sofort passiert oder dann, wenn man Return drückt. Man kann den Button für Vorwärts und Rückwärts machen, den kann man dann mit der entsprechenden Methode auf dieser View da unten verbinden.
+
+01:11:16.322 --> 01:11:32.302
+<v SPEAKER_2>Das heißt, ich ziehe einfach nur eine Linie von dieses Textfeld, kennt irgendwie den Event, Return drücken, und dann mache ich irgendwie eine Linie unten auf den HTML-Darsteller, und das wird dann übersetzt in, zeige ich mal an, was hier in dem String steht, oder was?
+
+01:11:32.322 --> 01:12:18.782
+<v SPEAKER_3>Genau, also wenn man so ein Widget hat, oder so ein User-Interface-Element, dann kann das immer eine Action haben. Also ob das jetzt Return ist und so weiter, das definiert das Ding in sich selber, aber es ist eine Action, und diese eine verbindet man dann. Und man kann das Ganze dann noch weiter treiben, wenn man nochmal in das Thema Bindings geht, und wirklich auch ganz komplizierte Dinge machen, weil Bindings ermöglichen es einen, dass man wirklich auch eine Datenhaltung nochmal hat, über die man manipuliert und dann entsprechend die Buttons auch reagieren. Wenn keine Daten da sind, dann ist er ausgegraut. Und wenn Daten da sind, dann geht es minus. Wenn eine Selektion da ist, geht es minus. Und so Geschichten. Es gibt noch ein Level obendrauf. Das, was wir gerade erzählt haben, ist mehr so das, was vor 10.3 passiert ist. 10.3?
+
+01:12:19.702 --> 01:12:23.682
+<v SPEAKER_1>10.3 waren beinig, glaube ich. Also das verbessert sich immer.
+
+01:12:23.702 --> 01:12:25.662
+<v SPEAKER_2>Was ist so die Mindestanforderung für eure Software?
+
+01:12:26.362 --> 01:12:31.902
+<v SPEAKER_3>Wir haben inzwischen auf 10.4 umgestellt. Früher war es mal 10.3, aber da gibt es viele APIs, die wir einfach jetzt nutzen wollen.
+
+01:12:31.922 --> 01:12:45.202
+<v SPEAKER_2>Das macht euch sozusagen die Arbeit auch schon wieder leichter? Und das heißt auch, das Entwickeln von komplexen, oder überhaupt erstmal von User-Interfaces raubt euch eigentlich gar nicht so viele Nerven?
+
+01:12:46.622 --> 01:13:14.862
+<v SPEAKER_3>Also das Entwickeln von User-Interfaces, sobald es aus Standard-Komponenten basiert ist, dann ist es hauptsächlich in Diskussionsgrundlage. Das kostet viele Nerven auf dem Mac trotzdem. Das heißt, wie mache ich denn was wirklich? Woraus besteht das? Ist es auch eine gute Idee, dem User das so zu zeigen? Das ist ein großer Bestandteil, wenn man auf dem Mac Software macht. Also nicht einfach nur die Funktionalität irgendwie so hinfurzen, sondern sich gut überlegen, was man...
+
+01:13:14.882 --> 01:13:16.062
+<v SPEAKER_2>Was würde der Benutzer sagen?
+
+01:13:16.082 --> 01:13:43.022
+<v SPEAKER_1>Was will er denn überhaupt sehen? Was wir meiner Ansicht nach lange falsch gemacht haben, und warum wir nicht daran gedacht haben, weil wir uns an iChat orientiert hatten, zwei Browser-Fenster für Internet und Bonjour. Das macht einfach keinen Sinn. Warum? Das kannst du alles in einem Fenster anzeigen. Aber iChat macht ja auch nach wie vor immer noch diese Unterscheidung. Ein Fenster für AIM, ein Fenster für Java, ein Fenster für Bonjour und dann für den dritten Java-Account nochmal ein Fenster. Das macht ja alles gar keinen Sinn. Das muss alles in eine Liste sein.
+
+01:13:44.782 --> 01:14:03.242
+<v SPEAKER_3>Das ist aber das Schöne, wenn man eine 0815-UI in dem Sinne zusammenbauen will, dann kann man sich hauptsächlich mit dem beschäftigen, was für den User relevant ist. Wenn man jetzt noch irgendwie besonderes Zeug machen will, dann ist natürlich auch schon harte Coding-Arbeit gefragt.
+
+01:14:03.262 --> 01:14:13.602
+<v SPEAKER_1>Gerade wenn du dann auch so eine View machen willst, die diese Magie mitbringt mit sich, dann musst du halt da auch reinsteigen und alles selber zeichnen. Da ist dann die eigentliche Arbeit.
+
+01:14:13.622 --> 01:14:34.922
+<v SPEAKER_3>Der Interface-Bilder weiß ja auch nur das alles über die Klassen, weil es natürlich irgendwo steht. Das ist nicht so, wenn ich jetzt selber eine View programmiere und dann tue ich den Interface-Bilder, dann geht da alles. Sondern dann habe ich natürlich nicht diese Meta-Information, die der Interface-Bilder braucht. Und das muss ich extra programmieren. Da kann man eben diese Information extra bereitstellen. Noch macht man für die eigenen Klassen relativ selten. Da macht man es dann lieber im Code.
+
+01:14:34.942 --> 01:15:28.842
+<v SPEAKER_2>Chaosradio Express 64 hat sich um Usability gedreht. Da kam das auch alles zur Sprache, was auch so den Mac und Windows und so weiter und natürlich auch die Linienungs-User-Interfaces so ausmacht und entscheidet. Wie geht ihr denn ran? Macintosh-Software-Entwicklung steht so in dem Ruf, dass die Entwickler dort immer viele kluge Entscheidungen fällen. Das ist natürlich nicht immer so. Aber was ist jetzt sozusagen für euch der Orientierungspunkt? Also berühmt sind ja diese Macintosh-User-Interface-Guidelines, die Apple mal rausgebracht hat und sich dann selbst relativ wenig dran gehalten hat an vielen Stellen. Was ist da sozusagen jetzt das aktuelle Dokument? Was gibt die Dokumentation des Betriebssystems in der Hinsicht her, wie man denn sein Programm gestalten sollte?
+
+01:15:28.862 --> 01:15:53.682
+<v SPEAKER_1>Man muss sagen, auf einer relativ fundamentären Ebene sind die Human-Interface-Guidelines auch noch zumindest ein Startpunkt. Da steht viel drin, was Verhalten angeht, was Track-and-Drop angeht, was User-Interaktion auf dieser Ebene angeht, wo sich auch Apple nach wie vor dran hält. Klar, die machen den Finder mal metal und dann machen sie wieder iTunes irgendwie anders.
+
+01:15:54.542 --> 01:15:56.842
+<v SPEAKER_2>Ich sage nur Yes-No-Buttons.
+
+01:15:57.962 --> 01:16:01.142
+<v SPEAKER_1>Das ist etwas, da hält sich Apple auch selber noch dran, dass eben Buttons sprechen müssen.
+
+01:16:07.462 --> 01:16:26.582
+<v SPEAKER_3>Sie müssen sagen, was passiert, wenn ich draufklicke. Es ist ein ganz klasse Beispiel. Als Entwickler mal startet, sollte man sich dieses Dokument auf alle Fälle durchlesen und auch wirklich verstehen. Dann merkt man nämlich, warum sich dieses Ding namens Mac so konsistent anfühlt. Warum ist der Button, der blau ist, der macht nie was kaputt?
+
+01:16:26.602 --> 01:16:32.902
+<v SPEAKER_2>Gib mal ein paar Beispiele, was da drin steht. Der Button, der blau ist, macht nichts kaputt?
+
+01:16:32.922 --> 01:17:00.722
+<v SPEAKER_1>Der Button, der vor ausgewählt ist, der ist ja blau. Weil der passiert, wenn du Enter drückst und pulsiert. Und jemand mit Enterprise Guideline sagt, wenn diese Funktion ausgeführt wird, also die Standardfunktion, die ausgeführt wird, wenn dieser Dialog kommt, die darf keine Daten vernichten. Insofern bist du mit blau immer auf der sicheren Seite. Das heißt, wenn der Safe-Dialog kommt, dann ist Safe blau und Cancel ist nicht blau. Und wenn du Enter drückst, dann wird gesafet.
+
+01:17:00.742 --> 01:17:03.862
+<v SPEAKER_2>Wobei Safe ja durchaus Daten kaputt machen kann. So ist es ja nicht.
+
+01:17:04.062 --> 01:17:08.322
+<v SPEAKER_1>Ja, du hast ja noch eine, Dura, auch noch. Es ist mehr so ein Zwei-Variant.
+
+01:17:08.342 --> 01:17:14.662
+<v SPEAKER_2>Das, was man erwartet, was das Richtige ist. Okay, alles klar.
+
+01:17:14.682 --> 01:17:35.382
+<v SPEAKER_3>Obendrauf dann natürlich das eben, auf was Martin gerade schon gesagt hat, dass diese Button sprechen wirklich konkret. Dass es nicht ein Okay und Cancel ist, sondern ein Save und Don't Save. Das ist eine ganz wichtige Komponente auf dem Mac. Jeder, der sich in der Windows-Welt umgibt, weiß ganz genau, dass A, die Reihenfolge der Buttons ständig sich irgendwie durchwechselt und B...
+
+01:17:35.402 --> 01:17:42.142
+<v SPEAKER_1>Und dann wird es Okay, Abort und Cancel. Und keiner versteht, ob das Abort und Cancel ist. Und Ignore.
+
+01:17:42.162 --> 01:17:43.762
+<v SPEAKER_3>Genau, und recht viel mehr Text gibt es da unten.
+
+01:17:45.222 --> 01:17:49.762
+<v SPEAKER_2>Und das ist so ein Drehwort. Diese Datei nicht löschen, ja nein.
+
+01:17:51.042 --> 01:17:53.622
+<v SPEAKER_1>Genau, solche Sachen vermeidest du eben mit entsprechenden Knöpfen.
+
+01:17:53.642 --> 01:18:08.482
+<v SPEAKER_3>Zum Beispiel. Oder auch, wie du deine Menüleiste gestaltest. Welche Menüs es geben soll, was in den Menüs da drin sein soll. Wie viele Items drin sein sollen. So wirkliche, wirklich konkrete Informationen, die du brauchst und die Entscheidungen, die du treffen musst.
+
+01:18:08.502 --> 01:18:24.662
+<v SPEAKER_1>Auch diese ganz grundlegenden Sachen, wie alles, was ein Tastaturkürzel hat, sollte, wenn irgendwie sinnvoll im Menü auftauchen, dass du das Menü halt auch gleich als Handbuch, Dokumentation hast. Was für Funktionen habe ich, was für Tastaturkürzel haben die? Genau.
+
+01:18:24.682 --> 01:18:36.802
+<v SPEAKER_3>Und auch grundsätzliche Aussagen, wie ein App-Icon sieht ungefähr so aus und ein Dokument-Icon sieht ungefähr so aus. Da gibt es schon auch Sachen, an die man sich, die Apple selber hält und die wichtig sind.
+
+01:18:36.822 --> 01:18:50.722
+<v SPEAKER_2>Wie ist das, wenn man jetzt seinem Programm Hilfestellungen sozusagen hinzufügen möchte für den Benutzer? Wie leicht ist es Hilfe? Fragezeichen, Buttons, Online-Dokumentation, diese Hilfe-Funktion, das Durchsuchen von Menüs?
+
+01:18:50.742 --> 01:18:54.042
+<v SPEAKER_1>Ja, das Apple-Hilfesystem ist so eine Kategorie für sich.
+
+01:18:54.062 --> 01:19:02.282
+<v SPEAKER_3>Das Durchsuchen von Menüs ist ja erst in LEPA dazu gekommen und das ist implizit. Also da braucht man nichts dafür machen. Das funktioniert einfach.
+
+01:19:02.302 --> 01:19:22.382
+<v SPEAKER_1>Das Apple-Hilfesystem an sich basiert seit 10.2, glaube ich, auf HTML-Dateien. Und das funktioniert halt, weiß nicht, also in meiner Erfahrung funktioniert es eher leitlich gut. Deswegen ist bei uns jetzt die Hilfe auch nicht so wahnsinnig umfangreich. Wir versuchen da eher online jetzt was aufzubauen, in Sachen mit einem Wiki und so, wo dann die User eben auch selber ein bisschen beitragen können.
+
+01:19:22.402 --> 01:19:46.442
+<v SPEAKER_2>Das ist mehr so eine Knowledge-Base. Aber ich finde ja immer so Hilfe ganz gut. Ich weiß, dass viele Leute das nicht tun, aber ich bin immer ganz gnadenlos, wenn ich irgendwie so eine neue Software vor meiner Nase habe und ich weiß was nicht, dann gehe ich immer bewusst in die Hilfe. Und ich bin manchmal echt erstaunt, wie wenig da ist, aber manchmal bin ich auch erstaunt, wie viel da ist. Es gibt durchaus Programme, die das beherzigen und das finde ich gut.
+
+01:19:46.462 --> 01:19:55.802
+<v SPEAKER_3>Aber es ist schwer, eine gute Hilfe zu machen unter Mac OS X eigentlich. Also man muss halt eben HTML-basiert seine Seiten zusammenbauen. Das ist ein sehr übles HTML. Ich weiß nicht, ob es inzwischen anders ist.
+
+01:19:55.822 --> 01:19:56.422
+<v SPEAKER_1>Das ist besser.
+
+01:19:56.442 --> 01:20:02.562
+<v SPEAKER_3>Das ist besser geworden. Früher musste man da wirklich sehr standardunkonformes HTML benutzen oder altes Standardkonformes.
+
+01:20:02.582 --> 01:20:10.402
+<v SPEAKER_1>Es war halt, bevor WebKit da war, hatten sie einen extra HTML-Paser für die Hilfe und der war halt irgendwie 4.0, war das Maximum.
+
+01:20:10.422 --> 01:20:11.882
+<v SPEAKER_3>Das hat mich viel Spaß gemacht.
+
+01:20:12.622 --> 01:20:14.562
+<v SPEAKER_2>Das heißt, auch das wird sich jetzt wahrscheinlich verbessern.
+
+01:20:14.782 --> 01:20:15.702
+<v SPEAKER_1>Das ist besser geworden.
+
+01:20:15.722 --> 01:20:50.362
+<v SPEAKER_3>Und es wird einem auch nicht so nahegelegt, also wenn man eben so eine One-Click-App macht, dann ist das Help-Menü zwar da, aber das Help-Menü sagt dann immer per Dialog, Help is not available. Anstatt dass der irgendwie auf der Tool-Seite dem Benutzer nahegelegt wird, du, deine App hat noch keine Hilfe, wird dem Benutzer das um die Ohren gehauen dann. Also das ist so was, wo auch der Fokus vom Framework was auslösen könnte. Wenn da standardmäßig praktisch schon mehr vorgegeben wäre, dass da schon standardmäßig so ein Hilfeset da wäre, so eine HTML-Seite, die man nur ausfüllen muss. Das wäre eine ganz andere Vorgehensweise. Haben sie nicht den Fokus, hatten sie trotzdem den Maxin nicht.
+
+01:20:50.382 --> 01:21:14.162
+<v SPEAKER_1>Also ich glaube auch, dass da gerade beim Hilfesystem noch massiv Raum für Innovation ist bei Apple. Also du kannst mit den Sachen, die sie jetzt schon haben, kannst du sehr schön in der Applikation Spotlights setzen und eben Dinge markieren und Sachen zeigen mit Stichwort Accessibility. Also die aus dieser, ja, wie heißt es?
+
+01:21:14.182 --> 01:21:16.622
+<v SPEAKER_2>Dass das User interface automatisch vorgelesen werden kann.
+
+01:21:16.642 --> 01:21:29.982
+<v SPEAKER_1>Genau, also die aus dieser Ecke kommt. Da kannst du eben auch viel, meiner Ansicht nach, machen. Für Hilfe, wo du dann eben Workflows illustrierst und solche Geschichten. Und wenn es da irgendwie schöne Tools gäbe, das wäre ein massiver Schiff nach vorne.
+
+01:21:32.642 --> 01:21:41.622
+<v SPEAKER_2>Ja, und so Usability ist das für euch auch ein Thema. Also ich meine, habt ihr euch wirklich mal so auch über Prozesse Gedanken gemacht, wie die Leute sozusagen die Software nutzen und wahrnehmen?
+
+01:21:41.642 --> 01:21:50.802
+<v SPEAKER_1>Um ehrlich zu sein, nein. Aber wir haben trotzdem Benutzer, die SubE-Settings benutzen und eben trotzdem über die Funktionen, die vom Framework kommen, da barrierefrei mitarbeiten können.
+
+01:21:51.282 --> 01:21:56.122
+<v SPEAKER_2>Ich rede jetzt nicht so sehr von Barrierefreiheit, sondern ich rede mehr so von Usability im einigen Sinne, dass man sowas auch...
+
+01:21:56.142 --> 01:21:57.542
+<v SPEAKER_1>Also ich dachte jetzt Accessibility, okay.
+
+01:21:57.902 --> 01:22:05.702
+<v SPEAKER_2>Ne, Usability meine ich, also sozusagen, analysiert ihr, wie eure Benutzer das sozusagen...
+
+01:22:05.722 --> 01:22:13.062
+<v SPEAKER_3>Haben wir so gesehen jetzt nicht gemacht, weil wir haben eigentlich da eine Aufgabe gemacht, so für uns das Beste zu machen und wir haben...
+
+01:22:13.082 --> 01:22:15.082
+<v SPEAKER_2>Hauptsache es funktioniert für den Programmierer?
+
+01:22:15.102 --> 01:22:31.142
+<v SPEAKER_3>Nein, nein, nein, nein, nein. Nein, nein, nein. Also es ist, es ist, es ist ein, wir haben wirklich einen ganz, ganz speziellen Anwendungsfall. Wir machen, wir programmieren selber eine Anwendung, mit der man programmiert. Also wir sind unsere Kunden und haben auch UI-Ansprüche. Also es ist ein Unterschied. Deswegen sind wir in der Geschichte immer...
+
+01:22:31.162 --> 01:22:33.282
+<v SPEAKER_2>Ihr habt das Glück, eure eigene Zielgruppe zu sein sozusagen.
+
+01:22:33.302 --> 01:22:35.902
+<v SPEAKER_1>Ja, das kommt dazu. Und es ist auch einfach so, wenn du für den Mac...
+
+01:22:35.922 --> 01:22:41.942
+<v SPEAKER_2>Wir sind ja wirklich echt Programmierer. Wir nutzen ja auch SubEther-Edit, manchmal so, um gemeinsam Texte zusammen zu schreiben.
+
+01:22:41.962 --> 01:22:44.042
+<v SPEAKER_1>Ein Teil unserer Zielgruppe sind Programmierer.
+
+01:22:44.062 --> 01:22:48.042
+<v SPEAKER_3>Und unsere initiale Zielgruppe waren schon auch Programmierer.
+
+01:22:48.062 --> 01:23:17.482
+<v SPEAKER_1>Was ich noch sagen wollte, als Mac-Programmierer hast du irgendwie auch... Du bist ja auch Mac-User und hast so ein Gefühl für, was ist Mac, in Anführungszeichen, was fühlt sich wie Mac OS an? Wie ist momentan der Stand der Dinge? Wie sollte das so aussehen, wenn du so ein Programm machst? Und da hast du eben dieses Brauchgefühl, das du dann auch als Entwickler verwendest, um deine Interfaces zu checken. Passen die da rein? Sind die gestreamlined? Passt der Workflow?
+
+01:23:20.222 --> 01:23:56.102
+<v SPEAKER_3>Unser eigener Prozess ist auch mehr über einen entsprechenden, megafinen Bekanntenkreis, der auch recht hohe Standards an Software hat, mit dem wir dann direkt arbeiten und quatschen. Wir haben da keinen formelleren Prozess. Wir setzen da nicht fünf, sechs beliebige Leute hin und hoffen, dass die damit umgehen können. Sondern wir gehen eher von der Variante aus, dass das, was wir da machen, dadurch, dass wir selber so kritisch in anderen Anwendungen gegenüber auch eine gewisse Qualität bekommen, dadurch, dass wir uns gemeinsam einigen, was ja auch schon bei zwei Personen schon immer schwierig ist.
+
+01:23:56.122 --> 01:24:01.742
+<v SPEAKER_2>Kann ich mir gut vorstellen. Trotzdem würde ich euch mal raten, mal einfach mal random Users zu nehmen und denen mal dabei zuzuschauen.
+
+01:24:01.762 --> 01:24:02.682
+<v SPEAKER_1>Das ist auch immer interessant.
+
+01:24:02.702 --> 01:24:36.742
+<v SPEAKER_2>Kann Schmerzen bereiten, aber kann auch unter Umständen interessante Erkenntnisse bringen. Vielleicht noch mal ein bisschen mehr zurück zur Programmierung als solchen, wenn man jetzt so seine Software schreibt und dann so mit so verschiedenen Kids und Frameworks seine Bekanntschaft geschlossen hat, sich in ihr Wesen eingetaucht hat, so dann hat man dann vielleicht auch irgendwann mal ein laufendes Programm, was sicherlich Fehler enthält. Wenn ich jetzt das Entteufeln entfehlern möchte, entkäfern möchte, welche Möglichkeiten bietet denn das Mac OS X an der Stelle?
+
+01:24:37.422 --> 01:24:42.762
+<v SPEAKER_1>Na gut, du hast auf jeden Fall schon mal den integrierten GDB in Xcode. Das heißt, du hast da einen schönen Debugger drin.
+
+01:24:42.822 --> 01:24:50.302
+<v SPEAKER_2>Vielleicht sagen wir nochmal zu Xcode an sich was sagen. Also diese Entwicklungsumgebung, die jetzt mit dabei ist. Was umfasst denn das alles?
+
+01:24:50.302 --> 01:25:03.202
+<v SPEAKER_1>Xcode an sich ist eigentlich Editor, also IDE an sich. Und IDE sagt ja auch schon wieder alles. Also Editor, Bildsystem, Debugger. Ja, das dürfte es sein eigentlich.
+
+01:25:03.222 --> 01:25:20.742
+<v SPEAKER_3>Mac hat auch noch Integration von Versionskontrollen, die nicht so berauschend sind, sie nutzen wir selber nicht. Hat eben Dokumentation, direkte Sprung zur Dokumentation aus Xcode, hat ein bisschen eine Funktion, sich seine Objekte als Graph darstellen zu lassen nochmal.
+
+01:25:20.762 --> 01:25:22.062
+<v SPEAKER_2>So ein Class-Browser.
+
+01:25:22.082 --> 01:25:25.402
+<v SPEAKER_3>Genau, so ein Class-Browser mit drin.
+
+01:25:25.422 --> 01:25:37.802
+<v SPEAKER_2>Ja, das ist es. Also auch Debugging, das heißt, im Moment, wo man sein Programm laufen lässt, dann kann man so zur Laufzeit, ja, was kann man da machen? Also Breakpoints setzen zum Beispiel.
+
+01:25:39.062 --> 01:25:56.762
+<v SPEAKER_1>Ja, also was mir ganz gut gefällt, sind die Conditional Breakpoints, dass du wirklich eben sagen kannst, wenn jetzt hier die Instanzvariable grün anzeigt, dann breake bitte und ansonsten nicht. Aber das sind schöne Geschichten. Die kann man natürlich auch per Kommandozeile mit GDB machen, aber wenn man da halt clicky-bunt die hat, dann ist man halt auch zufrieden.
+
+01:25:56.782 --> 01:26:06.722
+<v SPEAKER_2>Das heißt, im Prinzip ist es so die Funktionalität des GNU-Debuggers, also GDB, GNU-Debugger ins User-Interface dann aber auch mit voll integriert. Das heißt, man springt dann gleich zum Source-Code und so, wie man sich das einliegt.
+
+01:26:06.742 --> 01:26:16.042
+<v SPEAKER_3>Genau. Und kann auch innerhalb des Source-Codes auf die einzelnen variablen Namen sogar gehen und dann kommt da die komplette aktuelle Zustand raus. Also es ist recht schön integriert dazwischen.
+
+01:26:16.062 --> 01:26:22.622
+<v SPEAKER_2>Aber da hat sich doch jüngst was getan. Ich glaube, auch mit der 10.5-Version ist so ein neues Set von Performance-Tools dazu gekommen.
+
+01:26:23.202 --> 01:26:24.602
+<v SPEAKER_1>Also ein neues Tool, mehr oder weniger.
+
+01:26:24.802 --> 01:26:25.742
+<v SPEAKER_2>Ein neues Tool.
+
+01:26:25.762 --> 01:26:54.942
+<v SPEAKER_1>Und in der 10.5 hat man ja D-Trace eingebaut, was eben eine Möglichkeit gibt, in Prozesse tiefer reinzugucken, ohne viel Performance-Impact zu haben, wenn du es eben nicht machst. Und da gibt es eben ein schönes Programm, das heißt das Instruments. Das hieß früher X-Ray. Da gab es wohl rechtliche Probleme mit dem Namen. Das heißt, man nennt es jetzt Instruments. Und was man damit machen kann, ist halt sein Programm laufen lassen und dann diverse Instrumente darauf anwenden. Die Instrumente, die machen zum Beispiel sowas wie...
+
+01:26:54.942 --> 01:26:57.342
+<v SPEAKER_2>So Gitarre, Luftgitarre oder...
+
+01:26:57.362 --> 01:27:00.802
+<v SPEAKER_1>Ja, ich weiß nicht, das ist dann eher Garage Band, glaube ich.
+
+01:27:00.822 --> 01:27:04.422
+<v SPEAKER_3>Ja, aber daher kommt es auch, weil das Interface-Seed schon auch eine Haltfähigkeit hat mit Garage Band.
+
+01:27:04.442 --> 01:27:07.842
+<v SPEAKER_2>Was für Instrumente? Ist das jetzt mehr so wie man Zahnarzt sozusagen?
+
+01:27:08.122 --> 01:27:09.262
+<v SPEAKER_3>Messinstrumente halt.
+
+01:27:10.642 --> 01:27:23.402
+<v SPEAKER_1>Also du kannst halt sowas drauf werfen wie, zeig mir bitte alle Objektsinstanzierungen oder zeig mir bitte die CPU-Auslastung, zeig mir den Disk-Zugriff, Netzwerk, diese ganzen Messwerte, die du eben kriegst.
+
+01:27:23.422 --> 01:27:26.322
+<v SPEAKER_2>Also man baut sich so ein Armaturenbrett zusammen für sein Programm?
+
+01:27:26.762 --> 01:27:53.142
+<v SPEAKER_1>Wenn du jetzt zum Beispiel wissen willst, warum ist mein Programm so langsam, dann baust du halt mal so Speicherindikator ein und Festplattenzugriff und dann kannst du halt gucken, liegt es daran, dass so viel auf die Festplatte zugegriffen wird, liegt es daran, dass ich irgendwie zu viel Speicher brauche und kannst halt dann eben da reinzoomen und sehen, oh, viele Festplattenzugriffe, wer macht die denn? Und kannst halt dann noch ein bisschen weiter reingucken und siehst dann eben die Methode, wo das alles herkommt und findest dann hoffentlich einen Ausweg, wie du das vermeiden kannst.
+
+01:27:53.162 --> 01:28:01.342
+<v SPEAKER_3>Und wenn du fit in D-Trace bist, kannst du ja auch deine eigenen Instrumente bauen, die wirklich Hinz und Kunst machen da drin. Also da lohnt es sich mal einzulesen.
+
+01:28:01.362 --> 01:28:03.202
+<v SPEAKER_1>Ja, also deine eigene Programmiersprache für D-Trace.
+
+01:28:03.222 --> 01:28:05.062
+<v SPEAKER_2>Ach so, man kann sich auch seine eigenen zusammenbauen.
+
+01:28:05.082 --> 01:28:16.202
+<v SPEAKER_3>Genau, man kann sich auch sagen, also wenn jetzt diese Methode gecallt wird, dann werte aus, was für Parameter da kamen und zeige dann diese drei verschiedenen Arten von Parametern an als Graph oder so.
+
+01:28:16.222 --> 01:28:26.622
+<v SPEAKER_1>Ja, und du könntest ja irgendwie dein Instrument bauen, das den Sutton-Motion-Sensor anzeigt. Das macht ja doch auch Sinn, wenn du ein Programm hast, dass auf Sutton-Motion-Sensor-Import reagiert, dann hättest du das auch gleich mit dem Lock drin zum Beispiel.
+
+01:28:27.742 --> 01:28:56.382
+<v SPEAKER_2>Genau, Sutton-Motion-Sensor ist dieser Beschleunigungs-Sensor in den Mac-Pro's. Leider den Mac-Pro's haben sie noch nicht drin. Na ja, so als Diebstahlsicherung kann das ja auch funktionieren, aber die Dinger kann man ja auch anketten. Was soll's. Das ist ja eigentlich ganz schick. Das heißt, man hat sozusagen eine programmierbare Visualisierung zur Analyse. Habt ihr denn auch schon Fehler gefunden, sozusagen, unter Ausmutzung dieser Tools, oder sieht das nur hübsch aus?
+
+01:28:56.402 --> 01:29:23.082
+<v SPEAKER_1>Ich hab letztens mal wieder den Syntax-Hallelett neu geschrieben, wie ich das immer zu den vollen Versionen mache. Weil man wird ja dann doch immer schlauer. Oder man hat mehr Erfahrung, sagen wir mal so. Und da hat es mir viel geholfen, eben zu gucken, was generiere ich da für Objekte, wo könnte ich da noch irgendwie Geschwindigkeit einsparen, oder nicht Geschwindigkeit einsparen, sondern Gewinn. Und da hilft das extrem viel.
+
+01:29:23.102 --> 01:29:40.402
+<v SPEAKER_3>Und an sich ist es halt so, dass es mit D-Trace halt jetzt so gut wie nichts kostet, diese ganzen Cores zu überwachten. Und man konnte vorher fürs Speichermanagement auch schon Object-Alog benutzen. Man will ja auch nicht Speicher verschwenden, ja irgendwie liegen und also unbenutzten Speicher rumliegen lassen, obwohl man den frei geben würde.
+
+01:29:40.422 --> 01:29:42.802
+<v SPEAKER_2>Was meinst du, man kann Object-Alog verwenden?
+
+01:29:43.362 --> 01:30:10.522
+<v SPEAKER_3>Object-Alog war das Tool, das man vorher verwendet hat. Das hat dann jeweils, wenn ein Objekt erzeugt wurde und wenn es released wurde, wirklich das aufgezeichnet. Dann hat man einfach einen Graph mit jeder Art von Objekt und wie viele sind da und mit so einer Verlaufsanzeige auch. Das ist super wichtig, weil eben gegen Leaks. Und das geht halt jetzt in Detrace auch. Ohne, dass man dafür einen Zehntel von der Performance noch hat vom Programm. Das war vorher das Problem.
+
+01:30:10.762 --> 01:30:16.802
+<v SPEAKER_2>Weißt du, wie das überhaupt realisiert wird mit dem Detrace, dass man da jetzt so keine... Das klingt ja erstmal ein bisschen magisch.
+
+01:30:16.862 --> 01:30:18.882
+<v SPEAKER_1>Das hing irgendwie...
+
+01:30:18.902 --> 01:30:36.222
+<v SPEAKER_3>Ich hab's mir mal erklären lassen von jemandem, der das weiß. Das hing damit zusammen, dass eben im Endeffekt an einer Stelle so ein Sprungvektor-Tabelle einfach nur ausgetauscht wird, anstatt vorher wirklich noch mehrere Sprünge dann passieren.
+
+01:30:37.322 --> 01:30:40.402
+<v SPEAKER_2>Also auf jeden Fall eine Optimierung, die in den Körner mit reingeht.
+
+01:30:40.422 --> 01:30:49.402
+<v SPEAKER_3>Genau, auch in den Körner noch unten runter. Es hat wirklich erklärt und es kostet wirklich nichts. Also so gut wie nichts. Das funktioniert.
+
+01:30:49.422 --> 01:31:18.822
+<v SPEAKER_2>Das heißt, man kriegt das sozusagen for free und kann auch die wirkliche Performance testen an der Stelle. Interessant. Euer Programm ist ja so klassisch, ich sag mal proprietär, also closed source. Ihr verkauft das, das ist ja auch in Ordnung. Trotz alledem gibt es ja auch auf dem Macintosh so eine gewisse Open Source Kultur. Benutzt ihr denn selber Open Source Bibliotheken?
+
+01:31:18.842 --> 01:31:38.022
+<v SPEAKER_1>Ja, wir haben zum Beispiel unsere RegEx, also Reguläre Ausdrucker Bibliothek. Das ist ein Rapper, also erstmal ist es ein Rapper, der das nach Objective-C hochhebt. Und darunter läuft dann Onigoroma, was das RegEx-Framework von Ruby ist, soweit ich weiß, ist es ja mittlerweile, oder?
+
+01:31:38.042 --> 01:31:41.262
+<v SPEAKER_3>Sollte es werden. Ich glaube, dass es noch nicht wirklich ist.
+
+01:31:41.282 --> 01:31:50.402
+<v SPEAKER_1>Aber dann zumindest in der nächsten Ruby-Version soll es halt darauf basieren. Und da haben wir halt was, das nochmal nach Objective-C rappt und dann das benutzen. Das funktioniert sehr gut.
+
+01:31:50.422 --> 01:31:54.702
+<v SPEAKER_3>Zum Beispiel. Oder auch eine ganz Mac OS X spezifische Bibliothek.
+
+01:31:54.722 --> 01:31:56.422
+<v SPEAKER_2>Ich glaube, das war jetzt keine GPL-Software.
+
+01:31:58.602 --> 01:32:00.742
+<v SPEAKER_3>Wir haben unsere Lizenzen im Griff.
+
+01:32:00.762 --> 01:32:04.582
+<v SPEAKER_2>Okay, ich wollte es nicht wirklich bezweifeln.
+
+01:32:04.602 --> 01:32:18.022
+<v SPEAKER_3>Was interessant ist, ist Sparkle. Sparkle ist für das Software-Update zuständig. Das ist wirklich eine klassische Objective-C, Mac OS X Bibliothek. Also eine komplette Open-Source-Geschichte.
+
+01:32:18.042 --> 01:32:33.062
+<v SPEAKER_1>Eine Komponente mehr oder weniger. Die handelt halt komplett das Auto-Updating, also dass du eine Server fragst, in dem RSS-Feed-Wall drin steht, neueste Version ist irgendwie 3.0.3. Wenn ich die nicht habe, dann saugt er die und replace das in-place.
+
+01:32:33.082 --> 01:32:34.262
+<v SPEAKER_2>Abcasting.
+
+01:32:34.282 --> 01:32:35.062
+<v SPEAKER_1>Genau, Abcasting.
+
+01:32:35.082 --> 01:33:18.002
+<v SPEAKER_2>Eine sehr schöne Anwendung von dem Podcasting-Gedanken. Richtig. Interessant, dass ihr das erwähnt. Das finde ich nämlich ganz interessant, weil es ja offensichtlich auf dem Macintosh auch schon eine gewisse Open-Source-Kultur gibt. Ja, die ist jetzt nicht ganz so sehr beseelt von diesem freien Softwaregedanken, wenn ich das mal so interpretieren darf, sondern mehr auf diesem... Wir wollen uns jetzt auch hier mal auf was einigen und es irgendwie allen einfach machen, weil also Sparkle ist ja ein gutes Beispiel. Ich glaube, das hat letztes Jahr angefangen, hat sich rasant durch die ganze Macintosh-Anwendungswelt verbreitet, nicht überall da, wo ich es gerne gesehen hätte, aber doch an sehr vielen Stellen. Das ist dann auch BSD lizensiert?
+
+01:33:18.902 --> 01:33:35.342
+<v SPEAKER_1>Das ist auch BSD und das hat von Andy Metoschek irgendwie mal angefangen worden. Dann haben aber auch viele Entwickler von kommerzieller Software eben kontibutet und gesagt, hier, da, das brauchst du noch, und bau doch das bitte noch ein, hier ist der Patch und so. Wir haben auch irgendwie ein paar Bugs gefixt. Das funktioniert aber hervorragend.
+
+01:33:35.362 --> 01:33:49.362
+<v SPEAKER_3>Also ist auch eine interessante Art und Weise, um was zu beeinflussen. Auto-Update ist einfach was Schönes. Dass du auf dem Mac wohl echt hergehen kannst und eine Bibliothek machen und die zur Verfügung stellen und dann bauen das die Entwickler auch ein, ist auch wirklich eine sehr schöne Tatsache.
+
+01:33:49.442 --> 01:34:12.682
+<v SPEAKER_2>Zumal da ja auch, das finde ich so einen entscheidenden Unterschied. Das ist ja jetzt nicht nur irgendwie so eine typische Open-Source-Bibliothek, die keine Ahnung wie voll mit dem Regex, die sozusagen so unter der Motorhaube arbeitet, das ist ja sehr weit verbreitet, sondern auch tatsächlich ein User-Interface-Element reinbringt, auf das sich ja dann im Prinzip auch alle einigen. Wie seht ihr so diesen Aspekt Open-Source in der Macintosh-Anwendungsentwicklung?
+
+01:34:14.622 --> 01:34:22.282
+<v SPEAKER_1>Ja, also im Prinzip, wenn die Lizenzen zusammenpassen, ist das immer gern gesehen. Das handelt Apple ja ähnlich.
+
+01:34:22.302 --> 01:34:29.362
+<v SPEAKER_2>Ich meine, gib mir so eine kulturelle Frage. Seht ihr das sozusagen im Kommen, oder ist das nur so ein Nebenaspekt?
+
+01:34:31.102 --> 01:35:10.562
+<v SPEAKER_3>Ich denke, gezielterweise ist es halt Mittelwehr. Sowas wie Sparkle, irgendwas, was wieder so ein Framework bereitstellt mit irgendeiner Funktionalität, das ist so die Klasse von Sachen, was auf Mac OS X Open Source sehr gut funktioniert. Wenn es dann hoch in die GUI funktioniert, ist es nicht besonders kompatibel mit den Usern, weil eben die Anforderungen an die GUI von den Benutzern so hoch sind, dass sie selten von einem Open Source-Projekt wirklich erfüllt werden. Also das Einzige, was mir da wirklich einfällt, ist im Moment, es ist Sparkle und, nicht Sparkle, Transmission zum Beispiel oder CyberDuck auch. Das sind so zwei Dinge, die mir einfallen, die das wirklich erfüllen.
+
+01:35:10.582 --> 01:35:14.802
+<v SPEAKER_2>Transmission ist dieser großartige, bitteren Client, der auch komplett cross-platform ist.
+
+01:35:14.822 --> 01:35:19.582
+<v SPEAKER_3>Genau, aber eben auch trotzdem eine sehr schöne Mac OS X-Oberfläche hinbekommen hat.
+
+01:35:19.602 --> 01:35:20.262
+<v SPEAKER_2>Das stimmt.
+
+01:35:20.502 --> 01:35:30.822
+<v SPEAKER_1>Ich denke aber, dass diese Entwicklung, die jetzt bei Sparkle da stattfindet, in Sachen Open Source keine neue ist. Also auch nichts, was jetzt irgendwie im Kommen wäre oder was jetzt zunimmt, sondern was halt einfach üblich ist.
+
+01:35:31.842 --> 01:35:59.822
+<v SPEAKER_3>Das hat auch mehr mit der Entwicklergemeinde zu tun, die sich gerne gegenseitig hilft. Das ist auch so was, warum Programmieren auf Mac OS X schön ist. Im Moment tun uns sich alle auf Twitter da mal eine Frage hinposten, dass dich was aufregt und dann kriegst du eine Antwort von irgendeinem anderen Indie-Entwickler, obwohl du den gar nicht so direkt kennst. Oder du hast dieses CocoDev-Wiki, wo du auch wirklich nochmal interessante Infos kriegst, wenn jemand ein Problem löst dann auch.
+
+01:35:59.842 --> 01:36:05.682
+<v SPEAKER_1>Ja, da steht dann auch teilweise Seitenweise Code drin, der halt ein Public Domain ist für was, was irgendwie alle brauchen.
+
+01:36:05.702 --> 01:36:25.082
+<v SPEAKER_3>Genau, ich hab auch gerne, wie ich mit IPv6 in ein SubE-Set eingebaut hab, da mal drüber geblockt. Und dieser Code findet sich in diversen Apps wieder, weil ich einen lustigen String eingebaut hab. Also ich hab, man macht das gerne, man tauscht gerne Code. Das ist mehr auf der Ebene passiert, glaube ich. Das ist weniger diese ideologische Open-Source-Gedanke.
+
+01:36:25.102 --> 01:37:02.942
+<v SPEAKER_2>Wie seht ihr dann Apples Rolle? Also ich meine so was wie Sparkle jetzt mal zum Beispiel, das ist ja auch so eine Funktionalität, wo man sich denkt, so warum ist denn das nicht schon in irgendeinem Framework, ja also warum ist so das Aktualisieren, insbesondere jetzt wo ja Mac OS X 5 hat ja so diese Sache mit dem Code-Signing, das heißt auch so das Austauschen und Verändern von Programmen, so eine ganz haarige Geschichte. Bisher scheint das ganz gut zu laufen mit diesem Sparkle, aber ist natürlich so eine sensitive Geschichte. Würde man sich natürlich schon wünschen, überhaupt auch mal ein einheitliches Software-Update zu haben. Habt ihr das Gefühl, dass Apple da aufmerksam zuschaut?
+
+01:37:02.962 --> 01:37:06.042
+<v SPEAKER_3>Wir hatten mal mit denen drüber gesprochen, schon vor zwei Jahren mal.
+
+01:37:06.282 --> 01:37:32.082
+<v SPEAKER_1>Ja, ich denke, das ist das haupttechnisch-rechtliches Problem, dass Apple da irgendwie Angst hat oder z.B. Apple Legal da Angst hat, dass sie sich dadurch irgendwelche Liabilities einfangen, wenn jetzt der Betriebssystem interne Updater irgendwie Software updatet. Und dann kommt das ja von Apple in Anführungszeichen und dann ja. Also ich glaube, da ist irgendwie nicht irgendwie, da ist das Legal Department irgendwie die Haupthürde und dann muss halt die Community da zum Zuge kommen.
+
+01:37:32.102 --> 01:37:44.782
+<v SPEAKER_2>Trotzdem wird ja auch immer wieder so Errungenschaften, die so aus kleinen Shareware-Applikationen oder auch Freeware-Applikationen oder auch größeren Sachen da herkommen. Findet sich ja dann häufig im nächsten Betriebssystem Release auch wieder.
+
+01:37:44.802 --> 01:37:46.922
+<v SPEAKER_1>Ja, das würde ja erst gestieft werden.
+
+01:37:47.502 --> 01:37:50.122
+<v SPEAKER_2>Ja, ihr müsstet auch mal gestieft werden, oder?
+
+01:37:50.142 --> 01:37:50.482
+<v SPEAKER_1>Nee, nee.
+
+01:37:50.582 --> 01:37:54.382
+<v SPEAKER_2>Das wäre natürlich eine schöne Funktionalität.
+
+01:37:54.402 --> 01:38:11.502
+<v SPEAKER_3>Es ist eine Funktionalität, die durchaus ins Betriebssystem passt. Da wäre ich zwar finanziell nicht so froh drüber, aber grundsätzlich, wenn diese Funktionalität das Betriebssystem bereitstellen würde in einem Framework, sehr schön. Vielleicht pitchen wir das selber auch mal gegen Apple.
+
+01:38:11.522 --> 01:38:32.682
+<v SPEAKER_1>Es ist aber auch so bei diesen Sachen, die dann gestieft werden, es ist halt oft auch was, was man vermisst, was halt fehlt und was man dann macht. Und Apple macht halt vermutlich parallel dazu das Gleiche, weil die wissen auch, dass das fehlt. Und da ist dann auch gar nicht so viel böse Absicht dahinter. Also dann wurde es ja so ein Charakter für sich, der ist ja schon zweimal in der Folge gestieft worden insofern.
+
+01:38:32.702 --> 01:39:03.882
+<v SPEAKER_2>Ja, gestieft. Also wer das jetzt noch nicht verstanden hat, erklärt sich ja schon fast selber. Aber Steve Jobs wird dann immer unterstellt, er sei sozusagen die treibende Kraft dabei, irgendwelchen Third-Party-Entwicklern das Ding da auszumachen, indem halt so eine wichtige Funktionalität übernommen wird. Ich muss sagen, in den meisten Fällen in der Diskussion, wo ich das so mitbekommen habe, war es meistens eigentlich auch so einfach, wenn man sich das technisch ganz genau anschaut, eigentlich quark. Bzw. sind da auch teilweise so offensichtliche Sachen implementiert worden, wenn man sich denkt, naja, das muss halt auch mal ins Betriebssystem.
+
+01:39:03.902 --> 01:39:05.402
+<v SPEAKER_1>Klar, dann hat man halt mal Pech.
+
+01:39:07.702 --> 01:39:23.242
+<v SPEAKER_2>So wie ich übrigens auch immer diesen Vorwurf mit Internet Explorer und Windows kommt gebundelt, wo es ja diesen großen Aufstand gab, den ich nie verstanden habe. Also wie man irgendwie einem Betriebssystemhersteller vorwerfen kann, dass sie irgendwie einen Webbrowser im Betriebssystem haben.
+
+01:39:23.662 --> 01:39:27.722
+<v SPEAKER_1>Aus heutiger Sicht, ich hätte Ihnen ja vorgeworfen, dass Sie das nicht...
+
+01:39:28.242 --> 01:39:36.502
+<v SPEAKER_3>Auch live? Aus jetziger Sicht ist das irgendwie lächerlich, weil Browser so eine Commodity ist. Aber damals war ja wirklich Netscape und EE so...
+
+01:39:37.902 --> 01:39:59.022
+<v SPEAKER_2>Also ich meine, die Art und Weise, wie sie da konkret vorgehen, wie sie ja sozusagen auch durch interne Schutzmechanismen verhindert haben, dass andere dann... Das ist definitiv der Aspekt. Aber in der Diskussion war es ja dann häufig auch immer so dieses, auch mit dem Media-Player später, ja, dürfen sie eine Software mitliefern, mit der man sich Filme angucken kann? Logisch, logisch.
+
+01:39:59.042 --> 01:40:01.802
+<v SPEAKER_3>Das verstehe ich vollkommen. Da habe ich mir auch gedacht, so hm...
+
+01:40:01.822 --> 01:40:35.282
+<v SPEAKER_2>Das ist immer ein bisschen merkwürdig. Ja, schöner Überblick soweit. Gibt es denn noch etwas, was wir noch unbedingt erwähnen müssten? Was so aus eurer täglichen Dasein als Software-Entwickler... Gibt es vor allem etwas, was ihr Leuten, die jetzt vielleicht Interesse hätten, Software-Entwicklung auf dem Macintosh aufzunehmen, raten würdet? Also was wäre so der Weg, den man beschreiten sollte? Ich meine, wir haben dieses Buch bereits erwähnt, was man sich vielleicht mal anschauen sollte. Das ist vielleicht nicht unbedingt der erste Schritt, oder?
+
+01:40:35.302 --> 01:41:08.282
+<v SPEAKER_1>Der erste Schritt ist halt erstmal die Tools runterladen und dann eben die Tutorials machen, die Apple eben auch auf der Webseite angibt. Also Currency Converter ist da immer das Einstiegsding, also da wird halt an Fahrenheit und Celsius umgerechnet. Und da darf man auch schon ein bisschen mit Interface-Bilder Pfeile ziehen und so. Und kriegt halt so die erste Erfahrung, so wie das funktioniert. Und wenn man dann eben soweit da irgendwie sich zu Hause fühlt und das cool findet, dann liest man ein Buch und hüpft einfach rein, würde ich sagen, und macht einfach mal, setzt sich ein Projekt, setzt sich eine Deadline ganz wichtig und dann geht's los.
+
+01:41:08.302 --> 01:41:36.322
+<v SPEAKER_3>Ja, das Projekt ist für mich das Wichtigste. Also ich habe schon ein paar Bekannte gehabt, die gemeint haben, sie würden gerne was programmieren. Und die hatten einfach die Lust verloren, weil sie nichts hatten, was sie konkret machen wollten. Also man braucht halt schon irgendwas, was man dann konkret machen will, nachdem man die Bücher durchgearbeitet hat. Wenn man so ein Ziel vor Augen hat, dann geht es. Und auf Mac OS X ist es wirklich relativ leicht, beliebige GUI-App zu machen. Also gerade jetzt mit Co-Animation auch, sind so der Kreativität wenig Grenzen gesetzt, was man dann so mit relativ wenig Aufwand hinkriegt.
+
+01:41:36.342 --> 01:42:04.622
+<v SPEAKER_2>Ja, das ist nochmal ein ganz interessanter Punkt. Wir waren jetzt über diesen ganzen grundlegenden Frameworks, aber es gibt ja auch noch eine ganze Menge fancy Stuff, was du jetzt gerade erwähnt hast. Co-Animation ist ja jetzt jüngst dazugekommen, wo das Framework einem sozusagen komplett das Animieren von allen möglichen grafischen Objekten aus der Hand nimmt, beziehungsweise eigentlich erst so in die Hand gibt, weil man ja dann wie so ein Konzertdirektor da steht, wie ein Dirigent, und dann einfach nur noch die Objekte fliegen lässt.
+
+01:42:05.042 --> 01:42:07.582
+<v SPEAKER_3>Auch noch mit sehr tollen Sample-Code ist das gut.
+
+01:42:07.602 --> 01:42:20.382
+<v SPEAKER_2>Sagt doch mal so ein paar, vielleicht können wir noch mal so ein paar dieser Frameworks beleuchten, die so eurer Meinung nach so das Potential haben, dass sozusagen da fehlt eigentlich nur noch mal jemand, der jetzt mal anfängt, das mal so richtig in Wallung zu bringen.
+
+01:42:21.642 --> 01:42:28.142
+<v SPEAKER_1>Ja, so Coanimation ist auf jeden Fall was, was auf jeden Fall auf eine Anwendung wartet. Da macht Apple auch, ist Apple selber auch sehr konservativ.
+
+01:42:28.242 --> 01:42:29.202
+<v SPEAKER_3>Gott sei Dank.
+
+01:42:29.222 --> 01:42:31.442
+<v SPEAKER_1>Gott sei Dank können wir auf der einen Seite sagen. Ich habe auch...
+
+01:42:31.462 --> 01:42:32.102
+<v SPEAKER_2>Konservativ inwiefern?
+
+01:42:32.762 --> 01:42:41.482
+<v SPEAKER_1>Das wird nicht sehr häufig verwendet. Also das wird nur so an kleinen Ecken, wo man dann merkt, oh, hier wird schön was animiert, aber das ist nicht so in your face, wie man das befürchten könnte.
+
+01:42:41.502 --> 01:42:49.242
+<v SPEAKER_3>Wie ich mir gedacht habe, dass sie das bringen, haben wir, oh, Leopard wird übel, weil sie das überall jetzt einbauen. Man sieht eigentlich das Swish-Wush-Wummibuff. Genau.
+
+01:42:49.282 --> 01:43:06.102
+<v SPEAKER_1>Man kann jetzt auch mit dieser Technologie auch so Sachen machen wie rote Knöpfe, die dann irgendwie horizontal sind oder vertikal sind. Ja, also das sind halt dann die negativen... Aber ich denke, also eine schöne Applikation, die mehr Coanimation einsetzt, als man es gewöhnt. Jetzt ist auf jeden Fall noch was drauf, wo man warten kann.
+
+01:43:06.282 --> 01:43:20.642
+<v SPEAKER_3>Das iPhone zeigt ja ziemlich schön, was man mit Coanimation alles machen kann. Also gerade die neue Google Maps-App, wo man dann die Optionen macht und es dann so nach oben wegblättert. Das macht durchaus Sinn, dass da unten die Optionen kommen. Und sieht schön aus. Diese Kombination ist halt bei Coanimation gefordert.
+
+01:43:20.662 --> 01:43:22.202
+<v SPEAKER_2>Das ist jetzt erst vor kurzem dazugekommen, oder?
+
+01:43:22.222 --> 01:43:24.282
+<v SPEAKER_3>Genau, das Festival 113 ist dazugekommen.
+
+01:43:24.982 --> 01:43:29.762
+<v SPEAKER_2>Also als würde man wirklich das Papier rechts unten so hochnehmen und dann so drunter schauen.
+
+01:43:29.782 --> 01:43:32.002
+<v SPEAKER_3>Es ist so eine Gemischung aus Core Image und Coanimation.
+
+01:43:32.022 --> 01:43:34.102
+<v SPEAKER_2>Und das kostet dann nicht viel Code?
+
+01:43:34.122 --> 01:43:45.562
+<v SPEAKER_3>Nee, das kostet wenig Code und auch keine Performance großartig, weil das die Grafikprozessoren machen auf dem Mac. Also es ist wirklich sehr, sehr, sehr, sehr toll.
+
+01:43:45.582 --> 01:43:57.342
+<v SPEAKER_1>Was auch noch eine schöne Ecke ist, wo man sich reinarbeiten kann, wo man schöne Applikationen schreiben kann, ist Core Data. Core Data ist so eine Abstraktion auf Datenbanken, was man quasi …Teil vergessen.
+
+01:43:57.662 --> 01:44:01.902
+<v SPEAKER_2>Da habe ich auch schon viel drüber gehört. Vielleicht kannst du das nochmal kurz ausführen, was dahinter steckt.
+
+01:44:01.922 --> 01:44:26.482
+<v SPEAKER_1>Also Core Data ist im Prinzip der Nachfolger von EOF. EOF war der Database-Layer von WebObjects. Und was man damit kriegt, ist halt eine relativ gut abstrahierte Datenbank, wo man eben auch dann in Anführungszeichen Objekte reinwirft. Also man kann sich so ein Objekt bauen, und das wird dann in einer Datenbank repräsentiert und kommt dann aus der Datenbank auch wieder raus, wenn man es braucht.
+
+01:44:26.502 --> 01:44:29.442
+<v SPEAKER_2>Also in der Datenbank heißt das, dass man dahinter so einen Storage sich auswählen kann.
+
+01:44:29.582 --> 01:44:47.302
+<v SPEAKER_1>Du kannst halt einerseits eben im Memory eine Datenbank haben, du kannst eine MySQL, nee, eine MySQL kannst du nicht haben, aber du kannst eine SQLite haben und eine XML-File als Datenbank kannst du auch noch verwenden. Und SQLite bringt halt die beste Performance und ist halt für Applikationen, die mit großen Datenmengen umgehen, eine sehr schöne Geschichte.
+
+01:44:47.682 --> 01:44:50.122
+<v SPEAKER_2>Aber es geht jetzt nicht nur um Storage dabei bei Core Data.
+
+01:44:50.142 --> 01:44:53.222
+<v SPEAKER_1>Nee, es geht auch um Retrieval und eben um...
+
+01:44:53.242 --> 01:45:10.862
+<v SPEAKER_3>Es geht halt darum, dass die Datenbasis in deinem Programm wirklich Datenbank-basiert ist vom Gefühl her. Das heißt, dass man auf einmal wirklich Datenbank-Abfragen auf seinen Daten machen kann, was ja ansonsten immer das Behand programmiert mit Daten im Speicher echt Aufwand ist.
+
+01:45:10.882 --> 01:45:21.902
+<v SPEAKER_2>Das heißt, man sagt nicht mehr irgendwie select, ralala, und muss sich um den SQL-Kram kümmern. Sondern man hat ein abstraktes Objektinterface, wo man sagen kann, ich suche jetzt nach Daten in diesem Datenbeschein.
+
+01:45:21.922 --> 01:45:47.962
+<v SPEAKER_1>Das erleichtert dir halt so Sachen wie Smart Playlist. Solche Geschichten erleichtert das halt extrem. Weil da gibt es halt diesen, jetzt neue Dinge, auch schon diesen Auswähl-Dings, mit dem du eben so eine Smart Playlist baust. Also wo du eben so sagen kannst, so Title ist so und so und nächste Regel so und so. Und dann sagst du okay und dann kannst du eben dieses Regelset als Datenbank-Abfrage direkt auf die Smart Playlist quasi anwenden und kannst halt dann da schön eine Abfrage machen.
+
+01:45:47.982 --> 01:46:09.322
+<v SPEAKER_2>Das ist ja auch noch so ein interessanter Aspekt bei Macintosh-Frameworks, dass ja vieles nicht nur unter der Motorhaube ist, sondern dass an vielen Dingen dann eben auch eine Integration mit dem User-Interface verbunden ist. Das heißt man hat so standardisierte Dialogfenster, die dann auf einmal hochkommen. Keychain ist zum Beispiel so ein Beispiel, dass man seine Passwörter einfach dem System überlässt.
+
+01:46:09.342 --> 01:46:17.662
+<v SPEAKER_3>Das Adressbook ist auch ein tolles Framework. Das ist ja auch komplett programmatisch zugreifbar. Das Adressbook vom aktuellen User.
+
+01:46:17.682 --> 01:46:18.762
+<v SPEAKER_2>Kalender.
+
+01:46:18.782 --> 01:46:24.242
+<v SPEAKER_3>Genau, Kalender ist jetzt dazugekommen bei Leopard. PDF-Kit war großartig.
+
+01:46:24.262 --> 01:46:28.122
+<v SPEAKER_2>Das ist ein Framework, um PDFs zu lesen, aber auch zu verstellen.
+
+01:46:28.142 --> 01:47:05.162
+<v SPEAKER_3>Zu schreiben, zu verändern. Also diese ganzen Kits haben eigentlich meistens eine GUI-Komponente auch. Es gibt das Image-Kit auch, das ist im Endeffekt der Bild-Editor von Preview. Von dem Vorschau-Programm. Nur nicht ganz rund, aber das sitzt da drunter. Und PDF-Kit ist der PDF-Viewer vom Preview. Diese zwei Dinge sind eigentlich komplett fertige Komponenten, die man einfach in seinem Programm einsetzt. Das heißt, wenn ich jetzt eine Idee habe, ich mache so ein kleines Programm, das Bilder erzeugt, dann kann ich einfach der Image-Kit-View draufhauen, und dann kann ich gleich das Ding abspeichern.
+
+01:47:05.182 --> 01:47:11.322
+<v SPEAKER_2>Oder wenn ich irgendwie eine Handbuch, meine Manuals zu Hause, von meinem Staubsauger und so weiter anbinden will.
+
+01:47:11.342 --> 01:47:12.242
+<v SPEAKER_3>Ich will eine PDF-Verwaltung machen.
+
+01:47:12.782 --> 01:47:15.722
+<v SPEAKER_2>Kann man einfach PDF anzeigen, durchblittern lassen, editieren.
+
+01:47:15.742 --> 01:47:23.262
+<v SPEAKER_3>Ich habe mir zum Beispiel die Vorjahres-Session von Herrn Kaminski und diese Selbständigkeitskraft mir gebastelt letztens mal und habe dann nur der Image-Kit gemacht.
+
+01:47:23.282 --> 01:47:27.702
+<v SPEAKER_2>Du redest vom Kongress jetzt, 23c3-Vortrag von Den Kaminski. Was hat der da gemacht?
+
+01:47:27.722 --> 01:47:55.982
+<v SPEAKER_3>Der hat Dotplots gemacht von Binärdaten, wo man ein bisschen Selbständigkeit erkennen kann. Und das habe ich mir dann mal schnell in eine kleine App geschmissen und das ausrechnen lassen von Binärdaten. Und dann habe ich schon eine komplette schöne Bild an sich gehabt, die zoombar war und wo man schnell rum navigieren konnte und auch gleichzeitig das Ding gleich speichern in dem beliebigen Format. Da habe ich im Endeffekt nur diese Selbständigkeitsanalyse schnell zusammen gebastelt.
+
+01:47:56.182 --> 01:47:57.502
+<v SPEAKER_1>Der Rest kommt halt so gratis dazu.
+
+01:47:58.522 --> 01:48:01.162
+<v SPEAKER_2>Hast du die Daten dann auch mit Core Data gespeichert?
+
+01:48:01.282 --> 01:48:05.602
+<v SPEAKER_3>Nein, das ist wirklich nur ein Byte Stream, den man vergleicht, also ein Bild am Bau.
+
+01:48:05.622 --> 01:48:10.422
+<v SPEAKER_2>Aber für komplexe Datenmodelle wäre das zum Beispiel wieder eine Stelle, wo man andocken kann.
+
+01:48:10.442 --> 01:48:20.742
+<v SPEAKER_3>Da haben wir auch bei Xcode noch vergessen, da ist auch eine komplette GUI dafür, da kann man so praktisch seine Datenbankmodell per GUI zusammenbasteln.
+
+01:48:20.762 --> 01:48:25.062
+<v SPEAKER_2>Das heißt, dieses Core Data ist dann in diesem Model View Controller das ideale Model?
+
+01:48:25.082 --> 01:48:26.362
+<v SPEAKER_1>Genau, so ist es gedacht.
+
+01:48:26.602 --> 01:48:28.962
+<v SPEAKER_3>Bindings ist es der ideale Controller so ungefähr.
+
+01:48:28.982 --> 01:48:42.162
+<v SPEAKER_2>Ahja, für jeden was dabei. Also euch brauche ich ja gar nichts zu fragen. Ihr könnt ja glaube ich jedem nur raten, auf den Mac-Anwendungen zu entwickeln.
+
+01:48:42.182 --> 01:48:45.642
+<v SPEAKER_1>Und es macht Spaß. Ich denke, es macht vielen anderen auch Spaß, wenn sie sich mal reingearbeitet haben.
+
+01:48:46.982 --> 01:49:59.662
+<v SPEAKER_2>Fein, ich denke. Dann haben wir es erstmal ganz gut zusammen. Uns fallen bestimmt jetzt noch tausend Sachen ein, die wir danach so, ach, das hätten wir ja auch nochmal erwähnen können. Trotz alledem, das, was erwähnt wurde, die Links, die gehen wie immer mit in die Beschreibung der Sendung auf chaosradio.ccc.de und natürlich auch immer schön in den Lyrics der MP3-Datei. Und ich freue mich auch über Feedback und ihr euch sicherlich auch. Entweder im Blog, in den Kommentaren oder chaosradio.ccc.de. Wie gehabt, ja, ich hoffe, dass ich diese drei voneinander Disjunken-Systeme demnächst auch noch ein bisschen besser zusammenbekomme. Das Wiki, das Blog und das Portal, aber das ist ja auch alles Handarbeit. Und man hat ja nur so viel Zeit. Und ich konzentriere mich derzeit auch lieber um das Machen von Podcasts. Ja, um auch wie gerade die ganze Zeit den Download-Pegel auf unserem Server immer schön auf 100 Prozent zu halten. Ich sage euch, die Kiste glüht. Ja, vielen Dank Dominik und Martin. Das war Chaosradio Express, die 70. Ausgabe. Und ich bedanke mich fürs Zuhören. Bis bald und viel Spaß mit eurem ersten Macintosh-Programm.

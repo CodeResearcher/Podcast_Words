@@ -1,0 +1,1657 @@
+WEBVTT
+
+00:01:27.644 --> 00:01:28.204
+<v SPEAKER_2>Für heute.
+
+00:01:30.364 --> 00:03:21.444
+<v SPEAKER_3>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 144. Mein Name ist Tim Pritlove und ja, heute gibt es mal wieder ein Thema, was schon seit Ewigkeiten auf der müsste man unbedingt mal endlich mal machen Liste steht. Das ist meine Lieblingsliste. Und ich habe etwas Schwierigkeiten, genau ein Wort dafür zu finden, worum es eigentlich geht. Ich habe es einfach mal salopp als Internet-Infrastruktur bezeichnet. Aber um das noch ein bisschen besser auszuführen, worum es hier eigentlich gehen soll und auch die Inhalte zu erarbeiten, habe ich heute gleich zwei Gäste im Angebot, nämlich zu meiner linken Elisa, Elisa Jasinska, hallo, und den Christian Kaufmann. Hallo. Schön, dass es geklappt hat. Wir haben lange gekämpft für diesen Termin, mehrere Anläufe gebraucht, aber am Ende wird immer alles gut. Ja, ich habe es schon angedeutet, es geht um das Internet eigentlich. Und vorhin haben wir noch überlegt, wie könnte man denn das jetzt eigentlich nennen? Weil für die meisten Leute ist ja das Internet so, naja, da, wo man so reingeht. Nicht wahr? Man hat so seinen Internet Service Provider und der bietet einem so Internet an. Und dann kommt das da so an und dann ist alles gut. Aber tatsächlich geht es ja dahinter auch noch weiter. Und ihr seid jetzt beide im Geist und bei der Arbeit mit dieser anderen Seite beschäftigt. Du Elisa bist bei Amsics, dem Internet Exchange in den Niederlanden, genauer in Amsterdam beschäftigt. Und du Christian, du arbeitest bei Akamai, richtig?
+
+00:03:21.464 --> 00:03:22.604
+<v SPEAKER_1>Das ist richtig, ja.
+
+00:03:22.624 --> 00:03:24.604
+<v SPEAKER_3>Was treibst du da?
+
+00:03:24.624 --> 00:03:29.284
+<v SPEAKER_1>Ich mache Peering, eines der Schlagworte, die wir heute noch behandeln irgendwie.
+
+00:03:29.304 --> 00:03:30.004
+<v SPEAKER_3>Bestimmt.
+
+00:03:30.024 --> 00:03:32.744
+<v SPEAKER_1>Kapazitätsplanung und solche mystischen Sachen.
+
+00:03:33.084 --> 00:03:37.264
+<v SPEAKER_3>Und du Elisa, was ist so deine Themenwelt? Die ändert sich auch täglich, ne?
+
+00:03:37.284 --> 00:03:44.124
+<v SPEAKER_2>Von Switche, Babysitting zu programmieren, zu allem, was so anfällt.
+
+00:03:47.244 --> 00:03:50.304
+<v SPEAKER_3>Ja, das kann ich mir gut vorstellen. Davon habt ihr auch eine ganze Menge, ne?
+
+00:03:50.324 --> 00:04:01.504
+<v SPEAKER_2>Eigentlich gar nicht. Nein? Nee. Kommt einem immer so vor, Amsics ist so groß und machen so viel Traffic, die brauchen ganz viele Switche. Wir haben ein super kleines Netzwerk im Vergleich zu Christian zum Beispiel.
+
+00:04:02.824 --> 00:05:24.264
+<v SPEAKER_3>Okay, das werden wir gleich noch mal ein bisschen beleuchten. Ja, wie nennt man denn das jetzt, diese Welt? Also eigentlich ist es ja die Cloud. Also es war so lange die Wolke, bis irgendwelche Marketing-Hainis sich diese Wolke geschnappt haben und sie jetzt für diese Dienstleistungsgeschichte, also das Cloud-Computing, geschnappt haben oder sonstige Wolken-Dienste. Aber eigentlich ist ja sozusagen das, was das Internet so im Innersten zusammenhält, jenseits der ISPs, stellt ja auch nochmal einen ganz eigenen Organismus dar. Da reden irgendwie Entitäten miteinander in einer Sprache, die man ja zum Beispiel auf seinem eigenen Computer nicht spricht. Da gibt es Protokolle, die nicht implementiert werden müssen auf meinem Computer, damit ich am Internet teilnehmen kann. Also gibt es da noch ein ganz eigenes Wesen. Es gab vor x Jahren, ich weiß jetzt nicht mehr ganz genau, aber in ganz frühen Zeiten von allem gab es mal ein Buch, das hieß The Matrix, wo so im Wesentlichen alles aufgezeichnet wurde, was es denn überhaupt so an Entitäten gibt, an Rechnern und Infrastrukturen und Netzwerken. Damals gab es ja noch sehr viele. Heute schwimmt das halt alles unter diesem Oberbegriff Internet. Ja, aber ihr habt da auch keinen Namen. Was haltet denn von Wolken?
+
+00:05:24.284 --> 00:05:26.124
+<v SPEAKER_4>Kuckuckshalb, das fühlt mich gerade so ein.
+
+00:05:26.144 --> 00:05:30.204
+<v SPEAKER_5>Na ja, irgendwo.
+
+00:05:30.224 --> 00:05:34.944
+<v SPEAKER_2>Also Wolken sind schon treffend. Wir malen ja auch immer wieder noch, wenn wir Netzwerke malen, kleine Wolkchen hin.
+
+00:05:36.384 --> 00:05:47.144
+<v SPEAKER_3>Ja, das ist so. Genau. Also es geht um diese Wolke. Fangen wir doch vielleicht mal mit dir an, dieser Amsix. Was muss man sich darunter vorstellen? Was passiert da?
+
+00:05:48.704 --> 00:06:13.004
+<v SPEAKER_2>Das kann man sich, wenn man das so ganz salopp sagen möchte, wie ein Wasserwerk vorstellen. Da kommt ganz viel rein, wird durchgepumpt, kommt irgendwo wieder raus. Und ein bisschen mehr spezifischer, da sind halt ISPs, Content Provider, Service Provider, alle miteinander angeschlossen und tauschen da ihren Traffic drüber aus.
+
+00:06:13.024 --> 00:06:16.404
+<v SPEAKER_3>Wer ist denn bei euch an? Also ihr habt ja in dem Sinne überhaupt gar keine Endkunden.
+
+00:06:17.384 --> 00:06:37.824
+<v SPEAKER_2>Na, unsere Endkunden sind die ISPs. Das heißt, ich habe tatsächlich mit dem User, der zu Hause vom Computer sitzt, nichts zu tun, aber halt mit den Netzwerken selber, die dieses Internet formen. Und wir sind halt so ein Punkt in der Mitte, der es ermöglicht, dass das Internet sich zusammenschließt.
+
+00:06:38.884 --> 00:06:53.504
+<v SPEAKER_3>Wie viele von diesen Kunden gibt es? Wir haben gerade so 300-400 ISPs. Aber dann gibt es ja auch noch andere Organisationen, die so seid wie ihr.
+
+00:06:53.524 --> 00:07:03.404
+<v SPEAKER_2>Nein, nein, nein, nicht wie wir. Wir sind ja der Internet Exchange. Unsere Kunden sind die ISPs, die Provider, die dann den Traffic untereinander austauschen.
+
+00:07:03.424 --> 00:07:06.224
+<v SPEAKER_3>Aber seid ihr nicht auch mit anderen Exchanges verbunden?
+
+00:07:06.244 --> 00:07:06.324
+<v SPEAKER_1>Nein.
+
+00:07:06.344 --> 00:07:09.344
+<v SPEAKER_3>Sondern ihr habt sozusagen nur ISPs?
+
+00:07:09.364 --> 00:08:00.144
+<v SPEAKER_2>Die Exchanges sind generell separat und lokal. Weil man muss sich halt bei der ganzen Sache, auch wenn man jetzt über Protokolle, Internet und Global usw. spricht, immer vor Augen halten, dass dahinter dann tatsächlich irgendwo ein Kabel liegen muss. Und man muss halt zu dem Internet Exchange sich auch ein Kabel legen. Und das sind immer Sachen, die lokal angegliedert sind. In Amsterdam, in Frankfurt gibt es den DCX, in London gibt es den NINX. Und da in den Rechenzentren haben dann tatsächlich Firmen wie Akamai, Google, keine Ahnung, ihre Server-Infrastruktur, irgendwas zu stehen, die sie dann an diesen Internet Exchange anschließen. Das heißt jetzt irgendwie so eine Verbindung zwischen den Städten macht nicht so wirklich, weil das, was sie dann dort haben, machen die dann halt dort lokal.
+
+00:08:00.984 --> 00:08:10.244
+<v SPEAKER_3>Aber trotzdem muss ja irgendwie diese Verbindung dann herkommen, weil sonst gibt es ja kein Internet, also zumindest kein globales. Wenn jetzt alles nur in Amsterdam bleiben würde, dann würden die Daten nicht weit fließen.
+
+00:08:10.264 --> 00:08:15.984
+<v SPEAKER_2>Aber Internet Exchanges an sich sind halt so eine lokale Ansammlung an Sachen.
+
+00:08:16.004 --> 00:08:22.964
+<v SPEAKER_3>Was ist dann sozusagen eure, also wie groß muss man sich das so vorstellen? Also hast du gesagt 300 ISPs?
+
+00:08:22.984 --> 00:08:44.384
+<v SPEAKER_2>300 ISPs, von jedem kommt halt ein, zwei, drei Kabel. Das heißt, groß ist das nicht. Stell dir 700 Kabel vor, die bei uns reinkommen. Ein paar Kabel dazwischen, die das alles irgendwie in so einen großen Stern zusammenknüpfen. Und dann geht ein paar 100 Kabel wieder raus, genau. Das ist gar nicht so groß, wie man sich das vorstellt.
+
+00:08:44.404 --> 00:08:49.304
+<v SPEAKER_3>Das heißt, es ist so wie bei IT-Crowd. Das ist so eine kleine schwarze Box mit einer roten LED oben drauf.
+
+00:08:49.324 --> 00:08:53.204
+<v SPEAKER_4>Das ist das Internet. Aber mit Kabel sozusagen.
+
+00:08:53.224 --> 00:08:54.604
+<v SPEAKER_5>Das ist dann der Unterschied.
+
+00:08:54.624 --> 00:09:32.384
+<v SPEAKER_2>Genau, da gibt es das. Wir haben als ungefähr 17, 18, 20, vielleicht 23 so eine kleine schwarze Box mit einer roten LED drauf. Die sind alle miteinander verknüpft. Und dann zu diesen Kisten hinkommen die Kabel der Kunden. Und die bilden unter sich dann so eine Matrix mit. Von jeder schwarzen Box zu jeder anderen schwarzen Box können sie miteinander reden. Und das Ganze passiert irgendwie in sechs dieses Jahr, wahrscheinlich die siebte Co-Location Rechenzentrum in Amsterdam.
+
+00:09:32.404 --> 00:09:40.124
+<v SPEAKER_3>Das heißt, die ganze Infrastruktur von Amsics ist eigentlich gar nicht so groß?
+
+00:09:40.144 --> 00:09:44.224
+<v SPEAKER_2>Naja, nee. Es ist nicht viel. Groß ist sie.
+
+00:09:44.244 --> 00:09:45.444
+<v SPEAKER_3>Ja, aber in welcher Form ist sie groß?
+
+00:09:47.084 --> 00:09:54.624
+<v SPEAKER_2>Groß im Sinne von High-End-Switch, die tatsächlich viel, viel, viel Kapazität bieten.
+
+00:09:55.344 --> 00:09:56.964
+<v SPEAKER_3>Ja, was heißt das?
+
+00:09:56.984 --> 00:10:09.604
+<v SPEAKER_2>Das heißt, das irgendwie, schieß mich tot, was habt ihr jetzt? Acht mal zwölf. Zwölf Mal, also Akamai hat jetzt beim Amsics, darf ich das sagen?
+
+00:10:09.624 --> 00:10:10.984
+<v SPEAKER_1>Wir haben es schon gesagt.
+
+00:10:11.004 --> 00:10:42.524
+<v SPEAKER_2>Zwölf, zwölf, zehn Gigabit Interfaces und die muss man halt auch erstmal auf so einem Switch haben. Also der größte Switch, den man gerade so auf dem Markt kaufen kann, hat 128 10 Gigabit Interfaces und wenn man dann so 400 Kunden hat, die davon, einer halt mal zwölf, ist halt auch ein größerer, einige haben halt nur ein Gigabit oder einmal zehn Gigabit, dafür muss man halt Kapazität haben. Wir haben von den 350 Kunden, ich glaube, wir haben so um die 600 einzelne Ports. Ports auf einem Switch, wo tatsächlich das Kabel reinkommt.
+
+00:10:43.804 --> 00:10:52.884
+<v SPEAKER_3>Ja und im Unterschied zu den Switches, die man so normalerweise bei sich zu Hause im Tisch stehen hat oder vielleicht in der Firma noch, ist da richtig was los?
+
+00:10:52.904 --> 00:11:38.004
+<v SPEAKER_2>Da ist richtig was los. Die sind groß, laut. Dieses Ding, was irgendwie 128 Ports hat, das ist ungefähr so groß wie ich, wird irgendwie mit so einem Forklift ins Rack reingeschoben anheben. Will man das nicht mehr? Nein. Und ja, so der, also wie weit wollen wir jetzt ans Detail gehen? Wahrscheinlich nicht zu viel, aber der generelle Unterschied ist, dass das halt so modulare Zusammenstellungen sind. Das heißt, diese Dinger, das ist irgendwie einmal so ein großer Schrank und in dem Schrank gibt es halt einen ganzen Haufen Slots und in diese Slots kannst du halt reinschieben, was du willst im Prinzip. Und dann kaufst du dir so dein Kram zusammen, kannst dir halt in einen Switch eine Karte mit irgendwie 48 mal 1 Gigabit Interfaces und 4 mal 10 Gigabit Interfaces reinschieben und dir das so zusammenbasteln.
+
+00:11:38.024 --> 00:11:40.244
+<v SPEAKER_3>Gibt es auch schon 100?
+
+00:11:40.264 --> 00:11:43.484
+<v SPEAKER_2>Warten wir drauf und zwar ganz dringend.
+
+00:11:43.504 --> 00:11:44.644
+<v SPEAKER_3>Wäre mal ganz gut oder was?
+
+00:11:44.664 --> 00:11:46.144
+<v SPEAKER_2>Dauert noch ein bisschen, ja.
+
+00:11:46.164 --> 00:11:50.144
+<v SPEAKER_3>Aber die Technologie ist eigentlich schon erfunden, nur die Produkte gibt es noch nicht, oder wie?
+
+00:11:50.164 --> 00:11:56.804
+<v SPEAKER_2>Ja, nee, warte. Der Standard ist da. Die Technologie ist gerade dabei sozusagen erfunden zu werden, weil dann kommt das Produkt mit.
+
+00:11:58.144 --> 00:12:11.364
+<v SPEAKER_3>Das heißt im Wesentlichen alles, was irgendwie High-Traffic ist, wird mit 10 Gigabit Interfaces dann über eine Glasfaser abgefeiert. Sprich jeder, der bei euch angeschlossen ist, muss halt auch eine Glasfaserverbindung haben zu euch.
+
+00:12:11.384 --> 00:12:19.024
+<v SPEAKER_2>Seit kurzem Jahr. Letztes Jahr hatten wir tatsächlich noch ganz normale Copper-Ports und da konnte man sich auch am am 6. 100 MBit-Port kaufen.
+
+00:12:20.164 --> 00:12:21.084
+<v SPEAKER_3>Aber das ist jetzt vorbei.
+
+00:12:21.104 --> 00:12:24.904
+<v SPEAKER_2>Das ist jetzt discontinued. Das lohnt einfach nicht mehr.
+
+00:12:24.924 --> 00:12:27.464
+<v SPEAKER_3>Mit 100 MBit brauchst du ja gar nicht erst aufzuschlagen.
+
+00:12:27.484 --> 00:12:29.644
+<v SPEAKER_2>So in der Art, genau so in der Art.
+
+00:12:29.664 --> 00:12:32.004
+<v SPEAKER_3>Und was für ein Traffic glüht da jetzt so durch?
+
+00:12:33.404 --> 00:12:35.884
+<v SPEAKER_2>Scheiße, das hätte ich mal nachgucken sollen, bevor ich hier angekommen bin.
+
+00:12:35.904 --> 00:12:37.724
+<v SPEAKER_3>Naja, man kann es ja mal aus dem Bauch heraus sagen.
+
+00:12:42.004 --> 00:12:46.844
+<v SPEAKER_2>650 Gigabit pro Sekunde? Christian sagt 850. 850 Gigabit.
+
+00:12:47.324 --> 00:12:49.104
+<v SPEAKER_3>850 Gigabit.
+
+00:12:49.124 --> 00:12:51.004
+<v SPEAKER_2>Du hast doch da Internet, geh dann Google doch mal.
+
+00:12:51.144 --> 00:12:56.564
+<v SPEAKER_3>Ach, ich verlasse mich ganz auf dich. 850 Gigabit.
+
+00:12:56.584 --> 00:13:06.184
+<v SPEAKER_2>Ich habe gestern nachgeschaut, fast 2 Gigabit IPv6-Traffic, glaube ich, 1.8 oder so was. Wie viel? 1.8 Gigabit IPv6.
+
+00:13:06.824 --> 00:13:12.584
+<v SPEAKER_3>Also ein Sechshundertstel davon, sozusagen.
+
+00:13:14.984 --> 00:13:17.104
+<v SPEAKER_2>Du sollst das doch jetzt auch nicht in Proportion betrachten.
+
+00:13:17.124 --> 00:13:23.784
+<v SPEAKER_3>Naja, man muss ja die Dinge mal in Relation stellen. Also mit anderen Worten, ihr nähert euch.
+
+00:13:23.804 --> 00:13:25.084
+<v SPEAKER_2>Wir nähern uns dem Terabit.
+
+00:13:25.104 --> 00:13:28.304
+<v SPEAKER_3>Genau. Wie stark steigt diese Kurve an?
+
+00:13:28.324 --> 00:13:33.864
+<v SPEAKER_2>Also die letzten vier Jahre, die ich jetzt so mitbeobachtet habe, hat sich so verdoppelt.
+
+00:13:33.864 --> 00:13:36.304
+<v SPEAKER_3>Jedes Jahr oder was? Oder über diese ganze Zeit?
+
+00:13:37.044 --> 00:13:58.444
+<v SPEAKER_2>Jedes Jahr. Ich habe beim AMSIX angefangen vor vier Jahren. Als ich meinen ersten Arbeitstag dort hatte, haben wir knapp über 100 Gigabit gemacht. Und ich weiß noch, wir haben groß gefeiert, als es 150 war. Und dann haben wir groß gefeiert, als es 200 war. Und dann haben wir noch mal groß gefeiert, als es 300 waren. Und ich glaube, dann irgendwann bei 500 haben wir aufgegeben zu feiern.
+
+00:13:58.464 --> 00:14:00.404
+<v SPEAKER_3>Ihr könnt auch einfach immer bei zweier Potenti feiern.
+
+00:14:01.204 --> 00:14:05.104
+<v SPEAKER_2>Ja, ich glaube beim Tera-Bit feiern war auch noch mal...
+
+00:14:05.124 --> 00:14:10.424
+<v SPEAKER_3>Die Tera-Bit-Party. Auf Partys kommen wir auch noch zu sprechen. Das gehört die Spiele in eine besondere Rolle.
+
+00:14:10.444 --> 00:14:12.224
+<v SPEAKER_2>Legendär, legendär.
+
+00:14:12.244 --> 00:14:14.384
+<v SPEAKER_3>Aufrechterhaltende Internet-Infrastruktur.
+
+00:14:14.404 --> 00:14:18.724
+<v SPEAKER_2>Also guck mal, ich habe jetzt gerade nachgeschaut. 899 Gigawatt pro Sekunde.
+
+00:14:18.744 --> 00:14:21.644
+<v SPEAKER_3>Okay, also das Tera-Bit steht sozusagen unmittelbar bevor.
+
+00:14:21.664 --> 00:15:34.484
+<v SPEAKER_2>Ich habe den Grafen schon lange nicht mehr beobachtet. Es gibt auch immer so eine Trendgeschichte. Und es war halt auch lange Zeit knapp über 600. Weil so vom Herbst, nee, so vom Winter an bis Januar passiert immer nicht viel. Da steht das alles still. Und da ist irgendwie das Level immer das Gleiche. Und dann im Januar fängt es wieder an, nach oben zu steigen. Über den Sommer, genau. Über den Sommer steht es immer still. Und dann im Herbst fängt es an zu steigen, über Winter, Weihnachten und so weiter. Man sieht halt tatsächlich in unseren Grafen immer so ein bisschen End-User-Verhalten. Also wenn Ferien sind, ist immer weniger Anstieg, wenn Urlaub ist, wenn... Na, man muss sich halt auch... Also es ist tatsächlich so, dass wir ungefähr 50 Prozent unserer Kunden sind niederländisch, weil halt dort lokal. Das sind dann dort irgendwelche ISPs und so weiter und so fort. Als irgendwie vor, wann war das, zwei, drei Jahren, Holland in einer Fußball-WM irgendwie da ums Finale gespielt hat oder so, da hat man die Halbzeit gesehen bei uns im Grafen, wo dann auf einmal der Traffic wieder hochging und dann ging die zweite Halbzeit los und dann war wieder weniger und da gab's dann so ein Weh.
+
+00:15:34.504 --> 00:15:40.064
+<v SPEAKER_3>Das ist wahrscheinlich nicht der einzige Event, den ihr da seht, oder?
+
+00:15:40.084 --> 00:16:01.244
+<v SPEAKER_2>Also das war jetzt der Event und das ist auch halt ein paar Jahre schon her, der weniger Traffic gebracht hat. Andere Events bringen eigentlich immer mehr Traffic mittlerweile. Weil so Sport-Events, Tour de France, keine Ahnung, wo es mittlerweile ISPs gibt, die das halt übers Internet broadcasten und tatsächlich immer mehr Leute sich das übers Internet angucken.
+
+00:16:01.264 --> 00:16:05.724
+<v SPEAKER_3>Das heißt, es könnte sein, dass diese Kurve sich sogar umkippt, dass irgendwann in der Halbzeit der Traffic weggeht.
+
+00:16:05.744 --> 00:16:11.764
+<v SPEAKER_2>Aber da sind wir noch nicht. Genau, da sind wir noch nicht. Aber es ist halt ein paar Jahre her, dass die Kurve nach unten ging. Insofern...
+
+00:16:11.784 --> 00:16:26.384
+<v SPEAKER_3>Ja, in diesem Sommer gibt es ja wieder Fußball-WM. Mal gucken. Vielleicht lässt sich da ja schon was ablesen. Wie groß muss man sich das so vorstellen? Wie viele Leute arbeiten da?
+
+00:16:26.404 --> 00:16:38.104
+<v SPEAKER_2>Ziemlich klein. Also die komplette Firma sind so 23. Und wir sind jetzt sieben in der Technik. Und zu siebt babysitten wir da halt 24, sieben.
+
+00:16:38.124 --> 00:16:39.704
+<v SPEAKER_5>Das Terabit, was da so durchkommt.
+
+00:16:39.724 --> 00:17:00.704
+<v SPEAKER_2>Das Terabit. Also eigentlich auch nur zu fünf, sechs. Weil nicht alle immer mit an so Schichten. Wir haben halt Telefonschichten, wir haben halt irgendwie 24, sieben Betrieb im Prinzip, wo, wenn es brennt, dann kann da irgendwie der Kunde anrufen und sich beschweren und sagen, mach noch mal ganz. Und dann ist man halt auch mal das ganze Wochenende am Arbeiten.
+
+00:17:00.724 --> 00:17:12.444
+<v SPEAKER_3>Jetzt könnte man ja denken, wenn da jetzt irgendwie so viele Kabel reingehen und dann werden die da so an den Switch angeschlossen, dann muss man ja die auch nicht weiter tun. Da sitzt man dann so daneben und das Netz fließt da so durch. Was, was müsst ihr denn da überhaupt noch machen?
+
+00:17:12.584 --> 00:18:13.664
+<v SPEAKER_2>Da hoffen wir ja drauf seit Jahren, dass das irgendwann mal so der Fall ist. Was man macht, was man macht, also das größte Problem ist halt, dass diese ganze High-End-Hardware alles sehr neu ist. Und was die da einem bringen, hat halt so seine Ecken und Kanten und Macken. Das heißt, immer wieder läuft man mal in irgendwelche Hardware-Probleme rein, wo mal was nicht funktioniert. Immer mal wieder läuft man in irgendwelche Fiber-Probleme rein, wo gerade zufällig jemand über das Kabel gestolpert ist. Nö, weiter entfernt beim Kunden dann oder so. Passiert durchaus. Also wir hatten das tatsächlich mal, dass ein Kabel irgendwo von einer Location zu anderen in Amsterdam kaputt war und riefen dann irgendwie bei der Location an und die meinten, oh, ich hab da vorhin jemanden irgendwie auf der Straße in dem Loch gesehen, wo die Fiber langgeht. Vielleicht hat er ja aus Versehen an euerm und hat Sache, die haben aus Versehen an unserem. Und dann mussten wir das wieder ganz machen. Was war jetzt die Frage? Jetzt hab ich mich hier ver- ach so, warum?
+
+00:18:13.684 --> 00:18:14.944
+<v SPEAKER_3>Wie viel Pflege das braucht.
+
+00:18:14.964 --> 00:19:07.424
+<v SPEAKER_2>Wie viel Pflege das braucht, ja. Es braucht halt, also, nebst jetzt solchen Problemsituationen, wo man tatsächlich schnell was fixen muss, die glücklicherweise nicht allzu oft mehr auftauchen in den letzten Jahren, Erweiterung. Das ist halt so, dass, weil diese ganzen Geräte sind halt extremst teuer und es ist nicht so, dass wir jetzt für die nächsten zehn Jahre einkaufen könnten und für zehn Jahre das Netzwerk so ausbauen, das würde halt einfach kapazitätsmäßig nicht gehen, dass wir dann zehn Jahre lang uns das angucken können und nichts mehr tun müssen. Das heißt, was wir machen, ist im Prinzip, sobald eine der Locations keine Ports mehr hat, bauen wir neue dazu, dann müssen wir das wieder ans komplette Netzwerk anschließen und wir erweitern halt immer Stück bei Stück die ganze Infrastruktur. Und das ist halt so der größte Großteil der Tagesbeschäftigung.
+
+00:19:07.444 --> 00:19:11.664
+<v SPEAKER_3>Du hast gesagt Kunden und Firma, aber so eine richtige Firma seid ihr eigentlich gar nicht.
+
+00:19:12.424 --> 00:19:54.324
+<v SPEAKER_2>Stimmt. Das hatten wir jetzt vorher gar nicht. Das haben wir vergessen. Wir sind eigentlich ein Verein. Wir sind so eine Non-Profit-Organisation, das hat irgendwie historische Gründe und man möchte dann neutral und so weiter. Das ist im Prinzip eine Struktur, genauso wie der CCC. Also es gibt einen Verein und dann gibt es dazu eine Firma. Die Firma gehört zu 100% dem Verein und die Firma ist die, die mich einstellt und mir mein Gehalt bezahlt. Und alle Kunden, also ISPs, also Google, Akamai und so weiter, sind Mitglieder in dem Verein und können somit auch irgendwie auf den Meetings entscheiden, was der Verein dann tut und damit dann auch die Firma.
+
+00:19:54.344 --> 00:20:21.224
+<v SPEAKER_3>Worauf du dich beziehst, die Konstruktion beim CCC, dass die Leute jetzt nicht verwirrt sind, ist der spezifische Fall Veranstaltungsfirma, womit halt dann eben auch, da sind ja wahrscheinlich eure Bedürfnisse auch die gleichen, dass man halt einfach auch effizient wie in einer Firma arbeiten kann, dass man eben auch über Ausgaben entsprechend entscheiden kann, kurzfristig Risiko ins Weiter, ohne sich jetzt jedes Mal so einen Wasserkopf einer Mitgliederversammlung zu geben, daher diese Trennung.
+
+00:20:21.244 --> 00:20:40.604
+<v SPEAKER_2>Ja, aber es gibt tatsächlich Mitgliederversammlungen und so der grobe Trend wird auch, also der grobe Trend wird eigentlich, es gibt dann halt noch den Vorstand und der grobe Trend wird eigentlich mal vom Vorstand, wo Christian auch aktiv ist im AMSIX Vorstand, vom Vorstand so festgelegt und dann von der Firma sozusagen durchgeführt.
+
+00:20:41.644 --> 00:20:48.124
+<v SPEAKER_3>Jetzt hast du gesagt, 50 Prozent der Kunden sind ISPs in Holland. Was sind dann die anderen 50 Prozent?
+
+00:20:48.664 --> 00:20:49.884
+<v SPEAKER_2>Aus dem ganzen Rest der Welt.
+
+00:20:50.724 --> 00:21:04.424
+<v SPEAKER_3>Naja, aber du hast ja vorhin gesagt, naja das ist ja alles regional und wir sind ja nicht mit anderen Exchanges verbunden. Was heißt das dann? Das sind dann global arbeitende ISPs, die nochmal ihre eigenen internationalen Netze haben?
+
+00:21:04.424 --> 00:21:44.504
+<v SPEAKER_2>Das sind global arbeitende ISPs oder Firmen, die einfach von irgendwo weiter hereinkommen. Also auch wenn ich jetzt ein ISP in Russland bin, muss ich ja irgendwie meinen Traffic aus Russland rauskriegen. Und die haben dann halt mal einen Kabel durch ganz Europa und landen dann irgendwo in Frankfurt oder Amsterdam und dann schließen sie sich dort wieder einen Exchange an. Also es kommen die ISPs der ganzen Welt haben. Die meisten größeren brauchen einfach eine Infrastruktur, die global ist. ISPs sind halt nicht lokal in einem Land.
+
+00:21:44.524 --> 00:21:52.184
+<v SPEAKER_3>Aber man könnte ja auch meinen, dass die ISPs sich einfach untereinander dann verbinden können. Was ist dann der Vorteil des Internet Exchange?
+
+00:21:52.204 --> 00:22:01.684
+<v SPEAKER_2>Das tun sie ja, genau am Internet Exchange. Der Vorteil ist, dass wenn sich 500 ISPs mit oder, sagst du mal ISPs, es sind ja nicht nur ISPs, es sind halt auch...
+
+00:22:01.704 --> 00:22:04.004
+<v SPEAKER_3>Hast du einen anderen Namen? Ich wollte jetzt nicht mal Kunde sagen.
+
+00:22:05.464 --> 00:22:08.384
+<v SPEAKER_2>Wir sagen ja Member. Es sind ja keine Kunden. Das ist ein Member.
+
+00:22:08.404 --> 00:22:17.904
+<v SPEAKER_3>Dann musst du auch Member sein, wenn du Member meinst. Naja, es sind nicht immer ISPs meistens.
+
+00:22:17.924 --> 00:22:32.384
+<v SPEAKER_2>Es sind nicht immer ISPs. Und wenn jetzt 500 solcher Netzwerke sich mit 500 anderen Netzwerken verbinden müssten, dann bräuchte halt tatsächlich jeder einzelne 500 Kabel zu jedem anderen oder 499.
+
+00:22:32.404 --> 00:23:06.904
+<v SPEAKER_3>Das heißt, diese Internet Exchanges sind sozusagen einfach ein helfender Faktor bei der Vernetzung der ISPs untereinander. Und so ganz nebenbei sorgen sie auch für den globalen Brückenschlag, dadurch dass eben ISPs sich eben auch zu verschiedensten Internet Exchanges, nicht nur ihrem Lokalen, verbinden. Und das ist eigentlich dann auch schon die globale Internetinfrastruktur in ihrer einfachen Form, die sich hier abzeichnet. Man findet überall Internet Exchanges. Jedes Land hat mindestens einen, oder?
+
+00:23:08.604 --> 00:23:23.904
+<v SPEAKER_1>Nein, nicht unbedingt. Die meisten entwickelten Länder, internettechnisch entwickelten Länder, haben mindestens einen. Wenn du nach Asien oder nach Afrika gehst oder so, da findest du vielleicht gerade eine Handvoll, da hat dann jedes dritte oder viertel Land einen.
+
+00:23:23.924 --> 00:23:25.504
+<v SPEAKER_3>Weil es da wahrscheinlich auch nur einen Provider gibt.
+
+00:23:26.004 --> 00:23:37.184
+<v SPEAKER_1>Das ist vermutlich ein Grund. Und weil sie auch nicht genug Traffic haben. Das heißt, die schließen sich dann immer an Internationale an, schicken den Verkehr dann eher über Amsterdam, als dass er dann in der Region bleibt.
+
+00:23:37.204 --> 00:23:51.264
+<v SPEAKER_3>Okay, aber ab so einer bestimmten Dichte und einer bestimmten Traffic-Menge macht es einfach Sinn, sich einen regionalen Austauschknoten zu geben. Das Ganze gibt es ja auch noch mal super regional. Es gibt ja auch so Stadtlokale-Exchanges, oder?
+
+00:23:51.284 --> 00:23:53.344
+<v SPEAKER_2>Sind ja alle im Prinzip.
+
+00:23:53.364 --> 00:23:55.084
+<v SPEAKER_3>Alle? Ich meine, Amesics ist ja...
+
+00:23:55.104 --> 00:23:56.244
+<v SPEAKER_2>Amsterdam-Lokal.
+
+00:23:56.264 --> 00:24:04.784
+<v SPEAKER_3>Ja gut, aber Amesics übernimmt doch vor allem auch die Rolle für ganz Niederlande, oder? Es gibt weitere...
+
+00:24:04.804 --> 00:24:09.664
+<v SPEAKER_2>Es gibt weitere, es gibt weitere anderen Städte in der Niederlande, ja.
+
+00:24:09.684 --> 00:24:12.404
+<v SPEAKER_3>Wie viele sind das an der Zahl?
+
+00:24:12.424 --> 00:24:13.764
+<v SPEAKER_2>5, 7.
+
+00:24:13.784 --> 00:24:18.024
+<v SPEAKER_3>Und wer pumpt am meisten?
+
+00:24:18.044 --> 00:24:19.304
+<v SPEAKER_2>899.
+
+00:24:19.444 --> 00:24:22.484
+<v SPEAKER_3>Ich weiß ja nicht, was die anderen so machen, was so normal ist.
+
+00:24:22.504 --> 00:24:28.444
+<v SPEAKER_2>Also das sind so die drei größten auf der Welt, die es gibt, sind Amesics, DZX und Lynx.
+
+00:24:28.464 --> 00:24:34.224
+<v SPEAKER_3>Lynx ist in London. Tatsächlich. Man würde ja meinen, dass jetzt in den USA mehr los ist.
+
+00:24:34.724 --> 00:25:20.484
+<v SPEAKER_2>In den USA ist das ganze Konzept... Also, warte mal, ich habe gerade so ein paar Begriffe im Kopf, die wir die ganze Zeit noch nicht hatten. Was ist mir gerade eben eingefallen, aber das ist mir schon wieder entfallen. Peering. Peering wollen wir, was man im Prinzip tut an so einem Internet Exchange, also die Kunden dann ist Peering, was halt Traffic-Austausch for free im Prinzip ist. Man entscheidet sich dann, okay, du gibst mir Traffic, ich gebe dir Traffic und dann können wir sozusagen miteinander was austauschen. Und dieses Peering-Konzept, ich glaube, wir gehen da gleich noch mal genauer drauf ein, aber um dieses Peering-Konzept dreht sich halt alles in Europa, in den Staaten, ist das ein bisschen anders. Da ist das weniger prominent, ich weiß nicht, wie kann man das...
+
+00:25:21.384 --> 00:25:26.464
+<v SPEAKER_3>Woran liegt das, dass ihr so viele landesweite Netze haben, die alle so ihr eigenes...
+
+00:25:26.484 --> 00:26:14.284
+<v SPEAKER_2>Also in den Staaten gibt es vor allem, es gibt sowas wie einen neutralen Internet-Exchange nicht wirklich. In Staaten ist ein Internet-Exchange meist an irgendwie ein Rechenzentrum gebunden. Das heißt, da hat sich das Rechenzentrum entschieden, wir stellen uns in der Ecke einen Switch hin und alle, die bei uns Kunden sind, können sich dort an diesen Switch anschließen. Da gibt es halt nicht so diesen regionalen, lokalen, wie Amsterdam in sechs verschiedenen Rechenzentren, die alle zusammengeschlossen werden. Zudem, das sind dann halt keine offenen, neutralen, die haben dann zudem noch andere Services, wie irgendwie direkte Verbindungen zwischen Kunden und so weiter. Was sie dann alles irgendwie in ihren Peering-Traffic überhaupt reinzählen und nicht reinzählen, ist dann halt immer fragwürdig. Insofern ist das so ein bisschen schwierig zu vergleichen mit der Situation in Europa.
+
+00:26:14.304 --> 00:26:32.224
+<v SPEAKER_3>Gut, aber Tatsache ist, dass in Europa hat sich dieses Modell herausgebildet und es durchaus absehbar, dass es auch noch in anderen Ländern so kommen wird. Wie es jetzt in den USA weitergeht, lässt sich derzeit nicht absehen, denke ich mal. Oder wer meinte, dass es auch irgendwann darauf hinausläuft, dass solche Internet Exchanges dort entstehen müssten?
+
+00:26:32.484 --> 00:26:57.524
+<v SPEAKER_1>Nee, die werden dort nicht entstehen, weil der Markt im Endeffekt schon gesättigt ist mit den Internet Exchanges, die nur in einer Lokation sind und der Firma gehören, die den das Data Center betreibt. Das Association Model, das ist im Endeffekt der Verein, das Vereinsmodell. Hingegen erfreut sich schon relativ große Beliebtheit. Das ist also auch etwas, was in Europa mit als erstes entstanden ist, aber was von anderen Ländern kopiert wird.
+
+00:26:58.104 --> 00:27:01.784
+<v SPEAKER_3>Aber müssten dann diese Rechenzentren in den USA nicht auch sehr groß sein?
+
+00:27:01.804 --> 00:27:12.504
+<v SPEAKER_1>Die sind auch sehr groß, aber du hast dann trotzdem das Problem, dass die Anzahl der Kunden, die in so einem Data Center drin sind, trotzdem natürlich kleiner ist, als wenn man von sechs oder sieben Data Center in Amsterdam redet.
+
+00:27:12.524 --> 00:27:43.304
+<v SPEAKER_2>Was dann aber noch fällt mir jetzt gerade zu, so größere Data Center Provider in den Staaten haben halt auch über die ganzen Staaten verteilt ihre Locations und die haben dann auch angefangen, so Sachen zu machen wie ihre eigenen Data Center zusammen zu... Also die haben halt in LA und in New York und die sind zusammengeschlossen und der Peering Exchange da drüber ist dann halt auch über die ganzen Staaten und nicht nur in dem einen, doch? Switch and Data? Die haben sieben Locations. Die sind alle zusammengeschlossen.
+
+00:27:43.324 --> 00:28:04.664
+<v SPEAKER_1>Pikes geht über alle. Pikes ist ein Produktname für die Internet Exchanges, die Switch and Data, was eine Colo-Facility betreibt, und die haben in ihren verschiedenen Locationen jeweils einen Switch stehen, aber die Switch als solche sind nicht miteinander verbunden.
+
+00:28:04.744 --> 00:28:06.884
+<v SPEAKER_2>Ich dachte, das ist eine große Peering-Plattform.
+
+00:28:06.904 --> 00:28:21.704
+<v SPEAKER_1>Nee, was sie gerne machen ist, sie zählen den Verkehr von New York und LA und Atlanta zusammen, damit die Zahl groß ausschaut und damit sie dann praktisch mit den europäischen Zahlen konkurrieren können oder aus Marketing können, aber die Switche sind nicht verbunden.
+
+00:28:21.724 --> 00:28:30.904
+<v SPEAKER_2>Die Geschichte schon wieder. Okay, jetzt verstehe ich. Das ist halt, was ich meinte, dass man den US-Markt nicht so ganz mit Europa vergleichen kann.
+
+00:28:30.924 --> 00:28:40.484
+<v SPEAKER_3>Aber es ist ja auch mal interessant, da einen Blick drauf zu werfen. Wir müssen, glaube ich, mal, bevor wir zu sehr hier in ISP sprechen, noch mal ein bisschen erklären, du hast es schon ein paar Mal genannt, Colocation. Was ist das?
+
+00:28:40.504 --> 00:28:41.044
+<v SPEAKER_2>Rechenzentrum.
+
+00:28:41.504 --> 00:28:42.304
+<v SPEAKER_3>Und warum heißt das so?
+
+00:28:43.184 --> 00:28:50.564
+<v SPEAKER_2>Großer Raum mit Klimaanlage und ordentlicher Infrastruktur, um dort Technik unterzustellen.
+
+00:28:50.584 --> 00:28:52.104
+<v SPEAKER_3>Warum heißt das so? Warum heißt das nicht einfach?
+
+00:28:53.804 --> 00:28:58.624
+<v SPEAKER_1>weil das eine Colokation ist, wo du etwas reinstellen kannst. Und...
+
+00:28:58.644 --> 00:29:01.444
+<v SPEAKER_3>Co steht für reinstellen?
+
+00:29:01.464 --> 00:29:12.564
+<v SPEAKER_1>Also Location ist... Ja, du teilst dir im Endeffekt ein Rechenzentrum mit anderen Leuten, mit den anderen Kunden von diesem Rechenzentrumsbetreiber.
+
+00:29:12.584 --> 00:29:19.184
+<v SPEAKER_3>Also so ein kooperative, koordinierende... Nein, kooperativ darum geht es, oder?
+
+00:29:19.204 --> 00:29:21.184
+<v SPEAKER_1>Ja, weil der...
+
+00:29:21.204 --> 00:29:22.844
+<v SPEAKER_3>Gemeinsame Unterbringung sozusagen.
+
+00:29:23.244 --> 00:29:29.884
+<v SPEAKER_1>Das heißt, es baut sich nicht jeder ein eigenes für seine drei oder vier Server oder Racks, sondern du teilst dir eine vorhandene Infrastruktur mit anderen.
+
+00:29:30.044 --> 00:29:35.484
+<v SPEAKER_2>Wobei, wenn man sich ein eigenes baut, haben ja einige, nennt man das immer noch Colocation.
+
+00:29:39.184 --> 00:29:42.224
+<v SPEAKER_3>Naja, man ist dann nur halt unter sich.
+
+00:29:42.244 --> 00:29:46.404
+<v SPEAKER_2>Man hat dann aber halt seine verschiedenen Server, Technik und so weiter.
+
+00:29:46.424 --> 00:30:19.604
+<v SPEAKER_3>Aber der eigentliche Idee bei dem Begriff Colocation ist, man baut halt einfach, um Kosten gemeinsam zu sparen, weil es eh sinnvoll ist, diese ganzen Übergangspunkte dann halt auch beieinander zu haben, damit man nicht für jedes Peering 5 Kilometer Kabel verlegen muss, sondern bestenfalls vielleicht 10 Zentimeter Patch-Schnur irgendwo spannt, wenn überhaupt baut man sich einfach diese gemeinsamen Data Center. Du hast ja angefangen mit Data Center, also das ist im Prinzip ein identischer Begriff, nur dass Data Center erstmal nichts darüber aussagt, wer da alles ist.
+
+00:30:19.624 --> 00:30:40.344
+<v SPEAKER_2>Rechenzentrum halt. Aber auch so, was du jetzt meinst, um irgendwie die 5 Meter Patch-Kabel, also auch wenn du jetzt nicht die 5 Meter Patch-Kabel zum nächsten Kunden haben willst, brauchst du ja trotzdem ein Rechenzentrum, wo du deine ganzen Server reinstellst. Also das ist ja durchaus der Fall, dass irgendwie ein Rechenzentrum zu 50 Prozent mit Google-Servern ausgestattet ist.
+
+00:30:40.364 --> 00:30:43.224
+<v SPEAKER_3>Aber das ist ja nicht das, was Amsics macht oder auch?
+
+00:30:43.864 --> 00:30:50.444
+<v SPEAKER_2>Nee, wir haben mit Rechenzentren gar nichts zu tun. Wir sind Kunde beim Rechenzentrum. Wir mieten uns da Platz und stellen da unsere Sachen rein.
+
+00:30:50.464 --> 00:30:59.844
+<v SPEAKER_3>Aber das sind nur die Sachen, die die Daten holen und weiterleiten und das ist eigentlich das Ding, worum es geht. Keine Computing-Geschichten, keine Server, kein Hosting, nix dergleichen.
+
+00:30:59.964 --> 00:31:03.444
+<v SPEAKER_2>Ein bisschen halt. Wir brauchen halt auch einen Mailserver.
+
+00:31:03.464 --> 00:31:25.444
+<v SPEAKER_3>Aber jetzt können wir vielleicht auch noch ein bisschen mal zu deiner Welt kommen, Christian. Ackermarie haben wir schon gesagt, ist ja auch recht bekannt, einer der großen Firmen im Bereich Content-Delivery-Networks. Ich weiß nicht, ob der Begriff allein das Business-Modell von Ackermarie mittlerweile ausreichend beschreibt, aber das ist das, womit sie groß geworden sind, zumindest aus meiner Perspektive.
+
+00:31:26.424 --> 00:31:31.844
+<v SPEAKER_1>Ja, das ist im Endeffekt auch immer noch so das Brot-und-Butter-Geschäft, also praktisch der größte Teil von unserem Business.
+
+00:31:31.864 --> 00:31:41.564
+<v SPEAKER_3>Das heißt, Ackermarie baut Infrastruktur, um Content in die richtige Richtung zu schieben, und zwar vor allem zum Endkunden, oder?
+
+00:31:41.584 --> 00:32:48.444
+<v SPEAKER_1>Das ist richtig. Im Endeffekt kannst du dir das so vorstellen, du hast irgendeinen Content, lass uns annehmen, es sind Filme oder Webseiten, und du möchtest, dass die in der ganzen Welt verteilt werden, sodass sie jeder schnell und zügig sehen kann und gute Geschwindigkeit dorthin hat. Dann reicht es natürlich nicht, wenn du nur ein Paar Server irgendwo in Amerika hast, weil der Rest der Welt muss dann praktisch erst nach Amerika über einen Internet Exchange, zum Beispiel, und sich die ganzen Daten von dort holen, sondern es ist dann wesentlich geschwindigkeitstechnisch wesentlich besser, wenn du die Daten verteilen kannst. Und das macht im Endeffekt, wenn du sie dir einnimmst, hält praktisch Kopien von diesen Webseiten oder den Filmen oder was auch immer der Content sein mag, in den verschiedenen Rechenzentren in der Welt bereit. Und dann gibt es halt dann 50, 100, 300, 500 Locations, wo dann dieser Content ist. Und der ist dann dementsprechend wesentlich näher an dir dran. Das heißt, in Berlin ist zum Beispiel stehen ein paar Server von uns. Und wenn auch immer du dir dann diesen Content anschaust, dann holst du ihn ja aus Berlin und nicht aus San Francisco.
+
+00:32:49.584 --> 00:33:06.284
+<v SPEAKER_3>Das heißt, wenn ich mein Software-Update runter lade und feststelle, dass das erste Mal seit einer Woche meine 16 Megabit, die mir irgendwann mal versprochen wurden, auch tatsächlich ausgefüllt werden, dann liegt es wahrscheinlich daran, dass ich relativ nah an einem solchen Server bin.
+
+00:33:06.304 --> 00:33:06.544
+<v SPEAKER_1>Richtig.
+
+00:33:07.464 --> 00:33:29.344
+<v SPEAKER_2>Im Hintergrund ist das ja auch wahrscheinlich so ein bisschen eine Kostenfrage. Also das ist jetzt nicht so ganz mein Bereich, aber ich könnte mir durchaus vorstellen, dass ich mein Überseekabel nach irgendwie USA sind halt teuer. Und da kann ich mir nicht einfach irgendwie meine 80 Gigabit zusammenbauen, weil ich die ganze Zeit irgendwie meine Server nur aus USA betreibe.
+
+00:33:29.864 --> 00:33:49.184
+<v SPEAKER_1>Es ist zu einem ein Kostenfaktor, das ist richtig. Wobei das für, wenn du jetzt nur den Server hast, dann kaufst du dir halt Transit, ein anderes Wort, das wir noch besprechen müssen. Kaufst du dir halt einen Internetanschluss an irgendeinem Backbone-Provider. Und der transportiert das dann vielleicht. Damit ist es ja erstmal nicht dein Problem, wie weit das transportiert wird.
+
+00:33:49.204 --> 00:33:51.884
+<v SPEAKER_2>Dann ist das dem Transit-Provider sein Problem.
+
+00:33:51.904 --> 00:34:46.024
+<v SPEAKER_1>Richtig. Auf der anderen Seite, wenn das allerdings einmal um die ganze Welt geht, weil Latenzzeiten, sprich so die Geschwindigkeit des Lichts in so einer Glasfaser, ist natürlich begrenzt, dann dauert es auch eine ganze Weile, bis das dann so rumgeht. Und damit das Ganze eben schneller ist und auch besser skaliert, das ist nämlich auch ein wichtiger Punkt, wenn dieser Content jetzt alles nur aus einem einzigen Rechenzentrum käme, dann bräuchte dieses Rechenzentrum super viel. Also wir haben das Beispiel am Amsics genommen mit unseren 12 Ports. Wenn wir jetzt so den Rest der Kapazität zusammenrechnen würden, die wir weltweit haben, es gibt kein Gebäude, wo A genug Server reinpassen und wo B genug Glasfaser liegt, damit man den Verkehr überhaupt aus dem Rechenzentrum rauskriegen würde. Es ist also auch eine Scalability-Frage, wie weit das Ganze skaliert, damit man ihn überhaupt verteilen kann, zusätzlich zu Geschwindigkeit und Kosten.
+
+00:34:46.044 --> 00:35:13.004
+<v SPEAKER_2>Ist jetzt vielleicht auch nochmal eine interessante, um irgendwie so diese Struktur zu verstehen. Da sind wirklich viele verschiedene Parteien an dieser ganzen Geschichte dran. Also Rechenzentren sind eine Sache, Internet Exchanges sind andere Sache. Dann die eigentlichen Netzwerke, weil du irgendwie Fiber und Kabel, Glasfaser meinst, die irgendwie in so ein Rechenzentrum reinkommen, die gehören auch nochmal in eine komplett andere Firma, die das irgendwie dann unter See oder unter Erde verlegt hat, von der man das dann irgendwie den Weg rein oder raus zum Rechenzentrum sich mietet.
+
+00:35:14.704 --> 00:35:24.944
+<v SPEAKER_3>Da wollte ich mich jetzt auch langsam hinarbeiten, weil du hast ja gesagt, Amsics hat einfach nirgendswo geht so viel durch die Leitung wie beim Amsics, fragt man sich, wer sendet.
+
+00:35:24.964 --> 00:35:28.924
+<v SPEAKER_2>An keinem Internet Exchange. An keinem Internet Exchange.
+
+00:35:28.944 --> 00:35:32.364
+<v SPEAKER_3>Wo geht denn noch mehr Daten durch?
+
+00:35:32.384 --> 00:35:42.824
+<v SPEAKER_2>Privat im Sinne von internen Firmen kann ich mir durchaus vorstellen, dass zusammengerechnet noch deutlich mehr durchgeht.
+
+00:35:43.524 --> 00:35:45.664
+<v SPEAKER_3>Bei der Telekom zum Beispiel.
+
+00:35:45.684 --> 00:35:56.244
+<v SPEAKER_2>Wenn man jetzt bei Akamai alle diese Locations mal zusammenrechnen würde, die über die ganze Welt verteilt sind, dann ist das insgesamt definitiv mehr, als wir jetzt an einem Punkt haben.
+
+00:35:56.264 --> 00:36:00.864
+<v SPEAKER_3>Ja gut, wenn ich das ganze Internet zusammenrechne, ist es auch mehr als alles andere. Aber da wollte ich ja nicht hinaus.
+
+00:36:00.924 --> 00:36:02.824
+<v SPEAKER_2>Für einen Netzwerk, für eine Firma.
+
+00:36:02.844 --> 00:36:40.964
+<v SPEAKER_3>Mir geht es ja schon darum, wo glüht es. Und definitiv bei Amsics herrscht Temperatur. Das kann man, glaube ich, schon mal so festhalten. Jetzt frage ich mich natürlich, wer sorgt jetzt dafür? Klar ist, man hat halt die ISPs. Und das ist ja im Prinzip erst mal das klassische romantische Bild. Man sitzt so als Internet-User vor seinem Internetterminal, nicht wahr, und klickt sich dann irgendwie den Google. Und dann geht das vom ISP zu irgendeinem anderen ISP, wo halt der Server angeschlossen ist. Und da muss man dann halt durch den Internet-Exchange. Durch welchen interessiert mich an der Stelle nicht, aber durch irgendeinen wird es schon rauschen. So denn nicht dieser Server, den ich dort angewählt habe, im selben Netzwerk ist, an dem ich auch angeschlossen bin.
+
+00:36:40.984 --> 00:36:56.224
+<v SPEAKER_2>Oder es gibt ja tatsächlich also Internet-Exchanger helfen halt, damit man weniger, quatsch weniger, mehr Leute auf einmal erreichen kann, an einem Punkt. Aber es gibt tatsächlich Firmen, die ganz viele direkte Verbindungen haben.
+
+00:36:56.244 --> 00:37:23.764
+<v SPEAKER_3>Genau, darauf halte ich nämlich jetzt hinaus, dass es halt nicht nur ISPs sind, sondern es in zunehmendem Maße Firmen gibt, deren Business-Modell eigentlich innerhalb dieser Wolke stattfindet. Ich meine jetzt nicht Cloud Computing, sondern eben Akamai als ein Beispiel, also Content Delivery Networks, deren Business-Modell es ja ist, sich in dieser Infrastruktur zu befinden und sich darüber zu verbreiten und die dann genauso an den Internet Exchanges dranhängt, wie das die ISPs tun.
+
+00:37:24.924 --> 00:37:52.084
+<v SPEAKER_2>Was ich jetzt meinte, also jetzt so direkte Verbindungen, wenn jetzt zwei ISPs tatsächlich Unmengen an Traffic miteinander machen, dann irgendwann lohnt es sich einfach, sich direkt ein Kabel zu verlegen und nicht über einen Exchange zu gehen. Und das tun die. Das hat nichts mit irgendwie ich bin in der Wolke oder nicht. Also in eine Zwischenwolke in dem Internet oder ein End-User. Wenn jetzt irgendwie Telekom mit Kabel Deutschland einfach mal so Unmengen viel macht und die zufällig gerade irgendwo in der gleichen Location sind, dann legen sie sich halt eine Fieber.
+
+00:37:52.104 --> 00:37:58.364
+<v SPEAKER_3>Ja, klar. Aber das sind ja dann sozusagen Endkunden zu Endkunden oder zu Datacenter sozusagen. Also Kunden ist ja nicht immer nur der...
+
+00:37:58.384 --> 00:38:00.044
+<v SPEAKER_2>Nein, das ist halt ein Netzwerk zum anderen Netzwerk.
+
+00:38:01.624 --> 00:38:20.444
+<v SPEAKER_3>Ja, wir streiten uns eigentlich gar nicht. Wir reden von der gleichen Sache. Ich wollte auf was anderes hinaus. Also Akamai in dem Sinne hat ja selbst gar kein Angebot da, sondern nimmt ja anderer Leute Daten und führt sie dritten zu. Richtig?
+
+00:38:20.464 --> 00:38:30.084
+<v SPEAKER_1>Das ist richtig. Also den Content, den wir verbreiten, der gehört nicht uns. Wir haben also keine, wenn auch immer, wir reden von einem Movie, das man downloaden kann, das gehört nicht Akamai.
+
+00:38:30.524 --> 00:39:10.524
+<v SPEAKER_3>Und Sinn der Sache ist, das Ganze halt möglichst latenzfrei und schnell und kostengünstig zu dem zu kriegen, der es halt jetzt erhalten soll. Software-Updates sollen schnell rausgehen, Filme sollen irgendwie sofort schnell starten, YouTube, wir wollen alle, dass es irgendwie ordentlich lädt. Wenn wir da irgendwie auf Play klicken und es mir doch egal, wenn es ein HD-Movie ist, dass es halt jetzt mal gefällt ist, hier sofort anzufangen. Also das ist ja sozusagen das Business-Modell von Akamai und anderen Content-Delivery-Networks. Und um das eben zu erreichen, müsst ihr im Prinzip auf demselben Level euch vernetzen, wie das eben auch ISPs tun. Nämlich unter anderem über die Internet-Exchanges oder eben dann auch mit direkten Peerings bei bestimmten ISPs nämlich an, oder?
+
+00:39:10.544 --> 00:39:12.044
+<v SPEAKER_1>Das ist richtig.
+
+00:39:12.064 --> 00:39:15.044
+<v SPEAKER_3>Wie groß muss man sich jetzt diese Infrastruktur vorstellen von Akamai?
+
+00:39:17.744 --> 00:40:14.564
+<v SPEAKER_1>Akamai als Zeug ist ein Sonderfall, weil, wenn man von einem richtigen ISP spricht, der hat im Endeffekt, keine Ahnung, hat ein Netz, das in 5, 10, 50 Städten ist oder so, und hat da, wie wir vorhin erwähnt haben, eben diese Glasfaser dazwischen. Wir selbst haben gar keine Glasfaser oder kein Backbone. Das heißt, die einzelnen Server, die dann hoffentlich möglichst nahe an dir dran sind, sind nicht miteinander verbunden. Die sind alle direkt ans Internet angeschlossen. Das heißt, wir haben keinen richtigen Backbone, im Sinne wie einen ISP. Die Anzahl der Server an sich ist aber relativ groß. Also wir reden da schon von 60.000 plus, die in der ganzen Welt verstreut sind und eben an den ISPs, entweder an einem Internet Exchange direkt dranhängen oder eben ein direktes Peering haben, wie wir erwähnt haben, oder andere Möglichkeiten, aber im Endeffekt an diese Internetwolke angeschlossen sind.
+
+00:40:18.344 --> 00:40:34.784
+<v SPEAKER_3>Wir wollen ja nicht hier über Ackermai reden im Wesentlichen, sondern es gibt ja auch noch andere Beispiele. Wie ist denn das so mit so präsenten Firmen wie Google? Die dürften doch mittlerweile auch so eine riesige Infrastruktur haben, dass sie selber, also die sind ja nicht über einen ISP ans Internet angeschlossen.
+
+00:40:38.184 --> 00:40:44.344
+<v SPEAKER_1>Im Endeffekt ist jeder anders drum. Wir sollten vielleicht erst ganz kurz erklären.
+
+00:40:44.364 --> 00:40:50.324
+<v SPEAKER_2>Christian weiß davon ganz viel, weil er vorher bei Ackermai angefangen hat, war er bei Google, oder? Warst du nicht bei Google vorher?
+
+00:40:56.344 --> 00:41:43.084
+<v SPEAKER_1>Tja, ganz kurz vielleicht eine Begriffserklärung, die noch fehlt und das ist die des Trennsitz. Peering ist, wie wir vorhin erwähnt haben, wenn zwei Netze Daten miteinander austauschen, meistens for free. Es gibt auch ein sogenanntes Paid Peering. Die andere Möglichkeit, die es noch gibt, ist Transit. Transit ist im Endeffekt meistens, wenn ein kleineres Netz bei einem größeren einkauft. Das heißt, ich kaufe mir also ein kleiner regionaler Provider Zugang zum gesamten Internet an ein oder zwei Stellen. Dann gebe ich diesem Provider Geld und der transportiert dann den Rest meines Verkehrs bis nach Asien oder wo auch immer ich irgendwas habe. Dann peer ich aber nicht mit ihm. Ich zahle ihm für diese Dienstleistung. Und das nennt sich Transit.
+
+00:41:43.104 --> 00:41:46.044
+<v SPEAKER_3>Dann pauschal oder in Abhängigkeit von den Datenmengen?
+
+00:41:46.064 --> 00:42:01.624
+<v SPEAKER_1>Normalerweise in Abhängigkeit von den Datenmengen. Man nimmt da das sogenannte 95% teil. Das heißt, man nimmt die maximalen 5% Peaks raus und den Rest zahlt man dann per Embit.
+
+00:42:01.644 --> 00:42:04.284
+<v SPEAKER_3>Das heißt, also über welchen Zeitraum?
+
+00:42:04.304 --> 00:42:05.144
+<v SPEAKER_1>Normalerweise monatlich.
+
+00:42:05.464 --> 00:42:14.984
+<v SPEAKER_3>Okay, das heißt, man schaut sich an, was ist in diesem Monat tatsächlich an Datenverkehr gelaufen und in welche der beiden Richtungen zählt.
+
+00:42:15.004 --> 00:42:15.624
+<v SPEAKER_1>Die, die höher ist.
+
+00:42:16.904 --> 00:42:24.424
+<v SPEAKER_3>Das heißt, es ist egal, ob man viel schiebt oder viel lädt, am besten fährt man, wenn es sozusagen beides ausgeglichen ist.
+
+00:42:24.444 --> 00:42:27.624
+<v SPEAKER_1>Genau, dann kriegt man die zweite Hälfte sozusagen for free.
+
+00:42:27.644 --> 00:42:37.224
+<v SPEAKER_3>Aha, und dann guckt man sich sozusagen wie so eine Kurve an und schneidet oben die obersten 5% einfach ab und dieser Wert zählt.
+
+00:42:37.244 --> 00:42:39.964
+<v SPEAKER_1>Genau, und der Rest ist dann das, wofür man zahlt.
+
+00:42:39.984 --> 00:42:56.364
+<v SPEAKER_3>Das heißt, auch wenn da mal ein super Burst ist und so weiter, dann macht das keine Rolle. Und das heißt, als kleiner Regional-Provider schafft man sich damit sozusagen, ohne groß Infrastruktur ausbauen zu müssen, den Zugang zu allem.
+
+00:42:56.384 --> 00:42:56.924
+<v SPEAKER_1>Genau.
+
+00:42:56.944 --> 00:43:03.804
+<v SPEAKER_3>Aber man hat halt das Problem, dass man für seinen Traffic relativ viel zahlen muss. Ich weiß nicht, was das kostet, so was?
+
+00:43:03.824 --> 00:43:06.624
+<v SPEAKER_2>Das wird extrem billig gerade alles.
+
+00:43:06.644 --> 00:43:14.844
+<v SPEAKER_3>Was denn billig? Was kostet so ein Gigabyte, oder misst man schon gar nicht mehr? 7? In was misst man denn überhaupt diese Treffungen?
+
+00:43:14.864 --> 00:43:37.184
+<v SPEAKER_1>Man misst in Mbit pro Sekunde. Also kein Volumen, sondern eben wie viel als Pick kriegt. Und es hängt ein bisschen von der Region ab. Und wie viel Traffic man nimmt. Europa und Amerika sind relativ günstig. Ich denke, da ist man so zwischen, je nach Größenordnung, 5 und 7 Dollar, Euro dabei im Schnitt.
+
+00:43:37.204 --> 00:43:38.224
+<v SPEAKER_3>Für?
+
+00:43:38.244 --> 00:43:38.844
+<v SPEAKER_1>Per Mbit.
+
+00:43:38.864 --> 00:43:39.764
+<v SPEAKER_2>Per Mbit per Monat.
+
+00:43:41.084 --> 00:43:43.164
+<v SPEAKER_3>Also ein Megabit durchgehend...
+
+00:43:43.184 --> 00:43:43.884
+<v SPEAKER_2>Im Monat....
+
+00:43:43.904 --> 00:43:51.904
+<v SPEAKER_3>senden oder empfangen plus fünf Prozent extra oben drauf, kostet mich im Monat acht.
+
+00:43:51.924 --> 00:44:05.264
+<v SPEAKER_1>Sieben oder acht Euro. Ja, so was in dem Ding. In Asien oder in Regionen, die dann weniger Infrastruktur haben, wo das Ganze dann dementsprechend teurer ist, vielleicht 20 oder 30.
+
+00:44:07.584 --> 00:44:08.224
+<v SPEAKER_3>Oder Afrika.
+
+00:44:09.664 --> 00:44:16.424
+<v SPEAKER_1>Ja, wenn das Ganze auch nicht über den Glasfaser geht, sondern vielleicht noch über einen Satellitenverbindung oder so, dann reden wir vielleicht auch eher von 100.
+
+00:44:17.044 --> 00:44:18.344
+<v SPEAKER_3>Ah, da wird es dann richtig teuer.
+
+00:44:20.024 --> 00:44:46.644
+<v SPEAKER_2>Und das ist dann natürlich die Rechnung, die man im Prinzip so als Provider macht, um herauszufinden, ob es sich für einen lohnt, überhaupt einen Internet Exchange anzuschließen. Wenn ich jetzt am Internet Exchange mehr Traffic loswerde, also die Zahlen natürlich für die Ports beim AMSIX auch, und wenn ich jetzt mehr Traffic loswerde für den Preis auf so einen Port als ich für Transit bezahlen würde, dann fängt es sich halt an zu lohnen.
+
+00:44:46.664 --> 00:44:49.024
+<v SPEAKER_3>Was kostet denn so ein Port?
+
+00:44:49.044 --> 00:45:03.984
+<v SPEAKER_2>So ein Port am AMSIX, ich bin mal nachschauen sollen vorher. Preise wurden gerade gesenkt. Ich glaube 500 Euro pro Monat für einen Gigabit-Port und 2000 für einen 10-Gigabit-Port.
+
+00:45:04.224 --> 00:45:15.804
+<v SPEAKER_3>Und da ist der Traffic eigentlich selber gar nicht mehr entscheidend. Da kann ich senden, was auch immer da durchpasst. Das geht dann irgendwie los und dann ist auch egal, an wen das geht. Jeder, der irgendwie mitpiert an diesem Internet Exchange, ist damit im Boot.
+
+00:45:16.004 --> 00:45:16.684
+<v SPEAKER_2>Genau.
+
+00:45:16.704 --> 00:45:19.744
+<v SPEAKER_3>Selbst wenn ich die ganze Zeit nur in die Richtung von einem einzigen Provider senden würde.
+
+00:45:19.764 --> 00:45:27.544
+<v SPEAKER_2>Also jeder, der mit dir pieren will über den Exchange. Das ist ja trotzdem noch ein Mutual Agreement der Parteien, die an diesem Internet Exchange sind.
+
+00:45:27.564 --> 00:45:45.744
+<v SPEAKER_3>Das ist wichtig zu verstehen. Das heißt, wenn ich an einem Internet Exchange angeschlossen bin, dann bin ich erst mal nur angeschlossen und dann passiert erst mal noch gar nichts. Ich habe nur die Möglichkeit, mit jemandem zu pieren. Dann muss ich noch zu jedem einzelnen Provider hingehen und sagen, hier, guck mal, ich habe hier geile Daten. Willst du haben? Und dann sagt er, hey, super.
+
+00:45:45.764 --> 00:45:48.984
+<v SPEAKER_2>Und da kommt dann BGP ins Spiel.
+
+00:45:49.004 --> 00:45:57.624
+<v SPEAKER_3>Okay, da kommen wir gleich zu. Aber das ist dann sozusagen kostenlos. Also Peering ist ein Agreement, dass man sagt, okay, von dir nehme ich dann. Was sollte jetzt ein Provider davon abhalten, mit mir zu pieren?
+
+00:45:59.464 --> 00:46:55.144
+<v SPEAKER_1>Verschiedene Sachen. Peering oder Settlement-Free-Peering, wie es heißt, also sprich, dass keiner den anderen zahlt, wird normalerweise dann gemacht, wenn beide einen Vorteil drin sehen. Ein Beispiel wäre jetzt, du bist ein kleiner regionale Provider in Berlin. Ich bin ein großer Carrier, der die ganze Welt abdeckt. Ich habe 100 Millionen Kunden, du 5.000. Du profitierst wesentlich mehr davon als ich, wenn wir peeren würden. Weil ich gebe dir die ganze Welt, du gibst mir Berlin. Das ist nicht so ganz dasselbe. Das heißt, wir würden nicht peeren, sondern in dem Fall würde ich sagen, wenn du meine 100 Millionen Kunden willst und ich den Treffig für dich in die ganze Welt transportiere über meine Infrastruktur, die ja Geld kostet, dann musst du mich dafür zahlen. Das ist das, was transit ist. Das heißt, im Endeffekt peeren nur Netze miteinander, die gleiche Größe haben oder etwa gleiches Treffigvolumen.
+
+00:46:56.004 --> 00:46:59.384
+<v SPEAKER_3>Das diskordianische Prinzip Kommunikation ist nur unter Gleichen möglich.
+
+00:46:59.684 --> 00:47:22.244
+<v SPEAKER_2>Wobei, also ich habe halt von meiner Perspektive das Gefühl, dass sich das ändert. Weil wir haben halt sowie regionale holländische ISPs, wir haben einen regionalen Berliner Netzwerkschuppen jetzt irgendwie am Amsigstrande als auch Google und Akamai. Und ich meine, Akamai würde doch mit jedem von denen peern, oder?
+
+00:47:22.264 --> 00:47:23.444
+<v SPEAKER_1>Wir peern mit jedem.
+
+00:47:24.264 --> 00:47:27.424
+<v SPEAKER_2>Akamai würde man als Peering Slut bezeichnet, so in der Netzwerkwäsche.
+
+00:47:35.164 --> 00:47:39.304
+<v SPEAKER_3>Und wer peert nicht mit jedem? Wer ist das Gegenteil?
+
+00:47:39.324 --> 00:47:44.564
+<v SPEAKER_1>Gegenteile wären große internationale Carrier, die eben Netze in der ganzen Welt haben.
+
+00:47:44.584 --> 00:47:45.664
+<v SPEAKER_2>Telcos.
+
+00:47:45.684 --> 00:47:53.544
+<v SPEAKER_1>Das sind dann z.B. Firmen wie Level 3 oder Global Crossing oder Telia und solche.
+
+00:47:53.564 --> 00:47:55.204
+<v SPEAKER_2>Selbst schon Telekom ist...
+
+00:47:55.224 --> 00:48:00.024
+<v SPEAKER_1>Selbst schon die deutsche Telekom ist sehr wählerisch, mit wem sie Daten for free austauscht.
+
+00:48:00.044 --> 00:48:04.784
+<v SPEAKER_3>Weil die einfach ihr eigenes Datenaufkommen als riesiges Asset auch begreifen und da darf auch nicht jeder rein.
+
+00:48:04.804 --> 00:48:06.924
+<v SPEAKER_2>Weil sie auch Transit verkaufen wollen, vor allem.
+
+00:48:07.164 --> 00:48:12.644
+<v SPEAKER_3>Ach so, weil jeder mit dem sie peeren, teilt keinen Transit mehr sozusagen.
+
+00:48:12.664 --> 00:48:27.464
+<v SPEAKER_2>Ich meine, der Unterschied ist auch noch beim Peering. Und das kommt immer darauf an, was da jetzt noch hinter so einem Netzwerk dahinter steckt. Wenn jetzt die Telekom mit jemandem peeren würde, dann würde sie einem halt nicht das komplette Internet über diese Peering-Session geben, sondern halt nur ihre eigenen...
+
+00:48:27.484 --> 00:48:28.404
+<v SPEAKER_3>Was aus ihrem Netz kommt.
+
+00:48:28.424 --> 00:48:36.704
+<v SPEAKER_2>Was aus ihrem Netz kommt, genau. Man rotet nicht dadurch. Genau, wenn du von ihnen den Transit kaufen würdest, dann würdest du von ihnen tatsächlich das komplette Internet bekommen.
+
+00:48:37.744 --> 00:49:04.504
+<v SPEAKER_3>Das ist in der Tat sehr wichtig, dass man das unterscheiden kann. Das heißt, wenn ich jetzt... Fangen wir mal, ich will jetzt einen eigenen ASP gründen. Das wäre jetzt mal vielleicht so das Ding. Ich habe keine Ahnung, was mein Business-Modell ist. Ich biete irgendwie Verschlüsselung und Anonymisierung an, gepaart mit Charme und Attraktivität. Und Esprit und Liebe-Kunst. Und was es auch immer ist...
+
+00:49:04.524 --> 00:49:06.544
+<v SPEAKER_5>Das ist nicht die Blumenkraft.
+
+00:49:06.564 --> 00:50:08.404
+<v SPEAKER_3>Genau, die Blumenkraft. Und das bringt jetzt eine Heerschar von Usern dazu, die unter Umständen auch ganz ordentlich pumpen. So jetzt muss ich für die irgendwie Internet besorgen. Das ist ja klar. Das heißt, der erste Schritt wäre erst mal, dass ich mir einen möglichst regionalen, sozusagen für mich auch erreichbaren, technisch erreichbaren Provider suche, der mir eine Transit-Möglichkeit bietet. Sprich, ich muss mich natürlich in irgendeinem Data Center einnisten, wo ich unter Umständen meinen eigenen Server, meine Infrastruktur habe und dann natürlich auch den entsprechenden Router, um die Daten dann rauszugeben. Und dann gibt es so ein paar heilige Stecker und da steppsel ich mich dann in diesen anderen Provider mit rein und dann habe ich irgendwie Transit, dann habe ich Netz. Dann wächst jetzt mein Business irgendwie an, weil ich so toll bin. Und irgendwann wird das dann so viel und so attraktiv, dass die anderen sagen, mit deinem Traffic können wir unsere Kunden irgendwie auch ganz gut bedienen. Jetzt hätte ich ganz gerne Peering und dann geht es auf der Basis weiter.
+
+00:50:08.424 --> 00:50:50.484
+<v SPEAKER_2>Was vor allen Dingen auch passiert ist, dass irgendwann hast du mehr Infrastruktur und dann ist irgendwann dein Rechenzentrum voll und dann wird an der anderen Seite der Stadt ein neues gebaut und dann stellst du die zweite Hälfte deiner Infrastruktur in dieses Rechenzentrum. Dann musst du die irgendwie miteinander verbinden. Dann bist du auf einmal im Besitz von Kabel, die durch die Stadt gehen und dann hast du auf einmal schon wieder mehr Optionen, weil in dem anderen Rechenzentrum vielleicht wieder andere Firmen präsent sind als in dem ersten, um dich jetzt da mit dem und dem oder jenem anzuschließen und vielleicht ist in einem davon dann auch gleich wieder ein Internet Exchange, wo du dir dann gleich überlegen kannst, hm, dann brauche ich weniger Transitkosten, wenn ich die Hälfte meines Traffics ja schon mal an diesem Internet Exchange irgendwie wegpumpen könnte.
+
+00:50:50.984 --> 00:51:37.704
+<v SPEAKER_3>Ich wachse in die Wolke hinein. Also, Christian, wir sind jetzt ein bisschen abgekommen nochmal bei die Google-Frage. Ich meine, Google ist ja nun definitiv jemand, der eine Menge Content zu bringen hat und der auch eigentlich mit allem schnell verbunden sein möchte. Ich erinnere nur jetzt hier an diesen Google-DNS-Server, der von seiner Reaktionszeit den DNS-Server der meisten ISPs noch unterbietet oder zumindest auf gleicher Augenhöhe da agiert. Das heißt ja, dass die auch unglaublich regional, unglaublich präsent sein müssen mit all ihren Diensten und natürlich auch sein wollen, um einfach da die Suchseite schnell bedienen zu können. Was ergibt sich daraus für eine Infrastruktur? So aus deiner Perspektive, auch wenn du jetzt kein Google-Insider bist.
+
+00:51:37.724 --> 00:51:52.824
+<v SPEAKER_1>Daraus ergibt sich verschiedene Sachen. Einmal sind sie, wie du gesagt hast, ziemlich regional präsent. Das heißt, in jedem größeren Land, auf jeden Fall in jedem Land in Europa, haben sie irgendwie Netzwerkequipment stehen. Meistens einen Router, der dann auch mit dem Internet Exchange verbunden ist, unter Umständen eben abgedeckt.
+
+00:51:52.844 --> 00:51:58.284
+<v SPEAKER_3>Haben die dann auch eigene Data Center schon, oder geht es soweit erstmal nicht?
+
+00:51:58.304 --> 00:52:32.204
+<v SPEAKER_1>Gut, Google ist jetzt ein bisschen speziell, weil da natürlich auch ziemlich viele Gerüchte unterwegs sind, dass Google geheime Datencenter in Europa versteckt hat, wo nur sie drin sind und und und. Partiell ist das schon richtig. Das heißt, es gibt Datencenter, die sie sich selbst gekauft haben, selbst gebaut haben und hin und wieder geistert sowas dann durch die News, weil Google mit ihrer Infrastruktur und speziell mit ihren Servern sehr sehr viel Power und Cooling braucht, also Strom und Kühlung und Platz im Data Center. Deshalb ist es in irgendeinem gewissen Punkt sich einfach für sie lohnt, das selber zu bauen.
+
+00:52:33.004 --> 00:52:35.484
+<v SPEAKER_2>Das haben wir sogar schon überlegt in Amsterdam vor ein paar Jahren.
+
+00:52:40.904 --> 00:53:26.324
+<v SPEAKER_1>Sie sind aber trotzdem in normalen anderen Data Center präsent und speziell ihre Netzwerk-Infrastruktur, also sprich irgendwelche Router und Glasfaser und solche Verbindungen, sind dann an jedem größeren Exchange. Diejenigen, die mit Google selber peern und wenn Google das auch möchte, wobei Google relativ peering-freundlich ist, die peern dann direkt mit ihnen an irgendeinem Exchange. Diejenigen, die dann wieder eine gewisse Größe erreicht haben oder keine Lust haben, mit Google zu peern, aus welchen Gründen auch immer, die erreicht Google dann eben auch über Transit. Das heißt, dieses Transit- oder Peering-Modell ist ein Hybrid-Modell. Du hast nicht entweder A oder B, zumindest nur ganz wenige Firmen haben A oder B. Die meisten Firmen haben den Mischmasch dazwischen.
+
+00:53:27.084 --> 00:53:30.864
+<v SPEAKER_3>Will denn nicht jeder mit Google irgendwie? Warum sollte man denn das nicht wollen?
+
+00:53:31.764 --> 00:53:45.504
+<v SPEAKER_1>Wenn du eben eine, wobei das ist jetzt eine Annahme, ich weiß nicht an welchem Stand Google ist, aber Google kauft nach wie vor Transit, weil diese Netze eben der Meinung sind, dass sie so viele Kunden hinter sich haben und den Treffig ja auch um die halbe Welt transportieren.
+
+00:53:45.524 --> 00:53:47.664
+<v SPEAKER_3>Sich auch bezahlen lassen können sozusagen.
+
+00:53:47.684 --> 00:53:51.504
+<v SPEAKER_1>Dass sie dafür eben auch Geld haben wollen.
+
+00:53:51.524 --> 00:54:04.444
+<v SPEAKER_3>Das heißt, Google muss auch eine Menge Geld dafür zahlen, um überhaupt erst mal zum Kunden hinzukommen, um ihnen diese umständen kostenlosen Dienstleistungen auch anzubieten.
+
+00:54:04.864 --> 00:54:10.344
+<v SPEAKER_2>Das ist natürlich alles Spekulation. Wie viel Treffig überhaupt hier und wie viel sie da noch zusätzlich dazu.
+
+00:54:10.364 --> 00:54:27.524
+<v SPEAKER_3>Nichts genaues weiß man nicht. Aber Tatsache ist, sie sind einfach an jedem Internet Exchange sind sie einfach präsent und man kann einfach an Google ran, welchen Deal man dann auch immer mit ihnen macht. Du sagst, sie sind peering-freundlich, also generell sind sie eher offen dafür.
+
+00:54:28.444 --> 00:55:22.124
+<v SPEAKER_1>Sie sind auf jeden Fall eher offen. Ich denke, sie haben mittlerweile eine Policy. Also wenn du pierst, hast du eine sogenannte Peering Policy. Das heißt, die reicht von ich pier mit jedem, so wie wir. Das ist relativ unkompliziert. Oder du gehst hin und sagst, ich pier mit dir, aber ich habe gewisse Requirements, also gewisse Anforderungen an dein Netz. Zum Beispiel, dass du einen Network Operations Center hast, Leute, die sich 24 mal sieben um das Netz kümmern, sodass wenn irgendwas kaputt geht, ich dich auch anrufen kann, damit du das auf deiner Seite reparierst. Oder dass wir mindestens so und so viel Treffik austauschen, so und so viel MBit. Oder dass du in so und so viele Lokationen bist und eine gewisse Größe hast, damit man dich ernst nimmt. Und ich denke, dass Google mittlerweile an einem Punkt angekommen ist, wo sie ein Minimum an Treffik haben. Ich glaube, sie pier nicht mehr mit jedem. Ich glaube, bin mir nicht sicher, was gehört von 20 MBit oder so. Das ist jetzt auch nicht viel, aber es schließt unter Umständen ganz, ganz klein mal aus.
+
+00:55:22.584 --> 00:55:26.524
+<v SPEAKER_3>Ja, also wieder 20 MBit pro Monat gerechnet Treffik.
+
+00:55:27.364 --> 00:56:04.744
+<v SPEAKER_1>Weil man darf ja nicht vergessen, auch wenn das Peering als solches, nachdem man die Fixkosten gezahlt hat für den Port am Amsics oder einem anderen Exchange, trotzdem ja noch einen gewissen Aufwand bedeutet. Wenn ich zum Beispiel eben mit 300 von diesen Leuten piere am Amsics, dann setze ich normalerweise zu 300 Leuten eine BGP-Session auf. Das heißt, ich muss auf meinem Equipment etwas konfigurieren und mich darum kümmern und auch mit der anderen Seite reden, zumindest mal ein paar E-Mails austauschen für die Details, damit ich diese aufsetzen kann. Und das kostet natürlich auch indirekt direkt durch Leute, die das machen müssen.
+
+00:56:04.764 --> 00:56:06.064
+<v SPEAKER_2>Administrativer Aufwand.
+
+00:56:06.084 --> 00:56:17.404
+<v SPEAKER_1>Administrativer Aufwand. Insofern will ich vielleicht auch gar nicht mit jedem pieren. Wenn der Treffig nämlich niedriger ist als mein Aufwand, dann hat es sich nicht wirklich gelohnt. Aber ansonsten ist Google eher peeringfreundlich.
+
+00:56:18.324 --> 00:56:40.024
+<v SPEAKER_3>Wir müssen auf jeden Fall jetzt noch mal zu den technischen Abläufen kommen. Bevor wir das machen, vielleicht noch mal so ein anderer Player. Ich meine, neben Google. Also Google und Akamai sind, glaube ich, sehr bekannt. Wer natürlich auch eine große Rolle spielt in der Wolke ist Amazon mit ihren Dienstleistungen. Sind die so auf einem ähnlichen Level wie Google unterwegs?
+
+00:56:40.044 --> 00:56:47.244
+<v SPEAKER_1>Die Infrastruktur von Amazon ist wesentlich kleiner. Sie sind an weniger Exchanges und sie haben insgesamt weniger Treffig.
+
+00:56:48.584 --> 00:56:52.044
+<v SPEAKER_2>Also ich wusste jetzt zum Beispiel nicht, dass Amazon eine große Rolle spielt im Internet.
+
+00:56:55.564 --> 00:57:07.424
+<v SPEAKER_3>Naja, es geht mir jetzt nicht um dieses Amazon, ich kaufe mir ein Buch, sondern um Amazon, ich verkaufe meine Ressourcen an andere. Also sie haben ja auch Content Delivery in dem Sinne auch.
+
+00:57:07.504 --> 00:57:09.364
+<v SPEAKER_2>Das war mir zum Beispiel nicht klar, dass sie das tun.
+
+00:57:09.724 --> 00:58:12.404
+<v SPEAKER_3>Ja, ja, also Amazon S3 und solche Sachen, da kann man sich dann halt sehr schön automatisiert über APIs den Storage sozusagen einkaufen und darauf auch gut zugreifen. Viele Programme und viele Dienste. Twitter zum Beispiel, alle Bilder, die irgendwie von Twitter kommen, die kommen dann halt irgendwie von Amazon. Das ist dann halt für diese Firmen, gerade für Start-ups billiger, sich eine performante Infrastruktur, also Delivery-Infrastruktur aufzubauen, wo sie vollen Zugriff haben. Also ich will jetzt nicht da Amazon preisen, ich habe da jetzt auch selber nicht so viel Erfahrung damit, aber das ist halt sozusagen das Angebot, was sie machen. Und sie präsentieren sich halt weit als mehr nur als so ein Buchverkäufer oder Verkäufer, sondern gehen halt dazu über ihre Infrastruktur, die sie eben aufgrund ihres Business ursprünglich mal aufgebaut haben, auch weiter zu verkaufen. Das geht jetzt halt so hin, dass man eben da auch so virtuelle Hosts und so weiter kaufen kann. Also es ist halt auch eine Rechenwolke, eine Contentwolke. Also auch solche Firmen haben ja ein Interesse daran, dann auch nah dran zu sein, um ihnen schnell auszuliefern.
+
+00:58:13.424 --> 00:59:15.124
+<v SPEAKER_1>Das ist das Prinzip richtig. Amazon hat dementsprechend auch, soweit ich es gesehen habe, ihre Infrastruktur wesentlich erweitert. Allerdings ist das Produktportfolio von Amazon, speziell wenn es um dieses S3 und Cloud Computing geht, schon noch etwas eingeschränkt. Das sieht alles ganz gut aus, wenn du eine kleinere oder mittlere Firma bist, dann ist das für dich sehr attraktiv, weil du das eben über die APIs und die Web-Schnittstellen alles selber ändern kannst und dafür auch relativ kostengünstig ist. Wenn du jetzt eine mittelgroße bis große oder sehr große Firma ein bisschen viel Datenmengen hast, dann fängt das an, dann plötzlich nicht mehr so viel Sinn zu machen. Weil einmal sie im Vergleich zu anderen richtigen CDNs oder darauf spezialisierten CDNs jetzt nicht so viel Infrastruktur haben und dementsprechend ein paar Limitierungen. Und der Preis ist dann auch nicht mehr so attraktiv. Weil wenn du richtig viel Treffig und Volumen nimmst, dann dementsprechend geht der Preis natürlich runter. Und dann bist du mit anderen CDNs oder mit anderen Produkten besser bedient. Insofern decken sie eigentlich zumindest meines Erachtens nach noch ein relativ kleines Portfolio ab.
+
+00:59:15.144 --> 01:00:02.764
+<v SPEAKER_3>Gut, da werden wir vielleicht von den Content-Networks mal absieht. Oder vielleicht das auch mal eingeschlossen. Welche anderen Firmen haben denn jetzt noch so eine ISP-ähnliche Präsenz in der Wolke? Na ja, dass sie halt an Peerings machen, dass sie an vielen Internet-Exchanges präsent sind, so wie Google das ist. Gibt es da noch andere? Ja, aber das sind ja auch ISPs. Facebook. Ja, so was meine ich halt. Also Firmen, die jetzt nicht ISPs sind, deren Business-Modell nicht primär Zugang zum Internet verschaffen ist, sondern die sozusagen selber sind. Also Facebook ist bei euch dann auch...
+
+01:00:02.784 --> 01:00:06.264
+<v SPEAKER_2>Am six dot net slash connected, da gibt es eine ganze Liste.
+
+01:00:06.284 --> 01:00:07.164
+<v SPEAKER_3>Ja.
+
+01:00:07.184 --> 01:00:16.864
+<v SPEAKER_2>Facebook ist bei uns auch. YouTube war es, bevor sie jetzt halt bei Google sind.
+
+01:00:16.884 --> 01:00:18.704
+<v SPEAKER_3>Ich gucke mal hier, wer bei euch da alles so rumliegt.
+
+01:00:18.724 --> 01:00:19.684
+<v SPEAKER_2>Schau mal, genau.
+
+01:00:19.704 --> 01:00:26.884
+<v SPEAKER_3>Ah, AdMob, Werbungsfirmen. Auch Firmen, die ich gar nicht kenne.
+
+01:00:29.684 --> 01:00:36.724
+<v SPEAKER_2>Du, das sind genug Firmen, die ich vorher auch nicht kannte. Super viele, die kommen aus Dänemark, glaube ich.
+
+01:00:40.824 --> 01:01:11.704
+<v SPEAKER_1>Im Endeffekt kann ein Exchange jede Firma teilnehmen, die erstens mal ein eigenes AS hat und Interesse daran hat, Daten auszutauschen und genug Daten hat, damit es dich Sinn macht. Das können im Endeffekt auch normale Enterprise-Companies sein. Also theoretisch, keine Ahnung, BMW, Lufthansa, wie auch immer, irgendwelche normalen Firmen, die eben irgendwelche normalen Produkte herstellen, sozusagen nicht so virtuelle Produkte wie wir. Die können im Endeffekt auch an einen Exchange.
+
+01:01:11.724 --> 01:01:15.064
+<v SPEAKER_3>Was ist AS?
+
+01:01:15.084 --> 01:01:17.664
+<v SPEAKER_5>Eine Nummer.
+
+01:01:17.684 --> 01:01:42.184
+<v SPEAKER_1>AS steht für Autonomes System. Das ist im Endeffekt eine eindeutige Nummer, die einem Netzwerk zugewiesen wird. Und es ist grob so was wie eine Hausnummer oder eine Telefonnummer. Das ist eine eindeutige Nummer, mit der praktisch jedes Netz identifizierbar ist. Und das ist eben wichtig für die ganzen Routing- und BGP-Geschichten.
+
+01:01:42.304 --> 01:01:54.484
+<v SPEAKER_3>Ich würde eher sagen, so was wie eine Postleitzahl eigentlich. Das ist ja doch schon auf einem relativ großen... Also ich habe kein AS bei mir zu Hause. Ich, der ich hier in so einer Hausnummer untergebracht bin.
+
+01:01:55.924 --> 01:02:28.684
+<v SPEAKER_2>Du kriegst ja in dein AS zugewiesen, oder kannst halt eine All-Done sozusagen vom RIPE, wenn du tatsächlich Netzwerkaktivitäten vornimmst. Das heißt, wie du vorhin meintest, wenn du jetzt hier deinen kleinen ISP bauen willst, sobald du irgendwie genug Services hast, dass du tatsächlich Transit einkaufen willst, irgendwann wächst halt dann in die Größe, wo du jetzt denkst, okay, ich bin jetzt mein eigenes Netzwerk, ich habe jetzt irgendwie meine eigenen IPs, ich brauche jetzt auch eine eigene AS-Nummer. Machen wir ja für den Kongress zum Beispiel jedes Jahr.
+
+01:02:28.704 --> 01:02:32.084
+<v SPEAKER_3>Chaos Communication Kongress ist selber auch ein autonomes System.
+
+01:02:32.104 --> 01:02:40.264
+<v SPEAKER_2>Das ist eine AS, das hat irgendwie IP-Adressen, da gibt es größtenteils Transit von verschiedenen Providern.
+
+01:02:40.284 --> 01:02:50.404
+<v SPEAKER_3>Warum ist der Kongress ein AS an dem Moment? Also welchen Vorteil bietet das? Because we can, aber es hat ja auch technische Vorteile.
+
+01:02:50.424 --> 01:02:57.924
+<v SPEAKER_2>Wir kriegen halt einen ganzen Haufen IP-Adressen, das heißt, jeder Teilnehmer auf dem Kongress hat eine externe IP-Adresse.
+
+01:02:57.944 --> 01:03:15.784
+<v SPEAKER_3>Das heißt, die Konsequenz, bleiben wir mal kurz beim Kongress, ein schönes Beispiel, auch für so eine temporäre Installation. Der Kongress selber ist von vornherein gleich mit mehreren Providern verbunden. Also hat quasi Peering für kurze Zeit oder Transit.
+
+01:03:15.804 --> 01:03:17.444
+<v SPEAKER_2>Ja, Transit-Peering.
+
+01:03:17.464 --> 01:03:24.864
+<v SPEAKER_3>Also man erreicht das ganze Internet, aber über verschiedene Provider. Das ist dann in der Regel ja Teil der Sponsoring-Leistung.
+
+01:03:24.884 --> 01:03:27.484
+<v SPEAKER_2>Genau, den wir dann aber gesponsert kriegen von Kongressen.
+
+01:03:27.504 --> 01:03:40.164
+<v SPEAKER_3>Aber um das zu machen, also um überhaupt auf diesem ISP-Level zu reden, also um so etwas wie Transit zu machen oder Peering zu machen, was auch immer das Bezahlmodell und Traffic-Modell letzten Endes ist, ist diese AAS quasi eine Voraussetzung.
+
+01:03:40.184 --> 01:03:40.864
+<v SPEAKER_2>Und IPA-Draft.
+
+01:03:40.884 --> 01:03:42.504
+<v SPEAKER_3>Und wer gibt mir die?
+
+01:03:42.524 --> 01:03:43.744
+<v SPEAKER_2>Die gibt dir das RIPE.
+
+01:03:43.764 --> 01:03:47.184
+<v SPEAKER_3>Das RIPE ist wer?
+
+01:03:47.204 --> 01:03:50.244
+<v SPEAKER_2>Das ist ein französischer Name, den kann ich mir immer nicht merken.
+
+01:03:51.704 --> 01:04:00.124
+<v SPEAKER_3>Reso IP Europäen. Das deutsche europäische IP-Netz.
+
+01:04:00.144 --> 01:05:07.284
+<v SPEAKER_2>Pas de problème. Es gibt auf der Welt fünf sogenannte AERs, die verteilen IP-Adressen für ihre bestimmte Region. Die gibt es irgendwie nach Regionen. RIPE tut das in Europa. Es gibt irgendwie LACNIC in Südamerika, ARIN in Nordamerika, AFRINIC in Afrika und APNIC in Asien. Und die haben halt aus dem Pool an AS-Nummern und IP-Adressen ihren Teil. RIPE hat seinen Teil, ARIN hat ihren Teil. Und den verteilen sie dann weiter und managen, dass wer welche Adressen hat, ob sie ihm überhaupt zustehen und so weiter und so fort. Und verteilen die halt an Firmen. Das heißt, wenn du jetzt irgendwie deinen ISP gründest, dann schreibst du dem RIPE eine Mail und füllst dann ein Formular aus und erklärst denen, dass du hier jetzt gerade 50 Server gekauft hast und für die IP-Adressen brauchst und ein Netzwerk aufbaust und eine AS-Nummer brauchst. Und dann weisen sie dir das zu.
+
+01:05:08.164 --> 01:06:04.364
+<v SPEAKER_3>Also RER, Regional Internet Registry ist der Begriff. Da ist im Wesentlichen, man hätte es ja eigentlich auch eher Continental Internet Registry nennen können, weil es sich im Wesentlichen auf die Kontinente erstreckt, also Nordamerika, Zentral- und Südamerika ist eine Gruppe, Afrika, Eurasien ohne China und Indien, die dann wiederum mit Ozeanien zusammenfallen, so mal grob verortet. So, und da bekomme ich meine Adressen, die IP-Adressen. Und außerdem bekomme ich aber noch diese AAS-Nummer. Die AAS-Nummer ist ja jetzt in dem normalen Internet-Traffic, also wir wissen ja alle IP-Adressen und so weiter, brauche ich bei jedem Klick. Aber die AAS-Nummer in dem Sinne spielt in meinem eigentlichen Datenverkehr keine Rolle, sondern das ist nur eine Zahl und eine Größe und eine Identität innerhalb dieses ASP-Kommunikationsverkehrs.
+
+01:06:04.384 --> 01:06:56.264
+<v SPEAKER_2>Ja, genau, die AAS-Nummer spielt beim BGP dann eine Rolle. BGP ist das Border Gateway Protocol und das ist halt das Protokoll, worüber die Netzwerke untereinander kommunizieren und worüber dann im Prinzip dieser ganze Baum gebaut wird. Es ist halt ein Routing-Protokoll, was rechnet, du hast halt, wie du schon vorhin festgestellt hast, du kannst halt mehrere Transits, Peerings, Zeugs und so weiter haben und willst halt da irgendwie den besten, kürzesten Weg drin finden und BGP kriegt halt diese verschiedenen Optionen, wie komme ich jetzt irgendwie zu dieser Destination und rechnet sich in dem ganzen aus, was jetzt mein bester Weg ist und sollte ich das jetzt irgendwie über das Peering schicken oder über einen Transit oder wo muss es jetzt eigentlich lang?
+
+01:06:56.284 --> 01:07:32.904
+<v SPEAKER_3>Das heißt, wenn ich jetzt groß genug bin, das heißt ich bin entweder ein Chaos-Communication-Kongress oder ein aufstrebender Internet-Dienste-Anbieter oder Internet Service Provider. Das war jetzt fast derselbe Begriff, aber Internet-Dienste mache ich sowas wie Facebook. Also ich bin irgendwie eine tolle Webseite, die alle schnell erklicken sollen und ich wachse einfach auf einem bestimmten Level und ich möchte jetzt mitspielen. Dann gehe ich zu meiner zuständigen Registrie und sage hier, gib mal Adressen her und ich hätte aber auch ganz gerne mal eine AAS, weil ich bin wichtig. Wann geben die mir sofort eine?
+
+01:07:32.924 --> 01:07:56.024
+<v SPEAKER_1>Du bekommst dann eine AAS, wenn du Multi-Homing erfüllst. Das heißt, im Endeffekt, wenn du mit verschiedenen Netzen reden willst zur gleichen Zeit. Weil zu Hause, und das ist eben der Unterschied, wo du keine AAS hast, bist du an einen Provider angeschlossen. Willst du jetzt an verschiedenen Providern angeschlossen sein und deinen eigenen IP-Space den allen mitteilen, dann brauchst du eben diese AAS-Nummer. Das ist jetzt erstmal unabhängig von der Größe.
+
+01:07:56.044 --> 01:08:05.384
+<v SPEAKER_3>Wenn ich jetzt nur einen Transit mache, also wenn ich jetzt sozusagen das erste Modell, was wir haben, ich mache Transit durch den nicht größeren Provider, dann bin ich noch gar kein AAS.
+
+01:08:05.404 --> 01:08:10.164
+<v SPEAKER_1>Dann würdest du keins bekommen, weil du die Richtlinien nicht erfüllst. Du brauchst mindestens zwei Transit-Provider.
+
+01:08:10.424 --> 01:08:36.564
+<v SPEAKER_3>Okay, aber egal, ob Peering oder Transit ist, Hauptsache ist es mehr als eins. Multi-Homing. So und ab dem Zeitpunkt, wo ich quasi mehr als einen Weg habe, wo es nicht alles nur ein Default-Weg ist und dann kümmert sich wer auch immer, mit dem ich da verbunden bin, da drum, dem Moment, wo ich quasi selber auch Entscheidungen fällen muss, darüber schicke ich jetzt dieses Paket dahin oder schicke ich es dahin. In dem Moment bin ich quasi verpflichtet, BGP zu sprechen.
+
+01:08:36.584 --> 01:08:43.024
+<v SPEAKER_1>Das ist richtig. Das ist die einzige Möglichkeit, wie du mit den anderen Provider reden kannst. Das ist die Sprache, die zwischen den Providern gesprochen wird.
+
+01:08:43.324 --> 01:08:47.804
+<v SPEAKER_3>Ich will BGP sprechen. Das brauche ich als meinen eigenen BGP-Server.
+
+01:08:47.824 --> 01:09:35.444
+<v SPEAKER_1>Ja, im Endeffekt macht das dein Router. Das ist so ähnlich wie das Equipment, was du zu Hause hast, was an deinem ADSL hängt, nur ein bisschen größer mit viel mehr Funktionen. Und das spricht verschiedene Routing-Protokolle und hoffentlich auch BGP. Und das ist dann mit einer Fiber zum Beispiel mit dem anderen Provider, mit dem du sprechen willst, egal ob Peering oder Transit verbunden. Und dann wird ebenso eine BGP-Session oder ein Peering-Session konfiguriert. Das heißt, du tauschst dann IP-Adressen aus und sagst auf der anderen Seite, mit der IP-Adresse sprich jetzt dieses Protokoll und dann announced dir, sprich die andere Seite, gibt dir dann all die Priefixe, all die IP-Blöcke, die sie erreichen kann und die sie will, dass du erreichst über sie.
+
+01:09:35.464 --> 01:09:41.664
+<v SPEAKER_3>Das heißt, ich klopfe da erstmal an und sage erstmal meine AS-Nummer. Gestatten, AS-Nummer, was auch immer.
+
+01:09:41.684 --> 01:10:06.764
+<v SPEAKER_2>Und eine IP-Adresse. Du hast halt als Identifier, hast du halt eine IP-Adresse und eine AS-Nummer. Das tippst du in deinen Router rein. Ich möchte zu dieser AS auf dieser IP-Adresse eine Session haben. Und dann schickt er an dieser IP-Adresse erstmal so seine Hallo-Pakete und sagt, ich möchte zu dir eine Session. Und dann geht das so ein bisschen hin und her, dass die irgendwie miteinander und so eine Session established haben.
+
+01:10:06.784 --> 01:10:08.764
+<v SPEAKER_3>Woher kenne ich diese IP-Adresse?
+
+01:10:08.784 --> 01:10:12.044
+<v SPEAKER_2>Die musst du reintippen. Da redest du vorher mit den Leuten.
+
+01:10:12.064 --> 01:10:12.844
+<v SPEAKER_3>Die kriege ich gesagt.
+
+01:10:12.864 --> 01:10:13.624
+<v SPEAKER_2>Die kriegst du gesagt.
+
+01:10:13.644 --> 01:10:19.084
+<v SPEAKER_3>Es gibt jetzt keinen AS-Server, der mir dann auch noch mal das auflöst, so wie ein DNS-Server oder so.
+
+01:10:19.084 --> 01:10:25.884
+<v SPEAKER_2>Die kriegst du gesagt, nachdem du dich mit denen einigst, dass wir jetzt tatsächlich peeren wollen, dann sagen sie dir, du kannst mich erreichen und dann ist der IP und der erste Nummer.
+
+01:10:25.904 --> 01:10:28.544
+<v SPEAKER_3>Also das ist sozusagen der manuelle Routing-Teil des Internets.
+
+01:10:28.564 --> 01:10:55.964
+<v SPEAKER_2>Genau, das ist das, was wir sozusagen tun. Sachen in Router reintippen. Als Beispiel am AMSIX haben wir zum Beispiel ein Slash 22, was unser Peering-Lan ist und jeder Member, jeder Port, nee, na, Multiple Ports, kriegen dann halt aus diesem Slash 22 eine IP-Adresse zugeteilt, die sie sich auf ihrem Router konfigurieren und das dann halt ihr Identifier ist, um mit den anderen auf dem Laden kommunizieren zu können.
+
+01:10:58.004 --> 01:11:20.304
+<v SPEAKER_3>Also aus diesem Slash 22, also 1024 Adressen, das sind nur die Adressen, die ihr als AS-Ansprechpartner an unsere Kunden geben. Wie als AS-Ansprechpartner? Also diese an die Kunden geben, im Sinne von, das ist die IP-Adresse, wo BGP gesprochen wird.
+
+01:11:20.324 --> 01:11:46.744
+<v SPEAKER_2>Genau. Die müssen sie dann halt auf ihrem Router konfigurieren und dann können sie allen anderen am AMSIX sagen, das ist meine AMSIX-IP mit meiner AS-Nummer so und so und ich will jetzt mit dir peeren. So, und dann machen wir jetzt bei der Session. Wenn die Session dann erstmal da ist, dann schickt dein Router, du tippst halt vorher in deinen Router auch mit rein, was du für Präfixe hast, die er annoucen soll.
+
+01:11:46.764 --> 01:11:50.564
+<v SPEAKER_3>Also Präfixe im Sinne von, welche Netze erreichbar sind, die dir zugeteilt werden.
+
+01:11:50.584 --> 01:11:59.084
+<v SPEAKER_2>Das sind ja zwei Präfixe, die dir von RIPE zugeteilt wurden, die du auf deinen irgendwie 20 Servern hast in deinem Arcolo. Die sind da auf diesem Router sozusagen.
+
+01:11:59.104 --> 01:12:06.184
+<v SPEAKER_3>Und ich brauche im Prinzip für jedes Homing, also für jede Verbindung, brauche ich mindestens ein Netz.
+
+01:12:06.204 --> 01:12:15.484
+<v SPEAKER_1>Nein, du brauchst für jeden Provider eine BGP-Session, aber du annoucst immer dieselben IP-Adressen, weil du möchtest ja, dass die über verschiedene Wege erreichbar sind.
+
+01:12:20.164 --> 01:13:45.564
+<v SPEAKER_2>Weiter mit BGP? Okay, dann schickt dieses BGP, also, weil es kennt ja jetzt seine Präfixe, schickt es sogenannte Update-Pakete, wo im Prinzip drin steht, den Präfix, den du ihm sozusagen sagst, das ist meiner, und so von interessanten Informationen, die wir noch haben wollen, ist wahrscheinlich dann der AS-Fahrt noch so relevant, weil, okay, die Sache ist die, wenn das dann weiter und weiter und weiter announced wird von deinem, weil dein Transit Provider kriegt ja dann sozusagen deine Präfixe und erzählt dem Rest der Welt, ich weiß, wo diese Präfixe sind, die kannst du über mich erreichen, und fügt dann sozusagen seine AS-Nummer in diesen Fahrt hinein. Das heißt, du hast dann eine Liste von AS-Nummern, durch die das durchgeht, bis es in deinem Netzwerk, dein Netzwerk, deine AS muss halt die letzte sein in dieser Liste, weil da sind dann diese Präfixe tatsächlich. Und diese Liste sammelt sich dann halt so durchs Internet an und auf Basis davon stellt dann BGP, wenn es dann, also das ist ja jetzt erstmal nur dieses Control Framework, wenn du dann tatsächlich Traffic schicken willst über diese Verbindungen, anhand von diesen Informationen stellt es dann irgendwie fest, okay, wenn ich hier einen Fahrt habe, der irgendwie zwei Hops von mir entfernt ist und hier einen, der durch 15 Netze durchgeht, dann schicke ich den doch lieber hier lang, weil es ja viel kürzer.
+
+01:13:46.064 --> 01:15:18.564
+<v SPEAKER_3>Okay, ich fasse nochmal kurz zusammen. Also ich habe jetzt meinen tollen ASP gegründet mit dem Unique Selling Point, was auch immer und jetzt bin ich schon so cool und ich bin mit zwei verbunden. Hab mir irgendwie von der Raipe, weil ich in Europa sitze, habe ich mir irgendwie Adressen zuteilen lassen, hab dann noch eine AS dazu bekommen, genau eine und rede, hab dann irgendwie von diesen Peering-Partnern oder Transit-Partnern, was es auch immer sein mag, in dem Moment eine IP-Adresse genannt bekommen, da läuft deren BGP-Server drauf. Und dann habe ich meinen BGP-Server und sag ihm sowohl die eine als auch die andere Adresse, also Netzwerk A und Netzwerk B oder Partner A und B nenne ich es jetzt mal und dann fängt er mit beiden an zu reden und sagt ihnen, also hier gibt es irgendwie folgende Netze zu erreichen. Also nennen wir mal an, es ist nur ein einziges, so dann sagt er halt dieses eine Netz, so und die wiederum reden ja auch mit vielen anderen, also mit wem auch immer sie peeren, BGP wiederum und reichen diese Informationen, dass über sie mein Netzwerk, was zur DAS sowieso gehört, zu erreichen ist. Die das weiter reichen, die das weiter reichen, die es weiter reichen und wenn ich dann irgendwie so zehn, haupts weiter irgendwo in Afrika, wo jemand dann irgendwie meine Internetadresse eingibt und sagt da ist ja ein cooler Server, da möchte ich mich jetzt mal hin verbinden, dann liegt dem vor so eine Sprung, so ein Pfad, so irgendwie du gehst erst von AS N zu M zu X zu was weiß ich und irgendwann ganz am Ende ist es meine AS. Aber wie macht man daraus dann so ein richtiger?
+
+01:15:18.584 --> 01:15:25.444
+<v SPEAKER_2>Vorhin hatten wir ganz kurz nur beim Peering macht man das halt normalerweise nicht, dass man andere Netzwerke weiter announced.
+
+01:15:26.064 --> 01:15:26.484
+<v SPEAKER_3>Weil?
+
+01:15:26.504 --> 01:15:27.504
+<v SPEAKER_2>Das hatten wir ja vorhin.
+
+01:15:27.524 --> 01:15:29.764
+<v SPEAKER_3>Achso, weil das sozusagen nur das eigene Netzwerk.
+
+01:15:29.784 --> 01:15:37.004
+<v SPEAKER_2>Free Austausch, da announced nur dein eigenes, über deine Transit-Angebote würdest du dann auch tatsächlich gehen.
+
+01:15:37.024 --> 01:15:41.244
+<v SPEAKER_3>Verstehe, also Transit reicht weiter und Peering reicht in der Regel nicht weiter.
+
+01:15:41.264 --> 01:16:22.604
+<v SPEAKER_2>In der Regel. Das kommt halt immer auch auf die Firma an. Es gibt dann halt noch diese Network Provider. Also wenn man jetzt so vom Content und ISP absieht, gibt es halt noch so ein Network Provider, deren Job es halt ist, dein Netzwerk weiter zu promoten, die sich darum kümmern, dass du ein Netzwerk hast, die dir das sozusagen verkaufen. Die announced dann auch andere Routen weiter, auch über Peering. Aber das ist dann halt Teil ihrer Policy und das kannst du dann bei ihnen auch nachschauen, welche Firmen, welche Präfixe sie dann auch tatsächlich annoucen würden und so weiter. Also es ist halt alles sehr transparent, sollte sein.
+
+01:16:22.624 --> 01:16:59.164
+<v SPEAKER_1>Was ja im Endeffekt passiert ist, ist, du announced deine Präfixe, die deiner Kunden und dein Netz weiter. Am Anfang, wenn du nur ein kleiner ISP hier in Berlin bist, dann sind alle deine Kunden irgendwelche, keine Ahnung, DSL-Kunden oder sowas in der Richtung. Angenommen, dein Esprit reicht jetzt und du kriegst noch andere Firmen, dann mag dein Netz irgendwann so groß sein, dass du auch Produkte verkaufst, wo du andere kleine ISPs, wie du früher einer warst, jetzt selbst anschließt. Das heißt, du wirst sozusagen zum Business Provider oder zum Wholesale Provider. In dem Fall announced du nicht nur deine eigenen Adressen, sondern auch deren Adressen.
+
+01:16:59.184 --> 01:17:00.924
+<v SPEAKER_3>Also weil ich jetzt Transit anbiete sozusagen.
+
+01:17:00.924 --> 01:17:16.144
+<v SPEAKER_1>Genau. Das heißt, bei Peering announced du immer deine eigenen Adressen und die deiner Kunden, inklusive deren AS und dann bist du praktisch dann nicht mehr am Ende vom ISP-Fahrt, sondern du bist dann halt irgendwo mehr in der Mitte.
+
+01:17:16.164 --> 01:17:34.024
+<v SPEAKER_3>Man rutscht immer mehr in die Wolke hinein. Tja, wie gut funktioniert denn das, dieses BGP? Was kommt denn da für ein Thema zu?
+
+01:17:34.044 --> 01:17:38.544
+<v SPEAKER_2>Erstaunlich gut für die Umstände. Ich glaube, so kann man das...
+
+01:17:38.564 --> 01:17:41.044
+<v SPEAKER_3>Wie sind denn die Umstände?
+
+01:17:41.064 --> 01:18:12.524
+<v SPEAKER_2>Die Umstände sind, dass es halt sehr unkontrolliert ist, weil im Prinzip jeder kann seine mit genug Begründung, ich bin jetzt eine Firma, AS- und IP-Adressen kriegen, jeder kann sich damit anschließen, das wächst halt alles und wird immer mehr. Und keiner passt da halt irgendwie auf eine Art Struktur auf, sondern GGP halt. Und wenn du jetzt irgendwie...
+
+01:18:12.544 --> 01:18:27.704
+<v SPEAKER_3>Also gibt es denn da so Authentifizierung? Ist das so Teil dieses Protokolls? Kann da jetzt irgendwie... Jeder Anfang wird da gehackt, kommen da irgendwie böse Menschen und sagen, sie sind irgendjemand, verhalten sich da alle richtig. Es gab doch da so diverse Inzidenz.
+
+01:18:28.564 --> 01:18:34.144
+<v SPEAKER_2>Das ist also gehackt im Sinne von, du kannst ja...
+
+01:18:34.164 --> 01:18:47.544
+<v SPEAKER_3>Also man hat ja eine Menge Macht darüber. Wenn ich jetzt im Internet bin und mein BGP-Router dreht durch und macht irgendwie schlimme Sachen, dann hat das ja nicht nur Konsequenzen für mich, sondern unter Umständen auch für mein komplettes Umfeld oder sogar das ganze Netz.
+
+01:18:48.104 --> 01:20:11.364
+<v SPEAKER_1>Das ist prinzipiell richtig, da kommt es jetzt aber drauf an. Normalerweise verhindert das Protokoll bis zum gewissen Punkt, dass zu viel schief geht. Der andere Punkt ist, wenn du deinen Router richtig konfigurierst und gewisse Sicherheitsmaßnahmen auf deiner Seite mit berücksichtigst, dann kann dir dein Nachbar, egal ob er jetzt böse ist oder einfach nur unwissend, eigentlich gar nicht so viel anhängen oder Probleme bereiten. Das heißt, du hast schon Möglichkeiten, dich davor zu schützen. Zum Beispiel? Ein Beispiel ist zum Beispiel, ich könnte jetzt hingehen, ich bin jetzt der böse Provider in dem Beispiel und ich geh jetzt hin und ich behaupte jetzt einfach, ich hätte Adressen, die in Wirklichkeit dir gehören, und annonce die jetzt. Du hast jetzt irgendeinen Webserver und ich sage jetzt, ich möchte die jetzt umleiten auf meine Webseite und annonce genau dieselben IP-Adressen wie du. Dann sollte unser jeweiliger Transit Provider Filter haben auf seiner Seite, welche Adressen er von mir annimmt. Und wenn ich ihm falsche Unterjubel, die mir in Wirklichkeit nicht gehören, weil die sind ja im Reit zum Beispiel registriert, das heißt, er kann dann nachschauen, nicht manuell, das macht ein Programm, schaut nach. Und wenn ich dann praktisch Adressen weitergebe oder sage, die gehören mir, die mir in Wirklichkeit aber gar nicht gehören, dann nimmt er diese BGP-Updates nicht an und verteilt sie auch nicht weiter.
+
+01:20:11.624 --> 01:20:15.164
+<v SPEAKER_3>Das wird auch gemacht oder ist das so eine Option, könnte man mal einschalten?
+
+01:20:15.184 --> 01:20:54.684
+<v SPEAKER_1>Ich würde sagen, das wird schon, es wird auf jeden Fall zur Kundenseite, ich denke schon zu 90% oder 95% oder so gemacht. Das heißt, die Transit-Provider passen schon, speziell bei ihren kleineren Kunden auf, dass die meistens aus Unwissenheit eben nichts Falsches announcen. Wo es dann schon schwieriger ist, solche Listen zu generieren, ist dann bei einem Peering oder bei einem Private Peering, weil du dann ja nicht nur deine Netze announcest, sondern unter Umständen all die deiner Kunden. Und wenn du paar tausend Kunden hast, dann sind das plötzlich so viele Präfixe, dass diese Listen und das Pflegen des Ganzen ziemlich aufwendig wird. Das heißt, man filtert normalerweise nicht auf Peering-Seite, sondern nur, wo die Sachen ins Netz reinkommen. Und da wird das aber schon gemacht.
+
+01:20:54.864 --> 01:21:35.964
+<v SPEAKER_2>Das ist halt diese YouTube-Geschichte, die man so von vor ein, zwei Jahren kennt. Das war halt genau das Problem. Dass Pakistan Telekom den YouTube-Prefix annunzt hat. Noch ein kleiner Fakt am Rande. Das heißt, matters. Es guckt halt immer nach der Größe des Prefixes, sozusagen. Was guckt nach der Größe des Prefixes? Mein eigentlicher Traffic, den ich dann verschicke. Also ich schicke meinen Traffic jetzt an eine bestimmte IP-Adresse. Und diese IP-Adresse wird jetzt auf dem Router eine Liste von Prefixen. Und ich schaue halt, in welchen Prefix passt jetzt diese IP-Adresse.
+
+01:21:35.984 --> 01:21:41.284
+<v SPEAKER_3>Wissen wir jetzt, reden wir jetzt von BGP oder normalem Traffic?
+
+01:21:41.304 --> 01:22:58.784
+<v SPEAKER_2>Wir reden jetzt von normalem Traffic. Du rufst jetzt eine Webseite auf, die irgendwie auf IP-Adresse A ist. Und dann geht der Traffic da erstmal so durch bis zu deinem ISP. Und dann muss der ISP irgendwann gucken in seiner BGP-Table dann, wo ist jetzt dieser Präfix. Und dann versucht er zu matchen, die IP-Adresse ist irgendwie in diesem Präfix beinhaltet, weil es ja immer so eine Ansammlung ist. Und was es dann gibt, ist halt verschiedene, also es gibt halt verschiedene Größen an Präfixen. Wenn du jetzt irgendwie so ein Slash-22-Kann halt irgendwie mehrere Slash-24-er beinhalten. Die unter anderem alle separat in dieser Liste vorkommen können. Und was es dann halt tut, es nimmt das kleinste Paket. Und es würde dann halt, wenn es tatsächlich ein Slash-24 zu dieser IP-Adresse gibt, würde es die Route von diesem Slash-24 nehmen, um dort irgendwo anzukommen. Und was Pakistan Telekom gemacht hat, und das heißt dann alles irgendwie more specifics, und was Pakistan Telekom getan hat, es hat eine more specific Präfix zu Adressen von YouTube announced, der dann natürlich von verschiedensten ISPs, wo er nicht geblockt wurde, bevorzugt wurde.
+
+01:22:58.804 --> 01:23:07.924
+<v SPEAKER_3>Also warum haben sie das getan? Pakistan hat das deshalb getan, weil irgendein gotteslästerliches Video auf YouTube aufgetaucht ist, und das kann ja nicht sein. Richtig?
+
+01:23:08.404 --> 01:23:10.544
+<v SPEAKER_2>Ich glaube, es war ein Accident, oder?
+
+01:23:10.564 --> 01:23:49.244
+<v SPEAKER_1>Nein, es ging, glaube ich, um eine Sperrung, oder nicht? Es ging um eine Sperrung, und zwar wollten sie, gotteslästerlich oder nicht religiös konform zu ihrer, was auch immer, Policy, wollten sie verhindern. Und sie haben dann angefangen, ein Präfix, das eben nicht ihnen gehört hat, sondern YouTube oder Google heutzutage, das vorher eben in einem größeren Blog war, ein sogenanntes More Specific zu annoucen. Das heißt, die Router, die in der Routing-Tabelle nachgeschaut haben, haben dann plötzlich festgestellt, ich sehe hier eben ein More Specific, sprich ein 24, anstelle eines 22ers, und ich muss 24er bevorzugen, und sind halt dann in die Richtung von Pakistan Telekom gegangen.
+
+01:23:49.804 --> 01:24:07.404
+<v SPEAKER_3>Das heißt, anstatt eine Blockade aufzubauen, also was sie de facto verhindern wollten, ist, dass Internetnutzer in Pakistan YouTube erreichen. Und anstatt einfach den Trafik als solchen zu sperren und zu filtern, haben sie sich gedacht, wir leiten den um.
+
+01:24:07.424 --> 01:24:09.804
+<v SPEAKER_1>Ich glaube, sie haben nicht wirklich gedacht, das war ja der Punkt.
+
+01:24:09.824 --> 01:24:35.164
+<v SPEAKER_3>Sie haben nicht gedacht, aber sie haben dann einfach beschlossen, dass die technische Lösung dessen ist, dass, naja, wenn YouTube sowieso zu uns zeigt, dann kommen sie alle nicht aus dem Netz raus. Was ja der Logik, dass man nur regional agiert, auch funktioniert. Bloß den Seiteneffekt hat, dass durch dieses Announcement die ganze Welt, oder zumindest einen Teil dieser Welt, die Informationen bekommen hat, YouTube ist ab jetzt in Pakistan.
+
+01:24:35.404 --> 01:24:54.884
+<v SPEAKER_2>Also ich glaube, der Taipo an der Gewalt, sie haben ja dann tatsächlich irgendwo einen Fehler an der ganzen Sache gemacht. Ich glaube, was sie eigentlich tun wollten, sie wollten es halt nicht nach außen hin annoucen, sondern nur für ihre Kunden und ihr Land zu haben. Und ich glaube, das Problem ist dann gewesen, dass sie es halt nach draußen in die Welt geleakt haben. Genau.
+
+01:24:54.904 --> 01:25:17.924
+<v SPEAKER_1>Und in dem Fall hat jetzt eben der Transit Provider von Pakistan Telekom damals gepennt, hätte er nämlich Filter gehabt, die nachgeschaut hätten, dann hätte er festgestellt, dass Pakistan Telekom nicht der Besitzer von YouTube ist und sie dieses Prifix aus diesem Blog nicht annoucen dürfen. Ich glaube, es war damals PCCW. 3549 ist die heiße Nummer.
+
+01:25:17.944 --> 01:25:20.884
+<v SPEAKER_3>Das ist eine international arbeitende Firma?
+
+01:25:20.904 --> 01:25:46.724
+<v SPEAKER_1>Genau, das ist ein international arbeitender Transit Provider. Wie gesagt, ich bin mir nicht ganz sicher, das ist das, was ich im Gedächtnis habe. Heißt, sich aber gut nachgoogeln. Die haben an der Stelle nicht gefiltert. Und nachdem Piers sich untereinander nicht filtern, wie vorhin erwähnt, wurde dieses Prifix eben als more specific in die halbe Welt announced. Hätten die richtig gearbeitet an der Stelle, wäre eben auch wieder nichts passiert. Andere lustige Beispiele...
+
+01:25:46.744 --> 01:26:15.764
+<v SPEAKER_3>Also more specific, um das noch mal zu verdeutlichen, heißt, alle hatten ja im Prinzip schon einen Eintrag für YouTube-Netze. Aber dann kam halt diese andere Ankündigung, und die hat sich auf ein kleineres Netz bezogen. Und dann war das halt genauer. Von daher kam das daher wie eine Optimierung. Und diese Optimierung wurde dann aber von vielen auch einfach so übernommen, obwohl sie halt nicht hätte stattfinden dürfen. Mit dem Effekt, was war dann sozusagen die Auswirkung davon?
+
+01:26:15.784 --> 01:26:44.444
+<v SPEAKER_1>Ein Teil der Leute in Asien oder der Kunden, die Transit-Kunde von PCCW sind, haben dann eben dieses more specific gesehen und haben dann gedacht, na gut, dann habe ich hier einen besseren Weg zu YouTube. Dann nehme ich den jetzt. Und dann wurde der Treffig halt Richtung Pakistan Telekom geschickt. Da ist dann, weil es plötzlich sehr, sehr viel Treffig war, einmal ist da natürlich kein YouTube-Server, das ist ein Problem. Auf der anderen Seite ist dann auch viel Treffig hingegangen, dass Pakistan Telekom auch nicht glücklich damit war.
+
+01:26:44.464 --> 01:26:52.324
+<v SPEAKER_3>Was heißt das? Sie haben sich sozusagen die Pilzebub ins Haus geholt und auf einmal schlug irgendwie eine Treffigmasse auf, die sie so bisher noch nicht gesehen haben.
+
+01:26:54.084 --> 01:28:16.504
+<v SPEAKER_1>Ein anderes Beispiel, was hin und wieder an Internet-Exchangen passiert ist, ist, dass die Leute eben nicht nur ihre eigenen Präfixe annuncen, wie wir gesagt haben, sondern auch eine sogenannte Default-Route. Das heißt, das ist im Vergleich zu den ganzen Präfixen, die in der BGP-Table sind, einfach eine und die gilt für das ganze Internet. Das heißt, nach dem Motto, folge mir, ich weiß, wo es langgeht. Diese Default-Route wird normalerweise, wenn du clever bist an so einem Internet-Exchange, dann filterst du die. Das heißt, wenn dir irgendjemand sagt, hier ist das ganze Internet, dann glaubst du dem nicht. Weil, erstens, du willst dir nur seine Kunden erreichen. Und zweitens, wenn er das macht, for free, dann irgendwas passt da nicht. Und dann gibt es auch Beispiele, wo dann kleine regionale Provider eben so eine Default-Route announced haben, weil sie eben ihre Updates und die Konfiguration ihrer Route nicht unter Kontrolle hatten. Und die Leute, die dann eben nicht filtern an so einem Exchange, die waren dann plötzlich der Meinung, dass halt die Zentrale des Internets jetzt in Regensburg ist. Und haben halt dann angefangen, Kalieres Treffix nach Regensburg zu schicken. Nachdem wir wissen, dass das Internet nicht unbedingt nur in Regensburg ist, hat es dann auch nicht wirklich gut funktioniert. Aber das kommt wieder zurück zu der Geschichte, wenn du filterst und eben aufpasst, was du bekommst und was du rausgibst, dann ist es eigentlich relativ stabil und funktioniert ziemlich gut.
+
+01:28:17.204 --> 01:28:22.724
+<v SPEAKER_3>Trotzdem gibt es aber in dem Protokoll jetzt so keine Krypto zur Authentifizierung oder solche Geschichten.
+
+01:28:22.744 --> 01:29:05.084
+<v SPEAKER_2>Es gibt etwas, um die Session zu authentifizieren. Also wenn du jetzt diese Session mit der anderen RS-Nummer mit der du jetzt auf dem selben Exchange bist, dann kann man sich vorher auf ein Passwort einigen. Da gibt es irgendwie eine Passwortoption, tippst du ein. Wenn dir jemand diese Session wegnehmen wollen würde, dann müsste er sich in dem selben Netz schon befinden, in dem du bist. Das heißt, Sessions, die jetzt irgendwie Kunden vom AMSIX mit anderen Kunden vom AMSIX haben können, einem nur von Kunden vom AMSIX weggenommen werden. Das heißt, so richtig von...
+
+01:29:05.104 --> 01:29:22.564
+<v SPEAKER_3>Macht man doch nur einmal. Also das Hauptproblem ist jetzt gar nicht Attacken, sondern eher Verpeilung. Und zwar Verpeilung sowohl bei jemandem, der etwas falsch annoucet, als auch dann eben bei jemandem, der etwas falsch annoucet, das nicht richtig prüft.
+
+01:29:22.704 --> 01:30:02.784
+<v SPEAKER_2>Also an Attacken gab es halt diese eine Geschichte jetzt irgendwo letztes Jahr auf der Defcon oder so. Irgendwas da drüben in den USA? Was haben die da nochmal genau gemacht? Also sie haben, glaube ich, auch für das Defcon-Netz eine More Specific announced. Das Lustige, warum es halt auch niemandem aufgefallen ist, ist, sie haben es tatsächlich dann wieder zurückgegeben durch ihr Netzwerk. Das heißt, sie haben im Prinzip nur dafür gesorgt, dass der Traffic einmal umgeroutet wurde durch ihr Netz und wieder weg. Und deswegen hat es über die komplette Konferenz niemand mitbekommen, dass da tatsächlich jemand mit jemandem eine Route gehyjagt hat und den Traffic einmal durch ihr eigenes Netzwerk geleitet.
+
+01:30:02.804 --> 01:30:13.124
+<v SPEAKER_3>Das heißt ja sozusagen, den ganzen Traffic der DEFKON einmal durch ihr Netzwerk rumgetunnelt und konnten ihn komplett belauschen. Das ist natürlich auch...
+
+01:30:13.144 --> 01:30:15.584
+<v SPEAKER_2>Da hat halt Pakistan Telekom...
+
+01:30:15.744 --> 01:30:17.224
+<v SPEAKER_3>Die konnten nichts am Anfang sozusagen.
+
+01:30:17.244 --> 01:30:35.424
+<v SPEAKER_2>Ich glaube, es war im Prinzip dasselbe Prinzip. Ich bin mir jetzt nicht ganz sicher, wie die das genau gemacht haben. Bei Pakistan Telekom war das Problem, sie hatten halt nichts dahinter und es ist irgendwo im schwarzen Loch gelandet. Da haben sie halt dafür gesorgt, dass es im Endeffekt dann doch noch irgendwie an dem Ziel ankommt.
+
+01:30:35.444 --> 01:30:56.104
+<v SPEAKER_3>Aber trotzdem könnte das nur deshalb funktionieren, weil jemand anders nicht richtig geprüft hat, ob diese Nummer... Das heißt, diese Nummerüberprüfung ist eigentlich sehr wichtig und da gibt es direkt einen Server beim jeweiligen regionalen Internet-Registry, also bei RYP zum Beispiel, wo man solche Live-Checks macht.
+
+01:30:56.124 --> 01:31:01.204
+<v SPEAKER_2>Die haben eine Datenbank, wo das alles drin steht und aus der Datenbank willst du das im Prinzip live rausholen.
+
+01:31:01.224 --> 01:31:03.744
+<v SPEAKER_3>Und diese Datenbank steht dann aber auch ganz gut unter Strom, oder?
+
+01:31:05.504 --> 01:31:09.084
+<v SPEAKER_1>Nein, du machst das nicht live. Was du machst, ist, du hast normalerweise...
+
+01:31:09.104 --> 01:31:10.644
+<v SPEAKER_2>Du musst das periodisch halten.
+
+01:31:10.664 --> 01:31:20.844
+<v SPEAKER_3>Das heißt, du hast schon immer ein Backup eigentlich von welcher ASP, welches AS auf diesem Planeten ist für welches Netzwerk zuständig? Da muss man ja eine komplette Kopie aller Netzwerke haben.
+
+01:31:22.264 --> 01:31:23.764
+<v SPEAKER_2>Die, die man halt braucht.
+
+01:31:23.784 --> 01:31:30.904
+<v SPEAKER_1>Nein, weil du filterst ja im Endeffekt nicht die ganze Welt. Du filterst im Endeffekt zum Beispiel deine Kunden. Und du hast ja nicht die ganze Welt als Grund.
+
+01:31:30.924 --> 01:31:37.284
+<v SPEAKER_3>Das heißt, du holst dir eine Kopie von all denen, mit denen du redest oder die mit dir reden.
+
+01:31:37.304 --> 01:31:47.244
+<v SPEAKER_1>Nein, auch nicht. Weil deine Peers filterst du normalerweise nicht, sondern eben nur deine Kunden. Angenommen, du hast jetzt zehn Kunden, die eben mit dir BGP sprechen. Dann filterst du diese zehn.
+
+01:31:47.944 --> 01:31:57.244
+<v SPEAKER_2>Das heißt, du brauchst die Präfixe von diesen zehn Kunden, um diese Präfixe von ihnen zu erlauen und alles andere wegzuschmeißen.
+
+01:31:57.264 --> 01:32:01.924
+<v SPEAKER_3>Aber bräuchte die nicht auch noch deren Kunden auch noch, wenn da Transit in Transit steckt?
+
+01:32:02.044 --> 01:32:24.904
+<v SPEAKER_2>Wenn sie denn Kunden haben, ja. Dann sollten sie aber, das ist doch dann auch irgendwo in den ganzen Objekten mit inbegriffen, wo sie dann die AS, die bei ihnen Kunden sind, wiederum auflisten und du dann darüber, über die AS-Nummern weitergehen kannst und draus finden, was haben die denn jetzt verprügelt?
+
+01:32:24.924 --> 01:33:05.944
+<v SPEAKER_1>Genau, das sind reklossive Anfragen, die du ans Reib schickst. Das heißt, du gibst Makros an. Ich sage, du sagst zum Beispiel als kleiner Provider, bitte, Felter für das Makro XY, was auch immer du den Namen gewählt hast. Und da stehen dann nicht nur deine eigenen Präfixe drin, sondern eben auch die A.S.e deiner Kunden. Und was ich dann habe, ist, wenn ich dein Transit Provider bin, ich habe dann irgendeinen Bash Script oder Perl oder Gott weiß was und schaue dann beim Reib ein-, zweimal am Tag vorbei und löse die alle auf, kriege dann diese Präfixe zurück, nehme diese und konfiguriere damit meinen Router. Hoffentlich auch automatisch. Insofern ist es eben kein Live-Check, sondern die meisten machen ein-, zweimal am Tag.
+
+01:33:06.504 --> 01:33:08.104
+<v SPEAKER_2>Ich mache es alle sechs Stunden.
+
+01:33:08.124 --> 01:33:10.944
+<v SPEAKER_1>Oder ein paar Mal am Tag. Aber es ist eben beileibe nicht live.
+
+01:33:11.144 --> 01:33:32.444
+<v SPEAKER_2>Ja, und man versucht da halt auch nett zu sein. Also wenn wir jetzt irgendwie unsere 300er-S-Nummern, die wir da im Amsics haben, einmal durchlaufen lassen, dann achtet man halt schon darauf, dass man jetzt irgendwie eine Session zum Rhype aufmacht, die dann alle durchleitern lässt, dann sie dann ordentlich wieder zumacht und so weiter und so fort. Hängt halt so ein bisschen davon ab, wie man jetzt seine Skripte genau schreibt. Und wenn man jetzt da tatsächlich...
+
+01:33:32.464 --> 01:33:39.464
+<v SPEAKER_3>Du meinst jetzt eine Session... Nicht für jedes AS eine einzelne.
+
+01:33:39.484 --> 01:33:44.004
+<v SPEAKER_2>Genau, genau. Und wenn man sie tatsächlich mehrere Male pro Sekunde bombardieren würde, dann würden sie dich auch irgendwann blocken.
+
+01:33:46.124 --> 01:33:53.224
+<v SPEAKER_3>Das Amsics-Blocken. Welche Software nimmt man denn für diesen BGP-Kram heutzutage?
+
+01:33:54.304 --> 01:33:54.984
+<v SPEAKER_2>Das machen die Router.
+
+01:33:56.244 --> 01:33:58.444
+<v SPEAKER_3>Also man nimmt die Software, die auf den Routern ist.
+
+01:33:58.464 --> 01:33:59.064
+<v SPEAKER_1>Genau.
+
+01:33:59.564 --> 01:34:04.404
+<v SPEAKER_3>Aber es gibt ja auch... Ich weiß nicht, es gibt ja auch so eine offene Variante...
+
+01:34:05.704 --> 01:34:11.724
+<v SPEAKER_2>Es gibt offene.... Es gibt Quagga, es gibt OpenBGPD und es gibt Bird.
+
+01:34:11.744 --> 01:34:14.744
+<v SPEAKER_3>Wer benutzt das dann?
+
+01:34:14.764 --> 01:34:31.384
+<v SPEAKER_2>Die Leute, die sich keinen Hardware-Router leisten können und sich einen Server hinstellen. Und wenn man spezielle, ein bisschen out of the ordinary Funktionalitäten haben will von dem Gerät. Was zum Beispiel Hardware-Router nicht liefern.
+
+01:34:32.424 --> 01:34:50.004
+<v SPEAKER_3>Was ist denn das? Willst du jetzt das komplette? Ich frage mich nur, wenn es solche Open-Source-Lösungen gibt, die dann dafür entwickelt werden, benutzt werden, dann muss es ja auch wirklich ein Demand geben in irgendeiner Form. Da frage ich mich, was dieser Demand ist.
+
+01:34:50.024 --> 01:35:14.984
+<v SPEAKER_2>Tatsächlich, du fandest du jetzt irgendwie, als ich habe einen Prefix und meine AS-Nummer, würdest du nicht das Geld haben, um dir tatsächlich eine Route anzuschaffen. Du würdest dir dann einen Server hinstellen mit deinem einen Link zum zwei Links zu deinen Transit-Providern. Und das reicht ja vollkommen. Und da kannst du dann irgendwie deine Netzwerke drüber annunzen. Das ist halt die billige Lösung.
+
+01:35:15.004 --> 01:35:16.024
+<v SPEAKER_3>Also ist das auch gängig?
+
+01:35:16.044 --> 01:35:17.644
+<v SPEAKER_5>Ja, durchaus.
+
+01:35:17.664 --> 01:35:19.884
+<v SPEAKER_1>Ich weiß nicht.
+
+01:35:19.904 --> 01:35:21.624
+<v SPEAKER_2>So für kleinere Firmen sicher.
+
+01:35:21.644 --> 01:35:29.424
+<v SPEAKER_1>Ja, aber selbst kleinere Firmen, es gibt ja auch kleinere Routen. Und die kosten dann so 1000, 2000, 3000 Euro oder so. Und die können auch BGP.
+
+01:35:29.444 --> 01:35:38.324
+<v SPEAKER_2>Wir haben eine durchaus hohe Percentage an Server-Herstellern, an was wir so auf unserem Laden sehen.
+
+01:35:38.344 --> 01:35:48.944
+<v SPEAKER_1>Die dann auch darüber routen. Das Problem ist nicht so sehr, dass der Linux, Ubuntu, was auch immer Server, kein BGP könnte. Das Problem ist, dass sein Durchsatz limitiert ist.
+
+01:35:49.144 --> 01:35:51.284
+<v SPEAKER_2>Das ist natürlich eine andere Frage dann, ja.
+
+01:35:51.304 --> 01:36:03.664
+<v SPEAKER_1>Weil was auch immer sein PCI oder PCI Express Bus ist, mit der Netzwerkkarte, die dran ist, kriegt er nur ein paar hundert MBit drüber. Das heißt, in dem Moment, wo er mehr Traffic drüber schicken will, fällt so eine kleine PC-Box einfach um.
+
+01:36:03.684 --> 01:36:07.284
+<v SPEAKER_3>Ach so, wenn jetzt dieser PC das komplette Routing übernimmt.
+
+01:36:07.304 --> 01:36:08.564
+<v SPEAKER_1>Wenn er auch den Traffic übernimmt.
+
+01:36:09.804 --> 01:36:14.604
+<v SPEAKER_3>Ich würde ja jetzt erst mal nur davon BGP zu sprechen. Dazu muss man ja nicht den Traffic auch noch über den Rechner laufen.
+
+01:36:14.624 --> 01:36:18.784
+<v SPEAKER_1>Das macht aber normalerweise dieselbe Box. Nämlich die Box, wo es angeschlossen ist.
+
+01:36:18.804 --> 01:36:19.444
+<v SPEAKER_3>Muss es doch nicht tun.
+
+01:36:19.464 --> 01:36:32.664
+<v SPEAKER_2>Ja, aber der Traffic, wenn du irgendwo jetzt hin willst, muss ja im BGP nachgucken, wie ich denjenigen überhaupt erreichen kann. Das heißt, irgendwie dein Traffic, der fließt, ist mit dem BGP zusammen. Der muss da ja durch.
+
+01:36:32.684 --> 01:36:35.064
+<v SPEAKER_3>Das ist sozusagen meine Netzwerk-Logistik.
+
+01:36:35.464 --> 01:36:45.484
+<v SPEAKER_2>Das ist irgendwie so... Es gibt diesen tollen Film irgendwie, vom... Was war das? Die Sendung mit... Nee, das war nicht die Sendung mit der Maus. Irgendwas, wo so einer lang gelaufen ist...
+
+01:36:45.504 --> 01:36:48.124
+<v SPEAKER_3>Du hast auch gesagt, das war die Sendung mit der Maus, wo das Internet erklärt wird.
+
+01:36:48.144 --> 01:37:07.244
+<v SPEAKER_2>Genau, genau. Wo einer irgendwie so Korridorenlang gelaufen ist und an jeder Ecke stand so ein Mensch irgendwie mit so einem weißen Hut und hat dann eben gefragt, wo muss ich denn jetzt lang? Da. Und der Mensch, der durch die Korridore gelaufen ist, das war tatsächlich der Traffic. Und die Leute an den Ecken, die standen und ihm gesagt haben, wohin, das war das BGP. Ich glaube, die haben DNS erklärt.
+
+01:37:07.264 --> 01:37:12.844
+<v SPEAKER_3>Aber es ist im Prinzip so ein bisschen... Sie haben den Klick auf eine Webseite erklärt, inklusive DNS.
+
+01:37:12.864 --> 01:37:32.264
+<v SPEAKER_2>Jaja, und der DNS-Traffic ist dann halt bis zum Server und wieder zurückgelaufen. Das heißt, da war das Netzwerk dazwischen. Also dein Traffic muss halt auch darüber. Und du würdest nicht imstande sein, ein 10-Gigabit-Interface am 6.0 über einen Dell-Server laufen zu lassen.
+
+01:37:32.384 --> 01:37:44.044
+<v SPEAKER_3>Ja, okay, verstehe ich. Aber es gibt diese Lösung. Bei geringem Traffic. Es mag ja auch Situationen geben, wo man wirklich aus bestimmten Gründen mit vielen verbunden sein will, aber nicht unbedingt viel Traffic hat.
+
+01:37:44.064 --> 01:38:31.184
+<v SPEAKER_2>Und dann passt das ja auch. Dazu, ich erzähle jetzt mal, dazu haben wir am AMSIX so eine Geschichte, das nennt sich dann Route Server. Was das Ding tut, ist, es aggregiert Sessions. Das heißt, das ist ein transparenter BGP-Note. Es spricht BGP, es macht Sessions zu jedem über unser Laden auf. Der Traffic geht da aber nicht durch. Und was das tut, ist, ich über meine Session, die ich dann zu dem habe, kriege alle Routen von allen anderen Sessions, die auf diesem Cloud-Server drauf sind. Das heißt, es vereinfacht mir im Prinzip, ich brauche nicht 350 Sessions zu allen anderen Leuten am AMSIG, sondern ich brauche eine, und über diese eine kriege ich dann alle Präfixe von allen anderen.
+
+01:38:31.204 --> 01:38:39.964
+<v SPEAKER_3>Das heißt, diese Büchse spricht BGP, und er rechnet sozusagen immer den aktuellen Wegweiserwald, wohin man muss, für welches Netz.
+
+01:38:39.984 --> 01:38:40.224
+<v SPEAKER_2>Genau.
+
+01:38:40.764 --> 01:38:45.544
+<v SPEAKER_3>Und nur diese Essenz sozusagen, den aktuellen Snapshot, das wird dann immer wieder abgeholt.
+
+01:38:45.564 --> 01:38:59.744
+<v SPEAKER_2>Das leitet er weiter. Was er halt aber nicht tut, ist, seine IP-Adresse oder seine S-Nummer mit in diesen BGP-Fahrrad reinzunehmen. Daher transparent. Genau, und für sowas haben wir halt OpenBGP.
+
+01:38:59.764 --> 01:39:21.824
+<v SPEAKER_3>Wenn man jetzt so diesen ganzen Traffic betrachtet, ich meine, wir sind wieder bei diesem Terabit, was da so irgendwie durchströmt. Was lernt man denn da so über das Internet? Ihr schaut euch das doch bestimmt an. Ich meine, also ihr schaut euch nicht die Daten an, aber ihr schaut euch an, was da so läuft, was für Protokolle da verwendet werden.
+
+01:39:22.924 --> 01:39:52.264
+<v SPEAKER_2>Tun wir nicht. Tun wir absolut gar nicht. Also wir haben diese Policy-Grenze in unseren Kopf gesetzt. Wir sind ein Layer-2-Exchange. Wir haben damit nichts zu tun, was die Leute an Traffic machen. Wir schauen uns nicht mehr an als Layer-2. Das heißt, nein, tun wir ganz und gar nicht. Und alle Software, die wir schreiben, die irgendwie Traffic analysiert, wird auch speziell so gebaut, dass sie nicht mehr als Layer-2 decoden kann.
+
+01:39:52.284 --> 01:39:53.424
+<v SPEAKER_3>Aber ihr macht Statistiken.
+
+01:39:53.444 --> 01:39:54.284
+<v SPEAKER_2>Wir machen Statistiken.
+
+01:39:54.304 --> 01:39:55.704
+<v SPEAKER_3>Und was sagen diese Statistiken?
+
+01:39:55.724 --> 01:39:56.784
+<v SPEAKER_2>Bis zu Layer-2.
+
+01:39:56.804 --> 01:39:58.964
+<v SPEAKER_3>Okay, aber worüber macht ihr Statistiken?
+
+01:39:59.964 --> 01:40:17.684
+<v SPEAKER_2>Na, wir haben Statistiken über, was macht jemand jetzt auf seinem einen speziellen Port, den der am AMSIX hat. Wir haben Statistiken über, mit wem spricht er wie viel über das AMSIX. Aber nicht weiter. Also zu Protokollen kommen wir überhaupt nicht.
+
+01:40:19.324 --> 01:40:48.124
+<v SPEAKER_3>Und was ist so mit so Sachen wie, weiß nicht, also es ist ja immer so diese Diskussion um die Netzneutralität und dass bestimmte Protokolle oder bestimmte Netze in irgendeiner Form weniger wert sind als andere. Das ist sozusagen die politische Debatte. Dem steht dann gegenüber die Diskussion der, naja, es muss ja auch Pakete geben, die vielleicht schneller da sein müssen. Was weiß ich, so Internet-Telefonie hat doch schnell zu gehen. Betrifft euch das in irgendeiner Form?
+
+01:40:48.144 --> 01:41:20.604
+<v SPEAKER_2>Beim Internet Exchange auch überhaupt nicht. Weil das ist halt wieder eine, das ist eine Frage von irgendwie Routing und Cueing und so weiter. Wann schickt der Router denn jetzt welches Paket mit welchen Daten zuerst los? Dass es irgendwie durchs Amsics durchgeht, dass da da passiert nichts mehr. Der Router sorgt für das Timing, wann er es losschickt und nicht wir. Ihr habt ja keinen Netzwerk, genau.
+
+01:41:20.624 --> 01:42:25.984
+<v SPEAKER_1>Aber ich denke, die ganze Netzneutralitätsdebatte ist nicht so sehr wegen Geschwindigkeit, weil im Endeffekt die Pakete kommen immer alle gleich schnell. Die Frage ist, wenn du Überlastung hast und wenn der Link voll ist, welche Pakete schmeiß ich denn jetzt weg? Eben wie du gesagt hast, welche sind wichtig und welche sind unwichtig. Und die Frage da ist immer, wer bestimmt das? Nur, denke ich, wären die meisten Leute jetzt nicht so besonders glücklich, wenn ihre Pakete als nicht so wichtig empfunden wären. Und es ist zwar richtig, dass jetzt FDP vielleicht nicht dieselbe Priorität hat oder nicht zeitkritisch ist wie ein Voice Call. Aber im Endeffekt, wenn er dir nur normales Internet verkauft, der Provider, dann gehst du auch davon aus, dass er alle Pakete gleich transportiert. Sonst müsste er dir von Anfang an eben ein anderes Business-Modell geben oder andere Produkte und sagen, das bevorzuge ich das nicht. Und dann weißt du es auch. Und solange er das nicht macht, denke ich, gehen wir auch alle davon aus, dass er sie gleich behandelt und nicht wegschmeißt.
+
+01:42:27.444 --> 01:42:43.904
+<v SPEAKER_3>Es kam ja vorhin schon mal an, die Sache mit IPv6 macht doch einen extrem geringen Anteil aus aus dem Gesamtreffekt. Habt ihr das so ein bisschen im Blick, welche Rolle IPv6 spielt und im Blick, was es vielleicht bald spielen könnte? Tut sich da was?
+
+01:42:44.884 --> 01:42:55.184
+<v SPEAKER_2>Na, da kommen wir halt in diese ganze Geschichte mit IP-Adressen sind halt limitiert. Und RIPE und die ganzen RERs haben halt nicht mehr viele.
+
+01:42:55.204 --> 01:43:05.684
+<v SPEAKER_3>Ist das so? Also ich meine, ist das jetzt wirklich schon richtig so Hauen und Stechen? Und wenn man da hinkommt und sagt, ich möchte gerne Netzwerk haben, dass die dann sagen, oh nö.
+
+01:43:05.704 --> 01:43:30.944
+<v SPEAKER_2>Das ist jetzt schon schlimmer, als es noch vor ein paar Jahren war. Vor ein paar Jahren konnte man ohne großartige Begründung ganz viel bekommen. Mehr IP-Adressen, jetzt schauen sie schon mehr nach, okay, wie viele Server hast du eigentlich in deinem Netzwerk? Wie viele brauchst du eigentlich? Und dann wollen sie dir vielleicht doch lieber nur einen Slash-24 statt einem Slash-22 geben, weil...
+
+01:43:30.964 --> 01:43:34.564
+<v SPEAKER_3>Was heißt, sie schauen nach? Sie fragen ein und man muss es beantworten?
+
+01:43:34.584 --> 01:43:35.924
+<v SPEAKER_2>Sie fragen ein und man muss es beantworten.
+
+01:43:35.944 --> 01:43:41.744
+<v SPEAKER_3>Okay, also ist noch nicht so, dass man irgendwelche Beweise liefern muss oder so, schick mir mal Fotos von deinem Rack.
+
+01:43:41.764 --> 01:43:46.664
+<v SPEAKER_2>Nee, du musst halt ein Netzwerk-Drawing und ein bisschen Descriptions abgeben und sowas.
+
+01:43:46.684 --> 01:44:13.444
+<v SPEAKER_1>Ja, genau. Und werden sie früher zufrieden waren mit dem, dem du kurz erklärt hast, welche Usage du hast in den nächsten ein, zwei, drei Jahren, kommen jetzt eben bei größeren Blöcken auf jeden Fall auch Rückfragen. Das heißt, brauchst du sie wirklich, gibst du welche zurück? Wie eben sieht dein Netzwerkplan aus? Welches Equipment hängt dahinter? Nicht einfach, ich habe Server, sondern welche Server und warum und dies und das. Das heißt, sie fragen jetzt schon genauer. Aber es ist schon so, dass sie noch ganz normal IP-Adressen verteilen.
+
+01:44:13.564 --> 01:44:20.304
+<v SPEAKER_3>Aber wenn ich IPv6 haben will, kein Problem, kannst du haben. Da wird nicht so gefragt.
+
+01:44:20.324 --> 01:44:49.324
+<v SPEAKER_1>Das ist richtig. Es ist prinzipiell eh so, dass sie, wenn sie IPv6 vergeben, wenn du nicht mehr brauchst, sie dir automatisch einen Slash 32 geben in V6, was schon mehr IP-Adressen hat, als du vermutlich jemals brauchst. Und da fragen sie auch nicht, ob du ein kleinerer oder mittlerer Provider bist. Du sagst, du hättest gern V6, dann geben sie dir diese Slash 32. Das heißt, sie geben dir am Anfang extra so viel, dass du hoffentlich nicht bald wieder kommst und noch mehr brauchst.
+
+01:44:49.344 --> 01:45:08.944
+<v SPEAKER_3>Also Slash 32, ich meine, das ist so der komplette Range von IPv4. Das klang ja vorhin schon mal an, Elisa, bei dem, was du gesagt hast, was weiß ich, wie viel Prozent des Traffics sind irgendwie IPv6. Das war eher so im Bereich verschwindend gering.
+
+01:45:08.964 --> 01:45:19.224
+<v SPEAKER_2>Verschwindend gering, so unter 2 Gigabit die Sekunde an Physics-Traffic auf dem Amsic hier.
+
+01:45:19.244 --> 01:45:28.864
+<v SPEAKER_3>Wann war 2 Gigabit der Traffic, den das Amsic überhaupt gehabt hat? Kannst du das errechnen? Ich meine, das könnte man so irgendwie mal halbieren.
+
+01:45:28.884 --> 01:45:32.364
+<v SPEAKER_2>1995, 1996.
+
+01:45:32.384 --> 01:45:33.984
+<v SPEAKER_3>Da waren das schon 2 Gigabit.
+
+01:45:34.184 --> 01:45:37.264
+<v SPEAKER_2>Ja, ich glaube, 1997 vielleicht.
+
+01:45:37.284 --> 01:46:27.044
+<v SPEAKER_3>Also wenn man sozusagen sagen würde, das Internet, das IPv6-Internet befindet sich eigentlich immer noch im Geburtsstadium. Trotzdem, es gab jetzt ja auch gerade diese Woche die Meldung, dass Google Teile von YouTube über IPv6 vermittelt, wenn denen danach gefragt wird, ist natürlich auch so ein richtiges Henne-Ei-Problem hier mit dem IPv6. Und es gibt ja in dem Sinne keinen offensichtlichen Vorteil. Klar, wenn man jetzt ins Detail reingeht und sich anschaut, klar, jeder hat eine richtige Adresse, mag man das als technisch Interessierter dann als Vorteil werten, aber am Ende kommen die Daten ja dann auch nicht schneller mit IPv6. Oder macht das irgendwie einen Unterschied für euch? Erleichtert es euch irgendetwas, oder macht es die Sache nur generell schwieriger, mit zwei Protokollen gleichzeitig zu arbeiten?
+
+01:46:27.064 --> 01:47:01.604
+<v SPEAKER_2>Schwieriger nicht. Ich glaube, also von meiner Perspektive, die größte Schwierigkeit im Moment ist, dass IPv4 einfach wichtiger ist. Und das ist das, wo die Leute mit arbeiten, wo sie ein Auge drauf haben, wo irgendwie die Netzwerktechniker sofort fixen, wenn was kaputt ist. Das ist bei IPv6 nicht der Fall. Und du hast halt oft die Situation, wenn du dann schon mal IPv6 hast, dass es dann irgendwo in deinem Transit verloren geht, weil es nicht funktioniert. Und da ist niemand benutzt, es auch keinem wichtig genug ist, um es dann tatsächlich wieder zu fixen und so weiter und so fort.
+
+01:47:01.844 --> 01:47:16.004
+<v SPEAKER_3>Das heißt, wir können auch noch eine Zeit lang mit so einem Zustand leben, obwohl es IPv6 gibt, dass es dann so buggy ist, weil es einfach nicht genug Leute, die einen Plan haben, oder dass es den Leuten nicht insgesamt wichtig genug ist und so sehr mit IPv4-Problemen beschäftigt sind, dass es dann irgendwie so vor sich hin...
+
+01:47:16.024 --> 01:47:21.764
+<v SPEAKER_2>Solange es halt nicht benutzt wird, ist der Fokus so anders.
+
+01:47:21.784 --> 01:47:44.144
+<v SPEAKER_1>Ich denke, das Problem liegt darin, dass man mit IPv6 kein Geld machen kann. Und dementsprechend, weil es auch so wenig treffig ist, interessiert es keinen. Ich meine, IPv6 hat nicht eine andere Farbe oder macht es eben schneller, wie du gesagt hast, oder bietet irgendeinen Mehrwert als End-User erst einmal. Das heißt, du würdest deinem Provider jetzt nicht mehr Geld geben, nur weil er dir IPv6 daheim gibt. Und dementsprechend ist der Provider...
+
+01:47:44.164 --> 01:47:51.504
+<v SPEAKER_3>Also ehrlich gesagt, mir persönlich wäre das jetzt schon noch ein paar Euro Aufpreis wert, aber das Produkt gibt es natürlich so gar nicht.
+
+01:47:51.524 --> 01:48:46.324
+<v SPEAKER_1>Und dementsprechend ist so die Begeisterung auch noch nicht so groß, von den verschiedenen Providern da viel zu machen. Die Transit Provider, sprich so die Kernnetze in der Mitte, die haben es meistens schon und bieten V6 auch schon an. Auf der anderen Seite, so was Content- und Eyeballnetze angeht, haben wir genau eben das Henne-Eye-Problem. Als Contentnetz muss sich V6 nicht unbedingt bauen, weil es gibt keine Eyeballs, die sich anschauen können, weil du hast es nicht daheim, wie wir gerade gesagt haben. Und der Eyeball Provider sagt, ja es gibt ja keinen Content, da gibt es ja nichts zum Schauen, insofern muss ich ja noch nichts weiterbauen, oder eben sehr langsam. Es gibt allerdings schon ein Problem und das Problem ist, dass in grob 2, 2,5 Jahren oder so die IPv4-Adressen dann ausgehen und wer dann auch immer größere Netzblöcke haben will, bekommt einfach keine mehr von RIPE oder den anderen. Das heißt, bis dahin werden sich die Provider dann schon irgendwas überlegen müssen, wie sie das dann mal...
+
+01:48:46.344 --> 01:48:56.204
+<v SPEAKER_3>Ist das jetzt schon angekündigte Politik, dass das so in zwei Jahren so sein wird, oder ist das nur so eine allgemeine Erwartungshaltung, die ich jetzt auch schon sehr lange verfolge, dass es die irgendwie gibt, dass in zwei Jahren Schluss ist?
+
+01:48:56.224 --> 01:49:20.784
+<v SPEAKER_1>Es ist eine Erwartungshaltung basierend darauf, wie schnell im Moment IPv4-Adressen ausgegeben werden. Wenn sich morgen keiner mir für V4 interessieren würde, aus welchem Grund auch immer, dauert es länger, logischerweise. Wenn die Leute anfangen würden zu hamstern, so nach dem Motto, ups, in zwei Jahren gibt es keine mehr, ich hole mir erst mal welche und stelle sie ins Lager, wären ja nicht schlecht, dann sind es dementsprechend weniger als zwei Jahre. Aber so zwei, zweieinhalb Jahre.
+
+01:49:21.484 --> 01:49:26.544
+<v SPEAKER_3>Das ist ja schon, das ist ja schon ein realistisches Szenario.
+
+01:49:28.504 --> 01:49:31.184
+<v SPEAKER_2>Wir kriegen das bald mit, ja.
+
+01:49:31.204 --> 01:49:35.784
+<v SPEAKER_3>Und dann gibt es einfach kein Internet mehr. Das Internet ist voll, geh weg.
+
+01:49:35.804 --> 01:49:37.504
+<v SPEAKER_1>Genau, dann wird es abschalten und dann...
+
+01:49:37.924 --> 01:49:52.404
+<v SPEAKER_2>Ich meine, irgendwann wird es halt das Problem geben, dass jemand tatsächlich keine FIFO-Adressen mehr hat und er dann bestimmte Services nur noch auf Fisix anbieten kann. Und dann werden die Kunden auch hinterherkommen. Das ist so meine Prognose.
+
+01:49:52.424 --> 01:50:12.884
+<v SPEAKER_3>Ja, aber das Problem ist ja vielschichtig bei V6. Meine neue... also wenn man jetzt sich so eine Windows-7-Büchse oder so das latest Mac OS X auf seinen Tisch stellt, was ja die meisten tun, die können das ja. Es ist nur so, dass diese ganzen Router oder eben auch die Provider keine V6-Connectivity bieten.
+
+01:50:12.904 --> 01:50:18.904
+<v SPEAKER_2>Die End-User-Router, ja. Aber da gibt es jetzt auch mittlerweile diese Fritz-Geräte, die auch V6 können.
+
+01:50:19.504 --> 01:50:33.324
+<v SPEAKER_3>Ja, aber welche Internet Service Provider bieten wir denn tatsächlich V6-Connectivity? Ist das nicht so eigentlich die Hauptlücke, dass das so über das PPP, was da so gesprochen wird, also eine eigentliche Dial-up in das Netz?
+
+01:50:33.344 --> 01:50:47.084
+<v SPEAKER_2>Also in Holland gibt es den ersten Testversuch irgendwie von Access for All, die einem tatsächlich Native IPv6 nach Hause geben. Die haben da jetzt irgendwie gerade ihre 20 Kunden oder so, die das mal testen in so einer Beta-Version oder sowas.
+
+01:50:48.844 --> 01:50:54.244
+<v SPEAKER_3>Also in zwei Jahren gibt es keine Adresse mehr, aber die ersten 20 Kunden sind schon in einem Testversuch.
+
+01:50:54.264 --> 01:50:58.824
+<v SPEAKER_5>Das sieht irgendwie nicht gut aus, oder?
+
+01:50:58.844 --> 01:51:08.304
+<v SPEAKER_3>Also ich meine, was passiert denn dann? Gibt es da Mord und Totschlag, werden dann Netze wieder eingeklagt, die nicht benutzt werden? Wird dann irgendwie da...
+
+01:51:08.324 --> 01:51:16.044
+<v SPEAKER_2>Es ist alles unklar. Also ich meine, es gibt diese Modelle von, irgendwann fangen die Leute dann an, ihre Netzblöcke auf Ebay zu verscherbeln, zu irgendwie...
+
+01:51:16.064 --> 01:51:47.724
+<v SPEAKER_3>Ich meine, welche Organisation steht denn da jetzt eigentlich im Wesentlichen? Ja, weiß nicht, wer ist denn da in der Pflicht? Ich meine, diese regionalen Internet-Registries, also RIPE und die anderen fünf oder vier, die wir schon erwähnt haben, die bilden ja sozusagen auch nochmal eine Einheit. Die müssen sich ja ihren Adresspool sozusagen auch teilen. Dahinter steckt dann die IANA, ist das richtig? Also die Organisation, die die eigentlichen Adresszuteilungen macht. So, die müssen auch irgendeinen Plan haben.
+
+01:51:47.744 --> 01:51:57.564
+<v SPEAKER_1>Sie haben einen Plan, wie sie die letzten Netze jetzt vergeben, ja. Und was so die allgemeine Policy ist, bezüglich Netzgrößen und solche Sachen. Das haben sie schon, ja.
+
+01:51:57.584 --> 01:52:01.684
+<v SPEAKER_2>Aber sie vergeben ja nur, ob das im Endeffekt dann tatsächlich benutzt wird und von ISPs und...
+
+01:52:01.704 --> 01:52:07.604
+<v SPEAKER_3>Ja, aber wenn sie nichts mehr zum Vergeben haben, haben sie da auch einen Plan? Also weiß man, ob sie einen Plan haben?
+
+01:52:07.624 --> 01:52:09.024
+<v SPEAKER_2>Und dann haben sie nichts mehr zu vergeben?
+
+01:52:09.224 --> 01:52:19.624
+<v SPEAKER_3>Na gut, aber können sie da nicht was wegnehmen? Ich meine, es ist doch hier so, was weiß ich, Apple hat irgendwie so ein Klass-A-Netz. Ja, 17 und dann irgendwie alles Apple.
+
+01:52:22.264 --> 01:52:32.544
+<v SPEAKER_1>Wegnehmen ist halt sehr schwierig, weil wenn die jeweilige Firma behauptet, sie braucht die Adressen und das halbwegs begründen kann, dann kannst du ja nicht sagen, na jetzt schaltet die Hälfte eurer Standorte ab und ihr müsst die jetzt zurückgeben.
+
+01:52:32.564 --> 01:52:43.564
+<v SPEAKER_3>Na ja, was macht man dann? Rauskaufen. Gibt es dann Adresshandel? Also ich meine, ist das sozusagen die Konsequenz, wenn man ein Netz haben will, dann musst du dir irgendwie eins ergattern und dann landen die IP-Adressen auf eBay?
+
+01:52:43.584 --> 01:53:03.644
+<v SPEAKER_1>Gibt es ja jetzt schon. Also nicht unbedingt auf eBay, aber es gibt ja jetzt schon Varianten, wenn du größere Netze kaufen willst und jemand hat die, keine Ahnung, du hast vor 5 Jahren eine große Firma gegründet und die hat noch die IP-Adressblöcke im Keller liegen, dann gibt es jetzt schon Möglichkeiten, wie du die mir zukommen lassen kannst. Also das ist schon Gang und Gebe, aber das wird vermutlich noch mehr kommen.
+
+01:53:04.164 --> 01:53:17.564
+<v SPEAKER_2>Also da stellen sich die Arias definitiv darauf ein, dass da ein Handelmodell, das Handelmodell haben sie sozusagen schon eingeführt, wenn es noch ein bisschen rarer wird, als es jetzt schon ist.
+
+01:53:17.584 --> 01:53:40.944
+<v SPEAKER_3>Ah, da sind wir jetzt auch wieder bei einem interessanten Punkt der Netzneutralität angekommen, über den so bisher noch gar nicht gesprochen wird. Also was kostet mich der Zugang zum Netz, wenn es keine Adressen mehr gibt und ich mich nur noch auf Adresshandel im Sinne von, gib mir mal ein Netzwerk verlassen muss, dann kriegt dann nur noch der Meistbietende seinen Zugang zum Internet und der Rest steht dann da, darf nicht rein.
+
+01:53:40.964 --> 01:53:44.984
+<v SPEAKER_1>Nee, glaube ich nicht. Du hast ja jetzt im Moment eh eine IP-Adresse, die wird dir ja nicht weggenommen.
+
+01:53:45.624 --> 01:53:46.784
+<v SPEAKER_3>Ich?
+
+01:53:46.844 --> 01:53:50.184
+<v SPEAKER_1>Ja, was auch immer für einen Provider du hier hast, der gibt dir ja eine IP-Adresse.
+
+01:53:50.204 --> 01:53:53.984
+<v SPEAKER_3>Ja gut, eine, aber wenn ich jetzt halt einen Start-up gründen will und ich brauche da halt mal mehr?
+
+01:53:54.604 --> 01:54:13.904
+<v SPEAKER_1>Genau, das ist eben das Problem. Wenn du eine neue Firma gründen willst und dann eben nicht mehr genügend Adressen da sind oder dir halt keine zugeteilt werden, dann hast du eben ein Problem. Speziell wenn du dann eben V6-Adressen nehmen musst, weil keine V4 mehr da sind, allerdings kann dich die Hälfte der Welt nicht erreichen, dann hast du ein Problem, ja.
+
+01:54:13.924 --> 01:54:25.184
+<v SPEAKER_2>Das ist doch aber mit so vielen Sachen, sobald der Bedarf tatsächlich akut ist und wir es wirklich übermorgen brauchen, dann wird das wahrscheinlich auch ganz schnell passieren.
+
+01:54:25.204 --> 01:55:18.824
+<v SPEAKER_3>Na gut, aber ich frage mich jetzt, was dieser Modus da ist, weil wenn man es niemandem wegnehmen kann und es dann sozusagen absehbar ist, dass ab dem Zeitpunkt der vollständigen Verknappung, wo also die RIRS einfach überhaupt nichts mehr rausgeben können, selbst wenn sie wollten, man sich eigentlich nur noch auf unbenutzte Netze stürzen kann, die dann gehandelt werden, dann hat das sozusagen sehr viel mehr mit Geld zu tun als mit Bedarf. Und ja, das wird sich ja dann potenziell, vor allem wenn man sich die Steigerungsraten anschaut, wenn der Traffic, der derzeit beim Amsics durchläuft, in irgendeiner Form ein Indikator für die Verbreitung von Internet ist und nicht nur für die Verbreitung von Bandbreite, da stecken ja auch potenziell immer mehr Leute dahinter und nicht nur schnellere Rechner und größere Server und größere Dateien, dann ist ja absehbar, dass das dann auch schnell ausläuft.
+
+01:55:18.984 --> 01:55:26.484
+<v SPEAKER_2>Aber dann gibt es ja auch den Ausweg irgendwie ins Natt, wo du irgendwie weniger IP-Adressen nimmst und dir dann irgendwie dein internes Zeug zusammenbaust.
+
+01:55:26.504 --> 01:55:29.244
+<v SPEAKER_3>Ja gut, aber das ist ja heute schon die Realität beim End-Loser.
+
+01:55:29.264 --> 01:55:38.524
+<v SPEAKER_2>Das würde dann aber wahrscheinlich in internen Betrieben noch mal extremer als es jetzt schon ist.
+
+01:55:38.544 --> 01:56:00.764
+<v SPEAKER_3>Aber das ist ja nicht gut. Weil ich meine, wenn ich einen Server habe, dann kann ich ja nicht mehr im Natt leben. Also ich kann ja nicht einen Serverfarm aufbauen. Und dann habe ich dann, ja, ich baue mir 20 Server auf, um die Last auf mehrere Server zu verteilen und stelle die dann hinter einen Natt, wo dann doch wieder alles durch einen Rechner geht. Das kann ja wohl nicht die Antwort sein auf das Problem.
+
+01:56:01.664 --> 01:56:51.764
+<v SPEAKER_1>Nee, ich denke schon, dass es in Zukunft in Business-Cases mit reingenommen werden muss, was kosten mich die IP-Adressen? Nicht nur, was kosten mich die Server und der Strom, sondern jetzt haben wir auch einen Posten für IP-Adressen. Aber ich denke, die komplette Anzahl von Start-ups, die jetzt neue Server fahren brauchen, ist jetzt auch nicht so riesig. Und wenn du dir jetzt anschaust, wer jetzt wirklich viele IP-Adressen braucht, da wäre zum Beispiel die ganze iPhone oder die ganze Smartphone-Fraktion in der Zukunft, da gibt es jetzt schon Lösungen von Verizon zum Beispiel. Die geben ihren Blackberries in Zukunft alle V6-Adressen, haben dann ein spezielles V6-Gateway in die Welt hinaus und sehen dann aus wie riesige Nutpools und Torero Pools. Und da ist das Wachstum ja viel größer. Dass jetzt in Zukunft jedes Telefon IP-fähig ist im Vergleich zu fünf Start-up-Firmen, brauchen 20 neue Server. Insofern denke ich, dass es...
+
+01:56:51.784 --> 01:56:55.164
+<v SPEAKER_3>Das heißt, die setzen dann von IPv6 einfach auf IPv4 um?
+
+01:56:55.184 --> 01:57:11.984
+<v SPEAKER_1>Genau. Oder du möchtest jetzt jeder RFID-Adresse in deinem Lagerhaus V6-Adressen geben, dann hat es ja auch keine Auswirkungen auf der Restewelt. Also die Server-Farm-Geschichte ist sicherlich richtig, aber ich denke nicht, dass es von der Größenordnung so groß ist.
+
+01:57:12.004 --> 01:57:40.424
+<v SPEAKER_3>So schnell so ein großes Problem wird. Aber gut, fassen wir das zusammen, da ist schon ein Problem. Wie groß es sein wird, lässt sich derzeit nicht so richtig absehen, weil es schon auch noch ein paar Fluchtmöglichkeiten gibt, aber grundsätzlich, der Druck erhöht sich. Man kann durchaus davon ausgehen. Und ich meine, solche Maßnahmen wie YouTube geht auf IPv6, also wir sind glaube ich noch nicht so komplett auf IPv6, sondern, wenn ich es richtig verstanden habe, nur so eine Backbone-Infrastruktur, aber wenn ein paar...
+
+01:57:40.444 --> 01:58:12.944
+<v SPEAKER_2>Nein, nein, die sind jetzt tatsächlich bis zum End-User. Das habe ich ja gestern alles nachgelesen. Was sie tun, ist aber, sie verstecken es vom Rest der Welt. Du musst als Netzwerk, als AS, sich bei denen melden und sich von ihnen whitelisten lassen. Und wenn du von ihnen gewhitelistet bist, dann gibt dir der Google DNS-Server nur noch die V6-Adresse. Nur noch? Ja. Das heißt, wenn ich jetzt bei mir im Büro, weil wir uns gerade whitelisten haben, wenn ich jetzt bei mir im Büro auf YouTube gehe, habe ich YouTube nur noch über V6.
+
+01:58:12.964 --> 01:58:18.204
+<v SPEAKER_3>Whitelisten heißt, mich auf eine Liste wo eintragen lassen? Bei Google.
+
+01:58:18.224 --> 01:58:58.484
+<v SPEAKER_2>So dass deren DNS-Server weiß, wem er V4 und wem er V6 geben soll. Also die haben das jetzt tatsächlich bis zum End-User komplett für verschiedenste Services. Nur halt mit speziellen... Das mit dem whitelisten machen sie halt genau aus dem Grunde, der wie sehr wird das von Leuten eigentlich maintained. Und wenn sie jetzt zu viele Probleme das End-User Google nicht mehr erreichen können, weil sie dann halt nur noch Physix haben, dadurch haben, dass sie es halt allen ermöglichen, dann machen die das halt speziell mit irgendwie, okay, du musst mir jetzt aber auch versprechen, dass du dich um dein Physix kümmerst und irgendwie es alles reparierst, wenn es kaputt ist und so weiter und so fort. Und dann kriegst du auch von uns Physix.
+
+01:59:00.044 --> 02:00:02.244
+<v SPEAKER_1>Das Problem ist ja, dass nur, weil du eine V6-Anfrage an den DNS-Server von Google schickst, weiß Google noch nicht, ob die Bandbreite, die über V6 zu dir geht, ähnlich gut ist wie die V4-Bandbreite. Weil ein Teil des V6-Traffics wird nach wie vor getunnelt oder geht andere Wege und und und. Und da Google oder generell Content Company das nicht dem Zufall überlassen wollen, nur weil du jetzt eine V6-Anfrage stellst und das nicht so richtig unter Kontrolle hast bei dir und plötzlich dauert YouTube alles fünfmal so lange und bricht ab und du fängst an, es nicht mehr zu benutzen, nehmen sie nur IP-Adressen eben auf, von denen sie wissen, dass die Infrastruktur in Ordnung ist. Das heißt, nur die werden gewidelistet und nur die werden dann auch an V6-Content übergeben. Und das ist so ein bisschen die Idee dahinter im Vergleich zu ich stelle jetzt alles um und erlaube alles. Wie kann ich eine gewisse Qualität kontrollieren? Und das ist nicht nur ein Google-Phänomen, sondern das versuchen jetzt viele Content-Firmen oder CDNs auch sich das anzuschauen, um einen möglichst nahtlosen Übergang zu haben.
+
+02:00:03.204 --> 02:00:31.064
+<v SPEAKER_3>Das IPv6-Routing bietet aber doch bestimmten Providern, gerade jetzt in diesem Mobile-Space auch Vorteile. Durch dieses flexiblere Routing wird es nicht komplett in die V6-Architektur und das Adressmodell reingehen. Aber wenn ich es richtig verstanden habe, gibt es ja da sehr viel mehr Möglichkeiten, elegant Adressen durch die Gegend rumzulassen, als das bei IPv4 so ohne Weiteres möglich ist. Müsste es da nicht eine gewisse Nachfrage sogar geben nach IPv6? Vor allem lässt sich das derzeit noch nicht feststellen.
+
+02:00:32.444 --> 02:01:28.024
+<v SPEAKER_1>Da bin ich jetzt nicht so der Experte, aber ich denke, die Mobility- und Roaming-Geschichten sind zwar in V6 spezifiziert, aber ich kenne keinen, der sie schon eingesetzt hat. Der andere große Vorteil von V6 im Vergleich zu V4 wäre, dass, weil die Blöcke, die rausgegeben wurden, an die Provider viel größer sind, so dass du einen V6-Block hast und vielleicht 20 V4-Blöcke. Das heißt, deine Routing-Tabelle ist auch wesentlich kleiner. Die gesamte Routing-Tabelle in der Welt für IPv4 hat 300.000 Präfixe ziemlich genau im Moment. Die V6-Routing-Tabelle hat, ich weiß nicht, 1000, 1500, noch keine 2000 soweit, ich weiß. Ist also viel, viel kleiner. Dementsprechend brauchst du weniger Speicher, das Ganze ist schneller abgearbeitet und dies und das. Und das bietet natürlich schon einen Vorteil auf der Carrier-Seite, aber wenn du nicht durchkommst bis zum End-User, weil sein Modem noch nicht V6-fähig ist oder die Hälfte der Pakete verschluckt ist, die natürlich auch nicht...
+
+02:01:28.264 --> 02:02:11.364
+<v SPEAKER_3>Ich wüsste dir natürlich auch nichts. Ja, jetzt haben wir schon viel darüber geredet, wie es denn nun so aussieht in dieser Welt, aber diese Wolke und die ganzen Organisationen, die da irgendwie an einer Strippe ziehen, das hat ja auch eine ganze Menge mit Kooperation zu tun, eine ganze Menge mit aufeinander sich abstimmen und man hat ja eigentlich da auch ein gemeinsames Interesse, dass alles gut läuft, äh äußert sich ja auch in so einer ganz speziellen Community, oder? Wie redet man denn da so miteinander? Haben sich da alle lieb oder wie war das mit den Partys?
+
+02:02:11.384 --> 02:02:40.684
+<v SPEAKER_2>Ja, ich denke größtenteils haben sich da alle ganz doll lieb. So Peering-Slot-mäßig, ne? Du hast alle lieb. Es gibt halt so bestimmte Events, Veranstaltungen, Konferenzen in der Branche, wo einfach mal jeder hinfährt. Es gibt irgendwie Peering-Events speziell, wo man dann halt seine Diskussionen führen kann. Ich möchte mit dir und dir und dem da peern.
+
+02:02:47.144 --> 02:02:48.644
+<v SPEAKER_3>Online-Dating mal ganz anders.
+
+02:02:48.664 --> 02:03:36.504
+<v SPEAKER_2>Genau, dass man sich tatsächlich mal trifft, dass man tatsächlich mal Sachen bespricht und so weiter. Ich meine, wir kennen das ja alle, dass es immer mal Sinn macht, wenn man auch mal tatsächlich in real life miteinander redet. Und dafür gibt es dann halt um die Welt herum so eine handvoll Events, auf denen man sich dann tatsächlich immer trifft. Die Party, auf die du zu sprechen kommst, also das RIPE organisiert halt ein RIPE-Meeting zweimal im Jahr, was so in Europa eins der begehrtesten Netzwerkevents ist. In den USA gibt es irgendwie Nanog, in Asien gibt es Apricot, glaube ich. Das sind so die Namen, die mir da so einfallen. Auf dem RIPE-Meeting, jedes zweite RIPE-Meeting war bisher immer in Amsterdam und da organisiert das AMSEX immer eine große Party.
+
+02:03:36.524 --> 02:03:37.664
+<v SPEAKER_3>Jedes zweite RIPE-Meeting?
+
+02:03:38.204 --> 02:03:39.244
+<v SPEAKER_5>Und es gibt zwei pro Jahr?
+
+02:03:39.264 --> 02:03:44.824
+<v SPEAKER_2>Genau. Einmal im Jahr ist es in Amsterdam und... Warum?
+
+02:03:44.844 --> 02:03:45.844
+<v SPEAKER_3>War das schon immer so?
+
+02:03:45.864 --> 02:03:49.264
+<v SPEAKER_2>War bisher immer so. Jetzt haben sie es ein bisschen geändert, jetzt ist es nicht mehr so.
+
+02:03:49.284 --> 02:03:53.244
+<v SPEAKER_1>Das RIPE kommt aus Amsterdam, insofern war es einfacher für sie, es vor Ort zu machen.
+
+02:03:53.264 --> 02:03:59.324
+<v SPEAKER_2>Mittlerweile machen sie es nicht mehr. Und die AMSEX-Partys sind immer legendär.
+
+02:04:01.004 --> 02:04:02.444
+<v SPEAKER_3>Echt, da muss ich auch mal hinkommen.
+
+02:04:02.464 --> 02:04:03.944
+<v SPEAKER_2>Muss man auf eine AMSEX-Party kommen.
+
+02:04:04.164 --> 02:04:06.644
+<v SPEAKER_4>Darf denn da jeder hinkommen oder muss man da eine AS-Nummer haben?
+
+02:04:06.944 --> 02:04:09.604
+<v SPEAKER_2>Wenn man jemanden beim AMSEX kennt, dann ist das kein Problem.
+
+02:04:09.624 --> 02:04:12.844
+<v SPEAKER_4>Na, da habe ich ja noch mal Schwein gehabt.
+
+02:04:12.864 --> 02:04:21.744
+<v SPEAKER_2>Man muss wahrscheinlich auch in das Registry-Formular irgendwo eine AS-Nummer mit eintragen, aber da denken wir uns dann schon eine aus.
+
+02:04:21.764 --> 02:04:24.664
+<v SPEAKER_4>Okay, super. Ich nehme die vom Kongress.
+
+02:04:25.364 --> 02:04:30.484
+<v SPEAKER_5>Muss man mit Nibbler reden, ob das okay ist.
+
+02:04:30.504 --> 02:04:48.044
+<v SPEAKER_3>Ja, Mensch, die Wolke, die Matrix, der Backbone. Jetzt haben wir es ganz gut verwurstet hier, oder? Fällt euch noch irgendwas Spannendes ein, was wir hätten unbedingt noch erwähnen müssen? Nicht so, es wird hier kollektiv gespitzt.
+
+02:04:48.064 --> 02:04:49.964
+<v SPEAKER_2>Ich glaube, ich bin out.
+
+02:04:50.104 --> 02:04:53.044
+<v SPEAKER_4>Du bist raus.
+
+02:04:53.064 --> 02:04:54.064
+<v SPEAKER_3>Du hast ja...
+
+02:04:54.084 --> 02:04:55.124
+<v SPEAKER_2>Konntest du denn folgen?
+
+02:04:55.144 --> 02:05:01.944
+<v SPEAKER_3>Weißt du jetzt alles? Du warst ja die Einzige dieses Weihnachten, die die Internetlampe eingeschaltet hat.
+
+02:05:07.344 --> 02:05:45.164
+<v SPEAKER_2>Beim AMSIX ist es halt das Dove, dass alle unsere Engineers, die besagten fünf, die es dort gibt, alle irgendwie so ein bisschen affiliated mit dem CCC sind. Sprich, sie wollen alle auf den Chaos-Communication-Kongress fahren. Aber einer muss ja bei uns Schicht machen und irgendwie den 24-7-Betrieb. Ja, dieses Jahr hat es mich getroffen. Ich bin dann tatsächlich vorm Kongress nach Berlin gefahren, habe den Aufbau mitgemacht und am ersten Kongrestag bin ich zurück nach Amsterdam. Und dann saß ich da ganz alleine im Büro und da war niemand. Es war furchtbar, es war furchtbar. Aber ich habe mir alle Streams angeguckt, solange sie denn funktioniert haben.
+
+02:05:45.184 --> 02:05:47.584
+<v SPEAKER_3>Aber jetzt ist ja für fünf Jahre erst mal...
+
+02:05:47.604 --> 02:05:55.704
+<v SPEAKER_2>Jetzt habe ich erst mal fünf Jahre, genau. Wir rotieren das jetzt und wir haben jetzt auch einen, der nicht auf diese Veranstaltung fährt. Vielleicht können wir den auch mal irgendwann alleine lassen.
+
+02:05:56.264 --> 02:06:00.584
+<v SPEAKER_4>Super, hoffentlich kein Familienvater mit Weihnachten anbehnet.
+
+02:06:00.604 --> 02:06:06.004
+<v SPEAKER_2>Doch, Familienvater, aber Familienvater, Weihnachten zu Hause ist ja kein Problem, weil er ist ja dann wenigstens zu Hause und will nur irgendwo hinfahren.
+
+02:06:06.024 --> 02:06:07.304
+<v SPEAKER_3>Also er muss nicht unbedingt in ein Büro rumsetzen.
+
+02:06:07.324 --> 02:06:28.424
+<v SPEAKER_2>Er muss nicht im Büro rumsetzen, ne, ne. Also wir sitzen auch so normal, wenn wir Schicht haben. Wir haben halt ein Telefon, was wir geforwarded kriegen. Und ich glaube, die Grundregel, die wir haben, ist nicht außer Landes zu sein und nicht alkoholisiert, sodass man dann doch noch irgendwie zum Rechenzentrum fahren kann.
+
+02:06:28.444 --> 02:06:30.044
+<v SPEAKER_3>Das schließt den Kongress halt aus.
+
+02:06:30.064 --> 02:06:48.724
+<v SPEAKER_2>Das war ganz witzig. Vor zwei Tagen war ich mit Nils essen und da haben wir so ein bisschen Wein zum Abendessen gekillt und so weiter und so fort. Und ich war gerade on call und hatte das Telefon. Und irgendwann meinten wir dann, na gut, zwei vier betrunken Hände kriegen mehr hin als zwei nüchtern wahrscheinlich. Und die Taxikosten, um ins Rechenzentrum zu fahren, teilen wir uns dann.
+
+02:06:48.744 --> 02:07:14.084
+<v SPEAKER_3>Aber es kam gar nicht so weit. Na gut, super. Elisa, Christian, vielen Dank für die Ausführung hier über das Internet im Allgemeinen und im Besonderen. Ein Blick hinter die Kulissen. Ich hoffe für euch, Hörer, war auch was dabei. Für mich auf jeden Fall. Die ganzen Zusammenhänge mal so in den Kopf reinzukriegen, ist doch schon sehr wichtig. Das nächste Mal fühlt sich der Klick schon wieder ganz anders an, finde ich.
+
+02:07:15.204 --> 02:07:16.424
+<v SPEAKER_2>Vielen Dank, Tim, für die Einladung.
+
+02:07:16.644 --> 02:07:25.104
+<v SPEAKER_3>Ich meine, wenn man so irgendwie da auf so einen Link draufklickt und sich mal so klarmacht, was das eigentlich alles so los tritt. So ähnlich auch wie bei diesem Maus-Video.
+
+02:07:25.124 --> 02:07:28.304
+<v SPEAKER_2>Dazu musst du mal einen Link auf die Seite packen, dann...
+
+02:07:28.324 --> 02:07:57.264
+<v SPEAKER_3>Jaja, gibt's irgendwo noch. Es ist in Abhängigkeit davon, wie viele Mäuse man da los steht, aber was überhaupt alles mittlerweile so an Festplatten rasselt. Nur um einen irgendwie so einen ganz normalen Porno-Bildchen auf dem Bildschirm zu kriegen, das ist doch schon erstaunlich. Na gut, jetzt haben wir genug das Internet angehimmelt und wir kehren wieder zurück auf den Boden der Tatsachen. Nochmal vielen Dank und vielen Dank fürs Zuhören und bis bald bei Chaosradio Express.

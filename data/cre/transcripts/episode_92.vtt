@@ -1,0 +1,1558 @@
+WEBVTT
+
+00:01:26.835 --> 00:02:59.175
+<v SPEAKER_2>Hallo, hier ist Chaos Radio Express, Ausgabe Nummer 92. Mein Name ist Tim Pritlove und nach einer längeren Pause freue ich mich wieder sehr, euch am Kopfhörer zu begrüßen. Wo immer ihr das auch gerade hört. Und ja, ich setze die Reihe technischer Themen auch mit dieser Ausgabe fort. Zwischendurch gibt es ja Chaos Radio Express auch mal wieder live, wo mehr die gesellschaftlichen Themen beleuchtet werden in diesem Monat. Aber hier soll es mal wieder in die Details gehen. Und ich habe mir ein Thema rausgepickt, das schon häufiger auch von Hörern angesprochen worden ist, wo es offensichtlich auch großen Nachschulbedarf gibt. Auch bei mir, muss ich dazu sagen. Und ja, das Thema ist Virtualisierung im Allgemeinen und im Besonderen. Und dazu begrüße ich André Przywara. Hallo. Ja, schön, dass du es geschafft hast. Du kommst aus Dresden und bist dort auch fleißig. Darüber werden wir gleich viel hören. Und bist ja in jeder Beziehung mit dem Thema Virtualisierung eng vertraut. Aber was ich vielleicht mal eingangs mal hinterfragen wollen würde, ist so, wieso dein Werdegang bisher war, der dich bis zu diesem Thema geführt hat. Bist du auch so ein C64-Anfänger?
+
+00:02:59.195 --> 00:03:01.955
+<v SPEAKER_1>Nein, ich hatte ZX Spectrum natürlich.
+
+00:03:01.975 --> 00:03:05.655
+<v SPEAKER_2>Ah, das ist ja auch mal was Neues. Die Radiergummi-Tastatur.
+
+00:03:05.815 --> 00:03:08.735
+<v SPEAKER_1>Nein, ich hatte den Plastik-Spectrum mit den anderen Tasten.
+
+00:03:08.755 --> 00:03:15.255
+<v SPEAKER_2>Ach, den gab's? Ach, und der hatte diese dünnen Knipse-Tasten.
+
+00:03:15.455 --> 00:03:21.295
+<v SPEAKER_1>Naja, das war auch keine super Tastatur, aber die sah den normalen Tastaturen schon ähnlich.
+
+00:03:21.335 --> 00:03:26.055
+<v SPEAKER_2>Ah, okay, das ist mir gar nicht untergekommen. Z80 sozusagen.
+
+00:03:26.075 --> 00:03:26.775
+<v SPEAKER_1>Z80, ja.
+
+00:03:26.795 --> 00:03:28.915
+<v SPEAKER_2>Also warst du sozusagen von Anfang an auf der 8er-Linie?
+
+00:03:29.535 --> 00:03:44.375
+<v SPEAKER_1>Naja, ich hab da hauptsächlich Basic gemacht auf dem Teil. Da bin ich noch nicht so tief gegangen. Ich bin dann gleich auf PC gegangen. Also hatte nicht irgendwelche 68.000er Zwischenschritte.
+
+00:03:44.395 --> 00:03:45.355
+<v SPEAKER_2>Keine Amigas?
+
+00:03:45.375 --> 00:04:42.795
+<v SPEAKER_1>Nein, ich konnte mich da aus diesem Frieden raushalten. Ich hatte erstmal in der Uni damit zu tun, mit 68.000. In der Uni bin ich dann auch richtig angefangen mit C und Unix. Ich habe dann in der Uni noch ein paar Jahre gearbeitet, zu anderen Themen auch. Bioinformatik hatte ich auch mal zwischendurch gemacht. Ich hatte mich dann aber schon auf Linux in meiner Diplomarbeit spezialisiert. Vor 2,5 Jahren ungefähr gab es einen Aufruf, dass AMD in Dresden Entwickler sucht für Linux. Das fand ich eigentlich ganz spannend, weil die da auf der Hardware-Seite, was ja mein Fach war, also Technische Informatik studiert, und die Linux-Seite tatsächlich auch etwas forschen wollten. Das fand ich sehr spannend, habe mich da beworben und wurde dann auch genommen.
+
+00:04:42.815 --> 00:04:46.375
+<v SPEAKER_2>Du sagst, du hast eine Diplomarbeit gemacht mit Linux als Thema?
+
+00:04:46.375 --> 00:04:55.995
+<v SPEAKER_1>Richtig, ja. Über Echtzeit Linux hatte ich da so ein bisschen geforscht. Das ist dann später an meiner Arbeit wieder eingeschlafen, weil ich da was anderes gemacht habe. Deswegen wollte ich das eigentlich...
+
+00:04:56.895 --> 00:05:00.655
+<v SPEAKER_2>Aber das ist ja auch schon im Prinzip Forschung ein bisschen näher am Prozessor.
+
+00:05:02.135 --> 00:05:05.455
+<v SPEAKER_1>Das war ja mein Ziel an der Schnittstelle zwischen Hardware und Software.
+
+00:05:05.455 --> 00:05:24.775
+<v SPEAKER_2>Okay, also du hast sozusagen die frühen Basic-Welten doch frühzeitig verlassen. Du hast dich dann doch sehr auf die Prozessorebene begeben. Jetzt bist du bei AMD, die Nummer zwei im Prozessor-Business, die ja in Dresden recht große Werke haben.
+
+00:05:24.795 --> 00:05:35.155
+<v SPEAKER_1>Genau, es gibt zwei Fabriken, 3000 Leute, die da arbeiten. Und es werden praktisch alle AMD-Prozessoren dort hergestellt, also die weltweit verkauft werden.
+
+00:05:35.175 --> 00:05:38.115
+<v SPEAKER_2>Also es werden nicht alle dort hergestellt, aber alle Typen werden dort hergestellt?
+
+00:05:38.135 --> 00:05:53.595
+<v SPEAKER_1>Nee, es werden tatsächlich 99 Prozent aller Prozessoren, die weltweit verkauft werden, dort hergestellt. Das ist die einzige Fabrik, oder die einzigen beiden Fabriken, die tatsächlich Prozessoren im großen Maßstab produzieren. Es gibt noch so Second-Source-Geschichten, aber das ist nur als Backup gedacht.
+
+00:05:55.415 --> 00:05:59.915
+<v SPEAKER_2>Und jetzt bist du aber in einem speziellen Team gelandet.
+
+00:05:59.935 --> 00:07:01.775
+<v SPEAKER_1>Genau, das gibt das Operating System Research Center, oder OSRC abgekürzt. Das ist praktisch eine Einrichtung, die geschaffen wurde vor zweieinhalb Jahren, also 2006, um die Software-Schnittstelle besser zu betonen und das im Sinne von AMD voranzutreiben. Die Idee war, dass nicht immer die Software der Hardware hinterher programmieren musste, sondern dass vielleicht auch mal Anforderungen, die Software-Entwickler haben, auch in Hardware umgesetzt werden, also diesen umgekehrten Weg. Wenn ein Betriebssystem-Entwickler irgendwas stört, was sehr umständlich ist, dass das dann auch in Hardware gelöst werden kann oder verbessert werden kann. Da gab es eigentlich wenig Rückfluss. Es gibt immer sehr Rückfluss, wenn man Hardware-Lösungen hat, wie man dann in Software damit umgeht, aber diesen umgekehrten Weg gibt es relativ wenig, gerade bei so Hardware-orientierten Firmen, also wie AMD, die wirklich nur Prozessoren herstellen und keine Betriebssysteme oder sowas.
+
+00:07:01.795 --> 00:07:22.195
+<v SPEAKER_2>Operating System Research, also muss man sich das jetzt so vorstellen, dass dort auch wirklich jetzt klassischer Research betrieben wird oder geht es mehr darum, die Betriebssystemprogrammierer so als Kunden zu begreifen und dort vor Ort in so einem kleinen eingezäunten Bereich mit Karotten zu füttern?
+
+00:07:22.415 --> 00:07:54.935
+<v SPEAKER_1>Nee, das ist beides. Es gibt Leute, die machen richtig Research, also dass Lösungen in Emulatoren zum Beispiel herausprobiert werden. Was wäre, wenn man folgendes Feature hätte? Wie würde sich die Software damit verhalten? Bringt das wirklich so viel, wie man manchmal denkt? Es werden immer Lösungen ausgedacht. Die Hardware-Designer denken sich etwas aus, das könnte etwas bringen. Das ist immer so ein bisschen unbewiesen, ob es tatsächlich den Effekt hat, den man sich wünscht. Die Idee ist, dass wir das vorher simulieren, wie auch immer, mit verschiedenen Lösungen.
+
+00:07:54.955 --> 00:07:56.555
+<v SPEAKER_2>Um zu gucken, ob es wirklich etwas bringt.
+
+00:07:56.575 --> 00:08:05.215
+<v SPEAKER_1>Genau, und dann auch Feedback zu geben und sagen, wenn man jetzt noch ein zweites Register hätte, oder dieses Register anders organisiert wäre, dann würde das viel effizienter gehen.
+
+00:08:06.895 --> 00:08:17.795
+<v SPEAKER_2>Ah ja, das heißt, im Prinzip geht es darum, die Flaschenhälse auch zu bereinigen, aber auch von Zeit zu Zeit auch mal wieder ein paar ganz neue Features aufzuwenden.
+
+00:08:17.815 --> 00:08:36.055
+<v SPEAKER_1>Richtig, ja, neue Sachen. Was jetzt z.B. Synchronisation von mehreren Prozessoren ist ein großes Thema, aber es gibt immer mehr Kerne. Es stellt sich heraus, dass die Synchronisation zwischen verschiedenen Threads zunehmend ein Flaschenhals wird. Wie man das lösen kann, das sind wir im Moment dran.
+
+00:08:36.075 --> 00:08:40.335
+<v SPEAKER_2>Wie viele Leute arbeiten da so in so einem Research Center?
+
+00:08:40.355 --> 00:08:46.095
+<v SPEAKER_1>Es sind jetzt bei uns 25 in Dresden und es gibt noch ein paar in Austin.
+
+00:08:46.115 --> 00:08:58.155
+<v SPEAKER_2>Welche Rolle spielt jetzt da Linux im Besonderen? Ist das jetzt sozusagen das Test-OS für alle Features oder gibt es da jetzt im Prinzip Zuständige für jedes verbreitete Betriebssystem und dann wird auch jedes Feature mit allem getestet?
+
+00:08:58.175 --> 00:09:24.895
+<v SPEAKER_1>Grundsätzlich heißen wir Operating System Research Center, dass man annehmen würde, dass es für alle Betriebssysteme gilt. In der Praxis spezialisieren wir uns schon auf freie Betriebssysteme und da vor allem Linux. Also Linux deshalb, weil es unter den freien Systemen den größten Marktanteil hat und freie Betriebssysteme, weil einfach diese Feedback-Schleifungen viel einfacher zu lösen sind in freien Betriebssystemen, weil der Code da ist. Es ist wirklich aktueller Code, der auch tatsächlich jetzt eingesetzt wird und nicht in fünf Jahren.
+
+00:09:24.915 --> 00:09:26.235
+<v SPEAKER_2>Vielleicht mal unter Umständen.
+
+00:09:26.255 --> 00:09:39.855
+<v SPEAKER_1>Genau und es gibt halt sehr viele Leute, die den Code auch verstehen und die wirklich an der untersten Ebene der Änderungen oder Verbesserungen machen können, sodass wir uns praktisch um Linux zum Beispiel konzentrieren.
+
+00:09:40.515 --> 00:09:53.055
+<v SPEAKER_2>Das heißt, das ist schon so eine Gruppe, die auch ein hohes Maß an OS-Programmierungsfähigkeiten hat. Sind das dann auch wirkliche Kernel-Entwickler zum Beispiel auch mit Teil dieser Truppe?
+
+00:09:53.075 --> 00:10:10.735
+<v SPEAKER_1>Genau, also wir haben Kernel-Entwickler, die auch regelmäßig Patches schicken. Also alles, was den Kernel betrifft und von amd.com kommt auf der Kernel-Mainliste, ist von uns hauptsächlich. Was Treiber betrifft, gibt es noch mal eine andere Truppe, aber was so diese Kernfeatures und so betrifft und KVM zum Beispiel, was machen wir?
+
+00:10:10.755 --> 00:10:12.615
+<v SPEAKER_2>Wie lange gibt es diese Gruppe schon?
+
+00:10:12.615 --> 00:10:15.715
+<v SPEAKER_1>Na seit April 2006.
+
+00:10:15.735 --> 00:10:17.615
+<v SPEAKER_2>Also noch ein relativ frisches Ding.
+
+00:10:17.635 --> 00:10:21.295
+<v SPEAKER_1>Jaja, richtig und wir sind auch da vom Ansatz her auch eine neue Einheit in AMD.
+
+00:10:22.235 --> 00:10:26.975
+<v SPEAKER_2>Zeichnet sich das ab, dass das jetzt auch schon wertgeschätzt wird? Oder muss das noch so um sein?
+
+00:10:26.995 --> 00:10:44.015
+<v SPEAKER_1>Jaja, es gab was mit diesem TLB-Bug zum Beispiel, der voriges Jahr auftrat in den neuen Prozessoren. Da gab es einen Fehler, den wir, also beim Umsetzen der TLBs vom 2nd in den 3rd-Level-Cache.
+
+00:10:44.035 --> 00:10:49.215
+<v SPEAKER_2>Ein Detail, was wir später glaube ich nochmal erarbeiten wollen. Also es gab einen konkreten Fehler in den AMD-Prozessoren.
+
+00:10:49.355 --> 00:11:20.255
+<v SPEAKER_1>Einen Fehler, der zwar nur sehr selten auftrat, aber natürlich kann man das keinem verkaufen. Deswegen wurden die Prozessoren mit angezogener Handbremse praktisch verkauft durch einen BIOS-Workaround, der das Caching vollkommen abschaltete von den Pagedevils, was eine Menge Performance kostete. Und wir haben für, also Kollegen haben für Linux einen Workaround entwickelt, der praktisch nur mit ungefähr einem Prozent Performance-Nachteil zuhandenkam.
+
+00:11:20.275 --> 00:11:24.435
+<v SPEAKER_2>Das heißt, das eigentliche Problem war das Zusammenspiel des Prozessors mit dem BIOS?
+
+00:11:24.475 --> 00:11:29.475
+<v SPEAKER_1>Nicht mit dem BIOS, sondern es hat was mit dem Caching der Pagedevils zu tun.
+
+00:11:29.495 --> 00:11:33.655
+<v SPEAKER_2>Also es war schon ein Fehler, sozusagen ein konzeptioneller Fehler im Prozessor, im bestimmten Bereich.
+
+00:11:33.675 --> 00:11:39.835
+<v SPEAKER_1>Ja, kein Konzept, sondern ein Speedpass, also ein Problem in der Implementierung, also kein Entwurf, sondern tatsächlich jetzt...
+
+00:11:39.855 --> 00:11:41.395
+<v SPEAKER_2>Ach so, in einer konkreten Ausführung.
+
+00:11:41.415 --> 00:11:42.215
+<v SPEAKER_1>Korrekt, ja.
+
+00:11:42.235 --> 00:11:45.175
+<v SPEAKER_2>Das heißt, das ist etwas, was man dann später auch in der Produktion hat beheben können?
+
+00:11:45.395 --> 00:11:57.855
+<v SPEAKER_1>Richtig, da gab es den... also es gibt ja diese B2-Version von dem Barcelona oder dem Phenom, die diesen Fehler aufweisen. Und seit, glaube ich, jetzt seit April gibt es die B3-Version, die diesen Fehler nicht mehr hat.
+
+00:11:57.875 --> 00:12:00.415
+<v SPEAKER_2>Aber trotzdem habt ihr dann sozusagen auch einen Weg gefunden, wie man die Software...
+
+00:12:00.435 --> 00:12:23.035
+<v SPEAKER_1>Genau, und das Problem war natürlich, das Problem, das zu beheben und neue Prozessoren herzustellen, dauert natürlich seine Zeit. Und wir haben innerhalb von, glaube ich, drei Wochen einen Fix entwickelt, einen Linux-Patch auch veröffentlicht. Und das hat dazu geführt, dass große Kunden tatsächlich, dass die, sage ich jetzt mal, fehlerhaften Prozessoren tatsächlich nehmen konnten mit diesem Patch.
+
+00:12:23.055 --> 00:12:24.935
+<v SPEAKER_2>Ah, und die mussten nicht alle weggeschmissen werden.
+
+00:12:24.955 --> 00:12:27.995
+<v SPEAKER_1>Korrekt, und damit arbeiten konnten, und auch mit praktisch voller Geschwindigkeit.
+
+00:12:28.955 --> 00:12:30.715
+<v SPEAKER_2>Besonders dieses eine Prozent, was nicht weiter...
+
+00:12:31.535 --> 00:12:44.615
+<v SPEAKER_1>Genau, und das hat AMD auch eine Menge Geld gebracht, also Geld gerettet, und dadurch hat unser Einheit auch natürlich in der von AMD deutlich an Ansehen gewonnen.
+
+00:12:45.795 --> 00:13:02.515
+<v SPEAKER_2>Na, das ist ja schon eine kleine Success-Story, auf jeden Fall. Das heißt, das kann man schon eigentlich jetzt auch als... Tja, das ist ja dann im Prinzip schon auch eine richtige Quersubventionierung von Open-Source-Entwicklung. Weil da fällt ja dann auch wirklich eine ganze Menge wertvoller Code ab.
+
+00:13:03.815 --> 00:13:25.995
+<v SPEAKER_1>Also wir entwickeln halt, also neben dieser Forschungssache, da was jetzt eher so in die Zukunft gerichtet ist für die Zukunft der Prozessoren, sorgen wir auch dafür, dass zum Release-Zeitpunkt der Prozessoren diese sämtliche Features voll unterstützt werden von mindestens einem Betriebssystem oder einer Lösung. Was in unserem Fall dann Linux ist und was Virtualisierung angeht, zum Beispiel Xen.
+
+00:13:26.015 --> 00:13:39.675
+<v SPEAKER_2>Was jetzt für den AMD-Markt ja nicht irrelevant ist, weil AMD ist vor allem stark im Serverbereich. Es gibt natürlich auch Desktop-Installationen von AMD-Prozessoren, aber ich denke der Server-Markt ist im Wesentlichen das, wo AMD seinen Pfund hat, oder?
+
+00:13:39.695 --> 00:13:54.495
+<v SPEAKER_1>Ja, es gibt durchaus beides. Die Stückzahlen sind da deutlich größer im Desktop-Bereich. Also das bringt AMD wahrscheinlich mehr Geld als der Server-Markt. Der Server-Markt ist einfach prestigeträchtiger. Und für große Firmen halt wichtiger natürlich.
+
+00:13:55.055 --> 00:13:59.515
+<v SPEAKER_2>Gut, aber Linux ist vor allem im Server-Bereich auch wirklich wichtig.
+
+00:13:59.535 --> 00:14:31.015
+<v SPEAKER_1>Ja, genau. Da hat es einen deutlichen Marktanteil, was auch die Sales und Marketing dann auch wahrnehmen kann und sagt, okay, obwohl Linux jetzt so ein Open Source-Geschichte ist, was nicht wirklich effektiv Geld bringt, weil man es nicht verkaufen kann, bringt es doch für uns Einnahmen. Weil wenn Linux auf den Servern läuft, auf unseren Servern, und wir sagen können, es wird super unterstützt, und ihr habt alle Features, die die Prozessoren haben, auch in der Software ausgenutzt, dann ist das ein Argument für den Kunden, AMD-Prozessoren zu kaufen.
+
+00:14:31.035 --> 00:14:49.355
+<v SPEAKER_2>Ist das ein Trend? Also wir hatten jetzt hier gerade vor ein, zwei Tagen gab es die Meldung, dass Harald Welter auch schon mehrmals hier zu Gast bei Chaos Radio Express jetzt so auch eine beratende Tätigkeit für VIA übernimmt, die ja auch Prozessoren bauen. Kannst du das auch von anderen?
+
+00:14:49.375 --> 00:15:04.295
+<v SPEAKER_1>Ich weiß, dass einer der X-Org-Entwickler zum Beispiel auch bei uns angestellt ist, also bei der ehemaligen ATI-Sparte und dafür sorgt, dass die X-Org-Treiber halt voll unterstützt werden, also die Hardware.
+
+00:15:04.315 --> 00:15:05.315
+<v SPEAKER_2>Da geht es um Grafik jetzt?
+
+00:15:05.335 --> 00:15:06.935
+<v SPEAKER_1>Grafik, voll unterstützt.
+
+00:15:06.955 --> 00:15:33.635
+<v SPEAKER_2>Okay, jetzt muss ich ja nochmal mein Telefon ausschalten, das habe ich jetzt vergessen. Okay, ja, und jetzt hast du es ja schon erwähnt, dein Steckenpferd ist Xen, eine Open-Source-Lösung, um eben Virtualisierung zu betreiben unter Linux. Das heißt, das ist dann auch ein Fokus bei deiner Tätigkeit bei AMD. Richtig, ja.
+
+00:15:33.655 --> 00:15:46.115
+<v SPEAKER_1>Also das ist, ich bin hauptsächlich Xen-Entwickler und schicke halt Patches für Xen. Also das ist unser tägliches Brot. Unsere Aufgabe ist, Patches für Xen praktisch zu schicken.
+
+00:15:46.135 --> 00:15:58.675
+<v SPEAKER_2>Das heißt, du bist auch nicht alleine, sondern da gibt es noch mehrere Leute. Okay, und du gehst jetzt auch zu den Leuten, die jetzt konkret dann auch Code mit in das Projekt machen. Du bist jetzt keiner der Hauptentwickler, aber schon einer derjenigen, die eben auch dafür sorgen.
+
+00:15:58.695 --> 00:16:13.575
+<v SPEAKER_1>Ja, also Xen ist ein sehr professionelles Projekt. Und warum machst du das fest? Weil hauptsächlich Mitarbeiter von Firmen, also von IBM, Intel, HP und so weiter, die hauptsächlich Code beitragen.
+
+00:16:13.595 --> 00:16:14.235
+<v SPEAKER_2>Ah, verstehe.
+
+00:16:14.255 --> 00:16:49.395
+<v SPEAKER_1>Oder auch diese Xen Source, ist ja diese ursprüngliche Ausgründung, von der Cambridge University dieses Projekt ins Leben gerufen haben. Und die wurden jetzt von Citrix gekauft, voriges Jahr. Und das ist dort, also hat auch eine professionelle Heimat sozusagen. Es gibt eine Firma, die richtig diese Entwicklung koordiniert. Und die auch professionelle Lösungen auf Basis dieser, also wirklich verkäufliche Lösungen auf Basis dieser Open Source-Lösungen anbietet. Und deswegen ist es im Server-Markt, hat es einfach auch ein Gewicht.
+
+00:16:49.415 --> 00:17:44.595
+<v SPEAKER_2>Ja, Virtualisierung, das ist natürlich jetzt ein komplexes Thema. Dem wollen wir uns doch mal etwas nähern. Bevor wir da vielleicht jetzt auch auf die Spezifika von Xen und anderen Sachen zu sprechen kommen, denke ich, muss man da mal ein bisschen zurückrudern und gucken, wo das eigentlich so alles seine Herkunft gefunden hat. Grundsätzlich, wie ich das verstehe, geht es ja um das Problem, dass man eben auf Computern möglichst mehr als nur eine einzige Anwendung laufen lassen möchte. Und vor allem hat man es sehr häufig mit Anwendungen zu tun, die, wenn sie dann gemeinsam laufen, sich unbedingt gegenseitig nicht das Leben leicht machen. Sprich, es gibt so Gefährdungen, wie dass man sich gegenseitig die CPU wegraubt, dass man sich gegenseitig den Speicher vollschreibt. Und all diese Dinge müssen halt verhindert werden. Wo hat denn jetzt so die Idee der Virtualisierung seinen Ursprung gefunden?
+
+00:17:45.015 --> 00:18:02.175
+<v SPEAKER_1>Also das geht eigentlich bis in die 70er Jahre zurück. Hauptsächlich dort auf IBM Mainframes. Das waren also sehr große Kisten und nicht alle konnten diese großen Kisten tatsächlich ausnutzen. Und die Idee war, dass man diese Kisten partitioniert. Das war so der Begriff. Oder ist immer noch der Begriff?
+
+00:18:02.195 --> 00:18:21.175
+<v SPEAKER_2>Also groß im Sinne von, dass man einen eigenen Raum mit Klimaanlage dafür braucht, um das zu betreiben. Natürlich rechnen, krafttechnisch mit heutigen Systemen nicht im Ansatz zu vergleichen. Aber für damalige Verhältnisse halt der High-End. Eben für große Industrieunternehmen und so weiter, die damit ihre ganze Behaltung gemacht haben.
+
+00:18:21.195 --> 00:18:59.855
+<v SPEAKER_1>Und IBM musste halt den Leuten schmackhaft machen, dass sie große Rechner kaufen. Auch wenn sie sagten, wir brauchen für unsere Buchhaltung eigentlich nur ein kleines System. Dann hatte IBM natürlich ein Interesse daran, trotzdem ein großes zu verkaufen. Und jetzt wollte man nicht für jede Anwendung extra Rechner hinstellen. Also hat man gesagt, wir verkaufen euch ein großes Ding. Und das wird virtuell praktisch aufgeteilt in verschiedene Partitionen. Wo einzelne CPUs und Teile des Speichers und die ganzen Ressourcen, die der Rechner halt so hat, also die Platte und IO und so weiter. Geteilt werden und einzelnen Instanzen zugeordnet werden. Also mehrere virtuelle Rechner in einer Maschine.
+
+00:18:59.875 --> 00:19:15.075
+<v SPEAKER_2>Das heißt, für eine Software sah es wirklich immer so aus, als hätte sie die Kontrolle über das gesamte System. Und immer auf dieselbe Art und Weise. Und das war so für jedes eingesetzte Programm so. Gab es dann eine Limitierung, wie viele solche Unterteilungen vorgenommen werden können?
+
+00:19:15.095 --> 00:19:21.315
+<v SPEAKER_1>Ja, praktisch einfach schon. Weil IBM auch verkaufen wollte, da wurden dann einfach teilweise willkürlich so Grenzen gesetzt.
+
+00:19:21.655 --> 00:19:25.075
+<v SPEAKER_2>Ach so, da war dann so ein Byte anders und dann kostet es 1000 Dollar mehr.
+
+00:19:25.375 --> 00:19:42.495
+<v SPEAKER_1>Ja, zum Beispiel. Also das ist ja diese Geschichte, wo tatsächlich Maschinen mit 20 Prozent verkauft wurden. Also dem Kunden hingestellt wurden. Und der hat aber nur zwei bezahlt und konnte auch bloß zwei nutzen. Und wenn er mehr wollte, dann kam ein Techniker, drehte dann einen geheimen Schalter und plötzlich waren mehr CPUs da.
+
+00:19:42.515 --> 00:19:45.675
+<v SPEAKER_2>Aha, und da konnte man sich die Patches noch nicht aus dem Internet herunterladen damals.
+
+00:19:45.695 --> 00:19:49.795
+<v SPEAKER_1>Nee, das wollte man auch glaube ich gar nicht machen. Also auf so einer systemkritischen Ebene.
+
+00:19:52.675 --> 00:20:05.455
+<v SPEAKER_2>Welche Fokierung musst du den IBM da sozusagen treffen? Also was hat das ermöglicht? Ist das eine reine Software-Lösung gewesen? Oder ist die Architektur, die Hardware, die Prozessorentechnik dort von vornherein schon darauf ausgelegt gewesen?
+
+00:20:05.475 --> 00:20:48.455
+<v SPEAKER_1>Richtig, also es wurde praktisch schon mit dem Hintergedanken entwickelt, dass man dort, dass man das aufteilen möchte, die Hardware. Also bahnbrechend war eigentlich damals so ein Paper von Herrn Popek und Goldberg, die Virtualisierung praktisch damals beschrieben hatten in den 70ern. Und die haben halt aufgezeigt, was man machen muss, um einen Rechner mehrere virtuellen Maschinen aufzuteilen, was er für Bedingungen erfüllen muss. Und ja, also diese Aufteilung zum Beispiel, dass der größte Teil der Anweisungen tatsächlich nativ ausgeführt wird, das ist eine ganz wichtige Forderung, wo sich Virtualisierung von Emulationen zum Beispiel abgrenzt.
+
+00:20:48.475 --> 00:21:27.255
+<v SPEAKER_2>Ja, das ist glaube ich etwas, was den meisten Leuten als erstes einfällt, wenn man so denkt, virtuell bewege ich mich irgendwo, wo ich eigentlich gar nicht bin. Und dann gibt es diese unendliche Zahl an Emulatoren für alles Mögliche heutzutage, das dürfte jeder schon mal gesehen haben. Der C64 auf meinem Macintosh, der Nintendo Emulator auf was weiß ich, unter Windows. Eigentlich läuft heutzutage ja schon fast alles auf Alm. Und es gibt auch so Scherzbögel, die dann im Emulator einen Emulator für einen anderen Emulator fahren. Ich weiß nicht, bis weit sie es da schon gebracht haben. Aber ich glaube, so zehnfache Verschachtelung, davon habe ich schon mal gelesen.
+
+00:21:27.275 --> 00:21:29.135
+<v SPEAKER_1>Das sind eher so sportliche Sachen.
+
+00:21:29.155 --> 00:21:35.615
+<v SPEAKER_2>Was unterscheidet jetzt sozusagen die Emulation an der Stelle von der Idee der Virtualisierung? Um das mal deutlich zu machen.
+
+00:21:35.635 --> 00:22:01.455
+<v SPEAKER_1>Die Virtualisierung soll halt effizient sein. Und deswegen, klassischerweise emuliert man ja einen Rechner, in dem man Prozessor spielt. Also die Software des Host-Rechners spielt Prozessor, schaut sich die Befehle des Gastsystems an und setzt die halt irgendwie um. Er liest die tatsächlich und sieht, aha, das ist jetzt ein Move-Befehl oder ein Ladebefehl, was auch immer. Und führt das dann in so einem virtuellen Kontext aus.
+
+00:22:01.475 --> 00:22:11.895
+<v SPEAKER_2>Das heißt, alles wird Schritt für Schritt nachgebaut. Und jeder einzelne Instruktion wird erstmal gelesen, angeguckt, was ist das, und dann wird getan, was es machen soll. Es wird auch nicht übersetzt in dem Sinne.
+
+00:22:11.915 --> 00:22:35.615
+<v SPEAKER_1>Das wäre dann der nächste Schritt. Die klassische Emulation macht das erstmal nicht. Der Haken ist, dass es natürlich, wie man sich vorstellen kann, von der Performance her deutlich langsamer ist, als wenn man das nativ ausführen würde. Das spielt bei vielen Emulatoren so in der C64-Schiene jetzt nicht so die Rolle, weil die original hat, wer halt so langsam ist. Trotz dieser ganzen Umwege, das immer noch schneller ist als das Original.
+
+00:22:35.635 --> 00:23:12.415
+<v SPEAKER_2>Man muss sogar noch Begrenzung reinbauen, damit es nicht zu schnell läuft. Dann gibt es die Just-in-Time-Technik. Im Prinzip ist das ja auch genau die Sache, wie jetzt bei Java, bei so einer virtuellen Maschine. Macht ja im Prinzip auch nichts anderes. Da läuft die Software und liest den Code, nur dass es sich dabei um so einen virtuellen Prozessor handelt, den es so sozusagen nicht gibt. Also diesen Bike-Code. Und auch dort wurde dann eben Geschwindigkeit gewonnen, dadurch, dass man eben zur Laufzeit alles, was schon mal analysiert wurde, auch umsetzt in nativen Code. Und so, dass beim nächsten Mal nicht nochmal angeschaut werden muss, sondern nur noch ausgeführt wird.
+
+00:23:12.435 --> 00:23:20.575
+<v SPEAKER_1>Genau, also die ersten Java-Versionen mussten ja ohne diesen Just-in-Time-Compiler auskommen. Und die waren von der Geschwindigkeit gefürchtet, sag ich mal.
+
+00:23:20.595 --> 00:23:22.095
+<v SPEAKER_2>Ja, das hat sich deutlich verbessert.
+
+00:23:22.115 --> 00:23:40.115
+<v SPEAKER_1>Das hat sich deutlich verbessert durch dieses Just-in-Time-Compiling. Das wurde so mit diesen, tatsächlich mit Java und anderen White-Code-Maschinen, ist es halt groß geworden und ist dann auch auf die Emulatoren oder Virtualisierer angewandt worden. Das hat denen dann auch einen ordentlichen Sprung verschafft von der Performance.
+
+00:23:40.135 --> 00:23:55.015
+<v SPEAKER_2>Das heißt, die Virtualisierung verzichtet gerne da drauf. Und es ist ja auch so, hier geht es ja darum, dass das ein System quasi in mehrere virtuelle aufgeteilt wird. Und sprich, das Programm findet schon den Prozessor vor, den es ja auch eigentlich erwartet.
+
+00:23:55.035 --> 00:24:06.115
+<v SPEAKER_1>Die Idee bei der Virtualisierung ist, dass man den größten Teil des Quotes nativ auf den Prozessor ausführt, ohne diese Umsetzungsschritte der Lesen, der Befehle und Ausfühenden im virtuellen Kontext.
+
+00:24:06.855 --> 00:24:14.675
+<v SPEAKER_2>Aber welche kann man denn jetzt sozusagen nicht nativ ausführen? Also wo ist da jetzt die Grenze gesetzt? Was muss da berücksichtigt werden?
+
+00:24:14.695 --> 00:24:57.115
+<v SPEAKER_1>Wenn man natürlich die üblichen Schutzmechanismen des Prozessors benutzt, dann würde man sagen, alles was unkritisch ist, läuft in dem User Mode, in einem Modus des Prozessors, wo halt nicht alles erlaubt ist, das üblicherweise für die Anwendungsprogramme benutzt wird. Das Betriebssystem läuft in einem unbeschränkten Modus, in einem Supervisor Modus, Route Modus, wie auch immer man das nennt. Das Problem ist, dass tatsächlich das Betriebssystem in diesem Modus den vollen Zugriff auf den Rechner hat, auf alle Ressourcen. Das heißt, wenn man jetzt ein zweites Betriebssystem ausführen lassen würde, geht das eigentlich nicht, indem das zweite Betriebssystem auch in diesem Supervisor Modus läuft, weil es dann über die Ressourcen des ersten Systems auch mit entscheiden könnte.
+
+00:24:57.135 --> 00:25:02.955
+<v SPEAKER_2>Und beide haben irgendwie immer diesen Trend davon auszugehen, dass sie die einzigen auf die Platte sind.
+
+00:25:02.975 --> 00:26:13.375
+<v SPEAKER_1>Genau, beim Betriebssystemdesign geht man halt davon aus, dass das Betriebssystem das einzige, was läuft. Und um das Problem zu lösen, wurde schon damals von dem POPEC und Goldberg Paper vorgeschlagen, dass man einfach das Betriebssystem, was man virtualisieren möchte, auch im User Modus ausführt. Das bedeutet also, wenn es privilegierte Befehle benutzt, was ihr so ein Betriebssystem üblicherweise macht, Befehle, die also den Supervisor Modus eigentlich erfordern, dann bewirkt das eine Exception. Das heißt, die Ausführung des Betriebssystems wird unterbrochen und es wird ein Interrupt-Händler oder Exception-Händler abgearbeitet. Dieser wiederum kann dann genau gucken, was war das jetzt für eine Instruktion, die mein Gastbetriebssystem eigentlich ausführen wollte, kann es dann emulieren, also kann zum Beispiel den Zugriff auf die echte Hardware beschränken oder erlauben, je nachdem, je nach Kontext. Und geht dann wieder in den Gast zurück, in das Gastbetriebssystem. Und das Gastbetriebssystem bekommt davon gar nichts mit, weil es wie so ein Interrupt ist, was ja im Prinzip den Programmfluss zwar unterbricht, aber aus der Sicht des Gastbetriebssystems nicht.
+
+00:26:13.395 --> 00:27:19.335
+<v SPEAKER_2>Für mich klingt das natürlich jetzt so auch erstmal so wie das, was jedes Betriebssystem ja ohnehin schon tun muss, weil ja auch das Betriebssystem muss ja eigentlich virtualisieren. Es muss ja mehrere Programme, die unter ihm laufen, auch mehrere weitgehend identische Ablaufkontexte bereitstellen. Das ist ja das, was Multitasking eigentlich bedeutet. Und auch dort hat man ja das Problem, dass es eben privilegierte Zugriff auf Ressourcen geben muss, insbesondere natürlich den Speicher, wo man nicht immer jetzt um RAM zu lesen, da will man ja nicht immer dem Betriebssystem sagen, hallo Betriebssystem, liess mal das für mich das RAM, sondern da will der Prozess einfach selber drauf zugreifen, weil sonst wäre es ja unerträglich langsam, beziehungsweise man würde sich da ein Performance Penalty einholen, der einfach nicht zumutbar ist. Und dort haben ja dann ab, wann ging denn das los? Das war eigentlich auch eine Entwicklung der 70er, oder? Die MMU oder 80er kam zum Desktop-Bereich so ein bisschen, weiß nicht genau, bei IBM vielleicht schon eher. Wie verhält sich denn das dazu? Und vielleicht können wir mal kurz auf diese MMUs schauen, wie die jetzt dieses Problem erstmal gelöst haben.
+
+00:27:19.355 --> 00:27:35.015
+<v SPEAKER_1>Also grundsätzlich, was du jetzt schon ansprachst, es ist durchaus vergleichbar, das, was das Betriebssystem für die Anwendung macht, nämlich das Verwalten der Ressourcen, das macht bei Virtualisierung ein extra Stück Software, der Hypervisor, wie man das nennt, mit verschiedenen Betriebssystemen. Also das Verwalten.
+
+00:27:35.035 --> 00:27:37.375
+<v SPEAKER_2>Eigentlich ist es Betriebssystem Multitasking.
+
+00:27:37.395 --> 00:28:15.235
+<v SPEAKER_1>Richtig, also so ein Überbetriebssystem, wenn man so will, was praktisch dann die Ressourcen von mehreren Betriebssystemen steuert. Ja, diese ganze Speicherverwaltung ist natürlich eine elementare Sache, weil dieser virtuelle Speicher, der ist ja praktisch Voraussetzung für jedes halbwegs moderne Betriebssystem. Das ist also der Speicherschutz und die Umsetzung von virtuellen Adressen. Also jedes Programm sieht seinen eigenen Adressraum und kann damit praktisch machen, was es will. Aber wenn es seine vorher gesetzten Grenzen überschreitet, schreitet das Betriebssystem ein.
+
+00:28:15.255 --> 00:28:22.815
+<v SPEAKER_2>Beziehungsweise schreitet erst mal der Prozessor ein, weil in dem Moment, wo der Prozess ja auf den Speicher zugreift, das ist ja wirklich die Hardware, die das abfängt.
+
+00:28:22.835 --> 00:28:30.695
+<v SPEAKER_1>Genau, die MMU überwacht praktisch genau die Zugriffe und sobald ein unerlaubter Zugriff kommt, wird eine Exception ausgelöst und die wird vom Betriebssystem behandelt.
+
+00:28:31.495 --> 00:29:00.735
+<v SPEAKER_2>MMU steht für Memory Management Unit. Das ist also der Teil im Prozessor, der den Speicher verwaltet sozusagen. Wie geht denn das technisch vor sich, wenn so ein Prozess auf so einen Speicher zugreift? Also wie ist denn der Prozessor überhaupt in der Lage, einen Zugriff auf RAM, der ja sozusagen gar nicht in ihm, der RAM ist ja nicht im Prozessor, sondern der befindet sich ja irgendwo auf dem Mainboard des Computers und ist so mit Datenbussen angeschlossen. Wie kann es sein, dass ein Prozess, der auf diesen RAM zugreifen will, vom Prozessor abgefangen werden kann?
+
+00:29:01.335 --> 00:29:38.535
+<v SPEAKER_1>Also das ist die Aufgabe der Memory Management Unit, die früher extern war und heutzutage im Prozessor drin ist. Die Idee ist, es gibt physikalische Adressen, oder physische Adressen. Das ist praktisch das, was an RAM auf dem Mainboard verbaut wird. Das ist das, was der Prozessor nach außen hin anspricht. Die Programme sehen aber nicht diese physischen Adressen, sondern die sehen sogenannte virtuelle Adressen. Dazwischen gibt es eine Umsetzungstabelle. Die Adressen werden in Seiten aufgeteilt, also in gleichgroße Blöcke, das ist üblicherweise vier Kilobyte.
+
+00:29:38.555 --> 00:29:39.955
+<v SPEAKER_2>Die sogenannten Pages.
+
+00:29:39.975 --> 00:29:54.315
+<v SPEAKER_1>Das sind die Pages, genau. Für jede Page gibt es praktisch eine Zieladresse. Man kann virtuelle Pages werden dann in physische Pages umgesetzt. Da gibt es entsprechende Tabellen, ganz trickreich, mit mehreren Leveln, damit man nicht zu viel Speicher verschwendet.
+
+00:29:54.335 --> 00:29:55.555
+<v SPEAKER_2>Das sind dann die Paged Tables.
+
+00:29:55.575 --> 00:30:21.915
+<v SPEAKER_1>Das sind die Paged Tables und die richtet das Betriebssystem ein. Das sagt zum Beispiel, die virtuelle Page Nummer 0 mappe ich jetzt bei 2 GB rein. Wenn jetzt ein Prozess, der mit dieser Paged Table aktiv ist, auf Adresse 2 zugreift, greift dann auf den RAM des Mainboards an Adresse 2 GB plus 2 GB zu.
+
+00:30:21.935 --> 00:30:25.655
+<v SPEAKER_2>Aber das geht halt einmal über diesen Lookup in dieser Paged Table.
+
+00:30:25.815 --> 00:31:02.935
+<v SPEAKER_1>Genau, die Paged Tables liegen auch wieder im Speicher. Weshalb, das ist so ein bisschen der Pferdefuß in der ganzen Geschichte. Bevor der Prozessor jetzt diesen Speicherzugriff ausführen kann, muss er erstmal nachschauen, wie lautet denn die physische Adresse, die ich dazu... Deswegen muss er mehrere Speicherzugriffe machen, die Paged Stables werden, also physischen Speicher verankert. Und er schaut dann halt dort nach und muss unter Umständen mehrere Level durchlaufen. Und das dauert teilweise bis zu 24 Speicherzugriffe, die nötig sind, um rauszubekommen, welche physische Adresse zu einer virtuellen Adresse gehört.
+
+00:31:03.195 --> 00:31:08.735
+<v SPEAKER_2>Das heißt, um einen Byte zu lesen, müssen erstmal 24 andere gelesen werden.
+
+00:31:10.775 --> 00:32:01.635
+<v SPEAKER_1>Ganz schön Overhead. Und das Problem ist, dass man natürlich relativ lokal auf den Speicherzugriff, also wenn man einmal dieses Byte in einer Page gelesen hat, ist die Wahrscheinlichkeit, dass man in der Nähe dieses Bytes demnächst wieder Speicherzugriffe, dann kommt es natürlich sehr hoch. Deswegen hat man eigentlich relativ schnell zu den MMUs einen Cache eingeführt, der praktisch diese Umsetzungsschritte speichert, der also genau weiß, dass WP-Nummer 0 auf 2GB geht und das wird abgespeichert. Wenn nächstes Mal auf diese WP-Nummer 0 wieder zugegriffen wird, braucht diese Umsetzung, diese Torumsetzung nicht gemacht werden. Stattdessen wird halt in dem Cache nachgeguckt und das passiert praktisch sehr schnell. Diese Caches heißen TLBs, Translation Locosight Buffer, und das passiert praktisch instantan, dass dort nachgeschlagen wird. Und dann kann direkt auf die physische Adresse zugegriffen werden.
+
+00:32:01.875 --> 00:32:05.155
+<v SPEAKER_2>Ah, also die TLBs sind die Caches für den Zugriff auf die Page-Tables?
+
+00:32:05.175 --> 00:32:05.515
+<v SPEAKER_1>Richtig.
+
+00:32:05.535 --> 00:32:08.575
+<v SPEAKER_2>Und das ist auch das, wo der Bug gemacht wurde?
+
+00:32:08.595 --> 00:32:34.755
+<v SPEAKER_1>Genau, und die sind im Moment, wie man sich vorstellen kann, auch performancerelevant. Weil, wenn er für jeden Speicherzugriff jetzt entsprechend mehrere Speicherzugriffe machen muss, um überhaupt herauszukriegen, welche Adresse das denn ist, dann geht das von der Performance natürlich gar nicht. Hinzu kommt natürlich auf einen modernen Prozessor noch der Cache, der das Ganze auch nochmal abfedert. Also so schlimm, wie sich das jetzt anhört, ist das nicht. Und in Wirklichkeit gehen also die meisten Zugriffe tatsächlich ohne irgendwelche zusätzlichen Speicherzugriffe.
+
+00:32:34.775 --> 00:32:41.295
+<v SPEAKER_2>Weil einfach dieser mehrschichtige Cache-Salat, der sehr um den Prozessor herum liegt, da auch eben genau um sowas abzudämpfen.
+
+00:32:41.355 --> 00:32:48.735
+<v SPEAKER_1>Ja, zum Beispiel sind die Page-Stäbel typischerweise auch im Cache und verbrauchen deshalb nicht so viele Speicherzyklen, um drauf zu zugreifen.
+
+00:32:49.815 --> 00:33:09.875
+<v SPEAKER_2>So, jetzt hat ja Paging eigentlich auch schon seit, ja, seit langer Zeit tut es da auch ganz ordentlich Dienste. Also, wenn ich mich so richtig erinnere, war ja eigentlich auch Unix so das Betriebssystem, was den Einsatz von PMMUs, also von Paged Memory Management Unix, eigentlich wirklich erst populär gemacht hat.
+
+00:33:09.895 --> 00:33:19.915
+<v SPEAKER_1>Das kam nicht in der ursprünglichen Lienungsentwicklung, aber in der Mitte der 80er Jahre. Ich glaube, Vorreiter war da VMS. Als Betriebssystem das erste Mal zu einer virtuellen Speicherung.
+
+00:33:19.935 --> 00:33:35.315
+<v SPEAKER_2>VMS, also das Betriebssystem von Digital Equipment. Wo habe sie sie dich? Ich weiß nicht mehr, alles aufgekauft. Aber damals war natürlich die VEX Computer ganz heißes Eisen, auch so in der Frühzeit des Internets. Na ja, okay, stimmt es.
+
+00:33:35.835 --> 00:33:48.015
+<v SPEAKER_1>Also ich glaube, Mitte der 80er wurde das auch in Unix eingeführt. Vorher war das auch tatsächlich ohne PMMUs. Aber inzwischen ist es tatsächlich so, dass jedes moderne Betriebssystem so eine Memory-Management-Unit eigentlich erfordert.
+
+00:33:50.615 --> 00:34:49.675
+<v SPEAKER_2>So, das heißt, mit Paging ist im Prinzip schon mal diese erste Stufe der Virtualisierung erfolgt, sag ich mal, zumindest unter der Kontrolle eines Betriebssystems. Sprich, der Prozessor bietet eigentlich dem Betriebssystem eine Funktionalität, nämlich diese Paged Tables, mit denen der Speicher im Auftrag des Betriebssystems organisiert werden kann, sodass der Prozessor dann relativ effizient diese Speicherzugriffe, oder mehr oder weniger effizient, je nachdem, wie es halt kommt, umleiten kann. Und vor allem ist ja hier auch an der Stelle die Voraussetzung, die du genannt hast, auch gegeben, der Code läuft halt eigentlich nativ durch, der weiß jetzt nicht, dass das nicht mit richtigen Speichern zu tun hat, sondern greift halt einfach drauf zu und der Prozessor greift ihm da sozusagen einfach zwischen rein und schaufelt das halt so in die Richtung, wo es hingehört. Nur, dass das eben jetzt eher nur eine Virtualisierung der Anwendungsprogramme, also sprich, das eigentliche Multitasking des Betriebssystems erlaubt.
+
+00:34:49.695 --> 00:35:08.575
+<v SPEAKER_1>Deswegen wurden ja diese zwei Modi eingeführt in den Prozessoren. Einmal der Modus, wo man praktisch auf die Page Stäbe jetzt nicht zugreifen kann, das sind so die normalen Anwendungen, die benutzen die halt nur, aber ohne davon zu wissen. Und dann diesen Modus, wo es erlaubt ist, die Page Stäbe halt zu ändern, diesen Supervisor-Modus, in dem das Betriebssystem läuft.
+
+00:35:08.595 --> 00:35:14.975
+<v SPEAKER_2>Also worum es nicht nur um die Page Stäbe jetzt geht, sondern auch um Zugriff auf bestimmte Speicherbereiche, wo jetzt Geräte angeschlossen sind.
+
+00:35:14.995 --> 00:35:43.095
+<v SPEAKER_1>Deswegen ist das auch sicher, weil das tatsächlich in Hardware gemacht wird und es besteht keine Möglichkeit für ein Programm, was im User-Modus läuft, irgendwie da einzugreifen. Sobald ein unerlaubter Zugriff stattfindet, gibt es eine Exception und das Betriebssystem übernimmt die Kontrolle. Kann dann entscheiden, was passieren soll, entweder wird das ignoriert oder wenn es eine offensichtliche Verletzung war, dann wird das Programm auch beendet, dass die Segmentation fault ist.
+
+00:35:43.115 --> 00:36:24.435
+<v SPEAKER_2>Jetzt kam in den letzten Jahren ein zunehmender Maße dieser Bedarf auf, auch die Virtualisierung weiterzutreiben, dass man eben nicht nur mehrere Programme unterscheidet, sondern nicht zuletzt auch aus Sicherheitsaspekten. Ich denke, das ist eine der Sachen, die es treibt. Ich habe jetzt hier meinen Webserver laufen, und ich weiß, der ist so ein bisschen, naja, PAP hier, lalala, und einfach viele Sachen, wo man die Sicherheit auch nicht unbedingt einschätzen kann, wo man dann eben auch sagt, wenn das Ding jetzt wirklich mal geopfert werden muss auf dem Altar der Internetangriffe, dann soll jetzt nicht gleich alles andere, was auf diesem Computer auch noch mit an den Diensten mitkommt, dann auch gleich leiden.
+
+00:36:24.455 --> 00:36:41.775
+<v SPEAKER_1>Richtig, das ist also diese Serverkonsolidierungsgeschichte. Man möchte halt mehrere Server auf eine Maschine. Also das ist der Grund, warum Virtualisierung jetzt für X86 interessant wurde. Ähnlich wie damals bei IBM, sind die Rechner immer größer geworden und darum stemmen zu groß für...
+
+00:36:41.795 --> 00:36:45.155
+<v SPEAKER_2>Die konnten einfach mehr als man eigentlich brauchte. Richtig.
+
+00:36:45.175 --> 00:37:13.955
+<v SPEAKER_1>Die Idee war jetzt, dass man sagt, gut so ein kleiner Mail-Server für eine Abteilung oder so, der braucht halt nicht sozusagen den kompletten Rechner, den man heute im Laden kriegt. Der dreht einfach nur Däumchen. Und aus diesem Grund könnte man sich überlegen, naja, dann pack ich noch einen Web-Server mit drauf. Das will man aus Sicherheitsgründen aber nicht machen. Man möchte nicht Mail und Web-Server zum Beispiel auf einem Rechner laufen oder unter einem Triebstimm laufen lassen, weil dann einen Angriff auf den Web-Server gleichzeitig den Mail-Server mit kompromittieren.
+
+00:37:13.975 --> 00:37:27.655
+<v SPEAKER_2>Genau. Aber es gab ja auch jetzt innerhalb von Unix verschiedene Ansätze. Also mir fällt da jetzt so ein, dass das CH-Root die Funktionalität gibt, das ist ja schon seit Ewigkeiten nie so richtig populär gewesen.
+
+00:37:27.715 --> 00:37:36.735
+<v SPEAKER_1>Naja, das wird schon tatsächlich verwandt. Viele Anwendungen, zum Beispiel Nameserver, laufen üblicherweise, der Bein läuft üblicherweise in einer Change-Route-Umgebung.
+
+00:37:36.755 --> 00:38:03.295
+<v SPEAKER_2>Also vielleicht noch kurz erläutern, was das ist. Jedes Programm hat ja immer so einen Blick auf das Datalsystem und das fängt immer irgendwo an. Wenn man da oben hinschaut, dann sieht man eben alles. Aber in dem Moment, wo ein Prozess in so einer Dateisystemkapsel, eben in diesem geänderten Route, also man sieht der Prozess eben nicht mehr den eigentlichen Anfang des Dateisystems, sondern er wird irgendwo weiter unten eingeblendet, denkt, das ist das ganze Datalsystem und kann aber auf den Rest darüber gar nicht zugreifen.
+
+00:38:03.455 --> 00:38:11.355
+<v SPEAKER_1>So, und damit ist ja praktisch ein Teil der Ressourcen des Systems, nämlich die Festplatte, mehr oder weniger virtualisiert. Das wäre praktisch der erste Schritt.
+
+00:38:11.375 --> 00:38:13.175
+<v SPEAKER_2>Genau, aber es ist halt nur der Datei.
+
+00:38:13.235 --> 00:38:59.755
+<v SPEAKER_1>Richtig, also dieser Prozess hat vollen Zugriff auf den Speicher des Rechners. Zum Beispiel kann er andere Prozesse sehen, er kann die Netzwerkschnittstellen zum Beispiel vollständig bedienen oder auslasten zum Beispiel auch. Also das wäre das Problem, wenn jetzt so ein Angriff auf einen Nameserver, der zwar an einem Change-Route läuft, erfolgt, dann kann er zwar keine wichtigen Dateien überschreiben, aber er könnte zum Beispiel die Netzwerkschnittstelle sättigen, sodass keine Pakete für die anderen Anwendungen mehr ankommen. Oder er könnte den gesamten Speicher des Rechners praktisch benutzen und damit für die anderen Anwendungen unbrauchbar machen. Und deswegen wünscht man sich natürlich eine weitergehende Virtualisierung der Ressourcen, indem man sagt, es möchte nicht nur das Dateisystem beschränken, sondern auch andere Dienste des Systemes.
+
+00:38:59.855 --> 00:39:06.635
+<v SPEAKER_2>Der zweite Ansatz, der mir da einfällt, sind die Jails von BSD Unix. Was ist da dazugekommen?
+
+00:39:07.615 --> 00:40:02.335
+<v SPEAKER_1>Zusätzlich zu dem Dateisystem werden weitere Teile des Systems beschränkt, vor allem zum Beispiel die Prozesse. Eine Anwendung, die in einem Jail läuft, sieht nur die Prozesse, die in diesem Jail gestartet wurden, und nicht alle drum herum. Wenn jetzt ein Server als Route rechte läuft, dann könnte er theoretisch auch andere Serverprozesse beenden, die auf dem System laufen. Das geht nicht, weil er die ja gar nicht sieht. Also so ein Nameserver kann nicht den Web-Server abschießen, weil er den gar nicht sieht, weil das virtualisiert wird. Netzwerkschnittstellen werden üblicherweise virtualisiert und können auch von dem übergeordneten Betriebssystem beschränkt werden in der Bandbreite zum Beispiel. Und haben dann auch zum Beispiel ein eigenes Netzwerkinterface, sodass man nur in diesem, also wenn man dann einbricht in diese Maschine, dann tatsächlich nur in diesen kleinen Teil einbricht.
+
+00:40:02.895 --> 00:40:26.215
+<v SPEAKER_2>Aber man merkt gerade jetzt bei den BSD-Jails, dass das halt auch wirklich etwas ist, was jetzt ein Feature des Betriebssystems ist, was dann aber auch gleich die Funktionalität selbst wieder einschränkt. Also gerade bei den Netzwerkschnittstellen, bei den Jails, ist es zumindest derzeit noch so, dass man dort eben, was weiß ich, da kann ich jetzt irgendwie keinen Ping drauf machen, weil irgendwie das Netzwerkinterface nicht die volle Funktionalität hat, wie auf dem eigentlichen Betriebssystem.
+
+00:40:26.235 --> 00:40:34.235
+<v SPEAKER_1>Nö, das wird tatsächlich durch eine virtuelle Netzwerkschnittstelle, und man kann dann das machen, was halt erlaubt wird. Der Haken bei diesen Jails, das ist immer noch...
+
+00:40:34.255 --> 00:41:12.515
+<v SPEAKER_2>Ja, aber es gibt zum Beispiel keinen IPv6 derzeit und so eine Sache. Also es gibt halt Beschränkungen. Man merkt, es ist nicht einfach nur ein, ich doppel das jetzt mal und hab dieselbe Funktionalität, sondern man muss schon Schritt für Schritt für Schritt für Schritt eben diese Funktionalität auch noch bereitstellen und auch noch bereitstellen und auch noch bereitstellen. Und das ist denke ich jetzt auch mal die Idee eigentlich der Virtualisierungslösung, über die wir jetzt im Kern eigentlich sprechen wollen, dass man hier sagt, okay, wir schieben das gesamte Betriebssystem so wie es ist, einfach einen Schritt nach unten, legen diesen Hypervisor da drüber und dann haben wir einfach mehrere Betriebssysteme nebeneinander, die gar nichts voneinander wissen.
+
+00:41:12.755 --> 00:41:13.795
+<v SPEAKER_1>Genau, das ist die Idee, dass man...
+
+00:41:13.815 --> 00:41:18.375
+<v SPEAKER_2>Wo auch nichts im Betriebssystem selber drin ist, was weiß, dass da noch was ist.
+
+00:41:18.395 --> 00:41:45.775
+<v SPEAKER_1>Also man braucht jetzt nicht umständlich Beschränkungen basteln, sondern man sagt einfach, ich nehme das Betriebssystem so wie es ist, mit all den Features, die es hat, mit allen Möglichkeiten, virtualisiere das und kann dann in einer überordneten Ebene eventuelle Ressourcen beschränken, wenn ich möchte, muss es aber nicht. Und für die Anwendung gibt es halt keine Probleme, weil das die gewohnte Umgebung sieht, nämlich ein Betriebssystem, auf dem es sich auch austoben kann.
+
+00:41:45.795 --> 00:41:50.095
+<v SPEAKER_2>Und wer hat da jetzt angefangen? Also was...
+
+00:41:50.155 --> 00:43:04.755
+<v SPEAKER_1>Na die Idee steckt da praktisch schon damals in dem Popek und Goldberg-Paper, in dem man einfach sich überlegt hat, gut, wenn man sowas machen würde, müsste man ja dafür sorgen, also mehrere Betriebssysteme gleichzeitig jetzt unmodifiziert auszuführen, geht halt nicht, weil die davon ausgehen, dass sie alleine auf dem Rechner sind und sämtliche Ressourcen belegen können. Jetzt müsste man also dafür sorgen, dass es nochmal eine Überinstanz gibt, also eine Aufsicht, die ähnlich wie das Betriebssystem normalerweise für Anwendungsprogramme die einzelnen Betriebssysteme beschränkt. Und die Idee war dann, das stand schon in dem Puppeck und Goldberg-Paper drin, dass man einfach die Betriebssysteme im User-Modus ausführt. Also in einem Modus, wo eigentlich nicht alles erlaubt ist und wo es eine überordnete Instanz gibt, die die Kontrolle behält. Und die meisten Prozessoren sind so konstruiert, dass wenn Befehle ausgeführt werden, die direkt auf die Hardware zugreifen oder die den Zustand des Prozessors ändern wollen, dass diese Mules im Modus nicht erlaubt sind und dass die eine Exception verursachen. Also eine Unterbrechung des Programmflusses und ein Verzweigen in die überordnete Instanz. In dem Fall jetzt also den Hypervisor. Der Hypervisor ist also das Stück Virtualisierungssoftware, das die verschiedenen Betriebssysteme...
+
+00:43:04.775 --> 00:43:07.295
+<v SPEAKER_2>Das ist sozusagen das Betriebssystem für die Betriebssysteme.
+
+00:43:07.315 --> 00:43:51.475
+<v SPEAKER_1>Korrekt, ja. So und die Idee war, gut, dann lassen wir eine Betriebssysteme im User-Modus laufen. Alle kritischen Sachen werfen dann Exceptions, die werden von dem Hypervisor abgefangen und werden jetzt nicht... Da wird das Betriebssystem nicht beendet, weil es ist ja insofern legitim für das Betriebssystem. Aber diese Befehle werden halt Beschränkungen unterworfen unter Umständen. Also es wird halt geguckt, ob dieser Hardware-Zugriff, den das Gastbetriebssystem machen wollte, da sich erlaubt ist, eventuell wird er emuliert oder er wird halt durchgelassen oder er wird halt beschränkt. Und dann führt der Hypervisor entsprechende Code aus und springt dann zurück in das Gastbetriebssystem.
+
+00:43:52.175 --> 00:44:02.975
+<v SPEAKER_2>Und das geht so ohne Weiteres auf einem beliebigen Prozessor? Also ist es ohne Änderung der Hardware grundsätzlich möglich, so etwas überhaupt durchzuführen?
+
+00:44:02.995 --> 00:44:08.335
+<v SPEAKER_1>Grundsätzlich sollte das möglich sein, wenn der Prozessor entsprechend schön entworfen wurde dafür.
+
+00:44:08.335 --> 00:44:22.755
+<v SPEAKER_2>Also er muss im Prinzip schon Voraussetzungen mit sich bringen. So was wie ein Interrupt, der so programmiert wird, wo das Betriebssystem sagt, wenn es da klingelt, gehe ich ran, muss er ja auch die Möglichkeiten bieten, dass sich da jemand dazwischen hängt.
+
+00:44:23.615 --> 00:44:37.935
+<v SPEAKER_1>Na ja, z.B. Interrupt-Virtualisierung ist eine Sache, die Interrupts werden ja im Hypervisor dann ausgeliefert. Und der Hypervisor schaut dann z.B. nach, für welches Betriebssystem ist dieser Interrupt gedacht oder welches Betriebssystem hat sich auf diesen Interrupt registriert.
+
+00:44:37.955 --> 00:44:54.955
+<v SPEAKER_2>Ja, aber er muss ja überhaupt erst mal in der Lage sein, sich dazwischen zu hängen. Ich meine, wenn das jetzt so ist, dass wenn das Betriebssystem dann läuft und dann sagt einfach hier der Interrupt, der gehört jetzt mir und nimmt es dem Hypervisor weg, also muss ja sozusagen die Unterbrechbarkeit des Zugriffs, der muss ja irgendwie gewährleistet werden. Also ist das grundsätzlich immer möglich?
+
+00:44:54.975 --> 00:45:00.955
+<v SPEAKER_1>Wenn das Betriebssystem, das Gasbetriebssystem im User-Modus läuft, dann ist es auf jeden Fall möglich.
+
+00:45:01.155 --> 00:45:03.735
+<v SPEAKER_2>Ach so, und das ist dann aber auch immer der Fall, sozusagen?
+
+00:45:03.755 --> 00:45:04.375
+<v SPEAKER_1>Genau, das ist die...
+
+00:45:04.395 --> 00:45:08.895
+<v SPEAKER_2>Von all diesen Lösungen, von denen wir jetzt reden, dann ist das Betriebssystem auf einmal nicht mehr im Kern-Modus?
+
+00:45:08.915 --> 00:45:20.655
+<v SPEAKER_1>Richtig, genau. Das ist die Kernidee, weil sonst kann man nicht verhindern, dass das Betriebssystem die Kontrolle über den Rechner erlangt und Ressourcen nimmt, die es eigentlich nicht nehmen darf.
+
+00:45:21.335 --> 00:45:31.195
+<v SPEAKER_2>Dieser User-Modus, also ich weiß, es gab doch auch mal Prozessoren, die mehr als nur diesen einen und den anderen Modus hatten, oder?
+
+00:45:31.215 --> 00:45:48.375
+<v SPEAKER_1>Das ist auch eine interessante Geschichte. Deswegen zöge ich euch kurz immer, weil üblicherweise heißt das Ring 3 auf X86-Software. Da ist dieser User-Modus, also Ring 3, es gibt dort vier Ringe, die praktisch vier unterschiedliche Stufen ermöglichen.
+
+00:45:48.395 --> 00:45:50.515
+<v SPEAKER_2>Worin unterscheiden die sich? Ist das fest definiert?
+
+00:45:50.835 --> 00:46:01.915
+<v SPEAKER_1>Nein, es gibt tatsächlich eine Unterscheidung zwischen dem Ring 3 und Ring 0. Das sind praktisch diese Extreme, das Betriebssystem im Ring 0 und Anwendungsprogramme im Ring 3.
+
+00:46:01.935 --> 00:46:03.855
+<v SPEAKER_2>Und nichts läuft in 1 und 2?
+
+00:46:03.875 --> 00:46:28.435
+<v SPEAKER_1>Das ist üblich. Es wird aus Pop-Tapetitätsgründen nicht viel benutzt. Es gibt OS2 zum Beispiel benutzt das und es gibt einige Microkörner, die diese Ringe benutzen. Es war ursprünglich mal die Idee, dass man gerade für Microkörner, die viele unterschiedliche Schichten haben von Aufgaben, dass man zum Beispiel das Kernbetriebssystem im Ring Null läuft und Treiber und irgendwelche Dienste laufen im Ring 1 und 2.
+
+00:46:28.455 --> 00:46:31.615
+<v SPEAKER_2>Sodass die auch crashen können und das Betriebssystem trotzdem noch anfangen kann.
+
+00:46:31.635 --> 00:46:42.535
+<v SPEAKER_1>Ein Treiber, ein Treiber zum Beispiel Unsinn machen kann, der wird dann einfach vom Betriebssystem, was in einer höheren privilegierten Stufe läuft, beendet, unter dem Stimm neu gestartet, kann aber keinen Schaden anrichten, außer in sich selbst halt.
+
+00:46:42.555 --> 00:46:54.195
+<v SPEAKER_2>Warum macht denn das keiner? Ich meine, das ist doch ein Riesenproblem. Gerade bei jetzt so, was weiß ich, Linux, man hat da halt irgendwie so einen neuen Treiber, der macht irgendwie Ärger, nimmt das ganze Betriebssystem mit, das will man doch nicht.
+
+00:46:54.215 --> 00:47:21.955
+<v SPEAKER_1>Richtig, also diese Trennung möchte man schon. Warum das jetzt tatsächlich nicht benutzt wird, ist eine gute Frage. Also ich denke, das ist das Problem, dass es wirklich nur auf x86 diese Vierringe gibt. Ansonsten gibt es immer nur diese Zwei-Modi. Es gibt diesen Supervisor-Modus und den User-Modus. Und wenn man portabel sein will und wenn man jetzt so ein Betriebssystem so entwirft, dass es voraussetzt, dass man vier unterschiedliche Privilegilevel hat, dann kann man das eigentlich nicht vernünftig auf irgendetwas anderes portieren, außer auf x86.
+
+00:47:22.715 --> 00:47:34.495
+<v SPEAKER_2>Ja, aber das hat ja schon einige Entwickler nicht davon abgehalten, Optimierungen für x86 zu machen. Das ist einfach so eine dominante Plattform, zum Beispiel OS2, aber auch eben nur das Beispiel OS2.
+
+00:47:34.515 --> 00:48:08.995
+<v SPEAKER_1>Es hängt auch von der Architektur des Betriebssystems ab. Wenn man jetzt tatsächlich so einen Micro-Kurl hat, der davon gut profitieren kann, dann kann man das machen. Wenn man jetzt einen monolithischen Kern hat, so wie Linux zum Beispiel, dann handelt man sich zusätzlich natürlich noch ärger damit ein, mit dem Level, weil dann ständig Kommunikation gibt zwischen den verschiedenen Systemen, die recht teuer sind. Man muss sich auch vorstellen, dass so ein Wechsel von einem Privileg-Modus, also vom User-Modus in den Supervisor-Modus zu kommen, das ist unabhängig recht teuer, weil der gesamte Zustand des Prozessors gespeichert werden muss, im Rahmen oder im Cache.
+
+00:48:09.015 --> 00:48:44.395
+<v SPEAKER_2>Aber wäre es nicht zumindest denkbar, dass man so etwas macht, wie dass man einen bestimmten Treiber in so einem Vorsichtskäfig hält. Also dass man gerade, man hat jetzt hier irgendwie so Beta-Quality-Software oder es ist halt auch wirklich ein Treiber, der jetzt nicht besonders performance-kritisch ist. Weil ja, die paar Context-Switcher, die ein paar Male wo er gebraucht wird, ist da, aber performance-kritisch wird es halt dann, wenn er irgendwie einem um die Ohren fliegt, dass man ihn dann einfach nur für diesen Fall in einem anderen Ring laufen lassen kann. Wenn der Prozessor das bietet, wäre das nicht vorstellbar?
+
+00:48:44.695 --> 00:49:10.275
+<v SPEAKER_1>Das wäre durchaus möglich. Es gibt zwei Bestrebungen im Moment, die auf dieses Problem abzielen. Das eine ist, dass man versucht, dass Treiber, die nicht unbedingt im Supervisor-Modus laufen müssen, dass die tatsächlich im User-Modus laufen. Das sind diese Treiber im User-Space. In Linux ist das gerade sehr populär, dass man z.B. über USB- und Datalsysteme auslagert in den User-Space. Dort sind sie geschützt.
+
+00:49:10.295 --> 00:49:15.155
+<v SPEAKER_2>So wie dieses Fuse-System zum Beispiel für Datalsysteme.
+
+00:49:15.175 --> 00:49:31.475
+<v SPEAKER_1>Auf der anderen Seite, dass man die Hardware-Virtualisierung, da werden wir später nochmal drauf zu sprechen kommen, dass man dafür sorgt, dass die Hardware an den Treiber gebunden ist und der Treiber nur auf diese Hardware zugreifen kann und auf nichts anderes.
+
+00:49:32.755 --> 00:49:38.075
+<v SPEAKER_2>Dass man eigene Patch-Tablets bekommt, zum Beispiel, in den Adressraum, obwohl er im Ring Null läuft?
+
+00:49:38.095 --> 00:49:48.495
+<v SPEAKER_1>Obwohl er im Ring Null läuft, weil es noch eine Ebene darunter ist. Bei der Umsetzung von Speicher, die das Gerät sieht, kommt das praktisch mit.
+
+00:49:48.515 --> 00:49:51.335
+<v SPEAKER_2>Aber in anderen Ring zu schieben, ist dann immer noch kein Thema?
+
+00:49:52.075 --> 00:50:14.615
+<v SPEAKER_1>Na, das ist ein zweites Problem, weshalb diese Ringe jetzt sowieso vollkommen obsolet sind, ist, dass diese 74-Bit-Erweiterung der X86-Architektur diese Ringe nicht mehr unterstützt. Diese Ringe sind auch an Segmentierung gebunden, an diese Art der Speicherverwaltung, die eigentlich vor dem 32-Bit-Modus schon eingeführt wurde, im X86-Modus.
+
+00:50:14.635 --> 00:50:16.755
+<v SPEAKER_2>Was man so beim 82-86...
+
+00:50:16.775 --> 00:50:22.915
+<v SPEAKER_1>Richtig, da gab es verschiedene Segmente und jeder Speicherzugriff war relativ zu einem Segment.
+
+00:50:22.935 --> 00:50:24.135
+<v SPEAKER_2>Immer 64 Kilo breit.
+
+00:50:25.835 --> 00:51:26.575
+<v SPEAKER_1>Das wurde hauptsächlich aus Protektivitätsgründen. Mit dem Paging wurde diese Segmentierung etwas obsolet. Man konnte mit dem Paging das alles viel eleganter lösen als durch diese Segmentierung. Deswegen wurde die Segmentierung auch nicht benutzt. Was die meisten Betriebsthemen machten, ist, die Segmentierung mehr oder weniger auszuschalten, indem man sagt, das Segment beginnt an Adresse 0 und geht bis zum Ende des virtuellen Adressraums. Damit war die Segmentierung außen vor. Und diese Segmentierung kostete auch relativ viel Performance beim Kontextwechsel. Und deswegen hat man sich entschlossen, da es hier eh nicht benutzt wird, das beim Übergang zu 64-Bit, bei der Erweiterung fallen zu lassen. Dass also die Segmentierung nicht mehr benutzt wird in 64-Bit-Modus. Der Haken ist, dass diese Ringe nicht auf Paging-Level funktionieren, sondern nur auf Segmentierungs-Level. Also man kann nur bei Segmenten einen gewissen Ring angeben. Bei Paging kann man nur sagen, Supervisor oder QEMU.
+
+00:51:26.595 --> 00:51:33.795
+<v SPEAKER_2>Verstehe, alles klar. Das heißt, wenn man sich auf die Ringe einlässt, lässt man sich sozusagen auch auf die Segmente ein und das ist nichts, worauf man sich eigentlich wirklich einlassen möchte.
+
+00:51:33.815 --> 00:51:34.355
+<v SPEAKER_1>Tatsächlich, ja.
+
+00:51:34.375 --> 00:52:14.595
+<v SPEAKER_2>Okay, das ist natürlich ein extrem gut nachvollziehbarer Begriff. Ich kann mich noch gut dran erinnern, ich hab ja so mit Unix angefangen, halt auch mit den 286er-Systemen, also das gute alte Xenix, wo ja sogar Microsoft noch Unix-Entwicklungen gemacht hat. Man mag es ja gar nicht glauben. Und ja, das war natürlich lästig, weil entweder hatte man Programme, die eben nur innerhalb eines Segments arbeiten konnten, sprich der gesamte zur Verfügung stehende Adressraum betrug halt 64 Kilopalte. Das war zwar jetzt so in 80er Jahren durchaus noch machbar, aber dann halt mit unterschiedlichen Memory-Modellen, Huge-Compilation und so ein Kram. Und das wurde natürlich auch gleich wieder massiv langsam. Es ist einfach ärgerlich, wenn man will.
+
+00:52:14.615 --> 00:52:16.235
+<v SPEAKER_1>Genau, es bringt mehr Ärger, als es Vorteile bringt.
+
+00:52:16.695 --> 00:52:49.735
+<v SPEAKER_2>Gut, also dann vergessen wir das mit den Ringen. Ringen sind 32-Bit-Vergangenheit. Die Zukunft bei X86 geht ja jetzt auch gerade ganz spürbar in Richtung 64-Bit. Da hat ja dein Arbeitgeber AMD auch mächtig mitgeholfen. Im Prinzip haben sie ja Intel sozusagen da ein bisschen einen Klaps auf den Hintern gegeben, weil Intel ja andere Pläne hatte mit Itanium und ihrer eigenen IA64-Architektur. Und jetzt ist es aber im Prinzip die Fortschreibung des alten Modells mit anderen Mitteln, die AMD betrieben hat. Wie heißt der Modus offiziell?
+
+00:52:49.755 --> 00:53:32.875
+<v SPEAKER_1>Es gibt mehrere Namen dafür. Ursprünglich hieß es x8664 mit einem Bindestrich dazwischen. Kurz vor der Marktanführung wollte AMD nochmal da streichen, dass es von AMD erfunden wurde. Deswegen wurde es dann AMD64 genannt. Das ist auch teilweise an einigen Systemen, die damals angefangen haben zu entwickeln, zum Beispiel bei BSD, heißt es immer noch so. Dort gibt es eine Architektur, die AMD64 heißt. Intel hat es dann später übernommen. Die haben dann natürlich nochmal einen extra Namen dafür erfunden. Der neutrale Wendername ist x8664. Manchmal sieht man noch x64 bei Sun und Microsoft, die benutzen diesen Termin.
+
+00:53:32.895 --> 00:53:55.975
+<v SPEAKER_2>Um nochmal zwei bytes zu. Sparen. Ich habe mir das nie so genau angeschaut. Ich komme ja aus der sechser Linie und nicht so sehr aus der achter. Dass dieser Wechsel auf 64-Bit schon eine ganze Menge alte Zöpfe abschneidet.
+
+00:53:55.995 --> 00:54:19.435
+<v SPEAKER_1>Richtig, das war die Idee, dass man Sachen, die sowieso nicht benutzt werden oder die in irgendeinem Maße umständlich zu implementieren sind, wegwirft. Wenn man sowieso eine neue Architektur macht, und die zwar sehr ähnlich ist, sodass man sehr viel Code ohne zu portieren laufen lassen kann, aber die sowieso neu kompiliert werden muss, dann kann man auch solche Sachen mit ändern.
+
+00:54:19.455 --> 00:54:27.415
+<v SPEAKER_2>Gibt es da noch irgendwelche wichtigen dramatischen Änderungen, die bei dem Umsteigen auf 64-Bit? Es gibt mehr Register, oder?
+
+00:54:28.455 --> 00:55:34.275
+<v SPEAKER_1>Das ist interessant. Üblicherweise werden bei anderen Architekturen beim Umstieg auf 64-Bit die Programme langsamer, weil viele Datentypen jetzt völlig aufgebläht werden, von 2 bis auf 64-Bit. Sämtliche Speicheradressen sind 64-Bit. Also sämtliche Adressen sind 74-Bit, womit der Prozessor ständig umgehen muss. Das heißt, die Befehle werden unter Umständen noch größer, und die Pointer sind größer und verstopfen zum Beispiel den Cache mehr. Die Programme sind einfach größer, belegen mehr Daten. Der Cache wird mehr ausgelastet, also überflutet. Und es dauert halt natürlich trotzdem länger, 64-Bit über den Bus zu schieben. Und deshalb ist es so bei Spark und bei PowerPC, dass 64-Bit-Programme dort langsamer sind, wenn sie nicht entsprechend von 64-Bit-Arithmetik profitieren können. Deswegen benutzt Sun zum Beispiel auf ihren Spark-Maschinen immer noch standardmäßig 32-Bit für den User-Level.
+
+00:55:34.295 --> 00:55:39.955
+<v SPEAKER_2>Und nur 64-Bit, wenn es nötig ist. Aber das ist jetzt beim AMD 64-Modell anders.
+
+00:55:39.975 --> 00:56:03.675
+<v SPEAKER_1>Bei AMD 64 wollte man das umgehen und hat sich überlegt, wenn wir so eine neue Architektur machen, dann können wir auch gleich ein paar Flaschenhälse beseitigen. Und ein riesen Flaschenhals bei X86 war die beschränkte Anzahl der Register. Es gab halt acht sogenannte General Purpose Register, die aber nicht wirklich General Purpose waren, sondern es gab für jedes Register irgendwie Einschränkungen oder man konnte viele Befehle nur auf einen oder zwei Register machen.
+
+00:56:03.695 --> 00:56:04.595
+<v SPEAKER_2>Und jetzt?
+
+00:56:04.615 --> 00:56:28.975
+<v SPEAKER_1>Das wurde insofern erweitert, dass man gesagt hat, wir haben jetzt 16 Register und die behalten, also in vieler Hinsicht, die alten 8 Register bleiben erst mal so, wie sie sind, behalten auch teilweise ihre Beschränkungen, aber wenn Befehle auf die weiteren 8 Register zugreifen, dann gibt es dort keine Beschränkungen mehr. Und die werden dann konsequenterweise auch nicht mit Buchstaben oder so bezeichnet, sondern einfach R8 bis R15.
+
+00:56:28.995 --> 00:56:35.975
+<v SPEAKER_2>Warum nimmt man denn, für mich klingt ja so 16 ein bisschen wenig, warum nimmt man denn nicht gleich mehr? Andere Prozessoren haben doch auch mehr.
+
+00:56:35.995 --> 00:57:00.555
+<v SPEAKER_1>Ja, man hat tatsächlich verschiedene Simulationen durchgeführt und festgestellt, dass es nicht mehr bringt, dass es also so ein Hotspot an der Stelle ist. Weil halt auch viel Code natürlich entsprechend auf weniger Register optimiert ist. Das darf man auch nicht vergessen, dass die ganze Code-Basis natürlich seit, weiß ich, 20, 30 Jahren mit dem Umstand lebt, dass es nur weniger Register hat und da entsprechende Tricks verwendet werden.
+
+00:57:00.575 --> 00:57:04.435
+<v SPEAKER_2>Aber diese Tricks liegen noch meistens in den Compilern und das ist ja dann das, was da hier geändert werden muss.
+
+00:57:04.675 --> 00:57:40.315
+<v SPEAKER_1>Ja gut, aber man möchte nicht, also man möchte schon auf die Teile der Code-Basis zugreifen. Zudem darf man nicht vergessen, weil man jetzt einfach mehr Register, sind ja nicht nur entsprechend 8x64-Bit, die einfach zusätzlich in den Prozessor gepackt werden müssen. Die ganzen, die müssen ja auch codiert werden in den Befehlen zum Beispiel. Und da konnte man bisher mit 3 Bit praktisch jedes Register auswählen. Und wenn man jetzt sagt, man macht 256, dann wären es plötzlich 8 Bit. Und damit passt das gar nicht mehr in die Befehlswerte rein. Zusätzlich gibt es Schattenregister, es gibt also haufenweise Interner, die deutlich problematischer werden, wenn man sehr viele Register hat.
+
+00:57:40.335 --> 00:57:48.795
+<v SPEAKER_2>Das heißt, jetzt kommt im Prinzip nur ein weiteres Bit zur Adressierung des entsprechenden Registers dazu. Und man kann jetzt nur mit den neuen Registern alles Mögliche machen oder mit allen eigentlich?
+
+00:57:49.455 --> 00:57:53.555
+<v SPEAKER_1>Hauptsächlich mit den neuen. Die Befehle sind dann halt nicht mehr beschränkt.
+
+00:57:53.815 --> 00:58:12.975
+<v SPEAKER_2>Okay, das heißt, jetzt hat man 8 richtige General Purpose und die anderen sind so ein bisschen Multipurpose, aber nicht generell. Okay, ich glaube, das war jetzt mal ein ganz wertvoller Ausflug. Das hat natürlich jetzt so mit Virtualisierung nichts zu tun, aber ich finde jetzt auch gerade diesen Umbruch, der eigentlich jetzt stattfindet, doch sehr interessant.
+
+00:58:12.995 --> 00:58:50.615
+<v SPEAKER_1>Also diese Registerarbeitung ist der Hauptgrund, weshalb 64-Bit-Programme tatsächlich auch normale Programme schneller laufen als 32-Bit-Programme. Also wir haben da mal einige Benchmarks gemacht und waren erstaunt, dass Sachen wie Firefox oder Compiler zum Beispiel, die schneller laufen, wo man jetzt nicht unbedingt denkt, hm, das ist ein Programm, das von 64-Bit profitiert, weil es ja meist nur mit Bites umgeht, nämlich mit Zeichen. Das läuft schneller aufgrund der verbesserten Architektur, nicht aufgrund der 74-Bit breiten Adressen und Typen, sondern aufgrund der verbesserten Architektur läuft es schneller.
+
+00:58:50.635 --> 00:58:57.075
+<v SPEAKER_2>Kann den Linux eigentlich auch 32- und 64-Bit-Programme gleichzeitig ausführen?
+
+00:58:57.075 --> 00:59:10.175
+<v SPEAKER_1>Das wurde entsprechend im Prozessordesign berücksichtigt, dass man sagt, okay, zum Anfang wird es kaum 64-Bit-Programme geben, und deshalb wollen wir eine Möglichkeit, sehr performant 32-Bit-Programme auszuführen.
+
+00:59:10.395 --> 00:59:12.615
+<v SPEAKER_2>Also gleichzeitig unter demselben Betriebssystem?
+
+00:59:12.635 --> 00:59:21.355
+<v SPEAKER_1>Das war einer der Probleme, die der Ethereum zum Beispiel hatte, dass 32-Bit-Programme nicht wirklich performant ausgeführt werden konnten.
+
+00:59:21.375 --> 00:59:22.815
+<v SPEAKER_2>Aber so gibt es keine Penalty?
+
+00:59:22.835 --> 00:59:52.515
+<v SPEAKER_1>Das gibt keine Penalty, es läuft wunderbar schnell. Das haben wir auch getestet. Es gibt eine Sache, die man dort beachten muss, das Betriebssystem muss im 64-Bit-Modus laufen, muss also 64-Bit-kurt sein. Anwendungen können aber tatsächlich einfach rüberkopierte Programme sein, die also noch gar nichts wussten von 64-Bit, die laufen dann im 32-Bit-Modus. Aber das wird praktisch vom Prozessor erledigt, sodass die Software gar nicht großartig einsteigen muss, nur beim Übergang vom User Space in den Kernel Space natürlich.
+
+00:59:52.535 --> 01:00:04.615
+<v SPEAKER_2>Warum muss das so sein? Das wundert mich jetzt gerade so ein bisschen, weil Mac OS X zum Beispiel bietet ja jetzt auch diese Möglichkeit, 32-Bit und 64-Bit gleichzeitig laufen zu lassen. Aber der Kernel selber ist 32-Bit.
+
+01:00:04.635 --> 01:01:23.995
+<v SPEAKER_1>Genau, das ist eine Sache. Also wir haben uns auch schon überlegt, warum das bei Mac OS so ist. Ich denke, eine Sache ist, dass die Treiber natürlich im Kern laufen müssen. Und dass wenn man ein 64-Bit-Betriebssystem hat, man die Treiber komplett neu übersetzen muss zumindest. Bei Treibern ist es ja nicht geholfen, dass man die übersetzt. Man muss sie auch portieren. Man muss auch den Treibern sagen, das ist jetzt hier alles 64-Bit und dein Adress ist 64-Bit. Und der Hardware-Zugriff ist unter Umständen auch anders geregelt als im 32-Bit-Modus. Also erst mal muss man alle Treiber anpassen. Das ist für Linux jetzt nicht so ein Problem, da die Treiber im Quellcode vorliegen. Dann kann man den Treiberverwaltern, die dafür sorgen, dass die Treiber da aktualisiert werden, sagen, guck mal, dass das vielseitig bitfest wird und in zwei Monaten bist du fertig und dann läuft das. Wenn jetzt aber, wie bei Mac OS oder bei Windows, die Treiber gar nicht vom Betriebssystem-Hersteller geschrieben werden, sondern von den Firmen, also von den Herstellern der Hardware, dann ist es immer relativ schwierig, die dazu zu bewegen, jetzt in ein bestehendes Produkt noch Entwicklungszeit einfließen zu lassen, um diese Treiber zu portieren. Und das ist das Problem, was Windows hatte, was jetzt erst mit Vista tatsächlich salonfähig geworden ist im 74-Bit-Modus, weil die Treiber halt von Anfang an in 64-Bit-Fest geschrieben werden.
+
+01:01:24.015 --> 01:01:32.675
+<v SPEAKER_2>Trotzdem bietet ja Vista nicht die Möglichkeit, gleichzeitig 32-Bit und 64-Bit zu machen. Man hat ja doch verschiedene Ausgaben im Betriebssystem, man muss ja ein 64-Bit-Betriebssystem haben.
+
+01:01:32.695 --> 01:01:38.235
+<v SPEAKER_1>Ja, richtig gut, aber man kann auch 32-Bit-Programme unter dem 64-Bit Vista ausführen.
+
+01:01:38.255 --> 01:01:39.035
+<v SPEAKER_2>Ja, aber nicht umgekehrt.
+
+01:01:40.715 --> 01:01:48.515
+<v SPEAKER_1>Ja, das ist im Grunde bei Linux sehr ähnlich. Man kann auch einen 32-Bit-Kern auf einem 64-Bit-Rechner ausführen. Oder einen 64-Bit-Kern auf einem 64-Bit-Rechner.
+
+01:01:48.535 --> 01:01:55.235
+<v SPEAKER_2>Nicht so ein Rechner, sondern das Betriebssystem muss ja explizit 64-Bit sein, um 64-Bit Software laufen zu lassen.
+
+01:01:55.595 --> 01:02:01.975
+<v SPEAKER_1>Bei Windows und bei Linux ist das auch so. Linux muss auch im 64-Bit-Modus laufen. Aber Anwendungsprogramme können halt im 32-Bit-Modus laufen.
+
+01:02:01.995 --> 01:02:05.315
+<v SPEAKER_2>Okay, das heißt, Mac OS X ist ja sozusagen das Einzige, was das nicht benötigt?
+
+01:02:05.335 --> 01:02:13.935
+<v SPEAKER_1>Mac OS X, man kann auch diesen Ansatz fahren und das hat so ein paar Nachteile. Aber ich denke, Apple hat sich halt entschieden, dass die Vorteile, die es daraus zieht, überwiegen.
+
+01:02:14.735 --> 01:02:20.935
+<v SPEAKER_2>Gut, aber die Frage war ja eigentlich, beschränkt der Prozessor das in irgendeiner Form? Das scheint ja nicht der Fall zu sein.
+
+01:02:20.955 --> 01:02:25.775
+<v SPEAKER_1>Nein, es gibt den 64-Bit-Modus und in dem 64-Bit-Modus den Competitive-Bit-Modus für die Programme.
+
+01:02:27.635 --> 01:03:08.935
+<v SPEAKER_2>Ja, jetzt wollen wir aber eigentlich doch wieder zu den Virtualisierungen kommen. Ich fand jetzt aber diesen Ausflug mal ganz interessant, weil meine nächste Frage, nein, meine übernächste Frage wird dann auch sein, ist bei dieser Umstellung auf 64-Bit sozusagen auch für die Virtualisierung was abgefallen. Aber bevor wir dahin kommen, müssen wir glaube ich erst noch mal jetzt auf diese wirklichen Virtualisierungslösungen, die es gibt, die nicht auf Hardware basieren, vielleicht zu sprechen kommen. Wir hatten ja jetzt so den simplen Ansatz, CH-Root und diese JS und da BSD. Jetzt gibt es aber doch auch andere Lösungen, die dann sozusagen das erste Mal eine Virtualisierung bereitstellen, ohne jetzt in irgendeiner Form von der Hardware explizit Unterstützung zu bekommen.
+
+01:03:08.955 --> 01:03:47.335
+<v SPEAKER_1>Also was man vorher vielleicht nochmal erklären sollte, ich hatte ja vorhin so erzählt, wie das so schön gehen würde. Man führt das Betriebssystem im User-Modus aus und dann ist alles gut und der Hypervisor muss dann halt die entsprechenden Verletzungen des Betriebssystems, die das Betrieb auslöst, abfangen und behandeln. Der Hagen ist, dass das auf X86 nicht funktioniert. Nicht vollständig funktioniert. Weil es gibt einige Befehle, die sich anders verhalten im User- und Supervisor-Modus, aber die keine Exception auslösen. Das könnte man durchaus als Designfehler bezeichnen.
+
+01:03:48.015 --> 01:03:49.415
+<v SPEAKER_2>Welches ist das zum Beispiel?
+
+01:03:49.415 --> 01:04:12.855
+<v SPEAKER_1>Das ist zum Beispiel der PopF-Befehl. Der ist jetzt erstmal recht unscheinbar. Das ist ein Befehl, der einen Wert aus dem Speicher liest, nämlich von der Spitze des Stacks, also eine Pop-Instruktion, wenn man sich jetzt Push und Pop mal vorstellt. Und der das, was dort steht, in das Flex-Register reinschreibt. Deswegen PopF.
+
+01:04:12.875 --> 01:04:15.535
+<v SPEAKER_2>Cool war es vom Stack und Tools in die Flex.
+
+01:04:15.555 --> 01:06:10.655
+<v SPEAKER_1>In die Flex ist dazu gedacht, um das Status der Flex zu sichern. Man macht einen PushF und wenn man fertig ist, macht man PopF. Und dann sind arithmetische Flex zum Beispiel, ob das Ergebnis null war oder negativ. Das ist dann praktisch so wie vorher. Da kann man also Funktionen absichern, dass ein Funktionsaufruf den Status nicht ändert. Problematisch ist das im Flex-Register, nicht nur diese arithmetischen Flex-Ligen, die man ja irgendwie kennt, sondern auch System-Flex. Zum Beispiel das Interrupt-Flex. Das ist da auch mit drin im Flex-Register. Das also prozessorweit interrupts abschaltet. Jetzt darf es natürlich im User-Level-Prozess nicht erlaubt sein, interrupts abzuschalten. Und wenn man jetzt mit Push und Pop jetzt erst einmal nur so abstrakt arbeiten würde, bestehe die Gefahr auch nicht. Weil wenn man was pusht und danach wieder poppt, dann ist es so wie vorher. Aber natürlich kann man den Wert ja auch ändern. Auf dem Speicher, der liegt ja im Speicher. Das heißt, wenn zum Beispiel Interrupts eingeschaltet sind, nach einem Push, dann könnte man den Wert durch den Speicher-Zugriff das Bit löschen und durch PopF würde das dann wieder hergestellt werden und dann wären plötzlich die Interrupts aus. So, das geht natürlich nicht. Das darf kein User-Programm. Und wie löst man das? Und dann hat sich damals entschieden, das so zu lösen, dass es eine Maske gibt praktisch. Wenn der PopF-Befehl im User-Level-Modus ausgeführt wird, dann wird vorher noch eine Maske drüber gelegt über das Register und dann werden praktisch die Bits, die das Systemprogramm nicht verändern darf, werden geschützt. Das heißt, obwohl man versucht, das Interrupt-Fleck zu löschen, wird es nicht gelöscht. Diese Maske wird aber nur im User-Modus benutzt. Im System-Modus natürlich nicht. Dort ist es durchaus legitim, auf diese Weise die Interrupt zum Beispiel abzuschalten. Das benutzt man auch für Interrupt-Behandlungen. Das Problem ist aber, dass das still und leise passiert. Es gibt keine Exception, wenn so eine Maske zum Beispiel zuschlägt. Das wird einfach ignoriert.
+
+01:06:10.675 --> 01:06:12.555
+<v SPEAKER_2>Und das müsste der Hypervisor aber mitbekommen.
+
+01:06:18.715 --> 01:06:47.615
+<v SPEAKER_1>Wenn das Gas-Betriebssystem auf diese Weise abschalten kann, läuft das Gas-Betriebssystem aber im Ring 3. Das wird also still und leise ignoriert. Und der Hypervisor kriegt davon gar nichts mit. Er müsste aber eigentlich einschreiten und sagen, du wolltest jetzt Interrupt abschalten, das emuliere ich für dich, du bekommst jetzt keinen Interrupt mehr weitergeleitet zum Beispiel. Diese Befehle verhalten sich unterschiedlich. Man kann damit anhand dieser Befehle erkennen, ob man im Ring 3 oder im Ring 0 läuft.
+
+01:06:47.635 --> 01:06:48.515
+<v SPEAKER_2>Aber man kann nichts verhindern.
+
+01:06:48.535 --> 01:06:49.995
+<v SPEAKER_1>Und man kann nichts verhindern.
+
+01:06:50.015 --> 01:06:54.575
+<v SPEAKER_2>Das heißt, auf X86 gibt es gar keine Virtualisierung, weil geht nicht.
+
+01:06:54.595 --> 01:07:02.515
+<v SPEAKER_1>Theoretisch, das ist sehr spannend mit dir. Genau, das ist natürlich ein Problem, was man lösen muss.
+
+01:07:02.535 --> 01:07:04.655
+<v SPEAKER_2>Das ist diese Virtualisierungslücke?
+
+01:07:04.675 --> 01:07:27.455
+<v SPEAKER_1>Richtig, das bezeichnen wir noch als Virtualisierungslücke. Es gibt noch, glaube ich, insgesamt 17 Befehle, die in einem Paper von den VMware-Gründern von 1999 mal aufgeführt werden. Vielleicht packen wir das nochmal in die große Link-Tüte zu dem Podcast. Das ist wirklich ganz interessant. Da wird das an den PopF-Befehl zum Beispiel nochmal erläutert. Und da gibt es auch einen Verweis auf die anderen Befehle, die das Problem sind.
+
+01:07:27.475 --> 01:07:30.935
+<v SPEAKER_2>Das heißt, diese VMware-Leute waren da so an der Vorfront?
+
+01:07:30.955 --> 01:07:35.775
+<v SPEAKER_1>Richtig, also VMware hat Virtualisierung auf X86 populär gemacht oder ob salonfähig.
+
+01:07:35.795 --> 01:07:38.735
+<v SPEAKER_2>Waren sie die ersten, die Erfolg hatten?
+
+01:07:38.755 --> 01:08:36.915
+<v SPEAKER_1>Ich denke, es gab durchaus vorher andere Lösungen, die das versucht haben. Aber das ist tatsächlich so, was man kennt. Genau, das Problem ist jetzt, wenn man Virtualisierung nach diesem Schema auf X86 machen will, da muss man irgendwie diese Virtualisierungslücke schließen oder überbrücken. In Hardware konnte man erst mal nichts machen. Deswegen hat man sich natürlich überlegt, dann machen wir uns erst in Software. Und wie lösen wir das Problem? VMware hat sich dazu entschieden, den gesamten Code, den das Gastbetriebssystem ausführen will, zu scannen, also zu überprüfen. Das heißt, die emulieren nicht, aber die überprüfen vorher. Die gehen durch die Befehle, die codieren die und schauen nach, ob einer dieser kritischen Befehle darunter ist. Bevor der Code ausgeführt wird. Wenn man jetzt zum Beispiel einen Gast startet, dann weiß der Hypervisor, welcher Code jetzt ausgeführt werden muss.
+
+01:08:37.715 --> 01:08:40.835
+<v SPEAKER_2>Also Gast im Sinne von ein komplettes OS.
+
+01:08:40.855 --> 01:08:41.855
+<v SPEAKER_1>Ein komplettes Betriebssystem.
+
+01:08:41.875 --> 01:08:57.855
+<v SPEAKER_2>Ich will jetzt in so einer virtuellen Umgebung, einer virtualisierten Maschine, in dieser VM soll ein Linux kommen. Das heißt, er scannt den ganzen Instruction Code von dem Linux-Könnel durch?
+
+01:08:58.755 --> 01:10:07.275
+<v SPEAKER_1>Nicht alles auf einmal, aber Schritt für Schritt. Und zwar so in dieser Reihenfolge, wie der ausgeführt wird. Das heißt, der erste Setup-Code, der den Protekted-Mode einschaltet, der die ersten Page-Tables aufsetzt und alles diese Verwaltungssachen macht, das wird erstmal von VMware praktisch gelesen und überprüft. Und zwar unterteilt VMware den Code in Basic-Blocks. Das ist also der Scanning-Code bis zum nächsten Sprung. Weil er ja bei dem Sprung, wenn es ein bedingter Sprung zum Beispiel noch gar nicht wissen kann, wo der hingeht. Oder weil die Adressen unter Umständen sich auch inzwischen geändert haben. Also er guckt praktisch so einen Blog durch, ist dort ein kritischer Befehl. Wenn ja, ersetze den entweder durch einen Interrupt, also den man praktisch aus dem Gast-Kontext rausspringt in den Hypervisor-Kontext. Oder ersetze den, wenn es geht, natürlich durch einen entsprechend optimierten Code, der das Ganze emuliert. Und ein Sprung wird auch ersetzt durch so einen Debug-Interrupt, der also nur ein Byte-Kurs ist, oder einen Sprung in den Hypervisor.
+
+01:10:07.295 --> 01:10:21.715
+<v SPEAKER_2>Das heißt, die Virtualisierungssoftware liest wirklich den Instruktionscode, der dort geladen wird. Und den Zeitpunkt, wo er geladen wird, bzw. erst mal in Teilen, also immer eigentlich während er ausgeführt wird, muss er immer wieder feststellen, oh, jetzt kommt Code, den habe ich mir noch nicht angeguckt.
+
+01:10:21.735 --> 01:10:22.595
+<v SPEAKER_1>Genau.
+
+01:10:22.615 --> 01:10:28.195
+<v SPEAKER_2>Und legt ihn dann anders im Speicher ab, oder ändert ihn im Speicher?
+
+01:10:28.215 --> 01:10:40.855
+<v SPEAKER_1>Genau, also man kann sich beides vorstellen, dass man es ändert. Dafür gibt es ja so eine Interrupt, die nur einen Byte-Kurs sind, dieser Debug-Interrupt. Das heißt, man könnte den schädlichen Befehl einfach überschreiben durch einen Debug-Interrupt und mit Knobs auffüllen, meinetwegen.
+
+01:10:40.875 --> 01:10:41.835
+<v SPEAKER_2>Ja.
+
+01:10:41.855 --> 01:11:00.775
+<v SPEAKER_1>Das würde dann funktionieren. Vmware, weiß nicht, ob die das zum Anfang überlegt hatten, aber die kopieren tatsächlich. Also die erzeugen neuen Code. Wo dann tatsächlich auch die Länge des Bearbeitend-Codes nicht mehr mit dem Original-Code übereinstimmen muss. Hat natürlich den Haken, dass man auch Adresse, Sprungziele und so weiter ändern muss.
+
+01:11:00.795 --> 01:11:02.015
+<v SPEAKER_2>Das ist richtig aufwendig.
+
+01:11:02.035 --> 01:12:28.075
+<v SPEAKER_1>Das ist richtig aufwendig. Das ist auch das, weshalb Vmware natürlich gerne in den Code reingucken lässt. Das macht Virtualisierung in Software halt komplex. Das ist so der Einzige, um das perfomant hinzukriegen. Also die Idee ist, man hat jetzt so einen Block, hat den jetzt übersetzt praktisch in den Code. Dann wird der ausgeführt. Der nächste Sprung springt wieder in den Hypervisor. Der guckt, aha, wo geht der Sprung dann hin? Das weiß er ja zu diesem Zeitpunkt. Guckt dann den nächsten Block an, übersetzt den, also übersetzt den, guckt praktisch nach schädlichem Befehlen durch und springt dann da wieder rein. Das klingt jetzt erstmal nicht besonders performant, wenn man sich vorstellt, dass bei jedem Sprung tatsächlich ein Ausflug in den Hypervisor unternommen wird. Der Trick ist natürlich, dass man, wenn man eine Weile durchgeht, durch den Code, dass man dann plötzlich sehr viele Code-Teile ja schon besucht hat. Also gerade bei Schleifen, die springen zum Beispiel wieder zum Anfang, dann stellt man fest, hey, diesen Code, den hab ich ja schon, der ist eigentlich schon sauber, liegt ja schon sauber vor. Dann kann ich ja den Sprung in den Hypervisor durch einen Sprung auf den neu erzeugten Code ersetzen. Das heißt, der springt jetzt nicht mehr in den Hypervisor und guckt danach, was er jetzt als nächstes machen will, sondern er weiß, hey, der Code ist ja schon übersetzt, dann springt er doch direkt dorthin. Das heißt, dass nach einer relativ kurzen Zeit der Großteil des Gastcodes komplett bereinigt von diesen schädlichen Befehlen praktisch vorliegt.
+
+01:12:28.095 --> 01:12:34.975
+<v SPEAKER_2>Gibt es einen Namen für diesen Bereinigungsvorgang? Vor allem wie einen technischen Begriff, der das...
+
+01:12:34.995 --> 01:12:37.155
+<v SPEAKER_1>Das steht neben dem Vormir-Paper, ich weiß nicht.
+
+01:12:40.575 --> 01:12:42.715
+<v SPEAKER_2>gespült.
+
+01:12:42.735 --> 01:12:46.535
+<v SPEAKER_1>Ich glaube, Vormir hat da schon einen Begriff erfunden. Ich erinnere mich jetzt nicht an den genauen Namen.
+
+01:12:46.695 --> 01:13:22.255
+<v SPEAKER_2>Okay, irgendeinen Begriff gibt es. Den kennen wir jetzt nicht, macht ja nichts. Aber dieser Vorgang, das frage ich mich gerade, das ist ja dann im Prinzip eine permanente Änderung im Speicher. Der Code wird geändert, er liegt dann anders im Speicher. Und wenn das Betriebssystem anfängt, dann soll so ein Code, was weiß ich, wenn da irgendein Paging dann zum Beispiel zum Tragen kommt, weil nicht mehr genug Speicher da ist, und das muss auf die Platte geschrieben werden, dann wird dieser geänderte Code dann auch rausgepaget. Oder ist das etwas, was wirklich nur der Hypervisor sieht, solange er im Rahmen ist und solange das da ist?
+
+01:13:22.275 --> 01:13:43.335
+<v SPEAKER_1>Das ist wahrscheinlich so eine Art Schattencode. Also der tatsächlich ausgeführte Code, den sieht das Betriebssystem nicht. Das ist nämlich eine zweite Forderung, also neben dieser Effizienz und Nativ-Ausfühlen-Geschichte, ist eine zweite Forderung dieses Puppeck- und Goldbergpapers, dass ein virtualisiertes Betriebssystem keinen Unterschied sehen darf, ob es virtualisiert läuft oder auf nativer Hardware.
+
+01:13:43.355 --> 01:13:46.955
+<v SPEAKER_2>Das würde wiederum bedeuten, es müsste eigentlich den Originalcode auspaget.
+
+01:13:46.975 --> 01:13:49.995
+<v SPEAKER_1>Genau, und das muss alles dann sozusagen abgefangen werden.
+
+01:13:50.015 --> 01:13:56.495
+<v SPEAKER_2>Das heißt, in dem Moment, wo gepaget wird, muss dann eigentlich der Hypervisor wieder dazwischenkommen und wieder alle Änderungen rückgängig machen.
+
+01:13:57.235 --> 01:14:02.255
+<v SPEAKER_1>Naja, er behält natürlich die Original schon mal im Hinterkopf und weiß jetzt...
+
+01:14:02.275 --> 01:14:07.515
+<v SPEAKER_2>Das heißt, er macht eher eine Kopie von dem Code an einer anderen Stelle und führt ihn dort stattdessen aus.
+
+01:14:07.535 --> 01:14:14.715
+<v SPEAKER_1>Genau, also dieser Cache ist auch begrenzt. Er casht nicht die gesamte Historie, sondern es gibt halt 16 Megabyte oder so.
+
+01:14:14.775 --> 01:14:30.335
+<v SPEAKER_2>Okay, aber es gibt im Prinzip immer so einen Execution Cache, nenne ich das jetzt mal, wo immer der gerade frisch gebürstete hypervisor-kompatible Code rumliegt. Aber der andere liegt schon auch noch da, wo das Betriebssystem meint, dass er ist. Richtig, ja.
+
+01:14:30.355 --> 01:14:35.295
+<v SPEAKER_1>Also wenn das Betriebssystem hat keine Möglichkeit, diesen bereinigten Code sich anzuschauen.
+
+01:14:35.315 --> 01:14:36.915
+<v SPEAKER_2>Es weiß nicht, dass es virtualisiert wird.
+
+01:14:36.935 --> 01:14:45.095
+<v SPEAKER_1>Genau, es darf es auch nicht wissen. Das können wir vielleicht später nochmal sagen, das ist auch eine Sache, die dann einige Konsequenzen hat, gerade im 74-bit-Modus.
+
+01:14:48.855 --> 01:15:03.015
+<v SPEAKER_2>Das heißt, das ist sozusagen der Modus, in dem eigentlich jegliche Virtualisierung auf x86 funktioniert. Nur so kann man es machen.
+
+01:15:03.035 --> 01:15:58.835
+<v SPEAKER_1>In Software. Das ist im Grunde das Prinzip. Es gibt natürlich verschiedene Ausprägungen. Und was VMware vor allen Dingen verstanden hat, ist, das auf die Spitze zu treiben. Dass man nicht nur diese übliche Art des Bereinigens vornimmt, sondern auch Optimierung in den Code vornimmt. Das ist die eine Geschichte, dass kritische Befehle teilweise durch entsprechenden Code ersetzt werden, der jetzt durchaus auch ein bisschen länger sein darf, aber nicht allzu lang ist. Sodass auch kritische Befehle keinen verlassenen Kontext bewirken. Also dass nicht in den Hypervisor gesprungen werden muss, um so ein Pop-F-Off zu führen, sondern dass zum Beispiel die Maske entsprechend angepasst wird und vielleicht vorher geguckt wird, dass das auch so funktioniert. Oder geguckt wird, ob das Interrupt-Flag an ist, in dem was jetzt reinzuschreiben ist. Und nur wenn es an ist, dann wird in den Hypervisor gesprungen. Ansonsten wird der Code nochmal ausgeführt.
+
+01:15:59.715 --> 01:16:09.675
+<v SPEAKER_2>Aber Xen, also Xen ist ja so die Virtualisierung, die jetzt explizit auf Linux hinten auch optimiert ist, oder läuft Xen auch mit anderen Betriebssystemen?
+
+01:16:09.695 --> 01:16:11.155
+<v SPEAKER_1>Xen läuft auch mit anderen Betriebssystemen.
+
+01:16:11.175 --> 01:16:13.355
+<v SPEAKER_2>Das ist unabhängig davon.
+
+01:16:13.375 --> 01:16:51.595
+<v SPEAKER_1>Unabhängig davon, aber die Entwicklung ist schon praktisch sehr eng an Linux gekoppelt. In der Praxis sieht es auch so aus, dass Anwender von anderen Betriebssystemen immer so ein bisschen hinterher programmieren müssen und sich ein bisschen beschwerden müssen, dass viele Sachen zwar unter Linux funktionieren, aber auf anderen Betriebssystemen nicht. Also Sun mit Solaris zum Beispiel, die auch Xen einsetzen, die sind da so ein Fall davon. Und da gibt es auf der Meldungliste immer lustige Meldungen, wenn irgendwas geändert wird, dann geht das hey, ihr habt hier eine Bash verwendet und das gibt es hier bei BSD nicht oder bei Solaris gibt es inzwischen auch, aber das ist so ein Fall, dass ein Bash-Syntax zum Beispiel verwendet wird.
+
+01:16:51.615 --> 01:17:09.155
+<v SPEAKER_2>Betrifft aber jetzt mehr so das Inbetrieb neben einer solchen Sache und weniger die eigentliche Laufzeit ist ja eigentlich unabhängig vom Betriebssystem. Aber im Prinzip läuft Xen genauso wie VMware, also ist das jetzt ein vollständig vergleichbares Produkt oder ist da was generell anders?
+
+01:17:09.175 --> 01:18:04.615
+<v SPEAKER_1>VMware läuft halt komplett in Software, Xen benutzt unmodifizierte Betriebssysteme. Das heißt, man nimmt sein Betriebssystem, so wie es von der CD kommt, und kann es ausführen in diesem VMware. Das ist das, was man auch so erwartet. Man schiebt die Windows-CD ein auf seinem Linux-System und da geht ein Fenster auf und dann bootet der, man sieht BIOS-Meldungen und kann dann da Windows installieren. Bei Xen hat man sich eine andere Möglichkeit überlegt, wie man die kritischen Befehle vermeiden kann, indem die gar nicht erst auftauchen in dem Code. Xen hat sich überlegt, wir modifizieren die Betriebssysteme einfach so. In dem Fall wissen die Betriebssysteme, dass sie virtualisiert sind. Und alles, was schädlich ist, was sozusagen nicht funktioniert, das leiten sie an den Hypervisor weiter. Sie sagen also explizit, ich würde jetzt gerne die Pages-Tables ändern, ich weiß, ich darf das nicht, mach du das mal für mich.
+
+01:18:04.635 --> 01:18:13.355
+<v SPEAKER_2>Das heißt, Xen ist eigentlich, also weiß ich nicht, im Wesentlichen ein geändertes Linux, sind Patches für Linux oder eine andere Art und Weise zu übersetzen?
+
+01:18:13.375 --> 01:18:38.675
+<v SPEAKER_1>Oder Patches für Betriebssysteme, weil also tatsächlich läuft Xen auf FreeBSD, NetBSD, OpenBSD, Solaris und Linux, das sind so die Hauptbetriebssysteme. OpenSolaris und auch das normale Solaris, glaube ich. Es gibt noch eine Reihe von anderen kleineren Notisystemen, Plan 9 oder sowas, was auch tatsächlich unterstützt wird. Das heißt, man muss ein Betriebssystem, damit es unter Xen läuft, anpassen.
+
+01:18:38.695 --> 01:18:43.835
+<v SPEAKER_2>Anpassen hat aber den Vorteil, dass man eben diesen ganzen Analysekram sich komplett schenken kann.
+
+01:18:43.855 --> 01:19:18.975
+<v SPEAKER_1>Genau, man geht halt in eine semantische Ebene höher und sagt, ich weiß, dass das eigentlich nicht erlaubt ist, ich kann das gleich direkt an den Hypervisor delegieren. Man muss das nicht auf so einer unteren Ebene machen, zum Beispiel Änderung von Pagetables. Müsste man ja eigentlich in so einem Fall, wo man den Code scannen muss, jede einzelne Page zum Beispiel extra abfangen. In einem paravirtuellen Betriebssystem kann man sagen, ich möchte jetzt demnächst 200 Pages ändern oder Pagetables ändern und fühle das doch bitte für mich aus. Das heißt, man hat einmal diesen Overhead, in den Hypervisor zukommt und dann wieder zurück.
+
+01:19:19.835 --> 01:19:21.195
+<v SPEAKER_2>Paravirtuelles Betriebssystem?
+
+01:19:21.215 --> 01:19:33.975
+<v SPEAKER_1>Paravirtualisierung, das ist der Ansatz, den Xen benutzt, weil das Betriebssystem halt doch modifiziert ist und das Betriebssystem doch weiß, dass es virtualisiert läuft. Und man vertraut dem auch.
+
+01:19:33.995 --> 01:19:43.055
+<v SPEAKER_2>Aber müssen dann die Anwendungsprogramme, die jetzt als Binary kommen, wo man jetzt nicht an den Source ran kann, die müssen schon dann auch immer noch gescannt werden oder ist das im User-Mode kein Problem?
+
+01:19:43.075 --> 01:20:11.235
+<v SPEAKER_1>Im User-Mode ist es kein Problem. Da gibt es diese kritischen Befehle, machen da kein Problem. Es läuft ja eben User-Modus. Der virtuelle und der reelle User-Modus ist gleich. Deswegen ist es tatsächlich Virtualisierung, weil der Großteil der Befehle nativ ausgeführt wird und in dem Fall alle Anwendungsprogramme. Das ist bei Xen garantiert, dass das User-Land komplett genauso läuft wie auf einer nativen Maschine.
+
+01:20:11.255 --> 01:20:13.615
+<v SPEAKER_2>Ich meine, jedes beliebige Programm auch ein Binary.
+
+01:20:13.635 --> 01:20:16.815
+<v SPEAKER_1>Genau, nur der Kernel muss halt angepasst werden. Der Rest muss nicht angepasst werden.
+
+01:20:17.235 --> 01:20:41.235
+<v SPEAKER_2>Jetzt hast du aber gesagt, als wir über 64-bit gesprochen haben, bei Linux ist das ja ganz einfach, weil die ganzen Treiber usw. sind ja alle im Source. So ist es ja nicht, sondern es gibt ja auch Treiber, auch populäre Treiber, die verwendet werden, vor allem natürlich die WLAN-Treiber, Grafikkartentreiber, die eben nicht unbedingt immer im Source-Code auch verfügbar sind, sondern die auch als binäre Treiber verwendet werden. Wie kommt man mit denen dann klar?
+
+01:20:43.155 --> 01:21:48.375
+<v SPEAKER_1>Also bei Xen, wenn man so eine übliche Virtual-Aseliierungslösung macht, wo der Hypervisor über allem sitzt, dann hat man ja das Problem, dass die Treiber des Betriebsthemes ja auch eigentlich von diesen Beschränkungen betroffen sind, dass es im Level 3 zum Beispiel ausgeführt wird, also im Ring 3, und dass zum Beispiel direkte Hardware-Zugriffe verboten werden. Eigentlich müsste man konsequenterweise dann die Treiber auch im Ring 0 laufen lassen, im echten Ring 0, damit sie tatsächlich Zugriff auf die Hardware haben. Was würde bedeuten, dass man Treiber in die Virtualisierungslösung mit reinpacken muss? Das will natürlich keiner. Also will nicht keiner jetzt anfangen, sämtliche Treiber, die für Linux mal entwickelt werden, auf Xen zu portieren, auf den Xen halberweise. Deswegen hat man bei Xen sich überlegt, wir machen Folgendes, wir erlauben Linux-Treibern, also es gibt einen speziellen Gast, der immer gestartet werden muss, das ist die Domain 0, nennt sich das, und dieser Gast hat vollen Zugriff auf die Hardware. Und dadurch können wir alle Treiber, die in diesem Gast einfach existieren, können wir mitbenutzen.
+
+01:21:48.395 --> 01:21:53.875
+<v SPEAKER_2>Aber wenn die laufen, darf auch nichts anderes unterbrechen?
+
+01:21:53.895 --> 01:22:11.295
+<v SPEAKER_1>Die Treiber müssen teilweise angepasst werden, aber das passiert meist auf Schichten, wo keine Quellcodeänderung nötig ist. Wenn die Treiber zum Beispiel Page-Tables ändern wollen, dann rufen sie ja Linux-Routinen auf. Und diese Routinen sind natürlich geändert, die sind ja paravirtualisiert angepasst. Das heißt, da funktioniert dann schon...
+
+01:22:11.315 --> 01:22:19.535
+<v SPEAKER_2>Das heißt, es ist eigentlich kein Problem, aber können die nicht dann auch irgendwie so mit PopF und so ein Kram irgendwie daherkommen, was dann wieder stören würde?
+
+01:22:19.555 --> 01:22:34.755
+<v SPEAKER_1>Ja, da vertraut man praktisch dem, der Domain 0 dann in diesem Fall. Also es gibt diese eine spezielle Instanz und diese Domain 0, die diese Treiber erlaubt. Und dort ist es praktisch, ja, also die Treiber.
+
+01:22:36.275 --> 01:23:42.255
+<v SPEAKER_2>Ich stelle mir das jetzt so vor, ich habe da jetzt irgendwie meinen Mega-Server, der irgendwie echt zu viel Brain hat, und da habe ich jetzt so meine 10 Instanzen drauf. Aber das Ding muss jetzt halt auch mal, da ist halt auch ein Terminal angeschlossen mit einem Grafikkartentreiber, und diesen Grafikkartentreiber gibt es halt einfach mal nur in mehr. Der läuft ja jetzt parallel, und während ich da jetzt am Desktop sitze und auf diesem Ding rumklicke, ist natürlich jetzt für Server nicht so die Anwendung, aber muss er jetzt auch nicht unbedingt nur für Server zum Einsatz kommen. Wie auch immer, es geht ja auch mit dem Desktop-System. Also jetzt ist dieses Ding irgendwie im Betrieb, zeigt was weiß ich, irgendwelche 3D-Visualisierungen an oder so, wie das alles läuft. Jetzt ist ja dieser Treiber dann halt zu irgendeinem Zeitpunkt auch aktiv und könnte ja im Prinzip Dinge tun, weil er ja auch im Kernel-Modus läuft, die eben nicht sein dürfen, weil wir das ja jetzt ausführlich durchgekaut haben. Wie kann man denn jetzt verhindern, dass der anderen Kernel, die da halt laufen, die zwar hypervisor-aware sind, dass er den nicht dazwischenfuchtelt?
+
+01:23:42.735 --> 01:23:56.715
+<v SPEAKER_1>Also grundsätzlich, man vertraut denen. Das wird ja paravirtualisiert. Das Betriebssystem ist darauf angepasst, dass es mit Virtualisierung zusammenspielt und es garantiert praktisch aus, auch durch diese Paravirtualisierung, dass diese problematischen Befehle gar nicht vorkommen.
+
+01:23:57.095 --> 01:23:58.955
+<v SPEAKER_2>Ja, aber in diesem Treiber könnten sie doch vorkommen.
+
+01:23:58.975 --> 01:24:09.555
+<v SPEAKER_1>Es könnte tatsächlich sein, dass man einen Treiber schreibt, der sozusagen diese Virtualisierung unterbricht. Aber das betrifft erst einmal nur die Domain 0, die man praktisch als Bestandteil des Hypervisors sehen kann.
+
+01:24:09.955 --> 01:24:12.735
+<v SPEAKER_2>Ja, und dann? Dann geht irgendein anderer darauf verloren.
+
+01:24:12.755 --> 01:24:30.015
+<v SPEAKER_1>Dann ist das selber Problem, weil man das ja installiert. Das ist ja die Hypervisor-Software. Da vertraut man ja auch, dass die keinen Schaden anrichtet. Der Treiber läuft aber nur in dieser einen Domain. In dieser Domain 0. Das ist ja eigentlich nicht virtualisiert das System, sondern das ist sozusagen das Basisystem.
+
+01:24:30.035 --> 01:24:34.775
+<v SPEAKER_2>Das heißt sozusagen, eins darf laufen wie bisher und alle anderen sind sozusagen virtualisiert?
+
+01:24:34.795 --> 01:24:47.335
+<v SPEAKER_1>Alle anderen benutzen gar keine Hardware-Treiber, sondern die kommunizieren über den Hypervisor mit dieser Domain 0 und sagen, liebe Domain 0, führe doch bitte für mich diesen Festplattenzugriff.
+
+01:24:47.355 --> 01:25:06.735
+<v SPEAKER_2>Durch, okay, verstehe. Aber wie ist denn das jetzt eigentlich? Normalerweise kümmert sich halt das Betriebssystem darum, dass jetzt irgendwie CPU auch zugeteilt wird und ohne CPU-Zuteilung läuft ja nix. Wie läuft denn, dass diese Betriebssysteme untereinander sich überhaupt Zeit lassen? Also wer entscheidet darüber, wer wie viel Zeit bekommt?
+
+01:25:06.755 --> 01:26:13.715
+<v SPEAKER_1>Das macht der Hypervisor. Das ist übrigens die dritte Forderung aus dem Puppetman Goldberg-Paper, dass alleine der Hypervisor Zugriff auf alle Ressourcen des Systems hat und dass er die verteilt und dass kein Gast davon abweichen kann. Und dass kein Gast daraus ausbrechen kann. Die Idee ist jetzt einfach, dass betriebst der Hypervisor, das ist ein relativ kleiner Teil bei Xen, der praktisch das Scheduling übernimmt, der die ganze Verwaltung des Speichers übernimmt und die Interrupts und Timer zum Beispiel. Also die Low-Level-Hardware. Sämtliche Peripherie-Hardware, was IO betrifft, Grafikkarte, Netzwerk, Festplatte, wird von dieser privilegierten Domain Null gehandelt. Die technisch gesehen nicht Teil des Hypervisors ist, sondern extra, aber praktisch zu der Installation dazugehört. Und die Zuteilung der verschiedenen Gäste, die regelt halt der Hypervisor. Der bekommt die Time Interrupts, der entscheidet, welcher Gast wird laufen lassen. Also welcher Gast bekommt die CPU.
+
+01:26:13.735 --> 01:26:16.895
+<v SPEAKER_2>Das heißt, Domain Null ist sozusagen Domain Null und alle anderen sind Gäste?
+
+01:26:17.195 --> 01:26:21.495
+<v SPEAKER_1>Alle anderen sind Gäste, die heißen Domain New für Unprivileged.
+
+01:26:21.515 --> 01:26:25.535
+<v SPEAKER_2>Unmodifizierte binäre Treiber dürfen nur in dieser Domain Null laufen.
+
+01:26:25.555 --> 01:26:25.995
+<v SPEAKER_1>Genau, man kann.
+
+01:26:26.015 --> 01:26:32.715
+<v SPEAKER_2>Und wenn die laufen, dann kann auch die CPU nicht freigegeben werden, sozusagen. Da muss man dann darauf warten.
+
+01:26:32.735 --> 01:27:12.255
+<v SPEAKER_1>Naja, das läuft ja dann. Es kann ja sein, dass die ja böse Sachen machen. Im Kontext für einen Gast laufen die ja. Die Domain Null läuft zwar noch nebenher, aber wenn jetzt zum Beispiel ein Gast einen Festplatten-Zuhoff machen möchte, dann sagt er dem Hypervisor Bescheid, liess mir doch mal bitte Block XY von der Platte. Der Hypervisor schaut dann nach. Aha, das ist ja eine Sache, die kann ich jetzt nicht selber handeln, weil das ist IO., mache ich ja nicht. Ich mache ja nur die wichtigsten Sachen. Das macht die Domain Null für dich. Der Gast wird jetzt angehalten, er bekommt jetzt nicht mehr die CPU, sondern stattdessen bekommt die Domain Null die CPU. Mit dem expliziten Auftrag, bitte liess doch diesen Block.
+
+01:27:14.215 --> 01:27:16.675
+<v SPEAKER_2>Diesen Block ist aber doch etwas, was man an die Hardware stellt?
+
+01:27:16.695 --> 01:27:30.735
+<v SPEAKER_1>Die Domain Null hat dann den normalen Hardware-Treiber, den SATA-Treiber, der auf die Platte zugreift. Die führt dann diesen Hardware-Zugriff aus. Und gibt dann praktisch das Ergebnis zurück in diese Gastdomain.
+
+01:27:30.755 --> 01:28:01.335
+<v SPEAKER_2>Ich verstehe, das heißt diese Gastlinuxe, gehen wir jetzt mal davon aus, dass auf diesem Rechner nur ein Linux läuft, die sind sozusagen so virtualisierungs-aware, dass sie eben auch bestimmte Dinge gar nicht mehr selber tun, sondern delegieren. Also es ist jetzt wirklich nicht so wie VMware, mit der Code läuft es vollständig unmodifiziert und jeder hat auch seinen eigenen Treiber am Start. Sondern es wird eigentlich nur noch ein SATS-Treiber verwendet, der zwischen den ganzen einzelnen Instanzen geteilt wird.
+
+01:28:01.355 --> 01:29:17.675
+<v SPEAKER_1>Das ist eine Frontend-Backend-Architektur. Jeder Gast hat einen kleinen Treiber, der eigentlich nur die Körneranforderungen entgegennimmt und unmodifiziert weiterleitet an die Domain 0. Die Domain 0 kümmert sich darum, dass z.B. konkurrierende Zugriffe von verschiedenen Gästen auf die Platte gescheduled werden, gemanagt werden, wie auch immer. Das Schicke bei Xen ist, dass dadurch, dass es virtualisierungs-aware ist, die Kommunikation optimiert ist. ZB läuft das alles mit Zero-Copying. Es wird nichts kopiert, sondern Speicherseiten hin und her gemapped. Wenn jetzt ein Gast z.B. von der Platte lesen will, dann sagt er, liebe Domain 0 oder lieber Hypervisor, lese mir doch bitte Block XY in diesen Speicher, den ich dir hier bereitstelle. Der Hypervisor guckt danach, aha, das ist für die Domain 0. Dann mappt er praktisch die Seite aus dem Gast raus per Paging und mappt ihn in die Domain 0 rein. Und sagt der Domain 0, hier hast du den Speicher, wo das reinkommt. Die Domain 0 macht dann den Hardwarezug, füllt den Puffer und gibt dann wieder zurück. Und der Hypervisor nimmt dann diese Seite aus der Domain 0 wieder raus und mappt sie wieder in den Gast, ohne zu kopieren.
+
+01:29:18.055 --> 01:29:28.495
+<v SPEAKER_2>Das heißt, ein Ziel bei Xen ist, dass man diesen ganzen Doppelmoppel eigentlich von vornherein verhindert. Man könnte mir jetzt vorstellen, dass das für die Performance am Ende doch erhebliche Auswirkungen hat.
+
+01:29:29.055 --> 01:30:28.915
+<v SPEAKER_1>Ich müsste wirklich sagen, extrem. Das Problem ist, wenn man jetzt unmodifiziert ein unmodifiziertes Gast-System unter VMware ausführt, dann ist die Performance, was die Platte angeht, was die Grafik vor allen Dingen angeht und auch was Netzwerk angeht, sehr schlecht eigentlich. VMware hat das schon früher erkannt, dass man da was machen muss und hat praktisch so eine ähnliche Architektur wie Xen implementiert. Das sind diese Gast-Tools, wo jeder vielleicht schon mal zu tun hatte. Wenn man ein Betriebssystem installiert auf der VMware, dann kommt relativ bald eine Meldung. Hey, hallo, das ist jetzt hier Windows, kenn ich. Installiere doch bitte die tollen Gast-Tools, da kannst du mit der Maus dann aus dem Fenster raus und rein. Sagen die in Wirklichkeit, installieren die so eine Art von paravirtualisierten Treibern. Das ist der Name dafür, wo dann praktisch auch ein Windows-Treiber den Festplattenzugriff abfängt auf einer hohen Ebene, wo ankommt, das ist noch Blockadresse, an der es VMware direkt übergibt, der dann den Block zurückkopiert sozusagen.
+
+01:30:28.935 --> 01:30:33.295
+<v SPEAKER_2>Auch Netzwerkzugriffe. Auch Netzwerkzugriffe, das ist also vor allen Dingen für Hardware.
+
+01:30:33.315 --> 01:33:02.735
+<v SPEAKER_1>Also man muss sich jetzt vorstellen, der scannt ja praktisch Assembler Code auf der untersten Maschinenebene. Und wenn da jetzt zum Beispiel so eine Hardware-Befehle drin sind, die muss er ja abfangen, emulieren. Wenn man sich zum Beispiel eine Grafikkarte vorstellt, um da eine Linie zu zeigen oder um irgendwas einen Punkt zu setzen, dann müsste man ja jeden einzelnen Punkt abfangen. Jeden einzelnen Zufuhr auf den Speicher müsste man abfangen, gucken, ok, er wollte jetzt da einen blauen Punkt setzen an die Stelle. Das müsste jetzt auf deinem Hostbetriebssystem ausgeführt werden, dann geht er wieder zurück. Jetzt kommt der nächste Punkt daneben. Jedes Mal wird praktisch der Hypervisor angeworfen, dann geht er wieder in den Gast rein und das ist von der Performance an ziemlich schrecklich. Also bei Grafik ist es offensichtlich, aber auch bei Netzwerk und Plattenzugriffen ist es so, dass es, wie gesagt, in den unbenutzbaren Bereich rein geht. Ja, es ist schon erstaunlich flott, weil es werden natürlich auch einige Tricks verwendet, indem man zum Beispiel das Paging dafür benutzt, dass man die Grafikzugriffe nicht wirklich im Speicher abfängt, sondern einfach durch Paging ersetzt und dann auch nicht sofort aktualisiert, sondern ein gewissen Delay drin hat und so. Richtig. Und auch bei Netzwerk ist das Problem, dass man von einer semantischen Ebene ziemlich weit unten ist. Das heißt, um zum Beispiel ein Netzwerkpaket abzusenden, muss man mal wegen drei Hardwarezugriffe machen. Man muss erstmal ein Register pollen, ob der Bus überhaupt frei ist, dann muss man sagen, dass man was senden will. Das sind mehrere Hardwarezugriffe, die nötig sind. Dann muss man zusätzlich noch unter Umständen DMA machen oder muss den Speicher bereitstellen. Das heißt, um die einfache Sache Schicke mit dieses Paket übers Kabel auszuführen, sind unter Umständen fünf oder sechs Exits, also Verlassen des Gastkontexts, überwechseln den Hypervisor, behandeln und wieder zurück nötig. Das heißt, der Hypervisor muss auch so ein bisschen raten, was wollte der eigentlich, weil er sieht ja nur Zugriff auf IO-Port XY. Und jetzt muss er erst mal überlegen, das ist das und das Register, aha, der wollte wahrscheinlich Paket absenden. So, und das macht er dann fünfmal hintereinander und wenn es dann tatsächlich in der erwarteten Reihenfolge aufgetreten ist, die Zugriffe, dann weiß er, okay, der wollte tatsächlich dieses Paket absenden, dann mach ich das mal für ihn und dann bestätigt er das natürlich auch wieder auf so einer Hardware-Ebene, was recht umständlich ist. Und da kam Xen halt rein und hat gesagt, wir machen das alles viel eleganter, wir sagen ihm heiligerweise aber, wie es ist, nämlich, ich möchte dieses Paket versenden und er macht das denn und da verlasse ich nur einmal den Gast dafür.
+
+01:33:02.755 --> 01:33:10.755
+<v SPEAKER_2>Das heißt, der Trend geht eigentlich zur Paravirtualisierung, weil es eigentlich eine ganz andere Effizienz erlaubt?
+
+01:33:10.775 --> 01:33:15.755
+<v SPEAKER_1>Genau, der Haken bei Paravirtualisierung ist natürlich, dass das Gastbetriebssystem angepasst werden muss.
+
+01:33:15.775 --> 01:33:17.995
+<v SPEAKER_2>Klar, aber das ist ja nun bei Linux eigentlich nicht so das Problem.
+
+01:33:18.015 --> 01:33:21.435
+<v SPEAKER_1>Bei Linux ist es nicht das Problem, bei Windows ist es ein Riesenproblem.
+
+01:33:21.455 --> 01:33:23.435
+<v SPEAKER_2>Ja, bei Mac wäre das sicherlich auch ein Riesenproblem.
+
+01:33:23.455 --> 01:34:01.935
+<v SPEAKER_1>Richtig, ja. Es gab tatsächlich mal in der Entwicklung von Xen, da wurde mal eine ältere Windows-Version, glaube ich, paravirtualisiert, aber das war natürlich so ein Forschungsding und das war auch für einen älteren Xen Hypervisor und das war halt intern. Und es wurde nur geguckt, ja, es geht und wir können das machen. Schön und gut, aber Microsoft hat den Code natürlich nie released. Und Xen durfte das nicht releasen. Es war mehr so ein Proof-of-Konzept. Aber in der Praxis möchte man auch eigentlich nicht ständig mit verschiedenen angepassten Betriebssystemen umgehen. Man möchte einen Kern haben, der das macht.
+
+01:34:01.955 --> 01:34:51.815
+<v SPEAKER_2>Obwohl ja jetzt diese partielle Paravirtualisierung, also diese Paravirtualisierenden oder derptemntreiber, auch schon zufriedenstellende Ergebnisse erzielen kann. Ich meine, so wie VMware. Ich kenne es jetzt hier zum Beispiel, der typische Fall Windows auf Macintosh laufen. Da gibt es ja auch noch Parallels, was so ähnlich funktioniert. Ich weiß jetzt nicht, wie nah die jetzt wirklich an der Art und Weise dran sind, wie VMware das macht. Aber es ist dasselbe Prinzip. Dann haben wir sozusagen Xen. Ich dröte jetzt nochmal so ein bisschen die Kategorien auf. Um jetzt ein bisschen Überblick zu gewinnen. Dann gibt es halt Xen. Und ich vermute mal, dass jetzt diese Arbeit, die quasi dieses Patchen von dem Linux, um es eben für solche Umgebungen fit zu machen, wird ja sicherlich kurz oder lang auch im Kernel selber landen.
+
+01:34:51.835 --> 01:35:10.715
+<v SPEAKER_1>Das ist die Idee. Im Moment ist es so, dass es extern passiert, dass also von Xen Patches gemacht werden für die Linux-Könne. Und wie man weiß, die Linux-Könne-Entwicklung ist sehr dynamisch. Und eigentlich kommt man damit nicht so wirklich hinterher. Der Haken ist, es gibt bei Xen im Moment ein großer Pferdefuß. Man ist noch auf Kernel 2618.
+
+01:35:10.735 --> 01:35:11.615
+<v SPEAKER_2>Und aktuell ist...
+
+01:35:11.635 --> 01:35:26.955
+<v SPEAKER_1>Aktuell ist 26. Also 2618 ist zwei, zweieinhalb Jahre oder drei Jahre alt. Es gibt so einige Rückportierungen von Treibern auf die alte Kernel. Aber das ist so im Moment ein Riesenhaken. Bei Xen, man ist auf so einen alten Kernel festgezurrt.
+
+01:35:29.315 --> 01:35:33.015
+<v SPEAKER_2>Weil halt immer wieder, wenn sich was ändert, muss man sich das alles anschauen.
+
+01:35:33.035 --> 01:36:37.955
+<v SPEAKER_1>Genau, also es ist sehr dynamisch. Es wird ja auch viel bei der DINOS-Entwicklung auch am Eingemachten geändert. Am Scheduler, der wird mal vollkommen neu geschrieben von Version zu Version. Da müsste man den komplett neu paravirtualisieren sozusagen. Das ist also recht aufwendig. Die Distributoren machen das trotzdem teilweise. Fido, Suse zum Beispiel. Die haben jetzt tatsächlich 2625. Die haben also eine eigene Regie, die Xen-Patches auf 2625 portiert. Das wird interessanterweise aber nicht von Xen zurückportiert. Also das wird nicht übernommen, weil Xen den Ansatz fährt, dass die Patches in den offiziellen Körnern reinkommen. Das ist im Moment Work in Progress. Wir sind jetzt so weit, dass zumindest echte Gäste, also nicht die Domain 0, sondern die unprivilegierten Gäste, dass die inzwischen ganz gut funktionieren. Das ist in einem upstream normalen Kernel, den man sich runterladen kann von Kernel Org. Da muss man einfach einschalten, dass man zusätzlich Unterstützung für paravirtualisierte Xengäste haben möchte. Und dann läuft der Kern auch...
+
+01:36:37.975 --> 01:36:40.615
+<v SPEAKER_2>Das ist ein fester Teil von Linux? Das wird inzwischen...
+
+01:36:42.375 --> 01:37:26.695
+<v SPEAKER_1>Das ist paravirtualisiertes Xen. Also für ParavirtOps, das ist die Schnittstelle. Das ist eine verallgemeinerte Schnittstelle, die nicht nur für Xen passt, sondern auch für andere Geschichten. Weil VMware zum Beispiel möchte das natürlich auch gerne benutzen. Weil das ist einfach ein eleganterer Ansatz, sag ich mal. Und wenn es dafür eine Schnittstelle gibt, in Linux können die das gerne benutzen. Also in Windows fahren die trotzdem ihren Ansatz, bisher mit dem Patchen. Und wenn in Linux natürlich aber schon entsprechende Abkürzungen vorhanden sind, dann möchte man die gerne nutzen. Und wenn Xen sowas ähnliches bereitstellt, dann hat man sich bei Linux halt beschlossen, dass man eine Schnittstelle dafür definiert, diese Paravirt Ops. Und die können dann von Hypervisor direkt benutzt werden.
+
+01:37:26.715 --> 01:37:32.075
+<v SPEAKER_2>Wo wir bei Abkürzungen sind, KVM ist in dem Zusammenhang genannt worden. Hat das was damit jetzt zu tun?
+
+01:37:32.095 --> 01:37:43.455
+<v SPEAKER_1>KVM ist eine Kernel Virtual Machine, nennt sich das. Und das ist praktisch ein Ansatz, der Hardware-Virtualisierung voraussetzt. Also das ist vielleicht eine Sache, die wir jetzt...
+
+01:37:43.875 --> 01:39:47.655
+<v SPEAKER_2>Ach so, okay, das hat damit sozusagen gar nichts zu tun. Wir sind jetzt immer noch im Softwarebereich. Okay, gut, das ist doch mal schon ganz gut, das zu klären. Okay, dann blätter ich nochmal kurz zurück. Also wir hatten die Ursprünge der Virtualisierung auf x86, hatten erst mal damit zu kämpfen, dass der x86 selber in seinem Instruktionssatz einfach diverse Stolper-Fallen aufgestellt hat, die das nicht so ohne Weiteres machbar machen ließen. VMware, kluge Leute, haben sich das mal angeschaut und haben halt diesen Weg drumherum gefunden, haben gesagt, ok, alles klar, wir schauen uns einfach den Code, während er exekutiert wird, immer kurz vorher ein bisschen an, nehmen das böse irgendwie raus und führen eine Schattenkopie des Codes aus anstatt des eigentlichen Codes, sodass die Software davon nichts merkt oder dass man sie sich nicht anpassen muss, aber trotzdem in der Lage ist, verschiedene Betriebssysteme einfach parallel laufen zu lassen, ohne dass sie irgendwas voneinander wissen. Andere haben dieses Konzept übernommen, so wie Parallels, aber mit dem Xen-Projekt geht man anderen Ansatz und sagt, das ist eh alles nicht effizient. Das geht zwar, wenn man mal was fahren muss, das war ja so ein bisschen die Idee bei VMware, ich weiß nicht, ich habe einen Mac und dann muss ich mal meine Telefonanlage programmieren und so eine Buchhaltung benutzen. Da ist das ja nicht so wichtig, da ist man glücklich, dass es überhaupt läuft, aber letzten Endes ist natürlich die Virtualisierung, wie wir schon besprochen haben, gerade unter Sicherheitsaspekten, aber auch so administrative Trennung für Server hochinteressant. Da will man aber dann an der Performance nichts einbüßen, deswegen die Idee der Paravirtualisierung und zu sagen, okay, wir machen das Betriebssystem Virtualisierungs-Aware. Wir lagern alles das aus, was zeitkritisch ist, vor allem natürlich die Treiber, befinden sich in dieser Domain 0. Dort werden sie ausgeführt, sind performant und auch nicht so sicherheitskritisch, aber alles andere, was hin- und hergeschaltet werden muss, dass es dann eben auch angepasst ist, Hypervisor-Aware, und der Code kommt von vornherein schon in einer angepassten Version. Man muss da eigentlich ein bisschen rumpatchen, aber in zunehmendem Maße ist das Linux auch in der aktuellen Auslieferungsform schon dafür vorbereitet. Also eine korrekte Zusammenfassung von Xen...
+
+01:39:47.675 --> 01:40:03.055
+<v SPEAKER_1>Was ich vielleicht noch ergänzen würde ist, das klingt so, diese Xen-Lösung mit den Anpassungen, dass es nicht sicher wäre. In Wirklichkeit ist es so, dass Xen-Gastkörner, also Gastbetriebssysteme, werden im Ring 1 interessanterweise ausgeführt.
+
+01:40:03.075 --> 01:40:03.835
+<v SPEAKER_2>Ach, tatsächlich.
+
+01:40:06.315 --> 01:40:58.535
+<v SPEAKER_1>Das war auch ein bisschen Schmerz, als man dann im 64-Bit-Modus unterstützt. Dort wird es im Ring 3 ausgeführt. Das heißt, die Virtualisierung ist genauso sicher wie unter VMware. Das Gastbetriebssystem läuft im Ring 3. Das heißt, sollte doch mal ein Treiber einen schädlichen Befehl ausführen oder zu versuchen, dann wird er einfach nicht korrekt bearbeitet. Oder wenn tatsächlich mal ein Gast versucht wird, auf die Hardware zuzugreifen, wird das abgefangen, weil das im Ring 3 nicht möglich ist. Das ist also insofern sicher. Nur kann man i.o. getrennt davon freischalten für die Gäste. Für die Domain 0 wird z.B. der Zugriff auf den i.o. Bereich freigeschaltet, sodass die Domain 0 trotzdem keinen Zugriff auf den Hypervisor oder auf andere Gäste hat. So von sich heraus. Aber Zugriff auf sämtliche Hardware.
+
+01:41:00.435 --> 01:42:53.435
+<v SPEAKER_2>Mich erinnert jetzt diese Anpasserei an etwas, was ich auch mal kennengelernt habe. Nämlich der Versuch, den frühen Linux-Versionen Realtime-Fähigkeiten beizubringen. Das war am Anfang im Linux-Kernel nicht so vorgesehen. Mittlerweile ist da eine ganze Menge passiert, das habe ich nicht weiter verfolgt. Aber Tatsache war, es gab ja verschiedene Ansätze. Als erste gab es dieses RT-Linux, was ja mit dieser Idee aufgekommen ist, dass man ja dem Linux mal ein bisschen Beine machen kann, was jetzt die Reaktionsfreudigkeit betrifft. Indem man sagt, wir schieben das alles mal unter einen Nano-Kernel. Das heißt, ein anderer Kernel übernimmt, quasi wie so ein Hypervisor die eigentliche Regie. Zumindest ist er Herrscher der Interrupts. Und dann lassen wir das Linux mal in so einem Idle-Thread laufen. Und alles, was zeitkritisch ist, kommt dann erstmal dran. Und wenn da noch Zeit übrig ist, dann darf das Linux einfach so weiterlaufen wie bisher. Dann gab es da so eine Bewegung, weil dieses RT-Linux war ja auch so ein bisschen proprietary. Es hatte Schwierigkeiten mit den Lizenzierungen und so weiter. Es hat sich quasi ein Patent geben lassen auf diesen Ansatz mit diesem Idle-Thread. Und dann wurde irgendwann mal dieses Projekt ADEOS geboren. Sagt ihr das was? Was im Prinzip auch so ein Multi-Domain-Controller ist, der dieses Patent von RT-Linux da halt umgeht, sodass eben wenn das Linux ADEOS-Aware gepatcht ist, dass es sich dann sozusagen richtig dort registriert und sagt Hallo, ich bin ein ADEOS-Aware Linux und du darfst jetzt die Interrupts für mich verwalten. Das heißt, das Linux weiß sozusagen, dass da etwas über ihm ist, was die Interrupts für ihn erstmal annimmt, damit eben Real-Time-Prozesse parallel in einem Nano-Körnel da noch weiter abgefeiert werden können, bis das Linux dann halt auch wirklich dran kommt. Das ist ja so ein ähnlicher Ansatz.
+
+01:42:53.455 --> 01:43:36.735
+<v SPEAKER_1>Also dieser Ansatz der Paravirtualisierung, den hat Xen ja nicht erfunden, aber halt, sagen wir mal, salonfähig gemacht. Also es gab früher diese Micro-Körnel-Geschichten, die haben das im Grunde auch schon gemacht. Da gab es ja ein Micro-Körnel, das ist ja auch die Idee, einen kleinen schlanken Körnel, der nur das Notwendigste macht und den Rest dann an irgendwelche Betriebssysteme auslagert. Zum Beispiel gab es dann üblicherweise BSD-Implementierungen on top auf diesen Micro-Körnel zum Beispiel. Das ist im Grunde auch schon Paravirtualisierung, weil diese Betriebssysteme ja auch entsprechend angepasst sind, mit dem Micro-Körnel zusammenzuarbeiten. Und die sind üblicherweise auch in einem geringeren Privilegmodus ausgeführt.
+
+01:43:37.275 --> 01:43:42.035
+<v SPEAKER_2>So war es zumindest am Anfang. Das hat nun aber diese Kontext-Switcher, die das dann halt sehr langsam gemacht haben.
+
+01:43:42.055 --> 01:43:45.155
+<v SPEAKER_1>Genau, dann wurde das entsprechend so ein bisschen aufgeweicht.
+
+01:43:45.875 --> 01:43:49.695
+<v SPEAKER_2>Jetzt ist das eins. Der Mac arbeitet ja im Prinzip im Objekt der Trennung.
+
+01:43:49.715 --> 01:43:57.135
+<v SPEAKER_1>Genau, der Mac hat ja auch unten drunter noch ein bisschen Mach und FreeBSD, aber die zusammen zum Beispiel leben in einem Adressraum, glaube ich.
+
+01:43:57.155 --> 01:44:03.835
+<v SPEAKER_2>Es ist halt Mach und es ist auf Mach angepasste BSD. Also im Prinzip ist das genau das, nur dass sie halt so reingeniert wurden, dass sie eben in demselben...
+
+01:44:03.935 --> 01:44:11.875
+<v SPEAKER_1>Oder 11.4 zum Beispiel ist auch so ein Projekt, was ja auch aus Dresden kommt. Zum Beispiel, wir haben auch einige 11.4 Entwickler bei uns.
+
+01:44:11.895 --> 01:44:14.955
+<v SPEAKER_2>Dann mussten wir mal einen rumschicken, weil über 11.4 wollte ich nämlich auch nochmal...
+
+01:44:14.975 --> 01:44:16.525
+<v SPEAKER_1>Kein Problem...
+
+01:44:16.525 --> 01:44:31.035
+<v SPEAKER_2>.einen Express machen. Jetzt gibt es da noch eine ganze Reihe weiterer Projekte, die jetzt auch in diesem Bereich mit rumspinnen. Was ist zum Beispiel User Mode Linux?
+
+01:44:31.055 --> 01:45:09.755
+<v SPEAKER_1>User Mode Linux ist im Grunde auch ein paravirtualisierter Kern. Insofern ist es ein gepatchter Linux-Kern, der direkt dafür ausgelegt ist, als Anwendungsprogramm unter einem Linux zu laufen. Er macht im Grunde das Gleiche, mehr oder weniger das Gleiche wie Xen, mit dem Unterschied, dass es keinen direkten Hypervisor gibt, sondern dass der gepatchte Kern praktisch schon dafür sorgt, dass der Hypervisor nicht den Kern verwaltet, sondern der Kern verwaltet mehr oder weniger sich selbst. Der Format ändert seine Anforderungen, die er an die Hardware hatte, so ab, dass es als normale Systemaufrufe an den übergeordneten Linux-Kernen geht.
+
+01:45:09.775 --> 01:45:14.355
+<v SPEAKER_2>Das heißt, anstatt eines Hypervisors hat man einfach ein Überlinux in seiner vollen Ausprägung.
+
+01:45:14.375 --> 01:45:15.895
+<v SPEAKER_1>Ja, das ist ein normales Linux.
+
+01:45:15.915 --> 01:45:16.255
+<v SPEAKER_2>Genau.
+
+01:45:16.275 --> 01:45:17.435
+<v SPEAKER_1>Also die gesamtlichen Anpassungen.
+
+01:45:17.455 --> 01:45:20.215
+<v SPEAKER_2>Also über im Sinne davon, dass es die anderen Linuxs befährt.
+
+01:45:20.395 --> 01:45:21.695
+<v SPEAKER_1>Genau, das ist aber nicht angepasst.
+
+01:45:24.095 --> 01:45:30.335
+<v SPEAKER_2>Aber nur die, die als Usermut laufen, sind angepasst, wissen, dass sie auf einem anderen Linux laufen und reichen dann die Dienste nach oben weiter.
+
+01:45:30.355 --> 01:46:29.375
+<v SPEAKER_1>Genau. Das Problem bei dem ist, wenn es als reiner User-Prozess läuft, muss es auch die Speicher-Virtualisierung, also das Paging für die Gastprozesse, erledigen. Was es als reiner User-Prozess wirklich emulieren muss. Was es eigentlich nicht kann, wenn es nur im User-Level läuft. Um ein Performanz zu sein, muss man das Paging irgendwie auch in Hardware machen. Weil sonst, wie wir ja schon anfangs erwähnt hatten, ist so ein Paging eine sehr aufwendige Sache. Und wenn die Hardware da nicht unterstützend eingreift, ist die Performance ziemlich schlecht. Deswegen gibt es für das User-Mode Linux auch Patches, die doch wieder das überordnete Linux-Unternehmen, das läuft, patchen und dem praktisch eine Schnittstelle bereitstellen, um doch die Page-Stables benutzen zu können. Das ist so eine Optimierung praktisch. SKSS Patches heißen die, glaube ich.
+
+01:46:29.395 --> 01:46:35.455
+<v SPEAKER_2>Das heißt, dieses User-Mode Linux ist eigentlich derselbe Ansatz mit etwas anderen Mitteln?
+
+01:46:35.475 --> 01:46:51.935
+<v SPEAKER_1>Richtig. Also die Beschränkung bei User-Mode Linux ist, dass es nur Linux auf Linux macht. So war auch ursprünglich der Projektname Linux on Linux. Da die Abkürzung dafür aber Loll ist, wurde das von den Machern als nicht so passend erfunden.
+
+01:46:51.955 --> 01:46:55.815
+<v SPEAKER_2>Hätte zur Popularität durchaus beitragen können.
+
+01:46:55.855 --> 01:46:59.295
+<v SPEAKER_1>Richtig, aber vielleicht nicht in dieser Ernsthaftigkeit des Plats.
+
+01:46:59.315 --> 01:47:07.675
+<v SPEAKER_2>Ja, wäre vielleicht nicht business-kompatibel gewesen, aber es ist jetzt aber auch nicht so die populäre Lösung. Also ich habe den Eindruck, dass Xen im Business-Bereich da eigentlich sehr größer anstandt.
+
+01:47:07.695 --> 01:47:24.415
+<v SPEAKER_1>Xen hat den Vorteil, dass es halt von professionellen Firmen, also von richtig großen Firmen, gebacked wird, dass es übergreifend ist, dass es nicht nur auf x86 läuft zum Beispiel und nicht nur auf Linux und nicht nur Linux-Betriebssystemen als Gast laufen lassen kann.
+
+01:47:24.435 --> 01:47:32.355
+<v SPEAKER_2>Das heißt, man kann unter Xen genauso auch ein angepasstes BSD in allen Ausdrehungen fahren und so weiter?
+
+01:47:35.555 --> 01:47:40.675
+<v SPEAKER_1>Ich kann unter einem BSD Solaris, was auch immer, als Dom-U.
+
+01:47:40.695 --> 01:47:48.055
+<v SPEAKER_2>Zumindest, es ist zwar nicht festgelegt auf Linux, aber es ist in gewisser Hinsicht optimiert für alles, was im Source kommt.
+
+01:47:48.675 --> 01:48:09.855
+<v SPEAKER_1>Richtig, genau. Das ist das, worauf sich Xen im Moment beschränkt. Es gibt von einigen, zum Beispiel Real-Time-Betriebssystemen, glaube ich, gibt es kommersielle Anpassungen, die nicht Open Source sind, wo diese Portierung auf Xen Close Source ist. Aber die haben dann auch einen relativen Nischenmarkt. Das ist nicht, was man üblicherweise meint mit Xen.
+
+01:48:09.875 --> 01:48:20.135
+<v SPEAKER_2>Ein weiterer Begriff, der immer wieder in diesem Kontext herumgeistert ist, ist das QEMU-Projekt. Welche Rolle spielt das?
+
+01:48:20.155 --> 01:51:12.835
+<v SPEAKER_1>Das QEMU-Projekt ist eine sehr wichtige Sache. Was die Virtualisierung an das ermöglicht, ist praktisch so etwas wie VMware vor VMware, fährt aber einen anderen Ansatz. Die reine QEMU-Lehre ist, dass QEMU portabel ist, dass es portabel in dem Fall auf mehreren Systemen läuft, sowohl auf mehreren CPUs als auch unter mehreren Betriebssystemen, und dass es verschiedene Gäste ausführen kann, also verschiedene Architekturen und verschiedene Betriebssysteme. QEMU emuliert immer ein komplettes System, so ähnlich wie VMware praktisch, wo man keine Anpassungen vornehmen muss. Der Code wird aber übersetzt, der wird also nicht gescannt und nativ ausgeführt, wie bei VMware, sondern er wird tatsächlich umgesetzt, und zwar auf eine portable Art und Weise. Die Idee ist, jeder Gastcode, der reinkommt, wird angeguckt. QEMU ist ein Emulator im klassischen Sinne. Der Gastcode wird angeguckt. Der Trick ist, bei üblichen Emulatoren sind die auf eine Zielarchitektur optimiert. Das heißt, die wissen, wenn dieser Gastbefehl kommt, dann macht daraus folgenden Hostbefehl. Das kann man über Tabellen machen, dass es flotter geht. QEMU fährt aber einen generischen Ansatz. Die wollen sowohl mehrere Gast-CPUs als auch mehrere Ziel-CPUs unterstützen. Da funktioniert das also nicht, sonst müsste man ja die komplette Matrix implementieren. Die benutzen praktisch C als Zwischensprache. Der Gast-Code von verschiedenen CPUs wird in verschiedene Micro-Ops zerlegt. Also in grundlegende Befehle, so etwas wie ein Risk-Subset, wo sich alle Architekturen relativ gut drauf abbilden lassen. Für jeden dieser Micro-Ops gibt es dann eine C-Funktion, die diesen Micro-Op ausführt. Diese C-Funktion ist relativ kurz und wird natürlich vom Compiler optimiert für die Zielarchitektur. Dieser C-Code garantiert also die Portabilität. Der Trick ist jetzt, dass QEMU jetzt aber nicht hin- und herspringt, sondern diese Code-Schnipsel, die generiert werden, durch linker Tricks zusammenklebt. Also wenn jetzt ein komplexer Additionsbefehl auf x86, der eigentlich ein Ladebefehl, Addition und Schreibe zurück, Befehl praktisch ist, dann werden diese drei Befehle, die werden beim Erzeugen von QEMU, beim Kompilieren von QEMU, einmal erzeugt. Und da merkt sich dann die Adressen und die Länge des erzeugten Codes. Und diese Schnipsel werden dann zusammengeklebt von QEMU zur Laufzeit. Er sieht dann also, okay, jetzt ist folgender Befehl, das zerlege ich in diese drei Micro Ops. Und hier ist der Code für diese drei Micro Ops. Und diesen Code klebe ich jetzt praktisch zusammen. Und führe ihn dann aus.
+
+01:51:12.855 --> 01:51:14.435
+<v SPEAKER_2>Ist das dann so Just-in-Time-Compiler?
+
+01:51:14.455 --> 01:51:17.255
+<v SPEAKER_1>Das ist im Grunde so etwas wie Just-in-Time-Compiling.
+
+01:51:17.275 --> 01:51:25.695
+<v SPEAKER_2>Also er macht das alles zur Laufzeit. Er lädt den zu emulierenden Code, setzt den in seinen Bytecode um als erstes?
+
+01:51:25.715 --> 01:51:32.975
+<v SPEAKER_1>Genau, also er bricht den runter auf diese Micro Ops, um dann die entsprechend optimierten Funktionen zusammenzukleben.
+
+01:51:32.995 --> 01:51:35.615
+<v SPEAKER_2>Also so eine zweistufige Just-in-Time-Geschichte.
+
+01:51:36.495 --> 01:51:47.755
+<v SPEAKER_1>Und das wird natürlich auch gecached, das heißt, dass Schleifen dann tatsächlich auch relativ flott ausgeführt werden, weil die ja schon komplett voll liegen und dann kann man den Sprung wieder setzen durch einen Sprung auf die Schleifenanfang.
+
+01:51:47.815 --> 01:51:56.155
+<v SPEAKER_2>Da ist natürlich jetzt nichts Hypervisor-Aware und von daher auch nicht so optimierbar, eine Geschwindigkeit. Wo wird denn QEMU dann primär für eingesetzt?
+
+01:51:56.175 --> 01:52:05.675
+<v SPEAKER_1>QEMU wird eingesetzt, weil es natürlich portabel ist und weil es verschiedene Ziel-CPUs unterstützt. Also was man mit QEMU sehr gut machen kann, ist, komplett andere Systeme zu emulieren.
+
+01:52:06.275 --> 01:52:08.415
+<v SPEAKER_2>Auf komplett anderen Prozessoren vor allem.
+
+01:52:08.435 --> 01:53:06.215
+<v SPEAKER_1>Man kann also ein Solaris auf Spark ausführen auf einem PC zum Beispiel. Dafür wird es gemacht für Systeme. Was auch im Moment sehr populär ist für diese ganzen Embedded-Geräte, die ja auch nicht mit x86-Prozessoren laufen, sondern mit ARM oder MIPS zum Beispiel, da wird der QEMU auch gerne zur Emulation verwendet. Wenn man jetzt eine Änderung hat, das auf den Router zu brennen, und dann dort zu testen, kann man das einfach emulieren. Da gibt es tatsächlich auch sehr viel Code im QEMU, wenn man sich mal so reinguckt, die genau so eine Embedded-Systeme dafür auch Hardware-Emulationen bereitstellen, zum Beispiel für LCD-Anzeigen, für Netzwerkschnittstellen, die dann emuliert werden, sodass man sich dann seinen Router praktisch mit dem QEMU in Software nachbasteln kann und dann den auf der Maschine testen kann, und zwar mit einem sehr viel kürzeren...
+
+01:53:08.655 --> 01:53:19.455
+<v SPEAKER_2>Ah ja, das ist ja interessant. Das heißt, so eine Art Werkzeugkasten zum Bauen von Emulatoren, von vor allem kleineren Systemen, die auf größeren laufen, weil es einfach convenient ist, aber nicht unbedingt darauf auch beschränkt.
+
+01:53:19.475 --> 01:55:16.355
+<v SPEAKER_1>Man kann mit dem QEMU zum Beispiel auch 64-Bit-X86-Code auf einer 200-Bit-Maschine ausführen. Das war natürlich nicht sehr performant dann, aber es geht grundsätzlich, wenn man zum Beispiel 64-Bit-Betriebssystem mal ausführen möchte oder mal testen möchte auf seiner 230-Bit-Kiste, kann man das damit machen. Was den QEMU in dem ganzen Virtualisierungs- ja, interessant macht in diesem ganzen Umfeld, sind die Hardware-Treiber. Also QEMU emuliert ja einen kompletten PC. Das, was wir jetzt gerade besprochen hatten, ist ja die CPU-Emulation, aber die ganze Hardware drum herum muss ja auch noch emuliert werden. Wie gesagt, die Gastbetriebssysteme wissen ja nichts von Virtualisierung. Die erwarten also Standard-Hardware zum Beispiel. Die erwarten einen 82-54 Timer-Chip oder einen Interrupt-Controller, den Standard. Die erwarten Standard-Grafikkarten, Festplatten-Controller. All das hat der QEMU schon sehr früh implementiert. Und dass diese ganzen Geschichten, die ich anfangs mal erwähnt hatte, mit dem Abfang auf der unteren Ebene der Hardware-Zugriffe und dem raten, was der Gast eigentlich machen wollte. Das hat der QEMU praktisch schon seit 15 Jahren. Und da gibt es sehr viele optimierte, getestete Treiber oder Geräte, Emulatoren sind ja keine Treiber insofern. Emulierte Geräte, die auch sehr gerne von anderen Emulationsprojekten benutzt werden. Das Schicke ist auch noch, dass diese Treiber, diese Geräte, das sind so eine Standardgeräte, die praktisch für jedes Betriebsthema schon Treiber mitbringen. Das ist so ein normaler Intel-Chip-Satz für die Festplatte, also ein EDE-Controller, eine NE2000 Netzwerkkarte oder eine Realtek Netzwerkkarte, also die ganz verbreitet, wo eigentlich jedes schon Treiber mitbringt. Richtig, genau. Und Cirrus Logic-Grafikkarte. Und dadurch läuft praktisch jedes Betriebsthema out of the box, im QEMU, und dass man da zusätzlich Treiber installieren müsste.
+
+01:55:16.375 --> 01:55:21.595
+<v SPEAKER_2>Zumindest wenn es jetzt um PC-Hardware geht. Wenn man jetzt spezielle Embedded-Hardware hat, dann muss man natürlich nochmal...
+
+01:55:21.615 --> 01:56:11.495
+<v SPEAKER_1>Da muss man gucken, aber wahrscheinlich gibt es dafür auch schon emulierte Geräte. Weil, wie gesagt, die Entwicklung ist da sehr dynamisch. Die Meldungen sind immer noch aktiv. Und wird auch gerade von diesen Embedded-Wicklern sehr benutzt. Es gibt Leute, die versuchen zum Beispiel, diese ganze Spark- oder Sun-Rechner komplett zu emulieren. Sodass man sagen möchte, ich möchte jetzt ein spezielles Sun Spark Station 20 oder so emulieren. Und der dann dafür sorgt, dass die Original-Hardware auch dort ist. Und dass man ein normales Solaris für Spark zum Beispiel darauf ausführen kann. Das benutzen tatsächlich viele Leute, die noch alte Spark-Kisten rumstehen haben, da einen kompletten Software-Stack drauf haben und das nicht ändern wollen. Weil das läuft. Aber die Kisten werden einfach alt. Da gibt es keinen Ersatz mehr.
+
+01:56:11.575 --> 01:56:55.175
+<v SPEAKER_2>Dann kauft man sich einfach eine neue Büchse, wo es schneller läuft. Aber das ist einfach eine Emulation. Und die alte Software ist einfach noch da. Wollte ich nämlich auch gerade erwähnen. Das wurde mir auch gerade nochmal erneut bewusst, wie wichtig das eigentlich ist. Das klingt immer so nach Spielerei. So nach dem Motto, jetzt habe ich hier mein C64-Spiel. Oder den Emulator im Emulator im Emulator. Aber es wird natürlich wirklich interessant, wenn es darum geht, alte Software weiter zu betreiben, die einfach gut funktioniert, weil sie halt einfach mal gut programmiert worden ist, aber die Hardware ausstirbt. Oder natürlich auch, um einfach die Möglichkeit zu haben, diese Software mal laufen zu lassen, um einfach an alte Daten auch ranzukommen. Das Problem der Archivierung und solche Sachen.
+
+01:56:55.195 --> 01:57:34.835
+<v SPEAKER_1>Das ist eine ganz wichtige Sache. Und es wird auch tatsächlich von Firmen erstaunlich viel eingesetzt. Also dieses Problem, wie ich habe, alte Software. Das ist ein Riesenproblem für viele Firmen, die teure Software-Programme, natürlich Closed Source, sozusagen damals besorgt hatten, die dann nur auf ein spezielles Betriebssystem oder auf spezielle Hardware zugeschnitten waren. Was man sich so vorstellen kann, Windows 98. Da gab es vielleicht einige Programme, die laufen gar nicht auf Windows NT. Und viele wollen die jetzt benutzen. Das ist so ein Subbuchhaltungsprogramm. Das ist nicht wahnsinnig ressourcenfressend, aber das funktioniert. Das ist auf die Abläufe der Firma angepasst. Und die wollen das nicht ändern.
+
+01:57:34.855 --> 01:57:39.235
+<v SPEAKER_2>Da können sie gar nicht mehr ändern, weil der Proamira schon vom Lastar über erfahren worden ist.
+
+01:57:39.255 --> 01:57:59.895
+<v SPEAKER_1>Zum Beispiel, ja. Jetzt kann man Windows 98, wie vielleicht viele schon mitbekommen haben, gar nicht mehr vernünftig auf modernen Rechnern installieren. Bei mir sagt da immer, ich habe zu wenig Speicher, weil ich mehr als 512 MB drin habe. Und das ist irgendwie so die Grenze. Also das sind so kleine Probleme. Die Treiber gibt es gar nicht mehr für Windows 98.
+
+01:57:59.915 --> 01:58:01.115
+<v SPEAKER_2>Wird halt nicht mehr verbraucht.
+
+01:58:01.435 --> 01:59:02.395
+<v SPEAKER_1>Die Platte findet ja nicht mehr. Es gibt keinen SATA-Support und so weiter. Für so eine Sache, das ist also für Firmen sehr interessant, so was zu machen. Und da kann man mit Virtualisierung wirklich sehr viel erledigen. Was bei uns oder teilweise gibt es auch Sachen, also auch bei uns in der Firma gibt es zum Beispiel Design-Werkzeuge, die auf Red Hat Enterprise Linux 3 optimiert sind. Das sind auch wieder Close Source-Programme, die dafür optimiert sind und die funktionieren nicht auf moderneren Versionen von Red Hat Linux. Also was jetzt nicht nur Windows betrifft, sondern tatsächlich auch Linux-Programme. Und da haben wir auch zum Beispiel jetzt eine Virtualisierung mit Xen eingerichtet, um auf diese alte Software noch zugreifen zu. Genau, auch dieser Fall, wie du sagtest, wird nicht ständig in Betrieb benutzt, aber unter Umständen wollen Entwickler noch mal auf alte Designs zugreifen und wollen mit der alten Software noch mal die alten Projekte öffnen, was mit der neuen Software nicht mehr geht. Und da kann man dann mit Virtualisierung praktisch eine Brücke in die Vergangenheit schlagen.
+
+01:59:02.415 --> 01:59:12.915
+<v SPEAKER_2>Oder, was mir auch noch einfällt, eine gute Anwendung ist halt auch so, wenn man entwickelt, einfach für viele Plattformen. Und man muss die Software einfach auf vielen Plattformen testen, aber man will sich nicht mit dem Computer hinstellen.
+
+01:59:12.935 --> 02:00:04.415
+<v SPEAKER_1>Das ist ein weiterer Fall, also Web-Entwickler springen da natürlich ins Auge. Man möchte z.B. sein Programm auf Internet Explorer 6, 7 und vielleicht noch 8 laufen. Die kann man soweit ich weiß nicht parallel, z.B. installieren auf dem Windows. Da hat man also mehrere Windows. Dann hat man gleichzeitig noch ein Mac OS, der gibt es noch bei Haken. Aber man kann halt locker Conqueror unter Linux, Firefox unter Linux, Firefox unter Windows, alles in virtuellen Maschinen praktisch laufen lassen haben, die man entweder dann hochfährt zur Zeit oder die man einfach laufen lässt und darauf hofft, dass im Idle-Modus nicht zu viel Prozessor-Power verbraten. Dann kann man die praktisch nebenher laufen lassen. Wenn man jetzt mal testen will, dann aktiviert man die Maschinen. Und hat dann sozusagen den Original-Software-Stack, den auch der Kunde hat oder die Nutzer.
+
+02:00:04.435 --> 02:00:10.835
+<v SPEAKER_2>Macht es das auch dann einfacher, dass man so fertige Installationen, Read-Only, als Disk-Image irgendwo ablegt und davon startet?
+
+02:00:10.855 --> 02:00:59.895
+<v SPEAKER_1>Das ist noch ein weiterer Fall, der auch sehr häufig jetzt benutzt wird und der, denke ich, in Zukunft noch weiter zunehmen wird, dass in Zukunft komplette Software-Stacks vom Betriebssystem bis zur Anwendung komplett fertig installiert, als Disk-Images ausgeliefert werden. Das gibt es heute auch schon. Das so bei, glaube ich, Gnu-Step oder so, was so eine relativ komplexe Geschichte ist, wo man unter Umständen Bibliotheken braucht, die so große Abhängigkeiten haben, die nicht so verbreitet sind. Da ist es einfacher, man stellt eine Virtual-Image zur Verfügung, wo manchmal ein Linux-Kern drauf ist. Die ganzen Bibliotheken, alles entsprechend angepasst ist. Und man ist sicher, dass das von der Software-Seite her läuft. Und das machen auch viele, das wird auch im professionellen Umfeld benutzt, von Firmen, die das, zum Teil Demozwecken zur Verfügung stellen oder so was.
+
+02:00:59.915 --> 02:01:48.255
+<v SPEAKER_2>Ja, Nutzen und mögliche Anwendungen, da gibt es viele. Das hatte ich jetzt hier eigentlich so ein bisschen für den Ausklang des Podcasts mir notiert. Allerdings gibt es schon noch einen Bereich, in dem wir jetzt nochmal hinein stoßen müssen. Jetzt ist ja, wie wir schon jetzt an vielen Sachen, die wir hier diskutiert haben, bemerkt haben, dass die Digitalisierung einfach eine Sache ist, die für viele Menschen zu tun ist. Ich glaube, dass es für viele wirklich sehr, sehr interessant ist. Damit natürlich auch für die Firmen, auch die Prozessorhersteller. Und vor allem, es gibt eine ganze Menge zu optimieren, wo man doch eigentlich ganz gerne die Hardware, wo man es gerne sehen würde, wenn einem die Hardware da einem mehr abnimmt. Jetzt ist es schon, das Thema ist erkannt worden. Ich weiß nicht seit wann. Seit, ich glaube vor fünf Jahren. Vor fünf Jahren, was ist da passiert?
+
+02:01:49.835 --> 02:01:59.795
+<v SPEAKER_1>Also die Idee war, dass man diese Virtualisierungslücke halt in eine Hardware schließen wollte. Dass man sich gesagt hat, okay, Virtualisierung ist wichtig und funktioniert eigentlich auch erstaunlich gut.
+
+02:01:59.815 --> 02:02:02.375
+<v SPEAKER_2>Wer hatte die Idee?
+
+02:02:02.395 --> 02:02:04.995
+<v SPEAKER_1>Dieser andere Chiphersteller.
+
+02:02:05.015 --> 02:02:05.755
+<v SPEAKER_2>Bei Intel ging es los.
+
+02:02:05.775 --> 02:02:51.855
+<v SPEAKER_1>Ja, die Idee war sicherlich schon überall, aber Intel war der erste auf dem Markt damit. Sie haben gesagt, diese ganze Software-Geschichte, die vor VMware fährt, wie du schon richtig erkannt hast, ist wahnsinnig komplex. Und wenn man es richtig performant hinkriegen würde, würde es noch viel komplexer sein. Wenn man mal ins Detail schaut, was die noch an Optimierung haben, das ist schon beeindruckend. Wenn man so viel komplexen Code hat, hat das natürlich auch Probleme mit der Sicherheit. Man weiß nicht, ist der Code korrekt. Bei VMware kann man zum Beispiel nicht reingucken. Für Firmen, die im Bankensektor arbeiten, ist es natürlich schon kritisch, so ein riesiges Software einfach zu vertrauen und zu sagen, die Software macht das, was ich will. Und da bin ich sicher, dass da keine Hintertür drin ist.
+
+02:02:51.875 --> 02:02:54.495
+<v SPEAKER_2>Weil das Ding ja im Prinzip zwischen Code und Prozessor geht.
+
+02:02:54.515 --> 02:03:03.775
+<v SPEAKER_1>Richtig, also das ist auf der untersten Ebene. Er kann praktisch sämtliche Transaktionen, die in der Maschine passieren, abfangen. Er hat die vollkommene Kontrolle.
+
+02:03:04.075 --> 02:03:04.415
+<v SPEAKER_2>Stimmt.
+
+02:03:06.195 --> 02:03:53.995
+<v SPEAKER_1>Und außerdem wollte man halt, dass sicherlich die Geschwindigkeit war auch noch ein Aspekt, obwohl es nicht unbedingt der Hauptaspekt war oder der einzige Hauptaspekt, dass man die Geschwindigkeit der Virtualisierung verbessern wollte. Und dass man sich überlegt, okay, dann schaffen wir halt irgendwas, wo wir diese Virtualisierungslücke in Hardware überbrücken. Das wird dann allgemein als Virtualisierungserweiterung verstanden. Intel kam als Erster auf den Markt damit. Die nannten das VTX für Virtualization Technology. Ich glaube, dieses X kam ja später dazu, um die verschiedenen Ausbaustufen zu kennzeichnen. AMD kam, glaube ich, ein Jahr später raus. Das war 2006 oder 2005.
+
+02:03:54.015 --> 02:03:56.875
+<v SPEAKER_2>Also im Prinzip haben beide da auch schon parallel dran gearbeitet.
+
+02:03:56.895 --> 02:03:57.835
+<v SPEAKER_1>Jaja, auf jeden Fall.
+
+02:03:57.855 --> 02:03:59.315
+<v SPEAKER_2>Und zwölf Monaten.
+
+02:03:59.975 --> 02:04:24.415
+<v SPEAKER_1>Jaja, also das dauert natürlich auch entsprechend von der Idee bis zum Design und zur Planung und Ausführung. Und selbst wenn man dann tatsächlich auch einen Hardware-Entwurf hat, dauert das natürlich noch eine ganze Weile, ehe der Prozessor dann gebacken wird, ehe der getestet wird. Dann gibt es noch mal eine Runde in der Fabrik für die Fehler fixes und so weiter. Das darf man natürlich nicht unterschätzen. Also die Idee ist sicherlich schon etwas länger in den Köpfen gewesen.
+
+02:04:26.675 --> 02:04:28.295
+<v SPEAKER_2>Was macht jetzt diese Erweiterung?
+
+02:04:28.315 --> 02:05:27.415
+<v SPEAKER_1>Diese Erweiterung, jetzt könnte man sich überlegen, okay, dann könnte ich jetzt das, was wir vorhin erzählt haben, das Problem, was x86 hat, einfach fixen, indem man sagt, okay, wenn PopF im Ring 3 ausgeführt wird, dann kann man ihn einfach abfangen. Man hatte aber zum Glück, ist diese Trap- und Emulate-Geschichte, nicht der weise letzter Schluss, es ist nur so, wie es einfach funktioniert auf normalen Prozessoren. Und man möchte auch viele Befehle vielleicht abfangen, die gar nicht unbedingt super kritisch sind, also die verbotene Sachen machen, sondern auch Sachen, die erlaubte Sachen machen, wo man besser optimieren könnte. Also im Prinzip, neben früher oder das, was bei Paravirtualisierung ja schon passiert, dass man nicht nur die kritischen Befehle, sondern auch andere Sachen halt, die in Virtualisierung besser funktionieren, wenn sie auf einer höheren Ebene behandelt werden. Und deswegen hat man sich also entschlossen, eine umfassendere Lösung zu basteln. Also ich kann jetzt einfach mal nur erzählen von der AMD-Erweiterung, die ich jetzt also ein bisschen genauer kenne.
+
+02:05:27.435 --> 02:05:29.675
+<v SPEAKER_2>Ja, im Prinzip machen die ja wohl das Gleiche.
+
+02:05:29.695 --> 02:07:01.995
+<v SPEAKER_1>Im Prinzip machen die das Gleiche, sind aber nicht kompatibel. Man muss also schon ein bisschen Gehirn-Schmalz reinstecken, um das von dem einen auf das andere zu portieren, aber der Ansatz ist im Grunde gleich. Die AMD-Erweiterung fügt dem Prozessor praktisch eine weitere Schicht hinzu. Es gibt im Moment so diesen Real Mode, den Protekted Mode, den Long Mode. Und jetzt gibt es noch praktisch einen Gast- und einen Host Mode, der hinzugefügt wird. Interessanterweise ist das bei AMD eher ein zusätzlicher Zustand. Also man kann alle Modi entweder im Host- oder im Gast Mode. Das ist schonmal der erste Unterschied zu Intel, wo es keinen emulierten Real Mode gibt. Die Idee ist, dass wenn ein Prozessor normal startet, ist er im Host Mode, das ist alles erlaubt. Der Prozessor kann sämtliche Befehle ausführen, er kann auf sämtliche Hardware zugreifen, gar kein Thema. Wenn er jetzt ein Gast starten will, dann initialisiert er eine Speicherstruktur, einen sogenannten Virtual Machine Control Block, wie im CB, abgekürzt. Das ist praktisch eine große Bitmaske, in der er einzelne verbotene Befehle an- oder ausknipsen kann für den Gast. Also er sagt, wenn der Gast POPF ausführen will, möchte ich darüber informiert werden.
+
+02:07:02.015 --> 02:07:05.135
+<v SPEAKER_2>Also man kann es im Prinzip für jeden beliebigen Instruktion...
+
+02:07:05.155 --> 02:07:09.375
+<v SPEAKER_1>Nicht für jede beliebige Instruktion, sondern für Ausgewählte. Für eine Reihe von Instruktionen.
+
+02:07:09.395 --> 02:07:11.595
+<v SPEAKER_2>Dann kann man sich noch aussuchen, welche.
+
+02:07:11.615 --> 02:07:20.695
+<v SPEAKER_1>Genau, aber die über die kritischen Instruktionen hinausgeht. Zum Beispiel CPU-ID ist ein Beispiel, was ja an sich nicht kritisch ist, was man aber vielleicht doch trotzdem gerne abfangen möchte.
+
+02:07:20.715 --> 02:07:21.395
+<v SPEAKER_2>Was macht das?
+
+02:07:21.415 --> 02:07:35.475
+<v SPEAKER_1>CPU-ID ist ein Befehl, der die Features des Prozessors bekannt gibt, dem Anwendungsprogramm. Also es ist ein Maschinenbefehl, der praktisch sagt, ich kann zum Beispiel 64-Bit, ich kann SSE, ich kann die und diese Befehlssatzerweiterung.
+
+02:07:35.495 --> 02:07:38.975
+<v SPEAKER_2>Dann kann man sagen, das kriegen wir hier nicht emuliert.
+
+02:07:38.995 --> 02:08:50.615
+<v SPEAKER_1>Zum Beispiel. Also was der naheliegendste Anwendungsfall ist, dass man die Virtualisierungserweiterung selbst, die sich auch darüber bekanntgibt, für den Gast ausschaltet, weil man das nicht emulieren möchte. Man möchte keine, also möchte man schon, ist aber relativ komplex, macht man später, möchte man abschalten. Also es gibt eine Reihe von Befehlen, es gibt Zugriffe auf privilegierte Register, auf Register, die mit dem Paging zu tun haben, Debug-Register. Es gibt Interrupts, die man virtualisieren möchte oder nicht. Das kann man entsprechend sagen. Oder Exceptions, wenn zum Beispiel ein Gast eine Division durch Null macht, dann wirft das eine Exception, weil das ein nicht erlaubter Zustand ist. Da hat ja Hypervisor aber nichts mit zu tun. Das ist ja nur eine Gastgeschichte, da muss der Gastkörner sich mal darum kümmern, was da passiert. Das möchte man gar nicht abfangen zum Beispiel. Diese Exception kann also direkt im Gast behandelt werden. Andererseits einen Page Vault, also eine unerlaubte Situation beim Speichermanagement, möchte man durchaus abfangen, weil das ja virtualisierungsrelevant ist. So kann man also virtuelle Exception, virtuelle Interrupts, das kann man alles an und aus knipsen, wie man möchte.
+
+02:09:00.535 --> 02:09:04.235
+<v SPEAKER_2>Sehr viel einfacher, alles abzufangen.
+
+02:09:04.255 --> 02:09:08.235
+<v SPEAKER_1>Genau, weil es muss gar kein Code gescannt werden, weil das macht nämlich jetzt der Prozessor.
+
+02:09:08.315 --> 02:09:12.375
+<v SPEAKER_2>Ist das jetzt vor allem eine Hilfe für VMware oder hilft das auch Xen?
+
+02:09:12.395 --> 02:10:24.655
+<v SPEAKER_1>VMware hilft das gar nicht. Da gibt es ein interessantes Paper, wo VMware so ein bisschen dagegen wettert, gegen die Hardware-Erweiterung. Weil, also das Problem ist, die haben ihren Ansatz, die machen das in Software, die machen das seit, weiß ich nicht, neun Jahren. Das ist unendlich optimiert. Also, es gibt sogar das Gerücht, dass die spezielle Windows-Version erkennen, anhand von Signaturen im Speicher. Die sehen auch, ja, das ist Windows XP, Bild 47.11. Und dann weiß ich ja schon, wo ich patchen muss. Das heißt, die müssen dieses langwiegiges Scannen des Codes ersetzen, kritische Befehle, was ja so ein iterativer Prozess ist, der eine Weile dauert, eher so eingespielt ist und der der Code übersetzt ist, müssen die gar nicht abwarten, sondern die wissen genau, an Stelle 08.15 muss ich da eine 17 rein schreiben, statt 04. Und so weiter. Also die haben dann speziell vorbereitete Patch-Tables praktisch. Richtig, ja. Deswegen muss man da unter Umständen oder generell, also nicht nur auf so einer Hardware-Ebene, aber die emulieren bestimmte Sachen anders, zum Beispiel in VMware. Das muss man bei der VMware-Installation auch immer angeben, was man für ein Betriebssystem hat. Man kann zwar so generic oder so angeben, aber üblicherweise steht dann wirklich da Windows 2000, Windows XP, was auch immer.
+
+02:10:26.635 --> 02:10:29.615
+<v SPEAKER_2>Aber sie waren nicht so glücklich.
+
+02:10:29.635 --> 02:10:52.275
+<v SPEAKER_1>Die profitieren davon nicht, weil die ihre Architektur nah an ganz anderes halten. Also die haben sich diesen Ansatz des Scannings verschoben und diese Optimierung auch. Die benutzen ja das Scanning nicht nur, um die Befehle abzufangen, sondern die optimieren ja gleich, die verändern die Befehle. Und das funktioniert mit dieser Hardware-Erweiterung ja nicht, weil die ja nur die Befehle abfangen. Aber die können zum Beispiel keinen Code im Gast direkt verändern.
+
+02:10:52.635 --> 02:10:56.775
+<v SPEAKER_2>Aber mussten sie nicht den nur deshalb verändern, damit sie sie abfangen können?
+
+02:10:56.795 --> 02:11:16.875
+<v SPEAKER_1>Richtig, ja. Aber die haben nicht nur abgefangen, sondern auch optimiert. Und wenn man jetzt diese Hardware-Erweiterung erlaubt, nur das abfangen. Das heißt, man kann nicht direkt den neuen Code da reinschreiben, den Gast, das dann nativ ausgeführt wird, sondern er verursacht jedes Mal einen Sprung in den Hypervisor.
+
+02:11:17.635 --> 02:11:19.895
+<v SPEAKER_2>Dadurch wird es sogar langsamer, als wenn man jetzt...
+
+02:11:21.075 --> 02:11:34.555
+<v SPEAKER_1>Richtig, wenn man jetzt VMware praktisch diese Hardware hat, das haben die glaube ich auch mal gemacht, testweise einfach mal, dass das aktiviert. Und das war wesentlich langsamer, weil die ihre ganze Performance aus diesem Ansatz ziehen. Also das passt einfach in die Architektur.
+
+02:11:34.575 --> 02:11:43.415
+<v SPEAKER_2>Okay, da die den Aufwand schon getrieben haben, war es für die, die den Aufwand nicht treiben, ist die Hardware-Erweiterung hilfreich? Für Xen zum Beispiel?
+
+02:11:43.435 --> 02:11:58.495
+<v SPEAKER_1>Für Xen hat das dann auch übernommen und hat zusätzlich zu diesen paravirtualisierten Gästen, die wir ja schon besprochen hatten, zusätzlich eine Unterstützung für die Hardware-Erweitungen zugefügt, was Xen auch erlaubt, unmodifizierte Betriebssysteme auszuführen.
+
+02:11:59.515 --> 02:12:02.175
+<v SPEAKER_2>Das heißt, dann muss wirklich ein Linux überhaupt nicht mehr angepasst werden?
+
+02:12:02.195 --> 02:12:03.775
+<v SPEAKER_1>Richtig, da funktioniert auch WinLust unter.
+
+02:12:03.795 --> 02:12:08.995
+<v SPEAKER_2>Aber will man nicht dann trotzdem immer noch so diese Delegation mit den Treibern irgendwie in der Domain-Ul machen?
+
+02:12:09.015 --> 02:12:24.795
+<v SPEAKER_1>Also ich denke, das ist das, wohin die Reise hingeht. Die Hardware-Virtualisierung wird benutzt werden, um den Code abzufangen, und Treiber werden paravirtualisiert. Also sozusagen das Beste, the best of two worlds, wird praktisch genutzt werden.
+
+02:12:24.815 --> 02:12:31.135
+<v SPEAKER_2>Okay, aber es ist jetzt noch kein Match gegen die wirklich voll angepasste paravirtualisierte Linux-Variante.
+
+02:12:31.155 --> 02:12:39.935
+<v SPEAKER_1>Naja, es gibt einige Sachen, die halt in der Hardware-Virtualisierung schneller laufen.
+
+02:12:41.635 --> 02:12:46.495
+<v SPEAKER_2>Auch schneller, als wenn man das direkt in das Haus gut einbaut?
+
+02:12:46.515 --> 02:13:35.315
+<v SPEAKER_1>Teilweise, wenn zum Beispiel Exceptions auftreten, oder die Speicherverwaltung zum Beispiel, das muss ja dann auf jeden Fall emuliert werden von paravirtualisierten Gästen. Und wenn das aber unkritisch ist, dann kann das auch komplett im Gast ablaufen, wenn man sich sicher ist, dass es unkritisch ist. Zum Beispiel diese Division durch Null, die verursacht auf jeden Fall, das ist ja eine Exception, die auf den Ring Null verzweigt. Das heißt, auch wenn das jetzt gar kein Problem ist, verursacht diese Exception im paravirtualisierten Gast ein Exit. Also er geht raus und den Hypervisor behandelt oder sieht und steht, das ist ja, das interessiert mich ja gar nicht, dann geht er gleich wieder zurück. Und das kostet halt jedes Mal Zeit. Also so ein Kontextwechsel ist relativ teuer, verglichen mit dem Originalbefehl, der vielleicht nur...
+
+02:13:35.335 --> 02:13:38.495
+<v SPEAKER_2>Wobei jetzt typisch bei Zero ja jetzt nicht am laufenden Meter auftritt.
+
+02:13:38.515 --> 02:14:09.855
+<v SPEAKER_1>Nee, aber das ist nur so ein Beispiel, es gibt einzelne... Also Xen hat noch so ein paar Designprobleme, wo sie jetzt so ein bisschen zu tun bekommen, weil man halt doch mehr... Die Idee war ja, dass Xen ein schlanker Hypervisor ist, der die meisten Sachen in der Domain-0 erledigt und nur die wichtigsten Sachen in der eigentlichen Hypervisor, der den Xen-Code darstellt. Und man stellt fest, dass immer mehr Features in den Xen-Hypervisor doch wandern müssen, neu implementiert werden müssen. So auf unterer Hardware-Ebene.
+
+02:14:09.875 --> 02:14:16.135
+<v SPEAKER_2>Wie groß ist denn dieses Xen eigentlich? Wie viel Platz nimmt denn das in Anspruch? Ist das zu viel Code oder ist das eigentlich ganz klein?
+
+02:14:16.155 --> 02:15:24.175
+<v SPEAKER_1>Das ist eigentlich relativ überschaubar. Also es besteht praktisch aus drei Teilen, der eigentlich jetzt ein Hypervisor, der wirklich relativ flott ist. Also der übersetzt in ein, zwei Minuten oder so. Das ist sehr viel schneller. Dann gibt es die Linux-Patches, um den Linux-Tree anzupassen. Das ist die Domain-0. Und dann gibt es die Tools. Das ist auch eine Design-Idee von Xen, dass man die Verwaltung auch in der Domain-0 erledigt. Das heißt, die Verwaltung der ganzen Staaten von Gästen, Beschränken von Ressourcen, Anhalten, Migrieren von Gästen, das muss nicht im Hypervisor implementiert werden, sondern da gibt es Schnittstellen. Und die Tools laufen in der normalen Umgebung. Interessanterweise, die Tools, größte der Tools, ist in Python geschrieben. Also man nimmt einfach eine Scriptsprache, kann da ganz schick, so wie man das gerne möchte, eine Toolsdesign, kann da sämtliche Features nutzen, die Linux bietet, also Fernwertbarkeit durch SSH-Login oder sowas oder alles, was an Netzwerkverkehr geht. Da braucht man jetzt nicht einen TCP-IP-Stack implementieren, sonst hat der ja Linux schon. Und noch wesentlich mehr, die ganze Speicherverwaltung. Kann da einfach Bibliotheken drauf basteln und so weiter.
+
+02:15:24.195 --> 02:15:37.255
+<v SPEAKER_2>Das heißt, selbst wenn man, das ist aber dann Software, die auch für Linux wiederum gemacht ist, das heißt eigentlich jedes Xen-System, auch wenn es ein FreeBSD oder ein OpenBSD virtualisiert, hat eigentlich in der Domain-0 ein Linux laufen?
+
+02:15:37.275 --> 02:15:50.115
+<v SPEAKER_1>Nee, nicht unbedingt. Also das ist ein extra Schritt, um unpräviligierte Gäste unter Xen laufen zu lassen und die Domain-0 unter Xen laufen zu lassen. Aber das Domain-0 wird auch von Solaris, FreeBSD, NetBSD auch unterstützt.
+
+02:15:50.135 --> 02:15:53.395
+<v SPEAKER_2>Okay, also man könnte auch eine reine FreeBSD-Xen-Implementierung machen.
+
+02:15:53.415 --> 02:15:54.355
+<v SPEAKER_1>Richtig, es gibt viele, die das machen.
+
+02:15:54.375 --> 02:16:25.375
+<v SPEAKER_2>Ohne Einschränkungen jetzt in der Benutzbarkeit. Sind denn diese Hardware-Erweiterungen, dieses VTX und wie heißt das bei AMD? AMD-V. Ist das jetzt, also wenden die sich jetzt wirklich ausschließlich dieser Virtualisierung zu oder ist jetzt da, wie in dem Zuge der 64-Bit-Geschichte, auch eine gewisse Modernisierung, bestimmter Task-Switch-Sachen mit dabei?
+
+02:16:25.715 --> 02:16:31.855
+<v SPEAKER_1>Das ist also eine Erweiterung, die speziell auf diesen Fall Virtualisierung maßgeschneidert wurde.
+
+02:16:31.875 --> 02:16:35.875
+<v SPEAKER_2>Also jetzt kein komplettes Revamping der Art und Weise wie dieses?
+
+02:16:36.095 --> 02:17:08.915
+<v SPEAKER_1>Also es gibt durchaus, vielleicht kann man das in bestimmten, also im Grunde ist im großen Virtualisierungskontext, man kann Sachen machen, die auf den ersten Blick vielleicht nicht nach Virtualisierung aussehen. Zum Beispiel, wenn man jetzt nur ein Betriebssystem virtualisiert, dann würde man jetzt nicht von Virtualisierung vielleicht sprechen, weil man ja nur eins hat, aber man kann das zum Beispiel monitorn. Man kann zum Beispiel überprüfen, was das Betriebssystem für Zugriffe macht, weil man einfach noch eine Instanz höher ist. Also man kann das zum Beispiel machen, was man mit Hardware-Debuggern sonst machen müsste.
+
+02:17:08.935 --> 02:17:12.395
+<v SPEAKER_2>Dieses KVM, was ich jetzt vorhin schon angesprochen hatte, das wird aber jetzt hier relevant.
+
+02:17:13.195 --> 02:19:12.195
+<v SPEAKER_1>Genau, ein KVM ist ein Teil von Linux. Es wurde ursprünglich erst mal off-tree entwickelt, also außerhalb des eigentlichen Linux-Kerns. Es ist dann aber sehr schnell in den Linux-Kern gewandert. Selbst zum Ärger von Xen, die wirklich seit Jahren probieren, ihren Code in den Linux-Kernel zu kriegen, der Haken, dass der Xen-Ansatz ein relativ komplexer ist. Und deshalb sind die Patches auch sehr komplex und vertragen sich nicht sehr gut. Mit dem nativen Modus, also man muss zwei Modi haben und die Code-Qualität ist auch nicht so, wie man sie gerne hätte. KVM fährt einen sehr viel schlankeren Ansatz und setzt da ja auch Hardware-Virtualisierung voraus. Das ist ein typisches Beispiel, wo die Hardware-Virtualisierung sehr viel nützt, weil die Software sehr schlank ist. Im Grunde macht die nicht viel, es ist auch ein schicker Ansatz vom Design her, nämlich ein Unix-typischer Ansatz, dass man einen Treiber zur Verfügung stellt, der über eine Schnittstelle angesprochen wird. Also KVM ist im Grunde mehr oder weniger ein Treiber für die Hardware-Virtualisierung, wenn man so will, und es benutzt einen angepassten QEMU als eigentliches Virtualisierungsprogramm. Und zwar funktioniert das vollendermaßen. QEMU emuliert ja ein komplettes System, also es emuliert die CPU, wie wir das vorhin besprochen hatten, und diese ganzen Hardware-Geräte drum herum. Und was jetzt KVM macht, es stellt ein Modul zur Verfügung, das man einfach lädt, mit Modprobe. Da gibt es einen generischen Unterbau, und dann gibt es zwei Implementierungen, nämlich einmal für Intel, einmal für AMD, die man dann darüber lädt. Also je nachdem, was man für einen Prozessor hat, lädt man das entsprechende Modul, und dann gibt es einen Device-File unter dev.kvm, und dort können sich Programme, können das Device öffnen und können entsprechend Befehle absetzen. Und damit ermöglicht man praktisch einen kontrollierten Zugriff auf die Virtualisierungserweiterung. Und was jetzt, das ist gepatcht...
+
+02:19:12.215 --> 02:19:16.375
+<v SPEAKER_2>Das ist dann kompatibel sozusagen mit den beiden, oder?
+
+02:19:16.395 --> 02:19:26.835
+<v SPEAKER_1>Richtig, die Schnittstelle ist generisch und abstrahiert dann von Intel oder AMD. Das heißt, man kann dieselbe Virtualisierungssoftware dann sowohl auf Intel als auch auf AMD, weil der spezifische Code hat in den Treibern.
+
+02:19:26.855 --> 02:19:34.815
+<v SPEAKER_2>Also kvm ist sozusagen ein Hypervisor-Interface, was abstrahiert über die jeweilige konkrete Implementierung in dem Prozessor.
+
+02:19:34.835 --> 02:20:32.075
+<v SPEAKER_1>Was ich jetzt gelesen habe neulich, dass es auch für andere Architekturen jetzt inzwischen KVM gibt, die wahrscheinlich den, ohne jetzt, dass die explizit eine Virtualisierungserweiterung haben, wahrscheinlich diesen alten Trap und Emulator am Ansatz einfach benutzen. Und der QEMU ist insofern angepasst, dass er die ganze CPU-Emulation wegwirft und praktisch durch einen Zugriff auf diesen Treiber ersetzt. Er setzt dann also die Bitmaske für die entsprechenden Sachen, die er abfangen will, die er behandeln kann und die er behandeln möchte, und schaltet dann über einen neuen Befehl, der im Zuge dieser Virtualisierungserweiterung hinzukam, den Prozessor in den Gastmodus. Der Prozessor läuft dann trotzdem nativ weiter. Mit dem einzigen Unterschied, dass er halt darauf achtet, sollte einer der kritischen Befehle, die per Bitmaske halt vermerkt wurden, ausgeführt werden, dann muss er zurückspringen in den Hostmodus.
+
+02:20:32.095 --> 02:20:37.915
+<v SPEAKER_2>Was ich noch nicht so ganz verstanden ist, warum jetzt der Einsatz von dem QEMU an der Stelle jetzt so wichtig ist.
+
+02:20:37.935 --> 02:21:02.715
+<v SPEAKER_1>Weil diese Virtualisierungserweiterung nur die CPU virtualisiert. Es virtualisiert nicht das Speichermanagement, nicht in dieser Form und es virtualisiert auch nicht die Hardware natürlich. Das heißt, wenn jetzt man so einen unmodifizierten Gast startet, erwartet der übliche Hardware. Man kann ihn aber nicht den originalen Interrupt-Controller zur Verfügung stellen, also das System zur Verfügung stellen oder die Grafikkarte exklusiv.
+
+02:21:02.735 --> 02:21:15.075
+<v SPEAKER_2>Das heißt, das QEMU an der Stelle simuliert sozusagen den Rechner. Die Geräte, die Peripherie. Und zieht das einfach an Hardware rein, was sozusagen da nötig ist und was nicht da ist, wird emuliert.
+
+02:21:15.215 --> 02:21:24.835
+<v SPEAKER_1>Und der Vorteil ist, dass das getestete QoT ist, das ist QoT, der wirklich optimiert ist und seit Jahren funktioniert. Und man sich also da wenig Arbeit macht.
+
+02:21:24.855 --> 02:21:26.055
+<v SPEAKER_2>QoT, dem die Entwickler vertrauen.
+
+02:21:26.295 --> 02:21:27.015
+<v SPEAKER_1>Richtig.
+
+02:21:27.035 --> 02:21:37.975
+<v SPEAKER_2>Ja, mit dem Vertrauen ist das so eine Sache. Ich meine, wir hatten vorhin mit der Sicherheit, ach so, ja, gibt es jetzt zu diesem Bereich Hardware noch irgendwas Entscheidendes beizutragen letztlich?
+
+02:21:37.995 --> 02:22:46.375
+<v SPEAKER_1>Ja, also wie gesagt, es gibt diese beiden Modi und dieser Befehl schaltet halt um in den Host-Modus. Dann wird natürlich der Zustand des Prozessors, wie er im Host-Modus war, also im normalen Modus, wird gesichert in so einem speziellen Speicherbereich. Und der Zustand des Gastes wird wiederhergestellt. Das heißt, in diesem VMCB, in diesem Virtual Machine Control Block, ist neben dieser Bitmaske mit den erlaubten und nicht erlaubten Instruktionen auch noch ein Bereich, wo der Zustand des Prozessors gesichert wird. Genau, wenn man jetzt in den Gast-Modus wechselt, wird dieser Zustand wiederhergestellt. Der Prozessor läuft praktisch im Gast-Kontext, wenn man so will. Sollte jetzt ein unerlaubter Befehl kommen oder ein Interrupt, der nicht abgefangen wird, oder der abgefangen wird vom Hypervisor, dann verlässt der Prozessor automatisch den Gast-Modus, sichert den Zustand, so wie er ist, alle Register, den Zustand der Speicherverwaltungsregister und so weiter, sichert er in diesem Bereich und stellt dann den alten Host-Modus wieder her und läuft dann im Host-Modus praktisch weiter. Und zwar hinter dem Befehl, der diesen Host-Gast-Modus betreten hat.
+
+02:22:46.595 --> 02:22:54.535
+<v SPEAKER_2>Hat dann dieses KVM die Abstraktion quasi von diesem AMD-EV übernommen, mit diesem Host- und Gast-Modus, so wie es auch bei Xen ist?
+
+02:22:54.555 --> 02:22:56.635
+<v SPEAKER_1>So ist es bei Intel auch. Ja, also dies und dies.
+
+02:22:56.655 --> 02:22:58.855
+<v SPEAKER_2>Und du sagtest, bei Intel gibt es diese Unterfassung so nicht.
+
+02:22:58.875 --> 02:24:03.135
+<v SPEAKER_1>Es gibt einen Unterschied, also ein großer Unterschied ist, dass bei AMD dieser Virtual Machine Control Block tatsächlich im Speicher liegt. Also es ist ein, den füllt man einfach, so wie man eine normale Struktur in einem Programm NC oder was ausfüllen würde und gibt dann dem Befehl einfach die physische Adresse dieses Blocks mit. Bei Intel macht man das nicht direkt, sondern so ein bisschen indirekt. Da gibt es Befehle, also spezielle Befehle, auf die man auf diese Speichertutorial drauf zugreift. Letztendlich liegt das auch im Speicher, aber man schreibt nicht direkt dort rein, sondern über so einen VMWrite-Befehl sagt man dann Endname doch bitte die Bitmaske an der Stelle. Das hat wahrscheinlich den Vorteil, dass man Kompatibilität später hat, weil man anders implementiert wird, dann kann man das entsprechend... Ja, der Haken ist aber, dass man dadurch, dass es bei AMD komplett im Speicher liegt, man das einfach auch wegsichern kann. Oder man kann zum Beispiel mehrere Blocks einfach vorhalten und die dann entsprechend umschalten.
+
+02:24:03.155 --> 02:24:04.595
+<v SPEAKER_2>So muss man dann immer wieder alles...
+
+02:24:04.655 --> 02:24:17.015
+<v SPEAKER_1>Also das kommt ins Spiel bei Nested Virtualization, da bringt das Vorteil. Also, wenn man virtualisierte Systeme noch weiter virtualisieren will. Also ich glaube, das ist ein Thema, da wollen wir heute nicht mehr drüber reden, weil das...
+
+02:24:17.035 --> 02:24:18.895
+<v SPEAKER_2>Das klingt jetzt auch ein bisschen nach Overkill.
+
+02:24:18.915 --> 02:24:22.915
+<v SPEAKER_1>Jaja, aber da gibt es durchaus Leute, die daran interessiert sind.
+
+02:24:22.935 --> 02:24:47.255
+<v SPEAKER_2>Gut, dann schließen wir das mal ab und ich würde auch langsam mal zum Ende der Präsentation schreiten. Vielleicht noch mal kurz zu diesem Aspekt Sicherheit, weil den fand ich jetzt auch ganz interessant. Wir haben das ja schon anklingen lassen, du meintest, die Banken wollen natürlich auch der Virtualisierungssoftware vertrauen, weil sie ja im Prinzip den Zugriff hat auf alles und alles abfangen kann.
+
+02:24:47.415 --> 02:26:00.335
+<v SPEAKER_1>Zudem kommt noch das Problem, wenn man mehrere virtuelle Maschinen auf einem Rechner laufen lässt, dann ist der Hypervisor natürlich so ein Single Point of Failure für alle Maschinen. Das heißt, wenn es ein Problem auf einem Standalone-Mail-Server gibt, dann ist der Mail-Server kaputt, gut, aber der Web-Server läuft noch und der File-Server und der Datenbank-Server läuft noch. Wenn die aber alle virtuell auf einer Maschine laufen und da gibt es ein Problem mit der Virtualisierungssoftware, dann sind plötzlich alle Maschinen weg. Also man muss dem Hypervisor eigentlich sehr viel mehr vertrauen, als man einem einzelnen Betriebssystem vertrauen müsste. Und das kann man halt durch diese Hardware-Weitung, dadurch dass die in Hardware implementiert wird, ist die sehr viel sicherer. Also ich möchte jetzt nicht sagen 100% sicher, da gibt es sicherlich immer noch wieder Bugs oder was auch immer, womit man da ausbrechen kann. Aber vom Design her ist das natürlich sehr viel sicherer und dadurch, dass der Code einfacher ist, kann man den viel einfacher überprüfen. Und man hat auch kein Problem damit, den Code als Open Source zu veröffentlichen. Wo VMware sich ja so ein bisschen scheut, ihr ein ganzes Know-How. Also eigentlich besteht VMware ja nur aus diesem Code. Wenn der Code öffentlich wäre, gäbe es wenig Gründe jetzt von VMware, noch Produkte zu kaufen, wenn das andere auch machen könnten.
+
+02:26:02.375 --> 02:26:05.375
+<v SPEAKER_2>Wie das so ist, mit Software.
+
+02:26:06.115 --> 02:26:17.935
+<v SPEAKER_1>Und wie gesagt, das ist wirklich eine sehr komplexe Sache. Und die ganzen Optimierungen, eine Menge Höhenschmalz, also die scheuen sich sehr davor. Bei KVM ist der Code halt sehr klein. Das ist einfach ein Modul, was man da benutzt.
+
+02:26:17.955 --> 02:26:20.875
+<v SPEAKER_2>Setzt aber eben auf die Hardware-Erweiterung auf. Welche Prozessoren haben das eigentlich?
+
+02:26:23.395 --> 02:26:35.055
+<v SPEAKER_1>Also bei ARM D haben das alle Prozessoren, die auch DDR2-Speicher unterstützen. Das ist so eine Faustregel einfach. Also das sind, RFF heißen die intern bei uns.
+
+02:26:35.075 --> 02:26:37.835
+<v SPEAKER_2>Seitdem und ab da alle Prozessoren?
+
+02:26:37.855 --> 02:27:12.815
+<v SPEAKER_1>Alle außer Sempron. Im Sempron ist es, also dieser billig CPU, sage ich mal, es ist einfach abgeschaltet aus Marketinggründen sozusagen. Also alles, was in dem Sockelarm 2 läuft. Also wenn man einen Sockelarm 2 Prozessor hat, dann unterstützt er auch Virtualisierung außer Sempron. Bei Intel ist es ein bisschen komplexer. Am Grunde gilt dieselbe Faustregel. Also alle, ich glaube bei einigen Celerons, ist es einfach abgeschaltet. Alle moderneren Prozessoren sollten das aber schon unterstützen. Da verweise ich dann immer an der Stelle auf Wikipedia.
+
+02:27:12.835 --> 02:27:17.075
+<v SPEAKER_2>Okay, aber die Core-Prozessoren und so weiter, der neuere Bauart bringt das alle mit.
+
+02:27:17.095 --> 02:27:22.195
+<v SPEAKER_1>Ja, aber es gibt aber eigentlich, glaube ich, eine von den Pensionen, die noch Pension heißen, wo das irgendwie nicht...
+
+02:27:22.215 --> 02:28:33.655
+<v SPEAKER_2>Okay, aber nochmal kurz zu der Sicherheit, bevor ich das jetzt für aus dem Auge verliere. Du sagst ja gerade, mit dem Vertrauen in den Open Source. Mir fehlen mir in dem Zusammenhang einen Vortrag ein, gehalten auf dem 23C3, auf dem Kongress vor zwei Jahren ungefähr, von Joanna Rutkowska, die im Prinzip auch genauer auf diese Hypervisor-Problematik hingewiesen hat und eben auch so Methoden vorgestellt hat oder zumindest ein paar Gedankenspiele. Ich hatte jetzt leider nicht Zeit, mir sehr innig noch mal zu geben, diesen Vortrag ist auch nicht wirklich mein Bereich. Aber sie sprach halt von Stealth Malware, die unter anderem diese Hypervisor- Funktionalität nutzen kann, um sich eben auch super zu verstecken, weil sie im Prinzip jenseits jeglichen Zugriffs des Betriebssystems ist. Und wenn sich eben ein Virus, was auch immer, also Malware im Allgemeinen eben als Hypervisor in so einem System einlisten kann, also einmal diesen Zugriff schafft, sich selber zum Überwacher von allen Betriebssystemen zu machen, dann ist es fast nicht möglich, diese Software überhaupt noch automatisiert festzustellen, während man heute eine ganze Menge Tools hat, um eben in so einem System rumzupunkten und zu gucken, oh, da läuft was nicht richtig. Aber mit einem Hypervisor wird das eben auch ausgeschlossen.
+
+02:28:34.335 --> 02:32:16.755
+<v SPEAKER_1>Richtig, das ist dieses Blue Pill, so nennt sich das, also die Software, die die da geschrieben hat, die interessanterweise für AMD im Prozessor geschrieben wurde. Ja, das ist genau wie du schon beschrieben hast, benutzt man den Hypervisor-Modus, oder diesen Virtualisierungsmodus, um sich zu verstecken. Ich glaube ihr nicht so ganz, wenn sie sagt, dass das nicht erkennbar ist. Letztendlich hast du einen Prozessor, einen Speicher, eine Platte, Netzwerkkarten oder was auch immer. Wenn sich dein Gastbetriebssystem diese Ressourcen mit irgendwas anderem teilen muss, dann resultiert daraus ein Geschwindigkeitsverlust oder auch ein Zeitverlust. Also wenn du zum Beispiel Code hast, der neben deinem Betriebssystem ausgeführt wird, auf dem Prozessor, gehen wir erstmal von Single Core aus, wenn dein Viruscode oder dein Malware irgendwas machen möchte, dann muss es ja von der CPU die Zeit dafür nehmen. In dieser Zeit kann aber der Gast nicht laufen, also das eigentliche Betriebssystem. Ich denke, sowas kann man schon detektieren. Es ist wahrscheinlich nicht einfach. Es beginnt dann die übliche Schlacht von bösen und guten Leuten, da gibt es dann von Virus-Tools entsprechende verbesserte Erkennungsroutinen, die dann in der nächsten Runde wieder von den Viren umgangen werden und so weiter. Also ein Problem, was man auch mit normaler, guter Virtualisierung hat, ist zum Beispiel diese ganze Zeitgeschichte. So hast du grundsätzlich zwei Ansätze, wie du diese Zeit virtualisieren willst. Es gibt ja diesen Timestamp-Counter, das sind Hardwarezähler, die mit jedem Takt einen hochzählen. Damit kann man sehr genau praktisch Instruktionen vermessen. Man kann diesen Timestamp-Counter auslesen und dann liest man später wieder aus und vergleicht die Differenz und weiß, wie viele Takte vergangen sind. Wenn jetzt zwischen, sagen wir mal, man hat irgendwie einen Code, der zehn Cycles eigentlich nur braucht, dann macht man vorher so einen Read TSC und dahinter auch und vergleicht. Und dann würde man davon ausgehen, dass die Differenz zwischen diesen beiden Timestamp-Countern genau zehn Zyklen sind. Plus die Latenz, die vielleicht noch durch den Befehl selbst hervorgerufen wird. Wenn jetzt innerhalb dieses Fensters zwischen den beiden aufrufen, die Malware praktisch aktiv wird und irgendwelchen Code ausführt, dann läuft der Timestamp-Counter natürlich weiter. Die macht jetzt fast 4000 Takte und kehrt dann zurück. Wenn man dann den TSC ausliest, sieht man, dass plötzlich statt 10, 1010 Takte vergangen sind. Das kann man natürlich umgehen und das ist auch ein Problem, was normaler Betriebssysteme haben. Die möchten natürlich auch fortlaufen, TSCs für Messungen verwenden. Deswegen gibt es da auch eine Virtualisierung für. Man kann nämlich die Zeit, die man verbraten hat, schreibt man in den VMCB rein, also in den Control-Block, und beim Auslesen von RDTC im Gast, also beim Auslesen des Speichers, zieht er automatisch diesen Wert ab. Also er liest den tatsächlichen Wert aus und sieht, ok, ich muss 1000 abziehen und liefe das dem Gast zurück. So, das heißt, der Gast liest dann tatsächlich nur 10 Zyklen. Jetzt hat man aber das Problem, dass diese Zeit natürlich nicht umsonst war. Auch wenn die TSCs jetzt entsprechend angepasst sind, ist ja in Wirklichkeit Zeit vergangen. Einfach Wall Clock-Time. So, das heißt, wenn man jetzt sehr genau die Wall Clock-Time bestimmen könnte durch NTP oder was auch immer, dann würde man sehen, dass, obwohl nur 10 Zyklen vergangen sind, also 10 Zyklen bearbeitet wurden, in Wirklichkeit scheinbar mehr Zeit vergangen ist, als man eigentlich für diese 10 Zyklen braucht.
+
+02:32:16.775 --> 02:32:25.835
+<v SPEAKER_2>Ah, verstehe. Man vergleicht einfach die Realzeit mit der zu erwartenden Exekutionszeit und hat damit immer einen Measurement. Aber ist es natürlich schon kniffliger?
+
+02:32:25.855 --> 02:32:44.695
+<v SPEAKER_1>Das kann man natürlich auch umgehen, indem man zum Beispiel NTP-Zugriffe entsprechend fälscht. Also das wird dann diese übliche Schlacht. Und was man, also ich denke, was man viel einfacher rauskriegen kann, ist die Zeit, die verloren geht. Wenn der Virus irgendwas machen will, also ich bloopel, ist ja mehr so ein Proof of Concept. Ich weiß nicht, ich glaube, der macht gar nicht großartig viel Böses.
+
+02:32:44.695 --> 02:32:46.435
+<v SPEAKER_2>So habe ich das auch in Erinnerung.
+
+02:32:46.455 --> 02:33:19.275
+<v SPEAKER_1>Das war einfach immer ein Versuch. Wenn er aber was Böses machen möchte, zum Beispiel den Netzwerkverkehr lauschen, protokollieren, was auch immer, das wäre ja Sinn. Also vielleicht die Idee, dass er zum Beispiel den Netzwerkverkehr mitschnadet nach Passwort, dann snifft oder was auch immer, dann verbraucht er natürlich deutlich Ressourcen. Also er verbraucht CPU-Zeit vor allen Dingen, er braucht auch Netzwerkbandbreite, der muss sie irgendwie rausschicken. Und ich denke, dass man das schon detektieren kann, dass es nicht simpel ist, aber das ist durchaus möglich ist. Wenn man natürlich weiß, wie man es detektiert, dann kann man versuchen, wiederum umzuschiffen. Aber das ist das...
+
+02:33:19.295 --> 02:33:24.155
+<v SPEAKER_2>Also Sicherheit, habe ich so den Eindruck, ist auf jeden Fall auch jetzt bei der Entwicklung von Xen auf jeden Fall ein Thema?
+
+02:33:24.755 --> 02:33:34.195
+<v SPEAKER_1>Ja, auf jeden Fall. Also diese Sicherheit ist halt das, was ich ja meinte. Man muss dem Hypervisor sehr viel mehr vertrauen, als man normalen Betriebssystem vertrauen möchte.
+
+02:33:34.795 --> 02:33:52.195
+<v SPEAKER_2>Problem erkannt, sozusagen, jetzt muss man nur noch zusehen, dass es vorangeht. Ja, vielleicht dann nochmal zum Ausklang zu Xen. Was ist da so der aktuelle Stand? Was ist so die aktuelle Version? Worauf bezieht sich das alles, was wir sagen? Dieser Podcast wird ja auch noch in 500 Jahren gehört.
+
+02:33:54.815 --> 02:35:44.875
+<v SPEAKER_1>Wir sind ja ein super iPod-Stand. Also aktuell ist die Version Xen 3.2.1. Es wird jetzt, im August, also in ein paar Wochen, wird es die neue Version 3.3 geben, die also einige Detailverbesserungen hat. Es wird auch viel umgebaut in Xen, grundlegend dann an Code. Also gerade diese Timer-Geschichten, die sind gerade noch mächtig im Umbau begriffen, für diese Emulation der Zeit in den Gästen. Bei Xen gibt es durchaus so einen Trend zu beobachten, dass viele Leute eher KVM einsetzen möchten, weil sie sowieso auf Hardware-Virtualisierung setzen und da KVM einfach schlanker ist, ist es im Linux-Kern und es ist auch deutlich einfacher zu installieren. Also wenn man jetzt sich Xen mal selber installiert, selber baut und selber installieren möchte, ist das schon eine recht komplexe Sache, weil es halt diesen Hypervisor darunter gibt. Das fängt schon mal damit an, dass man mindestens einmal neu booten muss, um den eigentlichen Hypervisor vor dem Betriebssystem zu laden. Dann muss man den angepassten Linux-Kern erst mal übersetzen. Muss natürlich dafür sorgen, dass die Treiber, die man vorher drin hatte und die ganzen, wenn man seinen eigenen Körner kompiliert, dafür sorgen, dass das auch in den gepatchten Körnern halt mit reinkommt. Da muss man halt die ganzen Tools, das ist auch eine recht komplexe Geschichte, eh das so mal läuft. Also für einen Admin im Rechenzentrum sicherlich kein Problem und die Distribution integrieren das auch sehr gut inzwischen. Da ist das wirklich Paket anwählen, fertig installieren, neu booten. Aber neu booten muss man auf jeden Fall. KVM ist ja sehr viel einfacher. Also ich habe das wirklich mal ausprobiert, normales Linus hochgefahren, das Paket runtergeladen, Make gemacht, dann fielen zwei Module raus, die konnte ich einfach zur Laufzeit mit Modprobe aktivieren und schwuppdiwupp konnte ich einen Gast starten. Also ohne dass man großartig neu booten müsste oder dann ein ganzes System umbauen.
+
+02:35:44.895 --> 02:35:50.795
+<v SPEAKER_2>Aber dieser Gast ist dann eben nicht in dem gleichen Maße angepasst und diese Delegation von Treibern und so.
+
+02:35:50.815 --> 02:36:30.515
+<v SPEAKER_1>Der Gast läuft dann so wie ein normales Hardware-virtualisiertes Gast unter Xen auch laufen würde. Also das ist durchaus vergleichbar. Was Xen natürlich von vornherein mitgibt, sind paravirtualisierte Treiber. Die muss man, also dieselbe Architektur, die bei paravirtualisierten Gästen verwirkt, kann natürlich auch einfach benutzt werden bei den vollvirtualisierten Gästen. Das muss dann aber natürlich auch entsprechend installiert werden. Also man muss dann in das Betriebssystem reingehen, startet das erstmal normal mit der langsamen Emulation der Geräte, kann dann, das habe ich auch mal unprobiert, es geht on the fly, also ohne dass man da neu bootet, die paravirtualisierten Treiber installieren und hat dann einen richtigen Performance Boost.
+
+02:36:32.335 --> 02:36:53.555
+<v SPEAKER_2>Das heißt aber kurz gesagt, mit KVM, wenn man eben eine halbwegs moderne CPU hat, kann man eben unter Linux diese Virtualisierung mal eben einschalten und ist in der Lage, ohne jetzt neu booten zu müssen, mal eben auch noch ein zweites Linux oder welches System auch immer zu laufen. Aber das ist eben nicht in dem gleichen Maße Performance optimiert, wie jetzt ein wasch-echter Xen-Setup.
+
+02:36:53.575 --> 02:37:30.155
+<v SPEAKER_1>Naja, noch nicht. Also man merkt schon, dass KVM jünger ist und da an einigen Sachen noch Optimierung bedarf. Also diese ganze Paging-Emulation und sowas, das ist in Xen optimierter einfach. Paravirtualisierte Treiber gibt es aber auch für KVM. Das ist auch so noch im Stehen begriffen, aber die sind teilweise auch schon im Linux-Körner drin. Das ist natürlich sehr nett, weil man dann einfach das vielleicht schon eingeschaltet hat beim Standard-Körner, dem Distributor. Dann startet man das Linux, das Gastlinux im KVM von der CD und wenn das Gastlinux die Paravirtualisierte Treiber unterstützt, kann man auch gleich Out-of-the-Box-Zieh benutzen.
+
+02:37:30.175 --> 02:37:36.735
+<v SPEAKER_2>Okay, wem würdest du dann ein Xen-Setup empfehlen? Also in welchen Fällen ist das jetzt sozusagen heute besser?
+
+02:37:36.755 --> 02:38:31.275
+<v SPEAKER_1>Also sicherlich, was Xen von der Stabilität ist, ist Xen noch weiter, besser. Von der Verwaltbarkeit gibt es mehr Tools, obwohl sich das auch so ein bisschen abspricht, dass die meisten Tools jetzt verallgemeinert werden, dass die sowohl mit Xen als auch mit QEMU als auch mit KVM zum Beispiel umgehen. Das heißt, aber so die, man merkt schon, die Verwaltungstools von Xen sind ausgereifter. Die kann man auch locker übers Netzwerk halt benutzen und man kann einfach mal alle Gäste auflisten. Für den Admin im Rechenzentrum, der mehrere Gäste virtualisieren will auf einem großen Server, da ist Xen sicherlich sehr gut, weil man ja vielfach die Paravirtualisierung benutzen kann. Und wenn Paravirtualisierung nicht vorhanden ist, dann kann man halt auch über diese Hardware-Erweiterung auch unbeliebige Gäste benutzen.
+
+02:38:33.795 --> 02:39:14.215
+<v SPEAKER_2>Gut, dann würde ich sagen, haben wir jetzt schon auch wieder ganz gut Zeit abgefeiert hier. Noch nicht ganz im Rekordbereich, aber auf jeden Fall ein fettes Stück Podcast hier zusammengekommen, zweieinhalb Stunden haben wir jetzt auf jeden Fall schon mal durchgekaut. Haben wir noch ein letztes Wort? Gibt es noch irgendwas im Metakontext, auf das du noch mal hinweisen wolltest, was jetzt für Leute, die mit Virtualisierung entwickeln wollen oder irgendwie rumspielen wollen, noch mal bedenken sollten, was so zukünftige Trends sind, auf die man einen Stick werfen sollte, Mailing-Listen, Webseiten, sonstige Ressourcen?
+
+02:39:14.235 --> 02:39:18.095
+<v SPEAKER_1>Ja, ich denke, wir werden da noch mal eine Liste zusammenstellen von Ressourcen.
+
+02:39:18.115 --> 02:39:21.275
+<v SPEAKER_2>Ja, aber sag ruhig mal, was so ein bisschen spontan einfällt.
+
+02:39:21.295 --> 02:40:45.895
+<v SPEAKER_1>Also, auf der Xendevel-Mailing ist das sicherlich für Entwickler, die da zu tun haben. Es gibt einige Dokumentationen, nämlich XenWiki und in den Sourcen auch selbst gibt es Dokumente, die halt die Architektur und das Designfunktion noch mal beschreiben. Dort kann man also sehr viel draus ziehen, sehr viel lernen. Xen ist auch ganz gut, wenn man bestimmte Optimierungen halt oder einfach mal was ausprobieren möchte mit Linux-Körnen, wie man da Virtualisierung nutzen kann. Wenn man auch rumspielen möchte mit Körnern, kann man halt den angepassten Linux-Kern zum Beispiel patchen und was Neues da reinschreiben und das ist ja nun Gast. Wenn der abstürzt, ist halt der Gast abgestürzt, aber nicht die ganze Maschine. Zum Beispiel. Also dafür eignet sich Xen. Es gibt auch sehr viele Leute, die halt Projekte machen, die mit Xen zu tun haben oder Spin-offs, die bestimmte Teilaspekte der eben Virtualisierung halt vertiefen. Also zum Beispiel gibt es auch ein Spin-off, was cyclegenaue Simulationen ermöglicht von Prozessoren, wo man also wirklich genau ausstoppen kann, wie viele Zyklen jetzt eine bestimmte Code-Sequenz gedauert hat. Was ja mit Xen möglich ist, also nicht so möglich ist, war das einfach so schnell wie möglich und unter Umständen kommt ein Interakt dazwischen und dann weiß man sowieso nicht mehr. Aber es gibt halt die PTL-Summen, nennt sich das. Das ist eine Erweiterung, die auch wir gerne verwenden, um Effekte halt zu simulieren im Vorhinein von Zulübungen.
+
+02:40:45.915 --> 02:40:48.735
+<v SPEAKER_2>Gerade Performance-Messungen ist natürlich jetzt auch die Partie ganz wichtig.
+
+02:40:49.015 --> 02:42:01.955
+<v SPEAKER_1>Also man kann dann zum Beispiel gucken, was passiert, wenn man mehr Cash hat oder sowas wird auch dann zusätzlich noch emuliert. Also was wir eigentlich in Zukunft sehen wird, dass paravirtualisierte Treiber überall auftauchen werden. Die gibt es jetzt schon in Windows auch. Es gibt auch paravirtualisierte Windows-Treiber für Xen, wo man also Windows-Gäste, die man im Xen ausführt, mit paravirtualisierten Treibern laufen lässt. Da gibt es welche von Novell, die bei den professionellen Produkten dabeiliegen, die sozusagen Cluster sind. Es gibt auch eine Open-Source-Weite, die auf der Xen Devil Mining-Liste auch diskutiert wird. Dort gibt es also eine sehr dynamische Entwicklung und das funktioniert wohl auch schon ganz gut, sodass man auch Windows-Gäste mit Nativa-Platten und Netzwerk-Performance benutzen kann. Was wir jetzt gar nicht besprochen hatten, was ich vielleicht noch kurz erwähnen, ist diese Geräte-Virtualisierung. Das Problem ist, dass diese Geräte immer emuliert werden und man möchte aber eigentlich Geräte, die man im Rechner hat, vielleicht einem Gast exklusiv zuweisen. Also da interessieren sich sehr viele Kunden für einen großen Rechner mit vier Netzwerkkarten und vier Gästen und jeder Gast möchte bitte eine Netzwerkkarte exklusiv zugreifen und zwar richtig auf der Hardware-Ebene.
+
+02:42:01.975 --> 02:42:10.995
+<v SPEAKER_2>Ja, weil das ja auch in dem Netzwerk-Setup dann auch durchaus immer performansmäßig oder auch mit Testplatten, Rates, irgendwie Database, Server möchte natürlich vielleicht nur auf diese zuzuladen.
+
+02:42:11.015 --> 02:42:53.655
+<v SPEAKER_1>Das ist diese Rechenzentrumsschiene und das, was alle Heimbenutzer natürlich interessiert, sie möchten eine Linux haben und möchten einem Windows-Gast exklusiv die Grafikkarte geben, damit der 3D-Beschleunigung darauf machen kann, um irgendwelche Ballerspiele zum Beispiel damit zu spielen. Das hat im Moment ein Riesenproblem, weil DMA-Transfers auf physischen Adressen laufen und die Geräte überhaupt gar nichts wissen von der Virtualisierung. Das heißt, wenn ein Gast einem Gerät sagt, schreibt doch mal bitte an die und die Stelle im Speicher und zwar den Speicher, den er denkt, dass es der Speicher ist, an dem er zugreift, dann entspricht das natürlich diesem Gastadressen und nicht den physischen Adressen. Und dann geht das schief, dann schreibt das Gerät an die falsche Stelle.
+
+02:42:53.675 --> 02:42:57.455
+<v SPEAKER_2>Das heißt, die DMA ist überhaupt noch nicht berücksichtigt bei dieser ganzen Hardware-Virtualisierung?
+
+02:42:57.475 --> 02:43:56.035
+<v SPEAKER_1>Richtig, deswegen geht das immer durch den Hypervisor oder durch so eine Kontrollinstanz, die die Geräte abfangen. Bei Xen kann man das abfangen, weil es ja paravirtualisiert ist. Da gibt es sowieso eine Funktion, um Virtual-Adressen auf DMA-Adressen umzusetzen. Und diese ist paravirtualisiert. Das heißt, da besteht die Möglichkeit, für paravirtualisierte Gäste Geräte zuzuweisen. Also man kann zum Beispiel eine Netzwerkkarte. Kann man sagen, paravirtualisierter Xengast nutzt diese Netzwerkkarte exklusiv. Man sagt dann Bescheid beim Booten, dass die Domain 0 diese Netzwerkkarte nicht anfasst. Die existiert einfach nicht. Und der Gast bekommt dann Zugriff gewehrt. Das setzt aber natürlich voraus, dass der Gast doch keinen Blödsinn macht. Grundsätzlich besteht da schon die Möglichkeit, weil der Gast ja exklusiv Zugriff auf die Hardware hat. Der könnte ja auch falsche Adressen sagen. Oder wenn es einen Bug im Driver gibt, dann kann es schon passieren, dass die Virtualisierung da bricht. Das ist natürlich deswegen so eine Sache. Möchte man das vielleicht nicht.
+
+02:43:56.055 --> 02:43:58.455
+<v SPEAKER_2>Das heißt, man braucht noch ein bisschen mehr Hardware-Support.
+
+02:43:58.475 --> 02:44:10.375
+<v SPEAKER_1>Das heißt, man möchte eigentlich, genau. Und das ist jetzt, was jetzt im Kommen ist. Bei Intel gibt es das schon. Das muss jetzt nicht im Prozessor sein, sondern im Chipsatz. Intel hat das jetzt auf dem Markt, und bei AMD wird das demnächst auf dem Markt kommen.
+
+02:44:10.555 --> 02:44:14.915
+<v SPEAKER_2>Das heißt, nicht nur der Prozessor wird virtualisierungs-aware, sondern im Prinzip das gesamte System.
+
+02:44:14.935 --> 02:44:59.815
+<v SPEAKER_1>Das nennt sich IOMMU. Das ist praktisch eine Memory-Management-Unit. Jetzt aber nicht für Speicher, also zwischen Prozessor und Speicher, sondern zwischen Geräten und Speicher. Und dort kann man praktisch auch die ganzen Speise machen, die man mit der Memory-Management-Unit für normalen Prozessor machen kann. Dass man jedem Gerät virtuell einen Speicher zuweist und den dann je nach Gast auf anderen physischen Speicher mappt. Und das heißt, der Gast kann dann einfach seine Adressen, die er da hat, kann er da benutzen, das wird dann umgesetzt. Einerseits wird das, also wird umgesetzt, wird verbogen auf den entsprechenden richtigen Speicher und es wird auch kontrolliert, dass er die Beschränkungen einhält. Dass er so nicht irgendwelche Adressen reinschreibt, die gibt es dann halt praktisch so ein Board. Also das wird dann nicht durchgeführt von mehr Hardware.
+
+02:44:59.835 --> 02:46:16.975
+<v SPEAKER_2>Also man merkt, im Prozessoren- und im Systemherstellerbereich ist Virtualisierung auf jeden Fall ein heißes Thema. Und auch für den Anwender und für den Serverbetreiber im gleichen Maße. Jetzt auch bei Chaos Radio Express. Dank dir, André. Vielen Dank für die ausführlichen Ausführungen. Ich denke, wir machen jetzt hier mal einen Punkt. Und ja, ich kann mich nur wieder bedanken für das umfangreiche Durchhalten durch so einen langen Podcast. Und hoffe, das war mal wieder ergiebig und hat Einblick geboten. Ich persönlich muss sagen, bin jetzt auf jeden Fall einen Schritt weiter. Weil auch für mich war Virtualisierung bisher eigentlich immer so ein bisschen so, man startet da was, läuft das irgendwie, aber so richtig verstehen, was da gemacht wird und vor allem die Unterschiede zwischen den einzelnen Subsystemen. Das war jetzt doch sehr interessant, das mal herauszufinden und hier beschrieben zu haben bei Chaos Radio Express. Hier geht es auch bald wieder weiter, wie schon anfangs erwähnt, derzeit auch mit diversen Livesendungen und die Themenvielfalt, das kann ich euch versprechen, die wird auf jeden Fall breit brandig bleiben. Mal gucken, was noch an technischem Know-how von Dresden nach Berlin gefahren wird. Dann wird es hier auf jeden Fall weitere tiefe Einblicke geben. Okay, ich sehe auch nochmal, danke und tschüss. Und das war's bei Kraus Radio Express.

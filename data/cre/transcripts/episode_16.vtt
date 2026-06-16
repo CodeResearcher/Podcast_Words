@@ -1,0 +1,700 @@
+WEBVTT
+
+00:01:15.793 --> 00:03:05.241
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 16, unser Thema heute Wireless Mesh Networking und das OLSR-Protokoll. Dazu gibt es ein sehr ausführliches Interview. Ist mal leider wieder alles etwas länger geworden, aber dafür ist es sehr aufschlussreich mit vielen technischen Details. Und ich hoffe, das gefällt euch trotzdem am Mikrofon, wie gewohnt Tim Pritlove. Die Musik, die da im Hintergrund vor sich hinklimpernt, ist vom Digitalverein, heißt Deep Fragments Mix und soll hier wieder ein bisschen zur Untermalung dienen. Auch zur Untermalung würde ich ganz gerne mal eure Kommentare hier mit einbauen. Dazu habt ihr jederzeit die Möglichkeit, diese abzugeben, entweder per E-Mail an chaosradio.ccc.de oder auch per Telefon unter 018 01 99 33 22 99 55. Fragen, Anregungen, Kommentare, Klarstellungen, was euch auch immer einfällt, sonstige Beiträge. Wir sind dafür alles offen und würden gerne mal auch eure Stimme hören, damit das hier im Chaosradio und im Chaosradio Express zur Geltung kommt. Ja, das Thema heute soll sein Mesh Networking. Dazu habe ich auch Besuch bekommen und zwar von Elektra. Hallo Elektra. Du bist ja schon längere Zeit in diesem Bereich ganz wild aktiv. Mesh Networking, also weiß nicht, wie kann man dich denn bezeichnen? So als WLAN Netzwerk Aktivistin?
+
+00:03:06.261 --> 00:03:09.101
+<v SPEAKER_1>Ja, ich denke, das würde ich auch von mir sagen.
+
+00:03:09.121 --> 00:03:37.701
+<v SPEAKER_2>Okay, hast auch ein Buch geschrieben, da kommen wir auch nachher noch mal drauf. Aber vor allem hast du ein Protokoll mitgearbeitet und bist da ganz eifrig dabei, im Bereich Mesh Networking die Sache technisch nach vorne zu bringen. Hast auch auf dem Kongress einen Vortrag gehalten, genau genommen sogar zwei Vorträge. Der eine hieß Wi-Fi Longshots, da ging es um Langstrecken, WLAN-Versorgung, richtig?
+
+00:03:38.681 --> 00:04:03.181
+<v SPEAKER_1>Naja, ich habe vier Monate in Bangladesch verbracht und habe dort Wi-Fi Longshots aufgebaut. Ich habe im Norden von Bangladesch, in der Gegend, die auch für die Verhältnisse von Bangladesch recht zurückgeblieben ist, Kommunikationsinfrastruktur aufgebaut mit WLAN-Technologie. Ich habe aber da keinen Mesh eingesetzt.
+
+00:04:03.201 --> 00:04:04.541
+<v SPEAKER_2>Wie lange warst du da?
+
+00:04:04.561 --> 00:04:05.581
+<v SPEAKER_1>Ich sagte vier Monate.
+
+00:04:05.601 --> 00:04:19.981
+<v SPEAKER_2>Vier Monate? Und was hast du da so für Erfahrungen gemacht? Also ich meine, du hast da sicherlich einige Erfahrungen gemacht. Aber was sind so die Erfahrungen, die man hier auf jeden Fall mal teilen sollte, um sich in etwa vorzustellen, wie es ist, so in so einem Projekt teilzunehmen?
+
+00:04:20.621 --> 00:04:34.761
+<v SPEAKER_1>Ja, es war meine erste Reise in so einem Entwicklungsland und als ich da gelandet bin und ausgestiegen bin, dachte ich einfach nur ein langes, boah, das geht ja gar nicht.
+
+00:04:34.781 --> 00:04:35.961
+<v SPEAKER_2>Was ging denn nicht?
+
+00:04:35.981 --> 00:04:49.001
+<v SPEAKER_1>Also es ist absolute Chaos. Also unglaublich anstrengend war das für mich im ersten Moment. Klar, ich hatte auch einen langen Flug. Schon allein der Flug mit Beamer in Bangladesch Airlines war von ganz besonderer Qualität.
+
+00:04:49.801 --> 00:04:50.601
+<v SPEAKER_2>Kann ich mir vorstellen.
+
+00:04:50.801 --> 00:05:01.581
+<v SPEAKER_1>Ich bin insgesamt zweimal von London Heathrow abgehoben, weil die Maschine einmal kurz vor Wien eine Kehrtwendung gemacht hat, weil wir ein Leck im Hydrauliksystem des Flugzeugs hatten.
+
+00:05:01.601 --> 00:05:02.581
+<v SPEAKER_2>Sehr vertrauenserwirkend.
+
+00:05:02.701 --> 00:05:09.241
+<v SPEAKER_1>Ja, ich war dann verrückt genug nochmal in dieses Flugzeug zu steigen, nachdem es repariert war und bin dann tatsächlich dort angekommen.
+
+00:05:09.261 --> 00:05:12.521
+<v SPEAKER_2>Und wo hast du da, wo bist du dann konkret angedockt?
+
+00:05:15.501 --> 00:05:36.701
+<v SPEAKER_1>Ich war im Shunam-Gonsh-Distrikt und Joggernautpur war da mein Stützpunkt. Dort gibt es eine Vset-Anbindung an das Internet, 800 Millisekunden Latenzzeit. Und von dort aus haben wir mit WLAN-Funkstrecken halt andere Städte verbunden.
+
+00:05:36.721 --> 00:05:38.021
+<v SPEAKER_2>Was war das für eine Anbindung, sagtest du?
+
+00:05:38.601 --> 00:05:51.321
+<v SPEAKER_1>Was ist das? Das sind Satelliten links, recht langsam, recht teuer. Man braucht vier Meter große Satellitenschüsseln und die Bandbreite ist unglaublich teuer.
+
+00:05:51.341 --> 00:05:54.201
+<v SPEAKER_2>Das sind dann so stationäre Satelliten?
+
+00:05:54.221 --> 00:06:22.301
+<v SPEAKER_1>Ja, absolut. Also so eine Installation kostet mindestens 10.000 US-Dollar. Die monatliche Gebühr liegt sicherlich über 1.000 US-Dollar. Bangladesh hat überhaupt keine Anbindung an das große, böse Internet, außer über Satelliten. Es gibt also keine Tiefseekabel, die dahingehen, im Gegensatz zu Indien.
+
+00:06:23.301 --> 00:07:27.181
+<v SPEAKER_2>Okay, das heißt, das ist auf jeden Fall ein Bereich, wo man mit WLAN eine ganze Menge machen kann. Kabelverbundene Netze in Entwicklungsländern, das ist auf jeden Fall eine Seltenheit. Ich kenne das auch aus Afrika, die Problematik, wenn man da Kabel verlegt, dann bleiben die meistens auch nicht lange liegen. Dann wird das Kupfer dann auch schnell wieder weiterverkauft, bevor da überhaupt irgendwelche Daten drüber geflossen sind. Das hat schon die Ausbreitung von Telefonen stark verhindert. Da ist natürlich jetzt jede solche Funk-Technik, also sowohl natürlich GSM bei Telefonen, als auch jetzt die für den Weitverkehr eingesetzten WLAN-Strecken auf jeden Fall ein interessantes Thema. Da kommen wir auch gleich noch mal drauf zu sprechen, aber vielleicht sollten wir erst noch mal ein bisschen ein bisschen einkreisen, worauf wir jetzt hier im Kern zu sprechen kommen. Wir waren ja kurz bei den Vorträgen, also diese Wi-Fi-Longshots, da ging es halt um Langstrecken. Mit Wi-Fi der andere Vortrag war zum Thema OLSR. Das ist ein Protokoll, mit dem man diese Mesh Networks realisieren kann. Aber was genau sind Mesh Networks?
+
+00:07:28.781 --> 00:07:38.841
+<v SPEAKER_1>Ja, die Mesh Networks basieren auf dem Ad-hoc-Modus, den die meisten WLAN-Karten eigentlich theoretisch können sollten.
+
+00:07:39.801 --> 00:07:41.641
+<v SPEAKER_2>Können die das nicht alle?
+
+00:07:41.661 --> 00:07:48.481
+<v SPEAKER_1>Ja, das ist noch ein spezielles Kapitel, aber wir sollten uns nicht zu sehr verzetteln und auf den Ärger, den man in der Praxis hat, dann später zu...
+
+00:07:48.501 --> 00:07:50.401
+<v SPEAKER_2>Okay, also wir gehen erstmal davon aus, dass es geht.
+
+00:07:50.681 --> 00:08:04.201
+<v SPEAKER_1>Genau, das bin ich am Anfang auch und wenn ich gewusst hätte, was ich für einen Ärger mit diesen Treibern und verschiedenen Geräteversionen und Chipsetzen hätte, dann hätte ich es wahrscheinlich gar nicht angefangen und wir würden immer noch im Infrastrukturmodus funken.
+
+00:08:04.221 --> 00:08:33.881
+<v SPEAKER_2>Also dieser Modus ist sicherlich nicht unbedingt jedem bekannt. Also denn normalerweise macht man das ja so, man geht zum Access Point und dann klappt man seinen Rechner auf, seinen Laptop und dann sieht man so, ah, da ist ja ein Netz, das heißt sowieso, da springe ich jetzt mal rein und dann gibt man ein Passwort ein oder auch nicht und dann ist man damit verbunden. Und das ist ja im Prinzip so was ähnliches wie so ein Hub, wo man so früher sein Ethernet-Kabel reingesteckt hat, der verbindet dann eben alle. Und Ad-Hoc ist quasi die Verbindung von Rechner zu Rechner direkt ohne, dass man so eine zentrale Stelle braucht.
+
+00:08:34.021 --> 00:08:54.921
+<v SPEAKER_1>Na, ich würde das so beschreiben. Wenn ich jetzt einen Scherz-Anruf aus meiner Tasche tätige und dein Mobiltelefon in deiner Tasche anrufe, dann verbinde ich mich mit der Basisstation meines Providers. Wenn wir zufällig beim selben Provider sind, geht das Funksignal, die Datenkommunikation dann in deine Tasche und dein Telefon klingelt dann.
+
+00:08:54.941 --> 00:08:59.921
+<v SPEAKER_2>Du erinnerst mich, dass ich mal mein Telefon ausschalten sollte, bevor hier irgendwas Schlimmes passiert.
+
+00:08:59.941 --> 00:09:09.821
+<v SPEAKER_1>Du kannst also dein GSM-Telefon nur dann verwenden, wenn du eine Basisstation hast. Also wenn du jetzt irgendwo in die Pampa gehst, dann ist es ein absolut nutzloses Gerät.
+
+00:09:09.841 --> 00:09:12.541
+<v SPEAKER_2>Genau, und der Ad-Hoc-Modus ist sozusagen das Walkie-Talkie.
+
+00:09:12.561 --> 00:09:14.641
+<v SPEAKER_1>Genau, das ist das Walkie-Talkie-Prinzip.
+
+00:09:14.661 --> 00:09:23.901
+<v SPEAKER_2>Wo einfach jeder mit jedem kommuniziert. Das heißt, jeder sieht dann auch jeden sofort. Okay, und welche Rolle spielt das jetzt für dieses Mesh Networking? Was ist da die Grundidee?
+
+00:09:24.401 --> 00:10:12.861
+<v SPEAKER_1>Ja, die Grundidee ist, dass die Geräte also dezentral, ohne dass es irgendeine Hierarchie gäbe, also mit einem Master, also sprich deinem Access Point oder deine Base Station, direkt miteinander reden können, wie du schon gesagt hast, wie bei Walkie-Talkies. Und wer schon mal Walkie-Talkies verwendet hat, hat man immer festgestellt, dass das Problem ist, die Reichweite reicht einfach nicht. Und man kann manche Leute einfach erreichen und andere nicht. Wie toll wäre es da, wenn das Walkie-Talkie, wenn jemand in der Reichweite von Station B ist und kann Station A sehen und Station C, dann einfach die Daten zwischen A und C weiterleiten würde. Und genau diesen Effekt kann man natürlich in Computernetzwerken durch einen Bruting-Protokoll bewerkstelligen.
+
+00:10:13.681 --> 00:10:19.461
+<v SPEAKER_2>Und das sind dann die Matten, die da sozusagen gestrickt werden in dem Mesh Networking?
+
+00:10:19.481 --> 00:10:21.541
+<v SPEAKER_1>Genau, also die Knoten.
+
+00:10:21.561 --> 00:10:33.961
+<v SPEAKER_2>Und dazu müssen wir vielleicht mal so auch festhalten, so ein WLAN-Signal, wie weit breitet sich das normalerweise aus?
+
+00:10:33.981 --> 00:10:50.021
+<v SPEAKER_1>Das ist eine gute Frage, da gibt es verschiedene Antworten dafür. Wenn man jetzt auf einem sehr hohen Turm steht und hat freie Sicht und eine ungestörte sogenannte Frennel-Zone, dann kann man auch mit der eingebauten Antenne von einer...
+
+00:10:50.041 --> 00:10:52.881
+<v SPEAKER_2>Was ist das für eine Zone bitte? Eine Frennel-Zone?
+
+00:10:52.901 --> 00:11:07.961
+<v SPEAKER_1>Ja, das ist im Radio relativ schwierig zu erklären. Es ist ein Rotations-Elypsoid in 3D, den man sich denken muss zwischen den beiden Antennen, wenn man jetzt eine Funkverbindung zwischen zwei Geräten aufbaut. Dieser Rotations-Elypsoid, der Durchmesser...
+
+00:11:10.701 --> 00:11:12.261
+<v SPEAKER_2>Rotations-Elypsoid.
+
+00:11:12.721 --> 00:11:50.061
+<v SPEAKER_1>Ja, oder American Football, könnte man auch sagen. Genau, so eine längliche Pille. Kann auch besonders lang sein, aber um es zu beschreiben, komme ich mal darauf zurück. Innerhalb dieses Ellypsoiden, der von dem Abstand zwischen den beiden Antennen und der Frequenz abhängig ist, wenn da Objekte drin sind, dann stören die die Übertragung. Also es genügt nicht, wenn ich nur über eine dünne Linie, eine Sichtverbindung zwischen den beiden Antennen habe, sondern ich brauche eine ungestörte Frenelzone. Und die Frenelzone ist eben dieser gedachte Rotations-Ellypsoid.
+
+00:11:50.441 --> 00:12:03.841
+<v SPEAKER_2>Okay, wenn jetzt diese freie Sicht herrscht, also jetzt nicht nur so eine direkte Sichtverbindung, sondern man diese komplette Rag-Bi-Pille dazwischen schieben kann, wie weit gehen dann so normale Laptop-WLAN-Antennen zum Beispiel?
+
+00:12:07.001 --> 00:12:35.521
+<v SPEAKER_1>Das hängt jetzt von der Qualität ab. Also es gibt da sehr gute Geräte. Es gibt eine Firma in Taiwan namens Senao. Ich bin da Fan von den Produkten, aber ich will jetzt keine Schleichwerbung machen. Die machen zum Beispiel noch eine Megabit-Datenverbindung bei minus 95 Dezibel und andere Geräte, die kriegen noch nicht mal ein Ping, nicht ein einzelnes Datenpaket durch, wenn sie bei minus 85 dB ankommen. Das sind 10 dB Unterschiede.
+
+00:12:35.541 --> 00:12:40.541
+<v SPEAKER_2>Was für eine Strecke muss ich mir vorstellen? Rennen wir von Kilometer?
+
+00:12:40.561 --> 00:12:55.001
+<v SPEAKER_1>Ich habe einen kleinen Taschencomputer in Libretto mit einer Orinoco-WLAN-Karte und gegen eine Rundstrahlanterne bekomme ich noch 11 Megabit auf 2 Kilometer Entfernung. Das habe ich getestet in Bangladesch auf dem Reisfeld gegen eine Antenne, die hier oben auf einem Turm stand.
+
+00:12:55.821 --> 00:13:25.121
+<v SPEAKER_2>Die Idee vom Mesh Networking ist ja, dass man im Prinzip ein Netzwerk aus einzelnen Teilnehmern, also quasi die Teilnehmer, sind selber das Netz. Jeder weitere, der dazukommt, vergrößert das Netz, sodass man, wenn man jetzt mal davon ausgeht, dass man jetzt mal einen Kilometer Abstand hat zwischen zwei Punkten. Wenn dann einfach so, jeden Kilometer ist so eine Station, dann geht das eben so zehn Kilometer weiter. Dann kann ich eben über diese zehn Kilometer kommunizieren, indem ich meine Daten über alle einzelnen Punkte, die sich jeweils sehen, weiterreichen kann. Richtig?
+
+00:13:25.141 --> 00:13:56.181
+<v SPEAKER_1>Ganz genau. Und je mehr Leute daran teilnehmen, desto besser ist die Abdeckung. Also es muss jetzt kein Provider kommen, der in eine Infrastruktur investiert. Also zumindest zu einem bestimmten Teil. Das macht natürlich schon Sinn, eine Infrastruktur oben und zum Beispiel auf Dachlevel aufzubauen und irgendwelche Backbone-Links aufzubauen. Aber im Prinzip, man kann einfach eine Gruppe von 20 Nerds mit ihren Laptops, mit Mesh-Software drin, ich würde natürlich alles empfehlen, aber da kommen wir dann später drauf. Die können sich einfach in irgendein Gebiet begeben, sind dann alle miteinander verbunden.
+
+00:13:56.201 --> 00:13:59.201
+<v SPEAKER_2>Und das konfiguriert sich alles dynamisch, richtig?
+
+00:13:59.741 --> 00:14:09.261
+<v SPEAKER_1>Na ja, ganz, ganz perfekt dynamisch ist es nicht, weil man muss sich eine Adresse aussuchen und die mit den anderen absprechen. Man sollte natürlich keine Dupletten haben.
+
+00:14:09.281 --> 00:14:57.021
+<v SPEAKER_2>Also sprich, wie in jedem normalen, geplanten Netzwerk braucht man in irgendeiner Form eine Autorität, die die Adressen an die einzelnen Rechner vergibt. Aber das ist ja für die Topologie nicht entscheidend. Normalerweise ist es ja so, dass ich anhand der TCP-Adresse, die ja so ein Netzwerk und so einen Hostanteil hat, kann ich ja etwa herauskriegen, wo ich jetzt her bin. Also wenn man sich heute eine IP-Adresse anschaut, dann kann man diese anhand öffentlich veröffentlichter Tabellen auch so einigermaßen einem Ort auf diesem Planeten zuweisen. Das funktioniert natürlich auch nicht immer 100%ig, aber relativ gut, weil die Adressen sind eben bestimmten Providern zugeteilt, die eben bestimmte Versorgungsbereiche haben und so weiter. Aber hier ist ja jetzt alles dynamisch im Sinne von, die 20 Nerds laufen durch den Wald und ändern natürlich auch permanent ihre Positionen und damit auch die Abstände untereinander.
+
+00:14:58.941 --> 00:15:13.601
+<v SPEAKER_1>Ja, die Vernetzung übernimmt das Routing-Protokoll. Im Prinzip genügt für das Setup von diesen 20 Nerds, jeder kriegt eine individuelle IP-Adresse. Wenn er mehrere Interfaces hat in seinem Gerät, kriegt er auch mehrere IP-Adressen.
+
+00:15:13.621 --> 00:15:15.381
+<v SPEAKER_2>Also mehrere WLAN-Karten sozusagen.
+
+00:15:15.401 --> 00:15:15.881
+<v SPEAKER_1>Ganz genau.
+
+00:15:15.901 --> 00:15:16.641
+<v SPEAKER_2>Ist das sinnvoll?
+
+00:15:16.661 --> 00:15:28.901
+<v SPEAKER_1>Ja, das ist absolut sinnvoll. Also man kann zum Beispiel, wenn man drei WLAN-Karten im Gerät hat, wie eingebaute und zwei, die man dann noch über USB oder sonst wie anschließt, dann kriegt man ein richtiges performantes Mesh-Netzwerk hin sogar.
+
+00:15:28.921 --> 00:15:32.001
+<v SPEAKER_2>Die verwenden dann alle unterschiedliche Kanäle oder funken die alle auf dem gleichen Plan?
+
+00:15:32.021 --> 00:15:40.921
+<v SPEAKER_1>Das funktioniert natürlich dann am besten, wenn alle mehrere WLAN-Karten haben. Dann kann man wirklich richtig performantes Netz damit erzeugen.
+
+00:15:40.941 --> 00:16:13.761
+<v SPEAKER_2>Okay, aber das ist mir jetzt noch nicht so ganz klar. Also normalerweise bei einem normalen WLAN, wenn man sich an so einen Access-Point anschließt, dann funkt der ja auf einem Kanal. Und alle, die dann sozusagen an diesen Access-Point angeschlossen sind, die benutzen dann eben auch eben genau diesen von dem Access-Point vorgegebenen Kanal. So, und wenn jetzt irgendwie ein paar Meter weiter noch ein anderer Access-Point ist und der ist auf demselben Kanal, dann gibt es gleich Ärger. Dann überlappt sich das und dann funken die sich gegenseitig dazwischen und das ist nicht gut. Also müsste man einen gewissen Kanalabstand machen. Aber bei dem Mesh Networking verwenden ja absichtlich alle den gleichen Kanälen.
+
+00:16:14.161 --> 00:16:20.461
+<v SPEAKER_1>Wenn man ein Mesh-Netzwerk aufbaut, wo alle Geräte nur einen WLAN-Interface haben...
+
+00:16:20.841 --> 00:16:26.681
+<v SPEAKER_2>Aber eigentlich wäre es toller, wenn sie alle mehrere hätten, weil dann würde er mit dem einen auf dem einen Kanal reden und mit dem anderen auf dem anderen Kanal reden.
+
+00:16:27.401 --> 00:17:13.621
+<v SPEAKER_1>Also das Mesh-Netzwerk, so wie wir das machen oder wie das jetzt in Südafrika, in Griechenland, in Nepal eingesetzt wird, das basiert darauf, dass es ein Low-Cost-Netzwerk ist, was wenig Geld kosten soll, was sich selbst heilt, was dynamisch wächst, was organisch wächst. Und da nimmt man dann die Einschränkung, dass man Bandbreite verschenkt, indem man nur ein Interface verwendet im Kauf. Das ist auch so, dass wenn man Access Points im G-Modus betreibt, eben in Südafrika oder in Nepal, wenn sie überhaupt zum Beispiel Internet-Anbindung haben, dann ist das WLAN, auch das Mesh-Netzwerk mit nur einem Interface, so viel performanter als ihre Anbindung an das Internet, dass das überhaupt gar keine Rolle spielt.
+
+00:17:15.301 --> 00:18:00.761
+<v SPEAKER_2>Wir müssen mal ein bisschen aufpassen, wir werfen hier wieder mit viel technischen Begriffen um uns. Also WLAN, da gibt es ja diesen schönen Standard 802.11, das ist so die Protokollfamilie oder diese Standardsfamilie, in der das alles spezifiziert ist. Das, was wir alle kennen, ist in der Regel das 802.11b, das sogenannte. Das ist eigentlich so das, was man heute so als das herkömmliche WLAN bezeichnet. Dann gab es da so ein paar Entwicklungen. Heute haben sehr viele Geräte, verwenden auch noch diese G-Variante davon, die du gerade erwähnt hast, die funkt im gleichen Bereich, hat aber eine höhere Bandbreite, also 54 Megabit im Vergleich zu den 11 Megabit, die das normale WLAN macht. Und dann gibt es auch noch die A-Variante, das ist aber auch ein anderer Frequenzbereich, 5 Gigahertz-Bereich, aber auch mit 54 Megabit.
+
+00:18:00.781 --> 00:18:03.021
+<v SPEAKER_1>Richtig? Ja, also das...
+
+00:18:03.041 --> 00:18:08.401
+<v SPEAKER_2>Die können aber alle zum Einsatz gebracht werden. Also im Prinzip ist ja dieses Mesh Networking kann auch wirklich alles mischen.
+
+00:18:09.181 --> 00:18:15.261
+<v SPEAKER_1>Ja, ich meine, das Mesh Networking ist nicht daran gebunden, auch dass es WLAN ist.
+
+00:18:15.281 --> 00:18:15.901
+<v SPEAKER_2>Geht auch mit Kabel.
+
+00:18:15.921 --> 00:18:25.881
+<v SPEAKER_1>Wenn jetzt mehrere Mesh Nodes einfach irgendwo eine Ethernet-Verbindung über Kabel haben, kann man das Routing-Protokoll einfach auch auf dem Ethernet laufen lassen oder auf den Interfaces.
+
+00:18:26.761 --> 00:18:51.501
+<v SPEAKER_2>Aber jetzt natürlich schon so, dass diese Protokolle, an denen jetzt gearbeitet wird, in den Projekten, an denen du auch arbeitest, schon ganz spezifisch natürlich auf WLAN hin abzielen und auch die Probleme, die bei WLAN auftreten, sozusagen berücksichtigt. Weil wenn ich ein Kabel habe, dann ist das Kabel halt da oder ist es nicht und dann funktioniert das in der Regel ganz gut. Aber bei WLAN hat man ja so Link-Qualitäten und dann ist er mal da und mal nicht und schiebt sich eine Wolke dazwischen und so.
+
+00:18:51.521 --> 00:19:16.981
+<v SPEAKER_1>Ganz genau. Eine besondere Schwierigkeit ist halt, dass nur ein Übertragungsmedium zur Verfügung steht. Also wenn man jetzt ein Interface hat, gibt es eben nur einen Kanal. Und die Pakete werden dann durchgereicht. Im Prinzip macht Mesh Network das, was man in der Schule, also ich habe das in der Schule kennengelernt, Stille Post nennt. Nur natürlich, dass bei Stille Post irgendwie der Witz ist, dass hinterher was ganz anderes rauskommt, als am Anfang reingesagt wurde.
+
+00:19:17.301 --> 00:19:19.621
+<v SPEAKER_2>Ja, und das ist bei Mesh Networking anders?
+
+00:19:19.641 --> 00:19:24.301
+<v SPEAKER_1>Das ist bei Mesh Networking anders natürlich. Wir haben ja schließlich CRC-Zoom.
+
+00:19:24.321 --> 00:19:34.661
+<v SPEAKER_2>Genau, das kann man mit Prüf-Zoom machen. Aber im Prinzip ist es das gleiche Problem. Man muss erst einmal die Übertragung sichern, aber das ist ja natürlich Build-in in das WLAN.
+
+00:19:34.681 --> 00:19:36.561
+<v SPEAKER_1>Das ist schon gegeben.
+
+00:19:36.581 --> 00:19:54.481
+<v SPEAKER_2>Ja, wo wird denn sowas eingesetzt? Woran ich natürlich auch gleich denken muss, ist militärischer Bereich. Es sind solche Protokolle, solche Netzwerke, auch im militärischen Bereich. Das klingt so ein bisschen nach die Panzer fahren durch die Wüste und telefonieren miteinander.
+
+00:19:55.661 --> 00:20:08.121
+<v SPEAKER_1>Sagen wir es viel einfacher. Die Gruppe von 20 Nerds mit Laptops, die können auch in Kampfuniformen rumlaufen und kleine Ipaks mit sich rumschleppen und selbiges hat die US Army auch schon eingesetzt.
+
+00:20:09.341 --> 00:20:12.781
+<v SPEAKER_2>Okay, aber darüber wissen wir natürlich nicht so viele, welche Protokolle die einsetzen.
+
+00:20:14.721 --> 00:20:21.581
+<v SPEAKER_1>Naja, die machen halt keine Open Source-Entwicklung, wobei sie schon sicher sehr, sehr genau beobachten, was wir hier tun.
+
+00:20:21.601 --> 00:21:09.441
+<v SPEAKER_2>Gut, aber der Hauptgrund, würde ich sagen, der die Entwicklung jetzt in dem Bereich treibt, ist ja nicht, dass man mit 20 Nerds durch den Wald ziehen möchte, weil man schon immer mal im Wald nachts Internet haben wollte. Sondern es gibt ja so ein spezifisches Problem. Viele Leute freuen sich heute über DSL und alles ist ganz super. Aber es gibt natürlich auch Bereiche, in denen DSL nicht so stark vertreten ist. Das sind vor allem die ländlichen Bereiche. Es gibt da ja dieses recht bekannt gewordene Projekt in Jursland, in Dänemark, wo die gesamte Region dermaßen unterversorgt ist mit Infrastruktur aller Art. Das ist dann glaube ich aus der Tatsache, dass auch das letzte Krankenhaus geschlossen wurde, da aber zumindest mal eine Glasfaser lag, dann dieses Projekt losgetreten wurde. Warst du da mal?
+
+00:21:09.461 --> 00:21:10.281
+<v SPEAKER_1>Ja, ich war da mal.
+
+00:21:10.301 --> 00:21:12.901
+<v SPEAKER_2>Da gab es auch so eine Veranstaltung vor ein, zwei Jahren?
+
+00:21:13.261 --> 00:21:17.441
+<v SPEAKER_1>Ja, genau. Da gab es eine Veranstaltung, Fresh Air Free Networks.
+
+00:21:17.461 --> 00:21:18.341
+<v SPEAKER_2>Und da haben sich alle da getroffen.
+
+00:21:19.041 --> 00:21:23.401
+<v SPEAKER_1>Ich habe möglicherweise sogar noch ein T-Shirt angefunden.
+
+00:21:23.461 --> 00:21:28.461
+<v SPEAKER_2>Und dort haben sie im Prinzip die gesamte Bevölkerung, diesen ganzen Landstrich mit...
+
+00:21:28.481 --> 00:22:22.881
+<v SPEAKER_1>Die Situation in Jusland war so, dass das Wasser nach der Motel-Edge macht das Licht aus. Also die lokale Zeitung wurde geschlossen, das Krankenhaus wurde geschlossen. Im Prinzip ist es ja eine Region, die vollkommen von der Landflucht überrollt wurde, die es halt auch in Dänemark gibt. Und ein paar Leute haben gesagt, das kann es jetzt nicht sein. Und dann gab es im Krankenhaus, gab es halt eine schnelle Leitung, die war halt gedacht, um Internetmedizin zu betreiben. Und bevor die stillgelegt wurde, haben die gesagt, stopp halt, wir brauchen die noch. Und dann haben die Leute halt angefangen, eine komplette Infrastruktur, eine Daten-Infrastruktur, basierend auf WLAN aufzubauen und waren damit sehr erfolgreich. Also als wir sie getroffen haben damals, da hatten sie schon die ersten 600 Häuser verbunden und hatten Bestellungen für 3000.
+
+00:22:22.921 --> 00:22:34.541
+<v SPEAKER_2>Wow, also fast jeder ist dort über WLAN versorgt. Aber da spielt jetzt Mesh Networking nicht so die primäre Rolle. Ich denke mal, die Haupt-Links sind halt einfach so WLAN-Strecken.
+
+00:22:34.561 --> 00:22:55.601
+<v SPEAKER_1>Die haben diese Technik angesetzt, die man im Englischen Hub & Spoke, also Nabe und Speiche, benennt. Also irgendwelche zentralen Zugangspunkte und haben dann halt relativ preiswerte Access Points halt hingesetzt, die sich in einen Client-Modus, also die sich halt anbinden konnten, an diese Masternotes verbinden konnten.
+
+00:22:55.921 --> 00:22:59.641
+<v SPEAKER_2>Und wird da Mesh-Mit-Networking dann auch eingesetzt?
+
+00:22:59.661 --> 00:23:14.321
+<v SPEAKER_1>Ich bin eingeladen, bei ihnen noch mal vorbeizuschauen und sie darüber zu informieren. Die haben da auch ein großes Interesse dran. Allerdings in der Zeit, als sie angefangen haben, war die Sache mit dem Mesh-Networking noch kein Thema.
+
+00:23:14.341 --> 00:24:46.741
+<v SPEAKER_2>Okay, ein anderer unterversorgter Bereich, gerade hier in Berlin, sehr bekannt. Man führt das immer so unter dem Stichwort Opal-Ghetto. Opal steht für optische Anschlussleitungen. Ja, das ist so der Auswuchs des Zukunftswarens der Deutschen Telekom nach der Wiedervereinigung, wo sie glaubten, so ab jetzt machen wir alle nur noch Glasfaser und dann haben sie überall Glasfaser verlegt. Sie dachten, das sind die High-Speed-Verbindungen von morgen. Das sind sie ja eigentlich auch, aber es sind eigentlich eher die High-Speed-Verbindungen von übermorgen. Dann wurden sie von der technischen Entwicklung dahingehend überrascht, dass dann eben DSL aufkam, insbesondere natürlich den USA, weil die waren von optischen Anschlussleitungen noch ganz weit entfernt, wollten alle ihre Telefonleitungen wieder verwenden und damals hat halt in den 80er Jahren, glaube ich, hat noch keiner so richtig damit gerechnet, dass man wirklich über die alten Kupferkabel wirklich schnelle Verbindungen rüberkriegt. Aber das DSL hat das relativ ökonomisch hinbekommen und dann wollten auf einmal alle nur noch DSL produzieren und das ist das einzig wirklich günstige mit dem Ergebnis, dass dann die Opal-Gettos übrig blieben, wo dann einfach kein Kupfer lag. Der populärste Bereich ist Berlin Friedrichshain, der Ostbezirk auf der anderen Seite von Kreuzberg, der dann quasi durchsetzt war auf der einen Seite mit einer freakigen Kultur, auch einer freakigen Technikkultur, aber eben ohne Internet, aber natürlich mit einem hohen Internetbedarf. Und dort kommt jetzt aber das Mesh Networking zum Einsatz, richtig?
+
+00:24:46.761 --> 00:25:34.941
+<v SPEAKER_1>Genau, also ich lebe in Friedrichshain und es war für mich auch die Motivation, da einzusteigen. Wir hatten so ein Internet-Café, wo wir halt kostenloses Internet angeboten haben, wo wir Open-Source-Schulungen gemacht hatten. Und wir waren, ich weiß nicht, bis irgendwann 2001 waren wir in der Situation, dass wir eine ESDN-Flatrate hatten und die fielen dann ja alle weg. Bis auf, glaube ich, eine Ausnahme, die es dann doch noch irgendwie gab. Auf jeden Fall standen wir irgendwann mit einem Internet-Café ohne Internet da. Und dann war die Idee, uns mit WLAN außerhalb des Opal-Gattos zu versorgen. Das war dann der Punkt, wo ich angefangen habe, Antennen zu bauen, Workshops zu machen. Und da ging es erstmal darum, einfach Peer-to-Peer-Verbindungen aufzubauen.
+
+00:25:36.041 --> 00:25:42.641
+<v SPEAKER_2>Also überhaupt erst mal die Häuser untereinander zu vernetzen, aber dann schon mit der Intention, sich darüber ins Internet zu binden.
+
+00:25:42.661 --> 00:25:43.781
+<v SPEAKER_1>Ganz genau, damit fing es an.
+
+00:25:44.061 --> 00:25:51.741
+<v SPEAKER_2>Und dann haben sich alle die ISD-Einleitung geteilt. Highspeed Internet mit dem Hinterhof.
+
+00:25:52.081 --> 00:26:00.261
+<v SPEAKER_1>Das Entscheidende war damals nicht die Bandbreite, sondern die permanent online zu sein, ohne ständig auf die Uhr schauen zu müssen.
+
+00:26:00.621 --> 00:26:42.881
+<v SPEAKER_2>Ja, aber das muss man auch noch mal dazu sagen. Das war eigentlich die einzige Alternative, die hieß Modem so anrufen und dann auch wirklich pro Minute zahlen. Und jeder, der das schon mal gemacht hat, weiß, wie sinnlos Zeittarife sind für Internet. Das ist einfach Quatsch, weil es ist nicht wie telefonieren. Man stellt die Verbindung her und dann nutzt man sie die ganze Zeit, bis man sie nicht mehr braucht. Und dann baut man sie wieder ab. Man muss halt einfach immer da sein und dann schickt man halt mal was. Dann kriegt man mal was, gerade so Chatting, auch Web und so. Man klickt halt einmal und dann liest man erst mal wieder fünf Minuten. Genau, always online ist das Stichwort. Was habt ihr da für eine Technik zum Einsatz gebracht, um diese Vernetzung zu machen? Erst mal ganz normales WLAN-Nintern.
+
+00:26:43.861 --> 00:27:07.401
+<v SPEAKER_1>Ja, es war noch eine Zeit, wo die WLAN-Karten noch sehr, sehr teuer waren. Wir haben da Luce und Orinoco-Karten gekauft für 350 DM das Stück. Dann noch irgendwelche ESA zu PCMCAE, also einen Adapter, um in einem Desktop-Computer eine Notebook-Karte einstecken zu können, weil das waren damals die einzigen Karten, die es auf dem Markt gab.
+
+00:27:07.421 --> 00:27:09.641
+<v SPEAKER_2>Genau, es gab eigentlich nur PC-Cards.
+
+00:27:10.041 --> 00:27:22.601
+<v SPEAKER_1>Es gab nur Karten für Notebooks, sonst gab es nichts. Und diese Luce und Orinoco-Karten, das Tolle an denen war, dass sie eine sehr gute Empfangsempfindlichkeit hatten und einen Antennenanschluss, sodass man eine externe Antenne anschließen konnte.
+
+00:27:22.601 --> 00:27:42.081
+<v SPEAKER_2>Das war auch so ein bisschen der etablierte Standard. Eigentlich haben ja fast alle am Anfang Lusentechnik genommen. Da kommt ja auch dieser Wavelan-Begriff her. Das ist immer sehr verwirrend. Es gibt tausend Begriffe, Wireless-Lan, W-Lan, Wavelan. Meint alles dasselbe. So ist eigentlich alles das gleiche.
+
+00:27:42.401 --> 00:27:46.341
+<v SPEAKER_1>Ja, der Begriff Wavelan ist eigentlich ein Marketingbegriff von Lusent.
+
+00:27:46.361 --> 00:27:50.901
+<v SPEAKER_2>Am Anfang war der sehr populär, aber der ist dann eigentlich eingestellt worden, weil man wusste, dass es ein Scheichmark ist.
+
+00:27:50.921 --> 00:28:11.781
+<v SPEAKER_1>Es gab nur ganz, ganz wenige Firmen, die überhaupt drahtlose Netzwerkarten anbieten konnten. Und eine andere Marke war Breezecom, aber die hatten wir damals nicht. Und die Lusent-Karten, die wurden halt von Open Source Betriebssystemen unterstützt, also BSD und Linux. Und deswegen war das für uns keine Frage, welches wir da kaufen.
+
+00:28:14.361 --> 00:28:38.101
+<v SPEAKER_2>So, und dann, nehme ich mal an, wollten dann immer mehr mitspielen und das Ganze war dann sozusagen gar nicht mehr so ohne Weiteres regelbar. Man musste sich über eine dynamische, dynamischen Aufbau anzeichen, letztes Gedanken machen. Oder greife ich jetzt ein bisschen zu weit voraus? Erzähl doch mal, wie das war. Wann ist denn damals? Wann reden wir denn jetzt? Wir reden so von 2000, 2001, so in dem Bereich.
+
+00:28:38.121 --> 00:30:03.761
+<v SPEAKER_1>2001. Und da saßen halt die Frigs in ihrem Internet-Café mit dem über Funk übertragenen ISDN. Und ich kam halt mit dieser Idee, hey, verdammt, diese Karten können doch diesen tollen Ad-Hoc-Modus. Und da kam von mir, von meinem Hintergrund mit Funktechnik, der Wunschstraum, hey, wenn jedes Walkie-Talkie für das andere weiter funkt, weil Daten weiter reicht und als Relaisestation agiert, dann können wir das doch auch mit der Open-Source-Software und den WLAN-Karten machen. Und ein Freund von mir, der Bruno Randolph, meinte dann, ja, die Idee hatte er auch schon. Und er hatte da mal recherchiert und er war auf das Wort Mesh gestoßen und es gab auch irgendwas oder hieß es Mobile Mesh. Und mit diesen beiden Begriffen bewaffnet, habe ich dann die Suchmaschine der Wahl angeschmissen und fand dann Mobile Mesh als Open-Source-Software unter der GPL. Interessanterweise war das von einem Forschungsinstitut in den USA, das MITRI, die forschen im Auftrag der Zivilgesellschaft und des Militärs. Aber diese tolle Software, die gab es dann unter GPL, frei zum Download. Ich war begeistert, habe es runtergeladen auf mehrere Notebooks. Damals hatte ich dann zum Glück schon mehrere WLAN-Karten installiert, angeschaltet und wunderbar. Und dann auf dem Chaos-Communication-Camp, da hatte ich dann noch Mitstreiter gefunden. Und wir fingen dann auf dem Camp-Gelände das zu testen.
+
+00:30:03.781 --> 00:30:04.461
+<v SPEAKER_2>2003.
+
+00:30:06.581 --> 00:30:18.361
+<v SPEAKER_1>Ja, und ich war begeistert. Vorher hatte ich die Idee, falls das noch niemand programmiert hat, dann müssen wir das machen. Aber bestimmt hat jemand das schon gemacht und wir müssen das Rad nicht nochmal neu erfinden. Und eben das gab es auch.
+
+00:30:18.381 --> 00:30:29.381
+<v SPEAKER_2>Okay, worum kümmert sich dann diese Software jetzt genau? Also was macht diese Software neu? Weil diesen Ad-Hoc-Modus, also diese Walkie-Talkie, jeder spricht mit jedem, das gibt es ja schon.
+
+00:30:29.401 --> 00:30:36.681
+<v SPEAKER_1>Das gibt es schon, aber das hat den Haken, da können nur Geräte miteinander sprechen, die innerhalb direkter Reichweite sind.
+
+00:30:36.701 --> 00:30:37.821
+<v SPEAKER_2>Die sich gegenseitig sehen.
+
+00:30:37.841 --> 00:31:06.101
+<v SPEAKER_1>Ganz genau, also wenn man jetzt eine Wolke hat von zehn Geräten und alle zehn Geräte hat, also Not A hat zu allen anderen einen direkten Funkkontakt, dann geht das. Aber wenn nur einzelne Funkkontakte zueinander haben, dann können die eben nicht mit den anderen kommunizieren. Und erst dann, wenn die automatisch erkennen, wer wen sehen kann und sich darüber klar werden, wer wen zweckmäßigerweise die Daten weiter erreichen muss oder kann oder soll, dann geht das.
+
+00:31:06.121 --> 00:31:24.341
+<v SPEAKER_2>Also das Mobile Mesh ist quasi so eine wer sieht wen Datenstaubsauger, der einsammelt, wer jetzt eigentlich wen sehen kann und zwangsläufig wen anderen erreichen kann. Also wen muss ich etwas schicken, damit es sowieso weitergeht?
+
+00:31:24.361 --> 00:32:02.081
+<v SPEAKER_1>Ja, es ist ein proaktives Routing-Protokoll und die Funktionsweise ist, dass diese WLAN-Karten einen Broadcast schicken, die sagen Hello, ich spreche hier Mobile Mesh, wer kann mich sehen? Und die anderen sagen Hello, ich spreche Mobile Mesh und wer kann mich sehen? Und dann sehen sie, ah, da hat jemand ein Hello gefunkt, der spricht das gleiche Routing-Protokoll. Und dann tauschen sie sich darüber aus, wer wen noch sehen kann. Also sie tauschen dann Topologie-Nachrichten aus. Ich habe hier noch vier Nachbarn und du hast hier noch drei Nachbarn, die ich nicht sehe. Ich kann dich sehen, na wunderbar, dann kann ich die anderen drei Nachbarn über dich erreichen. Und so kann man das bis zu einem bestimmten Level, kann man das weiter ausbauen.
+
+00:32:02.101 --> 00:32:13.261
+<v SPEAKER_2>Und ja, und dann lebten sie bis an ihr Lebensende und waren glücklich. Oder gab es da Probleme?
+
+00:32:13.281 --> 00:32:40.481
+<v SPEAKER_1>Probleme sind mehrere Art existent. Zum einen ist es so, dass wir hier jetzt im Moment in Berlin ein Mesh-Netzwerk betreiben, wo etwa 200 Geräte dran beteiligt sind. Und wir sind hier dabei, das größte Mesh-Netzwerk der Welt zu betreiben, was außerhalb militärischer Nutzung existiert. Möglicherweise ist es trotzdem das größte Netzwerk, weil die Militärer es nicht gebacken kriegen.
+
+00:32:40.501 --> 00:32:44.361
+<v SPEAKER_2>Man sollte jetzt vielleicht auch mal den Namen fallen lassen. Wie heißt dieses Netzwerk?
+
+00:32:44.381 --> 00:32:59.941
+<v SPEAKER_1>Ihr findet das im Internet unter olsrexperiment.de. Am Anfang kam ich immer durcheinander, ist es nur ein OSLR oder der OLSR und meine Eselbrücke war dann Olsens Routing-Protokoll.
+
+00:32:59.961 --> 00:33:22.881
+<v SPEAKER_2>Ihr seid sozusagen die Olsenbande von Friedrichshain, immer wieder ein typischer Plan, die Widrigkeiten zu umgehen. Wir nehmen jetzt mal vorweg, es gibt ein neues Protokoll, OLSR, hat das... Gut, so richtig neu ist es jetzt nicht. Seit wann ist das in Entwicklung? Seit wann gibt es dieses Projekt?
+
+00:33:22.901 --> 00:33:28.361
+<v SPEAKER_1>Nein, nein, also du greifst vor, lass uns das Schritt für Schritt machen.
+
+00:33:28.381 --> 00:33:29.581
+<v SPEAKER_2>Bremse ich mich noch ein bisschen.
+
+00:33:30.421 --> 00:34:09.001
+<v SPEAKER_1>Ja, wie gesagt, ich habe also dieses Morai-Mesh getestet, ich habe Mitstreiter gefunden, die das auch auf ihren Geräten installiert haben. Wir haben es ausprobiert. Die Software gab es aber nur für Linux und die war zu dem Zeitpunkt auch schon relativ alt. Da gab es von 2000, gab es dann eine Veröffentlichung, war Version 1.0 stable und der Mensch, der das geschrieben hat, hatte kein Interesse mehr dran und wurde nichts mehr getan. Der hat das irgendwie mal fire and forget veröffentlicht und das war es dann. Und es wurde, die Netze wurden dann halt größer und die Leute, die in den Code reingeschaut haben, gemeinten, das ist jetzt nicht so richtig toll programmiert.
+
+00:34:09.021 --> 00:34:12.721
+<v SPEAKER_2>Also die Netze im Free Design wurden größer. Von wie vielen Leuten reden wir dann so ungefähr?
+
+00:34:14.761 --> 00:35:27.681
+<v SPEAKER_1>Na, wir hatten dann auch noch vielleicht 20, 30 Notes. Es war noch nicht so wahnsinnig berühmt, aber es war schon offensichtlich, dass dieses Mobile-Mesh schon auch seine Probleme hatte. In Wirklichkeit ist es so, dass so eine drahtlose Vernetzung per Funk, wo verschiedene Notes, Datenpakete weiterreichen und alle denselben Kanal verwenden, ist es vom Algorithmus her eine doch eher komplexe Angelegenheit, weil alle sich gegenseitig stören. Und der Hauptpunkt, der mir aufgefallen ist bei Mobile-Mesh war, es sucht immer den kürzesten Pfad. Also es versucht immer die Anzahl der Hops, die benötigt werden, um ein Datenpaket von Not A zu Not Y zu transportieren, auf Teufel komm raus, zu minimieren. Das machen fast alle Routing-Protokoll-Entwürfe, die an Universitäten irgendwie ersäumen werden oder an irgendwelchen Instituten. Die sind bis heute auf diesem Stand, dass sie einfach versuchen, die geringste Anzahl an Hops zu finden. Im militärischen Bereich wird man auch wahrscheinlich dabei bleiben, weil bei großer Mobilität hat sich das herausgestellt, dass der Kompromiss, immer den kürzesten Pfad zu wählen, doch der effektivste ist. Aber für ein brauchbares Netzwerk kommt man nicht drum rum, da bessere Algorithmen anzuwenden.
+
+00:35:27.821 --> 00:35:40.661
+<v SPEAKER_2>Also so richtig mobil ist das ja eigentlich nicht im Friedrichshain. Also die meisten Leute wollen halt eine Anbindung ihrer Wohnung haben, das heißt, in dem Moment, wo sie ihren Not einschalten, bewegt er sich auch nicht groß durch die Straßen. Aber es kann halt sein, dass er mal da ist und mal wieder weg ist.
+
+00:35:40.681 --> 00:36:18.041
+<v SPEAKER_1>Genau, man setzt sich in der Regel entweder hat einen statischen Not, also irgendeinen Exist-Point, der oben auf dem Dachhausdach steht oder auf dem Balkon oder auf dem Fensterbrett. Der schaltet sich ja nicht Tag und Nacht ständig ein und aus, der läuft die ganze Zeit. Das wollen wir ja auch. Weil wir wollen ja, dass die Leute dadurch, dass sie das benutzen, die Infrastruktur vergrößern und je verlässlicher das ist, desto besser ist das. Wenn ich ein Notebook habe, das schalte ich ein, starte das Protokoll und dann kann ich erwarten, dass ich innerhalb von ein, zwei Minuten die Routen habe und mit dem Netz verbunden bin. Dann habe ich mein Internetzugang. Ich kann mich auch so mit Schrittgeschwindigkeit bewegen und dann wird nichts abreißen.
+
+00:36:18.061 --> 00:36:26.301
+<v SPEAKER_2>Also die Routen haben heißt, ich schalte das Gerät ein und dann lauscht es sozusagen erstmal im Umfeld oder fängt gleich an zu schreien, weiß ich genau.
+
+00:36:26.321 --> 00:36:27.141
+<v SPEAKER_1>Das macht beides.
+
+00:36:27.161 --> 00:36:43.101
+<v SPEAKER_2>Wahrscheinlich beides. So, hallo, hier bin ich, wer kann mich sehen? Und dann trudeln so langsam die Informationen ein. Wie sind diese Daten so strukturiert? Also diese Information, wer sieht wen? Also kriegt jetzt jeder so eine komplette Kopie von allem oder kriegt jeder nur so das zu sehen, was ihn interessieren muss?
+
+00:36:43.121 --> 00:37:15.781
+<v SPEAKER_1>Also die Protokolle, die wir getestet haben und die wir verwenden, wie gesagt, so ist das Mobile Mesh und dann das OLSR, die gehören zur Gattung der proaktiven Routing-Protokolle. Es gibt verschiedene Theorien und Bestrebungen, wie man sowas implementieren kann. Es gibt da proaktive Protokolle, reaktive, welche, die auf geografische Lage basieren, welche, die auf hierarchischen Clustern aufbauen, in dieser Reihenfolge. Und in dieser Reihenfolge ist meiner Meinung nach auch die Brauchbarkeit.
+
+00:37:15.801 --> 00:37:20.401
+<v SPEAKER_2>Leitungsqualität, also jetzt so die eigentliche Qualität der direkten Verbindungen?
+
+00:37:20.421 --> 00:37:52.481
+<v SPEAKER_1>Es geht erstmal nur um den Algorithmus, also wie man diese Pfade findet und die Routen aufbaut. Und ein proaktives Routing-Protokoll, das sammelt einfach von allen Notes die Informationen darüber, wen hat Note X als Nachbarn. Und so bildet sich halt durch weitere gereichte Datenpakete, bildet sich irgendwann ein komplettes Bild des Netzes. Was mehr oder weniger unscharf ist, das muss man zugeben. Was aber nicht wirklich dramatisch ist. Da kommen wir dann später noch drauf.
+
+00:37:52.741 --> 00:38:07.421
+<v SPEAKER_2>Kann man sowas dann schon kartografieren? Also kann man aus dieser, wer sieht wen Struktur, auch schon so in etwa ablesen, wo sich das so befindet? Also ich meine, so eine Geoposition in dem Sinne ist ja wahrscheinlich nicht Teil des Protokolls.
+
+00:38:07.421 --> 00:38:34.061
+<v SPEAKER_1>Naja, wenn einzelne Notes bekannt sind, also wenn ich weiß, wo die stehen. Wir haben das auch so gemacht, dass wir bei der IP-Vergabe schon so eine Vergabe gemacht haben, dass man sehen kann, hier 130, das ist Süd-Friedrichshain, 129, das ist Nord-Friedrichshain. Auf die Art und Weise kann man das schon sehen. Und wenn ich jetzt einen Pier habe, der sich mit einem Note in Süd-Friedrichshain piert, dann ist schon irgendwo klar, wo der ist.
+
+00:38:34.081 --> 00:38:38.701
+<v SPEAKER_2>Aber so explizit Geokoordinaten spielen da eigentlich keine Rolle bei dem ganzen Spaß?
+
+00:38:38.721 --> 00:38:55.761
+<v SPEAKER_1>Ich meine, es gibt eine Map, also wenn man auf olsrexperiment.de klickt, dann kann man schauen, wo genau diese Notes stehen. Ausgenommen natürlich die mobilen Geräte, die sind dann natürlich nicht kartografiert.
+
+00:38:55.781 --> 00:38:59.121
+<v SPEAKER_2>So, sind wir jetzt bei OLSR oder noch nicht?
+
+00:38:59.961 --> 00:40:47.301
+<v SPEAKER_1>Naja, das Mobile-Mesh hat ja halt, wie ich dann geschlossen habe, das Problem, es sucht einfach nur den kürzesten Pfad, was dann bedeutet, dass es sich immer die lausigsten Links raussucht. Es versucht dann halt, um möglichst viel Connectivity zu erzeugen, sucht es sich die Nodes aus, die möglichst weit entfernt sind. Und möglichst weit entfernt heißt bei Wireless niedrigste Bandbreite, größter Packet-Loss, weil wir haben es ja nicht mit einem Kabel zu tun, wo was auf der einen Seite reingeht, auf der anderen Seite in der Regel auch wieder rauskommt, sondern je mehr Distanz man versucht zu überwinden, desto fürdüstbehafteter und zuverlässiger etc. pp wird es. Es hat sich herausgestellt, dass das Verfahren eigentlich untragbar ist, einfach immer nur den kürzesten Pfad zu wählen. Und wir hatten halt den Eindruck gewonnen, dass die Code-Base nicht besonders stabil ist. Und dann haben wir nach Alternativen gesucht und da sind wir auf das OLSR gestoßen. Das OLSR ist ein Request for Commons 3626, eingereicht von INRIA. Das ist eben so eine französische Forschungs- und Entwicklungsgesellschaft, die ebenso wie diese MIT AI im Interesse der Zivilgesellschaft und des Militärs forscht. Und wir haben festgestellt, dass es für verschiedene Betriebssysteme Implementierungen gab, die standardkonform sein sollten, unter anderem von der US Navy, die tatsächlich auch Code unter der GPL veröffentlicht hatten, unter anderem aus Frankreich und von einem Student an der Uppsala University in Norwegen namens Andreas Tönnesen, der einen Linux-Port dafür gebastelt hatte. Und diesen Linux-Port haben wir uns dann besorgt, ausprobiert und er schien erst mal zu funktionieren. Und von da an haben wir halt mit OLSR experimentiert.
+
+00:40:49.201 --> 00:40:58.481
+<v SPEAKER_2>Und das hat auch besser funktioniert als das Mobile Mesh? Aber es war neu.
+
+00:40:58.501 --> 00:42:22.181
+<v SPEAKER_1>Erst mal nicht. Man muss dazu sagen, dieses OLSR steht für Optimized Link-State-Routing. Link-State-Routing ist das gleiche Hintergedanke wie bei Mobile Mesh, ein proaktives Routing-Protokoll, wo alle Nodes eine Datenbank erstellen, wie jeder Knoten mit jedem anderen vernetzt ist, über wie viele Knoten. Und die schlauen Wissenschaftler, Ingenieure hatten sich da bei INRIA ausgedacht, wie man das Ganze optimieren kann. Und ich muss da jetzt zu einem Akademikerrand ansetzen. An Universitäten ist es so, dass da recht viel Papiere veröffentlicht werden. Und wenn Code implementiert wird, dann hauptsächlich für Simulatoren. Und ganz wenig wird da im wirklichen Leben getestet. Und das ist ein Alp. Also die Akademiker beschäftigen sich eigentlich nur damit, ha, du hast ein proaktives Routing-Protokoll. Das skaliert nicht. Das wird an seine Routing-Tabelle ersticken. Das wird an dem Protokoll-Overhead ersticken. Das macht nie mehr als 200 Knoten. Und ich habe jetzt ein optimiertes Verfahren. Und das ist reaktiv. Und das wird auch mit 10.000 Knoten noch zurechtkommen. Und das ist vollkommen utopisch. Also im Ad-hoc-Verfahren, also per Draht los, 10.000 von Noten untereinander vernetzen zu wollen. Und diese Ideen haben das echte Leben nie gesehen.
+
+00:42:22.201 --> 00:42:30.361
+<v SPEAKER_2>Das funktioniert sozusagen nur auf dem Papier, wo man Linien zeichnet, aber nicht, wo man wirklich jetzt mit Funk und Frequenzen und Interferenzen zu tun hat.
+
+00:42:31.021 --> 00:42:31.761
+<v SPEAKER_1>Ganz genau.
+
+00:42:31.781 --> 00:42:38.261
+<v SPEAKER_2>Aber wenn diese Netze dann auch wirklich jetzt so unterschiedliche Kanäle verwenden, wie wir das vorhin schon angesprochen haben, dass wir nicht alle jetzt auf dem gleichen...
+
+00:42:38.281 --> 00:42:51.701
+<v SPEAKER_1>Trotzdem braucht man einen intelligenten Algorithmus, der tut was, was angebracht ist. Und die Leute, also dieses OLSR, diese Optimierung bestanden dann zum einen in einem sogenannten Hysterese-Algorithmus.
+
+00:42:51.721 --> 00:42:54.401
+<v SPEAKER_2>Was heißt denn das? Das weiß ich ja jetzt auch nicht.
+
+00:42:54.421 --> 00:42:56.481
+<v SPEAKER_1>Hysterese. Muss ich Hysterese erklären?
+
+00:42:57.841 --> 00:43:03.861
+<v SPEAKER_2>Ja, also kannst du ja mal probieren. Vielleicht weißt du ja auch gar nicht, was es heißt. Du benutzt das Wort nur, weil es so klug klingt.
+
+00:43:06.621 --> 00:43:33.421
+<v SPEAKER_1>Nein, ich denke nicht, dass ich das aus dem Grund verwende. Hysterese sagt einfach, ich habe zwei Schwellenwerte. Oberhalb von einem bestimmten Schwellenwert aktiviere ich etwas oder deaktiviere ich etwas. Unterhalb von einem bestimmten Schwellenwert mache ich das umgekehrt. Das ist wie jetzt bei der Kommunikation über zum Beispiel eine serielle Schnittstelle. Alles, was über eine bestimmte Spannung wird, wird als logisch Null. Alles, was unter einer bestimmten Spannung als logisch Eins erkannt.
+
+00:43:33.801 --> 00:43:42.481
+<v SPEAKER_2>Die allwissende Müllhalde sagt dazu, Hysterese, auch Verharrungseffekt, bezeichnet das Fortdauern einer Wirkung nach Wegfall ihrer Ursache.
+
+00:43:42.781 --> 00:44:44.361
+<v SPEAKER_1>Das ist, glaube ich, besser, wenn ich das erkläre. Also zum Beispiel, in der Technik, wenn du zum Beispiel, du hast einen bestimmten Effekt, jetzt zum Beispiel, du willst kommunizieren über eine serielle Schnittstelle, also musst du irgendwie zuordnen, ab einer bestimmten Spannung ist es logisch so und so viel, also Null, unter einer bestimmten Spannung ist es logisch eins, es ist bei seriell invertiert. Und dazwischen gibt es einen Graubereich, da musst du eindeutig definieren, wann wird geschaltet, wann ist es so und wann ist es so, da darf es keine Unterschiede geben. Und da muss also eine bestimmte Schwellspannung überschritten oder unterschritten werden, damit es geschaltet wird. Und diese, die Beharrung liegt darin, dass eben erst geschaltet wird, wenn ein bestimmter Wert über oder unterschritten wird. Im Fall von OLSR bedeutete das, dass gezählt wurde, Hello-Pakete. Ich habe einen Not, mit dem ich mich gepieert habe. Und sobald ich drei Hellos von ihm nicht empfangen habe, schmeiße ich den aus meiner Routinetabelle raus.
+
+00:44:44.381 --> 00:44:53.041
+<v SPEAKER_2>Also Not ist jetzt der andere Rechner. Und Peeing heißt, ich kommuniziere mit ihm. Und mit Hello sagen sie halt alle, mich gibt es jetzt auch.
+
+00:44:53.061 --> 00:45:23.841
+<v SPEAKER_1>Genau. Und jetzt dreimal hintereinander gehen diese Hellos, die du mir schickst, verloren. Oder die Broadcasts empfange ich von dir nicht. Und dann gehe ich einfach mal davon aus, du existierst nicht, und dann schmeiße ich dich aus meiner Routing-Tabelle raus. Das war die eine tolle Sache. Damit wollten sie halt bewirken, dass halt zu schlechte Links nicht verwendet werden. Dann kommt das nächste. Sie hatten sich ausgedacht, Multipoint-Relaying. Das ist jetzt, glaube ich, nur akustisch schwer zu erklären. Das Multipoint-Relaying, das sollte...
+
+00:45:23.861 --> 00:45:32.381
+<v SPEAKER_2>Kannst du noch dazu gestikulieren? Wir machen jetzt hier Sound-Seeing.
+
+00:45:32.401 --> 00:45:35.721
+<v SPEAKER_1>Ja, müssen wir als Spatz mit Kunstkopfsterephonie...
+
+00:45:35.741 --> 00:45:37.241
+<v SPEAKER_2>Da arbeiten wir noch dran.
+
+00:45:37.261 --> 00:45:41.301
+<v SPEAKER_1>Okay, dann brauche ich noch irgendwelche Töne, die ich in der Hand halten kann.
+
+00:45:41.321 --> 00:45:46.341
+<v SPEAKER_2>Das ist eine holophonische Sendung.
+
+00:45:46.361 --> 00:46:50.601
+<v SPEAKER_1>Gut, aber nicht, dass wir uns zu sehr verzetteln. Das ist die Multipoint-Relays. Wenn jetzt eine Not Information darüber verbreitet, dann müssen andere Netzwerknoten diese Information weiterreichen. Und sie dachten sich, wenn jeder Netzwerknoten das weiterreicht, also jeder wiederholt, was irgendjemand gesagt hat, dann gibt es ein unglaubliches Rauschen, weil dann wird es unglaublich viele Kollisionen, unglaublich viele Treffe geben. Und das ist doch eigentlich gar nicht notwendig. Wenn ich einen kenne, der alle anderen sieht, die ich nicht direkt erreichen, aber indirekt erreichen kann, dann genügt es, wenn ich ihm sage, nur er soll das weiter funken und nicht andere Nachbarn, die ich habe. Also ich wähle dann aus, ich habe ein Subset von Nachbarn, die bilden die Schnittmenge zu meiner indirekten Umgebung, also alles, was zwei Sprünge von mir entfernt ist. Und ich wähle dann nur welche aus und sage nur denen, du schickst meine Topologie Nachricht, also in der ich aufzeichne, wie viele Nachbarn ich habe, nur du schickst die weiter.
+
+00:46:50.681 --> 00:46:52.481
+<v SPEAKER_2>Klingt erstmal ganz sinnvoll.
+
+00:46:52.501 --> 00:47:13.181
+<v SPEAKER_1>Das klingt auf den ersten Blick ganz sinnvoll, aber funktioniert in der Wirklichkeit leider gar nicht. Also wir haben dann das OLSR, der größte, größere Versuch war dann auf der Wizard of Oz-Konferenz hier in Berlin und wir dachten uns, da sind viele Nerds mit vielen WLAN-Karten. Wir haben auch die Netzwerkversorgung per WLAN organisiert auf der Wizard of Oz.
+
+00:47:13.781 --> 00:47:14.881
+<v SPEAKER_2>Auch im Berliner Kongresscenter?
+
+00:47:14.901 --> 00:48:08.541
+<v SPEAKER_1>Auch im Berliner Kongresscenter, ganz genau. Und dachten wir, animieren wir möglichst viele Leute und dann können wir mal schauen, wie das Protokoll im echten Leben mit möglichst vielen Leuten funktioniert. Und das Resultat war desaströs. Also wir konnten dann sehen, die Routing-Tabelle baut sich auf und bricht sofort wieder zusammen, und zwar komplett. Sie baut sich halb auf, bricht sofort wieder zusammen, baut sich zu 20 Nots auf, bricht sofort wieder zusammen und das permanent. Und ich habe mir das angeschaut und da wurde mir klar, warum das so ist. Erstens, Multipoint-Relay. Also ich suche mir nur die Nachbarn aus, über die ich möglichst viele erreiche. Das sind wieder, türkische Weise, die die möglichst weit entfernt sind. Dann kommt aber von denen dreimal kein Hallo bei mir an, dann schmeißt sie sie aus meiner Tabelle raus. Das heißt, ich stehe plötzlich mit einer Routing-Tabelle da, die Null-Einträge enthält. Ganz hervorragende Optimierung, Wundt.
+
+00:48:10.481 --> 00:48:15.681
+<v SPEAKER_2>Dem akademischen Ansatz fehlt der Praxisbezug. Das ist aber jetzt in diese OLSR-Software mit eingearbeitet worden.
+
+00:48:16.101 --> 00:50:12.901
+<v SPEAKER_1>Wir haben dann angefangen, das zu verändern. Zum Glück konnte man über die Konfigurationsdatei schon relativ viel einstellen. Wie gesagt, diese Mesh-Entwicklung, die Algorithmen, das ist alles sehr experimentell. Das war wirklich zum Glück, hatte der Andreas Tönnesen in seiner Implementierung das so gehalten, dass man relativ viel einstellen konnte. Wir konnten dann die Hysteriese deaktivieren und wir haben dann diesen Multi-Point-Relay gesagt, das soll einfach jeden als Multi-Point-Relay nehmen. Das war der erste Schritt und damit fing die Sache an, so halb gar zu funktionieren. Und dann meinte ich zu Andreas, ob es nicht viel besser wäre, wenn wir mal anfangen würden, nicht einfach den kürzesten Pfad zu wählen, sondern uns zu überlegen, wie messen wir, wer mit wem am besten verbunden ist und suchen uns dann die günstigsten Routen aus. Und dann gab es am MIT die Idee vom sogenannten Expected Transmission Count. Also, die hat mich so was ausgedacht. Man schickt eine Gruppe von Signalen, von der jeder Not weiß, innerhalb von einem bestimmten Zeitrahmen muss ich die hören von den anderen. Und ich erwarte jetzt, dass zehn Signale kommen. Wenn ich davon nur drei höre, heißt das, sieben sind verloren gegangen. Das kann ich dann berechnen. Und dann kann ich quasi diese Link, diese Verbindung, die ich habe zu bestimmten Not-B-Noten. Und ich habe mir das angeguckt und dachte, das ist alles ganz gut und schön, aber wozu sollen wir jetzt noch extra Datenpakete schicken? Wir schicken doch schon Hellos. Und dann haben wir uns einen Algorithmus ausgedacht, wie wir das erreichen, einfach anhand der Hellos Statistiken zu erstellen und zu herauszufinden, ob es ein symmetrischer oder ein unsymmetrischer Link ist. Also ein unsymmetrischer Link ist, wenn nur du mich hörst und ich höre dich nicht. Und die Leute, die diesen Draft, diesen Inria-Draft verfasst hatten, die hatten diese toll dreiste Idee, auch unidirektionale, also unsymmetrische Links auch mit zu verwenden und das war eine weitere Katastrophe.
+
+00:50:13.101 --> 00:50:24.801
+<v SPEAKER_2>Okay, also das heißt, im Prinzip setzt sich jetzt so schrittweise an der praxisorientierten Verbesserung des Protokolls durch und manifestiert sich eigentlich nur in diesem OLSR, in der OLSR-Soft, ja?
+
+00:50:25.921 --> 00:50:37.961
+<v SPEAKER_1>Wir schreiben halt keine Drafts, wir veröffentlichen keine Papiere, wir nehmen Implementierungen in die Hand, probieren sie aus, haben eine Benutzerbasis von Leuten, die motiviert sind. Wir beobachten, was dabei rauskommt.
+
+00:50:37.981 --> 00:50:43.701
+<v SPEAKER_2>Aber irgendwann könnte es natürlich auch schon noch mal Zeit sein für ein neues RFC, was sich dann quasi das andere obsoletet.
+
+00:50:44.101 --> 00:50:44.521
+<v SPEAKER_1>Ja.
+
+00:50:44.541 --> 00:50:52.941
+<v SPEAKER_2>Weil de facto setzt das ja so keiner ein, oder? Also es gibt ja keine Implementierungen, die das jetzt genauso macht, wie die Jungs von der Intela sich das mal ausgedacht haben, oder?
+
+00:50:53.701 --> 00:51:17.761
+<v SPEAKER_1>Doch. Doch. Also die Leute, die sich da damit beschäftigen und relativ unbedarft, so wie wir mal unbedarft waren, da dran rangehen, die denken, ah, das ist ja toll, und dann probiere ich das aus, und die Resultate sind sicherlich niederschmetternd. Und wir haben jetzt einfach an diesem Protokoll so lange rumgemeißelt und rum verändert, dass man eigentlich schon fast nicht mehr sagen kann, dass es OLSR ist. Weil die gesamten Optimierungen sind jetzt raus.
+
+00:51:17.781 --> 00:51:20.021
+<v SPEAKER_2>Gibt es dann eine neue Abkürzung, die man sich einfach merken kann?
+
+00:51:22.321 --> 00:51:23.721
+<v SPEAKER_1>Ja, das Problem ist, dass es...
+
+00:51:23.741 --> 00:51:43.821
+<v SPEAKER_2>Es ist ein Lahn oder so? Ich finde das ja bemerkenswert. Ich mir das so vorstelle, in Friedrichshain, so in Berlin, da gibt es ja einfach alle möglichen Strahlen, Quellen und Sichtbeschränkungen und Straßenfluchten und Störungen, die man sich nur vorstellen kann.
+
+00:51:43.841 --> 00:52:03.461
+<v SPEAKER_1>Man darf sich das nicht so vorstellen, dass das OLSR-Experiment nur einen Teil von Friedrichshain erfasst, sondern das sind konkret die Bezirke Mitte, Friedrichshain, Kreuzberg, Weißensee, Hohenschönhausen. Also ich kann jetzt nicht alle Standorte aufzählen, man sollte einfach mal bei OLSR uns einschauen.
+
+00:52:03.481 --> 00:52:14.861
+<v SPEAKER_2>Also fast ganz Ost-Berlin und das freie West-Berlin. Aber es geht auch schon über Berlin hinaus, oder? Es gibt ja auch andere Städte, in denen schon ähnliche Experimente gestartet werden.
+
+00:52:16.541 --> 00:53:38.581
+<v SPEAKER_1>Du hast vorher angehoben zu sagen, dass das Protokoll, wie hast du dich ausgedrückt, wenn in der Situation hier in der Stadt mit all diesen Strahlung, also das hat ja das, also alle möglichen Entstörungen, auch die Dynamik, nicht jeder kommt irgendwie optimal aufs Dach und der Einheitsaufbalkon. Ja und da kommen dann auch ganz viele Probleme dazu. Wir haben drahtlose Video-Übertragungssysteme, die im 2,4 Gigahertz-Band arbeiten, also die senden ein Dauersignal, was unglaublich stört. Wir haben natürlich jede Menge konkurrierende WLAN-Anwendungen, also nicht nur wir haben da angefangen, sich irgendwie peer-zu-peer zu vernetzen, sondern viele Hausgemeinschaften betreiben Hotspots. Über den Dächern haben auch inzwischen kommerzielle Anbieter einen Versuch gewagt und wollen gegen uns antreten, also so empfinden wir das. Also es gibt eine Firma, die hat sich gegründet, die nennt sich City Wireless Networks und die ist genau in dem heißen Punkt, wo wir am Arbeiten sind, wollen die mit einem ähnlichen Konzept Geld verdienen. Wobei ich denen recht wenige Chancen einräume, aber das Gerücht geht um, dass es für sie eher ein Testbit ist. Also mit der Technik, die wir entwickeln, kann man wunderbar das Problem der letzten Meile lösen. Nicht nur irgendwie in Afrika, sondern auch hier in der entwickelten Welt.
+
+00:53:38.601 --> 00:53:43.681
+<v SPEAKER_2>Inwiefern? Also ich meine, die letzte Meile jetzt über Funk zu machen, ist ja in dem Sinne keine neue Idee.
+
+00:53:43.841 --> 00:53:59.901
+<v SPEAKER_1>Das ist keine neue Idee, aber mit geringsten Kosten, mit einer sehr hohen Zuverlässigkeit. Also man kann nicht einfach eine Infrastruktur aufbauen und keinen Routing-Protokoll einsetzen. Irgendetwas funktioniert dann nicht, irgendein Link ist gestört und dann sitzt der Kunde ohne seinen Internetanschluss da.
+
+00:54:01.181 --> 00:54:14.661
+<v SPEAKER_2>Ja, jetzt vielleicht noch mal so ein bisschen zur Begriffsklärung. Wir hatten ja als Projekt, hast du gesagt, OLSR-Experiment. Ist das jetzt das gleiche wie freifunk.net?
+
+00:54:14.681 --> 00:54:56.721
+<v SPEAKER_1>Freifunk ist eigentlich nichts weiter als ein Begriff. Es ist keine wirkliche Organisation, es ist einfach nur ein Oberbegriff, unter dem sich so freie Netzwerk-Aktivisten hier in Deutschland irgendwie sammeln oder das ist quasi als Begriff dafür verwendet haben. Ähnliches gab es in England, in den USA und in vielen anderen Orten auch. In Deutschland heißt das Freifunk. Freifunk hat damit angefangen, dass Leute angefangen haben zu sagen, wir brauchen freie Netzwerk-Strukturen und wir bauen die einfach auf mit billigem WLAN-Equipment.
+
+00:54:56.741 --> 00:55:18.141
+<v SPEAKER_2>Gut, werden wir vielleicht mal zum Abschluss noch mal ein bisschen praktischer, bevor wir noch mal kurz auf das Big Picture eingehen, wie das sich noch zukünftig erweitern kann. Wenn ich jetzt so konkret daran teilnehmen will, was brauche ich? Angenommen, ich habe jetzt einen unterversorgten Bereich oder ich habe vielleicht auch so einen ländlichen Bereich und ich will mich da halt jetzt alternativ vernetzen. Womit fange ich an?
+
+00:55:20.721 --> 00:55:39.321
+<v SPEAKER_1>Die beste Lösung wird sein, du versuchst einen Access Point zu kaufen, der kompatibel mit der OpenWRT ist. Das ist ein Open Source Projekt, Linux auf Access Points. Für diese OpenWRT-Software gibt es unseren Routing-Demon.
+
+00:55:39.341 --> 00:55:42.321
+<v SPEAKER_2>Wofür steht das WRT?
+
+00:55:42.341 --> 00:55:50.761
+<v SPEAKER_1>Der WRT ist eine Modellbezeichnung von einem Access Point von Linksys, die dann später mal Francisco gekauft wurden. Ganz genau.
+
+00:55:50.781 --> 00:55:59.261
+<v SPEAKER_2>Das waren die ersten, die mit Linux ausgeliefert wurden und die dann relativ schnell reingeniert wurden, auch relativ günstig.
+
+00:55:59.501 --> 00:56:35.541
+<v SPEAKER_1>Da gab es die Klage von Harald Welte, der gesagt hat, ihr verletzt hier die GPL, ihr setzt hier ohne es zu sagen Linux auf eurem Access Point ein. Und er hat die GPL durchgesetzt vor einem deutschen Gericht und das Opfer wurde die Firma Sitecom, die diese Access Points entweder nicht mehr verkaufen hätte dürfen oder halt die Quellen ihres Betriebssystems für ihren Sitecom Access Point veröffentlichen hätten müssen. Und nachdem Sitecom dieser Forderung nachgekommen ist, dass sie sonst diesen deutschen Markt nicht mehr gehabt hätten, taten das andere Firmen auch und siehe da auf 50-60 Prozent diese Access Points des Linux als Betriebssystem Inside.
+
+00:56:35.561 --> 00:56:40.641
+<v SPEAKER_2>Okay, das können wir abkürzen. Also dann waren sie halt gezwungen, das zu veröffentlichen, dann hat sich dieses Gruppen-WRT-Projekt draus gegründet.
+
+00:56:40.661 --> 00:57:02.041
+<v SPEAKER_1>Da gab es verschiedene Hacker, die angefangen haben, eben mit diesem quelloffenen Betriebssystem für die Access Points halt rumzuhacken. Und eine sehr große Benutzerbasis fand sich für das Broadcom-Design. Broadcom ist eine Hersteller von Chipsetzen. Die haben also eine CPU integriert mit WLAN und die werden in sehr vielen Access Points eingesetzt. Und das populäre Modell war dieser Linksys-WRT54.
+
+00:57:03.561 --> 00:57:04.481
+<v SPEAKER_2>Und da kommt das her?
+
+00:57:04.501 --> 00:57:06.601
+<v SPEAKER_1>Da kommt das her, deswegen hast du das Open-WRT.
+
+00:57:07.201 --> 00:57:17.321
+<v SPEAKER_2>Den gibt es ja auch noch zu verkaufen. Die haben jetzt versucht, mal ohne Linux, da gab es dann gleich wieder ein bisschen Widerstand. Jetzt verkaufen sie trotzdem noch ein Linux-Modell, wenn ich das richtig verfolgt habe.
+
+00:57:17.341 --> 00:57:19.761
+<v SPEAKER_1>Das ist ein heikler Punkt.
+
+00:57:20.001 --> 00:57:26.421
+<v SPEAKER_2>Schon wieder einer. Okay, bleiben wir nochmal kurz bei der Praxis. Also was mache ich jetzt damit?
+
+00:57:26.441 --> 00:57:44.541
+<v SPEAKER_1>Wir müssen es wirklich sagen, weil sonst passiert, nämlich jemand, der diese Sendung hört, er geht in den Laden, wo er das Gerät nicht zurückgeben kann, und kauft sich ein Linksys VRT54GC oder VRT54G Hardware Revision 5. Und dann stellt er fest, dass die ganze tolle Software und alles, wovon wir reden, gar nicht funktioniert.
+
+00:57:44.841 --> 00:57:46.501
+<v SPEAKER_2>Das sind also No-Go-Geräte sozusagen.
+
+00:57:46.521 --> 00:57:47.121
+<v SPEAKER_1>Ganz genau.
+
+00:57:47.141 --> 00:57:51.801
+<v SPEAKER_2>Wie heißen die Geräte, mit denen es jetzt gehen würde, zum Beispiel? Ist ja ganz normaler Linksys.
+
+00:57:51.821 --> 00:58:38.121
+<v SPEAKER_1>Also es wurde dann halt ruchbar, dass das Gerät mit dem Broadcom-Design ersetzt wird, durch ein Gerät mit dem Marvel-Chipsatz. Und das sind eben die aktuellen Versionen. In den USA gibt es leider nur noch diese abgespeckte Variante zu kaufen, auf der ein proprietäres Betriebssystem da läuft, was Close-Tos ist. Und sie konnten dadurch halt irgendwie den Speicher halbieren und das Gerät passend billiger machen. Und deswegen kann man die tollen Sachen nicht mehr damit machen. Konsequenz war, dass sie, wie gesagt, haben, hm, da gibt es eine Community. Wir bieten jetzt noch eine Weile diese Geräte, die Linux-kompatibel an, und machen da ein L dran. Also VRT54GL ist also das Gerät der Wahl. Das wird jetzt, obwohl es eigentlich das gleiche Gerät ist, mit einer anderen Verpackung verkauft, wo halt GL drauf steht. Und das kostet 10 Euro mehr.
+
+00:58:38.401 --> 00:58:40.501
+<v SPEAKER_2>Was kostet das denn?
+
+00:58:40.521 --> 00:58:46.541
+<v SPEAKER_1>Zu den günstigsten Tarifen für den VRT54G sind 60 bis 70 Euro.
+
+00:58:46.561 --> 00:58:49.581
+<v SPEAKER_2>Gibt es aber unter Umständen auch so gebraucht, nochmal günstiger?
+
+00:58:49.861 --> 00:58:57.301
+<v SPEAKER_1>Ja, wobei, also gerade wenn man versucht, die per Ebay zu kaufen, man sollte es nicht unterschätzen, es gibt eine enorme Nachfrage nach diesen Dingern.
+
+00:58:57.321 --> 00:59:02.821
+<v SPEAKER_2>Okay, wenn ich das Ding jetzt habe, dann muss ich erstmal die Firmware austauschen von dem Gerät, oder?
+
+00:59:02.841 --> 00:59:21.861
+<v SPEAKER_1>Ja, da würde ich empfehlen, da geht man auf die Webseite vom OLSR Experiment und klickt sich zur sogenannten Freifunkfirmware durch. Da gibt es einen sehr begnadeten Menschen namens Sven-Ole Blattücke und der hat eine wundervolle Firmware für dieses Gerät oder für die ganze Gerätenfamilie gebastelt. Und an dieser Firmware können sich sehr viele Hersteller mehrere Scheiben abschneiden.
+
+00:59:22.581 --> 00:59:26.961
+<v SPEAKER_2>Ja, das habe ich gesehen, sehr schick, so mit eingebautem Web-Server, alles ganz hübsch gemacht, sehr übersichtlich.
+
+00:59:27.761 --> 00:59:36.481
+<v SPEAKER_1>Und es kann alles, also wenn man das Gerät im Laden kauft, kann es halt Accesspoint und sonst nichts. Und mit der Freifunk-Firmware kann es Accesspoint, kann es client, kann es...
+
+00:59:36.501 --> 01:00:08.861
+<v SPEAKER_2>Das heißt, man verliert auch keine Funktionalität dadurch, sondern man gewinnt ausschließlich. Man verliert nur die Garantie. Okay, das heißt, in dem Moment, wo jetzt die OLSR-Software auf dem Gerät drauf ist, kann ich das im Prinzip für ein Mesh Network benutzen. Also zum Beispiel jetzt hier in Berlin. Ich gehe auf diese Webseite, ich kriege die Firmware und vor allem ich das richtig erinnere, ich bekomme ja eine IP-Adresse dieses Projektes noch mit dazu. Das heißt, für dieses Gerät bekomme ich eine IP-Adresse. Und ich kann mir die Firmware gleich so runterladen, dass die IP-Adresse da fertig mit reinkommt.
+
+01:00:08.881 --> 01:00:12.381
+<v SPEAKER_1>Ganz genau, die Firmware enthält schon die IP-Adresse, für die du dich registriert hast.
+
+01:00:12.401 --> 01:00:15.561
+<v SPEAKER_2>Das heißt, man muss eigentlich nichts anderes machen, als die Firmware drauf und dann ist das Gerät fertig.
+
+01:00:16.841 --> 01:00:18.001
+<v SPEAKER_1>Du musst nur noch einschalten.
+
+01:00:18.021 --> 01:00:24.101
+<v SPEAKER_2>Einschalten und natürlich irgendwo platzieren, wo ich mindestens einen weiteren Node aus diesem Mesh-Network kriege.
+
+01:00:24.121 --> 01:00:27.021
+<v SPEAKER_1>Wenn das Netz sehr dicht ist, funktioniert das auch auf deinem Kühlschrank.
+
+01:00:27.041 --> 01:00:30.761
+<v SPEAKER_2>Woran erkenne ich dieses Netz?
+
+01:00:30.781 --> 01:00:49.301
+<v SPEAKER_1>Wir haben eingeführt, dass die Information, also die Webseite in der ESS ID, also im Netzwerknamen, den du quasi, wenn du beim Suchen nach WLAN-Netzwerken mit deinem Gerät schaust, wirst du finden olsr.freifunk.net. Damit geben wir bekannt, was für ein Protokoll läuft und dass es eben ein Freifunk-Knoten ist.
+
+01:00:51.301 --> 01:00:55.121
+<v SPEAKER_2>So, und dann stecke ich da mein Internetkabel rein und dann kommt der Internet raus?
+
+01:00:55.141 --> 01:01:24.841
+<v SPEAKER_1>Dann kommt der Internet raus. Und du kannst in die Administrationsseite dieses Access-Bonds sich reinklicken. Das Netz lebt auch davon, dass Leute auch ihren Internetzugang eben teilen mit anderen. Und dann kannst du unter OLSR-Konfiguration kannst du ein Häkchen setzen bei automatisch nach einem Internetzugang suchen. Und dann wird das Gerät feststellen, Hoppla, ich habe hier noch einen Internetzugang und wird automatisch dem Freifunknetzwerk bekannt geben, ich bin hier ein Internetzugang.
+
+01:01:24.861 --> 01:01:35.161
+<v SPEAKER_2>Dann kann man sozusagen nochmal seine eigenen Bandbreite dem Gesamtprojekt spektakulieren. Und man kann die Software natürlich aber auch direkt auf dem eigenen Notebook oder eigenen Rechner mit WLAN installieren.
+
+01:01:35.441 --> 01:02:06.981
+<v SPEAKER_1>Ja, ein Grund, warum wir damals zu OLSR gegangen sind, war ja auch, dass es eben Implementierungen gab für verschiedene Betriebssysteme. Und inzwischen unterstützen wir, außer Windows, CE und Symbian OS praktisch alles. Also sämtliche BSD-Varianten, Mac OS X, Windows von 95, 98 bis XP, natürlich Linux. Damit fing's ja an. Was nicht unterstützt wird, ist Windows CE. Also es gibt Leute, die beschweren sich, wir sollten das auch unterstützen. Wäre natürlich ganz interessant für PDAs.
+
+01:02:07.321 --> 01:02:41.801
+<v SPEAKER_2>Tja, ist ja Open Source. Falls da jemand die Gabe hat und die Muße vor allem, dann soll er sich da ruhig mal drauf stürzen. Gut, dann haben wir ja schon alles ganz gut durchgekaut. Jetzt wollte ich da nochmal auf dieses Buch zu sprechen kommen, an dem du auch beteiligt warst. Das Buch heißt, trägt den Titel Wireless Networking in the Developing World. A Practical Guide to Planning and Building Low-Cost Telecommunications Infrastructure. Das ist jetzt gerade erschienen, richtig? Januar 2006, 1.
+
+01:02:41.821 --> 01:02:43.361
+<v SPEAKER_1>Januar haben wir veröffentlicht.
+
+01:02:43.381 --> 01:02:52.341
+<v SPEAKER_2>Ist auch unter Creative Commons Attribution Sharelike-Lizenz veröffentlicht worden, also ist frei kopierbar. Wir werden das jetzt hier auch im Chaosradio Podcast finden.
+
+01:02:53.101 --> 01:03:00.661
+<v SPEAKER_1>Ja, es ist auch so, dass Leute, wenn jetzt ein Verlag sich entscheidet, dieses Buch drucken zu wollen, dann können sie das ohne Lizenzgebühren zu bezahlen.
+
+01:03:00.661 --> 01:03:07.941
+<v SPEAKER_2>Aber es gibt auch einen Print-on-demand- Service, wo man jetzt schon sagen kann, ich will das mir ja aufs Klo legen und gib doch mal einmal her.
+
+01:03:07.981 --> 01:03:11.341
+<v SPEAKER_1>Ganz genau, in den USA bei lulu.com.
+
+01:03:11.361 --> 01:03:28.981
+<v SPEAKER_2>Und die Website für das Buch ist www.net. Worum geht es in diesem Buch? Hier wird jetzt auch die Technik erklärt, aber es geht primär eigentlich um konkrete Ratschläge für die Weiterentwicklung.
+
+01:03:29.001 --> 01:04:05.321
+<v SPEAKER_1>Ich meine, für jemanden, der im Moment, also im Moment existiert nur eine englische Version dieses Buches, für jemanden, der englisch, technisches Englisch versteht, ist das Buch gedacht als sowas wie eine WLAN-Bibel. Also man kann mit diesem Buch bewaffnet, hoffen wir, losziehen und sich selber Antennen wasfeln und ein komplettes Netzwerk einschließlich Kaptiv-Portal-Lösungen aufbauen. Also es wird erklärt, TCP-IP eben, ich habe am Anfang die Frenhal-Zone versucht zu beschreiben, das ist da sehr anschaulich beschrieben.
+
+01:04:05.341 --> 01:04:39.741
+<v SPEAKER_2>Ah, die Rakbipille. Genau, also es geht hier los, kann man kurz durch den Inhalt marschieren, geht also erstmal hier tatsächlich, wird Radiophysik erklärt und Netzwerkgestaltung und Antennen werden erläutert, Verstärker, dann Netzwerk- Hardware, Sicherheitsaspekte und das Ganze im Outdoor. Und dann noch diverse Case Studies. Crossing the Divide with a Simple Bridge in Timbuktu.
+
+01:04:40.981 --> 01:04:55.941
+<v SPEAKER_1>Ja, das Buch wendet sich dem Titel nach für Entwicklungsländer. Das war auch der Grund, warum wir das unter dieser Creative Commons Sharelike Lensense 2.5 veröffentlicht haben. Wir wollen einfach eine massenhafte Verbreitung und damit eine Demokratisierung des Internet dabei führen.
+
+01:04:55.961 --> 01:05:06.981
+<v SPEAKER_2>Und es lädt auch zum Erweitern ein. Man kann ja hier den Content nehmen und seine eigene Ausgabe von dem Buch rausbringen, sofern es dann halt dieses Sharelike-License aus, die die gleiche Lizenz trägt wiederum.
+
+01:05:07.001 --> 01:05:16.621
+<v SPEAKER_1>Genau. Naja, neben Open Source, Open Networking, Open Books ein weiteres Creative Commons Projekt.
+
+01:05:16.641 --> 01:05:45.801
+<v SPEAKER_2>Genau. Ja, das kann ich euch alles nur empfehlen. Ich würde sagen, wir haben das jetzt alles mal ganz erfolgreich hier durchgekaut. Kann euch nur empfehlen, euch mal mit der Technologie ein bisschen vertraut zu machen. Das mag für die ein oder andere Anwendung ganz gut geeignet sein. Auf jeden Fall ist es eine Möglichkeit, eine ganze Menge auch über WLAN und über dynamische Routing zu lernen. Siehst du noch so ein paar andere praktische Anwendungen, die wir jetzt vielleicht noch nicht gekommen sind?
+
+01:05:45.821 --> 01:06:08.761
+<v SPEAKER_1>Was wirklich ganz gut ist, dass sich um dieses Thema WLAN und Vernetzung, dass sich da halt auch Communities drum bilden, also wo Leute sich wirklich treffen und sich Gleichgesinnte zusammenfinden. Also der soziale Aspekt sollte man wirklich nicht unterschätzen. Das Konzept ist wirklich fulminant und wir sehen es daran, dass wirklich sehr viele solche Netze überall am entstehen sind.
+
+01:06:11.041 --> 01:07:03.881
+<v SPEAKER_2>Okay, dann würde ich sagen, bedanke ich mich erstmal für das echt aufschlussreiche Gespräch. Alle Links zu der Sendung, alles, was hier erwähnt wurde, findet ihr wie immer auf der dazugehörigen Webseite und natürlich auch in den Lyrics der MP3-Datei, die ihr jetzt hier gerade anhört, auf die eine oder andere Art und Weise. Wenn ihr Fragen, Kommentare, Anregungen habt, ich habe es am Anfang schon erwähnt, ich erwähne es nochmal, schickt uns eine E-Mail chaosradio.accc.de oder benutzt unser Feedback-Telefon 018 01 99 33 22 99 55. Lange Nummer, aber mit großer Wirkung. Wir freuen uns über jede Rückmeldung. Und ja, auch dieses Thema wurde von außen angeregt. Und so soll es natürlich hier auch bleiben. Insofern wünsche ich euch noch eine schöne Woche. Und sag erstmal tschüss, bis bald.

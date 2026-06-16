@@ -1,0 +1,1504 @@
+WEBVTT
+
+00:00:48.883 --> 00:01:58.503
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 122. Mein Name ist Tim Pritlove und ja, nachdem wir hier eine Reihe von Sendungen gehabt haben, die vielleicht nicht ganz so der Mega Technik Hardcore waren, wie der hier manchmal so immer wieder durchscheint, wird es heute ganz anders. Denn heute wollen wir mal ein bisschen in die harte Materie einsteigen und hier wird wahrscheinlich auch mein eigenes Sachverständnis noch mal kräftig auf die Probe gestellt. Das Ganze ist auch so ein bisschen eine Zusammenfassung oder sagen wir mal ein Nachtrag zu einer Reihe von CREs, die hier schon gelaufen sind, die sich alle im weiteren Sinne mit Programmieren, Programmiersprachen und wie man mit diesen Programmiersprachen so umgeht oder wie man die inlaufige Programme dann letztlich auch umgesetzt bekommt behandeln. Ja und lange Rede, erstmal den Gast vorstellen, das ist nämlich Hannes, Hannes Mehnert, hallo.
+
+00:01:58.523 --> 00:01:59.503
+<v SPEAKER_1>Hallo.
+
+00:01:59.523 --> 00:02:20.063
+<v SPEAKER_2>Und ja, du bist ja hier auch schon seit Ewigkeiten in CCC-Kreisen unterwegs, hüpft hier fleißig rum, hast allerdings parallel auch noch was Richtiges gemacht, nämlich studiert. Mit anderen Worten, du kannst eigentlich nicht das abgebrochene Informatik-Studium vorweisen, sondern bist jetzt langsam ans Ende gekommen.
+
+00:02:21.143 --> 00:02:28.923
+<v SPEAKER_1>Genau. Also ich habe technische Informatik immer an angefangen und abgebrochen und bin dann zur Informatik gewechselt.
+
+00:02:28.943 --> 00:02:30.483
+<v SPEAKER_2>Wo ist denn da der Unterschied?
+
+00:02:30.503 --> 00:02:33.563
+<v SPEAKER_1>Bei technischer Informatik ist noch Elektrotechnik dabei.
+
+00:02:33.583 --> 00:02:35.963
+<v SPEAKER_2>Achso, da muss man auch noch löten.
+
+00:02:35.983 --> 00:02:55.023
+<v SPEAKER_1>Ja, und Max-Welt-Ingleichungen können. Und naja, das war mir dann irgendwann zu viel. Also löten geht schon noch, aber die Max-Welt-Ingleichungen, die waren dann irgendwann zu anstrengend. Und dann habe ich mir lieber gedacht, gehe ich zur Informatik, da kann ich noch schön theoretische Informatik hören, was ich auch durchaus interessant fand.
+
+00:02:55.043 --> 00:02:57.543
+<v SPEAKER_2>Dich interessiert die Theorie, ne?
+
+00:02:57.563 --> 00:03:20.163
+<v SPEAKER_1>Genau, ich finde die Theorie mittlerweile viel interessanter als den Rest, sozusagen. Deshalb beschäftige ich mich halt auch seit geraumer Zeit mit Compilern, beziehungsweise im Prinzip, seitdem ich diese Proamiersprachadülen gesehen habe, habe ich mich halt jetzt auch in den letzten Jahren in den Compiler mehr und mehr reingelesen.
+
+00:03:21.003 --> 00:03:54.583
+<v SPEAKER_2>Jetzt hast du dich schon geoutet. Du bist auch einer, one of the few. Ich habe da ja auch so ein Fäbele, aber du steckst gemeinsam mit Andreas, den ich hier auch schon mal bei Chaosradio Express genau zu diesem Thema auch interviewt habe, nämlich der CAE 031 Döllen und Programmiersprachen. Der Titel war deshalb so gewählt, weil wir dann auch sehr viel über Lisp und die allgemeinen Rahmenbedingungen gesprochen haben. Du hast ja den Podcast jetzt auch noch mal angehört, hast du gesagt. Warum war das jetzt besonders, das auf Döllen stoßen?
+
+00:03:56.143 --> 00:04:07.343
+<v SPEAKER_1>Na ja, das auf Döllen stoßen, das war halt endlich mal eine schöne, aufgeräumte Proamiersprache, in der man den Code einfach so hinschreiben konnte, wie man ihn hinschreiben mochte.
+
+00:04:07.363 --> 00:04:08.623
+<v SPEAKER_2>Aber brauchten das nicht alle?
+
+00:04:09.583 --> 00:04:59.343
+<v SPEAKER_1>Ja, aber man brauchte da nicht ständig irgendwelche Workaround, irgendwelche Visitor-Patterns oder irgendwelche Stub-Classes oder irgendwelchen Boilerplate-Code, den man in sowas wie Java oder Python immer wieder braucht oder in C++. Und naja, nach der Erkenntnis von Döllen bzw. nach der Kenntnisnahme von Döllen habe ich ja auch mit Andreas mal diesen ICFP-Contest zusammen gewonnen, naja zweiter Platz und Duchess-Preis. Und da waren wir dann ja gemeinsam auf der International Conference on Functional Programming 2005 in Tallinn. Und da haben ich halt die Vorträge beeindruckt über Typtheorie und über all die schönen Sachen, die die anderen funktionalen Programmierer so machen.
+
+00:04:59.363 --> 00:05:01.663
+<v SPEAKER_2>Wie groß muss man sich diese Veranstaltung vorstellen?
+
+00:05:01.723 --> 00:05:04.583
+<v SPEAKER_1>Na, das waren so 200 Leute, 250 Leute vielleicht.
+
+00:05:04.703 --> 00:05:07.123
+<v SPEAKER_2>Und was für Leute laufen da so rum?
+
+00:05:07.143 --> 00:05:21.343
+<v SPEAKER_1>Hauptsächlich Wissenschaftler, noch ein paar Leute aus irgendwelchen Firmen, die das einfach interessant finden, dann PhD- Studenten, aber sonst halt hauptsächlich alte Professoren, bzw. ältere Professoren.
+
+00:05:21.763 --> 00:05:24.903
+<v SPEAKER_2>Klingt nach einer langweiligen Veranstaltung, ist es aber nicht.
+
+00:05:24.923 --> 00:05:32.323
+<v SPEAKER_1>Nee, das sind alles hoch intelligente Leute, die halt interessante Sachen immer wieder vorstellen.
+
+00:05:32.343 --> 00:06:18.523
+<v SPEAKER_2>Und was, also ich meine, was wird da so vorgestellt? Darüber müssen wir ja auch reden. Hier soll es ein bisschen gehen um Compilerbau und diesen ganzen Kram und in einem anderen Podcast, in dem es vor kurzem hier um LLVM sich drehte, eben diese neue Programmierwerkstatt, in der man halt Compiler bauen kann, Chaosradio Express 114, was auch nur ein Überblick war über das Thema. Da klang ja auch schon an, da hatte Tim Sander ja auch gesagt, naja, für Compilerbau interessiert sich heutzutage irgendwie überhaupt keiner mehr. Also wenn man in der Uni was lernt, dann redet man nicht mehr da drüber. Das wäre irgendwie alles schon, was weiß ich, wird nicht mehr als was Wichtiges angesehen. Ist das gerechtfertigt, die Aussage?
+
+00:06:19.263 --> 00:07:52.723
+<v SPEAKER_1>Nicht wirklich. Also in Deutschland habe ich auch das Gefühl, dass die meisten sich nicht mehr so richtig um Compilerbau kümmern, wobei es auch an meiner Uni ein Compilerbau-Lehrstuhl gibt, wo ich auch gerade meine Diplom-Arbeit schreibe. Also da gibt es auch Leute, die tatsächlich noch als wissenschaftliche Mitarbeiter da arbeiten und an Compilerbau bzw. an Typtheorie was machen. Und auf der Konferenz fand ich interessant, dass es im Prinzip keinen Vortrag gab, wo es nicht Seitenweise, also slideweise irgendwelche Lemmas vorgestellt wurden, also irgendwelche typtheoretischen Gegebenheiten oder theoretischen Gegebenheiten, wie sich das alles verhält. Also im Compilerbau und auch in der Typtheorie ist es halt relativ weit verbreitet, dass man alles schön formalisiert und schön mathematisch ausdrückt, also eindeutig ausdrückt. Und da gab es halt echt viele Vorträge dazu, zum Beispiel über Generalized Algebraic Data Types oder einen Vortrag über Loop. Also einen gesamten eingeladenen Vortrag über Schleifen. Was eine Schleife ist, wie sich das verhält, wie das so ist. Und da hat halt jemand eine formale Syntax und Semantik für Schleifen gefunden, der Eulen Schivers, und hat das halt formalisiert, irgendwie Loop in welche Abschnitte sie sich teilt, also dass man zuerst die Startbedingungen hat.
+
+00:07:52.743 --> 00:08:18.203
+<v SPEAKER_2>Also mit anderen Worten, um es jetzt erstmal nicht gleich zu viel vorwegzugreifen, muss man jetzt erstmal ein bisschen hinarbeiten. Das ist so eine Art, das ist da schon so ein bisschen so die Leistungsschau der Leute, die sich wirklich noch über Sachen Gedanken machen, wo vielleicht an vielen Unis man sich gar nicht bewusst ist, dass man sich da überhaupt noch Gedanken darüber machen kann, wenn man jetzt mal vielleicht so die Ausnahme, diesen Lehrstuhl für Compilerbau eher als Ausnahme sieht, oder?
+
+00:08:18.203 --> 00:08:42.303
+<v SPEAKER_1>Ja, genau. Also es gibt da, also das ist halt alles relativ weit, das gehen grundlange Forschungen, das heißt, es sind da tatsächlich nur die Wissenschaftler dabei sozusagen, es ist relativ wenig, wo irgendwelche Firmen mitarbeiten und die machen sich da wirklich Gedanken und verifizieren das formal, also so wie die Mathematiker.
+
+00:08:42.323 --> 00:09:06.303
+<v SPEAKER_2>Gut, dann versuchen wir doch hier erstmal, zumindest bei diesem Podcast, noch ein paar Leute mitzunehmen, die jetzt mit dem ganzen Themenbereich noch nicht ganz so vertraut sind. Da schließe ich mich auch einfach mal selber mit ein. Das ist immer ganz gut, wenn man es schön doof fragen kann. Was man vielleicht mal voranstellen sollte, ist, was versteht man jetzt eigentlich unter diesem Begriff Compilerbau? Was ist ein Compiler?
+
+00:09:06.323 --> 00:09:27.963
+<v SPEAKER_1>Ja, ein Compiler ist erst mal ein Programm, was als Aufgabe hat, das ist aus einem Quellcode, also Code, der für Maschinen nicht lesbar ist, sondern mehr für Entwickler lesbar ist, der daraus Code transformiert, der für Maschinen lesbar ist, d.h.
+
+00:09:39.543 --> 00:09:50.043
+<v SPEAKER_2>Und sind alle Compiler gleich? Also ist man sich darüber einig, aus welchen Komponenten ein solcher Compiler besteht oder ist das irgendwie auch Moving Target?
+
+00:09:50.783 --> 00:10:22.303
+<v SPEAKER_1>Na, es ist schon eindeutig, woraus ein Compiler besteht, geht nämlich zuerst aus einem Frontend, was halt ein Parser und ein Lexer ist, das heißt, der liest erstmal den Quellcode, also parsen und macht eine lexikalische Analyse, macht daraus einen abstrakten Syntaxbaum, dann kommt es in irgendeine Zwischensprache und dann gibt es Backends. Und die Backends können dann halt Maschinencode generieren oder Java-Bytecode oder was auch immer, was dann halt ausführbar ist auf einem Computer.
+
+00:10:24.283 --> 00:10:53.943
+<v SPEAKER_2>Und wenn es jetzt einen ganzen Lehrstuhl dafür gibt, dann ist das ja sozusagen schon eine komplexe Materie. Das heißt, wenn man sich ausschließlich nur mit diesem einen Typ Programm sozusagen beschäftigen kann, lohnt es sich ja vielleicht nochmal, auf diese einzelnen Schritte auch einzugehen. Also, okay, Sourcecode, weiß jeder, ist halt einfach so Text. Man schreibt halt, also in der Regel, es gibt sicherlich auch Proamiersprachen, die es so grafisch machen und was weiß ich.
+
+00:10:54.063 --> 00:11:13.643
+<v SPEAKER_1>Ja, gab es auch mal bei einem ICFP-Contest, die Proamiersprache 2D, wo man halt in ASCII Art proamieren musste. Wo man halt so Kästchen gezeichnet hat in ASCII Art und jedes Kästchen hatte einen Input, die hatte zwei Inputs und zwei Outputs oder sowas. Ja, war ganz cool.
+
+00:11:13.663 --> 00:11:18.823
+<v SPEAKER_2>Okay, hat sich aber nicht wirklich durchgesetzt. Normalerweise schreibt man halt Programme, in denen man einfach Text reinschreibt.
+
+00:11:18.843 --> 00:11:19.803
+<v SPEAKER_1>Ja, leider.
+
+00:11:19.823 --> 00:11:22.543
+<v SPEAKER_2>So, leider. Wie würdest du es denn gerne machen?
+
+00:11:25.243 --> 00:11:38.603
+<v SPEAKER_1>Ich glaube, also gerade denke ich, dass man es viel besser mit so Graphen machen könnte und mit irgendwelchen Datenhandschuhen so, dass man im Prinzip dreidimensional proamieren könnte.
+
+00:11:38.623 --> 00:11:38.963
+<v SPEAKER_2>Wirklich?
+
+00:11:39.943 --> 00:11:41.083
+<v SPEAKER_1>Ja, wieso nicht?
+
+00:11:41.103 --> 00:11:46.183
+<v SPEAKER_2>Du willst eine Schleife dann so richtig, wie Tom Cruise, in einem freien Raum bauen.
+
+00:11:46.203 --> 00:11:47.323
+<v SPEAKER_1>Genau, modellieren.
+
+00:11:47.343 --> 00:12:08.863
+<v SPEAKER_2>Und dabei cool aussehen, so eine Brille tragen und so. Das ist doch nur so ein Traum der Programmiererschaft, dass sie auch mal cool sind. Nein, zu blässeverdammt in den Keller an den Textern. Ja gut, aber sag doch nochmal was zu diesen Komponenten. Das ist immer so schnell runtergerasselt. Da macht man dann so eine lexikalische Analyse. Was heißt das?
+
+00:12:11.063 --> 00:12:13.383
+<v SPEAKER_1>Na ja, fangen wir erstmal beim Pasa an.
+
+00:12:13.403 --> 00:12:14.663
+<v SPEAKER_2>Ist das das erste?
+
+00:12:14.683 --> 00:13:02.963
+<v SPEAKER_1>Der Pasa ist das erste. Der Pasa zerlegt den Sourcecode, der jetzt irgendwie Text ist, und das so vorlegt in einzelne Fragmente. Und macht das anhand von einer Grammatik. Das heißt, er weiß zum Beispiel irgendwie, welche reservierten Wörter es in der Proamiersprache gibt. So was wie Beginn und End oder Vor oder was auch immer. Und baut daraus halt den abstrakten Syntagsbaum. Das heißt, ein Baum, der halt im Prinzip nur diese Fragmente enthält. Das heißt, zwei plus drei wird halt zu einmal dem Operator plus und dann zwei weiteren Knoten, einmal die zwei und einmal die drei.
+
+00:13:04.043 --> 00:13:12.683
+<v SPEAKER_2>Aber ist es nicht so, dass man erstmal, also der Lexa ist doch das, was erstmal überhaupt sozusagen die Worte klarmacht, bevor man da eine Grammatik erkennt?
+
+00:13:14.083 --> 00:13:22.463
+<v SPEAKER_1>Na, der Lexa muss ja auch wissen, anhand von was sich die Worte jetzt unterscheiden. Also wo er die Worte trennen muss.
+
+00:13:22.483 --> 00:13:40.983
+<v SPEAKER_2>Ja gut, aber das ist ja unabhängig von, also das nimmt er aus dieser Grammatik raus. Gut, wie auch immer. Also, abstrak Syntagstrie oder abstrakter Syntagsbaum, das ist aber schon so ein feststehender Begriff. Das heißt, da gibt es auch nur genau eine etablierte Darstellung davon. Und das ist so ein Baum, oder wie?
+
+00:13:41.003 --> 00:14:00.943
+<v SPEAKER_1>Genau, das ist einfach ein Baum, wo, wie gesagt, wo zum Beispiel ein Plus ein Knoten ist oder vor ein Knoten ist und sich da runter dann die Subknoten, die davon benutzt werden. Also Plus bekommt halt jetzt zwei Operatoren, die zwei und die drei. Und dann sind das jeweils Subknoten, also Unterknoten.
+
+00:14:01.423 --> 00:14:07.823
+<v SPEAKER_2>Das heißt, das Plus hängt oben und da drunter gehen die zwei einzelnen Striche nach unten und da hängen dann die zwei und die drei dran.
+
+00:14:07.843 --> 00:14:08.203
+<v SPEAKER_1>Genau.
+
+00:14:08.223 --> 00:14:11.903
+<v SPEAKER_2>Und wenn ich jetzt irgendwie zwei plus drei mal fünf habe?
+
+00:14:11.923 --> 00:14:25.583
+<v SPEAKER_1>Dann hast du einen Malknoten, wo die fünf und die drei dran hängt und da drüber hast du noch einen Plusknoten, der halt das Ergebnis von dem Malknoten nimmt und dann noch die zwei.
+
+00:14:25.603 --> 00:14:35.783
+<v SPEAKER_2>Das heißt, dieser Baum drückt im Prinzip auch schon diese, wie nennt man denn das, diese Präferenz aus, was sozusagen zuerst ausgewertet werden muss?
+
+00:14:35.803 --> 00:14:37.883
+<v SPEAKER_1>Genau, das steckt in der Grammatik drin.
+
+00:14:37.903 --> 00:15:02.643
+<v SPEAKER_2>Das heißt, typische mathematische Ausdrücke werden dann grammatikalisch so sortiert, dass man weiß, in welcher Reihenfolge muss man da jetzt quasi durch? Und das Ganze erzeugt diesen Baum und der Baum drückt das dann eben auch direkt aus durch diese Knotenabhängigkeit. Und so macht das, so macht man das, so machen das alle.
+
+00:15:02.663 --> 00:15:03.683
+<v SPEAKER_1>Genau, so machen das alle.
+
+00:15:03.703 --> 00:15:11.403
+<v SPEAKER_2>Da ist noch kein was besseres eingefallen. Und das machen die auch alle schon immer so, oder ist das irgendwann mal so eine tolle Erfindung gewesen?
+
+00:15:11.623 --> 00:15:14.843
+<v SPEAKER_1>Das machen die soweit ich weiß alle schon immer so.
+
+00:15:14.863 --> 00:15:18.163
+<v SPEAKER_2>Okay, dann ist das ja eine relativ solide Technologie.
+
+00:15:18.183 --> 00:15:18.643
+<v SPEAKER_1>Genau.
+
+00:15:18.663 --> 00:15:19.563
+<v SPEAKER_2>Auf die man vielleicht nicht so viel...
+
+00:15:20.863 --> 00:15:38.343
+<v SPEAKER_1>Genau, also die Grammatiken und die Pasa unterscheiden sich halt in der Mächtigkeit irgendwie. Es gibt halt Regular Expression Pasa, die sind halt nicht so mächtig wie dann irgendwie für reguläre Sprachen. Da gibt es halt von Chomsky die Hierarchie von verschiedenen Sprachen.
+
+00:15:38.363 --> 00:15:40.583
+<v SPEAKER_2>Chomsky ist so eine ganz kluge Figur.
+
+00:15:40.603 --> 00:15:41.463
+<v SPEAKER_1>Genau.
+
+00:15:41.483 --> 00:15:44.363
+<v SPEAKER_2>Was hat er dazu beigetragen?
+
+00:15:44.383 --> 00:16:15.323
+<v SPEAKER_1>Er hat dazu beigetragen, das halt mal einzuordnen, was für Sprachen sich mit was für Parsern parsen lassen. Also wie die Mächtigkeit von verschiedenen Sprachen ist und was für eine Mächtigkeit von Parsern man dazu braucht. Also links rekursiv mit Lookahead oder rechts rekursiv mit Lookahead und so weiter. Also ob du auf das nächste Zeichen schon weiter gucken kannst und danach dich erst entscheiden musst, was du jetzt für einen Token generierst oder nicht.
+
+00:16:17.143 --> 00:16:20.883
+<v SPEAKER_2>Und was heißt Mächtigkeit in dem Zusammenhang?
+
+00:16:20.903 --> 00:16:22.723
+<v SPEAKER_1>Na, Ausdrucksfähigkeit.
+
+00:16:22.743 --> 00:16:31.663
+<v SPEAKER_2>Also wie viel man damit formuliert bekommt. Das heißt, es sagt auch konkret schon was über die Sprache aus oder erst mal nur darüber, wie die Syntax ist.
+
+00:16:31.683 --> 00:16:33.103
+<v SPEAKER_1>Über die Syntax der Sprache.
+
+00:16:33.123 --> 00:16:41.143
+<v SPEAKER_2>Und wenn eine Syntax mächtig ist, dann heißt das, dass man einfacher das selber ausdrücken kann oder mehr was andere nicht können?
+
+00:16:41.163 --> 00:16:50.403
+<v SPEAKER_1>Dass man einfacher das gleiche ausdrücken kann, dass man im Prinzip weniger Punctuation braucht und so weiter. Also weniger Kommas, weniger Simkola.
+
+00:16:50.423 --> 00:17:02.043
+<v SPEAKER_2>Also wenn ich jetzt diesen abstrakten Syntax-Baum habe, das heißt, diese Parsing-Vorstufe übersetzt den Source Code komplett erst mal in Bäume.
+
+00:17:02.063 --> 00:17:02.463
+<v SPEAKER_1>Genau.
+
+00:17:02.483 --> 00:17:12.163
+<v SPEAKER_2>Das heißt, ab dem Zeitpunkt liegt alles als Baum vor. Und dann? Also was kommt dann?
+
+00:17:13.443 --> 00:17:25.243
+<v SPEAKER_1>Na ja, nachdem wir jetzt einen Baum haben, brauchen wir irgendein theoretisches Modell, irgendeine abstrakte Beschreibung einer Maschine, in der dieser Code übersetzt werden kann.
+
+00:17:25.263 --> 00:17:27.223
+<v SPEAKER_2>Damit da auch was Lauffähiges draus wird?
+
+00:17:27.243 --> 00:18:15.723
+<v SPEAKER_1>Damit wir daraus Code generieren können und damit wir auf jeden Fall davor noch irgendwelche Optimierungen anwenden können auf die Zwischensprache. Eine Zwischensprache ist immer vorhanden und übersetzt im Prinzip die gesamte Syntax auf wenige elementare Sachen, die man so braucht in einer Sprache. Zum Beispiel basierend auf dem Lambda-Kalkül, wo es im Prinzip nur Variablen gibt. Dann gibt es die Abstraktion, was Lambda x irgendwas ist, was Methodendefinitionen sind, wenn man so will.
+
+00:18:15.743 --> 00:19:19.623
+<v SPEAKER_2>Immer langsam mit dem Pferden. Wir brauchen eine Zwischendarstellung von laufendem Code. Das Endergebnis der Code, wie er letzten Endes auf dem Prozessor läuft, ist noch weit entfernt. Man hat erst mal ein Modell davon, wie man diesen Fluss des Programms ausdrückt. Dazu muss man diesen Syntaxbaum übersetzen von Baum in Schritt für Schritt für Schritt. Es gibt vielleicht auch mehrere gleichläufige Schritte, aber im Wesentlichen ist der typische Fluss, das, was ein Programm tun soll, dort abgedrückt. Ist das schwierig? Ist das eine der Kernaufgaben des Compilerbaus, wo es knifflig wird, wenn der erste Schritt mit den Bäumen und so weiter, dann ist da noch kein was besseres eingefallen, das geht auch einfach. Irgendwann haben wir die Syntax sortiert bekommen. Das haben wir geparkt. Wie ist das mit dem Zwischencode? Da ist man sich nicht so einig.
+
+00:19:19.643 --> 00:19:40.523
+<v SPEAKER_1>Da gibt es verschiedene Zwischencodes. Es gibt zum Beispiel die Java-Virtual-Maschinen oder die Common-Language-Runtime, was für.NET das zu Hause sind. Und sonst gibt es dafür verschiedene Sprachen, verschiedenste abstrakte Maschinen.
+
+00:19:40.543 --> 00:20:26.383
+<v SPEAKER_2>Wobei es jetzt bei Java und bei.NET ja so ist, dass der Zwischencode eigentlich auch schon die letzte Stufe ist. Also das ist ja dann in dem Moment, wo das Programm geladen und exekutiert wird, tatsächlich auch der Code, der ausgeführt wird. Genau. In dieser virtuellen Maschine, die dann wieder zur Laufzeit sich auf die Bedingungen des Computers, auf dem sie läuft, dann anpassen kann, damit es auch ein bisschen schneller ist und nicht immer so lahmarschig, weil das ist natürlich jetzt erstmal per se kein besonders schneller Vorgang. Aber die anderen Sachen machen das ja nicht unbedingt. Es gibt ja auch Compiler, die direkt übersetzen. Also die oder zumindest versuchen dann letzten Endes fertigen Code, der eben nicht zu dem Zeitpunkt, wo das Programm gestartet wird, schneller zu machen, sondern wo er sozusagen schon so schnell ist, wie es irgendwie geht.
+
+00:20:27.483 --> 00:20:33.983
+<v SPEAKER_1>Genau, die machen dann einfach aus dieser Zwischensprache, generieren sie dann Binärcode.
+
+00:20:34.003 --> 00:20:36.643
+<v SPEAKER_2>Und wie muss man sich diesen Zwischencode dann vorstellen?
+
+00:20:37.523 --> 00:20:57.963
+<v SPEAKER_1>Na der Zwischencode enthält halt irgendwas, wo man Variablen haben kann. Dann gibt es da meistens Calls, also irgendwelche Methoden-Aufrufe. Dann gibt es meistens noch sowas wie IF und LOOP. Und das war es dann im Großen und Ganzen auch schon. Das reicht dann für die meisten Sachen schon.
+
+00:20:58.803 --> 00:21:06.643
+<v SPEAKER_2>Ah, IF und LOOP, das sind sozusagen die Besonderheiten. Man muss irgendwie eine Schleife bilden können und man muss in der Lage sein, irgendwas testen zu können.
+
+00:21:07.123 --> 00:21:23.043
+<v SPEAKER_1>Genau, also man braucht halt eine Branche, also eine Branche, um halt das Programm verzweigen zu können und dann LOOP, um halt zu loopen. Und ja, CALL, um irgendwelche Methoden aufzurufen, die man ja meistens doch hat.
+
+00:21:23.063 --> 00:21:32.483
+<v SPEAKER_2>Aber worin unterscheiden sich denn dann diese ganzen verschiedenen Pseudokurts, die es gibt? Also was sind dann die Unterschiede, wenn ihr sich alles auf die gleichen Dinge runterbrechen lassen kann?
+
+00:21:32.943 --> 00:22:06.723
+<v SPEAKER_1>Na, bei verschiedenen funktionalen Sprachen, zum Beispiel Haskell oder so was, gibt es dann halt keinen Loop. Das brauchen die da nicht. Die haben da Rekursionen und brauchen keinen Loop. Und sonst sind es halt mehr theoretische und formale Unterschiede. Also wie du jetzt das evaluierst, also diese Zwischensprache, also wie du sie ausführst, wie du zu einem Ergebnis kommst, wie da die Semantik von ist, da gibt es halt Unterschiede.
+
+00:22:06.743 --> 00:22:12.623
+<v SPEAKER_2>Die sind signifikant oder die sind eigentlich zu vernachlässigen?
+
+00:22:12.643 --> 00:23:04.143
+<v SPEAKER_1>Na ja, wenn du eine funktionale Promi-Sprache hast, dann ist es halt einfacher, weil du da im Prinzip wie gesagt nur so ein Lambda-Kalkül hast und das halt ausführen musst. Und wenn du dann irgendwelche Objekte und Sprachen hast, dann haben die als Hintergrund meistens das Objekt-Kalkulist bzw. lassen sich darauf zurückführen, was halt ein anderes Kalkül ist. Und das hat halt dann noch das Konzept von Objekten. Und das ist halt schon ein wenig unterschiedlich. Also was halt rauskommt, ist bei beiden Vinyarkodes, deshalb sind die Unterschiede nur im theoretischen Modell. Und was du darauf tun kannst.
+
+00:23:04.163 --> 00:24:10.423
+<v SPEAKER_2>Vielleicht sollten wir jetzt erstmal nochmal einen Blick auf die Programmiersprachen als solche richten. Also es gibt ja dann immer diese Unterscheidungen, mit was eine Programmiersprache denn so ist. Ja, und dann kommen dann irgendwie gleich die Verfechter und sonstigen Fankurven von Programmiersprachen und sagen, ach ja, meine Programmiersprache ist ja, dann geht es los. Dynamisch, objektorientiert, funktional. Und ich habe immer so den Eindruck, es gibt so recht keine Einigkeit darüber, welche Beschreibungen man eigentlich also hervorkommen sollte und kann und wie die sich miteinander vergleichen lassen. Welche Eigenschaften von Programmiersprachen findest du denn, sind irgendwie halbwegs unzweideutig und auch relevant bei der Betrachtung von wie eine Programmiersprache ist. Also, funktional hast du jetzt genannt, ist das so eine und was gibt es noch, was wirklich wichtig ist?
+
+00:24:10.723 --> 00:25:05.263
+<v SPEAKER_1>Na ja, es gibt halt auch Streit darüber, welche Eigenschaften man welchem Konzept zuordnet, sozusagen. Also, was jetzt funktional beschreibt, das ist halt auch nicht final definiert. Funktional für mich ist einfach, dass du Abstraktionen und Applikationen hast, also dass du halt Funktionen hast und Funktionen auch so betrachten kannst wie Variablen. Das heißt, dass du Funktionen variablen zuordnen kannst. Dass du Funktionen an Funktionen übergeben kannst. Das wäre für mich funktional. Zusätzlich, dass du noch keine Seiteneffekte hast in der Programmiersprache selbst, bzw. die sind dann halt anders modelliert. Seiteneffekte sind sowas wie Eingabe, Ausgabe oder Netzwerkeingabe oder was auch immer.
+
+00:25:05.283 --> 00:25:10.463
+<v SPEAKER_2>Was heißt das? Also, was heißt Seiteneffekt? Ist das Netzwerkeingabe?
+
+00:25:12.223 --> 00:25:24.123
+<v SPEAKER_1>Seiteneffekte, also rein funktional, wäre halt sowas rein mathematisches, sowas wie Plus, Mal, Minus usw., was halt nicht abhängig von der Zeit oder von irgendwas extern ist.
+
+00:25:24.143 --> 00:25:25.723
+<v SPEAKER_2>Da kommt immer dasselbe bei raus?
+
+00:25:25.743 --> 00:25:52.443
+<v SPEAKER_1>Genau, da kommt zu jedem Zeitpunkt immer dasselbe bei raus. Nun ist es aber so in der Programmierung, dass man da irgendwie manchmal schon so eine Benutzereingabe hat oder das Sourcecode zum Beispiel auch eigentlich nur Input ist für den Compiler. Also, dass du da irgendwas behandeln musst, was jetzt irgendwie nicht immer das Gleiche rauskommt, sondern was halt zu einem bestimmten Zeitpunkt kommt da halt irgendwas an Eingabereien, zum Beispiel der Sourcecode-Pfeil.
+
+00:25:52.463 --> 00:25:56.883
+<v SPEAKER_2>Aber das ist ja dann keine Eigenschaft der Proamiersprache.
+
+00:25:56.903 --> 00:26:09.603
+<v SPEAKER_1>Naja, du musst das irgendwie modellieren und du willst dir auch als Proamiersprache die Möglichkeit geben, mit dem Benutzer zu interagieren.
+
+00:26:09.623 --> 00:26:26.143
+<v SPEAKER_2>Ja klar, aber das Problem hab ich doch in allen Proamiersprachen. Man will ja immer mit dem Benutzer interagieren auf die eine oder andere Art und Weise. In welcher Auswirkung hat das jetzt auf die Funktionalität oder darauf, ob eine Sprache jetzt funktional ist oder nicht. Also ob sie Seiteneffekte hat oder nicht, wie du meintest.
+
+00:26:26.163 --> 00:26:39.083
+<v SPEAKER_1>Naja, rein funktional, also wenn du eine rein funktionale Proamiersprache hättest, dann hätte sie sowas wie Ein- und Ausgabe nicht, weil das könnte sie einfach nicht. Das wäre nicht abbildbar.
+
+00:26:39.103 --> 00:26:42.563
+<v SPEAKER_2>Das heißt, es gibt überhaupt keine rein funktionalen Proamiersprachen?
+
+00:26:42.583 --> 00:26:52.463
+<v SPEAKER_1>Genau, es gibt die halt nur mit dem Erweiterungsmodell von sogenannten Monaden. Damit modellieren sie halt Ein- und Ausgabe.
+
+00:26:52.483 --> 00:26:54.623
+<v SPEAKER_2>Was ist das?
+
+00:26:54.643 --> 00:27:44.963
+<v SPEAKER_1>Monaden ist wie gesagt ein Modell, wo sie, beziehungsweise wo man annimmt, dass man State verstecken kann, also Zustand verstecken kann. Das heißt, man hat jetzt nicht die Funktionen irgendwie Printline und Readline, sondern man hat eine Monade, die kümmert sich um den gesamten Zustand der Welt, also der externen Welt. Und der kann man dann sagen Read und Write. Und die wird dann auch sequenziell abgearbeitet und so weiter, aber sie ist halt eine Modellierung in der Hinsicht, dass sie wohltypisiert ist und dass sie halt den Zustand immer wieder versteckt.
+
+00:27:44.983 --> 00:28:27.683
+<v SPEAKER_2>Was heißt wohltypisiert? Also ich hab jetzt ein bisschen Schwierigkeiten zu folgen, weil du immer wieder in dem Moment, wo du einen Begriff einführst, immer wieder einen neuen nennst, den ich dann nicht verstehe. Ich spring nochmal kurz zurück. Funktional ist eine Programmiersprache. Also rein funktional kann sie eigentlich gar nicht sein. Man muss irgendwie Tricks machen, weil man braucht die wahre Welt und die wahre Welt liefert Eingaben und Ausgaben, will sie auch noch haben. Die Eingaben können halt irgendwann kommen. Das hat halt auf den Programmfluss einen Einfluss. Ein Einfluss heißt, dass es einen Seiteneffekt geben kann und dann ist die Sprache nicht vorhersagbar. Kann ich das mal so kurz festhalten?
+
+00:28:27.703 --> 00:28:28.283
+<v SPEAKER_1>Genau.
+
+00:28:28.303 --> 00:28:42.923
+<v SPEAKER_2>Gut. Wenn aber jetzt eine Sprache trotzdem gerne funktional sein möchte, so funktional wie es geht, muss es sich bestimmte Tricks bedienen. Man kann eigentlich von einer rein funktionalen Sprache gar nicht reden. Das geht bei Design gar nicht.
+
+00:28:43.363 --> 00:28:46.663
+<v SPEAKER_1>Genau, man kann davon reden, aber man kann sie nicht wirklich benutzen.
+
+00:28:46.683 --> 00:29:18.763
+<v SPEAKER_2>Okay. Wenn man aber jetzt eine Sprache trotzdem funktional nennen möchte, und das wird ja bei Programmersprachen getan, hast du das ja auch schon getan, dann heißt das erstmal, klar es gibt Funktionen, das haben sie ja fast alle so, aber man kann mit diesen Funktionen umgehen wie mit Variablen. Man kann sie irgendwie zuweisen und irgendwie abspeichern und so weiter. Aber warum ist das so wichtig? Also warum ist dieses, ich kann eine Funktion nehmen und eine A zuweisen, warum brauche ich das und warum geht die Welt unter, wenn ich das nicht habe?
+
+00:29:18.783 --> 00:29:55.223
+<v SPEAKER_1>Na die Welt geht jetzt erstmal nicht unter, wenn du das nicht hast. Aber es lässt sich halt vieles einfacher damit ausdrücken, wenn du es tun kannst. Also wenn ich halt eine Variable habe und kann dir ja sagen, naja, das ist die Methode, die mir zurückliefert, ob eine Zahl, die ich da übergebe, gerade oder ungerade ist. Und dann kann ich einfach diese Methode benutzen als Prädikat und kann über eine Liste drüber gehen und kann immer wieder diese Funktionen überprüfen, also kann für jedes Element der Liste überprüfen, ob diese Funktion gilt oder nicht.
+
+00:29:55.243 --> 00:29:59.703
+<v SPEAKER_2>Also es erlaubt ein generischeres Programmieren, kann man das so festhalten?
+
+00:30:00.043 --> 00:30:03.463
+<v SPEAKER_1>Ja, und dann ein kompakteres Programmieren.
+
+00:30:03.483 --> 00:30:07.363
+<v SPEAKER_2>Also bist du der Meinung, funktionale Eigenschaften will man eigentlich haben?
+
+00:30:07.383 --> 00:30:59.083
+<v SPEAKER_1>Genau, ein einfaches Beispiel wäre auch zum Beispiel die Sortierungsfunktion. Ich meine, wie stellst du dir so eine Sortierungsfunktion vor? Ich meine, die bekommt eine Liste. Das ist ja schon ganz klar. Aber wenn sie jetzt eine Liste von Zahlen bekommt, dann ist das auch relativ klar. Dann kann sie das halt als kleiner oder als größer testen. Dann musst du dich halt auch irgendwann entscheiden, ob du jetzt sortieren als irgendwie aufsteigend oder absteigend betrachtest. Und eigentlich willst du ja dann die Sortierungsfunktionen auch dazu benutzen können, dass sie eine Liste von Strings zum Beispiel sortiert. Und die Strings kann sie jetzt der Länge nach sortieren oder alphanomierisch oder wie auch immer. Das heißt, deine Sortierungsfunktion soll ja im Prinzip möglichst generisch gehalten sein und soll deshalb noch einen Prikard übergeben bekommen.
+
+00:30:59.103 --> 00:31:02.623
+<v SPEAKER_2>Also einen weiteren Wert, der verwendet wird, um eine Aussage zu machen.
+
+00:31:02.883 --> 00:31:12.263
+<v SPEAKER_1>Genau, einen weiteren Wert. Und das ist in dem Fall halt eine Funktion, die halt zwei Elemente der Liste bekommt und dann sagen soll, ob das erste oder das zweite größer ist.
+
+00:31:12.283 --> 00:31:45.743
+<v SPEAKER_2>Okay, das heißt, man kann sozusagen die Funktionalität einer Funktion dadurch beeinflussen, dass man ihnen noch Funktionalität mit rüberreicht, nämlich in Form wiederum einer Funktion, die diese Funktion, die ich aufrufe, einfach sich einverleiben kann und sozusagen übernehmen kann und benutzen kann. Und das macht es einfach flexibler. Weil ansonsten müsste man sozusagen für alle diese Fälle, die man mit so einer Funktion recht einfach ausdrücken kann, müsste man sozusagen sich Fälle schaffen, die dann die aufgerufene Funktion unterscheiden müsste. Und dann hätte man Spaghetti-Code.
+
+00:31:45.763 --> 00:31:51.523
+<v SPEAKER_1>Genau, sonst hast du halt sowas wie Java, wo du irgendwie die Funktion Sword hast. Und ich meine, naja.
+
+00:31:51.543 --> 00:31:54.743
+<v SPEAKER_2>Ja, und was ist damit? Was ist daran falsch? An dem Java Sword?
+
+00:31:55.423 --> 00:32:49.103
+<v SPEAKER_1>Das ist nicht wirklich falsch, aber sie muss halt für verschiedene Arrays verschieden implementiert sein. Also für einen Array von Inns ist sie anders implementiert als für einen Array von Strings. Und ich weiß jetzt nicht, was sie auf einem Array von Strings tut, also in welcher Reihenfolge sie das sortiert, aber es ist schon so, dass, also zumindest ich, in meiner Java-Programmierung dann mir die Sortierung immer wieder selbst schreibe, weil ich halt nicht die Möglichkeit habe, das zu machen. Beziehungsweise es geht schon mit irgendwelchen zusätzlichen Klassen, die dann irgendwelche Methoden implementiert haben, wo sie dann definieren, was größer und kleiner ist. Da gibt es halt das Comparable Interface, was im Prinzip dann gleich ist, aber es sieht einfach in der funktionalen Welt viel schöner aus.
+
+00:32:49.123 --> 00:33:06.463
+<v SPEAKER_2>Gut, also nehmen wir einfach mal zur Kenntnis, dass man, oder dass du zumindest die Meinung vertrittst, eine Poemiersprache sollte funktional sein. Ich meine, du hast ja auch nochmal den Podcast, den ich mit Pablo gemacht habe, über C++ angehört. So, C++ ist ja nun nicht in dem Maße funktional.
+
+00:33:06.463 --> 00:33:11.323
+<v SPEAKER_1>Na, da haben sie immer einen Template-System, was funktional ist.
+
+00:33:11.343 --> 00:33:16.223
+<v SPEAKER_2>Das heißt, Zeitpunkt der Übersetzung hat man Funktionalität.
+
+00:33:16.243 --> 00:33:35.023
+<v SPEAKER_1>Genau, das heißt, du musst Sort nur einmal hinschreiben und das dann abhängig von N-Typ-Variablen. Und du kannst es halt dann beliebig oft instanziieren. Und es wird dann so, also du hast es nur einmal im Source Code zu stehen, aber zu Compile-Time wird es dann halt aufgebläht zu 20 verschiedenen Sort-Funktionen.
+
+00:33:35.043 --> 00:33:37.663
+<v SPEAKER_2>Von denen sozusagen die richtige genommen wird?
+
+00:33:37.983 --> 00:33:41.243
+<v SPEAKER_1>Ja, die zur Compile-Time richtige genommen wird.
+
+00:33:41.263 --> 00:33:51.083
+<v SPEAKER_2>Genau. So, und diese Kalküle, die du jetzt erwähnt hast, was haben die damit zu tun?
+
+00:33:51.103 --> 00:34:23.443
+<v SPEAKER_1>Die Kalküle sind erstmal nur ein Modell. Ein Modell, was wohl definiert ist, wo es eine Semantik für gibt, wie man das auswerten kann. Und da gibt es zuallererst das Lambda-Kalkül, was ich erwähnen wollte. Da gibt es, wie gesagt, eigentlich nur drei Dinge. Einmal Variablen. Variablen sind relativ klar. Dann gibt es die Abstraktion, das ist das berühmte Lambda. Also Lambda x und dann irgendeine Expression oder irgendein Term.
+
+00:34:23.703 --> 00:34:24.703
+<v SPEAKER_2>Was macht das so berühmt?
+
+00:34:29.503 --> 00:34:34.843
+<v SPEAKER_1>Naja, Lambda ist im Prinzip die anonyme Funktion.
+
+00:34:34.863 --> 00:34:36.223
+<v SPEAKER_2>Das heißt?
+
+00:34:36.243 --> 00:35:00.443
+<v SPEAKER_1>Das heißt, das Lambda abstrahiert über beliebig viele Variablen bzw. erstmal über eine Variable, über dieses x. Und dieses x ist dann gebunden in dem Rumpf vom Lambda. Also in dem Term, was das Lambda auch noch hat. Das heißt, du kannst die Funktionen, die zu einer Zahl oder zu einer Variablen 1 addiert ausdrücken, als Lambda x, x plus 1.
+
+00:35:02.943 --> 00:35:04.063
+<v SPEAKER_2>Tja, wozu braucht man das?
+
+00:35:06.563 --> 00:35:22.103
+<v SPEAKER_1>Na, das ist, wenn du ein bisschen weiter denkst, sind das dann halt irgendwann deine Funktionen. Weil deine Funktionen haben halt irgendwelche Variablen als Argumente und haben dann irgendeinen Buddy, wo sie benutzt werden können.
+
+00:35:22.123 --> 00:35:22.963
+<v SPEAKER_2>Hab ich nicht verstanden.
+
+00:35:26.923 --> 00:35:28.883
+<v SPEAKER_1>Wozu man das benutzen kann, hast du es nicht verstanden?
+
+00:35:29.503 --> 00:35:46.403
+<v SPEAKER_2>Na ja, was die Bedeutung dessen ist. Also man, dass es soweit etwas gibt, was Lambda, Calculator ist klar, und so anonyme Funktionen, okay, super, klar. Klingt dann immer so wie etwas wie, aha, schick und so. Könnte man sich vielleicht auch irgendwann mal anschauen, aber ich kriege irgendwie meine Kasse auch ohne programmiert. Warum ist das, warum hat das jetzt sozusagen so eine Bedeutung?
+
+00:35:49.583 --> 00:36:01.603
+<v SPEAKER_1>Na die Bedeutung ist tatsächlich, dass du mit diesem Lambda-Kalkül alles programmieren kannst und du kannst sonst halt nicht deine Kasse in einem Lambda-Kalkül programmieren, wenn du keine Abstraktion hast.
+
+00:36:02.523 --> 00:36:06.183
+<v SPEAKER_2>Ja, aber warum will ich meine Kasse in einem Lambda-Kalkül programmieren?
+
+00:36:06.203 --> 00:36:16.083
+<v SPEAKER_1>Weil du ein formales Modell für deine Kasse haben willst, damit deine Kasse verifizierbar das tut, was sie tun soll, nämlich richtig rechnen.
+
+00:36:16.103 --> 00:36:19.483
+<v SPEAKER_2>Und was hat kein Lambda-Kalkül?
+
+00:36:19.503 --> 00:36:29.763
+<v SPEAKER_1>Kein Lambda-Kalkül als Grundlage, naja die ganzen Programmiersprachen, die nicht wohl definiert sind, also wo es keine formale Grundlage für die Programmiersprache gibt.
+
+00:36:29.783 --> 00:36:36.223
+<v SPEAKER_2>Was denn zum Beispiel? C, C++ haben keine formale Grundlage?
+
+00:36:37.263 --> 00:36:39.623
+<v SPEAKER_1>Na, sie haben keine Formalisierung.
+
+00:36:39.643 --> 00:36:40.123
+<v SPEAKER_2>Was heißt das?
+
+00:36:40.383 --> 00:36:50.683
+<v SPEAKER_1>Sie haben keine Semantik, wie man sie, also sie haben schon eine Semantik, aber keine mathematisch bewiesene Semantik, wie man sie evaluieren kann und soll.
+
+00:36:50.703 --> 00:36:57.963
+<v SPEAKER_2>Das heißt, man kann, wenn man jetzt so ein Stück C-Code hat, es nicht lesen und beweisen, dass es das Richtige tut?
+
+00:36:57.983 --> 00:36:58.163
+<v SPEAKER_1>Genau.
+
+00:36:58.183 --> 00:37:01.543
+<v SPEAKER_2>Und das ist das? Und bei anderen Programmiersprachen geht das?
+
+00:37:01.563 --> 00:37:02.223
+<v SPEAKER_1>Genau.
+
+00:37:02.243 --> 00:37:06.243
+<v SPEAKER_2>Und das geht deshalb, weil die den Lambda-Kalkulus berücksichtigen?
+
+00:37:06.263 --> 00:37:16.603
+<v SPEAKER_1>Genau, weil die halt auf dem aufbauen, also der Lambda-Kalkül ist halt im Prinzip die Grundlage für relativ viele Programmiersprachen.
+
+00:37:16.623 --> 00:37:21.623
+<v SPEAKER_2>Und welche Programmiersprachen würden jetzt diese Beweisbarkeit mit sich bringen im Vergleich dazu?
+
+00:37:21.683 --> 00:37:28.503
+<v SPEAKER_1>Na zum Beispiel Haskell oder ML oder also meistens diese funktionalen Programmiersprachen.
+
+00:37:28.523 --> 00:37:31.023
+<v SPEAKER_2>Also nur Sprachen, die eigentlich kaum jemand benutzt?
+
+00:37:31.043 --> 00:37:33.863
+<v SPEAKER_1>Genau, Scheme auch.
+
+00:37:33.883 --> 00:37:34.503
+<v SPEAKER_2>Und was ist mit Java?
+
+00:37:36.623 --> 00:37:55.183
+<v SPEAKER_1>Java hat auch eine Semantik, aber ich weiß gerade nicht, ob die auf dem, also die baut bestimmt. Also ich weiß nicht, was die als Grundlage benutzt gerade. Also ich weiß, dass es einen Beweis für Java gibt mit Date-Machines, aber das ist noch was anderes als Lambda-Kalküle.
+
+00:37:55.203 --> 00:38:00.023
+<v SPEAKER_2>Gibt es denn Bereiche, wo sozusagen so eine Beweisbarkeit einer Programmiersprache vorgeschrieben ist?
+
+00:38:05.643 --> 00:38:19.683
+<v SPEAKER_1>Also es gibt relativ wenig Bereiche, wo es überhaupt zum Tragen kommt, dass irgendein Stück Software beweisbar ist. Das ist zum einen Airbags. Da wird allerdings hauptsächlich Assembler-Code bewiesen.
+
+00:38:19.703 --> 00:38:20.243
+<v SPEAKER_2>Was ist das?
+
+00:38:21.643 --> 00:38:23.243
+<v SPEAKER_1>Software, die Airbags auslöst.
+
+00:38:23.263 --> 00:38:35.763
+<v SPEAKER_2>Ach, Airbags, okay. Verstanden. Ach wirklich? Das heißt, die Steuersoftware, die Firmware von Airbags muss in einer beweisbaren Programmiersprache geschrieben werden?
+
+00:38:35.783 --> 00:38:44.863
+<v SPEAKER_1>Genau, beziehungsweise der Assembler-Code, der muss halt durchbewiesen werden. Das wurde zumindest früher immer manuell getan.
+
+00:38:44.883 --> 00:38:47.703
+<v SPEAKER_2>Wer hat das festgelegt, dass es so zu sein hat?
+
+00:38:47.723 --> 00:38:52.683
+<v SPEAKER_1>Die Versicherungen, die Airbags versichern sollten in den Vereinigten Staaten von Amerika.
+
+00:38:53.423 --> 00:38:55.163
+<v SPEAKER_2>Das heißt, da geht es schon auch um Geld sozusagen?
+
+00:38:55.643 --> 00:39:05.563
+<v SPEAKER_1>Ja, da geht es auch um Geld. Und sonst ist Software für Flugzeuge, die ist halt auch durchbewiesen. Also für die Steuerung von Flugzeugen.
+
+00:39:05.583 --> 00:39:17.223
+<v SPEAKER_2>Das heißt, kein Flugzeug fährt Software, die in C geschrieben ist? Also für die lebensnotwichtigen Dinge zumindest?
+
+00:39:17.243 --> 00:39:21.923
+<v SPEAKER_1>Soweit ich das weiß, ist das so. Die benutzen dann meistens Ada als Proamiersprache.
+
+00:39:24.103 --> 00:39:26.283
+<v SPEAKER_2>Die auch diese Beweisbarkeit mit sich bringt?
+
+00:39:26.303 --> 00:39:27.823
+<v SPEAKER_1>Genau.
+
+00:39:27.843 --> 00:39:31.283
+<v SPEAKER_2>Ada ist ja eine Entwicklung des Militärs, wenn ich das noch richtig in Erinnerung habe.
+
+00:39:31.303 --> 00:39:44.003
+<v SPEAKER_1>Genau, Ada wurde hauptsächlich für das Militär entwickelt. Da gibt es dann Flugzeugsteuerungssoftware und wahrscheinlich auch Bombensteuerungssoftware. Alles Mögliche.
+
+00:39:44.023 --> 00:39:46.583
+<v SPEAKER_2>Da man beweisen kann, dass die Bombe auch explodiert?
+
+00:39:46.603 --> 00:39:53.303
+<v SPEAKER_1>Genau, und nicht explodiert, 3 Sekunden nachdem sie abgeschossen wurde.
+
+00:39:53.323 --> 00:40:35.123
+<v SPEAKER_2>Schöne neue Welt. Wir schweifen ganz gut ab, aber ich versuche die Sache ein bisschen einzugrenzen. Wir waren eigentlich bei Compilern, machen jetzt mal einen Ausflug in die Programmiersprache und haben festgehalten, welche Eigenschaften gibt es? Eine Eigenschaft, die sehr wichtig ist, ist Funktionalität. Um irgendwie funktional zu sein, muss man diesen Lambda-Kalkulus berücksichtigen. Der einfach aussagt, was sagt der denn genau aus? Das habe ich noch nicht so ganz verständlich gehört. Also was ist sozusagen, ich meine, anonyme Funktion, was sagt das aus? Was bedeutet das?
+
+00:40:35.143 --> 00:41:41.503
+<v SPEAKER_1>Na, die Aussage von einem Lambda-Kalkül ist halt, also es gibt da drei verschiedene Sachen. Ich kam bisher immer nur zu dem zweiten, was halt die Abstraktion ist. Das dritte ist noch die Applikation. Das ist, dass du einen Term auf einen anderen Term applizieren kannst. Das ist halt das Invertierte von der Abstraktion. Das heißt, um Lambda x, x plus eins anzuwenden, brauchst du ja auch noch irgendeinen Formalismus und dann kannst du einfach dahinter die einschreiben und dann wird die eins auf das Lambda appliziert. Das heißt, du bekommst dann eine Bindung für das x von eins und dann hast du da statt Lambda x, x plus eins, eins stehen, hast du eins plus eins stehen, was dann halt wieder ein Term ist, der evaluiert werden kann. Und die Aussage von dem gesamten Lambda-Kalkül, also du kannst in dem Lambda-Kalkül komplett, kannst du alles programmieren, was du programmieren willst. Du brauchst nicht mehr. Das ist halt ein bisschen umständlich, aber es reicht vollständig aus.
+
+00:41:41.523 --> 00:41:46.063
+<v SPEAKER_2>Mit diesem x plus eins kann man alles programmieren?
+
+00:41:46.083 --> 00:41:52.023
+<v SPEAKER_1>Mit den Variablen, mit der Abstraktion und mit der Applikation kannst du alles programmieren. Weil mehr machst du eigentlich nicht.
+
+00:41:52.043 --> 00:41:55.063
+<v SPEAKER_2>Ich mach nicht mehr als eins hinzuzufügen, oder?
+
+00:41:55.083 --> 00:42:05.363
+<v SPEAKER_1>Genau, also du kannst verschiedene Abstraktionen wählen und dann kannst du halt auch x plus fünf haben und x minus drei und was auch immer für Funktionen du sonst noch so brauchst.
+
+00:42:05.383 --> 00:42:06.923
+<v SPEAKER_2>Und daraus kann man alles programmieren?
+
+00:42:07.503 --> 00:42:10.163
+<v SPEAKER_1>Damit kannst du alles programmieren, genau.
+
+00:42:10.183 --> 00:42:11.823
+<v SPEAKER_2>Das heißt, mehr hätte man eigentlich nie lernen müssen.
+
+00:42:12.283 --> 00:42:15.643
+<v SPEAKER_1>Genau, das ist eigentlich alles ganz einfach.
+
+00:42:15.663 --> 00:42:25.043
+<v SPEAKER_2>Aber wie wirkt sich das jetzt konkret aus auf die Sprache? Also wo sieht man jetzt in der Sprache an, dass dieses Lambda da sozusagen zum Tragen kommt?
+
+00:42:25.063 --> 00:42:43.583
+<v SPEAKER_1>Das sieht man dann in der Zwischensprache im Prinzip. Also die Zwischensprache, also zu dem der Compiler irgendwas übersetzt, der kann halt auf das reine Lambda-Kalkül übersetzen.
+
+00:42:43.603 --> 00:42:53.043
+<v SPEAKER_2>Okay, also das Lambda-Kalkül ist sozusagen so eine formale Beschreibung, wie Programmiersprachen sich ausdrücken.
+
+00:42:54.003 --> 00:42:54.403
+<v SPEAKER_1>Genau.
+
+00:42:54.423 --> 00:43:25.223
+<v SPEAKER_2>Kann man das so festhalten. Und damit hat man eine formale Beschreibung, die man eben auch genauso formal lesen und interpretieren kann und als positiven Gewinn auch beweisen kann. Sodass der Airbag irgendwie, dass man sich einfach sicher sein kann, dass das Programm immer das Richtige tut. Wäre es eigentlich schön, dass irgendwie so Wortprozessoren und ähnliche Programme, die man den ganzen Tag benutzt, auch genauso beweisbar wären, dass sie irgendwie immer das Richtige ausdrucken?
+
+00:43:26.703 --> 00:43:33.823
+<v SPEAKER_1>Das wäre eigentlich schon wünschenswert, aber gerade ist das mit der Verifikation von Software noch nicht so weit vorbereitet.
+
+00:43:33.843 --> 00:43:57.383
+<v SPEAKER_2>Welche, also mal weggehen von dieser Funktionalität, hin zu einem anderen populären Termin, nämlich der Objektorientierung, was sicherlich einer der schwammigsten Begriffe ist, die so herumfliegen. Was ist denn das für eine, also was siehst du da jetzt dahinter, hinter dem Begriff, welche Eigenschaften und inwieweit wirken die sich dann auf die Compiler aus?
+
+00:43:58.183 --> 00:44:10.623
+<v SPEAKER_1>Na, die einzige Eigenschaft, die im Prinzip die objektorientierte Programmierung uns bringt, ist Mutable State. Mutable State ist halt...
+
+00:44:10.643 --> 00:44:11.903
+<v SPEAKER_2>Ein veränderbarer Zustand.
+
+00:44:12.383 --> 00:44:12.823
+<v SPEAKER_1>Genau.
+
+00:44:14.703 --> 00:44:16.363
+<v SPEAKER_2>Was heißt das?
+
+00:44:16.383 --> 00:44:39.123
+<v SPEAKER_1>Das heißt, du kannst irgendeine Speicheradresse oder was auch immer haben und kannst da irgendwas anderes zuweisen. Wie gesagt, in dem Lambda-Kalkül geht das halt nicht. Also, da kannst du sowas nicht machen. Du kannst halt eine Variable einführen und dann kannst du neue Variablen einführen, aber du kannst halt nicht irgendeine Variable verändern.
+
+00:44:40.483 --> 00:44:42.683
+<v SPEAKER_2>Weil das alles anonym ist.
+
+00:44:43.343 --> 00:44:47.003
+<v SPEAKER_1>Weil du halt keine Möglichkeit hast dazu.
+
+00:44:47.023 --> 00:44:53.723
+<v SPEAKER_2>Aber es gibt ja auch Poamiersprachen, die haben Variablen, die sind jetzt nicht objektorientiert. Oder sie ist eigentlich doch, man nennt sie bloß nicht so.
+
+00:44:55.643 --> 00:45:11.183
+<v SPEAKER_1>Ja, ja auch C ist im Prinzip nach der Definition dann objektorientiert, weil C hat ja auch Mutable State, was ja den Assignment-Operator. Aber C würde ich jetzt nicht als objektorientiert klassifizieren, sondern eigentlich als Marktprozentrum.
+
+00:45:11.203 --> 00:45:21.623
+<v SPEAKER_2>Du redest jetzt hier von dem Objektkalkül, also einem anderen formalen Modell, was sozusagen überhaupt erstmal diesen Speicherort schafft.
+
+00:45:21.643 --> 00:45:40.823
+<v SPEAKER_1>Nee, ja, ja doch, doch schon. Also die andere Eigenschaften von objektorientierten Proamirsprachen sind halt alle strittig. Also sowas wie irgendwie ein Klassensystem. Aber dann gibt es auch objektorientierte Sprachen wie JavaScript, die halt kein Klassensystem haben.
+
+00:45:42.443 --> 00:45:45.163
+<v SPEAKER_2>Polymorphie?
+
+00:45:45.183 --> 00:45:54.143
+<v SPEAKER_1>Ja, Polymorphie ist schwierig. Polymorphie ist ja für verschiedene... Also Polymorphie ist erstmal ein überladener Begriff.
+
+00:45:54.163 --> 00:45:59.103
+<v SPEAKER_2>Ja, ja, sind ja alles überladene Begriffe. Deswegen versucht das ja gerade so ein bisschen auszuflechten.
+
+00:45:59.123 --> 00:46:04.723
+<v SPEAKER_1>Genau, bei Polymorphie gibt es im Prinzip zwei verschiedene Arten von Polymorphie.
+
+00:46:04.743 --> 00:46:27.203
+<v SPEAKER_2>Polymorphie, das wollen wir vielleicht kurz erklären. Also besagt ist sozusagen die ideale Vorstellung, dass wenn man etwas mit A macht, dann kann man etwas mit B auf dieselbe Art und Weise machen. Also dass sich etwas auf dieselbe Art und Weise verhält, wenn man es irgendwie mit derselben Methode probiert.
+
+00:46:28.683 --> 00:46:31.003
+<v SPEAKER_1>Genau, sowas in der Richtung.
+
+00:46:31.023 --> 00:46:46.603
+<v SPEAKER_2>Also wenn ich die Funktion Sort auf A anwende, dann wird es halt sortiert und dann möchte ich eben auch Sort genauso auf B anwenden und gehe davon aus, dass ein vergleichbares Ergebnis rauskommt, in Abhängigkeit von wie B so drauf ist und dass ich nicht dafür noch ein eigenes B-Sort brauche.
+
+00:46:48.003 --> 00:47:57.583
+<v SPEAKER_1>Genau, das ist parametrische Polymorphie. Das ist halt die, also Parametric Polymorphism, ist halt, dass eine Funktion mit verschiedenen Typen benutzt werden kann. Das heißt, dass du Sort auf einer Liste von Integenten und Sort auf einer Liste von Float anwenden kannst. Dann gibt es noch die Daten-Polymorphie, also Data-Polymorphism. Das ist, wenn du Objekte von verschiedenen Typen in einer Variable oder in einer Member-Variablen speichern kannst. Das heißt, der Inhalt von irgendeiner Member-Variablen kann jetzt auch verschiedene Sachen haben. Also was du aus Scriptsprachen kennst, aus Python oder was auch immer, da schreibst du ja dann als Member-Variable oder als Field oder was auch immer irgendwas hin und kannst da jetzt problemlos entweder einen Integer rein tun oder einen String oder einen Float rein tun. Und das ist Daten-Polymorphie.
+
+00:47:57.603 --> 00:48:00.363
+<v SPEAKER_2>Also sozusagen kein Typ hat.
+
+00:48:00.383 --> 00:48:00.823
+<v SPEAKER_1>Genau.
+
+00:48:00.843 --> 00:48:01.923
+<v SPEAKER_2>Kann man das so festhalten?
+
+00:48:02.123 --> 00:48:05.643
+<v SPEAKER_1>Naja, es hat ja schon einen Typ, also keinen Typ zu haben.
+
+00:48:05.663 --> 00:48:23.763
+<v SPEAKER_2>Also es muss kein, oder unabhängig davon, welchen Typ es hat, kann ich immer noch dasselbe tun damit. Okay. Und alle gängigen Programmiersprachen, die sie objektorientiert nennen, bringen beide Arten von Polymorphie auch mit?
+
+00:48:23.783 --> 00:49:11.603
+<v SPEAKER_1>Nein, nein, nicht alle. Also parametrische Polymorphie ist zum Beispiel auch nicht überall vorhanden. Also zum Beispiel in C++ gibt es auch keine parametrische Polymorphie, bzw. du kannst das halt modellieren mit dem Template-System. Da hast du dann wieder verschiedene Methoden, die halt verschiedene Typen bekommen. Also gleiche Methoden, die halt verschiedene Typen bekommen. Bei Java genau das Gleiche. Aber auch andere objektorientierte und auch funktionale Sprachen haben parametrische Polymorphie.
+
+00:49:11.623 --> 00:49:21.983
+<v SPEAKER_2>So, und ist das jetzt irgendwie alles, was man betrachten muss, diese Arten von Polymorphie und ob es irgendwie funktional ist oder nicht? Und ob da Lambda drin steckt oder nicht?
+
+00:49:22.003 --> 00:49:36.563
+<v SPEAKER_1>Nee, es gibt da natürlich noch verschiedene Typisierungen. Zum einen dynamisch statisch typisiert und zum einen weakly oder strongly typed.
+
+00:49:36.583 --> 00:49:44.283
+<v SPEAKER_2>Also sag mal kurz, was du unter Typisierung genau verstehst. Weil das scheint ja doch ein relativ wichtiger Part zu sein.
+
+00:49:47.423 --> 00:50:43.363
+<v SPEAKER_1>Ja, also ein Typ einer Variablen ist halt die Information, die zu Compile-Time über diese Variable vorliegt. Das heißt, wenn ich da, meine Wengen, in Java irgendeinen Int x gleich 5 habe oder Int x habe, dann weiß ich halt zu Compile-Time, dass es ein Int sein wird. Ja, das im Prinzip Typisierung, die kann man jetzt auf verschiedene, also es gibt da verschiedene Arten sozusagen von Typisierung, die man da anwenden kann. Das eine ist die statische Typisierung. Das ist, wenn man nur die Typen betrachtet, die zur Compile-Zeit vorliegen. Also nicht irgendwelche, also dass deine Binäro-Objekte tatsächlich keine Typen mehr haben. Die haben halt diesen ganzen Overhead rausgestrippt.
+
+00:50:44.543 --> 00:51:32.963
+<v SPEAKER_2>Also das heißt, wenn wir beim Integer-Beispiel bleiben, und ich habe jetzt eine Integer-Variable, dann ist der Unterschied zwischen dynamisch und statisch im Wesentlichen der, dass diese Information, dass es sich bei diesem kleinen Speicher-Blob um einen Integer handelt und dass die Bits, die da drinstehen, bedeuten, welche Zahl dieser Integer ist und nicht ein Float und nicht ein String oder sonst irgendwas anderes sind. Diese Information liegt sozusagen ausschließlich beim Compiler, weil er gerade diesen Code liest, weiß, dass die Variable mit diesem Namen eben ein Int ist und weil das eben so ist. So, dann erzeugt er irgendwann das fertige Programm und zu dem Zeitpunkt sind all die Stellen, wo diese Variable halt mit einfließt in den Code und so weiter, weiß er halt immer, dass es ein Int ist, aber man sieht es dem Bit selber nicht an.
+
+00:51:32.983 --> 00:51:33.983
+<v SPEAKER_1>Genau, das ist Statisch-Typisierung.
+
+00:51:34.003 --> 00:51:46.443
+<v SPEAKER_2>Und dynamisch heißt, dass das Ganze auch noch zur Laufzeit mitgetragen wird, dass sozusagen das Programm selbst sich jederzeit versichern kann, dass ein bestimmter Wert eben auch von einem bestimmten Typ ist.
+
+00:51:46.463 --> 00:52:21.483
+<v SPEAKER_1>Genau, also bei Dynamisch-Typisierung hast du halt zu einem Objekt oder zu einer Variablen hast du halt immer noch die Information, welcher Typ das jetzt ist zur Laufzeit, was halt im Prinzip Space- und Time-Overhead ist. Weil zum einen musst du das ja irgendwie darstellen, was das jetzt für ein Typ ist. Das ist dann entweder ein Pointer oder irgendwelche Tagbits. Und zum anderen musst du das halt irgendwie raustrippen zur Laufzeit. Das heißt, du musst da irgendwelche Berechnungen machen, wenn du jetzt 3 plus 5 berechnest, damit du die Tagbits irgendwie wegbekommst.
+
+00:52:23.843 --> 00:52:32.223
+<v SPEAKER_2>Ja, und diese Unterscheidung in Strongly und Weakly Typed, was steckt da dahinter?
+
+00:52:32.243 --> 00:52:48.803
+<v SPEAKER_1>Da steckt im Prinzip dahinter, ob du als Programmierer in deinem Typ-System vorbei arbeiten kannst. Wie du es zum Beispiel entziehen kannst, weil du kannst irgendwie den Void-Pointer dann zu einem In-Pointer casten und den dann zu einem Car-Pointer casten und so weiter.
+
+00:52:48.823 --> 00:52:52.443
+<v SPEAKER_2>Casten im Sinne von, ich nehme halt einfach so die Bits und sage, die bedeuten jetzt was anderes.
+
+00:52:52.463 --> 00:53:29.463
+<v SPEAKER_1>Genau, ich definiere einfach, was die Bits jetzt bedeuten. Und ich ändere das einfach. Das ist halt weekly-typing, weil der Compiler kann halt nicht verifizieren, was du da getan hast. Weil der Compiler muss halt dir vertrauen, dass das jetzt tatsächlich irgendwie ein Car-Pointer ist und nicht ein In-Pointer ist. Er kann das aber selber nicht verifizieren, der muss dir halt vertrauen. Das heißt, der Developer muss halt wissen, was er da tut und muss sich da sicher sein. Der Compiler kann halt nicht überprüfen, ob das, was der Developer tut, richtig ist.
+
+00:53:29.483 --> 00:53:34.183
+<v SPEAKER_2>Hat weekly-typing denn irgendwelche Vorteile oder ist das einfach nur eine Unterlassung?
+
+00:53:34.203 --> 00:53:38.843
+<v SPEAKER_1>Das ist eine Ansichtssache.
+
+00:53:38.863 --> 00:53:40.503
+<v SPEAKER_2>Jetzt darfst du deine Meinung hier einfügen.
+
+00:53:40.523 --> 00:54:02.803
+<v SPEAKER_1>Ja, wenn man als Developer davon ausgeht, dass man gegen den Compiler arbeitet und dass der Compiler im Prinzip nur ein großes Monster ist, was man jetzt besiegen muss, dann ist weekly-typing natürlich ein Vorteil. Dann kannst du deinen Compiler einfach bescheißen, indem du deinen Void-Pointer zu einem Endpointer karstest.
+
+00:54:02.823 --> 00:54:08.583
+<v SPEAKER_2>Aber wenn man davon ausgeht, dass der Compiler mein Freund ist, will man eigentlich, dass er strongly typed?
+
+00:54:08.603 --> 00:54:33.403
+<v SPEAKER_1>Genau, dann will man das eigentlich strongly typed haben. Das heißt, dass man als Entwickler nicht am Typsystem vorbei arbeiten kann. Dann kann der Compiler versuchen, irgendwie Aussagen über Typen zu machen. Er kann zum einen Optimierungen machen, kann zum anderen dir schöne Fehlermeldungen geben, was für einen Typ er erwartet hat und was für einen Typ da tatsächlich ankam usw.
+
+00:54:33.423 --> 00:55:35.623
+<v SPEAKER_2>Jetzt hast du im Vorfeld schon gesagt, naja, Compilerbau alles schön und gut. Wichtig aber ist in diesem Zusammenhang der Begriff Typtheorie. Und das spielt ja jetzt sozusagen auch an der Stelle, wo wir vorhin den Compiler verlassen haben, eine Rolle. Also der Compiler, der jetzt einfach irgendeine Programmiersprache übersetzt, die sich reingezogen hat, den Zeichenstrom des Science-Codes, den auseinandergehackt hat nach einer gewissen grammatischen Vorstellung, die diese Programmiersprache eben mit sich bringt, dann diesen Baum zusammengebaut hat, und dann, dass diesen Baum in ein Programm Fluss übersetzt hat, der sozusagen erstmal ausdrückt, was der Programmierer so explizit eigentlich meinte. Ja, ok, alles klar, ich will jetzt, dass hier irgendwie eine Schleife läuft, und in Abhängigkeit von diesem Wert soll die dann irgendwie verlassen werden, und dann rufen wir mal diese Funktion auf, diese Funktion und diese Funktion. Welche Bedeutung haben denn jetzt Typen an der Stelle für den ganzen Compiler-Prozess?
+
+00:55:37.543 --> 00:55:56.743
+<v SPEAKER_1>Na, anhand der Typen, bzw. wenn er dann diese abstrakte Beschreibung, in diese abstrakte Beschreibungssprache übersetzt ist, der Source-Code, kann der Compiler Typen annotieren, kann Typen inferieren, und kann anhand der Typen bestimmte Optimierungen machen.
+
+00:55:56.763 --> 00:56:04.423
+<v SPEAKER_2>Also Typen annotieren heißt irgendwie sich merken und fermerken, welcher Typ irgendwo bei rausgekommen ist?
+
+00:56:04.443 --> 00:56:18.103
+<v SPEAKER_1>Genau, welcher Typ da rauskommen muss, z.B. anhand von Methodendefinitionen, die dann irgendwelche Typannotationen haben. Also wenn du behauptest, dass deine Funktion einen String zurückgibt, kann der Compiler das halt überprüfen.
+
+00:56:19.003 --> 00:56:20.603
+<v SPEAKER_2>Ob es auch einer war?
+
+00:56:20.623 --> 00:56:47.203
+<v SPEAKER_1>Ja, indem er guckt irgendwie, da ist so eine Funktion, was gibt es denn da für Exits? Also wo kann denn die Funktion irgendwie return? In Java z.B. mit dem Return-Statement in anderen Sprachen durch das letzte Statement und kann dann für jedes dieser letzten Statements oder für das Return überprüfen, ob es tatsächlich ein String ist. Also ob er der Meinung ist, dass so Compiler, also ob er zu Compilerm der Meinung ist, dass da ein String rauskommen wird.
+
+00:56:49.843 --> 00:56:53.583
+<v SPEAKER_2>Und Typ inferieren?
+
+00:56:53.603 --> 00:57:09.843
+<v SPEAKER_1>Typ inferieren ist das System, mit dem er das macht. Das heißt, wenn du irgendeinen Funktionsaufruf hast, dann kann er halt inferieren, dass der Rückgabewert dieser Funktion ein String sein wird.
+
+00:57:09.863 --> 00:57:13.123
+<v SPEAKER_2>Also eine Schlussfolgerung?
+
+00:57:13.143 --> 00:57:17.503
+<v SPEAKER_1>Genau, eine Schlussfolgerung, ja.
+
+00:57:17.523 --> 00:57:25.203
+<v SPEAKER_2>Und was muss jetzt eine Programmiersprache mit sich bringen, damit man diese Vorgänge machen kann und was hat man davon?
+
+00:57:25.223 --> 00:57:45.243
+<v SPEAKER_1>Man hat davon die Typ-Korrektheit, also dass der Compiler zur Kompilzeit schon feststellen kann, dass sein Programm typkorrekt ist, was schon mal eine erste Eigenschaft von einem Programm ist, damit es möglicherweise auch korrekt zur Laufzeit ausgeführt werden wird.
+
+00:57:45.263 --> 00:57:54.183
+<v SPEAKER_2>Also im Sinne von, dass überall da, wo ich davon ausgehe, dass eine Variable einen bestimmten Typ hat, dass sie den auch hat.
+
+00:57:54.203 --> 00:57:56.503
+<v SPEAKER_1>Genau.
+
+00:57:56.523 --> 00:57:59.983
+<v SPEAKER_2>Einfach Programmiererfehler zu verhindern von vornherein.
+
+00:58:01.283 --> 00:58:50.083
+<v SPEAKER_1>Das ist halt jetzt in der statischen und strongly-typed Welt, sozusagen in der dynamisch-stabilisierten Welt, ist das halt so, dass es da keine wirkliche Theorie dahinter gibt. Also sowas wie Python und Ruby. Da gibt es halt kein formales Modell, wie das jetzt auszusehen hat. Und das mit der Typ-Inferegierung ist halt auch kompliziert, weil sie eigentlich zur Compile-Time noch gar nicht wissen, was da überall drin steht. So, und da gibt es dann halt Runtime-Fehler, die halt Typfehler sind. Das heißt, da sagt dir dann dein Runtime-Programm, ich habe da irgendwie einen String bekommen, habe da aber einen Integer erwartet und weiß jetzt gar nicht mehr, was ich tun soll. Wirf eine Exception, dann kriegst du ein Traceback und dann musst du das von Hand fixen.
+
+00:58:50.103 --> 00:59:07.923
+<v SPEAKER_2>Ja, und, was ist jetzt alles so schwierig da dran? Das klingt ja alles ganz einfach. Dann nimmt man irgendwie so den Code, dann macht man da Bäume draus, dann setzt man das irgendwie in seinen Fluss um und dann schlussweise hat man noch so ein bisschen bei den Typen und dann wird dann das Ganze und alles funktioniert.
+
+00:59:07.943 --> 00:59:20.383
+<v SPEAKER_1>Genau, dazwischen macht man noch so ein paar Optimierungen, Umhaltungen, das Ganze raus zu optimieren, was der Entwickler nur so hingeschrieben hat, was er mal gegrenzt hat.
+
+00:59:20.403 --> 00:59:36.583
+<v SPEAKER_2>Was ist denn jetzt so der schwierige Teil an diesem ganzen Compiler-Kram? Ich meine, das klingt ja jetzt alles total easy und wissen wir schon, wozu braucht man überhaupt noch Lehrstühle und Forschung und was muss man da überhaupt noch Zeit mit verbringen? Was stellst du in den Mittelpunkt deiner Diplomarbeit, wenn du dich damit auseinandersetzt?
+
+00:59:36.603 --> 01:00:00.603
+<v SPEAKER_1>Na, ich stelle in den Mittelpunkt tatsächlich die Typtheorie und es gibt da eine Anwendung von Typtheorie auch auf dynamische Sprachen bzw. eine Erweiterung der Typtheorie um einen speziellen Typ, der halt erst zur Runtime bekannt ist und mit Hilfe dessen auch eine Inferierung von Typen zur Compile-Time.
+
+01:00:00.623 --> 01:00:09.723
+<v SPEAKER_2>Das heißt also sozusagen schon, beim Übersetzen eines dynamischen Programms für bestimmte Programmstellen Voraussagen treffen kannst, welcher Typ denn da jetzt wohl bei herauskommt.
+
+01:00:09.743 --> 01:00:10.403
+<v SPEAKER_1>Genau.
+
+01:00:10.423 --> 01:00:12.843
+<v SPEAKER_2>Ohne das Programm jetzt laufen zu lassen oder so.
+
+01:00:15.343 --> 01:00:30.043
+<v SPEAKER_1>Und des Weiteren werde ich noch polymorphe Typen implementieren und Typvariablen in den gleichen Compiler. Also Typvariablen ist jetzt nochmal was anderes.
+
+01:00:30.063 --> 01:01:08.963
+<v SPEAKER_2>Bleibt da nochmal kurz bei dem ersten Beispiel. Du hast ja gesagt, Typtheorie sozusagen Schlussfolgerungen anzustellen auf Basis des vorliegenden Codes, um zu wissen, wo jetzt welcher Typ da rauskommt. Das geht eigentlich nur bei statischen Programmiersprachen, weil nur da ist zur Compile-Time irgendwie alles klar. Und bei dynamischen Programmiersprachen gibt es sowas nicht. Das heißt, ich richtig verstehe, ist dein Ansatz jetzt der, zu sagen, das wäre aber ganz toll, wenn ich auch bei einer dynamischen Programmiersprache solche Schlussfolgerungen machen könnte, weil dann hätte ich ja die Chance, das Programm schneller besser zu übersetzen? Oder warum sollte man das tun?
+
+01:01:08.983 --> 01:01:29.303
+<v SPEAKER_1>Zum einen Optimierung, zum anderen Errordiscovery, also, dass du mehr Fehler schon zur Compile-Time feststellst und dem Benutzer schon zur Compile-Time sagen kannst, hier, du hast da etwas falsch gemacht und da muss jetzt aber ein String hin und du hast aber ein Integer angegeben.
+
+01:01:29.323 --> 01:01:37.203
+<v SPEAKER_2>Was für Strategien hast du da jetzt sozusagen entwickelt oder meinst du, müsste man da entwickeln, um da irgendwie vorwärts zu kommen? Was ist da so der Clou?
+
+01:01:37.943 --> 01:02:28.383
+<v SPEAKER_1>Die Strategien habe ich nicht ich entwickelt, sondern da gibt es zwei Forschungsgebiete oder zwei Forschungsbereiche in den Vereinigten Staaten. Einmal um Jeremy Sieck herum, der Gradual Typing erfunden hat bzw. formalisiert hat, was halt die Erweiterung eines Lambda-Kalküls um den dynamischen Typ ist. Also des typisierten Lambda-Kalküls, nicht des untypisierten Lambda-Kalküls, wie ich es vorhin erwähnt habe. Und das andere ist um Matthias Felleisen und Sam Thubin-Hochstedt herum Typed Scheme, wo sie im Prinzip einen Scheme genommen haben und das mit Typ-Annotationen versehen haben und somit typisierte Schememodule bzw. Libraries haben können.
+
+01:02:28.403 --> 01:02:37.163
+<v SPEAKER_2>Also Scheme ist so eine Programmiersprache, die aus der Lisp-Welt viel entlehnt hat, noch ein bisschen anders aussieht.
+
+01:02:37.183 --> 01:02:56.483
+<v SPEAKER_1>Ja, die hat halt in ihrem Standard erstmal kein Objektsystem und den ganzen Craft. Ist halt mehr eine Programmiersprache, an der noch aktiv geforscht wird, weil sie halt schön klein ist. Und sie ist halt dynamisch typisiert. Und ja, es gibt ganz viele verschiedene Interpreter bzw.
+
+01:02:59.803 --> 01:03:02.343
+<v SPEAKER_2>Warum ist sie so populär im Forschungsbereich?
+
+01:03:04.503 --> 01:03:23.583
+<v SPEAKER_1>Weil sie klein und dynamisch ist. Und man kann dann halt mal eben schnell das ganze Ding erweitern. Außerdem hat sie auch tatsächlich eine operationale Semantik. Das heißt, eine Semantik, wie sie auszuführen ist. Eine formalisierte Semantik, wie man sie ausführt.
+
+01:03:23.603 --> 01:03:29.183
+<v SPEAKER_2>Okay, das heißt, deine Diplomarbeit basiert jetzt in Teilen auf dieser Arbeit der genannten Wissenschaftler.
+
+01:03:30.083 --> 01:03:30.503
+<v SPEAKER_1>Genau.
+
+01:03:30.523 --> 01:03:40.243
+<v SPEAKER_2>Die jetzt sozusagen im Prinzip genau das versuchen, was du gesagt hast, dass man irgendwie diese Typen-Geschichte auch in die dynamische Sprache mit reinbringt zum Zeitpunkt der Übersetzung des Programms.
+
+01:03:40.263 --> 01:04:09.723
+<v SPEAKER_1>Genau, damit man halt zum... Also Type Schema geht da relativ weit. Das macht halt zum Zeitpunkt der Übersetzung. Wenn du ein vollständig statistisiertes Modul hast, kann es halt die gesamte Typinformation, die sonst zur Laufzeit vorliegen würde, kann es halt wegoptimieren. Und kann halt komplett startestabilisierte Module machen und kann die auch interaktiv... Und diese können dann auch interagieren mit dynamisch stabilisierten Modulen.
+
+01:04:09.743 --> 01:05:19.723
+<v SPEAKER_2>Verstehe ich das richtig. Die Verheißung eines dynamisch stabilisierten Systemes ist ja die, man kann alles zur Laufzeit offen lassen und hat einfach sehr viel mehr Flexibilität. Man muss sich eben nicht von vornherein festlegen. Letzten Endes ist es aber natürlich so, man hat da eigentlich nur die Wahl zwischen entweder ist es halt statisch oder ist es alles dynamisch. Es gibt da keine Zwischenwege. Und das ist ja auch eine häufig generell dynamisch stabilisierte Programmiersprache vor allem vorgeworfene Sache mit. Na ja, ihr performt ja nicht, weil ihr müsst ja alles offen lassen und deswegen können wir euch nicht so gut optimieren. Und in dem Moment, wo man jetzt sagt, ok, jetzt verbessern wir aber den Compiler dahingehend, dass wir eben diese Typinformation quasi erraten und damit vielleicht wissen wir nicht alles darüber, wie es letzten Endes ausgeht, sondern wir können aber zumindest 90% aller, also auf Basis von Unwahrscheinlich, ja, Unwahrscheinlichkeit wahrscheinlich nicht, sondern einfach Logik, dass man einfach bestimmte Sachen ausschließen kann, verdichten wir die Möglichkeiten, was letzten Endes tatsächlich in diesem konkreten Problem zur Ausführung kommt an Typen und können von daher besser optimieren. Ist das so?
+
+01:05:19.743 --> 01:05:25.943
+<v SPEAKER_1>Genau, und du kannst halt schon die Fehler zur Compile-Time rausfinden.
+
+01:05:25.963 --> 01:05:33.563
+<v SPEAKER_2>Also du weißt schon vorher, dass das Programm irgendwann sagen wird, ja, es ist aber ein String übergeben, wo Sonnenschein gefragt war.
+
+01:05:33.583 --> 01:05:50.663
+<v SPEAKER_1>Genau, du hast halt zur Compile-Time schon die Gewissheit, dass es, wenn du an dieser Stelle im Code zur Laufzeit kommen wirst, dass es dann einen Fehler geben wird. Kannst du halt trotzdem noch ausfinden, aber du weißt halt, wenn du an diese Stelle kommst, dann wird es da halt ein Problem geben.
+
+01:05:50.683 --> 01:05:55.563
+<v SPEAKER_2>Ist das jetzt nur so eine kleine Baustelle oder ist das irgendwie schon sowas Revolutionäres?
+
+01:05:55.583 --> 01:06:06.243
+<v SPEAKER_1>Ich finde das schon revolutionär. Es ist halt noch wenig beachtet gerade, beziehungsweise es gibt gerade schon verschiedene andere Leute, die sich damit auch beschäftigen.
+
+01:06:06.263 --> 01:06:11.003
+<v SPEAKER_2>Und wie sehr führt das jetzt in die dynamische Sprache, an die statische Sprache heran an der Stelle?
+
+01:06:11.743 --> 01:06:47.743
+<v SPEAKER_1>Na, mit dem Typed Scheme haben sie das schon sehr weit geschafft. Sie haben da halt, naja, es ist so weit gebracht, dass sie halt die, ja, sie haben halt die Möglichkeit, dass sie bestimmte Module statisch typisiert haben und andere dynamisch typisiert haben. Das heißt, sie können Applikationen bauen, wo sie die arithmetische Library oder die Matrix Library komplett statisch typisiert haben. Und dann irgendwelche Libraries, die halt Benutzereingabe erwarten, dass sie die halt noch dynamisch typisiert haben.
+
+01:06:47.763 --> 01:06:55.263
+<v SPEAKER_2>Und macht sich das dann so, also wie macht sich das bemerkbar? Macht sich das dann in Ablaufgeschwindigkeit bemerkbar?
+
+01:06:55.283 --> 01:07:32.503
+<v SPEAKER_1>Genau, das macht sich, also für die statisch typisierten Module ist halt der Overhead zur Runtime nicht mehr da. Also der dynamische Overhead, also es gibt keine Typchecks mehr da drin. Die Runtime muss halt nicht mehr zur Runtime überprüfen, ob es da irgendwelche Typen korrekt sind, sondern sie weiß halt schon durch die Compile-Time, dass die Typen da korrekt sein werden oder nicht korrekt sein werden. Und die dynamischen Module müssen halt weiterhin irgendwie gucken, was sie da für Benutzer in Eingabe bekommen und was sie da eh für Typen haben und müssen das checken.
+
+01:07:32.523 --> 01:07:37.763
+<v SPEAKER_2>Hast du jetzt im Kopf was da so für Speed-ups erzählt worden? Also waren das dann schon so Größenordnungen oder?
+
+01:07:38.683 --> 01:07:39.403
+<v SPEAKER_1>Nee, habe ich nicht im Kopf.
+
+01:07:39.423 --> 01:07:40.683
+<v SPEAKER_2>Gelingfügigkeiten.
+
+01:07:40.703 --> 01:07:44.303
+<v SPEAKER_1>Na, es ist schon elementar, wenn du halt in der...
+
+01:07:44.323 --> 01:08:02.143
+<v SPEAKER_2>Weißt du, das ist ja so 10%, 100% oder 1000% schneller. Von den Größenordnungen her. Also ist das etwas, was es so etwas schneller macht? Oder macht es das irgendwie deutlich schneller oder exorbitant viel schneller?
+
+01:08:02.403 --> 01:08:58.203
+<v SPEAKER_1>Also ich habe da keine Zahlen gesehen, aber... und habe auch selber noch keine Zahlen für meine Diplomarbeit. Aber ich denke, es macht es schon exorbitant schneller, wenn du halt die richtigen Libraries sozusagen richtig typisierst. Also wenn du halt eine mathematische Applikation hast, die halt sehr viel rechnet und der beim Plus immer wieder die Tagbits von den dynamischen Typen raus trippen muss und erst danach die Addition machen kann, dann sind das ja als Assemblerinstruktion schon einmal das exor für das Tagbit und danach die Addition. Und wenn du diese jetzt komplett statisch typisiert hast, dann brauchst du halt nicht mehr das exor und hast halt dann statt zwei Assemblerinstruktionen nur noch eine. Also statt exor und add hast du dann nur noch eine.
+
+01:09:00.243 --> 01:09:05.863
+<v SPEAKER_2>Also könnte sozusagen zu einem massiven Speedup beitragen.
+
+01:09:05.883 --> 01:09:25.703
+<v SPEAKER_1>Genau, das andere Problem, was jetzt nicht alle objektorientierten oder nicht alle dynamisch typivierten Sprachen hat, aber die Sprache, die ich speziell untersuche, also döhnen, ist das Konzept der Generic Functions und das Upgrade der Generic Functions zur Compile-Zeit.
+
+01:09:26.383 --> 01:09:32.403
+<v SPEAKER_2>Sagen wir mal was kurz dazu. Das Modell der generischen Funktion. Was macht sie generisch?
+
+01:09:32.423 --> 01:10:09.583
+<v SPEAKER_1>Generische Funktion ist das Modell, dass du Funktionen und Klassen komplett voneinander trennst. Das heißt, beide sind First Class Citizens. Das heißt, Funktionen sind auch, naja, du definierst deine Funktion nicht in irgendwelchen Klassen, sondern du definierst deine Funktion auf Argumenten. Und die sind nicht in irgendeiner Klasse versteckt. Das heißt, sie haben nicht irgendein Self-Argument oder irgend sowas, sondern sie haben halt dann Argumente von verschiedenen Typen oder von verschiedenen Klassen.
+
+01:10:10.903 --> 01:11:52.443
+<v SPEAKER_2>Das ist ja so eine Sache, die häufig einfach angenommen wird. Also wenn man so Diskussionen führt über, was denn so eine objektorientierte Programmiersprache ausmacht, dann hört man ja häufig so dieses, naja, da hat man dann so Objekte. Und die Objekte, die haben so ihren eigenen Zustand. Also was wir auch schon besprochen haben, also die Variablen, die da drin sind. Und es bringt halt auch noch so seinen eigenen Werkzeugkasten mit. Der Staubsauger schaltet sich selber ein. Und dem steht sozusagen jetzt hier, und wenn ich dann diese Funktionen benutze, dann wissen sie auch, dass sie sozusagen im Kontext eines solchen Objektes benutzt werden und können sich auf sich selbst beziehen. Also dieses Self, was schon meint ist, in der Syntax hat man ja dann häufig so dieses, ich nehme das Objekt und dann Punkt und dann ruf ich die Funktion auf. So und dann übergebe ich der aber unter Umständen auch noch ein paar Parameter, also muss nicht unbedingt, aber dieser eine Parameter, sozusagen das Objekt selber, ist implizit immer dabei und man muss sich darauf beziehen, indem man sagt, ich selbst. Ja, also die Funktion versteht sich sozusagen als Teil dieses Objektes, was sie ja auch ist und referiert zu dem Objekt als irgendwie ich oder so eine Ich-Werdung. Und das heißt, bei der generischen Funktion wird diese Funktion aus diesen Objekten herausgenommen, hat da einfach nichts mehr zu suchen, lebt außerhalb und man schreibt dann halt nicht A Punkt Funktion und dann Parameter B, sondern man schreibt einfach nur Funktion und dann die Parameter A und B. Und der Vorteil davon ist?
+
+01:11:52.963 --> 01:12:49.103
+<v SPEAKER_1>Der Vorteil davon ist, dass du Methoden beliebig erweitern kannst, ohne dass du irgendwelche Klassen anfassen musst. Also wenn du jetzt zum Beispiel die Methode Plus hast, willst du die ja auf zwei Integern bestimmt definiert haben. Das hat jetzt schon irgendjemand anderes gemacht. Aber jetzt brauchst du noch Plus auf einem Integer und deiner eigenen Klasse, die was auch immer tut. Und beziehungsweise wenn du jetzt zum Beispiel eine Klasse, die halt eine Liste enthält und du willst halt Plus definiert haben als die Länge der Liste plus halt die Länge der anderen Liste beziehungsweise Plus am Integer. Dann kannst du ohne die Klasse Integer zu erweitern zu müssen, kannst du einfach die Methode Plus erweitern auf Integer und deiner Klasse und auf deiner Klasse und deiner Klasse und auf deiner Klasse und Integer.
+
+01:12:49.123 --> 01:13:29.663
+<v SPEAKER_2>Indem man einfach dieselbe Funktion nochmal mit demselben Namen, aber mit anderen Parametern hinschreibt. Das heißt, die Funktionen unterscheiden sich nicht mehr darin, wohin sie sich befinden oder wie sie heißen. Also schon noch darüber wie sie heißen, aber es gibt halt mehrere Varianten davon, die alle gleich heißen, die sich aber dann quasi über ihre Parameter unterscheiden. Und die Auswahl darüber, welche dieser Funktionen genommen wird, hängt dann eben vom Typ ab. Vom Typ der Parameter. Dann natürlich auch der Anzahl der Parameter, aber dann eben bei gleicher Anzahl der Typ. Und deswegen ist das für dich so interessant, weil du sozusagen durch ein besseres Typenhandling an der Stelle auch diese Methoden-Performance schieben kannst?
+
+01:13:29.683 --> 01:14:11.623
+<v SPEAKER_1>Das Problem ist, wenn du deinen Typ erst zu runtime hast, dann musst du die Auswahl der Funktion, die du aufrufen willst, zu runtime tun. Und das ist halt komplex, weil wenn du jetzt irgendwie, keine Ahnung, 20 Methoden hast, die alle Plus heißen und auf verschiedenen Typen definiert sind, also Argumenttypen definiert sind, musst du jetzt erstmal die Auswahl treffen. Und das ist halt im Worst Case, dass du alle 20 Methodensignaturen dir angucken musst und dann die richtiger auswählen musst, die halt auf deine beiden Typen gerade passt. Und naja, zur runtime musst du dann halt tatsächlich da drüber laufen und Vergleiche machen und...
+
+01:14:11.643 --> 01:14:12.773
+<v SPEAKER_2>Das kostet Zeit...
+
+01:14:12.773 --> 01:14:17.663
+<v SPEAKER_1>.Distanzen dir merken von irgendwie deinen Argumenttypen und den tatsächlichen Typen.
+
+01:14:17.683 --> 01:14:18.803
+<v SPEAKER_2>Und das kostet Zeit.
+
+01:14:18.823 --> 01:14:19.863
+<v SPEAKER_1>Genau.
+
+01:14:19.883 --> 01:14:21.443
+<v SPEAKER_2>Und die Zeit willst du dir sparen?
+
+01:14:21.463 --> 01:14:26.863
+<v SPEAKER_1>Die Zeit will ich mir sparen, indem ich die Zeit halt schon zur Compile-Time verbrauche.
+
+01:14:26.883 --> 01:14:32.423
+<v SPEAKER_2>Das heißt, du weißt dann sozusagen schon vorher, welche Funktionen aufgerufen werden und mit welchen Parametern sie aufgerufen werden?
+
+01:14:33.383 --> 01:14:37.183
+<v SPEAKER_1>Genau. Und welche Typen diese Parameter haben.
+
+01:14:37.203 --> 01:15:06.823
+<v SPEAKER_2>Und muss dann sozusagen, kannst du an einer bestimmten Stelle, wo dann eine beliebige Methode mit dem Namen für irgendwelche Parameter, deren Werte sich gerade aus, was auch immer für eine Berechnung heraus ergeben haben und vor allem dessen Typen sich daraus ergeben haben, dadurch, dass man irgendwelche anderen Funktionen aufruft, die man vielleicht auch irgendwoher übergeben bekommen hat. Diese Voraussage, was dann letztendlich bei rauskommt, die willst du sozusagen schon zur Übersetzungszeit machen.
+
+01:15:07.183 --> 01:15:08.603
+<v SPEAKER_1>Genau, möglichst.
+
+01:15:08.623 --> 01:15:12.903
+<v SPEAKER_2>Das soll funktionieren? Das funktioniert schon oder das soll funktionieren?
+
+01:15:13.283 --> 01:16:17.223
+<v SPEAKER_1>Na, das funktioniert in diesem Typescheme und in dem Gradual-Typing schon ganz gut. Die haben halt noch ein paar andere Eigenschaften der Programmiersprachen, die ich halt anders hab. Also sie haben bestimmte Eigenschaften nicht, die ich dann halt zusätzlich habe. Und in meiner Diplom-Arbeit funktioniert das auch schon recht weitgehend. Also es ist noch nicht fertig, aber es funktioniert schon ganz gut. Genau. Also bisher hat der Dillon-Compiler das halt auch schon in gewisser Weise gemacht und versucht zu optimieren, weil dieser Generic Function Dispatch, also dieses drüberlaufen über die Menge der Funktionen, das ist halt echt so kostenintensiv, dass sie da schon vor zehn Jahren, als sie diesen Compiler geschrieben haben, bzw. mittlerweile 15 Jahren, als sie den Compiler geschrieben haben, dass sie sich dazu was ausgedacht haben. Aber das ist halt noch nicht erschöpfend. Also das funktioniert an bestimmten Test-Cases, die ich so habe. Funktioniert diese Typ-Inferenz dann noch nicht? Und da haben sie dann Generic Function Calls, die halt teuer sind.
+
+01:16:17.243 --> 01:16:51.603
+<v SPEAKER_2>Jetzt haben ja, hast du ja gesagt, auch andere Poemiersprachen, andere dynamische Sprachen wie Pilsen oder Ruby, haben ja dasselbe Problem. Letzten Endes, auch wenn sie jetzt diese generische Funktion nicht haben, müssen sie trotzdem zur Laufzeit halt Typen prüfen und in Abhängigkeit davon Verhalten modellieren. Inwieweit könnte denn, also weißt du, ob solche Maßnahmen in den Compilern für diese Sprachen oder ähnliche Sprachen, auch JavaScript und so weiter, ob das schon unternommen wird? Weil derzeit ist ja eigentlich so dieses Skriptsprachen schnell machen scheint ja gerade wirklich der heiße Scheiße sein. Also insbesondere im JavaScript Bereich.
+
+01:16:52.463 --> 01:17:20.703
+<v SPEAKER_1>Ja, also ich weiß es von Ruby, die benutzen, also da gibt es halt jetzt auch Papers darüber, wie die das machen wollen, also statische Typen, also Ruby statisch optimisieren, gibt es halt jetzt auch gerade zu dieser Upsala eine Einreichung, wo das halt Wissenschaftler für Ruby implementiert haben. Upsala ist? Upsala ist die Konferenz der Objektorientiere. Ich weiß nicht, was Upsala jetzt genau heißt.
+
+01:17:20.723 --> 01:17:24.443
+<v SPEAKER_2>Was die Abkürzung heißt. Also das ist die Konferenz OOP, Upsala oder Upsala.
+
+01:17:29.663 --> 01:18:01.983
+<v SPEAKER_1>Und für Python gibt es auch schon ein bisschen formale Arbeit für sozusagen. Und dann gibt es ja dieses PyPy-Projekt. Und das PyPy-Projekt wählt einen anderen Ansatz. Sie machen einfach einen Just-In-Time-Compilation. Also ganz Anfang zur Kompilzeit haben sie halt schon Typchecks für die ganzen Typen und zur Runtime gucken sie dann, ob diese Typen Typchecks wohl ausgehen oder nicht und optimieren dann nochmal den Code danach.
+
+01:18:02.003 --> 01:18:32.523
+<v SPEAKER_2>Genau. PyPy war ja hier auch schon zu Gast bei Chaosradio Express. Da haben wir mit Holger Kriekeldruher gesprochen. Das war ja dann diese Methode, die er dann beschrieben hat. Das heißt, man lässt einfach den Code laufen und schaut halt einfach mal beim Laufen, was dann bei rauskommt und auf Basis der Erkenntnisse optimiert man dann. Und mit dem eigentlichen Ziel, da eben performante Interpreter Maschinen zu haben. Aber das ist ja ein anderer Ansatz, als du den hast. Du willst ja sozusagen, ohne den Code laufen zu lassen, schon eine Analyse darüber machen.
+
+01:18:33.183 --> 01:18:46.503
+<v SPEAKER_1>Sie haben halt nur die Optimierung zur Laufzeit und ich will halt schon den Formalismus und die Sicherheit zur Kompilzeit haben. Und halt auch die Optimierung zur Kompilzeit.
+
+01:18:48.023 --> 01:18:57.723
+<v SPEAKER_2>Und diese ganzen Verfahren, die derzeit zum Einsatz kommen, um Javascript zu beschleunigen, mit diesen ganzen neuen Javascript-Methoden, mit Just-In-Time-Compiler-Geschichten?
+
+01:18:58.283 --> 01:19:26.903
+<v SPEAKER_1>Ich weiß nicht, was genau du da meinst. Was ich von Javascript kenne, ist dieses Edgemascript 4, dieses Proposal. Und da gibt es auch ein Paper darüber, über Evolutionary Programming with Javascript. Und da benutzen sie halt auch an Typtheorie genau dieses Gradual Typing. Du gibst hier Evolutionary Programming in Gradual Typing in Edgemascript 4 von Lars T. Hensen bei Adobe.
+
+01:19:26.923 --> 01:19:31.743
+<v SPEAKER_2>Gradual Typing, das hast du vorhin schon erwähnt. Was bedeutet das denn in dem Zusammenhang?
+
+01:19:31.763 --> 01:20:07.063
+<v SPEAKER_1>Gradual Typing ist einfach ein Typsystem, wo sie das typisierte Lambda-System haben, also das typisierte Lambda-Kalkül haben. Und dann noch als speziellen Typ, den dynamischen Typ, der halt erst zu runtime klar fest steht. Und zu compile-time kann man halt keine Aussage über diesen Typen treffen. Aber wenn man jetzt eine Typ-Inferenz laufen lässt und hat irgendwo diesen dynamischen Typen und weiß noch von woanders, dass es ein Integer sein muss, dann kann man schon mal den Typen der Variablen auf einen Integer setzen.
+
+01:20:09.983 --> 01:20:21.423
+<v SPEAKER_2>Aber letzten Endes ist es doch so, man kann jetzt so viel Typtheorie da reinschmeißen. Wir haben ja vorhin schon über die Seiteneffekte gesprochen und die Benutzereingaben. Es lässt sich ja nicht alles vorhersehen.
+
+01:20:21.443 --> 01:20:22.043
+<v SPEAKER_1>Genau.
+
+01:20:22.063 --> 01:20:33.883
+<v SPEAKER_2>Es wird doch definitiv Fälle geben, in der jegliches Annehmen und Nachverfolgen und Schlussfolgern scheitern muss. Und da bleibt es dann einfach so dynamisch, wie es vorher war.
+
+01:20:34.843 --> 01:20:38.823
+<v SPEAKER_1>Ich will ja auch die Dynamik gar nicht wegnehmen. Ich meine, es soll ja immer noch dynamisch bleiben.
+
+01:20:38.843 --> 01:20:59.043
+<v SPEAKER_2>Die Frage ist, in wie vielen Fällen vermutest du, wird man dann Erfolg haben und auch wirklich einen Vorteil verspüren? Meinst du, dass die meisten Fälle so einfach sind und eben so seiteneffektfrei sind, dass sie sich wirklich vorhersagen lassen, sodass man dann schon 99% der Fälle einen Optimierungsvorteil hat? Oder ist das irgendwie dann so Hälfte, Hälfte?
+
+01:21:00.203 --> 01:21:18.263
+<v SPEAKER_1>Na, ich denke für so bestimmte Probleme, die in der Standard-Library halt gelöst sind, also für sowas wie Listen-Operationen und so weiter, da kannst du das schon weitgehend zur Compile-Time lösen, was halt schon einen enormen Overhead wegnehmen kann.
+
+01:21:18.283 --> 01:21:20.743
+<v SPEAKER_2>Klar, weil die Standard-Library wird natürlich auch am laufenden Meter benutzt.
+
+01:21:21.163 --> 01:21:38.303
+<v SPEAKER_1>Genau, wenn du halt jetzt Listen sortieren willst und eine Liste von Integer reingibst und Sort aufrufst, dann willst du halt wissen, dass du danach auch eine Liste von Integer wieder zurückbekommen hast. Und nicht, dass du dann irgendeine Liste zurückbekommen hast. Weil das bringt dir dann ja nicht viel.
+
+01:21:38.323 --> 01:21:50.883
+<v SPEAKER_2>Wobei man ja in Döhnen, wenn ich mich richtig erinnere, ja auch schon die Möglichkeit hat zu sagen, okay, ich lass das jetzt mal nicht offen, welche Typen hier sind, sondern ich benenne sie eben eindeutig so, dass der Compiler im Prinzip da auch schon eine Vorlage hat.
+
+01:21:51.203 --> 01:22:09.683
+<v SPEAKER_1>Genau, der hat da schon eine Vorlage, es gibt da schon eine Syntax für, du kannst schon sagen, ich kriege hier als Eingabe eine Liste von Integern. Aber sowas wie die Funktion Sort, kriegt halt eine Liste und ein Prädikat, also eine Funktion, und gibt eine Liste zurück.
+
+01:22:09.703 --> 01:22:14.543
+<v SPEAKER_2>Da kann man ja nicht helfen, da muss man ja sozusagen schon mit Härte ran.
+
+01:22:14.563 --> 01:22:53.563
+<v SPEAKER_1>Genau, da gibt es halt gerade in dem Dyll noch keine Syntax, dass der Resultattyp abhängig davon ist, was du da reintust. Also ich will ja im Prinzip dann die Methode Sort so definiert haben, dass sie eine Liste von A's bekommt und eine Funktion, die von A nach Boolean geht. Und zurück gibt sie auch wieder eine Liste von A's. Beziehungsweise eigentlich eine sortierte Liste von A mit dem Prädikat dieser Funktion. Aber das kommt dann später.
+
+01:22:53.583 --> 01:26:08.643
+<v SPEAKER_2>So, jetzt sind wir ja am Anfang eingestiegen und haben so mal erläutert, wie so ein Compiler eigentlich anfängt zu arbeiten. Sind dann abgebogen in Richtung Programmiersprachen-Eigenschaften. Sind letzten Endes dann bei den Typen gelandet, die einfach eine wichtige Eigenschaft sind. Und auch benannt, dass jetzt Programmiersprachen auch sehr unterschiedliche Arten und Weisen haben, mit Typen umzugehen. Also vor allem da sehr pedantisch zu sein, was die Typen betrifft. Beziehungsweise ob eine Variable jetzt einen festgelegten Typ hat oder nicht. Ob sie das halt offen lassen oder nicht. Also dynamisch oder statisch sind. Und jetzt hast du ja gesagt, Typisierung ist einer der Orte, wo man eben Compilern eine Menge Beine machen kann. Insbesondere bei dynamischen Sprachen, die heutzutage einfach eine größere Bedeutung haben, als das noch vor 10, 20 Jahren war. Ich war also so C, C++, denke ich mal, hatte jetzt genau in dieser Phase einfach seine goldene Zeit. Nicht wahr? Betriebssysteme werden damit gebaut. Ein Großteil der wichtigen Applikationen wird gebaut. Diese Software ist halt einfach im Einsatz. Java ist nochmal ein ganz eigenes Ding. Also das ist einfach universell. Aber jetzt sehen wir, jetzt kommt das Web. Und gerade das Web, denke ich, hat einfach eine Menge geändert. Einerseits natürlich dadurch, dass in jeder Webseite JavaScript drinsteckt. Was schonmal der eine Punkt ist. Aber wie schon erwähnt, insbesondere so dynamische Web-Server, flexible Systeme, die einerseits schnell entwickelt werden sollen und die aber auch wirklich eine hohe Komplexität haben. Da nimmt einfach keiner mehr, na gut, keiner ist ein bisschen übertrieben, aber es zeigt sich, dass eben Sprachen wie Python und Ruby mit ihren besonderen Frameworks auch dafür größeren Zulauf bekommen. Sprich, man sieht jetzt, okay, es gibt auch eine Bewegung hin zu dynamischen Sprachen und man will aber natürlich trotzdem Performance haben, weil Performance ist einfach immer gut. Wenn irgendwas schneller läuft, ist es immer besser, als wenn es langsam läuft. Das spart auch irgendwie, also spart Zeit und Strom. Und jetzt halt zurück zu diesem Compilerbau. Also wir haben halt gesagt, okay, der Soundscape wird auseinandergenommen, wird irgendwie analysiert, die Grammatik, lalala, wir haben Syntax-Tree, dann wird das halt übersetzt in diesen Pseudocode, in diese intermediate language, wo es verschiedene Ansätze gibt, wie zum Beispiel den Bytecode bei Java, CLR bei.NET, beziehungsweise innerhalb der GNU-Compilerwelt gibt es ja auch natürlich diesen Zwischencode, wobei da gibt es irgendwie verschiedenste Formate von Zwischencode, das kam zur Sprache, als hier im Chaosradio Express zu LLVM und LLVM ist natürlich jetzt selber wieder ein frischer Ansatz, wo ja auch dieser Zwischencode eine große Rolle spielt, weil das ist ja dann sozusagen der Ort, wo dann die Optimierung einschlägt. Das heißt, zu diesem Zeitpunkt müsste man dann eigentlich auch diese Erkenntnisse aus der Typtheorie mit einbringen. Wenn man jetzt sich solche Systeme anschaut, wie den GNU-Compiler Collection oder eben auch LLVM, bringen die denn das Rüstzeug mit, dass man an der Stelle auch solche Typanalysen machen kann, wie du sie jetzt gerade beschrieben hast oder sind die dafür gar nicht gemacht?
+
+01:26:09.383 --> 01:27:10.703
+<v SPEAKER_1>Ja, ja, also bestimmte Sachen der Typtheorie können sie schon. Also LLVM hat halt auch alles typisiert und da hast du dann in 32 und in 16 und so weiter als Typen. Und kannst ja halt auch neue Typen bauen, also Compost-Types. Aber das, was ich jetzt mache, ist auch, also sowas wie das Generic Function Upgrading, ist halt eine Sache, die ich nicht in LLVM implementieren wollen würde, sondern da ich ja einen Dülen-Compiler habe, der auch schon in Dülen geschrieben ist und mit dem ich in Dülen auf die Liste der Methoden zugreifen kann und so weiter, mache ich halt solche Analysen lieber in Dülen. Und hätte dann im Prinzip einen typisierten Intermediate-Code, den ich dann im Prinzip an LLVM weitergeben könnte, der dann noch seine plattformspezifischen Optimierungen darauf ausführen könnte.
+
+01:27:10.723 --> 01:27:45.943
+<v SPEAKER_2>Okay, das heißt, in dem Fall jetzt deine Diplomarbeit mit dem Dülen-Compiler würdest du halt deine ganzen Typanalysen vorher machen und dann spuckst du sozusagen erst einen Zwischencode aus, der sozusagen schon voroptimiert ist? Gut, aber meine Frage ging ja eher in die andere Richtung. Könnte man sich theoretisch denken, dass eben mit diesen derzeit in Entwicklungen befindlichen und auch konkret genutzten Pseudocode-Systemen wie LLVM oder eben was der GNU Compiler macht, dass man eben diese Typtheorie-Geschichten dort auch noch mit einfließen lassen könnte, um dynamische Sprachen besser zu optimieren? Und das vielleicht sogar unabhängig von der programmierten Sprache?
+
+01:27:48.543 --> 01:28:26.023
+<v SPEAKER_1>Ja, könnte man natürlich tun. Also kannst du in die LLVM Intermediate Sprache sozusagen auch einbauen, müsstest dann halt irgendwie ein Input-Format finden, um halt genau diese Typen zu definieren und könntest das dann auch tun. Bei GCC weiß ich nicht, wahrscheinlich auch, aber das Problem dabei ist ja, dass GCC und LLVM ein anderes Target haben. Sie wollen ja als Frontend-Sprachen gerade sowas haben wie C, C++ und da hast du halt gar nicht die Möglichkeit, solche Typ-Ausdrücke hinzuschreiben.
+
+01:28:26.043 --> 01:28:30.303
+<v SPEAKER_2>Was heißt das? Sie wollen das haben? Also LLVM verschließt sich ja jetzt auch nicht anderen Programmiersprachen.
+
+01:28:30.803 --> 01:28:38.563
+<v SPEAKER_1>Na, LLVM hat halt nicht spezifischen Support für irgendwelche dynamischen Typen oder dynamischen Programmiersprachen.
+
+01:28:38.583 --> 01:28:40.823
+<v SPEAKER_2>Aber sagst du nicht gerade, man kann sich da Typen zusammenbauen?
+
+01:28:41.023 --> 01:28:53.563
+<v SPEAKER_1>Ja, man kann sich da Typen zusammenbauen, aber die Mächtigkeit davon ist halt nicht so weit, wie ich sie gerade habe oder ich sie gerade brauche. Also die...
+
+01:28:53.583 --> 01:29:26.063
+<v SPEAKER_2>Kann man nicht ausschließen, aber grifflich sein. Wäre aber schon auch ein Ansatz... Wenn ich es richtig verstanden habe, bei LLVM ist es ja gerade dieser Ort der Zwischenrepräsentation, an dem halt die Optimierungen ins Spiel kommen und wo man ja dann wirklich den Speed rausholen will. Da hat man noch eine relativ starksige Beschreibung mit Lauf mal durch diese Schleife durch und dann kommt halt eins von diesen 20-30 Optimierungsmodulen, schaut sich das irgendwie genauer ein und sagt, naja, so aufwendig müssen wir es jetzt nicht machen, da schneiden wir mal hier die Hälfte dabei raus. Gucken wir mal, macht immer noch das Gleiche, aber ist doppelt so schnell.
+
+01:29:26.803 --> 01:29:27.423
+<v SPEAKER_1>Genau.
+
+01:29:27.443 --> 01:29:32.583
+<v SPEAKER_2>Und dann wäre es ja sozusagen wünschenswert, dass man auch an der Stelle eben typbasierte Optimierungen machen könnte.
+
+01:29:34.963 --> 01:29:38.503
+<v SPEAKER_1>Sehr wünschenswert, aber ich habe da noch keinen Support für drin gesehen. Also dieses...
+
+01:29:38.523 --> 01:29:44.443
+<v SPEAKER_2>Jetzt haben wir sozusagen die Research Opportunity geschaffen. Jetzt haben wir sozusagen einen...
+
+01:29:44.463 --> 01:29:58.563
+<v SPEAKER_1>Ja, es gibt da schon aktiven Research- beziehungsweise Implementierungen von diesem McRuby, was halt auch LLVM-basiert ist und wo sie da irgendwas tun, aber das habe ich mir nicht intensiver angeschaut.
+
+01:29:58.583 --> 01:30:01.763
+<v SPEAKER_2>Also wo sie was tun, auch in Ansicht auf Typoptimierung?
+
+01:30:01.783 --> 01:30:05.423
+<v SPEAKER_1>Genau, auf diesen Dispatch-Optimierung LLVM.
+
+01:30:05.443 --> 01:30:55.763
+<v SPEAKER_2>McRuby soll man dazu sagen. McRuby ist ein von Apple angestoßender Effort, um Ruby besser in Mac OS X zu integrieren, weil es halt dasselbe Subsystem, dasselbe Foundation benutzt wie Objective-C. Das heißt, es lässt sich besser paaren. Es ist sozusagen eigentlich nur dafür gedacht, dass man eben in Ruby vollständige Mac OS X-Anwendungen machen kann. Aber ein Effekt dabei ist, dass sie eben den Compiler ausgetauscht haben und auch durch LLVM ersetzen gerade. Also das ist Work in Progress, was gerade stattfindet. Das ist alles noch nicht fertig. Es gibt da gerade auch etwas Disput darüber, ob sie denn nun wirklich mit ihren zwei, drei Behauptungen, die sie aufgestellt haben, ganz schnell zu sein, ob das dann wirklich alles so nachhaltig ist. Weil es gibt da irgendwie manches, was schneller ist, manches, was nicht schneller ist. Aber interessant ist sozusagen, dass sie das überhaupt versuchen.
+
+01:30:57.723 --> 01:31:20.943
+<v SPEAKER_1>Und das mit dem, wie schnell jetzt irgendwas ist, das kommt halt immer auf deine Benchmarks-View drauf an. Also wenn du irgendwelche Microbenchmarks hast und deinen Compiler an diese Microbenchmarks anpasst, dass du ganz oft ganz toll Nops rechnen kannst oder Plus rechnen kannst, dann ist es halt zwar ein Benchmark, der von dir selbst ausgeführt würde, aber ich meine die Aussage in der realen Welt ist dann halt nicht gegeben.
+
+01:31:20.963 --> 01:31:30.983
+<v SPEAKER_2>Muss man abwarten. Haben wir denn zum Thema Typtheorie jetzt alles Wichtige erwähnt?
+
+01:31:31.003 --> 01:31:32.363
+<v SPEAKER_1>Nee, haben wir nicht.
+
+01:31:32.383 --> 01:31:34.543
+<v SPEAKER_2>Was müssen wir denn auf jeden Fall nochmal betrachten?
+
+01:31:34.563 --> 01:32:27.543
+<v SPEAKER_1>Also Typtheorie geht noch sehr viel weiter. Also erstmal wollte ich noch verweisen auf so einen Weblob-Artikel von Oliver Steele, der Tests versus Types anspricht und der halt behauptet, dass wenn man eine statisch-typisierte Sprache hat, man halt damit beschäftigt ist, zuerst den Code zu schreiben, dann den Typchecker glücklich zu machen, damit man das Binary auch tatsächlich ausführen kann und dass man in dynamisch-typisierten Systemen halt zuerst den Code schreibt, dann schreibt man eine Menge von Test-Cases, die sehr viel mehr testen als Typen, also die auch Typen testen, aber halt auch noch mehr, also noch Behavior von Programmen und dass man damit deutlich schneller ist. Hat er irgendwie 2003 mal aufgeschrieben.
+
+01:32:27.903 --> 01:32:29.643
+<v SPEAKER_2>Also schneller im Programmieren.
+
+01:32:29.663 --> 01:32:32.743
+<v SPEAKER_1>Schneller, genau, schneller in der Entwicklung ist.
+
+01:32:32.763 --> 01:32:34.863
+<v SPEAKER_2>Nicht unbedingt schnelleren Code erzeugt.
+
+01:32:34.883 --> 01:32:40.243
+<v SPEAKER_1>Genau. Dann zur Typtheorie.
+
+01:32:40.263 --> 01:32:58.523
+<v SPEAKER_2>Wenn ich das richtig sehe, dieser Block-Eintrag behauptet, kurz gesagt, programmiert doch lieber dynamisch, weil mit Tests kommt ihr irgendwie schneller zum Ziel, als wenn ihr euch darum kümmert, eure Typen richtig gerade zu biegen, dass der Compiler euch vorbeilässt.
+
+01:32:58.543 --> 01:32:59.023
+<v SPEAKER_1>Genau.
+
+01:32:59.043 --> 01:33:01.443
+<v SPEAKER_2>Wie belegt er das?
+
+01:33:01.463 --> 01:33:14.503
+<v SPEAKER_1>Na durch empirische Analysen. Also, das er halt sagt, ist ja relativ deutlich. Ist halt so ein typischer Block-Artikel, da muss man ja nichts belegen. Das schreibt man einfach.
+
+01:33:15.643 --> 01:33:18.023
+<v SPEAKER_2>Okay, ist erstmal eine Behauptung. Fine.
+
+01:33:18.403 --> 01:34:01.383
+<v SPEAKER_1>Genau. Das wollte ich erstmal einstreuen. Dann zur Typtheorie. Na ja, die geht jetzt halt deutlich weiter. Also man hat jetzt nicht nur das Lambda-Kalkül, was man typisieren kann, sondern es gibt dann Erweiterungen im Sinne von, also es gibt da ganze Bücher drüber, zum Beispiel von Benjamin Pierce, das Types in Programming Languages, wo es dann halt auf 600 Seiten über verschiedene Arten der Typtheorie geht, wo es halt weitergeht mit Subtyping. Subtyping ist ja wahrscheinlich ein Begriff für die Objekte orientierter. Und davor gibt es dann halt so einfache Erweiterungen wie Tuple-Types, Record-Types, Summen-Typen, Regressionen.
+
+01:34:01.503 --> 01:34:06.723
+<v SPEAKER_2>Was heißt jetzt, warte mal, was ist hier klar? Also Subtypen heißt was?
+
+01:34:06.743 --> 01:34:08.023
+<v SPEAKER_1>Subtypen ist halt...
+
+01:34:08.443 --> 01:34:10.263
+<v SPEAKER_2>Sub, also so abgeleitete...
+
+01:34:10.283 --> 01:34:46.143
+<v SPEAKER_1>Also vererbungen. Genau, im Prinzip Vererbung. Also Subtypen und Subklassen ist auch nicht das Gleiche. Aber Subtypen macht halt Aussagen darüber, dass wenn ich eine Funktion spezifiziert habe, die einen Typ X bekommt, und ich habe jetzt noch einen Typ Y, der ein Subtyp von Y ist, dann kann diese Funktion auch Objekte des Typs Y nehmen und kann diese richtig händeln. Das ist im Prinzip Subtyping.
+
+01:34:46.963 --> 01:34:51.143
+<v SPEAKER_2>Inwiefern spielt das jetzt für die Optimierung eine Rolle?
+
+01:34:51.163 --> 01:35:09.583
+<v SPEAKER_1>Na, dass du für die Optimierung spielt das jetzt nicht zwingende Rolle, das ist halt mehr Typtheorie. Dass du halt Systeme mit Subtyping und Systeme mit Subclassen auch ordentlich tubisieren kannst.
+
+01:35:09.603 --> 01:35:17.843
+<v SPEAKER_2>Für wen ist das jetzt wichtig? Ist das für denjenigen, der eine Programmiersprache designt, einen Compiler baut?
+
+01:35:17.863 --> 01:35:42.603
+<v SPEAKER_1>Der eine Programmiersprache designt und einen Compiler baut. Weil der, der die Programmiersprache designt, muss sich Gedanken darüber machen, was die Programmiersprache, also was du da drin ausdrucken kannst. Und der, der den Compiler baut, muss das ja tatsächlich implementieren. Und das muss dann ja auch funktionieren und darf ja nicht in irgendwelchen Fällen einfach nicht funktionieren. Oder falsch funktionieren.
+
+01:35:42.623 --> 01:35:57.923
+<v SPEAKER_2>Nochmal so ganz nebenbei. Also eine Programmiersprache zu erfinden oder einen Compiler zu schreiben, gehört glaube ich zu den selteneren Tätigkeiten, denen sich auch Informatik-Studenten stellen. Sehe ich das richtig?
+
+01:35:58.023 --> 01:36:32.563
+<v SPEAKER_1>Ja, das siehst du richtig. Das ist halt die Disziplin in der Informatik, die im Prinzip kein externes Wissen braucht. Also ist nicht so wie die Bioinformatik, wo du irgendwelche tollen Algorithmen usw. noch aus der Biologie lernen oder aus der Biologie ableiten kannst. Sondern bei Compilerbau ist es halt dein Input, der Source-Code von irgendjemand anders und dein Output halt irgendwelcher Binär-Code und du musst keine Ahnung haben, wie irgendwelche Transistoren funktionieren oder irgend so ein Zeug, sondern du musst halt nur wissen, was in der Informatik los ist.
+
+01:36:32.583 --> 01:36:33.803
+<v SPEAKER_2>Ist ja eigentlich ein Vorteil.
+
+01:36:35.123 --> 01:36:36.523
+<v SPEAKER_1>Ja, ist halt ein Vorteil, aber...
+
+01:36:36.543 --> 01:36:38.003
+<v SPEAKER_2>Aber ist ja nicht so populär.
+
+01:36:38.023 --> 01:37:04.423
+<v SPEAKER_1>Nee, ist nicht so populär. Weil man nicht viel Geld mit verdienen kann möglicherweise. Und weil es ein komplexes Thema ist, weil du halt relativ viel Theorie dahinter hast. Durch diese Typtheorie und durch Optimierungen. Und dann hast du da beliebig komplexe Probleme. Zum Beispiel in welcher Reihenfolge du welche Optimierungen ausführst. Also, wie das besten funktioniert.
+
+01:37:04.443 --> 01:37:27.623
+<v SPEAKER_2>Ich wollte einfach auf die Motivation raus. Weil wenn man sich mit dir auch mal auf ein Bier trifft oder so weiter, dann bist du irgendwie schnell bei Typen und Compileroptimierungen. Dann fangen deine Augen an zu leuchten. Also, was kannst du sozusagen als Empfehlung herausgeben, was diese Experience ist, dich mit solchen Sachen zu beschäftigen? Was macht es so wertvoll?
+
+01:37:27.623 --> 01:37:41.483
+<v SPEAKER_1>Na, es macht es so wertvoll, weil ich halt nicht mehr Source-Code optimal schreiben muss, sondern ich schreibe mir halt Compileroptimierungen, die beliebigen Source-Code in optimierten Source-Code übersetzen.
+
+01:37:42.723 --> 01:37:51.183
+<v SPEAKER_2>Aber ich meine, was ist jetzt der Fun dabei? Das klingt ja jetzt alles erstmal nicht nach hübschen Mädchen treffen und ein ganzes Wochenende besaufen.
+
+01:37:51.203 --> 01:38:12.383
+<v SPEAKER_1>Na, der Fun dabei ist, dass ich halt später zum einen ein formales Modell habe, besser schlafen kann, weil ich weiß, dass mein Code funktionieren wird. Und zum anderen, dass er halt optimiert ist, also dass er schnell ist. Dass er schnell und safe ist.
+
+01:38:12.403 --> 01:38:15.663
+<v SPEAKER_2>Okay, das heißt, du machst das eigentlich nur für deinen eigenen Code?
+
+01:38:16.723 --> 01:38:18.223
+<v SPEAKER_1>Na ja, ich mach das halt für...
+
+01:38:18.243 --> 01:38:24.823
+<v SPEAKER_2>Du baust das jetzt in deinen Lieblings-Compiler ein, damit irgendwie deine Lieblings-Polimiersprache geschriebenen Programme schnell sind.
+
+01:38:24.843 --> 01:38:26.803
+<v SPEAKER_1>Genau, primär der Compiler.
+
+01:38:26.823 --> 01:38:29.503
+<v SPEAKER_2>Okay, aber das ist ja dann sozusagen reiner Eigennutz.
+
+01:38:29.523 --> 01:38:50.043
+<v SPEAKER_1>Das ist erstmal reiner Eigennutz, aber ich denke, wenn ich das fertig hab, dann werde ich möglicherweise auch ein Frontend für Python oder Ruby oder was auch immer schreiben für den gleichen Compiler. Und dann kann man einfach Ruby oder Python-Source nehmen und kann diesen einfach compilen mit dem Compiler und hat dann auch schnell einen Binärcode.
+
+01:38:50.943 --> 01:39:02.183
+<v SPEAKER_2>Und meinst du, dass du da, also wie hoch schätzt du die Qualität von diesem dünnen Compiler ein, die da jetzt vorliegt, wird das dann konkurrenzfähig sein?
+
+01:39:02.503 --> 01:39:20.063
+<v SPEAKER_1>Na die Qualität ist an vielen Stellen schon sehr hoch. An einigen Stellen ist sie dann auch wieder nicht so hoch. Also ich hab da jetzt auch während meiner Diplomarbeit erstmal diverse Zeilen Code gelöscht, weil es war einfach duplicate Code hier und da und die Abstraktion sind halt hier und da auch ein bisschen falsch.
+
+01:39:20.783 --> 01:39:47.103
+<v SPEAKER_2>Aber deine Vermutung wäre jetzt schon, dass wenn du jetzt sozusagen dir Python als Aufgabe setzt, aber trotzdem denselben Compiler verwendest, also Python nicht in einen im C geschriebenen Compiler, wie das derzeit üblicherweise der Fall ist, oder bei PyPy halt in Python, sondern meinetwegen jetzt den in dünn programmierten Compiler übersetzt, dass du dann gegenüber dem C Compiler, so wie er heute ist, also dem in C geschriebenen Compiler, deutliche Geschwindigkeitsvorschritte erfüllen könntest?
+
+01:39:47.243 --> 01:39:48.663
+<v SPEAKER_1>Ja, denke ich schon.
+
+01:39:48.683 --> 01:39:52.303
+<v SPEAKER_2>So, mit irgendwelchen gefühlten Größenordnungen?
+
+01:39:52.323 --> 01:39:54.723
+<v SPEAKER_1>Nee, ich fühle da keine Größenordnungen.
+
+01:39:54.743 --> 01:39:56.263
+<v SPEAKER_2>Okay.
+
+01:39:56.283 --> 01:40:06.063
+<v SPEAKER_1>Also ich muss erstmal gucken, wie der, also mein Benchmark wird halt sein, wie der Dillon-Compiler den Dillon-Compiler kompilen kann.
+
+01:40:06.083 --> 01:40:10.923
+<v SPEAKER_2>Also bist du jetzt so erwartungsfroh, dass du schon im Meinung weißt, das könnte unter Umständen wirklich was bringen?
+
+01:40:10.943 --> 01:40:35.543
+<v SPEAKER_1>Genau, und ich bin so erwartungsfroh, weil ich gucke mir halt meinen Control- und Dataflow-Graphen an. Also ich habe mir da eine Visualisierung geschrieben für meine Diplomarbeit, wo ich halt die Graphen sehe und sehen kann, was für Optimierungen drauf ausgeführt werden und wie der initiale Control-Flow-Graph aussieht und wie der Control-Flow-Graph nach den Optimierungen aussieht.
+
+01:40:35.563 --> 01:40:40.323
+<v SPEAKER_2>Control-Flow-Graph ist sozusagen die in diesem Zwischencode steckende Programmablauf-Logik, sozusagen.
+
+01:40:40.343 --> 01:40:40.923
+<v SPEAKER_1>Genau.
+
+01:40:40.943 --> 01:40:58.943
+<v SPEAKER_2>Das heißt, du visualisierst den irgendwie vorher, nachher und dann bewegen sich die Graphen magnetisch rum und werden kleiner und Sachen zerplatzen. Daran kannst du dir sozusagen selber auch visuell klarmachen, was du eigentlich tust.
+
+01:40:59.543 --> 01:41:02.343
+<v SPEAKER_1>Das ist besser als ASCII-Output lesen.
+
+01:41:02.363 --> 01:41:04.863
+<v SPEAKER_2>Ist da was im Web? Kann man da drauf linken?
+
+01:41:04.883 --> 01:41:06.083
+<v SPEAKER_1>Ja, kann man drauf linken.
+
+01:41:06.103 --> 01:41:07.403
+<v SPEAKER_2>Dann linken wir da auch drauf.
+
+01:41:07.423 --> 01:41:14.403
+<v SPEAKER_1>Genau. Das ist halt nicht magnetisch, sondern das ist halt schon layoutet.
+
+01:41:14.423 --> 01:41:21.123
+<v SPEAKER_2>Ich bin mir jetzt so ein bisschen unklar, wie tief man jetzt noch in diese Typtheorie-Geschichte reinfragen sollte, sodass es irgendwie noch plastisch bleibt.
+
+01:41:21.923 --> 01:41:46.083
+<v SPEAKER_1>Ja, es gibt da noch recht viel, also ein interessantes Thema. Was ich zumindest interessant finde, sind Dependent Types, also abhängige Typen. Das ist die Theorie dahinter, dass ich halt Aussagen darüber treffen kann. Ich habe jetzt hier nicht nur eine Liste, sondern ich habe erstmal eine Liste von Integern. Und dann kann ich noch zusätzlich so Aussagen darüber treffen, dass ich eine Liste von Integern der Größe 3 habe.
+
+01:41:46.103 --> 01:41:47.963
+<v SPEAKER_2>Also wo maximal drei Elemente drin sind.
+
+01:41:47.983 --> 01:42:39.803
+<v SPEAKER_1>Genau, wo genau drei Elemente drin sein werden. Also zur Compile-Time habe ich halt diese Aussage. Und wenn ich dann die Methode, füge mal ein Element in diese Liste zu, ausführe, dass ich danach halt eine Liste der Länge 4 habe. Und wenn ich solche Aussagen halt schon zur Compile-Zeit treffen kann, kann ich sehr viel mehr optimieren, als wenn ich sie nicht treffen kann. Und weil ich kann z.B. Optimierungen ausführen, die jetzt durch die Liste gehen und jedes Elemente printen z.B., könnte ich direkt unrollen. Also weil ich weiß, dass es genau vier Elemente sind, macht es möglicherweise Sinn, dass ich auf bestimmten CPUs nicht immer wieder branche und zurückgehe. Also die Loop tatsächlich durchgehe.
+
+01:42:39.823 --> 01:42:45.423
+<v SPEAKER_2>Und einfach viermal hintereinander dasselbe tue, weil es einfach schneller ist, als da welche blöden Schleifen zu zählen.
+
+01:42:45.723 --> 01:42:56.763
+<v SPEAKER_1>Genau, weil dann halt die Pipeline noch intakt ist. Und so gibt es halt noch sehr viel mehr.
+
+01:42:56.843 --> 01:43:02.543
+<v SPEAKER_2>Ist das nicht eigentlich eine Optimierung, die dann später so ein LLVM machen sollte, weil das ja dann doch sehr prozessor-spezifisch ist?
+
+01:43:02.563 --> 01:43:07.243
+<v SPEAKER_1>Genau, aber das LLVM muss ja erst mal wissen, dass die Listed tatsächlich eine Länge 4 hat.
+
+01:43:07.263 --> 01:43:09.503
+<v SPEAKER_2>Wie sagt man dem LLVM, dass es eine LLVM ist?
+
+01:43:09.523 --> 01:43:47.943
+<v SPEAKER_1>Das weiß ich nicht. Aber ich hoffe, dass man ihm das irgendwie sagen kann. Dann habe ich auch neulich noch gefunden, so Papers über Type-Based Race Detection vor Java. Das heißt, in der Typtheorie haben sie dann halt auch sowas wie Concurrency mal modelliert und können halt anhand der Typen Race Conditions rausfinden. Das heißt, sie machen auch so ein paar zusätzliche Annotationen und dann haben sie ein Java-System, wo sie ihr halt Aussagen darüber treffen kann, ob es Race Conditions hat oder nicht.
+
+01:43:47.963 --> 01:43:53.523
+<v SPEAKER_2>Das heißt, man kann auch obskure Fehler quasi vorhersagen?
+
+01:43:53.543 --> 01:43:57.123
+<v SPEAKER_1>Genau, man kann auch obskure Fehler vorhersagen.
+
+01:43:57.143 --> 01:44:27.423
+<v SPEAKER_2>So ein Warnsystem. Welche Implikation hat denn das überhaupt für Security? Das ist bei einem Fehler im Security jetzt ein weites Feld, aber wenn ich mir irgendwie so anschaue, unter welcher Attacke heutzutage Programme stehen, und wie Programme so von außen durchlöchert werden und dann Hintertücheln aufmachen, ist natürlich dieses Ganze, wie funktioniert dieser Code eigentlich und was weiß der Code über sich selber, ist ja nicht ganz irrelevant, oder?
+
+01:44:27.443 --> 01:45:42.923
+<v SPEAKER_1>Genau, also was da auch primär, als erstes muss man da nennen, was da nicht irrelevant ist, ist der Unterschied zwischen Wigli und Strongly-Typed. Das heißt, wenn ich eine Wigli-Type-Proamiersprache habe, dann habe ich halt immer das Problem, dass es da irgendwelche Buffer-Overflows geben kann und irgendwelche Code-Execution sein kann. C, C++, ja auch immer. Da gibt es dann auch irgendwelche Verhinderungen mit irgendwelchen Guards auf dem Stack und irgend so ein Zeug. Das finde ich jetzt nicht weiter interessant. Bei Strongly-Typed-Proamiersprachen hast du immerhin einen Typ von sämtlichen, also ist das alles stark typisiert. Das heißt, du hast immer noch einen Typ da dran. Das heißt, du kannst nicht so einfach irgendwie jetzt eine Null überschreiben und damit dann irgendwie Code ausführen. Es gibt auch ein interessantes Papers zu Vertrauen und Compilern. Das ist die Turing Award Lecture von Ken Tompton über Reflections on Trust in Trust. Das heißt, er hat mal beschrieben, naja, ich mein, was tust du denn, wenn jetzt eine Backdoor in deinem Compiler ist?
+
+01:45:42.923 --> 01:45:51.263
+<v SPEAKER_2>Aber wenn das Programm, mit dem ich mein Programm übersetze, in mein Programm etwas einfügt, was ein Hintertüchchen aufmacht, ohne dass ich da irgendwas von weiß.
+
+01:45:51.283 --> 01:46:15.503
+<v SPEAKER_1>Genau, und du kannst das sogar so machen, dass du, wenn du den Compiler dann selber kompilst, dann integriert er halt diese Optimi bzw. diese Backdoor immer wieder in sich rein. Das heißt, auch wenn du den Compiler mit dem Compiler übersetzt, dass du halt wieder einen Compiler, die dann in den Backdoor in jedes ausführbare Programm einfügt.
+
+01:46:15.523 --> 01:46:18.843
+<v SPEAKER_2>Das ist aber eher ein theoretisches Konstrukt, oder? Jetzt, oder gab es das?
+
+01:46:18.863 --> 01:46:19.623
+<v SPEAKER_1>Na ja, ist unklar.
+
+01:46:19.663 --> 01:46:20.623
+<v SPEAKER_2>Ach so, weiß man nicht.
+
+01:46:20.643 --> 01:46:30.203
+<v SPEAKER_1>Also sie haben das auch mal implementiert, haben sie geschrieben. Also es ist von 1984 und sie haben das auch mal implementiert, aber nie released.
+
+01:46:30.223 --> 01:46:32.103
+<v SPEAKER_2>Angeblich nie released.
+
+01:46:32.123 --> 01:46:33.983
+<v SPEAKER_1>Angeblich nie released, vielleicht ist es auch dann...
+
+01:46:34.003 --> 01:46:36.283
+<v SPEAKER_2>Weil sie gesagt haben, dass sie das nicht gelesen dürfen.
+
+01:46:37.423 --> 01:46:54.363
+<v SPEAKER_1>Genau, sie haben gesagt, wir haben das mal implementiert, aber wir werden das nie releasen, das ist ja viel zu böse. Und da gab es eine Antwort, 2005 interessanterweise, von David Wheeler über countering trusting trust through diverse double compiling.
+
+01:46:54.383 --> 01:47:05.143
+<v SPEAKER_2>Warte mal, was war denn die Aussage von Ken Thompson? Die Aussage von Ken Thompson war, Leute stellt euch doch mal vor, wie es wär, wenn es sowas gäbe und wir haben sowas mal testweise gebaut und jetzt habt ihr alle Angst.
+
+01:47:06.543 --> 01:47:11.363
+<v SPEAKER_1>Und wie lösen wir das Problem? Also wie kannst du jetzt dem Compiler vertrauen?
+
+01:47:11.383 --> 01:47:26.683
+<v SPEAKER_2>Hat er dafür auch Lösungsvorschläge gemacht, wie man dieses Problem lösen kann? Oder war das dann so die Q&A-Session und während sie alle auf den Bänken zitterten, hat er irgendwie Kekse gefressen und ist dann immer nach Hause gegangen? Und jetzt kam 2005 sozusagen die Antwort.
+
+01:47:26.803 --> 01:47:36.143
+<v SPEAKER_1>Also seine Moral war halt, dass du keinem Code vertrauen kannst, den du nicht tatsächlich selbst geschrieben hast.
+
+01:47:37.043 --> 01:47:40.103
+<v SPEAKER_2>Also schreibt eure Compiler selber, wenn ihr euch sicher sein wollt.
+
+01:47:40.443 --> 01:47:42.003
+<v SPEAKER_1>Oder wenn ihr die Bektos haben wollt.
+
+01:47:43.463 --> 01:47:47.703
+<v SPEAKER_2>Und jetzt kommt der Wieler und hat was rausgefunden?
+
+01:47:47.723 --> 01:48:28.703
+<v SPEAKER_1>Na, er hat einen Counter-Mechanismus für dieses Compilerproblem dargestellt, in dem er beliebigen Source Code hat. Und dann hat er zwei Compiler und dann compilert er, also er hat auch einen Source Code für einen Compiler und dann compilert er mit beiden Compilern den Source Code und guckt auf die Binaries, die rauskommen. Und wenn er das in einer bestimmten Abhängigkeit macht, also wenn er den Compiler mit dem Compiler compilert und den Compiler mit dem anderen Compiler compilert, dann muss das selbe Ergebnis rauskommen. Und dann kann er einfach das Binary vergleichen und wenn das Binary nicht gleich ist, dann...
+
+01:48:28.763 --> 01:48:37.463
+<v SPEAKER_2>Nicht gleich im Sinne von nicht Bit für Bit identisch, weil die Compiler ja eigentlich unterschiedlichen Code machen, sondern identisch im Sinne von das Verhalten des Programms.
+
+01:48:38.523 --> 01:48:42.863
+<v SPEAKER_1>Na, schon der Binary-Code muss identisch sein des Compilers.
+
+01:48:42.883 --> 01:48:48.983
+<v SPEAKER_2>Das heißt ja voraus, dass die Compiler dieselben Optimierungsstrategien fahren.
+
+01:48:50.923 --> 01:49:09.443
+<v SPEAKER_1>Ähm, ja stimmt, Moment. Die Teile stehen halt in dem Paper, aber er hat halt einen Mechanismus dafür gefunden, dass du entdecken kannst, dass der eine Compiler einen Backdoor hat. Solange nicht beide Compiler dieselbe Backdoor haben.
+
+01:49:12.563 --> 01:50:04.823
+<v SPEAKER_2>Und da stecken im Prinzip aber auch Methodiken drin, dass man in zunehmendem Maße den Programm schon zum Übersetzungszeitpunkt auf die Füße schaut. So, dass man irgendwie guckt, was tun die alle. In dem einen Fall, was dein Typtheorie-Diplom betrifft oder auch die Arbeit von PiPi, ist so dieses zur Compile oder zur simulierten Laufzeit, beobachten wir das Programm, um Erkenntnisse für die Optimierung, für in der Regel Ablaufgeschwindigkeit zu erzielen. In diesem Fall machen wir irgendwie ähnliche Sachen, um einfach uns sicher zu sein, dass das Programm schon das Richtige tut und dass nicht irgendwas da reingemacht wurde. Das hilft mir die beste Beweisbarkeit meines Sourcecodes, wenn am Ende noch weitere Zeilen Sourcecodes mit herangezogen werden, die ich selber so nie geschrieben habe.
+
+01:50:04.843 --> 01:50:05.423
+<v SPEAKER_1>Genau.
+
+01:50:05.443 --> 01:50:12.963
+<v SPEAKER_2>Und bewiesen habe. Tja, Hannes. Und jetzt? Was bringt die Zukunft? Also wo muss die Reise hingehen?
+
+01:50:12.983 --> 01:52:12.643
+<v SPEAKER_1>Was bringt die Zukunft? Das ist eine interessante Frage. Also es gibt da noch ein weiteres Problem, was ich noch erwähnen wollte. Das ist das Expression-Problem, was halt auch Aussagen über Proamiersprachen bzw. Erweiterbarkeit von Proamiersprachen trifft. Das ist das theoretische Modell, dass du jetzt die Funktion Plus zum Beispiel hast und zum Beispiel den Typen Integer. Das heißt, du kannst Plus auf zwei Integern ausführen. Und jetzt ist die Frage, wie du ohne den Source-Code für die Klasse Plus und für die Klasse Integer und für die Klasse Methode Plus das erweitern kannst, sodass du auch Additionen von Floating Points und Integers machen kannst. Und wie man eine Lösung dafür konstruieren kann in verschiedenen Sprachen. Und das ist halt die eine Ebene. Das heißt, du kannst die Menge der Klassen erweitern, also Floating Point und rationale Zahlen usw. und die andere Ebene ist, dass du die Menge der Operationen noch erweitern können willst. Also du willst dann auch Multiplikationen und Divisionen und Subtraktionen implementieren. Und das ist halt in bestehenden Sprachen, also in sowas wie Java und C++ nicht trivial möglich. Auch in funktionalen Sprachen, in sowas wie Haskell ist das nicht trivial möglich. Da kannst du halt immer nur die eine Ebene erweitern. Also du kannst natürlich die Klasse Float jetzt implementieren in objektorientierten Sprachen und kannst dann da Plus drauf definieren, aber dann kannst du nicht ein Integer plus ein Float ausdrücken, weil dazu müsstest du die Klasse Integer erweitern. Und bei funktionalen Sprachen kannst du halt die Operationen sehr einfach erweitern. Also bei objektorientierten kannst du halt auch nicht mal auf der Klasse Integer einfach so implementieren.
+
+01:52:13.163 --> 01:52:15.383
+<v SPEAKER_2>Aber es gibt auch Operator-Overloading.
+
+01:52:16.563 --> 01:52:30.663
+<v SPEAKER_1>Jaja, aber das hilft dir ja nichts. Also ich meine, wenn du jetzt die Klasse Integer hast und davon jetzt nicht den Source Code hast, wie implementierst du dann mal auf dem Integer? Dazu muss ja die Klasse Integer erweitern.
+
+01:52:30.683 --> 01:52:34.583
+<v SPEAKER_2>Okay, aber vielleicht habe ich ja den Source Code.
+
+01:52:34.603 --> 01:53:36.163
+<v SPEAKER_1>Ja, das ist ja jetzt hier nicht die Frage. Das Problem ist halt nur ein theoretisches Problem. Und da gibt es halt dann Lösungsansätze und in Haskell, also in den funktionalen Sprachen, kannst du dann halt die Operatoren erweitern. Aber man muss dann halt die Methode plus tatsächlich den Source Code zu haben, um halt plus auf Integer und Float erweitern zu können und so weiter. Das ist ein schönes Problem, was sie dann in so schicken Sprachen wie Scala oder Lisp halt trivial lösen können. Weil die bieten dir halt die Abstraktionsmechanismus, um halt das Externe alles zu erweitern. Scala ist auf der JVM eine funktionale Programmiersprache, die auch statisch typisiert ist. Und die hat halt dieses Konzept von Trades, was dir halt Mehrfachvererbung und so weiter gibt.
+
+01:53:36.183 --> 01:53:37.863
+<v SPEAKER_2>Aber Dön hat doch dieses Problem auch gelöst.
+
+01:53:38.183 --> 01:53:41.443
+<v SPEAKER_1>Ja, Dön hat das mit den generischen Funktionen auch gelöst.
+
+01:53:41.463 --> 01:53:46.283
+<v SPEAKER_2>Und was ist jetzt dieses Expression Problem?
+
+01:53:46.303 --> 01:53:48.483
+<v SPEAKER_1>Genau, das Expression Problem.
+
+01:53:48.503 --> 01:53:54.743
+<v SPEAKER_2>Und genau das ist das Expression Problem. Wie erweitere ich Klassen und Funktionalität ohne den Source Code zu haben?
+
+01:53:54.763 --> 01:53:59.063
+<v SPEAKER_1>Genau, und wie erweitere ich Funktionen und Klassen ohne den Source Code zu haben?
+
+01:53:59.083 --> 01:54:01.883
+<v SPEAKER_2>Und was kann man bei der anderen Proamiersprache lösen?
+
+01:54:01.903 --> 01:54:33.623
+<v SPEAKER_1>Es lässt sich wohl in Java mit dem Visitor-Pattern lösen. Und in Haskell lässt es sich auch irgendwie lösen. Also es ist ein Problem, was Philip Weidler 1998 formuliert hat und wo es dann diverse Antworten darauf gab, wie sie das lösen in verschiedenen Proamiersprachen. Also es ist in jeder Proamiersprache lösbar, aber es ist halt nicht unbedingt einfach, trivial und nicht schön anzusehen.
+
+01:54:33.643 --> 01:56:07.403
+<v SPEAKER_2>Und nicht so, dass man das auch wirklich verwenden wollen würde. Was ist denn so dein Tipp? Was kannst du denn so Programmierern empfehlen oder auch vielleicht Informatik-Studenten, die auch mehr in Richtung Programmieren gehen? Nicht jeder ist ja jetzt unbedingt auch gleichzeitig ein Programmierfan. Womit man sich denn mal so beschäftigen sollte? Also so einerseits ein bisschen aus der Erfahrung heraus, was für dich interessant war und was dir so Einblicke gegeben hat, die es wert waren, nachvollzogen zu werden. Und auch, was ist, das klingt ja mal raus, du bist auf Konferenzen, du beschäftigst dich, sagen wir mal, auch mit aktuellen Thesen, an denen sich jetzt auch für mich irgendwie abzeichnet, ah, okay, alles klar, Compilerbau, das ist jetzt nicht seit dem Buch von Niklaus Wirth damals, als er noch Pascal in die Schulen getragen hat, stehen geblieben, sondern das ist sozusagen nach wie vor auch ein Forschungsfeld, in dem über viele Sachen nachgedacht werden, neue Programmiersprachen kommen raus, die versuchen einzelne Probleme besser zu lösen, beziehungsweise es gibt neue Versionen oder Ansätze oder Extensions oder Fork von bestehenden Programmiersprachen, die auch versuchen, da irgendwas zu erreichen. Was sind denn die spannenden Felder? Was würdest du den Leuten empfehlen, die wirklich Programmierung auch als solche interessant finden und da selber vielleicht auch anfangen wollen zu forschen oder zumindest besser zu programmieren?
+
+01:56:08.803 --> 01:57:06.723
+<v SPEAKER_1>Naja, verschiedene Programmiersprachen, verschiedene Programmierparadigmen, wie zum Beispiel Prolog, um mal eine logische Programmiersprache zu nennen, die einfach angucken, gucken, was die Konzepte sind, worauf das aufbaut, wie das alles so ist. Also ich meine, Prolog ist da sicherlich was komplett anderes zu den bisher genannten Sprachen, dann halt mal eine funktionale Programmiersprache sich angucken. Da würde ich Heskel oder ML empfehlen, weil die sind sehr schön, sehr strikt, sehr knapp, kompakt. Dann statisch stabilisierte, objektorientierte Sprachen, sowas wie Java Scala, finde ich da interessant. Also Java weniger, mehr Scala gerade. Dann auf jeden Fall auch diese dynamischen Sprachen, sowas wie Lisp oder heutzutage dann wohl eher Clojure, was eine Lisp-Implementierung auf der JVM ist.
+
+01:57:06.743 --> 01:57:08.423
+<v SPEAKER_2>Das ist auch relativ neu, oder?
+
+01:57:08.443 --> 01:57:22.683
+<v SPEAKER_1>Ja, das ist relativ neu. Das habe ich vor zwei Wochen auf der International Lisp Conference ein längeres Tutorial von dem Autor gehört. Das war echt interessant. Sie haben da interessante Konzepte vorgestellt.
+
+01:57:22.703 --> 01:57:24.443
+<v SPEAKER_2>Lisp in einer Java-Maschine.
+
+01:57:24.463 --> 01:58:12.863
+<v SPEAKER_1>Genau, Lisp in einer Java-Maschine. Und wie sie da Multithreading, also Concurrency lösen usw. Das ist schon echt sehr schick. Und dadurch, dass sie auf einer JVM laufen, haben sie halt den Vorteil, dass sie sämtliche Java-Klassen halt weiter benutzen können. Dann, was finde ich noch interessant, verschiedene andere Proamiersprachen, die halt aktuell sind. Also da gibt es immer mal wieder ganz nette Proamiersprachen. Als Web-Resource ist es da unerlässlich, Lambda, die Ultimate zu nennen, was halt das Proamiersprachen-Weblog ist, wo sich halt im Prinzip die Community rumtreibt.
+
+01:58:12.883 --> 01:58:14.243
+<v SPEAKER_2>Aber du machst trotzdem lieber Düln?
+
+01:58:15.003 --> 01:58:33.043
+<v SPEAKER_1>Ja, ich hab halt in Düln meine Ecke gefunden, wo ich halt selber einen Compiler rumbasteln kann, wo mich keiner stört, wo der Compiler auch schon recht weit entwickelt wurde von anderen Leuten, die halt durchaus Ahnung davon hatten. Und ich entüge ja da halt dieses und jenes.
+
+01:58:33.063 --> 01:58:34.883
+<v SPEAKER_2>Kannst du aber auch empfehlen?
+
+01:58:34.903 --> 01:58:48.623
+<v SPEAKER_1>Kann ich auch empfehlen, ja. Also die Lernkurve ist halt ein bisschen steil, das Setup ist nicht trivial und die Community ist sehr klein, aber warum auch nicht? Also ich mein, macht ja sonst keiner, ne?
+
+01:58:48.643 --> 01:58:50.063
+<v SPEAKER_2>Aber wenn man erstmal da ist, ist es schön.
+
+01:58:50.803 --> 01:58:55.583
+<v SPEAKER_1>Ja, ich fühl mich da wohl. Also ich find das super.
+
+01:58:55.603 --> 01:58:57.063
+<v SPEAKER_2>Okay, Hannes, haben wir's?
+
+01:58:58.763 --> 01:59:01.383
+<v SPEAKER_1>Na ja, wir haben noch die Zukunft, ne?
+
+01:59:01.403 --> 01:59:02.083
+<v SPEAKER_2>Die Zukunft?
+
+01:59:02.103 --> 01:59:33.183
+<v SPEAKER_1>Die Zukunft, ja. Es gibt jetzt auch auf der, also es gibt noch verschiedene Mea-Konferenzen, sowas wie die PLDE, was die Programming Languages Design and Implementation ist. Und da gibt's ein Paper dieses Jahr, was heißt in Integrated Proof Language for Imperative Programs, was halt ein Java betrachtet und zu dem Java hinzu kann man halt Annotationen machen, die dann bewiesen werden von einem Beweissystem.
+
+01:59:33.203 --> 01:59:37.543
+<v SPEAKER_2>Hab ich das richtig verstanden, eine Sprache zum Beweisen von...
+
+01:59:37.563 --> 02:00:42.143
+<v SPEAKER_1>Genau, damit er halt sowas beweisen kann, wie das irgendwie add und remove auf einer Liste tatsächlich korrekt ausgeführt wird und dass die Liste danach immer noch konsistent ist und dass die Laufzeit von add oder remove halt auch in den entsprechenden Schranken ist. Und das finde ich gerade sehr interessant, also eh, dass man Beweissysteme und Proamiersprachen miteinander verbindet. Das denke ich, also ich denke, wenn man das halt in einer Syntax später haben kann, dann wird es irgendwann dazu führen, dass es tatsächlich mehr Beweise für mehr Applikationen gibt. Also im Prinzip, wo man ja, oder wo ich zumindest hin will, ist, dass man eine, naja, dass man alles durch bewiesen hat im Prinzip. Also dass du formale Beweise für sämtliche Applikationen hast. Sowas, was halt heutzutage nur für den Airberg oder für die Flugzeugsteuerung gemacht wird, dass sowas halt auch für Office-Applikationen gemacht wird, damit halt dein Wordprocessor immer korrekt funktioniert.
+
+02:00:42.163 --> 02:00:44.003
+<v SPEAKER_2>Das ist auch realistisch?
+
+02:00:45.863 --> 02:01:22.343
+<v SPEAKER_1>Ja, ich denke, das ist halt aktuelle Forschung, aber so in 20, 30 Jahren wird sich das vielleicht herausstellen, dass es zum einen möglich ist, zum anderen nicht mehr so viel Aufwand ist und zum dritten, dass es vielleicht ein Argument ist, diese Stück Software zu benutzen und nicht jede Stück Software. Ach, zum Programmiersprachen finde ich noch eine ganz interessante Programmiersprache. Die Programmiersprache ist von Dave Moon designt worden. Es plot die Programming Language for Oldtimers.
+
+02:01:22.363 --> 02:01:24.303
+<v SPEAKER_2>Ab wann ist man denn ein Oldtimer?
+
+02:01:24.323 --> 02:01:27.623
+<v SPEAKER_1>Ja, das ist, also weiß ich nicht. Ich bin noch keiner.
+
+02:01:27.623 --> 02:01:29.603
+<v SPEAKER_2>Okay, also ist nicht für dich, aber?
+
+02:01:29.623 --> 02:02:12.863
+<v SPEAKER_1>Genau, aber Dave Moon war halt auch einer, also war derjenige, der das Makrosystem in Düln entwickelt hat. Und er hat sich halt mal hingesetzt und hat mal eine Programmiersprache, eine weitere Programmiersprache erfunden, wo er diesmal alles richtig machen wollte und möglichst wenig Bunk-Creation haben wollte und halt auch ein Makrosystem. Und das ist halt im Prinzip auch ein Lisp, hat aber auch eine Syntax, also hat halt nicht S-Expressions, sondern hat halt eine richtige Syntax. Und im Gegensatz zu Düln ist halt das Makrosystem schon noch ein bisschen ausgefeilter. Ich vermute, man kann es noch schwieriger debuggen als das Düls-Makrosystem, aber schon ein interessanter Ansatz. Es gibt allerdings noch keine Implementierung von dieser Programmier-Straße.
+
+02:02:12.883 --> 02:02:13.663
+<v SPEAKER_2>Also theoretisch?
+
+02:02:13.903 --> 02:02:21.803
+<v SPEAKER_1>Es gibt es theoretisch und er hat halt für die interessanten, für ihn interessanten Sachen hat er halt Beispielimplementierung mal runtergehackt.
+
+02:02:21.943 --> 02:02:24.463
+<v SPEAKER_2>Und sieht das dann so ähnlich aus wie Düln?
+
+02:02:24.483 --> 02:02:34.963
+<v SPEAKER_1>Ja, also der hat auch einen Vortrag auf der International List Confidence gehalten und das sah schon verdammt ähnlich aus wie Düln.
+
+02:02:34.983 --> 02:02:36.123
+<v SPEAKER_2>Wo ist denn da noch der Unterschied?
+
+02:02:36.423 --> 02:02:48.603
+<v SPEAKER_1>Es gibt weniger Semikola. Und es gibt kein End. Er hat sich halt auch bei Python die Eindrückung, also die Indentation abgeschaut.
+
+02:02:48.623 --> 02:02:52.923
+<v SPEAKER_2>Verstehe, an die ich mich immer noch nicht so richtig gewöhnen kann.
+
+02:02:53.463 --> 02:03:26.503
+<v SPEAKER_1>Unser Makrosystem ist dann auch total toll. Er hat dann auch auf zwei Slides, also die Slides gibt es auch online, da hat er dann auch zu der Syntax mal gesagt, naja, wie behandelt man denn sämtliche Syntags gleich? Na ja, indem man einfach keine Syntax hat und halt alles durch Makros ausdrückt und hat dann vorgestellt, wie man Def-Makro, also die Definition eines Makros, wie man das in Def-Makro ausdrückt. Das ist so eine Definition eines Makrosystems in sich selbst.
+
+02:03:26.563 --> 02:03:28.483
+<v SPEAKER_2>Ah, wie das ein rekursiver Sport.
+
+02:03:28.703 --> 02:03:35.103
+<v SPEAKER_1>Ja, genau. Ich meine, was ist eine Programmiersprache wert, in der du nicht mal einen Compiler für die Programmiersprache schreiben kannst?
+
+02:03:36.963 --> 02:03:42.463
+<v SPEAKER_2>Ja, das stimmt. Also schreiben können tut man es wahrscheinlich schon immer, bloß kundlicherweise nicht immer gemacht.
+
+02:03:42.483 --> 02:03:44.963
+<v SPEAKER_1>Ja, wird in den seltensten Fällen mittlerweile gemacht.
+
+02:03:44.983 --> 02:03:45.363
+<v SPEAKER_2>Ist das so?
+
+02:03:47.603 --> 02:03:50.363
+<v SPEAKER_1>Also ich meine, Ruby, Python ist doch alles in C geschrieben.
+
+02:03:50.383 --> 02:03:51.583
+<v SPEAKER_2>Das stimmt.
+
+02:03:51.603 --> 02:03:53.023
+<v SPEAKER_1>Also PyPy ist eine Ausnahme.
+
+02:03:53.043 --> 02:04:01.823
+<v SPEAKER_2>Ja, aber ist ja auch nicht wirklich als Compiler gedacht. Mehr so als Rato dafür. Na ja, gut. Das stimmt.
+
+02:04:01.843 --> 02:04:09.883
+<v SPEAKER_1>Also ich meine, die ganzen Lisp-Compiler sind halt auch in Lisp geschrieben. Und der Düllen-Compiler ist auch in Düllen geschrieben. Beide Düllen-Compiler sind in Düllen geschrieben.
+
+02:04:09.903 --> 02:04:14.183
+<v SPEAKER_2>Immerhin. Gab auch noch einen dritten, der war aber in Lisp geschrieben.
+
+02:04:14.603 --> 02:04:31.263
+<v SPEAKER_1>Der Apple-Düllen? Ja, der Ex-Harlequin-Düllen, an dem ich jetzt auch gerade arbeite, der wurde ja auch mit einem Lisp-System gebootstrapped. Also da haben sie dann in Lisp irgendwas geschrieben, was halt Düllen lesen kann und eine Binary erzeugen kann.
+
+02:04:31.283 --> 02:04:33.123
+<v SPEAKER_2>Um das Henne-Eye-Problem sozusagen zu lösen.
+
+02:04:33.183 --> 02:04:36.423
+<v SPEAKER_1>Genau, und jetzt gibt es immerhin eine Henne.
+
+02:04:36.423 --> 02:05:15.923
+<v SPEAKER_2>Jetzt gibt es eine Henne, auf dass es noch mehr Eier gibt. Gut, Hannes, ich denke wir machen jetzt hier mal ein Schluss-Trick. Das war unsere diffuse Reise durch Compilerbau, Programmiersprachen und Typtheorie. Vielen Dank für die Ausführung. In den Show Notes online findet ihr zahlreiche Links auf die ganzen Talks und Papers, die Hannes erwähnt hat. Ich hoffe du schickst mir die Links noch. Und ja, das war's bei Chaosradio Express, Ausgabe 122. Danke, Hannes. Und dann sagen wir Tschüss und bis bald bei Chaosradio Express.

@@ -1,0 +1,778 @@
+WEBVTT
+
+00:00:08.983 --> 00:02:34.340
+<v SPEAKER_1>Ich bin dein Konduit. Ich bin ein Nerd. Hallo, hier ist Chaosradio Express, Ausgabe Nummer 103. Mein Name ist Tim Pritlove und ich begrüße euch wieder auf diesem Kanal unter euren Kopfhörern oder wo auch immer ihr gerade diese Sendung hören werdet. Das weiß man ja immer vorher nicht so genau und man weiß auch immer nicht so genau, was eigentlich wirklich das größte Interesse ist. Und von daher werde ich gerade in der nächsten Zeit versuchen, ein möglichst breitbandiges Panoptikum von Themen anzubieten. Und heute wird es wieder ein wenig technischer. Nicht, dass die letzten Sendungen besonders untechnisch gewesen sind, aber heute möchte ich mir mal wieder ein ganz spezielles Ding herauspicken und zwar soll das Thema sein Drupal, das Content-Management-System, was sicherlich viele von euch kennen oder zumindest schon mal davon gehört haben. Mindestens werdet ihr immer davon gehört haben, dass es sowas gibt wie Content-Management-Systeme und dass die allermeisten Leute immer so zurückschrecken und zusammenzocken, wenn sie allein schon diesen Begriff hören. Weil so ein CMS, das kann ein widriges Biest sein, wenn es das nicht sogar in den meisten Fällen ist. Ob das bei Drupal nun auch so ist oder nicht, gilt es hier jetzt in der nächsten Stunde oder wie lange das auch immer dauern wird, herauszufinden. Und wie es hier so üblich ist, gibt es dafür auch einen kompetenten Gesprächspartner. Und dafür begrüße ich den Kaspar, Kaspar Metz. Kaspar, schön, dass das geklappt hat. Du bist ja so ein Web-Coder. Kann man sagen?
+
+00:02:34.360 --> 00:02:40.560
+<v SPEAKER_2>Nicht nur Web-Coder natürlich, aber ich mache sehr viel Web für Brot, aber auch Web zum Spaß momentan.
+
+00:02:41.880 --> 00:02:45.380
+<v SPEAKER_1>Ist das so ein bisschen der moderne Sklavenjob?
+
+00:02:45.400 --> 00:03:00.380
+<v SPEAKER_2>Teilweise schon, aber wenn man irgendwann in der Position ist, dass man sich auch mehr oder weniger aussuchen kann, was man denn nun machen möchte, ist es eigentlich sehr erträglich. Und es macht viel Spaß, weil es auch einfach ein Feld ist, in dem sich viel tut und man immer sehr viele neue spannende Dinge auch ausprobieren kann.
+
+00:03:00.740 --> 00:03:04.980
+<v SPEAKER_1>Aber du hast nicht nur Web gemacht bisher, oder?
+
+00:03:05.000 --> 00:03:35.380
+<v SPEAKER_2>Nicht nur, aber Web war auch so durchaus mein Einstieg. Ich bin kein Informatiker, ich habe das alles autodidaktisch mir selbst beigebracht. Wer ist das schon? Informatiker sind wahrscheinlich eher in Forschungsinstituten an Universitäten, was jetzt nicht so meine Herangehensweise ist. Ich bin eher so ein praktischer Mensch. Also ich benutze Computer, um damit in der Welt was zu verändern oder was zu bewegen oder was zu bauen, was zu erstellen und nicht so sehr zum Selbstzweck.
+
+00:03:35.400 --> 00:03:54.420
+<v SPEAKER_1>In welchem Alter bist du so in den Topf gefallen? Einstellig. Okay, die genaue Zahl lassen wir mal im Geheimen. Ja, Drupal ist ja nun so eins dieser populären Systeme, oder? Kann man das so sagen?
+
+00:03:54.440 --> 00:04:13.740
+<v SPEAKER_2>Durchaus. Also es gibt, ich würde sagen, drei bis vier von den wirklich populären Content-Management-Systemen. Also Drupal, muss man erst mal sagen, ist eine von diesen typischen LAMP-Anwendungen. Also das heißt jetzt Linux, das kann man noch sagen, WAMP, das sage ich aber nicht so gerne. WAMP? Sagen wir LAMP Linux Apache MySQL PHP.
+
+00:04:13.760 --> 00:04:14.400
+<v SPEAKER_1>Was heißt denn WAMP?
+
+00:04:14.420 --> 00:04:18.480
+<v SPEAKER_2>Das ist so, es gibt so ein anderes Betriebssystem noch, das mit W anfängt.
+
+00:04:18.500 --> 00:04:19.820
+<v SPEAKER_1>Ach so.
+
+00:04:19.840 --> 00:04:24.140
+<v SPEAKER_2>Also es gibt sogar einen, ich glaube einen MAMP und einen BAMP für BSD.
+
+00:04:24.160 --> 00:04:31.400
+<v SPEAKER_1>Der erste Buchstabe ist eigentlich weitgehend austauschbar, denn Drupal basiert ja auf PHP und PHP läuft meines Wissens so ziemlich überall mittlerweile.
+
+00:04:32.700 --> 00:04:43.800
+<v SPEAKER_2>Genau, also PHP ist die Sprache, in der Drupal programmiert ist. PHP kann man mögen, kann man auch hassen, also die meisten hassen es eher. Ich finde es okay.
+
+00:04:43.820 --> 00:04:48.020
+<v SPEAKER_1>Welche meisten? Die meisten von allen oder die meisten, die es benutzen?
+
+00:04:48.040 --> 00:04:51.180
+<v SPEAKER_2>Viele derer, die es benutzen, aber die meisten, die es noch nie benutzt haben.
+
+00:04:51.880 --> 00:04:58.380
+<v SPEAKER_1>Das ist aber schon so eine bestimmte Eigenschaft von PHP, weil es gibt ja auch durchaus so Systeme, die werden eigentlich nur von Leuten benutzt, die es lieben.
+
+00:04:59.520 --> 00:05:10.320
+<v SPEAKER_2>Richtig, ja. Das würde ich PHP jetzt nicht unbedingt anhängen, weil natürlich, also PHP hat sich einfach durchgesetzt, mehr oder weniger in sehr vielen Bereichen. Also was wie Flickr ist halt auch PHP.
+
+00:05:10.340 --> 00:05:10.820
+<v SPEAKER_1>Ach wirklich?
+
+00:05:11.480 --> 00:05:27.100
+<v SPEAKER_2>Und ist einfach sehr stark im Web. Und also mir geht es dann selbst auch so, dass ich teilweise gar keine andere Programmier-Sprache an Beil habe, weil einfach die Auftragslage Richtung PHP sich zieht. Naja, aber ich glaube, auf PHP können wir dann nochmal später vielleicht ein bisschen zurückkommen.
+
+00:05:27.480 --> 00:05:44.820
+<v SPEAKER_1>Vielleicht eins noch. Ich meine, was bei PHP auf jeden Fall auffällig ist, es ist halt bei allen Web-Postern Standard. Das ist eine der wenigen Sachen, die eigentlich immer installiert sind und von daher natürlich auch relativ schmerzfreies Deployment theoretisch zumindest bieten.
+
+00:05:45.460 --> 00:06:09.420
+<v SPEAKER_2>Ja, ich würde da jetzt ein Handy-Eye-Problem drinnen sehen. Und also klar, für den Web-Poster ist es natürlich auch relativ einfach. Es hat sich halt durchgesetzt, diese Art von Hosting-Paket dann anzubieten, gerade so für sehr kleine Kunden, für Privatkunden, die sich nicht darum kümmern möchten, ihren Server zu administrieren. Klar, da greift man dann oft zu PHP.
+
+00:06:11.320 --> 00:06:36.340
+<v SPEAKER_1>So, jetzt ist aber mit PHP allein nicht so ohne Weiteres ein Start zu machen, denn die Sprache bietet vielleicht einiges, aber sicherlich keine fertigen, wie sagt man so schön, Turnkey-Systeme. Dafür gibt es dann viele Pakete. Drupal erscheint mir, also aus der Ferne, einer der populärsten PHP-Anwendungen zu sein.
+
+00:06:36.520 --> 00:07:04.140
+<v SPEAKER_2>Ja, sicherlich. Ich habe ja gerade schon dazu angesetzt, sozusagen, weil so ein paar andere CMS auch aufzulisten. Also es gibt so drei, vier große. Drupal hat sehr stark nach oben gestiegen in den letzten Jahren. Das ist auch noch nicht so lang so. Vorher war vor allen Dingen Typo 3 angesagt und durchaus auch Mambo, gerade hier im deutschsprachigen Raum.
+
+00:07:04.160 --> 00:07:05.820
+<v SPEAKER_1>Die alle auf PHP basieren jetzt.
+
+00:07:05.840 --> 00:07:53.220
+<v SPEAKER_2>Die alle auf PHP basieren, ja. Und natürlich auch WordPress, das immer mehr zu so einem generischen CMS wird. Also das ist halt so aus der Blogging-Richtung gekommen und für Blogs auch sicherlich sehr zu empfehlen, weil es irgendwie recht schnell aufgesetzt ist und einfach sich so um diese Blog-Kern-Funktionalität kümmert. Aber es wachsen halt da immer mehr generischere Features dazu, dass man irgendwie eigene Inhaltstypen haben kann und irgendwie Felder definieren kann und solche Sachen. Das geht in WordPress auch noch nicht so lange. Ja, mit Typo 3 habe ich nicht allzu viel Erfahrung, aber ich war sehr schnell davon abgeschreckt und so wie du vorhin meintest, wenn man das Wort CMS hört, dann schreckt man erst mal so zurück und bei Typo 3 sollte man das wahrscheinlich auch tun. Das ist irgendwie der große Behörden-Aktenschrank.
+
+00:07:53.240 --> 00:07:58.540
+<v SPEAKER_1>Jetzt schreien natürlich die Typo 3 User-Groups laut auf. Ist dir klar?
+
+00:07:58.560 --> 00:08:39.800
+<v SPEAKER_2>Ja, es ist natürlich nur meine subjektive Meinung dazu. Es ist ein bisschen schwer zu sagen, aber ich finde es ist zu seriös rangegangen. Es ist irgendwie so Big Iron. Wir sind irgendwie das schwere Ding und wir können alles und wir machen das jetzt alles immer serious und das klappt aber nicht. So was wie Drupal ist mir da lieber. Die ganze Community hat einfach einen viel selbstironischeren teilweise oder einen viel lockeren Umgang auch mit dem System und da geht es viel mehr.
+
+00:08:39.820 --> 00:08:43.700
+<v SPEAKER_1>Meist gehen gar nicht davon aus, dass es funktioniert. Die entwickeln es einfach gern.
+
+00:08:43.720 --> 00:08:48.140
+<v SPEAKER_2>Die entwickeln es einfach gern und genau deswegen funktioniert es einfach auch sehr gut.
+
+00:08:49.460 --> 00:09:02.460
+<v SPEAKER_1>Na gut, reden wir nicht so sehr über Sachen, die wir nicht so gut kennen, sondern schauen wir einfach mal, was Drupal jetzt eigentlich ausmacht. Drupal, was heißt das eigentlich? Das ist ja diese Sache mit dem Wassertropfen.
+
+00:09:02.720 --> 00:09:25.880
+<v SPEAKER_2>Ja, genau. Also Drupal heißt Truppel. Das ist so der, ich glaube, auf Niederländisch der Tropfen. Den sieht man auch im Logo von Drupal. Das sind eigentlich drei Tropfen. Das sieht man nicht auf den ersten Blick. Also das ganze Logo ist ein Tropfen und die Augen sind dann noch mal zwei Tropfen, die dann so ein Unendlichkeits-Arts irgendwie abbilden sollen.
+
+00:09:26.620 --> 00:09:32.380
+<v SPEAKER_1>Ah, so eine Art rikursives, endlos rikursives Logo, ja?
+
+00:09:32.400 --> 00:09:34.020
+<v SPEAKER_2>Könnte man so sagen.
+
+00:09:34.040 --> 00:09:37.340
+<v SPEAKER_1>Okay. Warum Tropfen? Weiß auch nicht.
+
+00:09:37.360 --> 00:10:04.780
+<v SPEAKER_2>Das muss man wahrscheinlich den Entwickler fragen, der das Ganze 2001 angeworfen hat. Der hat leider so einen unglaublich furchtbaren, ich kann ihn gar nicht richtig aussprechen, ein Belgier, Dries Boueterd, der hat das begonnen. Ich kann jetzt hier nur ein bisschen das Wikipedia-Zitien 2001 als ein Message-Board, also eher so bessere Formsoftware, glaube ich.
+
+00:10:04.800 --> 00:10:34.980
+<v SPEAKER_1>Das ist ja mal schon ganz interessant zu sehen, womit es eigentlich angefangen hat. Man hat ja jetzt gerade gesagt, so WordPress kommt so von den Blogs. Das erste WordPress war halt einfach nur ein Blog und irgendwann konnte man noch mal Seiten machen und weiß ja gar nicht, wohin das jetzt geht. Ich habe mich selber auch noch an Leute, die dann stark die Augenbrauen zusammengezogen haben, als ich mal so WordPress als CMS bezeichnet habe. Mir war das dann letzten Endes schon egal, weil letztlich ist es alles Content und man muss ihn irgendwie managen und wenn man dafür ein System hat, dann...
+
+00:10:35.000 --> 00:10:39.180
+<v SPEAKER_2>Dann ist es halt ein Content-Management-System. Genau. Also das ist schon die Definition eigentlich davon.
+
+00:10:39.500 --> 00:10:50.960
+<v SPEAKER_1>Das heißt, der Ur-Content von Drupal war eigentlich Foren. Das ist ja eigentlich auch, oder? Hab ich die richtig verstanden? Webforen? Da zucke ich ja auch mal so ein bisschen zusammen.
+
+00:10:50.980 --> 00:11:13.000
+<v SPEAKER_2>Durchaus, ja. Da gibt es ja auch ein Wust, ein Software dafür, die teilweise besser, teilweise schlechter ist. Und gerade so in dieser Zeit waren ja auch Webforen sehr im Kommen. Also das ist so ein bisschen, was heute Twitter ist, war vor 15 Jahren einfach Usenet. Und dazwischen gab es irgendwann mal die Foren.
+
+00:11:14.180 --> 00:11:20.840
+<v SPEAKER_1>Du meinst, Webforen sind schon wieder vorbei, sind schon wieder out?
+
+00:11:20.860 --> 00:11:35.480
+<v SPEAKER_2>Ich sehe da nicht mehr allzu viel technologische Entwicklung dahinter, oder dass irgendwie neue Kommunikationsmethoden ausprobiert werden. Webforen sind einfach so ein Stück stehen geblieben, auf dem wir wäscheln.
+
+00:11:35.500 --> 00:12:15.120
+<v SPEAKER_1>Also ich finde es ja eine interessante, also Webforen für sich finde ich auch ein bisschen langweilig, aber gerade weil ja häufig Medienlisten da eigentlich sehr viel besser funktionieren. Darüber müssen wir eigentlich diskutieren. Bloß so, sagen wir mal jetzt im Kontext eines Blogs, also so eine Reddit-Kommentar-Geschichte, die sich jetzt da sozusagen auch wieder herausbildet, zunehmendem Maße, deckt ja eigentlich genau das Gleiche ab. An der Stelle ist die Funktionalität sicherlich sinnvoll. Na gut, aber Drupal ist beileibe jetzt keine Webforen-Software, sondern schon ein sehr generisches CMS, versteht sich zumindest als solches. Was macht denn das aus? Also was ist denn das Konzept von Drupal?
+
+00:12:15.680 --> 00:12:37.720
+<v SPEAKER_2>Ja, also ein CMS, wie auch Drupal, da geht es darum, man hat Inhalte und man will die zusammen managen und man will das alles aus dem System heraus machen. Das heißt, man schreibt die Inhalte innerhalb von Drupal und konfiguriert Drupal innerhalb von Drupal und so weiter. Also das ist alles eine konsistente Oberfläche, mit der man...
+
+00:12:38.740 --> 00:12:40.120
+<v SPEAKER_1>Mit User-Interface.
+
+00:12:40.140 --> 00:13:14.220
+<v SPEAKER_2>Mit User-Interface, mit der man Artikel oder einfach Informationshappen managen kann. Das ist jetzt mal so die ganz abstrakte Definition davon und also Drupal, man kennt ja oft so diesen Term Backend, sowas wie WordPress, da geht man halt auf slash admin oder slash WPAdmin und dann hat man eine komplett andere Seite sozusagen, die einfach die Frontside managt. Bei Drupal ist das alles wesentlich integrierter, also man kann einfach, je nachdem welche Rolle man hat, sieht man einfach mehr Controls.
+
+00:13:14.260 --> 00:13:23.800
+<v SPEAKER_1>Das heißt, es wird sozusagen dasselbe Seam, was man eigentlich so zur Außendarstellung verwendet, enthält auch die Möglichkeit, die Administration vorzunehmen.
+
+00:13:24.060 --> 00:13:26.240
+<v SPEAKER_2>Ja, also man kann natürlich auch alles ändern.
+
+00:13:26.520 --> 00:13:50.100
+<v SPEAKER_1>Ja, aber ist das nicht ein Konflikt, weil viele solcher Sites, die so was machen, wo dann immer, keine Ahnung, Login, dann hat man irgendwie, wer ist gerade alles eingeloggt auf diesem System, was man dann so als End-User oder normaler Web-Teilnehmer quasi vorgeworfen bekommt, dann ist das ja eigentlich auch sehr viel mehr Information, als man eigentlich wissen will. Ist das Modell wirklich so zukunftsträchtig?
+
+00:13:50.120 --> 00:14:31.900
+<v SPEAKER_2>Macht es die Sache einfacher? Ja, also das Konzept von Drupal ist ja schon auch, möglichst flexibel zu sein, also da geht es mehr um Flexibilität, als um einen schnellen Start zum Beispiel, oder irgendwie ein definiertes Toolset, das man von Anfang an hat, wie zum Beispiel WordPress. Und diese Flexibilität bringt eben auch mit sich, dass man diesen Backend-Bereich gar nicht jetzt groß abgrenzt von anderen Sachen, weil es sind einfach nur ein paar Links mehr und ein paar Formulare mehr und ein paar Seiten mehr, die man halt erreichen kann. Und die werden dann eben über die schon vorhandenen Menüsstrukturen, die sowieso da sind, eingebunden.
+
+00:14:31.900 --> 00:14:42.540
+<v SPEAKER_1>Und ja, aber jetzt hast du ja gesagt, man hat Flexibilität. Wodurch entsteht denn diese Flexibilität? Also was genau ist denn so flexibel bei Drupal?
+
+00:14:44.420 --> 00:15:05.440
+<v SPEAKER_2>Also erstmal ganz wichtig bei einem Content-Management-System sind natürlich die Inhaltstypen, also sogenannte Content-Types. Einfaches Beispiel, ein Blog-Artikel. Das ist einfach ein Inhaltstyp. Bei Drupal nennt man sowas ein Node. Also ein Knoten.
+
+00:15:05.460 --> 00:15:08.380
+<v SPEAKER_1>Oder was auch immer ein Blatt im Baum.
+
+00:15:08.400 --> 00:16:37.900
+<v SPEAKER_2>Genau, sehr gut. Das ist so ein Stück Information bei Drupal. Und diese Nodes, also ich kann viele verschiedene Arten oder Klassen von Nodes haben und die kann ich mir beliebig zusammen konfigurieren. Also meinetwegen ein Blog-Artikel hat dann bestimmte Felder. Das ist natürlich einmal der Titel, das ist der Text, das ist ein Publikationsdatum, noch ein Autor, vielleicht ein definiertes Bild, das dann immer auf der gleichen Stelle erscheint. So und ich kann mir halt diesen Inhaltstyp beliebig zusammenstellen. Und da zahnen dann sehr viele Module ineinander. Ich denke, auf die Module werden wir ja noch sehr detailliert zu sprechen kommen, weil Drupal sehr von Modulen lebt auch. Und naja, also die Flexibilität ergibt sich einfach dadurch, dass ich mir meine Inhaltstypen beliebig zusammenstellen kann. Und das auf eine sehr einfache Weise. Das ist dann zunächst mal der, also die Informationsbeschreibung sozusagen. Und natürlich in der Ausgabe habe ich dann auch wieder viele Möglichkeiten, was das Theming angeht. Es gibt mehrere sehr schöne Theming-Engines für Drupal. Das ist auch wesentlich unanstrengender als zum Beispiel bei WordPress, wo ich einfach nur eine folgegebende Sprache habe. Also man kann sagen, Drupal ist flexibel. Die Flexibilität hat aber auch dann ihren Preis, weil man schon sich mehr reinarbeiten muss.
+
+00:16:37.920 --> 00:16:49.460
+<v SPEAKER_1>Flexibilität kommt sozusagen mit der Bürde der Komplexität. Jetzt hast du gesagt, das besteht aus Modulen. Besteht es nur aus Modulen?
+
+00:16:49.480 --> 00:16:56.220
+<v SPEAKER_2>Letztendlich ja. Es gibt sogar ein Modul, das heißt einfach Drupal. Das muss halt installiert sein.
+
+00:16:56.240 --> 00:16:58.280
+<v SPEAKER_1>Aber nur das?
+
+00:16:58.300 --> 00:17:03.280
+<v SPEAKER_2>Im Prinzip würde man da wahrscheinlich noch nicht sehr viel reißen können mit.
+
+00:17:03.300 --> 00:17:10.760
+<v SPEAKER_1>Was ist die Frage? Ich meine, wenn ich mir jetzt nur das Modul Drupal installiere, was sehe ich denn dann? Was würde ich denn sehen?
+
+00:17:10.780 --> 00:17:14.440
+<v SPEAKER_2>Wenn man ein neues Drupal installiert, ich meine, wir können ja auch einfach mal so diesen Vorgang durchgehen.
+
+00:17:14.460 --> 00:17:16.300
+<v SPEAKER_1>Ja, mach mal.
+
+00:17:16.320 --> 00:17:19.360
+<v SPEAKER_2>Wir installieren uns ein neues Drupal.
+
+00:17:19.380 --> 00:17:21.500
+<v SPEAKER_1>Da marschiert man erstmal zur Webseite.
+
+00:17:22.640 --> 00:17:34.420
+<v SPEAKER_2>Genau, drupal.org. Man holt sich das neues Release. Inzwischen sollte man sich, wir sehen, 6 holen. 7 kommt bald, aber man kann erstmal safe mit 6 arbeiten.
+
+00:17:34.440 --> 00:17:37.600
+<v SPEAKER_1>Wobei das auch noch nicht so abgehangen ist, oder?
+
+00:17:37.840 --> 00:18:07.500
+<v SPEAKER_2>Ja, das ist jetzt von, lass mich raten, ich glaube April, Mai 2008. Hat eine Weile gebraucht, bis es sich wirklich etabliert hat, weil viele Module quasi diesen recht großen Sprung von 5 auf 6 sich zu Herzen genommen haben und gesagt haben, ok, wir machen jetzt auch alles neu. Das hat dann natürlich eine Weile gedauert, bis auch wirklich alle Module, die man wirklich so braucht, verfügbar waren.
+
+00:18:07.520 --> 00:18:11.500
+<v SPEAKER_1>Das heißt, die Module-Schnittstelle hat sich das erste Mal geändert, oder wie?
+
+00:18:11.520 --> 00:18:30.780
+<v SPEAKER_2>Die Module-Schnittstelle eigentlich nicht, aber es wurden einige neue Features eingebaut, wie zum Beispiel, dass man Dinge mit einer adiaxifierten Oberfläche sortieren kann. Dass man Reihenfolgen nicht mit Zahlen von minus 10 bis plus 10 festlegt, sondern die einfach mit der Maus track and drop verschieben kann. Aber das musste dann das Modul wiederum unterstützen.
+
+00:18:30.800 --> 00:18:37.660
+<v SPEAKER_1>Ah, verstehe. Also es gab sozusagen ein Shitload von neuen Features, die man dann auch ganz gerne mal so in dem Modul gesehen hätte.
+
+00:18:37.900 --> 00:18:38.180
+<v SPEAKER_2>Genau.
+
+00:18:43.480 --> 00:19:03.760
+<v SPEAKER_1>Okay, das heißt, man installiert und man hat jetzt so, sagen wir mal, diese typische Lampeninstallation, sprich über SQL Server und so weiter, reden wir jetzt einfach mal nicht. Wir setzen das jetzt einfach mal als gegeben voraus, wie es ja bei vielen Webposts dann auch der Fall ist. Und dann kommt das Drupal dazu und residiert wahrscheinlich irgendwo.
+
+00:19:03.780 --> 00:19:45.360
+<v SPEAKER_2>Residiert in einem Ordner, da sollte der Apache dann mit klarkommen, also dazu konfiguriert sein. Also bei jetzt irgendeinem FTP-Hoster nehme ich mal an, ist das automatisch. Ich habe mit denen jetzt nicht mehr... Ich denke, da wirft man das einfach in einen Ordner, das ist dann der Webroot und dann wird das auch rausgeführt. Als nächstes konfiguriert man dann noch seine Datenbank. Also Drupal ist auch Multi-Site-fähig, das heißt, ich kann jetzt in slash-sites slash-all-Module ablegen, aber ich kann auch parallel von all irgendwie einen Ordner anlegen, der so heißt, wie meine Seite heißen soll. Und dann spezifisch für diese eine Seite dort spezielle Module ablegen.
+
+00:19:46.120 --> 00:19:55.720
+<v SPEAKER_1>Was meinst du für diese eine Seite? Das heißt, man Webseiten, unterschiedliche URLs, auch unterschiedliche Domains, die man aber alle aus derselben Installation heraus powert.
+
+00:19:55.920 --> 00:20:01.680
+<v SPEAKER_2>Genau, das geht. Da kann ich N Seiten aus einer einzigen Drupal-Installation fahren.
+
+00:20:02.260 --> 00:20:05.500
+<v SPEAKER_1>Die auch nicht zwangsläufig gleich aussehen müssen oder so?
+
+00:20:05.520 --> 00:20:51.320
+<v SPEAKER_2>Nee, die können komplett unterschiedlich sein, bedienen sich aber aus dem gleichen Sites All sozusagen. Also es gibt dann in Sites All zum Beispiel ein Ordner Modules. Und alle Module, die dort drin liegen, sind für alle Seiten, die ich so in meiner Installation habe verfügbar. Und ich kann eben auch sagen, Sites My Sites ist jetzt ein anderer Ordner und da ist auch ein Modulordner drin und da sind dann Module drin, die nur für My Sites sichtbar sind auch. Ja und dann gibt es eben eine Konfigurationsdatei pro Seite. Man will das schon so machen, dass man gleich von Anfang an, nicht dass in Sites All oder in Sites Default gibt es auch noch seine Konfigurationen abliegt, sondern einfach in Sites My Sites.
+
+00:20:51.340 --> 00:21:14.960
+<v SPEAKER_1>Also wenn du sagst pro Seite, wir reden von pro Website. Pro Website sagen wir, das ist ja in Deutschland immer so ein bisschen doppeldeutig mit der Seite. Okay, das heißt, man kann auch quasi Module zentral aktualisieren und hat automatisch ein Benefit auf allen Websites, die halt von dieser Maschine jetzt getrieben werden, beziehungsweise von dieser einzelnen Drupal-Installation.
+
+00:21:14.980 --> 00:21:27.160
+<v SPEAKER_2>Genau und man kann auch davon ausgehen, dass 60 bis 70 Prozent oder noch mehr der Module sowieso für alle Seiten gebraucht werden, die man sich da so installiert. Gut, also wir haben jetzt...
+
+00:21:27.180 --> 00:21:37.400
+<v SPEAKER_1>Wenn ich mir jetzt so diese Standardinstallation runterlage, jetzt hast du ja gesagt, da muss das Drupal-Modul dabei sein, aber ich vermute mal, da sind dann auch gleich, von Anfang an gleich mehrere Module mit dabei.
+
+00:21:37.420 --> 00:22:09.380
+<v SPEAKER_2>Natürlich, ja. Also was man sich da installiert, das ist Drupal Core, so genannt. Es gibt Drupal Core und es gibt Contrib. Das sind so die beiden Bereiche. Drupal Core wird von einem Personenkreis, ich weiß nicht, wie viele das jetzt wirklich sind, die da dahinter sitzen, fünf bis zehn, würde ich sagen. Leute, die entwickeln das und das ist so, dass wonach sich alles andere richtet. Drupal Core bringt selbst nicht allzu viel Funktionalität mit. Also man kann damit so ein, ja, sowas wie WordPress vielleicht.
+
+00:22:09.960 --> 00:22:12.840
+<v SPEAKER_1>Also schon so Blogging ist zum Beispiel dabei.
+
+00:22:12.860 --> 00:22:35.600
+<v SPEAKER_2>Genau. Drupal Core war am Anfang wesentlich kleiner und es sind einfach immer mehr von den guten Modulen, die man sowieso braucht, in Core reingerutscht. Teilweise nicht komplett, teilweise auch nur die wichtigsten Features der Module und das wurde dann eben in Core übernommen. Also wenn man sich an Drupal instille, dann hat man einfach das Drupal Core und von dem geht man dann aus.
+
+00:22:35.620 --> 00:22:38.520
+<v SPEAKER_1>Und das sind dann, was weiß ich, so zehn Module oder so?
+
+00:22:38.540 --> 00:22:44.180
+<v SPEAKER_2>Circa zehn Module. Ich könnte jetzt nachschauen, aber das würde wahrscheinlich zu lang dauern.
+
+00:22:44.180 --> 00:22:46.180
+<v SPEAKER_1>Okay, und der Rest ist alles Contrib?
+
+00:22:46.200 --> 00:22:58.360
+<v SPEAKER_2>Der Rest ist Contrib und Contrib-Module werden von, ja, also jeder kann dafür entwickeln. Man muss einfach nur einmal einen CVS-Zugang bekommen. Ich weiß auch nicht, warum die CVS benutzen und nicht irgendwie so Börsen oder Git.
+
+00:23:00.440 --> 00:23:04.360
+<v SPEAKER_1>Wirklich immer noch. Im Jahr 2018 stirbt das langsam aus.
+
+00:23:04.380 --> 00:24:16.700
+<v SPEAKER_2>Wird es wahrscheinlich auch. Wahrscheinlich ist es einfach nur ein zu big effort, das mal umzustellen. Jedenfalls, man kann eben sagen, ich habe hier mein Modul geschrieben, schaut euch das mal an. Ich hätte da jetzt gerne einen CVS-Account und dann kann ich das, damit ich das da einchecken kann. Und da gibt es dann eben ein riesiges Repository, da sind ein paar tausend Module drin, teilweise sehr gut, teilweise auch nicht ganz so gut. Und dort muss man sich dann eben die richtigen raussuchen. Und das war für mich auch eigentlich die größte Hürde, also einfach mal so diesen Überblick zu bekommen. Was für Module gibt es denn? Welches Modul benutze ich denn jetzt für diesen und jeden Zweck? Also es ist einfach so, dass nicht wirklich da einer sitzt am Tisch und sagt, wir brauchen jetzt diese Funktionalität und wer kann die jetzt bitte mal schreiben, sondern es entsteht einfach mehr oder weniger aus den praktischen Anwendungen von Drupal her. Also irgendeine Firma hat halt irgendwann einmal dieses und jenes Problem gehabt und dafür ein Modul geschrieben und das wurde dann eben wieder zurück in Contrib reingefüttert.
+
+00:24:16.720 --> 00:24:21.500
+<v SPEAKER_1>Aber es muss dann auch nach wie vor von den originalen Programmierern dann weiter gepflegt werden, um irgendwie zu überleben.
+
+00:24:21.520 --> 00:24:50.620
+<v SPEAKER_2>Richtig, ja. Und das ist auch oft ein Problem, weil viele schrecken dann auch davor zurück, ihren Code dort zur Verfügung zu stellen, weil natürlich muss das mehr enthält werden. Man kann dann nicht irgendwie sagen, macht mal damit, was ihr wollt, sondern es muss schon wirklich einen Maintainer geben, da achtet die Community auch sehr gut drauf. Dass wenn dann ein Security-Issue irgendwie da ist, dass da auch wirklich ein kompetenter Maintainer dahinter steht und sich dann auch darum kümmert.
+
+00:24:50.680 --> 00:25:20.820
+<v SPEAKER_1>Wenn man jetzt den nicht gibt, dann fliegen die wieder raus. Ja, und das war es schon. Alles ganz einfach sozusagen. Sind wir denn jetzt schon durch mit dieser gespielten Installation? Also ist es wirklich nur das, man packt das Drupal aus und dann läuft das gleich? Dann muss man doch jetzt bestimmt erstmal so eine Höllenorgie an Konfiguration vornehmen, oder?
+
+00:25:20.840 --> 00:26:46.940
+<v SPEAKER_2>Na, im Prinzip läuft das alles schon mal so für ein sehr, ja, also man kann eigentlich sofort loslegen zu bloggen. Man hat ein Feeds, man hat irgendwie schon ein paar Content-Typen, sowas wie Artikel und Seite und kann da einfach schon mal sich was Kleines aufbauen. Es werden sogar mehrere Themes gleich mit dazugelegt. Das Haupttheme ist Garland, das wurde für Drupal 5 gemacht und leider, leider muss man sagen, ist dann aus meiner Sicht ein bisschen die falsche Entscheidung getroffen worden, Garland zu nehmen als das Haupttheme, weil es einfach sehr anstrengend zu ändern ist. Man kann sich zwar irgendwie eine andere Farbe reinklicken, irgendwie solche Sachen, dann ist es halt nicht blau, sondern grün, aber es ist relativ anstrengend auf diesen Themen rumzuhaken. Und deswegen will man sich wahrscheinlich auch relativ bald ein anderes Theme besorgen. Es gibt da eine Menge V-Definierte, da bin ich jetzt nicht so freundlich davon, ich würde dann lieber was eigenes bauen. Und dafür kann ich als Basis zum Beispiel empfehlen, das Send Theme, das basiert auf der Z-Engine, die wiederum dann auf der PHP-Template ist die Engine, die Drupal eigentlich benutzt für PAP, für Themes.
+
+00:26:46.960 --> 00:26:54.320
+<v SPEAKER_1>Was ist denn diese Z-Engine nochmal? Das ist doch auch sehr eng mit PHP verwoben.
+
+00:26:54.340 --> 00:27:06.920
+<v SPEAKER_2>Die Z-Engine, das ist einfach nur die zu dem Send Theme zugehörige Engine. Und die setzt wiederum auf der bestehenden PHP-Template-Engine.
+
+00:27:07.920 --> 00:27:12.940
+<v SPEAKER_1>Das heißt, zu einem Theme braucht es auch noch so eine Engine?
+
+00:27:12.960 --> 00:27:27.260
+<v SPEAKER_2>Man kann sich ein Theme auch per Hand zusammenbauen und seine Strings einfach rausprinten. Will man aber nicht. Also man will da schon so ein bisschen eine Abstraktion haben.
+
+00:27:28.900 --> 00:28:46.180
+<v SPEAKER_1>Aber das ist mir jetzt nicht so ganz klar. Ich habe jetzt nicht so viel Zeit mit CMS verbracht. Ich habe mir hier und da mal irgendwie was angeschaut. Aber was ich immer sehr häufig festgestellt habe, ist, dass hast du ein CMS, dann hast du damit auch einen bestimmten Look. Und meistens kann man diesen Look auch schon so aus der Ferne erkennen. Das heißt, man surft irgendwo drauf und bevor man sich jetzt mal wirklich den Source-Code anschaut, kann man eigentlich schon sagen, ach, das ist ein... Das verwischt so ein bisschen, weil natürlich auch viel Populäres dann kopiert wird. Und dann weiß man manchmal gar nicht so sehr. Also WordPress war ja lange Zeit... Also in der allerersten Version wusste man sofort hier, das ist ein WordPress, so wie man auch ein Movable-Type unterscheiden konnte. Später kam dann dieses Kubrick-Theme, was WordPress dann noch mal sehr viel mehr Charakter gegeben hat. Bloß dann wurde eben dieses Kubrick-Theme auch von allen anderen aufgegriffen. Dann war das dann schon wieder etwas diffus. Trotz alledem, so gewisse Patterns oder auch so eine gewisse Liebe zu Sidebars, merkt man ja auch immer wieder, das ist so in bestimmten Systemen sehr populär. Bei Drupal hatte ich am Anfang auch den Eindruck, ist das ein richtiger Eindruck oder hat sich das mittlerweile geändert?
+
+00:28:46.340 --> 00:29:00.100
+<v SPEAKER_2>Also ich denke, dass schon eine relativ hohe Prozentszahl der Drupal-Sides, die da draußen so sind, eben dieses Garland-Theme benutzen. Das halt mitkommt, weil es einfach, ja, es ist da, man kann das benutzen. Es sieht auch relativ schick aus, Geschmackssache.
+
+00:29:00.120 --> 00:29:20.100
+<v SPEAKER_1>Und es gibt nichts anderes oder was? Es gibt genügend anderes, natürlich. Das hat dann auch denselben Feature-Set. Also das ist ja häufig so, wenn man alternative Themes hat, dass die dann nicht denselben Feature-Set bringen. Die sehen jetzt irgendwie erst mal ganz nett aus, aber dann hast du wieder irgendwelche, keine Ahnung, Administrationszeiten oder sonst irgendwas, wo das dann einfach nicht genug lach liefert.
+
+00:29:21.600 --> 00:30:29.760
+<v SPEAKER_2>Ja, ich würde gerne nochmal auf dieses Gardern-Theme selbst zurückkommen und wie sich das entwickelt hat. Am Anfang Drupal bis Version 4.7 oder bis Version 5 circa war einfach inherent hässlich. Also keiner wollte das benutzen, weil es einfach so hässlich war. Man kann sagen, der Code war immer das Schönste an Drupal. Also Drupal ist auch in der Tat eine der besten konzeptionierten und architekturierten PHP-Anwendungen, die ich so gesehen habe. Und es war einfach aber zu hässlich, um irgendwie dem Marketing-Fuzzi zu sagen, hey, wir wollen dieses System. Deswegen wurde dann eben auch diese Gegenentscheidung getroffen. Also wir müssen jetzt einfach auch mal schick werden. Und dieses Garland-Theme wurde da dazu geworfen. Und dadurch ist eben genau dieser Fall entstanden, dass viele Drupal-Seiten sich relativ ähnlich sehen. Und ich kann euch nur empfehlen, wenn ihr eine Drupal-Seite baut, werft das Garland-Theme weg und nehmt Sen, ZN.
+
+00:30:31.120 --> 00:30:44.900
+<v SPEAKER_1>Ja, was unterscheidet denn jetzt diese Themes voneinander? Oder fragen wir mal anders. Was leistet jetzt eigentlich konkret ein Theme? Also an welcher Stelle greift das und welche Bedeutung hat das dann jetzt?
+
+00:30:44.920 --> 00:30:50.640
+<v SPEAKER_2>Also das Theme ist die komplette Ausgabe, die komplette Darstellung der Webseite.
+
+00:30:50.660 --> 00:30:52.660
+<v SPEAKER_1>Alles ohne Ausnahme?
+
+00:30:52.680 --> 00:30:53.700
+<v SPEAKER_2>Alles ohne Ausnahme.
+
+00:30:53.720 --> 00:30:55.280
+<v SPEAKER_1>Installiere ich kein Theme?
+
+00:30:55.300 --> 00:31:02.600
+<v SPEAKER_2>Außer der eigentlichen Inhalte. Wenn ich kein Theme habe, dann muss ich ein Theme haben. Es muss eins ausgewählt sein.
+
+00:31:02.620 --> 00:31:06.880
+<v SPEAKER_1>Aber wenn ich jetzt so ein Null-Theme mache, was irgendwie nichts hinzufügt zu dem Content, was kommt dann dabei raus?
+
+00:31:07.780 --> 00:31:13.600
+<v SPEAKER_2>Ich muss ja den Content erstmal ausgeben. Also ein Theme, das einfach eine leere Datei wäre, dann hätte ich natürlich auch...
+
+00:31:13.620 --> 00:31:20.960
+<v SPEAKER_1>Nicht eine leere Datei, aber was, sagen wir mal, nichts Besonderes hinzufügt, was einfach so den Content dann einfach nimmt und irgendwie roh ausspuckt.
+
+00:31:20.980 --> 00:31:25.460
+<v SPEAKER_2>Gut, man kann das beliebig runterkochen natürlich, aber dann hätte ich halt irgendwie...
+
+00:31:25.480 --> 00:31:34.620
+<v SPEAKER_1>Na gut, aber ich wäre nur darauf hinaus, also was macht das Theme jetzt sozusagen? An welcher Stelle wird es aufgerufen und wird aktiv und muss ich dann worum kümmern?
+
+00:31:36.440 --> 00:34:24.520
+<v SPEAKER_2>Also das Theme besteht aus mehreren PHP-Dateien. Also ich rede jetzt mal von Themes, die die PHP-Template-Engine benutzen. Das ist die Haupt-Engine, wie ich schon jetzt ein paar Mal gesagt habe. Ich habe da mehrere PHP-Dateien, eine Config-Datei auch, in der kann ich noch ein paar Variablen definieren, die ich dann in den anderen PHP-Dateien zur Verfügung haben möchte. Und ich habe eine CSS-Datei. Das ist mal so das minimale Setup. Und was ich dann da drin mache, ich schreibe einfach mein HTML, ich baue mir die Seite auf, die Grundstruktur, und an den Stellen, an denen ich dann einen dynamischen Bereich habe, sozusagen, da kommt dann ein kleines PHP-Snippet rein, irgendwie Print-Futter, Print-Header oder Print-S-Content. Und was da ausgegeben wird, ist, also Nodes zum Beispiel. So eine Drupal-Node ist eigentlich ein PHP-Objekt. Also das PHP kann ja auch so ein bisschen Objektorientierung, das ist jetzt nicht besonders konsequent genutzt, eigentlich jetzt im Drupal-Fall nur aus dem Grund, dass nicht ständig alles als Array vorgehalten werden muss, sondern dass bei Bedarf dann nachgeladen wird, die einzelnen Felder in dem Content-Type. Und ich kann dann sagen, auch pro Node kann ich ein Template-Datei schreiben. Das heißt, ich kann sagen, irgendwie alle Blog-Enträge sollen jetzt so aussehen, wie ich in dieser Template-Datei definiert habe und da mache ich das im Grunde genauso. Ich schreibe HTML und an die Stellen, an denen was passieren soll, kommen wir dann kurz rein. Und die PHP-Template-Engine macht es auch sehr einfach, Dinge zu overriden. Also ich kann beliebig fein differenzieren, wie verschiedene Content-Typen aussehen sollen. Und ich kann ja mal so ein bisschen durchgehen, wie so ein PHP-Template, also ein PHP-Template-Engine Template aussieht. Ich habe dann einfach entweder insides-all-themes oder insides-meine-seite-themes in dem Ordner, liegt dann ein Unterordner nochmal, der heißt so wie das theme. Da drin habe ich dann erstmal eine themename.info-Datei, in der werden vor allen Dingen Regionen definiert, also Regions. Und ich kann sagen, welche Style-Sheets, also welche CSS-Dateien angehängt werden sollen. Regionen? Also Drupal hat eine Sache, das sind Blogs. Ich kann mir in die Sidebar einen Blog legen. Zum Beispiel sowas wie die neuesten Termine. Oder alle Tags, irgendwie eine Tag-Wolke von meinem Blog.
+
+00:34:24.540 --> 00:34:26.160
+<v SPEAKER_1>Also ein Inhaltselement.
+
+00:34:26.180 --> 00:35:02.120
+<v SPEAKER_2>Ein Inhaltselement, genau. Also ein Element an dem, oder eine Stelle, an der Sachen ausgegeben werden. Und zum Beispiel kann ein Modul dann einen Blog provide. Also sowas wie ein Kalendermodul. Da gibt es halt einen Blog, der heißt Kalender, und den kann ich mir dann irgendwo hinlegen. Und ich lege mir den in eine Region. Also die klassischen Regions sind irgendwie Header, Footer, Sidebar-Left, Sidebar-Right und so weiter. Und diese Regions, die kann ich mir eben definieren in der Punkt-Info-Datei von dem Theme. Also lass uns das mal so machen.
+
+00:35:02.640 --> 00:35:08.160
+<v SPEAKER_1>Das heißt, das Theme definiert sozusagen, aus welchen Regionen meine Webseite besteht?
+
+00:35:08.180 --> 00:35:09.960
+<v SPEAKER_2>Genau, das ist so die unterste Ebene.
+
+00:35:09.960 --> 00:35:14.980
+<v SPEAKER_1>Und deine Region wird dann wiederum befüllt mit Blogs und da kommt dann der eigentliche Content her?
+
+00:35:15.000 --> 00:35:53.080
+<v SPEAKER_2>Genau. Und die Blogs selbst werfe ich direkt im Interface von Drupal. Es gibt da so ein relativ hässliches Interface, das Blog-Editing sich nennt. Und da kann ich dann eben Blogs hin und her schieben in meine einzelnen Regionen rein. Und ich muss mich dann natürlich darum kümmern, in meinem Theme, dass diese Blogs auch ausgegeben werden. Oder diese Regionen, die dann Blogs enthalten, ausgegeben werden. Was es dann noch gibt, so die grundlegende Datei im Theme ist die page.tpl.php. Das ist so die gesamte Seite. Da steht oben irgendwie drin, was weiß ich, wenn ich...
+
+00:35:53.100 --> 00:35:56.240
+<v SPEAKER_1>Punkt TPL, da steht ich jetzt für das Template sozusagen.
+
+00:35:57.040 --> 00:36:47.860
+<v SPEAKER_2>Genau, also.tpl.php, das ist so das Namens- oder Benennungsschema für diese PHP-Template. Da steht dann irgendwie mein Dog-Type drin, da mache ich ein Head und ein HTML-Buddy eben. Das ist so die Wurzel vom Theme. Und an irgendeiner Stelle da drin sage ich dann einfach, ja, ein PHP-Print, sidebar, write. Und dann wird die komplette sidebar, write, dots an der Stelle immer eingefügt. Also ich kann dann in dieser Datei meine einzelnen Regions ausgeben. Und die kriege ich als Variable, wenn diese TPL-Datei ausgeführt wird, dann habe ich die einfach als Variable da.
+
+00:36:49.160 --> 00:37:56.120
+<v SPEAKER_1>Na, lass uns mal nicht gleich zu sehr jetzt in diesen Variablen-Details festhängen, weil ich denke, es ist erstmal ein bisschen wichtiger zu verstehen, wie jetzt die Sachen zusammenkommen. Also wenn ich nicht richtig verstehe, ist es so. Das Theme definiert überhaupt erstmal die Optik, ist ja auch klar, deswegen ist es irgendwie ein Theme. Und es tut es das, indem es in Regionen irgendwie aufteilt. Und ich kann mich jetzt im Administrationsinterface darum bemühen, zuzuweisen, bestimmte Blogs, also die eigentlichen Inhalte der Webseite, in diese Regionen, die das Theme dann eben auch an eine entsprechende optische Stelle bringt, wenn die Webseite gerennert wird. Das heißt, das ist das, worum ich mich eigentlich bemühen muss, dass ich erstmal ein Theme habe, was so die Optik hat, die ich gerne haben möchte. Und dann kann ich mir überlegen, ob ich jetzt mit diesem garlen Theme dahermarschiere, was jetzt die meisten verwende, oder ob ich aus anderen Erwägungen ein anderes Theme nehme, steht mir dann an Heim. Aber im Wesentlichen geht es eigentlich um diese Blocks und vor allem um die dahinterstehenden Module. Also im Prinzip jeder Block hat so ein Modul dahinter. Kann man das so sehen?
+
+00:37:56.140 --> 00:38:11.480
+<v SPEAKER_2>Viele Module provide Blocks, aber von Drupal selbst gibt es auch einige. Eigentlich kommen die dann auch von Drupal-Modulen, die halt in Core sind. Letztendlich ja, also Blocks kommen von Modulen.
+
+00:38:11.500 --> 00:38:16.800
+<v SPEAKER_1>Und nur von Modulen? Es gibt keine andere Quelle dafür?
+
+00:38:16.820 --> 00:38:41.120
+<v SPEAKER_2>Ich kann mir auch durch ein Core-Modul eigene Blocks einfach statisch schreiben. Das heißt, ich kann in dem Interface sagen, ich mache jetzt mal einen neuen Block. So, und da steht dann einfach statisches HTML drin oder was auch immer ich als Eingabemetode verwende. Ich kann dann auch direkt auf der Webseite PHP-Codes in eine Textbox reinpasten. Und dann wird dieser PHP-Code ausgeführt.
+
+00:38:41.340 --> 00:38:43.000
+<v SPEAKER_1>Aber das will man ja eigentlich nicht, oder?
+
+00:38:43.020 --> 00:38:45.640
+<v SPEAKER_2>Das will man eigentlich vermeiden, ja.
+
+00:38:45.660 --> 00:39:00.500
+<v SPEAKER_1>Wenn ich das jetzt alles vermeiden möchte, also wenn ich jetzt selber nicht anfangen möchte, selber Code zu schreiben, wie kann ich mir denn dann so ein Theme anpassen? Bin ich dann quasi gezwungen in den Code zu gehen oder gibt es auch Themes, die so von sich aus variabel sind?
+
+00:39:00.520 --> 00:39:31.260
+<v SPEAKER_2>Es gibt da einen ganzen Haufen Sachen. Es gibt, wie gesagt, Garland-Themen, da kann ich mir eine Farbe definieren. Viele Themes können auch, also ich habe da aus so einer Interface noch, da kann ich bestimmte Checkboxes ausmachen, sowas wie soll denn das Datum des Posts oder der Autor des Posts, dieser Note, mit angezeigt werden oder nicht. Das sind dann auch Variablen, die ich in dem Theme abfangen kann. Und sehr viele der besseren Themes unterstützen das eben. Das heißt, man kann schon relativ weit kommen, ohne da als Großkot zu müssen.
+
+00:39:32.140 --> 00:39:36.840
+<v SPEAKER_1>Und warum bevorzugst du dieses Zen-Theme gegenüber dem Standard-Garland-Theme?
+
+00:39:38.660 --> 00:39:45.980
+<v SPEAKER_2>Einfach, weil es ein sehr guter Ausgangspunkt ist, um eigene Themes aufzubauen, sehr schnell.
+
+00:39:46.000 --> 00:39:47.240
+<v SPEAKER_1>Also es ist besser strukturiert?
+
+00:39:47.400 --> 00:40:02.180
+<v SPEAKER_2>Genau, man hat halt so eine Vorstruktur. Wenn man das installiert, dann sieht es sehr hässlich aus. Eigentlich sieht es nach gar nichts aus. So ein bisschen wie eine Webseite, der in der TSS-Satei fehlt. Das ist halt einfach so, gib ihm die Browser-Standardschrift und irgendwie blaue Links und alles ganz groß.
+
+00:40:02.200 --> 00:40:05.800
+<v SPEAKER_1>Aber es drückt einem auf jeden Fall erstmal nicht so ein Design auf.
+
+00:40:06.000 --> 00:40:31.680
+<v SPEAKER_2>Genau, und was man sonst als Problem hat, ist dieses Un-Theming. Also, dass man erstmal alles, was schon in dem Theme in Garland enthalten ist, muss man erstmal wieder per CSS rausnehmen. Das macht wenig Spaß, weil man erstmal Stunden damit beschäftigt ist, irgendwie alles wieder so rauszupflücken, um dann neue Sachen reinzubauen. Deswegen Zen-Theme.
+
+00:40:31.700 --> 00:40:35.880
+<v SPEAKER_1>Warum braucht dieses Zen-Theme dann auch so sein eigenes Templating? Das habe ich noch nicht so ganz verstanden.
+
+00:40:35.900 --> 00:40:56.480
+<v SPEAKER_2>Na, es basiert schon auch auf PHP-Template, aber erweitert das noch so ein bisschen. Das wurde halt dann Zen-Theme genannt. Ich glaube, Jeff Robbins hat das gemacht von Lullabot, der auch sehr aktiv ist in der Community.
+
+00:40:56.500 --> 00:41:01.200
+<v SPEAKER_1>Lullabot, das können wir ja mal kurz reinwerfen. Das ist ein Videopodcast, oder?
+
+00:41:01.820 --> 00:41:26.640
+<v SPEAKER_2>lullabot.com ist eigentlich eine Agentur, die auch Websites bauen. Da sind einige von den Drupal-Core-Leuten dabei oder waren dort. Das ist der Drupal-am-nächst-stehende Organisation. Die haben zum Beispiel auch leolaports.tv gebaut.
+
+00:41:26.660 --> 00:41:27.920
+<v SPEAKER_1>Das ist auch eine Drupal-4.7-Seite.
+
+00:41:32.380 --> 00:41:37.640
+<v SPEAKER_2>Das haben die gebaut. Und die machen eben auch ein Podcast über Drupal-Themen.
+
+00:41:37.680 --> 00:41:44.860
+<v SPEAKER_1>Ich verstehe dich dann sozusagen schon über diese Einflussphäre. Da hast du ja podcastaffin geworden.
+
+00:41:47.260 --> 00:42:08.960
+<v SPEAKER_2>Ja, wir können ja das Thema Themes dann auch abhaken, denke ich. Vielleicht gibt es noch einen ganz guten Tipp. Das ist der Zenfine Garden. Das muss man nochmal raussuchen. Das ist einfach so eine Seite, wo irgendwie hunderttausende Themes für alle möglichen, ich glaube, dafür nehmen wir auch WordPress-Themes und so weiter, kann ich da durchsiegen und irgendwas finden.
+
+00:42:08.980 --> 00:42:15.300
+<v SPEAKER_1>Wir sind es wahrscheinlich nicht, aber so viele. Also im Prinzip angepasste Zen-Themes, die jetzt schon mal...
+
+00:42:15.320 --> 00:43:16.780
+<v SPEAKER_2>Nicht nur Zen-Themes, auch andere. Gut, Themes, so weit zu Themes. Aber ich denke, es gibt noch einiges zu besprechen, was so Drupal intern so alles macht. Also wir waren ja bei den Nodes. Ich will mal auf ein Modul zu sprechen kommen, das sehr wichtig ist. Neben einer Reihe anderer Module. Das ist CCK, das ist das Content Construction Kit. Das ist ein Modul, das ist, ich glaube, mit Drupal 4.6 auch in Core gelandet. Oder zumindest größte Teile davon. Und das erlaubt es erst, eigene Felder für Content-Types zu definieren. Nur wenn ich diesen Modul eingeschaltet habe, kann ich sagen, ich will hier mein Datumsfeld für Blog-Einträge. Oder ich will Tags in Blog-Einträgen haben. Damit baut man sich seine Content-Types zusammen.
+
+00:43:18.520 --> 00:43:31.040
+<v SPEAKER_1>Und das kann man generell auf alle Daten anwenden, die in Drupal herumfliegen, oder wie? Oder muss so ein Modul dafür gebaut sein, das mit diesem Construction-Kit zusammenarbeitet?
+
+00:43:33.960 --> 00:44:26.720
+<v SPEAKER_2>Es geht alles um Felder. Also ein Content-Type hat Felder, besteht aus Feldern. Und diese Felder kommen entweder von Modulen. Also mein Modul, das ich irgendwie schreibe, kann halt mehrere Felder definieren, die dann mir zur Verfügung stehen, wenn ich ein Content-Type mir zusammenbaue, dann kann ich halt sagen, ja, dieses Feld aus dem Modul soll da mit dabei sein. So was wie beim Event-Modul ist halt irgendwie ein Kalender-Witschritt. Oder ein Bild bei einem der zahlreichen Bild-Module. Oder eine Audio-Datei, was auch immer. Natürlich gibt es auch generische Felder. Ich kann sagen, irgendwie ein Textfeld. Und das soll dann irgendwie so ein paar erlaubte Werte nur haben dürfen. Oder eine Select-Box. Und das kann ich mir dann einfach so schön auf der Web-Oberfläche zusammen definieren.
+
+00:44:27.240 --> 00:44:38.120
+<v SPEAKER_1>Das ist aber sozusagen dabei, das CCK. Das gehört dazu. Also das ist ein Standard-Feature von Drupal, dass man sich generell zu allen Blocks seine Metadaten quasi mit hinzudichten kann.
+
+00:44:38.140 --> 00:45:33.820
+<v SPEAKER_2>Inzwischen ja. Also früher war das eben nicht so. Da gab es auch noch mal ein anderes Modul. Ich habe schon vergessen, wie das heißt. Das ist irgendwie auch ein ähnlichen Ansatz gefahren ist, sich eben diese eigenen Content-Typen zu bauen. Und inzwischen ist es halt CCK. So, und warum ich darauf zu sprechen kommen will, ist, dass CCK selbst auch so einen Paradigmenwechsel in Drupal eigentlich eingeführt hat. Und es geht seitdem immer mehr so in diesen Unix-Way, dass Module sich um eine kleine definierte Aufgabe kümmern, statt irgendwie das ganze Ding zu erschlagen. Das ganze Gesamtproblem zu erschlagen. Also vor CCK war es oft so, dass zum Beispiel ein Event-Modul, das hat halt gesagt, okay, wir haben hier Events, da will man vielleicht ein Bild dazu haben, da will man ein Datum haben, da will man Teilnehmer haben usw. Und ein Modul hat sich dann um alles, was ein Event betrifft, gekümmert.
+
+00:45:34.100 --> 00:45:37.080
+<v SPEAKER_1>Event im Sinne von Veranstaltungskalender, so was.
+
+00:45:38.360 --> 00:47:01.500
+<v SPEAKER_2>Also es hat einen Kalender bereitgestellt, mit Oberfläche, auf der man klicken kann. Das hat irgendwie eine Bildhochlade-Möglichkeit gehabt usw. Und seit CDK ist es eben sehr einfach zu sagen, okay, es gibt ein Modul, das macht nur Kalender-Uberflächen. Es gibt ein Modul, das kümmert sich nur darum, Daten zu speichern, also Datum zu speichern. Und es gibt ein Modul, das sich einfach nur darum kümmert, einen Teilnehmer abzubilden. Das wäre dann zum Beispiel Organic Groups, da kann man auch noch drauf zu sprechen kommen. Und eins, mit dem man eben Bilder hervorladen kann. Jetzt kann ich mir sehr einfach mit Hilfe von CDK meinen Event-Content-Type zusammenbauen. Das Problem dabei ist jetzt so ein bisschen, man muss erst mal herausfinden, welche Module da wirklich zusammenpassen und welche irgendwie auch die besten für diesen, die in Zweck sind, weil es einfach teilweise für ein Problem mehrere Lösungen gibt in Form von Modulen. Und da ist es so ein bisschen schwierig, sich dann da zurechtzufinden. Aber nach einer Weile hat man das dann auch irgendwie geschafft. Früher waren die Module eben mehr so generisch oder wollten halt irgendwie alles können. Und inzwischen, die meisten Module, die jetzt herauskommen, basieren eben auf CTK. Das definieren halt einfach nur noch Felder, die ich mit CTK zusammen brauche.
+
+00:47:01.520 --> 00:47:57.180
+<v SPEAKER_1>Verstehe. Das heißt, das CTK fungiert in zunehmendem Maße quasi als der Klebstoff zwischen solchen Mikromodulen, kann man das so sagen. Das ist jetzt wahrscheinlich kein stehender Begriff, aber ich nenne es jetzt einfach mal so, wenn vorher die Module groß und schwer waren, kommen sie jetzt ein bisschen kleiner. Ich meine, das ist ja so ein allgemeiner Trend, der zu sehen ist. Überall gibt es diesen Wunsch nach, es gibt da unterschiedliche Namen für komponentenbasierte Webseiten oder Micro-Sites, die sich irgendwie schnell mal mit Trick und Drop zusammenklicken lassen. Aber wenn ich das so richtig raushöre, ist auch schon der Lernaufwand für Drupal relativ hoch. Also man muss schon ziemlich tief einerseits verstehen, wie der interne Flow innerhalb von Drupal ist. Andererseits muss man sich auch mit einer relativ großen Zahl von Modulen und ihren Möglichkeiten bzw. ihren Limitierungen vertraut machen.
+
+00:47:58.120 --> 00:48:59.380
+<v SPEAKER_2>Also ich habe die meiste Zeit damit verschwendet, Module auszutesten sozusagen und zu sehen, welches Modul ist es für meinen Zweck geeignet. Es gibt auch so ein paar Fallstricke, also sowas wie das erste Modul, das sich um Bilder gekümmert hat, das hieß halt dann einfach Image. Und das basiert aber nicht auf TTK, sondern ist relativ anstrengend und geht zu seinen eigenen Wegen. Das Bild-Modul oder Image-Modul für TTK heißt dann einfach Image-Field. Ein Fels namens Image. Und naja, wenn man jetzt Neuling ist mit Drupal, dann wird man wahrscheinlich erstmal Image installieren, weil man irgendwie der Meinung ist, naja, das wird schon das Richtige sein für Bilder, weil es halt Image heißt. Und das ist in vielen Fällen so. Also auch bei Events gibt es irgendwie Datefield und Calendar statt Event. Also früher hat man halt das Modul Event benutzt und zwischen Datefield und Calendar.
+
+00:48:59.400 --> 00:49:08.840
+<v SPEAKER_1>Und was hilft einem dann dabei, sich da den Weg frei zu schaufeln? Also ich meine, man hat ja dann in der Regel erstmal wie gut ist denn das System dokumentiert an der Stelle?
+
+00:49:11.220 --> 00:49:12.600
+<v SPEAKER_2>Du meinst die Module selbst?
+
+00:49:12.900 --> 00:49:22.100
+<v SPEAKER_1>Also Drupal an sich, meine ich. Gibt es da ein brauchbares Referenzmenü, was sagt, hier sind die Fallstricke und da sind die Komplikationen?
+
+00:49:22.440 --> 00:50:33.060
+<v SPEAKER_2>Also wenn man sich einmal auf drupal.org zurechtgefunden hat in der Dokumentation, dann kommt man da auch relativ schnell, relativ weit. Wobei das eher um die Drupal-Core-Sachen geht. Also die gesamte API ist sehr gut dokumentiert. Das muss man sagen, das ist wirklich ziemlich klasse gemacht. Man kann auch sich dann pro Modul, gibt es wiederum kleine Diskussions-Threads und Bugreports und so weiter. Es hilft immer sehr, wenn man sich auf die Modulseite, oder wenn man ein Modul sucht, guckt man sich einfach die Kategorien durch, in die das, was man will, am besten passen würde. Und auf jeder Modulseite kann man dann auch gucken, wann ist das zuletzt geupdatet worden. Wie viele Probleme gibt es da? Wie viele Leute haben da Bugreports gefeilt, die noch nicht gefixt sind und so weiter? Und dann findet man sich schon zurecht. Und irgendwann hat man sich dann so sein Vector-Koffer zusammengelegt für alle möglichen Zwecke und kann damit dann auch recht schnell Seiten bauen. Eine Seite noch, die recht spannend ist oder recht praktisch, ist drupalmodules.com. Da findet auch Rating statt für Drupal-Module.
+
+00:50:33.080 --> 00:50:35.920
+<v SPEAKER_1>Und das ist ein Verzeichnis von Modulen oder von allen Modulen?
+
+00:50:35.940 --> 00:50:45.500
+<v SPEAKER_2>Genau, von eigentlich so ziemlich allen Modulen für Drupal. Da kann man dann auch irgendwie schön suchen nach Drupal-Versionen, irgendwie nach Aufgaben.
+
+00:50:45.520 --> 00:50:50.100
+<v SPEAKER_1>Warum ist das jetzt nochmal separat? Das würde man natürlich erwarten, dass sowas bei drupal.org schon angeboten wird.
+
+00:50:50.520 --> 00:51:04.780
+<v SPEAKER_2>Das würde man in der Tat erwarten, aber drupal.org bietet eigentlich nur eine riesige Liste an von allen Modulen, die so in Conjure drin sind. Und das ist eben jetzt auf drupalmodules.com independent entstanden und hat sich eben so durchgesetzt.
+
+00:51:04.960 --> 00:51:49.820
+<v SPEAKER_1>Die waren einfach nicht glücklich mit dem, wie es auf drupal.org lief und haben es einfach selber gemacht. Verstehe. Ich denke, um jetzt zu verstehen, wofür man diesen Werkzeugkasten gut einsetzen kann, weil es wirkt natürlich jetzt am Anfang immer so, ja, irgendwie, du kannst überall was reinschreiben und kannst es überall auch selber programmieren und musst lange Wege gehen und so. Das wirkt natürlich nicht besonders einladend auf den ersten Blick. Aber du hast ja jetzt mit Drupal schon so einige Systeme realisiert. Vielleicht kannst du mir ein paar Beispiele nennen. Also kannst du jetzt mehr oder weniger konkret benennen, wie du möchtest, aber nur sozusagen, was für Systeme lassen sich mit Drupal gut machen? Und was für Systeme sind vielleicht auch nicht so, ist man nicht so gut beraten mit Drupal? Das würde mich mal interessieren.
+
+00:51:51.400 --> 00:52:24.080
+<v SPEAKER_2>Ja, also ich kann es ja erstmal noch ein bisschen unkonkret lassen. Also was sich sehr gut machen lässt mit Drupal ist ein Blog. Auch ein sehr ausgefuchster Blog mit verschiedenen Sachen. Auch ein Multi-User-Blog. Es gibt sehr viele Seiten, wo einfach tausend Leute in einem Blog bloggen, sozusagen. Also Drupal sieht das dann so, dass jeder User hat einen Blog. Und auf der Hauptseite ist dann einfach eine aggregierte Ansicht von allen Blogs zu sehen. Also Multi-User geht sehr gut mit Drupal.
+
+00:52:24.100 --> 00:52:29.940
+<v SPEAKER_1>Also mehr so ein Blog-Host, wo jeder sein eigenes Blog hat. Also Multi-User-Blog im Sinne von mehr eigentlich Multi-Blog.
+
+00:52:30.660 --> 00:53:21.600
+<v SPEAKER_2>Ich kann vertris.org nachbauen..com, glaube ich, ist die Blog-Hostin. Ich kann auch relativ schnell sowas wie Flickr nachbauen. Also Image-Sharing und Social-Community dazu. Drupal sagt man auch nach, dass es sehr in Richtung Social-Software geht. Dass viele so Community-Features unterstützt werden. Das ist eigentlich vor allen Dingen ein Modul, das sich darum kümmert, Organic Groups, was wir vorhin schon kurz hatten. Damit kann ich eben, ja, zwischen Benutzern Relationships abbilden. Also ich kann irgendwie sagen, der ist Freund von dem, der gehört in die und die Gruppe. Na, Freunde ist nochmal was anderes, noch ein anderes Modul, das das verweilt. Aber ich kann eben Gruppen bauen. Und kann dann auch sagen, okay, die Gruppe Editors hat die und die Rechte.
+
+00:53:21.620 --> 00:53:24.060
+<v SPEAKER_1>Das heißt, Gruppen gibt es serienmäßig nicht in Drupal?
+
+00:53:24.580 --> 00:53:27.840
+<v SPEAKER_2>Nee, da muss ich OG, so heißt das Modul.
+
+00:53:27.860 --> 00:53:38.680
+<v SPEAKER_1>Aber es gibt Benutzer natürlich serienmäßig in Drupal. Und gibt es denn dann auch serienmäßig damit ein Security-Modell, was damit verbunden ist?
+
+00:53:39.540 --> 00:54:04.340
+<v SPEAKER_2>Und das ist eben das Rollensystem, das sich auch um Security kümmert. Das heißt, ich kann sehr fein differenzieren, welche Inhaltstypen für welche Rollen sichtbar sind, zum Beispiel, oder welche Menüeinträge für welche Leute sichtbar sind und so weiter. Und das funktioniert auch relativ gut. Und Drupal hat auch erstaunlich wenig Security-Probleme gehabt in den letzten Jahren.
+
+00:54:04.360 --> 00:54:06.560
+<v SPEAKER_1>Obwohl das doch relativ breitbandig eingesetzt wird.
+
+00:54:08.240 --> 00:54:12.640
+<v SPEAKER_2>Gibt es schon immer mal wieder so einen kleineren Fuck-Up, aber das hält sich alles zu Grenzen.
+
+00:54:14.020 --> 00:54:24.240
+<v SPEAKER_1>Da kannst du vielleicht mal so ein paar Beispiele nennen, wo deiner Meinung nach jetzt Drupal besonders gut geeignet war. Wo du es auch selber mal erfolgreich angesetzt hast.
+
+00:54:24.980 --> 00:56:11.780
+<v SPEAKER_2>Na, ein Beispiel könnte sein blinkenleitz.net. Da habe ich mal, ich glaube in der Woche habe ich das gebaut. Ist auch ganz schick geworden, finde ich. Das Design habe ich nicht gemacht. Hat Gott sei Dank Antenne nicht provided. Antenne springen worden. Das ist im Grunde ein relativ basic, relativ simple Seite für Drupal. Also ich habe da nicht allzu viele Module dafür benutzt. Im Grunde ist das ein Blog mit ein paar eigenen Inhaltstypen. Und das ist vor allen Dingen so ein Blinkenleitz-Movie, den man da so binden kann. Und der wird dann auch nochmal gepasst, ob das auch wirklich richtig ist, ob das wirklich BML ist und so weiter. Und dafür auf jeden Fall geeignet, Blog, statische Inhalte, die man einfach bearbeiten kann, das unterstützt auch Multilingualität. Das heißt, ich kann jeden Menüeintrag, jedes Stück Text auf der ganzen Seite einer bestimmten Sprache zuordnen. Und dann auch eine Default-Language definieren, auf die das dann im Zweifel zurückfällt. Eher so ein Punkt, der mir an Drupal sehr gut gefällt, ist die Sprachunterstützung oder wie Sprache betrachtet wird. Und zwar jedes Stück String, das ich irgendwo in einem Modul oder Template definiere, läuft durch eine Funktion, die einfach nur T heißt. Also ich schreibe dann T, Klammer auf, mein String, Klammer zu. Und das erlaubt es mir dann in einem Interface dafür, jeden String auf der Seite zu übersetzen. Das wird dann einfach in der Datenbank abgespeichert. Das heißt, ich kann die Seite on-site übersetzen. Es gibt auch sogar ein schickes Zusatzmodul. Das heißt...
+
+00:56:16.220 --> 00:56:23.460
+<v SPEAKER_1>Das scheint immer das Problem zu sein, dass man die große Anzahl von Modulen erst mal...
+
+00:56:23.480 --> 00:56:52.300
+<v SPEAKER_2>Ich wollte gerade noch... Genau, es sind einfach zu viele teilweise. Na jedenfalls, damit kann ich mir dann... Das wird in den Links stehen. Dann kann ich mir... quasi unten noch mal so eine Ajax-Bar aufmachen, unten auf der Seite, die dann so hoch fährt. Und da drin stehen einfach alle Strings, die gerade im Moment sichtbar sind. Und ich kann die direkt an der Stelle übersetzen. Das ist ein sehr schickes Spiel.
+
+00:56:52.320 --> 00:57:07.340
+<v SPEAKER_1>Auf blinkenlides.net wollte ich ja eigentlich vorhin jetzt nicht gerade unbedingt hinaus, weil das ja eigentlich auch eine relativ einfache Zeit ist. Aber hast du Drupal nicht auch zum Einsatz gebracht für Kampagnen?
+
+00:57:07.360 --> 00:59:56.100
+<v SPEAKER_2>Also eine Seite, die ich auch gebaut habe, da geht es um Kampagnen im weitesten Sinne. Das ist eigentlich, handelt es sich darum, um eine große Community-Seite, die freie Softwareentwicklung in Afrika unterstützt. Das habe ich gebaut. Da gibt es eine Vielzahl an verschiedenen Rollen, an verschiedenen Benutzern, Benutzetypen sozusagen. Da ist ein Wiki enthalten, jede Gruppe, die sich dort gründet, hat dann ihr eigenes Wiki, einen eigenen File Space. Also man kann Dateien hochladen für einzelne Gruppen. Es gibt auch ein Public-Wiki und bestimmte Rollen, die nur ins Public-Wiki schreiben dürfen und so weiter. Das ist alles relativ ausgefuchst. Und da bin ich schon so ein bisschen an die Grenzen geraten, teilweise wie manche Module miteinander integrieren. Und da muss ich auch schon recht viel umschreiben an manchen Modulen. Das ist manchmal nicht zu vermeiden, weil man irgendwie, wenn man perfektionistisch genug rangeht, dann wird man irgendwann an Grenzen stoßen. Auch bei Drupal, die viel auch in der Ausgabe z.B. Drupal unterstützt, jedes Textfeld, in dem ich Text schreiben kann, weise ich immer auch eine Eingabemetode zu. So was wie, dieser Text ist HTML, dieser Text ist irgendwie nur ein Subset von HTML, so was für Kommentare, das irgendwie Links rausgenommen werden, rausgepasst werden. Oder das ist einfach mal PHP-Code, den ich da jetzt in dieses Textfeld eingebe. Und was Drupal standardmäßig macht, eine riesen L-Lange-Liste unter jedes Textfeld reinzupasten, die mir erklärt, welche Eingabeformate ich denn da auswählen kann und was ich damit alles machen kann. Das ist einfach ein bisschen anstrengend, das rauszunehmen. Das muss man dann im Theme overriden, diese eine Funktion. Also man kann im Theme auch sehr schön Ausgabefunktionen überschreiben sozusagen. Da merkt man auch, dass der Inhalt von Funktionalität von Designen sehr sauber getrennt ist in Drupal. Module haben viele Funktionen, die mit Theme beginnen. All diese Funktionen kann ich im Theme, in meinem Template überschreiben. Das muss ich dann eben in so einem Fall machen, wenn ich diese L-Lange Liste Eingabe-Tipps nicht haben möchte. Das ist so ein Beispiel dafür, dass Drupal manchmal auch nerven kann, dass ihm teilweise Dinge an Stellen erscheinen, die man da nicht haben möchte. Und da muss man dann halt einfach per Hand ran. Ich hoffe, das war jetzt einigermaßen rund.
+
+00:59:56.120 --> 01:01:29.840
+<v SPEAKER_1>Nein, man merkt, dass du auf jeden Fall so ein bisschen ein gespaltenes Verhältnis zu dem System hast. Du bist jetzt definitiv kein Papst des Systems, der irgendwie herumläuft und das als die reine Lehre macht. Du nutzt es halt sehr praktisch. Deswegen wollte ich auch nochmal ein bisschen genauer nachhaken, weil das meiner Meinung nach noch nicht so ganz rausgekommen ist. Wofür taugt Drupal nun wirklich gut? Ich meine, klar, du hast gesagt, man kann damit einen Blog machen. Klar, aber einen Blog, dafür gibt es halt auch spezielle Blog-Software. Muss ich mir dann sozusagen gleich so ein Multi-User-System installieren, um das zu machen? Zumal es ja doch einen relativ hohen Anpassungsaufwand hat. Bei den Kampagnen wollte ich halt so ein bisschen darauf hinaus, wenn man sozusagen es eh schon mit so einer Community zu tun hat, die man gegebenenfalls vernetzen will. Also du hast ja gesagt, Wiki zum Beispiel ist so eine Funktionalität, die man auch out of the box hat. Dann möchte man das ja vielleicht eben dann auch gleich nutzen, mit so einem Drupal-System sagen, okay, alles klar. Wir haben hier so unsere Seite. Das ist so der Ort, wo wir alle zusammenarbeiten. Und unter anderem haben wir halt auch noch ein Wiki. Aber wir machen jetzt nicht einfach nochmal so ein separates Wiki auf, mit irgendwie Media-Wiki, wo sich jeder nochmal einen eigenen User-Account nutzen kann. Sondern wir nutzen den Vorteil, dass wir eben alles, sozusagen, dass wir die Leute eh schon einen Account haben. Und alle diese kleinen Informationsschnipsel, die wir zusammentragen wollen, bauen wir halt innerhalb dieses Systems, damit es beisammen ist. Also ist das jetzt wirklich eine der Stärken von Drupal?
+
+01:01:30.100 --> 01:01:37.660
+<v SPEAKER_2>Auf jeden Fall, ja. Also man kann sehr viele verschiedene Aufgaben mit einem System sozusagen integriert erschlagen.
+
+01:01:38.480 --> 01:01:45.340
+<v SPEAKER_1>Und eigentlich ist es aber auch nur dann zu empfehlen, wenn man mindestens zwei oder drei dieser Aufgaben damit auch wirklich erschlagen möchte.
+
+01:01:46.120 --> 01:02:24.480
+<v SPEAKER_2>Ja, also alles, was ein Stück weit über, ich sag mal, die Grundfunktionalität von WordPress, das was sich hinausgeht, eignet sich sehr gut für eine Drupal-Seite. Wenn man zum Beispiel ein Forum haben möchte noch dazu, oder irgendwie ein Wiki oder Podcast-Publikum, okay, das kann man auch machen. Aber alles, was irgendwie zum Beispiel auch mit vielen Editorien zu tun hat, also ich denke da jetzt an Zeitungen. Relativ viele Zeitungsseiten, Newsportale sind auch mit Drupal gemacht. Also der New York Observer zum Beispiel ist ein ganz gutes Beispiel.
+
+01:02:24.680 --> 01:02:27.240
+<v SPEAKER_1>Also du meinst, wo man so einen Release-Workflow hat.
+
+01:02:27.260 --> 01:02:27.660
+<v SPEAKER_2>Genau.
+
+01:02:27.680 --> 01:02:35.260
+<v SPEAKER_1>So man schreibt erstmal so einen Draft und dann guckt sich das jemand anders an und dann muss er das irgendwie approven und wenn er das approft, dann darf jemand anders das freischalten oder so.
+
+01:02:35.280 --> 01:03:28.180
+<v SPEAKER_2>Man kann sich diesen Workflow eben auch mit dem Modul namens Workflow beliebig zusammen definieren. Das zum Beispiel die Editor-Rolle kriegt alle Artikel per SS-Feeds meinetwegen oder per Mail, die jetzt von dem Writer geschrieben worden sind, geht dann noch mal drüber und dann hat das irgendwie den Status und das kann man da sehr fein zusammenbauen. Noch ein Anwendungsbereich, der sich auch sehr gut für Drupal eignet, das sind Shopsysteme. Meine erste Drupal-Seite war und das hat auch einen Shop für linke Klamotten. Und das geht auch ganz gut, also man kann zum Beispiel einen Blog mit einem Shop verbinden. Für WordPress wird es inzwischen auch Shopsysteme geben, die aber dann vielleicht nicht ganz so flexibel zu benutzen sind.
+
+01:03:28.200 --> 01:03:34.260
+<v SPEAKER_1>Das heißt, dass dann eben auch die User-Datenbank von dem Drupal quasi die Kunden mitaufnimmt?
+
+01:03:34.280 --> 01:03:34.820
+<v SPEAKER_2>Genau.
+
+01:03:34.840 --> 01:03:39.360
+<v SPEAKER_1>Das heißt, man lockt sich irgendwie in das Drupal ein als Kunde? Genau.
+
+01:03:39.380 --> 01:03:48.900
+<v SPEAKER_2>Ich habe dann die Rolle Kunde sozusagen. Aber man kann jetzt auch sagen, ich verkaufe hier das Recht, dass du da bloggen darfst oder was. Das könnte man sich alles beliebig zusammenstecken.
+
+01:03:49.020 --> 01:04:02.500
+<v SPEAKER_1>Okay, aber mit Shop meinst du schon nicht, man verkauft hier irgendwie die Möglichkeit der Mitnutzung, sondern halt Waren angeboten. Und dann gibt es da sozusagen ein freies Shop-System, wo ich auch gleich so eine Oberfläche habe, um mir meine Artikel einzustellen?
+
+01:04:02.520 --> 01:04:49.860
+<v SPEAKER_2>Genau. Das System, das ich da empfehle, das heißt U-Bar-Card. Und damit geht es relativ gut. Das hat schon noch so ein bisschen diesen alten Approach, dass es sich um sehr viel kümmert, um dass sich auch andere Module kümmern, aber die gehen auch immer mehr so in diese Richtung. Klar, also jeder Artikel ist dort natürlich ein TCK-Typ, der auch sich viele andere Module bedient. Aber trotzdem an manchen Ecken ist das schon noch so ein bisschen zu abgetrennt von der restlichen Drupalwelt. Aber in dem Fall auch okay, weil es eine relativ spezifische Aufgabe ist, so Waren zu verkaufen. Und dann gibt es halt tausend Zusatzmodule, auch wieder für U-Bar-Cards, so was wie, ich weiß nicht, dass ich mit PayPal bezahlen kann automatisch.
+
+01:04:52.080 --> 01:05:04.140
+<v SPEAKER_1>Aber ich habe auch so den Eindruck, dass wenn man so ein Drupal-System wirklich am Laufen halten möchte, dann kommt man so um seinen lokalen Drupal-Hacker nicht herum, oder? Also es ist irgendwie nicht gerade so ein End-User-System.
+
+01:05:04.600 --> 01:05:41.780
+<v SPEAKER_2>Es kommt auf die Ansprüche darauf an. Also WordPress ist definitiv end-userfreundlicher. Einfach auch, weil die Oberfläche stylischer ist, meinetwegen. Aber wenn man einmal diesen Schwung auch hat und sich mit den Basics irgendwie auskennt, dann ist Drupal auch sehr dankbar. Und auch wenn man nichts programmieren kann oder keine Lust hat, da irgendwie große Anpassungen vorzunehmen, dann kann man schon eine sehr okaye Seite mit Drupal ziemlich schnell zusammenbauen. Und es gibt halt eben so unglaublich viele Module für so unglaublich viele verschiedenste Aufgabenbereiche.
+
+01:05:43.620 --> 01:06:21.280
+<v SPEAKER_1>Ja, gibt es denn noch so ein paar Module, die du jetzt so empfehlen kannst? Weil, wenn jetzt ein großes Problem ist, den Überblick zu kriegen und du da jetzt schon so viel Zeit drin versenkt hast, wäre das, glaube ich, natürlich für die Hörer besonders interessant mal zu hören, was sind denn so die heißen kleinen Module, mit denen man sich vielleicht eine Menge Arbeit sparen kann. Weil manchmal ist es ja gerade dieses, ach naja, das System bringt zwar eine Menge Aufwand mit sich, aber da gibt es genau diese eine Funktionalität, die sich jetzt eben mit dem Rest brauchbar integrieren lässt, die einfach Gold wert ist, weil sowas nirgendswo woanders gibt oder zumindest nicht in der Möglichkeit ist, so einfach zu kombinieren.
+
+01:06:25.520 --> 01:06:54.640
+<v SPEAKER_2>Was ich so benutze ist, ich kann da mal mit einer Sache anfangen, die eigentlich auf jeder Drupal-Seite notwendig ist und wahrscheinlich auch bei den Chorlern, das ist Path-Auto. Also Drupal, das ist auch nochmal so ein spezieller Aspekt von Drupal, sind die URLs oder die, also wie erreiche ich die Inhalte. In einem normalen Drupal kann man einfach slash Notes eingeben und dann sieht man alle Notes in ihrer Reihenfolge, also in ihrer Stellungsreihenfolge.
+
+01:06:55.340 --> 01:06:58.140
+<v SPEAKER_1>Notes im Sinne von alle einzelnen Inhalts-Elemente.
+
+01:06:58.160 --> 01:07:00.360
+<v SPEAKER_2>Genau, das ist halt dann alles miteinander durchmischt.
+
+01:07:00.380 --> 01:07:05.460
+<v SPEAKER_1>Was es auch immer ist. Artikel, Blogs, spezielle Datentypen und so weiter.
+
+01:07:05.480 --> 01:07:07.660
+<v SPEAKER_2>Genau, die landen dann alle da in dieser großen Liste.
+
+01:07:08.100 --> 01:07:09.580
+<v SPEAKER_1>Nicht besonders übersichtlich.
+
+01:07:09.600 --> 01:08:41.400
+<v SPEAKER_2>Nee. Und ich kann dann auch zum Beispiel, es gibt auch diese Taxonomiesysteme, das sind einfach, ich kann bestimmten Artikel in bestimmte Kategorien zuweisen. Ich kann diese Kategorien auch beliebig baumartig strukturieren. Und da gibt es einige Möglichkeiten. Dann kann ich zum Beispiel auf die Standard-UR ergehen, Kategorie oder Taxonomy slash Kategorie slash Five oder so. Dann bin ich irgendwie bei der Kategorie. Aber das sind alles keine schönen human readable links, die dabei rausfallen. Und da kommt das Modul path auto eben ins Spiel und damit kann ich mir Schimata für URLs definieren. Ich kann sagen, alle Blog-Artikel sollen unter slash Blog sein und die sollen dann bei Blog Datum minus Artikel Titel erreichbar sein. Path auto, das basiert dann oder diese Substitution von Information aus der Note selbst, also sowas wie der Titel der Note, wird es dann wiederum von einem anderen Modul übernommen, das ist Token. Also Module stellen dann Token bereit, sowas wie den Titel oder ein bestimmtes Datum oder der User, der der Name des Users, der diesen Artikel verfasst hat, und den kann ich dann in meinen URL Schemas verwenden, diesen Token.
+
+01:08:41.420 --> 01:08:57.400
+<v SPEAKER_1>Das ist jetzt mehr so ein Modul für das interne Development, um einfach schöne URLs zu machen, mit dem diese Webseite, sagen wir mal, auch gut merkbare Pfade hat, was ja nicht ganz unwichtig ist. Also es gibt so viele Webseiten, die dann immer gleich mit diesen tollen Weisen von Session-IDs und sonstigen Climbim...
+
+01:08:57.560 --> 01:09:21.540
+<v SPEAKER_2>Ja, das hat Trupal von vornherein überhaupt nicht, diesen Climbim. Ein bisschen, weil irgendwie Nodes per Nummer angesprochen werden, per Default. Sozusagen, also Node 15 ist halt dann irgendwie mein Blog-Artikel. Und wenn ich Path-Auto installiert habe, dann konfiguriert habe, das ist eben slashblog slash heute Schneids.
+
+01:09:21.560 --> 01:09:28.420
+<v SPEAKER_1>Noch vielleicht ein paar Module, die mir End-User-Interesse erzeugen dürften.
+
+01:09:28.440 --> 01:09:30.080
+<v SPEAKER_2>Also was meinst du mit End-User-Interesse?
+
+01:09:30.360 --> 01:09:47.920
+<v SPEAKER_1>Na ja, weiß ich nicht, das mit dem Shop hast du ja schon erwähnt, das wäre jetzt so ein Beispiel, wo einfach, sagen wir mal, jetzt wirklich so eine vollständige Funktionalität geboten wird. Und jetzt nicht nur so eine Unterstützung auf Developer-Ebene.
+
+01:09:49.040 --> 01:10:13.080
+<v SPEAKER_2>Ja, also Drupal, was ich persönlich als Vorteil empfinde, was natürlich aber auch viele möglicherweise abschreckt, da sofort reinzutauchen, ist ja, wie schon gesagt, nicht so sehr ein System, das irgendwie Module bereitstellt, die irgendwie mit einem Module ein ganzes YouTube machen. Also man muss sich die Sachen schon zusammensetzen.
+
+01:10:13.100 --> 01:10:34.040
+<v SPEAKER_1>Also die Frage nach End-User geht eigentlich ein bisschen am Thema vorbei. Drupal positioniert sich sehr viel mehr eigentlich als Werkzeugkasten. Das heißt, wenn du jetzt von Modulen schwärmst, dann sind es meistens die, die es erlauben, solche Systeme möglichst flexibel zusammenzubauen. Konzentrieren wir uns noch mal da drauf, was da noch schön ist.
+
+01:10:34.060 --> 01:12:15.720
+<v SPEAKER_2>Also ein äußerst wichtiges Modul in Drupal ist, es gibt es auch seit Drupal 5 circa, Views, also Ansichten. Was das ist, das ist eigentlich so eine Art von universelen Query-Bilder. Das heißt, ich kann mir eine Datenmark-Abfrage, und in der Tat, was dabei rausfällt, ist auch einen SQL-Query bauen, der über Inhaltstypen sucht oder über Inhalte sucht. Diese Inhalte kann ich dann in einer Liste darstellen. Also angenommen, wir haben jetzt irgendwie eine Seite, wir haben da Events, wir haben Veranstaltungen, irgendwelche Konferenzen oder sowas. Wir wollen jetzt eine Unterseite haben, in der die alle aufgelistet werden, sortiert nach Datum. Das kann ich damit dann sehr gut machen. Und alles ohne irgendeinen Programmieraufwand. Ich lege mir dann diese URL erstmal an, oder ich lege eine neue View an, sage, die soll unter der und der URL auftauchen. Und angezeigt werden sollen zehn Inhaltstypen vom Typ Event, sortiert nach Datum. Und von diesen genau die Felder Titel und URL zur Webseite von diesem Event. Und dann kann ich einfach mir Listen bauen von Seiten. So, und das in einer sehr flexiblen Art und Weise. Und eigentlich, also, wenn man einmal das Konzept von Views verstanden hat, und das sollte man nach Möglichkeit versuchen zu tun, was auch nicht, also es ist eigentlich alles relativ selbsterklärend, dann hat man ein unglaublich mächtiges Tool da an der Hand, um sich irgendwie dynamisch generierte Unterseiten aus seiner Webseite zu bauen.
+
+01:12:15.740 --> 01:12:19.260
+<v SPEAKER_1>Muss ich denn dazu noch PHP dazu purmieren, um sowas zu nutzen?
+
+01:12:19.280 --> 01:12:19.620
+<v SPEAKER_2>Überhaupt nicht.
+
+01:12:19.820 --> 01:12:27.140
+<v SPEAKER_1>Das heißt, das Modul selber kommt eigentlich mit einem HTML-basierten User-Interface und da baue ich mir das zusammen.
+
+01:12:27.160 --> 01:12:42.720
+<v SPEAKER_2>In Drupal 5 war dieses Interface noch ein bisschen anstrengend, also da hat man irgendwie wahnsinnig viele Forms ausfüllen müssen und so weiter. Und in Drupal 6 geht das alles ziemlich cheesy mit Ajax-Interface, also da kann ich dann irgendwie Sachen verschieben.
+
+01:12:42.740 --> 01:13:52.600
+<v SPEAKER_1>Das heißt, wenn man jetzt quasi eine Webseite hat, die einen relativ großen Datenbestand hat, Shop hast du schon genannt, wäre so eine Sache, aber auch jede andere komplexe Datensammlung, keine Ahnung, was weiß ich, Archäologen, die ihre Daten im Web zusammentragen, ich finde jetzt einfach mal irgendwelche Anwendungsbeispiele. Ich finde, das geht ganz gut. Dann hat man immer dieses Problem, dass man, ich kenne das auch, man hat also komplexe Daten und dann will man eigentlich so 20.000 verschiedene Sichtweisen drauf haben. Jetzt möchte ich gerne irgendwie die, was sind so die Sachen, die als nächstes Mal in eine andere Aserwatenkammer geschoben werden müssen, oder was sind die Elemente, die jetzt zuletzt untersucht wurden, aber die bestimmte Anforderungen nicht erfüllen, bevor man solche Views macht und dass man dafür nicht unbedingt jetzt immer wieder den Programmierer aus dem Schrank holen muss, sondern dass man ihn einfach weiterschlafen lassen kann und sich das quasi selber... Man muss schon so ein bisschen systemadministrationsmäßig oder zumindest webseitenmäßig der Power-User sein, aber man muss nicht unbedingt jetzt den Sprung ins Programmiererlager machen.
+
+01:13:52.620 --> 01:15:58.140
+<v SPEAKER_2>Ganz richtig. Ich kann mir einfach aufgrund von verschiedenen Su-Parametern, ich kann sagen, ich will jetzt erstmal eine Liste haben vom Typ, also das waren Notes vom Typ, irgendwie Asservat-Auftau oder Dinosaurierknochen. Und dann kann ich sagen, okay, aber nur die, die den Status haben, sind jetzt schon untersucht worden. Und dann kann ich noch einen Filter einblenden dazu mit allen Leuten, die Dinosaurierknochen untersuchen. Und dann kann ich sagen, ich will jetzt nur die sehen, die von dem und dem untersucht wurden. Und dann auch nur in dem und dem Datumsbereich. Und dann will ich immer nur das Bild von den Dinosaurierknochen und die Kurzbeschreibung dazu sehen. Also das kann man alles sehr schön verstellen. Sehr powerfull mit diesem Views-Modul machen. Also in der Tat die Kombination aus CTK, dem Content-Contraction-Kit, in dem ich mir die Inhaltstypen selbst definiere und Views, mit dem ich die Inhaltstypen dann letztendlich ausgebe, ist wirklich, also das sind so die beiden Grundtools eigentlich, mit denen man schon sehr weit kommt. Was auch noch ganz interessant ist, das Modul Panels, das wurde auch von dem gleichen Menschen, Earl Miles, entwickelt, der auch Views entwickelt hat. Da kann ich dann letztendlich eine Seite definieren, die aus mehreren Seiten besteht, sozusagen. Ich kann sagen, das ist irgendwie ein Free-Column-Layout, also eine Sache, die man auch im Template machen könnte, aber die in manchen Fällen sinnvoller ist, eben Panels zu realisieren. Weil ich es eben auch für einen Spezialfall brauche. Dann kann man sich das nochmal so aufteilen und dann auch bestimmte Kontexte mit einbeziehen. Es ist ein bisschen anstrengend, sich da reinzufuchsen und da die Konzepte zu verstehen, gerade in der Vision 2, Panels 2 von Drupal 6, aber auch was sehr Brauchbares, was man sich frühzeitig anschauen sollte, damit man sich nicht ärgert, ach, das wäre so einfach gewesen. Wenn man das dann erstmal im Template realisiert.
+
+01:15:58.160 --> 01:16:03.740
+<v SPEAKER_1>War es noch irgendwas erwähnt mit Bild? Bilder?
+
+01:16:03.760 --> 01:16:11.960
+<v SPEAKER_2>Bilder, ja. Da gibt es eigentlich zwei Wege, das zu machen. Das eine ist eben das alte, schwere Image-Modul.
+
+01:16:11.980 --> 01:16:13.340
+<v SPEAKER_1>Was zu machen?
+
+01:16:14.180 --> 01:16:18.020
+<v SPEAKER_2>Bilder hochzuladen. Drupal, manche lachen über Drupal.
+
+01:16:18.040 --> 01:16:30.780
+<v SPEAKER_1>Ach, du redest jetzt von Fotos. Ich dachte, du meintest etwas, was Bilder heißt. Okay, du sprachst also tatsächlich von Bildern. Was gibt es denn Schönes für die Bilder?
+
+01:16:30.800 --> 01:17:21.580
+<v SPEAKER_2>Manche lächeln über Drupal, weil eben in der Standard-Funktionalität kann man noch keine Bilder hochladen. Und dann habe ich eben die Wahl zwischen entweder ich nehme das alte System sozusagen vor, CCK und Views, das einfach mal auf die kompletten Bilder kümmert. Das wäre Image und Image-Upload. Da hat man dann eben so eine kleine Oberfläche, wo man eben Bilder hochladen kann und die werden dann auch skaliert. Das neuere System, was ich empfehlen würde, ist eben Image-Field und Image-Cache. Image-Cache kümmert sich um verschiedene Größen und hält die dann auch vor. Also ich muss das Bild einfach nur einmal hochladen und es wird dann für die Größen berechnet, die ich definieren kann und es kann dann für die Stellen zwischen Größen ausgeben und so weiter. Image-Field und Image-Cache ist da das Richtige.
+
+01:17:21.600 --> 01:17:39.640
+<v SPEAKER_1>Das heißt, man hat das Bild auch für dich nur ein einziges Mal hochgeladen in maximaler Größe und dann verwendet man es einfach immer so, wie man es gerade haben will. Und mit dem Cache nehme ich mal an, der verhindert, dass dann die Bilder jedes Mal wieder neu berechnet werden, sondern wenn sie einmal angefordert wurden an bestimmten Größen, liegen sie da rum.
+
+01:17:39.660 --> 01:17:40.080
+<v SPEAKER_2>Genau.
+
+01:17:40.100 --> 01:17:43.320
+<v SPEAKER_1>Und wenn der nächste Request kommt, dann sind sie sozusagen schon da.
+
+01:17:43.340 --> 01:17:43.700
+<v SPEAKER_2>Richtig.
+
+01:17:49.520 --> 01:18:20.780
+<v SPEAKER_1>Ist das so? Das, was man wissen muss über Drupal, um es irgendwie zu mögen? Also so richtig einfach. Also es ist nicht so, dass es sich jetzt besonders anpreisen würde, so das Drupal. Das war so ein bisschen mein Eindruck. Also die Webseite selber, drupal.org, das kommt doch alles noch sehr technokratisch daher. Und die Einstiegslevel, den fand ich relativ hoch, soweit ich mich damit beschäftigt habe.
+
+01:18:21.500 --> 01:18:28.360
+<v SPEAKER_2>Ja, das mag so sein. Aber es ist, also ich würde schon, ja.
+
+01:18:28.380 --> 01:18:52.140
+<v SPEAKER_1>Ich sage nicht, dass das was Schlechtes ist. Ich sage nur, dass das auf jeden Fall etwas anderes ist. Klar, wenn ein System sich gleich von vornherein anbiedert, mit alles ganz einfach, dann hat man meistens den Effekt, dass man eben zwei Wochen später dann gegen die Wand fährt, weil man eben merkt, oh ha, das war zwar jetzt alles sehr einfach, aber das hat jetzt eben auch hier seine Grenze, und jetzt kann ich die Komplexität nicht mehr steigern.
+
+01:18:52.160 --> 01:20:21.820
+<v SPEAKER_2>Also bei Drupal muss man halt einfach sehen, es ist das klassische Open Source Projekt, wo einfach wahnsinnig viele Leute dran schrauben und es gibt keinen Kapitän, der das Ganze in eine Richtung steuert. Es gibt so ein paar Leute, die das schon machen und uns auch so ein paar Vorgaben irgendwie auf der Community geben. Also zum Beispiel eben, dass man sich mehr auf CTK und Views konzentriert in der Moduleentwicklung. Aber ich bin selbst natürlich auch Entwickler und sehe das Ganze auch aus der Entwicklerperspektive. Für mich ist Drupal einfach ein Tool, mit dem ich sehr schnell alle möglichen Wünsche an Websites erfüllen kann. Für jemanden, der jetzt einfach nur sein privates Blog mit ein paar Zusatzfunktionalitäten machen möchte, gibt es dann natürlich auch Sachen wie WordPress, die möglicherweise einfacher sind. Aber Drupal tut sich ein bisschen schwer mit dem Spagat zwischen ich bin ein System für Entwickler und ich bin ein System für Endanwender. Es geht immer mehr in die Richtung, es ist auch einfach für Endanwender, aber letztendlich kommt es doch so aus dem Anspruch heraus, wir schreiben sauberen Code, wir geben Module-Entwicklern was in die Hand, was wirklich auch ordentlich ist. Die Architektur ist sehr gut, wie gesagt. Das Wettbewerb steht dem Verwaltenden hinterher, finde ich.
+
+01:20:21.840 --> 01:20:29.860
+<v SPEAKER_1>Vielleicht noch einmal nachgefragt, was findest du denn da so gut an der Architektur? Ist da irgendwas besonders augenfällig?
+
+01:20:29.880 --> 01:21:33.360
+<v SPEAKER_2>Sehr schön. Eine Art für Drupal zu entwickeln, finde ich, das Hook-System, das Drupal bietet. Das ist eine sehr einfache Möglichkeit, mit dem Core oder mit anderen Modulen zu interagieren. Wenn eine bestimmte Sache passiert, dann wird ein bestimmter Hook aufgerufen und jedes Modul, das diesen Hook implementiert, kann dann was tun. Ein simples Beispiel, ein User lockt sich ein. Mein Modul könnte dann den Hook user-login implementieren. Das ist einfach eine PHP-Funktion, die heißt meinModul underscore user-login und die hat einen Eingabe-Parameter, das ist das User-Objekt. Wenn ein User sich einlockt, wird diese Funktion aus meinem Modul aufgerufen mit dem User als Parameter und ich kann dann irgendwas mit ihm machen. Ich kann dann zum Beispiel dem eine Mail schreiben oder was auch immer ich möchte. Für fast jede Funktionalität in Drupal gibt es eben diese Hooks. Das erleichtert es einem sehr, für Drupal-Module zu schreiben.
+
+01:21:33.540 --> 01:21:37.040
+<v SPEAKER_1>Also man kann so eventorientiert aufschreiben, sozusagen.
+
+01:21:37.060 --> 01:21:38.120
+<v SPEAKER_2>Genau, genau, richtig.
+
+01:21:38.140 --> 01:21:41.180
+<v SPEAKER_1>Kann man auch selber solche Hook-Aufgrufe bereitstellen?
+
+01:21:41.200 --> 01:22:13.600
+<v SPEAKER_2>Natürlich, ja. Ich kann aus meinem Modul heraus, deswegen lasse ich ein Modul zum Kategorisieren von Dinosauriern. Okay, das braucht man eigentlich nicht. Das kann Drupal ja schon längst. Sagen wir ein Modul, das Dinosaurierknochen automatisch anhand von bestimmten Parametern erkennt. Und jedes Mal, wenn dann ein neuer Dinosaurierknochen zugefügt wird, dann könnte ich einen Hook definieren, der dann anderen Modulen erlaubt, auf diesem Dinosaurierknochen noch irgendwas zu machen.
+
+01:22:13.620 --> 01:22:21.180
+<v SPEAKER_1>Weil die jetzt sozusagen nur darauf gewartet haben, dass eben mal wieder eine Bestimmung vorgenommen wurde und dann können sie aktiv werden.
+
+01:22:21.200 --> 01:23:19.400
+<v SPEAKER_2>Genau. Also Core ist eben durchsetzt davon. Jede kleine Aktion triggert so einen Hook. Im Grunde, also User Log In, User Log Out, User lädt eine Seite, dann gibt es den Hook Node Load. Früher, wie es z.B. CTK noch nicht gab, wurde viel an den Inhalten herumgedockt, mit diesem Hook Node Load. Das heißt, wenn an Inhaltstypen, was bestimmt ist, von einem Zusatzmodul bereitgestellt ist, angehängt werden sollte, dann hat dieses Modul in der Regel ein Hook Node Load implementiert und jedes Mal, wenn eine Node geladen wurde, geschaut, ist es jetzt eine, die mich interessiert und okay, dann hänge ich da jetzt meinen Kram dran. Wie gesagt, das erleichtert die Sache sehr, die Entwicklung. Was einem sehr entgegenkommt, ist die Dokumentation dieser Hooks. Das ist alles sehr schön gemacht.
+
+01:23:23.040 --> 01:23:42.060
+<v SPEAKER_1>Was mir jetzt gerade so einfällt, das klingt jetzt so ein bisschen, als ob das Debugging eines solchen Systems unter Umständen ganz schön knifflig sein könnte. Da geht dann irgendwas quer. Wie gut kann man so ein Drupal-System debuggen?
+
+01:23:42.080 --> 01:24:10.980
+<v SPEAKER_2>Das kommt natürlich ein bisschen darauf an, welche Ansprüche man da hatte. Ich habe jetzt noch nicht irgendwie mit extra, ich weiß nicht, Eclipse-Plugins gearbeitet. Ich denke, sowas wird es geben. Es gibt auch ein Modul, das mit dem Firebug kommunizieren kann. Das ist dieser unglaublich tolle Live-Webseiten-Debugger, würde ich mal sagen, für den.
+
+01:24:17.360 --> 01:24:31.800
+<v SPEAKER_1>Aber das ist ja mehr so im Frontend. Ich meine, wenn jetzt hinten so Fuck-up im Frontend ist, wenn man jetzt so diesen Hook mit dem User-Login aufgreift, ich könnte mir vorstellen, so ein Modul hat dann auch die Möglichkeit, Nein zu sagen, oder ist das nicht möglich?
+
+01:24:31.820 --> 01:24:57.720
+<v SPEAKER_2>Ich könnte dann einen User-Load machen, also eine Funktion aufrufen, die diesen User nochmal lädt und den dann aber überschreiben und dann was anderes. Also man kann schon einiges kaputt machen natürlich. Und gut, die Bagging findet dann oft auch aus Zeitmangel so statt, dass man halt ein Module deaktiviert und dann mal guckt, was passiert. Das ist vielleicht nicht die eleganteste Mitfolie, aber es sind da schon bessere, schönere Möglichkeiten vorgesehen.
+
+01:24:57.740 --> 01:26:10.880
+<v SPEAKER_1>Tja, jetzt haben wir es eigentlich, oder? Würde ich sagen. Ja, also ich halte mal so ein bisschen fest, wenn ich auch selber gerade dabei bin, noch ein bisschen besser zu verstehen, wo sich Drupal jetzt eigentlich genau positioniert, weil das ist ja sozusagen die eigentliche Schwierigkeit, festzustellen, was der Eingang schon gesagt hat, naja, es gibt ja sowas wie Typo 3, das versucht man erstmal irgendwie alles zu machen, das ist irgendwie groß und schwer, ein Tanker und ist nicht so anpassbar. Dann kann man natürlich auch irgendwie alles selber programmieren. Drupal, so wie es sich mir jetzt darstellt, ist ein System, das sich für Leute empfiehlt, die Systeme zusammenbauen. Also für Leute, die vielleicht ein Stück weit auch Programmierer-Erfahrungen haben, wo es aber jetzt nicht so sehr ums Programmieren ankommt, weil man muss ja jetzt nicht für alle Fälle immer wieder neue Module machen, sondern man muss eigentlich im Wesentlichen mehr alles zusammenhaken, was an Modulen vorhanden ist, das zusammenstecken und daraus eine neue Webseite machen und gegebenenfalls auch die eigenen Webdesigner-Skills bemühen oder so, wie auch immer, wenn man da nicht noch mit jemanden zusammenarbeitet.
+
+01:26:10.900 --> 01:27:42.020
+<v SPEAKER_2>Letztendlich ist es eine große Kiste mit Legosteinen man hat aber auch die Pfeile in der Hand, um so Legosteine dann auch mal anzupassen. Das sollte man jetzt nicht gerade in Core tun, aber ich muss zugeben, mir geht es selbst oft so, dass ich dann doch in Drupal Core selbst irgendwie was hacke. Also ich hatte zum Beispiel immer das Problem mit Scalability, dass zum Beispiel, ja also, wenn man wirklich große Seiten bauen möchte und da was machen möchte, die auf mehreren Performance-Servern verteilt laufen können, das geht alles mit Drupal. spezifisches Problem war zum Beispiel, dass ich Memcached benutzen wollte. Das ist ein Cache, der im Speicher liegt und nicht wie Drupal das standardmäßig macht, in die Datenbank reincached, was ja immer nochmal ein Performanceverlust ist, weil der SQL-Server bemüht werden muss. Und Drupal serialisiert halt von sich selbst heraus standardmäßig sämtliche Variablen. Das heißt, ein Array, das ich in Cache schreiben möchte, das wird erstmal serialisiert. Und das kann ich dann nicht so einfaches, oder ich will das nicht, wenn ich das mit Memcached mache, weil der kann einen Array sofort so als Array nehmen. in so einem Fall muss man dann zum Beispiel Core hacken. Also man wird da immer wieder über Dinge stolpern, die einem auch an Drupal-Core dann nicht gefallen. Und da hat man natürlich das Problem mit Updates.
+
+01:27:42.040 --> 01:27:51.320
+<v SPEAKER_1>Jetzt haben wir ein paar Ressourcen aber schon genannt. Natürlich gibt es Drupal-Org. Da steht die Doku, da gibt es die Software. Da ist Drupal Modules genannt. Wir haben Lullabot, diesen Video-Podcast genannt.
+
+01:27:51.340 --> 01:27:51.860
+<v SPEAKER_2>Audio-Podcast.
+
+01:27:53.120 --> 01:27:54.740
+<v SPEAKER_1>Audio und Video haben die, glaube ich, auch.
+
+01:27:54.760 --> 01:27:56.960
+<v SPEAKER_2>Teilweise Video, aber der Audio-Podcast nicht.
+
+01:27:56.980 --> 01:28:07.400
+<v SPEAKER_1>Okay, also es ist ein Audio-Podcast, wo Drupal-Development besprochen wird. Fallen wir jetzt aus dem Stand noch andere Ressourcen ein, die man vielleicht noch erwähnen sollte, die hilfreich sind?
+
+01:28:07.420 --> 01:28:29.960
+<v SPEAKER_2>Es gibt auch immer wieder lokale Drupal-Gruppen. Ich bin da selber nicht Teil von. Es gibt zum Beispiel eine User-Gruppe auch in Berlin, soweit ich weiß. Die treffen sich auch regelmäßig. Es gibt auch Drupal-Kons, Drupal-Konferenzen immer wieder. Sehr viel findet da aber auch in den Staaten statt. Veranstaltungen drum herum sind schon einige.
+
+01:28:30.160 --> 01:28:35.560
+<v SPEAKER_1>Obwohl es ja auch eine stark europäisch geprägte Community ist, die Drupal-Community.
+
+01:28:35.580 --> 01:28:43.780
+<v SPEAKER_2>Würde ich gar nicht sagen. Es kommt auch sehr viel aus den USA. Auch sehr viel von der User-Base.
+
+01:28:43.800 --> 01:29:39.820
+<v SPEAKER_1>Ich war mal auf der Fostim. Ich war mehr als einmal auf der Fostim, aber einmal war ich auch kurz im Drupal-Raum. Also Fostim, wer es nicht kennt, das ist Free and Open Software Development-Meeting in Brüssel einmal im Jahr. Mal, wenn es schön kalt ist, in so einem zugegen Gebäude. Bisschen anstrengend. Ich hoffe, dass sich das mal ändert. Was ganz nett ist an dieser Veranstaltung, wenn man jetzt wirklich selber Entwickler ist und an solchen Open-Source-Projekten teilnimmt, dort sind fast alle. Also es sind irgendwie 10, 20, 30 verschiedene Projekte, was weiß ich, die Java-Community und so weiter. Die Drupal-Community wollte auch vertreten und läuft dann eben so, dass man eben auch sozusagen immer so einen eigenen Track hat. Das heißt, jede Gruppe, wenn sie ein bisschen größer hat, hat dann auch so ihren eigenen Raum und macht dann eben auch nur Vorträge dazu. Da hatte ich so den Eindruck gewonnen, dass da doch ganz gut was geht. Du hast ja gesagt, es kommt aus Belgien.
+
+01:29:41.080 --> 01:29:49.520
+<v SPEAKER_2>Ja, Belgien, da war so der Startpunkt. Ich weiß jetzt nicht, ob der Erfinder des Ganzen sich überhaupt noch aktiv daran beteiligt oder ob das inzwischen auch schon an der Ende ist.
+
+01:29:49.540 --> 01:29:53.740
+<v SPEAKER_1>Auf jeden Fall, das ist noch so eine Webseite jetzt mit besonderen...
+
+01:29:54.460 --> 01:30:56.480
+<v SPEAKER_2>Na, also das meiste findet man tatsächlich auf drupal.org. Das ist ein bisschen anstrengend, dadurch zu navigieren. Es gibt irgendwie mehrere Anlaufpunkte für... Es gibt sowohl irgendwie Documentation als auch Getting Started und überall irgendwelche Autos, die so ein bisschen verstreut sind. Also irgendwann findet man sich zurecht. Sehr wichtig ist natürlich auch api.drupal.org. Das ist die komplette API-Documentation. Und das finde ich ein sehr schönes Interface, also man hat da einfach nur links eine Eingabefläche für Suchstrings. Ich kann da nach Sachen suchen und das läuft dann auch mit Autocompletion. Also ich kann da irgendeinen Funktionsname anfangen einzutippen und dann habe ich den auch schon. Und das Schöne ist, dass diese Seite auch nur aus einem einzigen Drupal-Modul besteht. Ich glaube, das heißt einfach API. Und das kann ich auch für meine eigene Seite dann an Start bringen. Das heißt, auf api.drupal.org finde ich eben eine Dokumentation für Drupal-Core. Und nicht für die Control-Modules. Wenn ich jetzt aber dieses Modul noch auf meiner eigenen Seite installiere, dann habe ich einfach meine eigene Seite automatisch dokumentiert.
+
+01:30:56.500 --> 01:31:04.880
+<v SPEAKER_1>Also falls man selber ein Modul macht und da dann die API für dokumentieren will, könnte man einfach dieses Modul nehmen.
+
+01:31:04.900 --> 01:31:24.540
+<v SPEAKER_2>Es ist ein Interface für die in Code vorhandene Dokumentation, die aufzugreifen. Also wenn ich jetzt Zusatzmodule auf meiner Seite installiert habe, was ich in der Regel natürlich habe, und auf deren Dokumentation leicht Funktionen finden möchte, die diese Module liefern, dann taucht es automatisch darauf.
+
+01:31:24.560 --> 01:31:34.780
+<v SPEAKER_1>Verstehe, alles klar. Ja, hilfreich. Ok Kaspar, vielen Dank für die Ausführung. Ich denke, wir machen jetzt hier mal einen Punkt.
+
+01:31:36.160 --> 01:31:38.520
+<v SPEAKER_2>Bisschen chaotischer Podcast geworden.
+
+01:31:38.540 --> 01:32:17.600
+<v SPEAKER_1>Vielleicht ein bisschen chaotisch, aber das macht ja nichts. Wir sind ja hier auch bei Chaosradio Express und da muss es nicht immer alles von A nach Z gehen, sondern manchmal muss man halt auch Umwege nehmen. Und gerade mit der Programmierung ist es ja alles nicht so einfach. Da gibt es nicht immer den klaren Pfad, den man so beschreiten sollte. Man muss sich ein bisschen rantasten, wer also noch auf der Suche ist nach einem System. Vielleicht für die Webseite dann vielleicht mal Drupal angucken. Wir werden hier sicherlich auch nochmal ein paar andere Systeme beleuchten. Ja, ich würde sagen, das war's. Wir sagen mal Tschüss. Und bis bald bei Chaosradio Express.

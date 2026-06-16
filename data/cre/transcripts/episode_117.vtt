@@ -1,0 +1,955 @@
+WEBVTT
+
+00:00:15.660 --> 00:00:28.680
+<v SPEAKER_1>Bandwidth, ich kann Bandwidth nicht mehr. Bitte! Das ist nicht für verdammt schmutzige Denker.
+
+00:00:28.700 --> 00:00:30.140
+<v SPEAKER_2>Das ist nicht für kompartimierende Denker.
+
+00:00:30.280 --> 00:02:04.033
+<v SPEAKER_1>Roboticized Thinkers, please. Hallo, hier ist Chaosradio Express Ausgabe Nummer 117. Mein Name ist Tim Pritlove und ich begrüße euch da draußen wieder an den Hörgeräten zu einer Ausgabe, die sich wieder einmal der Hardcore-Technik widmen wird. Heute geht es um Hardware im weiteren Sinne. Wir wollen ein bisschen darüber sprechen, wie es so ist, wenn man diese Grenze vom Programmieren hin zur Hardware durchschreitet, wenn man irgendwann anfängt, sich seine eigene Hardware zu programmieren, wozu man das braucht, wann man das will, was man damit machen kann, was man dazu am besten verwenden sollte. Als Gesprächspartner dazu habe ich hier eingeladen, bzw. bin ich zu Besuch hier im Augsburger Raum bei Benedikt Heinz, genannt Hunz, hallo, willkommen bei Chaosradio Express. Du bist so ein findiger Bastler, das heißt, genau genommen bist du ja eigentlich erst mal nur, was heißt nur, aber du bist Informatik-Student, richtig?
+
+00:02:04.233 --> 00:02:05.633
+<v SPEAKER_2>Ja, noch.
+
+00:02:05.653 --> 00:02:32.933
+<v SPEAKER_1>Und noch bist du es. Ja, du rauschst schon dem Diplom entgegen, hast also sozusagen die Zahlen und mathematischen Formeln schon eine Weile durch deinen Hirn schießen lassen, aber du bist ja jetzt nicht nur so von der theoretischen Fraktion, sondern du setzt dich ja schon auch ziemlich mit Hardware-Systemen auseinander. Was hat dich da hingebracht? Das ist eigentlich so dein Interessengebiet.
+
+00:02:33.633 --> 00:03:02.213
+<v SPEAKER_2>Ja, das Interessante an der Hardware ist eigentlich so, erst mal wie funktioniert die Hardware überhaupt? Also wenn man irgendein Gerät hat, dann ist es recht interessant, mal die Funktionsweise von dem Gerät zu analysieren. Das ist einfach erst mal aufzuschrauben, schauen, welche Chips sind da drin. Und dann unter Umständen zur Überlegenheit, was man sonst noch damit machen kann. Und dazu muss man halt dann oft Reverse-Engineering betreiben und das Ganze näher analysieren.
+
+00:03:02.573 --> 00:03:14.293
+<v SPEAKER_1>Ja, aber was ist für dich so der Reiz? Also was hat dich da hingebracht, dich mit solchen Sachen zu beschäftigen? Du kannst ja auch hier in deinem Garten fliegen können oder andere Dinge tun.
+
+00:03:15.273 --> 00:03:29.633
+<v SPEAKER_2>Das Interessante ist eigentlich zu verstehen, wie etwas, das man erstmal als Blackbox kauft, wie dieses Ding denn intern funktioniert. Also das finde ich hoch interessant. Und dabei lernt man eigentlich auch sehr viel.
+
+00:03:31.053 --> 00:03:37.013
+<v SPEAKER_1>Das heißt, du hast diese typische Hackerunruhe, dass wenn du nicht weißt, wie es funktioniert, dass du dann nicht ruhig schlafen kannst?
+
+00:03:37.633 --> 00:03:44.953
+<v SPEAKER_2>Ja, gewissermaßen. Also ich will eigentlich immer wissen, was da drin so ist und wie das genau funktioniert.
+
+00:03:45.913 --> 00:03:49.033
+<v SPEAKER_1>Und was war so das erste Gerät, was du dann aufgemacht hast?
+
+00:03:49.053 --> 00:03:51.013
+<v SPEAKER_2>Ach puh, das war...
+
+00:03:51.033 --> 00:03:53.733
+<v SPEAKER_1>War das im Alter von drei oder im Alter von fünf?
+
+00:03:53.753 --> 00:04:00.893
+<v SPEAKER_2>Nee, das war eher so Richtung fünf, also schon ein bisschen später.
+
+00:04:00.913 --> 00:04:03.833
+<v SPEAKER_1>Ein bisschen später. Weißt du das?
+
+00:04:03.853 --> 00:04:11.913
+<v SPEAKER_2>Das weiß ich nimmer, nee. Aber ich hab eigentlich alles aufgemacht und auch schon ein paar Mal 230 Volt gespürt.
+
+00:04:11.933 --> 00:04:13.873
+<v SPEAKER_1>Wie war das?
+
+00:04:13.893 --> 00:04:18.073
+<v SPEAKER_2>Ja, elektrisierend.
+
+00:04:18.093 --> 00:04:22.533
+<v SPEAKER_1>Hat dich auf jeden Fall nicht davon abgehalten, dich weiter den Systemen zuzuwenden.
+
+00:04:22.553 --> 00:04:25.613
+<v SPEAKER_2>Ja, ich mach zurzeit mehr mit 3,3 Volt als mit 230.
+
+00:04:25.633 --> 00:04:26.673
+<v SPEAKER_1>Ist ein bisschen sicherer, oder?
+
+00:04:26.693 --> 00:04:29.513
+<v SPEAKER_2>Ja, und...
+
+00:04:29.533 --> 00:04:52.173
+<v SPEAKER_1>Kann man empfehlen. Ja, aber so im Laufe, gut, du wirst dann irgendwann angefangen haben, dich näher mit Computern auseinanderzusetzen, und da stell ich einfach mal. Was für Projekte hast du jetzt in jüngster Zeit gemacht, die jetzt diese Grenze mit ich baue mir meine eigene Hardware da überschritten haben?
+
+00:04:52.913 --> 00:05:17.073
+<v SPEAKER_2>Ja, das sind eigentlich Fpga-Projekte in erster Linie. Also zum Teil auch eben quasi kommerzielle Projekte. Da habe ich zum einen ein Atapi-Gerät gebaut und zum anderen ein Gerät, das ein DVI-Signal in PAL umwandelt, also in Analog-Video.
+
+00:05:17.093 --> 00:05:28.773
+<v SPEAKER_1>DVI auf PAL, also DVI ist ja ein digitaler Standard, das heißt viele Pins und ich weiß gar nicht, wie viele von den Pins jetzt tatsächlich für das Bild zuständig sind.
+
+00:05:29.313 --> 00:05:36.133
+<v SPEAKER_2>Ja, wenn ich mich jetzt recht erinnere, sind es acht so was, also es sind differenzielle Leitungen.
+
+00:05:36.433 --> 00:05:38.153
+<v SPEAKER_1>Also alles doppelt ausgelegt.
+
+00:05:38.173 --> 00:05:43.893
+<v SPEAKER_2>Ja genau, wegen der Übertragungssicherheit.
+
+00:05:43.913 --> 00:05:54.593
+<v SPEAKER_1>Und wie macht man daraus? Pal ist dann sozusagen ein rein analoges Signal, das heißt man muss im Prinzip so einen DA-Wandler für Video bauen. Ist das schwierig?
+
+00:05:55.553 --> 00:06:25.853
+<v SPEAKER_2>Ja, also es geht natürlich nicht innerhalb von einer Woche und es geht nicht ohne Vorwissen und alles. Man kann es sich auch leichter oder schwieriger machen, je nachdem wie viele externe Chips man quasi benutzt und welche man da benutzt. Also DVI kann man zum Beispiel fertige Decoder kaufen, die das direkt parallel als RGB ausgeben. Und PAL-Encoder gibt es auch direkt so, dass die das Timing und so schon...
+
+00:06:25.873 --> 00:06:41.793
+<v SPEAKER_1>Also als RGB ausgeben ist im Prinzip wie das VGA-Signal, aber PAL ist ja dann normal so ein composite Video-Signal. Und sowas gibt es nicht als fertiges Gerät zu kaufen, irgendwie so DVI auf PAL. Klingt jetzt mal wie so eine Anforderung?
+
+00:06:41.813 --> 00:06:50.633
+<v SPEAKER_2>Ich wüsste jetzt nichts. Also wir brauchten da noch ein paar speziellere Geschichten dran, auf die ich jetzt aber nicht näher eingehen will. Und deswegen ging das nur so.
+
+00:06:50.633 --> 00:06:55.753
+<v SPEAKER_1>Okay, also es gab sozusagen den konkreten Bedarf. Und wie geht man denn daran?
+
+00:06:55.773 --> 00:07:22.273
+<v SPEAKER_2>Ja, erstmal, also man sollte ja auf jeden Fall eigentlich über Elektronikkenntnisse verfügen und Datenblätter lesen können. Und so die üblichen Verdächtigen unter den Herstellern wissen, wer baut welche Chips zum DA-Wandeln, wer baut irgendwelche Receiver für DVI und so weiter und so fort. Und da schaut man dann erstmal, was gibt es denn alles schon fertig und überlegt sich dann, was muss ich dazu selber noch machen.
+
+00:07:22.293 --> 00:07:43.053
+<v SPEAKER_1>Und wie komplex ist jetzt so ein Projekt? DVI auf PAL klingt jetzt erstmal so einfach, weil es ja einfach nur so ein kleiner Adapter ist, das steckt man dann irgendwie ran und dann kommt schon das Richtige raus. Aber das ist ja schon, ja weiß nicht, da braucht man schon so eine Art Computer, um erstmal so ein digitales Signal, so eine abstrakte Beschreibung des Bildschirminhalts zusammenzuführen.
+
+00:07:43.673 --> 00:08:00.973
+<v SPEAKER_2>Ja, Computer ist der falsche Begriff eigentlich, weil unter Computer verstehe ich was, was Touring mächtig ist. Und das ist diese Lösung nicht. Also die macht eigentlich nur Signalverarbeitung. Das heißt, sie rechnet ein paar Signale um und buffert diese Signale und gibt sie dann zur richtigen Zeit wieder aus.
+
+00:08:00.993 --> 00:08:07.033
+<v SPEAKER_1>Im Kern muss er ja im Prinzip immer nur Daten sammeln eben für einen kompletten Bildschirminhalt.
+
+00:08:07.053 --> 00:08:08.013
+<v SPEAKER_2>Ja genau.
+
+00:08:08.033 --> 00:08:10.773
+<v SPEAKER_1>Und den dann in ein analoges Signal umwandeln.
+
+00:08:11.633 --> 00:08:29.273
+<v SPEAKER_2>Ja, das macht dann der PAL-Encoder. Also der bekommt dann eben die digitalen Daten, bis sie aber eben zum richtigen Zeitpunkt. Und das ist ein anderer Zeitpunkt, als sie vom DVI kommen. Und das ist auch ein anderer Farbraum. Und dieses Buffering und die Farbraum-Umrechnung passieren dann eben im FPGA.
+
+00:08:29.833 --> 00:08:45.033
+<v SPEAKER_1>Und dieses andere Gerät, was du erwähnt hast, mit Atapi, also Atapi, wir reden von... Atapi ist ja der Name, den man üblicherweise immer so für das CD-ROM-Laufwerk verwendet. Aber eigentlich ist es ja derselbe Standard wie bis vor kurzem noch Festplatten, ATA, oder?
+
+00:08:45.233 --> 00:08:48.053
+<v SPEAKER_2>Nein, ne, das kann man nicht...
+
+00:08:48.073 --> 00:08:49.213
+<v SPEAKER_1>Klar ist ein entschlossenes Nein.
+
+00:08:49.733 --> 00:09:39.433
+<v SPEAKER_2>Also es ist so ähnlich, Atapi heißt ausgesprochen Atar Packet Interface und das ist im Prinzip SCSI. Also hier wird logisch SCSI gesprochen, nur die physikalische Verbindung ist ein bisschen anders. Übertragen werden aber immer SCSI-Kommandos. Und das üblicherweise schließt man über Atapi nur CD-ROM an. Wer SCSI kennt, weiß aber, dass es da verschiedene Geräte, Klassen gibt. Also es gibt CD-ROM, es gibt Festplatten, es gibt Communication Devices und was weiß ich alles. Und man kann im Prinzip an Atapi auch andere SCSI-Geräte, also andere Atapi-Geräte als ein CD-ROM anschließen. Rein logisch gesehen.
+
+00:09:39.453 --> 00:09:40.413
+<v SPEAKER_1>Macht man aber nicht.
+
+00:09:40.433 --> 00:09:41.713
+<v SPEAKER_2>Genau, normalerweise nicht.
+
+00:09:41.833 --> 00:09:46.533
+<v SPEAKER_1>Und warum musstest du da jetzt dabei? Was hat gefehlt?
+
+00:09:46.713 --> 00:10:34.453
+<v SPEAKER_2>Ja, das war gewissermaßen ein Hack, weil an dieses Gerät, das nur Firewire hatte, mussten einfach ein paar Tasten dran, um was eingeben zu können in dieses Gerät. Und für Firewire gibt es aber noch nicht wirklich basteltaugliche Lösungen. Und deswegen hab ich das eben entwickelt, dieses Atapi-Gerät. Das war die einfachste Lösung, weil man kann dann einfach einen Atapi auf Firewire-Adapter nehmen, mit dem man sonst CD-ROM an Firewire anschließt. Und hier schließt man eben dann quasi den FPGA an, an diesen Adapter. Der gibt sich als Atapi-Gerät aus und davon kann man dann eben die Tasten via Atapi-Kommandos abfragen, mit dem Rechner aus.
+
+00:10:34.473 --> 00:11:06.133
+<v SPEAKER_1>Also mit anderen Worten, du nutzt jetzt schon ein paar Mal gefallen FPGA, Technologie primär um so konkrete Probleme zu lösen, wo einfach eine bestimmte Hardware notwendig ist, wo man jetzt nicht einen vollständigen Computer nehmen kann und Software drauf programmieren kann, weil es einerseits zu sinnlos, zu teuer, zu groß und was weiß ich nicht noch alles wäre, sondern wo man einfach nur so eine spezialisierte Hardware braucht, die dann in der Regel nicht mehr als einen Chip besteht. Vielleicht kommt noch der eine oder andere dazu, aber so im Kern die eigentliche Funktionalität und das, was man sozusagen macht, wird dadurch gemacht.
+
+00:11:06.153 --> 00:11:35.433
+<v SPEAKER_2>Ja, das Wichtige daran ist eigentlich, dass hier halt Übertragungsgeschwindigkeiten erreicht werden müssen, die mit normalen Mikrocontrollern nicht mehr machbar sind. Also wer sich DVI mal angeschaut hat, das sind Gigabit und auch bei Atapi, da müssen immer zwei Kilobyte übertragen werden als Buffer bzw. 512 Byte. Und das passiert so schnell, dass ein Mikrocontroller das in Software nicht mehr entsprechend empfangen und sinken kann.
+
+00:11:35.453 --> 00:12:21.873
+<v SPEAKER_1>Jetzt haben wir da schon eine interessante Referenz. Wir hatten ja hier bei Chaosradio Express vor gutem Jahr, Ausgabe Nr. 67, hat sich mit Mikrocontrollern beschäftigt. Das ist ja nun das, was man eigentlich häufig nimmt, wenn man sagt, ich will jetzt was steuern. Dann braucht man halt in der Regel eigentlich gar nicht so viel. Wir hatten da in der Sendung so Beispiele wie Lampensteuerung, ich will irgendwie Licht mit LEDs machen, Farbmischungen und so weiter. Und da ist natürlich auch ein bestimmtes Processing nötig und auch dafür wäre es der totale Overkill, jetzt einen kompletten Computer zu nehmen. Das könnte man natürlich auch, aber wäre halt Overkill. Vor allem kriegt man das nicht klein und nicht mit wenig Strom betrieben. Und da ist das irgendwie normal, aber dann hat man es halt nicht mit solchen Datenmengen zu tun. Das heißt auf FPGA Technologie geht man in dem Moment, wo es einfach zu viel Processing ist, kann man das so sagen? Dafür ist es primär geeignet?
+
+00:12:21.893 --> 00:12:26.533
+<v SPEAKER_2>Ja, wenn es in Software einfach nicht mehr machbar ist, wenn man spezialisierte Hardware braucht.
+
+00:12:31.033 --> 00:12:41.513
+<v SPEAKER_1>Okay, jetzt haben wir schon ganz ordentlich mit vierbuchstabigen Abkürzungen um uns geschmissen. Was ist denn FPGA?
+
+00:12:41.533 --> 00:13:38.013
+<v SPEAKER_2>Ja, ein FPGA ist ein Field Programmable Gate Array. Also das ist die Abkürzung, unter der man sich erst mal nicht wirklich was vorstellen kann. Und so als Analogie kann man sich vorstellen, dass man eine Lagerhalle hat, die ist voll und in der hat man alle möglichen Gattertypen in tausendfacher oder millionenfacher Ausführung. Und einen Lötkolben dazu. Und eine Menge Zeit. Und man kann sich aus diesen Gattern dann alles, was man braucht, von einem simplen Addierer, einem binären Addierer bis hin zu einer komplexen CPU eigentlich alles aufbauen, wenn man auch noch Speicherelemente hat. Und diese Elemente sind im FPGA, wenn auch nicht direkt in dieser Gatterform verfügbar. Und man kann die beliebig untereinander verschalten.
+
+00:13:38.033 --> 00:13:53.033
+<v SPEAKER_1>Gatter. Was ist denn ein Gatter? Ich meine, das ist so ein Begriff, den hört man häufig. Und die erste Assoziation ist die Kuh auf der Wiese. Die bleibt dann irgendwie schön drin. Was spielt das jetzt für eine Rolle? Warum sind jetzt diese Gatter das, worum es geht?
+
+00:13:53.573 --> 00:15:09.033
+<v SPEAKER_2>Ja, aus den Gattern ist unsere ganze Digitartechnik aufgebaut. Also die ganzen Rechner heute sind binär basiert. Und diese Entscheidung, ob 0 oder 1, die wird immer aufgrund von diesen mathematischen bzw. logischen Funktionen getroffen, die in Hardware als Gatter realisiert sind. Und diese Funktionen sind beispielsweise und oder exklusiv oder nicht. Man kann sich aus drei, wenn ich mich recht erinnere, Gattertypen, kann man sich eigentlich alle anderen Gatter bauen. Und aus diesen Gattern kann man sich dann komplexe Geschichten bauen, wie Adira und so. Grundsätzlich ist es erstmal ein oder und so. Und das muss man wirklich so verstehen, dass wenn man eine 0 und eine 1 hat, dann ergibt es oder, weil mindestens 1 von beiden eine 1 sein muss, ergibt es eine 1. Und bei einem und müssen beide 1 sein und bei einem exklusiv oder muss 1 von beiden 1 sein und das andere eine 0 sein und so. Also diese Gatter, diese logischen Funktionen, die kennen sich ja die meisten schon jetzt so vom Hören und die lassen sich halt beliebig verketten.
+
+00:15:09.053 --> 00:15:18.953
+<v SPEAKER_1>Und das ist eigentlich auch tatsächlich die eigentliche Logik, mit der eigentlich alles aufgebaut ist. Über Prozessor, alles basiert sozusagen, das ist quasi so die atomarste Einheit.
+
+00:15:18.973 --> 00:15:57.453
+<v SPEAKER_2>Ja genau. Also wir können zum Beispiel mal einen Addier, der lässt sich relativ einfach realisieren. Wir wollen zwei Binärwerte addieren und gehen jetzt mal gleich vom Worst Case aus, dass das beides Einsen sind. Dann ist das Ergebnis ja eine 1,0. Und das heißt, das Least Significant Bit muss eine Null sein und das höherwertige Bit muss eine 1 sein. Und dafür reichen uns zwei Gatter. Und zwar verknüpfen wir die beiden eingehenden Einsen mit einem Xor, das ergibt das Least Significant Bit, die Null in diesem Fall.
+
+00:15:57.473 --> 00:16:02.333
+<v SPEAKER_1>Also eine Null, weil es wäre nur dann eine 1, wenn er eine 1 anholt, das ist nicht der Fall.
+
+00:16:02.353 --> 00:16:15.853
+<v SPEAKER_2>Aber wir haben einen Überlauf eben, das lässt sich im hintersten Bit nicht mehr speichern. Und diesen Überlauf, den kriegen wir durch ein Endgatter, also durch eine Unverknüpfung rein. Und damit kriegen wir den Wert 2 raus aus 1 plus 1.
+
+00:16:15.873 --> 00:16:31.493
+<v SPEAKER_1>Also eine Unverknüpfung, die auf dieselben Eingänge ist. Das heißt, beide Eingänge sind sozusagen beide auf ein Gatter geschaltet, auf ein XOR und auf ein AND. Und das AND bestimmt den Überlauf und das XOR bestimmt sozusagen, dass was übrig bleibt. Und dann hab ich eine 1,0. Und schon hab ich was addiert.
+
+00:16:31.633 --> 00:16:37.693
+<v SPEAKER_2>Ja genau. Und das lässt sich natürlich bis zu beliebig langen Bitbreiten ausbauen.
+
+00:16:38.493 --> 00:16:52.853
+<v SPEAKER_1>1 plus 1 gleich 10. Daran erkennt man den digitalen Helden heutzutage. Aber Subtraktion und so weiter, Multiplikation, das ist dann schon ein bisschen aufwendiger, aber man kann das aus diesen ganzen Bausteinen genauso zusammenbauen.
+
+00:16:52.873 --> 00:17:22.993
+<v SPEAKER_2>Subtraktion ist relativ einfach. Jetzt kann man einfach erst das Inverse der Addition sehen. Und auch wenn ich jetzt das nicht aus dem Kopf gerade hinkriege, aber Multiplikation ist eine ganz andere Geschichte. Also Multiplikation geht in Hardware einfach nicht innerhalb von einem Taktzyklus. Multiplikation, wenn man sich das, man kann sich Multiplikation ja auch aus Additionen und so aufbauen. Man braucht dann aber mehrere Takte. Also Multiplikation ist nicht so einfach.
+
+00:17:22.993 --> 00:17:35.453
+<v SPEAKER_1>Okay. Aber alles nicht unmöglich, wird ja heutzutage auch überall gemacht. Und in so einem Gate Array, also Gate Array stelle ich mir jetzt sozusagen vor, als einfach ein riesiges Feld von Gattern.
+
+00:17:36.153 --> 00:19:03.153
+<v SPEAKER_2>Ja es sind, aber im FPGA tatsächlich keine Gatter drin. Das war jetzt nur die, äh, logische Sicht der Dinge. Genau, ja. Und im FPGA ist das aus Gründen, der aus Platzgründen und so anders gelöst. Und zwar sind im FPGA sogenannte Lookup Tables drin. Und diese Lookup Tables, mit denen lässt sich aber dasselbe erreichen wie mit den Gattern. Diese Lookup Tables sind einfach ein Array, kann man sagen. Da geht man mit vier Eingängen raus, oder auch mehreren, das ist FPGA abhängig, und ein Ausgang geht raus. Und man konfiguriert in dieser Lookup Table, also man steuert eigentlich mit diesen vier Eingängen, wählt man einen Eintrag aus in der Lookup Table. Man hat vier Einträge, jeweils ein Bit in der Lookup Table, und man wählt mit den Eingängen den entsprechenden Eintrag aus, der dann am Ausgang angelegt wird. Und da kann man sich jetzt wieder, wenn man jetzt das Ganze mal mit einer simpleren Lookup Table nehmen, mit einer Und-Lookup Table, also mit zwei Bit, und wir wollen jetzt ein Und in einer Lookup Table implementieren, dann haben wir da vier Einträge drin, bei zwei Eingängen, um alle Möglichkeiten abzudecken. Nämlich 00, 01, 10 und 11.
+
+00:19:03.193 --> 00:19:06.393
+<v SPEAKER_1>Das heißt, man hat gar nicht die Logik, sondern man schreibt alle möglichen Ergebnisse hin.
+
+00:19:06.413 --> 00:19:12.133
+<v SPEAKER_2>Man schreibt die Ergebnisse fest in diese Lookup Table, wo man dann das Ergebnis entsprechend nachschlägt.
+
+00:19:12.153 --> 00:19:17.793
+<v SPEAKER_1>Das ist natürlich ein ganz schöner Platzverbrauch eigentlich, oder?
+
+00:19:17.793 --> 00:19:41.573
+<v SPEAKER_2>Ne, dadurch lässt sich natürlich das Ganze besser integrieren, weil man verkettet ja die Gatter, und dadurch kann man natürlich von mehreren Gattern das Gesamtergebnis gleich in die Lookup Table reinschreiben. Also man braucht dann nicht mehr die Gatter wirklich alle, sondern kann dann tatsächlich hier Ergebnisse zusammenfassen.
+
+00:19:43.053 --> 00:20:20.973
+<v SPEAKER_1>Das heißt, ein FPGA-System ist etwas, an das man herangeht mit dieser Logik, ich will jetzt logische Verknüpfungen realisieren, wie in einem Gatter, so wie wir das am Anfang besprochen haben. Tatsächlich beschreibe ich das aber dann in der Hardware in Form von vorberechneten Ergebnissen, dass je nachdem, welche Eingaben an irgendeiner Stelle ankommen, einfach nur noch nachgeschlagen wird, was das Ergebnis sein soll. Und das ist alles?
+
+00:20:20.993 --> 00:20:53.733
+<v SPEAKER_2>Ja, diese Lookup-Tables sind quasi so das Kernelement des FPGAs. Da gibt es aber natürlich noch andere Elemente, wo sich die Hersteller dann eben entsprechend unterscheiden, auch von den Eingängen her der Lookup-Tables. Und mit den Lookup-Tables selber muss man eigentlich selber gar nie als Anwender arbeiten, wenn man es nicht explizit will. Sondern man beschreibt die logischen Verknüpfungen und das Gegenstück des Compilers überlegt dann, wie das anhand der Lookup-Tables implementiert werden kann.
+
+00:20:57.713 --> 00:21:04.373
+<v SPEAKER_1>Seit wann gibt es denn diese FPGAs? Ich meine, die sind schon eine Weile auf dem Markt, aber immer gab es die nicht.
+
+00:21:04.393 --> 00:21:31.833
+<v SPEAKER_2>Nee, das ist relativ neu, kann man sagen. Da gibt es ja auch eine Entwicklung hin zu den FPGAs. Und man kann sagen, dass sie heute für Normalsterbliche eher zugänglich sind, als sie das vor einer Weile noch waren. Und dass sie natürlich auch günstiger und leistungsfähiger geworden sind. Aber seit wann es die jetzt genau gibt, das weiß ich jetzt auch nicht.
+
+00:21:31.853 --> 00:21:42.233
+<v SPEAKER_1>Aber es gibt auch verschiedene Ausführungen, wenn ich das richtig verstanden habe. Es gibt auch kleinere und größere Systeme, die noch andere Bezeichnungen führen.
+
+00:21:42.253 --> 00:21:57.693
+<v SPEAKER_2>Ja, genau. Und die bezeichnen eigentlich hauptsächlich, wie viele solche Look-App-Tables in diesem FPGA drin sind. Und je mehr da drin sind, umso komplexere logische Sachen kann man dann in diesem FPGA natürlich realisieren.
+
+00:21:57.713 --> 00:22:02.333
+<v SPEAKER_1>Von was für Größenordnungen reden wir hier eigentlich? Wie groß muss man sich so eine Look-App-Table vorstellen?
+
+00:22:02.353 --> 00:22:32.053
+<v SPEAKER_2>Was passt da rein? Man kann sich das ein bisschen umrechnen auf Gatter. Und zurzeit, also die FPGAs haben 50.000 Gatter bis 10 Millionen, würde ich jetzt mal sagen. Also 10 Millionen weiß ich jetzt nicht ganz sicher, aber 5 Millionen sollte mit drin sein. Also das ist quasi das Äquivalent zu den Look-App-Tables dann. Also das Gatter-Äquivalent gewissermaßen.
+
+00:22:32.073 --> 00:22:34.713
+<v SPEAKER_1>Und gibt es auch welche mit weniger?
+
+00:22:34.733 --> 00:22:40.253
+<v SPEAKER_2>Mit weniger gibt es keine FPGAs, aber CPLDs kann man da nehmen.
+
+00:22:40.273 --> 00:22:43.013
+<v SPEAKER_1>Was ist dann ein CPLD?
+
+00:22:43.033 --> 00:22:50.193
+<v SPEAKER_2>Die Abkürzung weiß ich gerade gar nicht auswendig. Könnte Complex Programmable Logic Device sein.
+
+00:22:50.213 --> 00:22:51.033
+<v SPEAKER_1>Steht hier auch.
+
+00:22:51.053 --> 00:22:56.093
+<v SPEAKER_2>Ja, fein. Das Internet weiß alles.
+
+00:22:56.113 --> 00:22:57.853
+<v SPEAKER_1>Und ist das jetzt was anderes?
+
+00:22:57.873 --> 00:23:30.073
+<v SPEAKER_2>Ja, das ist was anderes. Also das ist auch reconfigurierbare Logik, aber ein FPGA muss zum einen jedes Mal neu geladen werden, wenn er Sturm bekommt. Also der hat nur flüchtigen Speicher mit ein paar Ausnahmen. Und CPLD hat Flash drin. Und der hat auch keine Look-App-Tables, sondern der hat wirklich noch Gatter. Und zwar, soweit ich mich jetzt erinnere, hat der und und oder Gatter drin und halt nicht noch. Und daraus lassen sich dann alle anderen eben realisieren.
+
+00:23:31.053 --> 00:23:40.613
+<v SPEAKER_1>Aha, das heißt, verstehe, das heißt, eigentlich geht es, das eigentliche Stichwort, über das wir eigentlich reden müssen, ist rekonfigurierbare Logik.
+
+00:23:40.633 --> 00:23:40.993
+<v SPEAKER_2>Genau.
+
+00:23:41.013 --> 00:24:32.653
+<v SPEAKER_1>Man will einfach eine bestimmte Logik haben, die die Hardware ausführt. Und man beschreibt es, also man beschreibt es abstrakt mit Gattern. Aber ob das nun konkret in der jeweiligen Hardware, mit der man sozusagen diese Rekonfiguration, Nierbarkeit erreichen will, ob das nun wirklich Gatter sind, die dann in irgendeiner Form eine Konstellation gebracht werden, oder ob es eben, wie du das eben beschrieben hast, so eine Lookup-Table ist, ist eigentlich egal. Braucht einen eigentlich auch nicht weiter zu interessieren. Hat nur was für die Dichte in dem Chip selber zu tun. Also das heißt, würde man jetzt versuchen, so einen Chip aufzubauen, der jetzt diese Gatter-Dichte hat, wie bei einem FPGA, und ich würde es auch tatsächlich bauen, wie in so einem CPLD, dann würde es zu viel Platz einnehmen? Also ist das wirklich so eine platzsparende Geschichte, dass man diese Lookup-Tables macht, oder hat das was mit Geschwindigkeit zu tun?
+
+00:24:32.673 --> 00:24:47.353
+<v SPEAKER_2>Mit Beiben würde ich sagen, also die genauen Gründe weiß ich jetzt auch nicht, aber man kann diese Lookup-Tables auch noch anders benutzen, man kann die teilweise als Speicher, als Chip-Register und so noch benutzen, also da ergeben sich noch andere Vorteile daraus.
+
+00:24:47.373 --> 00:25:05.213
+<v SPEAKER_1>Okay, das ist also sozusagen noch etwas flexibler. Aber diese CPLDs, das heißt, es ist im Prinzip dieselbe Geschichte, auch hier habe ich eine reconfigurierte Logik, die Frage ist sozusagen immer nur, wie viele Gatter brauche ich eigentlich, um das spezifische Problem, das ich lösen möchte, auch lösen zu können?
+
+00:25:05.213 --> 00:25:06.693
+<v SPEAKER_2>Ja, genau.
+
+00:25:06.713 --> 00:25:47.353
+<v SPEAKER_1>Jetzt ist es natürlich so, dass man jetzt, weiß ich nicht, ich bin ja mehr so ein Software-Guy. Und wenn ich so über Problemlosungen nachdenke, dann habe ich natürlich irgendwie Algorithmen und Abläufe und Zeit, die dabei verbraucht wird im Kopf. Aber ich versage so ein bisschen, das Ganze jetzt in Form von so Gattern auszudrücken, weil irgendwie so ein Gatter sagt mir erstmal gar nichts. Also auf der einen Seite ist es mega abstrakt, weil es sich ja jetzt sozusagen auf die allerniedrigste Ebene bezieht. Denkt man denn jetzt wirklich so wirklich Gatter für Gatter? Ich meine bei 50.000 bis irgendwie 10 Millionen ist jetzt nicht, wie ich das hinschreiben sollte. Eigentlich benutzen wir noch eine andere Abstraktion, oder?
+
+00:25:47.373 --> 00:26:45.133
+<v SPEAKER_2>Also wenn man jetzt wirklich was implementiert und einen konkreten FPGA dafür auswählen muss, dann rechnet man sich natürlich nicht selber aus, wie viele Gatter man da jetzt brauchen wird. Sondern dann schätzt man das entweder so ein bisschen ab. Und wenn man keine größeren Stückzahlen hat, sondern eh für sich selber zu Hause das nur braucht, oder einfache Stückzahl, dann nimmt man halt einfach einen möglichst großen FPGA und zahlt dafür ein bisschen mehr. Dafür kann man dann später auch andere Sachen machen. Wenn es dagegen große Stückzahlen sind, dann implementiert man das vorher fertig. Vielleicht anhand eines Entwicklerboards mit einem großen FPGA. Und sobald das fertig implementiert ist, sagt einem die Software dann auch wirklich exakt, wie viel des FPGAs genutzt ist. Und man kann dann auch einen kleineren auswählen und kann sagen, das hätte ich jetzt gern für diesen kleineren synthetisiert. Und da sieht man dann auch, ob das da reinpasst oder nicht. Das rechnet die Software aus.
+
+00:26:45.133 --> 00:27:37.853
+<v SPEAKER_1>Nehmen wir doch mal dieses Beispiel mit dem DVI auf PAL. Weil ich denke, das macht irgendwie ganz gut greifbar, was eigentlich das Problem ist. Man hat es irgendwie mit einer unglaublich schnell auf einen einprasselnden Datenmenge zu tun. Frame für Frame und mit größeren Auflösungen wird es dann auch alles noch sehr viel mehr. Die kommen dann irgendwie über diese acht Leitungen angeschossen und wollen immer so in Side-Häppchen, nämlich in der Geschwindigkeit des Bildwechsels zusammengesetzt werden, damit man sie dann in so einen anderen Chip reinschiebt und sagt, hier mach mal ein PAL-Signal daraus. Habe ich richtig verstanden so weit, ne? Wie geht man da jetzt ran? Wie komme ich von dieser Aufgabenstellung bis zu einer Formulierung für Hardware? Kannst du das mal beschreiben, was da so die Schritte sind und welche Werkzeuge man in dem Moment dann auch zum Einsatz bringt?
+
+00:27:38.753 --> 00:28:22.333
+<v SPEAKER_2>Ja, zuerst mal überlegt man sich die Funktionsweise schematisch. Also das erste, was man halt sieht, ist, dass die Farbräume nicht passen. Also braucht man einen Farbraumkonverter. Dann merkt man, dass die Ein- und Ausgangstakte natürlich unterschiedlich sind. Also muss man die Daten buffern. Und da gibt es jetzt zwar in den FPGAs direkt RAM, das ist allerdings zum einen sehr schnell, aber zum anderen ist es sehr wenig. Und da passt ein kompletter Frame nicht rein. Das rechnet man sich halt aus, wie groß so ein Frame ist. Also hat man halt RGB, 24-Bit, mal Breite, mal Höhe.
+
+00:28:22.353 --> 00:28:23.513
+<v SPEAKER_1>Das ist eine Menge.
+
+00:28:23.533 --> 00:29:09.993
+<v SPEAKER_2>Ja, genau. Also hinter dem Farbraum wird der Konverter ein bisschen weniger, aber es ist trotzdem noch, ich glaube, wenn ich mich recht erinnere, so ein bisschen um die 2 oder 1 MB pro Frame oder so. Jedenfalls ist an der Stelle klar, dass man externen Speicher braucht. Und wenn man so ein Tearing verhindern will, also dass ein Frame ausgegeben wird und der vom nächsten Frame schon überschrieben wird, also dass man in einem Frame, den man dann sieht, zur Hälfte den vorherigen Frame und zur anderen Hälfte den nächsten Frame schon sieht, was ein relativ blöder Effekt ist. Wenn man das verhindern will, dann weiß man auch, dass man mit einem Buffer nicht auskommt, sondern dass man die Buffer switchen muss.
+
+00:29:10.013 --> 00:29:33.993
+<v SPEAKER_1>Das heißt, man hat sozusagen einen Buffer, den man volllaufen lässt, da hat man ein vollständiges Bild und dieses Bild wird dann quasi an diesen Parl-Chip übergeben, aber eben auch erst dann, wenn der dabei ist, das nächste Bild auch aufzubauen. Weil er ja mit 50 Hertz getaktet ist und das DVI, das hängt so ein bisschen davon ab, nicht? Kann mit 50 Hertz kommen, kann mit 60 oder eben auch mehr.
+
+00:29:34.013 --> 00:29:36.853
+<v SPEAKER_2>Also man trifft auf jeden Fall nie exakt die Parl.
+
+00:29:36.873 --> 00:29:45.313
+<v SPEAKER_1>Okay, das heißt du nimmst dann zwei unterschiedliche Buffer, dass du sozusagen schon hinten immer wieder einen neuen Frame irgendwie reinladen kannst, während du den anderen noch an die andere Hardware übergibst.
+
+00:29:45.333 --> 00:29:46.753
+<v SPEAKER_2>Ja, zwei oder mehrere.
+
+00:29:46.773 --> 00:29:51.513
+<v SPEAKER_1>Zwei oder mehrere. Kann ja auch ein richtiger Frame-Stau sein. Kann sogar sein, dass du Frames wegschmeißen musst.
+
+00:29:51.533 --> 00:30:03.573
+<v SPEAKER_2>Ja, muss man natürlich, ja. Aber das Ausgangsmaterial, wenn man jetzt zumindest ein Video oder so nimmt, also da merkt man das danach eigentlich nicht. Dann, weil das kommt ja des Ausgangsmateriales.
+
+00:30:03.593 --> 00:30:12.953
+<v SPEAKER_1>Hauptsache, sie schießen nicht so ineinander rein und dass man dann irgendwie so mitten im Bildschirm irgendwie so einen Sprung hat. Das kennt man ja auch bei schlechter Software, die versucht irgendwie Filme abzuspielen.
+
+00:30:13.413 --> 00:31:17.973
+<v SPEAKER_2>Genau, aber anhand der Buffer kann man sich eben dann schön ausrechnen, wie viel RAM man braucht. Und da muss man sich halt für einen RAM-Typ entscheiden. Und da ist es wieder interessant, welche Geschwindigkeit braucht man denn? Also was ist die, wie viel Megabyte pro Sekunde kommen denn vom DVI an? Und wie viel Megabyte pro Sekunde will denn der Ballencoder haben? Die muss man aufsummieren. Und das muss das RAM dann eben entsprechend abkören. Und dabei muss man noch beachten, dass die, das je nach RAM, das teilweise, dass man noch Zusatz-Taktzyklen braucht, weil man das Ganze, weil man immer nur blockweise lesen und schreiben kann, zumindest bei den bei den schnelleren RAMs. Und das muss man auch noch mit berücksichtigen. Und dann wählt man da eben einen RAM aus, das passend ist. Man muss sich dann überlegen, wie man das im FPGA ansteuert.
+
+00:31:17.993 --> 00:31:22.753
+<v SPEAKER_1>Das heißt, wir reden jetzt wohl von normalem RAM, so wie es auch irgendwie im Computer eingeschränkt wird.
+
+00:31:22.773 --> 00:31:38.873
+<v SPEAKER_2>Ja, es gibt ja viel verschiedenes, normales RAM. Es gibt SD-RAM, DDR-RAM, DDR2-RAM. Und dann gibt es noch wirklich jetzt das, was in den Cache-Speicher drin ist, ein synchrones RAM. Und ja, da muss man...
+
+00:31:39.633 --> 00:32:04.173
+<v SPEAKER_1>Die richtige Entscheidung fällen. Das macht man nicht mit dem FPGA, sondern das ist noch mal ein separater Baustein. Man hat dann auf diesem Gerät sowohl den FPGA, aber eben auch noch das RAM. Und was auch immer dieser FPGA tut, und am Ende des Tages generiert er die ganze Zeit Daten, die ins RAM müssen. Das heißt auch diese Kommunikation mit dem RAM über so einen Systembus, nehme ich an. Oder geht das dann direkt da rein?
+
+00:32:04.193 --> 00:32:24.833
+<v SPEAKER_2>Nein, man braucht dann einen RAM-Controller. Also man landet eigentlich heutzutage immer, wenn man diese Datengeschwindigkeiten hat und auch die Datenmengen, dann kommt man um SD oder DDR am Netz drum herum. Und dieses RAM ist nicht mit Transistoren aufgebaut, sondern mit Kondensatoren, und die müssen immer wieder nachgeladen werden.
+
+00:32:24.853 --> 00:32:32.133
+<v SPEAKER_1>Also man braucht so einen Refresh-Zyklus, und dafür braucht man dann noch einen eigenen Stein, der das einfach macht, was man zu zeigen will? Nein, das kann der FPGA machen.
+
+00:32:32.153 --> 00:32:34.273
+<v SPEAKER_2>Man muss eben diesen RAM-Controller im FPGA implementieren.
+
+00:32:34.953 --> 00:32:41.153
+<v SPEAKER_1>Ah, verstehe. Das heißt, man muss sich auch noch konkret um den RAM-Typ selber kümmern und das immer wieder refreshen.
+
+00:32:41.173 --> 00:33:01.213
+<v SPEAKER_2>Aber da gibt es teilweise auch das Intellectual Property, mit dem man das quasi fertig kaufen kann, oder teilweise auch als Source-Code bekommen, so einen RAM-Controller oder andere Funktionalitäten. Und man kann die dann im eigenen Design mitverwenden, wenn man die entsprechende Lizenzierung beachtet.
+
+00:33:01.233 --> 00:33:02.873
+<v SPEAKER_1>Gibt es da auch Open Source?
+
+00:33:03.213 --> 00:33:35.993
+<v SPEAKER_2>Ja, und zwar auf opencourse.org. Da gibt es ja viele Open Source-Projekte. Also die sind eigentlich alle, liegen die im Source-Code vor. Teilweise ist es so, dass man die nicht nutzen darf zu kommerziellen Projekten oder so, aber das ist unterschiedlich. Da gibt es, glaube ich, verschiedene Lizenzen. Und teilweise werden auch von den FPGA-Herstellern bestimmte Funktionalitäten selber im Quellcode veröffentlicht.
+
+00:33:36.013 --> 00:33:43.513
+<v SPEAKER_1>Weil das braucht einfach jeder und wenn das so der Blocker ist, um ein Projekt zu realisieren, wäre das eigentlich Quatsch, weil sie damit sich ihr eigenes Business eigentlich verhageln würden.
+
+00:33:43.653 --> 00:33:44.073
+<v SPEAKER_2>Ja, genau.
+
+00:33:44.093 --> 00:33:46.013
+<v SPEAKER_1>Ram-Controller ist wahrscheinlich ein gutes Beispiel, oder?
+
+00:33:47.993 --> 00:34:12.593
+<v SPEAKER_2>Dann gibt es auch nochmal quasi das Intellektuelle Property in Nicht-Opensource-Form als Black Boxes und da gibt es auch von den Herstellern schon sehr viele verschiedenen IPs, die man benutzen kann, auch kostenlos und auch in kommerziellen Projekten und dann gibt es nochmal quasi advancedere IPs, für die man dann wirklich nach Stipzahlen lizenzieren muss.
+
+00:34:12.613 --> 00:34:14.413
+<v SPEAKER_1>Das ist so der gängige Begriff dafür, ja?
+
+00:34:15.233 --> 00:34:17.033
+<v SPEAKER_2>Genau, also IP.
+
+00:34:17.053 --> 00:34:23.413
+<v SPEAKER_1>Weil von Code in dem Sinne kann man ja nicht sprechen. Sondern das ist so Gata.
+
+00:34:23.433 --> 00:34:27.333
+<v SPEAKER_2>Ja, man kauft sich eben das geistige Eigentum immer an einen anderen.
+
+00:34:29.733 --> 00:34:52.373
+<v SPEAKER_1>Gut, das heißt für den kleinen Konverter haben wir jetzt sozusagen die Komponenten, haben wir sie schon alle zusammen. Also an Funktionalität hast du gesagt, Farbraum-Konverter, das ist ja jetzt nicht nochmal ein eigener Chip, sondern das ist sozusagen nur eine der Funktionalitäten, die man in diesem Fpga realisieren muss. Eine andere ist, dass man dieses RAM kontrollieren muss, aber das ist dann eben auch noch ein eigener Chip. Haben wir jetzt schon alles beisammen irgendwie, um das eigentliche Problem zu lösen?
+
+00:34:52.393 --> 00:35:10.013
+<v SPEAKER_2>Ja, man braucht dann natürlich noch einen Controller im Fpga, der entscheidet, was wann getan wird, ob jetzt halt ins Frame geschrieben oder gelesen wird, von welcher Adresse gelesen oder geschrieben wird, welcher Frame jetzt ausgegeben werden soll. Und sowas implementiert man dann eigentlich immer als Date Machine.
+
+00:35:10.033 --> 00:35:55.933
+<v SPEAKER_1>Das ist ja eigentlich so das, was so der normalen Programmierung, das Software-Programmier jetzt noch am nächsten kommt. Man hat da sozusagen so einen zeitlichen Verlauf und muss den irgendwie kontrollieren, muss dann irgendwie sagen, du bitte schieb jetzt mal die Daten rüber. Aber man macht das nicht wie in einem Prozessor, sondern State Machine. Das heißt, es gibt einfach n verschiedene Zustände, in denen sich sozusagen die Maschine zu jedem Zeitpunkt befinden kann. Und in dem Moment, wo man von dem einen Status auf den anderen, also es gibt bestimmte Bedingungen, die dann sozusagen dazu führen, dass der Status wechselt. Und dann gibt es bestimmte Aktionen, die eben ausgeführt werden unter Konfiguration, Konstellation, um eben diesen Status auch sozusagen zum Ausdruck zu bringen. Genau, okay, verstehe. Was für Stats, mal so grob, wie viel braucht man da irgendwie? Zehnhundert, ein Tausend?
+
+00:35:55.953 --> 00:36:28.293
+<v SPEAKER_2>In dem Fall glaube ich waren es jetzt so 20 sowas. Also von der Programmierung her ist ganz anders als auf Prozessoren, weil man eben hier, und das ist auch in der, also man programmiert hier in Verilog oder VHDL. Ich persönlich bevorzuge eigentlich VHDL, weil ich das in der Uni gelernt habe. Und das VHDL steht für Very High Speed Integrated Circuit Hardware Description Language.
+
+00:36:28.313 --> 00:36:32.213
+<v SPEAKER_1>Also eigentlich müsste es VHSICHDL heißen.
+
+00:36:35.333 --> 00:37:46.713
+<v SPEAKER_2>Und wenn man jetzt so an einem Prozessor programmieren kann in ein oder zwei Sprachen, dann sind eigentlich alle weiteren Programmiersprachen relativ schnell und einfach zu lernen, weil es prinzipiell keine konzeptionellen Unterschiede ist. Bei den Hardware Beschreibungssprachen ist das ganz anders. Also man schreibt hier nicht seriell die Sachen runter, also dass sie nacheinander abgearbeitet werden, sondern man beschreibt die Hardware. Und prinzipiell führt die Hardware immer komplett, also das ist alles zur gleichen Zeit quasi im FPGA drin und wird auch ausgeführt, wenn man das nicht explizit verhindert. Und dass eben nur bestimmte Dinge ausgeführt werden, das macht man dann eben über eine State Machine. Und in komplexeren Fällen kann man auch einen kleinen Prozessor mit in den FPGA mit reinladen oder einen externen Prozessor benutzen, der dann komplexere Zustandsmechanismen implementieren kann oder quasi als Systemcontroller eingesetzt werden kann.
+
+00:37:48.413 --> 00:38:07.033
+<v SPEAKER_1>Ja, also das heißt, die Programmierung ist komplett anders. Wie muss man sich das vorstellen? Also wenn es total anders ist, was schält und was gibt es da noch irgendwo Ähnlichkeiten oder ist das jetzt so, als würde man eine Sprache lernen, die nicht von diesem Planeten ist?
+
+00:38:07.033 --> 00:38:29.653
+<v SPEAKER_2>Ja, letztendlich ist es so, dass man eine Sprache eigentlich lernt, die nicht von diesem Planeten ist. Also es gibt von der Syntax her gewisse Ähnlichkeiten. Verilog ist C relativ ähnlich, während VHDL, soweit ich weiß, Ada recht ähnlich ist. Ich kenne jetzt Ada nicht im Detail. Aber damit hört es eigentlich auch schon auf.
+
+00:38:31.053 --> 00:39:33.133
+<v SPEAKER_1>Und was beschreibt man denn da? Schreibe ich da Gatter hin? Wie kriege ich das jetzt zu fassen? Wenn wir mal mit dem Beispiel bleiben, mit dem DVI zum Paralkonverter, das ist jetzt noch ein sehr überschaubares Aufgabenfeld. Das heißt, am Anfang ist ja so ein kontinuierlicher Vorgang. Ich bin angeschlossen in so ein DVI-Signal und dann kommen die ganze Zeit irgendwelche Daten angeflogen. Das heißt, eigentlich muss ich erst mal buffern. Oder ich muss mich in irgendeinen wohl definierten... Was würde ich denn jetzt mal machen? Ich versuche mich jetzt mal in eine Hardware-Beschreibung. Ich würde jetzt erst mal in irgendeinen definierten Zustand kommen wollen, warte wahrscheinlich erst mal auf irgendein besonderes Ereignis. Das heißt, ich lasse erst mal alles an mir vorbeifliegen, bis ich weiß, jetzt fängt irgendwas neu an. Und jetzt kann ich mich irgendwie erst mal initialisieren. Das heißt, da fängt ein Frame an oder so. Oder es kommt irgendein Konfigurationspaket daher. Ist das so, das Ding? Und wie schreibe ich das dann sozusagen hin in VHDL?
+
+00:39:33.913 --> 00:41:13.533
+<v SPEAKER_2>Ja, das ist im Prinzip... Da hat man halt eine Zustandsvariable. Also es gibt schon quasi Variablen. Aber das Keyword Variable in VHDL beschreibt weniger... Also es gibt zwei verschiedene Typen. Es gibt Variablen und Signale. Und die kann man benutzen zum Speichern von Daten. Normalerweise sollte man eher Signale benutzen. Und das Interessante daran ist, wenn man jetzt eine Zuweisung hat, A ist gleich B plus C und A ist ein Signal, dann ist, wenn man in der Zeile drunter A benutzt, hat es nicht den Wert, der in der Zeile vorher dem zugewiesen wurde, sondern dieser neue Wert für A wird erst im nächsten Takt gültig. Also man arbeitet hier meist eigentlich immer synchron. Und man muss eigentlich immer von Takt zu Takt denken. Was soll zum nächsten Takt geändert werden und wann und was erwarte ich im nächsten Takt für Daten? Das ist jetzt das, was für die State Machine gilt. Da braucht man halt diese Signale. Man braucht eben eine Zustandsvariable, anhand der man sich immer den Zustand notiert. Und in diesem Zustand drin, man macht dann eine Art Case-Anweisung auf die verschiedenen Zustände. Und in dem entsprechenden Codeblock schaut man dann, welche Übergänge jetzt vielleicht...
+
+00:41:13.853 --> 00:41:40.853
+<v SPEAKER_1>Also man gruppiert es halt einfach nach diesen Zuständen und sagt, wenn dieser Zustand jetzt gerade derjenige ist, der vorherrscht, dann sind das die Dinge, die wir tun, und im anderen Zustand sind das die Dinge, die wir tun. Und wo wird dieser Zustand gespeichert? Also ist das dann sozusagen, der nimmt ja jetzt nicht das Ram, sondern das ist dann im FPGA, gibt es dann so noch mal Register, in dem man solche Werte ablegen kann? Oder muss man sich das auch erst mal aus Gattern zusammenbauen?
+
+00:41:40.873 --> 00:41:47.833
+<v SPEAKER_2>Nee, nee, das geht aus Gattern gar nicht, so leicht zusammenzubauen. Das sind wirklich Flip-Flops, die sind im FPGA drin.
+
+00:41:47.853 --> 00:41:49.313
+<v SPEAKER_1>Flip-Flops im Sinne von?
+
+00:41:49.333 --> 00:41:51.073
+<v SPEAKER_2>Ein Bit-Register.
+
+00:41:51.093 --> 00:41:54.693
+<v SPEAKER_1>Okay, also ein eingespeichertes Bit.
+
+00:41:54.713 --> 00:41:55.533
+<v SPEAKER_2>Genau.
+
+00:41:55.553 --> 00:41:56.513
+<v SPEAKER_1>Kein Bit, sondern Bit.
+
+00:41:57.893 --> 00:42:16.193
+<v SPEAKER_2>Und die verkettet der, also nicht der Compiler, man spricht da nicht vom Kompilieren, sondern vom Synthetisieren. Und das wird hier automatisch gemacht. Also man kann dann sagen, ich will hier 32 Bit-Register und der kümmert sich dann darum, dass das 32 entweder ist.
+
+00:42:16.213 --> 00:42:57.113
+<v SPEAKER_1>Okay, das heißt für den FPGA selbst sind alle Flip-Flops unabhängig voneinander, der hat einfach nur so das eine Bit und das ist entweder 0 oder 1. Und durch die Abstraktion der Hardware-Beschreibungsprache baue ich mir quasi ein Register zusammen, in dem ich sage, ich hätte jetzt hier gerne mal 32 Flip-Flops, die sollen für mich einen Wert ausdrücken. Und ich bin dann sozusagen mit den Details der Umsetzung gar nicht mehr beschäftigt. Das heißt, jetzt kann ich hier gehen und Zustände speichern. In dem Fall, was weiß ich, was hast du gesagt, wir haben da irgendwie 20 Zustände. Das heißt, wir kommen da irgendwie mehr oder weniger mit 5 oder 6 Bit irgendwie aus. Also so ein Register müsste man sich sozusagen zusammenbauen. Und da steht dann immer drin, was gerade unsere Wahrnehmung dieser DVI-Schnittstelle ist.
+
+00:42:57.653 --> 00:43:20.273
+<v SPEAKER_2>Ja, das ist halt der System-Controller, diese Zustandsmaschine. Aber der ist eigentlich nur quasi, der kontrolliert das Ganze. Aber das Interessante ist eigentlich so ein bisschen die Hardware drum herum, zum Beispiel der Farbraum-Converter. Da schreibt man im Prinzip eine Formel hin.
+
+00:43:20.293 --> 00:43:23.073
+<v SPEAKER_1>Was ist denn der Farbraum bei DVI?
+
+00:43:23.093 --> 00:43:33.693
+<v SPEAKER_2>Aus DVI kommt RGB. Und bzw. Juf. Ich weiß die Unterschiede zwischen den beiden Dingern nicht ganz.
+
+00:43:33.713 --> 00:43:35.973
+<v SPEAKER_1>Ist glaube ich derselbe Name für das selbe Ding.
+
+00:43:36.373 --> 00:44:45.993
+<v SPEAKER_2>Ja, stimmt nicht ganz, aber man sieht auch irgendwie auf dem Ausgangsbild keinen wirklichen Unterschied. Und ja, jedenfalls mit dieser State Machine, im Controller ist ja quasi immer nur, in einem normalen Prozessor ist immer nur eine Zeile aktiv. Und mit dieser State Machine, das ist quasi eine Methode, mit der man explizit dem FPGA sagt, dass man jetzt so etwas machen will, dass man die Einschränkung eines Prozessors haben will. Nämlich, dass jetzt nur dieser eine Code Block ausgeführt wird. Und innerhalb dieser Code Block, der in der entsprechenden Case Anweisung drin steht, der wird aber parallel ausgeführt. Also es werden alle Zeilen quasi, man darf da nicht mehr seriell denken, sondern man denkt eigentlich so, dass man Formeln hinschreibt. Also A ist gleich B plus C und so weiter und so fort. Und diese Formeln werden, wenn man sie nicht explizit mit so einem Zustand aus der, quasi vom Rest entkoppelt, dann werden die in jedem Takt ausgeführt.
+
+00:44:46.213 --> 00:45:07.633
+<v SPEAKER_1>Das heißt, anders als beim normalen Prozessor, wo immer alles erstmal hintereinander stattfindet, es sei denn, man kümmert sich darum, dass es explizit parallel ist, ist hier genau andersrum, hier ist immer alles total parallel. Es sei denn, man sichert sich irgendwie mit, nennt man das dann so, Logs oder Gruppenzustände wie auch immer?
+
+00:45:07.653 --> 00:45:10.513
+<v SPEAKER_2>Im FPGA, ja, durch die State Machine im Prinzip.
+
+00:45:10.533 --> 00:45:20.053
+<v SPEAKER_1>Okay, durch die State Machine schafft man sich quasi seine Serialisierung selber. Das heißt, dass dann zu dem Zeitpunkt, wo dann dieser Teil ausgeführt wird, ist dann alles irgendwie idle, also alles andere läuft dann nicht?
+
+00:45:20.073 --> 00:45:30.153
+<v SPEAKER_2>Das sind die anderen Zustände, die wir quasi explizit als Zustände gekennzeichnet haben, die nicht dem jetzigen entsprechen, die werden dann nicht ausgeführt.
+
+00:45:31.393 --> 00:45:34.573
+<v SPEAKER_1>Das heißt, im Falle deiner Farbraumkonvertierung?
+
+00:45:34.593 --> 00:45:49.693
+<v SPEAKER_2>Die wird in jedem Takt ausgeführt, die ist unabhängig von dem Systemcontroller. Also die wird zu jedem DVI-Takt ausgeführt, weil man will ja jedes DVI, man will jedes Pixel im Farbraum wechseln.
+
+00:45:49.713 --> 00:45:56.073
+<v SPEAKER_1>Das heißt, das läuft schon auch alles parallel quasi für jedes Pixel, aber es findet in dem Moment nichts anderes statt?
+
+00:45:56.093 --> 00:46:17.513
+<v SPEAKER_2>Ja, man muss da so ein bisschen Daten stürmen. Man muss das aus Sicht des Datenstroms sehen. Und der wandert dann eben durch den Farbraumkonverter und kommt dann hinten irgendwann beim Controller an. Und im Controller wird dann dafür, also in der...
+
+00:46:17.533 --> 00:46:18.733
+<v SPEAKER_1>In dem Controller meinst du jetzt?
+
+00:46:18.753 --> 00:46:30.213
+<v SPEAKER_2>Die State-Maschine. Und da wird dann halt der Rem-Zugriff und so gemacht. Also man arbeitet da dann auch teilweise mit unterschiedlichen Takten und da wird es dann schon komplizierter.
+
+00:46:30.233 --> 00:46:47.093
+<v SPEAKER_1>Wie viel Beschreibung ist denn jetzt nötig, um jetzt zum Beispiel dieses System zu realisieren? Also wie viel Code in VHDL oder wie viel Beschreibung muss man denn da jetzt eigentlich wirklich zusammenkehren? Ist das irgendwie so eine Bildschirmseite? Oder ist das schon ein ganzes Buch voll?
+
+00:46:47.113 --> 00:47:29.693
+<v SPEAKER_2>Ein ganzes Buch voll, ne. Ich würde sagen, das sind so 2000 Zeilen so was vielleicht. Also wir haben zum Teil fertige Komponenten benutzt. Also den Fahrraumkonverter gibt es als IP von Xilinx, als Blackbox quasi, den kann man einfach reinnehmen, verbindet die Ein- und Ausgänge und braucht sich dann darum nicht kümmern. Das ist eine schöne Sache, wenn man eh nicht ohne Ende Zeit hat. Und auch so Ansteuerung des SDRAMs gibt es auch fertig. Und also so der selber geschriebene Code, ja, vielleicht so um die 5.000 Zeilen, 2.000 bis 5.000 Zeilen.
+
+00:47:30.033 --> 00:47:37.553
+<v SPEAKER_1>Und der kümmert sich dann also primär um das DVI-Protokoll, um das irgendwie auseinanderzunehmen, die Daten daraus extrahieren, einen Speicher zu schieben?
+
+00:47:37.573 --> 00:47:45.593
+<v SPEAKER_2>Ja, Protokoll ist ein bisschen viel gesagt. Es gibt zwei Synchronisationssignale für vertikal und horizontal. Und ansonsten halt immer die Pixel-Daten.
+
+00:47:47.453 --> 00:47:58.093
+<v SPEAKER_1>Gibt es da nicht auch noch so diverse Metadaten zu berücksichtigen? Ich meine, bei DVI kann sich ja jederzeit auch die Auflösung ändern, theoretisch. Auch der Takt kann sich ja am laufenden Meter ändern.
+
+00:47:58.113 --> 00:49:26.713
+<v SPEAKER_2>Ja, das kriegen wir alles von dem DVI-Decoder. Also da kriegen wir... Man sieht die Auflösung im Prinzip anhand der Synchronisationssignale. Also da muss man mitzählen, wie lang dieses Synchronisationssignal an ist im FPGA und dann hat man die Auflösung. Aber diese Daten müssen wir nicht selber auswerten. Also man benutzt da so ein, ich glaube, 8 nach 5 Encoding bei DVI. Also das ist ja dieses Transition Minimized Differential Encoding. Und um da jetzt 5 Bits zu übertragen, überträgt man 8 Bit, in denen diese 5 Bit enthalten sind. Aber es gibt für dieselben 5 Bit dadurch natürlich verschiedene Codierungen. Und das macht man deswegen, damit es möglichst wenig Flankenwechsel auf dieser Leitung gibt. Weil die Flankenwechsel, die streuen in die umliegenden Leitungen ein und dadurch kommt es zu Übertragungsfehlern. Deswegen benutzt man da immer dieses Encoding, was im Vergleich zu den zuletzt übertragenen Daten möglichst wenig Flankenwechsel verursacht. Das ist relativ komplex, das ist entsprechend auszuwerten und lässt sich in den FPGAs außer der aller schnellsten Generation eigentlich kaum selber realisieren. Deswegen nimmt man da mit der Einfachheit halber einfach so einen Empfänger dann.
+
+00:49:26.733 --> 00:49:34.933
+<v SPEAKER_1>Das heißt, der FPGA, den du jetzt für dieses Projekt konkret verwenden musstest, war dann auch schon eher einer der schnelleren Sorte?
+
+00:49:34.933 --> 00:50:00.413
+<v SPEAKER_2>Nö, das war eigentlich so einer der aus dem unteren Mittelklassefeld, kann man sagen. Das war konkret jetzt den Spartan 3 400 AN. Also der hat um die 400.000 Gatter quasi als Äquivalent, ist aber auch nur zur Hälfte so was voll und also ist noch Platz. Quasi fast die Hälfte des FPGAs ist noch frei.
+
+00:50:00.433 --> 00:50:02.193
+<v SPEAKER_1>Was für eine Verschwendung.
+
+00:50:02.213 --> 00:50:09.453
+<v SPEAKER_2>Ja, wir können später noch irgendwann, was weiß ich, Bild im Bild oder so. Aber dafür wäre ich nicht bezahlt.
+
+00:50:11.293 --> 00:50:28.993
+<v SPEAKER_1>Das heißt, du hast ja anfangs gesagt, FPGA unterscheidet sich jetzt vor allem von seinen kleineren Alternativen, den CPLDs, dadurch, dass sie kein eigenes Flash haben und sozusagen immer wieder ihren Code sozusagen geladen bekommen in dem Moment, wo sie eingeschaltet werden. Wo kommt denn der dann her?
+
+00:50:29.013 --> 00:51:06.693
+<v SPEAKER_2>Also in dem vorliegenden Fall, in diesem Spartan 3 AN, der hat einen Flash mit eingebaut, aus dem man sich selber den Code laden kann. Das ist allerdings die Ausnahme. Und das hat nur diese AN-Serie. Ansonsten hängt da ein externes Flash mit dran. Früher hießen die Plattform Flash, also die gibt es auch heute noch. Da drückt im Prinzip der FPGA-Hersteller sein Logo drauf und macht an dem Preis hinten noch ein Null dran. Aber ansonsten ist das wie ein SPI-Flash, nur ist es ein anderes Protokoll. Aber der gibt die Daten eben auch in serialer Form aus.
+
+00:51:06.853 --> 00:51:09.593
+<v SPEAKER_1>Was ist ein SPI-Flash?
+
+00:51:09.593 --> 00:51:37.953
+<v SPEAKER_2>Serial Peripheral Interface kennt man so aus, dem Mikrocontroller Interface. Da gibt es im Prinzip, damit zwei Geräte miteinander kommunizieren können, ist es ein synchroner serialer Bus. Es gibt eine Datenleitung in jede Richtung und eine Taktleitung. Und so ähnlich läuft das da auch ab. Nur braucht man keine Datenleitung zum Flashing, sondern quasi nur vom Flash zum FPGA und noch eine Taktleitung. Und der taktet sich dann die Daten rein.
+
+00:51:37.973 --> 00:51:41.653
+<v SPEAKER_1>Das heißt, es gibt jetzt unterschiedliche Arten, wie man mit dem Flash kommuniziert?
+
+00:51:41.673 --> 00:51:42.113
+<v SPEAKER_2>Genau.
+
+00:51:42.133 --> 00:51:47.433
+<v SPEAKER_1>Das bezieht sich nicht auf das Flash, wie es in sich funktioniert, sondern wie es nach außen kommuniziert.
+
+00:51:47.453 --> 00:52:08.773
+<v SPEAKER_2>Ja, genau. Da brauchte man früher diese Platform-Flashes, die speziell für die FPGAs gedacht waren. Man konnte das Ganze auch mit einem Mikro-Controller reinschieben, aus einem normalen SPI-Flash. Mittlerweile unterstützen die FPGAs aber auch die Standard-SPI-Flashes.
+
+00:52:08.793 --> 00:52:10.273
+<v SPEAKER_1>Das heißt, die Situation verbessert sich?
+
+00:52:10.753 --> 00:52:16.553
+<v SPEAKER_2>Ja, also kann man zurzeit eigentlich nicht mehr meckern.
+
+00:52:16.573 --> 00:52:27.133
+<v SPEAKER_1>Was kostet so ein Stein? Also ich meine, wenn man ihn jetzt so kauft, da so reinbaut, ist das irgendwie so ein paar Dollar-Teil oder ist das irgendwie richtig teuer?
+
+00:52:27.153 --> 00:52:29.633
+<v SPEAKER_2>Nee, das hängt natürlich immer von der Größe ab.
+
+00:52:31.093 --> 00:52:34.053
+<v SPEAKER_1>Jetzt sollen wir mal so ein Mittelklassebeispiel nehmen.
+
+00:52:34.073 --> 00:52:50.513
+<v SPEAKER_2>Ja, der, den wir jetzt da verwendet haben, der ist glaube ich bei um die 80 Euro oder so. Also wegen dem Flash. Aber ansonsten kriegt man eigentlich die ohne Flash auch so für 30 oder 20 Euro rum. Auch in Deutschland so bei Reichelt und so.
+
+00:52:50.533 --> 00:52:59.953
+<v SPEAKER_1>Das heißt, das ist auch so ein bisschen so die Preiskategorie von so mittleren Mittelklasseprozessoren. Kann man vergleichen? Und ist ja eigentlich auch so etwas ähnliches?
+
+00:53:00.633 --> 00:53:02.253
+<v SPEAKER_2>Nee, überhaupt nicht, finde ich.
+
+00:53:02.273 --> 00:53:04.433
+<v SPEAKER_1>Aber man kann damit einen bauen?
+
+00:53:04.453 --> 00:53:06.373
+<v SPEAKER_2>Man könnte einen bauen, ja.
+
+00:53:06.393 --> 00:53:23.973
+<v SPEAKER_1>Also ich meine, es basiert letzten Endes sozusagen. Also ein FPGA ist ja frei programmierbar oder freikonfigurierbar. Das, was bei einem normalen Prozessor eben nicht freikonfigurierbar ist. Aber das ist ja sozusagen schon vorkonfiguriert. Beim FPGA fehlt sozusagen dieses eingebaute Logik.
+
+00:53:24.433 --> 00:53:36.633
+<v SPEAKER_2>Also man kann sich da verschiedene Controller auch wirklich einladen. 80-51er gibt es zum Beispiel ohne Ende fertigen Code, aber es gibt auch auf OpenCross teilweise AVR-Kompatible.
+
+00:53:37.533 --> 00:54:05.433
+<v SPEAKER_1>Also wir reden jetzt davon, dass man sozusagen ein FPGA nimmt und ihm jetzt nicht ein du machst jetzt mal hier Farbraum-Konvertierung und machst irgendwie aus DVI-Pal, sondern du bist jetzt ein Prozessor und heute bist du mal der und morgen bist du mal der. Dann gibt es sozusagen schon in frei oder zumindest in billig lizensierbar alte Scheiße, sozusagen alte Mikrocontroller oder alte Prozessoren, die man dann sozusagen im FPGA ablaufen lassen kann. Dann verhalten sie sich genauso.
+
+00:54:05.453 --> 00:54:07.973
+<v SPEAKER_2>Ja, so ziemlich genauso.
+
+00:54:07.993 --> 00:54:11.573
+<v SPEAKER_1>Kann man das dann auch mit allen I.O.-Leitungen und so weiter realisieren?
+
+00:54:11.593 --> 00:54:51.213
+<v SPEAKER_2>Ja, die kann man dann im Prinzip beliebig nach außen verraten und so. Der Vorteil von dem, das kann man auch teilweise in Projekte direkt mit einbauen, um sich einen extra Prozessor noch zu sparen, der sonst auf der Platine nochmal wäre. Da muss man allerdings aufpassen, wie es da mit Patenten von den Herstellern aussieht. Also ARM oder AVR zum Beispiel sollte man vielleicht nicht unbedingt in den FPGA mit rein klatschen, sondern sich einen Core suchen, wo die zugrunde liegende Architektur nicht patentiert ist.
+
+00:54:51.233 --> 00:54:52.773
+<v SPEAKER_1>Gibt es da überhaupt welche?
+
+00:54:52.793 --> 00:56:02.213
+<v SPEAKER_2>Ja, also diese 8051er, ich weiß nicht, wie es damit aussieht, aber das benutzt anscheinend zumindest fast jeder irgendwie. Aber es gibt auch von den Herstellern, von den FPGA Herstellern gibt es auch fertige Cores, die auch speziell für die FPGAs optimiert sind. Bei Xilinx wäre das eben der Pico Blaze, das ist ein 8-Bit Prozessor, den kann man bzw. Controller in Assembler programmieren und kann sich auch selber dann überlegen, was man alles dranbauen will. Zum Beispiel kann man sich selber Timer oder einen seriellen Anschluss dranbauen. Die größere Variante davon ist der Micro Blaze, der ist mit 32 Bit. Damit kann man zum Beispiel einen Linux dann auch drauf starten. Ich weiß jetzt allerdings nicht, ob es geht, es geht nur das Micro Linux, weil es ja von Haus aus keine MMU hat. Aber da gibt es auch andere Cores. Dieser Micro Blaze ist nicht komplett frei, sondern da braucht man eine teurere Variante von Entwicklungssoftware, soweit ich da informiert bin. Aber da gibt es auch noch andere offene Cores.
+
+00:56:02.233 --> 00:56:12.053
+<v SPEAKER_1>Das heißt, dieser Micro Blaze ist jetzt nicht eine Kopie von einem bestehenden anderen Prozessor, sondern wir machen uns mal unseren eigenen Software. Weil wir damit Spaß haben.
+
+00:56:12.073 --> 00:57:32.473
+<v SPEAKER_2>Ja, und um den möglichst effizient zu machen, dass er möglichst wenig Platz auf dem FPGA braucht und trotzdem möglichst schnell läuft. Also man darf sich da keine netten vorstellen. Ach, ich will jetzt hier einen Pentium 4, den lade ich mir jetzt in meinen FPGA ein. Das geht nicht. Man bräuchte da viel mehr Garter als im FPGA drin sind. Und die Performance ist lächerlich, die man mit einem FPGA da rauskriegt. Weil die Prozessoren sind einfach so optimiert. Von Platzbedarf her und von den Garterlaufzeiten und alles, das kriegt man mit einem FPGA niemals hin. Weil der ist ein generisches System, mit dem man möglichst viel machen kann. Aber er ist nicht spezialisiert darauf, dass man beliebige Prozessoren reinbaut. Deswegen ist es eher, wenn man wirklich was, so einen Controller braucht, um eine Lösung möglichst gut implementieren zu können, dann benutzt man den. Oder aus Spielerei, dass man versteht, wie ein Prozessor funktioniert. Das wird auch meistens in den Universitäten gemacht, dass man sich einen Prozessor im FPGA implementiert. Um dieses Pipelining zu verstehen, einen MIPS-Prozessor beispielsweise. Aber das ist eher so ein bisschen eine Spielerei.
+
+00:57:32.493 --> 00:57:55.413
+<v SPEAKER_1>Na gut, aber ich meine, Lernen ist ja auch durchaus ein guter Grund. Das heißt, man kann sich im Prinzip mit dem FPGA seinen eigenen Prozessor bauen. Man kann die Grundlagen von Prozessortechnologie im eigenen Leib verspüren bzw. rumoptimieren. Gibt es die Spark-Architektur nicht so weit frei verfügbar?
+
+00:57:55.433 --> 00:58:04.353
+<v SPEAKER_2>Ja, diese Open Spark. Da braucht man allerdings einen FPGA der Oberklasse. Also der kostet ein paar Hunderter.
+
+00:58:04.373 --> 00:58:05.993
+<v SPEAKER_1>Warum braucht man den?
+
+00:58:06.013 --> 00:58:08.433
+<v SPEAKER_2>Weil der Platzbedarf so immens ist.
+
+00:58:08.453 --> 00:58:11.973
+<v SPEAKER_1>Weil er einfach gerne viele Gatter hätte?
+
+00:58:11.993 --> 00:58:12.913
+<v SPEAKER_2>Ja, genau.
+
+00:58:12.933 --> 00:58:14.813
+<v SPEAKER_1>Wie viele Gatter hätte er denn gerne?
+
+00:58:14.833 --> 00:58:15.613
+<v SPEAKER_2>Das weiß ich jetzt auch nicht.
+
+00:58:16.113 --> 00:58:25.013
+<v SPEAKER_1>Aber das sind schon so Millionenbereich. Und dieser Microblaze, das ist ja direkt von Xilinx.
+
+00:58:25.033 --> 00:58:25.853
+<v SPEAKER_2>Genau.
+
+00:58:25.873 --> 00:58:32.893
+<v SPEAKER_1>Wir haben es schon ein paar Mal erwähnt, muss man jetzt auch noch mal konkret sagen. Xilinx ist so eine der Firmen, die solche FPGAs baut.
+
+00:58:32.913 --> 00:58:39.153
+<v SPEAKER_2>Es gibt zwei große Hersteller und ein paar kleinere. Die zwei großen sind Altera und Xilinx.
+
+00:58:39.973 --> 00:58:40.813
+<v SPEAKER_1>Altera.
+
+00:58:40.833 --> 00:59:18.193
+<v SPEAKER_2>Altera, genau. Und ansonsten gibt es noch Lattice und Atmel, die baut selber auch noch ein paar kleinere FPGAs. Aber das ist eigentlich alles nicht so richtig state of the art. Deswegen muss man sich eigentlich für Altera oder Xilinx entscheiden. Und ja, da gibt es für den einen wie auch für den anderen Gründe. Und ich für meinen Teil bin irgendwie bei Xilinx geblieben, hauptsächlich deswegen, weil es die Entwicklungssoftware auch frei für Linux, also frei im Sinne von kostenlos für Linux gibt. Und bei Altera muss man dafür zahlen.
+
+00:59:18.213 --> 00:59:22.633
+<v SPEAKER_1>Verstehe. Xilinx scheint aber auch der Marktführer zu sein, oder?
+
+00:59:22.653 --> 00:59:44.093
+<v SPEAKER_2>Ja, ich denke mal, also die haben zumindest, wenn man jetzt sagt, wer hat die wirklich schnellsten, besten, tollsten FPGAs, dann glaube ich, ist es Xilinx. Ansonsten so für den Preis-Leistungs-Verhältnis ist teilweise Altera vielleicht besser. Und manche Leute sagen auch, dass die Entwicklungssoftware von Altera besser ist.
+
+00:59:44.973 --> 01:00:01.313
+<v SPEAKER_1>Aber da hast du jetzt keine Erfahrung mit? So, ja nochmal zurück zu den Prozessoren. Das war ja ein kurzer Ausflug. Also Xilinx bietet sozusagen für seine eigenen Systeme an dieses Micro-Blase. Ist das der einzige Prozessor, den die...
+
+01:00:01.333 --> 01:00:04.153
+<v SPEAKER_2>Na den Pico-Blase gibt es eben beispielsweise noch.
+
+01:00:04.173 --> 01:00:05.293
+<v SPEAKER_1>Der ist dann kleiner.
+
+01:00:05.313 --> 01:00:06.253
+<v SPEAKER_2>Ja, das ist ein 8-Bit-Tor.
+
+01:00:06.793 --> 01:00:45.853
+<v SPEAKER_1>Und das bedeutet, dass wenn ich jetzt eine Hardware-Lösung habe, wo ein FPGA drauf ist, dass ich dort die Funktionalität eines Prozessors haben kann. Das heißt, dann kann ich hergehen und in dem Instruktionssatz für diesen Prozessor einfach seriell einen Code schreiben, so wie man das eben gewohnt ist. Ich vermute mal, dann gibt es auch noch irgendwie ein Modul für ein GCC, dass man sich auch nochmal eine C-Software für diesen Prozessor umsetzen kann. Kann ich dann diesen Core, wenn ich jetzt, was weiß ich, du hast ja gesagt, ihr habt nur die Hälfte der Gata verbraucht und angenommen die andere Hälfte wird jetzt ausreichend, um diesen Prozessor-Core zu implementieren, kann ich die dann auch tatsächlich parallel auf dieser gleichen Hardware laufen lassen?
+
+01:00:45.873 --> 01:00:46.733
+<v SPEAKER_2>Ja, das geht.
+
+01:00:46.753 --> 01:00:48.533
+<v SPEAKER_1>Ohne, dass sie sich groß in die Quere kommen.
+
+01:00:48.553 --> 01:00:55.753
+<v SPEAKER_2>Man könnte dann zum Beispiel noch einen Framewaffer machen, dass man noch eine Linux-Konsole damit drauf hat oder sowas. Und das geht ja schon.
+
+01:00:55.773 --> 01:01:21.753
+<v SPEAKER_1>Oder dass man, was weiß ich, da noch USB mit einbaut und sozusagen das Ding von außen konfigurierbar macht oder irgendwelche Status-Meldungen rauswirft. Das wäre sozusagen so eine Anwendung dafür. Ohne, dass man jetzt noch mal einen eigenen Stein nehmen muss und dann noch mal irgendwie aufwendig mit dem FPGA kommunizieren muss, weil man in dem Moment natürlich auch diese ganzen Register und Status-Zustände quasi auch direkt einblenden könnte in diesem Prozessor.
+
+01:01:21.773 --> 01:01:26.293
+<v SPEAKER_2>Ja, genau. Also via Memory-Mapped IO oder sowas, was man in den Adressraum einblendet.
+
+01:01:28.993 --> 01:01:32.693
+<v SPEAKER_1>Ist das jetzt gängig oder ist das jetzt nur was, was ich mir so ausgedacht hätte, was man mal machen könnte?
+
+01:01:32.713 --> 01:02:10.593
+<v SPEAKER_2>Nee, das ist gängig. Also bei größeren Projekten, wo man eben wirklich mit einer State-Machine nicht mehr hinkommt bzw. so eine State-Machine ist prinzipiell weniger flexibel natürlich und auch schwieriger zu warten. Weil irgendwann sitzt man dann vielleicht mit 200 Zuständen oder so da. Also daher sollte man in der Design-Phase dann schon überlegen, ob man nicht doch irgendwann einen Controller mit einbauen will oder einen Prozessor. Und dann macht das auch teilweise Sinn. Oder dann macht es halt Sinn, drin mit reinzumachen und denen das dann eben kontrollieren zu lassen.
+
+01:02:13.073 --> 01:02:16.373
+<v SPEAKER_1>Was sind denn so...
+
+01:02:16.393 --> 01:02:50.933
+<v SPEAKER_2>Also was mir an der Stelle noch kurz einfällt, ist, dass es bei den größeren, also bei den richtig oberklassen FPGAs, da gibt es auch schon Fertig-Prozessoren mit eingebettet, also wirklich ein Hardware. Zwar Power-PCs und glaube ich demnächst in der ganz neuen Generation auch ARM-Prozessoren. Und da kommt dann quasi direkt, man kann sich das so vorstellen, dass da der nackte Prozessor drauf sitzt und die Datenleitung kommt direkt hinter den Caches in ein FPGA rein. Und man kann dann da selber noch beliebige Hardware sich ausdenken, die man da dran anschließt.
+
+01:02:51.473 --> 01:03:12.413
+<v SPEAKER_1>Das heißt, man verbraucht auch gar keine Gatter für den Prozessor, man hat einfach so einen vollständigen Prozessor einfach komplett drin, weil es häufig eben so ist, dass man das eben sowieso noch braucht. Dann ist es einfach mit dabei. PowerPC und ARM, deshalb wahrscheinlich, weil die einfach im Embedded-Bereich die stärksten Prozessor-Typen sind.
+
+01:03:12.533 --> 01:03:19.933
+<v SPEAKER_2>Ja, und dafür kann man dann halt relativ schnell und schön solche Sachen entwickeln.
+
+01:03:20.273 --> 01:03:21.913
+<v SPEAKER_1>Werden die dann deutlich teurer dadurch?
+
+01:03:21.933 --> 01:03:35.153
+<v SPEAKER_2>Ja, die sind dreistellig, alle würde ich sagen. Also wenn ich jetzt so schätzungsweise, aber ich würde sagen, darunter kriegt man eigentlich nichts. Also das ist die Vertex-Serie bei Xilinx. Ich weiß nicht, wie es da bei Altera aussieht.
+
+01:03:35.813 --> 01:04:09.053
+<v SPEAKER_1>Vielleicht blicken wir doch mal so ein bisschen auf die konkreten Produkte und was es so gibt. Also wir haben jetzt schon gehabt, so Altera, Xilinx, die bieten das eine oder andere an. Jetzt wirst du wahrscheinlich nur mehr Überblick an Xilinx, keine Ahnung. Wenn man jetzt so einsteigen will mit, ich baue mir jetzt mal was, keine Ahnung, so einen Adapter, irgendwas, was jetzt irgendwo dazwischen ist, was Datenströme konvertiert, mag eine gute Anwendung sein. Vielleicht fallen ja noch ein paar andere gute Einsteiger-Aufgaben ein, die man mal so in Angriff nehmen könnte.
+
+01:04:09.073 --> 01:04:43.913
+<v SPEAKER_2>Also was eigentlich immer schön ist und was auch für mich so das Hauptding für FPGAs war, um Daten, die irgendwo auf einer Platine übertragen werden, um die einfach mal mitzulesen. Und das geht halt bis 100 Megahertz. Das kriegt man mit einem Mikrocontroller dann eben nicht mehr hin. Den FPGA hängt man da dann drauf und kann sich im Prinzip selber seinen Logic-Analyser so bauen. Im FPGA drin, der die Daten entsprechend analysiert, buffert und dann zum Beispiel via USB zum PC schickt. Und dafür kann man auch teilweise fertige Entwickler-Boards nehmen, die so um die 100 Dollar kosten.
+
+01:04:44.813 --> 01:05:18.833
+<v SPEAKER_1>Das heißt, wenn man jetzt zum Beispiel USB oder andere Protokolle, Busse, die jetzt auch auf irgendwelchen Prozessorsystemen oder Geräten drauf sind, wo man nicht genau weiß, was die eigentlich machen, aber man möchte ganz gerne mal einen tieferen Blick reinwerfen, dann wäre das sozusagen ein Ansatz. Ich meine, warum macht es dann Sinn, einen FPGA dafür zu machen? Reicht es nicht sich einfach nur so die Leitungen anzuschauen? Also inwiefern hilft das jetzt bei dieser Analyse?
+
+01:05:18.853 --> 01:06:32.733
+<v SPEAKER_2>USB ist nicht unbedingt das beste Beispiel, weil die Daten wieder differenziell übertragen werden und man braucht noch ein Physical Interface dafür. Aber Prinzipiell, wenn Daten irgendwie in paralleler Form zum Beispiel zu einem RAM übertragen werden, dann kann man den FPGA da einfach quasi mit drauf hängen und der bekommt dann auch die Daten und man kann sich dann selber seine Analyse-Software in dem FPGA schreiben, der die Daten mit der entsprechenden Geschwindigkeit auswertet. Also man schreibt sich quasi seinen Paser gewissermaßen in ein Hardware, also den man arbeitet am meisten in zwei Schritten. Man macht quasi einen ersten, ja Paser ist vielleicht der falsche Begriff, aber so eine Art Triggering-Logik und so, die die Daten wieder entsprechend zusammensetzt und dann zum PC schiebt und der PC, der wertet sie dann eben entsprechend aus. So geht man dann normalerweise dann vor. Und das lässt sich eben rekonfigurieren, also an verschiedene Sachen anpassen und das habe ich bei dieser Firewire-Geschichte auch erstmal gemacht, damit ich da auf dem Atapibus von dem normalen CD-ROM die Daten mitlesen konnte und da erstmal quasi unabhängig von der Theorie mir anschauen konnte, was tatsächlich die CD-ROMs denn so machen.
+
+01:06:33.853 --> 01:07:03.393
+<v SPEAKER_1>Das heißt, das ist nicht auch ein gutes Werkzeug für den Hardware-Hacker von heute, der einfach mal irgendeine neue Hardware, die irgendwas behauptet, was sie tut, analysieren will. Gerade wenn, was weiß ich, so Behauptungen im Raum stehen, dass das alles mal wieder total sicher ist und irgendwie wir machen das alles mit Verschlüsselung. Ja, welche Verschlüsselung haben sie denn? Ja, das sagen wir nicht, weil könnte ja jeder kommen. So, dann lauten ja dann immer schon die Alarmglocken und dann wäre so ein FPGA die Waffe der Wahl, um mal genau nachzuschauen.
+
+01:07:03.893 --> 01:07:55.253
+<v SPEAKER_2>Ja, man kann natürlich nur Daten, die übertragen werden, mitlesen und die Interpretierung der Daten, da muss man sich dann selber hinsetzen und schauen, was könnten das denn für Daten sein? Also, und was ist das für ein Bus überhaupt und so. Aber man kann zum Beispiel relativ einfach irgendwelche, wenn man das Chip-Layout hat, also wenn man die Pin-Belegung eines Chips hat und weiß, was an welchen Pins anliegt, beispielsweise gibt es Bluetooth-Sticks, auf denen ist noch ein Radio-Chip drauf und dahinter dann erst der Baseband-Prozessor. Und die Daten werden dann da in serieller Form übertragen. Dann könnte man den FPGA dranhängen und die ganzen Daten direkt so mitlesen, wie sie aus der Luft kommen, gewissermaßen. Also auf dem entsprechenden Kanal.
+
+01:07:55.273 --> 01:08:06.513
+<v SPEAKER_1>Und der FPGA ermöglicht es einem sozusagen, da mit der Geschwindigkeit mitzuhalten und die Daten dann überhaupt erstmal in irgendeiner anderen konsumierbaren Form wegzuschreiben, sei es in RAM oder über einen anderen Bus.
+
+01:08:06.533 --> 01:08:12.193
+<v SPEAKER_2>Der kann sie dann erstmal buffern und über USB mit High Speed zum Beispiel dann zum PC weiterschieben.
+
+01:08:17.113 --> 01:08:35.393
+<v SPEAKER_1>So, wo waren wir vorhin? Anwendung, genau. Was für Geräte... Genau, darauf wollte ich ja hinaus. Also was kauft man sich jetzt? Also was ist sozusagen der... Ich baue mir ein Atomkraftwerk für FPGA, so das Set für den jungen Forscher von heute.
+
+01:08:35.933 --> 01:08:58.613
+<v SPEAKER_2>Ja, also ich habe mich da für ein Entwicklerboard von der Firma Digilent entschieden. Das ist eigentlich relativ günstig. Also das gibt es je nachdem, welchen FPGA man drauf haben will. Man will natürlich den allergrößten, den es gibt. Und das ist trotzdem... Also da ist in dem Fall ein Spartan drauf. Also ohne diesen...
+
+01:08:58.633 --> 01:09:00.013
+<v SPEAKER_1>Ein Spartan.
+
+01:09:00.033 --> 01:09:42.333
+<v SPEAKER_2>Genau, ein Spartan 3e. Und außerdem ist dieses Flash schon mit drauf. Und der hat außerdem High-Speed-USB mit drauf. Und hat auch RAM mit drauf. Und VGA-Ausgang hat er. Und alle möglichen Tasten und Schalter und so weiter. Also damit kann man eigentlich sofort loslegen. Und kann auch die Daten immer über USB reinladen. Also man kann zum einen die FPGA-Konfiguration über USB in den FPGA laden. Und kann dann auch wirklich Nutztaten quasi zum FPGA übertragen. Und vom FPGA über USB zum PC übertragen.
+
+01:09:42.353 --> 01:09:43.973
+<v SPEAKER_1>Was kostest du ein Board?
+
+01:09:43.993 --> 01:09:46.633
+<v SPEAKER_2>100 Dollar, so was rum. 100 bis 150 Dollar.
+
+01:09:46.713 --> 01:10:03.013
+<v SPEAKER_1>100 Dollar, und das alles dabei. Also man kann damit USB ran, man hat eigentlich einen FPGA mit drauf. Aber der ist dann in welcher Kategorie? Also was so leistungsmäßig, was können diese Spartanen? Spartanen klingt ja erstmal sehr spartanisch.
+
+01:10:03.033 --> 01:10:19.433
+<v SPEAKER_2>Ja, das sind halt gewissermaßen Kompromisse. Aber die Vertex sind auch ziemlich teuer. Also die benutzt man wirklich nur, wenn es nicht anders geht. Und man wirklich zum Beispiel jetzt hat die Vertex.
+
+01:10:19.453 --> 01:10:21.413
+<v SPEAKER_1>Das ist dann die nächstgrößere Verteilung.
+
+01:10:22.653 --> 01:10:36.633
+<v SPEAKER_2>Also da gibt es auch bei DJ Landen Board wirklich ein Entwickler-Board für den Open Spark. Das kostet dann halt 500 Dollar. Aber eigentlich ist dieses Spartan ein gutes Board zum Starten.
+
+01:10:37.093 --> 01:10:41.873
+<v SPEAKER_1>Also Spartan ist ja eigentlich nur der FPGA. Das Board sehe ich gerade als hier Nexus.
+
+01:10:41.893 --> 01:10:43.313
+<v SPEAKER_2>Ja, dieses Nexus 2.
+
+01:10:43.593 --> 01:10:51.693
+<v SPEAKER_1>Das heißt da ist USB drauf. Da ist dieses Plattform-Flash, was du schon gesagt hast. Das heißt man kann den Code, der dann läuft, auch direkt drauf ablegen.
+
+01:10:51.713 --> 01:10:52.993
+<v SPEAKER_2>Falls sie fest drauf speichern, ja.
+
+01:10:53.013 --> 01:10:56.593
+<v SPEAKER_1>Genau, man hat also einen JTAG-Port mit dem man...
+
+01:10:56.613 --> 01:11:07.253
+<v SPEAKER_2>Ja, man lädt, den braucht man aber eigentlich nicht direkt, weil man die Daten eben via USB, also auch via JTAG in den FPGA bekommt, aber man kann das über USB machen.
+
+01:11:07.633 --> 01:11:11.493
+<v SPEAKER_1>Okay, und da ist auch noch so Flash und SD-RAM dabei. Also man hat eigentlich schon...
+
+01:11:11.513 --> 01:11:12.733
+<v SPEAKER_2>LEDs, Buttons.
+
+01:11:12.753 --> 01:11:15.833
+<v SPEAKER_1>Relativ viel Komfort, PS2, irgendwie.
+
+01:11:15.853 --> 01:11:16.973
+<v SPEAKER_2>Ja, es gibt lauter Zusatz-Ports.
+
+01:11:16.993 --> 01:11:18.573
+<v SPEAKER_1>Sogar eine VGA-Schnittstelle ist drauf.
+
+01:11:18.593 --> 01:11:32.173
+<v SPEAKER_2>Genau. Also die ist allerdings nur, glaub, 15 oder ja, die hat nur 4096 Farben. Das ist quasi ein sehr billiger DR-Wandler, allein durch Widerstände.
+
+01:11:32.193 --> 01:11:36.933
+<v SPEAKER_1>Da geht es einfach nur darum, dass man einfach so ein Monitorbild ausgeben kann, wenn man das haben möchte.
+
+01:11:36.953 --> 01:11:42.493
+<v SPEAKER_2>Also man könnte sich da zum Beispiel einen kompletten Amiga 500 draufladen.
+
+01:11:42.513 --> 01:11:43.513
+<v SPEAKER_1>Den gibt es schon?
+
+01:11:43.533 --> 01:12:01.553
+<v SPEAKER_2>Ja, den gibt es fertig. Zumindest für andere Boards. Ich weiß jetzt nicht, ob es für dieses Nexus-Board wirklich ein Bitstream gibt, den man digital draufladen kann, also ohne den zu synthetisieren. Aber es gibt zumindest auch den Source-Code davon, dass man den für das Board entsprechend anpassen kann.
+
+01:12:01.753 --> 01:12:06.213
+<v SPEAKER_1>Ist das nicht dann so ein Intellectual-Property-Problem wieder mit dem Amiga?
+
+01:12:06.233 --> 01:12:09.813
+<v SPEAKER_2>Puh, also solange das keiner verkauft, denke ich nicht.
+
+01:12:09.833 --> 01:12:29.173
+<v SPEAKER_1>Das heißt, das hat mal jemand so gehackt und es funktioniert und das fliegt so im Netz rum, aber es verkauft keiner. Man findet das schon, wenn man es sucht. Das heißt, man hat sozusagen in so einem Development-Board für 100 Dollar oder 130 Dollar einen kompletten Amiga 500. Wenn auch nicht mit der Farbqualität.
+
+01:12:29.493 --> 01:12:34.893
+<v SPEAKER_2>Also der ursprüngliche Amiga hat 500, glaube ich, hat auch nur 4.090.
+
+01:12:34.913 --> 01:12:41.113
+<v SPEAKER_1>Aber der benutzt dann sozusagen auch konkret dieses VGA-Ausgangssignal von dem Board, oder ist das darauf noch nicht angepasst?
+
+01:12:41.133 --> 01:12:52.173
+<v SPEAKER_2>Also ursprünglich, glaube ich, hatte der Amiga nur Pall. Aber das wurde schon, glaube ich, für andere Boards entsprechend angepasst, dass man da einfach VGA drin stecken kann.
+
+01:12:52.193 --> 01:12:55.593
+<v SPEAKER_1>Was gibt es denn sonst noch für historische Computer, die man sich da mal eben reinladen kann?
+
+01:12:55.613 --> 01:13:02.433
+<v SPEAKER_2>Also ich denke C64 gibt es auch. Und ja, dann so Z80 und so Zeug.
+
+01:13:02.453 --> 01:13:16.113
+<v SPEAKER_1>Verstehe, also man kann sozusagen die ganze historische Homecomputer-Familie da einmal nachspielen, ohne sich immer wieder neue Hardware kaufen zu müssen. Oder man braucht eben auch keinen Emulator, der das dann auf einer normalen CPU macht mit einem schnellen Rechner.
+
+01:13:16.133 --> 01:14:31.653
+<v SPEAKER_2>Genau, man könnte dann zum Beispiel jetzt, wenn man so einen Softcore nennt, wenn man einen Prozessor quasi auf einem FPGA laufen lässt, dann kann man hier natürlich sich auch alle möglichen Debug-Interfaces mit einbauen, dass man zum Beispiel jetzt wirklich nach jedem Takt anhalten kann, den ganzen Speicher und die Register ändern und lesen kann und so weiter und so fort. Aber wenn man jetzt nicht direkt einen Softcore haben will, dann kann man auch einen normalen anderen Prozessor natürlich anschließen. Zum Beispiel kann man einfach einen AVR-Microcontroller an den FPGA anschließen und kann sich selber noch Hardware für den AVR im FPGA bauen. Also manche AVR-Microcontroller haben ein externes Speicherinterface und darüber kann man externen Speicher, also bis zu 64 KB anschließen und an dieses Interface kann man einen FPGA dran anschließen und kann zum Beispiel sagen, ich will mir hier in den Speichern 32 Bit Timer bauen, der bis 100 MHz läuft oder so. Also man kann da sehr schön dann wirklich eigene, man kann ein System on a Chip quasi zuhause selber entwickeln.
+
+01:14:31.673 --> 01:14:37.373
+<v SPEAKER_1>Mit eigener Hardware, mit eigener spezialisierter Hardware, die dann sozusagen Teil des Systems sind, Teil des Prozessors sind.
+
+01:14:37.693 --> 01:14:52.533
+<v SPEAKER_2>Ja, das ist dann nicht direkt Teil des Prozessors, aber Teil des Systems, der sich aus dem Prozessor und allem anderen zusammensetzt. Ja, genau. Ist dann quasi sowas wie ein System on a Chip, nur dass es nicht ein Chip ist, sondern halt zwei.
+
+01:14:57.013 --> 01:15:01.693
+<v SPEAKER_1>Haben wir noch irgendwas ganz Wichtiges vergessen zu erwähnen?
+
+01:15:01.713 --> 01:15:38.733
+<v SPEAKER_2>Ja, puh, ein paar Punkte, würde man noch sagen. Also die FPGAs unterscheiden sich halt im Funktionsumfang her, also auch was das Innen-FPGAs verfügbar RAM betrifft und da sprechen wir eigentlich jetzt halt bei dem höchsten von diesen Entwicklerboards, von diesem Nexus-Boards, da kriegt man eigentlich nicht mehr als 60 Kilo Bytes, so was direkt im FPGAs drin. Also für alles andere muss man dann externes RAM nutzen, was auf diesem Board auch mit drauf ist und ja.
+
+01:15:38.753 --> 01:15:44.333
+<v SPEAKER_1>Also es mag Anwendungen geben, wo mehr schneller RAM sozusagen im Direktzugriff sinnvoll ist.
+
+01:15:44.353 --> 01:16:45.593
+<v SPEAKER_2>Ja, also das Direktzugriff und schnell, das sind zwei gegenteufige Aspekte. Also wenn man so ein externes RAM schnell ansteuern will, dann muss man das immer Pageweise ansprechen oder Burstweise. Man muss dann immer quasi 16 Wörter oder so in einem hintereinander lesen und die muss man dann eben lokal wieder buffern im FPGA und dafür kann man dieses RAM nutzen, was im FPGA drin ist. Das ist sowieso Dual-Port-RAM und das heißt, das hat zwei Anschlüsse, mit denen man gleichzeitig auf den Inhalt zugreifen kann. Und zwar hat das jeder dieser beiden Anschlüsse kann nochmal lesen und schreiben gleichzeitig. Also man hat zwei unabhängige Adressen, auf denen man jeweils gleichzeitig lesen und schreiben kann. Und so könnte man zum Beispiel über USB den Speicher verändern, während ein Software aus dem Speicher läuft. Oder da selber noch Daten reinladen.
+
+01:16:45.613 --> 01:16:56.013
+<v SPEAKER_1>Ohne, dass man da so Timing-Abhängigkeiten hätte und sich dabei takt einigen muss. Man muss nur sozusagen darauf achten, dass nicht beide dann auf dem selben Speicher gleichzeitig rumschreiben und dann entsprechende Konflikte erzeugen.
+
+01:16:56.033 --> 01:17:54.033
+<v SPEAKER_2>Genau, aber das ist eben gerade zum Buffern recht schön, weil dadurch kann man sich auch FIFUs dann implementieren. Also da gibt es halt nicht allzu viel von diesem RAM und man muss überlegen, so ein FPGA hat recht wenig Speicher in Form von Registern, wenn man größere Datenmengen ablegen will. Also dann muss man immer eigentlich dieses RAM benutzen. Auf Register kann man quasi beliebig zugreifen. Man kann beliebig viele Register gleichzeitig lesen und schreiben, aber da ist der Speicherplatz sehr teuer. Also da hat man nicht allzu viele Bit, ich würde sagen ein paar tausend oder so, oder ein paar zigtausend Bit im FPGA. Und wenn man mehr braucht, muss man immer dieses RAM nehmen, wo man aber dann halt immer nur quasi von einem Wort lesen kann. Also das ist...
+
+01:17:54.053 --> 01:18:00.533
+<v SPEAKER_1>Auf welchen Systemen sollte man sozusagen ausweichen, wenn man jetzt da mehr Komfort haben möchte oder braucht?
+
+01:18:00.553 --> 01:18:05.653
+<v SPEAKER_2>Ja, da gibt es eigentlich nicht wirklich. Man muss halt dann einen entsprechend größeren FPGA nehmen.
+
+01:18:05.673 --> 01:18:08.673
+<v SPEAKER_1>Das heißt einfach mehr Geld, mehr Spaß.
+
+01:18:08.693 --> 01:18:09.973
+<v SPEAKER_2>Das ist generell so.
+
+01:18:09.993 --> 01:18:45.253
+<v SPEAKER_1>Das ist generell so, ist hier nicht anders. Und ist sozusagen die Frage. Aber nicht zählt einen davon ab, jetzt mit so einem Einsteiger-Board, wie du das gesagt hast, mit diesem Nexus zum Beispiel, einfach erstmal loszulegen. Man muss ja auch erstmal drauf haben. Wie sieht das jetzt auf der Software-Seite aus? Also wenn ich jetzt so ein VHDL-System, was kommt das dann sozusagen vom Hersteller? Das ist so Teil der Auslieferung. Das heißt, ich kriege mit dem Developer-Board auch die Software, um VHDL jetzt auf meinem OS zum Laufen zu kriegen, zum Compilen und runterzuladen? Oder muss ich mir noch andere Komponenten zusammensuchen?
+
+01:18:45.613 --> 01:19:38.053
+<v SPEAKER_2>Also die Boards kommen, soweit ich weiß, ohne Software. Und man kriegt die Software kann man teilweise auf der Seite runterladen. Und teilweise braucht man aber auch die Seite vom wirklichen FPGA-Hersteller, also in dem Fall Xilinx. Und da bekommt man auch die Synthesetools, die aus dem VHDL-Code dann wirklich einen Bitstream machen. Also diesen Bitstream, den lädt man dann in den FPGA rein. Und dafür braucht man immer die Tools der Hersteller, also der FPGA-Hersteller. Und diese Tools sind aus Software-Sicht gesehen richtig übel, also zumindest bei Xilinx. Ich glaube, das Paket braucht 4 GB Platte. Und wenn eine halbwegs große Synthese läuft, dann braucht es auch mal 2 GB RAM.
+
+01:19:38.073 --> 01:19:38.953
+<v SPEAKER_1>Ist das so aufwendig?
+
+01:19:39.653 --> 01:19:50.513
+<v SPEAKER_2>Ja, ich weiß nicht, ob es wirklich nicht besser machbar wäre, aber das scheint bei Xilinx historisch gewachsen zu sein. Also da liegen noch irgendwie hunderte von CCL-Skripten mit bei.
+
+01:19:51.553 --> 01:19:52.353
+<v SPEAKER_1>Okay, alles klar.
+
+01:19:52.373 --> 01:19:54.693
+<v SPEAKER_2>Das war früher dazu gedacht auf Großrechte.
+
+01:19:58.633 --> 01:20:09.793
+<v SPEAKER_1>Gibt es denn irgendwelche freien Systeme, wo man jetzt mit VHL auch schon mal irgendwas machen kann? Ich meine, Simulatoren und so macht ein bisschen wenig Sinn bei Hardware Design.
+
+01:20:09.813 --> 01:20:24.393
+<v SPEAKER_2>Ja doch, das macht sogar sehr viel Sinn. Man sollte alles, was man implementiert, bevor man es auf dem FPGA laufen lässt, simulieren vorher, weil das ist selten kommt dabei das raus, was man sich eigentlich gedacht hat.
+
+01:20:24.413 --> 01:20:26.293
+<v SPEAKER_1>Wie macht man denn das?
+
+01:20:26.313 --> 01:21:28.813
+<v SPEAKER_2>Also in den Herstellertools sind Simulatoren mit drin, mit denen man, da kann man dann eben sagen, man legt jetzt an die Eingänge den und den Wert an, lässt zum Beispiel dann 100 Takte laufen und dann kann man wirklich sich grafisch anschauen, was aus den Ausgängen rauskommt. Man kann auch sagen, nach diesen 30 Takten muss am Ausgang das anliegen, sonst soll eine Fehlabmeldung geschmissen werden. Also man kann also erst mal rein schreiben, das ist quasi das Gegenstruktur zu einem Unit-Test und das sollte man immer machen. Weil diese Denkweise, die kriegt man eigentlich selten richtig hin. Man muss sich dessen im Klaren sein, dass die Daten immer einen Takt später verzögert erst da sind und wenn man jetzt ein System aus mehreren Komponenten zusammenbaut, dann ist diese Verzögerung mit jedem Takt größer und mit jedem Register, das man einfügt. Und da verliert man sehr schnell den Überblick bzw. kann das eigentlich selten korrekt richtig abschätzen. Und sowas sieht man dann aber anhand der Simulation.
+
+01:21:29.373 --> 01:22:02.793
+<v SPEAKER_1>Das heißt, die Simulation ist nicht insofern eine Simulation, als dass sie jetzt wirklich in so real thing macht, weil das könnte sie gar nicht von der Performance her, aber man hat quasi so einen Single-Stapper. Man kann so Takt für Takt wie ein Debugger beim normalen Programmieren durchgehen, sich irgendwie alles visualisieren, man sieht, was in den Registern steht, man sieht, was in den IO-Pins steht, und kann schon etwa ahnen, ok, alles klar, das ist auch das, was ich eigentlich haben wollte. Aber auch das ist sozusagen Teil dieser Lösung vom Hersteller. Gibt es denn irgendwie auch was, was vollkommen unabhängig ist von dem Hersteller?
+
+01:22:02.813 --> 01:22:16.233
+<v SPEAKER_2>Soweit ich weiß, gibt es irgendwie so GNU-VHDL-Dings auch mit so einem Simulator. Allerdings ist das wirklich, glaube ich, soweit ich weiß, dann nur für diesen Simulator.
+
+01:22:16.673 --> 01:22:18.073
+<v SPEAKER_1>Weil es die Hardware nicht gibt?
+
+01:22:18.093 --> 01:22:39.233
+<v SPEAKER_2>Genau. Also ja, da gibt es überhaupt nichts dahinter. Also man kann den VHDL-Code, wenn man den so geschrieben und ordentlich getestet hat, dann schon auch in dem Hersteller-Tool von Xilinx oder so importieren und dann da auch mit benutzen. Aber man kann mit keinen freien Tools für einen FPGA einen Bitstream erzeugen, soweit ich weiß.
+
+01:22:42.373 --> 01:22:57.493
+<v SPEAKER_1>Ja, genau. Aber das ist auf jeden Fall schon mal ausreichend, um sich sozusagen ein abstraktes FPGA-Modell selber mal zu erschließen, in VHDL irgendwas zu beschreiben und zu gucken, ob es denn auch nun wirklich so funktionieren würde.
+
+01:22:57.533 --> 01:23:11.953
+<v SPEAKER_2>Ja, ich denke da gibt es auch Tutorials für einen Timer oder dass er eine LED alle 5 Takte blinken lässt oder sowas, aber das macht natürlich nicht wirklich so viel Spaß, wie er dann mit einem wirklichen Entwicklungsmodell.
+
+01:23:11.973 --> 01:23:13.593
+<v SPEAKER_1>Klar.
+
+01:23:13.613 --> 01:23:38.413
+<v SPEAKER_2>Und dann muss man eben entsprechend die Software des Herstellers nutzen und die ist für die kleineren FPGAs kostenlos, also bei Xilinx und bei Altera. Bei Altera gibt es allerdings keine kostenlose Linux-Version, bei Xilinx schon. Wenn man größere FPGAs hat, dann muss man auch für die Software zahlen und dann wird es vier-
+
+01:23:38.433 --> 01:23:53.793
+<v SPEAKER_1>oder fünfstellig. Man muss für die Software, um sie zu betreiben, aber es gibt jetzt keinerlei Einschränkungen, was ich jetzt mit meinem FPGA mache. Das ist jetzt nicht so, dass sie dann auch noch Kohle haben wollen von den Produkten, die damit rauskommen, sondern das ist dann einfach frei.
+
+01:23:54.133 --> 01:24:09.513
+<v SPEAKER_2>Ja genau, es gibt halt bei den kleineren, oder bei den gratis-Software-Versionen ist halt nicht so viel Intellektual Property dabei, wie bei den großen. Also dieser Microplace zum Beispiel ist nicht dabei, so weit ich weiß.
+
+01:24:09.533 --> 01:24:24.353
+<v SPEAKER_1>Ok, verstehe. Ja, jetzt haben wir es, oder? Ich fand das einen guten Überblick. Die Glocken sind jetzt auch schon wieder vorbei hier. Das kann man nicht planen, wir sind hier in Bayern. Da nimmt die Religion da ein bisschen Einfluss.
+
+01:24:24.373 --> 01:24:25.733
+<v SPEAKER_2>Ja, die Leuten irgendwie dauernd.
+
+01:24:25.753 --> 01:25:28.213
+<v SPEAKER_1>Die Leute dauernd. Ich weiß nicht, wieviel da jetzt hier auf der Aufnahme angekommen ist. Vielleicht fragt ihr euch auch schon, wovon wir reden. Wie auch immer, auf jeden Fall sind wir jetzt hier durch. Ich sag vielen Dank, Kunz, für die Ausführung. Über, wie baue ich mir meine eigene Hardware zusammen? FPGAs und andere Steine. Für den Hacker von morgen, der mal so ein bisschen auf die Reise gehen will, den schon immer mal interessiert hat, wie irgendwelche Chips, die man in irgendwelche Geräte stecken, mit demselben kommunizieren. Ich denke, dass überhaupt der gesamte Bereich Reverse-Engineering rausfinden, wie funktioniert die Technik. Und darum geht es ja eigentlich auch bei der Hackerei, dass das extrem profitieren kann von Leuten mit Wissen um VHDL und FPGAs und all diese Systeme. Insofern, setzt euch ran und baut mal was Schönes. Das ist alles möglich und das ist auch alles kein Rocket Science, wie wir jetzt gerade gehört haben, muss ich mal ein bisschen damit beschäftigen, aber ist ja beim normalen Programmieren mit Computer noch auch nicht anders und am Ende zählt einfach immer nur die Energie, die man da reinsteckt.
+
+01:25:28.573 --> 01:25:32.453
+<v SPEAKER_2>Ein Punkt ist mir jetzt noch eingefallen, den wir noch nicht angesprochen haben.
+
+01:25:32.833 --> 01:25:37.073
+<v SPEAKER_1>Ein Schlusswort? Oder machst du jetzt nochmal eine komplett neue Themenkarte auf?
+
+01:25:38.053 --> 01:26:14.053
+<v SPEAKER_2>So ein Mittelding, sag ich mal. Also wir haben ja grob gesagt, dass FPGAs eigentlich dazu sehr gut geeignet sind, spezielle Algorithmen wirklich in Hardware zu implementieren. Und das kann man natürlich auch mit Krypto-Algorithmen machen. Sei es jetzt, um sich wirklich ein Hardware-Krypto-Chip für Festplatten zu bauen oder um fremde Krypto anzugreifen. Weil man den Algorithmus teilweise im FPGA wirklich in Hardware schneller als in Software implementiert bekommt. Und dann kann man da entsprechend Brute Force schneller machen. Also das ist auch noch ein vielleicht ganz interessanter Aspekt.
+
+01:26:14.713 --> 01:26:44.233
+<v SPEAKER_1>Der ja ja auch schon mal zur Sprache kam in Form der Sendung über GSM-Hacking. Ein Projekt, wo der Status gerade ein bisschen unklar ist, aber wo im Prinzip derselbe Ansatz gewählt wurde. Man hat dann schon mal raus, wie der Algorithmus funktioniert. Bis um ihn dann wirklich Brute Force anzugehen, braucht man eben extrem viel Rechenpower. Auch an der Stelle wurde ein FPGA eingesetzt. Und es wurde viel rumgerechnet an Redenbrute-Tables und ähnlichen Sachen. Ja, das ist natürlich auch auf jeden Fall noch mal so ein Einsatzgebiet, wo das schwer zum Tragen kommt.
+
+01:26:44.473 --> 01:27:00.073
+<v SPEAKER_2>Ja, man sollte sich da nur nicht sagen, ein FPGA, damit geht Krypto prinzipiell schneller. Das ist nicht so. Das ist sehr stark algorithmusabhängig. Und teilweise ist ein Software schneller und oft ist er auch auf Grafikkarten schneller.
+
+01:27:00.093 --> 01:27:53.313
+<v SPEAKER_1>Insbesondere jetzt mit der neuen Generation von Grafikkarten, die sich so leicht programmieren lassen, mit CUDA, OpenCL und solchen Systemen. Jetzt sind wir aber durch, oder? Das war das Wort zum Schluss. Krypto ist auf jeden Fall auch noch ein wichtiger Bereich. Alles sehr universell einsetzbar. Aber auch trotzdem ein sehr abstraktes Thema. Aber trotzdem nochmal Danke für die Ausführung, weil jetzt habe ich auch mehr verstanden, als ich vorher von dieser Technologie wusste. Und so habe ich auch noch ein bisschen was davon. Ja, das war es. Chaosradio Express Nummer 117. Es geht hier fix voran. Und ihr werdet euch sicherlich gefreut und gewundert haben über die häufige Release-Folge hier bei Chaosradio Express. Mal schauen, das soll so bleiben. Und ja, das war es auf jeden Fall für heute. Ich sage nochmal Danke uns. Und sagen schön Tschüss zu den Hörern.
+
+01:27:53.513 --> 01:27:56.273
+<v SPEAKER_2>Ja, tschüss und viel Spaß beim FPGA entwickeln.
+
+01:27:56.513 --> 01:28:01.933
+<v SPEAKER_1>Und genau und viel Spaß vor allem auch noch hier weiter im Programm bei Chaosradio Express.
+
+01:28:26.005 --> 01:28:26.625
+<v SPEAKER_2>Auf Wiedersehen!

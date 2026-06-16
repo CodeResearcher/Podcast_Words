@@ -1,0 +1,1156 @@
+WEBVTT
+
+00:00:15.112 --> 00:03:17.562
+<v SPEAKER_2>Wir können das Internet nicht mehr für versichert nehmen. Wir als Land müssen aufhören, überloggen zu gehen. Wir müssen nur, wenn wir es brauchen, das Internet nutzen. Hallo, hier ist Chaosradio Express, Ausgabe Nummer 86. Mein Name ist Tim Pritlove und ich begrüße euch zu einer wiederholten Iteration durch die wundersamen Welten der Technologie und der Gesellschaft. Denn darum geht es hier bei Chaosradio Express. Und so wird es auch heute nicht anders sein. Und nach dem Ausritt in die Lüfte in der letzten Ausgabe, wo mal wieder was vollkommen anderes diskutiert wurde, geht es zurück in die Technologie-Abteilung. Und das Thema heute am 24. April 2008 soll sein der Universal Serial Bus besser bekannt als USB. Eine Schnittstelle, die wir alle benutzen jeden Tag. Man mag sie oder man mag sie nicht. Aber vor allem, selten versteht man ihr Wesen vollständig. Und um das mal ein bisschen zu ergründen, habe ich einen brandneuen Gast eingeladen. Brandneu, weil noch nicht bei Chaosradio Express vertreten bisher. Ich begrüße Daniel. Daniel Mack, hallo. Du bist ein findiger Bastler, finde ich. Du machst ja so einiges. Und USB ist eigentlich auch nur so eins deiner Themen. Aber wenn auch immer man dir über die Schulter zuschaut, hat es viel mit Elektronik und mit Programmierung zu tun. Und mit Treiberentwicklung und mit Fernsehen. Und was du nicht alles noch irgendwie so machst, du warst auch bei BlinkenLights dabei, bei Arcade in Paris bei dem Projekt. Ja, aber USB ist ja schon so ein Sonderthema bei dir. Du hast vor einigen Jahren mal angefangen, dieses Fernsehgerät zu bauen, stimmt's?
+
+00:03:17.582 --> 00:03:26.702
+<v SPEAKER_1>Genau, ich habe damals zusammen mit einem Kumpel ein Gerät entwickelt. Das ist der erste Gerät, das digital ist, terrestrisches Fernsehen, via USB empfangen konnte.
+
+00:03:26.942 --> 00:03:27.862
+<v SPEAKER_2>Ja, das war das erste.
+
+00:03:28.322 --> 00:03:37.622
+<v SPEAKER_1>Das erste seiner Art, ja. Es kamen dann viele nach und so, aber wir haben das erste gebaut, das dann so funktioniert hat. Das haben wir dann auch produzieren lassen und es wurde dann verkauft.
+
+00:03:39.782 --> 00:03:42.722
+<v SPEAKER_2>Das hat aber dann schon USB 2.0 benutzt.
+
+00:03:42.742 --> 00:03:59.422
+<v SPEAKER_1>Genau, es hat USB 2.0 benutzt und war auch ein High-Speed-Device, weil die Datenmenge, die man so braucht, um terrestrisches Digitalfernsehen in den Rechner zu bringen, das sprengt, was man unter Full-Speed versteht. Aber das werden wir gleich noch mal genauer skuttieren.
+
+00:03:59.442 --> 00:04:46.542
+<v SPEAKER_2>Genau, das hat mich nämlich so ein bisschen auf die Spur gebracht, das mal so zu hinterfragen. Vielleicht sollten wir erstmal ein wenig in die, wenn auch weitgehend bekannte, denke ich, Geschichte abtauchen. USB, eine Geburt von Intel damals noch, als sie einen besonders schlechten Ruf hatten, als, ja, so, Universal Serial Bus sagt es ja schon so ein bisschen aus im Sinne von universell, das heißt, es sollte eine Schnittstelle geschaffen werden, über die man alles Mögliche anschließen kann. Das ist ihnen, glaube ich, auch soweit gelungen. Serial Bus wiederum reflektiert ja jetzt schon so eine technologische Eigenschaft. Also wie muss man denn ein USB-System verstehen?
+
+00:04:48.242 --> 00:05:21.762
+<v SPEAKER_1>Naja, also zunächst mal hat es wenig, also die erste Beschreibung hat ja erstmal wenig mit der Übertragung als serielle Information zu tun, sondern vielmehr damit, dass man bei USB immer einen Host braucht, der sozusagen an der Spitze der Topologie sitzt und dieser Host dann mit mehreren Clients kommunizieren kann. Aber es ist ganz wichtig zu verstehen, dass es immer eine Entität in diesem Netzwerk gibt, die quasi die Zügel in der Hand hat und viele Geräte, die dann entsprechend sich danach zu richten haben, was der Host ihnen sagt.
+
+00:05:21.782 --> 00:05:23.802
+<v SPEAKER_2>Das leitest du aus dem Namen ab?
+
+00:05:23.822 --> 00:05:24.922
+<v SPEAKER_1>Nein, das habe ich ja nicht gesehen.
+
+00:05:24.942 --> 00:05:26.022
+<v SPEAKER_2>Ach so, das hast du nicht aus dem Namen.
+
+00:05:26.022 --> 00:05:28.782
+<v SPEAKER_1>Nein, aber du fragtest, wie man sich ein USB-System so vorstellen kann.
+
+00:05:28.802 --> 00:05:54.002
+<v SPEAKER_2>Okay, gut, also mit anderen Worten, das handelt sich um einen Bus an sich. Als technisches Konzept ist es erstmal so, da hat man so eine lange Strippe und da hängen sie irgendwie alle dran. Mehr sagt das ja eigentlich erstmal nicht aus. Aber das Besondere bei USB oder zumindest eine wichtige Eigenschaft ist, dass es jetzt sozusagen einen Chef gibt. Und der bestimmt, wie es abgibt. Und das ist dann in der Regel der Computer?
+
+00:05:54.022 --> 00:06:06.722
+<v SPEAKER_1>Ja, das sage ich, ja. Es ist in der Regel ein Computer, der auch einiges an Softwarelogik mitbringen muss, an sogenannten USB-Stack und ohne den das ganze gesamte System auch nicht funktionieren kann.
+
+00:06:06.742 --> 00:06:08.122
+<v SPEAKER_2>Müssten das die anderen Geräte nicht auch tun?
+
+00:06:09.242 --> 00:06:27.962
+<v SPEAKER_1>Nein, die Idee bei USB ist eigentlich vielmehr die, dass man die Geräte relativ dumm hält. Das heißt, die Geräte sind einfach zu bauen, auch billig herzustellen und die Logik liegt hauptsächlich eigentlich in dem USB-Host, der sich eben kümmern muss um Synchronisation, um wann wer senden darf und all solche Dinge.
+
+00:06:28.722 --> 00:07:12.022
+<v SPEAKER_2>Das ist sozusagen das Grundprinzip? Und jetzt kennt man das ja alles, man hat wie Mäuse und Tastaturen über USB angeschlossen. Der iMac war ja so der erste Rechner, der auf alle anderen Schnittstellen konsequent verzichtet hat seinerzeit, sodass dann ja auf einmal es losging, dass man irgendwie alle möglichen Sachen über USB macht. Mittlerweile gibt es eigentlich fast nichts mehr, was man nicht anschließen kann, Festplatten. Wie läuft denn jetzt, also wie läuft denn dann die Kommunikation, wenn es jetzt irgendwie einen Chef gibt, was muss der jetzt tun, um da seine Herde am USB-Bus in den Griff zu kriegen?
+
+00:07:12.842 --> 00:07:43.122
+<v SPEAKER_1>Naja, zunächst mal muss er natürlich wissen, welche Geräte er überhaupt quasi in seiner Topologie so vorfindet, sprich in allererster Instanz muss dieses System in der Lage sein, Geräten, die frisch eingesteckt werden, eine ID zu geben, was nennt sich Enumeration, das heißt am Anfang, wenn man ein Gerät einsteckt, ganz gleich, ob es eine Maus, eine Tastatur, eine Festplatte oder sonst was ist, wird diesem Gerät eine ID vergeben, damit es nachher eindeutig identifizierbar ist am Bus.
+
+00:07:43.142 --> 00:07:48.022
+<v SPEAKER_2>Das heißt, okay, die erhält es erst in dem Moment. Was ist das für eine Zahl?
+
+00:07:48.042 --> 00:08:26.202
+<v SPEAKER_1>Das ist eine, ich glaube, ich weiß nicht, wie viele Bits es hier hat, aber es ist eine Zahl, glaube ich, von 1 bis 0 bis 127. 1 bis 127. 0 ist die ID, mit der die Geräte hochkommen, sprich, wenn sie booten, dann hat die Maus beispielsweise erst einmal die ID 0 und der Host kriegt eben mit, dass es ein Gerät mit der ID 0 am Bus gibt und verteilt eben entsprechend eine ID an dieses neu dazugekommene Gerät. Und das geht eben mit aufsteigender Nummernfolge, soweit ich weiß, und eben bis zu 127 Geräte an einem Bus. Okay, aber der Rechner bestimmt die ID. Ganz genau.
+
+00:08:26.222 --> 00:08:33.322
+<v SPEAKER_2>Was ist jetzt, wenn zwei Geräte gleichzeitig dazukommen? Oder wissen die dann, dass sie gemeint sind, wenn sie die Nummer kriegen?
+
+00:08:33.342 --> 00:08:52.322
+<v SPEAKER_1>Na, gleichzeitig geht insofern ja erstmal nicht, weil da erstmal, also um zwei Geräte an einen USB-Port anstecken zu können, braucht man ja einen Hub, der dazwischen hängt, sprich ein Gerät, der einen Downstream hat, Richtung Host, Richtung Computer und beispielsweise typischerweise zum Beispiel vier Möglichkeiten hat, weitere Geräte anzuschließen.
+
+00:08:52.602 --> 00:08:57.102
+<v SPEAKER_2>Ja, aber dann wenn ich jetzt den Hub reinstecke, dann stecke ich ja im Prinzip alle gleichzeitig dran.
+
+00:08:57.122 --> 00:09:41.502
+<v SPEAKER_1>Genau, zuerst mal kommt der Hub irgendwie aus dem Booten und sagt dann irgendwie, ich habe keine ID, gib mir eine. Dann sieht der Host, aha, da ist ein Hub, der hat noch keine ID oder überhaupt ein Gerät, das hat noch keine ID und fängt an diesem Hub eine ID zu vergeben. Sobald dieser Hub eine ID hat, sagt er, ich habe übrigens hier irgendwie vier weitere Ports, an denen auch Geräte angeschlossen sind, die haben irgendwie alle noch keine ID. Und dann geht das Spiel eben weiter, dann wird quasi das erste Gerät, also quasi der nullte Bus, oder der nullte Anschluss dieses Hubs irgendwie enumeriert und sobald diese Prozedur durch ist, geht es weiter mit dem ersten und so weiter. Das heißt, man hat über mehrere Hubs und man kann also einen Hub, auch wieder einen Hub anschließen und da geht das Spiel dann immer so weiter.
+
+00:09:41.682 --> 00:10:00.462
+<v SPEAKER_2>Das heißt, diese Hubs sind aber relativ intelligent. Den Begriff Hub kennt man vor allem noch so aus dem Ethernet-Bereich und da waren es ja eigentlich Geräte, die vor allem nicht besonders intelligent waren, der eigentlich nichts anderes gemacht hat, als das Ethernet-Signal physikalisch nochmal zu verbreiten und der ja als Gerät selbst überhaupt nicht sichtbar war im Netz.
+
+00:10:00.482 --> 00:10:04.882
+<v SPEAKER_1>Richtig, also die Hubs sieht man, das sind sozusagen aktive Komponenten in der Topologie.
+
+00:10:04.902 --> 00:10:07.782
+<v SPEAKER_2>Das heißt, sie werden mitgezählt und die konsumieren eine ID.
+
+00:10:07.822 --> 00:10:24.542
+<v SPEAKER_1>Genau, und die brauchen auch so ein bisschen Logik, das stimmt schon. Vor allem, wenn es dann darum geht, wenn verschiedene Geschwindigkeiten, also wenn sich die Geschwindigkeiten der Geräte an einem Hub und so weiter mischen, dann wird es nochmal ein bisschen komplizierter. Aber das machen wir später noch.
+
+00:10:24.562 --> 00:10:56.122
+<v SPEAKER_2>Okay, dann lassen wir die Hubs erstmal außen vor. Ich finde das jetzt mal ganz gut, dass wir das einfach mal so durchexerzieren. Das heißt, man schaltet, man steckt ein Gerät ein, zack, ich stecke jetzt mal die Maus rein, dann sagt die Maus, hallo, ich bin die Maus und meine Nummer ist 0, benenne mich. Und dann kommt der Rechner und sagt, ich taufe dich auf den Namen 1 am Anfang. Alles ist 1, außer der 0 und dann ist gut, dann hält die Maus das Maul oder muss die noch irgendwelche anderen Dinge von sich preisgeben?
+
+00:10:56.142 --> 00:11:30.182
+<v SPEAKER_1>Also es ist erstmal so, ganz wichtig zu verstehen, dass USB-Geräte von sich aus niemals irgendwelche Dinge tun können. Das ist eine ganz klar definierte Vorgehensweise, dass der Host immer derjenige ist, der erstmal eine Frage stellt und auf diese Frage kommt dann eine Antwort. Auch wenn es nur beispielsweise das zur Verfügung stellen eines Send-Slots ist, um Daten loszuwerden, ist es immer noch der Host, der den Takt vorgibt und der Host, der dem Gerät sagt, wenn du was zu sagen hast, dann tu das jetzt. Also Geräte gehen niemals von sich irgendwie her.
+
+00:11:30.322 --> 00:11:34.762
+<v SPEAKER_2>Aber dann müssen sie auch permanent gefragt werden, ob sie was zu sagen haben.
+
+00:11:34.782 --> 00:11:41.042
+<v SPEAKER_1>Genau, also wenn der Host davon ausgeht, dass dieses Gerät permanent was zu sagen haben könnte, muss er das auch permanent fragen.
+
+00:11:41.062 --> 00:11:41.722
+<v SPEAKER_2>Echt?
+
+00:11:41.742 --> 00:11:42.642
+<v SPEAKER_1>So ist das, ja.
+
+00:11:42.662 --> 00:11:51.062
+<v SPEAKER_2>Das heißt, eine Maus könnte überhaupt nicht kommunizieren, dass sie gerade gerollt wird? Würde der Computer sich nicht die ganze Zeit fragen, ob sie das gerade tut?
+
+00:11:51.322 --> 00:12:06.762
+<v SPEAKER_1>Ja, also es ist nicht zu verwechseln mit den API-Layern, die dann diese Funktionalität wiederum als Programmier-Schnittstelle zur Verfügung stellen. Das hat damit nicht unbedingt etwas zu tun, also nicht, dass der Treiber jetzt permanent jede Millisekunde aufwachen müsste und entsprechende Fragen stellt.
+
+00:12:06.782 --> 00:12:08.142
+<v SPEAKER_2>Sondern wir sind jetzt nur auf der Hardware-Ebene.
+
+00:12:08.162 --> 00:12:21.102
+<v SPEAKER_1>Wir befinden uns immer noch irgendwie komplett auf dem Link-Layer, sozusagen. Und da ist es wirklich so, da muss der Host permanent das Gerät fragen, ob es Daten zur Verfügung hat.
+
+00:12:21.122 --> 00:12:32.342
+<v SPEAKER_2>Aber wenn das Gerät jetzt wirklich sehr viele Daten permanent schickt, dann müsste es ja auch wirklich sehr, sehr, sehr häufig gefragt werden. Kann das Gerät sagen, wie häufig es gerne gefragt werden möchte?
+
+00:12:32.362 --> 00:13:32.002
+<v SPEAKER_1>Auch das geht, ja. Es gibt unterschiedliche Möglichkeiten, wie ein Gerät datenlos werden kann. Es gibt insgesamt vier im USB-Standard spezifizierte Möglichkeiten. Das sind sogenannte Kontrolltransfers, die für das Setup, das muss man gleich noch besprechen werden, verwendet werden. Es gibt Interrupt-Transfers für eher kleine Datenmengen, die zu einer unbestimmten Zeit auch übertragen werden können, mit wenig hoher Priorität. Es gibt Workdaten, die mehr Payload haben, sprich also mehr Daten wirklich transportieren können. Und es gibt die isogronen Transfers. Und all diese Transfers müssen aber immer noch vom Haus initiiert werden. Und je nachdem, wie sich ein Gerät eben darstellt, wie er sich anmeldet am USBus, wird das dann eben häufiger oder weniger häufig oft gefragt auf bestimmten sogenannten Endpoints.
+
+00:13:32.622 --> 00:13:42.542
+<v SPEAKER_2>Das heißt, das Gerät gibt sich sozusagen anfangs als ein Gerät zu erkennen, was einen von diesen vier Übertragungsmodi…
+
+00:13:42.562 --> 00:13:45.522
+<v SPEAKER_1>Es gibt vier Übertragungsmodi, ja.
+
+00:13:45.542 --> 00:13:51.702
+<v SPEAKER_2>Also es kann nur einen von diesen vier haben, also sozusagen kann man alle möglichen kombinieren.
+
+00:13:51.722 --> 00:14:06.042
+<v SPEAKER_1>Genau. Was es auf jeden Fall können muss, sind Kontrolltransfers, weil nur über diese Kontrolltransfers kann sich ein Gerät überhaupt identifizieren am Bus. Also nur darüber kann das Gerät sagen, ich bin…
+
+00:14:06.062 --> 00:14:14.342
+<v SPEAKER_2>Also das ist sozusagen die erste Art der Datenübertragung auf USB ist der Kontrolltransfer und den braucht man allein schon, um zu sagen, hallo.
+
+00:14:14.362 --> 00:14:15.082
+<v SPEAKER_1>Genau.
+
+00:14:15.802 --> 00:14:16.762
+<v SPEAKER_2>Ich stecke dran.
+
+00:14:16.782 --> 00:14:43.942
+<v SPEAKER_1>Ich bin Planck und Jay. Diese Kommunikation findet statt über sogenannte Endpoints. Diese Endpoints kann man vergleichen mit Ports bei TCP oder bei IP generell. Davon gibt es insgesamt bis zu 16 Stück. Man kann ein Gerät eben entsprechend anmelden und sagen, es hat bis zu 16 sogenannte Endpoints. Was es auf jeden Fall haben muss, ist der Endpoint Null, mit dem das Gerät eben sagt, ich bin übrigens ein Gerät von der Klasse so und so.
+
+00:14:43.962 --> 00:14:46.422
+<v SPEAKER_2>Ah, ich verstehe, also der Auskunftsschleife sozusagen.
+
+00:14:46.442 --> 00:15:16.282
+<v SPEAKER_1>Genau, darüber werden sogenannte Deskriptoren ausgetauscht. Diese Deskriptoren beschreiben quasi, was dieses Gerät überhaupt von sich sagt, dass es überhaupt tun kann. Also dann sagt das Gerät, ich entspreche der Klasse der Geräte einer Maus beispielsweise. Und dann weiß auch der Computer sofort, was er mit diesem Gerät anzufangen hat. Er weiß auch, was für Daten hat er zu erwarten, was für Daten muss man da hinschicken und so weiter. All diese Dinge sind dann in sogenannten Klassen-Spezifikationen festgehalten.
+
+00:15:16.922 --> 00:15:19.422
+<v SPEAKER_2>Das sind diese Device-Classes, von denen man immer hört.
+
+00:15:19.442 --> 00:15:42.962
+<v SPEAKER_1>Genau, also hat natürlich große Vorteile. Man muss eben jetzt nicht mehr zu jeder Festplatte, zu jeder Maus, zu jedem sonstigen Gerät entsprechende Treiber mitliefern, sondern die modernen Betriebssysteme kommen mit einer ganzen Menge von Device-Classes schon daher, die sie halt unterstützen und dann muss man sich halt als User nicht mehr drum kümmern.
+
+00:15:43.042 --> 00:15:47.602
+<v SPEAKER_2>Was ist das so? Also Maus, Tastatur denke ich mal, sowas offensichtlich und naheliegende?
+
+00:15:47.622 --> 00:16:02.942
+<v SPEAKER_1>Es gibt für alles Mögliche, es gibt für Audiogeräte, es gibt für eine Klasse, es gibt für, wie gesagt, Festplatten, für Master Storage, weiß es aller Art, für CD-Brenner und so weiter. Also serielle Schnittsteine beispielsweise auch, ja.
+
+00:16:02.962 --> 00:16:04.522
+<v SPEAKER_2>Und das spezifiziert Intel?
+
+00:16:05.842 --> 00:16:23.242
+<v SPEAKER_1>Naja, das ist dieses Konsortium, das besteht aus ein paar Firmen mehr eigentlich. Also ich habe jetzt hier stehen Compaq, Hewlett Packard, Intel, Lucent, Microsoft, NEC und Philips. Ja gut, das steht jetzt hier so in der Universal Serial Bus Specification.
+
+00:16:23.262 --> 00:16:24.602
+<v SPEAKER_2>Die ist schon ein bisschen älter, ne?
+
+00:16:24.622 --> 00:16:55.562
+<v SPEAKER_1>Die ist schon ein paar Jahre alt. Naja, wie auch immer, dieses Konsortium verabschiedet dann auch die Spezifikation der Klassen. Und man kann jetzt also theoretisch auch hergehen, wenn man damit politische Geduld und so weiter aufbringt und eben seine eigene Klasse definieren. Und dann eben so es dann eine Spezifikation dieser Klasse gibt, die darauf hoffen oder die Betriebssystemhersteller eben entsprechend nötigen, diese Klasse auch zu unterstützen.
+
+00:16:55.582 --> 00:17:04.182
+<v SPEAKER_2>Und müssen die Geräte, die einer Klasse, also die sagen, dass sie einer Klasse entsprechen, werden die irgendwie getestet, bevor sie verkauft werden dürfen, damit sie das auch wirklich behaupten dürfen?
+
+00:17:04.542 --> 00:17:12.802
+<v SPEAKER_1>Es gibt so einen Test, allerdings ist die Frage, wer das wirklich macht. Also es gibt theoretisch so einen Compliance-Test in der Tat.
+
+00:17:12.822 --> 00:17:16.042
+<v SPEAKER_2>Der ist aber nicht mandatory, also man muss den nicht machen, oder?
+
+00:17:16.462 --> 00:17:22.542
+<v SPEAKER_1>Ich glaube, man muss ihn machen, wenn man das USB-Logo auf die Verpackung drucken möchte und irgendwie das Certified drunter schreiben.
+
+00:17:22.562 --> 00:17:24.782
+<v SPEAKER_2>Das ist ja schonmal was, das haben ja eigentlich relativ viele, oder?
+
+00:17:24.802 --> 00:17:31.242
+<v SPEAKER_1>Da bin ich mir aber nicht so ganz sicher. Also ich hab's noch nie gemacht und für mich funktioniert USB, wenn man das einsteckt und das Dinge tut.
+
+00:17:33.282 --> 00:17:41.902
+<v SPEAKER_2>Also du hast es nicht gemacht im Sinne von, wenn du jetzt deine eigenen USB-Devices file bietest. Haben die dann auch so Produktverpackungen schon?
+
+00:17:41.922 --> 00:17:51.162
+<v SPEAKER_1>Also das sind ja keine Geräte, die ich selber verkaufe, sondern die Verpackung macht dann jemand anderes.
+
+00:17:51.182 --> 00:18:05.442
+<v SPEAKER_2>Gut, also nochmal ein bisschen zurückspulen. Also wir haben den USB-Bus. Der Computer ist immer der Chef. Und die Geräte, die angesteckt werden, die haben zu gehorchen und die dürfen auch nur reden, wenn ihnen sozusagen das Wort erteilt wird.
+
+00:18:05.462 --> 00:18:06.062
+<v SPEAKER_1>Genau.
+
+00:18:06.082 --> 00:18:22.522
+<v SPEAKER_2>Was mich dabei jetzt so ein bisschen verstört ist, gerade jetzt so, also wir hatten ja jetzt diese vier Modi-Datenübertragung, also Kontrolltransfer, im Sinne von, was heißt denn das, wie soll man das so sagen, also Kontrolltransfer, ist das im Sinne von Konfiguration oder?
+
+00:18:22.542 --> 00:19:17.942
+<v SPEAKER_1>Genau, also man muss sich das so vorstellen, ein Gerät kann auch von sich behaupten, mehrere mögliche Anwendungsarten zu haben. Oder also Dinge, die sich widersprechen oder auch Dinge, die gleichzeitig möglich sind. Beispielsweise stellt man sich vor eine Computertastatur, die auch noch ein Trackball mit drin hat. Jetzt gibt es da zwei Klassen letztlich, sprich zwei Funktionen. Die eine ist eben Tastatur und die andere ist ein Pointer-Device. Und das Gerät sagt dann von sich eben, ich bin ein sogenanntes Composite-Device, ich kann dir folgende Funktionen anbieten. Und all diese Kommunikation mit dem Host, der Host sagt dann, ich hätte gerne diese Konfiguration angewehrt, dieses Interface hätte ich gerne verwendet, all diese Dinge, um ein Gerät in den Zustand zu konfigurieren, wie man es gerne überhaupt verwenden möchte. Das alles sind sogenannte Kontrolltransfers.
+
+00:19:17.962 --> 00:19:24.702
+<v SPEAKER_2>Das heißt, der Rechner hätte auch die Wahl zu sagen, du bietest mir zwar das, das, das und das, aber das brauchst du jetzt gar nicht alles einzuschalten.
+
+00:19:24.722 --> 00:19:30.402
+<v SPEAKER_1>Natürlich, er bräuchte ja auch einfach nur seinen eigenen Treiber da nicht gegenzuwerfen und dann gibt es halt irgendwie keine Maus an diesem Gerät.
+
+00:19:30.662 --> 00:19:33.082
+<v SPEAKER_2>Dann kriegt das Ding auch keine ID.
+
+00:19:33.102 --> 00:19:33.702
+<v SPEAKER_1>Doch, natürlich.
+
+00:19:33.722 --> 00:19:34.642
+<v SPEAKER_2>Eine ID kriegt es immer.
+
+00:19:34.662 --> 00:19:38.022
+<v SPEAKER_1>Eine ID kriegt es, solange es sich speckkonform verhält.
+
+00:19:38.082 --> 00:19:46.262
+<v SPEAKER_2>Ich meine, das Composite, die weiß dann eine ID für alles. Und dann, wie werden dann die einzelnen Sachen noch unterschieden? Das geht dann über diese...
+
+00:19:46.282 --> 00:19:47.982
+<v SPEAKER_1>Das geht über sogenannte Interfaces.
+
+00:19:48.002 --> 00:19:48.582
+<v SPEAKER_2>Okay.
+
+00:19:48.602 --> 00:20:28.722
+<v SPEAKER_1>Interfaces innerhalb der USB-Deskripturen. Das heißt, das Gerät meldet sich an und sagt irgendwie, ich habe hier folgende Blöcke, die kann ich dir, kann man sich so vorstellen, also als Baumstruktur so aufdröseln. Und in diesen Interfaces sind wiederum Informationen codiert über die Endpoints. Das heißt, das Gerät sagt, ich habe auf Endpoint 1 beispielsweise Kommunikation zu bieten, die der Klasse der Tastaturgeräte entspricht. Und auf Endpoint 2 beispielsweise habe ich dann auch noch ein Pointer-Device. Und einfach, um diese Funktionen, diese verschiedenen Funktionsblöcke innerhalb eines Geräts auseinanderhalten zu können, gibt es Endpoints.
+
+00:20:28.742 --> 00:20:38.262
+<v SPEAKER_2>Das heißt, eigentlich kommuniziert man nicht nur mit der ID, sondern mit der ID in Kombination mit einem Endpoint. Richtig, genau. So wie man im Computer, im IP-Netzwerk irgendwie die IP-Adresse hat mit dem Port.
+
+00:20:38.282 --> 00:20:41.722
+<v SPEAKER_1>Genau. Man spricht einen bestimmten Port auf einem...
+
+00:20:41.742 --> 00:20:45.322
+<v SPEAKER_2>Und es sind also die Endpoints, die letztlich einer Device Class entsprechen?
+
+00:20:47.462 --> 00:20:58.382
+<v SPEAKER_1>Ja, also die Kommunikation, die über die Endpoints betrieben wird, die letztlich. Also das ist dann spezifiziert, was dann quasi über diese Endpoints genau für ein Protokoll letztlich geklatscht wird.
+
+00:20:58.402 --> 00:21:08.162
+<v SPEAKER_2>Ok, und dieses Ganze ausgekassbar, das geht über dieses Kontrolltransfer-Protokoll. Verstehe. Das heißt, die anderen drei Modi sind dann für die eigentliche Datenübertragung und für das eigentliche...
+
+00:21:08.182 --> 00:21:24.022
+<v SPEAKER_1>Genau, also theoretisch kann man natürlich auch die Kontrolltransfers dafür ranziehen. Das ist technisch möglich, es macht nur nicht besonders viel Sinn. Und das ist schon ganz sinnvoll so, dass die quasi nur für dieses ganze Low-Level-Setup irgendwie auch zur Verfügung stehen.
+
+00:21:26.022 --> 00:21:41.302
+<v SPEAKER_2>Ok, das heißt, wir wissen das jetzt eigentlich. Ich meine, es gibt ja derzeit zwei Versionen von USB, die Verbreitung haben. Ich glaube, USB 1.0 hat so richtig das Licht des Tages eigentlich nie gesehen.
+
+00:21:41.302 --> 00:21:54.622
+<v SPEAKER_1>Die hatten da so ein paar Probleme. Das gab es irgendwie eineinhalb Jahre oder so. Und wurde dann abgelöst, ziemlich bald, bevor das auch populär wurde, durch eben die Spezifikation 1.1.
+
+00:21:54.642 --> 00:21:58.582
+<v SPEAKER_2>Wo sozusagen der erste nennenswerte Bug-Fix war und so. Und ab jetzt kann man das auch benutzen.
+
+00:21:58.822 --> 00:22:30.342
+<v SPEAKER_1>Ja, genau. Also USB 1.1 war die erste Version, die sich dann auch letztlich so durchgesetzt hat. Damals halt auch viel für erst mal so Rumtret-Devices verwendet wurde, wie eben Tastatur und Mäuschen und so was. Erst mal eigentlich nur noch nicht mal irgendwie als Konkurrenz zu feiern war ja aufgestellt zu der Zeit, sondern eigentlich mehr so als das brauchen wir, weil wir können nicht ewig irgendwie mit diesen fünfpoligen Rundsteckern rumeiern oder mit PS-Halbe oder so. Wir brauchen halt irgendwie was, was da taugt, was man verwenden kann.
+
+00:22:30.362 --> 00:23:07.082
+<v SPEAKER_2>Es gab eine Menge Schnittstellen abzuschaffen, so Zentronix. Ich denke, ein Drucker wurde auch am Anfang angedacht. Also es ist ja absurd, wenn man zurückdenkt, mit was für Schnittstellen PCs früher alles so ausgerüstet war. Also ich finde es auch noch absurd zu sehen, was hier heute noch alles ausgerüstet sind. Hat sich ja noch lange nicht unbedingt alles auf USB zurückgezogen. Aber es hat sich auf jeden Fall schon mal verbessert, die Situation. Das kann man schon sagen. Also es ist schon recht universal. Aber meine Frage war, das, was wir jetzt bisher erklärt haben, also diese Host- und Slave-Geschichte und die Art und Weise, wie sich IDs und Endpoints ergeben, das ist bei USB 1.1 und USB 2.0 dasselbe?
+
+00:23:07.822 --> 00:23:09.842
+<v SPEAKER_1>Ja, das ist erst mal dasselbe, genau.
+
+00:23:09.862 --> 00:23:11.722
+<v SPEAKER_2>Das heißt, da unterscheiden die sich nicht?
+
+00:23:11.742 --> 00:23:41.762
+<v SPEAKER_1>Genau, USB 2.0 ist auch komplett abwärtskompatibel zu 1.1 und wirft deswegen auch so eine ganze Menge Verwirrung auf. Das ist ein großes Missverständnis einfach auch in dieser gesamten Branche, in der ganzen Szene. Ganz viele Menschen sind einfach total irritiert, ob der Tatsache, dass Geräte, dass Geräte, die unter der USB 2.0-Spezifikation funktionieren, nicht zwingend schneller sind, als Geräte damals waren, die unter der 1.1-Spezifikation funktionieren.
+
+00:23:41.782 --> 00:23:44.322
+<v SPEAKER_2>Weil man auch, wenn man 2.0 ist, kann man immer noch langsam.
+
+00:23:44.342 --> 00:24:11.522
+<v SPEAKER_1>Genau, also man muss das mal runterbrechen auf diese drei Speed-Modi, die es da gibt. Es gibt die Low-Speed-Devices. Das ist vor allem für Geräte wie, wie gesagt, Tastaturen und Mäuseln sinnvoll. Das sind Geräte, die weniger als ein paar 100 Kilobyte die Sekunde irgendwie übertragen. Also spezifiziert ist der Bus bis 1,5 Megabit pro Sekunde. Das heißt, auf einer Tastatur muss man da lange vertippen.
+
+00:24:11.542 --> 00:24:12.862
+<v SPEAKER_2>Schnell frei.
+
+00:24:12.882 --> 00:24:15.682
+<v SPEAKER_1>Und naja, das...
+
+00:24:15.702 --> 00:24:17.922
+<v SPEAKER_2>Ich kenne Leute, die schaffen das.
+
+00:24:17.942 --> 00:24:21.542
+<v SPEAKER_1>Ein USB-Bus zu saturieren? Ich würde einen Preis ausloben.
+
+00:24:21.562 --> 00:24:29.522
+<v SPEAKER_2>Die schaffen das zumindest, den Eindruck zu erwecken, als könnten sie einen USB-Bus saturieren. Okay, das ist Low-Speed.
+
+00:24:29.542 --> 00:24:35.602
+<v SPEAKER_1>Das ist Low-Speed, genau. Und die USB 1.1-Spezifikation... Auch Mäuse sind...
+
+00:24:35.622 --> 00:24:38.222
+<v SPEAKER_2>Ich denke mir, wenn du so eine Maus richtig hoch auflöst...
+
+00:24:38.302 --> 00:24:48.382
+<v SPEAKER_1>Ich will jetzt nichts Falsches behaupten. Wenn du eine da hast, dann können wir die mal eben einstecken und nachschauen. Aber soweit ich weiß, sind die meisten Mäuse, die so rumgetreten werden.
+
+00:24:48.402 --> 00:24:51.782
+<v SPEAKER_2>Ich habe gar keine Maus. Ich benutze nur Trackpack. Und das kriege ich jetzt gerade nicht ausgebaut.
+
+00:24:54.262 --> 00:24:56.602
+<v SPEAKER_1>Das ist eigentlich schon genau dafür auch...
+
+00:24:56.762 --> 00:24:59.342
+<v SPEAKER_2>Ah, doch, hier dieses Device habe ich hier. Ganz tolles...
+
+00:24:59.362 --> 00:25:00.362
+<v SPEAKER_1>Ich habe es ja schon eingesteckt.
+
+00:25:00.382 --> 00:25:15.482
+<v SPEAKER_2>Ah, du hast es schon eingesteckt. Genau, das ist toll, aber es leuchtet nicht. Ich weiß nicht, ob es jetzt was tut. Es leuchtet wahrscheinlich erst, wenn es ein Treiber kriegt. Das ist übrigens ein ganz großes Device, das kann man ja gleich mal erwähnen, von 3D Connection, was so eine Unterfirma von Logitech ist.
+
+00:25:15.502 --> 00:25:17.442
+<v SPEAKER_1>Das nennt sich Space Navigator.
+
+00:25:17.462 --> 00:25:24.522
+<v SPEAKER_2>Genau, der Space Navigator. Und das ist für Leute, die nicht genug von Google Earth kriegen können. Dafür ist es echt super, weil das ist quasi so ein...
+
+00:25:24.542 --> 00:25:30.602
+<v SPEAKER_1>Das ist wie dieser Knubbel, den man von Syncpads kennt. Nur, dass er auch noch in einer 3D-Dimension funktioniert.
+
+00:25:30.622 --> 00:26:12.702
+<v SPEAKER_2>Also das Ding kann links, rechts, vorne, zurück, hoch, runter und dann kannst du es noch drehen. Also rotieren und drücken. Genau, hoch runter, wie ich schon gesagt, und drücken. Und dann hat es noch zwei Buttons. Und das ist total schick und das ist bei Google Earth voll unterstützt. Dann kannst du so richtig super Helikopter irgendwie, ich schaue rechts aus dem Fenster, flüge an irgendwelchen Gebäuden vorbei, ganz easy machen, das ist sehr zu empfehlen. Gibt es immer lustigerweise in zwei Versionen, die hardware-technisch identisch sind, aber nur mit einer anderen Lizenz verkauft werden. Und die Personal Edition ist deswegen billiger als die Business- oder Standard Edition, oder wie sie es auch mal nennen. Schöne neue Welt.
+
+00:26:12.722 --> 00:26:26.202
+<v SPEAKER_1>Jedenfalls ist dieses Gerät, auch das, das ich jetzt hier gerade eingesteckt habe, dieser Space Navigator, ein Low-Speed-Device. Genau, dafür ist es eigentlich auch gemacht worden. Dafür gibt es diese Spezifikation.
+
+00:26:27.622 --> 00:26:30.322
+<v SPEAKER_2>Okay, und was gibt es da noch für Speed?
+
+00:26:30.342 --> 00:28:08.922
+<v SPEAKER_1>Genau, da gibt es den sogenannten Full-Speed. Es ist definiert bis 12 Megabit pro Sekunde. Ja, 12 Megabit. Und ist eben dagewesen für alles, was schneller ist als das. Also damals als es nur die USB 1.1 gab. Also sprich auch Festplatten und so weiter, auch Audiodevices. Man kommt mit 12 Megabit pro Sekunde schon ganz schön weit, wenn man sich das mal ausrechnet, gerade was man so für Audio braucht. Also so 44,1 Kilohertz Samplefrequenz bei 16-Bit-Stereo, kann man locker über USB-Full-Speed-Devices auch streamen. Aber wenn man erst mal so einen Teil hat, wo dann 10 Kanäle dran sind und man macht dann immer 92 Kbps, oder man möchte eben seine Festplatte auch mal mit voller Geschwindigkeit irgendwie anfahren, dann reicht das halt nicht mehr so. Naja, jedenfalls gibt es dann eben diesen USB 2.0-Standard auch, der irgendwann 2001 oder so ins Leben gerufen wurde. Und der erweitert im Wesentlichen den USB 1.1-Standard. Und zwar insofern, als dass er eine neue Geschwindigkeitsklasse definiert, die High-Speed-Devices, und noch so ein paar kleinere Veränderungen mitbringt. Allerdings ist er voll abwärts kompatibel zur USB 1.1-Spezifikation. Das heißt, Host-Controller beispielsweise, die eine USB 2.0-Spezifikation erfüllen, sind in der Lage, alle Geräte, die unter der USB 1.1-Spezifikation programmiert wurden, eben auch voll zu unterstützen. Problemlos.
+
+00:28:08.942 --> 00:28:12.702
+<v SPEAKER_2>Also sind sozusagen gezwungen, das zu tun?
+
+00:28:12.722 --> 00:28:47.102
+<v SPEAKER_1>Genau, die Spezifikation schreibt das vor. Damit haben wir eigentlich auch schon erklärt, warum nicht alle Geräte, die die USB 2.0-Spezifikation erfüllen, automatisch High-Speed sein müssen. Also eine Maus beispielsweise kann durchaus vollkompliment zur USB 2.0-Spezifikation sein. Man guckt sich dieses Gerät an, guckt, wie es sich irgendwie darstellt, schaut sich die Diskripturen an, spricht mit ihm und so weiter und stellt fest, dieses Gerät verhält sich komplett konform zur USB 2.0-Spezifikation. Es ist trotzdem ein Low-Speed-Device.
+
+00:28:47.122 --> 00:28:53.522
+<v SPEAKER_2>Was heißt denn, man schaut sich die... Also warte mal, High-Speed sind diese 480 Megabit, oder?
+
+00:28:53.542 --> 00:28:55.122
+<v SPEAKER_1>Genau, mit High-Speed sind dann 480 Megabit.
+
+00:28:55.362 --> 00:29:19.922
+<v SPEAKER_2>Und was ja heute auch noch für Festplatten einen relativ weit bringt. Es geht jetzt auch langsam los, dass das auch nicht ausreicht. Aber für den Zwischenbedarf, dafür ist es ja eigentlich auch gemacht, ist es ja nicht ganz brauchbar. Aber jetzt hast du gerade gesagt, es gibt Diskripturen, oder was? Wo kommen die jetzt ins Spiel?
+
+00:29:21.142 --> 00:29:56.722
+<v SPEAKER_1>Na, also so ein Gerät sich irgendwie am Bus angemeldet hat, und dass alles erstmal funktioniert hat, und der Host-Controller quasi irgendwie glücklich ist mit dem, was das Gerät so von sich gibt, solange es sich nicht komplett daneben verhält und den Bus, keine Ahnung, elektrisch kaputt macht, werden gleich in der frühen Init-Phase, wenn das Gerät eingesteckt wurde, auch die Deskripturen ausgetauscht, die eben Dinge, wie ich vorhin beschrieben habe, von sich geben, zum Beispiel, ich bin ein Gerät, das kann irgendwie folgende Funktion erfüllen.
+
+00:29:58.082 --> 00:30:05.342
+<v SPEAKER_2>Ah, ok, das war jetzt sozusagen der Sammelbegriff für diese ganze Konfiguration mit Endpoints und was sie können, die Weißklasse usw.
+
+00:30:05.362 --> 00:30:50.042
+<v SPEAKER_1>Die Konfiguration der entsprechenden Endpoints usw. ist inkapsuliert in sogenannten Deskripturen, die das eben beschreiben. Und es gibt auch, wer sich dafür interessiert, unter so gut wie jedem Betriebssystem, gibt es Tools, die das eben auch schön anzeigen. Beispielsweise unter macOS nennt sich das USB-Prober.up, kommt mit den Developer-Tools mit. Und da sieht man zum Beispiel auch, das ist ganz interessant, wenn man auch kein Gerät eingesteckt hat am Rechner, kann man hier sehen, dass eine ganze Menge los ist. Das sind also nicht nur die sogenannten Root-Hubs, sprich die Ports selber, die man eben zugänglich hat von außen. Die sind auch schon Entitäten für sich selbst.
+
+00:30:50.062 --> 00:30:51.162
+<v SPEAKER_2>Die nennt man Root-Hubs?
+
+00:30:51.182 --> 00:31:06.782
+<v SPEAKER_1>Root-Hubs, genau. Auf meinem Macbook ist es zum Beispiel auch der IR-Receiver. Diese Infrarot-Empfänger, genau. Oder hier die Bluetooth-Geschichte oder das Trackpad selber.
+
+00:31:06.802 --> 00:31:07.262
+<v SPEAKER_2>Die Kamera.
+
+00:31:07.642 --> 00:31:14.322
+<v SPEAKER_1>Genau, das sind alles Geräte, die intern schon am USB hängen.
+
+00:31:14.342 --> 00:31:23.242
+<v SPEAKER_2>Jetzt sehe ich das hier auch gerade. Sehr schick. Wo ist denn meine Maus? Ah, da. Internal Keyboard Trackpad. Ah, das ist so ein Composite Device, wie du es gesagt hast.
+
+00:31:23.262 --> 00:31:26.762
+<v SPEAKER_1>Genau, das haben sie dann quasi intern schon mal zusammengefasst.
+
+00:31:26.782 --> 00:31:38.682
+<v SPEAKER_2>Da kann ich jetzt meinen Device-Deskriptor aufklappen und mir mal alles anschauen. Der hat eine Versionsnummer. Das ist sozusagen die USB 2.0-Spezifikation, Deskriptor Version Nr. 0x0200, oder was?
+
+00:31:38.702 --> 00:31:45.942
+<v SPEAKER_1>Genau, damit fängt das an. Was diese ganzen Felder bedeuten, muss man vielleicht nicht alles erklären, wichtig ist...
+
+00:31:45.962 --> 00:31:49.742
+<v SPEAKER_2>Vendor ID und Product ID ist ja etwas, was einem auch häufiger entgegenkommt.
+
+00:31:49.762 --> 00:32:51.962
+<v SPEAKER_1>Genau, also man muss ein Gerät eben, das man auf den Markt bringt, auch mit einer eindeutigen ID kennzeichnen, damit es eben keine Kollisionen geben kann. Wobei die ID für die Treiber selber nicht unbedingt wichtig sein muss. So, die Treiber sich nicht an der Vendor ID, Product ID orientieren, sondern eher daran, was das Gerät sagt, welche Klassen es unterstützt. Das sieht man jetzt hier auch beispielsweise in den Device Descriptoren, im USB Prober sieht man, dass es sich um ein Composite Device handelt, und damit ist es die Device Klasse 0. Und dann sieht man eben in den einzelnen Interfaces nochmal, dass es jetzt hier zum Beispiel ein HID-Interface ist, also ein Human Input Device. Und als solches kann es eben bestimmte Dinge wie, weiß ich nicht, relativ für absolute Achsen und so weiter von sich geben. Und das wird eben wiederum implementiert von Geräten wie Mäusen oder so. Oder von dem hier auch.
+
+00:32:51.982 --> 00:33:18.822
+<v SPEAKER_2>Verstehe, also jedes Device hat dann nochmal mehrere Interfaces. Die meisten haben nur eins, nehme ich mal an. Und dieses hat halt hier mehrere, weil da ein Composite-Device ist. Ah ja, okay, da kann man ja eine Menge Dreiecke aufklappen. Das bringt uns jetzt hier irgendwie komplett durcheinander. Aber wer vergibt denn diese Wendor-IDs? Und bist du der Meinung, dass 64.000 ausreichen werden irgendwie? Das wäre hier nur so ein 16-Bit-String.
+
+00:33:18.842 --> 00:33:21.142
+<v SPEAKER_1>Das ist richtig, ja. Wendor-ID-Imported-IDs sind immer...
+
+00:33:21.162 --> 00:33:28.742
+<v SPEAKER_2>65.536. Bevor jetzt irgendwie die spitzfindigen Kommentatoren uns korrigieren.
+
+00:33:28.762 --> 00:33:30.862
+<v SPEAKER_1>Wird das reichen?
+
+00:33:30.882 --> 00:33:34.502
+<v SPEAKER_2>Wird es nicht mehr als 65.000 USB-Wendors geben?
+
+00:33:34.522 --> 00:33:39.882
+<v SPEAKER_1>Ja, das ist die Frage. Also ich glaube, momentan ist die Zahl noch nicht an der Grenze. Aber das könnte schon mal zum Problem werden irgendwann.
+
+00:33:39.902 --> 00:33:41.082
+<v SPEAKER_2>Klingt nicht sehr viel für mich.
+
+00:33:41.462 --> 00:34:08.822
+<v SPEAKER_1>Ja, also man muss auch Geld dafür bezahlen, dass man so eine ID bekommt. Ich meine, es interessiert sich letztlich, wenn man jetzt selber was bastelt oder sowas, kann man da auch irgendwas reinschreiben, das ist total egal. Solange man halt entsprechend, weiß ich nicht, seinem Treiber auch dieselbe ID mitteilt. Aber wenn man das Gerät eben verkaufen möchte, muss man den Nummernblock kaufen, indem man sich eine Wender-ID reserviert.
+
+00:34:08.942 --> 00:34:19.382
+<v SPEAKER_2>Und dann macht man sich da seine Product ID rein, und das ist dann das, woran der Treiber erkennt, das ist jetzt einfach mal das Device, und dafür muss ich jetzt die Software bereitstellen.
+
+00:34:19.402 --> 00:34:55.662
+<v SPEAKER_1>Der Treiber muss sich nicht unbedingt daran orientieren, wie die Wender-ID und Product-ID aussieht, sondern ein Treiber kann beispielsweise auch hergehen, also zumindest unter macOS und unter Linux, das ist ähnlich, und kann eben sagen, ich unterstütze erstmal alle Geräte, die der Device-Klasse HID entsprechen. Und wenn man sich ein Gerät mit genau dieser Device-Klasse anmeldet, geht der Host-Controller, Stack, also die Software, die dann entsprechend auf dem Computer läuft, eben herruft diesen Treiber auf und sagt, hier hast du ein Gerät, das meint irgendwie HID sprechen zu können. Quatsch doch mal mit dem, mal gucken, was das sagt.
+
+00:34:55.822 --> 00:35:04.422
+<v SPEAKER_2>Na, wie weit kommen wir denn mit HID? Also HID heißt Human Interface Device, aber das ist ja sowohl eine Tastatur als auch eine...
+
+00:35:04.442 --> 00:35:07.122
+<v SPEAKER_1>Ist auch letztlich die gleiche Klasse in der Tat.
+
+00:35:07.862 --> 00:35:10.142
+<v SPEAKER_2>Ah, das heißt, der Treiber kann...
+
+00:35:10.722 --> 00:35:38.322
+<v SPEAKER_1>Also das wird dann nochmal genauer spezifiziert. Erstmal heißt es, ich bin ein Human Interface Device. Und dann wird über diese Deskriptoren eben noch weitere Informationen gegeben, wie beispielsweise ich habe hier einen Endpoint, auf dem kommen Key-Events und ich habe hier einen Endpoint, auf dem kommen irgendwie relative und absolute Achsen. Also wie das ganz genau funktioniert, möchte ich jetzt gerade gar nicht groß behaupten, weil ich noch nie einen HID-Interface wirklich selber implementiert habe.
+
+00:35:39.942 --> 00:35:43.842
+<v SPEAKER_2>Was für eine Device Class hatte denn dein DVBT-Receiver?
+
+00:35:43.862 --> 00:36:14.122
+<v SPEAKER_1>Na ja, da hatten wir das große Problem, dass es dafür keine Device Class gibt. Es gibt keine passende Streaming-Klasse dafür. Und deswegen haben wir in den Diskripturen damals gesagt, wir sind komplett proprietär und brauchen einen Treiber, der sich für uns interessiert. Das heißt, keiner der entsprechenden Class-Treiber versucht auch noch mit uns zu quatschen, weil wir sagen von Anfang an, wir brauchen unseren eigenen Treiber.
+
+00:36:14.142 --> 00:36:15.922
+<v SPEAKER_2>Also ist das dann Device Class FFFF?
+
+00:36:19.162 --> 00:36:29.782
+<v SPEAKER_1>Und damit teilt man das eben mit und dann muss man eben die Treiber-Implementierung selber übernehmen, muss sich nach der Wende- und Product-ID des Geräts richten, sprich entsprechend gucken, ist es überhaupt angeschlossen.
+
+00:36:30.242 --> 00:36:32.082
+<v SPEAKER_2>Und welche Version ist es?
+
+00:36:32.102 --> 00:36:35.062
+<v SPEAKER_1>Oder eben aufgerufen werden, wenn es dann angeschlossen wird.
+
+00:36:35.082 --> 00:36:46.502
+<v SPEAKER_2>Wobei eine Version ist ja auch nochmal separat. Also man kann diese Product-ID verwenden und dann immer noch eine andere Version für das Gerät mitgeben, damit man die auch noch erscheint. Also es gibt hier eine Device-Version-Number.
+
+00:36:46.522 --> 00:36:49.702
+<v SPEAKER_1>Genau, die gibt es auch noch. Die kann man befüllen, muss das aber nicht unbedingt.
+
+00:36:49.722 --> 00:36:54.702
+<v SPEAKER_2>Ja, sonst läuft man ja dann auch irgendwie mit seinen Product-IDs und kommt an nichts aus, wenn man dann jede Version nochmal unterscheiden möchte.
+
+00:36:54.862 --> 00:37:19.102
+<v SPEAKER_1>Nee, die Version unterscheidet man dann nicht. Genau. Also was es auch gibt, irgendwie, wo wir schon dabei sind, sind hier bei diesen Device-Deskriptoren, die haben auch einen Verweis auf einen String. Dieser String ist dann weiter unten in den Deskriptoren definiert und enthält eben beispielsweise solche Dinge wie den Namen des Herstellers, den Namen des Gerätes und so weiter.
+
+00:37:19.122 --> 00:37:32.342
+<v SPEAKER_2>Du, dass halt auch ein OS, selbst wenn es nichts mit einem Device anfangen kann, zumindest so ein human-verständliche Datum kann, hier ist irgendwie Apple Computer und hat ein Keyboard und vielleicht weißt du ja, was damit anzufangen.
+
+00:37:32.362 --> 00:37:38.922
+<v SPEAKER_1>Genau, oder um halt überhaupt irgendeine Rückmeldung geben zu können dem User, dass das Gerät angeschlossen wurde.
+
+00:37:38.942 --> 00:37:40.762
+<v SPEAKER_2>Außer irgendwelche Zahlen auszuspucken.
+
+00:37:40.782 --> 00:37:41.122
+<v SPEAKER_1>Genau.
+
+00:37:41.782 --> 00:37:48.682
+<v SPEAKER_2>Ja, das ist ja interessant. Das heißt, so ein Tree-Tool gibt es wahrscheinlich auch für die meisten Betriebssysteme auf die eine oder andere Art und Weise.
+
+00:37:48.702 --> 00:37:53.082
+<v SPEAKER_1>Also unter Linux heißt das LS-USB. Damit kann man sich das genauso anschauen.
+
+00:37:55.662 --> 00:38:07.102
+<v SPEAKER_2>Ja, und damit kann man vor allem dann auch mal wirklich überprüfen, welche Geschwindigkeit ein angeschlossenes Device tatsächlich hat. Also ob es sich jetzt hier nur um Full-Speed oder eben um High-Speed handelt.
+
+00:38:07.122 --> 00:38:32.462
+<v SPEAKER_1>Genau, man sieht da eine ganze Menge. Der USB-Prober interpretiert auch eine ganze Menge. Das heißt, wenn man da ein Interface einstöpselt, das beispielsweise mal wieder ein HID-Interface ist, dann sieht man da direkt auch irgendwie mehr oder weniger im Klartext, was diese Beschreibungen, die letztlich auch nur in Form von Zahlen in den Diskripturen stehen, was sie so bedeuten. Das steht dann in Klammern noch dahinter.
+
+00:38:32.482 --> 00:39:21.442
+<v SPEAKER_2>Schick. Die, jetzt waren wir ja, vielleicht kommen wir nochmal zurück zu der Kommunikation der Geräte mit dem Rechner. Das finde ich jetzt nochmal ganz interessant. Wir hatten ja gesagt, es gibt vier verschiedene Kommunikationsmodi. Kontrolltransfer haben wir jetzt irgendwie ausführlich dargestellt. Da wird halt alles ausgehandelt. Wer bin ich eigentlich? Welche ID habe ich? Was für Endpoints haben die? Was haben die für Geschwindigkeiten und so weiter? Product-IDs haben wir jetzt alles durchgemuckelt. Das heißt, der Rechner hat jetzt eine relativ klare Vorstellung davon, was da ist. Und dann blickt er vor allem auf diese Endpoints und weiß, wie schnell er mit denen kommunizieren muss. Und vor allem weiß er auch, welche Art und Weise er mit ihnen kommunizieren muss. Weil ich das richtig gesehen habe, definieren die Endpoints jetzt auch, wie man sozusagen dort Daten überträgt.
+
+00:39:21.962 --> 00:40:02.842
+<v SPEAKER_1>Naja, also die Endpoints, wie gesagt, geben eben an, welcher Art sie sind. Also einer von diesen vier Arten. Man könnte theoretisch auch nochmal, ich glaube, ich glaube nicht, dass die Spezifikation das verbietet. Weiß ich jetzt aber nicht ganz genau. Man könnte theoretisch also zum Beispiel auch mittendrin irgendwie als Endpoint 4 oder so nochmal einen Kontrollendpoint anmelden. So könnte man eben tun. Endpoint 0, wie gesagt, muss es geben, ist immer da und ist eben für diese ganze Low-Level-Geschichte. Genau, und des Weiteren geben die Endpoints dann noch an, wie schnell sie Daten übertragen wollen, sprich, welches Polling-Intervall sie vorschlagen.
+
+00:40:02.882 --> 00:40:11.702
+<v SPEAKER_2>Ja, also wie häufig nachgefragt werden soll. Ich fand ja schon ganz lustig, dass es sozusagen einen Modus gibt, der Interrupt heißt, aber tatsächlich kann das Gerät ja den Hose gar nicht interruppen.
+
+00:40:11.722 --> 00:40:13.742
+<v SPEAKER_1>Richtig, ja, ist so.
+
+00:40:13.762 --> 00:40:30.082
+<v SPEAKER_2>Das ist wirklich so, als ob jemand die ganze Zeit die Tür aufmacht und fragt, ob man ihn überraschen möchte. Sehr überraschend. Ist denn das sinnvoll? Ich meine, macht dieses Design irgendwie Sinn? Ist das jetzt für irgendwas besonders gut?
+
+00:40:30.542 --> 00:41:10.582
+<v SPEAKER_1>Na, also ich meine, wie gesagt, der große Vorteil liegt meines Erachtens darin, dass die Geräte selber sich irgendwie nicht groß um Bus-Kollisionen oder so was kümmern müssen. Die müssen nicht permanent überwachen. Kann ich jetzt eigentlich theoretisch senden oder ist das jetzt gerade irgendwie eher schwierig? Sondern die warten halt darauf, aufgerufen zu werden und verhalten sich dann eben sehr dumm. Also die geben dann eben Daten her, wenn sie welche herzugeben haben und empfangen welche, wenn sie welche mitgeteilt kriegen und können dann im Wesentlichen auch nur noch sagen, will ich oder will ich nicht, also nehme ich an oder gehe weg.
+
+00:41:10.602 --> 00:41:46.082
+<v SPEAKER_2>Aber ist das nicht eine ganze Bus-Pollution? Also gerade bei so einer Maus, wenn ich jetzt die Maus wirklich schnell bewege, und man hat jetzt auch wirklich eine extra Maus, die auch besonders hoch auflöst, damit man eben auch schnelle Bewegungen sehr präzise umsetzen kann. Es gibt ja auch so billige Mäuse, die es nicht so fein machen. Das heißt, die wirft ja dann relativ viel Daten ab. Und damit jetzt eben dieses schnelle Übertragen auch geht, muss ja die Maus dem Rechner dann sagen, bitte frag mich sehr, sehr, sehr häufig, ob ich eine Information für dich habe.
+
+00:41:46.102 --> 00:41:47.722
+<v SPEAKER_1>Ja, das tut sie auch.
+
+00:41:47.742 --> 00:41:53.742
+<v SPEAKER_2>Damit wird der Bus ja mit einer Grundlast versorgt, sozusagen.
+
+00:41:53.762 --> 00:42:06.242
+<v SPEAKER_1>Wenn man so möchte, ja. Also klar, meine Daten müssen halt übertragen werden, ob jetzt irgendwie nur, ob der Bus nur fragt oder ob das Device in der Lage wäre, irgendwie selber Daten zu schicken. Ich meine, die Daten müssen da halt rüber. So, anders geht's ja nicht.
+
+00:42:06.522 --> 00:42:12.182
+<v SPEAKER_2>Na gut, aber sozusagen nur die Möglichkeit, dass irgendwas übertragen wird, belegt schon Bandbreite auf diesem Bus.
+
+00:42:12.202 --> 00:42:25.182
+<v SPEAKER_1>Sehr wenig. Also es ist quasi ein Read-Request, wenn man so möchte. Das heißt, der Host fragt an und das Gerät antwortet mit einem Nack. Sprich, ich habe keine Daten für dich. Frag das nächste Mal wieder an.
+
+00:42:25.202 --> 00:42:31.942
+<v SPEAKER_2>Werden wir jetzt richtig komplexe Daten übertragen oder ist das irgendwie nur eine Leitung an und aus?
+
+00:42:32.022 --> 00:42:48.262
+<v SPEAKER_1>Wie viele Leitungen hat USB? Im USB-Kabel haben wir vier Litzen. Wir haben eine Stromversorgung von 5 Volt, die vom Host auch natürlich kommen muss. Und dazu noch zwei Datenleitungen, die eben ein differenzielles Leitungspaar bilden.
+
+00:42:48.302 --> 00:43:06.942
+<v SPEAKER_2>Stimmt, das ist ja ein Serial Bus. Also es ist auch nur Serial. Alles hintereinander. Aber das heißt, die eine Anfrage, wie viele Daten müssen dann übertragen werden dafür? Für dieses, hast du was? Man muss irgendwie, was haben wir da? Die USB-ID, also die Device-ID und dann diesen Endpoint?
+
+00:43:06.962 --> 00:43:08.062
+<v SPEAKER_1>Ja, es sind schon ein paar Byte.
+
+00:43:08.162 --> 00:43:09.642
+<v SPEAKER_2>Also du müsstest schon ein paar Byte übertragen.
+
+00:43:09.662 --> 00:43:18.422
+<v SPEAKER_1>Es sind schon ein paar Byte, die dann zum Gerät gehen und die dann entsprechend auch von dem Gerät beantwortet werden müssen.
+
+00:43:18.442 --> 00:43:48.542
+<v SPEAKER_2>Also USB geht sozusagen davon aus, dass eigentlich immer genug Platz ist für die verhältnismäßig geringe Anzahl von Geräten, die dann letzten Endes wirklich angeschlossen sind. Das ist ja eigentlich auch die Realität. Man hat schon wirklich viel angeschlossen. Wobei jetzt mit Festplatten ist das natürlich so eine Sache. Aber ich will mich da jetzt nicht zu sehr festbeißen. Aber Tatsache ist, die Maus sagt, ich bin eine schnelle Maus, fragt mich häufig und wenn sie sich bewegt hat und wenn sie irgendwie ein Movement gemessen hat, dann wird beim nächsten Mal nachfragen, diese Information an den Rechner gereicht.
+
+00:43:48.562 --> 00:44:28.922
+<v SPEAKER_1>Ja, wobei also relativ häufig muss man auch gucken, in welchen Bereichen man sich da so auffällt. Also sagen wir mal so ein Polling-Intervall von 20 Millisekunden oder so was ist so ein Bereich, den merkt man nicht, wenn man so keine Ahnung, eine Maus in der Hand hat und sie durch die Gegend bewegt. Also das ist schon in Ordnung. Ja, vielleicht sind es auch 10. Aber sowas in der Größenordnung, wohingegen der USB-Bus deutlich öfter irgendwie am Start ist. Also in der Spezifikation 2.0 sind es insgesamt 8000 mögliche Pakete, die da über den Bus rauschen pro Sekunde. Da fällt so eine Maus jetzt nicht unbedingt ins Gewicht.
+
+00:44:31.182 --> 00:44:35.342
+<v SPEAKER_2>Das heißt, die Maus benutzt jetzt diesen Interrupt-Übertragungsmodus?
+
+00:44:35.362 --> 00:44:38.422
+<v SPEAKER_1>In der Regel tun sie das über die sogenannten Interrupt-Transfers.
+
+00:44:38.722 --> 00:44:41.382
+<v SPEAKER_2>Und das ist auch das, was die meisten benutzen?
+
+00:44:41.402 --> 00:44:42.662
+<v SPEAKER_1>Die meisten Mäuse?
+
+00:44:42.682 --> 00:44:44.642
+<v SPEAKER_2>Die meisten USB-Devices?
+
+00:44:44.662 --> 00:45:43.522
+<v SPEAKER_1>Nö, nicht unbedingt. Also Interrupt-Transfers sind eigentlich immer gerne dann genommen, wenn es sich um wenig Daten handelt. Es gibt noch Spezialitäten in den User-Space-APIs, aber es geht erstmal um Datenpakete, die nicht besonders viel Payload haben. Für alles andere gibt es dann eben die sogenannten Bulk-Transfers, die sich, also genauso wie die Isochronentransfers, sind die dafür da, viele Daten zu übertragen, haben allerdings einen entscheidenden Unterschied. Der lässt sich am ehesten erklären, wenn man TCP mit UDP im IP-Bereich vergleicht. Das heißt, die Bulkpakete sind Pakete, die unter Garantie auch ankommen. Später gibt es eine Checksumme drüber. Und wenn dieses Paket ausbleibt oder wenn die Checksumme nicht stimmt, dann wird der Host-Controller einen weiteren Transfer initiieren, um dieses verloren oder kaputtgegangene Paket eben nochmal zu kriegen.
+
+00:45:43.542 --> 00:45:48.982
+<v SPEAKER_2>Weil die Daten werden auf jeden Fall benötigt und sie werden auf jeden Fall konsistent, gültig, vollständig.
+
+00:45:49.002 --> 00:45:57.482
+<v SPEAKER_1>Genau, wie bei einer Festplatte. Das ist natürlich der Super-GAU, wenn da irgendwelche Daten-Bits kippen und der Host-Controller dann noch nicht mal irgendwas dagegen tut.
+
+00:45:57.502 --> 00:46:00.702
+<v SPEAKER_2>Und wie stellt USB sicher, macht es da noch mal so eigene Checksummen darüber?
+
+00:46:00.722 --> 00:46:05.422
+<v SPEAKER_1>Da ist eine 16-bitige, irgendeine Checksumme ist da drauf, genau.
+
+00:46:05.422 --> 00:46:13.802
+<v SPEAKER_2>Okay, das heißt, eine Platte liefert ihre Daten per Bulk aus, aber macht sie dann auch alles über Bulk? Oder sind das dann wirklich nur die Daten?
+
+00:46:13.822 --> 00:46:22.242
+<v SPEAKER_1>Viel mehr als Daten liefern muss sie ja nicht. Im Wesentlichen geht es darum, dass der Host-Controller eben bestimmte Sektoren der Festplatte liest und andere schreibt.
+
+00:46:23.802 --> 00:46:33.202
+<v SPEAKER_2>Aber es gibt ja auch noch so spezielle Anfragen an die Platten. Ja, also ich glaube, das schalte ich aus oder?
+
+00:46:33.222 --> 00:46:59.442
+<v SPEAKER_1>Das ist nochmal ein Spezialfall. Ein USB-Gerät auszuschalten wiederum, also ein USB-Suspend auszulösen, ist in der Tat wieder etwas, was man über einen Setup-Transfer macht, sprich über einen Control-Endpoint, weil jedes Gerät in der Lage sein muss, das zu tun. Wenn du den Rechner zuklappst oder so etwas, willst du halt auch, dass deine Geräte aufhören, Strom zu verbrauchen und all solche Dinge.
+
+00:46:59.462 --> 00:47:06.062
+<v SPEAKER_2>Beziehungsweise manchmal will man das auch nicht, weil man wieder zum Beispiel auch sein Gerät laden, während der Rechner zugeklappt ist.
+
+00:47:06.082 --> 00:47:16.742
+<v SPEAKER_1>Ist dann die Frage. Muss dann die Elektronik letztlich in dem Gerät selber, muss sich dafür entscheiden, was sie da tut. Es sei denn, der Host-Controller schaltet den Strom ab. Das hat man natürlich nicht immer in der Hand.
+
+00:47:16.762 --> 00:47:31.662
+<v SPEAKER_2>Auf dem Mack hat es sich ja gerade geändert. Das war ja früher immer so, dass man die Geräte nicht laden konnte. Seit der 10.5 Version haben sie das dann so geändert, weil die Leute dann doch mal ihren iPod laden wollten, ohne den Rechner gleich in Betrieb nehmen zu müssen.
+
+00:47:32.162 --> 00:47:55.142
+<v SPEAKER_1>Das Problem ist, dass die Geräte nicht alle in der Lage sind, sich auch wirklich stromlos zu machen. Das heißt, wenn man dem Gerät sagt, es ist vorbei, schalt ab, weil wir gehen jetzt schlafen, dann muss das nicht unbedingt bedeuten, dass die Geräte das auch tun. Dann hat man das Problem mit einem zugeklappten Rechner, irgendeinem Gerät dran, das munter die maximale Kapazität aus dem Bus zieht.
+
+00:47:55.162 --> 00:47:56.982
+<v SPEAKER_2>Ist das theoretisch oder kennst du den Fall?
+
+00:47:57.042 --> 00:48:01.462
+<v SPEAKER_1>Nein, solche Fälle gibt es natürlich. Die sind auch ganz praktisch. Und Lutsch hat die Batterie leer.
+
+00:48:01.542 --> 00:48:03.662
+<v SPEAKER_2>Was ist dir da so untergekommen?
+
+00:48:04.002 --> 00:48:17.182
+<v SPEAKER_1>Ich weiß nicht. Also beim Rumpass passiert es natürlich ständig, dass so etwas immer passiert. Und ansonsten sind es irgendwelche Controller-Device oder auch Soundkarten und so, die das halt nicht richtig machen.
+
+00:48:19.962 --> 00:48:26.322
+<v SPEAKER_2>Haben die dann ihren USB-Batch eigentlich verspielt, oder werden solche komplexen Sachen nicht getestet?
+
+00:48:26.342 --> 00:48:30.922
+<v SPEAKER_1>Eigentlich werden die schon getestet, aber wie gesagt, da bin ich irgendwie nicht so wahnsinnig drin.
+
+00:48:32.022 --> 00:49:00.702
+<v SPEAKER_2>Es geht halt dann trotzdem schief. Wie das so ist. Okay, das heißt, dieser Bulk-Transfer ist für Platten, für alles, was irgendwie Daten liefert und wo es vor allem so lange wiederholt werden kann, bis es dann richtig funktioniert hat. Und dann gibt es ja eben noch diesen Sonderfall von Geräten, die zwar Daten liefern, aber wenn sie beim ersten Mal nicht richtig ankamen, dann sind sie beim nächsten Mal schon verwirkt. Also alles, was so einen permanenten Stream hat.
+
+00:49:00.722 --> 00:49:10.642
+<v SPEAKER_1>Genau, also alle Arten von Daten, die, wenn sie zu spät kommen, genauso nutzlos sind, als wenn sie kaputt sind. Beispielsweise Video-Audio-Streaming, solche Geschichten.
+
+00:49:10.662 --> 00:49:12.802
+<v SPEAKER_2>Und das ist der Isochronos-Modus?
+
+00:49:12.822 --> 00:49:18.102
+<v SPEAKER_1>Das ist der sogenannte Isochronos-Modus. Gibt es den schon immer? Ja.
+
+00:49:18.122 --> 00:49:20.862
+<v SPEAKER_2>Also das war auch alles schon Bestandteil von USB 1.1?
+
+00:49:20.962 --> 00:49:34.082
+<v SPEAKER_1>Genau. Also er wurde jetzt erst richtig sinnvoll mit USB 2.0 und der Möglichkeit, auch wirklich viele Daten zu versenden. Aber es hat ihn auch in der 1.1-Spezifikation schon gegeben.
+
+00:49:34.502 --> 00:49:37.202
+<v SPEAKER_2>Und das ist dann zum Beispiel sowas wie Musik?
+
+00:49:37.222 --> 00:50:02.022
+<v SPEAKER_1>Das sind zum Beispiel Audiogeräte, die gerne Isochronen streamen. Weil ich meine, klar ist es natürlich doof, wenn es einen Aushaltzug gibt oder ein paar Bits kippen und solche Dinge. Man hört das dann eben als Knacksen oder so. Aber was will man machen? Also der Wandler in den Geräten hört auch nicht auf, irgendwie Daten zu schicken. Die Zeit bleibt ja nicht stehen. Und deswegen hat man auch keine andere Möglichkeit, als halt damit zu leben und das nächste Paket entgegenzunehmen.
+
+00:50:03.582 --> 00:50:05.002
+<v SPEAKER_2>Und Radio halt.
+
+00:50:05.022 --> 00:51:04.622
+<v SPEAKER_1>Genau, eine Besonderheit von einem isochronen Transfer ist es noch, dass die, naja, die Diskriptoren sagen, die Diskriptoren geben an, so das ist ein isochroner Endpoint, der möchte so und so viele, so und so große Datenpakete haben, so, sag mal, 512 Byte in jedem Paket. Und der möchte außerdem jede Millisekunde gefragt werden. Aus dieser Information muss auch gefragt werden. Diese Information nimmt der Host-Controller und reserviert auf dem Bus eine entsprechende Bandbreite exklusiv für dieses Gerät. Das heißt also, einhergehend damit, dass er dieses Interface quasi anwährt, sagt, ich aktiviere dein Interface, dass es jetzt zu Musikstreamen irgendwie gut ist. Und einhergehend damit reserviere ich dir auch gleich auf dem Bus die entsprechende Bandbreite, damit du auch wirklich davon ausgehen kannst, permanent irgendwie Daten in dieser Geschwindigkeit ballern zu können.
+
+00:51:04.642 --> 00:51:07.682
+<v SPEAKER_2>Und wenn schon die ganze Bandbreite reserviert ist, dann kriegt er den nicht.
+
+00:51:07.702 --> 00:51:13.842
+<v SPEAKER_1>Dann geht es nicht. Aber das ist ja eben der Host, der das irgendwie tut und der das auch entscheidet letztlich, dass es halt nicht geht.
+
+00:51:13.862 --> 00:51:15.222
+<v SPEAKER_2>Und der kann dann dem User auch sagen...
+
+00:51:15.362 --> 00:51:18.902
+<v SPEAKER_1>Genau, dann gibt es so einen entsprechenden Pop-up und dann heißt es irgendwie, sorry.
+
+00:51:18.922 --> 00:52:02.622
+<v SPEAKER_2>Fehler 27. Damit es auch benutzerfreundlich ausgeführt wird. Das heißt Kontrolltransfer für die ganze Konfiguration. Interrupt so für die ganzen kleinen Standard-USB-Geräte, wie man sie so kennt. Bulk vor allem für sowas wie Festplatten, was irgendwie also Daten in großen Mengen und vor allem reliable bietet. Und Esochronos für was gegebenenfalls auch viele Daten liefert, aber nicht unbedingt, aber vor allem in konstanter Zeitscheibe. Und der Bus stellt sicher, dass diese Zeit auch da ist. Und es kann jetzt nicht sein, dass wenn das Ding einmal akzeptiert worden ist, dass es dann irgendwann wieder runtergeschmissen wird. Weil dann hat es einfach diesen Kanal sozusagen.
+
+00:52:02.662 --> 00:52:16.322
+<v SPEAKER_1>Naja, also da müsste ja schon passieren, dass ein anderes Gerät sich entsprechend anmeldet. Und dann würde es sich eher in dem Moment irgendwie zeigen, dass die Busbandbreite nicht ausreicht. Dann würde das andere Gerät halt irgendwie, das kommt dann einfach zu spät.
+
+00:52:16.862 --> 00:52:22.422
+<v SPEAKER_2>Ja gut, ich meine, die Rechner haben ja heutzutage auch mindestens so zwei, drei Busse eigentlich, oder?
+
+00:52:22.442 --> 00:52:26.822
+<v SPEAKER_1>Ja, also diese Rechne hat zwei nur leider.
+
+00:52:26.842 --> 00:52:28.602
+<v SPEAKER_2>Das MacBook Air hat einen.
+
+00:52:28.622 --> 00:52:30.442
+<v SPEAKER_1>Einen.
+
+00:52:30.462 --> 00:52:34.222
+<v SPEAKER_2>Zumindest einen nach außen geführten. Intern sieht das ja dann auch nochmal anders aus.
+
+00:52:34.882 --> 00:53:11.142
+<v SPEAKER_1>Ja, also es setzt sich immer mehr durch. Das ist ganz interessant zu sehen, dass immer mehr Hersteller von Hardware auch intern in ihren Geräten USB verwenden. Weil das natürlich Sinn macht. Also quasi fixfertige Kameras, die sich per USB angeben als Kamera-Interface, die gibt es halt. Und dann braucht man den Treiber quasi für die eingebaute Kamera. Der bedient dann gleichzeitig auch beliebige andere Kameras, die man quasi von außen per USB einsteckt. Also zumindest in der Theorie. Das heißt, man setzt da halt irgendwie auf Dinge auf, die es halt schon gibt. Das macht ja auch irgendwo Sinn.
+
+00:53:12.242 --> 00:53:27.362
+<v SPEAKER_2>Bevor wir vielleicht mal auf die Software-Seite mehr zu sprechen kommen, nochmal so zwei Hardware-Sachen, haben wir es erwähnt. Also es gibt ja auch standardisierte Stecker bei USB. Drei oder vier Ausführungen. Diesen A-Stecker, diesen flachen, den man alle irgendwie kennt, dann diesen quadratischen.
+
+00:53:27.382 --> 00:53:38.742
+<v SPEAKER_1>Also A ist irgendwie, kann man sich dadurch merken, A ist immer das, was man beim Host einsteckt. Also Host in dem Fall der Computer. Das, was man in den Computer einsteckt, ist ein sogenannter A-Stecker.
+
+00:53:38.762 --> 00:53:44.282
+<v SPEAKER_2>Wobei auch andere Geräte so einen Stecker haben.
+
+00:53:44.302 --> 00:54:06.922
+<v SPEAKER_1>Nicht? Nein. Hört es nicht so sein? In der Regel hast du ein Kabel, das auf der einen Seite einen A-Stecker hat und auf der anderen Seite einen B-Stecker. Und dieser B-Stecker, der passt dann eben in entsprechende Geräte mit dieser typischen globigen USB-Buchse, die man so kennt. Das ist dann ein sogenannter B-Stecker.
+
+00:54:06.942 --> 00:54:11.722
+<v SPEAKER_2>Ja, stimmt schon. Der Drucker hat das, das Mischpult hat das.
+
+00:54:12.282 --> 00:54:17.982
+<v SPEAKER_1>Es sei denn, hier in diesem Space-Navigator ist es natürlich fest mit drin. Es ist kein Stecker.
+
+00:54:18.942 --> 00:54:23.642
+<v SPEAKER_2>Jetzt komme ich gerade ins Schleunen. Das sind eigentlich nur die Hubs dann, ne?
+
+00:54:23.662 --> 00:54:31.822
+<v SPEAKER_1>Die Hubs wiederum haben halt... Ja, gut, bei Hubs ein bisschen host spielen.
+
+00:54:31.842 --> 00:54:34.942
+<v SPEAKER_2>Genau, jetzt vielleicht noch mal so die Rolle der Hubs. Also wir hatten ja schon Eingangs...
+
+00:54:34.962 --> 00:54:36.822
+<v SPEAKER_1>Oder wollen wir kurz diese Stecker-Thematik einmachen?
+
+00:54:37.382 --> 00:54:38.682
+<v SPEAKER_2>Es gibt ja noch andere Stecker A und B.
+
+00:54:38.702 --> 00:54:51.682
+<v SPEAKER_1>Genau, damit ist es ja leider nicht vorbei. Es gibt irgendwie genau diesen Stecker A, den man eben, den Typ Stecker A, den man in den Rechner einsteckt. Stecker B, diese typische, klobige Geschichte.
+
+00:54:51.702 --> 00:54:53.262
+<v SPEAKER_2>Also quadratische Stecker.
+
+00:54:53.282 --> 00:55:08.982
+<v SPEAKER_1>Genau, fast quadratisch. Der wird Stecker, also Typ B genannt. Davon gibt es natürlich auch jeweils die Buchsen, logischerweise. Und es gibt dann noch die gleichen Geschichten, jeweils in Mini und in Micro auch noch.
+
+00:55:09.002 --> 00:55:11.802
+<v SPEAKER_2>Mini-USBs, sehr verbreitet, so bei Kameras mittlerweile.
+
+00:55:11.822 --> 00:55:25.442
+<v SPEAKER_1>Genau, hauptsächlich als Plug für Typ B. Sprich, man steckt irgendwie ein Kabel in den Rechner ein. Und mit diesem Kabel verbindet man dann noch mit der Kamera. Und dort ist eben eine entsprechende Mini-B-Buchse.
+
+00:55:25.522 --> 00:55:27.482
+<v SPEAKER_2>Und Micro ist das Ganze noch mal kleiner.
+
+00:55:27.502 --> 00:55:37.222
+<v SPEAKER_1>Und Micro ist noch mal kleiner, genau. Und ist mir bisher allerdings auch selten untergekommen. Also es gibt so viele ganz flache Kameras und so was. Es gibt so einen Micro-Stecker.
+
+00:55:37.242 --> 00:55:46.702
+<v SPEAKER_2>Aber die sind vom Pinout alle identisch. Die haben Strom alles identisch. Also bei Firewire gibt es ja auch zwei Stecker. Aber die haben ja dann auch eine unterschiedliche Pin-Zahl mit und ohne Strom.
+
+00:55:46.722 --> 00:56:19.002
+<v SPEAKER_1>Genau, also Strom ist erstmal das Gleiche. Daten im Prinzip auch. Es gibt bei den Mini- und Micro-Buchsen gibt es noch einen Sonderfall, der sich irgendwie, der mit USB on the Go zu tun hat. So eine Aufweichung des Standards, die dahin abzielt, dass Geräte sich untereinander verbinden können. Als Beispiel, dass zwei Mobiltelefone sich gegenseitig sehen können, obwohl sie eigentlich beide ja nicht so richtig vollwertige USB-Hows sind.
+
+00:56:19.022 --> 00:56:22.262
+<v SPEAKER_2>Weil sie ja beide eigentlich zu Schweigen haben, bis der Chef sie fragt.
+
+00:56:22.282 --> 00:57:03.982
+<v SPEAKER_1>Genau, das ist ein sehr spezieller Fall letztlich, der erfordert, dass die Geräte mitgeteilt kriegen, ob sie sich als Host oder als Device zu verhalten haben. Und aus diesem Grund gibt es an den On-the-Go-Geräten einen fünften Pin in dem USB-Stecker, der entweder mit Ground verbunden ist oder eben nicht. Und die Geräte entsprechend konfiguriert. Ich weiß jetzt gerade nicht, wie rum es genau ist. Ich glaube, wenn das Ding auf Ground liegt, dann verhält sich das Gerät als Host. Ich glaube, so rum war es. Aber kann auch andersrum sein.
+
+00:57:04.002 --> 00:57:06.482
+<v SPEAKER_2>Das heißt, die Geräte können dann dynamisch das so oder so schalten?
+
+00:57:06.602 --> 00:57:31.422
+<v SPEAKER_1>Genau. Also die Controller, die in den Geräten sind, sind in der Lage, eben auch so ein bisschen Host zu spielen. Also haben so manche USB-Host-Funktionalitäten dann doch wieder mit drin. Was ein bisschen dem ganz klaren Prinzip widerspricht natürlich, dass es irgendwie einen Host gibt, der das Sagen hat, und alle anderen sind wirklich nur Devices. Mit on the go haben sie da eine...
+
+00:57:31.442 --> 00:57:34.862
+<v SPEAKER_2>Die gleichen Steckerformate? Also reden wir jetzt eigentlich von den selben Steckerarten?
+
+00:57:34.882 --> 00:57:41.342
+<v SPEAKER_1>Sieht sehr ähnlich aus, aber der on the go Stecker hat tatsächlich einen Pin mehr. Also ist dann ein bisschen breiter. Was es nicht gerade einfach macht.
+
+00:57:41.362 --> 00:57:43.922
+<v SPEAKER_2>Dann braucht man auch noch ein anderes Kabel.
+
+00:57:44.422 --> 00:58:00.562
+<v SPEAKER_1>Ich glaube, es passt auch nicht. Dann brauchen wir ja noch ein fünftes Leiter und noch einen Kabel. Man braucht sie nicht im Kabel, sondern man erdet das direkt im Stecker. Also im Stecker selber ist dann dieser fünfte, dieser Kodierungs-Pin entsprechend verbunden mit Ground oder eben nicht.
+
+00:58:00.622 --> 00:58:02.382
+<v SPEAKER_2>Tinkt ja nicht so, als ob es viel Zukunft hätte.
+
+00:58:02.622 --> 00:58:12.982
+<v SPEAKER_1>Na, das ist on the go. Ich bin mir da auch unsehlich. Ich meine, klar, von der Anwender-Sicht ist das natürlich super. Man hat irgendwie zwei Mobiltelefone und kann sich einfach eine Strippe zwischenziehen.
+
+00:58:13.002 --> 00:58:14.622
+<v SPEAKER_2>Gut, aber die haben dann auch sowieso Bluetooth.
+
+00:58:14.642 --> 00:58:18.602
+<v SPEAKER_1>Oder haben sie eigentlich? Vielleicht ist das auch nicht so sinnvoll. Ich weiß es nicht.
+
+00:58:20.602 --> 00:58:28.542
+<v SPEAKER_2>Okay, wir sind nicht schuld, aber wir reden darüber. Ja, jetzt haben wir das Stecker-Thema aber abgearbeitet, oder?
+
+00:58:28.562 --> 00:58:29.522
+<v SPEAKER_1>Jetzt sind wir mit den Steckern.
+
+00:58:29.542 --> 00:58:53.602
+<v SPEAKER_2>Genau, dann wollte ich nochmal nachfragen mit den Hubs. Also wir haben ja nun vorhin ausführlich dargestellt, wie sich die Geräte anmelden. Aber dann haben wir so ein bisschen die Spur zu den Hubs verloren. Hubs ist auch erstmal ein Gerät. Aber was gibt es denn noch für Anforderungen an die Hubs? Weil die müssen ja dann auch noch dieses ganze 1-1- und 2-0-Gemisch verkraften.
+
+00:58:54.562 --> 00:59:31.502
+<v SPEAKER_1>Ja, also in der Regel verhält sich ein Hub erstmal mehr oder weniger transparent. Das heißt, er reicht Datenpakete. Jetzt mal angenommen, er ist selber angeschlossen an einen High-Speed-Host und hat auch ein High-Speed-Device hinten dran. Verhält er sich erstmal einigermaßen transparent. Er ist so transparent wie möglich. Er reicht entsprechende Pakete an die entsprechenden Devices durch. Er weiß ja, hat er die Initialisierungsphase mitbekommen, hat er die Setup-Pakete durchgerechnet. Er weiß ja also, was auf diesem Port, auf seinem Downstream-Port...
+
+00:59:31.522 --> 00:59:34.942
+<v SPEAKER_2>Aber so ein Hub hat schon so einen Stein drin, der wirklich mitdenken muss.
+
+00:59:34.962 --> 00:59:37.622
+<v SPEAKER_1>Ein bisschen Logik braucht der ja.
+
+00:59:37.642 --> 00:59:41.022
+<v SPEAKER_2>Der muss die ganze Konfiguration quasi nachvollziehen und nachbilden.
+
+00:59:41.162 --> 00:59:46.422
+<v SPEAKER_1>Er weiß auf jeden Fall, welches Gerät, sprich, welche ID an jedem seiner Ports hängt.
+
+00:59:47.422 --> 01:00:01.122
+<v SPEAKER_2>Und wie die konfiguriert sind. Und wenn er jetzt oben an einen USB 1.1-Port angeschlossen wird und unten hat er dann aber einen USB 2.0-High-Speed-Device dran, was geschieht dann?
+
+01:00:01.402 --> 01:00:13.122
+<v SPEAKER_1>Wenn ein High-Speed-Device sich an einem Full-Speed-Port irgendwie wiederfindet, dann muss es sich entsprechend verhalten.
+
+01:00:13.142 --> 01:00:15.802
+<v SPEAKER_2>Also das ist ja auch kein Problem, weil es erst mit Hubs auftritt.
+
+01:00:15.982 --> 01:00:32.762
+<v SPEAKER_1>Genau, das hast du sonst auch. Dann gibt es entweder die Möglichkeit, dass das Gerät sagt, naja, für Full-Speed-Anwendungen könnte ich dir irgendwie dieses Interface hier noch als Kompromiss anbieten. Aber eigentlich bin ich ein High-Speed-Device und so weiter. Also da gibt es dann viele Möglichkeiten.
+
+01:00:32.782 --> 01:00:38.202
+<v SPEAKER_2>Also so eine Festplatte wird auch noch funktionieren an Full-Speed, weil dann ist sie halt nur langsam, aber sie funktioniert noch.
+
+01:00:38.882 --> 01:00:39.782
+<v SPEAKER_1>In der Theorie ja.
+
+01:00:39.802 --> 01:00:52.742
+<v SPEAKER_2>Aber dein DVB-T-Receiver kann ja nicht die Luft drosseln und die Daten kommen ja immer noch genauso schnell an und kann das dann nicht machen und er sagt einfach nein. Okay, das heißt eigentlich müssen die Hubs nur die ganze Konfiguration nachvollziehen, oder gibt es da noch irgendwie...
+
+01:00:52.762 --> 01:01:22.922
+<v SPEAKER_1>Na, also der andere Fall ist eigentlich interessanter, wenn sozusagen der Hub an einem High-Speed-Host angeschlossen ist und aber auf der anderen Seite nur ein Full-Speed-Device vorfindet. Dann hat der Hub insofern ein Problem, als dass das Bus-Timing nicht mehr passt. Das heißt, er kriegt die Transaktionen, die er da übertragen muss, weil letztlich kann man es runterbrechen auf wie lange ist eigentlich ein einzelnes Bit auf dem Bus, wie lange darf das brauchen.
+
+01:01:22.942 --> 01:01:25.742
+<v SPEAKER_2>Ach so, weil der Host ja immer sagt, jetzt darfst du...
+
+01:01:25.762 --> 01:01:57.482
+<v SPEAKER_1>Ja und vor allem auch die Geschwindigkeit, mit der die Bits wirklich rumtoggeln auf dem Bus. Die ist halt bei USB, ich meine bei USB 2.0 entsprechend verkürzt worden, um halt diese höhere Bandbreite hinzukriegen. Immerhin 40 mal schneller. Das heißt letztlich haben sie so in etwa auch die Zeit, die ein Bit auf dem Bus lang sein darf, halt auch auf ein Vierzigstel reduziert. Was natürlich das Full-Speed-Device, wo das Problem stellt, dass es nichts mehr versteht, weil die Bits viel zu schnell sind.
+
+01:01:58.722 --> 01:02:00.142
+<v SPEAKER_2>Und wie löst man das?
+
+01:02:00.162 --> 01:02:36.942
+<v SPEAKER_1>Gelöst ist das mit sogenannten Split-Transactions. Die werden verwendet, also die werden vom Host gesendet an den Hub. Und dann wird gesagt, pass auf, hier an deinem Port so und so, dass da ja so ein uraltes Full-Speed-Device hängen. Ich schicke dir jetzt mal hier irgendwie entkapsuliert in einem USB 2.0 High-Speed-Paket. Schicke ich dir mal, was du diesem anderen Gerät da irgendwie mitteilen solltest. Und ich melde mich dann gleich wieder, wenn das durch ist. Und dann daraufhin geht der Hub irgendwie her, spricht Full-Speed, USB.
+
+01:02:36.962 --> 01:02:37.602
+<v SPEAKER_2>Langsam.
+
+01:02:37.622 --> 01:02:39.842
+<v SPEAKER_1>Langsam, dass es auch irgendwie versteht.
+
+01:02:39.862 --> 01:02:46.362
+<v SPEAKER_2>Das ist so ein bisschen wie Deutsche Welle Radio Podcast für Ausländer.
+
+01:02:46.382 --> 01:02:46.802
+<v SPEAKER_1>So.
+
+01:02:46.822 --> 01:03:09.162
+<v SPEAKER_2>Langsam gesprochene Nachrichten. Da wirst du auch wahnsinnig dabei. Das ist so Bundeskanzlerin Merkel hat anlässlich… Ist zum Deutsch lernen. Ist zum Deutsch lernen. Aber ich habe versucht, in der Welle zuzuhören, und du wirst wahnsinnig dabei. Das ist ganz schlimm. Aber für Ausländer ist super. Okay, aber so macht das jetzt der Hub.
+
+01:03:09.182 --> 01:03:16.122
+<v SPEAKER_1>So ist der Hub im Wesentlichen auch unterwegs. Genau. Das heißt, der spricht dann langsam und deutlich mit diesem Full-Speed-Device.
+
+01:03:16.142 --> 01:03:19.122
+<v SPEAKER_2>Und wenn der dann fertig ist, dann kommt der Host vorbei.
+
+01:03:19.142 --> 01:03:20.242
+<v SPEAKER_1>Dann kommt der Host zurück.
+
+01:03:20.262 --> 01:03:21.302
+<v SPEAKER_2>Seid ihr endlich fertig?
+
+01:03:21.322 --> 01:03:21.642
+<v SPEAKER_1>Genau.
+
+01:03:21.662 --> 01:03:22.882
+<v SPEAKER_2>Das hat ja gedauert.
+
+01:03:22.902 --> 01:03:38.262
+<v SPEAKER_1>Und dann kriegt der quasi inkapsuliert in einem High-Speed-Paket das, was der Host mit dem langsamen Gerät abgequatscht hat, zurück. Das nennt sich Split-Transaction und dafür wird es dann verwendet.
+
+01:03:38.282 --> 01:03:51.682
+<v SPEAKER_2>USB ist ja eigentlich auch so ein bisschen der moderne Zigarettenanzünder, weil man kann es ja super verwenden zum Laden von allen möglichen, aber da kommt ja Strom. Hattest du da nicht mal so ein Problem mit der Stromversorgung?
+
+01:03:51.742 --> 01:04:31.402
+<v SPEAKER_1>Nein, mit der Stromversorgung gibt es eigentlich ständig Probleme. Erstens ist die Spezifikation an der Stelle nicht ausreichend. Also die USB-Spezifikation sieht vor, dass ein USB-Port von einem Host zur Verfügung gestellt bis zu 500 mA bei 5 Volt liefern muss. Das sind in der Theorie also 2,5 Watt, was erstmal irgendwie nicht so wahnsinnig wenig klingt, aber in der Praxis dann doch irgendwann wird. Wenn man halt ein Gerät hat, das entsprechend, keine Ahnung, mehr als zwei, drei Audiowandler und so weiter hat und auch ein paar Audio-Endstufen oder so, dann kommt man da recht schnell an die Grenzen.
+
+01:04:31.802 --> 01:04:35.482
+<v SPEAKER_2>Also man bräuchte mehr für die Geräte?
+
+01:04:35.502 --> 01:04:43.422
+<v SPEAKER_1>Man bräuchte mehr für die Geräte, genau. Man müsste eigentlich, müsste man in der Spezifikation halt mindestens doppelt irgendwie vorsehen, um halt auch wirklich sicher zu sein.
+
+01:04:43.442 --> 01:04:45.782
+<v SPEAKER_2>Und das ist pro Gerät?
+
+01:04:45.802 --> 01:05:54.382
+<v SPEAKER_1>Nein, pro Port. Also wenn man dann einen Hub dazwischen hat, dann kann man diesem Hub wieder Strom geben. Das heißt, der kann dann natürlich irgendwie aus dem Steckernetzteil so viel raussaugen, wie er möchte. Das ist dann irgendwie nicht mehr so entscheidend. Aber pro Port sagt die Spezifikation bis zu 500 mA. Sprich auch so ein Hub, der halt mit vier Ports daherkommt, muss halt auch nur damit rechnen, dass er insgesamt zwei Ampere an seine Geräte los wird. Blöderweise ist es jetzt so, dass die Gerätehersteller, die sich irgendwie um die Hubs kümmern und dann halt auch hauptsächlich leider um die Computer kümmern, dass sie das zumindest am Anfang sehr, sehr stiefmütig behandelt haben, was dem USB von Anfang an irgendwie so einen komischen, instabilen, backlichen Ruf bestärkt hat. Es war nicht unbedingt die Spezifikation, die als solche eigentlich nicht schlecht ist, das kann man nicht behaupten, sondern es war mehr die Umsetzung, wie ernst die Hersteller es genommen haben, wirklich auch stabile 5V zu liefern, die auch wirklich mit 500 mA belastbar sind.
+
+01:05:55.442 --> 01:06:01.242
+<v SPEAKER_2>Und das ist der Grund, dass man immer noch Festplatten kauft mit USB-Adaptern, wo dann so ein Doppelstecker dran ist?
+
+01:06:01.262 --> 01:06:11.602
+<v SPEAKER_1>Genau, weil man dann irgendwie aus dem zweiten Port entsprechend nochmal so viel Saft rauszieht. Das ist alles höchst unbefriedigend, aber...
+
+01:06:11.622 --> 01:06:13.182
+<v SPEAKER_2>Hat sich das gebessert?
+
+01:06:13.202 --> 01:06:18.862
+<v SPEAKER_1>Meines Erachtens nicht so richtig. Es fängt so langsam an, dass die Hersteller da auch wirklich Wert drauflegen.
+
+01:06:18.882 --> 01:06:20.802
+<v SPEAKER_2>Betrifft das alle Hersteller?
+
+01:06:20.822 --> 01:06:33.862
+<v SPEAKER_1>Eigentlich ja. Also vor allem Apple hat sich da nicht gerade irgendwie mit Ruhm bekleckert in der Vergangenheit. Die haben wirklich an ihren USB-Ports gerade mal noch 4,5V geliefert bei 400 mA Belastung und so. Das ist wirklich kritisch.
+
+01:06:34.162 --> 01:06:36.102
+<v SPEAKER_2>Bei Laptops oder bei Desktop?
+
+01:06:36.122 --> 01:06:54.542
+<v SPEAKER_1>Bei Laptops weiß ich es hauptsächlich. Desktop habe ich nicht so viele. Aber da ist es wirklich schlimm gewesen, so muss man ganz ehrlich sagen. Und dann muss man da drum herumschiffen. Dann geht es an manchen Rechnern, an anderen geht es dann irgendwie nicht mehr und so. Das gibt halt alles irgendwie kein besonders stabiles Gefühl für diesen Bus, obwohl der Bus an sich eigentlich gut ist.
+
+01:06:55.802 --> 01:07:00.442
+<v SPEAKER_2>Aber du hast ja auch gesagt, die Spezifikation wäre da nicht sehr klar gewesen.
+
+01:07:00.462 --> 01:07:12.082
+<v SPEAKER_1>Doch, doch, die Spezifikation ist total klar. Sie ist einfach nur nicht... Also, was ich meinte ist, sie hätte von Anfang an mehr vorsehen müssen. Man hätte von Anfang an mehr Power einfach vorsehen müssen.
+
+01:07:12.102 --> 01:07:14.802
+<v SPEAKER_2>Wie viel würdest du so für Angemessenheiten so heutzutage?
+
+01:07:14.822 --> 01:07:42.982
+<v SPEAKER_1>Ja, ich denke mal, mit dem doppelten bis dreifachen, wäre mal irgendwie einiges an Problemen erstmal los. Also ich meine, Firewire, ich weiß nicht, ich kenne mich mit Firewire nicht so gut aus, aber ich glaube, die definieren irgendwie bis zu 30 Volt auf ihren Leitungen und dann auch noch ein paar Ampere und so. Also die haben richtig, in der Theorie zumindest, richtig Saft auf der Leitung. Ich meine, das ist wahrscheinlich auch nicht nötig, aber so ein bisschen mehr und vor allem irgendwie...
+
+01:07:43.002 --> 01:08:20.642
+<v SPEAKER_2>Das ist schon erstaunlich, was man mit Firewire alles so betreiben kann. Also wo du gerade Audio-Interfaces gemeint hast, also da habe ich schon relativ dicke, klobige Schinken da dran geballert. So und die liefen halt dann so, also mit vielen Ports und Linke-Lämpchen. Keine Ahnung, was sie jetzt konkret an Strom da gezogen haben, aber Stromversorgung, Firewire, habe ich relativ wenig negative Erfahrungen gemacht. Was ich ja auch gut finde bei Firewire im Vergleich zu USB, ist ja, dass man auch diese Topologie beliebig wählen kann. Also da kann ja sowieso jedes Gerät mit jedem anderen reden. Also solche Klimmzüge wie dieses USB on the Go sind da eigentlich gar nicht nötig.
+
+01:08:20.662 --> 01:08:54.382
+<v SPEAKER_1>Sind nicht nötig, auf der anderen Seite wird von jedem dieser Geräte entsprechend auch abverlangt. Die Logik wirklich komplett zu implementieren, was einfach dazu führt, dass diese Chips, die das unterstützen, Chips, die das sprechen, deutlich teurer sind als die, die man halt für USB so kriegt. Und ich meine, eine Maus mit Firewire zu bauen, ist halt einfach nicht drin, weil der Chip alleine irgendwie, keine Ahnung, ist in die Blume gesprochen, irgendwie 10 US-Dollar kostet und so. Das kann man nicht in eine Maus einbauen, das geht halt einfach nicht.
+
+01:08:54.802 --> 01:09:01.882
+<v SPEAKER_2>Okay, also das ist sozusagen auch der Hauptgrund, warum eigentlich nie wirklich so kleine, billige Firewire-Devices am Markt erhältlich waren?
+
+01:09:01.902 --> 01:09:26.402
+<v SPEAKER_1>Ja, Firewire hat meines Erachtens noch ein paar andere strukturelle Probleme. Man muss irgendwie, um erstmal die Spezifikation lesen zu dürfen von Firewire, muss man Mitglied in diesem Konsortium werden, dass irgendwie, ich weiß nicht, ich habe mal irgendwann die Zahl gehört, ich glaube 7000 US-Dollar im Halbjahr oder irgendwie so etwas doofes. Und vorher kriegt man noch nicht einmal mitgeteilt, wie das eigentlich funktioniert.
+
+01:09:26.422 --> 01:09:27.882
+<v SPEAKER_2>Und bei USB muss man das nicht tun?
+
+01:09:27.902 --> 01:09:39.902
+<v SPEAKER_1>Bei USB muss man das nicht tun, da kann man einfach auf usb.org gehen und kann sich die Spezifikation runterladen, die in erstaunlichem Ausmaß wirklich jedes Detail dieses Buses beschreibt. Also wirklich fantastisch. Man kann irgendwie...
+
+01:09:39.922 --> 01:09:43.502
+<v SPEAKER_2>Muss man Lizenzen zahlen, wenn man USB-Geräte baut?
+
+01:09:43.522 --> 01:09:54.182
+<v SPEAKER_1>Nein, erstmal nicht. Also man braucht irgendwie, man muss was bezahlen, wenn man so eine eigene USB-Wender-ID haben möchte, dann muss man bezahlen. Aber da bin ich, wie gesagt, nicht so richtig informiert.
+
+01:09:54.202 --> 01:10:07.202
+<v SPEAKER_2>Okay, aber das ist ja schon mal eine klare Aussage und auch ein guter Grund, warum so viel USB. USB ist ja ein super, super Bastelbus mittlerweile. Also der Name Universal ist, kann man mittlerweile sagen, ist recht verdient.
+
+01:10:07.522 --> 01:11:04.082
+<v SPEAKER_1>Ja, also man kann eine ganze Menge Dinge damit machen. Und ehrlich gesagt hat es seinen wackeligen, gebastelten Ruf so ein bisschen zu unrecht. Was wie gesagt zum einen darauf zurückzuführen ist, dass es halt am Anfang vor allem irgendwie mit dem Power nicht so richtig funktioniert hat und die Gerätehersteller nicht so richtig viel Wert darauf gelegt haben, das auch wirklich zu liefern, was sie da eigentlich müssten. Und zum anderen hat es sicherlich auch damit zu tun, dass die Host-Controller-Software, also sprich die Integration in die Betriebssysteme von Anfang an irgendwie echt komisch war. Zumal es ja wie gesagt nicht als Konkurrenz gedacht war zu Firewire, sondern mehr so als Ergänzung, mehr so als Ablösung für, ja wir hatten es schon davon, Zentronix und PS2 und so. Wurde das auch nicht so richtig ernst genommen. Das heißt, die haben sich da zurechtgepfuscht, dass es auch gar keine Art mehr hatte. Allen voran Microsoft, die bis heute ihren USB-Stacks voll nicht im Griff haben. Ist ganz schlimm.
+
+01:11:04.622 --> 01:11:06.642
+<v SPEAKER_2>Bis heute im Sinne von Vista?
+
+01:11:06.662 --> 01:11:31.282
+<v SPEAKER_1>Ja, bei Vista ist es glaube ich auch noch sehr viel besser geworden, aber XP ist ein Graus. Was läuft denn da falsch? Ich weiß nicht genau, was sie da falsch machen. Ich kenne mich damit nicht so gut aus, aber ich habe ab und zu damit zu tun, Leuten zu helfen, die entsprechende Implementierungen auf Windows machen. Und da gibt es wirklich schlimme Geschichten zu berichten. Das haben sie wirklich ganz arg vermisst.
+
+01:11:31.302 --> 01:11:37.182
+<v SPEAKER_2>Was meinst du mit Implementierungen auf Windows? Also die Treiber schreiben jetzt, die sich in das USB-Subsystem einklinken wollen.
+
+01:11:37.202 --> 01:12:32.082
+<v SPEAKER_1>Nicht nur die, sondern auch wirklich das USB-Subsystem selber. Aber das ist letztlich auch nur ein großer Haufen Software, der da läuft. Zurück zu den Anfängen von USB. Es wurde halt irgendwie als Ablöse von PS2 und so weiter, als Protokollspezifikation für Mäuse, Tastaturen oder vielleicht noch einen Drucker nicht so richtig ernst genommen und hatte dann einfach eine ganze Zeit lang einen schweren Ruf, ein schweres Problem damit, diesem Ruf gerecht zu werden, auch ein stabiler Bus zu sein, dem man seine Daten anvertrauen möchte in Form von Festplatten oder eben, weiß ich nicht, Audio- und Videodevices und so weiter. Was also, ich will nur damit ausdrücken, was nichts mit der Technik als solche zu tun hat, weil die an sich ganz gut definiert ist eigentlich und auch viele Möglichkeiten bietet, sondern mehr so daran gescheitert ist, am Anfang zumindest, dass die, wie gesagt, die Hersteller das nicht so richtig ernst genommen haben.
+
+01:12:33.302 --> 01:12:43.262
+<v SPEAKER_2>Aber so USB unter Linux, die Software, die funktioniert? Also, ich meine, bei Windows so, meinst du, das wäre alles immer noch kritisch? Wie sind dir die Erfahrungen bei anderen?
+
+01:12:43.282 --> 01:13:17.402
+<v SPEAKER_1>Also bei Mac OS muss ich sagen, bin ich eigentlich zufrieden so. Also es gibt schon ab und zu, wenn man Geräte ansteckt, die sich so nicht nach der Spezifikation verhalten, was gerade auch passieren kann, wenn man so selber irgendwie ein bisschen rumbastelt, dann kann es schon mal sein, dass ein Port einfach komplett tot ist und dann einfach nichts mehr tut. Dann muss man dann rebooten und dann geht es wieder. Bei Linux ist mir das ehrlich gesagt noch nie passiert. Das ist ganz erstaunlich. Also die haben wirklich einen USB-Stack dahin implementiert, der hat sich...
+
+01:13:17.422 --> 01:13:18.242
+<v SPEAKER_2>Rock-solid ist.
+
+01:13:18.262 --> 01:13:21.262
+<v SPEAKER_1>Ja, der hat sich gewaschen. Das ist ganz gut.
+
+01:13:21.282 --> 01:13:22.722
+<v SPEAKER_2>Aber bei Microsoft ist das schlimm.
+
+01:13:22.742 --> 01:14:01.902
+<v SPEAKER_1>Na ja, es funktioniert schon. Ich möchte jetzt nicht behaupten, dass es gar nicht geht und so, aber allein dieses... Ich meine, also Microsoft hat von Anfang an, hat von Anfang an aus rätselhaften Gründen den Bus irgendwie so betrachtet, dass an jedem USB-Port, den man an seinem Windows-Computer hat, erst mal ein eigener, ein komplett eigener Bus existiert und binden dummerweise ihre Driver, die sie ja immer installieren müssen auch, auch noch an den jeweiligen Port, an dem der Driver das erste Mal installiert wurde. Das heißt also, man steckt eine Festplatte ein oder eine Digitalkamera oder sonst irgendwas.
+
+01:14:01.922 --> 01:14:07.562
+<v SPEAKER_2>Die Terminologie haben wir, glaube ich, so noch gar nicht erklärt. Also ein Bus ist, ist das jetzt nicht der Stecker?
+
+01:14:07.582 --> 01:14:11.042
+<v SPEAKER_1>Genau, also das, was auf dem Rechner rauskommt, bezeichnen wir jetzt mal als Bus.
+
+01:14:11.062 --> 01:14:14.162
+<v SPEAKER_2>Aber es können ja auch zwei Stecker am selben Bus sein.
+
+01:14:14.182 --> 01:14:21.882
+<v SPEAKER_1>Es können zwei Stecker am selben Bus sein? Nö, also wenn du zwei Stecker an deinem Computer hast, die jeweils...
+
+01:14:22.982 --> 01:14:31.882
+<v SPEAKER_2>Nee, ich glaube auch so, also bei Desops, war es nicht sogar auch bei den Power Max noch so, da waren teilweise drei Stecker, aber es waren nur zwei Busse.
+
+01:14:32.382 --> 01:15:12.022
+<v SPEAKER_1>Ach so, dann haben sie intern noch mal einen Hub. Aber gehen wir mal davon aus, man hat einfach zwei USB-Plugs an seinem Windows Laptop und steckt jetzt eine Digitalkamera beispielsweise an den einen Stecker ein. Dann geht dieses Windows eben her, sieht erst mal etwas, was es nicht kennt und tritt dann nervös von einem Fuß auf den anderen, um dann zu entscheiden, dass es wahrscheinlich irgendwie Sinn macht, den User irgendwie entscheiden zu lassen, was denn jetzt passieren soll. Dann geht dieser Assistent los, installiert irgendwelche Wüstentreiber, bis dann irgendwann mal nach einer Weile diese Festplatte erkannt wird.
+
+01:15:12.282 --> 01:15:14.602
+<v SPEAKER_2>Er installiert Treiber, wo holt er sich die denn her?
+
+01:15:14.622 --> 01:15:19.462
+<v SPEAKER_1>Ja, aus seinem eigenen Windows 32 irgendwas Systemverzeichnis, keine Ahnung.
+
+01:15:19.482 --> 01:15:20.122
+<v SPEAKER_2>Ah so, ja.
+
+01:15:20.142 --> 01:16:47.442
+<v SPEAKER_1>Entsprechend meldet er die dann in der Registry an. Und das funktioniert dann insofern auch, also wenn man einmal durch dieses Chaos durchmanövriert ist, kann man diese Festplatte am selben Port auch wieder ausstecken, wieder einstecken. Das geht erstmal alles. Es sei denn, man kommt auf die absurde Idee, die Festplatte beim nächsten Mal an einen anderen USB-Port einzustecken. Dann geht nämlich alles von vorne los, weil Windows sich gemerkt hat, dass der Treiber fest mit dem Port vertratet hat, an dem man das erste Mal gesehen wurde. Das ist wirklich grauenhaft. Die sollten sich wirklich etwas schämen dafür, dass sie das nicht in den Griff gekriegt haben. Ich bin mir ehrlich gesagt nicht sicher, ich habe mir das auch nicht mehr angeguckt, weil ich es auch einfach nicht mehr sehen möchte. Wie sie es da gelöst haben, weiß ich nicht so genau. Aber unter XP bis zur aktuellen Version ist das einfach der Punkt. Es ist auch mit jedem anderen Driver so. Wenn man jetzt ein proprietäres Gerät anschließt, sprich eines, das keine USB-Klasse von sich aus spricht, dann muss man diesen Driver installieren, beim ersten Einstecken. Ich meine, soweit kann man das nachvollziehen. Man muss ihn aber jedes Mal wieder neu installieren, wenn man dieses Gerät an einen anderen Torch steckt. Oh, das ist ja wirklich schlimm. Die Apple und die Linux-Community haben ganz andere Dinge vorgelegt. Da funktioniert das auch ganz wunderbar.
+
+01:16:47.462 --> 01:16:50.002
+<v SPEAKER_2>Mit BSD-Stacks mal irgendwie Bekanntschaft geschlossen?
+
+01:16:50.222 --> 01:16:52.162
+<v SPEAKER_1>Nein, ehrlich gesagt überhaupt nicht.
+
+01:16:52.182 --> 01:16:54.042
+<v SPEAKER_2>War das jetzt eigentlich mein Getränk oder dein Getränk?
+
+01:16:54.062 --> 01:16:55.662
+<v SPEAKER_1>Das ist mein Getränk.
+
+01:16:55.682 --> 01:16:56.422
+<v SPEAKER_2>Hab ich auch noch eins?
+
+01:16:56.462 --> 01:16:58.362
+<v SPEAKER_1>Ich glaube nicht.
+
+01:17:01.182 --> 01:17:15.722
+<v SPEAKER_2>Was haben wir denn noch auf der Liste? Ja, fast gar nichts mehr. Was mich jetzt noch mal interessieren würde, ist, du machst ja auch USB selbst hands-on. Also hast du eigene Platinen entworfen.
+
+01:17:15.722 --> 01:17:36.742
+<v SPEAKER_1>Ich habe eine Firma mit einem Freund zusammen. Wir entwickeln unter anderem auch Geräte, die mit USB zu tun haben, hauptsächlich Devices. In dem Fall handelt es sich um Audio-Geräte, sprich die Geräte, die High-End-Audio auf USB bringen.
+
+01:17:36.762 --> 01:17:37.382
+<v SPEAKER_2>Das geht auch gut?
+
+01:17:38.222 --> 01:18:01.762
+<v SPEAKER_1>Ja, da gibt es technische Probleme. Mit Firewire hat man es natürlich irgendwo einfacher, wenn man in den Rahmen des gegenüberliegenden Gerätes einfach reinpixeln kann und sich dieses Gerät, das die Daten empfängt, keine großen Gedanken mehr machen muss, über wie die Daten da reinkommen. Also auch keine Pakete fangen müssen.
+
+01:18:01.782 --> 01:18:06.822
+<v SPEAKER_2>Sprichst du diese DMA, Direct Memory Access-Funktionalität von Firewire an?
+
+01:18:06.842 --> 01:18:20.162
+<v SPEAKER_1>Da hat man es natürlich einfacher, als Gerät Daten auf den Haus zu bringen. Wo hingehen, bei USB, man sich natürlich schon um jedes Paket, das da reinkommt und das da raus soll, kümmern muss.
+
+01:18:20.222 --> 01:18:24.182
+<v SPEAKER_2>Gerade so Latenz, wenn immer erst mal gefragt werden muss.
+
+01:18:24.202 --> 01:18:34.922
+<v SPEAKER_1>Ja, es hat vor allem auch mit Last zu tun. Also ich meine, auf aktuellen Rechnen ist das nicht mehr wirklich ein Thema. Aber so eine prinzipielle Baustelle, um die man sich kümmern muss, ist das auf jeden Fall.
+
+01:18:35.142 --> 01:18:42.722
+<v SPEAKER_2>Wie viel Latenz legt denn dann so ein USB 2.0 im High-Speed-Modus auf ein Audiogerät?
+
+01:18:42.742 --> 01:19:56.302
+<v SPEAKER_1>Das kommt ganz drauf an, wie man es implementiert. Aber ich meine, man kann durchaus, also ich meine, die Taktung, wann ein Gerät datenlos werden kann, die ist wie gesagt bei USB 2.0 High-Speed, ist die auf 125 Mikrosekunden geschrumpft. Das heißt, man kann irgendwie 8000 Mal pro Sekunde Daten abliefern und auch welche empfangen. Und wenn man nichts weiter tut in diesem Treiber, in einem Audiotreiber beispielsweise, als die Daten, die man empfangen hat, sofort wieder auf den USB-Bus zurückzugeben und auf Bedarf zu setzen, dann hat man irgendwie Latenzen im Bereich von wenigen Millisekunden, 2, 3, 4, irgendwie sowas. Was die Latenzen letztlich ausmacht, sind die Stacks, die dahinter liegen, also in dem Fall ein Core-Audio oder so, die das schließlich bearbeiten müssen und entsprechend mixen müssen, an die Applikation weitergeben müssen. Diese Applikation muss dann wieder andere Daten abliefern, das muss alles wieder rückwärts gehen und wieder über den Mixer usw. Und das sind dann eher die Punkte, an denen Latenzen entstehen. USB selber, wie gesagt, wenn man nichts weiter tut, als im House-Controller die Daten zu loopen und wieder rauszuschicken.
+
+01:19:56.322 --> 01:20:22.482
+<v SPEAKER_2>Dieser Audiobereich verdient ohnehin auch noch mal eigenen Podcasts. Das ist ja noch mal eine ganze Welt. Darauf wollte ich jetzt auch eigentlich gar nicht hinaus. Was meine Frage war, gibt es irgendwelche Tipps oder Hinweise, wenn jetzt jemand selber mal experimentell mit USB arbeiten will, wenn man da am besten so rangeht? Na ja, es kommt ganz drauf an, was man verwenden will, Development Boards, die man empfehlen kann.
+
+01:20:22.502 --> 01:21:00.802
+<v SPEAKER_1>Ja, es kommt ein bisschen drauf an, was man machen möchte. Es gibt halt irgendwie für USB-High-Speed gibt es nicht so wahnsinnig viele Chips. Da haben wir einen, mit dem wir gerne arbeiten. Das ist von der Firma Cypress ein Baustein. Der beherrscht das wunderbar, der kann USB 2 High-Speed. Die Frage ist, ob man es wirklich braucht. Wenn man weniger Daten übertragen möchte, tut es eine Full-Speed-Implementierung auch vollkommen. Da gibt es dann auch ganz viele Prozessoren von Atmel und so weiter. Wer sich dann ein bisschen mit Mikrocontroller-Programmierung auskennt und ein bisschen Basiswissen mitbringt.
+
+01:21:00.822 --> 01:21:02.542
+<v SPEAKER_2>Die machen das dann einfach selbst?
+
+01:21:02.562 --> 01:21:18.562
+<v SPEAKER_1>Ja, man muss dann schon seine Deskriptoren noch irgendwie sich zurecht basteln und die entsprechend hinlegen und so weiter. Man hat aber, wie gesagt, mit neuen Betriebssystemen eben auch die Möglichkeit, dann direkt zu gucken, wie der Host-Controller damit umgeht und so weiter.
+
+01:21:18.582 --> 01:21:27.502
+<v SPEAKER_2>Aber jetzt, um dieses Kontrollprotokoll richtig zu sprechen, also so ein bisschen Implementierung muss man ja schon machen. Also es liegt vielleicht nicht die Last des ganzen Stacks auf einem, aber man muss ja schon irgendwie auf die Antwort gehen.
+
+01:21:27.522 --> 01:21:54.942
+<v SPEAKER_1>Es kommt drauf an, welche Tools man verwendet. Da wir irgendwie seit Jahr und Tag eigentlich mit diesem High-Speed-Baustein ganz glücklich sind, habe ich mir jetzt auch längere Zeit irgendwie keine aktuellen USB-Development-Keys von der Stange mehr angeguckt. Aber ich weiß, dass es da so Tools gibt, mit denen man sich einfach in so einer GUI seine Deskriptoren zusammen klickern kann und die dann entsprechend da hoch lädt. Also das wird einem relativ einfach gemacht.
+
+01:21:54.962 --> 01:22:07.002
+<v SPEAKER_2>Das heißt, wenn man jetzt einfach mal so ein kleines Blinkenlight, so eine kleine Blinkenlight-Matrix über USB ansteuerbar machen will, da muss man nicht weit gehen. Ich meine, da braucht man jetzt auch keinen High-Speed.
+
+01:22:07.022 --> 01:22:12.662
+<v SPEAKER_1>Also da kann man wahrscheinlich so ein Hello World-Example, das da dabei ist, irgendwie kompilieren, ein bisschen dran rumbohren.
+
+01:22:12.682 --> 01:22:24.482
+<v SPEAKER_2>Mit so einer Art Mellesteinchen und so. Na gut, das ist dann wahrscheinlich auch ein Thema, was dann vielleicht doch eher in den Nachfolge-Podcasts für die Micro-Controller, die wir neulich hatten, mal zählt.
+
+01:22:27.802 --> 01:23:07.142
+<v SPEAKER_1>Also, wir haben diesen DVB-Receiver, den wir damals gebaut haben, den haben wir eine Weile lang verkauft, bzw. eine andere Firma hat das getan und einen anderen Brand. Und wir haben uns irgendwann darauf geeinigt, dass wir diese Entwicklung, so wie sie ist, unter einer BSD-Lizenz freigeben dürfen. Und wen das interessiert, der kann einfach auf canu.de gehen. Das schreibt sich qanu.de. Und da gibt es dann so einen kleinen Text und die Schallpläne zum Runterladen. Die Boardlay-Ausdruf dürfen wir nicht freigeben, aber die Schallpläne. Und entsprechend eben auch so eine kleine Tool-Stange.
+
+01:23:07.162 --> 01:23:09.602
+<v SPEAKER_2>Das umfasst den vollständigen DVB-T-Receiver?
+
+01:23:09.622 --> 01:23:10.122
+<v SPEAKER_1>Genau.
+
+01:23:10.142 --> 01:23:13.622
+<v SPEAKER_2>Das heißt, man kann sich mit den Plänen quasi selber eine Platine designen?
+
+01:23:13.642 --> 01:23:14.522
+<v SPEAKER_1>Kann man tun, ja.
+
+01:23:14.542 --> 01:23:17.162
+<v SPEAKER_2>Also ein USB 2.0 DVB-T-Receiver ist.
+
+01:23:17.182 --> 01:23:17.482
+<v SPEAKER_1>Genau.
+
+01:23:17.502 --> 01:23:19.142
+<v SPEAKER_2>Aber da brauchen wir ja auch noch Treiber dafür, oder?
+
+01:23:19.162 --> 01:23:56.782
+<v SPEAKER_1>Die Treiber haben wir damals irgendwie auch schon ins Linux TV Repository entsprechend eingecheckt. Das heißt, da gibt es Treiber. Die kann man sich einfach ranhängen. Spricht, wenn man sich die Firmware queren, die dann auch dabei sind, wenn man sich die mal durchliest, dann kann man das Protokoll auch sehen, was da gesprochen wird. Und wenn man sich an diesem Protokoll orientiert und einen DVB-Receiver baut, der dazu entsprechend kompatibel ist, dann wird das auch sofort unterstützt von dem Linux-Treiber. Und dann kann man auch loslegen und sich die ganzen Linux-Tools, die es uns wirklich gibt, auf dem Fernseher gucken.
+
+01:23:56.802 --> 01:23:58.242
+<v SPEAKER_2>Habt ihr auch einen Micro-Controller auf diesem?
+
+01:23:59.002 --> 01:24:03.262
+<v SPEAKER_1>Ja, also dieser USB-Controller hat auch eine Micro-Controller-Funktionalität.
+
+01:24:03.282 --> 01:24:08.522
+<v SPEAKER_2>Ach so, okay. Das ist also im Wesentlichen dieser USB-Controller, die ihr nehmt, und der hat so ein bisschen Code, und da drin ist es dann implementiert.
+
+01:24:08.822 --> 01:24:10.222
+<v SPEAKER_1>Alles klar.
+
+01:24:10.242 --> 01:24:11.102
+<v SPEAKER_2>Verstehe.
+
+01:24:11.122 --> 01:24:13.122
+<v SPEAKER_1>Also, wenn das interessiert, da kann ich das gerne angucken.
+
+01:24:13.342 --> 01:25:36.682
+<v SPEAKER_2>Genau, dann kannst du mir gleich noch mal die Links zusammensuchen, dann pack ich das alles mit rein, in die Beschreibung von diesem Podcast. Welcher ist Chaosradio Express 86 und der nun langsam zum Ende kommt, wenn uns nicht noch was Kluges einfällt. Ich denke, wir haben das Thema jetzt auch ganz gut beackert. Da sage ich schon mal vielen Dank, Daniel, für die Ausführung. Und ja, dann bleibt mir eigentlich nur noch, das Übliche anzukündigen und mitzuteilen, nämlich meine Hoffnung, meiner Hoffnung Ausdruck zu geben, dass auch diese Sendung informativ und unterhaltsam war, wie sie jene bei Chaosradio Express sein sollte. Vielleicht auch ist, das weiß ich nicht. Das entscheidet ihr. Und je nachdem, wie euer Votum ausfällt, erwarte ich eure Kommentare entweder im Blog blog.chaosradio.ccc.de, im Post zu dieser Sendung. Oder ihr schreibt uns eine kleine E-Mail chaosradio.ccc.de, wie auch immer, was auch immer da kommt. Es wird von uns und von mir im Besonderen gerne gelesen und bei konkreten Fragen auch beantwortet. Denn so soll es sein, ein interaktives Medium ist auch ein Podcast, auch wenn hier so ein großer Datenstrom in die eigene Richtung geht und der Datenstrom in die andere Richtung nicht ganz so breit ausfällt. Aber das ist ja egal, Hauptsache es macht Spaß. Das war's bei Chaosradio Express und wir hören uns bald wieder auf diesem Kanal und ich hoffe, ihr seid dann wieder mit dabei.

@@ -1,0 +1,1171 @@
+WEBVTT
+
+00:00:00.520 --> 00:00:45.760
+<v SPEAKER_1>We need to be keenly aware of the startling advances in the sophistication of eavesdropping and surveillance technologies with their capacity to easily sweep up and analyze enormous quantities of information and then mine it for intelligence. And this adds significant vulnerability to the privacy and freedom of enormous numbers of innocent people at the same time as the potential power of those technologies grows. Those technologies do have the potential for shifting the balance of power between the apparatus of the state and the freedom of the individual in ways that are both subtle and profound.
+
+00:01:13.358 --> 00:05:15.518
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 130 und ja, mein Name immer noch Tim Pritlove und obwohl ich allen versprochen hatte, jetzt mal ein bisschen kürzer zu treten, nehme ich trotzdem noch Sendungen auf, weil ich kann es ja eh nicht lassen. Denn es gibt auch mal wieder einen guten Anlass, nämlich ein Thema, was ganz oben auf meiner Liste stand und noch steht, bis diese Sendung zu Ende ist, nämlich Version-Control oder um ein bisschen genauer zu sein, vor allem der Aspekt der verteilten Versionskontrolle, Distributed Version-Control, DVCS-Systeme, ganz heißes Basswort, man verbrennt sich fast die Finger nach dran, alle reden davon. Ja und ihr hört schon im Hintergrund kichert leise der Hucke, hallo Hucke, guten Tag. Du hast dich viel mit dem Zeug rumgeschlagen in den letzten Wochen und Monaten und deswegen dachte ich, reden wir doch mal darüber, was denn eigentlich so abgeht. Vielleicht mal ein bisschen erst wie gewohnt den Blick in die Vergangenheit. Versionskontrolle ist ja in dem Sinne nichts Neues, der Bedarf, den gab es wohl schon irgendwie schon immer und es gab auch die verschiedensten Ansätze, das zu lösen. Ein besonderes Problem ist halt Versionskontrolle in der Software- entwicklung. Also Versionskontrolle wird an vielen Stellen eingesetzt, auch so, was weiß ich, Systemadministratoren haben natürlich auch so ihre Konfigurationsdateien, die sie gerne, ja nicht wahr, ein bisschen im Überblick haben will, weil da kann sich natürlich so eine Änderung auch ganz böse auswirken und natürlich ist dem auch so bei Programmierern, Software wird modifiziert, man fügt irgendwelche Änderungen ein und dann läuft die ganze Scheiße halt nicht mehr und wenn man dann nicht in der Lage ist, zumindest definiert zurückzugehen und zu sagen, ok, ich gehe jetzt zumindest erst mal wieder an den Ort, von dem ich wusste, dass es lief oder wo ich zumindest die Fehler kannte. So und das ist ja dann auch das, was dann eben heute zu den üblichen Versionierung führt. Da hat man dann die 1.3 und dann kommt schon die 1.4 raus, aber für die, die noch 1.3 benutzen, gibt es dann die 1.3.1 und damit man eben solche Sachen auch machen kann, dafür gibt es Versions-Kontrollsysteme. Ja, daran gibt es aber auch eine ganze Menge. Mittlerweile, muss man sagen, lange, lange Zeit gab es Monokultur von CVS, werdet ihr alle schon mal was gehört haben. Das hat sich eigentlich so ein bisschen als der, ich sag mal, der Kupfer-Standard durchgesetzt und dann passiert irgendwie lange Zeit nichts und jetzt ist auf einmal unheimlich viel Bewegung in die ganze Geschichte gekommen. Ich kann mich noch erinnern, jetzt kann ich mal wieder von Klondike und damals mit Fick erzählen, als man mit seinen 2x80 Megabyte Festplatten noch der Held der Straße war, da gab es immerhin schon unter Unix so erste zarte Pflänzchen, kann ich behaupten, dass ich die jetzt zu viel zum Einsatz gebracht habe, aber es fing irgendwann mal an unter Unix mit so Sachen wie SCCS, das habe ich wenig benutzt, nein das habe ich gar nicht benutzt, RCS habe ich wenig benutzt und das war schon so ein bisschen der Nachfolger, wenn ich mich richtig erinnere, war so das erste System, was eigentlich überhaupt mit dieser Idee von Versionen ankomme, halt gar nicht Unix, sondern eben VMS, die alten Wechselkisten, die hatten das auch gleich im Im Dateisystem drin, das heißt, es war ein Systemfeature, wenn man irgendwie eine neue Datei geschrieben hat, dann gab es automatisch die letzte Variante als vollständige Kopie und dann eben auch immer automatisch direkt im Zugriff habe ich irgendwie foo.txt, dann gab es halt irgendwie foo.txt, Komma 1 und das war dann eben die Version danach und Komma 2 und das hat sich dann irgendwie immer so, glaube ich, nach hinten durchnummeriert oder so.
+
+00:05:15.538 --> 00:05:16.458
+<v SPEAKER_3>Vor meiner Zeit.
+
+00:05:16.698 --> 00:05:51.778
+<v SPEAKER_2>Vor deiner Zeit, auch ein bisschen vor meiner Zeit, weil ich habe eigentlich mit Form S nicht wirklich aktive Erfahrungen gesammelt, da müssten wir vielleicht nochmal Hans einladen, mal in die Vergangenheit flicken, vielleicht auch nochmal eine nette Idee, wie auch immer. Darum soll es nicht gehen. Nur halt so viel von diesen uralten Systemen findet sich eben auch heute noch immer noch wieder. Einerseits natürlich so bei der Begrifflichkeit und dann eben auch so Sachen wie das Komma am Ende als Konvention, um Versionen abzutrennen, findet man dann auch immer ganz viel. RCS, da habe ich mich auch vor kurzem nochmal versichert, ist halt auch noch beliebt.
+
+00:05:52.038 --> 00:06:31.078
+<v SPEAKER_3>Ja, also echt gerade so bei diesen System-Admins, die ihre Server-Administren und Config-Files, dafür wird das tatsächlich noch relativ häufig verwendet. Und ich habe das auch im Prinzip ausschließlich bisher dafür verwendet, wo ich mir dachte, die RC-Conf jetzt von dem Server, da will ich jetzt mal kurz was mit der Firewall und hier und da, und damit ich noch ein Backup habe. Ja, also natürlich ist ja immer so die Standardvariante der Versionierung. Ich kopiere mir das File mit einem Underscore-Backup hintendran und so, aber irgendwann dachte ich mir halt nach ziemlich vielen Iterationen und so, nutze ich auch mal dieses RCS und das halt auf dem Mac dabei direkt, ja, so selbst auf dem modernen.
+
+00:06:31.098 --> 00:06:36.358
+<v SPEAKER_2>Also du hast das Light einfach immer auf Underscore-Final, Underscore-Really-Final.
+
+00:06:36.378 --> 00:06:49.438
+<v SPEAKER_3>Genau, und jetzt aber wirklich. Genau, genau so. Das machen viele ja auch immer noch so, also und genau, dann dachte ich, okay, das ist gleich dabei hier und da, also es ist überall deployed noch, ich glaube bei FreeBSD ist das auch gleich noch aus.
+
+00:06:49.458 --> 00:08:23.678
+<v SPEAKER_2>RCS ist einfach Standard, weil man heute einen Unix hat, auch auf dem Mac und so weiter, das ist halt einfach dabei, weil das kann man, das sind Miniaturprogramme im Vergleich zu dem, was man heute so gewohnt ist, das ist ja Pippi-Facts. Und der Vorteil, deswegen benutzen eben auch die SysAdmins RCS, weil man da keine neuen Verzeichnisse für anlegen muss. RCS findet einfach in-place an der Stelle statt, das heißt, ich habe Versionen einer Datei und die sind dann eben einfach diese Komma-Varianten, liegen da rum, bloß man hat eben ein definiertes Toolset, mit dem man damit umgehen kann. Sprich, wenn andere Leute darauf stoßen und die sehen halt diese Komma-Dateien, dann wissen sie schon, aha, alles klar, da ist RCS am Start und das ist natürlich super. Weil nicht selten, gerade jetzt bei Systemadministrationen, hat man natürlich auch so Konstellationen, dass wenn da so ein Verzeichnis ist und angelegt wird, dass das schnell so Seiteneffekte haben kann für Backup-Systeme, was weiß ich, wird nicht gebackupt oder wird gebackupt, obwohl es nicht gebackupt werden sollte, nicht wahr? Mit so Punktverzeichnissen werden dann mal gesehen, mal nicht gesehen. Also manchmal ist eben auch weniger mehr und von daher halten sich eben auch solche Sachen ganz gut. Und ich denke, dass auch die ganzen alten Klötze, die wir jetzt loswerden wollen, wie CVS zum Beispiel noch länger unterwegs sein werden auf diesem Planeten, als uns das lieb ist, die OpenBSD zum Beispiel wird immer noch mit CVS entwickelt. Man mag es gar nicht glauben. Wann bist du denn das erste Mal auf Versionssysteme eigentlich gestoßen? Erzähl doch mal ein bisschen was zu dir, Hoke. Was machst du denn eigentlich? Du bist ja auch so ein bisschen Hacker bei Exzident, oder?
+
+00:08:23.698 --> 00:09:31.658
+<v SPEAKER_3>Ja, naja, also eigentlich so... Mein erster Rechner war ein Mac damals mit 14 Jahren. Genau, da kamen meine Eltern eben auf die Idee, Kinder brauchen einen Computer. Haben sie irgendwie im Fernsehen wahrscheinlich nach der Wende irgendwo gehört. Dann haben sie gefragt, willst du nicht einen Computer haben? Und meinte ich, oh nee, was soll ich damit? Weil meine Freunde hatten alle blöde Computer. Und dann hatte ein Freund von mir einen Mac bekommen. Und der Mac war der erste Computer, wo ich dachte, boah, ja, will ich haben. Sondern gab es halt keine Spiele. So haben wir halt statt Spielespielen, haben wir dann mit Freehand und Direktor rumgespielt und irgendwie Grafikkram gemacht und unsere Vorträge in der Schule. Und so was, Ausdrucken und so alles gleich mit dem Rechner gemacht und wir waren natürlich totalen Helden. Weil irgendwie alles total professionell und schick aussah. Und dann habe ich eigentlich eine ganze Zeit lang nur Gestaltung ausschließlich gemacht. Und eigentlich bin ich auch so durch einen Zufall in den CCC gerutscht. Und da wuchs dann irgendwie mit der Zeit immer mehr so das Interesse zu wissen, wie die Dinge eigentlich dahinter funktionieren. Weil immer, wenn irgendwas nicht geht, so denkt man sich ja, hm, schade. Oder man guckt halt nach, ob man da nicht irgendwie ein Hebel oder ein Schräubchen findet, wo man mal selber drehen kann, um es wieder zum Funktionieren zu bringen.
+
+00:09:31.658 --> 00:09:34.878
+<v SPEAKER_2>Das ist ein bisschen komisch, wenn man den Hausnörd anrufen muss.
+
+00:09:35.138 --> 00:09:58.278
+<v SPEAKER_3>Ja genau, das habe ich noch nie gemacht. Und auch damals, als ich hier Internet so, ok, ich meine, Internet habe ich mir so ein PC-Modem bestellt bei 1&1, da habe ich so in meiner Naivität, in meiner Jugendlichen, dachte, das wird schon mal weggehen. Gab es natürlich keinen Treiber oder so. Dann musste ich halt auch selber herausfinden, wie ich da so einen AT, dieser AT&T-Befehl, oder wie heißen die? AT.
+
+00:09:58.298 --> 00:09:59.138
+<v SPEAKER_2>ATTENTION heißt das.
+
+00:09:59.158 --> 00:10:00.378
+<v SPEAKER_3>Genau.
+
+00:10:00.398 --> 00:10:01.958
+<v SPEAKER_2>Ich bin voll vom Thema, aber das ist super.
+
+00:10:01.978 --> 00:11:33.738
+<v SPEAKER_3>Genau, so. Und dann fing das halt so an mit irgendwie, jetzt gucke ich mal, wie es abgeht. Jetzt bin ich halt Programmierer hauptsächlich und Systemadministrator, also voll irgendwie die Laufbahn, haben wir komplett gewechselt. Und eigentlich hat das eben dann auch so, als ich angefangen habe, Webseiten zu machen, das war glaube ich so die Übergangsphase zum Programmieren auch. Da hatte ich dann das erste Mal mit Subversion tatsächlich zu tun, also CVS habe ich nur benutzt, um mal Software auszuchecken, irgendwelche Open-Source-Projekte, um die auf die Platte zu holen. Und dann, als ich das erste Mal mit einem Freund irgendwie zusammen eine Webseite oder so, ein Webseitenprojekt gemacht habe, da ging es dann halt los, ey, lass mal hier das Subversion benutzen, mhm, was ist denn das, Version-Control-System und so und dann, ja, so richtig angefreundet hatte ich mich da am Anfang noch nicht mehr, war eher so, hm, ja, aus der Not heraus, weil er das jetzt benutzt hat und wenn ich das nicht benutzt hätte, hätte ich nie mitmachen können. So, und naja, dann habe ich halt mit SVN so angefangen, rumzumodeln, aber halt auf einem sehr niedrigen Niveau, also wirklich nur auschecken, Änderungen wieder hinzufügen und zurück kommitten, keine Branches, keine Merges, äh, wenn Konflikte gab, immer ihm gesagt, hier, du, mach du mal das, so war ich keine Ahnung von und das kam dann halt erst mit den Jahren so, also jetzt so zuletzt bei meinem derzeitigen Arbeitgeber, äh, da hatten wir halt so ein Projekt so mit richtig vielen Leuten, 10, 15 Leuten, die an einem Projekt gearbeitet haben und da hatte ich dann so das erste Mal auch so richtig mit Subversion zu tun eigentlich, davor war das wirklich alles sehr low-level.
+
+00:11:33.758 --> 00:13:22.258
+<v SPEAKER_2>Ja, und da sollten wir vielleicht an der Stelle nochmal jetzt so ein bisschen zusammenfassen für die Leute, die mit Versionskontrolle noch überhaupt nicht so richtig zusammengekommen sind, also wir haben es schon erwähnt, CVS. Also CVS ist so das, was irgendwann mal der heiße Scheiß war und tatsächlich ist es im Prinzip der Nachfolger von dem eingangs schon erwähnten RCS. Während RCS Versionierung im selben Verzeichnis gemacht hat und einfach auch nirgendswo anders, also es keinerlei Vorstellungen gab von irgendwie Internet oder Server, weil das gab es damals einfach noch nicht bzw. hatte noch nicht mal auch nur im Ansatz irgendeine Bedeutung, wie das heute hat, das ist gar nicht mehr vergleichbar. CVS ist schon ein System, was davon ausging, dass man mit mehreren Leuten an einer Datenbasis arbeitet, also idealerweise halt beim Programmieren, wobei das eben auch noch nicht unbedingt jetzt gleich Internet bedeutet, sondern damals hat man ja vor allem multiusermäßig an einem Unix-System gearbeitet, da hingen halt viele Terminals dran bzw. man hat sich eben über die Modems eingewählt, man bevölkerte einfach diesen Rechner, als wäre er das Internet und jeder hatte seinen eigenen User-Account und das CVS war einfach in der Lage, ein zentrales Repository, wie man das so schön nennt, vorzuhalten, wo eben alle diese Dateien und Verzeichnisse, also im Prinzip eine komplette Baumstruktur von Dateien abgelegt wurden und den Zugriff darauf zu regeln, das heißt Zugriffsrechte und es gab dann eben einen Satz von Operationen, mit dem man eben in dieses Repository reinschreiben konnte. Später ging das dann eben auch über SSH-Tunnel und so weiter, dass man das so umgebogen hat. Das heißt, CVS selber ist überhaupt nicht Internet-aware, aber man kann es eben auch über Internet machen, so muss man das glaube ich sehen und naja.
+
+00:13:22.278 --> 00:14:23.018
+<v SPEAKER_3>Es gibt ja auch noch zwei, drei andere ganz wichtige Unterschiede. Also RCS war halt vor allen Dingen wirklich, wie du schon sagtest, auf Single-User ausgelegt. Das heißt, so ein typisches Attribut, was man auf Version-Control-Systeme anwendet, ist halt, wie werden sozusagen Konflikte behandelt. Da gibt es halt Locking, also den Zugriff auf Files einfach zu locken, zu sperren. Das heißt, wenn ich so einen Fall aufmache, kann niemand anderes das gerade schreiben. Und alle späteren Systeme haben dann eben auf Merging gesetzt. Das heißt, alle Leute konnten gleichzeitig schreiben und committen und dann, wenn es halt Konflikte gab, musste man die halt dann irgendwie auflösen und RCS war eben halt Locking. Das heißt, wenn du einen Fall auf deinem Rechner halt aufmachst, dann ist das gelockt. Kein anderer kann reinschreiben, wenn du es committest, dann ist es Read-Only. So, du musstest zum Schreiben erst wieder auschecken, kannst dann editieren und dann wieder reinspeichern. So, das war natürlich so für kollaboratives Arbeiten doof. Dann war noch der zweite Punkt, dass es halt wirklich auf ein...
+
+00:14:23.038 --> 00:14:29.398
+<v SPEAKER_2>Aber kollaboratives Arbeiten war eigentlich ein Fehler. Aber zumindest zuverlässig erkannt wurde, wenn man die Tools benutzt hat.
+
+00:14:29.698 --> 00:14:54.038
+<v SPEAKER_3>Und dann ist halt noch so der Punkt, dass RCS halt sich um einzelne Files gekümmert hat. Also du hast sozusagen pro File ein Versionsfile gehabt, und bei späteren Systemen und auch bei CVS war das dann schon anders. Da hat man sozusagen das ganze Projekt als, oder das ganze Projekt versioniert, also den Tree und alles, was dazugehört und nicht halt so auf einzelnen Files begrenzt.
+
+00:14:54.178 --> 00:14:57.538
+<v SPEAKER_2>Das ist die Definition eines Repositories, eines Ortes, wo Sachen liegen.
+
+00:14:57.758 --> 00:15:24.738
+<v SPEAKER_3>So, und dann, ja, wie gesagt, dann haben sie halt irgendwie das angefangen und erst 1994, als das dann eben auch mit dem Internet so losging, da haben dann so zwei Leute von Cygnussoft CVS über TCPIP implementiert und das waren auch die Leute, die später dann SVN angefangen haben. Ja, also, ich weiß nicht, wann ist denn CVS überhaupt rausgekommen, irgendwie 80er oder so?
+
+00:15:24.758 --> 00:15:31.438
+<v SPEAKER_2>Gute Frage, nee, ich glaube, das ist auch erst so Anfang der 90er entstanden. Aber genau, ich guck mal kurz. Was sagt die allwissenden Müllhalde?
+
+00:15:31.458 --> 00:15:34.758
+<v SPEAKER_3>1984 bis 1985.
+
+00:15:34.778 --> 00:15:37.598
+<v SPEAKER_2>Tatsächlich, echt? So, allange gibt es CVS schon.
+
+00:15:37.618 --> 00:15:41.638
+<v SPEAKER_3>Da muss ja schon 80er gewesen sein.
+
+00:15:41.658 --> 00:15:59.538
+<v SPEAKER_2>Cygnus ist ja auch nicht irgendeine Bude, sondern das ist der erste wirkliche Open-Source-Commercial-Spin-Off, die sich auch des GCCs angenommen haben und viele andere coole Sachen gemacht haben. Da waren so die emsigen Hacker am Start, die vor allem aus vielen Werkzeugen erst mal benutzbare Werkzeuge gemacht haben.
+
+00:15:59.558 --> 00:16:14.418
+<v SPEAKER_3>Das wirklich Interessante war eben sozusagen an CVS, dass dann so auch gerade eben, als das Internet überhaupt erst da war, dann auch so dieser Bedarf war, kollaborativ da wirklich in großen Mengen zu arbeiten über TCP, dass es Merging war das erste Mal.
+
+00:16:14.898 --> 00:16:18.218
+<v SPEAKER_2>Und immer mehr Programmierer und immer mehr Programmierer, die im Team arbeiten.
+
+00:16:18.238 --> 00:16:22.338
+<v SPEAKER_3>Genau. So. Naja, und das hat halt...
+
+00:16:22.358 --> 00:18:12.678
+<v SPEAKER_2>Aber CVS nervt. Also wenn man mit CVS arbeitet, ist das wirklich total anstrengend. CVS hat zwar damals in Riesenproblemen behoben überhaupt erst mal und war im Vergleich zu RCS natürlich die Tür, die man öffnet und dann kam irgendwie das Licht. Aber wie das immer so ist, die Bedürfnisse wachsen, die Ansprüche steigen. Und bestimmte Dinge waren halt einfach voll der Schmerz bei CVS. Also was glaube ich jeder bestätigen kann, ist so was wie, man hat da so seine Verzeichnisse und irgendwann so eine Verzeichnisstruktur will man halt auch mal ändern. Da hat man einfach festgestellt, dass der Ordner da an dem Ort, wo er gerade ist, einfach nicht an der richtigen Stelle ist. Man will das neu organisieren und CVS bietet dafür schlicht keinerlei Möglichkeiten, sodass man sich dann eben auf so Hacks berufen musste und dann in das Repository quasi auf Serverseite dort die Verzeichnisse neu organisiert hat, ohne dass es dann Teil des Systems ist. Also es gab dazu keine Historie. Man konnte diese Maßnahme auch nicht rückgängig machen oder so. Man ordnete es einfach nur anders. Sprich die Sichtweise von CVS. Während RCS halt immer aufs File geguckt hat, hat CVS immer auf den Ordner geguckt. Und alles, was über einen Ordner hinausging, ließ sich nicht mehr verbinden. Und Subversion war dann eben so das Durchatmen nach zehn Jahren, wo man dann irgendwie gesagt hat, so jetzt wollen wir mal CVS so neu schreiben, wie wir es schon immer haben wollten. Und die größten Schmerzen, wie zum Beispiel das mit dem Ordner generell halt das Umbenennen, das Verschieben von Ordnern, aber eben auch so Tatsachen wie RCS und CVS, konnten dann richtig nur mit Textdateien arbeiten und mit Subversion konnte man dann eben auch problemlos Banneries einschicken, was weiß ich, JPEG-Filme und so weiter.
+
+00:18:12.698 --> 00:19:13.058
+<v SPEAKER_3>Genau, bei CVS ist es halt auch so die Sachen, dadurch dass sie das erste Kollaborative waren, die haben halt wirklich tatsächlich so einfach zehn Jahre, war einfach kein anderer da so und es gab halt irgendwie so viele Probleme, eben das Rename und so weiter, dass das eben dann auch die History von den Files verloren gegangen ist, wenn du den Fall umbenannt hast und was gab es hier noch? Ich habe mir da so ein paar Sachen noch aufgeschrieben, als ich das noch mal studiert hatte, um je mehrfach an den Kopf gefasst und dachte, das kann ja gar nicht wahr sein, dass Leute da zehn Jahre das ausgehalten haben. Zum Beispiel waren ja auch Commits nicht atomic, also non-atomic, wie man so schon sagt. Das heißt, es kann sein, dass so die ersten Teile eines Commits durchgehen und dann entsteht ein Konflikt und dann bricht er in der Mitte ab und dann ist halt so die eine Hälfte schon drin und die andere Hälfte noch nicht und dann muss man das erst mal die erste Hälfte wieder rauspulen, damit man dann wieder den Konflikt resolven kann und dann alles noch mal zusammen und dann kann es aber sein, dass später noch mal ein Konflikt kommt und dann wieder von vorne und so weiter und so fort, wo dann eben auch Subversion an der Stelle auch schon gesagt hat, so entweder alles geht durch oder nicht.
+
+00:19:13.338 --> 00:20:53.978
+<v SPEAKER_2>Genau, beziehungsweise Subversion hat dann auch aufgeräumt mit dieser Problematik. Also angenommen, also häufig sind ja Änderungen nicht nur Änderungen an einer Datei, sondern man hat ja mehrere Änderungen in mehreren Dateien, die in direktem Zusammenhang stehen. Wenn man die Änderungen in der einen rückgängig machen muss, man auch die Änderungen in der anderen rückgängig machen, weil sonst passt es nicht mehr zusammen. Jetzt konnte ich zwar bei CVS sagen, okay, alles klar, diese drei Dateien haben sich geändert, das will ich jetzt einchecken, trotzdem hat CVS jede Datei für sich eingecheckt und die hatten so miteinander erstmal nichts zu tun, außer dass das zum gleichen Zeitpunkt stattgefunden hat. Also man konnte definierte Rollbacks vielleicht unter Umständen dadurch machen, dass man sich auf eine Zeit bezogen hat, aber man hatte eben diesen Kontext als solchen nicht. Und bei Subversion war es dann das erste Mal so, dass man sagen kann, diese drei Dateien, diese Änderungen, die packe ich jetzt in einen Commit, also in eine, das muss man auch gleich nochmal erklären, also sozusagen ich übergebe das dem Versionskontrollsystem, hier hat sich geändert, speichere das mal als eine Änderung im Repository. Ja, das ist also ein großer Wandel gewesen, weg von Versionsnummern pro der Unterteil hin zu einer Revisionsnummer pro Repository und die schreitet halt immer weiter hoch. Also ich muss sagen, Subversion ist insofern eigentlich auch eine große Leistung, als dass es das Prinzip, was man bei CVS mal haben wollte, naja vollendet hat. Also das ist jetzt mal nicht sagen, aber da ist alles das, was wirklich die großen Fehler waren von CVS, ist mit Subversion wirklich ausgemerzt worden und es ist nicht so, dass man damit nicht arbeiten könnte.
+
+00:20:53.998 --> 00:21:33.158
+<v SPEAKER_3>Genau, also ich konnte ja dann damit auch arbeiten, so nach den Anfangs-Schwierigkeiten, wenn man halt noch nie mit so einem Version-Control-System gearbeitet hat, wo halt bewusstes Eingreifen überhaupt auch notwendig ist. Zum Beispiel könnte man ja Time Machine auf dem Mac jetzt auch als Versioning-System in Anführungsstrichen bezeichnen, wo man sich halt nicht darum kümmern muss, aber trotzdem irgendwie in der Zeit zurückgehen kann. Aber bei SVN, so alle haben ja damals gesagt, CVS, nee, mach hier SVN und so, ist viel besser. Und es geht, also nach dem ersten Lernen der Konzepte, so wie sich das so eben mit Commit und Rollback und so, diese ganzen Geschichten, muss man ja vielleicht, sollten wir die dann auch gleich nochmal erklären.
+
+00:21:33.538 --> 00:22:04.098
+<v SPEAKER_2>Eine Sache, die mir auch noch einfällt, wo Subversion einen riesen Vorteil gegenüber CVS bietet, ist, es ist halt das erste System, was eben auch Internet-Aware ist, d.h. es gibt da ein eigenes Protokoll, das SVN-Protokoll, d.h. dieses Client redet mit Server ist eben einfach schon mal definiert, man muss da nicht solche Klimmzüge machen mit SSH und sonstigen Tunnels. Das ist auf jeden Fall ein großer Vorteil. Ja, vielleicht mal so zu dieser Abstraktion von Versionierungssystemen. Was hältst du für die wichtigsten?
+
+00:22:05.598 --> 00:22:35.538
+<v SPEAKER_3>Na ja, also wie gesagt, so nach RCS, wo eben, wie du ja schon gesagt hast, wurde einfach nur ein Pfeil daneben gelegt ins Pfeilsystem mit hinten einem Komma und V dran, ne? Also wenn du Foo.txt gespeichert hast, hat es, wenn du da konntest sagen, check das mal ein ins Version-Controlsystem, nehmen wir mal jetzt einfach als bunte Wolke, dann hat er sozusagen daneben einen Foo.txt, V gelegt und da drin die Unterschiede immer gespeichert zu den jeweiligen Versionen, so war das doch.
+
+00:22:35.558 --> 00:24:30.878
+<v SPEAKER_2>Genau, da sollte man sozusagen auch nochmal gleich auf den Ursprung eigentlich der Versionierung schlechthin verweisen, nämlich auf das kleine Programmchen DIV. Also eines der ersten, wie soll ich sagen, also eines der ersten Unix-Programme überhaupt, was quasi Teil des Systems war und das überhaupt erst mal in der Lage war, zwei Dateien, also in dem Fall nur Textdateien, zwei Textdateien zu nehmen und danach eine Differenz auszugeben. Das heißt, die beiden werden miteinander verglichen, aber das Tool kann mehr sagen als nur ist anders oder ist gleich, sondern es sagt explizit, was anders ist und gibt das Ganze in einem Format raus, in diesem Diff-Format raus, dass man sozusagen gleich wieder in ein Editor reinwerfen kann, wodurch sozusagen diese Änderungen wieder hergestellt werden. Also Zeile 10 wurde gelöscht, Zeile 12 wurde geändert von auf und so was. Zeilenbasiert, Prinzip eine schöne Sache und man könnte auch fast sagen, dann gab's noch das Patch-Tool, was solchen Diff-Output nimmt und dann quasi automatisch wieder auf die Dateien anwendet, womit auch häufig so, naja, Versionierung kann man es nicht nennen, aber im Software-Development-Bereich war das lange, lange Zeit sehr, sehr, sehr wichtig, dass man einfach so ein Patch-File bekam, was letzten Endes ein Sammelsurium von Diffs war und das eben mit dem Patch-Kommando anwenden konnte auf einen bestehenden Source-Code. So konnte ich jemand anderem eine Änderung schicken, ohne jetzt an irgendeinem Versions-Kontrollsystem teilzunehmen. Was sehr wichtig ist, da kommen wir sicherlich auch noch mal drauf, mit dem ganzen Distributed-Teil, was eigentlich sehr wichtig war für die ganze Dynamik, weil man konnte sich halt mal eben einen Fix schicken lassen, sofern man eben über Source-Code und so weiter verfügt hat, aber das war ja eigentlich der Unix-Standard und ist ja auch heute so. Und daraus kommen eben diese ganzen Ideen.
+
+00:24:34.218 --> 00:24:35.358
+<v SPEAKER_3>Und jetzt fangen wir halt dann…
+
+00:24:35.378 --> 00:24:43.198
+<v SPEAKER_2>Ich bin heute voll dabei irgendwie, ja? Also ich muss jetzt hier einfach mal so die Klondike abdecken. So, aber gleich steige ich aus.
+
+00:24:45.838 --> 00:24:47.038
+<v SPEAKER_3>Also dann halt…
+
+00:24:47.058 --> 00:24:51.498
+<v SPEAKER_2>Hast du eigentlich auch so bei Subversion mit so Branches gearbeitet?
+
+00:24:51.518 --> 00:25:00.438
+<v SPEAKER_3>Ja, später dann, genau. Irgendwann habe ich so die Scheu ein wenig abgelegt und habe dann auch gebrancht und so weiter. Aber da kommen wir vielleicht gleich noch zu, oder? Oder wird es jetzt da direkt schon…
+
+00:25:00.458 --> 00:25:02.258
+<v SPEAKER_2>Ich weiß nicht, was muss man denn vorher noch erklären?
+
+00:25:02.818 --> 00:26:41.598
+<v SPEAKER_3>Na, jetzt hatten wir ja gerade erstmal hier das RCS mit Fals daneben liegen, und jetzt wollten wir ja noch ein paar Begriffe mehr einführen. So, bei CVS hatten wir dann sozusagen diese Klein-Server-Geschichte, ne? Also gibt es den einen großen Server, wo der ganze Source-Code mit allen Versionen drauf liegt und dann gab es die Clients, die sich von diesem Server einzelne Versionen, wie man so schön sagt, auschecken konnten, also downloaden. Man sagt dem Server, ich will Version 43 und dann hat der Server einem die Version, also dir das Projekt zum Stand der Revision 43 zurückgegeben. So, diesen Server nennt man dann in diesem Versions-Control-Jargon halt Repository. Und im Fall von CVS ist es eben ein Central Repository, also ein zentrales Repository, wo alle die Mitarbeitenden ein- und auschecken. Genau, das Einchecken wäre dann vielleicht auch noch so ein Begriff, das heißt, wenn ich jetzt mir eine Version auf meinen Rechner ausgecheckt habe und Modifikation gemacht habe, dann kann ich die wieder sozusagen zurück zum Server schicken und man sagt da commit, also to commit a change und in Deutsch, in Eingedeutsch wird es wahrscheinlich einchecken oder so was. Ja, keine Ahnung, so, also Repository und so und dann ist noch so der letzte Punkt, den man vielleicht noch einen Punkt, den man braucht, die Working Copy, die auch noch eine wichtige Rolle spielt, also man holt sich halt diesen Check-Out auf die Platte und dann manifestiert sich da auf der Platte in dem gewünschten Ordner eben dieses Projekt.
+
+00:26:41.618 --> 00:26:42.578
+<v SPEAKER_2>Eine Arbeitskopie.
+
+00:26:42.598 --> 00:28:10.498
+<v SPEAKER_3>Eine Arbeitskopie, genau, die Working Copy, so und dann macht man halt Änderungen auf dieser Working Copy und dann die Changes dieser, die man da gemacht hat, die committet man dann zurück und generiert damit eine neue Revision auf dem Versionskontrollsystem und eben auch bei sich lokal. Also lokal sieht man dann, okay, ich habe jetzt Version 44 und der Server weiß dann auch nach dem Committen irgendwie, Version 44 wurde jetzt gerade angelegt. So, und ja, damit kommen wir ja schon mal erstmal ein ganzes Stück weit. So und der Vorteil war dann eben, dass wenn das so zentral ist und über Internet, dann konnten die Leute halt woanders sitzen und sich gegenseitig die Änderungen runterladen von dem Central Server, ihre Änderungen machen, wieder zurückschieben. Wenn es Konflikte gab, hat der Server halt gesagt, das kann jetzt nicht so einfach annehmen, dann musst du dir vielleicht mal erstmal hier von mir die aktuelle Version ziehen, dann den Konflikt beheben. Also das heißt, Leute haben zum Beispiel in der gleichen Zeile, im gleichen Pfeil, was unterschiedliches editiert. Dann spricht man sozusagen von einem Konflikt, da weiß dann das Repository eben nicht, welcher Change ist jetzt der richtige sozusagen, und dann sagt es halt dem, der die Änderung als zweites hochschiebt, irgendwie, pass mal auf, hier ist jetzt gerade ein Problem, behäb das mal, dann kann er nochmal committen, ja und so ging das ja erstmal los. Konnte man halt schön kollaborativ, schwieriges Wort, schon mal am Code arbeiten, hat ein zentrales Backup.
+
+00:28:10.518 --> 00:28:55.378
+<v SPEAKER_2>Aber hat auch so seine Probleme, weißte ich nicht, wenn ich mir das sehe. Also diese Konfliktbewältigung, das ist ja dann auch das A und O, weil das kann natürlich sehr gut sein, dass zwei Leute an identischen Teilen des Repositories, also quasi auf ihrer Arbeitskopie des ursprünglich identischen Teils auf dem Server arbeiten und dann Änderungen an denselben Dateien einbauen. Wobei es so ist, dass wenn das System erkennt, dass es sich zwar um Änderungen an derselben Datei handelt, aber... Und der andere hat sozusagen schon was eingecheckt und hat sozusagen auch schon eine Datei angefasst, die ich jetzt auch noch mal anfassen will, dass er schon unterscheiden kann zwischen einer Änderung, die im Konflikt steht und einer Änderung, die nicht im Konflikt steht.
+
+00:28:55.398 --> 00:30:03.138
+<v SPEAKER_3>Genau. Also es ist halt so, wenn, sagen wir mal, Alice und Bob checken beide, wobei im Versionskontroll-Jargon nehmen sie immer Larry und Sally irgendwie als... Also, aber ich finde Alice und Bob schöner, die sind kürzer. Also, Alice und Bob checken jetzt beide, checken beide vom Repository die Version 42 aus. So, jetzt fängt Bob an, hier irgendwas zu editieren und lädt das auch gleich wieder hochgeneriert, Revision 43. Also, er hat, sagen wir mal, in Hello TXT hat er die erste Zeile geändert. So, jetzt macht halt Alice irgendwie auch ihre Änderungen und committet ohne vorher die Änderung von Bob, sich auch runterzuladen. Sie editiert jetzt auch in Hello TXT, sagen wir mal, die erste Zeile. Das heißt, sie kommet jetzt zurück und will auch Revision 43 generieren, weil sie noch nicht die Revision 43 von Bob bekommen hat, sozusagen. Und in dem Moment gibt es dann halt einen Konflikt, wo er dann sagt, zum Beispiel, jetzt ladet ihr erstmal die aktuellste Version von mir runter und dann sehen wir mal weiter.
+
+00:30:03.158 --> 00:30:04.918
+<v SPEAKER_2>Dann muss man dann ein Update machen.
+
+00:30:05.398 --> 00:30:47.758
+<v SPEAKER_3>Genau, und in dem Moment lädt Alice jetzt erstmal die nächste Version runter, nämlich die von Bob, und dann gibt es bei ihr lokal diesen Konflikt. Jetzt kriegt sie diese neue Version von Bob, die eben die erste Zeit editiert hat. Und Alice hat auch in der ersten Zeit editiert, und jetzt muss sie diesen Konflikt erstmal beheben und sagen, entweder, nee, meine erste Zeit ist viel besser oder Bob's ist besser oder packen die irgendwie zusammen. So, und wenn sie das gemacht hat, committet sie dann nochmal und generiert dann eben Version 44. So, so ist eben erstmal der grundsätzliche Workflow, würde ich mal sagen. Genau, so und wie gesagt, bei RCS ging das eben nicht, weil sie einfach das Pfeil gelockt haben, da ging das gar nicht, dass man sich was auschecken konnte, wenn jemand anders das schon...
+
+00:30:47.838 --> 00:30:51.898
+<v SPEAKER_2>Da konnte das System einfach bei Design damit gar nicht umgehen und hat es einfach verhindert.
+
+00:30:51.918 --> 00:31:01.698
+<v SPEAKER_3>Genau, so und das war eben auch schon sehr mühselig bei CVS, mit diesen Konflikten, so das hat man halt dauernd gehabt.
+
+00:31:05.338 --> 00:31:07.518
+<v SPEAKER_2>Ja, das war wirklich eklig, weil...
+
+00:31:07.538 --> 00:31:11.118
+<v SPEAKER_3>Alle, die ich da drauf angesprochen habe, die waren genau so.
+
+00:31:11.138 --> 00:31:27.558
+<v SPEAKER_2>Es hat dich nicht nur darauf hingewiesen, sondern es hat dann irgendeinen Garbelmüll in deine Dateien reingeschmissen, die du dann wieder rauseditieren musstest und so weiter, um halt diese Konflikte aufzulösen und das machte einen dann doch schon immer ein bisschen wirr. Also das war einfach ein bisschen dreckig und an der Stelle ist Subversion einfach auch viel eleganter und cooler.
+
+00:31:28.298 --> 00:31:42.838
+<v SPEAKER_3>Genau, so und noch ein Konzept, was man dann halt vielleicht noch erklären müsste, ist vielleicht eben das mit den Branches, mit diesen Verästelungen, ich weiß nicht, ob man das wirklich irgendwie noch hier bei diesem Publikum eindeutschen muss, alles wahrscheinlich nicht, ne?
+
+00:31:42.858 --> 00:31:51.758
+<v SPEAKER_2>Ach na ja, also nicht Techniker, die sich dann immer wieder in die Sendungen hineintasten und sich fragen, ob das wohl etwas ist.
+
+00:31:52.238 --> 00:32:11.258
+<v SPEAKER_3>Genau, also bei Software-Entwicklungen und bei vielen anderen Sachen auch, aber vor allen Dingen bei Software-Entwicklungen ist es so, dass man eben oft so eine Hauptentwicklungsader hat oder eine Linie oder wie sagt man so ein …Na, man sagt Trunk. Baumstamm.
+
+00:32:11.278 --> 00:32:42.518
+<v SPEAKER_2>Also ich meine, diese Baumgeschichte steckt da halt voll drin. Man muss sich halt einfach Software-Entwicklungen vorstellen wie ein Bäumchen. Das Bäumchen soll irgendwie wachsen und im Wesentlichen sieht man natürlich den Baum. Das ist halt so. Und dieser Trunk, diese Hauptentwicklungslinie, die auch am dicksten und am stabilsten ist, im Idealfall zumindest, da soll halt irgendwie alles hin. Aber man hat natürlich dann immer wieder Varianten und neue Versionen, die man unterscheiden möchte. Genau. Und dafür gibt es halt diese.
+
+00:32:42.538 --> 00:34:45.338
+<v SPEAKER_3>Genau. Also ein großes Open Source Software Projekt, das hat sozusagen seine stabile Version, also die, die läuft, wo alle Tests durchgehen, die keine Bugs hat und so, die ist auf diesem Hauptzweig von unserem Repository of Trunk, nennen wir es jetzt mal. So und jetzt kann es halt sein, dass die irgendwie mal denken, ich muss jetzt mal ein großes Refactoring machen oder ein neues Feature hinzukoten. Aber während wir das tun, das dauert vielleicht zwei Wochen, kann es halt eben sein, dass irgendwie das Programm gar nicht funktioniert, während wir da drum haken. Deswegen wäre es halt blöd, wenn sie das eben auch auf diesem Trunk machen, weil dann für alle anderen das auch gebrochen wäre. Deswegen kann man bei Version-Controlsystem einen Ast sozusagen abzweigen von dem Hauptentwicklungsstamm und parallel arbeiten. Also man kann sich das auch so ein bisschen wie so ein U-Bahn-Plan oder so vorstellen. Es gibt einfach so eine Abzweigung plötzlich. Ja, oder wie einen Baum, genau. Und dann kann man da unabhängig von dem Trunk arbeiten und committen. Also das ist eigentlich das Wichtige, weil bei diesen zentralen Repositories, wenn man halt zwei Wochen lang arbeitet und man kann nicht committen, weil man gerade sozusagen die Software kaputt gespielt hat mit seinen Änderungen, weil man eben noch gerade mittendrin ist, dann hat man zwei Wochen unversionierte Arbeit sozusagen. Und das ist halt fatal. Deswegen brancht man ab, sagt, ab diesem Zeitpunkt möchte ich sozusagen eine zweite Entwicklungslinie haben. Und auf diesem Branch, da kann ich dann committen, wie ich lustig bin. Das bricht halt nicht den Hauptentwicklungsstrang. Und irgendwann, wenn ich fertig bin, so mit meinem Featuren, alles toll funktioniert, dann merge ich meine Änderungen wieder zurück auf die Hauptentwicklungslinie. Also ein Merge heißt einfach, die Änderungen, die ich dann auf dem Branch gemacht habe, wieder auf den Trunk einzubliedern. Ich bin immer so dabei hier mit Anglicism.
+
+00:34:45.358 --> 00:35:28.118
+<v SPEAKER_2>Ja, klar. Im Prinzip arbeitet man die ganze Zeit auf dieser Kopie in diesem Branch, diese Abzweigung, die halt erstmal eine vollständige 1 zu 1 Kopie von dem ist, was das andere ist. Die anderen ändern dann halt weiter, wie gewohnt, an diesem Trunk, während man sich eben selbst darauf konzentriert, eben die wesentlichen Änderungen zu machen, wo sich unter Umständen auch viel ändert. Dann ist man irgendwie zwei Wochen später fertig. Das heißt, man hat sowohl die Änderungen eingebaut und hat es auch soweit getestet, dass man sagen will, okay, das können wir jetzt wagen, aber wir wollen das halt wieder übernehmen in den Trunk. Weil letzten Endes ist das halt einfach ein großer Schritt, der aber eben allen zugute kommen soll. So, und jetzt muss man das ja irgendwie wieder zusammenführen.
+
+00:35:28.278 --> 00:35:30.538
+<v SPEAKER_3>Genau, also Merge zusammenführen.
+
+00:35:30.558 --> 00:36:17.898
+<v SPEAKER_2>Genau, das heißt, alle Änderungen da werden einfach überführt, müssen aber dann sozusagen die bis dahin auf dem Trunk aufgelaufenen Änderungen auch noch mit berücksichtigen. Das ist ja nicht einfach nur so die gesamte Veränderung von seiner Zeit bis jetzt, sondern das muss ja dann das auch noch mit reingemacht werden. Das heißt, es ist ein relativ komplexer Vorgang, den das Versionskontrollsystem an der Stelle berücksichtigen muss. Insbesondere mit, ich habe was unbenannt, ich habe Dateien in andere Verzeichnisse verschoben. Das sind ja so Problemfälle, denen CVS nicht ohne Grund aus dem Weg gegangen ist. Diese Beschränkungen waren ja auch einfach Annahmen, um das überhaupt erst mal beherrschbar zu machen. Bei Subversion ist das dann natürlich ganz schön knifflig. Geht denn das immer so glatt oder...
+
+00:36:17.918 --> 00:37:08.418
+<v SPEAKER_3>Na, es gibt vieles, was eigentlich... Also es gibt da so drei Kategorien, könnte man sagen. Es gibt Sachen, die gehen einfach glatt, weil es einfach keine Konflikte oder Probleme gibt. Und allein deshalb, weil zum Beispiel auf dem Trunk in der Zwischenzeit gar nichts passiert ist, so. Oder nur irgendwie in kleinen Dateien geändert wurde, die man jetzt auf dem Branch gar nicht angefasst hat. Und so eine Geschichte, wo es überhaupt gar keinen Grund für Konflikte gibt. Die Sachen, die gehen dann auch in Subversion. Also mit CVS soll es auch mit Branch and Merge total horrible gewesen sein. Oder wenn überhaupt, dann nur mit Hilfskripten und so weiter. Und bei Subversion gab es eben dann schon die Fälle, dass man einfach so ein Merge hinbekommt, halt ohne Konflikte, ohne irgendwelche Probleme. Aber das eben auch selten. So eine zweite Fall...
+
+00:37:08.438 --> 00:37:54.378
+<v SPEAKER_2>Also ein Fall, wo es gut gehen könnte, ist, ich kümmere mich um eine Library, die zwar alle benutzen, aber in der eigentlich so keiner mit rumschreibt. Würde ich aber jetzt permanent Änderungen machen, würde aber deren anderen Code darauf basiert, dass das sozusagen überhaupt alles funktioniert. Hätte ich schon ihren Ärger. Aber zumindest fummelt da sonst keiner mit dran rum. Das heißt, ich kann da in Ruhe dran rumfummeln. Und wenn ich nach zwei Wochen meine wesentliche, was weiß ich, Anpassung, das schon gesagt, schöner Begriff, Refactoring, also wenn man sozusagen dasselbe mal anders schreibt, damit es irgendwie eleganter, flüssiger, erweiterbarer, besser, stabiler, hübscher, was weiß ich, ist. So, und dann hat man dann irgendwann diesen Prozess abgeschlossen. Dann sagt man, okay, ab jetzt dieselbe Library in grün. So, für euch hat sich eigentlich gar nichts geändert, aber sie ist halt einfach hübscher geschrieben oder läuft schneller oder so.
+
+00:37:55.018 --> 00:38:37.598
+<v SPEAKER_3>So, dann gibt es noch so eine zweite Kategorie, die eigentlich auch erst mit diesen dezentralen Versionskontrollsystemen dazu gekommen ist, nämlich Änderungen, die eigentlich auch einfach so gehen müssten, die aber bei SVN einfach aufgrund der Architektur, wie es sozusagen gebaut ist oder implementiert ist, nicht einfach durchgehen. Das hat dann damit zu tun, da kommen wir dann auch später vielleicht im Genaueren dazu, dass die modernen Version-Kontrollsysteme gar nicht mehr so direkt Files tracken, sondern eher den Inhalt der Files. Und dadurch werden viele Merges einfacher oder im Fall von SVN eben schwieriger, weil es dann, ja, wir brauchen ein griffiges Beispiel dafür.
+
+00:38:38.058 --> 00:38:46.638
+<v SPEAKER_2>Das hilft immer. Habe ich nämlich jetzt nicht so ganz verstanden, worauf du hinauswolltest. Was meinst du mit nicht den Files? Ist das nicht dasselbe?
+
+00:38:46.658 --> 00:38:54.658
+<v SPEAKER_3>Naja, nee, also man müsste halt jetzt dann auch schon mal erklären, wie diese neuen Version-Kontrollsysteme oder wie Subversion funktioniert. Also bei Subversion...
+
+00:38:54.678 --> 00:39:13.718
+<v SPEAKER_2>Vielleicht können wir dann, lass uns das mal anders gehen, bevor wir erklären, wie das funktionieren, sollten wir vielleicht erst mal erklären, warum es die überhaupt gibt. Also was ist denn das Problem? Du hast jetzt schon gesagt, okay, Branching, Merging geht zwar irgendwie im Prinzip mit zentralen Repositories, aber in der Realität schmerzhaft. Aber in der Realität gibt es Probleme.
+
+00:39:13.878 --> 00:39:59.738
+<v SPEAKER_3>Also es ist wirklich auch so, dass man, wenn man ein großes Projekt hat und zwei Wochen auf einem Branch gearbeitet hat und auch wenn man die ganze Zeit die Änderung vom Trunk in seinen Branch immer mit reinzieht, das muss man ja auch machen, damit man sozusagen dann am Ende beim finalen Merge nicht mehr so viel zu mergen hat, so selbst dann denkt man sich also bei einem großen Refactoring über zwei Wochen so, wir haben eine Taskkarte aufgehangen, einen Tag lang nur diesen Merge machen. So und es hat einen Tag gedauert. Zu zweit saßen wir vorm Rechner und haben uns durchgehangen, irgendwelche Konflikte aufgelöst, irgendwelche Mime-Type-Probleme von diesem SVN und so weiter, keine Ahnung, irgendwie das ist halt immer so und das wird auch jeder sagen. Also niemand hat Lust, Branches zu machen oder Branches zu mergen.
+
+00:39:59.758 --> 00:40:03.518
+<v SPEAKER_2>Aber was ist genau das Problem? Also warum ist das so?
+
+00:40:03.538 --> 00:40:49.838
+<v SPEAKER_3>Es ist halt, also man muss noch sagen, SVN hat halt im Vergleich zu CVS es einfach gemacht, überhaupt erstmal ein Branch anzulegen. So bei CVS war das alleine schon irgendwie einfach eine Command-Line mit 23 Options, um es jetzt mal zu überspitzen und es hat lange gedauert, weil CVS jedes Fall einzeln angefasst hat und so weiter und so fort. Und es hat im Prinzip eine physikalische Kopie erstellt für diesen Branch. Einfach den nochmal daneben gelegt und gesagt, das ist jetzt Branch XY. So SVN hat das jetzt sozusagen insofern verbessert, als dass Branches erstellen schon mal extrem schnell war, weil die haben nicht die Files einfach daneben kopiert, sondern so was ähnliches wie Hardlinks gemacht. So in der Theorie funktioniert es wie Hardlinks, ja. Also das heißt, sie legen neue Files an, die aber in Wirklichkeit auf...
+
+00:40:49.858 --> 00:40:52.278
+<v SPEAKER_2>Originale verweisen und dann einfach nur eine Differenz sind.
+
+00:40:52.518 --> 00:41:04.438
+<v SPEAKER_3>Genau, das heißt, jede Änderung auf dem Branch sind dann wiederum Deltas oder Diffs auf die Originalversion im Trunk. So, das hat es auch schon mal einfacher gemacht. Ich weiß nicht, die Command...
+
+00:41:04.458 --> 00:41:16.118
+<v SPEAKER_2>Deutlich weniger Platz an, ne? Genau. Wenn man nur ein paar Dateien hat, ist super. Aber wenn man da so hunderte von Megabytes an Code dupliziert, dass man liegt da mal zehn Kopien an, dann hat man ja auch schon wieder einen Gigabyte mehr.
+
+00:41:16.138 --> 00:41:49.358
+<v SPEAKER_3>So, und zum Beispiel bei SVN kann es auch daran liegen, dass ich es schon so lange wieder nicht mehr gemacht habe, aber ich habe die Commandline, um einen Branch zu erstellen, trotzdem nicht im Kopf. Es ist irgendwie SVN-Copy und dann die URL vom Repository, und zwar die ganze. Und dann ist das halt in so einem Extra-Orner drin. Also irgendwie so geht das. Na gut, also es geht schon mal schnell. Die Operation führt man auf einen Client aus und wird auf einem Server ausgeführt. Das heißt, zumindest die Network-Latenz kommt hinzu und dann braucht das Subversion halt auch noch mal so ein, zwei Sekunden zum Nachdenken, um halt diesen Branch anzulegen. Okay, aber schneller als bei CVS.
+
+00:41:49.918 --> 00:41:51.518
+<v SPEAKER_2>Ja, zwei Sekunden ist ja noch ordentlich gerade.
+
+00:41:52.218 --> 00:42:47.818
+<v SPEAKER_3>Das bremst eigentlich nicht raus. So, und jetzt, da ist jetzt eben das Problem bei Mergen. Und das hat auch Linus Torwalz gesagt, der halt Git entwickelt hat, so eines von den dezentralen Systemen, das halt irgendwie den Fokus auf das einfache Branchen zu legen total der falsche Ansatz ist, weil Branchen, who cares? Das Schwierige ist das Mergen. So, und bei SVN war das mit dem Mergen zwar schon auch um einiges besser, aber die hatten halt diverse Probleme. Zum einen haben die sich nicht gemerkt, also erst später in Version 1.5, aber vorher haben sie sich nicht gemerkt, welche Merges schon gemacht wurden. Das nennt man als Fachbegriff Merge Tracking. Das heißt, wenn man jetzt auf dem Branch arbeitet und sich immer die Updates von dem Trunk holt, damit man halt auch die Features vom Trunk immer auf seinem Branch mit drin hat, dann hat er halt sich nicht gemerkt, welche Merges da jetzt überhaupt stattgefunden haben.
+
+00:42:47.838 --> 00:42:52.778
+<v SPEAKER_2>Also er hat sich nicht wirklich angeschaut, woher sie kommen, sondern hat sie nur als solche genommen, als wären es meine Änderungen gewesen.
+
+00:42:52.798 --> 00:42:52.958
+<v SPEAKER_3>Genau.
+
+00:42:52.978 --> 00:42:54.798
+<v SPEAKER_2>Die zufällig dieselben waren, wie auf dem Main.
+
+00:42:54.818 --> 00:43:29.678
+<v SPEAKER_3>Genau. Erstens hat er den Owner dieser Edits verworfen und auf sich selbst geändert. Dann hat er sich nicht gemerkt, wann der Merge passiert ist. Das heißt, wenn man nochmal einfach so gemerged hat, dann hat er das gleiche nochmal gemacht. Und dann gab es halt wiederum Konflikte, weil es dann schon drin war und so eine Geschichte. Also es war halt die Referenzierung der einzelnen Versionen und wo sie herkamen und wo was hingemerged wurde, das hat halt SVN nur halb gemacht. Einfach wirklich halb so. Sie haben es schon zu teilen gemacht, aber die entscheidenden Informationsbits haben halt gefehlt, um das einfach intelligent vom System erledigen zu lassen.
+
+00:43:29.698 --> 00:43:39.078
+<v SPEAKER_2>Und vor allem geht dabei eine ganze Menge Historie verloren. Das heißt, wenn man später mal in Krut reinschaut, wer hat denn diese Änderung gemacht? Das ist unter Umständen ganz jemand anderes im System, als es wirklich der Fall war.
+
+00:43:39.098 --> 00:43:39.158
+<v SPEAKER_1>Genau.
+
+00:43:39.178 --> 00:44:29.338
+<v SPEAKER_2>Das ist natürlich auch ein echtes Problem, weil manchmal muss man ja auch einfach den Schuldigen suchen. Also ich erinnere mich auch noch an so CVS-Setups schon eine Weile her, wo dann tatsächlich ein schönes Element in der Softwareentwicklung ist ja so der Daily-Bild oder überhaupt der laufende Bild. Das heißt, irgendein automatisiertes System, den die Leute da eingecheckt haben, die Programmierer auch immer wieder neu compile und guckt, läuft es noch, ja, also nicht läuft es noch im Sinne von der Anwendung selbst, sondern eben lässt es sich überhaupt noch übersetzen. Und in dem Moment, wo halt festgestellt wird, dass seit diesem Check-In etwas nicht mehr läuft, dann ging halt gleich irgendwie eine E-Mail raus, so im weiteren Sinne sitzt am See und die SMS kommt und sagt dir, nimm mal ein Taxi, du hast was kaputt gemacht.
+
+00:44:29.598 --> 00:44:34.898
+<v SPEAKER_3>Genau, kurz noch vor dem Feierabend, diese eine Zeile, die wird nichts brechen, die komm ich dich einfach so umhängen.
+
+00:44:34.918 --> 00:44:37.598
+<v SPEAKER_2>Dann hab ich's weg.
+
+00:44:37.618 --> 00:44:56.918
+<v SPEAKER_3>Genau, ja und dann eben noch ein weiterer Unterschied oder ein weiteres Problem war halt, dass die als Backend ja BerkeleyDB auch am Anfang benutzt haben und da drin Files getrackt haben, also sie haben sozusagen versucht... Jetzt die Subversion. Die haben halt...
+
+00:44:56.938 --> 00:45:01.818
+<v SPEAKER_2>Also BerkeleyDB ist diese super simple Database, Library oder Unix...
+
+00:45:01.838 --> 00:46:40.018
+<v SPEAKER_3>Genau, sie haben halt versucht, mit BerkeleyDB ein versioniertes Dateisystem sozusagen irgendwie abzubilden intern und da gab es einfach... Also ich kann es dir jetzt nicht ganz genau sagen, aber da gab es einfach diverse Probleme. Erstens ist diese BerkeleyDB alle paar Commits dann irgendwie mal kaputt gegangen und so. Das hat sich halt am Ende dann auch alles noch ein bisschen gebessert. Also bei 1.5 haben sie Merge-Tracking eingebaut, da haben sie sich halt so ein kleines Behelfsordnerchen angelegt, wo immer drinsteht, welche Merges an welche Revisionen ran gebutscht wurden. Und sie haben ja dann später auch ein anderes Backend benutzt, statt BerkeleyDB dieses FS-FS. Das kann man auch mal dann nachher in der Wikipedia nochmal nachlesen. So, und dann haben sie eben noch als Unterschied tatsächlich eben Files getrackt. Das heißt, ja, und das ist, da hatte ich irgendwie letztens so ein schönes Beispiel, warum das blöd ist, aber ich finde es jetzt gerade nicht mehr. Versus Content getrackt. Also das ist eben auch so dieser Unterschied bei Renames und so weiter. Also bei Subversion haben halt so Renames oder irgendwelche Änderungen an der Datei, die aber gar nicht den Inhalt betreffen, sondern irgendwie die Datei selbst, haben schon dazu geführt, dass es eben Konflikte geben kann. Das waren halt irgendwie, ja, also zum Beispiel bei Git ist es so, du kannst halt das ganze Repo löschen, also alle Files in deiner Working Copy und alle von Hand wieder eintippen und für Git wäre das halt kein Change. Und bei SVN war das halt früher eben nicht so. Das haben sie aber mittlerweile auch schon gefixt. Also es war halt irgendwie so zwei, drei kleine Sachen, die aber dieses Mergen eben weniger automatisch ablaufen haben lassen.
+
+00:46:40.038 --> 00:47:07.378
+<v SPEAKER_2>Okay, also man kann jetzt zumindest zusammenfassen, wir müssen jetzt auch mal ein bisschen hier vorankommen. Versionskontrollsysteme im zentralen Server haben den großen Vorteil, dass sie die Kollaboration beim Programmieren, vor allem, kann man auf andere Sachen benutzen, vereinfacht haben. Und von CVS bis Subversion ist doch eine ganze Menge Holz bewegt worden, sodass man sagen kann, spätestens jetzt auch mit der aktuellen, also ein Fünf ist es auch schon mehr.
+
+00:47:07.398 --> 00:47:08.618
+<v SPEAKER_3>Ein Sechs steht vor der Tür.
+
+00:47:08.638 --> 00:48:00.218
+<v SPEAKER_2>Genau, also Subversion hat jetzt nach ein paar Versionen auch eine Reife entwickelt, wo man zumindest die Kinderkrankheiten schon weitgehend weggeboxt hat. Da läuft jetzt nichts mehr korrupt usw. Und es wird auch noch am laufenden Meter verbessert. Sprich, wenn man so ein Modell hat, gerade auch wenn man vielleicht sogar auch nur der Einzige ist, der an irgendwas arbeitet, dann kann man schon sehr wohl auf Subversion zugreifen. In dem Moment, wo man mit anderen Leuten dran arbeitet, muss man schon mal gucken, was ist denn eigentlich wirklich so unser Arbeitsmodell. Jetzt, wir haben es ja schon mehrfach erwähnt, Linus Torvalds ist irgendwann mal vorgeprescht und hat dieses Git entwickelt. Das war aber damals ja gar nicht mal das erste System dieser Art, sondern er hat ja für das Linux-Development eben nicht CVS verwendet, sondern ein kommerzielles Produkt namens Bitkeeper.
+
+00:48:00.238 --> 00:49:20.598
+<v SPEAKER_3>Genau, und noch davor sogar gab es noch dezentrale Subversion, SVK. Ah ja, richtig. Es gab schon diverse dezentrale Ansätze. Und eigentlich haben jetzt so die hippen Kinder von heute, nämlich Git, Mercurial, Bazaar, die haben im Prinzip schon alle von diesen ersten Versuchen ganz viel übernommen und gelernt einfach. Also es gab halt dieses SVK, dann gab es Arch und alles, was davon erst mal noch entstand. Und dann gab es Monoton, auch ein open source dezentrales System. Und dann gab es eben als kommerzielle Variante Bitkeeper. So die sind alle vor Bazaar, Mercurial und Git passiert. Und der Entwickler von Bitkeeper, der hat eben irgendwie gesagt, pass mal auf, Linus, hier für euren Linux-Körner, das ist das perfekte Tool und hat halt ordentlich die Werbetrommel gerührt und meinte, ihr könnt das gratis benutzen so, aber ihr dürft den Code nicht reverse engineern oder ihr dürft da halt keine Veränderungen dran machen, ihr dürft euch auch nicht angucken. So, das war halt die Bedingung. Und obwohl das natürlich Linus total gegen den Strich ging, war es für ihn halt zumindest das erste Version-Control-System, was für ihn wert war, zu benutzen überhaupt.
+
+00:49:20.618 --> 00:49:35.138
+<v SPEAKER_2>Weil gerade natürlich beim Kernel hat man natürlich den Fall, dass die Leute sehr viel voneinander unabhängig arbeiten, lange Zeit an bestimmten Features, die man danach wieder zusammenführen muss. Das ist wirklich genau dieses Merging-Problem und deswegen wollte er eben sowas wie CVS gar nicht haben.
+
+00:49:35.838 --> 00:50:31.418
+<v SPEAKER_3>So, jetzt können wir mal versuchen, das hier irgendwie so strukturiert anzugehen. Warum braucht man denn eigentlich überhaupt jetzt dezentrales Version-Kontrollsystem, wenn Subversion ja im Prinzip eigentlich funktioniert? Also, ne, bis auf diese kleinen Schwierigkeiten und so weiter, funktioniert ja eigentlich super und auch so seit mehreren Jahren. So, und die Sache ist halt so, also ich hab irgendwie Git, musste ich anfangen zu lernen, an Früchten Strichen, weil halt Ruby on Rails, womit ich halt sehr viel arbeite, die sind einfach von einem Tag auf den anderen auf Git gewechselt. Und dann dachte ich mir, hm, noch ein neues, wasch ein Kontrollsystem, wieso das denn so? Funktioniert doch alles so. Ja, muss ich jetzt wieder neue Kommandos lernen, irgendwie Volledzen, ne, am Anfang, ja. So, aber es hat halt einfach ohne Ende Vorteile. Also es gibt nichts, was SVN besser macht als ein dezentrales Repository. Wir können das jetzt irgendwie wahrscheinlich stundenlang irgendwie sagen, aber SVN kann auch dies und das, ja, aber es ist halt blöd.
+
+00:50:31.438 --> 00:51:07.118
+<v SPEAKER_2>Also dezentrales Repository heißt jetzt überhaupt erst mal, also Distributed Version Control sagt im Prinzip aus, wir trennen uns von dieser Idee eines zentralen Repositories, denn das wirft Probleme auf hin zu einem, jeder hat seine eigene Arbeitskopie, die automatisch quasi auch ein vollwertiges Repository ist, sprich ich kann lokal genau dasselbe tun, wie ich es vorher eben nur mit diesem Server machen konnte. Und dann gibt es Werkzeuge in die Hand, damit man all diese unabhängig voneinander weitergetriebenen Repositories miteinander synchronisieren kann.
+
+00:51:07.138 --> 00:51:43.498
+<v SPEAKER_3>Genau, also der erste ganz entscheidende Knackpunkt oder das beste Argument für dezentrales Version-Controlsystem ist der Single Point of Failure. Sag mal, du hast ein Open Source Projekt, du hast keinen eigenen Server, und du hostest dein Zeug bei Google Code. Die haben so SVN-Repositories. Du schiebst jetzt dein Code, deine Versions-Control, alle deine Historie, schiebst auf Google auf dem Server. Und du hast immer nur den aktuellen Checkout auf der Platte. So in dem Moment, wo die Google Server abbrennen, ist deine ganze History weg.
+
+00:51:43.518 --> 00:51:44.718
+<v SPEAKER_2>Google never fails.
+
+00:51:44.738 --> 00:51:49.638
+<v SPEAKER_3>Ja, lass es... Okay, Google ist vielleicht nicht das beste Beispiel dafür, aber...
+
+00:51:49.658 --> 00:51:51.078
+<v SPEAKER_2>Es kann einfach der eigene Subversion Server sein.
+
+00:51:51.098 --> 00:51:53.958
+<v SPEAKER_3>Es kann der eigene Subversion Server sein, es kann die Platte abbrennen.
+
+00:51:53.978 --> 00:51:55.918
+<v SPEAKER_2>Wir haben mal so ein Repository einfach mit RM gelöscht.
+
+00:51:56.278 --> 00:52:09.658
+<v SPEAKER_3>Ja, oder sowas, und es ist einfach weg. Und wenn jeder eine Kopie von dem Repository und der ganzen History hat, dann gibt es diesen Single Point of Fail nicht. Und das ist einfach so ein Problem, das haben eben alle Zentralen.
+
+00:52:09.998 --> 00:52:17.278
+<v SPEAKER_2>Aber das ist ja nichts, was sich jetzt konkret auf mein Development als solches erstmal auswirkt, sondern das ist erstmal nur die Datensicherheit sozusagen.
+
+00:52:17.298 --> 00:52:48.858
+<v SPEAKER_3>Genau, aber das ist schon mal so ein ganz großer Vorteil. So ein zweiter großer Knackpunkt ist, es ist schon alleine nur, dadurch, dass es dezentral ist und man die komplette Repository History auf der Platte hat, einfach um Dimensionen schneller, also wirklich Quantensprünge finden da statt. Und man ist total erstaunt, wie schnell auf einmal so Sachen gehen können, wie zum Beispiel. Also alles, ich meine, für alles brauchst du eine Network Connection bei SVN, bis auf DIV von der letzten Revision, glaube ich.
+
+00:52:48.878 --> 00:52:54.418
+<v SPEAKER_2>Versaillen, der Server ist halt bei dir lokal auf der Platte. Also kannst du auch lokal ein Repository haben.
+
+00:52:55.178 --> 00:54:00.698
+<v SPEAKER_3>Aber angenommen, du bist jetzt auf dem Server, und du arbeitest mit mehreren Leuten zusammen, dann ist es ja spätestens irgendwo im Internet oder im Network. So, brauchst du halt für jede Operation, die du machst, sozusagen eine Network Verbindung. Du willst wissen, wer hat diese Zeile verbrochen, wer hat diese Zeile Codes reingeschrieben, die dir den Bild kaputt gemacht hat. Du musst halt mit dem Server sprechen, guck mal nach. Wer hat denn hier diese Zeile zu welcher Revision gemacht? Und schon allein diese Network-Latency und das SV-Ending halt auch immer noch ein, zwei Sekunden nach. Kommt halt so irgendwie immer so ein paar Sekunden zusammen. Das macht immer so Enter und so. Ah, Ergebnis, ne? So, ich habe hier letztens einfach mal gezeigt, so diese Unterschiede. Ich mache das mal an diesem Beispiel. Also wir haben ein Projekt, das hat 22.000 Revisionen oder so. 315 Megabyte Source Code. Kaum Binary Files so. Und jetzt hole ich mir einen Checkout von SVN. Und der ist eben diese 315 Megabyte groß. Und ich klone mir das mit Git, was natürlich viel länger dauert, weil er sich die ganze History von dem SVN holt.
+
+00:54:00.718 --> 00:54:02.218
+<v SPEAKER_2>Was meinst du mit du klonstest die?
+
+00:54:02.238 --> 00:55:42.538
+<v SPEAKER_3>Also ich check es aus, nein. Also wenn man halt eine Kopie, wie gesagt bei dem dezentralen System hat ja jeder eine komplette Kopie von dem Repository. Statt halt einen Checkout zu machen, also von einer bestimmten Revision, klont man sich das ganze Repository auf die eigene Platte. So, das ist so die erste Operation gewesen. Ich mache einen Checkout mit SVN, der geht bei 350 Megabyte und 22.000 Revisionen usw. Hat halt 20 Sekunden oder sowas gedauert im LAN. So, Git hat irgendwie über eine Minute 30 gebraucht, um halt eben die ganzen Revisionen vom Subversion Server zu kriegen. Dann war aber das Repository kleiner als der SVN Checkout. Also die ganze Historie von dem SVN in Git war kleiner als der Checkout von Subversion. So, und dann ging es halt los. Dann habe ich einfach gesagt, Subversion, gib mir mal alle Diffs von heute bis zurück nach 1. Januar 2005. So, du kannst dir ja etwa vorstellen, dass das irgendwie so 40 oder über eine Minute hat das, glaube ich, gedauert. Und bei Git halt nicht mal eine Sekunde. Terminals nebeneinander gelegt, Command gestartet, Git peng, sofort fertig. Weil es ist halt direkt auf der Platte. Und das andere muss dann halt irgendwie Server und der Server nachdenken und crunchen. Und dann ist eben so eine Unterschiede, wenn du das einmal erfahren hast, dass alles einfach fast instantan geht, dann willst du da nicht mehr zurück. Ich habe jetzt hier für die Sendung als Vorbereitung mit SVN noch ein bisschen rumgespielt. Und jedes Kommando immer so, ja fertig, nachdenken, nachdenken, nachdenken, fertig. Also auch nur committen, so die einzelnen Zeilen, wie die da durchretten, das einfach bei Git so ping und fertig.
+
+00:55:42.558 --> 00:56:21.898
+<v SPEAKER_2>Ja, kann man wie gesagt bei Subversion auch haben, aber da hat man halt sein Repository auf der Platte und das kann dann mit den Repositories, die andere dann vielleicht von demselben Code auf der anderen Platte haben, so erstmal nicht zusammenspielen, es sei denn man geht wieder durch diese Merch-Mühle durch. Was sind denn jetzt die rettenden Ideen bei Git, oder wir sprechen ja hier im Prinzip für alle aktuellen Distributenversionskontrollsysteme allgemein, was sind denn so die Kernideen, die das überhaupt ermöglichen, dass man sich das komplette Repository lokal hinwirft? Was hat denn da vorher gefehlt? Was ist denn so der entscheidende Gedanke, der jetzt da die Tür zum Himmel öffnet?
+
+00:56:22.338 --> 00:58:26.518
+<v SPEAKER_3>Na ja, also zum einen natürlich ganz klar, so Mercurial und Git vor allen Dingen, aber auch Bazaar, die haben eine ganz andere interne Struktur. Also die funktionieren einfach ganz anders und viel schlauer und viel effizienter und so weiter und so fort. Also ich habe versucht, zum Beispiel bei SVN nachzulesen, wie das funktioniert. So, wie speichert der die Revision? Wie machen die da die Deltas? Wie legen die das ab und so weiter und so fort? Und es haben mehrere Seiten Text und danach war es mir immer noch nicht klar. Ich glaube, die haben sich auch zum Teil irgendwie widersprochen, weil zwischen der Kommunikation zum User, wie es funktioniert und wie es tatsächlich funktioniert, sind auch nochmal Unterschiede. So bei Git und Mercurial vor allen Dingen, ist das in ein paar Sätzen einfach erklärt, wie das ganze Versionskontrollsystem funktioniert, inklusive Branches und Merging. Und es ist einfach extrem schlau. Also ich kann das ja mal kurz so dann mal ausführen. Also bei Git ist es eben so, es gibt vier Arten von Objekte im Repository. Also man stellt sich das so vor. Achso genau, ein großer toller Unterschied auch noch, den ich mal vorweg nehme, ist bei SVN hat man ja überall diese SVN-Verzeichnisse, Punkt SVN in jeder Hierarchie. Bei Git und Mercurial hat man das halt eben nur einmal im Top-Level-Verzeichnis. Und da findet sozusagen alles statt, was mit Version-Kontroll zu tun hat. Das finde ich zum Beispiel auch einen sehr netten Nebeneffekt. So, und in diesem Repository liegen dann sogenannte Objects. Davon gibt es mehrere Stück, vier unterschiedliche Arten. Nämlich einmal, dass den Blob, Binary Large Object, das beinhaltet im Prinzip einfach nur den Content von Files, nichts weiter. Und zwar gzipped, glaube ich, oder bzipped, irgendwie halt nochmal gepackt auf jeden Fall. Das heißt, für jedes File liegt da ein Object-Blob rum, wo einfach nur der Content gzipped drin liegt. So, das Ganze wird dann noch mit einem SHA-1-Hash versehen, über diesen Blob halt. Und der Filename dieses Blobs ist eben dieser SHA-1-Hash.
+
+00:58:26.538 --> 00:58:34.278
+<v SPEAKER_2>Das heißt, wenn man die Daten sucht für eine Datei, macht man diesen Hash von dem Dateinamen oder den Hash vom Dateinamen?
+
+00:58:35.038 --> 00:59:40.258
+<v SPEAKER_3>Nee, nee, von der ganzen Datei. Also der ganz, genau, der SHA-1-Hash von den Daten ist dann der Dateinamen dieses Blobs. Und da steht aber nichts weiter drin. Keine weiteren Metainformationen, einfach nur der Raw Content. So, dann gibt es Objekt Nummer 2, das sitzt da drüber. Das ist das sogenannte Tree-Object. Dieses Tree-Object gibt es für jeden Folder innerhalb des Projekts und referenziert einfach nur die Blobs. Das heißt, in diesem Tree-Object steht drin, hier, pass auf, dieser Hash entspricht Dateiname HelloTXT und hat diese Permission-Bits. So, Tree-Objects können dann noch andere Tree-Objects referenzieren und Tree-Objects selbst haben eben auch noch mal einen Char1-Hash über alle Blobs, die der Tree referenziert. Das ist so eine schöne Hierarchie. So, damit kann man sozusagen erstmal die Hierarchien abbilden. Dann gibt es da drüber das Commit-Object. Das Commit-Object zeigt sozusagen auf ein bestimmtes Tree-Object. Das heißt, für jeden Commit gibt es im Prinzip einen vollwertigen Tree. Wollen Sie sich das so in etwa vorstellen?
+
+00:59:40.278 --> 01:00:25.178
+<v SPEAKER_2>Also Commit, um es nochmal deutlich zu sagen, ist sozusagen der Vorgang des Übergebens von neuen Daten an das Repository. Nach einem Commit ist das dann halt alles irgendwie drin. Man kennt ja den Begriff auch schon aus der Transaktionswelt von Datenbanken. Man führt halt einfach eine Transaktion aus. Im Falle von Versionskontrollsystemen handelt es sich um Änderungen an Dateien, wo es eben sonst Änderungen an Datenbankfeldern ist. Das heißt, jeder Commit, in dem Moment, wo er stattfindet, hat dann sozusagen einen komplett neuen Blick auf, wie denn die verzeichnende Struktur ist. Das heißt, sie kann vorher und nachher komplett anders sein. Und sie drückt sich dadurch aus, dass der Commit halt hier auf den Vorherzustand verweist, auf das entsprechende Tree-Object und danach eben auf das nächste Tree-Object, die unter Umständen ganz anders aufgebaut sind oder auch genauso.
+
+01:00:25.198 --> 01:00:59.818
+<v SPEAKER_3>So, die Trees sind halt auch für jeden Commit neu. Aber wenn sich halt irgendwelche Dateien nicht geändert haben, dann bleiben die Blobs von diesen Dateien die gleichen. Also wir haben jetzt irgendwie zwei Commits, A und B. Die haben jeweils ein eigenes Tree-Object referenziert. Und sagen wir mal, Commit A und B unterscheiden sich halt nur in einer Datei. Dann teilen die sich für alles andere die gleichen Blobs. Referenzieren die selben Schasum. Und sie wissen ja halt auch, welches die gleichen Blobs referenzieren kann, weil gleicher Inhalt, gleiche Schasumme.
+
+01:00:59.838 --> 01:01:05.798
+<v SPEAKER_2>Wer sich schon mal mit dem ZFS-Dateisystem beschäftigt hat, wird hier viele Ähnlichkeiten feststellen.
+
+01:01:05.818 --> 01:01:33.338
+<v SPEAKER_3>Genau, so. Und wenn es halt eine Änderung gibt, dann legt es halt für diese eine Änderung, einen neuen Blob an und referenziert den halt auch in diesem Tree. Das heißt, man hat halt richtige Snapshots auch in dem Fall. Also Git speichert keine Deltas so in dem Sinne, sondern macht halt einfach irgendwie für jeden Commit einen eigenen Tree. Und wenn die Objekte gleich sind, dann sind die Objekte eben auch gleich und die Trees referenzieren die gleichen Objekte. Und wenn sich eben was geändert hat, dann wird ein neues Objekt angelegt.
+
+01:01:33.358 --> 01:01:53.178
+<v SPEAKER_2>Das heißt, wenn jetzt aber in einer Datei sich auch nur ein Zeichen geändert hat, dann gibt es im Prinzip eine komplett neue Version davon. Also einen neuen Blob, in dem dann auch alles drin ist. Und nicht nur so ein Minidiff, wo drin steht, ein Zeichen hat sich geändert, sondern eben wirklich alles. Und wenn das Ding 500 Kilobyte groß ist, dann sind 500 Kilobyte angelegt. Der Regel ändert sich ja eben nicht so viel.
+
+01:01:53.758 --> 01:02:21.758
+<v SPEAKER_3>Und Git würde jetzt in dem Fall auch nach einer gewissen Zeit, wenn dann irgendwie die Sachen zu groß werden, würde das halt auch detektieren. Wenn da eigentlich nur ein Buchstabe sich geändert hat, dann macht es da schon irgendwie so noch Delta Magic im Hintergrund. Aber davon kriegt man jetzt erstmal nichts mit. So, wenn man anfängt, sieht man halt wirklich diese vier Objektarten. Jetzt hatten wir drei. So, und als viertes Objekt gibt es noch die sogenannten Tag-Objekte. Und die Tag-Objekte referenzieren dann halt Cummits.
+
+01:02:21.778 --> 01:02:35.258
+<v SPEAKER_2>Tags sind ja auch nichts Neues. Das gab es auch schon bei CVS. Das ist sozusagen die Methode gewesen, um diesen ganzen fortschreitenden Versionen auch zwischendurch mal Namen zu geben. Sprich, man weist diese Tags bestimmten Zuständen zu.
+
+01:02:35.278 --> 01:02:36.818
+<v SPEAKER_3>Das ist jetzt Stable Release 1.0.
+
+01:02:36.838 --> 01:03:03.318
+<v SPEAKER_2>Genau, bei CVS eben wieder dateibasiert, bei Subversion bezüglich einer Revision. Und das heißt, bei Git bezieht sich das eben auch auf so einen kompletten, ja, wie ein Commit Graph, so ein Change Set. Genau, das heißt, man hat da auch einfach Tags, sowieso, was weiß ich. Unser Programm ist fertig, wird zum Kunden ausgeliefert. Das ist die Version, die wir auf die CD-ROM brennen Version. Die ist dann halt so ein Tag und steht da einfach so mit drin.
+
+01:03:03.338 --> 01:03:49.958
+<v SPEAKER_3>Genau. Und jetzt ist es eben auch noch so, dass eben diese ganze Kette, also jeder SHA-1-Key basiert auf dem, was unter ihm ist. Also ein Tree-Object hat dann den Hash von allen Blobs, die unter ihm sind. Ein Commit hat einen Hash über den Tree und die ganzen Metadaten, die dem Commit mit drinstehen, wie zum Beispiel, wer hat es commited und wann. Und ein Tag hat dann eben auch eine Referenz auf genau dieses SHA-1-Summe von diesem Commit. Somit hat man auch so eine gewisse Signierung auch schon. Also man kann jetzt sagen, unser stable Release, könnt ihr euch hier runterladen, das hat den und den SHA und die Leute können sich das halt runterladen und dann auch sofort nachgucken, ob das auch wirklich genau dem entspricht, was da auf der Webseite angegeben wurde.
+
+01:03:49.958 --> 01:04:09.578
+<v SPEAKER_2>Das heißt auch, nebenbei ist die ganze Datenintegrität damit auch sichergestellt. Also man hat nicht irgendein Bitmüll auf der Platte, der vielleicht stimmt oder auch nicht, sondern man kann kryptographisch sicher gehen, oder zumindest weitgehend sicher gehen, in den Bereich der Unwahrscheinlichkeit hinein, dass das eben auch alles so noch passt.
+
+01:04:09.598 --> 01:05:37.258
+<v SPEAKER_3>Genau, also das war auch ein großes Designziel von Linus Torvalds bei Git, dass er eben gesagt hat, ich will 100% sicher sein, dass wenn ich Daten aus dem Repository raushole, dass die noch genauso sind, als ich sie reingeschoben habe und einfach mit SHA1-Summen vergleichen kann. Und Git checkt das auch an allen möglichen Stellen. Das hat auch Bitkeeper schon sogar gemacht. Also die haben tatsächlich auch mal bei Linux, beim Kernel jemanden gehabt, der versucht hat, das Bitkeeper-Repository zu hacken und dann irgendwelche Änderungen einzuschieben. Und Bitkeeper hat mit einem viel simpleren Hash-Algorithmus das auch festgestellt und Git macht das halt auch an jeder Stelle. Also sobald irgendwo der Content von einem Pfeil nicht mehr mit der SHA1-Summe in Einklang ist oder irgendwie so in dem Tree irgendeine andere Inkonsistenz festgestellt wird, kriegst du auch sofort Bescheid gesagt, jung, hier stimmt irgendwas nicht, musste mal nachgucken. So, gut und das war's eigentlich auch schon und so funktioniert das halt. So, das heißt, wenn ich jetzt einen Branch mache, dann entsteht sozusagen das nächste Commit-Objekt und das hat einfach als Parent eingetragen. Also jedes Commit-Objekt hat eben so einen Parent noch, das baut sich dann sozusagen auf. Also der erste Commit hat halt als Parent sozusagen den Root-Commit oder Version 0 und dann ist jeder weitere Commit hat als Parent eben die Schar-Summe von dem vorhergehenden Commit drin. Ist das so verständlich?
+
+01:05:37.798 --> 01:05:40.398
+<v SPEAKER_2>Ja, klar, das war nur einfach.
+
+01:05:40.418 --> 01:06:01.338
+<v SPEAKER_3>Genau, und wenn du jetzt einen Branch machst, dann hat der nächste Commit dann eben auch eine Referenz auf den Commit, von dem er gebrancht wurde. Das heißt, du hast halt auch schon mal im Gegensatz zu CVS und dem frühen SVN, kannst du halt jederzeit auch feststellen, von wo gebrancht wurde. Das war halt bei SVN und CVS am Anfang alles auch gar nicht so möglich.
+
+01:06:03.538 --> 01:06:10.758
+<v SPEAKER_2>Das heißt, man wusste nur, da ist irgendwann mal ein Branch stattgefunden, aber die eigentliche Referenz aus was das hervorgegangen ist, wurde so nicht gespeichert.
+
+01:06:10.778 --> 01:06:16.938
+<v SPEAKER_3>Auch bei SVN nicht? Du musstest halt durch alle Deltas durchgehen, um festzustellen, von wo es hergekommen ist.
+
+01:06:17.178 --> 01:06:26.478
+<v SPEAKER_2>Alles klar, und hier ist das Teil des Designs, das heißt, da bildet sich auch wirklich ein tatsächlicher Baum in der eigentlichen Datenschruktur schon selber ab und ist nicht nur so scheinbar so.
+
+01:06:26.498 --> 01:07:04.138
+<v SPEAKER_3>Genau, das ist halt wirklich einfach Rock's Solid, da kann echt kaum was schiefgehen. So und in dem Moment, wo du eben ein Merch machst, dann hat sozusagen dieser Commit, der aus dem Merch resultiert, also wenn du zwei Branches zusammenfügst, gibt's einen neuen Commit und der hat dann eben zwei Parents einfach eingetragen. Nämlich die Charsum von den jeweiligen beiden Commits, die als letztes auf den beiden Branches da waren und von wo zusammengemercht wurde, die stehen dann halt da drin. Das heißt, du kannst da richtig schöne U-Bahn-Fahrkleine bauen und siehst halt genau, wann, wo, was gemercht wurde, in welche Richtung und von wem und sowieso.
+
+01:07:04.158 --> 01:07:06.378
+<v SPEAKER_2>Sozusagen so Mehrfach-Vererbung.
+
+01:07:06.398 --> 01:07:46.218
+<v SPEAKER_3>Genau und daran sieht man jetzt sozusagen, also durch dieses Verfahren und dieses nicht tracken von Files, sondern das Konzentrieren auf Content und das Bilden von Chasum und das Bilden von Graphen mit diesen Chasum ermöglicht es Gitt und auch McHill, was ganz ähnlich funktioniert, einfach viele Sachen einfach so zu mergen, die bei SVN einfach nicht so einfach möglich waren, weil die halt nicht so schlaue Graphen aufgebaut haben. Also gab es halt im Prinzip so viele Branches, keine richtigen Graphen, sondern die mussten halt durch die alle Deltas durch, rausfinden, von wo das überhaupt kam und dann haben sie nicht getrackt, wann wo was reingemercht wurde und dadurch kamen einfach so hier und da einfach kleinere Probleme, die jetzt...
+
+01:07:46.238 --> 01:08:00.778
+<v SPEAKER_2>Wie haben wir das erwähnt? Charsum, also wer den noch nicht geschneit hat, wovon wir reden, gemeint ist S-H-A, der Algorithmus, also wir reden von Hashes, also kropografische Zusammenfassung großer Datenmengen auf einen Wert, um einfach sicherzustellen, welcher das ist.
+
+01:08:00.998 --> 01:08:04.898
+<v SPEAKER_3>Na du wirst das ja dann wahrscheinlich eh alles noch verlinken.
+
+01:08:04.918 --> 01:08:06.838
+<v SPEAKER_2>Klar, hier wird ja immer fleißig nachgearbeitet.
+
+01:08:06.858 --> 01:08:07.978
+<v SPEAKER_3>Die Lesehilfe.
+
+01:08:07.998 --> 01:08:18.398
+<v SPEAKER_2>Die Lesehilfe, also wer jetzt hier wirklich ausgestiegen ist, drückt mal auf Pause und guckt mal in die Links. Da kann man das dann alles ganz gut nachlesen. So, wir wollen ja hier auch keinen überfordern, nicht wahr?
+
+01:08:19.978 --> 01:08:22.658
+<v SPEAKER_3>Dann mal los. Genau, so.
+
+01:08:23.218 --> 01:10:44.458
+<v SPEAKER_2>Also, warte, ich fasse mal kurz zusammen. Genau, mach mal wieder deinen Chapter zusammen. Es gibt halt Versionsbedarf. Wir haben eine erste und eine zweite Generation. Die erste Generation ist einfach nur die Files für sich, RCS. Dann kam die CVS slash Subversion Welt, die gesagt hat, wir müssen aber kollaborativ dran arbeiten. Wir haben einen zentralen Server. Und dann kommt jetzt die dritte Generation von Versionskontrollen, die sagt, dieses Zentrale hat viele Probleme. Das hat Performanceprobleme, es hat Kollaborationsprobleme und es hat Besitz- und Zugriffsprobleme. Wir wollen das einfach auflösen, denn die Welt funktioniert anders. Bei dem Linuskernel war es von Anfang an schon sehr stark so, dass sich eben eine sehr große Gemeinde um denselbe Code-Basis gekümmert hat. Jeder wollte zwar irgendwie im Wesentlichen andere Teile bearbeiten, aber es gab natürlich auch immer wieder Überschneidungen. Und es ist einfach sehr viel wertvoller, wenn jeder für sich einfach sein Development vorantreiben kann und man die Dinge erst dann wieder zusammenbringt, wenn es eben wirklich nur tut, wenn man nämlich etwas Gemeinsames herstellen will. Und um dieses Modell zu erleichtern und auch um die großen Probleme, die auch bei Subversion konzeptionell immer noch mit drin sind, aufzulösen, hat man sich eben vor allem auf so ein auf Kryptographie-basierendes mathematisches System ausgedacht, um diese ganzen Abhängigkeiten von Änderungen auch implizit in dem Datenbestand, den man dann vorhält, abzubilden, um das eben sicher zu sagen und gewinnt nebenbei eben auch noch Datenintegrität. Also man kann sich immer sicher sein, dass das auch alles noch stimmt. Und wenn mal was nicht stimmt, dann merkt man das eben auch sofort. Dann stimmt es nicht mehr. Und man bildet eben auch noch sehr viel besser ab, diese natürlichen Fluss von Änderungen, dass man also auch wirklich da kommt es her, da hat sich es aufgespalten. Der abgespaltene Bereich referenziert immer noch richtig wieder zurück in seine Vergangenheit, sodass man eben nicht auch nur von der Vergangenheit in die Zukunft seine Änderungen betrachten kann, sondern genauso gut auch den Weg wieder zurückgehen könnte. Und wenn eben zwei Entwicklungslinien auch wieder aufeinandertreffen, dann wird auch das explizit in dem Datenmaterial so abgebildet, sodass sich eben auch die Wahrscheinlichkeit für Konflikte bei diesem Zusammenführen reduziert bzw. vollständig auflöst. Also Konflikte gibt es ja dann immer noch, oder?
+
+01:10:44.478 --> 01:10:47.038
+<v SPEAKER_3>Ja klar, Konflikte passieren immer noch.
+
+01:10:47.058 --> 01:10:49.118
+<v SPEAKER_2>Aber die werden anders dargestellt?
+
+01:10:49.138 --> 01:11:17.778
+<v SPEAKER_3>Ja, da komme ich gleich noch zu. Aber es ist einfach so, gefühlt hat man einfach viel mehr automatisch gemerscht, was vorher unnötigerweise zu Konflikten geführt hat. Noch ein anderes, was ich noch kurz mit anführen wollte, was eben auch noch daraus resultiert aus dieser ganzen Struktur, wie bei McCurl und Git, ist eben, dass du auch sehr viel Platz sparst. Ich sagte schon, ein Checkout in SVN belegt mehr als das ganze Repository in Git.
+
+01:11:17.798 --> 01:11:19.398
+<v SPEAKER_2>Also ist auch alles doppelt, ne?
+
+01:11:19.418 --> 01:12:06.658
+<v SPEAKER_3>Genau. Und vor allen Dingen, bei Subversion speichern sie schon auch vorrangig Deltas. Aber irgendwann, nach einer gewissen Zeit und Größe, akkumuliert sich einfach an diesem Punkt SVN verzeichnend so viel Kram und Dips und Deltas, dass das halt irgendwann aufbläst. Genau. Und bei Git und McCurl, dadurch, dass sie das alles nochmal g-sippen und wenn es der gleiche Content ist, auch keinen neuen Blob erzeugen, bleibt das halt total klein und schlank. Also auch die Rails-Jungs hatten als Argument aufgeführt, als sie zu Git gewechselt sind. Die Rails-Repo hat irgendwie in SVN 250 Megabyte belegt und in Git halt 9. So, mit der ganzen History, allen Branches, allen Tags und was nicht auch alles. Schon einfach mal eine beeindruckende Hausnummer.
+
+01:12:06.678 --> 01:12:08.618
+<v SPEAKER_2>Das ist ja Faktor 30.
+
+01:12:08.638 --> 01:13:18.358
+<v SPEAKER_3>Genau. Ja und das trifft eigentlich bei vielen zu. Also wenn du das in McCurl oder Git importierst, kriegst du immer irgendwie Speicherplatz wieder am Ende. So, also das noch so ein zusätzlicher Punkt. Dann hattest du ja hier noch gesagt, also Commit-Rechte ist halt auch noch so ein großer Knackpunkt. Also was halt wirklich ein großer Pluspunkt von dezentralen Versionskontrollsystemen ist, ist, dass Forks nicht mehr wehtun. Also früher kam man auch so gefühlt, hat man das noch so im Hinterkopf, wenn man ein Projekt da betreut hat und irgendjemand hat gesagt, ich mache einen Fork. Er forkt jetzt, weil man genau weiß, wenn der jetzt ein eigenes Repo aufmacht und da sein Scheiß entwickelt, das wieder zurückzumergen, selbst wenn sie sich wieder vertragen, wird einfach Major Pain und nahezu unmöglich. Hat man auch selten gehört, dass sie dann doch mal wieder ihre Repos zusammengeführt haben. Und das ist halt bei dezentralen Systemen einfach, da ist Forken cool. Ja, das kann ich auch erst nicht glauben.
+
+01:13:18.378 --> 01:13:18.918
+<v SPEAKER_2>Bei Design.
+
+01:13:19.218 --> 01:14:21.158
+<v SPEAKER_3>Bei Design, genau. Also erstens ist ja im Prinzip dadurch, dass man sich das Repository komplett kopiert oder klont, ist das ja schon ein Fork in dem Moment. Ich habe mein eigenes Repository, das ist jetzt mein Projekt. Kann ich machen, was ich will damit. Kann Branches einführen, kann Features löschen, was auch immer. So, mein Fork. Und das ist eben jetzt total hip und beliebt zu Forken. Also wenn ich zum Beispiel bei Rails wollte ich mal einen Bug fixen. Und bin dann in irgendeinem Channel so, ja, ich habe jetzt hier so ein Patch-File, so mit Diff erstellt und so, da habe ich alles mal zumailen. Dann meint man so, nee, geh mal auf GitHub, mach einen Fork, mach deine Änderung, sag uns Bescheid. Und wir pullen dann von ihr, naja, Bahnhof, was, wie? Und da ist um dieses Git rum eine Website entstanden, github.com, so ein bisschen Social Community für Nerds, da hostet halt Rails seinen Code. Und da gibt es einfach einen Button Fork.
+
+01:14:21.178 --> 01:14:25.878
+<v SPEAKER_2>Was dem Studenten sein Facebook ist, dem Programmierer sein GitHub.
+
+01:14:25.898 --> 01:14:33.658
+<v SPEAKER_3>Genau, und da gibt es einfach neben jedem Projektnamen einfach den Button Fork. Und wenn du auf Fork klickst, dann kriegst du auf deinem User-Account bei GitHub einen Fork.
+
+01:14:33.678 --> 01:15:04.058
+<v SPEAKER_2>Das heißt, der Vorschlag war, um eine kleine Fehlerbehebung in dieses Megaprojekt Rails einzuführen, dass du auf GitHub gehst, wo eben das Repository, also es gibt schon auch ein primäres Repository nach wie vor. Es gibt schon so eins, was das Hauptrepository ist. Aber wenn du dir selbst eins machst, dann sind die gleichwertig, technisch gesehen. Und nicht, wie bei Subversion, zweitrangig. Und dann forks so das im Sinne von, du kopierst es.
+
+01:15:04.078 --> 01:15:06.658
+<v SPEAKER_3>Genau, es macht einen Klonen.
+
+01:15:06.678 --> 01:15:10.538
+<v SPEAKER_2>Also Klonen ist sozusagen der technische Vorgang. Fork ist so das, was es meint.
+
+01:15:10.558 --> 01:15:14.938
+<v SPEAKER_3>Genau, also in klassischer Terminologie ist es halt ein Fork im Prinzip.
+
+01:15:14.958 --> 01:15:31.278
+<v SPEAKER_2>Das heißt, ich erhalte dann nicht nur eine Kopie des Codes, sondern auch eine vollständige Kopie der gesamten Historie des Codes. Also alle Zusammenhänge haben wir ja eben schon beleuchtet. So, dann wendest du sozusagen deinen Patch, den du schon bereit hattest, darauf an. So, hier Buck ist gefixt und dann?
+
+01:15:31.298 --> 01:15:38.218
+<v SPEAKER_3>Und dann gibt es einen Button Send Pull Request. So, dann schickst du den Leuten vom…
+
+01:15:38.238 --> 01:15:39.698
+<v SPEAKER_2>Du schreibst den, also bei GitHub.
+
+01:15:39.718 --> 01:15:40.998
+<v SPEAKER_3>Genau, bei GitHub ist das dann so.
+
+01:15:41.018 --> 01:15:43.298
+<v SPEAKER_2>Also deine Funktionalität dieser Webseite.
+
+01:15:43.378 --> 01:15:45.178
+<v SPEAKER_3>Jetzt gibt es aber auch einen Git direkt eingebaut.
+
+01:15:45.198 --> 01:15:47.218
+<v SPEAKER_2>Okay, was ist das dann?
+
+01:15:47.238 --> 01:15:59.558
+<v SPEAKER_3>Also das ist im Prinzip nur die Nachricht. Pass mal auf, ich habe hier was gemacht in meiner Kopie von diesem Repo. Und guckt euch das mal an, und wäre cool, wenn ihr das bei euch wieder reinmarscht. So, und jetzt…
+
+01:15:59.578 --> 01:16:01.198
+<v SPEAKER_2>Das nennt man aber Pull, oder?
+
+01:16:01.218 --> 01:17:17.198
+<v SPEAKER_3>Pull, genau, aber da kommen wir gleich noch zu. Also was man eben dazu sagen muss, bei diesem dezentralen System, dadurch, dass jeder Klon im Prinzip ein Fork ist, und das ein Designwunsch ist, dass es alles ein Fork ist und so weiter, da ist es eben auch ein Designziel, dass diese Forks auch wieder einfach zu mergen sind. Also das eben, was früher nicht möglich war, dass man wirklich nur mit größten Schmerzen, dass man zwei unterschiedliche Repositories wieder zusammenführt, ist halt bei Git und Mercurial und bei XAR einfach täglich Brot sozusagen. Weil jeder hat halt irgendwie seine eigenen Branches und sein eigenes Repo und seine eigenen Changes und wenn da dieses Zusammenführen so ein Schmerz wäre, dann wäre das ja komplett pointless sozusagen. Von daher sind diese Systeme halt darauf ausgelegt, einfach von anderen Repos reinzumergen. Also ich kann zu jedem Zeitpunkt in meiner Kopie sagen, hol mir mal die aktuellsten Änderungen aus dem offiziellen Rails Repository in meins rein. Und dann macht er das halt einfach. So und genauso geht es in die andere Richtung. Ich würde halt denen Bescheid sagen, ich habe jetzt hier was Neues in meinem Repository. Hol das mal von mir rüber und dann können die sozusagen von meinem Repository pullen. Also es ist halt nicht mehr so, dass man dieses eine Server hat, wo man...
+
+01:17:17.218 --> 01:17:22.598
+<v SPEAKER_2>Aber bevor sie das jetzt wirklich zentral auch übernehmen, machen sie es hier wahrscheinlich selber auch erstmal.
+
+01:17:22.618 --> 01:17:23.178
+<v SPEAKER_3>Genau, das ist halt...
+
+01:17:23.198 --> 01:17:35.298
+<v SPEAKER_2>Holen die sich auch sozusagen nochmal ihren Fork, holen da eine Änderung rein, schauen sich an, was das macht. Und dann haben die dann sozusagen die Gewalt, das eben auch in dieses zentrale Repository wieder einzuspielen.
+
+01:17:35.318 --> 01:18:02.898
+<v SPEAKER_3>Genau, das ist ja eben das Schöne. Wenn du als Entwickler dann so ein Pull-Request oder so ein Merge-Request, nennst du mal, ja, Gesandt bekommst, dann musst du halt nicht auf deinen Code irgendeinen Patch anwenden und dann probieren, ob es geht. Sondern du klonst einfach das Fork-Repository lokal, probierst deinen Code aus, lässt ihn laufen und bauen. Und wenn es funktioniert, dann kannst du das Verzeichnis löschen und sagen, ja gut, merge ich rein. Und es halt funktioniert total schön und einfach.
+
+01:18:03.138 --> 01:18:46.298
+<v SPEAKER_2>Das heißt, es ist jetzt sowohl, was das Testen von solchen Änderungen betrifft, eine Vereinfachung, als auch, dass es so ein bisschen den Wind rausnimmt aus den sozialen Problemen, die so vorgingen. Also dieses, ihr seid alle doof und riecht nach Lulu. Ich nehme jetzt den Code und mache da mein eigenes Ding. Und ich habe auch meine eigene Posse und die findet mich cool. Und deswegen wird die damit sozusagen auch bei euch abgezogen. Und weil man sich ja irgendwie aus technischen Gründen immer so ein bisschen für einen Leader entscheiden muss. Und das natürlich da auch eine entsprechende Reibe reinbringt. Also könnte man fast sagen, so distributierte Versionskontrollsysteme könnte man in der Softwarewelt schon fast für den Friedensnobelpreis vorschlagen.
+
+01:18:46.418 --> 01:18:48.738
+<v SPEAKER_3>Definitiv.
+
+01:18:48.758 --> 01:18:50.958
+<v SPEAKER_2>So ein Mediations-Modus.
+
+01:18:50.978 --> 01:19:19.658
+<v SPEAKER_3>Definitiv, also das ist ein Riesenpunkt. Erstens so dieses Thema Commit-Richter. Wer darf denn überhaupt committen? Sondern musst du dir erstmal diesen Status des ordentlichen Patches verdienen, in dem du halt irgendwie 10 oder 20 sinnvolle Patches submittest, wo keiner auf der Vailing-Liste rantet, ne? Bevor dann so, und dieser Moment kommt die Initierung so, du hast jetzt Commit-Richter auf unserem zentralen Repository. Das fällt halt komplett weg. So auch so irgendwelche Neidgedanken und so, der ist jetzt irgendwie berufen worden und ich nicht, obwohl ich vielmehr sinnvolle Patches gemacht habe und so.
+
+01:19:19.678 --> 01:19:43.818
+<v SPEAKER_2>Ja, wobei es gibt ja schon, also es gibt schon auch Zugriffsrechte, weil dieses auf Github, also sozusagen das offizielle Rails-Repository, um beim Rails als Beispiel zu bleiben, da darf ja jetzt auch nicht jeder was reinschieben. Aber man kann einfach das, was man tun muss, um die Änderungen als solche überhaupt erst mal zu erstellen, einzubauen und vorlegen zu können, das kann man einfach lokal machen, ohne solche Rechte haben zu müssen.
+
+01:19:43.838 --> 01:20:21.178
+<v SPEAKER_3>Du kannst einfach committen ohne Rechte. Das geht eben bei zentralen Repositories nicht. Du checkst dir die Mozilla Codebase mit SVN aus, wobei wir jetzt auch was anderes benutzen. Aber du holst dir das in ein Checkout, machst eine Änderung, aber wo committest du die? Es dauert jetzt auch zwei Wochen, bis du da wirklich soweit bist, dass es jetzt fertig ist. Du kannst das halt nicht committen, weil es muss halt zum zentralen Server. Oder du ziehst das alles in ein extra Repo bei dir auf dem Server, machst einen Import von dem anderen, dann hast du aber wieder das Problem, das zurückzumergen. Dann musstest du wieder Patch-Files schicken und so. Das ist halt alles totaler Schmerz.
+
+01:20:21.198 --> 01:21:09.318
+<v SPEAKER_2>Das heißt, hier kommt jetzt diese Denke mit dem Push und dem Pull. Also Push und Pull heißt im Prinzip, die Änderungen, die in dem einen Repository vorliegen, übernehme ich in das andere Push-Pull, jeweils in welche Richtung das geht. Ich hole es mir aus dem anderen Push, ich schiebe es in den anderen. Das heißt, das ist im Prinzip eine neue Denke. Was vorher nur der Commit war, ist jetzt aufgespalten in den Commit und in die Push-Pull-Geschichte. Das heißt, wo vorher Push-Pull quasi impliziert in dem Commit mit drin war, hat man das jetzt getrennt. Das heißt, ich committe erstmal lokal. Vorher war das immer ein Zugriff aufs Repository eben zentral. Jetzt mache ich das einfach lokal. Und wenn das jemand interessiert, dann schiebe ich ihm diese Änderung auch noch rüber. Aber den fertigen Commit überreichen ist was anderes, als ihn selber durchzuführen.
+
+01:21:10.438 --> 01:21:45.658
+<v SPEAKER_3>Ja, das passt. Das ist eben auch ein ganz wichtiger Punkt, dass jedes Repository gleichberechtigt ist beim zentralen System. Man kann zwar sagen, das ist jetzt das, von dem ihr immer klonen solltet. Das ist von seinem Status her das Wichtigste, aber es ist technisch nicht anders. Genau. Und es passiert auch echt oft, dass Abandonware auftritt, dass irgendjemand sein Projekt verlässt, abandont, und dann einfach nichts mehr macht, weil kein Bock mehr hat, so typisches Symptom in der Open Source Welt.
+
+01:21:45.678 --> 01:21:48.138
+<v SPEAKER_2>Aber dann auch kein Bock mehr hat, Leuten Zugriff auf das Repository zu geben.
+
+01:21:48.158 --> 01:22:08.658
+<v SPEAKER_3>Oder ist weg oder gestorben oder keine Ahnung was. Und dann gibt es aber eben jetzt zum Beispiel auf GitHub oder sonst wo in der Welt gibt es einfach zigtausend Clones davon. Und ein anderer hat halt vielleicht Bock, das Projekt noch weiter zu machen und macht das. Und dann merken halt die anderen Leute auch, na okay, bei dem passiert nichts mehr, bei dem passieren die ganze Zeit sinnvolle Patches. Dann gehen wir doch da hin.
+
+01:22:08.678 --> 01:22:32.178
+<v SPEAKER_2>Eigentlich ist das so ein bisschen Open Source plus plus. Also bisher war das immer so, ist der Source als solcher verfügbar, dann ist gut so. Aber jetzt geht es ja eigentlich einen Schritt weiter. Das Open Source Development eigentlich nur dann wirklich auch open ist, wenn man eben auch den Fortschritt der Entwicklung als solcher mit bereitstellt. Und das kann man eben durch das verteilte System schmerzlos machen.
+
+01:22:33.198 --> 01:22:40.838
+<v SPEAKER_3>Ja, ich meine, du kannst ja natürlich, wie bei SVN und so, kannst du dir auch immer die ganze History einfach importieren. In dein eigenes Repository und so weiter.
+
+01:22:40.858 --> 01:22:49.418
+<v SPEAKER_2>Aber es ist halt vom Handling her einfach nicht machbar. Es ist jetzt sozusagen das Werkzeug da, um auch den Development-Prozess selbst zu befreien.
+
+01:22:49.438 --> 01:25:53.758
+<v SPEAKER_3>Genau, mit wenigen Kommandos einfach gib mir so. Und kommen wir zum nächsten großen Fall. Das sind auch wirklich alles, wie gesagt, große Vorteile in einer Serie. Dadurch, dass du eben das Repository-Lokal auf der Platte hast, brauchst du eben auch gar kein Netzwerk, um arbeiten zu können. Du kannst diffen, blamen und was auch immer. Du kannst alte Versionen auschecken. Du kannst committen, ohne Netz zu haben. Das heißt irgendwie, egal, du bist gerade auf dem Himalaya oder im Flugzeug, du kannst arbeiten, du kannst committen, du kannst diffen, du kannst merken, du kannst branchen, du kannst einfach alles machen. Ohne Netz. Letztens wieder so einen schönen Fall gehabt, ich einen großen Commit in SVN machen müssen mit viel Binary-Files. Und mittendrin schaltet meine Freundin den Geschirrspüler und den Wasserkocher gleichzeitig ein. Die Sicherung fliegt, das Internet ist aus und das SVN risst die Hände hoch und so. Und es war schnell behoben, so der State, in dem es sich dann verfangen hatte. Wie gesagt, da gab es ja auch schon Fortschritte. Aber war dann erstmal so ein Moment irgendwie, das will ich nicht. Ich will nicht das, ich will committen, wann immer ich will, egal ob Netz da ist oder nicht. Das erste, was ich dann gemacht habe, gleich als der Strom wieder an war, war mir das ins Git importiert und alles auf Git umgestellt. Aber das sind halt so Sachen, das will man echt nicht mehr wissen. Wir müssen es dann einfach committen können, wann und wo man will und zu welchem Zeitpunkt auch immer, egal ob der zentrale Server online oder offline ist, egal. Das bietet auch einen weiteren großen Vorteil. Angenommen, man hat halt den SVN-Server in der Firma, im LAN, im Intranet, gar nicht im Internet verfügbar. So, jetzt fährt man zum Kunden zu zweit und muss da lokal irgendwas aufbauen, installieren usw. oder fixen. Dann hat man halt so diesen Checkout auf seinem Rechner, wo kurz bevor man losfährt, holt man von der Firma noch mal schnell den letzten Checkout, fährt dahin und deploit das und macht dann auch so ein paar Fixes und lässt die alle uncommitted in seinem Rechner da so rumfliegen. Und wenn man dann zu Hause ist und der eine hat die Endung gemacht und der andere die, dann muss man die irgendwie zusammenführen und dann ins SVN zu Hause. Und das klingt ja schon mal so wie, will man nicht. Will man wirklich nicht, macht keinen Spaß. So und bei Git, genau derselbe Fall, du fährst hin, holst dir erst mal vorher den aktuellen Checkout, so die beiden, die da hinfahren. So dann sitzen die da ohne Internet, aber die können ja irgendwie über Bluetooth oder sonst was sich oder mit einem Kabel selbst vernetzen. Können die ganze Zeit Bugs fixen, können die committen, können gegenseitig voneinander pullen und pushen. Das heißt, der eine fixt den Bug X, der andere fixt Bug Y, die können gegenseitig merging, können dann irgendwie das deployen. Und wenn sie zurückkommen, ist halt dieses merging dann eigentlich schon fast passiert, sozusagen. Sie müssen dann jetzt nur noch ihre sowieso zusammenkonglomerierte Arbeit dann eben mit dem aktuellen Stand in der Firma merging, was halt irgendwie viel weniger hässlich ist als erstmal diese zwei Wochen, meinetwegen, Commit-Set, die nicht weggespeichert wurden, wo man auch nicht mehr genau weiß, was habe ich jetzt wo und wann gemacht. Das ist ja auch dieses Problem, wenn man es so lange offen liegen lässt. Hinterher die Commit-Messages zu schreiben, ist dann auch immer ein bisschen schwierig.
+
+01:25:53.898 --> 01:26:26.678
+<v SPEAKER_2>Wie identifiziert man denn jetzt diese Commits? Also bei Subversion bin ich so gewohnt, ich mache halt jetzt einen Commit, ich habe mehrere Dateien, die Änderungen werden zusammengefasst, dann ist das eine neue Revisionsnummer, da zählt halt was hoch. Daran kann ich sie irgendwie auch eindeutig identifizieren. Wenn jetzt mehrere Leute unabhängig voneinander da was machen, man will die wieder miteinander abgleichen, da gibt es ja keine Zahl, die im Prinzip gilt. Also wodurch identifiziert man einen solchen Commit und wie kann ich den jetzt benennen, um dann eben ihn an ein anderes Repository zu pushen?
+
+01:26:26.698 --> 01:26:43.438
+<v SPEAKER_3>Na, bei Git ist es so, dass die, die Schar-1-Summen von dem Commit sozusagen als Versionsnummern benutzen. Das heißt, es ist nicht mehr so diese schöne 1, 2, 3, 4, 5-Welt, sondern Schar-1-Hash-Summen als Versionsnummern.
+
+01:26:43.718 --> 01:26:45.078
+<v SPEAKER_2>Da kann man hexadezimale Strings.
+
+01:26:45.098 --> 01:26:50.698
+<v SPEAKER_3>Genau. Das ist natürlich schon, kann man so als kleinen Nachteil oder Einbuße werten.
+
+01:26:50.718 --> 01:26:56.298
+<v SPEAKER_2>Kann ich dir an der Stelle auch einen Namen geben? Oder nur dadurch, dass sie solche Tags verwenden?
+
+01:26:56.318 --> 01:27:28.098
+<v SPEAKER_3>Du könntest ja Tags werden, dann das einzige Mittel. Und du kannst halt die Tags, die Hashes haben, verkürzt angeben. Also du kannst, wenn du einen Commit hast, kannst du das erste Zeichen von dem Hash sozusagen als Identifikationsmerkmal benutzen. Sobald du halt zwei Dateien hast oder zwei Blobs, oder zwei Objects, die mit dem gleichen Buchstaben anfangen, und du sagst irgendwie, check mir mal Commit A aus, und es gibt halt zwei, die mit A anfangen, dann sagt es dir, hm, weiß ich jetzt nicht genau, welchen du meinst, guck mal, die beiden gibt's, gib mir mal noch ein Zeichen mehr. Also es gibt so...
+
+01:27:28.118 --> 01:27:32.458
+<v SPEAKER_2>Also nicht mehr Zeichen eingeben, nicht mehr Hexzahlen eingeben, als nötig ist.
+
+01:27:33.638 --> 01:28:28.798
+<v SPEAKER_3>So, und dann, was wollte ich noch sagen? Da hat es noch die, ach so, ja und genau, das nimmt dann halt eben auch diese, diesen Revisionsnummernkonflikt einfach komplett raus. So, weil jeder Commit hat halt einen unique SHA-1-Hash, dadurch, dass einfach eine andere Zeit, ein anderer User und so weiter komplett andere Parameter für diesen Commit zuständig waren. Und dann gibt's halt von Git, ich weiß nicht, wie es bei Mercurial ist, aber ich würde es tippen, es ist ähnlich. Also du machst halt einmal, wenn du losfährst von der Firma einen aktuellen Checkout und jeder weitere Commit, den du dann halt ohne Verbindung zum zentralen Repository machst, zählt er halt sozusagen mit und sagt dir, du bist jetzt schon drei Commits weiter als das letzte Mal, als du in der Firma ausgecheckt hast. Oder dann weißt du halt schon irgendwie, wie viele Commits du da überhaupt zusammen konglomeriert hast. Und du kannst halt immer das DIV auf die letzte Version und so machen. Das geht halt alles.
+
+01:28:29.058 --> 01:29:01.318
+<v SPEAKER_2>Das heißt, das ist jetzt auch nicht so unabhängig voneinander, dass es dann auch komplett seine Herkunft leugnet, sondern es gibt schon auch Werkzeuge, die das Arbeiten mit einem zentralen Repository, im Sinne von, das hat den Status zentral zu sein, nicht, dass es technisch zentral ist, solche Zusammenarbeit zu fördern. Auch wenn man erstmal lokal alles machen kann. Aber es fasst mir sozusagen auch zusammen, wie meine Änderungen im Verhältnis zu einem anderen Repository spielen.
+
+01:29:01.858 --> 01:29:38.158
+<v SPEAKER_3>Da ist halt der nächste Punkt, der bei diesem dezentralen System und vor allen Dingen bei Git anders ist. Man hat eben lokale Branches. Also das war eben ja auch so ein Problem in Anführungsstrichen oder für manche andere auch ein Feature. Dass wenn du einen Branch gemacht hast, bei SVN und CVS war der eben für alle sichtbar. Das heißt, in dem Moment, wo du einen Commit auf diesem Branch machst, ist der auf dem zentralen Server. Und jeder, der einen Checkout von diesem zentralen Server macht, sieht diesen Branch. Und egal, was du da drin tust. Deswegen war man auch so ein bisschen sparser mit Branches und hat nicht für jedes experimentelle Feature oder für jeden komischen...
+
+01:29:38.178 --> 01:29:39.378
+<v SPEAKER_2>Weil man sich ein bisschen schämt.
+
+01:29:39.398 --> 01:30:46.138
+<v SPEAKER_3>Genau. Oder man wollte, da das halt auch eben nicht so eine einfache Operation war, also vielleicht schon das erstellen, aber trotzdem mit diesem Merge und so immer so ein bisschen problemhaftet war, man hat sich das einfach wirklich aufgehoben für die extremen Fälle, wo man es wirklich brauchte mit diesen Branchen und so weiter und so fort. So, und bei Git, kann ich es jetzt verbrieft sagen, sind eben die Branches local. Das heißt, du hast volle Kontrolle, welche Branches überhaupt auf das Repository wandern. Du kannst auf deinem lokalen Repository zwei Milliarden Branches haben, aber dich am Ende nur entschließen, hier cooles neues Feature, den publish ich jetzt auf das, das und das Public Repo. Also du kannst dir auch überlegen, auf das Repo, auf diesen Repository Server, push ich den Branch und auf den, den und auf den, noch einen anderen. Du hast da sozusagen volle Kontrolle und das ist dann eben auch total bequem. Also du kannst einfach branchen, wie du willst. Also es ist noch cheaper, wie man so schön sagt, als jetzt bei Subversion, wo man eben mit einer schnellen Kommande das auf dem Server macht. Du machst das lokal und es dauert halt 0,01 Sekunden, diesen Branch anzulegen. Und du bist da und der ist ausgecheckt und kannst loslegen.
+
+01:30:46.158 --> 01:31:09.958
+<v SPEAKER_2>Jetzt hast du ja gesagt, man hat nicht mehr das Problem mit den Comet-Reits, aber man hat natürlich immer noch das Problem mit den Push-Reits, weil man darf ja nur nicht überall drauf pushen und so weiter. Rechte gibt es schon noch. Das heißt, man braucht auf jeden Fall auf jeder Git-Installation schon Rechte und einen entsprechenden User-Account und so. Das heißt, es gibt auch nach wie vor da einen Administrator und all das.
+
+01:31:09.958 --> 01:31:12.578
+<v SPEAKER_3>Im Prinzip ja.
+
+01:31:12.598 --> 01:31:40.578
+<v SPEAKER_2>Aber es geht sich nur auf das Push und das Pull. Push ist sozusagen ein Überführen eines lokalen Commits auf ein anderes Repository. Also ist dieser Push-Vorgang tatsächlich dann auch wirklich ein vollständiges Übernehmen? Ich muss mich ja auch auf irgendeine Linie beziehen. Das ist ja auch irgendein Schrank benennen. Wir haben diese Entwicklungslinien dann doch noch Versionsnummern oder haben die Namen?
+
+01:31:40.598 --> 01:32:12.238
+<v SPEAKER_3>Genau, da wollte ich jetzt eigentlich auch drauf kommen mit diesen Branches. Versuchen wir das mal aufzudröseln. Wir haben das Rails Git Repo auf GitHub und ich habe meinen Klon davon. Die haben bei ihrem Rails Repo ein paar Branches angelegt. Der Trunk heißt bei Git halt Master und ist einfach eine Branche wie der andere. Das der Master heißt, ist einfach Konvention. Sie wollten es halt wahrscheinlich nicht Trunk nennen, um sich möglichst weit zu distanzieren von allen anderen.
+
+01:32:12.778 --> 01:32:24.498
+<v SPEAKER_2>Warte mal, wir reden jetzt viel über Git, aber im Prinzip alles, was du sagst, gibt es so oder so ähnlich, auch in anderen Systemen und wir gehen auch nochmal auf die konkreten Unterschiede ein bisschen ein.
+
+01:32:24.518 --> 01:33:06.838
+<v SPEAKER_3>Also Macuril und Git sind sehr, sehr, sehr, sehr ähnlich. Also das, was ich über Git sage, ist zu 98,5 Prozent auch wahr für Macuril. Gut, also die haben Branches und wenn ich jetzt einen Klon von dem Rails Repo mache, dann sehe ich auch die Branches von denen, die sie auf dieses Repo gepusht haben. Es gibt einen Unterschied zwischen lokalen und remote Branches. Das heißt, wenn ich einen Remote Repository clone, was publizierte Branches hat, dann habe ich die bei mir lokal in slash remotes slash Branch-Name. Also ich sehe die.
+
+01:33:06.858 --> 01:33:07.438
+<v SPEAKER_2>Als solche.
+
+01:33:07.458 --> 01:33:09.418
+<v SPEAKER_3>Genau, aber ich kann die nicht auschecken.
+
+01:33:10.658 --> 01:33:11.878
+<v SPEAKER_2>Du weißt nur, dass es sie gibt.
+
+01:33:11.898 --> 01:33:24.698
+<v SPEAKER_3>Ich weiß nur, sie sind da. Ich könnte sie im Prinzip darauf auch auschecken, also mir das Working Directory in den Zustand versetzen, wie dieser Branch ist. Aber ich kann da nicht commitment, ich kann es mir mal angucken.
+
+01:33:25.238 --> 01:33:37.578
+<v SPEAKER_2>Das heißt, man greift eigentlich nur auf eine Linie zu, also nur auf den Trunk. Also wenn ein Repository öffentlich ist, dann gibt es nur einen einzigen Ort, wo ich mir wirklich vollständig alles rausholen kann.
+
+01:33:37.598 --> 01:34:05.098
+<v SPEAKER_3>Moment, das ist halt so, zu diesen Remote-Branches, du kriegst halt den Master, dann kriegst du noch den Branch Experimental, den Branch Releases, die alle in diesem Remote-Namespace liegen. Dann hast du, wenn du klonest, einen lokalen Master-Branch und dann stellt Git eine Verbindung zwischen diesem Remote-Master-Branch und dem lokalen Master-Branch her. Das verlinkt die sozusagen. Das heißt, wenn ich sage Git Pull...
+
+01:34:05.118 --> 01:34:06.818
+<v SPEAKER_2>Also Master-Branch ist jetzt der Chunk?
+
+01:34:06.838 --> 01:34:25.998
+<v SPEAKER_3>Genau. Wenn ich jetzt sozusagen Updates von GitHub Pulle, von Rails, dann update der automatisch meinen lokalen Master-Branch. Die haben so eine, wie sagt man, so eine symbiotische Verbindung. Man spricht davon, dass man die Remote-Branches trackt.
+
+01:34:26.018 --> 01:34:28.398
+<v SPEAKER_2>Tracking permanent folgt.
+
+01:34:28.418 --> 01:34:49.218
+<v SPEAKER_3>Genau. Also der andere Weg wäre, ich müsste dann halt auf meinem lokalen Branch immer den Remote-Branch raufpullen. Also immer von dem Remote-Branch in meinen lokalen Pullen. Wenn man die halt trackt, kann man das sozusagen automatisieren und Push und Pull sind automatisch gleich mit dem Remote-Branch verbunden. So, kann man sich das in etwa vorstellen?
+
+01:34:49.238 --> 01:34:50.898
+<v SPEAKER_2>Mir gelingt das jetzt so im Ansatz.
+
+01:34:50.918 --> 01:35:15.238
+<v SPEAKER_3>Im Ansatz. Also, okay, sagen wir mal, es gibt dann noch zwei andere Branches, nämlich Experimental und Buggy, die eben auch in diesem Remote-Namespace liegen. Die track ich nicht per Default. Wenn ich jetzt sozusagen die auch noch tracken wollte, dann müsste ich mir lokalen Branch anlegen, der Experimental heißt und Git sagen, track mit diesem Branch den Remote-Branch, sodass auch wieder diese Verbindung hergestellt ist und ich dann...
+
+01:35:15.398 --> 01:35:25.998
+<v SPEAKER_2>Okay, aber wir reden jetzt nicht von so einer Live-Hot-Verbindung. Das heißt, wenn da jetzt Änderungen in diesem Master-Branch aufschlagen, was muss ich konkret tun, dass diese Änderungen automatisch eingeführt werden?
+
+01:35:26.038 --> 01:35:32.978
+<v SPEAKER_3>Na, immer wenn ich Git Pull sage, kann ich einen Server angeben, von dem ich pullen will.
+
+01:35:32.998 --> 01:35:35.038
+<v SPEAKER_2>Aber du kannst doch sagen, einfach pull mal.
+
+01:35:39.258 --> 01:36:01.818
+<v SPEAKER_3>Also wenn du pull einfach nur so sagst, dann holt er sich von dem ersten Server, von dem du geklont hast, ja, du kannst ja auch von unterschiedlichen kronen, von dem ersten, den du geklont hast, holt er sich einfach den aktuellen Stand. So, er bringt das Repository in Sync mit dem Remote Repository. Das heißt, deine ganzen Remote Branches sind upgedated und die lokalen Branches, die Remote Branches tracken, sind dann eben auch gleich in Sync.
+
+01:36:01.838 --> 01:36:45.718
+<v SPEAKER_2>Alles klar. Das heißt, man hat schon, in der Software gibt es schon expliziten Supporter, ich würde ja auch schon gesagt, so Werkzeuge, um einfach am Ball zu bleiben. Also man hat schon so dieses Verhältnis, wie das auch vorher war. Man ist so mehr eigentlich so der Client, nur dass man eben technisch nicht wirklich ein Client ist, der nicht, der also tatsächlich über das selbe Instrumentarium verfügt, aber schon weiß, dass er in diesem Fall eher der Slave ist und der andere ist der Master. Aber diese Rollen können sich jederzeit vertauschen. Die sind nicht technisch manifestiert. Gut, das ist ja ganz gut. Weil letzten Endes ist es ja so, am Ende des Tages, man hat halt einfach schon noch ein zentrales Repository, weil man muss ja auch irgendwo die Daten zusammenführen.
+
+01:36:45.738 --> 01:37:50.438
+<v SPEAKER_3>Genau. Und wenn, also das ist übrigens jetzt tatsächlich auch ein Feature, was bei Git, glaube ich, noch als einziges so ist, dass eben diese Branches sehr vorsichtig behandelt werden. Also wenn du bei Mercurial einen Branch gepublished hast, dann ist er auch gepublished und wenn du pullst, dann kriegst du den Branch auch, egal ob du willst oder nicht. Und du kannst, glaube ich, also ich weiß nicht, ob es immer noch so ist, aber du kannst auch Branches, die du einmal gepublished hast, nicht mehr löschen und so weiter und so fort. Also bei Git hast du da so richtig fein granulierte Kontrolle über alles, was du mit diesen Branches machst, welche du publishst, welche nicht, welche du löscht, welche nicht, welche du pullst oder welche du tracksst und welche und so weiter. Du kannst das halt in wirklich feinster Körnung granulieren, was du jetzt genau mit welchem Branch zu welchem Zeitpunkt tun willst. Und das ist bei Mercurial eben alles ein bisschen weg abstrahiert. Das ist wahrscheinlich auch ein Punkt, warum Mercurial dann zum Beispiel bei anderen Leuten beliebt ist, weil sie sich eben darum gar nicht kümmern müssen. Sie sagen, pull, die haben die Branches und alles gut.
+
+01:37:50.458 --> 01:37:50.778
+<v SPEAKER_2>Verstehe.
+
+01:37:50.958 --> 01:37:53.138
+<v SPEAKER_3>Die müssen sich halt um das Tracken und so weiter gar nicht kümmern.
+
+01:37:54.438 --> 01:38:10.838
+<v SPEAKER_2>Also Mercurial, kann man sagen, ist im Design von Git vor allem dahingehend unterschiedlich, dass es sehr viel mehr die Gesamtkonsistenz der Historie versucht immer herzustellen. Während bei Git hat man sozusagen die Möglichkeit, eine sehr selektive Wahrnehmung einer Vergangenheit.
+
+01:38:11.618 --> 01:38:45.258
+<v SPEAKER_3>Ja, es war früher einfach so, dass Git hatte so den Unix-Ansatz, ganz viele kleine Tools, die alle kleine Aufgaben erledigen, also wie bei Unix, die man dann so mit Pipes aneinander stecken kann und damit was Komplexeres baut. So, das war halt der Git-Ansatz. Deswegen gab es bei Git irgendwie 150 unterschiedliche kleine Tools. Git-Klon, Git-Push, Git-Pull, alle mit so einem Minus dazwischen. Und Mercurial und andere Tools haben eben diesen SVN-Ansatz gewählt, irgendwie ein Kommando mit Options hinten dran.
+
+01:38:45.278 --> 01:38:52.618
+<v SPEAKER_2>Genau, was bei dem Fall von Mercurial HG ist, als Geweis auf die Kurzform des Elements.
+
+01:38:52.638 --> 01:39:36.718
+<v SPEAKER_3>Genau. Und das hat sich jetzt bei Git aber mittlerweile auch geändert. Also früher musste man wirklich mit ganz vielen einzelnen Tools jeden Schritt, mit so Skalpell und Nadel und Fahnen ganz vorsichtig usw. Aber mittlerweile gibt es da eben auch so ein Git-Command, was dann sozusagen auch ähnlich funktioniert wie SVN oder das HG-Command und dann einfach die Parameter auf die einzelnen Tools dispatched im Hintergrund. So und von daher ist es mittlerweile von der Benutzung sehr ähnlich. Also du hast auch sehr viel einfach, was einfach so geht. Aber du kannst nach wie vor eben bei Git in die Tiefe gehen und irgendwie mit Skalpell ein Stück rauszuleißen und das woanders hinhängen und so.
+
+01:39:37.298 --> 01:39:43.238
+<v SPEAKER_2>Okay, es ist für Leute, die gerne in Control sind, aber für Leute, die irgendwie ein bisschen Kommandozahlen fauler sind.
+
+01:39:43.258 --> 01:39:57.578
+<v SPEAKER_3>Genau, also die, die das sowieso in der GUI klicken wollen, für die ist das fast egal so, für die funktioniert das auch fast gleich so. Kann man halt beliebig wegabdrehen. Bei Mercurial ist halt per Die-Fault einfach schon mehr wegabdrehen. Das ist so ein bisschen bequemer einfach.
+
+01:39:57.598 --> 01:40:36.958
+<v SPEAKER_2>Ich hatte das ja schon eingehends gesagt, das ist ja interessant, dass nach dieser langen Zeit der Monokultur, wo es eigentlich nur CVS gab und dann Subversion davon sozusagen übernommen hat, jetzt gibt es wieder ein heißes Rennen. Mehrere Systeme stehen voller Konkurrenz zueinander. Ich denke, man kann festhalten, derzeit sieht es so aus, Git und Mercurial teilen sich da so ein bisschen den Markt. Also sowohl sind bei Git viele, viele sehr populäre Projekte untergekommen, also abgesehen von dem ganzen Linux-Kontext. Rails hast du schon genannt, also Ruby generell, glaube ich, ist bei Git untergekommen.
+
+01:40:36.978 --> 01:41:00.558
+<v SPEAKER_3>Dadurch, dass die Rails-Jungs von einem Tag auf den anderen gesagt haben, wir gehen jetzt auf Git-Padding, haben die alles mitgezogen. Alles, was bei Ruby jetzt nicht auf GitHub liegt oder in Git ist, denkt man, ist schon nicht mehr maintained oder outdated. Und gucke ich mir gar nicht an. Ich gucke mir immer lieber, ob es auf GitHub vielleicht nicht doch noch irgendwie ein Repo gibt. Also die sind wirklich komplett assimiliert worden.
+
+01:41:00.698 --> 01:41:44.318
+<v SPEAKER_2>Genau. Und da Mercurial aber in Python geschrieben ist, ist die Python-Welt entsprechend in die Richtung abgedriftet. Und ich glaube Mozilla und noch so einige andere große haben sich eben dann Mercurial verschrieben. Es gab auch nochmal einen großen Schub für Mercurial, weil sie ja Google Code auch jetzt geoutet hat und sagt, wir machen das. Es gibt auch ein längeres Blogposting dazu, warum sie das tun. Also sie haben da wohl auch viel darüber nachgedacht. Und ich glaube auch da hat die konzeptionelle Nähe zu SVN eine große Rolle gespielt. Es gab noch so ein paar Details. Ich weiß jetzt nicht so ganz genau. Es gibt immer dieses Gerücht, dass man bei Git gar keine Dateien umbenennen kann.
+
+01:41:46.058 --> 01:42:15.618
+<v SPEAKER_3>Na doch kann man. Aber das ist bei Mercurial aber glaube ich genauso. Also die tracken nicht explizit File-Renames, sondern sie tracken den Content einer Datei. Und wenn der dann zufällig mit einem anderen Dateinamen benannt ist, in dem Tree-Object darüber, dann kriegst du das natürlich auch angezeigt und als Change sozusagen angezeigt. Aber die schreiben jetzt nicht benenne File X in ein File Y um, sondern das eine Fall verschwindet, das andere kommt hinzu, der Blob bleibt der gleiche.
+
+01:42:16.478 --> 01:42:20.518
+<v SPEAKER_2>Der Content moves einfach so nahtlos über Dateigrenzen hinweg.
+
+01:42:20.538 --> 01:42:31.998
+<v SPEAKER_3>Genau, man spricht da so von implizitem File Rename. Also in dem Moment, wo du den Content von File A nach File B schiebst, dann ja, gut, ist ein Rename. Aber für Git ändert sich da herzlich wenig, außer das Enttreten.
+
+01:42:32.018 --> 01:42:37.318
+<v SPEAKER_2>Er ist sozusagen aber in der Historie als solcher erstmal so nicht als Vorgang ersichtlich.
+
+01:42:37.338 --> 01:42:41.818
+<v SPEAKER_3>Es gibt keinen extra Rename-Vorgang. Ich glaube, das gibt es aber bei Mercurial auch nicht, oder?
+
+01:42:41.838 --> 01:42:46.938
+<v SPEAKER_2>Soweit ich weiß, gibt es das da schon. Zumindest habe ich auch das entsprechende Kommando da.
+
+01:42:47.138 --> 01:42:50.698
+<v SPEAKER_3>Ja, es gibt auch ein Git-Rename, aber das macht im Prinzip... Das tut es sozusagen.
+
+01:42:50.718 --> 01:43:22.078
+<v SPEAKER_2>Okay, verstehe. Ich glaube, das war so eine der Unterschiede. Aber die Unterschiede, hast du ja schon gesagt, liegen eher so im einprozentigen Bereich. Was sind denn... Der dritte im Boot ist Bazaar oder BZR. Wenn man jetzt mal so auf die Systeme schaut, wo sind die Änderungen? Also wo sind die Unterschiede? Wie wichtig sind diese Unterschiede? Und ist da irgendwas dabei, was einen jetzt in die eine oder andere Richtung lenken könnte? Oder ist das alles egal?
+
+01:43:22.098 --> 01:43:47.258
+<v SPEAKER_3>Obwohl ich persönlich natürlich totaler Fan von Git bin, wie man wahrscheinlich schon gemerkt hat, würde ich halt eher den Fokus legen, wenn irgendjemand da draußen, der das jetzt gerade noch hört, irgendein zentrales Version-Kontrollsystem nimmt, benutzt und Freude dabei hat, wechselt einfach mal auf die andere Seite, probiert das mal aus. So, egal, ob es jetzt Basar, Mercurial oder Git ist, die Vorteile, man will einfach danach nicht mehr zurück.
+
+01:43:47.278 --> 01:44:04.778
+<v SPEAKER_2>Also wenn man Subversion hat, hat man zumindest bei Mercurial den Vorteil, dass das von der Bedienung her weitgehend gleich bleibt. Also man tauscht eigentlich nur vorne das SVN gegen HG aus und muss da nicht sehr viel anders drüber denken, abgesehen davon, dass diese Push- und Pull-Geschichte noch mit dazu kommt.
+
+01:44:04.978 --> 01:45:47.178
+<v SPEAKER_3>Genau. Und dann war es halt... Ja, am Anfang war es dann eben noch so, dass Bazaar, das kam ja sozusagen, glaube ich, noch vor, Git und Mercurial raus, das hat auf irgendeinem älteren basiert. Hör mal, da muss ich mal kurz in meine schlaue Seite hier gucken. Ich habe mir das ja irgendwo auch aufgeschrieben vorher, aber jetzt finde ich es natürlich auf Anhieb nicht. Doch da, Bazaar. Das ist entweder von Monoton oder von Arch, was halt auch eines dieser Vorläufer war, abgekommen und hat dann nochmal ein Rewrite gemacht und so. Die waren halt am Anfang die ersten, die so hip und cool waren, mit irgendwie Distributed-Sein. Da ist glaube ich das Gnome-Projekt auch drauf. Oder Ubuntu. Ubuntu ist auch drauf, genau. Und die waren halt aber langsam. Dann hatten sie nicht so effiziente Platz-Speicherung, Speicherung von Daten. Dann hatten sie nicht dieses Integritäts-Feature. Dann, was war denn noch? Also so viele kleine Sachen, die aber z.B. Linus Torvalds unbedingt haben wollte, hatten die halt am Anfang nicht. So. Dann war es ja eben so, nur die beim Linux-Connect haben Bitkeeper benutzt und irgendwann hat das Geld gekostet. Deswegen hat Linus gesagt, ich gucke mir jetzt alles an, was es da draußen gibt. Und dann hat er geguckt. Bei diesen Kriterien, die ich gerade so genannt habe, also Datenintegrität, schnell, irgendwie mit klein und easy merging, easy branching und so, da sind halt schon eigentlich alle rausgefallen. Und übrig blieb eigentlich dann eben...
+
+01:45:47.198 --> 01:45:49.158
+<v SPEAKER_2>Und die Kommandozahle war wahrscheinlich bei den anderen zu einfach.
+
+01:45:52.478 --> 01:47:56.318
+<v SPEAKER_3>Kompliziert genug. Und das Einzige, was es dann halt noch gab, war Bazaar, aber das hat er halt auch ausgeschlossen wegen Performance und so weiter. Und dann hat er sich ja entschieden, ich schreibe meins selber. Und zur gleichen Zeit hat halt noch einer aus diesem Linux-Dunstkreis, eben McQuirrell angefangen und mit den gleichen Designgoals und aus den gleichen Beweggründen. Und darum sind Git und McQuirrell einfach auch so verdammt ähnlich. So und Bazaar hat jetzt zwar in der ganzen Zeit, also ich habe mal das Chainslock durchgeguckt, die haben die konstant auch aufgeholt, also in Sachen Geschwindigkeit, in Sachen Platz, Effizienz und so weiter und so fort, die haben dann nachgedeckt. Und auch so die Sachen, die Git konnte, die McQuirrell nicht konnte, hat McQuirrell jetzt auch mittlerweile schon nachgezogen. Und andersrum Git auch, also Git hat eben diesen großen Nachteil des komplexen Interfaces, das ist jetzt fast weg, also die bringen fast täglich neue Releases raus, wo irgendwas wieder angenehmer wird. Und das hat sich einfach so signifikant verbessert in dem letzten Jahr, dass man auch Git jetzt irgendwie nicht mehr mit diesem großen Vorsichtsplüschkissen behandeln muss. Ja, ganz viele Tools und ich weiß nicht, ob das was für dich ist. Und so ist es ein bisschen schwierig zu lernen, weil da gibt es jetzt eben auch dieses eine Command. Sprich, diese drei haben sich in der letzten Zeit so stark angenähert, dass wirklich, also es gibt minimale Implementierungsunterschiede. Es gibt bei Git halt, für mich ist Git halt das konsequenteste dieser dritten Generations Version-Control-Systeme, weil es einfach konsequent alles anders macht und konsequent aber auch wirklich alles gut macht. Also es ist einfach ein extrem konsistentes Version-Control-System. Alles, was da drin ist, hat Hand und Fuß. Ich habe noch keine Stelle gesehen, wo ich dachte, oh Gott, was ist das denn jetzt hier? Das geht ja gar nicht. So und das ist es eigentlich nur. Eigentlich entscheidet sich die Frage an den Projekten, an denen du teilnehmen willst. Wenn du halt komplett selber irgendwie was machen willst, entscheidet sich es noch an der Frage, willst du auf GitHub sein, willst du auf Bitrocket oder wie heißt das? Oder willst du auf Launchpad sein? Das ist auch nochmal ein Entscheidungskriterium.
+
+01:47:56.338 --> 01:48:35.518
+<v SPEAKER_2>Das sind dann sozusagen die drei wichtigsten, nicht die einzigen, aber die wichtigsten Sites, wie du es schon gesagt hast, Social Networks für Entwickler. Was leisten denn, darauf wollte ich jetzt auch mal zu sprechen kommen, was leisten denn diese Seiten? Was ist die eigentliche Dienstleistung? Also Public Repositories gab es ja auch schon vorher, Google Code haben wir erwähnt, es gab ja auch schon immer hier die Entwicklungswebseiten, SourceForge und so weiter. Was ist da jetzt anders? Warum sollte man da hinmarschieren? Warum ist auf einmal das Versionskontrollsystem so ein verbindendes Glied?
+
+01:48:36.738 --> 01:48:46.158
+<v SPEAKER_3>Naja, also zum einen die Basis-Services bieten sie natürlich so, Free Unlimited Repositories und auch mit ordentlich Speicherplatz verbunden.
+
+01:48:46.178 --> 01:48:53.818
+<v SPEAKER_2>Das heißt, man kann da hinmarschieren, man kann sich einen Account machen und für Lau hat man mindestens einen Repository sozusagen frei, da kann man irgendwie sein Zeug reinspeisen.
+
+01:48:53.838 --> 01:48:58.118
+<v SPEAKER_3>Mehr, du kannst glaube ich Unlimited Repositories kreieren, du hast einen limitierten Speicherplatz.
+
+01:48:59.958 --> 01:49:18.198
+<v SPEAKER_2>Achso, bei Buildbucket ist das anders. Wie auch immer, mindestens ein Einschluss ist frei, vielleicht auch mehrere. Das heißt, man kann da sein Zeug ablegen. Man hat im Internet seinen Kram verfügbar, aber man muss nicht jedem Zugriff darauf geben.
+
+01:49:18.218 --> 01:50:27.098
+<v SPEAKER_3>Genau, dann ist das nächste was zu bieten, ein schön convenient way, um die Zugriffsrechte zu verwalten. Also wer darf da direkt in dein Repository committen? Das heißt, du machst dir einen Account, legst deinen Public SSH-Key hoch und in dem Moment kannst du einfach ganz bequem von überall, wo du einen Key hast, committen. Wenn du jetzt einen neuen hinzufügen willst, kannst du halt auch mehrere SSH-Keys anlegen. Dann könnten halt auch Leute committen. Dann kannst du dir sozusagen einen Account bei GitHub teilen mit mehreren SSH-Keys und gibst einfach die Keys an die entsprechenden Leute weiter, die damit committen sollen. Und der andere Weg wäre eben, alle machen sich einen Account bei GitHub laden, alle ihre SSH-Keys hoch und in dem Moment können alle, wenn du sie dann auf GitHub für das Projekt einträgst, da kollaborieren. So, also diese Basics-Sources sind natürlich drin. Der Mehrwert liegt eigentlich aber so in dieser sozialen Komponente. Also eben dieses Forken und Projekte anhand dessen bewerten, wie oft sie geforkt werden oder wie oft sie von Leuten beobachtet werden. Das ist halt so ein Kriterium, um überhaupt auszuwählen, aus welchen Forks ich jetzt überhaupt mir den einausufe, von dem ich klone.
+
+01:50:27.118 --> 01:50:31.198
+<v SPEAKER_2>Verstehe, also da wird sozusagen intern auch Statistik geführt und die ist einsehbar.
+
+01:50:31.218 --> 01:51:30.358
+<v SPEAKER_3>Genau, du siehst für jedes Projekt einfach, wie viele Forks gibt es, wie viele Clones gibt es, wie, dann gibt es natürlich sowas wie Activity-Graphs und so weiter. Aber so dieses, wie viele Leute folgen hier und wie viele Leute forken hier. So das ist auch schon mal so ein Indikator, der irgendwie vorher halt so, wie viele Forks hast du? Na dann kann es ja mit deiner Repository-Politik nicht so weit her sein. Ist jetzt da halt komplett auch raus. Dann ist es natürlich eben so, dass du auf GitHub, wenn du deinen Fork gemacht hast, warum sollte es eigentlich auch bei Bitbucket mehrere Repositories geben, eigene? Weil wenn du einen Fork machst, hast du ja wieder ein neues Repository an deinem Account dran kleben. So, dann das vorhin besprochene, du machst halt einen Patch und schickst halt diesen Pull-Request. Also dieses ganze Merge-Management ist da halt komplett für dich hinter zwei, drei Buttons weg abstrahiert. Das heißt, du machst die Änderung, pushst das auf GitHub in dein Repository, dann klickst du den Button Send Pull-Request, dann kriegst du ein schönes Pop-Up, wo du sagst, dem, dem, dem und dem will ich jetzt Bescheid sagen, dass ich was Cooles gemacht habe.
+
+01:51:30.758 --> 01:51:36.178
+<v SPEAKER_2>Also dieser Pull-Request ist nicht im einigen Sinne ein Feature von Git, sondern es ist ein Feature von GitHub.
+
+01:51:36.198 --> 01:52:08.478
+<v SPEAKER_3>Nee, Git hat das auch. Du kannst direkt von der Commandline so eine E-Mail schicken. Hier, pull mal diesen Commit, aber bei GitHub ist es einfach weg abstrahiert. So, ähm, dann kriegen die eine Mail, können da raufklicken, sehen die Commits, können dann mit Checkboxen auswählen, welche sie haben wollen und klicken dann auf Merge und dann macht GitHub ein Merge. So und das ist halt, das ist die Treibendheit so weit, dass du für dein Projekt eine sogenannte Fork-Queue hast. Das heißt, du hast eine Seite, Fork-Queue, wo alle Forks drauf sind und alle Commits, die auf den jeweiligen Forks gemacht wurden.
+
+01:52:09.758 --> 01:52:13.838
+<v SPEAKER_2>Fork-Queue, also keine Gabelwarteschwange.
+
+01:52:13.858 --> 01:52:20.658
+<v SPEAKER_3>Genau, also den Fork-Buffer oder den Change-Buffer aller Forks oder keine Ahnung.
+
+01:52:20.678 --> 01:52:25.178
+<v SPEAKER_2>So eine Inbox für Fork-Anfragen oder was.
+
+01:52:25.198 --> 01:52:30.238
+<v SPEAKER_3>Nee, nee, das sind nicht mal Anfragen. Du siehst einfach, wer alles für ein Projekt gefolgt hat und was die alles da gemacht haben.
+
+01:52:30.398 --> 01:52:42.998
+<v SPEAKER_2>Okay, also es ist im Prinzip wirklich so ein bisschen wie Facebook, bloß man schickt halt keine Geburtstagseinladung und privaten E-Mails rum, sondern man schickt sich gegenseitig irgendwie Code und nimmt daran Teil und so weiter.
+
+01:52:43.378 --> 01:53:16.938
+<v SPEAKER_3>So und jetzt ist es halt auch total cool, weil du gehst dann so für dein Projekt deine 23 Forks durch und siehst dann so, da hat einer einen Commit gemacht, der diesen und diesen Bug fixt. Ja, den wollte ich schon immer mal fixen, habe ich nie geschafft, keine Ahnung, so mal raufklicken und dann färbt hier halt GitHub das auch noch ein grün und rot, ob dieser Commit jetzt, wenn du ihn einfach auf Merge klicken würdest, ob der einen Konflikt verursachen würde oder nicht. Na ja und dann kannst du dir halt so durch deine ganze Liste durchgehen, alle anklicken, die Checkboxen mit Checkboxen anklicken, na die will ich ignorieren in der Zukunft, die Commits finde ich cool.
+
+01:53:16.978 --> 01:53:45.458
+<v SPEAKER_2>Das heißt, wenn man jetzt auch selber mal irgendwas macht, was so halb fertig ist, das tut irgendwas, wie das eben meistens so bei Code ist, dann stellt man das irgendwie so öffentlich und dann wartet man da drauf, bis die Leute darauf stoßen, man kann das ja auch bekannt machen, dann benutzen die das, dann kommen sie alle mit ihren Verbesserungsvorschlägen an und die kommen dann einfach integriert in dieser Seite vor die Nase, sondern kann sagen, hier keine Konflikte, wenn du das einbaust, dann funktioniert das besser. Und dann weißt du schon, ah, alles klar, das kommt von Huckel, der wird sich das schon überlegt haben, zack, bumm und schon ist dein Code gefixt, du musst irgendwie keine Kommandanzale aufrufen, nix.
+
+01:53:45.478 --> 01:54:03.918
+<v SPEAKER_3>Das ist sozusagen das Wikipedia-Prinzip für Code auch, so alle können halt immer alles ändern und du kannst dann aber, zumindest, also es passiert halt alles nicht in einem Repository, aber du kannst dann halt irgendwie das online stellen, die Leute benutzen und wenn sie halt Verbesserungen haben, sie können einfach Verbesserungen machen und wenn dir die gefallen, dann möchtest du sie rein und wenn nicht, dann nicht.
+
+01:54:03.958 --> 01:54:25.578
+<v SPEAKER_2>Jetzt hast du natürlich, jetzt hast du ein Stichwort gesagt, was ich hier noch auf meiner Liste hatte. Du hast gesagt, das Wikipedia-Prinzip. Eigentlich ist es das ja nicht, weil bei der Wikipedia habe ich ja mein zentrale Repository und es gibt sehr viel Streit darüber, wer den da nun eigentlich ändern kann. Und du kannst mal nicht so eben mal eine komplette Wikipedia-Klonen und deine eigene Version machen und den Artikel lokal weiterentwickeln.
+
+01:54:25.598 --> 01:54:27.478
+<v SPEAKER_3>Wieso nicht? Gibt es nicht die Dumps von der Wikipedia?
+
+01:54:27.498 --> 01:54:53.138
+<v SPEAKER_2>Ja, aber dann musst du dir halt den kompletten Dump runterholen, wie bei Subversion, musst deinen eigenen UPS-Haber aufmachen und danach musst du erst mal versuchen, die Änderungen da wieder zurückzuführen, weil du ja auch nicht die Änderungen, die seitdem in der Seite machen, wieder rein kriegen. Also im Prinzip genau das Prinzip auf Software-Basis sehe ich halt bei der Wikipedia auch, und ich habe mich gerade gefragt, ob nicht vielleicht diese Distributed Version-Control auch für Wiki-Systeme eigentlich eine gute Idee wäre.
+
+01:54:53.158 --> 01:54:55.838
+<v SPEAKER_3>Ich meinte das auch eigentlich eher mit dem Mitmach-Konzept.
+
+01:54:55.858 --> 01:55:33.978
+<v SPEAKER_2>Ist mir schon klar, aber um das jetzt gleich mal weiter zu treiben, dieses Mitmachen, man sieht ja bei der Wikipedia, das hat ja auch seine Grenzen, nicht wahr? Da gibt es Streit, was weiß ich, Michael Jackson ist tot, dann ist die Seite halt erst mal gesperrt. Warum? Weil natürlich alle, wie die Blöden, sich da drauf werfen und so weiter. Das könnte man natürlich auch elegant umgehen, indem die Leute halt irgendwie die Daily-Wikipedia machen, wo sie sich vielleicht wirklich die Köppe einschlagen, dann aber sich irgendwie einigen auf, naja, das ist jetzt die Essenz dieser Sache, und dann wird das eben gepusht und dann können eben die Haupt-Wikipedia-Administratoren sagen, okay, alles klar, diese Änderungen, die holen wir jetzt mit rein, die dann auch erhalten bleiben.
+
+01:55:34.238 --> 01:56:53.118
+<v SPEAKER_3>Es gibt auch in der Tat jetzt, basierend auf Mercurial und Git, ganz viele Projekte, die gar nicht primär Source-Code damit tracken, sondern halt anderen Kontexten. Also die Idee finde ich jetzt auch extrem cool eigentlich. Würde ich sogar gar nicht ausschließen, dass da nicht schon irgendjemand was am Basteln ist. Aber das, genau. Ja, und ich meinte eben dieses Mitbau-Prinzip, dass halt irgendwie diese Hemmschwelle bei einem Projekt zu contributen, beizutragen, irgendwie seine Patches hinzuschicken, die ist halt nicht mehr so hoch. Du musst halt nicht irgendwie eine Mail schicken, dann weißt du nicht, liest der seine Mail überhaupt oder interessiert den so einen Forst-Developer, der jetzt da mal ankommt mit irgendeinem kleinen Mini-Patch, interessiert den das überhaupt und so, dann machst du es einfach. Und wenn das genug Leute cool finden, dann ist halt dein Repository vielleicht am Ende der Gewinner sozusagen, und du bist dann der Projekt-Maintainer auf einmal. Und das hat irgendwie einfach zu einer ganz anderen Dynamik auch geführt. Also wirklich einfach ein Rausch, der da ausgebrochen ist, mit diesem Forken und Mergen und Puschen und Pullen und Messages senden und watchen und so geht es ein riesen... Also die Kollaboration hat dadurch einfach extrem nochmal eine zweite Blütezeit hingelegt. Und die sind einfach wie verrückt am gegenseitig austauschen.
+
+01:56:53.138 --> 01:56:54.358
+<v SPEAKER_2>Hilft das der Softwarequalität?
+
+01:56:55.238 --> 01:57:40.738
+<v SPEAKER_3>Ich würde schon sagen, dass das extrem hilft, weil es geht einfach alles viel schneller. Also die Prozesse sind halt, ja, so dezentral. Es gibt eben nicht diesen Single Point of Failure. Es gibt einfach viele Schultern, die sozusagen die Entwicklung tragen. Und du kannst einfach viel schneller Leute dazugewinnen und begeistern, weil die einfach sofort alles haben und sofort mitmachen können, sofort committen können und einfach du musst dich nicht mehr darum kümmern. Jetzt komplizierte... Ah, noch ein ganz wichtiges Feature. Du musst dich nicht darum kümmern, komplizierte Merges zu machen oder irgendwie mit Policies auf der Mailing-Liste werthaft committen zu hantieren und du kannst dich einfach auf das Wesentliche konzentrieren. Zu diesen Mergen muss man nämlich eigentlich noch was sagen. Das ist nämlich auch noch ein ganz, ganz, ganz tolles Feature.
+
+01:57:40.838 --> 01:57:42.298
+<v SPEAKER_2>Ja.
+
+01:57:42.318 --> 01:58:01.658
+<v SPEAKER_3>Es ist nämlich so, dass bei Git und Mercurial und auch bei Subbasar bestimmt, musst du als Maintainer des Projekts nicht die Merges machen. Das heißt, wenn jemand dir einen Patch schickt und er macht einen Konflikt bei dir lokal, dann kannst du ihm sagen, kannst du nicht den Merge machen in deinem Repo?
+
+01:58:01.678 --> 01:58:03.558
+<v SPEAKER_2>Du hast das ja eh alles schonmal angefasst.
+
+01:58:03.578 --> 01:58:08.578
+<v SPEAKER_3>Genau so. Und dann sagst du mir nochmal Bescheid und dann pulle ich nochmal von dir.
+
+01:58:08.598 --> 01:58:29.678
+<v SPEAKER_2>Verstehe. Das heißt, man fordert ihn auf, die Änderungen, die in meinem Repository bis dahin aufgelaufen sind, alle wieder sozusagen zu holen. Also er pullt sich sozusagen den Rest, löst dann das so weit auf, dass es eigentlich gar keinen Unterschied mehr gibt zwischen den beiden Repositories, außer eben dieser einen spezifischen Änderung, die er mit allen bringt.
+
+01:58:30.518 --> 01:58:49.598
+<v SPEAKER_3>Verstehe. So und das ist halt auch nochmal so ein bisschen anderes Delegieren. Du kannst dann halt ganz bequem sagen, ja der Merch, da gibt es halt einen Konflikt und ich kenne mich persönlich damit gar nicht so aus und du bist da der Spezi und jemand anderes hat aber eine gleiche Stelle und macht ihr das mal unter euch aus und sagt mir Bescheid, wenn der Konflikt resolvt ist und das mit meinem Repository.
+
+01:58:49.618 --> 01:58:57.538
+<v SPEAKER_2>Programmieren wird dann sozusagen von einer lean forward zu einer lean back Geschichte, man sitzt dann noch in so einem großen Sessel mit integriertem Mausklick.
+
+01:59:02.178 --> 01:59:29.438
+<v SPEAKER_3>Gestern war eben auch einer im Club, der hat sich das auch so ein bisschen von mir angehört, so dieses Evangelisieren auf Distributed Version Control und der meinte dann, ah ja, ich habe auch so gerade ein Open Source Projekt gemacht und da waren so ein paar Leute und die haben dann vorgemacht und jetzt kann man das gar nicht mehr mergen und so weiter und so fort. Das ist genau diese Geschichte und der war dann auch total begeistert von diesen Geschichten, die ich ihm gerade erzähle. Wie kann dann die einfach zusammen mergen und die Konflikte können die resulvern und ich muss mich nicht drum kümmern und...
+
+01:59:29.458 --> 01:59:33.698
+<v SPEAKER_2>Was, alle haben sich auf einmal lieb auf der Welt? Kein Krieg mehr miteinander?
+
+01:59:33.718 --> 01:59:37.878
+<v SPEAKER_3>So nett, also es hat auf jeden Fall echt Spannung rausgenommen.
+
+01:59:38.578 --> 02:00:29.098
+<v SPEAKER_2>Das ist wirklich interessant. Das haben wir im Prinzip mit der Wikipedia-Geschichte schon angesprochen. Ich finde es auch besonders interessant im Hinblick auf Kollaboration an Texten, die eben jetzt nicht unbedingt Running Codes sind. Weil im Prinzip müsste man ja jetzt auch mit so einem GitHub-Repository problemlos einfach an Texten arbeiten können. Wenn man jetzt sozusagen, was weiß ich, mit zehn Leuten eine Pressemitteilung macht und jeder führt zu unterschiedlichen Zeitpunkten da Änderungen herbei, dann kann man sagen, okay, ich habe hier mal eine Änderung gemacht, ich kann die als Pull-Request an den Master-Editor schicken. Der sieht dann, okay, hat keine Konflikte mit den aktuellen Änderungen und sieht auf den ersten Blick wie eine sinnvolle Ergänzung auf, kann ich einfach übernehmen und so weiter. Und am Ende hat man sowohl die volle History als eben auch so ein verteiltes Arbeiten am Text.
+
+02:00:29.118 --> 02:00:59.878
+<v SPEAKER_3>Genau, also da gibt es... Ich sage, glaube ich, diesen Podcast verdammt oft genau, aber egal. Da gibt es gerade... Jeder hat immer so ein Wort, das er zu häufig sagt. Ich habe kürzlich erst ein Git-Buch. Gab es auf Twitter irgendwie ein Git-Buch, was unter Creative Commons-Lizenz frei im Netz lesbar ist. Und es gibt halt als Support die Kaufversion. So, und das Besondere daran ist, dass er...
+
+02:00:59.998 --> 02:01:01.038
+<v SPEAKER_2>Pro Git oder so hieß es.
+
+02:01:01.058 --> 02:01:51.258
+<v SPEAKER_3>Pro Git, genau. Und der Autor von diesem Buch ist halt auch einer von GitHub. Und er hat seinen gesamten, alles was er gemacht hat, seine Omni-Graffel-Grafel-Grafel. Grafel-Grafel-Grafel. Er hat seine Grafiken, seine Texte in Markdown oder so, hat er alles auf GitHub in ein entsprechendes Repository getan. Das heißt, seine ganze History an dem Buch, seine ganzen Files, alles ist in diesem Repository. Er hat jetzt auf seiner pro-git.com-Seite oder Org geschrieben, wenn ihr eine Translation machen wollt, macht einen Fork von dem Buch, translatet das und sagt, schickt mir ein Pull-Request, wenn ihr fertig seid und dann gibt's halt den Branch Hungarian oder was auch immer und es gibt mittlerweile sogar schon, glaube ich, zwei Translations oder wenn ihr Ergänzungen habt, Fork dieses Buch, macht einen neuen Paragraph an der richtigen Stelle, sagt mir Bescheid, ich merge es rein, wenn es cool ist. Also in der Hinsicht, das war wirklich auch so...
+
+02:01:51.278 --> 02:01:56.898
+<v SPEAKER_2>Wie wäre denn das, wenn man so ein System, wenn man das System auch benutzt für ein CMS in einer Webseite?
+
+02:01:56.918 --> 02:02:06.678
+<v SPEAKER_3>Gibt's auch schon. Also es gibt Leute, die ihre Backups mit Git machen und es gibt auch einen CMS bildlich, was als Backend Git zur Versionierung benutzt.
+
+02:02:06.698 --> 02:02:09.418
+<v SPEAKER_2>Was war das Erste, die ihre Backups damit machen?
+
+02:02:16.638 --> 02:02:23.818
+<v SPEAKER_3>Also die treiben das dann halt bis ins Letzte. So mit Web-Up, Frontend und allem drum und dran, so den ganzen Schnösel, alles aneinander gesteckt.
+
+02:02:24.198 --> 02:03:02.858
+<v SPEAKER_2>Interessantes Ding. Und so könnte man ja im Prinzip dann auch die Replikation der eigenen Festplatte auf andere Festplatten und andere Rechner ganz gut organisieren, weil wenn ich jetzt, oh jetzt brichst du mir Hörhaut. Das heißt, wenn ich jetzt dieses unglaubliche Problem, was man hat, wenn man Desktop-Rechner hat und Laptop-Rechner hat und man will irgendwie zumindest einen Teilbereich seiner Festplatte irgendwie auf dem gleichen Stand haben, dann hat man immer dieses Problem, dass man Änderungen hier, Änderungen da und so. Aber wie sophisticated sind denn dann die Werkzeuge auf dem Rechner? Da bin ich dann doch immer wieder auf der Kommandozeile, oder? Muss man jetzt Git irgendwie auch ins Triebsystem einbauen? Oder ins File-System? Gibt es schon Git-FS?
+
+02:03:02.978 --> 02:04:00.998
+<v SPEAKER_3>Ich glaube noch nicht, aber ich glaube, du würdest da entweder dir selber einen Frontend da zusammenhaken. Wie gesagt, ich glaube, da gibt es so Leute, die da schon Web-Interfaces für basteln. Und ansonsten wäre es halt schon die Command Line. Aber in der Tat, Leute basteln da halt genau so eine Lösung, Synchronisationslösung oder auch Deployment-Lösung einfach mit Git. Also es gibt ja auch so diesen Fall, auch ein ganz tolles Beispiel, was bei diesem dezentralen System gelöst wird. Du hast einen SVN im Intranet, hast den Rechner, wo es deployt werden soll, im Internet. So, jetzt willst du auf den Internet-Server gehen und die Changes aus dem SVN-Pullen geht aber nicht. Oder check-outen geht aber nicht, weil es halt im Intranet. So, und bei dezentral, dann kannst du halt einfach die andere Richtung nehmen und dahin pushen. Und dir so einen Hook-Script machen, was halt irgendwie ausgeführt wird, sobald da eine neue Version hingepusht wird, was dann irgendwie alles an die richtigen Plätze verteilt und fertig, ne?
+
+02:04:01.018 --> 02:04:06.618
+<v SPEAKER_2>Vor allem, man muss nicht regelmäßig nachgucken, ist was neu, ist was neu, sondern man hat halt Push-Services, um zu sagen, im wahrsten Sinne des Wortes.
+
+02:04:06.638 --> 02:04:13.978
+<v SPEAKER_3>Genau, und das verfriekeln die Leute da tatsächlich in diversen Projekten, also auch nicht nur mit Gitzern, sondern auch mit Mercury.
+
+02:04:13.998 --> 02:04:19.358
+<v SPEAKER_2>Dann eben auch wunderbar für Webseiten. Gibt es da irgendwas, was du benennen könntest oder weißt du nur, dass da Leute dran arbeiten?
+
+02:04:20.818 --> 02:04:28.278
+<v SPEAKER_3>Ich habe jetzt keine Namen im Kopf, aber das scrollt hier durch die üblichen Webblogs immer durch. Ich könnte das auch vielleicht noch mal als Ergänzung...
+
+02:04:28.298 --> 02:04:51.738
+<v SPEAKER_2>Aber eigentlich bräuchte man in seinem CMS, wenn man jetzt sagt, okay, da gibt es jetzt irgendwie eine Seite, die hat irgendwie einen Content, der lässt sich einen Text ausdrücken, bräuchte man ja im Prinzip in seinem CMS, in seiner Webserver-Software, nur die Möglichkeit, so einen Git-Push-Request einzusammeln und den dann eben auf die richtige Datei zu beziehen. Und dann könnte man das schon mit sowas wie GitHub koppeln.
+
+02:04:52.178 --> 02:05:59.898
+<v SPEAKER_3>Ja, also es ist, glaube ich, auch nicht wirklich schwer, weil die paar Kommandos, die man in der Branche braucht, man muss ja jetzt erstmal nicht mit Branchen und Mergen und so weiter rumhantieren, das einfach straight forward auf einem Branch benutzt, ist das nicht viel, was man da tun muss. Jetzt, wo ich gerade nochmal Merge sage, fällt mir noch ein Feature ein, was Git hat, was die anderen nicht haben. Also abgesehen davon, dass Merges prinzipiell einfacher sind durch die Architektur, hat Git pluggable Merge-Strategies, also du kannst unterschiedliche Merge-Strategien dir aussuchen für einen Merge. Ich weiß nicht, ob es Mercurial mittlerweile hat, aber früher war es so, oder vor einer Weile war es so, dass Mercurial immer nur zwei Branches zusammenführen konnte. Git hat halt eine sogenannte Octopus-Branch-Strategie, wo du halt beliebig viele Branches gleichzeitig zusammenführen kannst. Das kann dann halt irgendwie einen neun Milliarden Parents haben, der eine commit. Und das ist auch noch so ein Feature, was bei Git echt ganz schick ist, dass du für verschiedene Merge-Szenarien auch unterschiedliche Algorithmen sozusagen zur Verfügung hast.
+
+02:05:59.918 --> 02:06:01.398
+<v SPEAKER_2>Was für Szenarien könnte das jetzt sein?
+
+02:06:03.478 --> 02:06:24.098
+<v SPEAKER_3>Wie zum Beispiel eben mehrere Branches gleichzeitig in einen commit münden lassen. Sonst müsstest du halt immer erst den einen Branch dahin, dann von dem anderen Branch dahin und dann so die Stück für Stück durchhangeln. Und bei Git sagst du, ach Git, Merge, den Branch, den Branch, den Branch, den Branch. So, man macht so eine lange Liste und dann machst du Enter und dann bist du halt so in diesem interaktiven Konflikt-Resolve-Modus.
+
+02:06:24.118 --> 02:06:33.858
+<v SPEAKER_2>Okay gut, aber man hat dann schon ein, entweder auf der Kommando-Zeite, so ein interaktives Frage-Antwort-Spielchen mit, was soll ich jetzt damit machen? Soll ich den so einbauen oder nicht oder soll ich den oder den nehmen oder was?
+
+02:06:33.878 --> 02:06:56.958
+<v SPEAKER_3>Nein, nein, nein, er macht alles, was offensichtlich ist, so von Zeitpunkt, wann der commit entstanden ist und ob, also wenn er halt irgendwie das so machen kann, dann macht er das einfach nur bei dem Fall, dass er jetzt in dem einen Branch die Zeile 1 editiert und in dem anderen Branch auch, dann würde er halt irgendwie mal kurz nachfragen, wie ist denn das jetzt gemeint, welcher soll denn jetzt wie kommen. Was dann auch noch eigentlich…
+
+02:06:56.978 --> 02:07:01.198
+<v SPEAKER_2>Wie gut funktioniert das eigentlich mit Binärdateien?
+
+02:07:01.218 --> 02:07:01.378
+<v SPEAKER_3>Meistens…
+
+02:07:01.398 --> 02:07:11.338
+<v SPEAKER_2>Also ich meine, so bei Text und Zeile und so weiter, klar, das ist ja klar, aber was mache ich jetzt so bei JPEGs oder so, wo irgendjemand die Metadaten geändert hat oder MP3s oder so?
+
+02:07:11.818 --> 02:07:16.598
+<v SPEAKER_3>Na, du kriegst Binary Diffs, so, er macht auch Binary Diffs darauf.
+
+02:07:16.618 --> 02:07:29.558
+<v SPEAKER_2>Ich meine, kann eine Git-Installation so intelligent gemacht werden, dass sie zum Beispiel weiß, wie sie mir eine Änderung einer MP3-Text präsentieren soll oder so weit ist es noch nicht?
+
+02:07:29.578 --> 02:07:30.318
+<v SPEAKER_3>Nein, so weit ist es nicht.
+
+02:07:30.338 --> 02:07:32.638
+<v SPEAKER_2>Das ist nur so, dieser Blob ist anders als dieser Blob.
+
+02:07:35.618 --> 02:07:39.538
+<v SPEAKER_3>Und dann haben wir noch ein ganz wichtiges Feature, nicht erwähnt, History Rewriting.
+
+02:07:40.978 --> 02:07:45.118
+<v SPEAKER_2>Oh, na, das ist doch für unsere Revisionisten genau das Richtige.
+
+02:07:45.138 --> 02:07:51.438
+<v SPEAKER_3>Ja, wie gesagt, das ist auch so, wir fallen da wahrscheinlich noch stundenlang über welche Features ein.
+
+02:07:51.458 --> 02:07:56.438
+<v SPEAKER_2>Was heißt denn das History Rewriting? Man kann einfach behaupten, es war alles anders.
+
+02:07:56.458 --> 02:08:40.638
+<v SPEAKER_3>Ja, also, nehmen wir mal ein ganz einfaches blödes Beispiel. Also ich mache einen Branch und sage, der heißt Feature XY und ich mache für jede Zeit einen Commit und es sind am Ende 300 Commits für genau ein Feature hinter einem Button. So, wenn ich das jetzt zurück in den Master Branch merge, dann würde er ja die ganzen 300 Commits von dem Branch halt oben drauf auf den Master batzeln. So, jetzt kann es aber sein, dass ich, also ich hätte es halt lieber, die 300 Commits in einem zusammengefasst. Ich will eigentlich nur ein Commit, ich habe das neue Feature gemacht, ich habe dies, das und jenes gemacht, so mit schön viel Text. So, und dann kann ich halt mit Mikyryl und Git einfach sagen, ich möchte jetzt diese 300 Commits in einem zusammenfassen.
+
+02:08:40.658 --> 02:08:43.398
+<v SPEAKER_2>Weil es keinen Sinn macht, die einzelne Schritte überhaupt abzubilden.
+
+02:08:43.418 --> 02:10:54.758
+<v SPEAKER_3>Und die in einem Commit rein zu mergen. So, das ist noch so der einfachste Fall. Kann man auch so argumentieren, ja, ist ja quatsch, ich will alle Commits sehen und so weiter, ne? So. Dann gibt es die Möglichkeit im Nachhinein Commits zu reordern, wenn man sie mergt. Das heißt, ich will eigentlich, dass der Commit vor dem anderen kommt. Das wäre auch eine Art des History Rewritings, weil es dann hinterher nicht mehr zu sehen ist, wie es eigentlich ursprünglich war. Dann kannst du auch Commits löschen. So, du kannst im Nachhinein irgendwie durch die History gehen und einzelne Commits einfach rauspicken und sagen, die sollen nie in einem Repository jemals wieder zu sehen sein. Dann kann es halt sein, du hast ein File, irgendwann mal, also du hast ein privates Projekt angefangen und in irgendeinem File standen halt Credentials dran, also User, Passwort, Steuernummer, was auch immer. Und jetzt denkst du dir, ich mach jetzt dieses Projekt online, weil ich publish das auf Github. Ah, Moment, da steht jetzt in der History überall die Namen der Ex-Freundinnen. Genau. So, und dann erlaubt es dem Git und Mercurial auch, durch die ganze History zu gehen und die komplett zu re-writeen und eben genau dieses File rauszunehmen. Und Git, ich weiß nicht, ob das bei Mercurial geht, kann halt auch einzelne Zeilen aus der History rausnehmen. Das haben wir kürzlich gemacht, weil wir wollten halt irgendeine Software, die wir beim Kongress immer für die Kassen benutzen, wollten auf Github mal publishen und dann fiel uns ein, dass da halt auch noch so ein paar Sachen drin stehen, die nicht auf Github sein sollten und die waren halt nun in 23 Commits drin über ewige Zeiten. Und dann haben wir irgendwie halt in der Nacht im Club gesessen und haben uns überlegt, wie das geht. Und es geht einfach. Du kannst dann durch diese ganze History durchwabern und ja, das alles umändern und diese Zeile, die dann eben böse war, rausnehmen sollen und dann hinterher, wenn du es dann publischt, dann sehen die anderen, die davon klonen, einfach gar nicht, dass das jemals überhaupt drin gestanden hat. Ja, das ist auch eine Sache, die halt mit dem klassischen Version-Controlsystem einfach überhaupt nicht geht.
+
+02:10:54.778 --> 02:11:21.438
+<v SPEAKER_2>Wie ist denn das eigentlich, wenn ich jetzt wechseln will, so jetzt bin ich total überzeugt, so distributed is da shit. Und jetzt hänge ich aber noch in so einem oldschoolischen, mundvoldigen CVS-Repository rum. Gibt es da irgendwie die Möglichkeit, denn da auch diese ganze alte Historie nicht nur zu breiten, sondern auch sozusagen zu übernehmen, wieder zu integrieren?
+
+02:11:21.458 --> 02:11:43.218
+<v SPEAKER_3>Also da gibt es verschiedene Möglichkeiten und die sind alle eigentlich ganz großartig. Also den einen Fall gibt es ja, das ist wirklich eine andauernde Freude von Großartigkeiten. Also der erste Fall ist so, dein Arbeitgeber benutzt SVN und will halt nicht auf Git wechseln. Ist zu viel Pain, die Admins haben zu viel zu tun, keine Ahnung, wir benutzen SVN aus.
+
+02:11:43.238 --> 02:11:46.438
+<v SPEAKER_2>Außerdem haben wir vor zehn Jahren schon mal was geändert. Wo kommen wir denn dahin?
+
+02:11:46.458 --> 02:12:22.738
+<v SPEAKER_3>Genau. So, da ist jetzt der Fall, du kannst mit SVN und Mercurial dir einmal dieses SVN in ein lokales Git oder Mercurial Repo importieren und jede Änderung, die du dann committest und dann pusht, wird dann hinter der Fassade sozusagen, sprich dann dein Git Repo mit dem SVN Repo und tust du als wärst du ein SVN Client und committest das dann ins SVN. Für dich ist das Git, du hast lokale Branchen, du kannst irgendwie machen, was du willst und in dem Moment, wo du halt pusht auf diesen Remote Server, den SVN Remote Server, verhält sich dann dein Git Client wie ein SVN.
+
+02:12:22.758 --> 02:12:38.678
+<v SPEAKER_2>Das ist doch auch das Prinzip gewesen von SVK, wenn ich das richtig mitzukommen habe. Weil du kannst lokal deine Commits machen und erst wenn der SVK gesagt hat, jetzt ist irgendwie alles fertig, schiebt er das rein und der Subversion Server merkt da gar nichts von.
+
+02:12:38.698 --> 02:13:19.298
+<v SPEAKER_3>Genau. So was gibt es dann halt auch für Git und für Mercurial und alle anderen. Und das gibt es, also ich weiß nicht, ob es das auch für CVS noch gibt, aber auf jeden Fall für SVN. Also dieser Schmerz ist beseitigt, dann gibt es das natürlich auch untereinander. Also ich weiß auch nicht, ob es von Git zu Mercurial geht, aber Git hat ein Plug-In, womit man dann halt mit Mercurial-Repositories genauso reden kann, als wäre es eigentlich ein Git-Repo. Das heißt, die Mercurial-Leute, wenn die auf GitHub posten können, dann können die sich ein Plug-In installieren für Mercurial und können dann mit Mercurial einfach mit GitHub kommunizieren. Also so eine Sache gibt es auch ganz viel. So, und dann...
+
+02:13:19.318 --> 02:13:22.078
+<v SPEAKER_2>Da zeigt sich ja auch die Nähe, die konzeptionelle.
+
+02:13:22.098 --> 02:14:17.398
+<v SPEAKER_3>Genau. Und dann gibt es noch die Unwilligkeit, der User zu wechseln. Es kann ja sein, dass die User eigentlich gar nicht selber wechseln wollen. Die Admins wollen jetzt auf Git umsteigen aus verschiedenen Gründen, oder Mercurial. So, und dann gibt es halt diesen Typi, der Hauptentwickler, der den ganzen Code in- und auswendig kennt und dessen Wort gesetzt ist. Und der benutzt seit 20 Jahren CVS. Und der wird jetzt nicht irgendwie, nur weil irgendwelche Kiddies da ankommen und sagen hey, wir wollen das neueste, tolle Ding benutzen, wird der jetzt nicht auf Git wechseln. So, kommt ja gar nicht in die Tüte. So, und dem kann man dann wiederum bei Git den Server, oder das Remote-Repository so erscheinen lassen, als wäre es ein CVS-Server. Das heißt, der kann weiter mit seinem CVS rumpoolen und Commits machen und die werden aber dann auf dem Server als normale Git-Revisionen und so weiter angelegt. Also das heißt, es gibt auch die Abstraktion noch mal von der Seite, dass man einfach User, die gar nicht wechselwillig sind, so.
+
+02:14:17.418 --> 02:14:24.218
+<v SPEAKER_2>Sind das jetzt bekannte Projekte, wo dir gleich die passenden Namen dazu einfallen, oder sind das irgendwelche kleinen Skripte, die keiner an den Kopf kennt?
+
+02:14:24.238 --> 02:14:28.338
+<v SPEAKER_3>Das ist mit dabei, dass der Git-Demon sich auch als CVS-Server geben kann.
+
+02:14:28.358 --> 02:14:29.898
+<v SPEAKER_2>Okay, eine kleine Konfigurationssache.
+
+02:14:29.918 --> 02:14:47.418
+<v SPEAKER_3>Genau, und Git, um SVN-Imports zu machen, das ist auch dabei. Das ist bei Mercurial auch schon dabei. Also bei Git ist es einfach, statt Git-Clone-Repository sagst du Git-SVN-Clone und dann das SVN-Repository. Und dann zieht sich das alles rein und dann ist das fertig.
+
+02:14:47.438 --> 02:14:47.758
+<v SPEAKER_2>Verstehe.
+
+02:14:48.158 --> 02:16:16.438
+<v SPEAKER_3>Also die Migration könnte einfach fast nicht sein. Also wenn man am Anfang davor sitzt und so, wie ich am Anfang auch denke, dann gibt es jetzt noch ein Version-Control-System, alles ganz anders und wenn man das mal beiseite lässt, ist der eigentliche Prozess relativ smooth. Also da gibt es echt kaum Schwierigkeiten. Die einzige Hürde ist eigentlich das Umdenken. Das ist das Hauptproblem beim Wechsel, dass man immer noch im Rückenmarkt dieses SVN-Denken hat. Also wenn ich ein File adde, dann ist es geadded und wenn ich es committe, dann ist es auf dem Server. Wohingegen dann bei Git so die Leute da sitzen. Check mal aus, ich habe hier gerade commited. Und dann checkst du es aus, keine Erinnerung da. Hast du es auch gepusht? Ja, ich habe es doch commited. Aber commit in ein lokales Repository. Du musst jetzt den commit noch ins remote Repository pushen. Und dann halt immer, also das ist am Anfang, so in den ersten zwei Wochen, wenn du mit Git oder Mercurial dann so richtig loslegen willst, hast du immer noch so dieses SVN oder CVS-Denken und willst so in alte Muster zurückfallen und hast noch so dieses Gefühl, ach, das geht ja gar nicht so. Und musst dann erst mal so mühsam lernen, dass das alles ganz anders ist. Und darum ist, glaube ich, Git von den Kommandos halt einfach auch so, also es ist wirklich vollständig anders, einfach wahrscheinlich, um auch den Leuten so diese Brücke zu nehmen, dass das ja eigentlich so wie SVN funktioniert. Und dass die dann so denken, ja, okay, wenn ich jetzt hier das und das mache, dann ist das so wie eine SVN.
+
+02:16:18.518 --> 02:16:19.978
+<v SPEAKER_2>Heute ist different, now face it.
+
+02:16:21.298 --> 02:16:42.598
+<v SPEAKER_3>Und das ist eigentlich noch so der Hauptunterschied. Also die Leute, wie gesagt, so nach ein, zwei Wochen sind sie dann drin, aber so am Anfang, wenn man so neben denen sitzt, so dann ist es immer wieder das Gleiche. Also ich habe jetzt schon echt viele bekehrt und viele begleitet bei ihrer Reise. Trip-Sitter. Und es war halt, wie gesagt, die ersten Schritte waren immer so ganz komisch und holprig.
+
+02:16:42.618 --> 02:16:51.178
+<v SPEAKER_2>Ja, und dann ist es auch immer so, ach, das ist doch scheiße hier, die sind redistributed und geht, das ist doch blöd und so weiter.
+
+02:16:51.198 --> 02:17:02.558
+<v SPEAKER_3>Aber es ist dann wirklich so am Anfang einfach dieses Unverständnis, diese Unwilligkeit, jetzt etwas Neues zu lernen. Aber dann in dem Moment, wo sie feststellen, wie cool das eigentlich alles ist, sondern okay, verstanden. Und dann wollen sie auch nicht mehr zurück.
+
+02:17:02.738 --> 02:17:05.898
+<v SPEAKER_2>Raus aus der Matrix. Den Stipsel ziehen aus dem Kopf.
+
+02:17:07.218 --> 02:17:10.218
+<v SPEAKER_3>Ja, den zentralen Repository-Stipsel.
+
+02:17:11.138 --> 02:17:55.338
+<v SPEAKER_2>Nicht mehr fernwirken, sondern selbst wirken. Ja, also das, was du sagst, macht wirklich eine ganze Menge Türchen auf. Und ich denke, dass auch gerade dieser soziale Schub durch sowas wie GitHub, aber generell, sagen wir mal, erst mal durch diese Funktionalität und diese Denke, dieses Verteilen von Entwicklungsgeschichte einen großen Unterschied machen kann. Weil man natürlich einerseits sehr viel mehr Vergangenheit in die Hand gelegt bekommt. Jeder hat auf seinen eigenen Laptop, der noch nicht mal Internet braucht, die gesamte Entwicklungshistorie von Linux oder so. Ich weiß jetzt nicht, inwieweit die alten Versionierungen da zurückgeführt sind, wahrscheinlich nicht in dem Maße.
+
+02:17:55.358 --> 02:18:12.278
+<v SPEAKER_3>Bei dem Linux-Kanal haben sie tatsächlich neu angefangen, weil als sie Bitkeeper und so weggeschmissen hatten und Git dann erst mal gerade schreiben wollten, da wollten sie halt einfach den ganzen Konflikten aus dem Weg gehen und haben gesagt, wir machen da nochmal einen Clean Cut. Aber so viele große Projekte, die migrieren, die holen ihre ganze History rein.
+
+02:18:12.298 --> 02:18:50.758
+<v SPEAKER_2>Da hat man natürlich da eine ganze Menge drin und daraus kann man natürlich dann auch wiederum lernen. Aber was ich noch sehr viel wichtiger finde, ist, dass einfach der Schmerz der Beteiligung gesenkt wird. Dass es eben die technische Hürde gesenkt wird. Von daher natürlich auch sehr viel einfacher ist, erst mal jungen Leuten, also jungen nicht unbedingt jetzt von ihrem Alter her, sondern dass sie eben in einem Projekt neu sind oder in einem bestimmten Programmierfeld oder in einer Sprache, es erst mal einfach machen, sich zu tummeln und gleichberechtigt weiterzuentwickeln, bevor sie dann sozusagen wirklich an die heiße Herdplatte geführt werden. Nicht wahr?
+
+02:18:50.778 --> 02:20:29.618
+<v SPEAKER_3>Ja, man, es macht halt auch wirklich, wenn man so mit SVN und so zu tun hat, es macht einfach viel mehr Spaß mit diesen Distributed Version Control System, Branches und Mergen, es ist einfach kein Schmerz mehr, es geht schnell, es ist toll. So, man macht gerne Branches, für jedes kleine Popel-Feature macht man ein Branch, es kostet nichts, es ist schnell und super. Und man hat halt irgendwie, wie gesagt, eben das Gefühl, mehr dabei zu sein, man muss nicht irgendwie um Commit-Rechte battlen und dieses alles, man hat irgendwie mehr Sicherheit durch diese Integritätschecks, wobei ich eben nicht genau weiß, ob inwieweit das bei Mercury und Bazaar so zu diesem Level getrieben wird, wie bei Git. Aber die haben auch Schaarsummen hier und da. Und diese Speichereffizienz und sowas, einfach von vorne bis hinten. Wie gesagt, ich habe ja jetzt, glaube ich, noch über keinen Feature wirklich gemeckert. Vorher habe ich so Version-Control als lästige Notwendigkeit betrieben, so einfach um der Selbsterhaltung willen, damit ich mir nicht völlig in den Fuß schieße. Und jetzt mache ich das einfach für alles, für InDesign-Dokumente, für alles mögliche in Projekten. Es kostet nichts, geht in het pengen, da hast du dein Repository-Kommitte rein, das geht schnell, das ist toll. Ich habe ja früher auch, wenn ich ein InDesign-Dokument gemacht habe, InDesign-Bug, InDesign 22.03.99 und so einen Files nebeneinander gelegt, dann wusste man nicht, welches File gerade offen ist, und hat es ins falsche geschrieben, aber alles kaputt. Und jetzt so die letzten Tage habe ich auch so einfach überlegt, warum benutze ich das nicht einfach für alles? Also geht ja schnell, für zwei Files kostet nichts. Ich habe dann eine schöne, saubere History. Kann das Remote wegpushen einfach so. Also ist einfach toll, macht Spaß.
+
+02:20:29.638 --> 02:20:33.258
+<v SPEAKER_2>Und trotzdem wäre natürlich so ein bisschen die Clicky-Integration auch ganz wünschenswert, oder?
+
+02:20:33.298 --> 02:22:21.158
+<v SPEAKER_3>Na es gibt ja, es gibt schon hier die ein oder anderen Clicky-Tools. Die können zwar nie so die Komplexität, die möglich ist, abbilden. Die User-Interfaces sind sehr simpel, meistens darauf beschränkt, einfach Changesets zu committen oder irgendwie Branches zu wechseln, neue Branches zu createn, die History anzugucken, zu durchsuchen. So eine Geschichten. Aber jetzt so richtig am nackten Metall ist man mit diesen Gullis natürlich nie. Und viele sind auch sehr, sehr simpel. Also bei Git und ich glaube bei McCuril ist auch eine dabei. Bei Git sagt man einfach GitK. Dann kommt da so eine GTK abhoch, die auch schon irgendwie die Branches zeigt und den U-Bahn-Fahrplan malt und sowas alles. Und ein Web-Interface ist alles schon dabei. Dann gibt es noch ein paar Open-Source-Clicky-Apps, die auch ganz okay sind. Dann gibt es diverse IDE-Integrationen für Eklipse und so. Also ist schon viel da. Ich benutze halt oft auch die Command Line, weil es schneller ist. Und für größere Commits nehme ich dann halt irgendwie einen Div-Viewer und ein Clicky-Commit-Tool oder so. Aber Merges und so, die mache ich eigentlich alle von der Hand. Das Schöne ist auch, ich komme mit Git, da habe ich mich schon oft in irgendwelche States gebracht, wo ich dachte, das war jetzt komplett falsch abgebogen. So, irgendwie ist es voll falsch. Und bei SVN hätte ich so in vielen Situationen einfach gesagt, okay, schmeiß weg und check nochmal neu aus. Und übertrag die Changes nochmal von Hand. Und bei Git, und ich bin mir sicher bei Mercurius, ist es auch so, kommt man halt immer wieder zurück. So, egal wo man falsch abgebogen ist, egal welches Kommando man jetzt falsch eingetippt hat, egal wie man sich jetzt gerade so das Repository vermeintlich zerschossen hat, es gibt immer irgendwie einen Weg zurück einfach. Und ja, das ist einfach, das macht einfach Spaß.
+
+02:22:21.178 --> 02:22:31.678
+<v SPEAKER_2>Das macht auch mehr Mut. Weil man vor seinen eigenen Maßnahmen nicht so viel Angst haben muss. Was fehlt denn noch?
+
+02:22:33.578 --> 02:23:37.578
+<v SPEAKER_3>Ja, ich habe auch natürlich die letzten Tage überlegt, so was, wo würde mir jetzt fehlen? Es gibt auch gerade so eine große Git-User-Survey, wo sie dann fragen, was denn jetzt verbessert werden muss. Ich meine, klar, hier das Interface kann man immer noch verbessern und so. Aber eigentlich, für das erste fällt mir wirklich nicht so richtig ein. Ich sage jetzt, nee, der eine Punkt, der ist jetzt richtig mies. Es gibt bestimmt Leute, die sagen, ja, ich will schon explizites Tracking von Renamings haben. Oder ich will, also die ganzen neuen Version-Controlsysteme, die tracken halt keine File-Permissions. Die machen nur das Execution-Bit-Tracking mit. So, dann gibt es halt bestimmt Leute, die sagen, ja, ich will aber lieber hier volle File-Permissions und ich will explizites Rename-Tracking und so weiter und so fort. Also es gibt Garantierfälle, wo man sagt, irgendwie, ja, das ist ja blöd. Aber für mich persönlich, es ist einfach das Beste seit dem Schnittbrot, wie du das so schön zu sagen pflegst. Bis jetzt der nächste kommt mit einer wahnsinnig schlauen Idee, mit der keiner gerechnet hätte, ist das jetzt einfach, besser geht es nicht.
+
+02:23:38.558 --> 02:26:04.458
+<v SPEAKER_2>Meine, wir haben es ja schon angedeutet, mit diesem Wiki-Beispiel oder auch so, wie du das mit deinen InDesign-Dokumenten machst. Eigentlich ist Versionskontrolle immer noch etwas, was eigentlich weitgehend in der Domäne der Programmierer liegt. Mit der großen Ausnahme Wiki. Wobei wir da eben genau die Nachteile, die wir jetzt schon in der Entwicklerwelt ausgemacht haben, das nämlich ein zentrales Repository einfach Ärger macht langfristig. Genau diese Wachstumsschmerzung sieht man da. Genau das gleiche hat man auch. Es gibt ja auch schon eine ganze Reihe von kollaborativen Editoren da. Zum Beispiel auf dem Mac, das SubEther-Edit, hat schon diesen Realtime-Modus drin. Man kann einfach gleichzeitig arbeiten. Gut, da sieht man, da ist dieses Konflikt-Tracking sozusagen live. Man sieht, der andere schreibt da oben dran rum, dann mache ich mal da, dann fasse ich jetzt mal nicht an. Das ist natürlich auch eine interessante Dynamik. Auch bei diesen Google-Docs-Geschichten geht es auch schon in diese Richtung. Ich denke, der Trend für Echtzeit-Kollaboration nimmt auch noch weiter zu. Aber natürlich ist gerade das geordnete, nachvollziehbare und dann eben auch durch solche expliziten Ja-Nein-Sagungen. Hier ist ein Änderungsvorschlag, willst du den drin haben und so weiter, dass das eben alles geordnet abläuft. Das ist natürlich etwas, das will man im Prinzip auf alles anwenden können, was man auf seinem Computer hat. Also es wäre geradezu geboten, dass das Betriebssystem an sich diese Funktionalität generell allem bereitstellt. Jedes Programm kann, so wie es heute ein Ando-Management von seinem Betriebssystem organisieren lassen kann, im Prinzip auch ein Versionsmanagement. Und zwar eben dann auch gleich ein verteiltes Versionsmanagement machen. Dass ich halt in meinem, was weiß ich, Photoshop sitze. Ich mache auf einem Bild, was ich mir von einem Repository geholt habe, ändere ich ein paar Filter und wende das an und sage dann, ok, kommite das mal hier lokal in diese Datei hinein. Und wenn ich dann später festgestellt habe, das ist jetzt genau das Geile. Und jetzt gehe ich nochmal mit einem Blur-Filter drüber. So und dann pushe ich das halt wieder zurück in meinen Photoshop-Hub. Und dort wird das dann eben eingebaut. Und wenn jemand anders mal auf dem Textlayer noch ein paar Ergänzungen gemacht hat, dann findet das eben auch Einzug.
+
+02:26:04.578 --> 02:26:12.718
+<v SPEAKER_3>Ja, und ich meine, wie gesagt, so Time Machine, damit hat man ja im Prinzip schon mal so ein grobes Verging, aber man sieht halt auch nicht die Unterschiede.
+
+02:26:12.918 --> 02:26:14.518
+<v SPEAKER_2>Also das Backup-System auf Mac.
+
+02:26:14.538 --> 02:26:51.638
+<v SPEAKER_3>Und es ist halt auch strikt linear so. Also auf einer Linie, es gibt halt nicht sowas wie Branches und Konflikte und Mergen. Es ist halt relativ stumpf. Aber prinzipiell wird es wahrscheinlich schon auch in diese Richtung früher oder später gehen. Wie gesagt, es gibt Leute, die mit Git Time Machine nachbauen, mehr oder weniger. Und eben dann halt mit den ganzen Features von Git, ob das jetzt so wirklich der Performance-Knaller ist, wenn man dann sein ganzes Home und seine ganzen Movies da reinkippt und so, sei mal dahingestellt. Aber es gibt Leute, die zumindest ausprobieren. Und wenn sie feststellen, prinzipiell ist das eine coole Idee, dann schreiben sie halt das nächste Version-Control-System, was auch mit so einem Files dann einfach super gut klarkommt.
+
+02:26:51.658 --> 02:28:11.698
+<v SPEAKER_2>Ja, gerade diese Verteilbarkeit ist an der Stelle halt auch wirklich ein Punkt, weil man kann dann eben, wenn man das alles mit gibt macht von seiner Platte, jetzt mal so weitergedacht, da schreibe ich das dann eben mal weg. Und in so ein Backup-Repository, das kann ich halt irgendwo hinlegen. Und wenn ich dann später dann wirklich mal in diesen Files komme mit, da habe ich einen Backup, dann weiß ich auch genau, in welchem Zustand sich eigentlich welche Datei befindet. Weil ja die ganze Historie hier darin auch abgelegt ist. Und ich kann es dann eben mit irgendeinem anderen Fund, sagen wir mal, ich finde zwei Backups, der eine beim Freund, das andere unter dem Bett. Und die Hauptdatei ist abgegangen. Das eine ist ein halbes Jahr alt, das andere ist irgendwie ein dreiviertel Jahr alt. Dann bin ich ja in der Lage, aus diesen Datenbeständen halbwegs geordnet zusammenzuführen, was denn so das jeweils Aktuellste ist. Man muss sich nicht für das eine ist neuer als das andere, weil das kann natürlich so und so sein. Von daher schon ein interessantes Modell. Naja, jetzt kommen wir aber ins Philosophieren, was vielleicht auch kein Fehler ist, aber ich denke, das ist alles noch ein neues Feld. Und viele der Überlegungen drängen sich geradezu auf. Und es wird spannend sein, das noch weiter zu beobachten. Genau. Weil wir jetzt nicht noch etwas ganz Wichtiges vergessen haben.
+
+02:28:11.718 --> 02:28:21.538
+<v SPEAKER_3>Ach, es gibt halt echt noch tausende Features, die man jetzt erwähnen könnte. Es fällt mir gerade noch viel ein.
+
+02:28:21.558 --> 02:28:33.078
+<v SPEAKER_2>Vielleicht sollten wir uns auch konzentrieren auf wo starten. Also was kannst du empfehlen, wenn man jetzt irgendwie loslegen will? Was sind so die Ressourcen? Du hast schon das Pro-Git-Buch, das klingt schon ein bisschen nach dem zweiten Schritt.
+
+02:28:33.998 --> 02:28:46.518
+<v SPEAKER_3>Nein, nein, das heißt Pro-Git, weil es von A-Press gedruckt wird. Und die haben eben so eine Serie, die mit Pro, da fängt halt alles mit Pro an. Du hast doch hier auch Pro-Django. Und ist das ein Pro-Buch?
+
+02:28:46.538 --> 02:28:47.038
+<v SPEAKER_2>Was wie?
+
+02:28:47.058 --> 02:28:48.238
+<v SPEAKER_3>Das Pro-Django-Buch?
+
+02:28:48.258 --> 02:28:53.498
+<v SPEAKER_2>Das vermag ich nicht zu beurteilen, ob das jetzt ein Pro-Buch ist.
+
+02:28:53.518 --> 02:30:28.438
+<v SPEAKER_3>Also, für Git kann ich es zumindest so mal sagen. Also bei Git gibt es mittlerweile, das war früher halt ein Kritikpunkt, wenn man so im Internet halt googelt, so McHill versus Git, so wird halt eben angeführt, das Interface ist so kompliziert und es gibt keine ordentliche Doku. Das ist mittlerweile alles nicht mehr so. Das Interface ist richtig schön vereinfacht und es gibt so viel Doku, wie man sie irgendwie gar nicht verarbeiten kann. So, der wichtigste Teil, würde ich sagen, ist, wenn man auf gitscm.com geht. Von da aus ist nämlich alles einfach verlinkt. Die hatten vorher auch noch eine ganz furchtbare Seite, ähnlich wie Mercurial jetzt gerade noch, und haben das jetzt mal so ein bisschen auf Web 2.0-Niveau gehoben, auch wenn die Farben noch so ein bisschen retro aussehen. Aber wenn man da auf Documentation klickt, oben in der Menüleiste, da findet man dann halt alles. Und zwar angefangen von so Migrationsguides, so SVN-Crashkurs, ich komme jetzt aus der SVN-Wild und will mal sehen, wie das in Git funktioniert. Dann gibt es Git for the lazy, Git for designers, Git for computer scientists. Dann das offizielle Git-Tutorial, Everyday-Git, wo sie irgendwie einfach mal die täglichen Workflows beschreiben. Und ganz, ganz groß ist das, wo ist es? Das Git-Community-Book. Ach, das ganz oben verlinkt, genau unter dem Menü. Das Git-Community-Book. Und das ist eben auch von diesem Typen geschrieben, der bei GitHub mitarbeitet und dieses Pro-Git-Buch geschrieben hat. Und der maintains das auch. Dieses Computer-Community-Book ist auch auf GitHub als Repository.
+
+02:30:28.598 --> 02:30:31.078
+<v SPEAKER_2>Und da schreibt sozusagen die Community das Buch.
+
+02:30:31.098 --> 02:30:59.118
+<v SPEAKER_3>Genau, und das ist auch wirklich sehr, sehr gut. Also da steht viel drin, es ist gut geschrieben und sehr empfehlenswert. Dann habe ich mir kürzlich dieses... Ach so, dann unten gibt es auf dieser Dokumentationsseite Videos. Da sieht man das Video von Linus Torwalz, wo er eben bei Google das mal vorträgt, zu seinen Anliegen und warum er jetzt überhaupt Git gemacht hat. Das ist eigentlich auch sehr schön, um zu verstehen, warum und wieso. Und irgendwie auch um mal Linus Torwalz kennenzulernen, weil der spricht nicht so oft vor Publikum und Kameras.
+
+02:30:59.158 --> 02:31:02.418
+<v SPEAKER_2>Das ist ein ziemlicher Rand, der Vortrag.
+
+02:31:02.438 --> 02:31:08.998
+<v SPEAKER_3>Ja, das ist sehr randlastig. Aber irgendwie versteht man auch...
+
+02:31:09.018 --> 02:31:14.778
+<v SPEAKER_2>Der ist schön, er fragt ja herum, wer benutzt denn hier Subversion? Und dann so ganz viele und dann wer hat schon mal ein Merch gemacht?
+
+02:31:21.118 --> 02:31:58.318
+<v SPEAKER_3>Und dann neben diesen ganzen Textressourcen gibt es dann noch diese Gitcasts, ähnlich wie Railscasts für die Ruby-Entwickler unter... Also Screencasts. Genau, Screencasts einfach zu den täglichen Problemen. So, das ist halt, wie gesagt, auf der Seite findet man einfach alles. Ich würde eben das Community-Book empfehlen und vielleicht halt diese Quickstart-Guides. Die Screencasts sind auch okay, die Videos kann man sich auch angucken. Und als Buch würde ich aber, also wenn ihr euch das ProGit-Buch online durchlesen wollt, das ist auch sehr schön geschrieben. Und als Paperbook würde ich dieses O'Reilly-Buch zum Beispiel empfehlen. Das habe ich mir gerade gekauft und durchgelesen, war sehr schön geschrieben.
+
+02:31:58.338 --> 02:32:00.558
+<v SPEAKER_2>Manchmal ist auch ganz gut, was auf Papier zu haben, ne?
+
+02:32:00.578 --> 02:34:11.638
+<v SPEAKER_3>Genau. Aber das ist ja eben alles verlinkt. Von daher geht auf gitscm.com/documentationundfindet einfach alles. Also so habe ich es auch gemacht. Bei Mercurial ist es sehr ähnlich. Da gehst du halt auch auf die Mercurial-Seite und die haben ähnlich so auch geschriebene Guides. So ihr kommt jetzt gerade von Git, ihr kommt gerade von SVN, ihr kommt gerade von CVS. So ist es bei uns. An dem einen gleich an die Hand. Ja, bei Git ist es noch so, GitHub ist einfach auch die coolste Seite in dieser Hinsicht oder in diesem Bereich. Und die haben auch selber sehr viele Guides geschrieben, wie man mit GitHub und so coole Workflows hinkriegt, auch auf dieser gitscm-Seite verlinkt. Und als Abschluss, eine meiner Lieblingsseiten, die ich kürzlich auch hier mit einem aus dem Club einen Tipp submitted habe, der aber noch nicht drin ist, getready.com. Zusammen geschrieben und klein. Da sind halt alle so Probleme wie, ich will jetzt mal einen Pfeil nachträglich aus der ganzen History raus haben, wie mache ich das? Da gibt es halt von Beginner, Advanced und Expert verschiedenste Tipps. Genau, und das bezeichnet nicht den User, also das Skill-Level vom User, sondern das bezeichnet den Skill des Vorgangs. Den Skill des, genau, also so wie tief man da so jetzt einsteigt. Und da gibt es wirklich auch sehr viel, sehr nützliche Sachen. Einfach, wenn man mal irgendwie so ein konkretes Problem hat, kann man das da finden und einen Weg bekommen, wie man es macht. Also das ist ja eben auch am Anfang, wenn alles sowieso ganz anders heißt, so wie mache ich denn jetzt ein Revert oder ein Rollback oder ein Merge oder sonst was, steht da dann eben auch noch mal schön drin. So und ich habe hier auch eine ganze Liste von Links, so in der letzten Woche gesammelt. Die kann ich euch einfach, die gebe ich einfach alle Tim, dir da rüber, dann kannst du die ja auch mit auf die Seite tun. Da gibt es auch so eine schöne Seite, whygitisbetterthanx.com, wo dann so auch in so wenigen Schritten einfach die wichtigsten Punkte einfach nochmal abgearbeitet werden mit schönen Grafiken und so. Also die Git-Jungs sind schon...
+
+02:34:11.658 --> 02:34:19.698
+<v SPEAKER_2>Also auch gutes Kanonenfutter für so Stehparties, wo dann irgendwelche Neumarktklugen daher gelaufen kommen. Also meins ist Cuda, dann kann man sich dann gleich entsprechend bewaffnen.
+
+02:34:19.958 --> 02:34:38.538
+<v SPEAKER_3>Also ich kann jetzt noch abschließend sagen, so mein Gefühl ist halt, dass so die Git-Community, die da halt an Git entwickelt und das die Community auch antreibt, einfach ein bisschen größer und aktiver ist. Also bei Mkula hat man so den Eindruck, dass es noch ein bisschen zu wenig Leute sind, die da so den letzten großen Tritt über die Klippe bewerkstelligen.
+
+02:34:38.558 --> 02:34:40.598
+<v SPEAKER_2>Und bei Git ist das alles schon am explodieren.
+
+02:34:40.598 --> 02:35:14.278
+<v SPEAKER_3>Und durch dieses Rails-Projekt, dass das da raufgemacht wird, haben die so eine unglaubliche Community da mit GitHub auch noch bekommen und die Leute gehen einfach total ab und bauen hübsche Webseiten, lesbare Webseiten machen, schöne Tutorials und Screencasts. So diese ganze, ein bisschen gestaltungsaffinere Landschaft ist halt auf so ein Projekt gezogen worden, was Linus Torvalds gemacht hat. Weißt du, wie die anderen Seiten so aussehen, die mit Linux und kernel und so zu tun haben? Bei Git ist einfach echt sehr viel super schick, gut erreichbar, lesbar durch super Web 2.0. Macht einen riesen Unterschied aus.
+
+02:35:14.298 --> 02:35:17.318
+<v SPEAKER_2>Das hat ja auch schon die ganze Rails-Geschichte maßlos nach vorne getrieben.
+
+02:35:17.338 --> 02:35:34.258
+<v SPEAKER_3>Genau. Und dadurch hast du auch viel Doku und viel Argumentation, warum das eine besser ist als das andere. Die anderen ziehen da schon nach. Ja, aber ich habe so persönlich das Gefühl, dass dabei Git viel mehr geht. Gestern habe ich mal geguckt, da gab es eine neue Subversion. 1634.
+
+02:35:34.278 --> 02:35:36.378
+<v SPEAKER_2>Also nicht Subversion.
+
+02:35:36.398 --> 02:35:38.638
+<v SPEAKER_3>Genau, eine neue Unterversion von Git.
+
+02:35:38.658 --> 02:35:39.838
+<v SPEAKER_2>Ein Dot-Dot-Release.
+
+02:35:40.118 --> 02:35:54.418
+<v SPEAKER_3>Und heute gab es 164. Das heißt, innerhalb von drei Tagen gab es dann schon mehr Releases mit Fixes und Verbesserungen und schneller und weniger Speicherplatz. Die Treten auch ordentlich aufs Gaspedal.
+
+02:35:54.438 --> 02:36:04.378
+<v SPEAKER_2>Und das tun sie wahrscheinlich auch, weil sie Git benutzen. Weil sie die Vorteile schon ernten können, die in einem verteilten Entwicklungsmodell potenziell drinstecken.
+
+02:36:04.398 --> 02:36:08.798
+<v SPEAKER_3>Genau, und bei Mercurial ist das sozusagen gerade noch kurz vor...
+
+02:36:08.818 --> 02:36:09.658
+<v SPEAKER_2>Vor Ausbruch.
+
+02:36:09.678 --> 02:36:13.438
+<v SPEAKER_3>Kurz bevor die Achterbahn die Spitze des Hügels erreicht hat.
+
+02:36:13.458 --> 02:36:48.018
+<v SPEAKER_2>Na gut, aber die Unterstützung durch Google dürfte sicherlich auch nicht gering einzuschätzen sein. Letzten Endes haben wir ja schon festgestellt, die Systeme sind sich sehr ähnlich. Es ist auch davon auszugehen, dass sie sich gegenseitig noch die Features abgucken werden. Das ist ja in gewisser Hinsicht auch sehr gesund. Vielleicht ist das auch das Beste, was passieren konnte. Hätte es jetzt nur ein System gegeben, dann wäre man wieder schnell da zufrieden gewesen. Jetzt gibt es so einen Konkurrenzkampf. Die drei Systeme machen so ein bisschen den Eindruck von OpenBSD, FreeBSD und DSD.
+
+02:36:48.038 --> 02:36:50.358
+<v SPEAKER_3>Die treiben sich gegenseitig voneinander her.
+
+02:36:50.378 --> 02:36:53.718
+<v SPEAKER_2>Genau, aber kümmern sich letzten Endes um das Gleiche.
+
+02:36:53.738 --> 02:37:11.458
+<v SPEAKER_3>Und dadurch, dass sie dann immer mehr austauschbar werden. Wenn du jetzt ein Git-Fabel hast, dann kannst du trotzdem mit Mercurial-Repositories sprechen. Ist das dann am Ende auch egal. Da muss man sich echt nicht schämen, wenn man Mercurial oder Bazar benutzt, weil am Ende ist es einfach alles schön.
+
+02:37:11.478 --> 02:37:13.358
+<v SPEAKER_2>Schämen muss man sich nur, wenn man noch CVS benutzt.
+
+02:37:13.418 --> 02:38:21.758
+<v SPEAKER_3>Genau, weil das ist einfach alles Dimensionen besser als die ganzen zentralen Repositories. Nicht nur wegen diesen zentralen Aspekten, sondern eben auch technologisch. Und dann gibt es eben noch diesen Punkt, wo die Leute meinen, da war ich auch schon ein paar Mal, wo ich dachte, hallo, geht es noch irgendwie? Die gehen halt meinen, ja, aber so in Corporate-Environments ist ja zentralistisches Repository besser, weil dann hat der Quality-Manager mehr Kontrolle über die Programmierdrohnen usw. und so weiter und so fort. Und dann ist halt jeder Commit verbindend und so. Das ist einfach so ein Quatsch, weil du hast halt so Software-Projekte, wo so eine Test-Suite zwei Stunden zu bauen dauert, hat auch Linus dann seinen Vortrag. Du musst halt vor jedem Commit, weil du darfst halt nicht committen, bevor dich die Tests durchdauern. Du darfst halt die Software nicht brechen. Okay, dann sitzt jetzt vor jedem Commit zwei Stunden und wartest, bevor du dann committen darfst in das heilige Repository. Und dann, wenn du es nicht machst und doch was gebrochen hast und oh Gott, oh Gott, und alles schlimm und so eine Geschichte, die hast du einfach da nicht. Und du hast ja trotzdem dein zentrales Repository, wo halt das Daily Release sozusagen publiziert wird oder sonst was. Also die können...
+
+02:38:21.778 --> 02:38:24.698
+<v SPEAKER_2>Das ist einfach ein menschlicher Arbeitsablauf.
+
+02:38:24.718 --> 02:38:45.138
+<v SPEAKER_3>Du kannst eben auch mit diesem dezentralen System auch so einen zentralistischen Workflow abbilden. Das muss nicht alles total chaotisch und alles in gleich sein. Du kannst eben auch auf deinem zentralen, wichtigen Hauptrepository, an dem die Leute gemessen werden, irgendwie da die Messschablone anlegen. Du kannst genauso eine Workflow abbilden.
+
+02:38:45.998 --> 02:39:09.058
+<v SPEAKER_2>Du hast ja auch schon gesagt, es gibt ja dann auch für die Leute, die jetzt, sagen wir mal, jemanden zuhören, der jetzt schon die ganze Zeit sich ins Gesicht haut, weil er diese Probleme nur zu gut kennt aus seinem täglichen Ablauf, kann ich mir gut vorstellen. Also es gibt die Flucht nach vorne. Man kann selber das einsetzen und gegenüber so einem zentralen Server nach wie vor CVS oder SVN sprechen, dann ist man schon mal ein bisschen freier.
+
+02:39:09.078 --> 02:39:09.778
+<v SPEAKER_3>Genau.
+
+02:39:09.798 --> 02:39:17.598
+<v SPEAKER_2>Und vielleicht möchte man ja dann seine anderen Mitarbeiter auch noch befreien. Das könnte sich ja auch ganz gut machen.
+
+02:39:18.198 --> 02:40:00.918
+<v SPEAKER_3>Die Revolution von unten. Das hatte auch an diversen Orten tatsächlich schon stattgefunden. Dass einfach die Leute gesagt haben, ich weigere mich jetzt einfach so mit diesem SVN weiterzumachen und ich benutze jetzt einfach Git. Und dann irgendwann so nach einer Weile kam dann hier der Admin mal vorbei und meinte so, ja, okay, zeig mal her, wie geht denn das jetzt hier? Und jetzt haben wir bei uns in der Firma auch ganz viel Git jetzt schon. Einfach dadurch, dass die Leute gesagt haben, es ist so viel besser. Also dieser Anwendungsfall mit... Dieser Lookback. Genau, die Leute sind bei dem Projekt, beim Kunden vor Ort und haben kein Internet. Nur dieser Fall, den hatten wir bei uns in der Firma eben. Und die kamen dann einfach zurück mit strahlenden Gesichtern. Und ja, das gelobte Land. Und dann setzte das halt so langsam ein.
+
+02:40:03.038 --> 02:40:05.618
+<v SPEAKER_2>Super. Ich denke, jetzt machen wir hier mal den Deckel drauf.
+
+02:40:05.758 --> 02:40:16.298
+<v SPEAKER_3>Ja, und ich möchte von den Leuten, die das hören, dann getwittert bekommen, wie oft ich genau gesagt habe. Sind doch da immer ganz groß in so einer Absenzählerei.
+
+02:40:18.018 --> 02:41:27.498
+<v SPEAKER_2>Und es gibt auch Twitter, Tim Pritlove. Wollte ich auch schon mal loswerden hier. Wissen natürlich einige von euch. Aber Twitter ist für uns auch tolles Feedback. Für mich besonders hier bei Chaosradio Express. Ja, ich hoffe, das war nach eurem Geschmack. Hier ging es um Distributed Version Control, verteilte Versionssysteme. Und demnächst geht es hier, wie ihr es gewohnt seid, um wieder ganz andere Sachen. Ja, Huckel, erstmal vielen Dank hier für die Ausführung. Und wir freuen uns sehr über Kommentare. Ihr müsst jetzt auch hier nicht ins Geschrei ausbrechen, mit was denn jetzt irgendwie besser ist oder nicht. Aber alle Ressourcen, alles was wir hier falsch gesagt haben, bitte verbessern, ab in die Kommentare damit. Links auf andere Systeme. Wenn ihr dann irgendwie der Meinung seid, Mercurial wäre hier nicht gut genug weggekommen, ist alles kein Problem. Wir wollten hier generell verteilte Systeme erst mal vorstellen. Hier geht es ums Prinzip und nicht so sehr ums Detail. Was ihr nehmt ist egal, aber es ist schon klar, dass man hier doch Potenzial hat für ganz neue Workflows. Und die sollte man dann eben auch nutzen. So, dann machen wir einen Deckel drauf. Kling. Und das war's. Tschüss und bis bald bei Chaosradio Express.

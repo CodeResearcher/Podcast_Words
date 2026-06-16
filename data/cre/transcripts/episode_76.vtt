@@ -1,0 +1,751 @@
+WEBVTT
+
+00:00:00.960 --> 00:01:01.360
+<v SPEAKER_1>The very word secrecy is repugnant in a free and open society. And we are as a people, inherently and historically, opposed to secret societies, to secret oaths, and to secret proceedings. We decided long ago that the dangers of excessive and unwarranted concealment of pertinent facts far outweighed the dangers which are cited to justify it. Even today, there is little value in ensuring the survival of our nation if our traditions do not survive with it. And there is very grave danger that an announced need for increased security will be seized upon by those anxious to expand its meaning to the very limits of official censorship and concealment.
+
+00:01:29.983 --> 00:02:52.903
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 76. Mein Name ist Tim Pritlove und ich begrüße euch zu einer weiteren Ausgabe von Chaosradio Express heute am 17. Februar 2008. Und ich bin mal wieder ein wenig auf Reisen. Und wie schon in der letzten Folge befinde ich mich in Hamburg und heute habe ich es auch mal in die Clubräume des Chaos Computer Club Hamburg geschafft. Fast am Morgen, 13 Uhr, das heißt, hier ist noch nicht so viel los, sondern ich bin alleine mit meinem heutigen Gast und das ist Felix Fietkau. Hallo, Felix. Wir wollen heute ein Thema besprechen, was schon seit langer Zeit in aller Munde ist, behaupte ich jetzt mal so. Und zwar geht es um das Projekt OpenWRT, einer Linux-Distribution, die sich konzentriert auf die Bereitstellung von Firmware für kleine Router, also sprich um den Zugang, WLAN und Internetzugang zu machen. Das können wir jetzt gleich noch mal in einzelnen Auseinanderklammbüsern, wofür OpenWRT insgesamt zu taugt. Aber ich habe es ja schon gesagt, wir sind ja hier im CCCHH und du bist ja auch schon eine Weile hier dabei.
+
+00:03:01.103 --> 00:03:01.923
+<v SPEAKER_3>Hier ist einiges los.
+
+00:03:02.203 --> 00:03:43.283
+<v SPEAKER_2>Ja, also die letzten Male, wo ich irgendwie unterwegs war in Köln und so weiter, habe ich auch mal immer so ein bisschen darüber berichtet, was eigentlich an Infrastruktur so vorhanden ist in den regionalen Clubs der CCCHH ist ja, wie man weiß, der älteste Teil des CCC. Hier ist der Club in 80er Jahren groß geworden. Später, in 90er Jahren, gab es dann so die Ausbreitung über ganz Deutschland und den deutschsprachigen Raum. Aber natürlich gibt es auch noch den CCC in Hamburg, hier im Lokstädter Weg, mit eigenen Clubräumen. Hier gibt es so einiges zu gucken. Hier gibt es irgendwie ein Tresen und eine Küche und viele Räume und viel Internet. Und du bist auch häufiger hier?
+
+00:03:43.723 --> 00:04:03.743
+<v SPEAKER_3>Ja, ich bin eigentlich relativ häufig hier. Hauptsächlich, um eben OpenWRT zu machen und Freifunk, ein anderes Projekt, das sich mit WLAN beschäftigt. Also hauptsächlich, um meine Projekte zu machen, bin ich hier. Und es kommen auch immer wieder Leute vorbei und dann kann man noch neue Leute begeistern für das Projekt. Und dafür ist der CCC eigentlich sehr gut.
+
+00:04:04.503 --> 00:04:10.103
+<v SPEAKER_2>Das heißt, hier im Club gibt es auch mehr als nur dich, die an dem OpenWRT-Projekt mitarbeiten?
+
+00:04:10.123 --> 00:04:15.123
+<v SPEAKER_3>Ja, also im Club haben wir noch zwei weitere Leute, die auch mit am Projekt beteiligt sind.
+
+00:04:15.703 --> 00:04:17.883
+<v SPEAKER_2>Das sind also richtige Kernentwickler?
+
+00:04:18.123 --> 00:04:26.383
+<v SPEAKER_3>Ja, also einer ist noch mit Kernentwickler und einer, hauptsächlich Package-Maintainer, aber ist dabei auch zum Kernentwickler zu werden.
+
+00:04:26.403 --> 00:04:28.643
+<v SPEAKER_2>Und wie viele Leute arbeiten überhaupt mit bei OpenWRT?
+
+00:04:29.383 --> 00:04:43.423
+<v SPEAKER_3>Ja, habe ich jetzt schon eine Weile nicht mehr gezählt. Gerade vor ein paar Tagen ist noch einer dazugekommen. Also wir sind sicher schon so 16, 17 Leute. Also da bin ich mir jetzt gerade nicht sicher. Ich müsste noch mal auf die Liste gucken. Also es werden mehr.
+
+00:04:43.443 --> 00:04:47.063
+<v SPEAKER_2>Okay, und die machen auch alle mit einer Kernel-Entwicklung oder?
+
+00:04:47.083 --> 00:05:07.243
+<v SPEAKER_3>Ne, nicht alle. Also wir haben ein paar, die jetzt nur für Pakete für OpenWRT zuständig sind und auch dementsprechend an den Teilen arbeiten. Aber wir haben schon ein paar Kernel-Entwickler dabei. Also auch einen, der jetzt tatsächlich an einem Kernel-WLAN-Treiber-Projekt arbeitet. Der ist jetzt gerade zu uns gestoßen, um diesen Treiber eben in OpenWRT zu maintainen.
+
+00:05:08.203 --> 00:05:23.603
+<v SPEAKER_2>Das heißt, der CCHH ist also jetzt gerade für das OpenWRT-Projekt auch ein richtiger Anlaufpunkt. Wenn man also ein Interesse hat, auch mit Leuten in Kontakt zu treten, die sich jetzt sehr gut mit der Development auskennen oder vielleicht auch Lust haben, in dem Projekt mitzuwirken, dann wäre das hier schon mal ein guter Ort aufzuschlagen.
+
+00:05:23.963 --> 00:05:24.843
+<v SPEAKER_3>Ja, auf jeden Fall.
+
+00:05:24.863 --> 00:05:25.923
+<v SPEAKER_2>Habt ihr regelmäßig getrefft?
+
+00:05:26.263 --> 00:05:40.963
+<v SPEAKER_3>Also wir treffen uns eigentlich Donnerstags regelmäßig und manchmal verlängern wir das dann auch noch bis ins Wochenende rein und hier ist am Wochenende auch manchmal einiges los. Aber Donnerstag ist eigentlich das regelmäßige Treffen, was WLAN-Geschichten angeht, Freifunk und OpenWRT.
+
+00:05:41.003 --> 00:05:53.403
+<v SPEAKER_2>Dann sollten wir vielleicht noch mal ein bisschen ausholen. Vielleicht noch mal so zu dir. Du bist irgendwie 25, habe ich so eine Erinnerung. Wie lange machst du schon so mit Rechnern rum?
+
+00:05:53.423 --> 00:06:00.383
+<v SPEAKER_3>Also mit Rechnern mache ich eigentlich rum, seit ich so 14 bin, aber mit OpenWRT erst so die letzten drei Jahre.
+
+00:06:00.403 --> 00:06:03.343
+<v SPEAKER_2>War das dann auch für dich ein komplett neuer Einstieg überhaupt so in die WLAN-Welt?
+
+00:06:04.123 --> 00:07:17.263
+<v SPEAKER_3>Ja, auf jeden Fall. OpenWRT ist auch das erste wirkliche Projekt, an dem ich arbeite, was Computergeschichten angeht. Und dazu gekommen bin ich eigentlich durch Zufall. Ich habe mir so ein linkses Gerät gekauft, weil ich im Internet gelesen habe, da läuft Linux drauf, die Dinger kann man hacken. Und ich hatte irgendwann mal vor, mir ein Notebook zu kaufen, aber ich war mir halt noch nicht sicher, was ich mit dem Ding machen möchte. Ich hatte mir das als Spielzeug gekauft. Und dann habe ich mich umgeschaut, was gibt es denn da schon für Projekte, dass man damit basteln kann. Und da habe ich gesehen, es gibt unglaublich viele Projekte, die einfach die GPL-Quellen der Linksys-Firmware genommen haben, ein bisschen modifiziert haben und das dann als eigenständiges Projekt gemacht haben. Aber OpenWRT war so das einzige Projekt, was daran gearbeitet hat, eine neue Basis zu bauen für diese Geräte. So ein neues Betriebssystem, was eben frei von den ganzen Altlasten der Linksys-Firmware ist. Und das hat mich natürlich sehr interessiert. Und dann bin ich da dazu gestoßen und habe einfach mal angefangen, mich damit zu beschäftigen. Und habe ein paar Sachen neu geschrieben, ein paar Patches geschickt und bin dann relativ kurz danach, nachdem ich so wirklich Sachen eingereicht hatte, auch zum Entwickler geworden.
+
+00:07:17.283 --> 00:07:58.323
+<v SPEAKER_2>Dieses Linksys-Gerät ist ja sehr bekannt, eben weil es auch quasi der Namensgeber ist für das Projekt, wenn ich das richtig sehe. WRT54G, also eines der ersten günstig zu erhaltenen Geräte, die halt schon WLAN nach dem G-Standard gemacht haben, nicht nach dem alten 802.11b, was dann irgendwie sehr schnell sehr populär wurde. Vor allem auch deshalb, weil ja am Anfang das alles noch gar nicht so frei war, sondern Linksys hat ja diese Firmware veröffentlicht und dann erst weil Harald Welte mit seinem GPL-Violations-Projekt draufgehauen hat, wurde ja Linksys dazu gezwungen, den Source Code überhaupt erst zu veröffentlichen.
+
+00:07:58.563 --> 00:08:26.823
+<v SPEAKER_3>Ja, ich glaube, wenn ich mich recht in Sinne war, die Free Software Foundation da auch mit involviert und ich glaube, es kam sogar so weit, dass die Free Software Foundation quasi damit gedroht hatte, den Linksys-Cisco-Deal platzen zu lassen, wenn das mit den GPL-Codes nicht in Ordnung gebracht wird. Wenn das publik gemacht wird, so zu früh, dann wäre ja eigentlich für Cisco ein Grund gewesen, Rückzieher zu machen, wenn da lizenzmäßig Sachen nicht in Ordnung sind.
+
+00:08:26.823 --> 00:08:44.663
+<v SPEAKER_2>Naja, das heißt, der Druck war groß und dann haben sie auch relativ schnell reagiert und dann war auf einmal das erste Mal wirklich ein sehr günstiges, halbwegs taugliches Gerät auf dem Markt, auf dem man quasi die gesamte Software selber übersetzen konnte. Das war dann im Prinzip die Geburtsstunde des OpenWRT-Projektes.
+
+00:08:45.123 --> 00:09:15.423
+<v SPEAKER_3>Ja, also die ganze Software kann man leider nicht übersetzen. Also ist dann dann schon noch das Problem mit der Treiber, weil bei den meisten Geräten, die man so auf dem Markt findet, sind eben proprietäre Treiber dabei. Die kriegt man dann nur als Binaries und die kann man dann, wenn, dann auch nur mit Mühe auf neuere Kernel bringen. Wir haben uns die Mühe gemacht, also allerdings nur innerhalb von Linux 2.4, aber man kriegt generell nicht alles an Quellcodes, was eben da benutzt wird auf den Geräten.
+
+00:09:16.503 --> 00:09:32.503
+<v SPEAKER_2>Ja, jetzt haben wir es schon gesagt. Also auf dem Gerät läuft LEAF und läuft Linux. Es gibt auch noch andere Geräte von Linksys, auf denen mittlerweile etwas anderes zum Einsatz kam, aber so richtig populär sind eigentlich nur diese Linux- Varianten geworden, oder? Also ich weiß nicht, gibt es die anderen noch?
+
+00:09:32.523 --> 00:09:55.523
+<v SPEAKER_3>Also es gibt auf jeden Fall noch viele andere Geräte und teilweise ist es auch so, dass Geräte, wo vorher ein VXWorks, also ein proprietäres Real-Time-Betriebssystem draufläuft, dass die dann hinterher zu Linux konvertiert wurden. Von wem jetzt? Von Linksys? Nicht von Linksys, sondern von Open-Source-Entwicklern mit teilweise Bootloader-Ersätzen.
+
+00:09:55.803 --> 00:09:57.323
+<v SPEAKER_2>Weil die Hardware eigentlich die gleiche war?
+
+00:09:57.723 --> 00:10:16.303
+<v SPEAKER_3>Ja, die Hardware ist eigentlich die gleiche, wobei sie bei Geräten mit VXWorks üblicherweise an Flash und RAM sparen, was die Geräte dann weniger interessant macht. Und deswegen konzentrieren sich die Open-Source-Leiter eigentlich auch hauptsächlich auf die Geräte, wo eben schon Linux draufläuft, weil die üblicherweise genug RAM und Flash haben.
+
+00:10:16.903 --> 00:10:33.583
+<v SPEAKER_2>War das so ein wichtiges Gerät, vielleicht noch mal kurz ein Blick da drauf, was ist da eigentlich drin in so einem Teil? Also was macht so ein, was hat DN54-WRT, hab ich schon wieder falsch rum gesagt, WRT54G, was steckt denn da drin, computermäßig?
+
+00:10:33.603 --> 00:11:15.623
+<v SPEAKER_3>Also die ersten Versionen hatten 125 MHz-Prozessor, die weiteren 200 MHz-Prozessor ist ein MIPS und hört sich nicht wirklich nach viel an, wenn man sich die Geschwindigkeiten von modernen Rechnern anschaut, aber wenn man erst mal dran arbeitet, so ein System so klein zu kriegen, dann sieht man, dass es doch eine ganze Menge ist. Also vieles an Software, was man so auf dem PC laufen lässt, das kann man auch einfach auf den Router portieren und dort laufen lassen, das geht dort genauso. Und die haben üblicherweise 4 MB Flash und 16 MB RAM. Das ist so die Größe, die wir als Minimum anvisieren für unser System.
+
+00:11:15.643 --> 00:11:22.183
+<v SPEAKER_2>Klingt erst mal wenig im Vergleich zu heutigen Desktop-Systemen, aber das war vor nicht allzu langer Zeit durchaus auch die Standard-Ausstattung eines PCs.
+
+00:11:22.643 --> 00:11:53.103
+<v SPEAKER_3>Ja, aber andererseits muss man auch bedenken, unser System in der Standard-Ausstattung ist eben die gesamte Firmware aus Kernel, Root-File-System und teilweise mit einem kleinen Web-Interface noch dazu mit PPP und DHCP und den ganzen NAT-Geschichten. Das ganze Image ist nur 1,5 Megabyte groß, sodass da eigentlich noch jede Menge Platz frei ist, wo man noch weitere Pakete installieren kann. Insofern sind die 4 MB schon eigentlich relativ großzügig für Standard-Anwendungen.
+
+00:11:53.123 --> 00:11:56.423
+<v SPEAKER_2>Aber so heutige Router sind dann auch schon ein bisschen besser ausgestattet?
+
+00:11:57.163 --> 00:12:38.343
+<v SPEAKER_3>Also bei dem WRT haben die das gleich behalten. Sie versuchen eigentlich, wo sie nur können, Kosten zu sparen. Das heißt, wenn mit Linux gearbeitet wird, so weniger wird es eher selten, aber mehr wird es auch eher selten bei den günstigeren Geräten. Aber es gibt natürlich noch ein ganzes Spektrum an weiteren Geräten, die dann wesentlich mehr bieten. Es gibt zum Beispiel auch extra für Routing-Geschichten und mit WLAN gibt es Boards, die haben teilweise 16 MB Flash und 256 MB RAM, aber das sind dann eher so die speziell angepassten Geräte. Und 16 MB Flash und 256 MB RAM ist schon ziemlich viel. So viel braucht man in der Regel nicht.
+
+00:12:38.583 --> 00:12:57.703
+<v SPEAKER_2>Ja, weil das Ding ja im Prinzip nur WLAN bereitstellen soll. Da kannst du ja mal kurz umschreiben, was umfasst das OpenWRT-Projekt? Also was wird jetzt sozusagen konkret dort erarbeitet und was hat man davon, wenn man sich sozusagen OpenWRT als Linux-Distribution als Quelle bezieht?
+
+00:12:58.223 --> 00:13:38.943
+<v SPEAKER_3>Also der große Vorteil, den man hat, ist, dass man das Gerät betrachten kann wie ein ganz normales Linux-Gerät, wo eine Linux-Distribution draufläuft. Man hat Konfigurationsdateien, die man bearbeiten kann. Man hat ein modulares System, wo man sich Software nachinstallieren kann. Und ein paar Sachen fehlen natürlich gegenüber einer normalen Linux-Distribution und die ganzen Tools sind ein bisschen abgespeckt. Aber im Prinzip kann man das Ding betrachten wie einen richtigen Linux-Rechner. Und das macht es natürlich auch wesentlich flexibler als so ein Gerät mit so einer Standard-Firmware, wo man eben nur im Web-Interface ein paar Sachen klicken kann. Und wenn im Web-Interface die Sachen, die man braucht, gerade nicht drin sind, dann hat man halt Pech.
+
+00:13:38.963 --> 00:13:49.723
+<v SPEAKER_2>Aber was ist denn jetzt dabei? Also WRT-Distribution gehört natürlich vor allem erstmal Linux. Was für ein Linux wird da genommen und in wie weit ist das modifiziert?
+
+00:13:49.743 --> 00:16:14.563
+<v SPEAKER_3>Es ist relativ stark modifiziert, eigentlich auf allen Plattformen, die wir unterstützen. Wir haben angefangen und haben uns, also als wir ursprünglich mit OpenWRT angefangen haben, haben wir uns hauptsächlich auf den WRT-54G und den großen Bruder, den WRT-54GS konzentriert. Und im Laufe der Zeit hat das OpenWRT-Projekt quasi mehrere Erweiterungen vom Zielbereich erfahren, also wir haben erst nur diesen WRT gehabt, dann sind wir übergegangen zu mehreren ähnlichen Geräten, die auf der Broadcom-Plattform aufbauen. Dann sind wir weitergegangen und unterstützen noch Router, die jetzt keinen Broadcom-Chip-Satz haben, sondern irgendeine andere Hardware-Plattform, also wir haben Plattform-Abstraktionen in OpenWRT eingebaut. Und inzwischen sind wir dabei, dahin zu gehen, dass wir nicht nur Wireless-Router-Geschichten unterstützen, sondern quasi beliebige Embedded-Geräte. Und was halt dabei ist, ist Linux und die ganzen Standard-Basispakete, so was, was man, also erstmal die normalen Linux-Utilities, die man braucht, um überhaupt mit dem System arbeiten zu können, wo halt LS dabei ist oder ein Editor für Config-Dateien und eine Shell und solche Sachen. Und darauf haben wir dann kleine Utilities, die DHCP machen, DNS machen, ein kleines Web-Interface ist in Arbeit, gibt es für eine alte Version schon und wir arbeiten gerade an einer völlig neuen Version eines Web-Interfaces. Aber darüber hinaus gibt es dann noch eine riesige Auswahl, die man eben so in der normalen Routerfirme nicht hat. Wir haben etwas an die 300 oder 400 Pakete zur Auswahl. Das sind üblicherweise alles Sachen, die man auf Linux-Distributionen auch hat und wo sich dann jemand dachte, dass man das auf einem Router auch gebrauchen könnte. Denn manche Router haben zum Beispiel auch Anbindungen für externe Festplatten und darauf kann man einige Sachen laufen lassen. Zum Beispiel haben wir Samba, um eben eine Windows-Freigabe von der Festplatte aus laufen zu lassen. Wir haben, ja was haben wir denn noch? Es ist eigentlich relativ viel. Wir haben Mesh-Rooting-Software. Wir haben irgendwelche Media-Streaming-Geschichten und also es ist, muss man eigentlich mal in die Paketliste schauen. Es ist alles mögliche dabei. Kann ich jetzt gar nicht alles aufzählen.
+
+00:16:14.583 --> 00:17:02.103
+<v SPEAKER_2>Das heißt eigentlich ist das Teil optimiert für, also es soll eigentlich bieten ein Betriebssystem und eine eine Applikationsumgebung für Router, aber wenn ich jetzt so höre, USB-Anschluss, Festplatte anschließen, geht es ja auch schon so ein bisschen in diesen Bereich, den man Network Attached Storage nennt, dass man das Gerät auch benutzt, um zentrale Festplatte anzubinden. Das ist ja derzeit sehr populär auch, ist ja auch sehr schön. Man hat irgendwie ein kleines Gerät, was meistens lüfterlos arbeitet, leise ist, klein ist, nicht so viel Strom zieht wie jetzt ein dicker PC. Und externe Festplatten sind ja mittlerweile auch sehr günstig zu bekommen. Und so hat man dann immer eine Platte, wo eben zentrale Daten draufliegen, die dann jeder, der in dem jeweiligen Netzwerk sich bewegt, benutzen kann. Geht das dann auch so weit, dass man auch Drucker darüber ansprechen kann?
+
+00:17:02.343 --> 00:17:18.223
+<v SPEAKER_3>Ja, das ist kein Problem da. Dafür haben wir schon Software. Die kann man einfach über USB anschließen und dann wird ein Port freigegeben, den kann man von Windows aus benutzen, den kann man in Cups von Linux integrieren. Der ist dann netzwerkweit verfügbar.
+
+00:17:18.243 --> 00:17:24.803
+<v SPEAKER_2>Druckt man dann sozusagen auf den Router oder wird nur dieses USB-Interface virtuell auf den jeweiligen Rechner weitergeleitet?
+
+00:17:25.823 --> 00:17:47.303
+<v SPEAKER_3>Es wird ein Port aufgemacht, an den man die Druckdaten schickt. Der Router hat keine eigene Drucker-Warteschlange, sondern man schickt eigentlich nur die Daten hin, die dann letztendlich der Drucker ausgeben soll. Aber unter Windows reicht es dann eben, wenn man den Druckertreiber installiert und ihm einfach sagt, er soll den Drucker auf dem und dem Port, auf der und der IP nehmen.
+
+00:17:47.323 --> 00:17:50.503
+<v SPEAKER_2>Wenn wir gleichzeitig drucken wollen, was passiert dann?
+
+00:17:50.523 --> 00:17:58.783
+<v SPEAKER_3>Dann wartet das System bei einem. Aber dann lockt es halt so lange, bis derjenige, der gerade druckt, damit fertig ist.
+
+00:18:01.063 --> 00:18:07.483
+<v SPEAKER_2>Jetzt hast du gesagt, man kann Pakete installieren. Nicht jedes Linux hat ja da dasselbe Konzept.
+
+00:18:07.503 --> 00:18:35.603
+<v SPEAKER_3>Welches Subsystem verwendet ihr da? Das System nennt sich IPKG. Das ist eigentlich eine minimalisierte Form von dem Debian-DPKG. Es ist vom Format her ähnlich, aber wesentlich kleiner. Es ist auch schneller auf Embedded-Geräten, weil die ganzen Daten, die auf dem System abgelegt werden, nicht so groß sind. Funktional verhält es sich ähnlich wie das Debian-DPKG-System.
+
+00:18:35.623 --> 00:19:01.243
+<v SPEAKER_2>Also kleiner, das heißt auch die Pakete sind kleiner und die Software dafür ist auch kleiner. Jetzt vielleicht noch mal kurz zurück zu dem Kernel. Du meintest ja, ihr habt da relativ viele Änderungen dran gemacht. Was für Änderungen sind denn da notwendig? Also warum kann ich nicht einfach einen Standard-Linux-2426-Kernel runterladen und den auf so ein System zum Laufen bringen?
+
+00:19:01.423 --> 00:20:17.263
+<v SPEAKER_3>Der hat üblicherweise nicht die Hardware-Unterstützung für die Geräte, an denen wir arbeiten. Also so ein Hersteller von Embedded-Geräten arbeitet üblicherweise so. Also wenn jetzt Broadcom neuen Chipsats rausbringt, dann forken die irgendeine Kernelversion, üblicherweise eine relativ alte, integrieren dort ihren Chipsats-Support und geben diesen modifizierten Kernelsource dann raus an Hersteller wie Linksys, die dann darauf ihre Produkte aufbauen. Und die kommen meistens auch nie dazu, ihre Modifikationen auf neuere Versionen zu aktualisieren. Und auch die Code-Qualität ist üblicherweise eher mäßig. Und wir gehen dann so vor, wir nehmen uns von der jeweils verwendeten Basisversion, also wenn beispielsweise auf der Broadcom-Plattform sind wir noch auf Linux-Zoo4 wegen proprietären Treibern. Aber wir nehmen uns dann die neueste Version von Linux-Zoo4 und passen den Plattform-Support entsprechend an und ziehen ihn hoch auf die neuere Version. Und vor allem, wir machen das so, wir haben nicht nur einfach irgendwie einen Kerneltri in unserem System rumliegen, der dann entsprechend modifiziert wurde, sondern alles, was wir machen, sind Patches, die auf einen Standard-Kernel draufgepackt werden, automatisch. Wenn das System kompiliert wird.
+
+00:20:17.363 --> 00:20:24.923
+<v SPEAKER_2>So ist es, wenn eine neue Version vom Kernel rauskommt, ihr dann im Idealfall eigentlich nur noch dieselben Patches wieder anwendet und gegebenenfalls, wenn was gebrochen ist, das anpasst.
+
+00:20:25.263 --> 00:20:44.383
+<v SPEAKER_3>Genau, also dafür gibt es auch Tools, die das Anpassen der Patches stark erleichtern, sodass man einfach durchgehen kann und für jeden Patch, der kaputt ist, kriegt man dann eine Meldung, welcher das ist und braucht eigentlich nur ein paar Dateien editieren, ein paar Konflikte entfernen und dann zieht er die Patches automatisch hoch.
+
+00:20:44.483 --> 00:20:52.723
+<v SPEAKER_2>Aber das ist jetzt sozusagen das, was ihr macht? Wenn ich mir das OpenWRT ziehe, muss ich solche Dinge nicht mehr tun, sondern genau das ist sozusagen die Arbeit des Projektes.
+
+00:20:52.743 --> 00:21:25.143
+<v SPEAKER_3>Genau, also wenn man OpenWRT sich selbst kompiliert, dann muss man sich relativ wenig mit dem System beschäftigen. Also man zieht den Source, lässt einmal Make-Menu-Config laufen, das ist wie beim Linux-Kernel, so ähnlich sieht das dann auch aus und da kann man dann einfach die Plattform auswählen, die man haben möchte, noch ein paar Pakete dazu auswählen, die man vielleicht im Image haben möchte und dann lässt man einfach Make laufen und den Rest macht das System von alleine. Und wenn irgendwas fehlt auf dem System zum Kompilieren, dann kriegt man da auch eine entsprechende Meldung und dass man weiß, dass man nachinstallieren muss.
+
+00:21:25.163 --> 00:21:40.663
+<v SPEAKER_2>Aber wo macht man denn diese Konfiguration? Also ich meine, kann ich, also ich habe jetzt dieses Gerät, jetzt sagen wir mal, das ist irgendwie leer, das hat irgendwie nichts, wie bekomme ich denn da überhaupt erstmal was drauf?
+
+00:21:40.683 --> 00:21:56.663
+<v SPEAKER_3>Also üblicherweise, wenn man so ein Gerät kriegt, ist es nicht leer, sondern da ist dann die Standard-Firmware drauf. Und bei den meisten Plattformen ist es so, dass das, was letztendlich aus unserem Build-System als Image herausfällt, das kann man dann einfach über das Web-Interface draufflaschen.
+
+00:21:57.523 --> 00:22:10.903
+<v SPEAKER_2>Das heißt, also das heißt, ihr habt auf eurer Webseite sozusagen schon so einen Konfigurator, wo ich sagen kann, ich will, hätte jetzt gerne für dieses Gerät eine OpenWRT-Distribution in Version tralala mit den und den Paketen und dann kriege ich ein fertiges Image.
+
+00:22:11.223 --> 00:22:29.043
+<v SPEAKER_3>Also das Konfigurationssystem ist noch nicht auf der Webseite. Das ist eine Sache, wo ich dran arbeite, was aber noch nicht online ist, sondern wir haben Binary's für die Versionen, die wir released haben, die man sich runterladen kann und draufflaschen kann. Das ist dann einfach die Standard-Konfiguration. Und da kann man sich dann Pakete nachinstallieren.
+
+00:22:29.063 --> 00:22:41.083
+<v SPEAKER_2>Okay, aber ich brauche jetzt nicht noch ein eigenes Linux-System, wo ich diese Übersetzung mache, sondern ich kriege schon etwas, was ich erst mal draufflasche und ab dem Moment ist der Router sozusagen selber zuständig.
+
+00:22:41.103 --> 00:22:46.263
+<v SPEAKER_3>Genau, nur wenn man etwas angepasstes haben möchte, dann braucht man halt ein Linux-System, um das zu kompilieren.
+
+00:22:46.283 --> 00:22:49.623
+<v SPEAKER_2>Und diese nackte Version hat die dann auch schon die Möglichkeit, Pakete nach zu installieren?
+
+00:22:50.583 --> 00:22:57.523
+<v SPEAKER_3>Also OpenWRT hat generell auf jeder Plattform, die wir unterstützen, ein schreibbares Dateisystem, wo man Pakete darauf installieren kann.
+
+00:22:58.643 --> 00:23:12.763
+<v SPEAKER_2>Das heißt, ich gehe jetzt irgendwie zum Media-Markt, hole mir irgendwie Tra-la-la-Router-Hasse-nicht-gesehen mit den Features, die ich nicht gerne haben möchte und von dem ich weiß, dass er von OpenWRT unterstützt wird. Wie viele Geräte sind derzeit so unterstützt, so mal grob gesagt?
+
+00:23:12.783 --> 00:23:44.043
+<v SPEAKER_3>Geräte weiß ich nicht. Also wir haben Plattformen, bestimmt. Also ich habe auch wieder die Zahl nicht im Kopf, aber wir haben bestimmt so zehn Plattformen oder mehr jeweils. Also es ist unterschiedlich, wie gut wir die einzelnen Plattformen unterstützen. Es gibt welche, die wirklich voll unterstützt werden. Es gibt welche, da fehlt zum Beispiel noch Unterstützung für WLAN, weil wir noch keine Treiber dafür haben. Aber es sind sicher irgendwie ein paar hundert Geräte schon, die man damit dann benutzen kann.
+
+00:23:44.263 --> 00:23:50.203
+<v SPEAKER_2>Okay, also es gibt schon so einiges und das findet man auch auf eurer Webseite, welche Geräte da sicher unterstützt werden und in welchem Umfang.
+
+00:23:50.223 --> 00:24:01.343
+<v SPEAKER_3>Genau, also es gibt auch mehrere Geräte, die zwar unterschiedliche Hersteller haben, unterschiedlich aussehen, aber innen dann doch die gleiche Hardware haben und die gleichen Images annehmen.
+
+00:24:01.363 --> 00:24:14.423
+<v SPEAKER_2>Diese Anpassung, also ich meine so ein Gerät, das muss man sich ja klar machen, ist kein PC. Also erstmal laufen da keine Intel-PC-kompatiblen Prozessoren drin, sondern ich weiß nicht, was mittlerweile verbreitet ist. Also MIPS hatten wir jetzt schon am Anfang.
+
+00:24:14.443 --> 00:24:16.023
+<v SPEAKER_3>MIPS und ARM sind sehr häufig.
+
+00:24:16.043 --> 00:24:18.603
+<v SPEAKER_2>MIPS und ARM, könnten wir vorstellen, dass da auch so ein Trend zu ARM ist?
+
+00:24:19.823 --> 00:24:42.243
+<v SPEAKER_3>Ja, also ARM eher bei den besseren Geräten. Also die schwachen Geräte, wie die Linksys-Geräte, also die Standard-Ausstattung, das ist üblicherweise MIPS. Es gibt ein paar Exoten, die da sogar x86 verwenden, aber das ist eher unüblich. Und bei den etwas besseren Geräten ist dann ARM verbreiteter.
+
+00:24:43.363 --> 00:24:58.663
+<v SPEAKER_2>So, das heißt, ich habe dann jeweils für die Plattform angepasstes Image, dann benutze ich die Standard-Firmware-Update-Funktion des Gerätes und dann sorgt er sich das rein, bootet einmal und dann kommt das Ding mit dem Linux hoch.
+
+00:24:58.683 --> 00:25:29.383
+<v SPEAKER_3>Idealerweise ja. Also es gibt ein paar Geräte, wo wir die Web-Upgrade-Funktion nicht unterstützen, weil das Image-Format des Herstellers völlig anders ist als unseres, weil die Hersteller auch üblicherweise kein schreibbares Dateisystem haben. Und da muss man dann doch manchmal an den Bootloader ran. Aber es gibt jeweils Hautos zu den Geräten. Also ein paar sind ein bisschen mehr gebastelt, ein paar lassen sich ohne irgendwelche Hardware-Hacks machen. Es ist jeweils unterschiedlich.
+
+00:25:30.703 --> 00:25:35.303
+<v SPEAKER_2>Was ist denn so ein aktuell populäres Gerät, was wenig Ärger macht, um mal so ein Beispiel zu haben?
+
+00:25:36.423 --> 00:26:04.763
+<v SPEAKER_3>Ein sehr populäres Gerät ist zum Beispiel ein Asus WL500G Premium, der ist im Prinzip wie ein Linksys, nur schneller und hat eine austauschbare WLAN-Karte und hat zusätzlich noch zwei USB 2.0-Ports dran und auch ein schnellerer Prozessor und mehr Arbeitsspeicher. Was kostet so ein Teil? Irgendwo zwischen 80 und 90 Euro, also noch erschwinglich.
+
+00:26:04.783 --> 00:26:12.003
+<v SPEAKER_2>Das heißt, dann hat man also tatsächlich so ein Teil, was dann auch wirklich so als Network-Attached-Storage ist und auch schnell genug ist, um die Daten dann halbwegs brauchbar zu liefern.
+
+00:26:12.183 --> 00:26:44.363
+<v SPEAKER_3>Also man kann nicht wirklich viel Performance erwarten bei diesen Geräten, was die Network-Attached-Storage-Geschichte angeht. Aber wenn man jetzt nicht wirklich viel an Performance brauchen, einfach nur ein paar Dateien ablegen möchte oder man möchte eine USB-Soundkarte dranstecken, damit das Gerät Musik spielen kann, dafür ist es bestens geeignet. Ja, also der Music-Player-Demon, den man auf einem normalen Linux auch installieren kann, den haben wir eben auch und das funktioniert auch mit so einem ASUS-Router dann.
+
+00:26:44.383 --> 00:27:22.643
+<v SPEAKER_2>Ein großer Schwerpunkt von OpenWRT ist ja jetzt schon mehrfach rausgekommen, also einerseits hat man halt Router, das heißt, das Ding soll ja eigentlich einem erst mal Internet geben, sprich es macht PPP-OEs, es ist in der Lage, sich über DSL beim Provider einzuwählen, es macht dann DHCP für die Clients in dem eigenen Netzwerk, so dass man eben über Ethernet sich anschließen kann und dann kriegt man noch eine IP-Adresse und dann wird es irgendwie durchgeleitet. Aber diese Geräte haben natürlich auch alle WLAN. Und bei WLAN gab es, ja, was heißt gab es das Problem, gibt es das Problem, dass dort die Hardware-Hersteller ein Geheimnis draus machen, was sie da jetzt tatsächlich zum Einsatz bringen.
+
+00:27:22.663 --> 00:27:36.363
+<v SPEAKER_3>Das ist nicht nur WLAN-spezifisch, sondern es betrifft eigentlich relativ viele Sachen, wo die Hersteller eben eigene Treiber geschrieben haben. Wenn die Hersteller eigene Treiber geschrieben haben, dann geben sie die meistens nur als Binaries raus.
+
+00:27:36.383 --> 00:27:43.643
+<v SPEAKER_2>Also das ist ja schon erwähnt, also auch die Chipsätze, also auch so die integrierenden Chips, die die eigentliche Systemfunktionalität enthalten. Für die gilt das auch.
+
+00:27:44.363 --> 00:28:36.943
+<v SPEAKER_3>Ja, also es ist so, was den Plattform-Supporter angeht, da sind die Hersteller ja gezwungen, die Sourcen offen zu legen, wegen der GPL, weil alles, was quasi direkt im Linux-Kernel-Image landet, dafür müssen Sourcen bereitgestellt werden, das sagt die GPL. Also nicht alle halten sich dran, deswegen gibt es auch GPL-Violations. Aber was eben externe Treiber angeht, es ist eine rechtliche Grauzone, aber die Hersteller versuchen halt den Kram so weit wie möglich dicht zu machen und eben keine Sourcen rauszugeben. Was, wenn man sich das nochmal genau überlegt, eigentlich gar nicht in ihrem Interesse ist, weil dadurch, also durch das Offenlegen der Sourcen, würde man der Konkurrenz eigentlich gar nicht wirklich große Vorteile verschaffen, aber es ist eben doch so ein bisschen Angst vor der Konkurrenz mit im Spiel, gehe ich mal davon aus.
+
+00:28:36.963 --> 00:29:03.763
+<v SPEAKER_2>Ist das wirklich so? Also ich meine, es gibt ja auch einen ähnlichen Bereich, nämlich die Grafikkarten, wo das ja ähnlich läuft und tatsächlich ist es ja so, dass mittlerweile in den Treibern eine ganze Menge auch der eigentlichen Features drinsteckt. Das heißt, eine Menge ist dann auch im Treiber realisiert, weil nicht alles ist in der Hardware, sodass das ja schon etwas ist, wo man sich auch Features abgucken kann. Ist das bei WLAN anders?
+
+00:29:03.783 --> 00:29:46.583
+<v SPEAKER_3>Kommt drauf an. Also bei Atheros-Karten zum Beispiel, da ist tatsächlich fast alles an Treiber-Code veröffentlicht worden, bis auf einen kleiner Teil, der noch binary ist. Allerdings muss man zu WLAN sagen, es gibt sowieso schon genügend offenen Code, um die generellen 802.11-Geschichten zu machen, die nicht hardware-spezifisch sind, sodass es sich dort eigentlich gar nicht lohnt, das geschlossen zu halten. Was die software-gesteuerten Geschichten angeht, das hält sich bei den embedded Sachen eher in Grenzen. Da will man eigentlich so viel wie möglich in Hardware machen, weil die CPU auch nicht so stark ist.
+
+00:29:46.603 --> 00:29:56.603
+<v SPEAKER_2>Gibt es denn Hersteller, die da anders vorgehen? Also gibt es komplett freie WLAN-Systeme, Chips, wo kein Geheimnis daraus gemacht wird, wo der Treiber sogar vom Hersteller bereitgestellt wird?
+
+00:29:57.743 --> 00:30:46.683
+<v SPEAKER_3>Ja, zum Beispiel gibt es von Hersteller RALINK, sind relativ häufig Dokumentationen und Treibersourcen an die Open Source Community geflossen. Die scheinen das sehr gut zu unterstützen. Aber ich glaube, Realtek gehört auch zu den Herstellern, die das etwas unterstützen. Aber ich weiß nicht, wie sehr die das unterstützen. Aber ansonsten, die Haupthersteller wie Broadcom und Atheros, Broadcom ist ganz geschlossen, wobei es da einen reverse-ingenierten Treiber gibt aus der Open Source Community. Und Atheros ist eben halb offen. Aber sie machen jetzt gerade in den letzten Zeiten ein paar Schritte in die Richtung, dass sie ganz offen werden wollen. Aber ob sie das wirklich durchziehen werden, da bin ich mir noch nicht ganz sicher.
+
+00:30:46.703 --> 00:30:50.743
+<v SPEAKER_2>Was lässt dich da skeptisch sein?
+
+00:30:50.763 --> 00:31:05.143
+<v SPEAKER_3>Dass sie das eigentlich schon, also sie haben es eigentlich schon lange gesagt, dass sie mal irgendwie offen sein wollen. Und es ist bisher, also es ist bisher nur angekündigt worden und noch nicht wirklich viel rüber gekommen dabei. Und es zieht sich eigentlich schon eine ganze Weile hin.
+
+00:31:05.883 --> 00:31:35.483
+<v SPEAKER_2>Sie sind alle open, aber es kommt nichts sozusagen. Das ist ja auch so ein Meme aus den 90er Jahren, wo sie dann auch alle irgendwie auf einmal alle open auf ihre Produkte draufgeschrieben haben, aber keiner wusste eigentlich so ganz genau, was da nun so wirklich open dran sein soll. Das heißt, es gibt ein grundsätzliches Problem. Diese Router haben WLAN-Chips, von denen man nicht genau weiß, wie man sie nun eigentlich von Software aus ansprechen muss, um sie wirklich dazu zu bringen, WLAN-Netze aufzumachen und zu bedienen.
+
+00:31:35.563 --> 00:32:00.843
+<v SPEAKER_3>Also das Hauptargument, was bei WLAN-Herstellern angeführt wird, wo ich mir nicht wirklich sicher bin, ob das wirklich der Grund ist, ist, dass die FCC relativ strikte Regulierung hat, auf welchen Frequenzen die Geräte funken dürfen. Und bei viel Hardware ist es eben so, dass man durch entsprechende Software-Geschichten auch außerhalb dieser Bereiche gehen kann oder die Sendeleistung hochschrauben kann und solche Geschichten.
+
+00:32:02.003 --> 00:32:08.463
+<v SPEAKER_2>Das heißt, das ist dann so ihre Argumentation, wir dürfen es nicht freigeben, weil dann könnte ja jeder irgendwie durch die Gegend schießen, wie er will.
+
+00:32:08.483 --> 00:32:36.783
+<v SPEAKER_3>Genau. Wobei, also die Ateros-Hardware und die Broadcom-Hardware inzwischen, also zumindest die normalen 11G-Geschichten so weit reverse-ingeniert wurden, dass es jetzt auch mit freien Treibern geht, aber es läuft eben noch nicht so ganz stabil. Also die Möglichkeiten, um da diese Beschränkungen zu umgehen, sind schon da. Das Einzige, was noch nicht da ist, ist wirklich stabile Unterstützung dafür.
+
+00:32:37.363 --> 00:32:42.603
+<v SPEAKER_2>Was muss denn der Treiber eigentlich leisten? Also was muss ein WLAN-Treiber konkret tun?
+
+00:32:43.523 --> 00:33:32.583
+<v SPEAKER_3>Also 802.11 hat abgesehen von der richtig low-level-Geschichte mit dem Frequenzmanagement und der Aufmodulierung der Signale, also abgesehen davon hat es ein relativ definiertes Protokoll, wie jetzt zum Beispiel ein Access Point mit einem Client kommuniziert. Und diese ganze Kommunikation wird üblicherweise zu einem großen Teil, nicht komplett, aber zu einem großen Teil vom Treiber erledigt. Beziehungsweise vom Treiber in Zusammenarbeit mit dem WLAN-Stack. Also es ist immer mehr in die Richtung gegangen, dass die Grundfunktionalität des 802.11-Protokolls in einen WLAN-Stack integriert wurde und der Treiber eigentlich nur mit dem WLAN-Stack kommuniziert, um diese Sache so ein bisschen zu trennen.
+
+00:33:32.603 --> 00:33:36.343
+<v SPEAKER_2>Also dem WLAN-Stack von Linux, oder gibt es da mehrere?
+
+00:33:36.363 --> 00:34:04.703
+<v SPEAKER_3>Es gibt mehrere, es gibt einen von Linux, es gibt einen von BSD. Zum Beispiel das populäre METWifi-Projekt, was diesen halbfreien Treiber für Atheros-Karten bereitstellt, nutzt den BSD-Wireless-Stack auf Linux. Und es gibt da noch Geschichten, also Broadcom hat einen eigenen WLAN-Stack, der in den Treiber integriert ist. Und es gibt da noch einen von Intel. Es gibt relativ viele.
+
+00:34:06.143 --> 00:34:07.863
+<v SPEAKER_2>Was ist dieses METWifi-Projekt?
+
+00:34:07.883 --> 00:34:12.063
+<v SPEAKER_3>METWifi ist der halboffene Treiber für Atheros-WLAN-Karten.
+
+00:34:12.083 --> 00:34:12.963
+<v SPEAKER_2>Was heißt halboffen?
+
+00:34:13.823 --> 00:34:24.783
+<v SPEAKER_3>Er hat einen proprietären Teil, der von Atheros bereitgestellt wurde, der für mehrere Architekturen kompiliert ist, aber eben Binary ist und die ganze Low-Level-Kommunikation mit der Hardware regelt.
+
+00:34:25.503 --> 00:34:32.603
+<v SPEAKER_2>Und da drüber gibt es dann einen Teil, der offen ist. Das heißt, sie haben sich so ein bisschen frei gemacht. Aber das ist natürlich für euch nicht gerade besonders befriedigend.
+
+00:34:37.103 --> 00:35:02.203
+<v SPEAKER_3>Ja, die Antwort ist, es gibt ein neues Treiberprojekt, was direkt im Kern stattfindet, was eben diese Arteros-Geschichten reverse-ingeniert. Und das scheint jetzt zumindest für die etwas älteren Karten schon relativ gut zu funktionieren. Und es nutzt auch nicht diesen BSD-Wireless-Stack, sondern den neuen Wireless-Stack von Linux. Also es wird dran gearbeitet, die ganzen Treiber zu vereinheitlichen, dass sie alle mit einem Stack laufen.
+
+00:35:02.223 --> 00:35:30.483
+<v SPEAKER_2>Das ist jetzt Teil von Linux 2.6. Das heißt, dass eigentlich die gesamte 802.11, das muss man auch nochmal dazu sagen, also das ist ja sozusagen der Meta-Standard für alles, was wireless ist, das kommt sozusagen richtig in den Kernel rein. Dass also dieses ganze Handling, ich rede mit dem Kleinen, nicht mehr so eine Sache von Treibern ist, sondern dass man da eigentlich einen einheitlichen Code verwendet und die Chips im Prinzip mehr oder weniger beliebig austauschen kann.
+
+00:35:30.503 --> 00:35:31.143
+<v SPEAKER_3>Genau.
+
+00:35:31.163 --> 00:35:33.003
+<v SPEAKER_2>Und was ja dann auch so den schönen...
+
+00:35:33.023 --> 00:35:43.723
+<v SPEAKER_3>Also der Treiber ist weiterhin da, aber der Treiber muss nicht mehr so viel machen. Es ist mehr Code verallgemeinert und der Treiber regelt dann nur noch die hardware-spezifischen Geschichten.
+
+00:35:43.743 --> 00:36:09.063
+<v SPEAKER_2>Genau. Aber das hat ja auch den Vorteil, dass man eben so Probleme, die man ja so kennt. Man hat jetzt irgendwie so ein Gerät mit WLAN-Stein von Hersteller XY und der Treiber ist jetzt mal wirklich so richtig bekloppt und dann lässt er sich eben schnell in das Licht führen und wenn man ihm dieses und jenes Paket schickt, dann legt er sich irgendwie quer. Sowas wird dann natürlich in zunehmendem Maße auch ausgeschlossen, weil man sozusagen ein Single Point of Correction an der Stelle gewinnt.
+
+00:36:09.083 --> 00:36:09.223
+<v SPEAKER_3>Richtig.
+
+00:36:09.243 --> 00:36:22.103
+<v SPEAKER_2>Na ja, das ist ja interessant. Und wie viel Arbeit ist dann sozusagen konkret dort notwendig, um nun diese Geheimnisse des Hardware-Zugriffs da zu reverse-ingenieren?
+
+00:36:22.123 --> 00:37:01.183
+<v SPEAKER_3>Das hängt jeweils von der Plattform ab. Also bei Broadcom war es ein bisschen schwieriger, weil eben der Treiber und der Stack zusammen in einer großen Binary ist. Aber da sind die Entwickler auch sehr strikt nach Cleanroom vorgegangen. Sie haben den Treiber disassembliert, haben ihn reverse-ingeniert und haben daraus Spezifikationen für die Hardware abgeleitet und veröffentlicht. Dann hat ein anderes Team angefangen und hat aus diesen Spezifikationen dann funktionierenden Code produziert in Kommunikation mit denjenigen, die den Kram reverse-ingeniert haben. Aber es gibt keine Überlappung zwischen dem Treiber-Team und dem Speck-Team.
+
+00:37:01.203 --> 00:37:15.103
+<v SPEAKER_2>Das heißt, da wurde auch nie Code übernommen? Genau. Sondern die einen haben gedacht, wir haben jetzt folgende Erkenntnisse, wie das grundsätzlich funktionieren müsste. Dann hat jemand anders das genommen. Hat das dann auch gleich geklappt? Oder ist das dann so ein wechselseitiger Prozess mit, also so wie ihr es dokumentiert habt?
+
+00:37:16.783 --> 00:38:42.123
+<v SPEAKER_3>Ja, es ist ein wechselseitiger Prozess. Weil das Reverse-Engineering, also es ist relativ viel und das ist relativ fehlertrechtig. Da kann man leicht mal was falsch interpretieren. Und man liest ja eigentlich nur den Assembler-Code. Und bei Atheros ist es eben so, da weiß ich jetzt nicht, wie die ursprünglichen Reverse-Engineering-Geschichten stattgefunden haben, denn dort wurden keine Specs produziert. Dort wurde vom OpenBSD-Projekt ein freier Treiber bzw. kein freier Treiber, sondern ein freier Ersatz für die proprietären Teile von Atheros geschrieben. Und daraus ist jetzt in letzter Zeit ein Linux-Projekt entstanden, was sich diese Codebase genommen hat und daraus einen richtigen Treiber geschrieben hat für Linux. Denn die Kernel-Entwickler wollen nicht einfach nur den Med-Wifi nehmen und die proprietären Teile ersetzen, weil solche Betriebssystem-Abstraktionsgeschichten, die dort im Spiel waren, das ist für den Kernel nicht akzeptabel. Der Code muss einen einheitlichen Code-Stil haben und wirklich lesbar sein. Und das ist mit solchen Betriebssystem-Abstraktionsschichten eben nicht gegeben. Der Kernel soll in der Hinsicht so einheitlich wie möglich sein. Genau. Denn je mehr Abstraktionsschichten man dazwischen hat, desto mehr Performance geht auch dadurch flöten.
+
+00:38:42.143 --> 00:38:49.283
+<v SPEAKER_2>Unterstützt ihr denn auch schon Geräte mit dem neuen N-Standard? Und was ist mit 812.11a?
+
+00:38:49.303 --> 00:39:46.723
+<v SPEAKER_3>11a ist üblicherweise nicht so das Problem. Zumindest da, wo wir Treiber dafür haben. Bei Broadcom sind wir jetzt noch auf die proprietären Treiber angewiesen. Aber dort haben wir Unterstützung für 11a und für 11n. Also für einige Geräte zumindest, noch nicht für alle. Aber die WLAN-Treiber-Geschichten sind da. Und was das Projekt der freien Broadcom-Treiber angeht, die arbeiten jetzt auch an Unterstützung für Draft-N. Sie haben schon angefangen, die 11n-hardware-spezifischen Sachen zu reverse-ingenieren. Und ich glaube, es ist schon langsam losgegangen, auch mit der Treiber-Entwicklung für diesen Teil. Es ist zu erwarten, dass vielleicht in ein paar Monaten oder vielleicht ein bisschen länger auch da die Hardware-Unterstützung nachkommen wird. Es dauert ja immer eine ganze Ecke länger, wenn man jetzt den Kram erst reverse-ingenieren muss und dann erst den Code dazu schreiben kann.
+
+00:39:46.743 --> 00:39:55.983
+<v SPEAKER_2>Gibt es denn auch schon Hardware-Hersteller, die gesagt haben, wenn es das OpenWRT-Projekt gibt und da wird so viel Arbeit geleistet, warum nehmen wir denn nicht gleich einfach die Distribution für unser Gerät?
+
+00:39:56.583 --> 00:40:46.623
+<v SPEAKER_3>Ja, das gibt es. In letzter Zeit haben wir einen sehr guten Kontakt zu Infineon aufgebaut. Die machen eher High-End DSL-Geschichten. Sie machen keine eigenen Boards, außer die Referenzgeschichten, die eval-kits. Aber sie stellen Prozessoren her für Netzwerkkommunikation, für DSL. Und sie wollen, glaube ich, auch WLAN machen. Sie haben sich bei uns auf der Mailing-Liste eingeschrieben, haben angefangen mit uns zu kommunizieren und haben uns auch die nötigen Informationen geliefert, um OpenWRT Unterstützung für ihre Hardware bereitzustellen. Und so wie ich das sehe, ist es abzusehen, dass sie OpenWRT auch einsetzen wollen für ihre eigenen Kunden, weil wir einfach einen...
+
+00:40:46.643 --> 00:40:49.923
+<v SPEAKER_2>Macht Infineon auch eigene WLAN-Chips?
+
+00:40:49.943 --> 00:40:50.643
+<v SPEAKER_3>Weiß ich nicht.
+
+00:40:50.803 --> 00:40:57.203
+<v SPEAKER_2>Du sagst jetzt eigene Hardware. Was umfasst das? Sind das jetzt nur so kleine Embedded-Geräte? Oder sind das Chipsets?
+
+00:40:57.223 --> 00:41:09.623
+<v SPEAKER_3>Es sind Chipsets für DSL, also Routerchipsets. Aber ich weiß nicht, wie das mit dem DSL-Bereich bei Infineon aussieht. Also es kann sein, dass da noch was kommt. Aber da habe ich im Moment noch keine Informationen drüber.
+
+00:41:09.643 --> 00:41:10.483
+<v SPEAKER_2>Also mit dem WLAN-Bereich?
+
+00:41:13.303 --> 00:41:19.723
+<v SPEAKER_3>Also üblicherweise werden so Infineon-Geräte dann mit Atheros WLAN verbaut.
+
+00:41:19.743 --> 00:41:25.163
+<v SPEAKER_2>Und da habt ihr auch schon Treiber, aber eben nicht für die aktuellen Chips. Oder wie sieht es da jetzt aus?
+
+00:41:25.183 --> 00:41:29.503
+<v SPEAKER_3>Ja, das ist diese halboffene Geschichte. Und da wird Draft N auch noch nicht so wirklich unterstützt.
+
+00:41:30.263 --> 00:41:46.223
+<v SPEAKER_2>Das heißt, wenn ich jetzt einen... Mir ist noch ein bisschen unklar, was jetzt eigentlich sozusagen wirklich komplett unterstützt wird und was nicht. Du hast ja gesagt, manche sind komplett unterstützt. Dieses ASUS-Gerät, was du erwähnt hast, was ist da jetzt zum Beispiel für einen WLAN-Stein drin?
+
+00:41:46.243 --> 00:41:48.523
+<v SPEAKER_3>Da ist standardmäßig Broadcom drin.
+
+00:41:49.023 --> 00:41:52.943
+<v SPEAKER_2>Und irgendein spezieller Broadcom oder sind die alle gleich?
+
+00:41:52.963 --> 00:42:05.583
+<v SPEAKER_3>Standard Broadcom 11G 4318 heißt das Ding, aber unterscheidet sich nicht so stark von den anderen 11G Geschichten. Und so wie ich das sehe, ist das jetzt kurz davor, mit freien Treibern zu funktionieren.
+
+00:42:05.603 --> 00:42:12.603
+<v SPEAKER_2>Und was heißt das? Derzeit funktioniert es gar nicht? Oder es funktioniert, indem man dann einen nicht freien Treiber nimmt?
+
+00:42:12.623 --> 00:42:15.783
+<v SPEAKER_3>Es funktioniert, wenn man einen nicht freien Treiber nimmt, funktioniert das.
+
+00:42:16.003 --> 00:42:18.343
+<v SPEAKER_2>Und woher nimmt man diesen nicht freien Treiber?
+
+00:42:18.363 --> 00:42:31.483
+<v SPEAKER_3>Den haben wir aus GPL-Codes vom Hersteller gezogen. Der ist da als Binary drin. Und dann haben wir den Kernel so angepasst, dass der Treiber, der für eine ältere Kernelversion kompiliert wurde, auch mit unseren neuen Kerneln.
+
+00:42:31.503 --> 00:42:36.923
+<v SPEAKER_2>Ist der denn so dann in Binary veröffentlicht worden? Oder hat man den sich vom Gerät geholt?
+
+00:42:36.943 --> 00:42:41.783
+<v SPEAKER_3>Der ist so als Binary veröffentlicht worden im GPL-Relais.
+
+00:42:41.803 --> 00:43:06.663
+<v SPEAKER_2>Ah, verstehe. Das heißt, derzeit ist es eigentlich so, diejenigen, die wirklich jetzt Linux schon werkseitig einsetzen, sind ja gezwungen, das, was sie dort einsetzen, auch zu veröffentlichen. Und sie veröffentlichen es auch im Source-Quot, bis auf den WLAN-Treiber. Aber den veröffentlichen sie auch, aber eben so als binären Blog. Und immerhin kann man den so nehmen und einfach benutzen. Und dann funktioniert er exakt genauso wie im Original.
+
+00:43:06.683 --> 00:43:12.203
+<v SPEAKER_3>Bei unserem Kernel jetzt mit ein paar Anpassungen, weil wir nicht die Kernelsourcen vom Hersteller nehmen wollen.
+
+00:43:13.583 --> 00:43:39.463
+<v SPEAKER_2>Okay, aber ihr schreibt das sozusagen drumherum, aber letztlich nehmt ihr denselben Treiber. Das heißt, vom Verhalten her ist es dann auch erstmal identisch. Aber der Wunsch des Projektes ist eigentlich grundsätzlich, dahin zu gehen, zu sagen, wir wollen eigentlich für alles freie Treiber haben. Und vor allem, wir wollen auch eine gewisse Logik nicht mehr im Treiber sehen, sondern wollen die eigentlich in einem vereinheitlichen 802.11-WLAN-Stack sehen. Und wollen eigentlich in diesem Treiber wirklich nur noch die notwendige Hardware-Anbindung ranbauen.
+
+00:43:41.183 --> 00:44:06.623
+<v SPEAKER_3>Und was jetzt den ASUS angeht, also er läuft mit Linux V6. Und die freien Treiber funktionieren, also es ist, also ich glaube, es haben jetzt inzwischen schon Leute zumindest so weit geschafft, dass sie das Ding im Kleinmodus haben laufen lassen, das WLAN, mit den freien Treibern. Und wie gesagt, der Autor von diesem Treiber, oder einer der Autoren…
+
+00:44:07.103 --> 00:44:10.663
+<v SPEAKER_2>Im Kleinmodus meinst du jetzt, dass das Ding selber ein WLAN-Client ist, oder?
+
+00:44:12.703 --> 00:44:24.043
+<v SPEAKER_3>Der arbeitet jetzt dran, also den Treiber auf den neuesten Stand zu bringen, also bei uns. Und mit etwas Glück haben wir auch bald das Ding als Access Point laufen mit den freien Treibern.
+
+00:44:26.383 --> 00:44:32.223
+<v SPEAKER_2>Für mich ist Access Point eine ganz andere Aufgabe, als die, die man als Client in einem WLAN erfüllen muss.
+
+00:44:32.243 --> 00:44:52.143
+<v SPEAKER_3>Was Treiber angeht, hat der Access Point Modus etwas mehr an Anforderungen. Zum Beispiel muss die Hardware in der Lage sein, automatisch Beacons rauszuschicken. Aber ansonsten ist der Rest der unterschiedlichen Aufgaben hauptsächlich im Stack gelöst.
+
+00:44:54.403 --> 00:45:48.803
+<v SPEAKER_2>Ich wollte vorher gar nicht darauf eingehen, aber jetzt, wo wir uns ein Gespräch angenähert haben, finde ich das auch noch mal ganz interessant. Wie muss man sich das eigentlich vorstellen, wie ein WLAN läuft? Ein WLAN vom Namen her sagt, man nehme einen LAN und dann lassen wir einfach mal das Kabel weg. Dann haben wir einen WLAN. So einfach ist es ja nicht. Ein WLAN funktioniert in einem ganz anderen Übertragungsmedium, nämlich in der Luft. Das hat spezielle Anforderungen im Gegensatz zu einem Kabel, vor allem so einem geswitchten Netzwerk. Man sieht ja, die Übertragungsgeschwindigkeiten, die dort erreicht werden, sind bei weitem nicht da, wo man mit kabelgebundenen Netzen sein kann. Kannst du vielleicht mal so ein bisschen beschreiben, wie eine WLAN-Kommunikation tatsächlich funktioniert und was dieser Access Point tatsächlich tun muss, um nun diese ganzen Clients gleichzeitig ansprechen zu können?
+
+00:45:50.483 --> 00:46:12.383
+<v SPEAKER_3>Ja, das ist ein bisschen kompliziert. Das Problem am WLAN ist ja, dass nicht mehrere Leute gleichzeitig auf dem gleichen Kanal funken können. Das heißt, es gibt also generell kein Duplex wie bei Ethernet. Der Access Point muss regelmäßig sogenannte Beacons rausschicken, die die Clients dann empfangen können, um zu sehen, dass der Access Point eben noch da ist.
+
+00:46:12.403 --> 00:46:18.463
+<v SPEAKER_2>So ein Fondfeuer, hallo, hier bin ich. Das ist auch das, wo dann immer der Netzwerkname, die SSID mit übertragen wird?
+
+00:46:18.503 --> 00:46:35.723
+<v SPEAKER_3>Ja. Und ansonsten, wenn jetzt ein Client mit einem anderen Client kommuniziert, dann unterhalten die sich üblicherweise nicht direkt, sondern sie sind über den Access Point miteinander verbunden. Das heißt, wenn ein Client an einen anderen Client etwas schickt, dann leitet der Access Point das weiter.
+
+00:46:35.743 --> 00:46:37.983
+<v SPEAKER_2>Das heißt, er muss auch alles nochmal senden, was er empfängt.
+
+00:46:38.003 --> 00:46:47.903
+<v SPEAKER_3>Genau. Also nicht alles, wenn es ein Paket ist, das jetzt nur vom Client an den Access Point geht und nicht weiter, dann muss er das auch nicht weiter schicken.
+
+00:46:47.923 --> 00:46:53.143
+<v SPEAKER_2>Aber ein Broadcast-Paket, also wenn jetzt ein Hallo schickt, wer ist denn noch hier?
+
+00:46:53.683 --> 00:47:31.223
+<v SPEAKER_3>Also das kommt auch, glaube ich, auf den Modus darauf an. Ich weiß nicht, vielleicht gibt es auch Bedingungen, unter denen ein Client einen Broadcast auch so schicken kann, dass die anderen das kriegen. Aber es gibt da noch sehr viele Timing-Probleme, die da mit drinstehen, die auf verschiedene Weise gelöst sind. Zum Beispiel ist es ja ein Problem, wenn jetzt mehrere Clients gleichzeitig anfangen zu funken. Dann kommt nur Müll an. Und das muss auch irgendwie geregelt sein. Dafür gibt es dann diverse Mechanismen, die dann teilweise vom Access-Point geregelt werden, teilweise von den Clients selbst. Also die Clients müssen halt aufpassen, dass sie sich nicht gegenseitig in eine Quere kommen.
+
+00:47:32.243 --> 00:47:35.263
+<v SPEAKER_2>Was kann denn der Access-Point dann tun, um irgendwie das zu regeln?
+
+00:47:36.183 --> 00:47:46.383
+<v SPEAKER_3>Ja, es beruht eigentlich hauptsächlich darauf, dass die Clients sich ordentlich verhalten. Weil wenn ein Client auf Teufel kommt, raus Pakete schickt, dann ist nichts, was der Access-Point machen kann.
+
+00:47:47.263 --> 00:47:49.663
+<v SPEAKER_2>Ja, das ist natürlich ein Problem.
+
+00:47:49.863 --> 00:47:50.763
+<v SPEAKER_3>Genau.
+
+00:47:50.783 --> 00:47:52.303
+<v SPEAKER_2>Wobei es gibt schon Dinge, die er tun kann.
+
+00:47:53.303 --> 00:47:56.443
+<v SPEAKER_3>Ja, also er könnte den Kanal wechseln, aber...
+
+00:47:56.563 --> 00:48:52.943
+<v SPEAKER_2>Worauf ich jetzt ein bisschen hinaus wollte, ist auch mal so nachzufühlen, wir haben ja auf dem Kongress zum Beispiel immer das Problem, dass wir dort einfach für 4.000 Leute WLAN anbieten wollen. Und das bringt natürlich eine ganze Menge Probleme mit sich, das ist erst mal rein in der Topologie begründet. Man kommt beileibe nicht mal in einem einzigen Access-Point aus, man muss fast gar nicht wie viel mittlerweile installiert werden. 20, 30 Stück hängen da auf jeden Fall irgendwie herum. Und es gab ja dann auch mal wieder viel Stress und Ärger mit der Bereitstellung von so einem WLAN. Die Leute sind dann immer schnell frustriert, weil WLAN geht nicht, Internet ist kaputt und so. Bloß, wenn man sich das halt mal genau anschaut, was da wirklich für Anforderungen da auf einmal auf einen zukommen, wenn man ein Netzwerk für 4.000 WLAN-User anbieten möchte, das ist natürlich enorme Problematik. Taugt denn OpenWRT auch für solche Installationen, wo mehrere Access-Points zusammenarbeiten können?
+
+00:48:57.963 --> 00:49:26.403
+<v SPEAKER_3>Ist im Prinzip dafür geeignet. Es kommt natürlich darauf an, wie man das Roaming letztendlich aufbauen möchte. Aber wenn man jetzt beispielsweise einfach die Access-Points miteinander bridgt und üblicherweise möchte man sie ja miteinander dann verkabelt haben und wenn der WLAN-Teil sozusagen komplett verbunden ist auf allen verschiedenen einzelnen Stationen, dann kann der Client auch problemlos zwischen den einzelnen Access-Points hin und herum, ohne seine Verbindung zu verlieren.
+
+00:49:26.423 --> 00:49:49.063
+<v SPEAKER_2>Und jetzt hat man natürlich auch das Problem der Angreifer, du hast ja schon gesagt, das basiert alles so ein bisschen darauf, dass alle Clients auch lieb und artig sind. Das weiß man aus dem Kindergarten, das ist immer so einfach nicht, weil irgendeiner dreht immer gerade mal frei, sei es, dass es irgendwie absichtlich macht oder was weiß ich, weil die Software versagt, dann muss man sich da ja auch wehren können. Es ist in OpenWRT auch in irgendeiner Form Schutz gegen solche Attacken mit eingebaut.
+
+00:49:51.963 --> 00:50:13.263
+<v SPEAKER_3>Ja, man kann nur bedingt was gegen DDoS machen. Zum Beispiel gab es mal in gewissen Versionen vom Atheros-Treiber, nennt Buck, dass er irgendwie, dass der Treiber der Hardware eine ungültige Datenrate geschickt hat und die Karte dann einfach den Carrier angeschaltet hat und nicht wieder ausgeschaltet hat und damit das ganze Band, also den ganzen Kanal tot gemacht hat.
+
+00:50:13.283 --> 00:50:14.663
+<v SPEAKER_2>Die ganze Zeit rausgepustet hat.
+
+00:50:14.983 --> 00:50:24.103
+<v SPEAKER_3>Und da zum Beispiel, es gibt da keine Möglichkeit gegen so etwas, was zu unternehmen, so wenn jetzt irgendwie dadurch die Kanäle geblockt werden. Das geht einfach nicht.
+
+00:50:24.123 --> 00:50:37.683
+<v SPEAKER_2>Aber das ist ja auch eher selten. Aber was so ein sehr beliebtes Problem ist, dass Leute halt sagen, ich bin jetzt mal das Netz irgendwie, ich mache jetzt hier mein eigenes Netzwerk auf, ich biete jetzt auch das Netz an, ich bin jetzt auch ein Accesspoint, ich will jetzt hier auch mitspielen.
+
+00:50:37.703 --> 00:50:53.183
+<v SPEAKER_3>Dagegen kann man was machen. Um dagegen was zu machen, haben wir jetzt keine extra Software drin, die man dafür benutzen würde. Aber das könnte man natürlich schreiben und auf einem OpenWRT aufsetzen, das wäre kein Problem.
+
+00:50:53.203 --> 00:50:54.703
+<v SPEAKER_2>Aber das ist nicht so euer Fokus?
+
+00:50:54.723 --> 00:51:12.343
+<v SPEAKER_3>Das ist im Moment noch nicht unser Fokus. Also was unser Hauptfokus ist, ist, dass wir bauen, die Technologie, dass es eben extrem einfach wird, Linux auf ein neues Gerät zu bringen und beliebige Pakete mit drauf und ein flexibles modulares System zu haben.
+
+00:51:12.363 --> 00:51:27.283
+<v SPEAKER_2>In dem Zusammenhang, wie einfach ist es denn? Also wir hatten ja schon am Anfang dieses Draufladen und dann ist es irgendwie installiert und dann holt man sich noch ein paar Pakete dazu und prima. Aber welches User-Interface bietet sich denn einem, wenn man so ein OpenWRT installiert hat?
+
+00:51:27.303 --> 00:53:13.103
+<v SPEAKER_3>Also bei der aktuellen Version gibt es standardmäßig kein Web-Interface. Aber es gibt ein externes Projekt, das heißt XWRT, das hat dann ein installierbares Paket für OpenWRT, was ein Web-Interface bereitstellt. Und die haben auch Images auf der Webseite, die man flashen kann, wo dann direkt das Web-Interface mit integriert ist. Und was jetzt geplant ist für OpenWRT ist eine neue Basis für ein Web-Interface zu schaffen, die mehr auf Modularität ausgelegt ist und die es möglichst einfach machen soll, flexibel verschiedene Web-Interfaces zu schreiben, die dann, also zum Beispiel jetzt auch für Hardware-Hersteller, dass sie dann einfach irgendwie das Web-Interface nehmen können und dann einfach ein eigenes Theme draufsetzen und dann haben sie was Funktionales oder dass sie einfach ein paar Webseiten dahin geht, abändern, dass die Einträge der Konfiguration anders strukturiert sind, aber dass letztendlich die Basis des Web-Interfaces die gleiche ist und nicht modifiziert werden muss. dadurch werden wir die Web-Interface-Kernentwicklung zurück in das OpenWRT-Projekt holen, wenn das so richtig losgeht. Das baut im Moment alles noch auf einigen Geschichten am Konfigurationssystem von OpenWRT auf, an dem ich gerade arbeite. Also wir arbeiten dran, dass wirklich alle Pakete in OpenWRT über das gleiche Konfig-Format, das gleiche Konfig-System konfiguriert werden, sodass man eben, wenn man Web-Interface für verschiedene Pakete baut, nicht irgendwelche eigenen Konfigurations-Parser schreiben muss oder so, sondern es geht alles über den gleichen Mechanismus und der kann entweder mit einem Text-Editor, mit einem Kommandol-Zeilen-Tool oder mit einem Web-Interface geändert werden.
+
+00:53:14.843 --> 00:53:21.463
+<v SPEAKER_2>Und das heißt, Web-Interface ist eigentlich auch so ein bisschen jetzt so der Weg, den ihr verfolgt als User-Interface?
+
+00:53:21.483 --> 00:54:40.523
+<v SPEAKER_3>Es ist nicht unser Hauptziel, da ein Web-Interface zu haben. Es gehört irgendwie schon dazu, aber es ist nicht unser Fokus. Unser Fokus ist wirklich die Basistechnologie, um überhaupt diese ganze Paketierung von Software, die Portierung auf Plattformen möglich zu machen. Wenn man sich mal anschaut, wie das bei einem Hardware-Hersteller üblicherweise abläuft. Beispielsweise Broadcom macht ein eigenes SDK. Sie forken eine alte Linux-Version. Sie basteln irgendwie per Hand die Pakete, die sie brauchen, da noch mit rein. Sie schreiben ein paar Make-Files, die das zusammenbauen und kompilieren sich vielleicht entweder manuell oder mit einem kleinen Skript noch eine Cross-Compiler-Toolchain. Das geben sie dann raus an den Hersteller, wie links ist. Das gibt es für jeden, für jede verschiedenen Chip gibt es quasi ein extra SDK dafür. Es gibt kaum SDKs, die jetzt tatsächlich mal ganz viele Plattformen unterstützen, wo man einfach nur auswählen muss und mit ein paar kleinen Anpassungen arbeiten kann. Genau, aber da kommt ja noch oben drauf, dass der Hersteller dann für jedes einzelne Produkt dann auf der Basis, auf Basis dieses SDKs nochmal eine eigene Codebase maintainen und die lebt dann so lange, wie das Produkt auf dem Markt ist und verkauft werden soll und wird danach weggeschmissen.
+
+00:54:40.543 --> 00:54:42.483
+<v SPEAKER_2>Was auch nicht so lange ist heutzutage.
+
+00:54:42.503 --> 00:55:07.883
+<v SPEAKER_3>Genau. Und was wir halt erreichen, ist, dass man für die verschiedensten Geräte aus der gleichen Codebasis Firmwares zusammenbauen kann und eine Plattform-Abstraktion drin hat, eine Abstraktion für die verschiedenen Treiber, die man hat und dass eben alles den gleichen Code benutzen kann. Sodass man wesentlich weniger Aufwand hat, damit das Ganze zu warten.
+
+00:55:07.903 --> 00:56:40.863
+<v SPEAKER_2>Darauf wollte ich nämlich auch gerade hinaus auf diese Wartbarkeit. Webinterface finde ich ja immer irgendwie ist ja ganz nett. Besser als wenn man keins hat, weil jetzt so ein System auf der Kommandezeile zu konfigurieren. Na ja, gut, ich meine, das geht schon, aber wir wissen auch, das hat jetzt nicht gerade besonders viel User-Appeal. Und am Ende des Tages will man nicht unbedingt gerade die meiste Zeit mit der Konfiguration eines Routers verbringen, weil das ist irgendwie die Basis für die Arbeit. Wenn es kein Internet gibt, dann ist es irgendwie auch doof. Trotz alledem haben natürlich Webinterfaces die Einschränkung, dass sie halt auch nur von Humanoiden benutzt werden können. Jetzt kriege ich bestimmt gleich wieder Flame-Kommentare, aber ich habe ja zu Hause einen schönen Airport-Router von Apple und es gibt so einen Feature, was ich daran einfach wirklich großartig finde, nämlich, dass die Konfiguration eben nicht über ein Webinterface erfolgt, sondern ich habe eine Anwendung auf meinem Rechner, die mit diesem Gerät sozusagen über eine Netzwerk- API, wie der genau aussieht, habe ich keine Ahnung, kommuniziert und darüber halt Statusabfragen, aber eben auch die gesamte Konfiguration macht. Wäre das nicht vielleicht für euch auch ein Weg, dass man einfach sagt, okay, wir haben jetzt hier für OpenWRT ein gewisses Netz- API, wo die Konfiguration programmatisch übers Netz erfragt werden kann, wo es eine klare Authentisierung gibt, was ermöglicht, richtige Anwendungsprogramme zu schaffen, die dann eben sozusagen auch nativ, keine Ahnung, in KDE und GNOME oder vielleicht immer auch auf anderen Betriebssystemen herkommen und eigentlich noch eine viel bessere User-Experience bringen.
+
+00:56:40.883 --> 00:57:18.743
+<v SPEAKER_3>Das ist eine Sache, an der auch aktiv gearbeitet wird. Also die Grundlage für so etwas ist eben das Konfigurationssystem, was ursprünglich als Kooperation zwischen OpenWRT und dem Fraunhofer Focus entwickelt wurde. Und dafür wird es dann, also wenn das released wird und noch ein bisschen aufgeräumt wird, wird es einen SNMP-Adapter geben, sodass man dann das Gerät per SNMP remote beeinflussen kann, die Konfiguration ändern kann und so. Und das ist auf jeden Fall ein Bereich, also es ist noch einiges zu tun, aber das ist so im Moment der Bereich, auf den ich mich auch konzentriere.
+
+00:57:19.723 --> 00:58:13.963
+<v SPEAKER_2>Dann können wir gleich noch einen anderen Feature-Request ablassen, was nämlich auch sehr schick ist. Gerade jetzt bei DSL hat man ja immer das Problem, da kommt eine Provider und haut einem einmal pro Nacht irgendwie die Verbindung weg. Jeder kennt es, so ist total ärgerlich. Das Schlimmste ist vor allem, jede Nacht muss man immer wieder, wenn irgendwas zuckt, muss man über nachdenken, war es das jetzt oder war es das nicht? Also überhaupt dieses Ding überhaupt mitzubekommen und nicht nur daran, dass die eigenen Programme fehlen. In dem Fall von dem Airport-Teil kommt halt dann diese Software auch automatisch hoch. Das heißt, die haben sozusagen auch so einen Sinn Dämonen und wenn dann irgendwie das Gerät sagt, meine Internetverbindung ist weg, habe ich halt auch die Möglichkeit, direkt vom Client-Rechner gesagt zu bekommen, es gibt ein Problem und das Problem lautet, die PPP-Verbindung ist weggebrochen. Oder, keine Ahnung, das Kabel ist raus gezogen worden oder so eine Sache. Und das ist natürlich etwas, was den Benutzer die Sache auch wirklich einfach macht. Habt ihr sowas auch im Sinn?
+
+00:58:13.983 --> 00:58:57.143
+<v SPEAKER_3>Im Sinn ja, aber wir haben noch kein konkretes Paket dafür, aber die eigentliche Schwierigkeit da ist, wir wollen nicht einfach irgendetwas draufsetzen, was dann mit einer bestimmten Hardware funktioniert und auf diese Hardware ausgerichtet ist, sondern es muss generell für die verschiedenen Hardware-Plattformen Abstraktionsmechanismen geben, wo dann letztendlich so eine Software dann einfach draufsitzt, sodass, wenn wir jetzt auf eine neue Plattform portieren, wir nicht in den einzelnen Paketen, die solche Sachen eben machen, dann noch extra Hacks einfügen müssen, damit sie mit den Eigenheiten der Hardware zurechtkommen, sondern das muss alles durch definierte Abstraktionsschnittstellen gehen. Und das ist eine Sache, wo relativ wenig aufgebaut wurde, wo es relativ wenig gibt und was wir wirklich aktiv voranbringen wollen.
+
+00:58:59.083 --> 00:59:07.903
+<v SPEAKER_2>macht ihr denn das? Also wie arbeitet ihr denn in dem Projekt konkret zusammen?
+
+00:59:07.923 --> 00:59:10.463
+<v SPEAKER_3>die OpenWRT-Entwickler untereinander oder wie?
+
+00:59:10.483 --> 00:59:14.763
+<v SPEAKER_2>Wie läuft das so bei euch? Macht ihr das alles über die Mailing-Liste oder gibt es da...
+
+00:59:14.783 --> 01:00:21.543
+<v SPEAKER_3>Also wir haben... Die Hauptkommunikation findet eigentlich... Innerhalb des Projektes findet per ISC statt. Wir haben da unseren eigenen Channel, wo wir sind. Und dann gibt es auch noch eine Mailing-Liste, wo hauptsächlich die Kommunikation mit externen Entwicklern stattfindet. Also zum Beispiel unsere Patches, die wir von anderen Leuten kriegen, da wird bevorzugt, dass die eben auf die Mailing-Liste geschickt werden. Da gibt es dann... Da machen wir dann ein Review und ziehen die auch gleich aus der Mailing-Liste raus. Was man mit Git zum Beispiel, was bei der Kernel-Entwicklung zum Einsatz kommt, sehr gut machen kann. Das nutzen inzwischen auch einige OpenWRT-Entwickler, weil es auch mit unserem Versionskontrollsystem SVN gut arbeiten kann. Dann können die Leute auf die Mailing-Liste einfach Patches schicken und wir können die Patches rausziehen und direkt in Commits umwandeln im Versionskontrollsystem. Dann gibt es noch eine weitere Ressource. Das System heißt Track. Das ist ein integrierter Source-Code-Browser, Wiki und ein Bug-Tracker.
+
+01:00:21.563 --> 01:00:25.443
+<v SPEAKER_2>Track, T-A-A-C. Das ist auch sehr beliebt in letzter Zeit.
+
+01:00:26.323 --> 01:00:54.103
+<v SPEAKER_3>Das Wiki ist eben nicht öffentlich schreibbar. Das nutzen wir für Informationen, die wir veröffentlichen, die wir editieren. Und hauptsächlich eine Liste der unterstützten Plattformen, wer an was arbeitet, so Sachen, wo externe Leute üblicherweise sowieso nicht dran gehen sollen. Ein öffentliches Wiki gibt es aber auch, das ist eine andere Wikisoftware und auf einer anderen Adresse. Bald. Also im Moment ist es noch Moin Moin, aber wir wollen weg davon.
+
+01:00:54.823 --> 01:01:03.523
+<v SPEAKER_2>Weg vom Camel-Case. Ganz sinnvoll. Macht ihr auch Konferenzen? Macht ihr Treffen? Macht ihr Entwicklertreffen? Gab es schon mal so einen OpenWRT-Con?
+
+01:01:03.543 --> 01:01:08.463
+<v SPEAKER_3>Die ersten zwei richtigen Entwicklertreffen, die hatten wir auf dem Kongress.
+
+01:01:08.643 --> 01:01:11.323
+<v SPEAKER_2>Ahja, wie praktisch. Jetzt auf den letzten beiden, oder wie?
+
+01:01:13.043 --> 01:01:28.943
+<v SPEAKER_3>Ja, doch genau. Der Kongress ist sowieso ideal. Da haben viele Leute Zeit. Da können auch Leute aus dem Ausland hinfliegen. In Berlin ist das relativ gut angebunden. Es ist also eigentlich ein idealer Ort, um sich zu treffen.
+
+01:01:28.963 --> 01:01:35.283
+<v SPEAKER_2>Und da ist ja auch dann die OpenBSD-Community auch noch mit dabei, die ja auch ganz aktiv ist in den WLAN-Treiber-Geschichten, oder?
+
+01:01:35.303 --> 01:01:53.903
+<v SPEAKER_3>Ja, wobei, also die Kommunikation zwischen Linux und OpenBSD ist immer sehr schwierig. Und es gab auch riesige Flame Wars dazu. Das ist alles... Wenn dann Theodorath ins Spiel kommt, dann kann man es eigentlich aufgeben, um dann noch irgendwie sinnvolle Diskussionen zu führen. Das ist... ja.
+
+01:01:53.923 --> 01:02:02.283
+<v SPEAKER_2>Aber man könnte ja mal einfach so eine Tortenschlacht organisieren, dass man das einfach mal so ritualisiert und dann sich vorne bei der Rakete trifft und sich eine halbe Stunde...
+
+01:02:02.303 --> 01:02:12.483
+<v SPEAKER_3>Ich weiß nicht, von den Linux-Treiber-Leuten habe ich, glaube ich, noch keinen auf dem Kongress gesehen. Aber ich muss ja mal schauen. Ich versuche auch, die irgendwie herzukriegen, weil ich mich mit denen auch mal treffen möchte.
+
+01:02:13.503 --> 01:02:16.603
+<v SPEAKER_2>Sind das jetzt konkrete Personen, oder gibt es da Linux-Treiber-Leute?
+
+01:02:17.123 --> 01:02:40.283
+<v SPEAKER_3>Ja, hauptsächlich von den Treibern, mit denen wir so zu tun haben. Die reverse-ingenierten Atteros-Treiber und die Broadcom-Treiber, das sind eigentlich so die wichtigsten, wo ich zumindest auch Kommunikation mit den Entwicklern pflege. Wo sitzen die? Also bei den Broadcoms sind, ich glaube, zwei in Deutschland, einer in Italien.
+
+01:02:40.303 --> 01:02:42.983
+<v SPEAKER_2>Zwei in Deutschland, und die sind nicht auf dem Kongress?
+
+01:02:43.703 --> 01:02:47.703
+<v SPEAKER_3>Also ich habe die zumindest noch nicht gesehen. Kann sein, dass sie da waren, aber ich habe sie nicht gesehen.
+
+01:02:47.723 --> 01:03:11.263
+<v SPEAKER_2>Sollten sie das jetzt hören. Sie sind herzlich eingeladen, auch noch auf dem Kongress teilzunehmen. Ich stimme dir ja total zu. Wir haben das ja auch in der Organisation des Kongresses vor einigen Jahren versucht, explizit in die Gruppen reinzutragen, dass der Kongress einfach ein guter Ort ist. Wir haben ja jetzt auch diese Workshop-Räume, die man sich frühzeitig buchen kann, sodass man da eben auch in Ruhe Treffen machen kann, sich besprechen kann.
+
+01:03:11.283 --> 01:03:18.563
+<v SPEAKER_3>Wobei die Camps eigentlich besser sind, weil wenn man so einen Entwicklertreffen hat, eigentlich ist der Kongress zu kurz.
+
+01:03:18.583 --> 01:03:20.863
+<v SPEAKER_2>Und das, obwohl er schon vier Tage lang ist.
+
+01:03:20.883 --> 01:03:25.963
+<v SPEAKER_3>Genau. Eigentlich braucht man dafür wirklich Zeit, dass man sich mal hinsetzen kann, dass man auch tatsächlich mal zusammen was hacken kann.
+
+01:03:26.703 --> 01:03:32.563
+<v SPEAKER_2>Aber es ist halt erstmal so First Contact, wie du schon gesagt hast, weil man da überhaupt Leute auch eine sonstige Motivation haben kann.
+
+01:03:32.583 --> 01:03:39.363
+<v SPEAKER_3>Es ist schon mal viel wert, wenn man die Leute, die man sonst nur aus dem IRC kennt, wenn man denen auch tatsächlich Gesichter und Stimmen zuordnen kann. Das bringt schon viel.
+
+01:03:40.723 --> 01:03:42.663
+<v SPEAKER_2>Du konntest ja auch Videokonferenzen machen, oder?
+
+01:03:42.683 --> 01:03:44.943
+<v SPEAKER_3>Ja, es hat nicht die gleiche Bandbreite.
+
+01:03:45.943 --> 01:04:11.503
+<v SPEAKER_2>Ja, Kämpfe gibt es natürlich dafür ein bisschen zu selten. Wobei, es gibt ja auch jetzt hier wieder das ICMP-Mini-Camp in Erlangen und so. Vielleicht ist das ja auch schon nochmal eine Option. Ja. So, jetzt haben wir schon so viel durchgekaut. Was ich nochmal hinterfragen wollte, wir hatten das schon kurz erwähnt, die Zusammenarbeit mit Firmen, also als Infineon, aber es gibt auch noch andere Kooperationen, oder?
+
+01:04:11.523 --> 01:04:59.703
+<v SPEAKER_3>Genau, zum Beispiel mit Fonen arbeite ich zusammen. Die nutzen OpenWRT für ihre Geräte, für diese kleinen Foneras, die auch relativ beliebt sind, weil es eben sehr billige Geräte sind, mit denen man schon viel machen kann. Wie gesagt, die Firmware basiert auf OpenWRT, ist leicht modifiziert, und dann sind noch ein paar Sachen dazu, die eben diese Fonengeschichte ausmachen, diese Hotspot-Controller und so, aber die haben das Projekt eigentlich relativ gut unterstützt. Sie haben zum Beispiel auch die Entwicklung von Komponenten finanziert, die wir sowieso auch in OpenWRT gut gebrauchen konnten. Und was Treiber angeht, haben wir da auch einige Ressourcen noch von denen gekriegt. Also es ist eine relativ gute Zusammenarbeit.
+
+01:05:00.423 --> 01:05:03.043
+<v SPEAKER_2>Aber das Foneprojekt ist derzeit so ein bisschen unklar in Zustand.
+
+01:05:04.963 --> 01:05:08.263
+<v SPEAKER_3>Ja, ich weiß nicht, vielleicht fängt es sich auch mal wieder an zu schauen.
+
+01:05:08.283 --> 01:05:34.703
+<v SPEAKER_2>Also es gibt schon so eine gewisse Verbreitung, aber man kann auch nicht davon reden, dass es jetzt wirklich überhand genommen wird. Ich hatte ja auch mal ein Interview gemacht mit dem Martin Wasowski, hier bei Chaosradio Express, wo das Ganze noch so frisch und neu war. Ja, seitdem hat es sich weiter ausgedehnt. Ich bin mir noch nicht ganz so sicher, ob es wirklich die Kraft hat, diese kritische Masse an Teilnehmern zu erreichen.
+
+01:05:34.723 --> 01:05:39.623
+<v SPEAKER_3>Ich sehe auch immer noch relativ selten, wenn ich irgendwo bin, dass da tatsächlich mal ein Phone-Hotspot ist.
+
+01:05:39.643 --> 01:05:42.323
+<v SPEAKER_2>Ja, ich habe eigentlich auch noch gar keinen gesehen bisher.
+
+01:05:42.743 --> 01:06:31.503
+<v SPEAKER_3>Also so ein, zwei schon hin und wieder mal. Aber vielleicht ist es auch das Problem, wenn die ganzen Geräte drinnen stehen, das bietet nicht viel Abdeckung nach außen hin. Und ich glaube nicht, dass die meisten Leute irgendwie schlau genug sind, um die Dinge ans Fenster tatsächlich zu stellen. Es kann sein, dass sie irgendwo stehen, wo sie halt gerade ihre Netzwerk-Steckdose haben. Und dann ist die Abdeckung, die man da irgendwie durchs Fenster raus dann noch schaffen, relativ gering. Allerdings ist vorhin dann später auch auf die Idee gekommen, dass sie ja noch extra Antennen verkaufen können für diese Dinge. Oder teilweise dazugeben können, um eben eine bessere Abdeckung hinzukriegen. Haben die denn so einen externen Anschluss? Also man kann die kleine Stummelantenne einfach abschrauben und eine andere Antenne dranschrauben. Das ist, ich glaube, RPSMA oder so.
+
+01:06:34.303 --> 01:06:40.903
+<v SPEAKER_2>Und gibt es noch weitere Firmen, die in irgendeiner Form dem OpenWRT-Projekt da Gutes zukommen lassen?
+
+01:06:40.923 --> 01:07:31.843
+<v SPEAKER_3>Also es gibt ein paar kleinere Sachen, so immer wieder mal einzelne Projektbasis. Ich überlege jetzt gerade so die konkreten Beispiele, fehlen mir jetzt gerade. Aber es gibt auch immer mehr Firmen, die einfach nur OpenWRT für ihre Produkte einsetzen. Zum Beispiel habe ich das auch ohne Kommunikation mit uns. Zum Beispiel habe ich jetzt vor kurzem rausgefunden, dass Netgear zwei Produkte hat, wo im GPL-Code dann ein OpenWRT-Bildtree drin ist. Der aber relativ komisch modifiziert wurde. Aber interessanterweise ist das von dem Hersteller gemacht worden, der unter anderem auch für Phone-Hardware herstellt. Und wahrscheinlich haben die dadurch ein bisschen was mitgekriegt, so wie wir arbeiten. Sie haben es nicht wirklich gut umgesetzt, aber vielleicht kommen sie irgendwann noch mal auf die Idee, mit uns zu kommunizieren, um das eben noch mal zu verbessern.
+
+01:07:31.863 --> 01:07:34.823
+<v SPEAKER_2>Das sind aber nur so jetzt ein paar Produkte aus dem Netgear.
+
+01:07:34.843 --> 01:07:40.283
+<v SPEAKER_3>Genau, aber es ist durchaus ein Trend da, dass es mehr wird.
+
+01:07:40.303 --> 01:07:41.663
+<v SPEAKER_2>Das heißt, ihr seid auch recht hoffnungsvoll?
+
+01:07:41.683 --> 01:07:52.923
+<v SPEAKER_3>Genau, ich erwarte auch vor allem viel aus der Infineon-Geschichte. Ich glaube, der Koordinator für die Softwarebranche bei Infineon, der hat bei uns einen SVN-Account.
+
+01:07:53.343 --> 01:07:59.863
+<v SPEAKER_2>Na ja, macht Infineon denn da so stark in dem Markt?
+
+01:07:59.883 --> 01:08:12.563
+<v SPEAKER_3>Sie machen hauptsächlich eher die High-End-Geschichten, glaube ich. Also nicht die ganz billige Sparte. Aber sie haben auf jeden Fall sehr gute Prozessoren, was DSL und Voice-over-IP angeht. Und deswegen sind wir da auch sehr lange interessiert.
+
+01:08:12.583 --> 01:08:16.343
+<v SPEAKER_2>Ist es denn das, was Telekom und so weiter einem hinstellt?
+
+01:08:16.363 --> 01:09:30.703
+<v SPEAKER_3>Es gibt einen von der Telekom, den Speedport W700V. Der hat auch Infinien-Hardware drin. Und da wollen wir dann auch Hardware-Unterstützung haben, dass man den auch eben umflaschen kann auf OpenWRT. Das ist eine Arbeit. Und wir haben auch eigentlich schon die nötigen Treibersourcen gekriegt. Aber es ist sehr viel Arbeit, das Ganze aufzuräumen und zu integrieren. Weil wir haben einfach andere Qualitätsansprüche, was den Code angeht, als üblicherweise Hardware-Steller in einer Embedded-Welt. Was noch dazu kommt, ist, in der Embedded-Welt interessiert sich eigentlich keiner sonst für die Code-Qualität. Das sieht ja normalerweise sowieso keiner. Deswegen muss es laufen und es gibt einen riesigen Druck, weil das Marketing schon recht früh die Produkte ankündigt. Dann muss bis dahin das Laufen, egal wie. Dementsprechend wird das dann auch entwickelt. Genau, und dafür folgen wir einen anderen Ansatz. Es ist fertig, wenn es fertig ist. Aber wir machen ja auch letztendlich nicht die fertige Lösung, sondern wir machen die technologische Basis, die dann letztendlich dafür benutzt wird, um die einzelne Lösung zu erstellen. Aber wir reduzieren erheblich den Aufwand, den es braucht, um so eine Lösung zu erstellen.
+
+01:09:31.983 --> 01:09:39.703
+<v SPEAKER_2>Was ist denn mit Abspaltungen oder Parallelprojekte? DD-WRT zum Beispiel. Was hat das mit euch zu tun?
+
+01:09:39.723 --> 01:10:28.303
+<v SPEAKER_3>DD-WRT hat jetzt nicht viel mit uns zu tun. Es ist auch ein anderer Ansatz. DD-WRT ist zum Beispiel auch kein Entwickler-System, sondern es ist entstanden auch als modifizierte Linksys-Firmware. Es hat letztendlich mehr Code von OpenWRT übernommen und auch eine gewisse Plattform-Abstraktion eingebaut. Aber sie verfolgen auch einen anderen Ansatz. Es ist hauptsächlich auch eher das Klickbare mit dem Web-Interface. Das ist der Hauptpunkt, auf den sich DD-WRT konzentriert, so wie ich das sehe. Aber DD-WRT zielt darauf, schon eine fertige Lösung zu bauen, die man einfach nur flasht. Und wir kümmern uns um die technologische Basis. Ich habe Kontakt zu dem Hauptentwickler von DD-WRT. Und es gibt da eine gewisse Kommunikation. Aber es ist einfach ein anderer Ansatz. Es ist nicht wirklich Konkurrenz groß.
+
+01:10:28.323 --> 01:10:31.323
+<v SPEAKER_2>Gibt es noch andere Projekte, die sich ähnlichen Zielen verschrieben haben?
+
+01:10:31.343 --> 01:10:44.163
+<v SPEAKER_3>Es hat sich mal ein Projekt von OpenWRT abgespalten. Das nannte sich dann FreeWRT. Das war auch von einem OpenWRT-Entwickler, der das Projekt verlassen hat. Aber das Projekt ist inzwischen eingeschlafen. Also da passiert eigentlich gar nichts mehr.
+
+01:10:44.183 --> 01:11:05.223
+<v SPEAKER_2>Das heißt, die Kernentwicklung läuft dann noch da. Vielleicht so als letztes. Ich hatte das auch vor ein paar Ausgaben hier bei Chaosradio Express. Ausführliches Interview mit den OLPC-Leuten aus Österreich. OLPC Austria. Die sind ja dann auf dem Kongress auch bei euch aufgeschlagen. Ich habe gehört, dass dann OpenWRT mal Flux auf den OLPC überspielt wurde.
+
+01:11:05.543 --> 01:11:22.343
+<v SPEAKER_3>Ja, das war eigentlich eine Sache, die auch hier im Club entstanden ist. Wir hatten gerade nicht viel Hardware da und dachten uns, wir hacken jetzt mal ein Gerät, so was haben wir denn gerade da. Und dann hat einer der Debian-Entwickler uns einen OLPC-Laptop geliehen. Und der stand dann da rum und dann dachten wir auch, machen wir mal OpenWRT auf den OLPC-Laptop.
+
+01:11:22.363 --> 01:11:23.723
+<v SPEAKER_2>Das war aber jetzt schon noch vor dem Kongress.
+
+01:11:23.743 --> 01:13:20.703
+<v SPEAKER_3>Das war vor dem Kongress, eine ganze Weile vorher. Und dann haben wir eben angefangen, haben OpenWRT auf den OLPC portiert. Und wir hatten den X-Server auch auf OpenWRT portiert, sodass man auch ein grafisches Interface hat. Und irgendwann lief dann OpenWRT auf diesen OLPC-Kisten. Und wir hatten dann auch mal beim OLPC-Projekt selber angefragt, ob wir eben noch ein paar von den Dingern haben können. Wir haben denen gezeigt, wir hatten ein lustiges Foto hier, wo ein OLPC-Laptop mit einer Mateflasche und einem Chaos-Knoten drauf. Das haben wir denen dann geschickt. Und da lief dann OpenWRT drauf. Und dann haben die uns tatsächlich auch zwei Geräte geschickt. Das war dann auf dem Kongress sehr lustig. Wir hatten unseren OpenWRT-Tisch aufgebaut und hatten da auch die OLPC-Laptops stehen. Und weil die da standen, haben sich dann auch die OLPC-Leute dazugeselten, haben dann noch mehr Laptops dahingestellt. Und irgendwann war das so ein schöner gemeinsamer Bereich, so OLPC und OpenWRT. Und das lief recht gut. Also war ja sehr interessant. Und wir waren auch überrascht, wie viel Interesse auch von der OLPC-Seite dann kam an OpenWRT. Weil OpenWRT eben wahnsinnig schnell auf den Dingern bootet. So 20, 25 Sekunden statt ein, zwei Minuten. Wir haben ein wesentlich kleineres System. Also das OLPC-System baut jetzt auf Fedora auf. Und das ist eigentlich eine Desktop-Linux-Distribution. Und dementsprechend hat es natürlich viel Kram, der relativ groß ist und der für Desktop-Systeme zwar sinnvoll ist, aber wenn man jetzt ein abgespecktes Gerät für einen bestimmten Zweck hat, dann möchte man eigentlich doch eher was Kleineres haben, was dann auch schneller startet, weil die Prozessoren von den OLPCs ja doch nicht so leistungsfähig sind. So im Vergleich zu den Desktop-Maschinen. Und wir verfolgen halt den Ansatz, wir nehmen nicht irgendwas Großes und machen es klein, sondern wir haben von vornherein ein kleines System, was wir dann anpassen, dass es eben auch die Features von den Größeren kriegt, aber trotzdem klein bleibt.
+
+01:13:20.723 --> 01:13:26.863
+<v SPEAKER_2>Wie zum Beispiel dann mal ein X-Server dazuschmeißen, was ja eher die Ausnahme ist. Und das lief aber auch alles ganz problemlos.
+
+01:13:27.263 --> 01:15:28.943
+<v SPEAKER_3>Ja, es hat eine ganze Weile gedauert, den X zu portieren, weil wir, also erstmal cross-kompilieren, ist bei vielen Projekten nicht wirklich vorgesehen. Die achten dann darauf, dass man es auf einem System nativ gut kompilieren kann und diese Autokomp-Geschichten haben gewisse Unterstützung für Cross-Kompilieren dabei. Aber es ist eben relativ häufig so, dass wenn man dann tatsächlich versucht, ein Paket zu cross-kompilieren, dann hakt es irgendwo und dann muss man Sachen fixen, dann muss man irgendwelche Configure-Skripts anpassen und dann kommen irgendwelche Dependencies dazwischen. Also von den regulären Software-Autoren, es denkt eigentlich kaum jemand an's Cross-Kompilieren. Und wir arbeiten dann halt dran, dass wir diese ganzen Probleme lösen. Und wir haben auch eine abgespeckte C-Library, die wesentlich kleiner ist. Und da gibt es dann auch noch Inkompatibilität mit ein paar Paketen. Das ist eigentlich so die Hauptarbeit beim Portieren eines Paketes. Aber wir haben eben das Build-System dahingehend angepasst, dass man bei vielen Paketen eigentlich nur reinschreiben muss, wo es her ist, welche Dateien tatsächlich im Paket landen sollen, welche Versionsnummer, noch eine MD5-Summe vom Source-Tarboil und irgendwie noch Informationen, wo das im Menü auftauchen soll. Das schreibt man einmal rein, probiert es dann mal aus. Und wenn man Glück hat, und das passiert eigentlich relativ häufig, dann kompiliert das Paket eigentlich gleich schon beim ersten Durchgang, wenn man nicht irgendwo einen Fehler eingebaut hat. Und wenn es nicht kompiliert, dann braucht man eigentlich nur ein paar kleine Sachen noch dazuschreiben, die dann die Bugs, die auftreten, fixen. Aber im Prinzip haben wir das Portieren von Paketen, das Cross-Kompilieren, sehr stark vereinfacht. Also bei mir ist es so, ich habe mich so sehr daran gewöhnt, dass ich es wesentlich einfacher finde, so mit dem System ein Paket zu Cross-Kompilieren, als mal eben eine Source runterzuladen auf meinem Desktop und den auszupacken und regulär zu kompilieren, was eigentlich sonst einfacher ist. Aber diese Arbeit wird einem halt einfach abgenommen.
+
+01:15:28.963 --> 01:15:36.023
+<v SPEAKER_2>Nachdem dann OpenWRT auf dem OLPC lief, liefen dann auch die OLPC-Anwendungen vollständig?
+
+01:15:36.043 --> 01:16:02.763
+<v SPEAKER_3>Noch nicht, aber es fehlt noch die Libraries, um grafische Interfaces mit Python zu machen. Die Haupt-OLPC-Software ist in Python geschrieben. Ich hatte vor einer Weile noch mal angefangen, den Fenstermanager, den OLPC, benutzt zu portieren. Die Anwendungen müssen noch portiert werden, aber es ist eigentlich gar nicht mehr so viel Arbeit. Die Hauptarbeit ist schon getan.
+
+01:16:02.783 --> 01:16:14.003
+<v SPEAKER_2>Und ist deine Erwartung, dass wenn du jetzt die restliche Arbeit auch noch gemacht hast, dass die selben Subsysteme laufen wie auch auf der Original-Distribution, dass du dann dasselbe in schneller und kleiner hast?
+
+01:16:14.023 --> 01:16:44.823
+<v SPEAKER_3>Ja, eigentlich schon. Was die ganzen Desktop-Basis-Komponenten angeht, da sind viele Sachen beim Original-System dabei, die wir einfach nicht brauchen. Ein paar Sachen müssen wir vielleicht noch anpassen, aber es ist schon eine relativ eigengeschriebene Sache für OLPC, dieser ganze Anwendungs-Dac. Das hat auch nicht so viele Dependencies auf irgendwelche anderen Geschichten. Wenn wir das portiert haben, müsste das eigentlich laufen.
+
+01:16:44.843 --> 01:16:55.823
+<v SPEAKER_2>Der OLPC bringt ja auch noch diese 802.11.1-Mesh-Networking-Geschichte mit sich. Ist das für euch auch ein spannendes Thema?
+
+01:16:56.743 --> 01:17:07.163
+<v SPEAKER_3>Es ist ein interessantes Thema, aber das Problem ist, dass die Mesh-Geschichte in Hardware gemacht wird. Die Firmware, die das Meshing macht, ist nicht offen.
+
+01:17:07.183 --> 01:17:08.283
+<v SPEAKER_2>Auch auf dem OLPC nicht?
+
+01:17:08.303 --> 01:17:13.563
+<v SPEAKER_3>Genau. Die läuft auch nicht auf dem Host-Prozessor, sondern auf dem WLAN-Chip selber.
+
+01:17:13.583 --> 01:17:15.403
+<v SPEAKER_2>Weißt du, was das für einer ist?
+
+01:17:15.423 --> 01:17:40.403
+<v SPEAKER_3>Das ist ein Marvel-Chip. Da ist ein abgespeckter ARM-Prozessor mit drin. Es gibt wohl Bestrebungen, da auch etwas Offenes zu machen. Und es gibt auch Reverse-Engineering-Ansätze. Aber im Moment ist das halt einfach nicht offen. Das heißt, das macht es für eigene Mesh-Tests und angepasste Geschichten weniger interessant, weil wir das Mesh-Protokoll nicht beeinflussen können.
+
+01:17:40.423 --> 01:17:43.963
+<v SPEAKER_2>Aber sobald das Ding reverse-ingeniert ist, wäre das durchaus auch ein Thema.
+
+01:17:43.983 --> 01:17:55.803
+<v SPEAKER_3>Auf jeden Fall. Dann kann man damit auch eventuell andere Mesh-Protokolle fahren oder irgendwelche eigenen WLAN-Experimente machen, die man so einfach ohne direkte Hardware-Unterstützung nicht machen kann.
+
+01:17:56.843 --> 01:18:28.803
+<v SPEAKER_2>Ja, wenn das jetzt so interessiert, OLPC, wie gesagt, Chaosradio Express, welche Nummer war denn das jetzt? 71 glaube ich. Und auch zum Mesh-Networking habe ich mit Elektra schon zwei Podcasts gemacht. Da kann man sich das irgendwie alles nochmal geben, mit OLSR und Batman und hast du nicht gesehen. Auch das OLPC-Projekt haben wir ja sehr ausführlich vorgestellt. Das ist auch schon über OpenWRT geredet worden. Deswegen greife ich das jetzt hier auch einfach nochmal auf. Ja, ansonsten gibt es noch irgendwas hinzuzufügen. Da haben wir jetzt hier schon eigentlich alles ganz gut durchgerockt, meiner Meinung nach.
+
+01:18:28.823 --> 01:18:30.023
+<v SPEAKER_3>Ja, denke ich auch.
+
+01:18:30.043 --> 01:18:45.123
+<v SPEAKER_2>Gut. Bleibt sozusagen noch die Frage, nach was euer Projekt sozusagen noch an Unterstützung sich sehnt. Also wenn jetzt irgendwie Leute zuhören, die vielleicht Lust haben, an dem Projekt in irgendeiner Form beizutreten, zu wirken.
+
+01:18:45.143 --> 01:19:06.643
+<v SPEAKER_3>Wir können eigentlich Entwickler für alle Teile wirklich gebrauchen. Es ist sehr viel, wo noch viel Arbeit benötigt wird. Und die Leute, die interessiert sind, können sich auf der Mailing-Liste oder im ISC melden. Aber zu tun gibt es mehr als genug. Und es gibt mehr als genug Betätigungsfelder, wo die Leute eben noch dran arbeiten können.
+
+01:19:06.663 --> 01:19:18.583
+<v SPEAKER_2>Aber abgesehen jetzt von dem Aspekt, es gibt viel Arbeit. Was sind so die besonderen Herausforderungen, die du so siehst, die besonders Spaß machen könnten? Wo man so neue Frontiers...
+
+01:19:18.603 --> 01:19:31.943
+<v SPEAKER_3>Also mir persönlich macht gerade diese ganze Treiberentwicklungsgeschichte sehr viel Spaß. Und da gibt es auch noch sehr viel, was getan werden kann. Interessierte Kernel-Hacker können wir immer gebrauchen.
+
+01:19:31.963 --> 01:19:56.683
+<v SPEAKER_2>Genau. Und wenn euch das interessiert, dann schaut ihr nach bei openwrt.org. Das ist so eure Hauptwebseite für alles. Das heißt, da sind Kontakte, Treffen und so weiter, Meldinglisten und so weiter. Alles verzeichnet, der Chat. Oder wenn ihr in Hamburg seid oder im Umfeld, dann könnt ihr auch hier vorbeischneiden im Chaos Computer Club in Hamburg. Im Logstädter Weg 72 Donnerstags habt ihr auch mal eure Treffen. Also jeden Donnerstag sozusagen.
+
+01:19:56.703 --> 01:20:02.443
+<v SPEAKER_3>Ja, Donnerstagabend. So meistens so ab 20 Uhr, manchmal ein bisschen später. Und Open End.
+
+01:20:02.463 --> 01:20:53.663
+<v SPEAKER_2>Das heißt, ihr könnt auch mal Leute vorbeischneiden mit ihren eigenen Devices und dann auch mal gucken, ob man da irgendwie OpenWRT draufkriegt und was da für Möglichkeiten sind. Na, das ist doch was Schönes. Na gut, Felix, vielen Dank für die Ausführung. Nun würde ich sagen, das war's bei Chaosradio Express Nummer 76, OpenWRT aus Hamburg. Und ich bedanke mich wieder fürs Zuhören. Und ich hoffe auf eure Kommentare und Anregungen. Entweder im Blog unter blog.chaosradio.cc.de oder vielleicht habt ihr auch Hintergrundinformationen, die ihr bei uns im Wiki versenken könnt. Alle Links zu Blog-Eintrag und Wiki findet ihr bei uns auf dem Chaosradio.cc.cde-Portal zu der Sendung. Ja, und dann bleiben wir nur noch, euch noch einen schönen Tag zu wünschen. Hier geht es auch bald wieder munter weiter. Und ja, noch viel Spaß bei allem, was ihr tut. Und vielleicht kramt ihr nochmal euren alten Router aus dem Regal. Man kann vielleicht noch ein bisschen mehr damit machen.
+
+01:20:53.683 --> 01:20:56.283
+<v SPEAKER_3>Lieber neue als alte. Bei den alten sieht es manchmal nicht so gut aus.
+
+01:20:58.303 --> 01:21:00.683
+<v SPEAKER_2>Okay, das war's und tschüss, bis bald.

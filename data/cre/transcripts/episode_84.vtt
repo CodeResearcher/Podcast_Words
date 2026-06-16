@@ -1,0 +1,697 @@
+WEBVTT
+
+00:00:26.600 --> 00:00:29.720
+<v SPEAKER_1>Ja, ich habe das Memo hier, ich hab es vergessen.
+
+00:01:05.305 --> 00:02:34.885
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express Ausgabe Nr. 84. Mein Name ist Tim Pritlove und ich begrüße euch am 7. April 2008 zu einer neuen Iteration der Weltbeobachtung per Podcast. In letzter Zeit ist die Themenlandschaft ja hier sehr unterschiedlich gewesen. Das ist auch gut, so soll es bleiben. Trotzdem gab es etwas wiederkehrendes, was auch heute noch mal aufgegriffen wurde, nämlich der Blick auf die Programmiersprachen. Das ist natürlich immer so eine Sache. Potenzielles Nerd-Thema, Achtung, Achtung. Aber ich höre immer viel auch von den Hörern zurück, dass es da großes Interesse gibt, darüber etwas zu erfahren. Und natürlich im Idealfall auch sehr verständliches und Erklärendes zu erfahren, weil irgendwie wird Programmieren immer beliebter. Und ganz oben auf der Liste, der Wunschliste, der Hörer, stand eine Sendung zum Thema Lisp, eine der ältesten Programmiersprachen, die wir auch schon mal angerissen haben, als ich hier mit Andreas mal über Düllen eine Sendung gemacht habe. Da hat er schon etwas weit ausgeholt und bei Lisp begonnen, weil das eben auch für die Programmiersprache Düllen sehr wichtig ist. Aber zum Thema Lisp selber habe ich mir jetzt einen Spezial-Experten ins Haus geholt und ich begrüße das erste Mal bei Chaosradio Express den Hans. Hallo Hans.
+
+00:02:34.905 --> 00:02:35.665
+<v SPEAKER_1>Guten Tag.
+
+00:02:35.685 --> 00:02:51.545
+<v SPEAKER_2>Hans Hübner, du bist der hackenden Elite wohl bekannt, denn du bist ja nun schon echt verdammt lange dabei. Also ich glaube, seit wann kennen wir uns eigentlich? 1900?
+
+00:02:53.085 --> 00:02:56.925
+<v SPEAKER_1>Jack Tramiel in Hannover beim Hacker-Stammtisch.
+
+00:02:56.945 --> 00:02:57.845
+<v SPEAKER_2>Hast du da kennengelernt?
+
+00:02:57.865 --> 00:03:07.685
+<v SPEAKER_1>Ja, da haben wir uns kennengelernt. Da bist du als Fanboy Jack Tramiel hinterher gelaufen, weil du eigentlich nicht auf den Hacker-Stammtisch warst, weil du ja kein Hacker warst damals und das auch abgelehnt hast.
+
+00:03:07.705 --> 00:03:12.885
+<v SPEAKER_2>Was? Das habe ich gar nicht gesagt. Du hast mir das mal eingeredet.
+
+00:03:12.965 --> 00:03:14.705
+<v SPEAKER_1>Ja, genau. Ich habe dir das eingeredet.
+
+00:03:15.225 --> 00:03:56.285
+<v SPEAKER_2>Du bist sowieso schuld. Ja, das war aber total lustig. Das war Jack Tremille, damals der Chef von Atari. So ein kleiner, knorziger, so ein Giftzwerg, aber total lustig, vollkommen laute Stimme. Wir hatten alle Atari STs und wollten ihn haben. Dann haben wir uns auf diese Pressekonferenz eingeschlichen, wie wir das immer gemacht haben, auf der CeBit, wo es immer so Fettessen gab, ein Maritimhotel, so ein dickes Buffet, 20 Meter lang. Das waren noch Zeiten. Mein Freund Jürgen hat einfach mal gefragt, ob er nicht Bock hätte, auf die Stammtischrunde zu kommen. Und dann ist er dann tatsächlich vorgefahren. Und dann saß er da irgendwie die ganze Zeit gackern auf dem Sofa und hat von den alten Zeiten erzählt. Da warst du auch mit dabei, ja?
+
+00:03:56.305 --> 00:04:06.165
+<v SPEAKER_1>Da war ich auch mit dabei. Ich glaube aber, ich bin relativ früh wiedergegangen, weil ich war damals ja mit Karl unterwegs. Und wir waren ja nicht unbedingt die Atari-Fanboys.
+
+00:04:07.225 --> 00:04:08.285
+<v SPEAKER_2>Ich war auch kein Fanboy.
+
+00:04:08.305 --> 00:04:09.025
+<v SPEAKER_1>Ich hatte nur einen.
+
+00:04:09.125 --> 00:04:11.225
+<v SPEAKER_2>Ich fand die Maschine scheiße. Die war total kacke.
+
+00:04:11.945 --> 00:04:20.485
+<v SPEAKER_1>Ja, das war ein glästlicher Computer, aber das wird gewesen sein 1987?
+
+00:04:20.505 --> 00:04:22.525
+<v SPEAKER_2>Nee, das war früher.
+
+00:04:22.525 --> 00:04:29.405
+<v SPEAKER_1>1986. Nee, aber viel früher kann es nicht gewesen sein. 86, 87. Naja, also es ist jedenfalls schon ganz schön lange her, ungefähr 20 Jahre.
+
+00:04:29.585 --> 00:04:33.325
+<v SPEAKER_2>Ja, aber da warst du dann auch schon eine Weile unterwegs. Wann hast du denn eigentlich angefangen mit Computern?
+
+00:04:33.765 --> 00:04:58.965
+<v SPEAKER_1>Na, angefangen habe ich, da war ich so, würde ich sagen, 13. Da gab es erst den, also ich war eigentlich ein Elektronik-Bastler und mein Vater hat erst eine Modelleisenbahn angeschleppt und dann hat er mir irgendwelche Bausätze gekauft bei Azzardradio, die durfte ich dann zusammenlöten. Und dann habe ich Elektronik-Zeitschriften gelesen und irgendwann kam in einer dieser Elektronik-Zeitschriften die Werbung für den ZX-80.
+
+00:04:58.985 --> 00:05:00.765
+<v SPEAKER_2>Was war das, Funkschau oder was?
+
+00:05:00.785 --> 00:05:22.805
+<v SPEAKER_1>Nee, das war, die hieß, ja, Elektor hatte sowas nicht, die waren immer schon ein bisschen, ein bisschen elitärer damals. Das war damals die ELO aus dem Franzis-Verlag. Und da gab es eine, die Chip gab es damals noch nicht. Das war die ELO. Und die L-Rad aus dem Heise-Verlag, wo die CT zunächst eine vierseitige Beilage in der Mitte war, bis sie dann explodierte.
+
+00:05:22.905 --> 00:05:25.565
+<v SPEAKER_2>Ach, die ist aus der L-Rad rausgefallen. Das wusste ich gar nicht.
+
+00:05:25.885 --> 00:05:49.065
+<v SPEAKER_1>Das war eine Beilage früher. Die CT war die Computer-Beilage in der L-Rad. Jedenfalls, der ZX-80 war der Computer von Sir Clive Sinclair, der für 500 Mark erhältlich war und einen Kilobyte RAM hatte und einen ZX-80 Prozessor, der, wenn er rechnen wollte, musste der immer das Display dunkel schalten, weil er nicht gleichzeitig display und rechnen.
+
+00:05:50.505 --> 00:05:52.165
+<v SPEAKER_2>Ne, und denken sie hin.
+
+00:05:52.185 --> 00:05:58.385
+<v SPEAKER_1>Ne, also so, das war sozusagen mein Einstieg. Also ein Freund von mir hatte auch einen Sharp PC-1211.
+
+00:05:58.405 --> 00:06:01.225
+<v SPEAKER_2>ZX-80, das war dann so Anfang der 80er Jahre, ne?
+
+00:06:02.825 --> 00:06:19.045
+<v SPEAKER_1>Das war so 83, so würde ich sagen, 83, 84, sowas in der Größenordnung. Und da ging es dann halt um Basic. Basic war die Sprache, die irgendwie verfügbar war. Ja, das gab einfach keine andere Premiere-Sprache, die irgendwie zugänglich war.
+
+00:06:19.065 --> 00:06:25.445
+<v SPEAKER_2>Ja, man schaltete immer diese Büchsen ein und dann fiel da einfach so ein Ready raus. Und dann musste man... Prompt. Musste man einfach los.
+
+00:06:25.465 --> 00:06:26.185
+<v SPEAKER_1>Genau.
+
+00:06:26.205 --> 00:06:27.125
+<v SPEAKER_2>Zehn, Print.
+
+00:06:29.185 --> 00:06:42.025
+<v SPEAKER_1>Und diese Basic-Büchsen, also da gab es den Apple II und ZX80, ZX81, Schneider CPC, VC20, die Commodores fand ich mal hässlich. Ich hab ja immer zu tendiert, die dann zu meiden und...
+
+00:06:42.045 --> 00:06:50.445
+<v SPEAKER_2>Aber man kam geil schnell ans Malenbord, ja. Einfach unten die Schrauben nie festgeschraubt lassen. Dann konnte man einfach so die Tastatur hochklappen und irgendwie direkt auf den Stein rum.
+
+00:06:50.465 --> 00:07:40.505
+<v SPEAKER_1>Ja, da hatten wir ja ganz anderes Leiden bei dem ZX81. Da gab es nämlich deine Folientastatur, die ohnehin schon eine Zumutung war. Und die Folientastatur, die hatte eine Verlegung und ging in einen ganz schlechten Platinensteckverbinder rein. Wenn man den aufgemacht hat, dann hat man eigentlich immer irgendwas kaputt gemacht. Also hardwaremäßig waren wir dem Commodore-Lager natürlich unterlegen. Also so, das war der Anfang. So habe ich angefangen. Da habe ich also Basic auf irgendwelchen Z80-Büchsen gemacht. Und dann hat, zu meiner Schande muss ich es gestehen, ein Freund von mir, der ein C64 hatte, der hat mir dann gezeigt, was ein Akustikkoppler ist. Damals gab es ja keine Modems und man musste also mit einem Akustikkoppler die Verbindung ins Netz herstellen.
+
+00:07:40.525 --> 00:07:49.305
+<v SPEAKER_2>Für Bürger des 21. Jahrhunderts muss man erklären, das war sozusagen, man steckt einen Telefonhörer, die damals noch so prägnante Form hatten.
+
+00:07:49.325 --> 00:07:51.125
+<v SPEAKER_1>Die waren noch separat vom Telefon getrennt.
+
+00:07:54.645 --> 00:08:01.305
+<v SPEAKER_2>Stimmt, man steckte dann in so eine Plastemuschel und dann ging es los. Man durfte nicht husten.
+
+00:08:02.525 --> 00:08:56.945
+<v SPEAKER_1>Dieser Freund mit dem C64 hatte einen Akustikkoppler. Dieser Akustikkoppler hat mich fasziniert. Da hat er mir dann gezeigt, wie man in irgendwelche Mailboxen reinkam und wie man in irgendwelche anderen Computer rein konnte. Das war dann mein Einstieg in größere Systeme, wo ich dann länger auf irgendwelchen Wechseln und so etwas rumgemacht habe. Im Heimcomputerbereich war es eben so, das hieß damals Heimcomputer, Personal Computer, gab es noch nicht, war Basic, die vorher herrschende Sprache. Wenn man ein wenig fortgeschrittener war, dann konnte man den Pascal programmieren. Da gab es den hervorragenden Turbo Pascal Compiler von Borland, der inzwischen als Delphi ein immer noch gutes Dasein fristet. Jedenfalls so, das war meine Herkunft.
+
+00:08:57.945 --> 00:09:01.585
+<v SPEAKER_2>Also du hast eine ganze Menge Poemiersprachen gestreibt über die Zeit.
+
+00:09:01.605 --> 00:09:43.065
+<v SPEAKER_1>Ja, das bleibt ja nicht aus. Ich wollte früher immer einen Forth haben, weil Forth war irgendwie schön schräg. Ich hatte immer Lust auf Sachen, die nicht so mainstreamig sind. Und Forth war sehr interessant, gab es aber quasi gar nicht für irgendeinen Rechner, den ich dann auch hatte. Da habe ich aber eine Weile mit rumgemacht. Und dann Pascal natürlich und dann verschiedene Kommando-Zeilen, Sprachen von irgendwelchen Großrechnern, die man über das Modem mit irgendwelchen Skripten versorgen konnte. Da gab es ja noch nicht überall Unix, sondern da gab es dann irgendwie dutzende verschiedene Betriebssysteme mit jeweilig eigenen Skriptsprachen.
+
+00:09:43.725 --> 00:09:50.985
+<v SPEAKER_2>Du hast ja auch viel mit VMS rumgemacht, also mit dem Betriebssystem der VEX-Maschinen. Was hat man denn da eigentlich programmiert?
+
+00:09:51.005 --> 00:10:10.265
+<v SPEAKER_1>In C habe ich das gemacht. Also da habe ich C gelernt und dann C++ und dann habe ich größere Anwendungen in C++ geschrieben auf VMS. Und C++ war halt, also in den 80er Jahren war es so, dass in den späten 80er Jahren war objektorientierte Programmierung die aktuelle Mode.
+
+00:10:10.285 --> 00:10:11.205
+<v SPEAKER_2>Die Verheißung war das.
+
+00:10:11.645 --> 00:12:04.945
+<v SPEAKER_1>Ja, ja, also die Verheißung... Ja, ja, ja, macht alles und die Wartung fällt quasi vollständig weg und man kann alles nochmal benutzen und so. Aber das war halt so der aktuelle Trend. Es gab denn Magazine, Journal of Object-Oriented Programming und C++ Report, die sehr hochqualitative Artikel auch zum objektorientierten Programmieren hatten. Das war so eine sehr, sage ich mal, sehr goldene und interessante Zeit insofern, als dass da noch ein paar Wissenschaftler aus dem KI-Umfeld getextet haben in diesem Magazin. Es aber nicht so eine Massenbewegung war. Und insofern war das eine ganz nette Zeit. Und da habe ich halt in C++ lange viel programmiert und dann irgendwann auch mal Pearl auf die wegsportiert, weil C++ dann doch ganz schön unhandlich ist und der Compiler langsam und Pearl kann man halt so schön und das zusammen hacken. Und in Pearl habe ich dann so das erste Mal ein bisschen praktisch funktionale Programmierung üben können. Also so programmieren ohne irgendeinen Typen-Corset, wo man irgendwie erstmal ansagen muss, was man für einen Datentyp haben will, bevor man die Variable verwenden kann. In Pearl ist das ja alles dynamisch. Und in Pearl hat man halt auch anonyme Funktionen, was auch oft sehr nützlich ist. Und das hat mich dann so ein bisschen in die Richtung funktionale Programmersprachen interessiert. Wobei ich da nie so ein... Also ich bin ja kein Wissenschaftler. Du bist Praktiker. Ja, ja, ja. Also ich habe eigentlich kein theoretisches Fundament, was mich dann auch davon enthebt, mich zu lange...
+
+00:12:04.965 --> 00:12:07.325
+<v SPEAKER_2>Kannst du auch ein abgebrochenes Informatikstudium vorweisen?
+
+00:12:07.345 --> 00:12:13.345
+<v SPEAKER_1>Ja, natürlich. Nee, nee, nee, eigentlich ist es so, ich habe tatsächlich Mathe studiert.
+
+00:12:13.365 --> 00:12:15.205
+<v SPEAKER_2>Also ist es ein abgebrochenes Mathe-Studium.
+
+00:12:15.225 --> 00:12:27.885
+<v SPEAKER_1>Ja, weil ich musste noch Wartesemester machen. Und aber bevor dieses Wartesemester abgelaufen war und ich dann in Informatik wechseln konnte, hatte ich für mich entschieden, dass ich lieber Programmierer werden will und eigentlich nicht Computerwissenschaftler. Und das bin ich jetzt halt.
+
+00:12:27.905 --> 00:12:49.845
+<v SPEAKER_2>Hands-on. Ganz praktisch. Ja, zu Pearl wolltest du mich damals auch konvertieren. Das habe ich aus irgendwelchen Gründen nie so richtig getan. Ich bin ja jetzt in dieser XML-Ecke hängen geblieben. Aber darüber wollen wir jetzt nicht reden. Jetzt hast du schon erwähnt, funktionale Programmierung und dann erwähnst du es bei Pearl. Das überrascht mich jetzt ein bisschen.
+
+00:12:50.405 --> 00:13:19.025
+<v SPEAKER_1>Ja, Pearl war die erste Sprache, die das für mich zugreifbar gemacht hat. Weil Pearl genauso wie Lisp auch eine funktionale Programmesprache ist, wo du Funktionen als First-Glass-Objekte hast, durch die Gegend reichen kannst. Du hast Closures, du hast Operationen auf Listen. Also da gibt es eine ganze Menge Sachen, die man damit machen kann.
+
+00:13:21.065 --> 00:13:40.685
+<v SPEAKER_2>Wie würdest du denn das so... Also bleib mal kurz dabei, weil es ist natürlich jetzt bei Lisp eigentlich so das Buzzword. Wenn jetzt so gefragt wird, was ist denn Lisp, dann sagt man ja erst mal, was ist eine funktionale Programmiersprache? Da kann man funktioniert drin programmieren. Was heißt das? Funktionen hat man ja auch in anderen Programmiersprachen.
+
+00:13:40.705 --> 00:14:39.025
+<v SPEAKER_1>Ja, der Trick oder der Unterschied zwischen einer nicht-funktionalen und einer funktionalen Programmiersprache ist, dass Funktionen als Objekte an sich existieren. Das heißt, ich kann eine Funktion nehmen und sie auf irgendwas anwenden. Ich kann eine Funktion nehmen und sie in eine Variable abspeichern und hinterher auf etwas anderes anwenden. Ich kann das Verhalten des Programms steuern über Variablen, die das Verhalten selbst beinhalten. Ich kann eine Funktion haben, die rechnet die Mehrwertsteuer aus. Eine Funktion, die rechnet die Mehrwertsteuer aus. Dann kann ich mir eine Variable mit einem rechneren Mehrwertsteuer aus und kann der die Funktion zuweisen, die 16 Prozent drauf addiert. Und wenn die Mehrwertsteuer sich ändert, dann weise ich dieser Variable, rechne Mehrwertsteuer aus, eben eine neue Funktion zu, die 19 Prozent hat.
+
+00:14:44.765 --> 00:14:49.945
+<v SPEAKER_2>Das ist zwar nicht so piktoresk, aber wie wirfst du die jetzt auf andere Werte?
+
+00:14:49.965 --> 00:14:53.005
+<v SPEAKER_1>Ich habe einen Operator Apply.
+
+00:14:53.105 --> 00:15:06.285
+<v SPEAKER_2>Du wendest sozusagen die Funktion auf etwas an, das heißt, dass letztlich diese Funktion mit diesem etwas aufgerufen wird als Parameter und dann kriegt sie da diese Zahl rein und dann spuckt sie die Mehrwertsteuer raus.
+
+00:15:06.465 --> 00:15:27.645
+<v SPEAKER_1>Genau, aber im Unterschied zu vielen anderen Programmiersprachen, wo die Funktionen zwar existieren, wie zum Beispiel in C++, aber Teil quasi der Syntax sind und man dann irgendwelche Bocksprünge machen muss, um einen Zeiger auf eine Funktion zu haben, mit der man dann umgehen kann, kann man in funktional orientierten Programmiersprachen eben sehr oberflächlich mit Funktionen auch hantieren.
+
+00:15:28.565 --> 00:15:45.705
+<v SPEAKER_2>Wie bist du denn zu Lisp gekommen? Also was war denn der Grund? Du hast gesagt, du hast jetzt mit allem möglichen programmiert und dann irgendwie, keine Ahnung, eine ewige Zeit C++ gemacht. Das war ja eine lange Phase. Wir reden ja jetzt nicht von ein paar Jahren, was weiß ich, zehn, 15 Jahre lang, oder?
+
+00:15:45.725 --> 00:16:16.425
+<v SPEAKER_1>Ja, so was. Also es ist so, dass ich eigentlich immer auf der Suche nach dem Heiligen Gral bin. Und der Heilige Gral ist ein Programmiersystem, bei dem man die Sprache nicht dauernd wechseln muss, sondern wo man von abstrakten Konzepten bis zu den Bits in der Hardware alles in einer Umgebung machen kann, sodass man an beliebiger Stelle sagen kann, ach, jetzt möchte ich mal ein bisschen mit meinem Bit wackeln, oder ach, jetzt möchte ich mal bitte, weiß ich nicht.
+
+00:16:16.605 --> 00:16:18.125
+<v SPEAKER_2>Die Kathedrale und nicht der Asar.
+
+00:16:25.285 --> 00:17:16.245
+<v SPEAKER_1>Ich bin durchaus kein Freund von zufälliger Architektur. Das ist nichts, wo ich jetzt sage, das befördere ich. Die Suche nach dem Heiligen Gral hat mich eigentlich immer angetrieben. Ich habe in den 80er Jahren ein bisschen Forschung im Bereich verteilte Betriebssysteme gemacht. Und da gab es dann halt so Betriebssysteme, die mit ganz vielen Rechnern zurecht kamen. Und die waren dann teilweise in C geschrieben. Und ich wollte aber immer etwas haben, was in C++ geschrieben ist und einen Kernel haben, der auch in C++ geschrieben ist, sodass, wenn ich irgendwie ein Programm schreibe und stelle fest, ich muss jetzt was im Kernel machen, dass ich dann halt auch weiter in C++ was im Kernel hacken kann und so weiter. Also so dieses, vielleicht bin ich da ein Kontrollfreak oder so, dass ich also so das Bedürfnis habe, den ganzen Computer zu beherrschen.
+
+00:17:16.265 --> 00:17:30.725
+<v SPEAKER_2>Das ist ja auch nachvollziehbar. Ich meine, wer will denn wirklich für jede Aufgabe wieder was anderes? Also als müsste man hier für jede Aufgabe, die man so im täglichen Leben hat, eine andere Sprache lernen. Ich müsste mich irgendwie auf Französisch im Supermarkt durchschlagen und danach im Restaurant mich mit Italienisch, ja.
+
+00:17:30.745 --> 00:17:37.925
+<v SPEAKER_1>Ja, das ist eine sehr gute Analogie. Also jedenfalls so, das ist so eine Grundmotivation, die ich verfolge.
+
+00:17:39.185 --> 00:17:49.845
+<v SPEAKER_2>Aber es gibt ja nicht so viele Programmiersprachen, in denen überhaupt Betriebssysteme programmiert sind. Also es gibt C, natürlich ganz viel, fast alles, würde ich fast sagen. Es gibt aber auch C++-Betriebssysteme.
+
+00:17:49.865 --> 00:17:50.505
+<v SPEAKER_1>Lass mich doch ausreden.
+
+00:17:50.625 --> 00:17:52.545
+<v SPEAKER_2>Jaja, war ja nur so.
+
+00:17:52.565 --> 00:18:47.685
+<v SPEAKER_1>Ja, also es war nämlich dann tatsächlich so, dass auf dieser Suche nach dem Heiligen Gral, da kam Andreas, Andreas mit Düllen, der auch hier schon saß, Andreas Burg, der schleppte eines Tages eine Lisp-Maschine an. Und das war also jetzt nicht so, es gibt diese Lisp-Maschinen auch in groß, schrankfüllend und auf der Seite stellen und so weiter in groß. Aber er hatte einen Macintosh und in diesem Macintosh befand sich ein Platinensatz und dieser Platinensatz war die Lisp-Maschine. Und was mich dabei besonders beeindruckt hat, war, dass diese Lisp-Maschine vollständig in Lisp programmiert ist. Da gibt es keinen Kernel, der ein C ist und dann schreibt man irgendwie, muss man einen System-Call machen und seine Parameter serialisieren, damit der Kernel die versteht. Da gibt es nur Lisp.
+
+00:18:47.705 --> 00:18:49.565
+<v SPEAKER_2>Drei Bar, alles.
+
+00:18:49.585 --> 00:19:14.405
+<v SPEAKER_1>Da gibt es dann so, es ist in Lisp oft so, da gibt es so Makros, die sagen dann With Open File. Und dann habe ich ein bisschen im Lisp-Maschinen-Source rumgeguckt und da stand dann Without Interrupts und das fand ich echt beeindruckend. Also da habe ich gedacht, das finde ich gut. Da war ich sofort verkauft.
+
+00:19:15.225 --> 00:19:24.765
+<v SPEAKER_2>Vielleicht sollten wir kurz erwähnen, was Lisp-Maschine ist. Also Lisp-Maschine ist im Prinzip ein alter Computer. Ja, wir reden hier von den 70er Jahren.
+
+00:19:33.525 --> 00:19:43.325
+<v SPEAKER_1>Also die erste ist 1979 gebaut worden. Das ist die Maschine von Tom Knight.
+
+00:19:43.345 --> 00:19:46.265
+<v SPEAKER_2>Also wir reden von Computern, vollständigen Systemen.
+
+00:19:46.285 --> 00:20:46.085
+<v SPEAKER_1>Ja, Rechner, also echter Hardware. Und im Unterschied zu vielen anderen Systemen, die sich nicht festgelegt haben darauf, eine bestimmte Sprache zu unterstützen, ist es bei der Lisp-Maschine ebenso, dass der Prozessor an sich dafür ausgelegt ist, Lisp auszuführen. Das heißt, es gibt einen Prozessor, natürlich gibt es da auch einen Assembler, eine Low-Level-Inkarnation, so, dass man da irgendwie, man kann da nicht direkt seine Klammern rein schicken, in so eine Lisp-Maschine, aber das ist nur sehr klein, diese Schicht, die zwischen der Hardware ist und dem Lisp und dann ist eben da Lisp. Und dann kann man irgendwie seine Treiber in Lisp programmieren und seine Interrathendler in Lisp programmieren und dann kann man sein Fallsystem in Lisp programmieren und dann kann man sein Expertensystem in Lisp programmieren. Das ist alles die gleiche Sprachumgebung, die gleiche Semantik der ganzen Umgebung, das bleibt alles immer gleich. Das fand ich beeindruckt.
+
+00:20:46.105 --> 00:20:55.565
+<v SPEAKER_2>Das heißt, diese Lisp-Maschine in diesem Macintosh, das war sozusagen eine nachgebaute Lisp-Maschine, die als Steckkarte in einem Hostsystem ausgeführt war?
+
+00:20:55.725 --> 00:23:39.485
+<v SPEAKER_1>Ja, also es gab in den, also das Lisp ist sowieso ohnehin eine Programmiersprache, die ist in den 50er-Jahren am MIT entwickelt worden. Und der Fehler für den Kopf war John McCarthy und das war damals, war das überhaupt der Beginn des Programmierens. Und es war jetzt erstmal nur die Frage, was kann man überhaupt für Sprachen haben, um mit Computern zu, um Computer zu programmieren. Und eine der Sprachen, die aus dieser Zeit hervorgegangen ist, ist eben Fortran. Es gibt recht viele Sprachen, die aus dieser Zeit hervorgegangen sind, die nicht mehr existieren. Und eine weitere Sprache ist eben Lisp, die auch aus dieser ganz frühen Zeit des Programmierens kam. Und die, also so die Grund, das Grundprinzip, dass man mit Listen arbeitet und dass man Lambda-Ausdrücke hat, das sind Sachen, die sind aus diesem Urschleim gekommen, die quasi, die haben sich auch in Lisp in den über 50 Jahren, die es das jetzt gibt, immer weiter mitgezogen. Und am MIT, also in den 80er Jahren war es denn so, in den 70er und 80er Jahren, dass es Mini-Computer gab, überhaupt gab. Vorher gab es keine Mini-Computer, vorher waren Computer immer saalfüllend und immer mit einem riesigen Budget verbunden. Und in den 70er Jahren war es dann so, dass durch die aufkommende Small-Medium-Scale-Integration, also so TTL-Chips mit 15 Beinen oder mit 16 Beinen, wo dann zwei Flip-Flops drin waren oder vier Gatter oder so, solche Sachen, sowas gab es in den 70er Jahren dann zu kaufen. Und am MIT haben dann ein paar von den Mitarbeitern dort einen Computer auf Basis von diesen TTL-Chips gebaut, der dazu da war, eben LISP auszuführen. So, das waren zunächst mal irgendwie Kisten, die waren so groß wie ein Aktenschrank, haben ganz viele Boards drin gehabt mit TTLs drauf und vielleicht noch ein paar etwas größer integrierte Chips, aber im Prinzip so eine ziemlich diskret aufgebaute Sache. Und diese LISP-Maschine, die dann am MIT gebaut wurde, die wurde dann von zwei Firmen auch kommerziell gebaut, die aus dieser Gruppe, aus dem Künstlichen Intelligenz-Labor direkt hervorgegangen sind. Eine von diesen Firmen war Symbolics und Symbolics hat dann diese Macintosh-Karte irgendwann als dritte Generation ihrer LISP-Maschinen gehabt, was nichts weiter war, als die gleiche Schaltung, die vorher auf vielen Boards im Schrank war, auf ein volles E-Chip runtergebrannt.
+
+00:23:39.825 --> 00:24:03.645
+<v SPEAKER_2>Und vorher gab es das aber so als richtigen Computer. Andreas hat ja auch irgendwann mal so eine richtige Symbolics dann angeschleppt, das sind noch die mit diesen geilen Real Programmers-Keyboards. Da gibt es nicht nur Alt- und Kontroll, sondern auch Hyper, Meta, Super. Also wer schon immer mal Lust auf weitere Modifier aus seiner Tastatur hatte, da war einfach...
+
+00:24:03.665 --> 00:24:06.525
+<v SPEAKER_1>Da gibt es auch eine Dreiecke, eine Quadrat- und eine Kreistaste.
+
+00:24:09.285 --> 00:25:00.905
+<v SPEAKER_2>Also, ja, irre. Ich meine natürlich jetzt nichts, was man im täglichen Gebrauch heute wirklich noch gut zur Anwendung bringen konnte. Aber das drückt dann natürlich auch so eine gewisse Gedankenprägung aus. Also, es waren schon wirklich auch Maschinen von Leuten, die das einfach mit der Systemprogrammierung auf eine ganz andere Art und Weise verstanden haben. Da war das nicht nur so das Mittel zum Zweck, sondern da ging es wirklich darum, auch eine Architektur zu schaffen, die in sich geschlossen war. Das war so zumindest mal ein Eindruck. Und es war ja auch bemerkenswert, wenn man sich mal angeschaut hat, was das hier alles konnte, das Ding. Also ich meine, da war so eine grafische Entwicklungsumgebung mit dabei. Korrigier mich, glaube ich, ein Debugger auch mit drin. Also alles, was man heutzutage dann so wertschätzt, dass es jetzt endlich mal funktioniert, das gab es damals alles schon vollwertig.
+
+00:25:00.925 --> 00:25:50.005
+<v SPEAKER_1>Naja, ich meine, es ist so, dass das MIT auch den Ruf hat, Leute hervorzubringen, die eine gewisse Attitüde haben. Und das ist zum einen so eine Borniertheit und Arroganz, die vielleicht nicht unbedingt in jeder Hinsicht fundiert ist. Auf der anderen Seite war das MIT und versteht sich auch immer noch so als Elite-Schmiede. Und dementsprechend waren die Lisp-Maschinen auch von den Leuten, die die gebaut haben, die haben sich einfach so verstanden, dass sie wirklich die besten Computer bauen. Das gibt einfach nichts, was besser ist. So mussten die alle sein. Wenn man diese Umgebung da sieht, dann ist das alles schon sehr, sehr kompromisslos. Und sehr, ich sag mal...
+
+00:25:50.025 --> 00:25:50.965
+<v SPEAKER_2>Der Heilige Gral.
+
+00:25:50.985 --> 00:26:43.145
+<v SPEAKER_1>Naja, das geht so ein bisschen in die Richtung. Ich meine, das Handbuch fängt an. Welcome to GENERA, the best software development environment available. Der Imperativ ist da schon auch vorhanden. Wir sind das und alle anderen können einpacken. Es ist auch heute noch so, wenn man sich heute GENERA anguckt, dass es auch nach heutigen Maßstäben noch sehr fortschrittlich ist. Aber es ist natürlich auch so, dass es in 20 Jahren Entwicklungen die Softwareindustrie nicht nur direkt hervorgebracht hat. Und man jetzt zwar sagen kann, ok, da wo die Lisp-Maschine irgendwie Ende der 80er, Anfang der 90er Jahre war, da ist Eclipse heute noch nicht. Aber das ist echt nur die halbe Wahrheit. Tatsächlich ist es eben so, dass das ganz schön staubig ist. Guck mir das ja auch ab und zu mal an.
+
+00:26:43.165 --> 00:26:43.765
+<v SPEAKER_2>Was ist staubig?
+
+00:26:43.785 --> 00:27:29.145
+<v SPEAKER_1>Das ist Genera. Das war vor 20 Jahren wirklich advanced. Und es wäre schön gewesen, wenn die Softwareindustrie die Chance bekommen hätte, davon zu profitieren. Aber tatsächlich ist es eben so gelaufen, dass die Lisp-Maschinentypen Leute auch immer eine sehr abgehobene Philosophie hatten und nicht unbedingt da so bestrebt waren, die breite Masse mit ihrer Technologie zu beglücken. Die hatten halt Militäraufträge und Forschungsgeschichten und hatten massig Geld und haben sich da Bauchpinseln lassen und es nicht notwendig befunden.
+
+00:27:29.605 --> 00:27:31.625
+<v SPEAKER_2>Die Priester halt, in der Kathedrale.
+
+00:27:31.645 --> 00:28:13.745
+<v SPEAKER_1>Genau, so ist es dann eben auch gekommen, dass Symbolics pleite gegangen ist, weil sie sich nicht so sehr auf den Kundenwunsch eingelassen haben. Interessanterweise ist diese Geschichte natürlich auch sehr eng verzahnt mit Richard Stormin und dem GNU-Projekt. Weil Richard Stormin sehr direkt an der Lisp-Maschine damals mitgearbeitet hat. Der hat das Handbuch für die Lisp-Maschine geschrieben. Als das MIT die Lizenzen für Symbolics und Lisp Machines Incorporated rausgegeben hat, hat Stormin ein Riesenskandal gemacht und das GNU-Projekt gegründet.
+
+00:28:13.765 --> 00:28:16.745
+<v SPEAKER_2>Der hat das Skandal weswegen gemacht?
+
+00:28:16.765 --> 00:28:43.945
+<v SPEAKER_1>Weil das MIT die ganze Lisp-Maschinentechnologie an zwei Firmen verkauft hat. Die haben das Ganze als Proprietäre weitergegeben. Das MIT durfte die Quellen dann nicht mehr so ohne weiteres rausgeben. Es gab zwar immer noch ein bisschen Austausch, aber man konnte nicht mehr so ohne weiteres einfach so ein Lisp-Maschinentape irgendwohin schicken.
+
+00:28:45.065 --> 00:28:54.625
+<v SPEAKER_2>Aus heutiger Sicht eigentlich ein großer Fehler. Hätte man es einfach offen gelassen und die Firmen trotzdem ihr Ding machen lassen, hätte es unter Garantie auch funktioniert.
+
+00:28:55.625 --> 00:28:58.905
+<v SPEAKER_1>Ich meine, mit Garantien funktionieren und so weiter, wäre ich vorsichtig.
+
+00:28:59.205 --> 00:29:28.525
+<v SPEAKER_2>Ja, sind wir vorsichtig, aber was ich meine ist, im Nachhinein könnte man sagen, ein Business machen und da irgendwie ein Produkt liefern und Support liefern, das ist so das eine. Und das wird dadurch, dass jetzt dieser Source-Code verfügbar gewesen wäre, nicht unbedingt gefährdet. Weil da brauchst du immer noch die Leute, die das irgendwie auch können und verstehen. Auf der anderen Seite hätte man dann irgendwie so Leute wie Stolman unter Umständen immer noch mit im Boot gehabt, was vielleicht sinnvoll gewesen wäre. Dann hätte er nämlich weiter gute Handbücher geschrieben und nicht ein Unix gemacht.
+
+00:29:31.765 --> 00:30:01.925
+<v SPEAKER_1>Das ist wirklich ein Unglück. Ich meine, der Richard Stolman, der mag ja seine Qualitäten haben. Aber so richtig, dass jetzt so die alternative Zualism-Maschine aus dem GLOO-Projekt hervorgegangen wäre, also jetzt so von dem ästhetischen Anspruch an ein technisches System, das ist ihm eben nicht gelungen. Selbst wenn die Maschine jetzt veraltet ist, ist das eben doch ein Beispiel von einer schönen Kathedrale.
+
+00:30:01.945 --> 00:31:30.205
+<v SPEAKER_2>Und das wurde dann gegen den Bazaar eingetauscht. Ja, naja gut. Viele Leute sind glücklich mit dem Bazaar. Von daher kriegt jeder, was er möchte. Aber LISP, ich meine, es hätte ja trotzdem noch eine Chance gehabt. Zunächst einmal muss man festhalten, es gibt natürlich LISP immer noch. Du verwendest es. Darauf wollen wir natürlich auch nochmal zu sprechen kommen. Trotzdem gibt es immer so eine Marke. Wenn man mit Programmierern redet, über hast du dir schon mal LISP angeschaut? Dann ist es erstens mal so, dass es nicht viel verbreitetes Wissen gibt. Das ist so mein Eindruck. Es gibt zumindest viele Glaubensbekenntnisse, was es denn nun sei oder was es nicht sei, was vielleicht auch zutrifft, aber sehr häufig nicht. Aber es gibt vor allem so Vorbehalte. Und natürlich Vorbehalt Nummer eins ist LISP. Das ist doch das mit den Klappen. Vielleicht kannst du ja mal kurz erläutern, was ist denn nun eigentlich die Grundidee bei LISP? Eine paar Sachen hast du schon gefallen lassen. Wir haben das so mit der funktionalen Programmierung gemacht. Aber der Name LISP drückt ja was ganz anderes aus. Die Sprache heißt LISP, weil sie steht für List Processing. Also eigentlich ist es eine Listenverarbeitung vom Titel her.
+
+00:31:30.225 --> 00:33:13.345
+<v SPEAKER_1>Also LISP ist eine Sprache, wo alle Programme als Listen dargestellt werden. Es gibt eine Listennotation, die besteht aus einer Klammer auf, und dann kommen irgendwelche Elemente und dann kommt eine Klammer zu. Und mehr oder weniger ist das auch die gesamte Syntax dieser Sprache. Sämtliche höheren Funktionen sind wiederum dargestellt als Listen. Wenn man in anderen Sprachen dann eine Syntax hat mit reservierten Wörtern, die dafür sorgen, dass der Compiler oder der Interpreter sich zurechtfindet, ist es in Lisp ebenso, dass sich der Compiler oder der Interpreter nur durch die Listen durchhangelt und eben guckt, was steht am Anfang dieser Liste. Ist das ein Makro-Aufruf oder eine Funktion oder ein Special Operator? Und daran entscheidet. Der Vorteil dabei ist, dass die Syntax sehr homogen ist. Es gibt nicht die Notwendigkeit, die Syntax zu erweitern, wenn man einen neuen Operator definieren möchte oder eine domain-spezifische Sprache, was ja heute so ein beliebtes Buzzword ist, wo man sagt, ich möchte jetzt eine Sprache, die nur dafür da ist, zu beschreiben, wie ich meinen Mesh-Pod konfiguriere. Dann ist das Erste, was ein C oder ein Basic-Programmierer oder ein Java-Programmierer macht, sich eine Syntax auszudenken für seine Sprache, um dann darstellen zu können, was auch immer dann die DSL selber machen wollen würde. In Lisp macht man das gar nicht, weil die Syntax so primitiv ist, dass man sie für jede beliebige DSL auch benutzen kann. Da schreibt man sich einfach ein paar Funktionen, tut die in sein Paket rein, benutzt die Lisp-Syntax und ist fertig damit.
+
+00:33:13.365 --> 00:33:16.565
+<v SPEAKER_2>DSL heißt Domainspecific Language?
+
+00:33:16.585 --> 00:35:38.225
+<v SPEAKER_1>Domainspezifische Sprache. Es ist also eine Sprache, die dafür da ist, einen ganz bestimmten Anwendungszweck zu erfüllen. Der Vorteil dabei ist, dass wenn man Lisp als DSL verwendet, also Lisp selbst erweitert, um eine DSL zu haben, dann hat man immer noch Lisp. Man kann immer noch, wenn man was Komplizierteres machen will, alle Operatoren von Lisp verwenden. Wenn man eine eigene Sprache entwickelt, dann hat man immer das Problem, entweder die Sprache kann es halt einfach nicht, dann muss man einen Aufruf in eine andere Sprache machen und die Parameter übergeben und wieder zurück und so weiter. Alles schwierig, so schwierig, weil man muss dann wieder mit mehreren Sprachen romantieren oder man muss die Sprache erweitern, was dann manchmal nicht geht, weil man sich nicht genug Gedanken gemacht hat und so weiter. Also diese einfache Syntax ist einer der großen Vorteile von Lisp und der zweite Vorteil von dieser einfachen Syntax ist, dass man auch Daten in Listen sehr gut darstellen kann. Wenn wir also zum Beispiel in Lisp XML verarbeiten, dann machen wir nichts weiter als das XML, was man normalerweise mit vielen spitzen Klammern und vorne Wort und hinten schließendes Tag und so weiter, dass wir das einfach in Listen reinschreiben, die verschachtelt sind, die ganz genau die gleiche Struktur haben wie in ein XML-File und dann können wir mit Lisp auf den Listen, die man in Lisp ja gut verwenden, verarbeiten kann, auf dem XML-File rumhantieren. Das ist also eine Sache, die sehr lockerflockig von der Hand geht und wo es auch nicht jetzt riesige Libraries braucht oder irrsinnig viel Infrastrukturcode, sondern es funktioniert eben einfach so ganz direkt. Und die fehlende Syntax von Lisp ist für meine Begriffe der größte Vorteil von Lisp an sich, weil das auch das Editieren leichter macht. Es ist für einen Editor, der jetzt einigermaßen mächtig ist, kein Problem, die Klammern zu zählen und dann einen Ausdruck aus einem Lisp-Programm rauszuzielen. Man geht an den Anfang von dem Ausdruck, der fängt immer mit einer Klammer an, und dann sagt man dem Editor, komm, hol mir mal den ganzen Ausdruck. Dann zählt er die Klammern raus und holt den ganzen Ausdruck daraus. Dann hat man den entweder kopiert oder gelöscht oder woanders hingeschoben. Das sind alles Sachen, die, wenn man mit einer Premiersprache, die mehr Syntax hat, arbeitet, viel schwieriger sind.
+
+00:35:38.245 --> 00:35:45.805
+<v SPEAKER_2>So wie bei C++, da muss man dann schön sorgfältig mit der Maus die Selektion bis zum Semikolon ziehen.
+
+00:35:50.625 --> 00:36:28.605
+<v SPEAKER_1>Dadurch, dass LISP auch eine funktionale Premiersprache ist, kann man diese Listen auch an einer beliebigen Stelle immer wieder hinschreiben. Wenn man so eine If-then-Abfrage machen will, die in C zum Beispiel ein Statement sind oder in Java auch, dann kann man das in LISP an jeder beliebigen Stelle hinschreiben. Auch zum Beispiel innerhalb einer Argumentliste für eine Funktion. Und das ist eine Sache, die macht den Code auch leichter lesbar, weil man nicht für jeden Blödsinn einen extra Namen erfinden muss, bloß weil man da so ein Conditional will oder man nimmt dann diese komische Fragezeichen-Doppelpunkt-Notation. Das ist alles irgendwie...
+
+00:36:28.625 --> 00:36:46.045
+<v SPEAKER_2>Das ist so eine typische Krücke in C, wo man irgendwie einfach die Schwäche der Syntax versucht zu kompensieren nach dem Motto, naja, da brauchen wir aber schon manchmal einen If-Then, weil sonst wird es ein bisschen zu schlimm und dann macht man sich für genau diesen einen Fall eine Ausnahme und dann wird es halt auch wieder schwierig.
+
+00:36:46.125 --> 00:37:12.505
+<v SPEAKER_1>Ja, und vor allem ist es dann weniger homogen und weniger leicht zu verarbeiten. Ich meine, man kann natürlich intelligente Editoren schreiben, die auch die Sprache durchparsen und dann in der Lage sind, auf Sprachebene auch zu operieren beim Editieren. Das ist alles möglich. Aber Tatsache ist, dass das einfach viel, viel schwieriger ist in anderen Sprachen, die Syntax haben, als in Lisp, wo es eben eine triviale Sache ist.
+
+00:37:12.805 --> 00:37:39.825
+<v SPEAKER_2>Also das Interessante ist, viele Leute beklagen bei Lisp eine komplizierte Syntax und du sagst, das ist ja genau nicht der Fall, sondern die Syntax ist ganz im Gegenteil einfach, weil sie einem ganz klaren Konzept folgt, nämlich eben die Notation mit Klammern und Listen. Wenn es jetzt so einfach ist, vielleicht kann man ja einfach mal das Hello World runterbeten. Wie läuft es denn jetzt mit den Klammern? Also was schreibt man denn jetzt eigentlich hin, um irgendwie Print Hallo zu machen?
+
+00:37:39.845 --> 00:38:18.565
+<v SPEAKER_1>Klammer auf, Print, ein Leerzeichen, ein Anführungszeichen, Hallo, noch ein Anführungszeichen und eine Klammer zu. Also der Pasa sieht eine Klammer auf, das fängt eine Liste an. Dann sieht der Pasa ein Symbol, Print nämlich. Ein Symbol ist einfach ein Symbol. Jetzt guckt er in seinem... Moment, was macht denn der Pasa jetzt eigentlich? Da bin ich wieder überfragt. Der Reader liest jetzt erstmal die Liste ein. Also er liest die Klammer auf, er liest das Symbol, er liest den literalen String Hallo, der durch zwei Anführungszeichen gekennzeichnet ist, und den Klammer zu. Jetzt hat er eine Liste im Speichel.
+
+00:38:18.585 --> 00:38:22.865
+<v SPEAKER_2>Wobei so ein String wahrscheinlich auch intern dann eine Liste von Zeichen ist?
+
+00:38:22.885 --> 00:38:28.725
+<v SPEAKER_1>Nein. Es ist zu langsam. Also das war natürlich am Anfang alles so.
+
+00:38:28.745 --> 00:38:29.985
+<v SPEAKER_2>Ich frage nur, ich frage nur.
+
+00:38:30.005 --> 00:40:02.025
+<v SPEAKER_1>Aus Effizienzgründen sind natürlich die ganzen Datentypen, die man so heute hat, so Arrays und Strings und Hashtables und so, die natürlich nicht in Listen implementiert, sonst wäre das viel zu langsam. So, und dann guckt der Evaluierer nach, was steht da am Anfang der Liste? Da steht Print. Und dann guckt der Evaluierer nach, gibt es eine Funktion, die Print heißt? Ja, es gibt eine Funktion, die Print heißt. Dann ruft er die Funktion Print auf, mit Apply. Und das Argument für diese Funktion ist der String Hallo. So funktioniert der Evaluierer im Krogen. Und das ist eine sehr, also ist es so, dass in den Lisp-Textbüchern, in den älteren, in den neueren nicht mehr unbedingt, aber in den älteren, wird immer erklärt, wie läuft denn das eigentlich mit Lisp? Was passiert da genau? Und da kriegt man dann halt runter, erzählt, okay, der Evaluierer nimmt die Liste und guckt, was steht vorne drin, und dann wird die Argumentliste auseinandergenommen. Das sind alles Sachen, die sind bis ins kleinste Detail und mehrfach durchformuliert und die kann man jederzeit nachlesen. Das ist für mich auch eine Sache, die ich für sehr wichtig halte. Es gibt da sowas wie eine intellektuelle Transparenz. Es gibt viele Bücher, die darüber geschrieben wurden. Es gibt gute und schlechte Bücher. Aber so das Wissen, was dahinter steht, das ist zugänglich. Es ist auch nicht nur eine Implementation verfügbar, sondern Dutzende. Es gibt Dialekte. Das ist eine ganze Familie von Sprachen. Das ist eine Sache, die mich für diese Sprache einnimmt.
+
+00:40:02.505 --> 00:40:26.125
+<v SPEAKER_2>Wie ist denn das mit der Performance? Das ist ja auch immer so ein verbreitetes Vorurteil, dass Sprachen, die jetzt sehr high-level sind und funktional sind, und du hast ja auch schon erwähnt, es gibt dynamische Typisitionen, also es gibt ja nicht so etwas wie eine Int-Variable.
+
+00:40:26.145 --> 00:42:23.525
+<v SPEAKER_1>Normalerweise deklariert man seine Variable nicht. Normalerweise schreibt man sein Programm erstmal so runter, wie man es schnell runterschreiben möchte. Wie in allen anderen Sprachen ist es auch an LISP notwendig, dass man sich darüber im Klaren ist, was die konstrukte Kosten, die man verwendet. Also wenn man zum Beispiel die Funktion Length aufruft und die Liste ist lang, dann dauert das lange, weil die ganze Liste durchgegangen werden muss, bis klar ist, wie lang sie ist. Das sind solche Art von Operatoren, die unter Umständen viel Laufzeit beanspruchen. Es gibt es natürlich einige in LISP. Das ist das eine. Das andere ist, wenn man jetzt das Problem hat, dass es zu langsam ist, dann kann man zumindest in Common Lisp auch Typen deklarieren. Dann kann man also sagen, diese Variable ist eine Integer-Variable, diese Variable ist ein String, und dann kann man alle Safety-Sachen ausschalten, sodass der Laufzeitsystem zur Laufzeit nicht mehr prüft, ob die Variable auch tatsächlich diesen Typ hat. Und dann sind Common Lisp-Programme potenziell genauso schnell wie C-Programme. Das ist auch mehrfach belegt. Da gibt es ausreichend Literatur, um das nachzugucken, dass Performance an sich jetzt erstmal nicht das Problem für Common Lisp ist. Aber Common Lisp ist eben das Lisp, was in dieser Hinsicht am weitesten ausgereift ist, weil es eben als High-Performance-Programm in der Sprache sehr viel Pflege bekommen hat und in den 80er und 90er Jahren auch stark vom amerikanischen Verteidigungsministerium unterstützt wurde, weil die große Systeme in Lisp hatten. Und da ist einfach sehr viel Geld in die Spezifikation geflossen und in alles reingeflossen, was dazu geeignet ist, diese Sprache auch als High-Performance-Programm in die Sprache geeignet zu machen.
+
+00:42:23.545 --> 00:43:04.485
+<v SPEAKER_2>Bevor wir vielleicht noch auf so ein paar Sprachdetails noch mal eingießen, die hier und da schon jetzt angeklungen sind, vielleicht noch mal kurz auch so historisch nochmal der Blick. Also Lisp wurde in den 50er Jahren entwickelt. Also da wurde sozusagen die Idee geboren. Da gab es irgendwie diese erste Implementierung. Seitdem ist ja eine Menge passiert und du hast ja schon mehrfach erwähnt, es gibt halt viele Implementierungen. Was sind denn so die wesentlichen Meilensteine und was sind so die Systeme, in denen eigentlich auch tatsächlich entwickelt wird? Du hast schon eben erwähnt, etwas wie Common Lisp, also wie hängt das zusammen? Was ist dabei standardisiert und wo sind die Lips unterschiedlich?
+
+00:43:04.505 --> 00:44:48.185
+<v SPEAKER_1>Also ich muss gestehen, ich bin über die Zeit zwischen 1960 und 1990 nur grob im Bilde. Es gab in dieser Zeit immer wieder irgendwelche Mainframe-Implementationen von Lisp, weil damals gab es nur Mainframes und dann hat man halt irgendwie auf irgendeinem Mainframe auch mal wieder ein Lisp geschrieben. Und mit dem KI-Boom, künstlichen Intelligenz-Boom in den 80er Jahren, ist es dann dazu gekommen, dass Lisp mehr Aufmerksamkeit bekommen hat für die Entwicklung von sogenannten intelligenten Anwendungen. Das Ganze ist dann auch so ein bisschen kulminiert in dem Star Wars-Programm von Ronald Reagan damals aufgelegt, wo aus dieser KI-Szene wundersame Versprechungen gemacht werden können, was man für tolle, automatische Raketenabwehrsysteme im Weltraum deployen könnte. Und das war natürlich alles gespießen aus der Entwicklung von Experten-Systemen, die in Lisp unter anderem eben auch damals gemacht wurden. Das war einfach die Mainstream AI-Programmiersprache. Und in den 80er Jahren wurden die verbreitetsten Lisp-Dialekte, die fast alle Mainframe-Dialekte waren, zu Common Lisp zusammengeführt. Da wurde eine Standardisierungsbemühung ins Leben gerufen, die hauptsächlich eben auch von dem amerikanischen Verteidigungsministerium finanziert war, wo es darum geht, die verschiedenen Lisp-Dialekte zu einem Standard Lisp zusammenzufassen. Und das Resultat davon ist Common Lisp.
+
+00:44:48.205 --> 00:44:57.185
+<v SPEAKER_2>Aber wenn die Syntax so einfach ist, wo unterscheiden sich denn die Dialekte? Also nutzen die da nicht runde Klammern, sondern geschweifte Klammern?
+
+00:44:58.045 --> 00:47:07.305
+<v SPEAKER_1>Aus der gleichen Zeit kommt Scheme. Scheme und Common Lisp eignen sich auch ganz gut, um da mal so einen Vergleich anzustellen, was zwei verschiedene Lispe für unterschiedliche Eigenschaften haben können. Scheme ist ein minimalistisches Lisp, was auch am MIT entwickelt wurde, auch aus der gleichen Szenerie, sage ich mal. Scheme unterscheidet sich von Common Lisp dadurch, dass die Spezifikation sehr viel kleiner ist. Ich weiß nicht, was die erste war, ob die jetzt 60 Seiten oder 80 Seiten hatte. Common Lisp ist ein Vielfaches davon in der Spezifikation, also etwa 1000 bis 1500 Seiten, wenn man das auf Papier ausdruckt. Scheme ist auch ein Lisp, hat auch Klammern, aber zum Beispiel hat Scheme nur einen Namespace für Variablen und Funktionen. Das heißt, wenn ich eine Funktion definiere, die bla heißt, dann kann ich nicht eine Variable definieren, die auch bla heißt, sondern es ist das Gleiche, was im Prinzip auch konsequent ist. Sodass man in Scheme eine Variable bla zu einer Funktion zuweisen kann, ich erzeuge eine Funktion, weise dir eine Variable bla zu und dann schreibe ich Klammern auf, bla und irgendwelche Argumente und rufe damit die Funktion auf. Also, die Variablen und die Funktionen haben den gleichen Namespace. Das ist Lisp 1, so heißt das. Im Common Lisp gibt es zwei Namespaces, nämlich den Variablen-Namespace und den Funktions-Namespace. Sodass man nicht eine Variable anlegen kann, eine Funktion zuweisen kann und Klammern auf und diese Variable hinschreiben kann, das geht da nicht. Das ist also schon ein deutlicher Unterschied, da kommen auch andere Programme bei raus. Scheme präferiert einen endrekursiven Programmierstil. In Scheme gibt es keine iterativen Konstrukte. Inzwischen gibt es sie natürlich auch und man kann sie auch nachbilden. Aber grundsätzlich ist Scheme eine Sprache, wo alles, was man normalerweise mit einer Schleife realisieren würde, mit einem Funktions-Aufruf macht. Mit einem Rekursiven normalerweise.
+
+00:47:07.885 --> 00:47:11.765
+<v SPEAKER_2>Also nicht so vor dem I gleich eins zu tausend, sondern...
+
+00:47:11.785 --> 00:47:13.505
+<v SPEAKER_1>Genau, nicht vor I gleich eins zu tausend, sondern...
+
+00:47:13.605 --> 00:47:16.625
+<v SPEAKER_2>Man zählt die tausend runter und ruft sich so oft immer wieder selber auf.
+
+00:47:16.645 --> 00:48:32.825
+<v SPEAKER_1>Ganz genau. Und Scheme spezifiziert, damit das überhaupt funktioniert, ausdrücklich, dass ein endrekursiver Aufruf nicht auf den Stack gepackt wird. Das heißt, wenn ich also eine Funktion am Ende nochmal sich selbst aufrufen lasse und nichts weiter mache als diesen Aufruf, hinterher also der Wert, der zurückgeliefert wird, aus der Funktion, nicht mehr verwendet wird, dann ist das so viel wie ein Go-To, wie ein Sprung. Kostet also nichts auf dem Stapel und so kann man dann, wenn man das als gegeben hinnehmen kann, kann man vollständig ohne irgendwelche iterativen Konstrukte auskommen. In Common List gibt es verschiedene primitive Iterationsmechanismen wie Do-Times, mit denen man irgendwie von 0 bis N zählen kann oder Du ist ein allgemeiner Iterationsmechanismus. Da gibt es ein riesiges Iterationsmakro, das heißt Loop. Da kann man dann so was schreiben wie Loop 4i from 1 to 25 with foo gleich bar step phasel. Also ganz verbose und sieht dann aus wie Fortran.
+
+00:48:32.845 --> 00:48:33.865
+<v SPEAKER_2>Ein Iterations-OS.
+
+00:48:34.445 --> 00:49:10.465
+<v SPEAKER_1>Ein Iterations-OS, ein grausam großes Makro. Also ich hasse Loops, aber das ist eine Sache, die ist jetzt vielleicht doch für der zu weit. Insider-Scharmützel. Scheme ist ein Dialekt, der auf Minimalismus ausgelegt ist und Common Lisp ist eine Multiparadigmen-Programmiersprache, die entwickelt wurde im Hinblick darauf, dass möglichst viel existierender Lisp-Source in Common Lisp zum Laufen zu kriegen sein soll.
+
+00:49:10.485 --> 00:49:21.405
+<v SPEAKER_2>Hat Scheme nicht auch schon diesen Multiple-Dispatch? Dass man mehrere Funktionen gleichen Namen haben kann und welche dann ausgeführt wird, das sind bestimmt die Parameter?
+
+00:49:21.465 --> 00:49:37.745
+<v SPEAKER_1>Common Lisp hat das. Bei Scheme bin ich mir nicht so sicher. Da bin ich mir nicht so sicher. Ich muss gestehen, dass ich von Scheme fast gar keine Ahnung habe. Die Scheme- und Common Lisp-Gemeinde haben nicht sehr viel Überlappung.
+
+00:49:37.765 --> 00:49:57.785
+<v SPEAKER_2>Das heißt, die sind auch nach wie vor getrennt und wurden dann nicht wieder vereint? Nach der Geburt getrennt sozusagen? Jetzt hast du aber gesagt, die ganzen Dialekte wurden vereint. Also alles außer Scheme sozusagen, was sich so entwickelt hat, wurde dann in Common Lisp zusammengefasst. Das heißt, alle LISP-Systeme, die man heute verwendet, implementieren Common LISP. Kann man das so sagen?
+
+00:49:57.805 --> 00:50:19.045
+<v SPEAKER_1>Nö. Es gibt verschiedene LISP-Dialekte, aber es gibt mehrere Common LISP-Implementationen. Und wenn man heute in LISP programmieren möchte und wirklich jetzt so den Wunsch hat, ich möchte LISP machen und nicht den Wunsch hat, ich brauche eine Scriptsprache für meine Cut-Anwendung oder so, dann ist Common LISP der, die Universal-Programmiersprache, mit der man das machen sollte.
+
+00:50:19.065 --> 00:50:20.185
+<v SPEAKER_2>Und das ist auch das, was du verwendest?
+
+00:50:20.205 --> 00:50:24.325
+<v SPEAKER_1>Ja, das ist auch das, was ich verwende.
+
+00:50:24.345 --> 00:50:37.205
+<v SPEAKER_2>Mit Common LISP gibt es auch noch einen anderen Begriff, der immer wieder erwähnt wird. CLOS, das Common LISP Object System, was ist das?
+
+00:50:37.225 --> 00:51:20.245
+<v SPEAKER_1>Das Common LISP Object System ist das Objektsystem von LISP. Also LISP ist eine Multiparadigmen-Sprache. Das heißt, LISP ist relativ leicht zu erweitern im Hinblick auf neue Programmierideen. Und als in den 80er Jahren objektorientierte Programmierung populär wurde, wurden in LISP verschiedene Objektsysteme programmiert. Also es haben Leute sich hingesetzt und sich überlegt, wie kann man denn in LISP auch objektorientiert programmieren, weil das scheint ja eine gute Idee zu sein. Und CLOS, das Common Lisp Object System, ist quasi die Kulmination der LISP-Objektsysteme, die Mutter aller Objektsysteme.
+
+00:51:20.265 --> 00:51:28.485
+<v SPEAKER_2>Ich bräuchte ja eigentlich im Podcast so eine Taste, wo dann immer so Köre kommen im richtigen Moment. Das muss ich echt nochmal.
+
+00:51:28.505 --> 00:51:57.685
+<v SPEAKER_1>Also bei CLOS ist es auch tatsächlich so, da muss ich jetzt die Geschichte zu erzählen. Ende der 80er-Jahre habe ich mir ein Buch gekauft von Grady Butch. Grady Butch ist einer der Päpste der objektorientierten Programmierung. Grady Butch hat ein Buch geschrieben, Object-Oriented Design and Analysis with Applications. Das war also ein Buch, das sich damit befasst, wie man objektorientierte Systeme bauen kann.
+
+00:51:57.705 --> 00:52:01.445
+<v SPEAKER_2>Oh, oh, ich kann mich noch erinnern, das war so das Mantra.
+
+00:52:01.465 --> 00:52:06.005
+<v SPEAKER_1>Ja, das war das Mantra. Da haben alle von geredet und...
+
+00:52:06.025 --> 00:52:07.525
+<v SPEAKER_2>Hast du schon den Butch gelesen?
+
+00:52:07.545 --> 00:52:32.885
+<v SPEAKER_1>Ja, hast du schon den Butch gelesen. Und Wölkchennotationen und so weiter. Aber dieses Buch, das war so aufgebaut, dass da mehrere Beispielanwendungen durchgesprochen wurden und jede Beispielanwendung wurde in einer anderen Sprache durchgenommen. Es gab ein Beispiel in Smalltalk und ein Beispiel in C++. Es gab noch zwei andere und es gab ein Beispiel in Clos.
+
+00:52:32.905 --> 00:52:33.565
+<v SPEAKER_2>C vielleicht?
+
+00:52:33.905 --> 00:53:20.005
+<v SPEAKER_1>Nee, warte mal, hatte es ein C-Beispiel? Java gab es noch nicht. Ich weiß es nicht mehr. Es waren halt irgendwie ein paar. Ich habe es gelesen und in jedem Kapitel hat man irgendwie gezeigt, was man mit diesem Objektsystem alles machen kann. Mit Smalltalk konnte man dieses machen und da gab es dann schöne Sets und Bags und tolle Datenstrukturen, die man benutzen konnte. Und in C++ gab es dieses und in C++. Ich glaube, es war in C++. Also jede Sprache hatte ihre Spezialität und in Clos ging plötzlich alles. Das Beispiel war so, naja, in Clos kann man das alles machen und da kann man so und so und so.
+
+00:53:20.025 --> 00:53:25.585
+<v SPEAKER_2>Ja, es ging in allen Sprachen alles. Also für die Beispiele gab es immer, gab es in jeder Programmesprache eine Implementierung.
+
+00:53:27.105 --> 00:53:49.525
+<v SPEAKER_1>Nee, der Punkt war der, dass jedes Objektsystem so seinen speziellen Style hatte, wie man das machen konnte. Und hier gab es Mehrfach-Vererbung, da gab es keine Mehrfach-Vererbung und so weiter. Und in Clos ging alles. Da gibt es Mehrfach-Vererbung, da gibt es Multiple Dispatch, da gibt es Before, Around und After Methoden. Ja, reicht eigentlich schon.
+
+00:53:49.545 --> 00:53:52.545
+<v SPEAKER_2>Also sozusagen der vollständige Werkzeugkasten, man kann aus dem Vollen schöpfen.
+
+00:53:52.565 --> 00:54:28.405
+<v SPEAKER_1>Genau, man kann da wirklich aus dem Vollen schöpfen. Verglichen mit C++ ist Clos wirklich drei Stufen weiter. Damals habe ich es gelesen und es gab schon keinen C++-Compiler. Und ein Clos-System war für mich vollständig außerhalb jeglicher vorstellbarer Reichweite. Ich war also der kleine Hans und saß da und habe gelesen, die großen Jungs machen das also so. Ich werde mich jetzt weiter auf die Suche nach einem vernünftig funktionierenden C++-Compiler begeben irgendwann. Das gelobte Land. Ja, das gelobte Land.
+
+00:54:28.585 --> 00:54:33.785
+<v SPEAKER_2>Wo Milch und Honig fließen. Und irgendwie hat das Common Lisp Object System.
+
+00:54:33.805 --> 00:55:02.905
+<v SPEAKER_1>Das Common Lisp Object System hat mehrere interessante Eigenschaften. Eines davon, was ich jetzt mal kurz zum Besten geben kann, ist die Trennung von generischen Funktionen und der Klassenhierarchie. In allen anderen Objekte und Programmiersprachen, die populär sind, ist es so, dass man eine Methode, also einen Aufruf an eine Klasse dranhängt, an eine Instanz einer Klasse. Das heißt, ich habe eine Instanz einer Klasse und dann, es gibt sicherlich andere Sprachen, aber bei den meisten ist es so.
+
+00:55:02.925 --> 00:55:05.445
+<v SPEAKER_2>Also Java, C++, Funtime, eigentlich fast alle.
+
+00:55:05.465 --> 00:55:08.945
+<v SPEAKER_1>Da habe ich ein Objekt und dann kann ich dem Objekt sagen, mach mal.
+
+00:55:08.965 --> 00:55:10.365
+<v SPEAKER_2>Der Staubsauger schaltet sich selber ein.
+
+00:55:10.385 --> 00:55:34.625
+<v SPEAKER_1>Genau, der Staubsauger schaltet sich selber ein. In Klosses ist es so, dass die Funktionen von den Klassen getrennt sind. Das heißt, ich kann zu jeder Funktion sagen, auf welche Art von Objekt sie anwendbar sind. Und ich kann es auch auf mehrere Objekte spezialisieren. Was natürlich jetzt schwierig zu erklären ist, wenn es nur verbal gehen soll. Aber...
+
+00:55:34.645 --> 00:55:38.725
+<v SPEAKER_2>Ich habe da ja mal mein Sexbeispiel. Mit dem Multiple Dispatch meinst du jetzt?
+
+00:55:38.745 --> 00:55:40.705
+<v SPEAKER_1>Ja, bring mal das Sexbeispiel bitte.
+
+00:55:42.845 --> 00:55:50.505
+<v SPEAKER_2>Naja, ich meine, stell dir vor, es gibt halt eine Funktion, die heißt Make Sex. Und als Parameter hast du halt Mann und Frau.
+
+00:55:50.505 --> 00:55:52.605
+<v SPEAKER_1>Ah, okay, sehr vernünftig.
+
+00:55:52.625 --> 00:57:29.085
+<v SPEAKER_2>Und ich nehme halt immer das Beispiel, weil da wird einfach jedem sofort klar, dass es einfach nicht so einfach ist, eine Entscheidung darüber zu fallen, ob man nun diese Funktion Make Sex in die Klasse Mann oder in die Klasse Frau reintut. Da kommt natürlich gleich der erfahrene Java-Programmierer und sagt, naja, aber wir haben ja Vererbung und das tue ich dann einfach in human. Und Mann und Frau sind ja irgendwie Unterklassen von human. Aber dann willst du halt auch mal mit einem Vorwerkstaubsauger Sex machen oder mit einem Hund. Es gibt da ja irgendwie alle möglichen Sachen. Nicht, dass ich das jetzt selber unbedingt alles ausprobieren wollte, aber man ist ja als Programmierer, man modelliert ja die Welt und die Welt ist, wie wir wissen, sehr vielfältig. Und das ist ja genau das, was ein Multiples Patch an der Stelle abnimmt. Also man tut halt die Funktion eben weder bei Mann noch bei Frau rein, sondern man sagt halt, es gibt irgendwie die Funktionalität, Make Sex, und es gibt verschiedene Fälle, die müssen auseinandergehalten werden. Und ein Fall ist halt, man trifft auf Frau, und ein anderer ist, man trifft auf Mann usw. und dann eben Vorwerkstaubsauger und der ganze andere Mumpitz. Das ist ja das, was du meinst. Die generische Funktion ist sozusagen die Ankündigung, es wird Sex gemacht generell, und dann kommen wir in die ganzen Implementierungen, wie dann das halt so geht. Und das Schöne ist, man kann ja auch nachträglich das dann so hinzuwerfen. Das haben wir auch, muss man auch mal dazu sagen, im Dülen-Podcast mit Andreas. Also Dülen ist ja auch eine Sprache, die schwer aus diesem Object-System sich herausgezogen hat, bloß eben eine andere Syntax dabei noch postuliert. Aber im Wesentlichen ist das ja dieselbe Denke. Aber das ist halt auch alles ein Clos mit drin.
+
+00:57:29.785 --> 00:58:32.525
+<v SPEAKER_1>Und dann hat Clos eben noch das tolle Feature des Meta-Object-Protokolls, wo man sich also direkt in die Implementation der Objekte selbst reinhängen kann. Und das ist vielleicht verbal noch schwieriger zu erklären, außer dass man vielleicht sagen könnte, ja, wenn ich jetzt eine Klasse habe und ich möchte gerne die Werte, die in dieser Klasse drinstehen, nicht im Speicher liegen haben, sondern aus einer Datenbank ziehen, dann würde das in jeder beliebigen anderen Progangiersprache erfordern, dass ich irgendeinen Pre-Prozessor baue oder dass ich eine andere Syntax verwende, um die Klasse zu definieren oder was auch immer. In Klaus ist das nicht so. Wenn ich das Meta-Object-Protokoll verwende, dann kann ich sagen, dass meine Klasse eine andere Meta-Klasse hat und diese Meta-Klasse implementiert dann den Zugriff auf einen Slot, nennen wir das, aber wie nennt man es in anderen Sprachen nochmal?
+
+00:58:35.365 --> 00:58:36.445
+<v SPEAKER_2>Member Variablen?
+
+00:58:36.465 --> 00:58:57.065
+<v SPEAKER_1>Genau, Member Variablen. Die Implementation der Member Variablen selbst, wie eine Member Variable gefunden wird, ist in Klaus eine Sache, die ist möglich, ohne dass man Klaus erweitern, aufhecken, was auch immer muss. Man muss sich einfach mit dem Meta-Object-Protokoll eine neue Meta-Klasse definieren, die diesen Zugriff auf die Datenbank dann realisiert.
+
+00:58:57.125 --> 00:59:01.925
+<v SPEAKER_2>So kann man sich so persistente Objekte bauen oder auch so Netzwerkobjekte, die einfach...
+
+00:59:01.945 --> 00:59:47.445
+<v SPEAKER_1>Genau. Also zum Beispiel, was man jetzt in Java mit Hibernate macht, wo man jetzt dann mit irgendwelchen Class-Annotations rumfummeln muss und wo sie die Syntax extra erweitern mussten und so weiter. Solche Sachen sind in Kloss sehr einfach zu realisieren. Es gibt sehr, sehr viele, also in Anführungszeichen, es gibt mehrere Datenbank-Layer, die genau das machen, dass sie eine neue Metaklasse definieren und dann die Slots persistent in einer Datenbank ablegen. Solche Sachen sind in Kloss alle möglich ohne großes Rumgehäcke und auch einigermaßen portabel. Ich sage einigermaßen, weil das Metaobjekt-Protokoll nicht im Common-LISP-Standard festgeschrieben ist, sondern es da einen quasi de facto Standard gibt, der sich über ein Buch definiert.
+
+00:59:47.465 --> 01:00:10.965
+<v SPEAKER_2>Benutzt man das wirklich häufiger? Es kommt mir jetzt schon eher wie so ein Sprang-Konzept vor, was man zwar dann eben manchmal auch braucht, aber jetzt nicht unbedingt so im täglichen Leben zum Einsatz kommt. Oder ist das so etwas, wenn man so wirklich mal ein komplexes System hat mit neuen Herausforderungen, wo man eben so eine Grundfunktionalität braucht, dass man sie darüber dann implementiert?
+
+01:00:10.985 --> 01:00:46.085
+<v SPEAKER_1>Also der Trick dabei ist eben, dass man Claus nicht verlassen muss und dass man nicht ein neues Objektsystem schreiben muss, sondern dass man das existierende System an den richtigen Stellen einfach erweitern kann über definierte Schnittstellen. Und das ist eine Sache, die ist, also ich meine gut, ich bin jetzt irgendwie 20 Jahre Hacker und vielleicht nicht mehr der ganz normale Anwender, aber ich habe eben auch mir so ein Persistenzsystem geschrieben, wo wir da genau das machen. Und das ist eine Sache, die ist einfach nicht schwierig. Also klar, das ist natürlich irgendwie komplex, weil es dann irgendwie...
+
+01:00:46.105 --> 01:00:47.185
+<v SPEAKER_2>Man muss schon wissen, was man tut.
+
+01:00:47.205 --> 01:00:58.705
+<v SPEAKER_1>Es ist abstrakt so, aber es ist eben nichts, wo man dann plötzlich wieder was anderes machen muss. Man kann das alles in Lisp machen, die Protokolle sind alle in Lisp definiert, das ist also, findet alles in derselben Umgebung statt.
+
+01:01:02.825 --> 01:01:30.525
+<v SPEAKER_2>Ich wollte zwar jetzt nicht so sehr auf der Synthax rumreiten, aber weil du es eingehend schon mal kurz erwähnt hast, weil es etwas ist, was immer wieder hochgebracht wird, wenn man über Lisp redet, sollte man es auch erwähnen, das ist die Sache mit dem Lambda und die Sache mit den Clojures. Das hängt ja auch ursächlich mit der Ursprache zusammen. Vielleicht kannst du erst noch mal, was ist das Lambda?
+
+01:01:30.545 --> 01:01:36.625
+<v SPEAKER_1>Das Problem ist, dass ich dazu echt zu sehr praktiker bin, um es wirklich gut zu beschreiben. Weil eigentlich ist das eine komplizierte Sache.
+
+01:01:37.025 --> 01:01:39.425
+<v SPEAKER_2>So geht es ja um dieses Lambda.
+
+01:01:39.445 --> 01:02:15.965
+<v SPEAKER_1>Ein Lambda ist eine anonyme Funktion. Und im Gegensatz zu Funktionen, die man so kennt, wie schreibt man so ein C, ich kann mich gar nicht mehr erinnern, Int, Foo, Klammer auf, Klammer zu, eine Lambda-Funktion hat keinen Namen und sie ist nur dann sinnvoll, wenn man entweder eine Higher-Order-Funktion aufruft, also eine Funktion, die eine Funktion als Argument erwartet, dann kann man so eine anonyme Funktion auch übergeben. Oder wenn man sie eben einer Variable zuweist.
+
+01:02:16.205 --> 01:02:24.565
+<v SPEAKER_2>Das heißt, da, wo man irgendwo einen Funktionsaufruf hat und Parameter übergibt, dann kann ein Parameter auch eine solche Funktion sein. Man schreibt die dann einfach an der Stelle einfach so hin.
+
+01:02:24.585 --> 01:02:40.105
+<v SPEAKER_1>Ganz genau. Also zum Beispiel gibt es die Sortierfunktion. Da wollte ich gerade sagen, das gibt also die Sortierfunktion, die heißt Sort in Common Lisp. Die erwartet zwei Argumente. Sie hat auch noch mehr, aber zwei Argumente sind notwendig. Nämlich einmal eine Sequenz und zum anderen eine Funktion.
+
+01:02:40.305 --> 01:02:43.745
+<v SPEAKER_2>Also Sequenz ist die Liste, die man sortieren möchte und dann das, womit man sortiert.
+
+01:02:43.945 --> 01:03:32.585
+<v SPEAKER_1>Genau, und die Funktion ist die Vergleichsfunktion und Sort ruft dann die übergebende Funktion immer mit zwei Elementen aus der Liste auf, bis die Liste sortiert ist. Wie das intern funktioniert, ist nicht spezifiziert, aber hinterher ist die Liste sortiert im Bezug auf die ordnunggebende Funktion. Es gibt auch noch andere Higher-Order-Funktionen, die nützlich sind, wie zum Beispiel MAP, mit dem man eine Funktion auf alle Elemente einer Liste anwenden kann, oder AVERY, mit der man feststellen kann, ob eine Funktion, eine Prädikatfunktion für alle Elemente der Liste gilt, oder SUM, mit der man feststellen kann, ob eine Prädikatfunktion für einige Elemente gilt. Das ist cool.
+
+01:03:32.605 --> 01:03:37.945
+<v SPEAKER_2>Das finde ich total lecker. Das liest sich dann auch einfach im Source-Code so geil.
+
+01:03:38.165 --> 01:03:39.605
+<v SPEAKER_1>Ja, das ist dann Poesie.
+
+01:03:40.525 --> 01:03:41.765
+<v SPEAKER_2>Das kann man richtig singen.
+
+01:03:41.785 --> 01:04:01.825
+<v SPEAKER_1>Ja, das kann man richtig singen, aber teilweise kann man es schwer lesen. Ich meine, es ist auch leicht, sich in Lisp dann so treiben zu lassen und solange an der Funktion rumzukloppen, bis sie nur noch aus SUM, MAP, EVERY, COMPOSE, MAP-Kram steht.
+
+01:04:01.845 --> 01:04:21.025
+<v SPEAKER_2>Bei Döhlen, was ja dem sehr verwandt ist, hatte ich immer dieses schöne EVERY-Fragezeichen, du.tassen, Syntax-Konstruktion, das ist ein Beispiel. Hast du noch alle Tassen? Kommt drauf, aber diese Geschichte, das hängt dann auch mit dir, das war das andere, was du noch erwähnt hast, sind Closures.
+
+01:04:21.045 --> 01:04:46.405
+<v SPEAKER_1>Closures sind Variablen, die innerhalb eines bestimmten lexikalischen Kontexts sichtbar sind. Und wenn ich jetzt also eine anonyme Funktion habe und eine Variable, die in dem lexikalischen Kontext, wo diese Funktion definiert ist, sichtbar ist, dann kann ich auf diese Funktion, auf diese Variable auch außerhalb des lexikalisch sichtbaren Kontexts zugreifen.
+
+01:04:47.505 --> 01:04:51.185
+<v SPEAKER_2>Das heißt, ich habe eine Funktion, und die liefert mir eine Funktion zurück?
+
+01:04:55.865 --> 01:05:17.825
+<v SPEAKER_1>Wie kann man das gut erklären? Eine Variable, die ich geclosed habe, ist in einer Funktion, in der Closure sichtbar. Und wenn ich diese Funktion dann an eine andere, an eine andere High-Order-Funktion übergebe, dann kann sie weiter auf die nur lexikalisch sichtbare Variable zugreifen.
+
+01:05:17.845 --> 01:05:38.625
+<v SPEAKER_2>Jetzt müssen wir uns ein Beispiel ausdenken. Ich habe da eine Funktion, was weiß ich, erfinden wir mal was, gibt mir meine aktuelle Geo-Koordinate oder so etwas. Da wird dann eine Variable zurückgegeben, die ich später benutzen kann, die mir dann immer die Position liefert.
+
+01:05:38.645 --> 01:05:57.005
+<v SPEAKER_1>Glücklicherweise beschäftigen wir uns hier, ja, das ist echt schwierig. Und glücklicherweise sind wir hier nicht ins Schema. Du solltest dir vielleicht noch mal einen Schema-Hacker ranholen, der soll dann Continuations erklären. Das ist noch schwieriger. Also eigentlich ist es nicht so... Hängt damit zusammen. Ja, das ist schon was ganz anderes.
+
+01:05:57.025 --> 01:06:00.805
+<v SPEAKER_2>Wo man dann so weitermacht. Das hat ja auch was mit Scope zu tun.
+
+01:06:00.825 --> 01:08:54.685
+<v SPEAKER_1>Also lexikalische Bindungen... Also was mir bei Lisp sehr gut gefallen hat, oder warum ich der Sprache besonders zu geneigt bin, ist, weil sie mir lexikalische und dynamische Bindungen auch erklärt hat. Und zwar wirklich erklärt hat. Weil es da auch ein klares Konzept für gibt. Und das ist eigentlich auch relativ einfach mal zu erklären. Also dynamische Bindung ist dynamisch gebunden, wenn sie auf dem Stack ist. Das heißt, wenn ich eine dynamische Variable a definiere, eine andere Funktion aufrufe und dann auf die Variable a zugreife, diese andere Funktion kann ganz woanders sein, dann kriege ich den Wert der Variable auf dem Stack. Das hängt sozusagen an der Call-Chain dran. Und eine lexikalisch gebundene Variable ist nur da zugreifbar, wo man sie sehen kann, und zwar im Source-Code. Das heißt, ich habe eine Variable, die heißt a, und dann gucke ich nach oben bis zu der Stelle, wo sie gebunden wird. Und da ist dann der Punkt, wo diese Variable herkommt. Ich bin jetzt auch kein Theoretiker, ich bin halt Praktiker, aber das hat was mit Lesen zu tun. Ich lese den Source-Code, ich sehe die Definition einer Variable und ich kann mir sicher sein, wenn ich weiter nach unten gucke und eine Variablenreferenz finde, dann muss ich nur nach oben gucken, um zu sehen, wo sie herkommt. Das heißt auch, ich kann auch eine Variable neu binden. Das mache ich zum Beispiel häufiger, wenn ich einen, sagen wir, ich habe einen String, da steht ein Dateiname drin. Und jetzt möchte ich sicherstellen, dass ich, dass ich in dieser, dass der Dateiname, ne, da steht eine URL drin. So, möchte ich sicherstellen, dass da nicht, dass diese Variable keinen String enthält, sondern ein Objekt-URL, auf das ich auch zugreifen kann, wo ich dann einen Request hinschicken kann zum Beispiel. Dann kann ich einfach sagen, also das Argument heißt URL, so von meiner Funktion, dann kann ich sagen, let url parse url url. Dann heißt die Variable auch url, aber enthält dann die gepaarste URL. Und ich muss dann keine neuen Namen erfinden, sondern es ist klar, dass da immer noch das Gleiche am Start ist. In anderen Programmiersprachen würde man dann sagen set, also url gleich parse url oder was auch immer. Aber wir machen das einfach nur durch Neubindung des Namens. So und dieses lexikalische, das macht es leicht zu verstehen, das gibt es in Perl auch. Und das ist in Lisp aber klarer als in den meisten anderen Programmiersprachen, die ich kenne. In Scheme gibt es glaube ich nur lexikalische Bindung.
+
+01:08:54.705 --> 01:10:11.025
+<v SPEAKER_2>Ich glaube wir verfangen uns langsam ein bisschen. Aber schöner Ausflug in die Komplexität des Programmiers. Da merkt man mal wieder, am Ende hängt es dann doch immer so ein bisschen vom Detail ab. Und gerade solche Sachen, also ich meine, ich habe auch schon tausendmal irgendwelche Sachen verstanden. Und wenn man dann irgendwie mal ein Jahr lang in der Nase gebohrt hat, dann ist es irgendwie entflogen. Und man braucht dann auch immer wieder die ganz konkrete Anwendung von solchen Sachen. Aber es stimmt schon, wenn eine Programmiersprache Sachen sehr konsequent macht und es auch in der Syntax irgendwie sehr konsequent zu erkennen ist, dann ist es einfach viel, viel, viel nachhaltiger, als wenn das so ein Patchwork ist, wo sich irgendwie was ändert. Am schlimmsten finde ich ja so Programmiersprachen, die dann irgendwie auch alle zwei Jahre in einer neuen Version rauskommen. Und dann ist immer irgendwie wieder alles anders. Also es ist ja gerade so diesen Java- und Skriptsprachen-Bereich. Dann gibt es dann irgendwie Version 3.0. Und jetzt haben wir auch noch das. Und interessanterweise, wenn man sich so anschaut, so Robi und Python, ich verfolge es nicht wirklich nahe. Aber wenn man sieht, was immer so eine Diskussion ist, was in den nächsten Versionen dann irgendwie noch dazukommen soll, da merkt man, am Ende schmeißen sie alle diese Features rein, die bei Lisp sowieso schon immer da waren.
+
+01:10:11.045 --> 01:11:30.525
+<v SPEAKER_1>Naja, so richtig, ganz richtig ist es ja nicht. Die waren ja nicht schon immer da. Sondern die sind halt nicht wirklich neu. Diese ganzen Features sind in den 80er Jahren erfunden worden und in Lisp reingeschmissen worden. Und als das passiert ist, haben das wirklich große Köpfe gemacht. Das muss man einfach anerkennen, dass die Leute, die Lisp entwickelt haben, dass da viele sehr, sehr intelligente Leute bei waren, wo die Spezifikation einfach wirklich richtig konsequent bis ins letzte Detail durchdacht ist und dann nochmal und nochmal durchgegangen wurde. Und das merkt man halt. Die ganzen Sachen, die jetzt so als neu rauskommen in PHP oder in Perl oder in Ruby oder Python, das sind einfach eigentlich alte Hüte, die jetzt da in diesen Umgebungen eben auch noch mit aufgenommen werden. Aber richtig, richtig neu ist das alles nicht mehr. Und für mich, ich meine, ich bin jetzt ein bisschen älter, ist so eine Programmiersprache, die auch so das abgeklärte hat natürlich genau das Richtige. Ich kann aber auch verstehen, wenn das nicht für jeden was ist, weil das natürlich auch so ein bisschen der Kreativitätshemmer ist im Bereich der Spracherfindung.
+
+01:11:34.485 --> 01:11:52.605
+<v SPEAKER_2>LISP ist ja nicht nur als Multipurpose-Programmiersprache bekannt, sondern versteckt sich auch in anderen Programmen. Mir fällt da ein, vor allem natürlich erstmal der Editor EMAX. In dem spielt ja LISP eine große Rolle. Was ist diese Rolle, die es dort spielt?
+
+01:11:52.625 --> 01:12:50.285
+<v SPEAKER_1>Na ja, Richard Stormin war ja wie gesagt in der LISP-Maschinengruppe und hat da die Dokumentation gemacht. Er wollte natürlich eigentlich seinen Editor auch am liebsten in LISP schreiben, aber es gab keinen LISP und deswegen hat er eben GNU-EMAX in C geschrieben, aber alle höheren Funktionen sind in LISP geschrieben. Und da gibt es einen eigenen LISP-Dialekt, der heißt E-LISP, der so ein bisschen so ähnlich ist wie Common LISP. Also es ist nicht schwierig, zwischen Common LISP und E-LISP zu wechseln. So, geht schon. Aber es ist natürlich eine Sprache, die schon eingeschränkter ist. Also die hat nicht den Anspruch der Universalität dieses E-LISP. Und die meisten, also die große Masse Source Code, die man so verwendet, wenn man E-MAX verwendet, ist eben in LISP geschrieben und nicht der Zirkern, der darunter liegt.
+
+01:12:50.305 --> 01:12:53.965
+<v SPEAKER_2>Ich glaube, AutoCut hat auch LISP als Automatisierung.
+
+01:12:53.985 --> 01:13:15.065
+<v SPEAKER_1>Haben sie immer noch. Ja, also AutoCut ist in der Erweiterungssprache auch ein LISP. Es gibt viele Cut-Systeme, große Cut-Systeme, die LISP verwenden oder irgendeine LISP-Abbot verwenden für E-Scripting. Aber die werden dann nicht so sichtbar, sind nicht so populär.
+
+01:13:15.085 --> 01:13:23.625
+<v SPEAKER_2>Was sind denn noch populäre, gibt es noch so Hidden Gems, gibt es so populäre Sachen, die so in LISP gemacht wurden, wo man heutzutage mal denkt?
+
+01:13:24.805 --> 01:14:05.665
+<v SPEAKER_1>Also es gibt die alten Beispiele. Es gab mal ein Spiel von Naughty Dog, wo die Game-Intelligenz in LISP war. Das gibt es aber inzwischen nicht mehr. Es gab mal die Nya Hustor, der in LISP geschrieben war. Das gibt es aber auch nicht mehr. So richtig große LISP-Systeme gibt es jetzt halt. Dieses eine, an dem ich gerade arbeite, wo irgendwie alle LISP-Programmierer dieser Welt mehr oder weniger subsummiert sind, um ein Reservierungssystem für Erkanada zu schreiben. Aber das ist meines Wissens das einzige wirklich große LISP-Projekt im Moment.
+
+01:14:05.985 --> 01:14:13.605
+<v SPEAKER_2>Woran liegt das? Wenn das so toll ist?
+
+01:14:13.625 --> 01:16:34.945
+<v SPEAKER_1>Also die Attitüde der LISP-Programmierer ist ein Hindernis. LISP-Programmierer sind bornierte alte Säcke. Die meisten, mit denen man es so zu tun hat, die so auch schon älter sind, kenne ich, weiß ich, war ich schon. Also es ist schwierig, mit denen eine Kommunikation aufzubauen, überhaupt erst mal über ein Problem zu sprechen, weil sie ja schon alles kennen und gemacht haben. Und dieses Phänomen, dass die Sprache fertig ist, das zieht eben auch nur bedingt Leute an. Es gibt zwar eine relativ große LISP-Community jetzt, die ist auch nicht so von der Hand zu weisen, wir sind viele, aber so dieser Mitmacheffekt, der stellt sich bei LISP nicht ein, weil viele Sachen sind einfach auch zu gut in LISP. Also man hat es da teilweise mit Libraries zu tun, da kann man sich dann erst mal zurückziehen und lange, lange, lange lesen, bevor man in der Lage ist, irgendwie so sein Mindset so eingesporn zu haben. Und berühmt zu werden in LISP ist schwierig inzwischen. Das geht zwar auch, aber es ist wirklich wesentlich schwieriger als in den dynamischeren, jüngeren Programmiersprachen, wo eben so eine Dynamik jetzt auch da ist und wo die Leute auch dadurch angezogen werden, dass es dynamisch ist. Ein weiteres Hindernis von LISP ist, dass es eine Single-User-Programmiersprache ist. Das kann man der Sprache jetzt nur bedingt vorwerfen, aber LISP ist eine Sprache, womit man explorativ programmiert. Man hat ein LISP, das läuft, das ist meistens ein Prozess, der schnell so 100-200 Megabyte groß ist. Das startet man und dann hat man einen Prompt und da gibt man dann so Sachen ein und dann probiert man Sachen aus und so weiter. Also man hat so eine interaktive Programmierumgebung. Das ist unterschiedlich zu Java beispielsweise oder zu C++, wo man Files hat, die eingecheckt werden zu einem Source-Baum und wo man so eine Batch-Organisation hat, wo dann also ein Compiler angeworfen wird und dann wird es getestet. In Lisp hat man mehr so eine interaktive Umgebung.
+
+01:16:34.965 --> 01:16:36.145
+<v SPEAKER_2>So ein lebendes System.
+
+01:16:36.165 --> 01:16:36.945
+<v SPEAKER_1>Ein lebendes System.
+
+01:16:36.965 --> 01:16:40.105
+<v SPEAKER_2>So wie auch bei Smalltalk so das Image.
+
+01:16:40.125 --> 01:16:40.745
+<v SPEAKER_1>Genau, das Image.
+
+01:16:40.765 --> 01:16:46.845
+<v SPEAKER_2>Die Runtime, in der so alles ist. Liegt dann auch der Code da immer sozusagen so fertig kompiliert vor.
+
+01:16:46.865 --> 01:17:36.125
+<v SPEAKER_1>Der liegt kompiliert vor. Also Lisp krankt sehr stark darunter, dass es eben dann doch in den 70er- und 80er-Jahren fest verwurzelt ist und Files in einer Form da eingegossen sind und die Speicherknappheit in einer Form in diesem Standard festgeschrieben sind, die es dann schwierig machen, da wirklich jetzt mit großen Systemen, mit zwei Gigabyte, vier Gigabyte Hauptspeicher wirklich sinnvoll umzugehen. Aber so dieses Explorative, der Mann und sein Computer, das skaliert halt nicht so gut. Und die meisten... Die meisten größeren Systeme sind eben Systeme, die auch von mehreren Leuten entwickelt wurden. Und es gibt keine wirkliche Team-Entwicklungskultur in Lisp.
+
+01:17:36.145 --> 01:17:50.645
+<v SPEAKER_2>Wird das jetzt technisch irgendwie verhindert? Also ich meine, was wäre das jetzt nicht auch vorstellbar, dass man mit mehreren Leuten erfolgreich daran arbeitet? Ich meine, ihr arbeitet doch im Team da, wenn da so große Systeme gemacht werden.
+
+01:17:50.665 --> 01:18:52.465
+<v SPEAKER_1>Ich meine, ich kann jetzt nicht so viele Details aus meinem Arbeitsbereich bekannt geben. Nur ich muss dazu sagen, also die Umgebung, die ist feindselig. Es gibt Umgebungen, die für Teams von 150 Leuten einfach besser vorbereitet sind, wo es mehr Patterns gibt, größere Projekte zu organisieren als in Lisp. Dazu gibt es diese ganze Kultur, die dahinter steht. So Software-Entwicklung in the large und Organisationen von Software-Projekten und Definitionen von Apis und so weiter. Das ist in Lisp alles nicht so verwurzelt. Das geht zwar alles und natürlich könnte man, wenn man nur genug Zeit hätte, auch ein World Class Team Entwicklungs-Environment damit machen, aber in Java ist das viel, viel einfacher, zum Beispiel, weil es da einfach diese ganze Infrastruktur, die man haben muss, gibt.
+
+01:18:52.485 --> 01:19:08.805
+<v SPEAKER_2>Die auch von vornherein so auf Deployment hin optimiert ist, muss man auch noch dazu sagen, was natürlich auch immer ein bisschen schwierig ist. Weil, wie ist denn das, man braucht ein Lisp-Programm dann auch immer so eine Runtime, die mit dabei sein muss.
+
+01:19:08.825 --> 01:19:40.005
+<v SPEAKER_1>Jaja, und die Open Source LISPs kranken alle darunter, dass die Runtime sehr, sehr, sehr groß ist. Also so im Sinne von 200 Megabyte Memory-Footprint für einen Lisp-Prozess muss man halt auf alle Fälle rechnen. Und normalerweise alluzieren die sich dann auch gleich irgendwie 5 Gigabyte, 1 Gigabyte virtuellen Speicher, sodass man so ein Lisp-Programm auf einem Shared-Host gar nicht laufen lassen kann, zum Beispiel.
+
+01:19:40.025 --> 01:19:46.065
+<v SPEAKER_2>Was gibt es denn für Lisp-Systeme? Also was ist denn konkret in Not-Song? Also jetzt ob Open Source oder nicht?
+
+01:19:46.585 --> 01:19:47.125
+<v SPEAKER_1>Im Compiler?
+
+01:19:47.885 --> 01:21:16.225
+<v SPEAKER_2>Ja, also was brauche ich? Also wenn ich jetzt irgendwie, sagen wir mal, ich bin jetzt wirklich der alte Mann und das Meer und mir geht es jetzt einfach darum, ein bisschen explorativ coole Software zu schreiben, weil ich habe jetzt hier ein mega komplexes Ding, keine Ahnung, ich habe jetzt hier Log-Files, was weiß ich hier, unser Sputnik-Projekt, das würde mir jetzt mal so einfallen. Da hatten wir ja auch vor 2 Jahren mit angefangen, dann gab es diesen Fehler im System, wo die IDs durcheinander waren, dann gab es tatsächlich einen Polen, der hat auch einen Vortrag darüber gehalten, der aus den kaputten Daten versucht hat, die Heilen wieder zu errechnen, einfach durch Verwandtschaft und Wahrscheinlichkeit. So eine Aufgabe, dass man so einen riesen Datenbestand hat, und dann wirklich eine sehr komplexe Sache, wo man komplexe Daten braucht, wo man auch wahrscheinlich während des Programmierens, ich unterstelle jetzt einfach mal LISP, dass das auch etwas ist, wo es seine Klasse zeigen kann. Komplexe Datenstrukturen, wo man auch immer wieder seine Ansätze neu macht, wo man seine Vererbung ändert, wo man irgendwie seine Ansätze darüber, wie man jetzt überhaupt da rangeht, permanent wieder über den Teich wirft. So was will ich jetzt machen. Und das ist ja, glaube ich, so ein Büss mit der Zustimmung. Also das wäre so etwas, wo man sagen kann, da kann ich bei LISP aus dem Vollen schöpfen. Und da ist jetzt auch nicht so wichtig, dass ich jetzt keine Deployment-Rantime habe, um das mal eben auf 200.000 Hosts irgendwie für Millionen von Usern anzuwenden. Da geht es nur darum, dass ich mein Ziel erreiche.
+
+01:21:16.385 --> 01:21:46.505
+<v SPEAKER_1>Das kommt darauf an, was du für ein Budget hast. Wenn du Geld hast, dann gehst du zu Franz und kaufst dir Allegro CL. Das ist das beste LISP, was es im Moment gibt. Das kommt mit einer IDE und mit Support und mit Libraries, die alles Mögliche können. Die haben auch einen RDF-Double-Store, der riesige RDF-Datenbanken verwalten kann und so weiter. Das ist aber irrsinnig teuer. Das kostet in den fünfstelligen Euro Beträgen.
+
+01:21:46.525 --> 01:21:48.425
+<v SPEAKER_2>Einmal so 15.000 Euro.
+
+01:21:49.185 --> 01:22:25.465
+<v SPEAKER_1>Und dann kannst du noch keine Deployment-Lizenz usw. Das ist das World-Class-Environment. Wenn du wirklich eine große Aufgabe hast und Zeit sparen möchtest, dann ist das die Umgebung, mit der das am besten geht. Die sind auch führend. Wenn es dir darum geht, dass du hinterher ein Programm von Distributen verteilen können möchtest und ein Executable verteilen möchtest, dann gehst du zu ListWorks. Da kriegst du was, was auf Mac und PC schön aussieht. Und wenn du kein Geld ausgeben willst, dann gibt es fünf verschiedene Compiler, die man benutzen kann.
+
+01:22:26.625 --> 01:22:28.905
+<v SPEAKER_2>Warte mal, diese Allegro CL, auf was läuft denn das?
+
+01:22:28.925 --> 01:22:29.605
+<v SPEAKER_1>Auf allem.
+
+01:22:29.625 --> 01:22:30.425
+<v SPEAKER_2>Auf allem?
+
+01:22:32.705 --> 01:23:43.345
+<v SPEAKER_1>Ja, auch so ziemlich auf allem. Und die Open Source LISPs, da gibt es welche. Also gibt es SBCL, was unter Unix gut läuft und unter Windows brauchbar ist. Es gibt CMUCL, was auf Unix läuft. Es gibt Clojure CL, das läuft auf Mac sehr gut. Das gibt das halt auch eine Cocoa Bridge. Man kann relativ gut direkt Objective-C APs aufrufen. Das ist ganz sexy. Das ist auch ganz gut gelöst. Man kann sich auch mit Interface-Bildern sein Interface zusammenklicken und Cocoa Chords machen. Das geht ganz gut. Und dann gibt es C-LISP, das läuft auf allem. Das ist langsam, weil es auf eine virtuelle Maschine compiled und nicht nach Native-Maschinencode. Wenn es um Geschwindigkeit geht, dann sind CMUCL und SBCL die Mittel der Wahl. Es gibt auch noch den ABCL, das läuft in der Java VM. Was dann heißt, man kann die Java APIs aufrufen aus dem LISP direkt. Das v.a. Function-Interface von dem LISP ist die Java VM.
+
+01:23:43.365 --> 01:23:44.925
+<v SPEAKER_2>Das heißt, man kann es auch als Applet machen.
+
+01:23:44.945 --> 01:23:46.045
+<v SPEAKER_1>Man kann es auch als Applet machen, ja.
+
+01:23:46.065 --> 01:23:52.985
+<v SPEAKER_2>Aber da muss man im Applet erstmal 200 MB LISP runtime schicken. Das sind nicht 200 MB.
+
+01:23:58.505 --> 01:24:27.545
+<v SPEAKER_1>Es gibt ja noch Unterschiede im Support für Threads und im Support für Unicode und so. Aber das sind alles Common-Lisp-Implementationen. Und das kommt halt so oft dein Projekt an. Als ich bei einer Firma gearbeitet habe, die sich mit Geodaten beschäftigt hat, musste ich halt mal einen Gigabyte Geodaten auseinanderklamüsern und da irgendwelche Daten extra hin. Da habe ich mir halt alligruzell kaufen lassen und dann war das eine Aufgabe von einer Woche und dann war das erledigt. Also das geht dann auch sehr schnell und damit kann man auch sehr...
+
+01:24:27.565 --> 01:24:39.985
+<v SPEAKER_2>Das rechtfertigt dann sozusagen auch den Preis. Man kauft sich da sozusagen abgehangenes, wohlentwickeltes High-Level-Zeug, was einfach viele Probleme schon mal löst, die man gar nicht erst hat.
+
+01:24:40.005 --> 01:25:29.465
+<v SPEAKER_1>Und wenn man es jetzt mal so rustikal macht, dann kann man heutzutage auch diese virtuelle Lisp-Maschine aus den frühen 90er Jahren runterladen und mal mit Genera direkt spielen. Das ist insofern ganz interessant, weil es schon sehr, sehr anders aussieht und auch sehr anders zu bedienen ist. Meter, halber Super, Alt-Shift-Control. Aber es hat halt so eine Kommandozeile, die dir schon die Wörter in den Mund legt und alles ist klicksensitiv. Und da gibt es sogar ein funktionierendes Mailprogramm. Und wenn man ein Problem im System hat, dann landet man im Debugger. Und dann kann man es direkt online fixen, neu kompilieren und weitermachen. Also es ist schon sehr irre.
+
+01:25:29.485 --> 01:25:48.685
+<v SPEAKER_2>Hast du dich eigentlich auch mal mit Dülln irgendwie noch mal auseinandergesetzt? Also ich wehne das jetzt nochmal, weil das ist ja im Prinzip ein Projekt, ist ja nicht wirklich eine komplette, also schon eine neue Programmiersprache. Das ist ja ganz anders aussehen, aber die zieht ja im Prinzip ihre Vergangenheit komplett aus diesem Lisp und kommt Lisp auf.
+
+01:25:48.705 --> 01:26:48.425
+<v SPEAKER_1>Na Dülln ist ja eigentlich ein Lisp. Ja genau. Nur hat sich eben genau das ereignet, dass irgendjemand bei Apple sich durchgesetzt hat und gesagt hat, wir wollen die Klammern nicht sehen. Und das ist dann nichts für die Lisp. Das ist dann nichts für mich zumindest. Ohne die Klammern und mit diesen komischen Makros, die die haben, das kickt mich gar nicht. Weil ich die Klammern als absoluten, das ist für mich der Vorteil. Man kann damit gut arbeiten. Das ist wie eine Knetmasse, mit der man gut formen kann. Wenn einem die ja weggenommen wird, weil man mit Legosteinen arbeiten soll, mag es ja sein, dass manche Leute da sehr sophisticated sind und große Gebäude in Legosteinen arbeiten können. Aber ich bin halt nun mal ein Knetmassentyp.
+
+01:26:49.645 --> 01:27:27.045
+<v SPEAKER_2>Das ist ein interessanter Trade-off. Auf der anderen Seite düllen auch genau das andere, was wir so beklagt haben, Versuch zu lösen. Da kann man dann mit Files, das ist für Multi-User gedacht, da kann man dann eben auch kleine Programme machen. Die Runtime ist nicht so schwer. Man hat dann nicht so dieses Laufzeit-Ding in der gleichen Art und Weise. Na gut, aber düllen wurde schon bereits diskutiert. Fand ich jetzt bloß nochmal ganz interessant. Dann sollten wir vielleicht jetzt auch langsam zum Ende kommen. Was mich jetzt nochmal interessieren würde, ist, wem kannst du Lisp ans Herz legen? Also wir haben Vor- und Nachteile gehört. Für wen ist es, wer sollte sich damit beschäftigen?
+
+01:27:27.465 --> 01:29:15.865
+<v SPEAKER_1>Also jeder, der gut programmieren können möchte, sollte mal ein halbes Jahr mit Lisp verbringen. Weil diese Sprache einem einfach viel zeigt, was schon ging und was es schon gab, und viel Literatur zeigt, die abstrakte, komplexe Probleme behandelt und in Lisp erklärt, wie man diese Probleme löst. Es ist ein Vorteil, diese Sprache zu kennen, um sich dann in der KI-Literatur an der Stelle auch zurechtzufinden. Ich meine, Computer sind keine Wissenschaft, und es gibt nicht den Weg, programmieren zu lernen. Insofern kann ich das ja auch nur sagen, im Sinne von mir hat das geholfen. Ich bin da jetzt auch drauf kleben geblieben, aber mein Sohn ist 14. Dem habe ich zuerst ein bisschen Forth gezeigt, und als nächstes muss er halt LISP lernen. Bevor er sich Java-Skript reinzieht. Es ist tatsächlich so, dass tiefere Verständnis für Variablen, Bindungen, Clojures und Rekursionen sind Sachen, die man in LISP relativ schnell begreifen kann, weil sie schnell auch in den Vordergrund gerückt sind und nicht versteckt sind hinter irgendeiner Implementation oder hinter so einem Pragmatismus. Sondern man kann sich einfach ein Büchlein nehmen und das nachlesen und da steht es dann halt drin.
+
+01:29:15.885 --> 01:29:28.785
+<v SPEAKER_2>Programmieren für Erwachsene. Ja, Hans, ich denke, wir haben es. Vielen Dank für die Ausführung. Sehr interessant. Hast du noch ein letztes Wort?
+
+01:29:28.805 --> 01:29:30.165
+<v SPEAKER_1>Ich hoffe, es war unterhaltsam.
+
+01:29:30.705 --> 01:29:37.305
+<v SPEAKER_2>Ich denke, für mich auf jeden Fall. Es wurde mehrfach bestätigt, dass wenn ich es toll finde, dann finde ich alles auch toll.
+
+01:29:37.325 --> 01:29:43.065
+<v SPEAKER_1>Das ist schön. Ich kann auch gerne nochmal Literatur...
+
+01:29:43.085 --> 01:29:47.605
+<v SPEAKER_2>Oh ja, das ist eine gute Idee. Genau, ein paar Literatur-Tipps. Das hätte ich jetzt fast vergessen.
+
+01:29:47.625 --> 01:30:02.525
+<v SPEAKER_1>Also es ist so, es gibt zwei Bücher, die momentan in der Lisp-Community als die beiden Bücher gehandelt werden. Das eine ist Patterns of Artificial, Paradigms of Artificial Intelligence Programming von Peter Norwick.
+
+01:30:02.545 --> 01:30:05.585
+<v SPEAKER_2>Das ist so ganz nebenbei der...
+
+01:30:05.605 --> 01:31:04.905
+<v SPEAKER_1>Director of Search Quality bei Google. Dieses Buch ist auch schon 15 Jahre alt und beschäftigt sich mit AI-Anwendungen in Lisp programmiert. Er hat ohne Ende Programmierbeispiele. Es geht um Suchen und Compiler und Prolog Interpreter und solche Sachen. Also es ist recht abstrakt, würde ich mal sagen. Auf der anderen Seite gibt es das Buch Practical Common Lisp von Peter Seibel. Practical Common Lisp beschäftigt sich mehr mit den ganz praktischen Dingen von heute. Also wie macht man einen Web-Server? Wie parset man MP3s ein, um die Tags zu lesen? Solche Art von Sachen. Sehr pragmatisch orientiert. Das sind die beiden Werke, die man dem Studenten von heute oder dem Pragmatiker von heute gerne empfiehlt.
+
+01:31:05.085 --> 01:31:07.485
+<v SPEAKER_2>In welcher Reihenfolge liest man die dann?
+
+01:31:07.505 --> 01:31:56.805
+<v SPEAKER_1>Ich würde die gar nicht lesen. Ich mag die beiden Bücher nicht so besonders gern. Der Norweg ist mir zu anstrengend und zu abstrakt. Im Practical Common Lisp gibt es ein langes Kapitel über Loop. Dieses Loop-Makro mag ich halt nicht. Ich kann empfehlen, das Buch On Lisp von Paul Graham. Das ist auch online als PDF zu erhalten. Es ist zwar eigentlich ein fortgeschrittener Buch, erklärt aber Makros in einer Art und Weise, die sehr erleuchtet ist. Sie zeigt nämlich, wie erweiterbar Lisp ist. Und wie man sinnvoll Makros einsetzen kann. Das ist ein Buch, das ich sehr gerne lese oder gelesen habe. Oder auch noch mal reingucke.
+
+01:31:57.445 --> 01:32:10.025
+<v SPEAKER_2>Paul Graham kann man ja sowieso nur empfehlen. Der ist ja auch derjenige, der hinter diesem Yahoo-Store, den du schon erwähnt hast, stand und der dieses schöne Essay Hackers & Painters geschrieben hat.
+
+01:32:10.125 --> 01:32:36.445
+<v SPEAKER_1>Ja, also Paul Graham ist im Moment in der Lisp-Szene sehr umstritten, weil er seit zehn Jahren oder seit 15 Jahren, seit On Lisp diesen Lisp-Dialekt ARK angekündigt hat. Neulich ist der eben released worden und irgendwie, irgendwie, also ich weiß auch nicht genau, was da jetzt so toll dran sein soll und warum es notwendig war, diesen neuen Lisp-Dialekt zu erfinden.
+
+01:32:36.445 --> 01:32:38.425
+<v SPEAKER_2>ARK, ARC, neue Poemiersprache.
+
+01:32:44.265 --> 01:33:36.445
+<v SPEAKER_1>Nichtsdestotrotz, Paul Graham hat auch das Buch an, sie Common Lisp geschrieben, was auch nicht ganz schlecht ist, aber was das Common Lisp-Object-System nicht wirklich behandelt. Das Common Lisp-Object-System ist bei Sonja Keen in dem Buch Object Oriented Programming with Common Lisp am besten beschrieben. Und dann gibt es noch The Art of the Matter Object Protocol. Das ist das Buch, was beschreibt, wie das Meta-Object-Protokoll funktioniert. Und das sind alles Bücher, die sind sicherlich nicht für, sag ich mal, jemanden, der noch nicht programmiert hat. Aber wenn man eine Programmiersprache mal so richtig gemacht hat, dann sind das Bücher, die einem auch verständlich machen, was an Lisp eigentlich dran ist, weil sie eben Sachen erklären, die in keiner anderen Programmiersprache so gehen, und zwar im Rahmen der normalen Standard-Benutzung. Das sind alles keine Sachen, die jetzt irgendwie Lisp-Implementationen oder so erklären, sondern einfach nur so, was man mit Lisp alles machen kann.
+
+01:33:36.465 --> 01:33:41.685
+<v SPEAKER_2>Programmiert für Fortgeschreiter. Jetzt haben wir es aber, oder?
+
+01:33:41.705 --> 01:33:45.425
+<v SPEAKER_1>Ja, klar. Ich kann ja dann nochmal ein paar Links posten und dann kannst du die auf deine...
+
+01:33:45.445 --> 01:34:53.045
+<v SPEAKER_2>Genau. Das steht wie immer alles auch auf der Seite. Zu Chaosradio, zu dieser Ausgabe, zu CRE 084. Aber ich schreibe es auch immer schön in die Lyrics der MP3-Dateien mit rein, damit das alles self-contained ist. Finde ich auch ganz toll. Leider macht mir das noch keiner nach. Ich dachte ja, ich starte da irgendwie einen tollen Trend. Aber man muss ja manchmal auch wirklich jahrelang durchhalten, bis irgendetwas wirklich mal übernommen wird. Aber es ist natürlich eine Menge Arbeit, die macht sich nicht jeder. Aber ich bin so doof und höre mir das alles nochmal an und schreibe irgendwie alles auf. Also das meiste, was hier erwähnt wird, findet ihr in den Links in der Sendungsbeschreibung. Und ja, wenn euch das gefallen hat, wenn ihr Fragen und Anmerkungen, Kommentare, Kritik oder was auch immer habt, wie immer, wisst ihr, schickt uns eine E-Mail, chaosradio.ccc.de oder was mir noch lieber ist, postet einen Kommentar in unserem Blog mit dem Beitrag zu dieser Sendung. blog.chaosradio.ccc.de Ja, und das war's. Ich sage vielen Dank, Hans. Und das war Chaosradio Express, Ausgabe 84. Ich wünsche euch noch einen schönen Tag bei allem, was ihr tut.

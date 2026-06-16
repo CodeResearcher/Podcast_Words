@@ -1,0 +1,697 @@
+WEBVTT
+
+00:00:10.218 --> 00:00:25.167
+<v SPEAKER_1>Okay, lass uns einfach einen normalen Sondiergang machen, um zu sehen, dass das System funktioniert. System working?
+
+00:00:25.187 --> 00:02:22.367
+<v SPEAKER_2>Seems to be. Okay, fine. Hallo, hier ist Chaosradio Express, Ausgabe Nummer 82. Mein Name ist Tim Pritlove und ich begrüße euch am 24. März 2008, dieses Mal aus Köln, dem schönen Köln, wo ich in einem Dom sitze, wie man am Hall schön hören kann. Nein, wir sitzen nicht im Dom, sondern im Bürgerhaus Stollwerk, einer schönen Location mitten in der City, wo hier in den letzten Tagen über Ostern der Easter Hack stattgefunden hat. Eine weitere Traditionsveranstaltung des Chaos Computer Club, wo hier über die Osterfeiertage komplett durchgehackt wurde. So eine Art Kongress en Miniatur, wo ähnlich Inhalte zu finden sind. Da geht es halt um Technik und den Club selber auch. Da gibt es auch sehr viele Teilnehmer aus dem Clubumfeld. Selbst als so eine große Veranstaltung wie der Kongress, die eine sehr breite Öffentlichkeit anspricht und auch sehr viel internationaler ausgerichtet ist. Trotzdem waren hier 300 Leute vor Ort, wie wir gerade gehört haben, auf der Abschlussveranstaltung. Und ich möchte jetzt die Gelegenheit nutzen, hier, wo man immer mit so vielen klugen Leuten zusammenkommt, auch noch einen Podcast aufzunehmen für Chaosradio Express. Ausgabe Nr. 82 und das Thema soll sein, die Programmiersprache Erlang. Und dazu begrüße ich Ben Fuhrmannek, hallo.
+
+00:02:22.387 --> 00:02:24.507
+<v SPEAKER_1>Guten Tag.
+
+00:02:24.527 --> 00:02:33.947
+<v SPEAKER_2>Du hast einen Vortrag hier gehalten über diese Programmiersprache mit dem Titel Eine sehr praktische Einführung in Erlang. Sind die richtig gerade?
+
+00:02:33.967 --> 00:02:45.927
+<v SPEAKER_1>Ja, der Titel war Wissenswertes über Erlang, eine sehr praktische Einführung, angelehnt an den tollen 80er-Jahre-Hit Wissenswertes über Erlangen von Max Gold.
+
+00:02:45.947 --> 00:02:57.427
+<v SPEAKER_2>Wobei das eigentlich nichts zu tun hat. Aber ich wollte jetzt noch mal die Gelegenheit nutzen und dich auch noch mal befragen, wie du den Easter Hack wahrgenommen hast in diesem Jahr. Du bist ja eigentlich auch ein ziemlicher Traditionsgast auf nahezu allen Clubveranstaltungen.
+
+00:02:57.447 --> 00:03:03.827
+<v SPEAKER_1>Der Easter Hack war endlich mal eine überragende Veranstaltung und sonst eigentlich auch, aber gerade hier besonders.
+
+00:03:04.907 --> 00:03:07.767
+<v SPEAKER_2>Aber das sagst du jetzt nur, weil das so nah an deinem Wohnort liegt.
+
+00:03:07.787 --> 00:03:21.427
+<v SPEAKER_1>Ja, ich wohne fast hier. Nein, es ist wirklich schön. Es gab ein ganztägiges Frühstück. Es gab viele, viele Leute, die sich nicht gestritten haben. Es gab sogar viele Kinder hier. Zwei habe ich gezählt, glaube ich.
+
+00:03:21.447 --> 00:03:24.667
+<v SPEAKER_2>Richtig, war alles voll. Es waren mehr als zwei.
+
+00:03:24.687 --> 00:03:28.467
+<v SPEAKER_1>Das kann ich sagen. Es waren mindestens zwei.
+
+00:03:28.487 --> 00:03:33.647
+<v SPEAKER_2>Abgesehen von den ganzen anderen Spielkindern, die sich hier zusammengefunden haben.
+
+00:03:35.207 --> 00:03:43.207
+<v SPEAKER_1>Es gab ein riesiges Hack-Center, das nur für die Anfangs- und Abschlussveranstaltungen sonst als Nicht-Hack-Center genutzt wurde.
+
+00:03:43.227 --> 00:03:52.067
+<v SPEAKER_2>Sehr schön, dieser Hauptraum hier im Bürgerhaus. Links und rechts noch mit diesen Emporen. Das fand ich auch. Es war eine extrem interessante und angenehme Atmosphäre.
+
+00:03:52.087 --> 00:04:02.007
+<v SPEAKER_1>Dazu haben sich noch ganz viele Projekte zusammengefunden. Manche waren sehr offensichtlich, wie zum Beispiel die Freifunke haben sich getroffen. Leute, die den ganzen Tag Papiersachen gebastelt haben.
+
+00:04:02.027 --> 00:04:03.147
+<v SPEAKER_2>Da gab es einen Origami-Workshop.
+
+00:04:04.167 --> 00:04:16.467
+<v SPEAKER_1>Ja, es gab natürlich Omnipresent Go-Bretter, wer dann Go spielen wollte. Das ist auch ein ganz modernes Spiel, das es erst seit wenigen tausend Jahren gibt. Und natürlich war das POG da, denn man konnte wie immer telefonieren.
+
+00:04:16.507 --> 00:04:33.267
+<v SPEAKER_2>Stimmt, da gehörst du ja auch ein bisschen dazu, das immer im Team zu finden, jedes Jahr. Ein verlässlicher Dienst auf allen Clubveranstaltungen. Ja, aber darüber wollen wir jetzt nicht so sehr reden, nachdem wir jetzt hier den Easter-Hack gelobt haben. Das mein ich?
+
+00:04:33.287 --> 00:04:33.927
+<v SPEAKER_1>Das meinst du.
+
+00:04:33.947 --> 00:04:39.247
+<v SPEAKER_2>Ach so, ja doch, natürlich. Wo bin ich denn mit meinen Gedanken?
+
+00:04:39.267 --> 00:04:42.807
+<v SPEAKER_1>Also das Thema dieser Sendung heißt Programmiersprache Erlang.
+
+00:04:42.827 --> 00:04:49.287
+<v SPEAKER_2>So ist es. Und das ist ein Fachbegriff aus der Telefoniewelt, richtig?
+
+00:04:49.307 --> 00:05:19.627
+<v SPEAKER_1>Also zunächst einmal ist es zumindest der Nachname eines berühmten Menschen, Agner Kraub Erlang. Das war ein Mathematiker, der hat einige Theorien aufgestellt. Unter anderem dient er auch als Namensvater der schönen Programmiersprache Erlang. Die wurde an dem Computer Science Laboratory von Ericsson erfunden. Und deswegen meinen auch einige Leute, es sei die Ericsson-Language Erlang, was auch gar nicht so verkehrt ist.
+
+00:05:20.987 --> 00:05:24.007
+<v SPEAKER_2>Das heißt, es ist eine mögliche Deutung dieses Namens.
+
+00:05:24.687 --> 00:05:40.887
+<v SPEAKER_1>So sieht es auch aus. Was hat das alles mit dem POC und dem Telefon zu tun? Ericsson ist eine Telefonfirma und die haben sich gedacht, wir haben hier so Telefonanlagen, wie bringen wir die Logik dazu, in diese Anlagen hineinzukommen?
+
+00:05:40.947 --> 00:05:43.187
+<v SPEAKER_2>Haben wir schon erklärt, was das POC eigentlich ist?
+
+00:05:43.207 --> 00:05:48.307
+<v SPEAKER_1>Das POC. Meinst du, es gibt Leute da draußen, die nicht wissen, was das POC ist?
+
+00:05:48.327 --> 00:06:30.987
+<v SPEAKER_2>Natürlich gibt es das. Das sind vielleicht nicht mehr viele, aber man muss ja auch die paar Leute auch noch erreichen. Das ist das Phone Operations Center, analog zum NOC, zum Network Operations Center. Da hat sich der Begriff schnell durchgesetzt auf unseren Veranstaltungen. Also ihr habt da eine dicke Telefonanlage, die eine Menge kann, die vor allem über deckt, also über schnurlose Telefone kommuniziert. Da kann man auch direkt Telefone anschließen. Aber der eigentliche Clou ist, dass das Ding wireless ist, wo man eben auf solchen Veranstaltungen nirgends eine Telefonieinfrastruktur hat. In der Regel ist das POG auch immer so das Erste und das Letzte auf der Veranstaltung. Also vom Zeitablauf her.
+
+00:06:31.007 --> 00:06:32.967
+<v SPEAKER_1>Ja, das ist jetzt auch ein bisschen die Funkbereite.
+
+00:06:32.987 --> 00:06:46.807
+<v SPEAKER_2>Und insofern passt da irgendwie Erlang rein. Aber wie hat sich denn diese Sprache bei Ericsson entwickelt? Was war jetzt der Einfluss von Herrn Erlang da drauf?
+
+00:06:46.827 --> 00:06:47.767
+<v SPEAKER_1>Der Name.
+
+00:06:47.827 --> 00:06:51.627
+<v SPEAKER_2>Also es war sozusagen nur zu ihm zu ehren.
+
+00:06:51.647 --> 00:08:01.007
+<v SPEAKER_1>Sozusagen. Das lohnt sich auch wirklich, diesen Mathematiker zu ehren. Ich kann nicht so viel über diesen Mathematiker selbst sagen, mehr zu der Sprache. Und da komme ich wieder zu der Telefonanlage zurück und überlege uns, welche Anforderungen hat man bei einer Telefonanlage, außer, dass man natürlich den Hörer ab dem Telefonieren möchte. Nein, man möchte auch sofort telefonieren. Man möchte nicht erst warten. Das muss also ziemlich sofort sein. Das soll in Echtzeit passieren. Das soll nicht mitten im Gespräch knacken und dann soll es auf einmal abstürzen. Also manch einer kennt vielleicht so moderne Telefonanlagen in Software. Asterisk wäre da ein Beispiel. FreeSwitch und Yate und wie sie alle heißen, YXA ist vielleicht noch zu erwähnen. Das sind auch alles, sagen wir mal, Telefonanlagen, die sehr gut zum Herumspielen geeignet sind. Und Herumspielen ist nicht besonders gut geeignet für so eine zuverlässige Anwendung wie Telefon, die wir sie eigentlich haben wollen. Das heißt, die Überlegung ursprünglich war, wir wollen eine Zuverlässigkeit haben. Wir wollen wirklich, dass Leute miteinander telefonieren können.
+
+00:08:01.027 --> 00:08:03.387
+<v SPEAKER_2>Wer ist ja jetzt wir in dem Zusammenhang?
+
+00:08:03.407 --> 00:08:06.747
+<v SPEAKER_1>Wir, die Leute, die ein Kommunikationsbedürfnis haben.
+
+00:08:07.427 --> 00:08:08.307
+<v SPEAKER_2>Wir die Telefonwelt.
+
+00:08:12.247 --> 00:08:39.087
+<v SPEAKER_1>So, da überlegt man sich natürlich, was tut man, wenn das doch mal abstürzt? Was passiert da so? Und das muss man mit in die Sprache einbauen. Was ich vielleicht noch erwähnen sollte, ist die Logik, die bedrückt man natürlich in der Sprache aus. Man drückt eine Logik in der Sprache aus und man hätte auch irgendeine Sprache nehmen können, die es zu dem Zeitpunkt schon gab. Das war etwa vor 20 Jahren. So, was gab es zum Beispiel vor 20 Jahren für Programmiersprachen, die man nehmen konnte?
+
+00:08:40.087 --> 00:08:40.787
+<v SPEAKER_2>Vor 20 Jahren?
+
+00:08:41.167 --> 00:08:43.347
+<v SPEAKER_1>Lysp?
+
+00:08:43.367 --> 00:08:54.487
+<v SPEAKER_2>Lysp gab es schon immer. Wenn du mich so fragst, dass ich dir auf den linken Fuß erwischt. Ja. Man hätte auch C nehmen können, natürlich.
+
+00:08:54.807 --> 00:08:57.447
+<v SPEAKER_1>C gab es schon, Lysp ist eigentlich ein gutes Stichwort.
+
+00:08:57.587 --> 00:08:58.347
+<v SPEAKER_2>Ich glaube, so einiges.
+
+00:08:58.367 --> 00:09:53.107
+<v SPEAKER_1>Was gab es auch schon? Vielleicht Prolog, wer das kennt? Und tatsächlich hat man sich auch ein bisschen an diesen beiden orientiert. Lysp und Prolog. Ich weiß nicht, ob das tatsächlich bekannt war, aber ich nehme es einfach stark an, denn es sind sehr viele Elemente aus diesen beiden Sprachen vorhanden. Nämlich ist Erlang eine funktionale Programmiersprache. Funktionale, wer das nicht mehr genau weiß. Also es gibt Funktionale und Prozedurale und noch ein paar andere Arten von Programmiersprachen. Was man üblicherweise kennt, ist, wenn man so anfängt zu programmieren, ich habe meine Funktion, die schreibe ich, oder meine Prozedur, die führt irgendwas aus, eine Anweisung nach der anderen, das war's. Vielleicht gebe ich auch was zurück. Bei funktionalen Programmiersprachen ist das der Fall, dass ich auf jeden Fall immer eine Funktion habe, die gibt etwas zurück. Diese Funktion ruft vielleicht eine andere Funktion auf, die ruft vielleicht auch sich selbst auf.
+
+00:09:53.127 --> 00:09:59.107
+<v SPEAKER_2>Das Vorbild ist sozusagen die mathematische Funktion, die natürlich auch immer irgendwas liefert, weil das ist ja ihre Aufgabe.
+
+00:09:59.247 --> 00:10:03.727
+<v SPEAKER_1>Genau, die liefert das vielleicht sogar rekursiv, indem die mathematische Funktion wieder sich selbst enthält.
+
+00:10:04.067 --> 00:10:08.027
+<v SPEAKER_2>Beziehungsweise sich selbst aufruft.
+
+00:10:08.047 --> 00:10:11.727
+<v SPEAKER_1>In dem Fall, genau.
+
+00:10:11.747 --> 00:10:16.007
+<v SPEAKER_2>Haben wir den eigentlich schon, Entschuldigung, ich bin ein bisschen unkonzentriert, weil wir immer so viele Leute hier sehen.
+
+00:10:16.027 --> 00:10:18.647
+<v SPEAKER_1>Man hört das auch im Hintergrund.
+
+00:10:18.667 --> 00:10:28.707
+<v SPEAKER_2>Der Begriff Erlang, bevor wir das komplett noch aus dem Ding... ist doch auch ein Fachbegriff im Telefoniebereich.
+
+00:10:28.727 --> 00:10:30.247
+<v SPEAKER_1>Ja.
+
+00:10:30.267 --> 00:10:46.527
+<v SPEAKER_2>War das jetzt auch ein Grund, warum das Ding so heißt? Also Erlang ist doch die Maßzahl dafür, wie viele Gespräche ein jeweiliges System mit Themen zu einem bestimmten Zeitpunkt immer bereitstellen kann.
+
+00:10:46.787 --> 00:10:50.747
+<v SPEAKER_1>Was gab es denn zuerst? Gab es erst die Maßeinheit oder erst die Programmiersprache?
+
+00:10:50.767 --> 00:10:51.427
+<v SPEAKER_2>Das weiß ich nicht.
+
+00:10:52.067 --> 00:10:54.427
+<v SPEAKER_1>Was meinst du denn? Das müsste man erforschen.
+
+00:10:54.447 --> 00:10:57.607
+<v SPEAKER_2>Das müsste man erforschen, okay.
+
+00:10:57.627 --> 00:12:20.847
+<v SPEAKER_1>Ja, währenddem du das erforscht, werde ich einfach mal ein bisschen weitererzählen über die Sprache selbst. Wir waren dabei zu ergründen, wie kommt nun so eine Telefonanlage zu ihrer Logik beziehungsweise zu ihrer Programmiersprache, in der dann die Logik programmiert wird. Und dann überlegt man sich, sie darf erst mal nicht abstürzen. Ich möchte nicht, dass ich telefoniere und plötzlich ist die Verbindung weg. Das heißt, ich muss in meiner Software Methoden haben, um eine Fehlerbehandlung auszudrücken. Das haben sehr viele Programmiersprachen, wenn nicht sogar alle gängigen. Das ist trotzdem ein Pfeiler, das war im Hintergedanken. Das werden wir gleich mal behalten. Dann kann man sich überlegen, ich habe nicht nur eine Telefonanlage, wie wir das beim POG haben, sondern wir haben zwei, wir haben drei, wir haben tausend Telefonanlagen über die Welt verteilt, die wollen alle vernetzt werden. Und meine Anwendung möchte davon wissen, man möchte also vielleicht ein Programm starten, das hier startet und das beendet sich aber auf einem ganz anderen Rechner, auf einer ganz anderen Telefonanlage. Das kann darauf zugreifen oder es kennt das andere Telefon und sendet Nachrichten hin und her. Es gibt auch einen Fachbegriff dazu, der nennt sich Concurrency oder Nebenläufigkeit. Gut, eigentlich nennt sich das Distribution.
+
+00:12:20.887 --> 00:14:53.587
+<v SPEAKER_2>Bevor wir weiter noch in die Details vorstoßen, möchte ich noch mal die Klammer noch ein bisschen größer machen. Also was man erstmal grundsätzlich, glaube ich, verstehen muss, ist erstmal Telefonanlagen, die waren lange Zeit auch mechanisch aufgebaut, irgendwie mit Hupdreh-Wählern und was nicht alles. Kann mich noch erinnern, dass ich als Kind noch so eine Nebenstellenanlage reingelaufen bin, irgendwie von der Post. Und dann machte einfach nur Ratta und Klacker und tralala und tralala. So, dass die Dinger natürlich dann auch irgendwann mit Digitaltechnik vollgestopft wurden und heutzutage eigentlich auch nur noch Computer sind, das ist so eine absehbare Entwicklung. Trotzdem war das natürlich schon eine sehr etablierte Technologie schon vor der Digitalisierung. Also bevor man überhaupt in der Lage war, Programmiersprachen dafür zu entwickeln, ist das halt eine Technik, die da ist. Im Gegensatz zu anderen Techniken, die ja sozusagen durch die Computer überhaupt erst entstanden sind. Und deswegen, das finde ich jetzt insofern interessant, als du das wieder schon ausgeführt hast, dass das einfach von vornherein ein Anforderungsspektrum definiert. Allein schon diese Dienstgüte, das ist ja irgendwie nichts, was jetzt bei Programmiersystemen, also bei Programmen, die man heutzutage benutzt, habe ich nicht so den Eindruck, als ob jetzt so die Dienstgüte immer so im Vordergrund steht. Und das findet man ja nicht so häufig, weil da wird dann erst mal so programmiert, was man irgendwie hinkriegt. Na ja, irgendwann stürzt das Programm dann halt mal ab und dann ist es auch egal, dann wird der Rechner irgendwie neu gebootet. Das ist natürlich etwas, wo man sagen wir mal so einem Telekom-Menschen, und damit meine ich jetzt nicht die deutsche Telekom, sondern halt einfach Leute, die sich in diesem Telko-Bereich bewegen, mit denen kann man da irgendwie nicht kommen. Also da muss einfach eine gewisse Ausfallsicherheit vorhanden sein und da muss vor allem auch, eben wie du schon richtig gesagt hast, so eine Reaktionszeit muss irgendwie möglich sein. Und da kommt ja auch dieser Begriff Erlang rein. Ich habe jetzt gerade nochmal nachgeschaut, also der Begriff Erlang ist halt von eben jenem Agna Krarob Erlang erfunden worden, also dieses Modell. Und das bezeichnet eben, was eine Telefonanlage bereitstellen kann. Also wenn ihr irgendwie 50 Erlang hat, dann kann die vielleicht 5000 Telefonanschlüsse haben, aber irgendwie 50 Leute können wirklich zu jedem Zeitpunkt auch wirklich telefonieren damit. Ja, so. Und ich frage mich jetzt also diese Entwicklung bei Ericsen, wann ging denn das eigentlich los? Also wann ist denn diese Programmiersprache wirklich dann in den Griff genommen worden?
+
+00:14:53.607 --> 00:15:09.827
+<v SPEAKER_1>Ich kann dir sagen, seit 1998, also vor etwa zehn Jahren, ist das open source und da war die Programmiersprache bereits fertig und im Einsatz. Vielleicht kannst du gerade die genaue Jahreszahl heraussuchen aus diesem Internet, von dem sie alle reden.
+
+00:15:09.847 --> 00:15:37.327
+<v SPEAKER_2>Ja, ja, ich schaue ja mal gerne in meinen Freund, die allwissende Müllhalde, aber die hält sich da noch gerade etwas bisschen bedeckt. Aber es gibt ja auch eine schöne Einführung zu Erlang, fällt mir jetzt gerade ein, die wir auch schon mal bei ChaosTV gepostet haben. Ich glaube, das war ChaosTV, CTV 68, wo so was, du kennst das Video doch sicherlich, oder? Was war denn das gleich nochmal für Jungs? Das war das Elemental Computer Science Laboratory, lese ich hier gerade.
+
+00:15:37.347 --> 00:16:07.067
+<v SPEAKER_1>Tatsächlich haben die sich irgendwann umbenannt und waren dann Ericsson, Abi. Das sind dieselben Leute, die die Programmiersprache erfunden haben. Und in diesem Video sieht man sehr demonstrativ, hallo Bob, und die rufen sich gegenseitig an. Und dann wird künstlich ein Fehler erzeugt. Man sieht auf so einem flimmernden uralten Bildschirm in schwarz-weiß, wie dann dieser Fehler erzeugt wird und wie das System trotzdem nicht abstürzt. Das war ein Durchbruch Sondergleichen, also ein Informatiker freut sowas.
+
+00:16:08.567 --> 00:16:30.447
+<v SPEAKER_2>Okay, also alles klar, das ist dann die Truppe, aus der dann Ericsson hervorgegangen ist. Also mit anderen Worten, also der Film ist aus dem Jahr 1990, steht hier, also die Sprache gibt es definitiv schon länger, aber heute ist es auch open source. Und es gibt ja auch schon, naja, gibt es eigentlich viel Software, die in Erlang geschrieben ist?
+
+00:16:30.467 --> 00:16:31.267
+<v SPEAKER_1>Ja.
+
+00:16:31.287 --> 00:16:33.527
+<v SPEAKER_2>Also es gibt ein sehr populäres Beispiel natürlich.
+
+00:16:33.707 --> 00:16:54.967
+<v SPEAKER_1>Es gibt mindestens ein sehr populäres Beispiel, nämlich diesen E-Jabber-D, ein Jabber-Server in Erlang geschrieben, der wird auch ziemlich viel verwendet. Soweit ich weiß, läuft Jabber-Org damit und auch jabber.ccc.de. Jabber ist dieses Instant-Messaging-Protokoll, das kürzlich sehr beliebt geworden ist.
+
+00:16:54.987 --> 00:17:18.427
+<v SPEAKER_2>Ja und das eigentlich auch so ähnliche Funktionsanforderungen hat wie eine Telefonanlage. Weil da hat man potenziell ganz viele User, die dann eben zu einem bestimmten Zeitpunkt auch dann real miteinander kommunizieren wollen. Das ist dann sozusagen der Erlang. Also wenn jetzt, was weiß ich, jabber.ccc.de hat glaube ich über 4.000 User oder so. Kann das sein?
+
+00:17:18.447 --> 00:17:20.787
+<v SPEAKER_1>Die jedes Mal gleichzeitig online sind?
+
+00:17:20.807 --> 00:17:50.007
+<v SPEAKER_2>Nee, nicht gleichzeitig online sind, aber die so insgesamt da irgendwie aktiv sind. Aber ich lasse mich da jetzt mal nicht fest nahe anzunehmen. Auf jeden Fall viele. Und es sind auch viele, die wirklich online sind, also das kommt noch dazu. Ja, und dann ist es ja eigentlich genau das gleiche. Man möchte dann eben, dass die Nachricht, die man da reinschickt, auch möglichst schnell weitergeleitet wird. Die soll dem Server nicht lange hängen bleiben, so wie man das hier auch bei E-Mail wünscht. So, und das Ding darf dann eben unter diesem, dieser Last nicht zusammenbrechen. Das ist natürlich eine interessante Anforderung.
+
+00:17:50.027 --> 00:17:51.787
+<v SPEAKER_1>Aber was ist denn jetzt? Ja, sehr ähnliche Anforderungen.
+
+00:17:51.807 --> 00:18:00.687
+<v SPEAKER_2>Genau, aber jetzt haben wir ja schon gesagt, die Hauptanforderungen sind eben diese Zuverlässigkeit, aber eben auch diese Nebenläufigkeit.
+
+00:18:00.707 --> 00:18:49.827
+<v SPEAKER_1>Diese gewisse Nebenläufigkeit und die Verteiltheit. Was ich eben beschrieb, ist, wenn man mehrere Telefonanlagen hat oder von mir aus mehrere Jabber-Server, dann möchte man sich auch mit denen verbinden, möchte die vielleicht skalieren, man möchte einfach noch einen Rechner daneben stellen und dann haben doppelt so viele User Platz auf dem Server. Das ist eine gewisse Verteiltheit und damit kommt auch gleichzeitig die Nebenläufigkeit. Denn ich muss mir überlegen, wenn ich zwei Rechner habe, dann habe ich auch mindestens zwei Prozesse. Ich habe auch zwei Prozessoren, da laufen also eigentlich zwei Programme ab. Und diese Sprache Erlang, egoistisch wie sie ist, denkt sich, ich bin jetzt die Abstraktionsebene, bei mir gibt es erstmal einen Körner und dann mache ich meine Prozessverwaltung auch mit diesem eigenen Körner, mit einem eigenen Scheduler und diese Prozesse, die kommunizieren miteinander.
+
+00:18:50.827 --> 00:19:14.167
+<v SPEAKER_2>Das heißt, eine Annahme, die Erlang macht, ist, Dinge können gleichzeitig passieren. Das hat man ja nicht in jeder Programmiersprache, also wenn man sich jetzt Basics anschaut oder auch Lisp oder so, die machen eine Menge kluge Sachen, aber so diese Vorstellung davon, dass das Programm mehr als einmal gleichzeitig abläuft, das ist nicht unbedingt in jeder Programmiersprache drin, also genau genommen in fast keiner.
+
+00:19:14.667 --> 00:19:26.167
+<v SPEAKER_1>Also wenn man sich das überlegt, es gibt Threads, in anderen Programmiersprachen nennt man diese gleichzeitige Ausführung von Code Threads.
+
+00:19:26.187 --> 00:19:27.607
+<v SPEAKER_2>Im Betriebssystem nennt man das Threads.
+
+00:19:29.287 --> 00:19:36.947
+<v SPEAKER_1>Also in manchen Sprachen nennt man das auch Prozesse. Also man kann die Begriffe nahezu austauschen.
+
+00:19:36.967 --> 00:20:29.667
+<v SPEAKER_2>Nee, darum geht's mir nicht, aber die Begrifflichkeit der Gleichläufigkeit oder Gleichzeitigkeit ist zuerst in den Betriebssystemen entstanden. Das heißt, man hat irgendwie nicht die Programmiersprache da drauf getunt, sondern man hat dasselbe Programm mehrere Male nebeneinander gelaufen lassen, ohne dass sie was voneinander wussten. Und wenn sie miteinander kommunizieren müssen, müssen sie das halt mit den Mitteln des Betriebssystems machen. Interprozesskommunikation, Shared-Memory und was ist da irgendwie, SEMA-Foren und was es da noch so alles gibt. So und dann ist es eben auch abhängig von den Leistungsfähigkeiten des jeweiligen Betriebssystems. Und in dem Moment, wo man das dann auf ein anderes Betriebssystem auch portieren möchte, ist man natürlich so ein bisschen außen vor, weil dann ist wieder alles ein bisschen anders und man muss die Software anpassen. Aber Erlang geht ja da jetzt einen ganz anderen Weg. Erlang sagt, Gleichläufigkeit ist einfach ein generelles Problem. Das brauchen wir in Telefonanlagen und was man in Telefonanlagen braucht, das braucht man auch sonst im Leben. Und wir bauen das quasi in die Programmier-Sprache ein. Habe ich das richtig verstanden?
+
+00:20:29.687 --> 00:20:42.887
+<v SPEAKER_1>Ja, ich würde das gar nicht so sehr als Gegensatz sehen. Was Betriebssysteme machen, diese Prozessverwaltung und die Kommunikation. Das wird einfach nochmal abstrahiert auf genau dieselbe Art und Weise.
+
+00:20:42.907 --> 00:20:50.887
+<v SPEAKER_2>Ja genau, aber als Programmierung braucht man nicht zu wissen, wie es im Betriebssystem funktioniert, sondern man bekommt es quasi von der Sprache schon ins Haus geliefert.
+
+00:20:50.907 --> 00:20:53.867
+<v SPEAKER_1>Das ist der Sinn und Zweck. So, jetzt kann man sich auch überdenken.
+
+00:20:53.887 --> 00:20:58.287
+<v SPEAKER_2>Wie drückt sich das denn aus in der Sprache?
+
+00:20:58.307 --> 00:21:14.407
+<v SPEAKER_1>Das drückt sich ungefähr so aus, wie man sich das auch vorstellen könnte. Es gibt ein Befehl, um Prozesse zu generieren, denzen sich Spawn. Und es gibt ein Befehl, um Nachrichten zu verschicken. Das ist ein Operator, nämlich der Ausrufezeichen-Operator, der sendet einfach eine Nachricht zu einem Prozess.
+
+00:21:14.427 --> 00:21:16.607
+<v SPEAKER_2>Und sagt Hallo, ich bin's.
+
+00:21:16.627 --> 00:21:29.267
+<v SPEAKER_1>Zum Beispiel sagt man Hallo oder man schickt eine Nachricht dahin, die ein Befehl ist oder man schickt irgendwas hin. Man kann sich das ungefähr so vorstellen, wie uns beide. Angenommen, ich wäre ein Erlang-Prozess und du wärst ein Erlang-Prozess.
+
+00:21:29.607 --> 00:21:32.727
+<v SPEAKER_2>Jetzt sind wir schon fast in diesem Video, wo sich diese Jungs dann auch so umsetzen.
+
+00:21:32.747 --> 00:21:35.927
+<v SPEAKER_1>Hallo Tim, kannst du mich hören?
+
+00:21:36.727 --> 00:21:42.547
+<v SPEAKER_2>Muss ich jetzt explizit darauf warten, dass irgendwas kommt oder werde ich einfach so davor in Kenntnis gesetzt, dass du mir gerade was gesagt hast?
+
+00:21:42.567 --> 00:21:54.667
+<v SPEAKER_1>So sieht's aus. Also ich gehe einfach davon aus, dass du gerade lebst und dass du mir auch antworten kannst. Und wenn du die Nachricht nicht verstanden hast, dann antwortest du mir vielleicht nicht oder du antwortest mit einer Fehlermeldung.
+
+00:21:54.687 --> 00:21:56.927
+<v SPEAKER_2>Muss ich antworten oder kann ich die einfach nur zur Kenntnis nehmen?
+
+00:21:56.947 --> 00:22:02.027
+<v SPEAKER_1>Du kannst ja auch nur zur Kenntnis nehmen. Oder ich kann auch so lange warten, bis du geantwortet hast oder eben nicht.
+
+00:22:02.387 --> 00:22:09.267
+<v SPEAKER_2>Okay, das heißt, du sagst hallo und du wartest auf eine freundliche Replik von mir und ich ignoriere das einfach und lasse dich da versauern.
+
+00:22:09.347 --> 00:22:12.567
+<v SPEAKER_1>Ich glaube, ich versuche das nochmal. Hallo Tim.
+
+00:22:12.587 --> 00:22:14.807
+<v SPEAKER_2>Hallo Ben.
+
+00:22:16.227 --> 00:22:22.627
+<v SPEAKER_1>So, genauso kann man sich das vorstellen im Erlang. Wir haben zwei Prozesse. Jetzt wird es ein bisschen komplizierter.
+
+00:22:22.647 --> 00:22:23.507
+<v SPEAKER_2>Noch komplizierter?
+
+00:22:23.527 --> 00:22:35.107
+<v SPEAKER_1>Und zwar gehe ich einfach davon aus, dass du Informationen bereitstellen möchtest, die mich interessiert. Die Information könnte nun lauten...
+
+00:22:35.127 --> 00:22:36.947
+<v SPEAKER_2>Wie viele Minuten wir jetzt schon gesprochen haben.
+
+00:22:36.967 --> 00:22:42.287
+<v SPEAKER_1>Zum Beispiel, das weiß ich nämlich nicht. Und dann frag dich einfach, wie viele Minuten haben wir eigentlich jetzt schon gesprochen?
+
+00:22:43.487 --> 00:22:46.107
+<v SPEAKER_2>Ja, ich glaube, wir haben schon 21 Minuten zusammen.
+
+00:22:48.307 --> 00:23:38.907
+<v SPEAKER_1>Und dir ist vielleicht etwas aufgefallen. Wir haben keinen gemeinsamen Speicherbereich verwendet. Kein Shared Memory, wir haben keine Logs gehabt. Wir hatten keine Semaphoren. Ich habe einfach so auf dich, auf deine Antwort gewartet. Ich habe keinen Deadlock-Gefahr gehabt, sondern du hast mir das einfach gesagt. Und genauso funktioniert das auch in der Erlang-Programmiersprache. Ich verwende keinen gemeinsamen Speicherbereich, sondern jeder Prozess hat ein eigenes Gehirn, eine eigene Message-Queue sozusagen. Wenn ich jemandem was schicke, wenn ich dir was sage, dann landet das erstmal in einer Message-Queue. Die kann man abfragen mit so einer Art Pattern-Matching, um auch zu wissen, was man überhaupt abfragen möchte. Und dann weiß ich das einfach. Ich muss nicht extra Speicherbereich anfordern. Es ist eine sehr hohe Sprache.
+
+00:23:39.767 --> 00:24:09.267
+<v SPEAKER_2>Noch mal die Frage, was ich vorhin meinte. Muss ich mich jetzt selber um das Empfangen kümmern? Funktioniert das so, dass immer eine Nachricht da ist, dass dann automatisch ein Stück Code von mir aufgerufen wird in meinem Thread, der das sozusagen wirklich unterbricht? Also ist das so ein Interrupt oder muss ich mich explizit darum kümmern, jetzt auch die Nächste, dass ich immer wieder in meinem Prozess dahin gehe und sage, jetzt gucke ich mal, ob wieder neue Nachrichten für mich da sind und danach tue ich erstmal nichts?
+
+00:24:09.287 --> 00:24:25.907
+<v SPEAKER_1>Ja, das Zweite ist der Fall. Intern ist es sicherlich so gelöst wie immer mit Interrupts und mit Speicherbereichen, aber tatsächlich muss man sich als Programmierer aktiv darum bemühen, die Nachrichten auszuwerten. Wenn dich die Nachrichten gar nicht interessieren, dann musst du die auch nicht auswerten.
+
+00:24:25.927 --> 00:24:29.987
+<v SPEAKER_2>Das heißt, dann stauen die sich dann einfach und es ist mir doch egal, wer mir dann Messages schickt?
+
+00:24:30.007 --> 00:24:46.227
+<v SPEAKER_1>Genau, üblicherweise. Es gibt spezielle Nachrichten, wie zum Beispiel die Nachricht, dass einer gestorben ist von uns beiden. Die würde ich dann auf jeden Fall bekommen. Angenommen, ich überwache dich gerade, weil du mir sowieso gegenüber sitzt und du stirbst jetzt, dann merke ich das. Und dann kann ich was dagegen tun.
+
+00:24:46.247 --> 00:24:53.987
+<v SPEAKER_2>Das ist schön, das beruhigt mich. Ich fühle mich immer so unsicher bei Podcasts, aber das ist jetzt echt vorbei.
+
+00:24:54.007 --> 00:25:23.207
+<v SPEAKER_1>Genauso ist das auch mit den Erlang-Prozessen. Die kann ich überwachen, die können sich gegenseitig überwachen. Und wenn einer stirbt oder wenn einer falsche Nachrichten sendet und dadurch ein anderer Prozess stirbt oder angenommen, wir hätten jetzt eine ganze Reihe von Leuten hier, die jeweils einen Erlang-Prozess repräsentieren. Und der Erste stirbt und der Zweite überwacht ihn. Und der Zweite stirbt deswegen auch, weil er das nicht versteht. Der verkraftet das einfach nicht und so weiter. Bis der Letzte sich denkt, boah, ich weiß, was zu tun ist. Ich hab die Lösung und der reanimiert die alle wieder.
+
+00:25:23.947 --> 00:26:04.747
+<v SPEAKER_2>Also diese Concurrency, die Nebenläufigkeit, ist eine Kerndesign-Vorgabe bei der Entwicklung von Erlang gewesen. Und das ist halt so, weil man von vornherein gesehen hat, im Telefonanlagenbereich geschehen die Dinge einfach gleichzeitig. Und man muss in der Lage sein, schnell zu reagieren. Wie du schon am Anfang gesagt hast, man möchte schnell, dass das Freizeichen kommt, man möchte, dass irgendwie aufgehängt wird, wenn der Hörer auf der Gabel ist. Und man möchte, wenn eine Taste gedrückt wird, auch sofort darauf reagieren. Und eine gute Telefonanlage und ein gutes Telefonnetz hat sich schon immer dadurch ausgezeichnet, dass es schnell ist. Wie toll war das noch in den 80er-Jahren, als man einen Hörer abgenommen hat und man hat sofort ein Freizeichen bekommen. Also wir sind mittlerweile schon so ein bisschen weg mit Voice-over-IP, wo das alles ganz schlimm wäre.
+
+00:26:04.767 --> 00:26:07.347
+<v SPEAKER_1>Ein Freizeichen.
+
+00:26:07.367 --> 00:27:00.407
+<v SPEAKER_2>Ja, aber das ist ja das, was gemeint ist. Und ich finde das insofern interessant und doppelt interessant, gerade im Hinblick auf dieses, da schreibt jetzt jemand ein Jabber-Server in so einer Programmiersprache. Ich meine, ich weiß noch, als das irgendwie so rumging, es gibt ja so e-Jabber-D, dann alle so, in welcher Programmiersprache ist das bitte Programmiersprache? Also Erlang hat ja noch wirklich keinerlei nennenswerte Verbreitung. Also weder jetzt, dass viele Leute damit programmieren würden, noch dass es so einen Mindshare hat wie C oder Pascal oder Basic oder was weiß ich. Aber trotzdem merkt man immer wieder die Leute, die in anderen Programmiersprachen kämpfen, wenn sie so etwas machen wollen, so einen Server, der mit ganz vielen Seiten sprechen muss und der ganz schnell auf alles zuverlässig reagieren muss, die haben dann erst mal ein Problem. Die haben dann gar keine Bordmittel, mit denen sie das so ohne Weiteres angeben können. Und das mag natürlich auch der Grund sein, warum sich dieses System an der Stelle zumindest für diesen einen Fall durchgesetzt hat. Wo kommt denn Erlang sonst noch zum Einsatz?
+
+00:27:00.427 --> 00:27:04.727
+<v SPEAKER_1>Also das ist wirklich eine der großen Stärken, ist eben diese Nebenläufigkeit.
+
+00:27:04.747 --> 00:27:11.947
+<v SPEAKER_2>Wo kommt denn Erlang zum Einsatz? Es werden ja vor allem Telefonanlagen damit pur, oder?
+
+00:27:11.967 --> 00:28:13.347
+<v SPEAKER_1>Es gibt noch eine Software, die man vielleicht gesehen hat, wenn man Stress-Testing machen möchte. Wenn du einen Webserver geschrieben hast, zum Beispiel, du möchtest jetzt mal ein paar Anfragen darauf starten, um zu sehen, wie viel hält der Webserver eigentlich aus. Oder wenn du einen Javaserver geschrieben hast, du möchtest den Stress testen, da gibt es eine Software, die nennt sich Zung. Auch in Erlang geschrieben. TS-UNG. Das kannst du mal wieder in deinem...... Fahren Sie fort. Die basiert eben auch auf Erlang und die macht es so. Die simuliert einen Client, in dem ein Prozess erzeugt wird. Das können dann auch mal 100.000 Millionen, wie viel auch immer Prozesse sein. Alleine daran sieht man schon, wie leichtgewichtig diese Erlang-Prozesse eigentlich sind. Man kann auch einen Performance-Test machen auf meinem ziemlich langsamen MacBook hier. Da gehen da schon mal 20.000, 30.000 Prozesse zu erzeugen und wieder zu beenden pro Sekunde.
+
+00:28:14.547 --> 00:28:23.427
+<v SPEAKER_2>So, Distributed Load Testing Tool. Und das ist auf erlangprojects.org gehostet. Interessant, sowas gibt es also.
+
+00:28:23.447 --> 00:28:26.867
+<v SPEAKER_1>Ja, da siehst du vielleicht auch ein paar andere, unbekanntere Projekte auf der Seite.
+
+00:28:26.887 --> 00:28:28.847
+<v SPEAKER_2>Das gelingt mir gerade noch nicht so ganz.
+
+00:28:30.167 --> 00:28:34.087
+<v SPEAKER_1>Es gibt auch ein Framework. Vielleicht kennst du Ruby on Rails.
+
+00:28:34.107 --> 00:28:39.267
+<v SPEAKER_2>Natürlich. Hat mir hier auch schon Chaosradio Express 72 ein bisschen beleuchtet.
+
+00:28:39.287 --> 00:29:02.787
+<v SPEAKER_1>Das hat unter anderem als Konzept eine Art Datenbank-Abstraktion, dass man sich vorher überlegt, was möchte ich eigentlich abbilden. Dann beschreibe ich das irgendwie abstrakt. Und wie das nun in der Datenbank tatsächlich abgebildet wird, das übernimmt mein Framework für mich. Das gibt es auch in Erlang, nennt sich Early Web. Da es nicht so verbreitet ist, vielleicht auch nicht ganz so ausgereift, aber es gibt es und es funktioniert.
+
+00:29:02.887 --> 00:29:08.007
+<v SPEAKER_2>Also Early Web sozusagen als Light-Wide Web Development Framework, meinst du?
+
+00:29:08.027 --> 00:29:23.127
+<v SPEAKER_1>Genau, basierend auf Erlang. Dann kann man sich auch überlegen, dass es logischerweise einen Web-Server dafür gibt. Mindestens einen, tatsächlich gibt es mehrere, aber einen bekannten. Jaws nennt er sich. Oder Jaws, je nachdem, wie du es aussprechen möchtest, aber eigentlich Jaws. Y-AWS.
+
+00:29:30.207 --> 00:31:14.027
+<v SPEAKER_2>Web-Server in Erlang, das ist doch toll, weil Web-Server haben wir auch dieses Problem, dass sie meistens viel zu groß sind und dann irgendwie nicht so richtig skalieren. So eine Apache mag ja für so eine General-Purpose-Webseite ganz gut sein, aber alle Leute, die wirklich High-Performance brauchen, also wo wirklich schnell was passiert, sind dann immer schnell am Ächzen und Stöhnen, weil man das Ding dann eben mühsam feintunen muss oder die Maschinen mit entsprechenden Ressourcen versehen muss, damit das Ding ordentlich durchatmen kann. Also wir verwenden zum Beispiel bei Chaosradio Express den Light, hat es die PD, und das ist an der Stelle auch schon mal ein echter Fortschritt. Also das ist, glaube ich, auch ein Trend. Wir erleben jetzt so eine generelle globale Entwicklung im Software-Development. Man hat jetzt so die ersten 20 Jahre sich durchgemüht und die ersten 10 Jahre Internet auch hinter sich gebracht. Also so seit dem Web mal jetzt grob gerechnet, seitdem es so richtig eingeschlagen hat, man weiß, man braucht solche Anwendungen. Während am Anfang es alles noch um Funktionalität und Features ging, kommt jetzt ein zunehmender Maße Sachen rein, wie Sicherheit, Skalierbarkeit, Zuverlässigkeit, Robustness, und insbesondere die Skalierbarkeit ist ein ganz großes Problem. Da hat irgendwie so ein kleines Projekt mal was gehackt, auf einmal wird das Scheiße erfolgreich und irgendwie zwei Stunden später fliegen alles um die Ohren und sie haben überhaupt gar keine Möglichkeit durch das irgendwie hinzufügen von RAM oder Festplatten oder Prozessoren daran irgendwas zu drehen, weil eben einfach die Software nicht skaliert, weil einfach die Programmierplattform selbst ist nicht erlaubt, da einfach mal so den Hebel hochzulegen und zu sagen, so das Ganze machen wir jetzt mal mit einer Null hinten dran und dann soll das bitte noch genauso funktionieren.
+
+00:31:14.047 --> 00:31:18.687
+<v SPEAKER_1>Das haben wir einige Male erlebt im letzten Jahr. Twitter wäre ein Beispiel.
+
+00:31:18.707 --> 00:31:26.627
+<v SPEAKER_2>Genau, Twitter ist auch so ein Ding, was die ganze Zeit irgendwie aus dem Leim geht. Ja, wir haben gerade keine guten Beispiele, aber Twitter ist wirklich ein gutes Beispiel.
+
+00:31:26.647 --> 00:31:27.727
+<v SPEAKER_1>Das ist glaube ich das Beispiel.
+
+00:31:27.747 --> 00:31:41.227
+<v SPEAKER_2>Das ist vielleicht gerade echt wirklich das Beispiel, aber da gäbe es bestimmt noch eine ganze Menge anderen, die auch aus dem Leim gehen würden, wenn sie denn mal populär werden würden. Das muss man ja auch erst mal erreichen.
+
+00:31:42.267 --> 00:32:15.967
+<v SPEAKER_1>Ja, du siehst daran schon, für welche Art Anwendung die Sprache eigentlich gebaut ist, nicht etwa für Guise oder für was auch immer, sondern eher für Server-Prozesse. Ich habe eine Anwendung, wo viele User da sind, ich habe viele gleichzeitige Abläufe und ich möchte die irgendwie abbilden in meine Programmiersprache. Da käme ich jetzt nicht auf die Idee und sage, die und die Sprache in C kann ich aber viel schneller per regular expressions parsen. Ja, dafür ist Erlang nicht gedacht. Das macht man dann auch in C.
+
+00:32:15.987 --> 00:32:32.627
+<v SPEAKER_2>Jetzt hast du ja gesagt, Vorgabe waren so Concurrency, Robustness, Distribution. Jetzt haben wir die Concurrency schon so ein bisschen beleuchtet. Was macht denn die Robustness, also die Robustheit, die Widerstandsfähigkeit eines solchen Erlangsprogramms aus, oder der Sprache an sich?
+
+00:32:32.827 --> 00:32:42.147
+<v SPEAKER_1>Ja, die Sprache selbst hat natürlich so eine Art Try-Catch-Konstrukt, wie man das aus anderen Sprachen kennt. Wenn ich einen Fehler habe, dann kann ich den abfangen.
+
+00:32:42.167 --> 00:32:43.187
+<v SPEAKER_2>Also Exception-Management?
+
+00:32:43.207 --> 00:33:01.507
+<v SPEAKER_1>Ja, Exception-Management. Ich kann aber auch einfach davon ausgehen, wenn ich abstürze, wie das eben schon der Fall war mit dem Sterbebeispiel, dann kriegt das jemand mit. Dann werden Nachrichten in der Gegend rumgeschickt. Das ist eine Art erweiterte Exception, die übertragen wird zu anderen Prozessen, die gleichzeitig laufen.
+
+00:33:01.527 --> 00:33:03.087
+<v SPEAKER_2>Was heißt denn Sterben? Also wie kann ich denn sterben?
+
+00:33:03.107 --> 00:33:08.727
+<v SPEAKER_1>Ich habe einen Programmierfehler gemacht und zum Beispiel...
+
+00:33:08.747 --> 00:33:10.427
+<v SPEAKER_2>Gibt es auch so Pointer?
+
+00:33:10.447 --> 00:34:21.047
+<v SPEAKER_1>Es gibt keine Pointer. Nein, aber zum Beispiel kann ich mir vorstellen, es wurde Code geschrieben, der ist aber noch nicht im System drin oder wird nicht gefunden. Den referenziere ich nun oder ich habe mich vertippt und dann wird er nicht gefunden, passiert ein Fehler. Ein Programmierfehler einfach. So was passiert, das stürzt ab. Dieser Teil des Prozesses stürzt ab, dann kann ich den Fehler entweder abfangen oder der ganze Prozess beendet sich und sendet an den Prozess, der ihn erzeugt hat, eine Nachricht. Und der kann dann wieder entscheiden, ja, will ich den erst neu starten oder was auch immer, eine Fehlerbehandlung einbauen auf diese Weise. Ein großer Vorteil dabei ist im Erlang-System, dass dieser überwachende Prozess nicht auf demselben System laufen muss. Ich kann jetzt mir überlegen, ich habe einen Rechner, der überwacht nur alle und einen zweiten Rechner, der arbeitet nur, weil er sowieso einen schnelleren Prozessor hat zum Beispiel. Das ist eine große Robustness. Also die drei Faktoren, Concurrency, Distribution und Robustness, die spielen gut zusammen. Das eine basiert auf dem anderen.
+
+00:34:21.547 --> 00:34:50.727
+<v SPEAKER_2>Okay, das heißt, man muss auch einmal ein bisschen erklärt haben, um das Einzelne gut zu verstehen. Dann vielleicht nochmal auch gleich so der Sprung auf diese Verteiltheit. Also eine andere Frage hatte ich noch. Werden denn solche Sachen wie SREDS im Betriebssystem, also sozusagen die Nebenläufigkeit, die das Betriebssystem bereitstellt, auch im Hinblick auf mehrere Cores von Erlang genutzt? Also wenn ich jetzt so einen Prozessor habe, also mit mehreren Cores, laufen dann zwei Erlang-SREDS innerhalb eines Programms dann auch verteilt auf zwei Programmen?
+
+00:34:51.907 --> 00:35:35.067
+<v SPEAKER_1>Tatsächlich gibt es da zwei Möglichkeiten. Die eine Möglichkeit ist, dass das Erlang tatsächlich schon kann. Und das hängt wie gesagt vom Betriebssystem ab, also so für die gängigen Unixe und Linuxe und Windows und so weiter, ist das so implementiert, dass SMP-Support vorhanden ist. SMP Symmetric Multi-Processing Support heißt das, also genau die Funktionalität, die du eben beschrieben hast. Wenn es das Erlang aus irgendeinem Grund nicht kann, dann kann man einfach zwei Erlangs starten, die dann vom Betriebssystem her hoffentlich auf zwei CPUs laufen oder drei oder vier und die kommunizieren einfach miteinander. Das wird auf diese Weise verteilt.
+
+00:35:35.087 --> 00:35:47.127
+<v SPEAKER_2>Verstehe, das heißt und das ist dann in der Programmierung auch kein großer Unterschied, also ist das Kommunizieren mit einem anderen Thread innerhalb desselben Erlangs genauso, wie das Kommunizieren mit einem anderen Erlang auf einem anderen Computer?
+
+00:35:47.147 --> 00:36:00.027
+<v SPEAKER_1>Im Prinzip ist es fast gleich. Es gibt einen Unterschied, ich kann explizit sagen, ich habe einen lokalen Prozess, der soll auch nur lokal bleiben. Oder ich kann sagen, der Prozess, der soll global freigegeben werden. Da können andere Erlangs darauf zugreifen.
+
+00:36:00.047 --> 00:36:02.087
+<v SPEAKER_2>Aber das Senden der Nachrichten und so weiter, das Ausliefern?
+
+00:36:02.107 --> 00:36:02.767
+<v SPEAKER_1>Das ist völlig identisch.
+
+00:36:02.787 --> 00:36:23.307
+<v SPEAKER_2>Das ist dasselbe. Das heißt, da muss ich eigentlich an meinem Code gar nichts ändern. Genau. Das heißt, diese Nebenläufigkeit, diese Concurrency in dem Sinne ist auch dieselbe Basis wie die Verteiltheit. Das ist von vornherein so verteilt, dass es sowohl innerhalb eines Prozesses, eines Rechnerprozesses verteilt sein kann, als auch eben über Rechner verteilt.
+
+00:36:23.667 --> 00:36:24.327
+<v SPEAKER_1>So ist es.
+
+00:36:24.347 --> 00:36:30.007
+<v SPEAKER_2>Und was wird dann als Transport benutzt, wenn ich jetzt so zwei Maschinen habe? Ich meine, da ist ja dann irgendwie noch so eine Wolke dazwischen.
+
+00:36:30.027 --> 00:36:37.607
+<v SPEAKER_1>Ja, tatsächlich gibt es da ein eigenes Protokoll, das extra dafür erfunden wurde. Man kann sich auch Gedanken über die Sicherheit machen.
+
+00:36:37.627 --> 00:36:38.887
+<v SPEAKER_2>Das Erlang-Cloud-Protokoll?
+
+00:36:39.427 --> 00:36:40.867
+<v SPEAKER_1>Ja, ja, so ähnlich.
+
+00:36:40.887 --> 00:36:41.227
+<v SPEAKER_2>So ähnlich?
+
+00:36:42.107 --> 00:36:43.887
+<v SPEAKER_1>Ich weiß gar nicht, ob das einen Namen hat.
+
+00:36:43.907 --> 00:36:48.347
+<v SPEAKER_2>Okay, aber es gibt irgendwie einen Erlang-Message von einem zum anderen über Schick-Protokoll.
+
+00:36:48.367 --> 00:36:56.207
+<v SPEAKER_1>Ja, es gibt da ein sinnvolles Protokoll, das auch darauf achtet, dass irgendwie Little-Endian, Big-Endian nicht vertauscht wird und das immer gleich serialisiert.
+
+00:36:56.227 --> 00:37:00.547
+<v SPEAKER_2>Erlang ist ja keine Skript-Sprache, ne? Wird richtig, also wird das, oder?
+
+00:37:00.567 --> 00:37:16.127
+<v SPEAKER_1>Ja, um das mal kurz einzustreuen, ja, es wird vorkompiliert in Bytecode, der dann vom Erlang-System interpretiert wird. Aber ich kann es auch on the fly kompilieren mit so einer Art Skript. Nämlich e-Skript nennt sich das.
+
+00:37:16.147 --> 00:37:18.227
+<v SPEAKER_2>Ach so, wo man dann sozusagen so e...
+
+00:37:18.247 --> 00:37:22.267
+<v SPEAKER_1>Ich will nur mal eben zwei Zeilen schreiben, dann mach ich das als e-Skript.
+
+00:37:22.287 --> 00:37:26.287
+<v SPEAKER_2>Aber ansonsten ist es eher so wie Java, das heißt, es gibt ein Pseudocode, und der wird dann irgendwie von der Rante ausgeführt.
+
+00:37:26.307 --> 00:37:32.367
+<v SPEAKER_1>Genau, der ist auch völlig unabhängig von der Architektur. Ja, wo waren wir stehen geblieben vorher?
+
+00:37:33.127 --> 00:37:43.627
+<v SPEAKER_2>Generell noch diese Message-Verteilung und das Protokoll zwischen zwei Instanzen. Also wie diese Verteilung jetzt real funktioniert, was ich sozusagen bereitstellen muss, damit es auch wirklich läuft.
+
+00:37:43.647 --> 00:38:10.987
+<v SPEAKER_1>Man kann sich ja vorstellen, dass jetzt zwei Rechner einfach Erlang starten, das reißt erstmal noch nicht aus. Sondern man muss den Rechnern und den einzelnen Erlang-Instanzen noch Namen geben. Zum Beispiel nenne ich mein Erlang Rechner 1, Erlang 1 add Rechner 1, und deins ist Erlang 2 add Rechner 2. Der benutzt tatsächlich auch den DNS, um den anderen Rechner zu finden.
+
+00:38:11.007 --> 00:38:11.627
+<v SPEAKER_2>Das du mein nimmst?
+
+00:38:15.207 --> 00:38:37.567
+<v SPEAKER_1>Dann vertrauen die sich noch nicht automatisch. Man muss noch einen Cookie austauschen, das ist einfach ein String. Dann vertrauen die sich und man kann gemütlich Prozesse verteilen, wie man möchte. Ich kann noch explizit sagen, ich starte jetzt auf deinem Erlang einen Prozess oder ich kann auch einfach eine Applikation starten, die das automatisch verteilt nach Kriterien, die man vorher definiert.
+
+00:38:37.587 --> 00:39:00.507
+<v SPEAKER_2>Aber wie macht man denn das mit Speicher? Ich meine, wenn jetzt so zwei Prozesse in dem einen oder anderen auf demselben Rechner laufen, also innerhalb eines Computerprozesses, dann weiß man, die haben irgendwie denselben RAM und wenn ich jetzt auf gleiche Datenstrukturen zugreifen will, dann sind die ja eh da. Aber wenn ich jetzt etwas delegieren will an einen Prozess, der auf einmal an einen Computer läuft, wie kommt der denn dann an die Daten ran?
+
+00:39:00.527 --> 00:39:02.547
+<v SPEAKER_1>Die werden einfach serialisiert übertragen.
+
+00:39:02.567 --> 00:39:08.207
+<v SPEAKER_2>Das heißt, es muss dann immer alles mitübertragen werden. Also er kann nur auf die Daten reagieren, die ich ihm auch schicke.
+
+00:39:08.227 --> 00:39:16.167
+<v SPEAKER_1>Es werden immer alle Daten mitgeschickt, das ist wahr. Das klingt auf den ersten Blick ein bisschen viel. Tatsächlich ist es nicht viel.
+
+00:39:16.887 --> 00:39:38.267
+<v SPEAKER_2>Ja gut, aber wenn man jetzt, man hat jetzt was, was ich, so eine riesige Konfigurationsdatei, die am Anfang beim Starten, was weiß ich, so eine Telefonanlage, die hat ja irgendwie alle möglichen Konfigurationen, keine Ahnung, welche Nebenstellen es gibt, wie die heißen, wie die konfiguriert sind, was sie dürfen, was die nicht dürfen, das muss ja irgendwo stehen. Lagert man das dann in so eine Datenbank aus?
+
+00:39:39.307 --> 00:39:49.627
+<v SPEAKER_1>Ja, das lagert man in eine Datenbank aus. Tatsächlich gibt es auch eine Datenbank, die extra für Erlang programmiert wurde, die nennt sich Mnesia, angelegt an Mnesia.
+
+00:39:50.487 --> 00:39:51.547
+<v SPEAKER_2>Ohne das A?
+
+00:39:51.567 --> 00:39:52.487
+<v SPEAKER_1>Ohne das A.
+
+00:39:52.507 --> 00:39:59.487
+<v SPEAKER_2>Ah, das heißt A. Mnesia, okay, das ist eine sehr positive Deutung.
+
+00:39:59.647 --> 00:40:38.327
+<v SPEAKER_1>Ja, es ist keine Programmiersprache, die man mit SQL abfragt, sondern eine Sprache, die man mit einer Erlang-Syntax abfragt, die ähnlich der Erlang List Comprehensions funktioniert. List Comprehensions kann man sich ungefähr so vorstellen, wie man aus der Mathematik Wertebereiche definiert. Also zum Beispiel für alle x gilt mhmhmhm. Und dann hat man Bedingungen. Und in Erlang funktioniert das genauso, da sage ich einfach, ich will jetzt das Element x haben, und das Element x kommt aus der Tabelle so und so und hat die und die Bedingungen. Und ungefähr so schreibt man das auch hin in der speziellen Erlang-Syntax.
+
+00:40:38.347 --> 00:40:51.587
+<v SPEAKER_2>Ist das dann so eine hierarchische Datenbank? In was speichert man da? Hat man da auch diese Vorstellungen wie in Relations-Datenbanken, so mit Tabellen? Oder ist das mehr so objektorientiert? Oder ist das mehr so eine Direktur?
+
+00:40:51.607 --> 00:41:05.807
+<v SPEAKER_1>Man speichert in Tabellen Erlang-Konstrukte. Es gibt nur ganz wenige Datentypen, zum Beispiel eine Liste oder ein Tupel. Und die kann ich so, wie sie sind, einfach in die Datenbank reinschreiben. Und wenn ich sie später brauche, genauso wieder rauslesen.
+
+00:41:06.607 --> 00:41:11.747
+<v SPEAKER_2>Okay, das heißt, ich schreibe eigentlich schon so Datenstrukturen, wie sie auch im Programm verwende, da rein?
+
+00:41:11.867 --> 00:41:20.607
+<v SPEAKER_1>Ja, ich muss mich nicht darum kümmern, dass ich extra eine Abbildung finde, wie ich nun meine Datenstruktur in diese Datenbank reinbekomme, außer für Optimierungszwecke.
+
+00:41:20.627 --> 00:41:26.947
+<v SPEAKER_2>Was für Datenmodelle kann denn Erlang in der Programmiersprache so? Also, ist ja nicht objektorientiert.
+
+00:41:26.967 --> 00:41:44.307
+<v SPEAKER_1>Um es mal vereinfacht zu sagen, es kann Listen und Tupels, was im Wesentlichen auch Listen sind mit einer festen Länge. Und dann natürlich noch so die üblichen Integer, Floating Point und interessanterweise werden Strings auch als Listen abgebildet. Das kennt man ja von Python vielleicht.
+
+00:41:44.327 --> 00:41:47.207
+<v SPEAKER_2>Okay, aber da kommt auch die Nähe zu Lisp wieder hervor.
+
+00:41:47.227 --> 00:41:48.827
+<v SPEAKER_1>Ja, genau.
+
+00:41:48.847 --> 00:41:55.967
+<v SPEAKER_2>Okay, das heißt, das erleichtert ja sozusagen den Aufbau von so hierarchischen Datenstrukturen, wie man das eben von XML zum Beispiel kennt.
+
+00:41:57.127 --> 00:42:42.987
+<v SPEAKER_1>Ja, also das wird sehr erleichtert. Tatsächlich, wenn man sich überlegt, wie könnte man zum Beispiel ein Programm von einer objektorientierten Struktur übertragen in eine prozessorientierte Struktur wie bei Erlang? Dann kann man sich überlegen, eine Instanz eines Objektes, die hoffentlich zu einem Zeitpunkt genau dasselbe tut wie eine zweite Instanz, optimalerweise, könnte ich dann deswegen übertragen, ein Prozess ist ein Objekt, ein anderes Prozess ist ein anderes Objekt und bei der Objektorientierung würde ich jetzt nun eine Funktion des anderen Objekts aufrufen. Ich kann überlernen, kann ich von einem Prozess eine Nachricht an den anderen schicken und warte, bis die Antwort kommt. Das ist also sehr leicht übertragbar.
+
+00:42:43.007 --> 00:44:22.827
+<v SPEAKER_2>Viele Programmiersprachen bilden ja auch so diesen Aufruf von Funktionen auch selber als Methoden ab. Also Smalltalk zum Beispiel, da ist das ja auch immer schon so dieses Message-Passing-Modell gewesen. Diese Datenbank, ist das sehr verbreitet in der Erlang-Anwendung? Also ist das so wirklich so das, was man dann auch verwendet? Oder ist das jetzt nur so, könnte man auch nehmen, da haben wir uns schon mal die Zeit gefunden, sich damit zu beschäftigen. Ich finde, das ist eigentlich eine sehr angenehme Eigenschaft, wenn man seine eigene Vorstellungswelt da nicht verlassen muss als Programmierer. Also ich hatte jetzt auch vor zwei Podcasts, haben wir uns ja über Soap und Plon unterhalten, in Python geschriebene Web Development Frameworks. Und das Soap ist ja auch ein Subsystem, was dann erstmal dem Programmierer ein ganz mächtiges Werkzeug in die Hand gibt, nämlich eine Object Database. Das heißt, die Objekte, mit denen ich in meiner Programmiersprache ohnehin schon nativ arbeite, die kann ich da einfach drin versenken und dann sind die da einfach drin. So, muss man, wie die gespeichert sind, keine großen Gedanken machen, so dieses Serialisieren und so weiter, das geschieht dann halt alles automatisch. Und man muss vor allem nicht umdenken, weil dieses weit verbreitete SQL, was immer so gelobt wird und unsere tolle Datenbank und so weiter, die macht irgendwie SQL, das ist zwar ganz schön, um mal so ein paar kleinere Sachen zu machen, aber jeder, der schon mal so eine komplexe Datenstruktur in seinem Programm gehabt hat, der weiß, irgendwann wird man wahnsinnig, weil man eigentlich nur noch damit beschäftigt ist, eine Übersetzung zu finden von dem, was man halt eigentlich so in der Hand hat, zu dem, wie es dort abgelegt werden soll und wieder zurück.
+
+00:44:24.487 --> 00:45:27.867
+<v SPEAKER_1>So sieht's aus. Es ist natürlich sehr angenehm, dass man Mesier verwenden kann. Ich mache es relativ selten. Denn natürlich möchtest du den Grund wissen. Üblicherweise hat man schon eine Datenstruktur. Ich habe schon eine I2L-Datenbank und ich habe schon meine Postgres-Datenbank. Da sind schon die Daten drin, jetzt möchte ich darauf zugreifen. Und dann mach ich das auch, dann überlege ich mir nicht, wie kann ich denn die Daten portieren und dann irgendwas damit machen? Nein, dann verwende ich das einfach, weil es leichter ist. Ein großer Vorteil dieser Media-Datenbank ist, dass sie auch verteilt ist. Da sie auf Erlang basiert, kann ich die einfach verteilen. Ich kann 20 Rechner aufstellen und sagen, der eine Rechner hält diese eine Tabelle nur im RAM für den schnellen Zugriff, der andere Rechner hält die andere Tabelle nur auf der Platte für Ausfallsicherheit und die synchronisieren sich automatisch. Das ist ein großer Vorteil. Der Nachteil ist, man muss sich erstmal mit dieser Datenbank auseinandersetzen, denn sie ist neu, sie basiert nicht auf SQL. Wenn man das noch nicht gesehen hat, ist das eine gewisse Einarbeitung.
+
+00:45:27.887 --> 00:45:50.367
+<v SPEAKER_2>Ja, aber das kann sich ja manchmal lohnen. Ich zum Beispiel mache viel mit XSLT und so. Also meine Datenbank ist XML. Und da kann ich halt auch meine Daten ganz anders modellieren. Würde ich das irgendwie mit SQL machen, wird wahnsinnig werden. Aber wofür setzt du denn Erlang selber ein? Vielleicht mal die Frage.
+
+00:45:50.387 --> 00:45:58.227
+<v SPEAKER_1>Neben dem offensichtlichen, nämlich für E-Jab-AD, verwende ich Erlang auch als Backend für eine POC-Anwendung.
+
+00:45:58.247 --> 00:46:01.127
+<v SPEAKER_2>Bekommst du das mit E-Jab-AD?
+
+00:46:01.147 --> 00:46:12.027
+<v SPEAKER_1>Nein, ich verwende das lediglich. Ich verwende das auch beruflich, davon abgesehen. Und dafür programmiere ich dann auch was für den E-Jab-AD. Aber hauptsächlich verwende ich es privat oder im POC eben.
+
+00:46:12.047 --> 00:46:12.747
+<v SPEAKER_2>Für die Telefonanlage.
+
+00:46:13.147 --> 00:46:13.847
+<v SPEAKER_1>Für die Telefonanlage.
+
+00:46:13.867 --> 00:46:18.587
+<v SPEAKER_2>Das heißt, die Telefonanlage, die wir hier alle benutzen, die läuft tatsächlich unter Erlang?
+
+00:46:18.607 --> 00:46:18.807
+<v SPEAKER_1>Nein.
+
+00:46:19.307 --> 00:46:20.027
+<v SPEAKER_2>Tut sie nicht?
+
+00:46:20.047 --> 00:47:03.227
+<v SPEAKER_1>Nein, nein. Tatsächlich läuft die unter einem BSD mit irgendwelcher AC-Software und so weiter, denn es ist keine Ericsson-Telefonanlage. Aber das Management dafür, das läuft teilweise mit einer Software, die im Backend Erlang verwendet, denn es ist eine Backendsprache. Das Frontend ist dann so eine Webbrowser-Geschichte. Das Backend ist eben Erlang. Das funktioniert sehr gut. Dann verwende ich das noch für verteilte Anwendungen im Asterisk. Wir haben hier einen Asterisk aufgesetzt. Und wenn mehrere Leute dieselbe Anwendung anrufen, dann ist es nun vorstellbar, dass diese Anwendung auch miteinander kommuniziert. Ähnlich wie bei einem Multi-User-Dungeon.
+
+00:47:08.787 --> 00:47:23.287
+<v SPEAKER_2>Du wählst die Sprache strategisch immer genau da für die Projekte aus, wo sie ihre Stärken ausspielen kann. Ich vermute mal, diese Verteiltheit reizt dich da fast noch am meisten, oder?
+
+00:47:23.307 --> 00:47:51.927
+<v SPEAKER_1>Ja, es ist wohl ein Zusammenspiel der Funktionalität. Tatsächlich wird auch in Proc, werden auch andere Programmiersprachen verwendet für andere Anwendungszwecke. Da muss man nicht sagen, hier ich lobe Erlang über alles und verwende das jetzt für beliebige Probleme, auch wenn die noch so wenig dazu passen. Wenn, dann verwendet man diese Sprache auch nur für die Probleme, die wirklich zutreffen, nämlich für Server-Kommunikation, für Verteiltheit, für diese Gleichzeitigkeit. Das sind die Anwendungsfälle.
+
+00:47:51.947 --> 00:47:56.707
+<v SPEAKER_2>Verwendet nicht auch Amazon Erlang in irgendeinem Projekt?
+
+00:47:56.727 --> 00:48:16.567
+<v SPEAKER_1>Du beziehst dich bestimmt auf die Simple DB. Ein Dienst von Amazon ist im Wesentlichen eine Datenbank, wo man Daten reinschreiben kann. Dann werden die gespeichert. Genau das, was man von einer Datenbank erwartet. Die basiert wohl auch auf Erlang, ist aber nicht open source. Leider. Ich hätte mit dem Code gerne mal angesehen.
+
+00:48:17.287 --> 00:48:21.307
+<v SPEAKER_2>Gilt das auch für dieses S3-System am Ende noch?
+
+00:48:21.327 --> 00:48:24.327
+<v SPEAKER_1>Das ist höchstens gerüchteweise bekannt.
+
+00:48:24.347 --> 00:49:40.187
+<v SPEAKER_2>Das kann ich dir nicht sagen. Amazon macht da ja auch etwas total Spannendes, wie ich finde. Die haben natürlich jetzt sowieso, um ihren Shop zu treiben, haben sich über die Jahre eine unglaubliche Infrastruktur aufgebaut. Die haben irgendwie Data-Center, Tralala, was nicht alles. Jetzt haben sie sich gedacht, den Bedarf, den wir haben, den haben auch viele andere, wenn auch in kleineren Fällen. Warum sollen wir denn nicht, wenn wir das eh schon haben, damit auch noch mal Geld verdienen und haben dann zum Beispiel diesen S3-Service aufgebaut, nach dem Motto, ihr wollt was im Internet speichern, was hohe Verfügbarkeit haben soll, naja, dann hier. Dann kann man sich da irgendwie schnell in ein Account klicken und dann hat man da irgendwie so seinen Bucket. Dann kann man da einfach so Daten reinschmeißen und dann sind die da. Dann zahlt man halt irgendwie für Treffik und wie viel Speicher man belegt und alles ist super. Das heißt, ein Modell, was darauf aufbaut, dass man ganz, ganz, ganz viele Kunden hat, die alle mehr oder weniger kleine Sachen bereitstellen. Sprich, hier kommt wieder dieser Aspekt mit dieser Skalierbarkeit rein. Das ist dann etwas, wo dann potenziell auch unglaublich viele Leute darauf zugreifen. Sachen, die einfach sehr hoch verfügbar sein müssen und wo es nicht lange dauern kann. Von daher würde ich schon mal fast vermuten, dass sie das dann auch einsetzen, wenn sie es eben für dieses SimpleDB nachweislich schon eingesetzt haben.
+
+00:49:40.207 --> 00:49:42.007
+<v SPEAKER_1>Das böte sich definitiv an.
+
+00:49:42.027 --> 00:49:47.987
+<v SPEAKER_2>Ist das denn eine verlässliche Information, dass dieses SimpleDB in Erlang geschrieben ist oder mutmaßen wir hier?
+
+00:49:52.607 --> 00:49:55.447
+<v SPEAKER_1>Es ist wohl ein sehr beständiges Gerücht, das wurde nicht dementiert.
+
+00:49:55.467 --> 00:50:11.587
+<v SPEAKER_2>Gut, ein sehr beständiges Gerücht, das sollte für Chaosradio Express ausreichen. Was gibt es denn noch für schöne Eigenschaften, die du noch zum Besten geben möchtest, um das Erlang zu preisen?
+
+00:50:12.407 --> 00:51:37.147
+<v SPEAKER_1>Wenn man sich überlegt, wie lange es die Sprache schon gibt, selbst 10 Jahre Open Source, dann kann man sich genau so überlegen, da hat vielleicht der ein oder andere schon mal etwas programmiert. Tatsächlich gibt es eine sehr große Klassenbibliothek, die nennt sich OTP, Open Telekom Plattform. Da findet man so alle gängigen Problemlösungen. Zum Beispiel ganz Low-Level-Probleme. Ich habe eine Tupelliste beispielsweise, also Key Value, Key Value, Key Value in einer Liste. Ich möchte die z.B. sortieren oder umkehren, oder ich suche ein Element oder sonst irgendwelche diese Low-Level-Sachen, die sind alle sehr, sehr effizient programmiert, weil man die auch ständig benötigt. Dann ist in dieser OTP-Bibliothek auch die Nidia-Datenbank Teil davon. Und es gibt generelle Konstrukte, konzeptionelle Konstrukte, wie zum Beispiel für eine kleine Server-Architektur. Da kann man sich überlegen, wenn ich innerhalb meiner Anwendung einen Client habe und einen Server, dann hat das schon mal jemand programmiert und es wurde sozusagen templateartig oder in Erlang heißt das Behavior, wurde schon mal programmiert und man kann einfach dieses Programmierschema übernehmen, indem man einfach dieses Behavior startet und parametrisiert und konfiguriert.
+
+00:51:37.627 --> 00:51:41.787
+<v SPEAKER_2>Wird das durch Spracheigenschaften gefördert? Solche Behavior-Sachen, dass man irgendwie so...
+
+00:51:41.807 --> 00:51:50.767
+<v SPEAKER_1>Es gibt tatsächlich einen Befehl, der heißt Behavior, der überprüft zur Compile-Zeit, ob auch alle Funktionen da sind, die man wirklich dafür braucht.
+
+00:51:50.807 --> 00:52:01.907
+<v SPEAKER_2>Also was in anderen Sprachen so unter Interfaces bekannt ist, beziehungsweise wenn man mehrfach Vererbung hat, unter Umständen auch sozusagen direkt als Funktionalität in das Programm hineingereicht wird.
+
+00:52:04.947 --> 00:53:03.287
+<v SPEAKER_1>Ich würde sagen, es entspricht etwa Templates. Templates aus C++. Also es ist schon ein Teil fertig, ein anderer Teil muss noch programmiert werden. Und der eine Teil ist überwiegend so ein Teil, den man immer wiederkehrend hat. Zum Beispiel überprüfe ich immer wieder meine Message-Queue vom Prozess und gucke, ist da was, was mich interessiert. Und dann ändere ich vielleicht den aktuellen Status, den ich so habe, mitführe. Und dann warte ich wieder auf die Nachricht. Das muss ich nicht jedes Mal selbst programmieren, das ist schon fertig. Da gibt es eben mehrere dieser Programmierkonstrukte. Das ist eine ziemlich umfangreiche Bibliothek mit einer sehr, sehr guten Dokumentation, wie ich finde inzwischen. Die Sprache wird aktiv weiterentwickelt. Das heißt, Ende letzten Jahres würde ich sagen, ja, die Dokumentation war noch nicht so gut. Inzwischen ist die wirklich, wirklich gut. Die hat sich auch in den letzten paar Monaten deutlich verbessert. Vielleicht auch durch diesen Hype von Erlang, kann man schon fast sagen.
+
+00:53:03.307 --> 00:53:07.867
+<v SPEAKER_2>Gibt es ein schönes Buch zum Thema, was man sich mal antun sollte, wenn man einsteigt?
+
+00:53:07.887 --> 00:53:16.047
+<v SPEAKER_1>Es gibt tatsächlich ein schönes Buch momentan, das ich wirklich empfehlen würde. Kennst du gerade den Titel?
+
+00:53:18.507 --> 00:53:20.967
+<v SPEAKER_2>Ist das dieses Programming Erlang?
+
+00:53:20.987 --> 00:53:28.407
+<v SPEAKER_1>Jetzt wo du sagst, Programming Erlang von Joe Armstrong. Das ist eine schöne Einführung.
+
+00:53:28.427 --> 00:53:31.367
+<v SPEAKER_2>Ist das so eine Einführung oder ist das auch eine Referenz?
+
+00:53:32.567 --> 00:54:13.187
+<v SPEAKER_1>Ich würde es eher weniger als Referenz verwenden, obwohl es einen enthält. Tatsächlich enthält das Erlang-System selbst Manpages. Wer die gewohnt ist, der verwendet Manpages. Das hat vielleicht ein bisschen den Nachteil, dass man auch wissen muss, wonach man sucht. Zum Beispiel gibt es das Modul IO., dann ruf ich das einfach auf. man.io oder rman.io. Dazu muss ich wissen, wie das geht. Dann gibt es eine Webseite, erlang.org. Da befindet sich die meiste Dokumentation. Da findet man auch Tutorials, schöne Einführungen, auch Referenzen auf dieses Buch. Und es gibt eine Community. Juhu, es gibt eine Community.
+
+00:54:13.207 --> 00:54:16.667
+<v SPEAKER_2>Richtige Menschen sozusagen benutzen das auch, nicht nur diese Zombies aus dem Video.
+
+00:54:18.387 --> 00:54:21.067
+<v SPEAKER_1>Die müssten inzwischen auch ziemlich alt sein.
+
+00:54:21.087 --> 00:54:33.127
+<v SPEAKER_2>Ich kann dir noch mal dieses Video empfehlen. Das müsst ihr euch unbedingt angucken. Das ist so großartig. Irgendwie total charmant, aber auch vollkommen steif sitzen sie da und preisen irgendwie. Aber auch wirklich mit Hingabe ihre Programmiersprache.
+
+00:54:34.747 --> 00:54:58.567
+<v SPEAKER_1>Ja, und tatsächlich, wenn man einmal zwei Wochen Erlang programmiert hat, dann hast du genau dieselbe Hingabe. Das erweitert den Horizont ungemein. Vor allem, wenn man vorher noch keine funktionale Programmiersprache kennt, dann ist das sozusagen so, als ob man wieder von vorne anfängt zu programmieren. Wenn man schon eine Kenntlist zum Beispiel, dann ist es nicht ganz neu, dann erkennt man manches wieder, aber es ist trotzdem eine Erfrischung für das Gehirn.
+
+00:54:58.587 --> 00:55:26.127
+<v SPEAKER_2>Das kann ich mir gut vorstellen, aber vor allem, denke ich, empfiehlt es zu Erlang dann, dass man sich das dann anschaut, wenn eben vor allem diese Aspekte gleich, also Nebenläufigkeit, Gleichzeitigkeit plus diese Option zum Verteilen, wenn das in irgendeiner Form eine Rolle spielt und darauf, was die Gleichzeitigkeit betrifft, vor allem eben so High-Performance, hohe Verfügbarkeit, wenn ein Programm gerade im Netz mit vielen gleichzeitig sprechen muss, die sich alle unterschiedlich verhalten.
+
+00:55:26.727 --> 00:55:31.227
+<v SPEAKER_1>Oder? So sieht's aus. Ich würde es auch für...
+
+00:55:31.247 --> 00:55:32.707
+<v SPEAKER_2>Hättest du es jetzt nicht besser sagen können.
+
+00:55:33.407 --> 00:55:34.767
+<v SPEAKER_1>Ja, da hast du gut erklärt.
+
+00:55:34.787 --> 00:55:35.567
+<v SPEAKER_2>Hab ich dich verstanden.
+
+00:55:39.507 --> 00:56:12.407
+<v SPEAKER_1>Ja, ich bin auch ganz stolz auf mich. Also, es kam tatsächlich schon mal jemand auf die Idee und hat sich gedacht, man muss auch in Erlang was anderes machen können und hat auf Teufel heraus nun einen 3D-Modeller in Erlang geschrieben. Das ist eine 3D-Modeller, Software Wings 3D heißt die. Die funktioniert auch ganz gut. Also, es ist nicht völlig auf Serverprozesse beschränkt. Man kann da auch was anderes mit schreiben. Das ist der Ursprung. Dafür funktioniert es auf jeden Fall sehr gut.
+
+00:56:13.067 --> 00:56:23.587
+<v SPEAKER_2>Okay, also auf jeden Fall spannend zu sehen, welche Rolle diese Sprache in Zukunft noch macht. Ich meine, es gibt ja immer so Leute, die meinen so, wann haben wir denn endlich mal die Programmiersprache, die alle Probleme löst.
+
+00:56:24.027 --> 00:56:28.627
+<v SPEAKER_1>Jetzt haben wir sie gefunden. So einfach ist das.
+
+00:56:28.647 --> 00:57:00.387
+<v SPEAKER_2>Na gut, zumindest wenn alle Probleme sich mit, muss sich verhalten wie eine Telefonanlage zusammenfassen lässt. Das wird es sicherlich nicht geben. Aber es gibt zumindest bestimmte Konzepte, die sich in meinen Augen immer wieder durchsetzen. Und so Funktionales Programmieren ist definitiv eine der Sachen, die noch mehr Bedeutung in Zukunft erlangen wird. Ja, jetzt haben wir viel gehört, viel Wissenswertes über Erlang. Und, ja, weiß nicht, haben wir noch was Substanziales vergessen?
+
+00:57:00.407 --> 00:57:38.367
+<v SPEAKER_1>Wer noch mehr wissen möchte, der sollte nicht nur mich anschreiben und nachfragen, denn ich hab mich dafür sehr begeistert und ich kann euch auch alle begeistern, sondern er sollte auch unbedingt die Dokumentation lesen, Erlang Org oder die Community-Site besuchen, trapacet.org. Es gibt auch eine schöne Mailing-Liste. Ja, zum Beispiel bravoecofoxtrott.com at eventphone.de So sieht es aus.
+
+00:57:38.387 --> 00:57:46.207
+<v SPEAKER_2>Das müsst ihr jetzt erst mal dekodieren, bevor ihr nicht hin kommt. Du darfst den Leuten auch nicht zu einfach machen, oder?
+
+00:57:46.227 --> 00:58:30.267
+<v SPEAKER_1>Ja, furchtbar. Es gibt eine schöne Mailing-Liste. Erlang Questions. Die ist im Moment so gering, bzw. der Traffic ist zwischen gering und mittel, je nachdem, wie man das bewertet. Und einem wird dort wirklich geholfen. Wenn man wirklich ein Problem hat, und das ist ein bisschen diffiziler, dann kann es sehr gut sein, dass man auch von den Original-Entwicklern von Erlang, die seit 20 Jahren damit entwickeln, oder dass Erlang selbst entwickeln, dass man von denen die Antwort bekommt oder dass sie den Kommentar abgeben, stimmt. Da ist ein Fehler, was auch schon vorkam, der dann behoben wird.
+
+00:58:31.287 --> 00:59:42.967
+<v SPEAKER_2>Ja, ich meine, die werden sich sicherlich freuen, dass Erlang jetzt so viel Zuspruch gefunden hat. Dieser eJava-D, dieser Java-Server, das ist ja im Prinzip derzeit so das absolute Leuchtturmprojekt, da hat irgendwie jeder mal irgendwie von gehört, der sich so halbwegs mit dieser Technik beschäftigt. Und das hat natürlich eine ganze Menge Spotlight auf die Sprache geworfen. Deswegen auch bei Chaosradio Express. Und ich sage erstmal Danke, Ben, für die ausführliche Darstellung dieser Programmiersprache. Vielleicht war ja auch für euch was dabei. Und ihr habt euch Lust, das mal anzuschauen und kommt vielleicht auch auf neue Ideen, was man jetzt mal für Projekte realisieren könnte, wofür die anderen Programmiersprachen bisher immer nicht ganz so geeignet erschienen. Wie auch immer, wir harren der Dinge, die dort kommen. Und ja, mir bleibt jetzt nur noch nach Feedback zu verlangen, wie ich es immer tue, chaosradio.ccc.de, die E-Mail. Oder ihr schaut einfach mal an unser Blog, blog.chaosradio.ccc.de, wo es natürlich ein entsprechendes Posting zu dieser Sendung gibt. Und dann könnt ihr dann einen Kommentar versenken, den ich immer gerne lese. Denn man will ja auch was hören von den Leuten, die einen hören. Ja, jetzt bleibt mir nur noch, ja, dir noch einen schönen Tag zu wünschen. Der Easter-Hack ist jetzt vorbei.
+
+00:59:43.187 --> 00:59:45.587
+<v SPEAKER_1>Ja, vielen Dank und schön, dass ihr da reinduft.
+
+00:59:45.607 --> 00:59:54.807
+<v SPEAKER_2>Ja, natürlich, you're welcome. Dann war's das mal von Chaosradio, Ausgabe Nummer 82. Und viel Spaß bei allem, was er noch tut.

@@ -1,0 +1,703 @@
+WEBVTT
+
+00:00:51.546 --> 00:01:43.806
+<v SPEAKER_1>Hallo, hier ist Chaosradio Express, Ausgabe Nr. 44. Die 44. Ausgabe wird sich mit einem etwas komplizierteren Thema auseinandersetzen. Jetzt geht's in die Details. Das Thema ist Kryptographie und insbesondere ein Blick auf die WEP-Verschlüsselung, die schon vor einiger Zeit und jetzt noch mehr unter Attacke geraten ist. Mein Name ist Tim Pritlove und mit mir zusammen sitzt Erik Tews. Hallo, Erik. Hallo, Tim. Du bist ja auch selber Kryptograph, Informatiker, Mathematiker. Ich weiß nicht, welche Bezeichnung du da als Erstes für dich wählen würdest, wenn du von den drei wählen könntest.
+
+00:01:44.086 --> 00:01:45.826
+<v SPEAKER_2>Ich bin Informatikstudent.
+
+00:01:45.846 --> 00:02:37.486
+<v SPEAKER_1>Okay. Und wir werden auch gleich noch näher darauf eingehen, was du gemacht hast. Aber wir können schon mal vorwegnehmen, du warst beteiligt bei einer neuen kryptographischen Analyse dieses Verschlüsselungsverfahrens. Aber bevor wir darauf eingehen, sollten wir vielleicht erst mal erklären, worum es hier eigentlich geht. Wir alle verwenden Computer und in letzter Zeit haben natürlich alle Internet und das Tollste, was man haben kann, wenn man seinen Computer auf den Knien hat, ist das Internet ohne Kabel. Sprich WLAN-Technologie ist überall und am Anfang haben sich alle noch sehr gefreut und mittlerweile wird nur noch mit den Augenbrauen gezuckt, wenn es um das Thema Sicherheit geht. WLAN gibt es jetzt seit wann?
+
+00:02:37.506 --> 00:02:54.826
+<v SPEAKER_2>Die ganze Entwicklung hat, glaube ich, nun seit 1991 angefangen. Das heißt, da haben sich zuerst mal Leute zusammengesetzt und haben angefangen, darüber nachzudenken und seit etwa 1997 ist das, was wir heutzutage als WLAN kennen, zum ersten Mal standardisiert worden bzw. war so zu kaufen.
+
+00:02:54.846 --> 00:02:58.886
+<v SPEAKER_1>Mit anderen Worten der 802.11-Standard.
+
+00:02:58.906 --> 00:03:10.666
+<v SPEAKER_2>Genau, die 802.11-Standard wurde, glaube ich, 1997 zum ersten Mal veröffentlicht und 1999 noch einmal aktualisiert, wenn ich mich recht erinnere.
+
+00:03:10.946 --> 00:03:17.646
+<v SPEAKER_1>Im Prinzip ist das der Versuch, die weit verbreitete Ethernet-Schnittstelle in die Luft zu kriegen.
+
+00:03:17.666 --> 00:03:17.926
+<v SPEAKER_2>Genau.
+
+00:03:17.966 --> 00:03:20.126
+<v SPEAKER_1>Mal so ganz einfach gesagt.
+
+00:03:20.146 --> 00:03:46.426
+<v SPEAKER_2>Das heißt, diese ganzen WLAN-Karten sind eigentlich so gedacht wie eine Netzwerkkarte halt einfach nur ohne Kabel. Das heißt, eine Analogie findet man zum Beispiel auch in diesem Begriff WEP. Der steht für Wide Equivalent Privacy. Das heißt, WEP ist ein Protokoll, das eigentlich gewährleisten sollte, dass diese kabellose Karte den Gleichenschutz in einer Form liefert wie eine kabelgebundene Karte. Das heißt …Genau.
+
+00:03:46.446 --> 00:04:35.046
+<v SPEAKER_1>Wobei wir jetzt vielleicht schon zacken zu weit vorweggreifen. Vielleicht lassen wir uns erst noch mal kurz bei Wireless laden bleiben und diesem Versuch es irgendwie dem Ethernet gleich zu tun. Zunächst einmal verfolgt Wireless natürlich einen ähnlichen Ansatz. Das heißt, so wie man vorher das Kabel hat, hat man jetzt eben die Luft und das ist das sogenannte Shared Medium, das worauf alle drauf zugreifen. Nun hat aber natürlich Funk immer noch so ein paar Einschränkungen und vor allem natürlich die, dass man den Fluss nicht begrenzen kann. Beim Kabel weiß man, wer da nicht dransteckt, kann in der Regel zumindest da erstmal nicht drauf zugreifen, aber die Ausbreitung von Funkwellen lässt sich sozusagen nicht beherrschen. Das WEP, dieser erste Kryptografiestandard, der war ja von Anfang an dabei, oder?
+
+00:04:35.066 --> 00:04:41.846
+<v SPEAKER_2>Der war ganz von Anfang an mit dabei und auch wirklich jede Karte, die es auf dem Markt gibt, die kann WEP. Also ich habe noch nichts gesehen, was nicht WEP kann.
+
+00:04:42.406 --> 00:05:15.826
+<v SPEAKER_1>Also WEP, Wireless Equivalent Privacy heißt es genau. Also Privatsphäre, genauso toll, wie man das mit einem Kabel hat, das ist sozusagen das Versprechen, das war eben das, mit dem man WLAN von Anfang an verkauft hat, als sicher. Und ja, was ist denn jetzt genau WEP? Also was fügt dieses Protokoll dem normalen eigentlichen Hin- und Herfunkten hinzu? Was verändert sich gegenüber dem normalen unverschlüsselten Wireless?
+
+00:05:16.946 --> 00:05:45.106
+<v SPEAKER_2>Es gibt praktisch zwei Sachen, die WEP in einer gewissen Form gewährleistet, Nummer eins. Alle Datenpakete, die übertragen werden über die Luftschnittstelle, werden verschlüsselt. Das sollte dafür sorgen, dass die Pakete nicht nur von dritten Personen eingesehen werden können, die eigentlich keinen Zugang zu diesem Funknetzwerk haben sollten. Und es verhindert, dass dritte Personen selber Pakete rausfinden können, also dieses Funknetzwerk in irgendeiner Form nutzen können. Oder dass dritte Personen Pakete, die übertragen werden, in irgendeiner Form verändern können.
+
+00:05:46.686 --> 00:06:19.066
+<v SPEAKER_1>Im Prinzip. Und wie wird das jetzt gemacht? Also normalerweise, wenn man kennt das, man schaut irgendwie, gibt es denn hier WLAN? Dann sieht man hier irgendwie, hier gibt es dieses Netz mit diesem und jenem Namen. Also dieses Announcement. Wie nennt man das genau? Das Beacon. Der Beacon Frame, in dem halt angekündigt wird, hier gibt es ein Netz, der ist erstmal unverschlüsselt. Da steht der Netzname drin, FUBAR. Und dann wählt man das aus und sagt, okay, prima, da möchte ich jetzt rein. Und dann kommt das System hoch und sagt, naja, das ist aber alles verschlüsselt. Jetzt musst du ein Passwort eingeben.
+
+00:06:19.086 --> 00:06:20.126
+<v SPEAKER_2>Genau.
+
+00:06:20.146 --> 00:06:54.726
+<v SPEAKER_1>Beziehungsweise, wo nachher eigentlich meist gefragt wird, ist ein Schlüssel. Das heißt, tatsächlich steckt dahinter eine Zahl. Manche Computer, der Mac zum Beispiel, hat von Anfang an gesagt, naja, gib mal ein Passwort ein. Tatsächlich steckt nicht wirklich so ein Passwort dahinter, sondern es ist ein Schlüssel in einer bestimmten Länge. Wenn man ein Passwort eingibt, gibt es dann wiederum noch einen Algorithmus, wie der Computer aus diesem Wort diese Zahl macht, oder man trägt halt die Zahl direkt ein. Das sind dann diese berühmten 10 Hexadizimal-Zahlen.
+
+00:06:55.006 --> 00:06:59.166
+<v SPEAKER_2>Es sind normalerweise 5 oder 13, also es gibt praktisch zwei möglichen…
+
+00:06:59.186 --> 00:07:14.606
+<v SPEAKER_1>5 Bites. Aber man muss ja dann… Entschuldigung. Zeichen, meinte ich. Okay, da ist er aber recht. Es sind also 5 Bites oder es sind 13 Bites, in genau der Länge muss man die eingeben. Und wenn man die richtigen erwischt hat, dann hat man Zugang.
+
+00:07:14.626 --> 00:07:14.846
+<v SPEAKER_2>Genau.
+
+00:07:15.586 --> 00:07:20.486
+<v SPEAKER_1>So, was steckt da jetzt dahinter? Also was für eine Art Verschlüsselung wird dort angewendet?
+
+00:07:21.706 --> 00:08:06.786
+<v SPEAKER_2>Das ist ein relativ interessantes Verfahren. Und zwar, was man halt bei WEP hat, ist, dass Daten halt wie im Ethernet in Paketen verschickt werden. Das heißt, man will zum Beispiel, für den Fall, dass man ein einziges Paket bei der Übertragung verloren geht, nicht auf dieses Paket warten müssen, um sinnvoll die folgenden Pakete entschlüsseln zu können, sondern will jedes Paket unabhängig voneinander verschlüsseln. Sodass, wenn halt mal ein Teil der Übertragung verloren geht, dass man dann trotzdem noch weiterarbeiten kann. Und man will natürlich jedes Paket nicht gleich verschlüsseln, weil man dann solche Eigenschaften hat, wie dass gleiche Pakete auch in der verschlüsselten Version gleich aussehen und ähnliche ekelige Sachen. Das heißt, es wird pro Paket ein mehr oder minder zufälliger Paketschlüssel gewählt, der sich einmal aus diesem Web-Schlüssel und eine Art Zufallszahl ableitet.
+
+00:08:07.886 --> 00:08:48.126
+<v SPEAKER_1>Das heißt, jedes einzelne Paket, was rübergeht, selbst wenn es denselben Inhalt hat, sieht nach der Verschlüsselung anders aus und das tut es deshalb, weil jedes einzelne Paket immer wieder mit einem anderen Schlüssel gemacht wird. Normalerweise kennt man das ja bei Verschlüsselungen allgemein, was weiß ich, so, ich habe jetzt so meine Datei, die verschlüssel ich, dann wird halt alles irgendwie mit einem einzigen Schlüssel eingepackt und wenn ich das wieder auspacken will, brauche ich auch nur diesen einen einzigen Schlüssel. Aber auf dem Funkfeuer sozusagen wird jedes einzelne Paket immer wieder mit einem neuen Schlüssel gemacht. Obwohl man ja eigentlich am Anfang nur einen eingibt.
+
+00:08:48.146 --> 00:09:29.126
+<v SPEAKER_2>Genau. Und zwar hat man sich da Folgendes ausgedacht und hat sich gedacht, okay, es gibt schon diesen WEP-Schlüssel, den kennt man schon, und wir müssen daraus jetzt mehrere Schlüssel machen. Eine sehr einfache Methode ist, man sagt ganz einfach, man wählt den Anfang des Paket-Schlüssels in irgendeiner Form zufällig und wählt das Ende des Paket-Schlüssels immer konstant, nämlich dieser geheime WEP-Schlüssel. Und man muss natürlich noch die Gegenseite des Paket wieder entschlüsseln können, d.h. sie muss diesen kompletten Schlüssel in irgendeiner Form kennen. Den Ende des Schlüssels, den WEP-Schlüssel, den kennt die Gegenseite bereits, den hat halt der Benutzer dort ebenfalls eingegeben, und den Anfang des Paketes, des Paket-Schlüssels. Das ist der sogenannte Initialisierungsvektor, der wird immer im Klartext mit übertragen.
+
+00:09:29.146 --> 00:09:49.946
+<v SPEAKER_1>D.h. der Schlüssel, der angewendet wird auf jedes Paket, setzt sich immer aus diesem einen konstanten, für das ganze Netz dauerhaft gültigen Schlüssel aus, also das einzige, was man wissen muss, um überhaupt erst mal Zugang zu bekommen. Und dann gibt es einen variablen Teil, der wirklich für jedes Paket immer wieder neu gemacht wird. Wie wird der erzeugt, dieser variable Teil?
+
+00:09:49.966 --> 00:10:17.766
+<v SPEAKER_2>Das ist eigentlich gar nicht so genau vorgeschrieben. Man findet eigentlich in der Praxis zwei Methoden. Möglichkeit Nummer eins ist, man wählt den wirklich zufällig, das sind drei Bytes, die kann man einfach aus dem Zufallszahlen-Generator ausgeben lassen. Dann kriegt man für jedes Paket einen zusätzlichen, einen zufälligen Initialisierungsvektor. Methode Nummer zwei ist, man fängt einfach bei irgendeiner bestimmten Kombination anzuzählen. Man sagt einfach, diese drei Bytes sind irgendeine Zahl in irgendeiner Darstellung und zählt dann einfach nach jedem Paket um eins hoch. Das ist auch eine Möglichkeit.
+
+00:10:17.786 --> 00:10:20.626
+<v SPEAKER_1>Also manche machen das so, manche machen das so, Hauptsache ist es nicht immer der gleiche.
+
+00:10:21.426 --> 00:10:27.806
+<v SPEAKER_2>Ja, das heißt, es sollte sich in irgendeiner Form verändern und jede Implementierung, die ich kenne, verändert ihn auch jedes Mal.
+
+00:10:28.366 --> 00:10:50.246
+<v SPEAKER_1>Gut, das heißt, sagen wir mal, ich bin irgendwie Computer A und du bist Computer B und ich will dir jetzt ein Datenpaket schicken und wir kennen beide diesen festen Schlüsselteil sowieso. Dann denke ich mir jetzt noch irgendeine Zahl dazu aus, pack das da mit ran, dann verschlüssel ich mein Datenpaket mit diesem Schlüssel und dann schicke ich zu dir das rüber. Aber jetzt musst du ja diesen Initialisierungsvektor, den müsstest du ja auch kennen.
+
+00:10:50.546 --> 00:10:51.606
+<v SPEAKER_2>Genau, den muss ich auch kennen.
+
+00:10:51.626 --> 00:10:53.366
+<v SPEAKER_1>Das heißt, den schicke ich mit dem Paket.
+
+00:10:53.386 --> 00:10:54.926
+<v SPEAKER_2>Genau, den schickst du mit dem Paket.
+
+00:10:54.946 --> 00:10:58.706
+<v SPEAKER_1>Das heißt, der ist dann auch sozusagen klar sichtbar.
+
+00:10:59.126 --> 00:11:16.946
+<v SPEAKER_2>Genau, das heißt, wenn man irgendwie einen Sniffer hat, wie zum Beispiel Wireshark, kann man den einfach einschalten und wenn der auf der WLAN-Karte mithört, ob man das richtig eingestellt hat, dann kann man sich da clickypony durch die GUI durchklicken und findet dann irgendetwas namens Initialisierungsvektor oder IV. Und das ist dann genau diese Zufallszahl, die du gewählt hast.
+
+00:11:18.166 --> 00:11:40.806
+<v SPEAKER_1>Das heißt, da der eben mit übertragen wird, braucht mich der eigentlich gar nicht weiter zu interessieren. Mich interessiert eigentlich, wenn ich jetzt sozusagen Zugriff erhalten will auf dieses Netz, nach wie vor nur dieser eine konstante Schlüssel. Wenn ich diesen Initialisierungsvektor nehme, den kann ich einfach aus der Luft lesen und ich habe den Anarchie, dann kann ich halt alles lesen. Ist ja auch klar, weil der Empfänger muss das ja eigentlich auch finden.
+
+00:11:41.046 --> 00:11:41.286
+<v SPEAKER_2>Genau.
+
+00:11:43.006 --> 00:11:51.346
+<v SPEAKER_1>Gut, das heißt, alles ist verschlüsselt und alles ist total sicher. Ist das jetzt schon das komplette Verfahren? Eigentlich schon.
+
+00:11:51.366 --> 00:12:07.006
+<v SPEAKER_2>Das ist eigentlich schon das komplette Verfahren. Es gibt in dem Verfahren noch einen zweiten Schutz, der verhindern soll, dass man ein Paket in irgendeiner Form noch während der Übertragung abändert, aber der spielt nicht unbedingt so eine große Rolle. Also der stört nicht wirklich.
+
+00:12:07.026 --> 00:12:07.746
+<v SPEAKER_1>Was ist das für ein Schutz?
+
+00:12:08.426 --> 00:12:33.806
+<v SPEAKER_2>Es wird über das Paket eine Prüfsumme gebildet mit einem Verfahren, das heißt CAC 32, und die Prüfsumme wird ebenfalls mit verschlüsselt und mit übertragen. Und wenn ich ein Paket empfange, dann entschlüssel ich das Paket und rechne ebenfalls die Prüfsumme aus und gucke dann nach, ob die entschlüsselte Prüfsumme mit meiner ausgerechten Prüfsumme übereinstimmt. Wenn nicht, wird das Paket in irgendeiner Form verändert. Das kann entweder durch einen Angreifer passiert sein oder auch einmal rein zufällig durch eine Störung der Übertragung.
+
+00:12:34.406 --> 00:12:39.426
+<v SPEAKER_1>Und trägt das jetzt signifikant zur Sicherheit bei?
+
+00:12:39.446 --> 00:12:51.426
+<v SPEAKER_2>Nicht so. Das Verfahren an sich selber hat auch seine kryptographischen Macken. Es verhindert, dass man beliebige Pakete verändern kann, aber es ist nicht wirklich ein guter Schutz.
+
+00:12:52.586 --> 00:13:10.446
+<v SPEAKER_1>So, jetzt ist ja die Frage, welcher Algorithmus wird denn jetzt tatsächlich verwendet? Ich habe jetzt meinen festen Key, ich denke mir noch meinen variablen Teil dazu aus, Verschlüsselte. Was bedeutet das, was für eine mathematische Aktivität wird dort entwickelt?
+
+00:13:11.306 --> 00:13:23.606
+<v SPEAKER_2>Also, was passiert ist, du nimmst zuerst diesen Initialisierungsfaktor und den Hauptschlüssel, hängst die beiden zusammen und kriegst dann einen Paket-Schlüssel raus. Mit dem Paket-Schlüssel musst du dann eine sogenannte Stromschiffe initialisieren. Das ist bei WEP die RC4-Stromschiffe.
+
+00:13:26.326 --> 00:13:41.126
+<v SPEAKER_1>Also, Stromschiffe ist StreamCypher, glaube ich, der englische Begriff dafür. Was für eine Art Technologie, das ist für Datenströme optimierte Verschlüsselungsalgorithmen. Kann man das so sagen?
+
+00:13:41.146 --> 00:14:02.766
+<v SPEAKER_2>In etwa ja. Also, was passiert, sehr einfach ausgedrückt ist Folgendes, man hat in irgendeiner Form einen Schlüssel, dem übergibt man dieser Stromschiffe und was sie dann macht, sie generiert einen sogenannten Schlüsselstrom. Das ist im allgemeinen Fall irgendwie eine zufällige Folge aus Bits oder Bytes, die man dann mit dem zu verschlüsselten Text verknüpft, zum Beispiel einfach durch XOR.
+
+00:14:02.786 --> 00:14:05.766
+<v SPEAKER_1>Also das Umkippen von Bits sozusagen.
+
+00:14:05.786 --> 00:14:29.326
+<v SPEAKER_2>Genau, das heißt, ein XOR ist halt eine ganz, das ist das mathematische Exklusive, oder, das ist ein ganz einfaches Verfahren, mit dem man halt einfach zwei beliebige Bits miteinander verknüpfen kann oder auch Bytes oder was auch immer. Also, Bytes ist ja nichts weiter als eine Folge von Bits. Und so, dass, wenn man zweimal irgendetwas auf den Wert drauf XORt, dann ergibt es wieder den ursprünglichen Wert.
+
+00:14:29.346 --> 00:14:39.586
+<v SPEAKER_1>Mit anderen Worten, der Algorithmus erzeugt dann so ein Bitmuster, dann nehme ich das eigentliche zu übertragende Byte, XORE sie miteinander und dann ist das die Verschlüsselung.
+
+00:14:39.606 --> 00:14:48.706
+<v SPEAKER_2>Genau, wenn ich entschlüsseln will, erzeuge ich mir wieder dieses Bitmuster, mit natürlich genau dem gleichen Schlüssel, XORE das auf meine verschlüsselte Übertragung und bekomme dann wieder den Klartext.
+
+00:14:48.726 --> 00:15:08.826
+<v SPEAKER_1>Das ist dann das Auspacken. So, und dieser Algorithmus, der dort zum Einsatz kommt um diesen Stream-Cypher, also diese Bit-Vorlagen zum X-Oren, um den zu machen, heißt RC4 und ist ja schon ein bisschen länger auf dem Planeten. Wer hat den erfunden und woher kommt der?
+
+00:15:08.846 --> 00:15:40.726
+<v SPEAKER_2>Erfunden hat ihn, wenn ich mich recht erinnere, Ron Rivist. Das heißt, manche Leute sagen auch, die Abkürzung RC4 steht für Rons Code. Und er hat eine etwas merkwürdige Entstehungsgeschichte gehabt. Ron Rivist ist einer der Menschen, die auch das bekannte RSA-Verfahren entwickelt haben. Und Ron Rivist hat den Algorithmus 1987 oder kurz davor erfunden. Allerdings hat er die genaue Funktionsweise geheim gehalten und ihn vermarktet, bzw. die Firma RSA Data Security hat ihn vermarktet.
+
+00:15:41.166 --> 00:15:45.826
+<v SPEAKER_1>Es war also ein kommerzielles Produkt und kein Standard in der Firma.
+
+00:15:45.846 --> 00:16:10.706
+<v SPEAKER_2>Heutzutage kennt man das vielleicht AES, DEST, das sind alles in irgendeiner Form offene Standards. Das war RC4 damals nicht. Man konnte zu RSA hingehen und hat gesagt, ich brauche eine schnelle, effiziente, sichere Stromschiffe. Dann konnte er mir irgendwas verkaufen und dann konnte man RC4 kaufen. Das hat man in irgendeiner Form gekriegt, also von hier aus in Chips oder in Software-Modulen oder so was in der Art. Ich weiß nicht genau, was die alles verkauft haben.
+
+00:16:13.266 --> 00:16:19.506
+<v SPEAKER_1>Und dieser RC4-Algorithmus hat es aber jetzt in diesen Standard geschafft. Das heißt, irgendwann muss er ja auch mal bekannt geworden sein.
+
+00:16:19.526 --> 00:16:54.566
+<v SPEAKER_2>Nein, der muss eigentlich gar nicht dafür bekannt geworden sein, weil jeder Hersteller, der halt so eine Karte bauen will, kann jetzt zu RSA hingehen und sagen, ich habe gehört, für so eine Karte bräuchte man dieses RC4-Dingens, verkaufe mir das bitte mal. Und dann kann er halt bei RSA am RC4 lizenzieren. Trotzdem ist es halt passiert, dass der Algorithmus bekannt geworden ist. Nämlich 1994 hat sich das Ding einfach im Usenet wiedergefunden. Da hat halt jemand einfach eine Analyse von dem Algorithmus beziehungsweise einfach den Quellcode des Algorithmuses im Usenet gepostet. Und von dem Tag an war dann halt einfach mal RC4 bekannt.
+
+00:16:57.226 --> 00:17:01.766
+<v SPEAKER_1>Hat er einfach mal so eine Analyse gemacht? Ist das irgendwie schwierig?
+
+00:17:01.786 --> 00:17:12.086
+<v SPEAKER_2>Weiß man nicht. Also es ist eigentlich was bekanntes. Es gab halt irgendwie ein Posting auf einer Mailing-Liste und kurz danach hat ein Algorithmus im Usenet gefunden. Und keine Ahnung, wie der da hingekommen ist.
+
+00:17:12.106 --> 00:17:22.286
+<v SPEAKER_1>Kann also auch so ein Whistleblower gewesen sein, der Insider Wissen hatte und das dann einfach mal unter der Behauptung, er hätte das selber rausgefunden gepostet hat?
+
+00:17:23.206 --> 00:17:45.846
+<v SPEAKER_2>Könnte sein. Oder die Alternative ist 1994, da gab es nämlich recht innere auch schon sowas wie SSL und von Netscape in Web-Browsern und dort wird zum Beispiel auch RC4 eingesetzt. Das heißt, es gab damals zumindest irgendwelche Software-Implementierungen von RC4, die man bei sich als normaler Anwender möglicherweise auf dem Rechner haben konnte.
+
+00:17:46.086 --> 00:17:53.746
+<v SPEAKER_1>Also RC4 ist nicht nur in WEP drin, sondern es ist auch in dem SSL drin. Also genau dem Protokoll, was aus HTTP HTTPS macht.
+
+00:17:53.766 --> 00:17:55.086
+<v SPEAKER_2>Genau.
+
+00:17:55.106 --> 00:18:00.266
+<v SPEAKER_1>Und schon zu dem Zeitpunkt, als es dort gelandet ist, war der Algorithmus als solcher nicht bekannt?
+
+00:18:00.286 --> 00:18:36.166
+<v SPEAKER_2>Das weiß ich jetzt gar nicht mal so genau, aber SSL war ja auch nicht unbedingt so von Anfang an so ein offener Standard. Das war eigentlich so eine Entwicklung von Netscape, die dann immer mehr so zum Standard geworden ist eigentlich. Aber wenn ich mir überlege, ich habe halt irgendwie so ein Stück Web-Brose auf dem Rechner und der halt irgendwie RC4 macht und man guckt sich da mit dem Object-Code ein bisschen genauer an, dann kann man daraus möglicherweise schon analysieren, wie der funktioniert. Also ich weiß nicht, inwieweit man das Ganze geopfoscated hat, aber prinzipiell kann ich mir vorstellen, dass man sowas auch aus irgendeinem Binary auskriegt. Also RC4 ist nicht besonders kompliziert.
+
+00:18:36.986 --> 00:18:50.986
+<v SPEAKER_1>So, aber irgendwann war dann dieser Algorithmus bekannt und jetzt ist er aber auch öffentlich publiziert worden dann irgendwann oder ist es immer noch so dieses, es ist nicht offiziell bekannt, aber man weiß schon, wie es funktioniert?
+
+00:18:51.006 --> 00:19:26.606
+<v SPEAKER_2>Die Situation ist eigentlich ganz merkwürdig. Also RSA hat niemals ein Dokument, das mir Bekannte ist, rausgegeben, das spezifiziert, wie RC4 funktioniert. Das Einzige ist, es gibt halt irgendwie die paar Zeilen Quellcode, die mal jemand im Usenet gepostet hat und die verwenden heutzutage praktisch alle Leute. Also RC4 ist zum Beispiel auch im Linux kernel enthalten oder praktisch in jedem Webbrowser ist er mit drin oder halt irgendwie in jedem 802.11 Stack ist er mit drin. Also der ist auf der ganzen Welt da und praktisch alle Open-Source-Implementierungen basieren auf den paar Zeilen Quellcode, die halt damals im Usenet gelandet sind.
+
+00:19:26.626 --> 00:19:31.806
+<v SPEAKER_1>Das heißt RSA bezieht dafür auch kein Lizenzgeld in dem Sinn?
+
+00:19:31.826 --> 00:19:43.926
+<v SPEAKER_2>Also es ist zumindest nicht bekannt, dass sie in irgendeiner Form eine Klage anstreben gegen die Leute, die jetzt RC4 so öffentlich verwenden. Ich weiß gar nicht auch genau, wie das da funktioniert, was man da für Möglichkeiten hat, Algorithmen zu patentieren.
+
+00:19:43.946 --> 00:19:55.786
+<v SPEAKER_1>Ist halt die Frage der Software-Patente an der Stelle. Das greift weltweit sowieso nicht. Aber wahrscheinlich haben sie von vornherein eingesehen haben, dass es sinnlos ist, da gegen die Windmühlen anzukämpfen.
+
+00:19:56.306 --> 00:20:03.226
+<v SPEAKER_2>Das Ding war halt öffentlich und wenn das Ding einmal im Usenet gelandet ist, dann kann man es nicht mehr rückgängig machen. Dann ist das halt so.
+
+00:20:03.246 --> 00:20:53.026
+<v SPEAKER_1>Okay, fassen wir mal zusammen. Also es gibt diesen Algorithmus RC4. Er ist für WEP, für die Verschlüsselung fürs WLAN auch verwendet worden. Er nimmt diesen Kernschlüssel oder Hauptschlüssel, wie man glaube ich besser sagt, zusammen mit diesem Initialisierungsvektor, also dieser Zufallszahl oder sonst wie irgendwie gebildet, eine Zahl, die für jedes einzelne Datenpaket noch mit zugenommen wird. Dann ist dieser Algorithmus am Werkeln auf Basis dieses Schlüssels und erzeugt so eine kontinuierliche Reihe von Bits, die man gegen die eigenen Daten dagegen hält. Und das ist dann ebenso die Verschlüsselung. Jetzt gibt es immer diese Konfusion mit wie groß dieser Schlüssel jetzt eigentlich ist. 64 Bit oder 128 Bit und dann heißt es 40 oder 104 Bit. Das hat dann wiederum mit diesem Initialisierungsvektor zu tun, richtig?
+
+00:20:53.206 --> 00:21:48.606
+<v SPEAKER_2>Genau, also RC4 an sich selber kennt kein Konzept von Initialisierungsvektoren. RC4 kennt halt einfach Schlüssel und aus dem Schlüssel macht das Ding Schlüsselströme. Mehr oder weniger in der beliebigen Länge. Und sowas wie ein Initialisierungsvektor kennt es halt nicht. Das heißt, was man macht ist, man setzt diese Schlüssel für RC4 nach einem bestimmten Schema zusammen. Man wählt die ersten drei Bytes, diesen Initialisierungsvektor, und die restlichen Bytes füllt man mit dem geheimen Hauptschlüssel auf, diesem WEP-Schlüssel. Und das heißt, dieser Paketschlüssel ist halt normalerweise 64 oder 128 Bit lang, von dem halt die ersten drei Bytes bzw. ersten 24 Bit bekannt sind. Und was man in der Kryptographie gerne macht, man redet gerne von effektiver Schlüssellänge. Das heißt, man verschlüsselt dann zwar mit einem 64 oder 128 Bit Schlüssel, aber von diesem Schlüssel sind 24 Bit bekannt. Das heißt, wirklich geheim bzw. wirklich der geheime Anteil vom Schlüssel ist nur 40 oder 104 Bit lang.
+
+00:21:48.626 --> 00:21:51.966
+<v SPEAKER_1>Mit anderen Worten, das ist dann die eigentliche Sicherheit, die WEP bietet?
+
+00:21:51.986 --> 00:22:03.746
+<v SPEAKER_2>Wenn RC4-Pompen sicher wäre, dann müsste man halt nur 2,40 Möglichkeiten durchprobieren, um den Schlüssel mit Sicherheit zu finden, anstelle von 2,64 Möglichkeiten.
+
+00:22:03.766 --> 00:22:25.986
+<v SPEAKER_1>Das wäre dann die Brute-Force-Attacke, da wo man sozusagen überhaupt keine mathematische Schwachstelle ausnützt, sondern man probiert halt einfach mal alle Schlüssel aus und guckt, bei welchem das irgendwie hinhaut. Wie lange bräuchte so ein handelsüblicher Laptop, den man sich heute für 1000 Euro schießen kann, um so eine Brute-Force von so einem Paket durchzuführen? Wenn man jetzt mal von der kurzen Schlüssellänge ausgeht, von den 40 Bit?
+
+00:22:26.486 --> 00:22:38.886
+<v SPEAKER_2>Da müsste ich mal nachdenken. Also es gibt effiziente Softwareimplementierungen von RC4, die packen, glaube ich, so um die 33 Millionen Schlüssel pro Sekunde. Und insgesamt gibt es halt 2 hoch 40 Schlüssel, müsste man mal ausrechnen.
+
+00:22:38.906 --> 00:22:40.746
+<v SPEAKER_1>Aber er ist auf jeden Fall noch eine Weile beschäftigt.
+
+00:22:41.706 --> 00:22:58.826
+<v SPEAKER_2>Ja, allerdings setzt das jetzt voraus, dass man einen Laptop hat, nämlich genau das Ding, was ich jetzt habe. Also der macht diese 33 Millionen, wenn ich mich recht erinnere. Wenn man möglicherweise ein Stück Spezialharz, so was wie ein FPGA oder sowas, dann geht es nochmal ein wesentliches Stück schneller.
+
+00:22:58.846 --> 00:23:03.446
+<v SPEAKER_1>Das heißt, so jetzt mal vom Bauch aus, kannst ja nachher nochmal nachrechnen, wie lange würde es dauern?
+
+00:23:05.046 --> 00:23:05.986
+<v SPEAKER_2>Ähm, Moment.
+
+00:23:06.006 --> 00:23:21.366
+<v SPEAKER_1>Besser nachrechnen, genau. Wir machen jetzt mal eine Brutforce-Attacke. Im Kopf. Es klappert die Tastatur. Alles ist ganz spannend.
+
+00:23:21.386 --> 00:23:44.926
+<v SPEAKER_2>Das müssten etwa 2 hoch 15 Sekunden sein. Das sind 32.768 Sekunden, grob geschätzt. Das wären dann. Heutzutage.
+
+00:24:12.437 --> 00:24:21.437
+<v SPEAKER_1>Gehen ja dann eigentlich alle auf so die 104 bzw. 128-Bit-Schlüssellänge. Umso länger der Schlüssel ist, umso länger würde so eine Brute-Force-Attacke dauern.
+
+00:24:21.457 --> 00:24:32.917
+<v SPEAKER_2>Genau, das heißt, dass zwei auch 104 Werte durchprobieren, das ist dann absolut unmöglich. Also das geht auch nicht mit allen Richtungen der Welt in vernünftiger Zeit.
+
+00:24:32.937 --> 00:25:08.497
+<v SPEAKER_1>Sprich bei 40 Bit ist es irgendwie absehbar, dass umso schneller die Computer werden, dass es in immer entspannterer Zeit vor sich geht, aber jedes Bit mehr verdoppelt die Zeit, die man benötigt und dementsprechend ewig lange kann das dann dauern. So, aber jetzt gab es ja dann einen großen Aufruhr. Ich glaube, das ging so 2001 los, wo das erste Mal berichtet wurde, dass dieser Algorithmus, der bei WEP, bei dieser Standardverschlüsselung vom WLAN eingesetzt wird, dass der Schwächen hat. Wo kam das her?
+
+00:25:08.517 --> 00:25:17.617
+<v SPEAKER_2>Es gab eine Analyse von drei Kryptologen. Die Namen waren Flora, Mantin und Shamir. Shamir ist auch einer der Erfinder vom RSA-Kryptosystem.
+
+00:25:17.637 --> 00:25:20.937
+<v SPEAKER_1>Das ist sozusagen das S in dem R, S-A?
+
+00:25:20.957 --> 00:25:49.477
+<v SPEAKER_2>Genau. Und die haben halt gezeigt, dass es, wenn man RC4 so verwendet wie bei WEP, dass man halt Schlüssel hat, dass man sehr viele Schlüssel hat, die alle auf einem Teil konstant sind und am Anfang in irgendeiner Form zufällig, also man hat dort einen Initialisierungsvektor, dass es dann möglich ist, den geheimen Schlüssel auszurechten, indem man nur die Initialisierungsvektoren kennt und Teile der Schlüsselströme, die mit diesen Paketschlüsseln erzeugt worden sind.
+
+00:25:49.497 --> 00:26:08.077
+<v SPEAKER_1>Also mit anderen Worten, wenn man mal die Antenne in die Luft hält und einfach mithorcht und mitschreibt und eine große Datenmenge von hin- und hergesenneten Paketen einfach aufzeichnet, das geht ja, sie sind ja verschlüsselt, aber empfangen kann man sie ja trotzdem, dann hat man so ein Analysematerial und wenn man da durchpflügt, dann lässt sich der Schlüssel herausrechnen.
+
+00:26:08.097 --> 00:26:15.477
+<v SPEAKER_2>Genau, dafür braucht man halt keinen unbedingt so schnellen Rechner, aber braucht dann sehr hohe Anzahl von Paketen.
+
+00:26:15.497 --> 00:26:18.377
+<v SPEAKER_1>Wie viele Pakete sind das dann, hohe Anzahl?
+
+00:26:18.397 --> 00:26:31.117
+<v SPEAKER_2>Das hängt immer so ein bisschen davon ab, wie viel Glück man hat, aber je nachdem, so zwischen 4 und 6 Millionen Datenpakete muss man abfangen. Dann funktioniert es meistens irgendwie.
+
+00:26:31.137 --> 00:26:32.237
+<v SPEAKER_1>Und dann war der Aufruhr groß?
+
+00:26:33.437 --> 00:26:43.857
+<v SPEAKER_2>Ja, also bis dahin, es war zwar bekannt, dass RC4 möglicherweise einige unschöne Eigenschaften hat, aber das war in dem Sinne der erste große Angriff, den es auf RC4 gab.
+
+00:26:43.877 --> 00:26:50.697
+<v SPEAKER_1>Aber danach ist ja WEP eigentlich immer noch ziemlich umfangreich zum Einsatz gekommen. Gab es denn überhaupt zu dem Zeitpunkt schon eine Alternative dafür?
+
+00:26:53.237 --> 00:27:39.757
+<v SPEAKER_2>Es gab halt einige Firmen, die haben anstelle von WEP-VPN eingesetzt. Das machen viele heutzutage auch noch. Das hat den Vorteil, man braucht sich irgendwie gar nicht um die Funkverschlüsselung zu kümmern, sondern man benutzt halt einfach eine andere Software, die das Ganze auf dem höheren Layer absichert. Mantin und Shamir und Flora haben halt auch noch einen kleinen Trick benutzt. Und zwar, sie haben für ihren Angriff spezielle Initialisierungsvektoren benötigt. Das heißt, nicht jeder Initialisierungsvektor, den man zufällig wählt, konnte für den Angriff verwendet werden, sondern der Initialisierungsvektor musste ein ganz besonderes Format haben. Und weil man halt bei WEP nicht diese Formate in irgendeiner Form dem Sender vorgeben kann, musste man halt einfach warten, bis rein zufälligerweise genug von den Paketen vorbeigeflogen sind, die einen passenden Initialisierungsvektor hatten.
+
+00:27:39.777 --> 00:27:45.677
+<v SPEAKER_1>Das heißt, das ist dann doch eher ein Angriff mehr theoretischer Natur gewesen?
+
+00:27:45.697 --> 00:28:35.177
+<v SPEAKER_2>Er hat auch in der Praxis funktioniert. Es hat halt einfach nur relativ lange gedauert. Also einmal mussten sie sich hinsetzen, musste die Karte halt irgendwie einschalten, sodass sie halt Daten aufgezeichnet hat und musste dann halt abwarten, bis genug Pakete dabei vorbeigekommen sind. Und dadurch, dass natürlich diese Initialisierungsvektoren ein sehr spezielles Format haben mussten, konnte man auch diesen Angriff in gewisser Form fixen. Was man halt einfach gemacht hat, man hat halt seine Karten zu umprogrammiert, dass sie, wenn sie in irgendeiner Form zufällig einen Initialisierungsvektor gewählt hatten, hat man halt geprüft, hat dieser Initialisierungsvektor dieses für die Schami-Attacke ungünstige Format. Und wenn er dieses Format hatte, hat man einfach die Nixen genommen und hat den verworfen. Hat also die Initialisierungsvektoren, die in dem Sinne als schwache Initialisierungsvektoren bekannt geworden sind, herausgefiltert.
+
+00:28:35.197 --> 00:28:45.197
+<v SPEAKER_1>Das heißt, es gab zwar eine potenzielle Lücke, aber es war zumindest möglich, durch ein Update der Software darauf Einfluss zu nehmen, dass man zumindest durch diese einen konkreten Angriff dann doch nicht gefährdet war.
+
+00:28:45.777 --> 00:28:49.497
+<v SPEAKER_2>Genau, hat natürlich auch einen Nachteil, ich muss alle Stationen bei mir im System sichern.
+
+00:28:49.757 --> 00:28:55.757
+<v SPEAKER_1>Ist das überhaupt gemacht worden? Wurde da in irgendeiner Form tatsächlich mit Firmware-Updates und so weiter reagiert bei den Herstellern?
+
+00:28:56.057 --> 00:29:06.877
+<v SPEAKER_2>Ja, das war wirklich so. Also, sehr viele Hersteller haben halt neue Firmware rausgegeben und meistens gab es dann irgendwie vom Marketing noch einen schönen Namen dazu. WEP-Plus war zum Beispiel so ein Name und dann...
+
+00:29:06.897 --> 00:29:08.517
+<v SPEAKER_1>Ach, das war WEP-Plus, alles klar.
+
+00:29:08.537 --> 00:29:12.657
+<v SPEAKER_2>Genau, WEP-Plus war WEP, nur halt bitte diesen dummen Initialisierungsvektor auslassen.
+
+00:29:13.217 --> 00:29:21.477
+<v SPEAKER_1>Mhm, alles klar, Clip mit ohne Scheiß. Und das war aber dann nicht die einzige Attacke.
+
+00:29:21.497 --> 00:29:48.177
+<v SPEAKER_2>Wenn man das erstmal in seiner Firmware gefixt hatte, dann war das erstmal wieder so halbwegs sicher. Hat natürlich auch einen Nachteil, ich muss es überall fixen. Also, eine einzige Station mit einer ungepatchten Firmware und ich habe ein Problem. Ist natürlich blöd, wenn ich halt irgendwie von mir aus ein Gast bei mir in der Firma habe oder ähnliches, dann muss ich den halt erstmal auf seine WLAN-Firmware filzen und ihm halt irgendwie neue Firmware verpassen. Bevor ich ihn ins Netz lassen darf, also das war nicht so wirklich schön.
+
+00:29:48.197 --> 00:29:50.577
+<v SPEAKER_1>Und dann war aber trotzdem erstmal wieder ein bisschen Ruhe.
+
+00:29:50.597 --> 00:29:52.937
+<v SPEAKER_2>Genau, dann war erstmal wieder ein bisschen Ruhe.
+
+00:29:53.717 --> 00:29:55.357
+<v SPEAKER_1>Bis was passiert ist?
+
+00:29:55.377 --> 00:30:10.657
+<v SPEAKER_2>Bis es eine Weiterentwicklung von diesem Angriff gab, der dann unter dem Namen Coreq-Attacke bekannt wurde. Das war dann eine Weiterentwicklung von dem Angriff, der auch andere Initialisierungsvektoren nutzen konnte. Das heißt, WEP-Plus war dann plötzlich auch wieder unsicher.
+
+00:30:11.717 --> 00:30:17.057
+<v SPEAKER_1>Coreq-Attacke, K-O-R-R-E-K, wofür steht das Coreq an dem Fall?
+
+00:30:17.077 --> 00:30:23.617
+<v SPEAKER_2>Nur ein R und es ist ein Pseudonym von jemandem, der diesen Angriff einfach mal in einen Form gepostet hat.
+
+00:30:23.637 --> 00:30:27.117
+<v SPEAKER_1>Das heißt, man kennt ihn gar nicht?
+
+00:30:27.137 --> 00:30:44.917
+<v SPEAKER_2>Der wirkliche Name der Person ist nicht bekannt. Es ist also zumindest niemand, der diesen Angriff aus irgendwie wissenschaftlicher Perspektive betrachtet hat, wie zum Beispiel Flora Mantin und Shamir, sondern es ist halt irgendjemand, die sich das ausgedacht hat und hat es halt einfach in Form gepostet und ein bisschen Quellcode dazugestellt.
+
+00:30:44.937 --> 00:30:48.237
+<v SPEAKER_1>Und wann war das?
+
+00:30:48.257 --> 00:30:51.617
+<v SPEAKER_2>Das müsste, wenn ich mich recht erinnere, 2000 Jahr gewesen sein.
+
+00:30:51.637 --> 00:31:09.217
+<v SPEAKER_1>Okay, also noch nicht so lange her, vor drei Jahren. Und damit, also das war also im Prinzip ein ähnlicher Vorgang, eine ähnliche Attacke wie die ursprüngliche Attacke, die bloß nicht mehr diese Besonderheiten in dem Initialisierungsfaktor, diese bestimmten Muster benötigte.
+
+00:31:09.657 --> 00:31:21.357
+<v SPEAKER_2>Ja, und sie hat auch weniger Pakete gebraucht. Also so eine Zahl, die man so hört, ist für die 104-Bit-Schlüssel, dass sie so 500.000 bis 2.000.000 Pakete gebraucht hat, damit sie normalerweise irgendwie funktioniert.
+
+00:31:21.377 --> 00:31:24.817
+<v SPEAKER_1>Und wie lange braucht man dann, um dann wirklich den Schlüssel auch auszurechnen auf diesen Daten?
+
+00:31:25.997 --> 00:31:38.997
+<v SPEAKER_2>Ich glaube, das hängt auch so ein bisschen von Glück ab, aber normalerweise so ein paar Sekunden bis ein paar Minuten genügen, wenn man genug Pakete hat. Hat man nur sehr wenige Pakete, dann können halt die Programme sehr sehr lange herumrechnen und finden möglicherweise den Schlüssel nicht.
+
+00:31:40.357 --> 00:31:42.057
+<v SPEAKER_1>Zwei Millionen Pakete?
+
+00:31:42.077 --> 00:31:45.337
+<v SPEAKER_2>Wenn man zwei Millionen hat, dann sind die Erfolgsaufsichten normalerweise sehr gut.
+
+00:31:45.377 --> 00:31:50.757
+<v SPEAKER_1>Wie lange muss man da so lauschen, bis man so zwei Millionen Pakete zusammen hat?
+
+00:31:50.777 --> 00:32:11.957
+<v SPEAKER_2>Dazu kam noch ein weiterer Trick, nämlich die sogenannte Arp-Injection. Was man gemacht hat, ist, oder beziehungsweise die Packet-Injection, man hat einfach Pakete genommen, die in irgendeiner Form dafür verantwortlich sind, dass auf die Pakete eine Reaktion bewirkt wird. Bei einer Arp-Anfrage ist normalerweise dann als Reaktion eine Arp-Antwort fällig. Man hat halt einfach diese Pakete verschlüsselt.
+
+00:32:11.977 --> 00:32:38.657
+<v SPEAKER_1>Da muss ich mal kurz einhaken, damit das klar wird. Also Arp ist ein Teil des Ethernet-Protokolls, um herauszufinden, welche Adresse ein Rechner hat, also auf dem jeweiligen Medium, also die Adresse auf der Ethernet-Ebene. So, hallo, ich hätte gerne den Rechner mit Internet-Adresse sowieso. Wo muss ich denn das jetzt hinschicken? Und das Gleiche gibt es beim WLAN auch.
+
+00:32:39.317 --> 00:32:41.097
+<v SPEAKER_2>Ja, das funktioniert praktisch genau.
+
+00:32:41.117 --> 00:32:58.577
+<v SPEAKER_1>Das heißt, das ist auch etwas, was permanent immer stattfindet. Das ist etwas, wo ohne das funktioniert einfach die gesamte Kommunikation nicht über TCPIP, wenn man WLAN oder Ethernet verwendet. Das heißt, man kann danach lauschen. Und dann? Wie kann man die erkennen, wenn die verschlüsselt sind?
+
+00:32:58.697 --> 00:33:05.557
+<v SPEAKER_2>Na ja, einmal zu einer Anfrage wird normalerweise immer die Broadcast-Adresse gestellt. Und der zweite Trick ist, zu einer Anfrage…
+
+00:33:05.577 --> 00:33:07.997
+<v SPEAKER_1>Also an die Adresse, an der sozusagen alle mithören müssen.
+
+00:33:08.017 --> 00:33:15.617
+<v SPEAKER_2>Genau. Die wird immer an alle Stationen geschickt. Und das kann man auch in einem verschlüsselten Paket ansehen, ob es gerade an alle Stationen geschickt wird oder ob es nur an eine Station geschickt wird.
+
+00:33:15.637 --> 00:33:19.617
+<v SPEAKER_1>Weil die Zieladresse generell immer unverschlüsselt ist, damit die überhaupt wissen, ob sie gemeint sind oder nicht.
+
+00:33:19.637 --> 00:33:31.497
+<v SPEAKER_2>Genau. Und das zweite ist, diese Abpakete sind immer gleich lang. Also da gibt es nicht irgendwie optionalen Protokollfeldern oder Möglichkeiten, da was anderes zu kodieren, sondern Abpakete haben immer die gleiche Länge.
+
+00:33:31.797 --> 00:33:35.237
+<v SPEAKER_1>Das heißt, egal wie sie verschlüsselt sind, man kann sie allein schon an der Länge erkennen.
+
+00:33:35.257 --> 00:33:43.557
+<v SPEAKER_2>Genau. Also das funktioniert sehr zuverlässig. Wenn man halt so ein Paket findet, das an die Broadcast-Adresse geht und das diese charakteristische Länge hat, dann ist das wohl eine Abanfrage.
+
+00:33:43.797 --> 00:33:50.437
+<v SPEAKER_1>Und dann kann man sich dieses Paket einfach in seiner verschlüsselten Form nehmen und einfach selber aussenden.
+
+00:33:50.697 --> 00:33:50.977
+<v SPEAKER_2>Genau.
+
+00:33:51.497 --> 00:34:08.617
+<v SPEAKER_1>Und da es auf jede Abanfrage in der Regel auch eine Antwort gibt, nämlich von dem Rechner, der dann angefragt wurde, kriegt man permanent immer wieder eine neue Antwort. Jedes Mal immer wieder eine neue Antwort, aber sie ist halt jedes Mal mit einem neuen Schlüssel verpackt, weil ja jedes Datenpaket immer wieder neu verschlüsselt wird.
+
+00:34:08.637 --> 00:34:09.197
+<v SPEAKER_2>Genau.
+
+00:34:09.217 --> 00:34:13.397
+<v SPEAKER_1>Und damit kann man den Trafik erzeugen, den man benötigt, um danach eine Analyse zu machen.
+
+00:34:14.137 --> 00:34:23.317
+<v SPEAKER_2>Genau. Und wenn man einen guten Empfang hat und ein schnelles Netzwerk, dann kriegt man so etwas weniger als 800 Pakete beziehungsweise mehr als 700 Pakete pro Sekunde mit dieser Methode hin.
+
+00:34:24.757 --> 00:34:27.917
+<v SPEAKER_1>700 Pakete pro Sekunde.
+
+00:34:27.937 --> 00:34:34.297
+<v SPEAKER_2>Sogar noch ein bisschen mehr. Also 760, 770, das ist so ein Wert, den kriegt man bei gutem Empfang durchaus hin.
+
+00:34:34.317 --> 00:34:50.177
+<v SPEAKER_1>Okay. Das heißt, wenn man jetzt zwei Millionen Pakete braucht, dann ist man da eine dreiviertel Stunde ungefähr am Werkeln und dann hat man irgendwie die Datenmenge, die man braucht, diese Correq-Attacke zu machen.
+
+00:34:50.477 --> 00:34:59.117
+<v SPEAKER_2>Genau. Wenn man halt irgendwie Glück hat, funktioniert es halt auch nicht mit zwei Millionen, sondern halt schon nach 500.000. Da geht es ein bisschen schneller, aber prinzipiell, man muss schon ein bisschen warten.
+
+00:34:59.137 --> 00:35:08.837
+<v SPEAKER_1>Das merkt man doch auf dem WLAN, wenn man da selber gerade drauf arbeitet und irgendwie permanent diese Pakete erzeugt, dann geht auch die Performance enorm in die Knie, oder?
+
+00:35:08.857 --> 00:35:17.497
+<v SPEAKER_2>Ja, aber wenn ich immer dann im WLAN sitze und die Performance ist gerade mal nicht so, wie sie sein sollte, glaube ich, wird der Angriff und ja.
+
+00:35:17.517 --> 00:35:20.477
+<v SPEAKER_1>Es wird keiner stutzig, weil Internet ist sowieso dann immer langsam.
+
+00:35:20.497 --> 00:35:22.937
+<v SPEAKER_2>Ja, also das passiert halt ab und zu mal, dass es langsam wird.
+
+00:35:22.957 --> 00:35:27.177
+<v SPEAKER_1>Man kann es ja auch langsamer machen und dann sitzt man halt zwei Stunden da, aber dann hat man die Daten mehr.
+
+00:35:27.197 --> 00:35:36.857
+<v SPEAKER_2>Genau, also solange das nicht irgendwie so auffällt, dass halt die Seite zu Minuten lädt, muss man halt noch irgendwie so zehn Prozent Platz lassen irgendwie zur maximalen Datenrate und dann fällt das nicht auf.
+
+00:35:36.877 --> 00:36:12.557
+<v SPEAKER_1>Okay, also mit anderen Worten, spätestens seit 2004, wenn nicht sogar schon seit 2001, ist eigentlich diese Standardverschlüsselung des WLANs, das WEP, komplett knackbar. Es ist mit dem Einsatz von Tools und irgendwie der richtigen Software und natürlich auch ein Betriebssystem, was einem diese Injektionen von diesen Fake-Paketen erlaubt, sprich man nimmt sich einen Linux-Computer mit einem Treiber auf der WLAN-Karte, der diesen Zugriff auch erlaubt, weil das ist ja jetzt so normalerweise, glaube ich, in den Standard-Treibern in Windows und auf Mac nicht vorgesehen.
+
+00:36:13.377 --> 00:36:29.557
+<v SPEAKER_2>Nö, das ist normalerweise nicht vorgesehen, allerdings viele Treiber in der Linux können das schon. Das hängt auch ein bisschen davon ab, was man für eine WLAN-Karte hat, an manchen geht es gut, an manchen geht es weniger gut, aber normalerweise, wenn man in irgendein Elektrofachmacht geht und wo irgendwie fünf Karten im Regal stehen, da ist nur wenigstens eine dabei, die das kann.
+
+00:36:30.397 --> 00:36:38.937
+<v SPEAKER_1>So, 2004 war aber WEP eigentlich immer noch in Verwendung, ich meine, das ist auch heute noch immer noch in Verwendung. Gab es da irgendwie dann auch den passenden großen Aufschrei?
+
+00:36:40.677 --> 00:36:57.497
+<v SPEAKER_2>Ja, es gab noch mal so einen Aufschrei und man hat natürlich auch angefangen, da Nachfolgeverfahren zu entwickeln. Das Ganze ist dann irgendwann im 800ZU. LFI-Standard zusammengeflossen, wo man zwei Verfahren entwickelt hat, die dann WEP ablösen sollten.
+
+00:36:57.517 --> 00:37:00.057
+<v SPEAKER_1>Das ist das, was man heute als WPA kennt?
+
+00:37:00.077 --> 00:37:15.097
+<v SPEAKER_2>Genau, kennt man heutzutage entweder als WPA1 oder WPA2 oder nur WPA oder in vielen Finalisten auch noch mal die Begriffe TKIP oder CCMP. Das sind praktisch alles Namen für einen der beiden Nachfolgerverfahren, die es gibt, beziehungsweise irgendwie in Kombination von diesen Verfahren.
+
+00:37:15.617 --> 00:37:17.957
+<v SPEAKER_1>Und warum sind die sicherer?
+
+00:37:17.977 --> 00:37:43.737
+<v SPEAKER_2>Sie sind sicherer. Eines der beiden Verfahren benutzt immer noch RC4, wählt aber nach jedem Paket den kompletten Schlüssel neu. Das heißt nicht diese Eigenschaft, dass nur der Anfang des Schlüssels irgendwie zufällig ist und danach der geheime Teil immer klein ist, sondern der komplette Schlüssel wird nach jedem einzelnen Paket, was rausgesendet wird, einmal komplett ausgetauscht, sodass es irgendwie keinerlei erkenntbare statistische Abhängigkeiten mehr gibt zwischen zwei Paketschlüsseln.
+
+00:37:45.537 --> 00:37:57.517
+<v SPEAKER_1>Das heißt, im Prinzip ist es so, dass jetzt mit WPA1 und 2 bereits zwei, zumindest nach dem heutigen Stand der Technik, brauchbare Nachfolger gefunden sind?
+
+00:37:58.217 --> 00:38:17.897
+<v SPEAKER_2>Ja, und das CCMP-Protokoll macht die ganze Sache halt noch ein bisschen schöner, das schmeißt halt einfach mal komplett EC4 aus der Hardware raus und ersetzt es durch AES in einem als sehr sicher angesehenen Modus und AES ist zurzeit eine der am besten bekannten kryptographischen Verfahren, die so in der Praxis eingesetzt werden.
+
+00:38:18.157 --> 00:38:24.997
+<v SPEAKER_1>Ja, das ist so der Goldstandard derzeit für Verschlüsselung und auch ein öffentlich dokumentiertes Protokoll.
+
+00:38:25.217 --> 00:38:50.297
+<v SPEAKER_2>Ein öffentlich dokumentiertes Verfahren, ja. Es gab halt einen Wettbewerb, wo sozusagen der beste Algorithmus gewinnen sollte und den hat dann der Rheindal-Algorithmus für sich entschieden. Also Rheindal ist halt der Name, den AES vorher hatte. Es gab halt diesen Wettbewerb, wo man halt diesen Nachfolgerstandard damals zu des finden wollte, den AES. Und halt ein Algorithmus namens Rheindal hat diesen Wettbewerb gewonnen und darf sich seitdem her auch AES nennen.
+
+00:38:53.077 --> 00:39:15.597
+<v SPEAKER_1>So, jetzt ist also eigentlich WEP tot und begraben. Aber du und noch zwei andere, Ralf-Philipp Weinmann und André Püschkin an der Universität in Darmstadt, ihr habt euch dieses Themas auch nochmal angenommen.
+
+00:39:15.957 --> 00:39:36.837
+<v SPEAKER_2>Ja, weil WEP ist zwar so aus sicherheitstechnischer Sicht so ziemlich tot, aber wird immer noch sehr gerne eingesetzt. Es gab aus 2006 so eine Diplomarbeit, wo jemand mal so insgesamt 18.000 Netze per Wardriving gefunden hat und hat sich mal dort die Sicherheit angeschaut und so in etwa ein bisschen mehr als die Hälfte der Netze war damals noch mit WEP-Verschlüsselt.
+
+00:39:36.857 --> 00:39:37.837
+<v SPEAKER_1>Wann war das?
+
+00:39:37.857 --> 00:39:46.157
+<v SPEAKER_2>Das war Ende 2006, wo die Arbeit erschienen ist. Normalerweise dauert so eine Arbeit sechs Monate, das heißt, das ist vermutlich so der Stand von Mitte 2006.
+
+00:39:46.157 --> 00:39:47.477
+<v SPEAKER_1>Okay, also...
+
+00:39:47.497 --> 00:39:51.557
+<v SPEAKER_2>Und die Hälfte war wohlgemerkt WEP und von der anderen Hälfte war auch noch ein Teil unverschlüsselt.
+
+00:39:53.737 --> 00:40:05.497
+<v SPEAKER_1>Mit anderen Worten ist alles noch eigentlich total offen und Leute, die glauben, ihr Netz wäre jetzt in irgendeiner Form besonders gesichert, die bewegen sich eher in so einem trügerischen Bereich.
+
+00:40:05.517 --> 00:40:28.417
+<v SPEAKER_2>Ja, oder sie wissen es halt nicht. Also, wenn man heutzutage so eine WLAN-Karte kauft, bei manchen steht halt irgendwie drauf, hochsicher, da 128-Bit-WEP-Verschlüsselung und bei anderen Karten, es gibt halt auch Hersteller, die schreiben dabei, die Karte kann WEP und die Karte kann TKIP, aber Vorsicht, wenn du WEP verwendest, die mit WEP-Verschlüsselndaten können halt weniger Stunden entschlüsselt werden.
+
+00:40:30.017 --> 00:40:48.277
+<v SPEAKER_1>Tja, dem ist ja auch so, wie wir jetzt wissen. Das heißt, also gut, heutzutage haben natürlich alle Rechner auch schon Unterstützung für sowohl das WPA1- und WPA2-Verfahren, das heißt, man hätte sozusagen die Wahl, aber es gibt ja auch noch Geräte, die ja nur WEP können.
+
+00:40:49.177 --> 00:41:01.857
+<v SPEAKER_2>Ja, also es gibt auch noch neu entwickelte Geräte, die nur WEP können. Es gibt diverse Spielekonsolen, die halt wählern können und die werden halt heutzutage neu verkauft und die können halt einfach mal nur web oder gar keine Verschlüsselung.
+
+00:41:01.877 --> 00:41:03.517
+<v SPEAKER_1>Welche ist das?
+
+00:41:03.537 --> 00:41:11.037
+<v SPEAKER_2>Das ist zum Beispiel Zeit der Nintendo DS. Also ich hab hier nicht selber, aber es haben sich sehr viele Leute gemeldet in letzter Zeiten haben sich darüber beschwert.
+
+00:41:12.537 --> 00:41:23.797
+<v SPEAKER_1>Okay, die haben sich bei euch gemeldet. Warum? Also was habt ihr dann gemacht? Ihr habt euch nochmal diese WEP-Geschichte angeschaut. Weil warum habt ihr das gemacht?
+
+00:41:23.817 --> 00:41:46.357
+<v SPEAKER_2>Wir haben vor einigen Jahren sogar, ich glaube es war 2004 oder 2005, einen Vortrag über Rc4 gehört von einem Herrn Klein, der sich auch immer mit Rc4 genauer beschäftigt hat und Rc4 noch weitere Eigenschaften gefunden hat, die damals Floor, Martin und Shamir nicht gefunden haben und auch Correq nicht gefunden haben und wir wollten wissen, ob sich diese Eigenschaften ebenfalls für einen Angriff ausnutzen lassen.
+
+00:41:48.197 --> 00:41:50.357
+<v SPEAKER_1>Und was habt ihr dann gemacht?
+
+00:41:50.377 --> 00:42:05.417
+<v SPEAKER_2>Wir haben dann ein bisschen rumexperimentiert und irgendwann festgestellt, ja, das was Herr Klein entdeckt hat, lässt sich prinzipiell ebenfalls für einen Angriff auf WEP ausnutzen und der Angriff von Herrn Klein ist auch in vielen Fällen ein bisschen effizienter als diese Correq-Attacke, die es gibt.
+
+00:42:07.537 --> 00:42:09.537
+<v SPEAKER_1>Und was stand dann am Ende dieser Entwicklung?
+
+00:42:10.237 --> 00:42:29.037
+<v SPEAKER_2>Na ja, wir haben dann noch ein bisschen rumexperimentiert, geht sie nicht noch schneller und haben nochmal diesen Angriff von Herrn Klein ein bisschen optimiert und am Schluss waren wir dann so weit, dass wir mit etwa 40.000 Datenpaketen bis 85.000 Datenpaketen den geheimen 104-Bit-Schlüssel immer errechnen konnten.
+
+00:42:29.817 --> 00:42:45.817
+<v SPEAKER_1>Das muss man aber sagen, diese Arbeit von dem Kleinen bezog sich eigentlich erst mal nur auf den RC4-Algorithmus als Seuchen und ihr habt dann das sozusagen genommen und gesagt, okay, jetzt gucken wir nochmal, ob das jetzt in dem speziellen Fall WEP anbringbar ist.
+
+00:42:45.837 --> 00:43:06.817
+<v SPEAKER_2>Genau. Der Kleine hat sich damit beschäftigt, was passiert, wenn man RC4 so verwendet, dass man mit sehr vielen verschiedenen Schlüsseln verschlüsselt, die aber alle an irgendwie einem gewissen Bereich gleich sind. Und das Ergebnis davon war dann halt, dass man RC4 in diesem Fall mit einer sehr effizienten Methode angreifen kann.
+
+00:43:06.837 --> 00:43:07.997
+<v SPEAKER_1>40.000 Pakete.
+
+00:43:08.017 --> 00:43:25.817
+<v SPEAKER_2>40.000 Pakete. Dann klappt es in 50% aller Fälle oder alternativ 60.000, dann klappt es in 80% aller Fälle oder 85.000 Pakete. Dann klappt es in 95% aller Fälle. Das geht nach oben hin. Im Prinzip verbleibe ich weiter, wenn einem 95% Erfolgsverständigkeit nicht reichen.
+
+00:43:25.837 --> 00:43:52.117
+<v SPEAKER_1>Das heißt, mit anderen Worten, wenn man jetzt, also man muss ja dann unter Umständen auch ein bisschen nachhelfen und diese Pakete, die man dann braucht, erzeugen, also die vorhin schon erwähnte Injektionsmethode sozusagen und man braucht nur 100.000 Pakete, um jetzt total sicher zu sein, dann dauert das irgendwie gerade mal zwei Minuten, dann hat man die Pakete irgendwie beisammen, ne?
+
+00:43:52.137 --> 00:43:56.777
+<v SPEAKER_2>Ja, oder halt, wenn man halt so halbsicher sein will, reicht ein bisschen weniger als eine Minute aus.
+
+00:43:56.797 --> 00:44:01.237
+<v SPEAKER_1>Und wenn man dann diese Datenpakete weniger als eine Minute datensammeln?
+
+00:44:01.257 --> 00:44:03.257
+<v SPEAKER_2>Weniger als eine Minute datensammeln bei sieben…
+
+00:44:03.277 --> 00:44:05.197
+<v SPEAKER_1>Und das eigentliche Ausrechnen dann des Schlüssels?
+
+00:44:05.937 --> 00:44:15.197
+<v SPEAKER_2>Das geht relativ schnell, also ich hab's auf meinem Laptop ausprobiert, da dauert es nie länger als drei Sekunden. Und wenn man halt will, kann man es auch noch auf dem PDA machen, da klappt das auch noch ganz gut.
+
+00:44:15.217 --> 00:44:25.037
+<v SPEAKER_1>Das heißt, man muss nur eine Minute datensammeln oder weniger als eine Minute datensammeln und die letzten paar Sekunden dann irgendwie noch ein bisschen drüberrechnen und dann hat man auf einmal den Schlüssel.
+
+00:44:25.057 --> 00:44:30.837
+<v SPEAKER_2>Genau, das dauert dann bei 50 Prozent Erfolgswahrscheinlichkeit ein guter Datenrate, ein bisschen weniger als 60 Sekunden.
+
+00:44:32.397 --> 00:45:03.517
+<v SPEAKER_1>Mit anderen Worten, der Titel eures Papers, was ihr dazu rausgebracht habt, das nämlich lautet Breaking 104 Bid WEP in Less Than 60 Seconds ist sozusagen eine Behauptung, die ihr auch locker belegen könnt. Vor ein paar Tagen wurde darüber ja kräftig berichtet bei Heise und allen üblichen sonstigen Security-Foren, was waren so eure Erfahrungen mit der Veröffentlichung?
+
+00:45:04.077 --> 00:45:48.197
+<v SPEAKER_2>Naja, wir haben halt erstmal ein bisschen rum experimentiert, erstmal so bei unserer Entwicklung und haben halt irgendwann festgestellt, ja, wir können WEP brechen und dann haben wir uns halt überlegt, was machen wir damit und erstmal muss man bedenken, WEP war zu dem Zeitpunkt kryptographisch schon gebrochen, das heißt, man hat jetzt damit nicht irgendwie Leute kalt erwischt, sondern praktisch seit 2001 wussten alle Leute, die WEP verwenden, das Verfahren ist nicht sicher und das soll man nicht für sensitive Daten einsetzen. Und ja, dann haben wir uns halt dazu entschieden, ok, wir geben unsere Ergebnisse jetzt an die Öffentlichkeit und dann gab es noch die Überlegung, geben wir jetzt nur unsere mathematischen Methoden, die wir eingesetzt haben an die Öffentlichkeit oder zeigen wir auch wirklich genau wie es geht, also packen wir auch ein Programm dazu, dass das Ganze dann ausrechnen kann.
+
+00:45:48.217 --> 00:45:53.037
+<v SPEAKER_1>Ein böses Hackertool. Das habt ihr dann getan.
+
+00:45:53.057 --> 00:46:30.057
+<v SPEAKER_2>Wir haben uns dann überlegt, okay, es gibt zwei Möglichkeiten, entweder wir packen das Programm nicht dazu, dann programmieren wir es in zwei Tagen nach oder wir packen das Programm dazu, dann können wir auch sagen, genau, das ist das, was wir getestet haben, das ist das, was wir mit mir simuliert haben und wenn irgendjemand nicht glaubt, dass das, was wir in diesem Paper aufgeschrieben haben, dann soll er doch einfach mal den Code nehmen und es selber ausprobieren. Genau, dann kann er irgendwie diesen Code nehmen und halt einfach mal bei sich Datenpakete sammeln und kann mal schauen, wie es dann so klappt und wir dann feststellen, diese Behauptungen, die wir aufgestellt haben, das heißt, dass so ein WEP in den Einsatzszenarien so schnell brechen kann, die sind korrekt.
+
+00:46:30.077 --> 00:46:33.417
+<v SPEAKER_1>Das Tool heißt dann Aircrack NG, richtig?
+
+00:46:33.437 --> 00:47:03.697
+<v SPEAKER_2>Nein, das Tool heißt Aircrack PTV, PTV steht für die Anfangsbuchstaben der Nachnamen der Autoren und das Tool macht nichts weiter als das Ausrechnen der Pakete. Das heißt, das Aufzeichnen der Pakete und das Generieren von dem Traffic, das überlassen wir in einem anderen Programm, was es schon länger gibt, dem sogenannten Aircrack NG. Das ist so eine Tool Suite, die so ein paar kleine Tools für Webnetze enthält, die unter anderem Traffic erzeugen können und halt einfach Traffic auf der WLAN-Karte mitschneiden können und aufzeichnen können.
+
+00:47:03.717 --> 00:47:11.037
+<v SPEAKER_1>Das ist sozusagen der komplette Werkzeugkasten, den man benötigt, um diese Attacke auf WEP dann auch konkret durchzuführen.
+
+00:47:11.237 --> 00:47:22.637
+<v SPEAKER_2>Genau, man braucht diese Aircrack-NG-Tool Suite und unser kleines Tool Aircrack-PTW, was dann am Schluss nichts weiter macht, als einfach die aufgezeichneten Pakete durchzugehen und die Schlüssel dann auszugeben.
+
+00:47:22.657 --> 00:47:31.057
+<v SPEAKER_1>Und ja, dann habt ihr jetzt so ein schickes Paper veröffentlicht, aber ihr habt euch ein bisschen beim Datum vertan, oder?
+
+00:47:31.077 --> 00:48:00.177
+<v SPEAKER_2>Ja, leider ist es halt passiert, dass das Paper dummerweise am 1. April fertig war. Wir haben halt nicht gemerkt, dass es der 1. April ist und haben das Ding halt im Anzitronet reingestellt. Und als dann halt die ersten Leute auf das Paper gestoßen sind, gab es halt ein paar merkwürdige Kommentare, weil halt am 1. April mal so verkündet, wir haben da so eine 128-Bit-Verschlüsselung geknackt, weniger als 60 Sekunden und es funktioniert so einwandfrei, das gab dann so gemischte Meinungen.
+
+00:48:00.197 --> 00:48:03.297
+<v SPEAKER_1>Mit anderen Worten, das hat euch keiner geglaubt?
+
+00:48:03.317 --> 00:48:08.477
+<v SPEAKER_2>Es haben uns schon ein paar Leute geglaubt, nur so ein paar andere haben es halt auch nicht geglaubt.
+
+00:48:08.497 --> 00:48:55.777
+<v SPEAKER_1>Aber jetzt gibt es ja dann sicherlich auch so Diskussionen, man ist da schon so ein bisschen drauf eingegangen, vielleicht auch nochmal nachschieben, so mit, ja, was ist jetzt irgendwie die Verantwortung? Man kann sagen, ok, das Messer war ja schon draußen und jetzt ist es bloß ein bisschen schärfer geschliffen worden, aber was würdest du denn generell anderen Leuten raten, die solche Sicherheitslücken finden, die jetzt auf so eine Technologie angewendet werden können, die ja potenziell riesige Anwendungsbreite haben? WEP ist halt, haben wir ja eben auch gehört, noch vor einem Jahr war die Hälfte aller Netze, die man so auf der Straße sehen kann, damit verschlüsselt. Das ist ja kein besonders kleines Ziel.
+
+00:48:57.137 --> 00:49:14.677
+<v SPEAKER_2>Es kommt immer darauf an, was man gefunden hat. Also, wenn jetzt noch irgendjemand sich mal unsere Arbeit anschaut und denkt, 60 Sekunden sind ein bisschen schlecht, das geht auch in fünf, dann hätte ich keine Probleme damit, wenn er auch sein Tool rausgibt und das dann halt zeigt, dass das auch in fünf Sekunden geht. Also noch mal so die nächste Generation.
+
+00:49:14.697 --> 00:49:19.497
+<v SPEAKER_1>Aber angenommen, man würde jetzt was finden, was WPA1 knacken würde?
+
+00:49:19.517 --> 00:49:48.997
+<v SPEAKER_2>Dann würde ich empfehlen, wesentlich vorsichtiger vorzugehen. Also in dem Moment, wo man in irgendein Protokoll angreift, es gibt prinzipiell zwei Möglichkeiten, die man angreifen kann. Entweder man greift eine konkrete Implementierung eines Protokolls an, d.h. ein Hersteller, der ein Protokoll implementiert hat, hat bei der Implementierung irgendwelche Fehler gemacht. Dann muss man in irgendeiner Form versuchen, mit dem Hersteller zusammenzuarbeiten und diesen Fehler der Implementierung zu beheben. Und man soll dem Hersteller auch Zeit geben, den Fehler zu beheben, bevor man dann seine Informationen veröffentlicht.
+
+00:49:49.017 --> 00:49:51.617
+<v SPEAKER_1>Wie viel Zeit sollte man dem Hersteller geben?
+
+00:49:51.637 --> 00:50:29.657
+<v SPEAKER_2>Es kommt immer darauf an, was es genau ist. Normalerweise bei irgendwelcher Software sagt man normalerweise, 30, 60, 90 Tage sollte ein Hersteller maximal brauchen, um Software zu patchen. Bei Software geht es relativ einfach, bei den meisten Programmen gibt es ein Update-Mechanismus bei den gängigen Programmen. Oder der Hersteller packt das Update-Mechanismus auf die Homepage und schreibt hin, dass man das unbedingt einspielen soll. Bei anderen Sachen wird es möglicherweise schwieriger. Also zum Beispiel Telefone oder Ähnliches lassen sich wesentlich schwierige Updaten. Da muss man halt mal mit dem Hersteller reden und muss dann für sich selbst entscheiden, wie man es macht.
+
+00:50:29.677 --> 00:50:35.597
+<v SPEAKER_1>Und wenn dann so der Zeitpunkt der Veröffentlichung gekommen ist, wie sollte man da am besten vorgehen?
+
+00:50:35.617 --> 00:51:58.937
+<v SPEAKER_2>Normalerweise läuft es so, dass wenn ein Hersteller ein Update bereitstellt, dann schreibt der Hersteller selber bei dem Update dabei, dass es ein Sicherheitsrisiko in seinen Produkten gibt und warnt praktisch alle Leute vor, ohne genau zu beschreiben, wie das genau funktioniert. Und sobald das Update dann irgendwie eingespielt wurde, also die Leute genug Zeit hatten, das Update zu installieren, dann kann man prinzipiell alle Informationen rausgeben, die man hat. Anders als sieht es aus, wenn man Fehler in einem Protokoll findet, also man greift nicht an eine direkte Implementierung an, sondern man greift einfach die Funktionsweise von irgendeinem Protokoll an. Das heißt, in irgendeinem Protokoll gibt es irgendeinen Design-Fehler, zum Beispiel beim TLS 1.0-Protokoll gab es einen Design-Fehler, der es erlaubt hat, nachfolger Protokoll von SSL. Das heißt, in vielen Fällen, wo man noch aus marketingtechnischen Gründen SSL liest, sind zwischen einfach TLS dahinter. Und im TLS 1.0-Protokoll gab es einen Design-Fehler, der es dann erlaubt hat, dass man bestimmte Daten entschlüsseln konnte und in dem Fall, das kann kein Hersteller alleine beheben, weil man muss sich ja irgendwie mehrere Hersteller implementieren, TLS, oder muss man sich auf einen gemeinsamen Nenner einigen und der Standard war eben fehlerbehaftet. Das heißt, man muss dann in irgendeiner Form mit allen Herstellern bzw. mit dem Standardisierungsgremium zusammenarbeiten und irgendeine Fehlerkorrekturtechnik vorschlagen.
+
+00:52:00.837 --> 00:52:34.857
+<v SPEAKER_1>Mit anderen Worten, man sollte sich auf jeden Fall überlegen, was man tut, bevor man irgendwie. Den Ruhm aufbauen lässt, indem man verantwortungsvoll damit an die Öffentlichkeit geht. Genau.
+
+00:52:41.577 --> 00:52:46.077
+<v SPEAKER_2>Dann ist es eigentlich besser, ein bisschen abzuwarten, den Ruhm sich selbst aufbauen lassen, indem man einfach verantwortungsvoll damit an die Öffentlichkeit geht.
+
+00:52:48.437 --> 00:52:49.837
+<v SPEAKER_1>Da gab es praktisch eine Vorwarnzeit von sechs Jahren.
+
+00:52:50.977 --> 00:53:37.437
+<v SPEAKER_2>Verwendet das in der aktuellen Version auch noch RC4? Allerdings die Methoden, die Martin, Shamir und Flora angewendet haben, bzw. die dann CROIC verfeinert haben oder die Idee von Klein, die basieren alle darauf, dass man sehr viele Verschlüsselungen hat, die mit sehrjenigen Schlüsseln ablaufen, d.h. irgendwelche Schlüssel, wo immer gewisse Bereiche in den Schlüsseln gleich sind. Und WEP verwendet halt eben solche Verfahren, wo immer Teile des Schlüssels gleich sind, nämlich der sogenannte WEP-Hauptschlüssel ist dann immer gleich oder der WEP-Schlüssel ist gleich. SSL verwendet das aber nicht. D.h. bei SSL wird bei jedem Verbindungsaufbau der komplette Schlüssel absolut zufällig ausgehandelt und nur ein einziges Mal verwendet und danach wieder weggeschmissen. D.h. es wird nicht irgendwie so ein bisschen was geändert, sondern alles Schlüssel weiß.
+
+00:53:37.457 --> 00:53:39.477
+<v SPEAKER_1>Es wird immer alles komplett neu geändert.
+
+00:53:39.497 --> 00:53:39.697
+<v SPEAKER_2>Genau.
+
+00:53:39.717 --> 00:54:13.837
+<v SPEAKER_1>Und es bleibt dann auch sozusagen für die gesamte Dauer der Verbindung. Also jeder HTTPS-Click sozusagen ist ein komplett neu ausgehandelter Schlüssel. Und die Daten, die innerhalb dieser einen Click-Aktion, dieses einen Seitenladens übertragen werden, sind eben nur mit diesem einen Schlüssel verschlüsselt und nicht jetzt wie, also nicht wie der eigentliche Wireless-Lan, Datenstrom zerhackt in 1000 Pakete, wo dann jeder noch mal einen eigenen Schlüssel hat, sodass man da gar nichts analysieren kann. Das heißt, es bringt einem nichts, das abzuhörchen. Man kann diese Methoden nicht anwenden.
+
+00:54:13.857 --> 00:54:18.477
+<v SPEAKER_2>Genau. Also ich bin der Meinung, was wir entdeckt haben, kann man nicht auf SSL oder TLS anwenden.
+
+00:54:18.497 --> 00:54:26.537
+<v SPEAKER_1>Also mit anderen Worten, das verschlüsselte WEP ist nicht in Gefahr, zumindest noch nicht. Nicht unter den einzelnen Sachen.
+
+00:54:26.557 --> 00:54:27.257
+<v SPEAKER_2>Nicht mehr als gestern.
+
+00:54:28.557 --> 00:55:17.137
+<v SPEAKER_1>Ja, super, das war jetzt mal ein sehr technischer Ritt. Zum Abschluss würde mich natürlich jetzt noch mal ein bisschen interessieren, was reitet denn die Kryptografen. Wenn man heute von Kryptographie spricht, dann habe ich irgendwie so gleich weiße Kittel in meiner inneren Vorstellung. Ja, da kommen sie, die Wissenschaftler, die großen Kryptografen, die irgendwie verzaubern jetzt alles irgendwie ins Sicher, und dann ist alles sicher. Was ist denn so der… also was treibt denn die Kryptografen an und was ist denn der Reiz an Kryptographie für dich?
+
+00:55:17.157 --> 00:56:05.997
+<v SPEAKER_2>Na ja, es ist eine relativ interessante Wissenschaft. Also es ist halt so eine Mischung aus Informatik und Mathematik, beziehungsweise theoretischer Informatik und Mathematik. Und es ist halt etwas, was immer so ein bisschen Geheimnis umwoben ist. Also ganz früher, vielleicht so Zeiten vor den 60er-, 70er-Jahren, war halt Kryptographie was, was nur beim Militärs existierte oder bei Geheimdiensten. Und was halt irgendwie immer so ein bisschen darauf beruht hat, dass man halt auch nicht so weiß, wie sie so recht verschlüsseln. Und vielleicht so in den 70er-Jahren hat es dann angefangen, dass dann Kryptographie zu einer ernsthaften Wissenschaft wurde. Also dass auch sich Forscher mit Kryptographie öffentlich in irgendeiner Form beschäftigt haben und dann auch Verfahren entwickelt haben, die dann von da an praktisch der Allgemeinheit zur Verfügung standen.
+
+00:56:09.057 --> 00:56:17.397
+<v SPEAKER_1>Und was würdest du jetzt Leuten raten, die Lust haben, sich mit kryptographischen Verfahren zu beschäftigen? Wo fängt man da an?
+
+00:56:17.417 --> 00:57:04.637
+<v SPEAKER_2>Das ist ein bisschen schwierig, weil für die meisten kryptographischen Verfahren braucht man ziemlich viel Wissen über Mathematik oder möglicherweise auch theoretische Informatik. Und wenn man halt nicht gerade das Ganze studiert, dann fängt man best mit irgendwelchen Büchern an zu diesem Thema. Also es gibt da sehr viel Standardliteratur. Das Problem ist halt, viele Bücher erklären Mathematik und verwenden die Mathematik einfach, ohne sie vorher komplett zu erklären. Das heißt, wenn man möglicherweise nicht gerade Leistungskurs Mathe besucht hat oder so, selbst dann wird es einem schwerfallen, diese Verfahren auf Anlieb zu verstehen. Das heißt, man sollte dann vielleicht auch noch zu dem Buch über Kryptographie gleich ein Buch über Mathe dazu kaufen oder irgendein Buch, was halt die mathematischen Verfahren ebenfalls erklärt.
+
+00:57:05.337 --> 00:57:12.717
+<v SPEAKER_1>Und gibt es auch ein Buch, das versucht, das kryptographische Verfahren zu erklären, ohne zu sehr auf Mathe zu setzen?
+
+00:57:12.737 --> 00:57:58.757
+<v SPEAKER_2>Das weniger, aber es gibt Bücher, die die Mathematik dahinter ebenfalls erklären. Also ich zum Beispiel bin an der TU Darmstadt und arbeite bei Professor Buchmann, der auch ein eigenes Buch zu dem Thema geschrieben hat. Das heißt, Einführungen in die Kryptographie ist ein eher dünnes Buch, das so die Grundlagen hauptsächlich der asymmetrischen Kryptographie erklärt. Also das sind die kryptographischen Verfahren, wo man zwei Schlüssel hat, einen zum Verschlüsseln, einen zum Entschlüsseln und den Schlüssel zum Verschlüsseln auch freigeben kann, also der öffentlich bekannt sein kann. Deswegen nennt man das auch oft Public Key-Kryptographie und alternativ, es gibt ein Buch von einem Herrn Schneier, der relativ viele Sachen erklärt. Das ist so ein 700 Seiten Buch. Das heißt, Applied Cryptography ist schon ein bisschen älter, aber da werden sehr, sehr viele Verfahren erklärt.
+
+00:57:59.817 --> 00:58:05.297
+<v SPEAKER_1>So dass man einen ganz guten Überblick bekommt darüber, was man sich vielleicht auch mal genauer anschauen sollte.
+
+00:58:05.317 --> 00:58:12.277
+<v SPEAKER_2>Ja, da sind auch durchaus einige Exoten dabei, die vielleicht gar nicht mehr so eingesetzt werden, die aber trotzdem noch interessant sind.
+
+00:58:14.137 --> 00:58:22.757
+<v SPEAKER_1>Okay, super. Haben wir noch irgendwas Wichtiges vergessen, was wir vielleicht noch unseren Hörern mit auf den Weg geben sollten?
+
+00:58:22.777 --> 00:58:25.477
+<v SPEAKER_2>Vielleicht die entsprechenden URLs dazu, weil die packst du?
+
+00:58:25.497 --> 00:59:41.497
+<v SPEAKER_1>Die packe ich wie immer, nachdem ich mir das hier alles nochmal angehört habe, in die Show Notes. Das heißt, es gibt alles auf chaosradio.ccc.de. Da gibt es den Chaosradio Express Podcast, den ihr gerade hört, und natürlich auch noch die anderen Podcasts vom Chaosradio, Chaosradio, die Aufzeichnung der Sendung. Es gibt Chaosradio Express auch noch in einer internationalen Version. Und ich verweise auch immer ganz gerne auf unseren Spaßkanal Chaos TV, wo bunte Tüte Unterhaltung und interessante Dokumentationsfilme gepostet werden, regelmäßig. Ansonsten, wenn es noch Fragen gibt zur Sendung selber oder Feedback und Kommentare und Anregungen, oder ihr das irgendwie mal anders ausgerechnet habt mit den Schlüsseln für die Brutforce-Geschwindigkeit, als wir jetzt hier während der Aufnahme mal eben beim Eintippen in den Rechner, dann ist eure Adresse chaosradio.sccc.de. Feedback ist immer gerne gesehen. Und ich sage erst mal Danke, Erik, für die Ausführung. Eine sehr technische Ausgabe von Chaosradio Express, aber ich hoffe, es hat euch trotzdem Spaß gemacht, zuzuhören und hat euch auch vor allem neue Einblicke gegeben in die Kryptographie und warum ihr vor allem euer WLAN vielleicht nicht mit WEP verschlüsseln solltet. Dann sage ich Tschüss, danke Erik.
+
+00:59:42.417 --> 00:59:43.337
+<v SPEAKER_2>Auf Wiedersehen.

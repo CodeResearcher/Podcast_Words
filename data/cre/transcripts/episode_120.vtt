@@ -1,0 +1,958 @@
+WEBVTT
+
+00:01:19.325 --> 00:04:24.445
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 120. Mein Name ist Tim Pritlove und heute geht es mal wieder um Technik. Und zwar so richtig, denn ich habe jemanden hier, der schon zweimal bei Chaosradio Express dabei war und immer gern gesehen ist, nämlich Harald Welte. Hallo. Wir haben ja hier schon ganz ausführlich geredet und sehr häufig ging es um funkende Strahlung im weiteren Sinne. Wir haben mal über das OpenMoco-Projekt geredet, also das Projekt, um ein freies Telefon zu entwickeln, also ein freies GSM-Telefon, ein Mobiltelefon zu entwickeln. Das Projekt hat ja einige holprige Straßen genommen. Trotz alledem ist daraus ja auch eine Software-Szene entstanden, die sich auch weiterhin damit beschäftigt, dieses Ziel zu erreichen. Das war jetzt die Ausgabe 42. Wer auch generell mal verstehen möchte, wie eigentlich ein Mobiltelefon so aufgebaut ist, kann ich den Podcast auch nach wie vor sehr empfehlen. Da haben wir doch sehr viele Details aufgezählt und genau erläutert, was nun eigentlich auch das Schwierige daran ist, so etwas zu implementieren. Ein anderer Punkt, den wir auch gemeinsam erarbeitet haben, war in Chaosradio Express 87 Software Defined Radio. Da ging es im Kern darum, wie man halt funkt per Software, wie man also ohne aufwändige spezialisierte Hardware, eigentlich im Wesentlichen nur mit dem Einsatz eines PCs und eben etwas unterstützender generalisierter Hardware, selber Funk-Protokolle nachbauen kann in Software. Auch das ein sehr detaillierter Einstieg in die Materie. Ja, und jetzt kommen wir sozusagen hier zu einem Thema zusammen, was diese beiden Podcasts und eigentlich auch noch einen dritten, den ich vor kurzem geführt habe, zusammenfassen, bei dem du nicht beteiligt warst. Ich hatte mich nämlich hier mit Tobias unterhalten über Next Generation Networks, Chaosradio Express 110, aber bevor wir auf die LG-Networks, also das, was jetzt bevorsteht in den GSM-Netzen, unterhalten haben, ging es vor allem eben auch darum, wie funktionieren diese Netze intern. Heute allerdings geht es mehr so darum, wie man sich eigentlich sein eigenes GSM-Netzwerk zusammenbaut, so Mobilfunk selbst gemacht. Wenn man schon immer mal davon geträumt hat, einen eigenen Staat zu gründen, dann muss man früher oder später auch darüber nachdenken, sein eigenes Mobilfunknetz zu betreiben. Und wenn man sich auf sowas vorbereitet, hoffe ich, dass wir hier ein paar interessante Anregungen geben können. Hintergrund ist, dass du seit einiger Zeit mit obskurer Hardware herum operierst, die ich auch schon ein paar Mal nackt habe auf deinem Tisch liegen sehen. Einer, ja, einer, einer, was, was ist das genau?
+
+00:04:25.325 --> 00:04:45.345
+<v SPEAKER_1>Ja, also obskure Hardware findet sich bei mir genug, aber das ist mit sicherlich so das Obskurste, was ich bisher aufgetrieben habe. Das ist eine sogenannte Siemens BS-11 Micro-BTS. Das ist also eine sogenannte Base-Transceiver-Station. Das ist das erste Element im GSM-Netzwerk, womit dein Telefon spricht.
+
+00:04:45.365 --> 00:04:53.445
+<v SPEAKER_2>Das sind diese kleineckigen Kisten, die man eigentlich immer, naja, so überall rumstehen sieht. Genau genommen sieht man ja immer nur die Antennen.
+
+00:04:53.465 --> 00:05:43.745
+<v SPEAKER_1>Genau, du siehst in der Regel, wenn du so einen Mobilfunk machst, siehst du den Mast und oben irgendwie so Antennen dran. Meistens drei sogenannte Sektor-Antennen und von da gehen dann Antennenkabel irgendwo runter in ein Gebäude oder in so einen kleinen Container oder sonst irgendwas am Boden und da drin steht dann meistens so ein Rack mit dem eigentlichen Equipment, also mit der Base Transceiver Station. So und Siemens hat vor langen Jahren Mitte der 90er irgendwie so Verkleinerte von diesen Stationen gebaut, deswegen Micro-BTS und das ist quasi Antenne und die Elektronik in einem Gerät, das ist dann so, ich weiß gar nicht wie groß es ist, vielleicht so 50 mal 50 Zentimeter, wiegt irgendwie 40 Kilo und das kann man direkt an den Mast schrauben, da braucht man dann also keine zusätzlichen Racks irgendwo in einem Raum stehen oder so.
+
+00:05:43.765 --> 00:05:51.085
+<v SPEAKER_2>Das ist dann so für Urbane Zentren, um da nochmal hier und da nochmal eine kleine Mini-Base Station reinzuhauen, um die Lücken zu füllen?
+
+00:05:51.405 --> 00:07:04.345
+<v SPEAKER_1>Ja, das ist denke ich die ursprüngliche Idee gewesen, genau solche Lücken zu füllen. Man hat ja gerade in dichtbebauten Gebieten oft Probleme, eine vollständige Abdeckung zu schaffen. Und da gerade mit dem ganzen Stahlbeton und so, der da im Weg ist. Und da kann man dann so kleine BTSen aufstellen. Ich glaube, so richtig aufgegangen kommerziell ist das Konzept nicht. Das entzieht sich jetzt so im Detail meiner Kenntnis. Ich habe da ja nicht irgendwie daran gearbeitet. Aber üblicherweise, was man heute in den Netzen sieht, sind da eher solche Repeater. Also statt eine eigene neue Zelle dorthin zu stellen für so ein kleines Loch, was man irgendwo abdeckt, macht man quasi einen Repeater, der einfach nur Signale einer anderen Basestation verstärkt. Das ist einfacher zu deployen. Da braucht man für so einen Repeater halt nur einen Stromanschluss. Wohingegen für so eine Micro-Basestation brauche ich ja dann auch wieder irgendwie einen Uplink. Also ich muss ja von dieser Basestation meine Mobilfunk-Signale irgendwo anders hinbekommen. Das heißt, ich muss da eine Richtfunkstrecke oder eine Telefonleitung oder irgendwas hinlegen. Das kostet natürlich Geld, auch im laufenden Betrieb und ja, es ist halt einfach komplexer.
+
+00:07:04.365 --> 00:07:06.345
+<v SPEAKER_2>Das heißt, das Ding war ein Flop?
+
+00:07:06.365 --> 00:07:36.985
+<v SPEAKER_1>Das weiß ich jetzt nicht, aber was ich gehört habe, ist diese Idee mit diesen kleinen BTSen nicht so aufgegangen, wie sie sich das gedacht haben. Und letztlich habe ich dann auf Ebay, ich glaube 2006 war das oder 2005 noch irgendwie so um den Dreh, habe ich auf Ebay so eine Angebote gesehen und dachte mir so, hey, irgendwie für, ich weiß nicht, wie ich das gezahlt habe, 350 Euro oder so, ist es mir den Spaß mal wert, irgendwie so ein Gerät daheim zu stehen haben, um damit zu spielen.
+
+00:07:37.005 --> 00:07:38.725
+<v SPEAKER_2>Wer hat dir das verkauft?
+
+00:07:38.745 --> 00:08:12.265
+<v SPEAKER_1>Das ist eine Firma für Messgeräte gewesen, also schon ganz offiziell. Die verkaufen so Funkmessgeräte und also wie man sie halt braucht im Funkmessbereich, wenn man irgendwie Geräte testet oder entwickelt. Und da ist es schon plausibel, dass man zum Beispiel während der Telefonentwicklung auch so eine Base Station mal eben im Labor stehen hat, um das entsprechend auszuprobieren. Ja, also es war auch ganz offiziell mit Rechnung und so und alles und die war original verpackt. Also da war nichts jetzt irgendwie, dass jemand irgendwo weggeschraubt hätte, so vom Mast oder so.
+
+00:08:12.285 --> 00:08:13.865
+<v SPEAKER_2>Da gab es auch nur die eine sozusagen.
+
+00:08:13.885 --> 00:09:02.145
+<v SPEAKER_1>Da gab es, nee da gab es, also die hatten in der Auktion glaube ich nur die eine, weil ich habe dann mal irgendwann Spaßhalber angefragt, dann meinten sie ja, sie hätten da noch einige und ich könnte da beliebig viele quasi irgendwie bestellen. Aber ich meine, ich wusste ja noch gar nicht, was ich mit dem Ding anfangen kann. Also was ich wusste zu dem Zeitpunkt ist, okay, das ist eine BTS. Was das war, war mir schon klar. Ja, also eben dieses bindige Lied zwischen dem Funk-Interface und dem Rest des Netzwerks, das ja verkabelt kommuniziert. Also Transceiver ist ja manchen Leuten im Begriff, allgemein im Funk-Bereich. Also ein Transmitter und Receiver in einem. Und letztlich setzt dieses Gerät halt von der Funk-Schnittstelle zum Mobiltelefon die ganzen Datenpakete um auf eine verkabelte Verbindung. Kann man sich so vorstellen...
+
+00:09:02.165 --> 00:09:04.785
+<v SPEAKER_2>Mikrofon und Lautsprecher sozusagen.
+
+00:09:04.805 --> 00:12:50.185
+<v SPEAKER_1>Ja, da kann man jetzt so übertragen, ja auch darauf. Aber man hat sowas ja auch, keine Ahnung, im Packet Radio Amateurfunk-Bereich, da hat man auch so ein kleines Gerät, was dort als TNC oder Modem oder was auch immer bezeichnet wird. Ja, das ist eben das, was zwischen der Luft, der Funk-Schnittstelle sitzt und irgendwo dann im Kabel, wo die Daten dann Richtung Rechner oder Netzwerkegeräten weitergereicht werden. Und wie diese Geräte funktionieren und was die für Protokolle sprechen, das ist standardisiert. Wie alle Teile von GSM sind die standardisiert in Dokumenten, die auch für jedermann zugänglich sind. Das sind die sogenannten GSM-Spezifikationen, die es beim ETSI zum Download gibt. ETSI steht für European Telecommunications Standardization Institute. Das ist auch da, wo man für ISDN oder für andere Telefonie-Anwendungen die Spezifikationen bekommt, kostenlos einfach als PDFs. Bei GSM ist das leider ein bisschen komplexer. Das sind 1400 PDFs insgesamt. Ich weiß nicht, wie viele Seiten. Jemand hat mir mal ein Script geschickt, dass ich das irgendwie drüber laufen lassen kann, wie viele Seiten das letztlich sind. Ich habe es noch nicht ausprobiert. Also es ist verdammt viel. Man muss ja auch sehen, das wurde irgendwie, ich weiß nicht, wann der Anfang der Entwicklung war, Ende der 80er wahrscheinlich. Ja, und das wird ja kontinuierlich weiterentwickelt über jetzt 20 Jahre. Und ich meine, am Anfang war das nur Sprachtelefonie, dann hat man Datenverbindungen hinzugefügt, SMS hinzugefügt, später dann GPLS, also für Paketvermittelte Daten wie das Internet, Edge und so weiter. Also da sind sehr viele Entwicklungsstufen drin. Und das muss ja alles noch vorwärts- und rückwärtskompatibel sein und alle möglichen komischen Anforderungen aller Länder irgendwie erfüllen. Also das ist schon ziemlich komplex. Aber wie gesagt, ich wusste halt, das ist ein standardisiertes Protokoll. Und demnach sollte ich eigentlich mit eigener Software sprechen können mit diesem Gerät. Ja, und dann dachte ich mir gut, wenn ich mal Zeit finde, die 250 Euro ist mir der Spaß wert. Mehr wollte ich da jetzt nicht davon kaufen. Ich wusste ja gar nicht, ob ich tatsächlich erfolgreich irgendwie was damit machen werde. So, dann kam ja irgendwie OpenMoko dazwischen so als, ja wie soll ich sagen, Zeitvakuum, nein Zeit-Zeit-Sauger, so, genau, Zeitloch, ja. Also es hat dann irgendwie so nahezu jede wache Minute irgendwie aufgefressen. Das heißt also die Basisstation lag da immer so irgendwie in der Ecke. Glücklicherweise sind da noch ein paar mehr auf Ebay gelandet und andere interessierte Leute in dem Umfeld haben sich welche gekauft. Einer davon war Dieter Spahr, den ich auch über OpenMoco kannte. Der hat sich eine gekauft und dann im September letzten Jahres angefangen damit zu spielen. Und er hat es also geschafft, einfach mit einem ganz einfachen Programm. Was wirklich nur, naja, wir haben von jemanden, der eine solche Basisstation im Betrieb hatte, haben wir Traces bekommen, also die die Protocol-Nachrichten, die zwischen der der BTS und dem restlichen GSM-Netz ausgetauscht werden. Also es ist wie jetzt, wenn man im Internet mit TCP da irgendwie einen Mitschnitt macht, was gehen da für Pakete nach links und rechts? Solche Mitschnitte hatten wir bekommen. Das heißt also, wir wussten nicht nur theoretisch nach der Spezifikation, wie sieht das Protokoll aus, sondern wir hatten also auch Beispieldaten, von denen wir wussten, dass sie mit genau diesem Gerät funktionieren.
+
+00:12:50.205 --> 00:13:01.905
+<v SPEAKER_2>Also das, was sozusagen wirklich roh zwischen Telefon und Netzwerk ausgetauscht wird und was, wenn man hier irgendwie ein GSM-Telefon einschalten würde, in diesem Podcast mit bäd zu hören wäre?
+
+00:13:01.925 --> 00:14:21.545
+<v SPEAKER_1>Ja, aber nicht auf der Luftschnittstelle in dem Fall, sondern eben auf der anderen Seite der BTS. Ja, also wenn man sich das GSM-Netzwerk anschaut, da hat man einmal das Telefon, das wird immer als MS bezeichnet, als Mobile Station. Dazwischen gibt es diese Funk-Schnittstelle, dann kommt der Funk-Mast, also die BTS selbst. Der Vollständigkeit halber noch, diese Luftschnittstelle heißt UM. Warum auch immer, völlig unklar. So, und danach kommt also nach dieser BTS, und davon stehen ja Tausende, Zehntausende irgendwie im Land rum, von diesen Sendemasten. Die haben dann eine Leitung zu etwas zentraleren Knoten, die nennen sich Base Station Controller, BSC. Deswegen auch der Name OpenBSC an der Software, an der ich eben arbeite. Und diese Base Station Controller, die steuern also so eine Gruppe von Base Transceiver Stations, die meistens geographisch auch in der Nähe sind. Und die Base Station Controller dann alle zusammen, da hatten wir vielleicht ein paar hundert irgendwie in so einem GSM-Netz, nicht ein paar zehntausend, und die sind dann alle verbunden mit dem sogenannten Mobile Switching Center, also das Herzstück des GSM-Netz, wo letztlich die ganze Vermittlung der Gespräche und so weiter stattfindet.
+
+00:14:21.565 --> 00:14:29.925
+<v SPEAKER_2>Aber dieser Mitschnitt, den ihr jetzt erwähnt, das war sozusagen die Kommunikation zwischen diesen Transceiver, der BTS und dem nächsten Element, also dem BSC.
+
+00:14:29.945 --> 00:14:30.305
+<v SPEAKER_1>Richtig, ja.
+
+00:14:30.705 --> 00:14:42.505
+<v SPEAKER_2>Aber das ist ja letztendlich nichts anderes als eine 1 zu 1-Repräsentation dessen, was über den Funk geht. Oder ändert diese BTS da noch irgendwas dran? Spricht die wirklich ein eigenes Protokoll und setzt das logisch um?
+
+00:14:42.525 --> 00:15:13.085
+<v SPEAKER_1>Es gibt da mehrere Kanäle. Also es gibt Nachrichten, die tatsächlich transparent durchgereicht werden. Also so eine Layer 3-Nachricht, die zum Beispiel einen Anrufaufbau signalisiert. So eine Setup-Nachricht, wie im ISDN heißt die auch Setup. Die wird transparent wirklich durchgereicht. Ja, da macht die BTS nichts damit. Dann gibt es aber natürlich auch andere Nachrichten, mit denen ich die BTS selber steuere. Zum Beispiel auf welchem Kanal bist du, ja, solche Dinge, was ist deine Network-ID, was für eine Adresse hast du und so weiter, solche Sachen.
+
+00:15:13.105 --> 00:15:15.285
+<v SPEAKER_2>Okay, also sozusagen das Management-Protokoll.
+
+00:15:15.305 --> 00:15:15.545
+<v SPEAKER_1>Genau.
+
+00:15:15.565 --> 00:15:27.985
+<v SPEAKER_2>Also das, was über das Funk geht, das geht natürlich auch zwischen BTS und BSC quasi eins zu eins durch. Und zusätzlich gibt es noch den ganzen Management-Kram, wie rede ich als BSC mit meiner Antenne, um sozusagen klar zu machen, was sie tun soll.
+
+00:15:28.225 --> 00:15:34.945
+<v SPEAKER_1>Genau. Also Sachen wie Sendeleistung oder auch welche Schlüssel für Verschlüsselung eingesetzt werden oder auf überhaupt und so weiter.
+
+00:15:34.965 --> 00:15:41.085
+<v SPEAKER_2>Aber das ist halt auch alles offendokumentiert eigentlich, bloß das hängt ja dann immer im Detail, nicht?
+
+00:15:41.105 --> 00:15:55.685
+<v SPEAKER_1>Genau. Also ich meine, erstens mal hat man natürlich immer die Frage, wie genau halten sich die Hersteller an die Speck? Das ist natürlich toll, wenn man da einen echten Mitschnitt hat, weil dann kann man das überprüfen. Also entspricht das den Erwartungen, die ich nach der Speck habe?
+
+00:15:55.705 --> 00:15:56.405
+<v SPEAKER_2>Das hast du auch gemacht.
+
+00:15:56.705 --> 00:16:56.165
+<v SPEAKER_1>Das haben wir gemacht und ich war sehr angenehm überrascht. Also ich würde sagen, irgendwas so 98 Prozent ist wie ein Aspekt. Also es sind so paar kleine Sachen, die anders sind. Aber Siemens muss sich da also sehr genau irgendwie ans Wort gehalten haben, was in der Spezifikation steht. Ich habe keine Erfahrung mit vielen anderen Herstellern, aber ich habe gehört, dass das bei anderen Herstellern durchaus sehr anders ist. Also die sehr viel mehr profitäre Erweiterungen haben. Also wir hatten den Mitschnitt und Dieter Spahr hat dann eine Software geschrieben, die einfach nur diesen Mitschnitt sozusagen ein Replay davon macht. Das heißt, wir haben diesen Mitschnitt da liegen und dann läuft die Software und die schickt eben diese Nachrichten alle in der gleichen Reihenfolge nochmal an die BTS. Das heißt, ohne dass wir irgendwelches echtes GSM-Netzwerkequipment gehabt hätten, außer dieser BTS, konnten wir zu dem Punkt die BTS schon mal so weit bringen, dass ein Telefon sie gesehen hat.
+
+00:16:56.185 --> 00:17:00.805
+<v SPEAKER_2>Was war denn die physikalische Schnittstelle? Wie kommt man denn rein in dieses Gerät?
+
+00:17:00.825 --> 00:17:16.745
+<v SPEAKER_1>Das ist auch wieder spezifiziert oder standardisiert. Das ist eine E1-Schnittstelle. Wem das jetzt nichts sagt, wird auch als ISDN-Primär-Multiplex-Anschluss bezeichnet.
+
+00:17:16.765 --> 00:17:17.165
+<v SPEAKER_2>S2M.
+
+00:17:17.525 --> 00:17:27.425
+<v SPEAKER_1>S2M ist gerade in Deutschland eine übliche Abkürzung dafür. Letztlich 30 ISDN-Kanäle zusammengebündelt.
+
+00:17:27.445 --> 00:17:28.405
+<v SPEAKER_2>2 Megabit.
+
+00:17:28.425 --> 00:17:49.765
+<v SPEAKER_1>Genau, 2 Megabit Bruttodatenrate. Weil diese Schnittstelle im ISDN-Netz oder überhaupt im Telefonienetz eine gängige Schnittstelle ist, bekommt man natürlich auch Einsteckkarten für den PC, also PCI-Karten zum Beispiel. Und nur, dass man die halt nicht mit dem Telefonienetz verbindet, sondern man verbindet sie einfach mit dieser BTS.
+
+00:17:50.325 --> 00:17:56.885
+<v SPEAKER_2>Das heißt, man spricht da auch nicht ISDN drüber, sondern man spricht halt dieses Ich rede mit meiner BTS-Protokoll.
+
+00:17:56.905 --> 00:18:15.945
+<v SPEAKER_1>Genau. Die unteren, also da ist sehr viel anders gegenüber dem ISDN. Es gibt so ein paar Ähnlichkeiten mit ISDN, aber es ist nie identisch. Also zum Beispiel gibt es bei ISDN, also wer da irgendwie schon mal davon gehört hat, da gibt es ja solche TEIs, ich glaube Terminal Equipment Identifier heißt das.
+
+00:18:15.965 --> 00:18:17.525
+<v SPEAKER_2>Das ist eigentlich ein Telefon sozusagen.
+
+00:18:17.545 --> 00:19:29.025
+<v SPEAKER_1>Genau, die Adressen, die Adressvergabe für die Telefone und so. Und dieses TEI-Management, das gibt es da auch. Nur, dass sie halt keine dynamisch vergebenden Adressen, sondern statisch vorvergebende Adressen verwenden und irgendwie zwei, drei Änderungen im Protokoll haben. Aber so auf den ganz tiefen Schichten unten drunter, ja. Also, so Layer 1, Layer 2, das ist noch sehr ähnlich mit ISDN. Aber der Layer 3, also die eigentlichen, wie jetzt der Ansuf aufbauen und so weiter, solche Sachen, da ist dann schon ganz, ganz viel anderes Zeug dabei. Ja, nichtdestotrotz konnte ich also eine gängige Karte quasi im normalen Handel erwerben. Und hab dann ISDN, na ISDN vor Linux heißt das jetzt nicht mehr, das heißt jetzt MISDN, das ist der ISDN-Teil im Linux-Körner. Das konnte ich einfach verwenden. Da musste ich irgendwie, ich glaube so 10 Zeilen Kernel-Patch oder so machen. Wie gesagt, an so ein paar Ecken sind die unteren Layer anders als im klassischen ISDN. Da musste man ein paar Sachen anfassen. Die sind jetzt inzwischen auch schon Mainline. Also jetzt inzwischen kann man mit einem normalen Kernel das machen, muss man nicht mehr was verändern. Weil die höheren Ebenen, die werden dann eh als normaler Prozess, ein normales Programm in Daemon implementiert.
+
+00:19:29.125 --> 00:19:35.305
+<v SPEAKER_2>Das heißt, du gehst quasi roh auf die Karte drauf und sprichst dann einfach direkt das Protokoll, was du sprechen möchtest.
+
+00:19:35.325 --> 00:20:22.945
+<v SPEAKER_1>Genau, ja. Das ist der Hintergrund. Und diese Karten, die sind, mein ISDN spricht man nicht mehr so furchtbar häufig heutzutage. Aber wo man die findet, halt verstärkt ist in dem ganzen Asterisk-Bereich. Also Asterisk ist eine populäre Voice-over-IP, Private Branch Exchange-Vermittlung. Und wenn man jetzt zum Beispiel ein klassisches existierendes Telefonnetz in der Firma hat mit einer existierten Telefonanlage, dann spricht die nach außen gegenüber dem Amt normalerweise eben so ein Primär-Multiplexer. Und wenn ich das jetzt aber mit Voice-over-IP verknüpfen möchte, dann schließe ich die halt wieder an so eine Karte an und lasse dann eben Asterisk laufen. Und kann dann Voice-over-IP mit meiner klassischen Telefonie verheiraten. Und aus dem Bereich sind die Karten ziemlich populär und leicht erhältlich.
+
+00:20:24.865 --> 00:20:31.105
+<v SPEAKER_2>So, und dieser Replay des Protokolls, den ihr da gemacht habt, der war dann erfolgreich. Dann zuckte das Ding.
+
+00:20:31.125 --> 00:20:31.365
+<v SPEAKER_1>Genau.
+
+00:20:31.385 --> 00:20:40.325
+<v SPEAKER_2>Also, ihr habt auch die entsprechenden Antworten bekommen, die in diesem Recording mal mit aufgenommen wurden. Und ihr konntet dann vergleichen, ob sich das Ding genauso verhält.
+
+00:20:40.345 --> 00:21:25.485
+<v SPEAKER_1>Genau. Das ist also echt extrem minimalistisch. Also, ich sage jetzt nicht das wir, sondern es war tatsächlich Dieter, der das vollständig gemacht hat, diese ersten Schritte. Aber sehr minimalistisch. Er hat halt wirklich geguckt, was kommt da für eine Antwort. Dann vergleichen wir mal die ersten 14 Hexbites mit irgendwas, was wir statisch irgendwo in unserem Programm als Hexwerte drin stehen haben. Und wenn das der Fall ist, dann schicken wir wieder 10 weitere Nachrichten oder so. Also wirklich so... Ja, genau. Also ziemlich, ich würde schon sagen, sehr, sehr krude. Also ohne überhaupt in dem Programm überhaupt irgendein Verständnis der Protokolle zu haben oder irgendeine Art von Interpretation oder irgendwas, logische Abstraktion, einfach nur, da kommen Hexbites, die sehen so aus, also schicken wir mal was anderes zurück.
+
+00:21:25.505 --> 00:21:36.865
+<v SPEAKER_2>Das heißt, ihr konntet euch zumindest schon mal sicher sein, dass das Gerät als solches funktioniert und auch das ist, was es vorgibt zu sein, nämlich eine BTS. Genau. Und dann? Dann hat euch so ein bisschen das Fieber gepackt, oder wie?
+
+00:21:36.885 --> 00:22:20.545
+<v SPEAKER_1>Genau. Das war dann für mich halt auch so der auslösende Faktor. Also ich sag so, hey, irgendwie, ich hab jetzt so ein Ding seit zwei Jahren im Keller stehen oder was auch immer, kann nichts oder hab nichts irgendwie vorzuweisen, außer, dass ich mich sehr tief eingelesen hab in die Specks immer wieder, wenn ich mal irgendwo Zeit hatte und irgendwie, ich hab mal so ein paar PDFs aufgemacht und quergelesen. Das heißt also, das Verständnis ist ein bisschen gereift über die Zeit, aber ich hatte halt nichts, was funktioniert. Und Dieter kommt da irgendwie da her, sitzt sich ran und hat in extrem kurzer Zeit irgendwie was tatsächlich am Laufen. Das war natürlich schon so ein Motivationsschub dann auch für mich, zu sagen, hey, jetzt muss ich mich damit mal beschäftigen. Auch weil ich gerade zu der Zeit dann bei OpenMoko ja auch schon längst wieder draußen war und mehr Freizeit hatte für solche Spielereien.
+
+00:22:20.565 --> 00:22:21.205
+<v SPEAKER_2>So.
+
+00:22:21.225 --> 00:22:43.085
+<v SPEAKER_1>Und dann habe ich im November letzten Jahres angefangen, das zu schreiben, was jetzt OpenBSC heißt. Und im Wesentlichen, der Großteil der Arbeit ist eigentlich so im Dezember reingeflossen vor dem Kongress, weil wir uns dann auch vorgenommen hatten, auf dem Kongress irgendwie was zu haben, was wir demonstrieren können, auf dem CTC-Kongress.
+
+00:22:43.105 --> 00:23:17.945
+<v SPEAKER_2>Das heißt, erst war es so ein bisschen ein Bastelprojekt, aber jetzt wolltest du schon, also in meiner OpenBSC haben wir ja schon erwähnt, so heißt jetzt das Projekt, worum es ja vor allem auch gehen soll, versucht eigentlich diese andere Seite der BTS nachzuspielen. Also es geht gar nicht darum, jetzt selber diese Firmware der BTS selber zu bauen, sondern man geht jetzt erstmal davon aus, man hat eine, weil du hast ja eine. Und dann fügst du dem sozusagen die nächste Stufe eines GSM-Netzwerks hinzu, damit das Ding mit Telefonen kommunizieren kann.
+
+00:23:17.965 --> 00:23:22.945
+<v SPEAKER_1>Richtig, ja, das ist der Stand der Dinge. Wir haben dann...
+
+00:23:23.125 --> 00:23:53.005
+<v SPEAKER_2>Ich meine, jetzt ist es ja so, wenn man ein WLAN macht und so weiter, das kann man ja jeden Tag gebrauchen. Und viele andere Dinge, die hier schon bei Express ein Thema waren, das ist immer so, das kriegt man irgendwie locker zum Einsatz. Aber ein GSM-Netzwerk, ich meine, das betreibt man ja mal nicht mal so eben. Das ist schon rumgewitzelt mit, wenn man sein eigenes Land hat. Aber was hat dich denn da jetzt eigentlich getrieben? Ist das jetzt nur so because we can oder was war der Auslöser?
+
+00:23:53.325 --> 00:26:12.145
+<v SPEAKER_1>Ja, das ist so ein bisschen die Motivation, die sich durch meine Arbeit in den letzten Jahren zieht. Letztlich ist es so, dass... Ich bin ja jemand, der aus dem Netzwerk-Photocall-Bereich kommt, so Netfilter, IP-Tables, war ja mein erstes großes Involve. Wie sagt man denn? Ich war da involviert jedenfalls. Und Netzwerk-Protokolle, gerade wie sie im Internet gesprochen werden, dann ISDN fand ich auch sehr interessant, habe ich viel damit gemacht und so. Und über diese Sachen, da gibt es einfach unglaublich viele Leute, die sich damit auskennen. Also frag irgendeinen x-beliebigen Hacker und erkennt sich irgendwie aus, wie die Grundzüge von TCPIP funktionieren, wie HTTP funktioniert und so weiter. Das Wissen ist da und letztlich führt das auch dazu, dass solches Wissen natürlich auch mal angewendet wird in einer Art und Weise, wie es nicht vom Hersteller gedacht war, sage ich mal. Dann werden Sicherheitslücken aufgedeckt. Und dadurch, dass die aufgedeckt werden und von vielen Leuten nachvollzogen werden können, entsteht wiederum ein Druck auf die Hersteller oder auf die Gremien, die solche Protokolle spezifizieren, das entsprechend zu verbessern. Und dieser Kreislauf, den wir in der Internet-Security-Szene haben, den gibt es halt außerhalb kaum. Ich hatte ja vor ein paar Jahren mal mit RFID angefangen, auch in ähnlicher Hinsicht, einfach Werkzeuge zu schaffen, damit Leute die untersten Ebenen der RFID-Protokolle anfassen können. Aber es gibt halt sehr viele Leute aus dem Softwarebereich, die sich mit Netzwerkprotokollen beschäftigen, aber die halt irgendwie keine Hardware anfassen oder jetzt keine Low-Level-Entwicklung machen würden. Wie sind noch diese RFID-Projekte? OpenPCD ist das bekanntere davon, das andere ist OpenPICC. Und dann gibt es dazu noch eine Bibliothek, auch die LIBRFID heißt, das ist dann die Softwareseite, das andere beide waren Hardware-Projekte. Und ich habe ja auch so ein bisschen meine Finger mit dem Spiel gehabt bei dieser DECT-Geschichte, also um die Schnurrlostelefonie. Da war ja eine große Veröffentlichung am Chaos-Kongress bezüglich der Unsicherheit und das ist auch wieder so. Das ist auch ein Kommunikationsprotokoll.
+
+00:26:12.165 --> 00:26:15.765
+<v SPEAKER_2>Was hier übrigens auch schon ein Thema war in CRE 102.
+
+00:26:16.585 --> 00:26:17.285
+<v SPEAKER_1>Aber natürlich.
+
+00:26:17.305 --> 00:26:19.405
+<v SPEAKER_2>Vielleicht mal die Querverweise einplaggen hier.
+
+00:26:19.425 --> 00:27:05.645
+<v SPEAKER_1>Na gut, ich meine, alles, was irgendwie wichtig ist, wurde hier sicher schon besprochen. Habe ich gar keine Zweifel. So, ja, also da war ich ja auch so ein bisschen mit involviert und habe die Leute zusammengebracht. Und meine E-Mail-Signatur ist auch schon, ich glaube, seit vier Jahren steht da unten ein Zitat aus der DECT-Spezifikation drin. Privacy in residential applications is a desirable marketing option. Mit Quellenangabe, aus welcher Etsy-Spec. Da hatte ich jetzt vor kurzem lustigerweise über diese DECTED, nennt sich das Projekt, da hatte ich ja einen Kontakt mit dem Chef des DECT-Forums, also des Herstellergremiums. Und der war ja sehr amüsiert über meine Signatur. Also der fand das sehr, sehr gut.
+
+00:27:05.665 --> 00:27:06.485
+<v SPEAKER_2>Hat er noch nicht gelesen?
+
+00:27:07.285 --> 00:30:25.585
+<v SPEAKER_1>Doch, meinte er, da muss man aber schon sehr tief reinlesen, dass man es findet. Also ich habe da ja schon öfter was gelesen an diesen Spezifikationen und irgendwann bin ich halt zu GSM gekommen. Aber letztlich, um das nochmal kurz zusammenzufassen, ja, es gibt Kommunikationsprotokolle außerhalb der Internetwelt, mit denen sich kaum jemand auskennt, außer wenigen Leuten, die für irgendwelche großen Herstellerfirmen arbeiten. Und wo auch kaum jemand die Möglichkeit hat, einzudringen in die Materie, weil, naja, jetzt irgendwie sich hinzusetzen und Spezifikationen zu lesen, ohne dass ich das selber mal ausprobieren kann, macht ja irgendwie keinen Sinn. Das motiviert ja niemanden. Ja, also vielleicht irgendein Akademiker in seinem Kämmerchen, aber so irgendwie den gewöhnlichen Hacker motiviert das nicht. Und deswegen braucht man also diese Werkzeuge. Jetzt beim Internet ist das total leicht. Da habe ich irgendwie eine Ethernet-Karte oder, wenn ich es komplexer haben will, von mir aus ein Wi-Fi-Interface. Ja, und alles, was da oben draufkommt, also irgendwie das Ethernet-Protokoll, TCP, IP, ARP, HTTP, was auch immer ich spreche, das habe ich alles in quellenoffenen Implementationen. Da kann ich jetzt irgendwie Linux nehmen, da kann ich BSD nehmen, da kann ich tausendelei Embedded-Betriebssysteme nehmen. Es gibt irgendwie, weiß weiß ich, wie viele verschiedene Implementationen davon, die ich alle mit mir durchlesen kann, mit denen ich experimentieren kann, mit denen ich irgendwie Dinge tun kann. So, bei GSM gibt es das halt nicht. Bei DECT gab es das bis vor kurzem auch nicht. Bei RFID auch nicht, bevor wir diese OpenBSC-Geschichte gemacht haben. Und das ist letztlich so die Motivation, also den Zugang zu dieser Technologie zu erleichtern für andere Leute, die sich damit vielleicht mal beschäftigen möchten, mit dem Hintergrund, letztlich auch Sicherheitsprobleme aufzudecken und populärer und bekannter zu machen und den Druck auf die Hersteller oder Standardisierungsgremien zu erhöhen, hier mal was Vernünftiges vorzulegen. Wir haben es gerade verdeckt gesehen, wunderbar, das fällt irgendwie alles links und rechts auseinander. Wenn man dann die Speck liest, dann weiß man ja auch schon, das war ja gar nicht dafür gedacht, irgendwie besonders sicher zu sein, weil es ist ja nur eine Marketing-Option, dass es Privatsphäre hat. Aber ich meine, das wusste halt niemand. Nachdem es veröffentlicht wurde und von Mainstream, Fernsehsendern und Zeitungen und was auch immer aufgegriffen wurde, dann gibt es ein paar mehr Leute, die sich jetzt vielleicht mal denken so, oh ja, eigentlich will ich ein Telefon haben, wo der Nachbar nicht mithören kann. Und das erzeugt ja dann wiederum den Bedarf dafür. Und wenn der Bedarf da ist, dann gibt es auch in Kürze so hoffentlich Produkte, die eine höhere Sicherheit bringen. Und bei der Mobiltelefonie-Bereich ist es halt so, dass im akademischen Bereich oder überhaupt so im theoretischen Bereich sind halt sehr viele Probleme bekannt. Aber wie kommuniziere ich das? Ich kann mich da jetzt hinstellen irgendwo, kann ein Paper veröffentlichen. Ja, da ist ein Problem. Ja, und dann sagen alle, ja, schön, danke. Und das war's dann. Aber wenn ich das demonstrieren kann und wenn ich halt irgendwie auch zum Beispiel Journalisten sowas vorführen kann, dann habe ich eine ganz andere Breitenwirkung mit so einem Problem. Und dann entsteht auch die Motivation, was zu tun irgendwie für die Sicherheit dieses Systemes.
+
+00:30:25.605 --> 00:30:47.125
+<v SPEAKER_2>Und dazu braucht man natürlich laufenden Code. Genau. Und jetzt hattest du die Hardware und hattest, sagen wir mal, sowohl die Hardware, die diese Funk-Schnittstelle repräsentiert, als auch die Hardware, um mit dieser Hardware zu reden, diese ISDN-Karte und dann halt ein PC. Und du hattest die Dokumentation und dann habt ihr euch irgendwie hingesetzt und habt angefangen, den ganzen Stack durchzuhacken?
+
+00:30:47.925 --> 00:31:34.365
+<v SPEAKER_1>Ja, ungefähr, ja. Also wir sind natürlich weit davon entfernt, irgendwie auch nur ein bestimmtes Teilprotokoll dieses ganzen Stacks vollständig zu implementieren. Das ist aber auch gar nicht unser Ansatz. Wir wollen ja jetzt nicht irgendwie hier was erzeugen, was irgendeine formale Verifikation oder sonst irgendwas übersteht, sondern es geht halt einfach darum, das minimale Sub-Set zu implementieren, also das, was man braucht, damit das ganze Telefoniesystem am Laufen ist. Also was brauche ich, damit ein Telefon sich einbuchen kann in das Netz, damit ich einen eingehenden und ausgehenden Sprachtelefonie-Anruf haben kann, eingehende, ausgehende SMS, solche Sachen. Und dafür brauche ich ja nicht irgendwie 1400 PDFs voll mit jeweils so und so viele 100 Seiten implementieren. Das braucht man ja alles nicht.
+
+00:31:34.385 --> 00:31:38.045
+<v SPEAKER_2>Man muss nur wissen, welche PDFs man letzten Endes implementieren muss.
+
+00:31:38.065 --> 00:32:18.345
+<v SPEAKER_1>Genau, ja. Und da kam das halt sehr entgegen, dass ich da sehr viel gelesen hatte schon die Jahre vorher und so. Das ist bei GSM echt schwierig, weil es kaum vernünftige Sekundärliteratur gibt. Wenn man Bücher über GSM findet, dann geht es da nur um Netzwerkplanung. Also in welchem Abstand baue ich meine Zellen auf und in was für einem Wabenraster. Also wenn ich ein Netzwerk aufbauen will und mir kommerzielles Equipment dafür einkaufe, was tue ich da? Aber GSM, wie sehen da die einzelnen Pakete aus? Und wie läuft das auf dem Protokoll ab? Da gibt es eigentlich fast keine Bücher.
+
+00:32:18.365 --> 00:32:20.585
+<v SPEAKER_2>Das fehlt sozusagen das GSM in den Nutshells.
+
+00:32:20.605 --> 00:32:27.225
+<v SPEAKER_1>Genau, das fehlt. Ich habe auch schon mal gesagt, dass Hitchhiker's Guide to the GSM existiert leider auch nicht.
+
+00:32:27.245 --> 00:32:28.165
+<v SPEAKER_2>GSM vor Dummies.
+
+00:32:28.805 --> 00:32:36.285
+<v SPEAKER_1>Das wäre sehr interessant. Vielleicht wäre das ja nochmal eine interessante Geschichte.
+
+00:32:36.305 --> 00:32:39.945
+<v SPEAKER_2>Falls dir sonst keine Projekte mehr einfallen, kannst du dich ja dann aufs Buch schreiben.
+
+00:32:41.165 --> 00:33:34.745
+<v SPEAKER_1>Hätte ich gerne schon immer mal, aber es braucht halt so viel Zeit. Gut, jedenfalls gibt es da kaum Bücher dafür. Das heißt, wenn man nicht so ein Spezifikationswadenbeißer ist, dass man sich da irgendwie hineinbeißt, ist das halt nicht so furchtbar leicht. Jetzt denke ich, für andere Leute da noch mit einzusteigen, ist es wieder leichter, weil die können sich halt den Code mit anschauen. Die können sich Traces angucken, die man ja jetzt auch wunderbar... Also, wenn man mal wirklich das ganze Equipment hat, dann kann man sich ja so einbuchen ins Netz, das passiert hier. Ausbuchen aus dem Netz, eingehender Anruf. Dann sieht man halt irgendwie die ganzen Nachrichten, die da ausgetauscht werden. Das ist ein sehr viel interaktiveres Lernen, wie man das ja auch... Also, wenn ich mich jetzt irgendwie über Internetprotokolle informieren will, dann mach ich das ja auch so. Dann starte ich mal hier irgendwie meinen Browser und hier meinen Web-Server, mache meinen T-Z-B-Dump auf und gucke mal, was passiert da. Da muss ich nicht irgendwie LFCs lesen, bis aufs letzte Wort.
+
+00:33:35.465 --> 00:33:42.025
+<v SPEAKER_2>Jetzt ist ja das ganze Projekt noch relativ frisch. Du hast gesagt, wann ging es? Letzten Herbst ist es angefangen, ne?
+
+00:33:42.045 --> 00:33:45.045
+<v SPEAKER_1>Ja, im November ging es eigentlich los, so mit der eigentlichen Implementation.
+
+00:33:45.065 --> 00:33:51.785
+<v SPEAKER_2>Aber zum Kongress gab es schon einen entsprechenden Vortrag, Rang Your Own GSM-Netzwerk, zusammen mit dem...
+
+00:33:51.805 --> 00:33:52.525
+<v SPEAKER_1>Dieter Spahr, ja.
+
+00:33:52.545 --> 00:34:10.025
+<v SPEAKER_2>Dieter Spahr, genau. Bei Marc kann sich den Vortrag auch nochmal anschauen, gibt es natürlich als Videoaufzeichnung. Aber ich habe dich dann unten im Keller mit diesem Gerät dann noch kräftig rumhacken sehen. Also eigentlich habt ihr die ganze Zeit auf dem Kongress nichts anderes gemacht als dieser Software geschraubt, oder?
+
+00:34:10.045 --> 00:35:56.905
+<v SPEAKER_1>Genau, ja. Also das interessante war, was ich... Also ich meine, bisher hatte Dieter bei sich daheim, also der lebt auf einem Bauernhof irgendwo im Nichts, da ist nie ein anderes Telefon außer sein eigenes, ja. Das gibt es gar nicht, ja. Er hatte auch kaum Handy, Netzempfang von einem normalen Netz, ja. Also das ist wirklich so... Der sieht da keine anderen Telefone. Wenn ich das bei mir in meinem Lab mache, dann habe ich da auch kaum irgendwie mal andere Telefone, die irgendwie so interagieren mit meinem Gerät, ja. Ich habe halt irgendwie meine fünf, sechs Telefone, mit denen ich teste, und ich habe meine Base Station, so. Aber als wir da im Kongresszentrum saßen, ich meine, da haben über 1000 Leute versucht, sich einzubuchen, oder 1000 Telefone versucht, sich einzubuchen in unsere Basisstation, das ist natürlich ein ganz anderes Test-Setup, ja. Das ist eine ganz andere Load, die kann ich so nicht simulieren oder generieren. Und man kann natürlich auch anderen Spaß damit haben, ja. Also, erstmal war total verblüffend für uns, dass die alle versuchen, sich bei uns einzubuchen. Weil normalerweise soll ein Telefon, also nach Spezifikation, sich nur dann, also solange das Heimatnetz erreichbar ist, also du bist jetzt ein deutscher Kunde bei Vodafone, T-Mobile, Eplus, sonst irgendwas, ja. Und du bist in Berlin, wo du Empfang hast von deinem eigenen Netz. Ja, und da kommt jetzt ein anderes Netz hoch, was eine ganz andere Netzwerk-ID hat. Also jedes Netz hat so eine numerische ID, ja. Und was ist nicht 262-01 ist irgendwie T-Mobile, ja. Und solange das Telefon, also das Telefon weiß ja, dass es eine T-Mobile-Sim-Karte drin hat mit dieser ID, und das soll sich eigentlich nur bei T-Mobile einbuchen, es sei denn, es würde kein T-Mobile mehr empfangen. Oder der Anwender würde sagen, hier bitte buche dich doch mal explizit in ein anderes Netz ein. Ja, das heißt also für uns war erstmal unbegreiflich, warum versuchen sich diese ganzen Telefone bei uns einzubuchen, wo sie doch alle ihre Heimatnetzwerke sehen.
+
+00:35:56.925 --> 00:35:58.585
+<v SPEAKER_2>Na vielleicht im Keller nicht so?
+
+00:35:58.605 --> 00:36:20.485
+<v SPEAKER_1>Genau, das war dann der Clou, dass im Keller unten die Empfangsfeldstärke, vor allem von den 1800er GSM Netzen, also E+, Vodafone, sehr stark in die Knie geht. Und dann versuchen halt, welches andere Netz es da hat, es hat einen guten Empfang, also versuchen wir uns da mal einzubuchen. 900er eigentlich, ja.
+
+00:36:20.505 --> 00:36:22.925
+<v SPEAKER_2>E+, und O2, wahrscheinlich vor allem, ne?
+
+00:36:22.945 --> 00:36:34.305
+<v SPEAKER_1>Ja, also D1, D2, das waren die ersten, die sind noch 900, und alles, was danach kam, ist eher 1800, so grob. Also das erklärt das aber auch noch nicht vollständig, ja.
+
+00:36:34.325 --> 00:36:42.045
+<v SPEAKER_2>Aber es war ja auch sichtbar. Wie hieß das Netz noch gleich? Das hatte irgendwie so ein ganz, wie hieß das nicht, irgendwie 00?
+
+00:36:42.185 --> 00:36:46.065
+<v SPEAKER_1>001-01 war unser, den ID, den wir verwendet haben, weil...
+
+00:36:46.345 --> 00:36:49.025
+<v SPEAKER_2>Was ist denn das für eine ID?
+
+00:36:49.045 --> 00:37:19.085
+<v SPEAKER_1>Das ist einfach nur eine Zahl. Also jede Basisstation hat quasi so regelmäßig stattfindende Beacons, die ausgestrahlt werden, wie das bei Wi-Fi auch ist. Da ist halt ein Netzwerkname drin als String. Bei GSM hat man ja ganz andere Bitraten und muss sehr viel sparen. Das heißt, da liefert man keinen String mit mit dem Namen des Netzwerks, sondern man liefert nur eine numerische ID. Die besteht aus einem Country-Code, 262 ist Deutschland. Und danach eine fortlaufende vergebene Netznummer. Also eins ist T-Mobile, zwei ist Vodafone und so weiter.
+
+00:37:19.625 --> 00:37:26.425
+<v SPEAKER_2>Das heißt, jedes Telefon hat diesen String eingebaut und der kommt gar nicht over the air.
+
+00:37:26.865 --> 00:37:46.005
+<v SPEAKER_1>Ja, also jedes Telefon hat einmal in der Firmware selber eine Liste, die quasi zum Zeitpunkt, wo die Firmware kompiliert wird, mit eingebaut wird. Das ändert sich ja nicht so oft, was für GSM-Netzwerke es gibt. Und dann gibt es darüber hinaus noch auf der SIM-Karte eine Liste mit Zuordnungen zwischen dieser ID und dem menschenlesbaren Namen.
+
+00:37:46.025 --> 00:37:56.805
+<v SPEAKER_2>Das heißt, sollte wirklich mal ein neuer Netzbetreiber kommen, dann wäre der für bestehende Telefone erst dann sichtbar, wenn die eine neue SIM-Karte erhalten, wo das dann drauf enthalten ist.
+
+00:37:57.625 --> 00:38:05.445
+<v SPEAKER_1>Was man auch oft sieht, das sind so Umbindungen, ja. Also, was weiß ich jetzt hier mit D2, Vodafone und Vodafone und so.
+
+00:38:05.465 --> 00:38:07.045
+<v SPEAKER_2>Oder O2 und Viac Intercom.
+
+00:38:07.245 --> 00:38:24.265
+<v SPEAKER_1>Ja, solche Sachen, ja. Also, ich habe noch eine ganz alte D2-SIM-Karte. Also, wo es wirklich noch D2-Privat auf der SIM-Karte hinten drauf steht. Ja, und wenn ich dann ein altes Telefon noch dazu nehme, dann sehe ich auch noch ein D2-Privat-Netz und kein Vodafone-Netz, ja. Ja, das ist einfach...
+
+00:38:24.285 --> 00:38:29.965
+<v SPEAKER_2>Okay, und eure Base Station hat sich einfach 00101 genannt, weil das so die Testnummer ist, oder?
+
+00:38:29.985 --> 00:38:58.805
+<v SPEAKER_1>Genau, also das ist einfach... Ja, ich weiß nicht, wie offiziell das ist, aber so alle Tester, es gibt ja so Telefon-Tester, also die man einfach kaufen kann. Also von HP und Agilent und Rode und Schwarz und so weiter. Wenn man jetzt mal testen will, geht das Telefon noch, dann kann man das da durchtesten. Und die emulieren dann ja auch ein GSM-Netz. Und diese ganzen Testgeräte verwenden alle 01-01 als ID. Deswegen haben wir das auch genommen, weil wir sagen, naja, gut, wir testen ja hier quasi auch nur ein bisschen rum.
+
+00:38:58.865 --> 00:39:15.565
+<v SPEAKER_2>Ja, jetzt ist es natürlich so auf so einer Hacker-Veranstaltung, da kann man davon ausgehen, dass eine ganze Menge Leute auch immer mal gucken. Und dann war ja auch bekannt, dass da mit GSM irgendwie rumgespielt wird. Und dann tauchte halt, wenn man die Netze durchgescannt hat, tauchte halt dieses Netz auf. Und daher bin ich überhaupt nicht überrascht, dass so viele Leute versucht haben, sich da einzubuchen.
+
+00:39:16.265 --> 00:39:39.825
+<v SPEAKER_1>Ja, naja, gut, jedenfalls hatten wir da viel Spaß und haben natürlich auch mal Dinge ausprobiert. Also, man kann ja dann einfach alle Leute reinlassen zum Beispiel. Das ist schon mal so der erste Denial-of-Service-Angriff eigentlich gegen GSM. Also in Wi-Fi-Terminologie würde man das als Rogue Access Point bezeichnen. Hier ist es halt eine BTS. Ich meine...
+
+00:39:39.845 --> 00:39:43.385
+<v SPEAKER_2>Ihr hättet euch ja jetzt auch 26201 geben können.
+
+00:39:43.405 --> 00:39:47.445
+<v SPEAKER_1>Hätten wir können, haben wir nicht. Behaupte ich jetzt nicht nur, sondern haben wir nicht.
+
+00:39:47.565 --> 00:39:59.765
+<v SPEAKER_2>Ja, habt ihr nicht gemacht, aber nichts hätte euch technisch davon abgehalten, weil es keinerlei kryptographische Signierung, irgendein Key oder sonst irgendwie was verschlüsseltes gehabt, mit dem man beweisen kann, dass man das Netz ist, sondern man kann es halt einfach behaupten.
+
+00:39:59.885 --> 00:40:14.465
+<v SPEAKER_1>Ja, also GSM hat keine Mutual Authentication. Also nicht beiderseitig wird da die Identität festgestellt, sondern nur das Netz hat die Möglichkeit, die SIM-Karte zu identifizieren. Aber weder das Telefon noch die SIM-Karte haben eine Möglichkeit, das Netz zu identifizieren.
+
+00:40:15.805 --> 00:40:20.625
+<v SPEAKER_2>Genau so wie ihr auch bei DECT jetzt gerade das Problem war.
+
+00:40:20.645 --> 00:41:07.365
+<v SPEAKER_1>Ja gut, da gibt es das eigentlich schon, aber es gibt dann Probleme in der Implementation und im Fehlerverhalten und so weiter. Aber bei GSM ist es einfach gar nicht da. Man könnte sich jetzt fragen, warum? Gut, ich denke, ich bin da nicht sonderlich paranoid. Manche Leute sagen, na ja, das ist, weil die Behörden ja unbedingt irgendwie IMSE-Catchern sowas einsetzen möchten. Und das würde ja nicht mehr funktionieren, wenn irgendwie eine gegenseitige Authentisierung stattfinden würde. Zumindest nicht mehr so leicht. Das glaube ich jetzt nicht. Ich denke wirklich, das ist einfach der Mindset der Leute, die sowas machen. Das sind Leute, die kommen so aus diesen, also zumal Spezifikationen, 80er-Jahre und so weiter. Die kommen so aus diesen Telefonie ist noch Staatsmonopol und irgendwie, warum sollte überhaupt jemand anders quasi hier ein Netz verwalten?
+
+00:41:07.385 --> 00:41:08.645
+<v SPEAKER_2>Was man dafür Infrastruktur braucht.
+
+00:41:08.665 --> 00:41:22.405
+<v SPEAKER_1>Genau, wer hat denn überhaupt das Geld, irgendwie solches Equipment zu kaufen oder wie auch immer. Das ist einfach ein Attack-Vektor aus der Security-Seite heraus, an dem man einfach überhaupt nicht gedacht hat. Und jetzt hat man halt so ein bisschen den Salat.
+
+00:41:22.425 --> 00:41:31.925
+<v SPEAKER_2>Jetzt kannst du mal kurz nochmal die IMSI-Catcher auch nochmal erklären, wo du es jetzt gerade erwähnt hast. Das sind ja Geräte, die schon länger auf dem Markt sind.
+
+00:41:32.385 --> 00:42:07.645
+<v SPEAKER_1>Ja, also IMSI-Catcher ist eigentlich ein Missnummer. Also der Name ist eigentlich falsch. IMSI-Catcher, also wenn man das Wort zerlegt, dann heißt es ja, man möchte die IMSI fangen. IMSI ist die Subscriber-ID. Das heißt die Seriennummer der SIM-Karte. Ich stehe jetzt also als Überwachungsbehörde vor dem Problem. Ich weiß zwar die IMSI, also ich suche ja nach einem bestimmten Telefon von irgendjemanden, respektive die SIM-Karte in einem Telefon von einer zu überwachenden Person, und möchte jetzt irgendwie diesen einen Haar rausgreifen. Wie mache ich das jetzt?
+
+00:42:07.665 --> 00:42:11.345
+<v SPEAKER_2>Da könnte man natürlich einfach zum Netzbetrauer gehen und irgendwo einen Stecker reinstecken.
+
+00:42:12.005 --> 00:42:23.705
+<v SPEAKER_1>Genau, das ist eigentlich auch so, wie das gedacht ist im GSM-Netzwerk, da gibt es also Lawful Interception Interfaces dafür, und das ist alles ganz prima. Warum auch immer man jetzt einen IMSEE-Catcher braucht, entzieht sich so ein bisschen meiner Erkenntnis.
+
+00:42:23.725 --> 00:42:27.105
+<v SPEAKER_2>Wenn man nicht lawful unterwegs ist, wird das zum Beispiel ganz praktisch.
+
+00:42:27.125 --> 00:43:49.105
+<v SPEAKER_1>Das ist eine Geschichte, die andere ist halt, wenn ich wirklich, also ich bin eh schon 50 Meter weg von ihm nur, und ich will noch wissen, wer ist denn das? Oder wo steht der genau in der Menschenmenge? Dann ist sowas natürlich interessant. Und was man dann macht, ist, dass man kurzfristig alle GSM-Netze stört. Ja, also man stört alle GSM-Netze. Und bietet nur noch auf einem freien Kanal, bietet man seine eigene Basisstation an. Und dann wollen natürlich alle sich dort einbuchen. Ja, alle Telefone verlieren ihr Netz im Umkreis. Und alle wollen sich da einbuchen. Und beim Einbuchen kann ich sie fragen, was ist denn deine IMSI? Wer bist du denn? Und die anderen alle, die mich nicht interessieren, denen sage ich alle, nee, geh weg, du darfst hier nicht. Und der eine, den ich haben will, da sage ich dann, ja, schön, dich wollten wir. Willkommen zu Hause. Und dann schalte ich meine Störung wieder ab, wenn ich das möchte oder so. Oder ich lasse die Störung noch laufen, das ist halt so, meine technische Details. Aber ich habe dann diesen einen, den ich haben will, oder die Nummer der Leute, die ich haben will, habe ich dann auf meiner Basisstation eingebucht. Und dann kriege ich natürlich alles mit, was die tun. Und ich kann so Dinge tun wie, kann den Kanal zu dem Telefon offen lassen, dass das immer schön was sendet. Und nachdem ich ja weiß, auf welcher Frequenz und in welchem Zeitschluss das sendet, kann ich natürlich den rauspeilen irgendwie aus der Menge.
+
+00:43:49.125 --> 00:43:55.445
+<v SPEAKER_2>Ohne dass das merkt, wenn er telefoniert, wenn man dann hintenrum natürlich zu den anderen Netzen, die die Verbindung sozusagen wieder herstellen kann.
+
+00:43:55.465 --> 00:44:07.225
+<v SPEAKER_1>Genau, das kann man natürlich tun, die Verbindung hinten raus wieder herstellen. Wenn man das ideal machen will, dann macht man das auch gleich wieder übers GSM-Netz. Das heißt also, man ist quasi ein Proxy dann für sein Telefon.
+
+00:44:07.245 --> 00:44:09.225
+<v SPEAKER_2>So ein richtig schöner Man in the Middle Attack.
+
+00:44:09.245 --> 00:45:39.365
+<v SPEAKER_1>Richtig, richtig, ja. Also es ist deutlich mehr als nur das IMSI-Catchen. Also man will nicht nur die IMSI haben, sondern man will ja irgendwie interangulieren, seine Gespräche mitschneiden usw. Deswegen bin ich mit beiden Begriffen mal so ein bisschen vorsichtig. IMSI-Catchen, das ist quasi das, was wir auch schon am Kongress konnten mit OpenBSC und dieser BS11. Weil das ist ja genau das, die ganzen Telefone, gut, wir haben es jetzt nicht gestört, das Netz, aber die Telefone haben schon von sich aus versucht, sich einzubuchen. Und dann konnten wir durch jedes Telefon fragen, was ist deine E-Mail, also die Equipment-Nummer, die Telefonseriennummer und was ist deine IMSI, die SIM-Karten-Seriennummer. Die SIM-Karten-Seriennummer weiß man dann gleich, wo der herkommt, weil da steht ja die Operator-ID vorne dran, also 26201 für D1 oder halt irgendwie, der kommt aus Finnland und wir haben hier drei Schweizer und überhaupt. Und aus der Seriennummer des Telefons kann man auch wieder ableiten, was für ein Gerät hat denn der Mann. Also man konnte zum Beispiel sehen, wie viel iPhones, wie viel Prozent und solche Sachen, ja, das ist alles da. Ja, das sind, also das ist schon mal auch jetzt so was Privatsphäre betrifft, halt irgendwie so ein Punkt, ja, wo man sagt, das ist jetzt gut, das ist nicht ein riesiges Sicherheitsproblem vielleicht, aber was man einfach so an Daten abgreifen kann, so aus der Luft, ist halt schon nicht unerheblich, ja. Und also gerade zum Beispiel, weil ja immer auch die Amerikaner in ihrer Paranoidität vor irgendwelchen terroristischen Angriffen, da gab es ja bei den Ausweisen auch die Debatte, weil wenn man jetzt den amerikanischen Staatsbürger an seinem Ausweis identifizieren kann, so hey, ich kann ihn an seinem Telefon identifizieren, da brauche ich gar keinen Ausweis dafür, ja.
+
+00:45:39.385 --> 00:45:43.865
+<v SPEAKER_2>Na gut, die Staatsbürgerschaft deckt das ja noch nicht unbedingt ab.
+
+00:45:43.885 --> 00:45:44.705
+<v SPEAKER_1>Ja, aber er hat...
+
+00:45:44.725 --> 00:45:47.425
+<v SPEAKER_2>Also zumindest einen Wohnsitz und einen Vertrag.
+
+00:45:47.445 --> 00:46:17.205
+<v SPEAKER_1>Genau, einen Telefonievertrag in den USA. Ich meine, die Terroristen glaube ich nicht, dass, also wenn man jetzt in dieser blöden Denke drin ist, dann reicht den dann schon so, um die Bombe zu zünden. Also, ja, das halt alles immer nur irgendwie Panikmache. So, ja, das konnten wir da also am Kongress demonstrieren, was wir auch konnten zu dem Zeitpunkt, das Telefonen klingeln lassen. Das haben wir auch ausgiebig getan, so irgendwann mal nachts. Da haben wir dann mal gesagt, so, naja, jeder, der jetzt reinkommt, bei dem klingelt halt das Telefon irgendwie, so.
+
+00:46:17.225 --> 00:46:18.845
+<v SPEAKER_2>Also ihr habt einen Anruf simuliert.
+
+00:46:18.865 --> 00:46:36.125
+<v SPEAKER_1>Genau, wir haben einen Anruf simuliert. Und wenn man da rangegangen ist, ist einfach nichts passiert. Und der Anruf kam von der Nummer 2342. Was dann ein sehr aufgeregter Papillon kam dann zu mir, so, was tun wir mit seinem Telefon und seine Telefonrechnung und was er überhaupt... Ich meine, da fallen ja keine Gebühren an, weil es ist ja nicht...
+
+00:46:36.145 --> 00:46:44.505
+<v SPEAKER_2>Er würde mir auch noch eine Rechnung schicken können. Die benutzen unseres Testnetzwerks, berechnen wir ihnen.
+
+00:46:44.525 --> 00:47:01.425
+<v SPEAKER_1>Das wäre ja cool gewesen als SMS, ja. Also irgendwann haben wir umgestellt, an dem Abend vorm Vortrag haben wir dann umgestellt und haben halt allen Leuten SMS geschickt. Dann haben wir ihnen geschickt, so hier besucht den GSM-Vortrag, dieser Saal, so und so viel Uhr. Ja, ich meine, das ist...
+
+00:47:01.445 --> 00:47:03.465
+<v SPEAKER_2>Eure Software kann schon so einiges eigentlich.
+
+00:47:03.885 --> 00:47:13.765
+<v SPEAKER_1>Ja, damals konnte sie das, inzwischen ist es deutlich weiter. Also ich hole mal kurz aus, ohne jetzt in die Tiefe zu gehen. Wir quasseln hier schon wieder irgendwie über tausend Dinge.
+
+00:47:14.565 --> 00:47:15.585
+<v SPEAKER_2>Ist ja alles interessant.
+
+00:47:16.985 --> 00:47:49.665
+<v SPEAKER_1>Ja, ich habe inzwischen jemanden, also ein Kunde von mir, ist kommerziell insorciert an OpenBSC auch. Und ich werde also für einen großen Teil der Entwicklung bezahlt inzwischen. Und das hat natürlich sehr geholfen, jetzt im Februar, März und so die Entwicklung auch nochmal richtig voranzutreiben. Und inzwischen ist es so, dass wir, wir können wunderbar Gespräche durchstellen und SMSen zustellen und so weiter. Also man kann es schon richtig als private Telefonanlage quasi nutzen. Was aber eigentlich gar nicht unser Ziel jetzt ist. Aber es ist natürlich schön, wenn Dinge einfach mal funktionieren.
+
+00:47:49.685 --> 00:48:05.285
+<v SPEAKER_2>Also man könnte zum Beispiel, um das ja mal so ein bisschen in den nutzbaren Bereich zu bringen, wenn man jetzt auf dem Schiff ist und durch internationale Gewässer fährt, dann könnte man mit dem System im Prinzip heute schon mit einer einzigen Base Station für alle Anwesenden auf dem Schiff ein Telefonnetz machen.
+
+00:48:05.305 --> 00:48:20.685
+<v SPEAKER_1>Richtig, ja. Das gibt also tatsächlich auch kommerzielle Firmen, die sowas tun für private Chats, für Containerschiffe und so weiter. Ja, die verwenden halt im Moment klassisches Equipment von klassischen Herstellern und zahlen da klassisch 5-stellige Beträge dafür. Jaja, mindestens.
+
+00:48:20.705 --> 00:48:21.625
+<v SPEAKER_2>Das klingt wenig.
+
+00:48:22.405 --> 00:48:27.585
+<v SPEAKER_1>Ja, ja, ich sage, also für einzelne Geräte 5-stellige Beträge. Für die komplette Installation ist das dann natürlich mehr.
+
+00:48:27.605 --> 00:48:28.765
+<v SPEAKER_2>Klasse 6-stellige Beträge.
+
+00:48:28.945 --> 00:48:29.685
+<v SPEAKER_1>Ja, eher.
+
+00:48:29.705 --> 00:48:30.345
+<v SPEAKER_2>Oder 7-stellige.
+
+00:48:30.365 --> 00:48:44.785
+<v SPEAKER_1>Ja, da gehe ich eher davon aus. Ja, und ich habe jetzt hier so quasi die 350-Euro-Evail-Lösung mit freier Software hinten dran. Und da gibt es natürlich, dann kannst du ja auch verstehen, dass es da ein gewisses kommerzielles Interesse gibt an solchen Projekten.
+
+00:48:44.805 --> 00:48:55.565
+<v SPEAKER_2>Ja, das wird mir jetzt gerade bewusst. Dass auf Containerschiffen dann auch noch eigene GSM-Netze auch tatsächlich zum Einsatz kommen, finde ich interessant. Um vor den Piraten zu warten sozusagen.
+
+00:48:55.585 --> 00:49:59.245
+<v SPEAKER_1>Na, das nicht. Die machen das halt auch mit Ablink. Also die haben dann halt irgendwie einen Satelliten-Ablink nach außen. Das heißt also, die können auch von außen Anrufe empfangen und raustelefonieren und so. Ja, da braucht es dann natürlich wieder entsprechende Verteile mit Operatoren und so. Aber so das Equipment auf dem Schiff, ich kenne da mehrere Firmen inzwischen, die sowas tun. Und ja, dafür kann man es verwenden. Wie gesagt, aber das ist jetzt eigentlich nicht meine Intention, hier in Konkurrenz mit irgendwelchen Netzwerkanbietern, also Geräteherstellern für GSM-Netzen zu treten. Das ist eigentlich nicht mein Punkt. Sondern was meine Intention ist, ist, dass man eben hier, was als freie Software hat, möglichst viele Leute dazu ermutigt, mal damit zu spielen. Ich habe dann auch von dieser Messtechnik-Firma den kompletten Restposten von über 70 Basisstationen aufgekauft, um die eben kostengünstig weitergeben zu können an interessierte Leute aus dem Umfeld.
+
+00:49:59.265 --> 00:50:00.685
+<v SPEAKER_2>Sind da auch schon ein paar weitervermittelt worden?
+
+00:50:00.865 --> 00:50:06.685
+<v SPEAKER_1>Ja, es sind inzwischen 35 oder so weg davon. Es ist schon ordentlich was unter das Volk gekommen.
+
+00:50:06.705 --> 00:50:16.305
+<v SPEAKER_2>Das heißt, wenn jemand so halbwegs glaubwürdig nachweisen kann, dass er ein Interesse daran hat, so etwas auch mal konkret zum Einsatz zu bringen, könnte man sich an dich wenden?
+
+00:50:16.325 --> 00:50:49.325
+<v SPEAKER_1>Kann man sich an mich wenden, ja. Die Idee war einfach nur, dass ich nicht wollte, die haben ja ihre Restposten da nicht verkauft bekommen bei der Messtechnik-Firma, weil niemand was damit anfangen konnte. Jetzt gibt es aber plötzlich Software, die kostenlos ist, mit der man das Gerät zu einer sehr wertvollen Aufgabe führen kann. Und da wollte ich nicht, dass die jetzt den Preis hochziehen und hier absahnen, weil ich Software geschrieben habe. Das war der Grund, warum ich die aufgekauft habe.
+
+00:50:49.345 --> 00:50:52.765
+<v SPEAKER_2>In welchem Frequenzbereich arbeiten die eigentlich? Ist das festgelegt?
+
+00:50:52.785 --> 00:51:34.085
+<v SPEAKER_1>Das ist GSM 900, das ist das klassische GSM. Das ist dann auch schon so der Punkt, wo man vielleicht mal einen rechtlichen Hinweis an der Stelle anbringt. Es ist also so, dass GSM-Frequenzbänder alle, also das 900er, das 850er, 1800er, 1900er, alle Frequenzbänder sind lizenziert. Das heißt, man darf auf diesen Frequenzen nicht irgendwelche Dinge betreiben, sofern man keine Lizenz dafür hat. Die Lizenzen werden vergeben von der Bundesnetzagentur in Deutschland. Und im GSM-900er-Band bekommt man in der Regel keine Testlizenzen mehr, weil da alles vergeben ist.
+
+00:51:35.045 --> 00:51:53.105
+<v SPEAKER_2>Also man darf es nicht betreiben, solange man sich, wenn man sich nicht gerade auf internationalen Gewässern befindet, also sozusagen außerhalb einer Hoheitszone von irgendeinem Land, was das reguliert in Deutschland, darf man es nur, wenn man im Keller vom Chaos-Communication-Kongress rumsitzt.
+
+00:51:53.125 --> 00:52:41.825
+<v SPEAKER_1>Ja, also das ist sicherlich fragwürdig, ja. Der Punkt ist aber letztlich, ja, wenn man sowas tut und das mit außerordentlich geringer Sendeleistung tut, also dass es wirklich im Keller bleibt, ja, und nicht rausgeht, und sowas kann man ja auch ausprobieren, wie weit es geht, dann, und dann noch dazu auf irgendeinem Frequenz, also auf einem Kanal, der tatsächlich an dem Ort nicht verwendet wird, sowas kann man sich ja auch anschauen mit einem Spectrum-Analyzer oder ähnlichen Geräten, dann kann einem ja niemand vorwerfen, dass man jetzt hier irgendwie, sozusagen, dass irgendwie ein Fernmeldesystem stört oder so, ja. Also das ist halt was, was man tun kann, wenn man also versuchen will, den möglichen Impact irgendwie zu minimieren. Also ich habe da auch irgendwie…
+
+00:52:41.845 --> 00:52:49.085
+<v SPEAKER_2>So ein bisschen vergleichbar mit diesen UKW-Sendern fürs Auto, wo man dann so sein Musikabspielgerät mit dem Autoradio verbinden kann.
+
+00:52:49.105 --> 00:53:19.905
+<v SPEAKER_1>Ja, da ist es auch tatsächlich legal seit Kurzem. Ja, aber lange Zeit nicht, ja. Beim GSM ist es also definitiv nicht legal, weil die Lizenz halt in der Regel für das ganze Bundesgebiet an irgendjemand vergeben wurde. Und solange man jetzt nicht zu T-Mobile oder einem existierten Operator geht und mit denen quasi einen Vertrag macht, so hier, ich darf in meinem Haus, im Keller irgendwie, was die natürlich nicht machen, weil es viel zu viel Aufwand für sie ist, aber… So rein theoretisch, rechtlich ginge das nur so im GSM-Nollen. Im GSM 1800-Bereich, wo die BS11 leider nicht geht, ich habe inzwischen aber auch andere Geräte, die da gehen.
+
+00:53:19.925 --> 00:53:23.325
+<v SPEAKER_2>Das ist aber auch regulierter Frequenzbereich.
+
+00:53:23.345 --> 00:53:38.485
+<v SPEAKER_1>Auch regulierter Frequenzbereich, aber da ist noch was frei. Das heißt, da kann man zu einer Bundesnetzagentur gehen, kann sagen, hey, hier, ich entwickle irgendwie Software für den Mobiltelefonbereich. Ich möchte an dieser Adresse daheim mit geringer Sendeleistung irgendwie hier was betreiben, macht mir doch mal eine Zuteilung.
+
+00:53:38.505 --> 00:53:40.425
+<v SPEAKER_2>So auf bestimmte Zeit sozusagen?
+
+00:53:40.885 --> 00:53:56.205
+<v SPEAKER_1>Na, das geht für ein Jahr dann immer. Und dann kann man das verlängern und ich hab jetzt das nicht mehr im Kopf, das war also unter 200 Euro. Also das ist was, was man, wenn man jetzt da irgendwie Interesse hat und damit spielen will und irgendwie für 300 Euro noch mehr Geräte kauft und das dann legalisieren möchte, dann kann man das...
+
+00:53:56.225 --> 00:54:01.165
+<v SPEAKER_2>1800 ist der in Nordamerika eingesetzte Frequenzbereich. Dazu braucht man so ein Tri-Band-Gerät.
+
+00:54:01.185 --> 00:54:03.385
+<v SPEAKER_1>Ne, 1800 ist auch das, was in Deutschland verwendet wird.
+
+00:54:03.405 --> 00:54:05.565
+<v SPEAKER_2>Also in Deutschland...
+
+00:54:05.585 --> 00:54:07.225
+<v SPEAKER_1>1900 wäre das genau.
+
+00:54:07.245 --> 00:54:09.885
+<v SPEAKER_2>Okay, das heißt auch im 1800, da gibt es noch Platz, verstehe.
+
+00:54:09.905 --> 00:54:42.665
+<v SPEAKER_1>Da gibt es einfach noch Platz, ja. Das heißt, da hat die Bundesnetzagentur einfach alles vergeben. Ich finde das persönlich total doof. Ich meine, ich mache sowas ja auch beruflich. Ich habe ja lange Zeit in der Mobiltelefonie-Entwicklung gearbeitet. Und jetzt möchte ich gerne irgendwie mein Telefon testen. Und ich habe eigentlich keine legale Möglichkeit, das zu tun. Also angenommen, ich hätte jetzt ein Telefon, das gar nicht GSM 1800 kann, oder eine Basestation, was das nicht kann. Dass man da nicht mal eine einzelne Frequenz freigehalten hat, irgendwie für so Tests weggeht, das finde ich schon ein bisschen fragwürdig.
+
+00:54:42.685 --> 00:54:45.105
+<v SPEAKER_2>Da hat wahrscheinlich auch keiner so richtig drüber nachgedacht.
+
+00:54:45.365 --> 00:54:46.505
+<v SPEAKER_1>Ja, wahrscheinlich, ja.
+
+00:54:46.525 --> 00:54:47.765
+<v SPEAKER_2>Aber wo haben die denn das getestet?
+
+00:54:47.785 --> 00:54:50.765
+<v SPEAKER_1>Wahrscheinlich nur in so......Fahrradation-Käfigen.
+
+00:54:50.785 --> 00:54:52.945
+<v SPEAKER_2>Fahrradation-Käfige, genau.
+
+00:54:52.965 --> 00:54:59.385
+<v SPEAKER_1>Da kann man das natürlich auch ganz legal betreiben im Fahrradation-Käfig. Weil da stellt man ja dann sicher, dass tatsächlich wirklich nichts nach außen dringt.
+
+00:54:59.405 --> 00:55:03.105
+<v SPEAKER_2>Also Alutapete an den Kellerwand und dann braucht man auch keinen Fragen.
+
+00:55:03.125 --> 00:55:06.105
+<v SPEAKER_1>Ich glaube, Alu wird es nicht unbedingt tun, aber...
+
+00:55:06.125 --> 00:55:07.945
+<v SPEAKER_2>Metallbleche, was auch immer, Gitternetze.
+
+00:55:08.345 --> 00:56:41.365
+<v SPEAKER_1>Ja, also diese BS-11, die kann man auf 30 mW schon rein von der Software herunter konfigurieren. Ja, das ist quasi schon nichts mehr. Dann kann man, wenn man das will, noch Dämpfungsglieder davor stecken. Oder man kann irgendwie halt die Antenne irgendwie durch ein Stück Draht ersetzen, was irgendwie noch mal eine extreme Verlustleistung hat oder so. Also da kann man schon, jetzt sage ich mal so, für den weitestgehend sicherstellen, dass man da nicht irgendwie jemanden stört. Also das ist, ich meine, das ist auch einfach so, jenseits von der rechtlichen Situation, ja, einfach so, das will ich nicht machen. Ich will nicht hier irgendwie jetzt der Telekom irgendwie ein Netz stören oder davon oder so. Das ist einfach nicht der Punkt, wenn ich destruktiv auftrete. Deswegen verwende ich auch nicht irgendwie Operator-IDs von solchen Operatoren. Was wir am Kongress mal gemacht haben, spaßhalber ist, wir haben die Operator-ID von einem ägyptischen Operator genommen, Mubi Nil. Ich habe die nicht mehr im Kopf, die numerische Zahl dafür. Weil es nämlich in Ägypten ein Gesetz gibt, dass Mobiltelefone keinen GPS haben dürfen. Und auch wenn du jetzt ein iPhone importierst oder irgendetwas, dann musst du es in Ägypten seinen GPS ausschalten. Und das haben wir getestet und tatsächlich bei mehreren Nokia-Modellen und auch beim iPhone ist das GPS ausgegangen in dem Moment, wo wir eine ägyptische Operator-ID eingestellt haben. Das ist mal eine neue Möglichkeit, GPS zu jammen, zumindest in Smartphones. Die müssen sich nicht mal einbuchen. Das reicht, wenn die das sehen. Wenn die einfach sehen, in meiner Umgebung ist eine ägyptische Basisstation, zub GPS aus.
+
+00:56:41.385 --> 00:56:49.805
+<v SPEAKER_2>Das heißt, auch wenn man im iPhone dann in Dübien rumläuft, dann kann es sein, dass einem das GPS ausgeschaltet wird.
+
+00:56:49.825 --> 00:56:50.765
+<v SPEAKER_1>Möglicherweise, ja.
+
+00:56:50.765 --> 00:56:52.765
+<v SPEAKER_2>Aber da ist wahrscheinlich viel Sand an der Stelle.
+
+00:56:54.365 --> 00:57:04.405
+<v SPEAKER_1>Gut. Also es geht halt um dieses Experimentieren mit Sicherheitsproblemen. Wir haben da auch eine ganze Menge inzwischen rausgefunden, weil wir wissen, wie sehen die Specks aus.
+
+00:57:04.425 --> 00:57:18.165
+<v SPEAKER_2>Ach so, das heißt, man könnte in dem Moment, wo man auch in Deutschland sagt, hier gibt es jetzt Mobinil, dann geht überall das GPS aus. Genau. Interessant.
+
+00:57:18.185 --> 00:57:25.805
+<v SPEAKER_1>Das sind halt so die Dinge, weil auch wieder keine Authentisierung da ist. Ja, wer sagt, dass das irgendwie tatsächlich ein Ägypter ist?
+
+00:57:25.905 --> 00:57:31.765
+<v SPEAKER_2>Ich meine, das GPS könnte sich ja selbst ausschalten, wenn es feststellt, dass es ein Ägypter ist.
+
+00:57:31.785 --> 00:57:56.125
+<v SPEAKER_1>Das ist auch richtig, ja. Aber das wird es wahrscheinlich auch tun. Also, da müsste man jetzt nach Ägypten reisen. Und sich in einen fahrradischen Käfig stellen, damit man... Na gut, dann fangen wir auch kein GPS mehr. Man müsste irgendwie irgendwo hin, wo man keine Netzabdeckung hat in Ägypten. Was wahrscheinlich auch einiges an Wüste gibt, wo man keine Netzabdeckung hat. Also ich weiß es nicht, ob sie das mit dem GPS alleine auch machen, so von den Landesumrissen her oder so?
+
+00:57:56.145 --> 00:58:00.945
+<v SPEAKER_2>Also wer nach Ägypten in den Urlaub fährt mit dem iPhone und das GPS funktioniert nicht, jetzt weiß auch warum.
+
+00:58:01.225 --> 00:58:06.985
+<v SPEAKER_1>Ja, also da kann man auch im Netz nachlesen. Tausend Leute, die da irgendwie sich darüber schon ausgetauscht haben.
+
+00:58:07.005 --> 00:58:20.005
+<v SPEAKER_2>Na dann sag doch nochmal, was jetzt die Software, was so der aktuelle Stand ist. Also was kann das Ding alles und welche Teile des Netzwerks werden denn da konkret simuliert?
+
+00:58:20.865 --> 00:59:11.325
+<v SPEAKER_1>Also im Grunde simulieren wir eben alles, was jenseits der BTS ist. Also es gibt im GSM-Netzwerk eine ganze Menge an so funktionalen Einheiten. Wir hatten einen Base Station Controller, wir hatten das Mobile Switching Center, wir haben das sogenannte Home- und Visitor Location Register, also wo die ganzen Kundendaten drinstehen. Genau, also welche Telefonnummer hat wer und so weiter. Und dann so Sachen wie ein SMS-Switching Center oder was haben wir noch für Elemente, ein Authentication Center und so weiter. Also es gibt eine ganze Menge, die tatsächlich, ich meine Mitte der 80er Jahre hat man da wirklich eigene Geräte irgendwo so hingestellt, so in Racks und die haben dann jeweils immer nur eine Funktion ausgeführt, so Multitasking war eigentlich noch nicht so das Normale.
+
+00:59:12.205 --> 00:59:21.325
+<v SPEAKER_2>Heute sind es aber auch schon mehr funktionale Einheiten von einem Ding, also eine Base Station übernimmt dann auch das Versenden der SMS zum Beispiel.
+
+00:59:21.625 --> 01:00:08.565
+<v SPEAKER_1>Nee, das ist nicht der Fall. Also es ist tatsächlich so, dass in den klassischen, weil diese Schnittstellen ja alle spezifiziert sind, wenn du Altes mit neuem Equipment irgendwie kombinieren willst, dann müssen die ja immer noch miteinander reden können und so. Das heißt, das ist tatsächlich so, dass das alles dedizierte Geräte sind. Also wenn du jetzt so einen Base Station Controller alleine irgendwie kombinieren willst, den du kaufst, dann kriegst du da inzwischen, je nachdem, was ich kenne, von einem Hersteller kenne ich das Produkt näher, da kriegst du halt so ein Embedded-PC, so ein Industrial-PC als 19 Zoll Einschub. Und da läuft dann irgendwie ein Red Hat Linux drauf. Und oben auf dem Linux läuft halt dann irgendwie die proprietary Base Station Controller-Software. Und du hast halt noch ein paar so E1-Interfaces und andere Schnittstellen drin. Ja, aber es ist tatsächlich wirklich ein dedizierter Rechner, der das macht. Und der macht jetzt nicht noch andere Funktionen.
+
+01:00:08.585 --> 01:00:10.225
+<v SPEAKER_2>Na gut, aber es wäre technisch möglich.
+
+01:00:10.365 --> 01:00:23.105
+<v SPEAKER_1>Natürlich, natürlich kann man das. Aber es ist halt auch nicht im Interesse der Hersteller. Die wollen dich ja irgendwie mit Hardware tot schmeißen. So, ja, noch dazu mit spezieller Voodoo-Hardware, die ist immer nicht mit einem normalen PC irgendwie ersetzt.
+
+01:00:23.125 --> 01:00:24.705
+<v SPEAKER_2>Und fünfstelligen Preisvorstellungen.
+
+01:00:24.725 --> 01:01:48.205
+<v SPEAKER_1>Natürlich, mindestens. Also, ich kenne so Base Station Controllern. Das ist jetzt eher so der kleine Bereich. Ja, da legt man so 80.000 Euro dafür hin, irgendwie so, ja. Ich will jetzt nicht sagen, es ist nicht gerechtfertigt. Also, ja, die ganze Software ist halt auch anders ausgelegt. Die implementieren die Specs vollständig. Die sind ordentlich getestet. Das ist irgendwie ziemlich, also das Zeug crasht nie. Und es ist extrem stabil. Und mit Failover und an allen möglichen und so. Ja, das ist schon auch wirklich was dahinter. Ja, aber ich sage nur jetzt so, für mal ein experimentellen Netzversicht, da brauche ich sowas nicht. Oder jetzt auf einem Schiff oder so, da frage ich mich jetzt auch, ob ich das wirklich brauche. Ja, also wenn ich jetzt irgendwo, keine Ahnung, in einem alpinen Bergwandergebiet irgendwie sicherstellen muss, dass 24 Stunden am Tag der Notruf ankommen, dass wirklich auch so wie immer alles funktioniert und ich 99, sonst irgendwie wie viele neuen Zuverlässigkeit habe, okay, dann brauche ich das. Ja, gut. Und in OpenBSC haben wir also alles sozusagen, was darüber liegt. Also der Base Station Controller, das Mobile Switching Center, das Home Location Register, was bei uns einfach eine SQL-Tabelle ist, in der halt die Einserleger drin stehen. Ja, das ist also alles dort implementiert. Wir sind gerade so ein bisschen dabei zu planen, wie wir das alles also etwas modularer gestalten, weil das halt alles jetzt ein Programm ist im Moment, das das macht.
+
+01:01:48.225 --> 01:01:51.845
+<v SPEAKER_2>Kannst du denn jetzt schon out of the box mit mehr als einer BTS reden?
+
+01:01:53.725 --> 01:02:11.885
+<v SPEAKER_1>Es kann das eigentlich. Ich habe es immer noch nicht getestet. Also die ganze Software-Architektur berücksichtigt das. Man kann das konfigurieren, aber ich habe es wirklich tatsächlich, das steht jetzt gerade so auf meiner To-Do-Liste mit mehreren BTSen. Das ist auch Teil des Milestones, den ich dafür meinen Kunden abliefern muss.
+
+01:02:11.905 --> 01:02:20.465
+<v SPEAKER_2>Das heißt eigentlich ist der Name OpenBSC insofern irreführend, als dass es sich eigentlich um ein vollständiges GSM-Netzwerk handelt?
+
+01:02:22.205 --> 01:02:24.005
+<v SPEAKER_1>Bis auf die BTS?
+
+01:02:24.365 --> 01:02:41.905
+<v SPEAKER_2>Genau, bis auf die BTS. Also alles, was nicht Hardware ist, die komplette Logik. Allerdings nicht feature complete im Sinne des Standards, aber feature complete im Sinne von das, was man normalerweise an Funktionalität erwartet. Was fehlt dann?
+
+01:02:41.925 --> 01:03:27.565
+<v SPEAKER_1>Was fehlt im Moment an Funktionen? Wir haben bisher überhaupt keine Unterstützung für Datencalls, also weder Circuit-Switch-Data noch GPRS, also die paketorientierte Datengeschichte, was natürlich auch schon sehr wichtig ist heutzutage gerade, was die Telefone so können und was sie so machen. Da will man das haben. Was weiterhin fehlt, ist ein Interface nach außen hin. Also wir können prima innerhalb, also wenn es eine BTS oder auch mehrere BTS anschließt an OpenBSC, dann können wir da Sprachtelefonie und SMS hin und her vermitteln, aber wir können uns halt nicht irgendwie, es gibt kein Interface zum klassischen Telefonienetzwerk oder zu Voice-over-IP oder so. Das ist eine Insel, die nicht nach außen hin irgendwie verbunden ist.
+
+01:03:27.585 --> 01:03:40.785
+<v SPEAKER_2>Und wenn man jetzt mehrere Installationen hat, also ich habe einen Rechner mit der BSC-Software an einer BTS und irgendwo anders habe ich den auch, können die sich dann schon untereinander verständigen, wie das ja ein, das ist ja dann die MSC-Funktionalität im GSM-Netzwerk.
+
+01:03:41.005 --> 01:04:36.405
+<v SPEAKER_1>Ja, das geht nicht. Der Ansatz, den ich im Moment dafür fahre, das ist so ein bisschen bedingt dadurch, dass da das Funding mit reinkam, also die bezahlte Arbeit, ist BTS an unterschiedlichen Standorten mit einem BSC nur zu verbinden. Also es gibt nämlich inzwischen auch, ich meine die Siemens BS11, die ist jetzt halt Mitte der 90er, ja, die ist schon ein bisschen alt. Es gibt inzwischen so BTS, die nicht mehr über E1 kommunizieren, sondern über Ethernet und IP. Ja, da wird das alles encapsulated und die sind auch viel kleiner, die sehen ein bisschen größer aus, wie ein Wi-Fi Access Point. Kostenpunkt ist aber leider mindestens Vaktor 10 teurer als die alten Siemens BS11. Aber da kann man jetzt zum Beispiel, ich kann jetzt hier theoretisch, kann ich eine daheim stehen haben und eine im Club und eine bei dir oder so. Und die können alle halt so konfiguriert sein, dass sie eine OpenBSC-Instanz verwenden. Und dann können wir trotzdem miteinander telefonieren.
+
+01:04:36.745 --> 01:04:37.425
+<v SPEAKER_2>Über Internet?
+
+01:04:37.445 --> 01:05:50.045
+<v SPEAKER_1>Über Internet, ja. Mit der BS11 geht das jetzt halt nicht, weil das ja E1, also dann müsste man das E1 quasi, was glaube ich auch irgendwie geht, da gibt es Code dafür, wie ist denn, dass man E1 in diese VIP einpackt an einer Stelle und das irgendwo anders wieder rausfahren lässt. Ja, dass man das einfach tunnelt, genau, dieses E1. Dann hätte man auch diese Funktion. Sicherlich wird das anstehen, ja. Also da ist jetzt, da ist noch nicht so ganz klar, wo die Reise hingehen wird und wie das im Detail aussehen wird, diese Schnittstellen da. Also ich denke, also mein persönlicher Ansatz im Moment ist irgendwie so, dass wir nach außen hin vielleicht gar nicht unbedingt diese ganze klassische Telefonie haben wollen, sondern dass wir irgendwie nach außen hin dann gleich Richtung Asterovsk oder sowas gehen. Also dass man einfach, wenn man mehrere OpenBSC-Instanzen hat und die sollen miteinander telefonieren können, dass man irgendwo ein Plugin hat Richtung Asterovsk oder an so einem Voice-over-IP-Gateways und das halt dann... Man muss ja nicht das ganze Rad neu erfinden irgendwie. Das ist aber wie gesagt noch unklar. Mir geht es jetzt im Moment hauptsächlich darum, also noch mehr Stabilität, auch viel mehr Tests. Also die Telefonen verhalten sich sehr unterschiedlich, muss ich sagen.
+
+01:05:50.105 --> 01:05:53.345
+<v SPEAKER_2>Das wäre schon fast mal eine nächste Frage gewesen. Wie sehr denn?
+
+01:05:53.365 --> 01:06:04.905
+<v SPEAKER_1>Sehr, sehr. Also ich hatte einen Voice-Call zwischen zwei alten Nokia-Telefonen irgendwie am Laufen und dann hat es bestimmt noch mal einen Monat gedauert, bis das irgendwie mit Motorola oder Siemens-Geräten auch ging.
+
+01:06:04.925 --> 01:06:05.925
+<v SPEAKER_2>Was ist denn da anders?
+
+01:06:06.985 --> 01:07:57.465
+<v SPEAKER_1>Es gibt halt im GSM-Standard oft auch irgendwie so Optionen. Also du kannst es so machen oder so oder so. Ja und dann greife ich mir natürlich in der Regel das raus, was ich am schnellsten implementieren kann, damit es halt einfach tut erstmal. Mehr kann man dann immer noch nachher polieren. Und beim Verbindungsaufbau, da gibt es zum Beispiel ein sogenanntes Very Early Assignment. Das hängt davon ab, wann dieser Sprachdatenkanal irgendwie zugewiesen wird und so. Und das ging einfach irgendwie mit manchen Telefonen nicht, obwohl es so im Spektrum steht. Wahrscheinlich weil das echte Netze nie verwenden und dann fällt das gar nicht auf, dass das nicht funktioniert. Oder dann auch tatsächlich echtes Fehlverhalten von Telefonen. Oder wiederum natürlich auch Fehlverhalten meiner Software, wo manche Telefone halt so hinweg sehen und andere irgendwie sagen, ne, Badge mag ich nicht, da ist ein Bit falsch. Das Paket ist nicht grün. Und Telefone sind jetzt nicht wie Rechner. Also wenn ich jetzt irgendwie hier ein Telefon hätte, was wie ein, keine Ahnung, wie irgendwie ein Apache-Webserver wäre oder so, wo ich dann ordentliche Divak-Meldungen oder sonst irgendwas einschalten kann, ist ja nicht so. Wenn ich jetzt irgendwie ein Telefonanruf aufbaue, dann sagt das Telefon halt die Lüb und legt wieder auf. Ja, irgendwie so. Aber ich sehe halt nicht, warum hat es das jetzt wirklich getan. Soweit so tief kann ich ja ins Telefon nicht reinsehen. Das ist eben auch wieder so ein bisschen das Problem. Also man muss dann einfach probieren und im Zweifelsfall halt auch mal jemanden fragen oder Leute fragen, ob sie vielleicht so ein Telefon, also es gibt ja Leute, die da im Telefonieumfeld auch irgendwie tätig sind und dem Projekt positiv gegenüberstehen, ja, die dann vielleicht mal einen Trace oder sowas wieder schicken. Aber wenn ich sehe, wie so ein Telefon tatsächlich in einem echten Netzwerk funktioniert, dann kann ich natürlich auch mir ableiten, was ich jetzt vielleicht anders mache.
+
+01:07:57.485 --> 01:08:04.705
+<v SPEAKER_2>Aber du hast ja sicherlich auch mit dem Free-Runner-Telefon probiert von Openboco, oder? Und da hat's ja in dem Prinzip den vollen Durchblick.
+
+01:08:06.085 --> 01:09:16.565
+<v SPEAKER_1>Da hätte ich jetzt, weil ich da mitgearbeitet habe für den Telefonie-Teil, auch den Durchblick, ja. Mir ist es aber, also im Moment arbeite ich nicht mit Smartphones, weil die zu lang zum Booten brauchen. Das ist einfach in der Entwicklung, das ist einfach total doof. Egal, ob es Openboco oder was auch immer ist, die brauchen ja alle zum Booten irgendwie ziemlich lang. Aber wenn ich so ein altes Feature-Phone, so ein Nokia 3310 oder ein Siemens S25 oder irgend so was nehme, da drücke ich auf einen Einschalter und irgendwie zehn Sekunden später ist es da, höchstens. Und das ist halt wirklich so, dass, ich meine, wenn man sowas entwickelt, da schickt man mal irgendwas Falsches, ja, und die Telefone crashen durch die Gegend. Also das ist nicht mehr lustig. Also was ständig irgendwelche Telefone irgendwo stehen bleiben oder abstürzen oder was, das ist alles völlig, also da bin ich auch wieder überrascht. So schlimm hätte ich es eigentlich nicht erwartet, dass das alles so wackelig irgendwie ist. Weil das ja dann, da geht dann auch wieder die Sicherheitsdebatte an. Also ich warte immer noch darauf, bis irgendjemand mal richtig Fuzzing probiert bei so Telefonen. Einfach so vom Netzwerk her mal einfach nur Schrott ans Telefon schicken. Mal schauen, ob es überhaupt ein Telefon gibt da draußen, was das überlebt.
+
+01:09:21.265 --> 01:09:27.625
+<v SPEAKER_2>Wenn man jetzt die Netze mal fuzzet, dass sie ja nicht auch schnell aus dem Tritt kommen.
+
+01:09:27.645 --> 01:10:40.025
+<v SPEAKER_1>Das ist sicherlich auch sehr interessant. Leider kann man das halt nicht tun, so ohne Weiteres, weil dann bräuchte man jetzt das wirklich auf GSM-Seite im Baseband, das offene Telefon. Und da die Schnittstelle sehr asymmetrisch ist zwischen dem, was tut die Basisstation, was tut ein Telefon, kann ich mit einer Basisstation kein Telefon emulieren und umgekehrt auch nicht. Weil schon mal die Sende- und Empfangsfrequenz ist unterschiedlich. Also man hat da andere Frequenzen, was dann auch durch andere Filter in der Hardware so vergossen ist. Da kann man also nichts dran tun. Da fehlt also das Pendant auf der Telefonie-Seite, wo Dieter Spahr, ich und einige andere schon irgendwie unsere Gedanken dazu haben. Aber wir wollen jetzt halt die Basisstation-Seite erstmal irgendwie so weit zu einem Punkt bringen, dass sie, wie wir sagen, jetzt erstmal gut. Und wenn wir dann noch Zeit und Lust haben, was im Moment aber sehr gut aussieht, dann wollen wir uns halt die Telefonseite mal vornehmen. Und dann kann man solche Dinge tun, ja, mal irgendwie an Netze, natürlich macht man das dann nur mit OpenBSC, mal an Netze irgendwelche zufälligen Daten zu schicken und zu schauen, was da passiert.
+
+01:10:40.045 --> 01:10:44.565
+<v SPEAKER_2>Also meinst du, die generelle Softwarequalität der Telefone ist zumindest fragwürdig?
+
+01:10:44.725 --> 01:12:03.545
+<v SPEAKER_1>Ja, bei den Netzen habe ich da eigentlich größere Hoffnungen, muss ich sagen. Aber bei den Telefonen, ich meine, das ist halt einfach auch so dieses ganze Jahr, es tut, also lass es uns schippen und dann kann man ja das meistens nie vernünftig updaten, so diese ganze Telefonie-Seite. Ja, respektive Arbeit der Entwickler und schon am nächsten Produkt, das ist halt ein Konsumermarkt. Wohingegen der Netzwerkequipment-Bereich ist halt, ich glaube, professionellere Geräte gibt es quasi. Also einen professionelleren Markt als diesen gibt es ja kaum. Das heißt, da ist man auch sehr konservativ, was irgendwie Änderungen betrifft. Man überlegt sich da schon genau, was man tut und läuft nicht irgendwie dem neuesten Freund hinterher oder sonst irgendwas. Und der Code ist ja auch schon etwas abgehangen eher in dem Bereich. Bei den Telefonen, da hast du so viel an User-Interface und an allen möglichen Dingen, die da so quer laufen. Gerade in den Feature-Phones, wo der Telefonie-Teil und der ganze Rest des Telefons auf einem Prozessor läuft und alles in einem Adressraum oft und so, da ist natürlich die Stabilität unter Umständen eine andere.
+
+01:12:03.565 --> 01:12:22.645
+<v SPEAKER_2>Wie schwierig wird es denn sein, diesen Datenteil mit einzubauen? Das ist natürlich schon sehr interessant. Gerade wenn man nachdenkt, mit seinem eigenen Kreuzfahrtschiff unterwegs zu sein und dann über so einen Satellitenkanal quasi Telefonie bereitzustellen, ob man das jetzt über VoIP oder was auch immer macht, will man natürlich auch Internet auf die Geräte kriegen.
+
+01:12:22.665 --> 01:13:01.865
+<v SPEAKER_1>Da bin ich eben auch dran. Das eigentliche Einbuchen, also sozusagen das Einbuchen in das GPRS-Netz, das ist auch schon da. Das ist nicht der schwierige Punkt. Schwieriger ist jetzt vor allem, da habe ich jetzt auch noch keine klare Architektur im Kopf. Ich meine, GPRS habe ich immer ausgeblendet beim bisherigen Lesen der Spezifikation, weil ich mir dachte, nee, jetzt will ich den anderen erst mal verstehen. Es werden ja sogenannte PDP-Sessions aufgebaut, also der Aufbau einer Datenverbindung und dann wie werden die Pakete da encapsulated und wie sieht dann auch das Interface nach hinten raus.
+
+01:13:01.885 --> 01:13:14.765
+<v SPEAKER_2>Hast du dich da jetzt noch gar nicht eingelesen oder weißt du schon im Prinzip, weil das habe ich hier bisher auch noch nicht behandelt und finde ich mal ganz interessant, wie jetzt eigentlich die Datenkommunikation konkret abläuft, wenn heute so ein Telefon Internet haben will.
+
+01:13:14.785 --> 01:13:24.485
+<v SPEAKER_1>Das ist mir, also ich meine zumindest, was jetzt 2G, 25G, also GFHS und Edge betrifft, bin ich da schon, also je zu auf dem hohen, abstrakten Level weiß ich schon, was da passiert.
+
+01:13:24.505 --> 01:13:26.225
+<v SPEAKER_2>Kannst du es mal irgendwie anreißen?
+
+01:13:26.245 --> 01:17:14.125
+<v SPEAKER_1>Ja gut, also zum einen ist GFHS existiert erst mal parallel zu GSM. Das heißt, so in der ursprünglichen Version der Spezifikation sind das quasi zwei getrennte Netze. Die verwenden zwar irgendwie so ein bisschen ähnliche Protokolle und so, aber dass du im GSM angemeldet bist, heißt noch nicht, dass du im GFHS angemeldet bist oder umgekehrt. Also du kannst zum Beispiel eigentlich auch gemäß der Spekt könntest du ein reines GFHS-Netz fahren, das gar kein GSM kann, also keine Voice Calls. Später hat man dann so Mischmasche entwickelt, wo man dann mit einem Auffall sich in beiden Netzen registrieren kann. Das war dann erstmal das. Ja, das ist ähnlich wie das Einbuchen ins Telefonienetz, da muss ich da einbuchen. Da passiert dann auch die Autorisierung und wenn man Verschlüsselung benutzt, was ja in kommerziellen Netzen in der Regel der Fall ist, wird dann auch der Session Key ausgehandelt und die Verschlüsselung initialisiert. Und dann, wenn, ja, das ist dann ähnlich wie beim Telefonieaufbau, da hat man irgendwie einen eingehenden Aufbau und einen ausgehenden Aufbau und so, gibt es da auch, es sind halt keine, also wenn ich einen Telefoniekanal aufmache, dann wird da halt irgendwie ein Zeitschlitz fest zugewiesen und so. Das heißt also, man sagt ja hier irgendwie, ich möchte jetzt einen Anruf machen, bitte teil mir doch mal einen Kanal zu, dann wird der Kanal zugewiesen und dann werden die entsprechenden Aufbaunachrichten ausgetauscht und dann bleibt der Kanal stehen, bis der Telefonie-Call wieder abgebaut wird. Und bei den GPS-Sessions macht man da halt einen sogenannten PDP-Kontext, nennt sich das auf. Was auch immer PDP heißt, weiß ich nicht, entzieht sich meine Erkenntnis, aber wir nehmen das einfach mal so hin. Und damit wird dann quasi ein Kanal zugewiesen zwischen dem Gateway, das also das Internet mit dem Mobiltelefonie-Netzwerk verbindet, und dem eigentlichen Telefon. Und die Zuteilung von Zeitschlitzen und solchen Dingen, die geschieht dann ja dynamisch bei GPS. Das heißt also, es wird erstmal nur State auf beiden Seiten erzeugt. So irgendwie das Telefon weiß dann, aha, ich rede mit dem und dem. Und da gibt es im Prinzip eine Verbindung. Aber über die Verbindung gehen erstmal keine Daten. Ja, und erst in dem Moment, wo jemand eine der beiden Seiten was senden möchte, dann kann der Base Station Controller quasi gucken, was für Kanäle habe ich gerade frei, wie viel Zeitschlitze in den Kanälen habe ich frei, wie viel kann ich dem jetzt zuteilen. In echten Netzen ist da sicher auch Policy mit dabei. Also sowas wie, wie viel will ich denn dem User maximal geben, oder wie viel Netzwerkkapazität reserviere ich für irgendwelche Notruf oder sonst irgendwas, oder andere Leute, die das Netz benutzen wollen. Und dann weist der Base Station Controller dem Telefon halt für eine gewisse Zeit bestimmte Zeitschlitze auf der Funkschnittstelle zu und die werden dann benutzt. Der große Unterschied zwischen dem klassischen Voice-Telefonie-Kram und dem GPS ist ja, dass man auch nicht nur fest einen Zeitschlitz bekommt, sondern eben mehrere haben kann, damit man auch über die Datenraten von normalen Telefonie, wie sagt man, Circuit-Switch-Data, also leitungsvermittelter Datenkommunikation hinwegkommt. Man will ja nicht nur 9600 GPS oder irgendwas in dem Bereich haben, sondern man will ja irgendwie mehr haben. Und da werden dann Kanäle gebündelt sozusagen und Kanäle sind Zeitschlitze. Und demnach kann das Netz dann, je nachdem, wie viel verfügbar ist, halt mehrere Zeitschlitze zuweisen.
+
+01:17:14.145 --> 01:17:16.765
+<v SPEAKER_2>Das sind dann die höheren Datenraten, die dadurch erzielt werden.
+
+01:17:16.905 --> 01:18:00.265
+<v SPEAKER_1>Genau. Und Edge ist von der ganzen Signalisierung her genau das Gleiche. Nur, dass dann eigentlich die Modulation selber, also wie wenn die Bits über die Luftschnittstelle kommuniziert, dass man da dann auf eine andere Modulation zugreift. Die halt eine höhere Datenrate zulässt. Das heißt also für das Ressourcenmanagement, also wie viele Funkkanäle habe ich, wie viele Zeitschlüsse sind in den Kanälen und wie werden die gerade benutzt und so, ist es komplett original genau das Gleiche wie in GVHS und auch in GSM. Nur dann, was in den Zeitfenstern, die zugewiesen werden, wie die Information da so strukturiert ist, das ändert sich durch die Modulation.
+
+01:18:00.465 --> 01:18:09.845
+<v SPEAKER_2>Wie ist das, wenn ein Telefon, ein GSM-Telefon telefoniert, eine Telefonverbindung hat, dann kann währenddessen kein Datenverkehr laufen?
+
+01:18:11.345 --> 01:18:32.325
+<v SPEAKER_1>Das kommt sehr aufs Telefon drauf an. So von der Speck her geht das. Es gibt da Klasse A, Klasse B, Klasse sonst irgendwie, so Klassendesignationen, die ein Telefon haben kann. Also 99% der Real-World-Telefone können das nicht. Aber man kann durchaus ein Telefon bauen, das das kann.
+
+01:18:33.125 --> 01:18:33.925
+<v SPEAKER_2>Da macht es keiner.
+
+01:18:33.945 --> 01:18:43.805
+<v SPEAKER_1>Das ist halt kompliziert. Da braucht man mehr größeren DSP und mehr Software und mehr Komplexität. Das kann man wahrscheinlich nicht verkaufen für mehr Geld.
+
+01:18:43.825 --> 01:18:54.865
+<v SPEAKER_2>Warum ist das nötig? Was im GSM-Netzwerk erzwingt, dass man mehr Aufwand treiben muss, um das gleichzeitig zu machen?
+
+01:18:54.885 --> 01:19:20.165
+<v SPEAKER_1>Na ja, du hast halt dann zwei miteinander im Wettbewerb stehende Dinge. Du hast auf der einen Seite den GSM-Voice-Call, der will einen bestimmten Zeitschlitz haben. Und dann hast du den GPS-Daten-Call, der will auch verschiedene Zeitschlitze haben. Du hast in einem DSP nur eine begrenzte Kapazität, wie viel Demodulation du machen kannst. Also ein klassisches altes Nur-GSM-Voice-Telefon.
+
+01:19:21.605 --> 01:19:23.165
+<v SPEAKER_2>Das hat einfach nicht die Kapazität.
+
+01:19:23.185 --> 01:19:49.825
+<v SPEAKER_1>Die Rechenkapazität hat das zu tun. Du hast ja so einen Funkkanal, und auf dem Funkkanal gibt es acht Zeitschlitze. Und für einen Voice-Call musst du eigentlich sozusagen immer nur einen daraus dekodieren können. Das heißt also, du hast achtmal so viel Zeit für die ganze Berechnung, als du tatsächlich irgendwie Daten empfängst. Und wenn du jetzt GPS machst, dann kannst du das natürlich auch im Prinzip nur mit einem Zeitschlitz machen, aber das bringt dir halt nichts. Du willst es mit mehreren Zeitschlitzen haben.
+
+01:19:49.845 --> 01:19:50.445
+<v SPEAKER_2>So.
+
+01:19:50.465 --> 01:20:02.445
+<v SPEAKER_1>Und wenn du jetzt Voice und GPS oder Edge gleichzeitig haben willst, dann hast du halt noch höhere Anforderungen an, wie viele dieser Zeitschlitze musst du parallel verarbeiten und so weiter und so weiter.
+
+01:20:02.465 --> 01:20:10.985
+<v SPEAKER_2>Das heißt letztlich ist es eigentlich für die Software jetzt, die auf dem PC läuft, jetzt kein großes Problem, das zu tun. Das müsste sozusagen erst mal nur implementiert werden.
+
+01:20:11.405 --> 01:20:39.545
+<v SPEAKER_1>Ja, das ist richtig. Und also, nicht nur ist implementiert, sondern man muss sich dann halt schon Gedanken machen, auch wie sieht diese Schnittstelle nach außen hinaus. Also wie integriere ich das mit dem TCW IP-Netzwerk? Es muss dann ja irgendeine Art Gateway geben. Da müssen dann irgendwelche Pakete hingerootet werden. Was für ein Interface schafft man da? Wie macht man das? Wir wollen es ja auch möglichst portabel halten und nicht so Linux-spezifisch haben. Dass also auch Leute mit anderen Betriebssystemen die Software verwenden können.
+
+01:20:39.565 --> 01:20:54.685
+<v SPEAKER_2>Aber was kannst du denn mit dieser Micro-BTS, die du jetzt hast, die auf 900 MHz läuft, was könnte man denn da überhaupt erzielen? Also dieses Edge, wenn das eine andere Modulation ist, ist dann nicht möglich. Weil das sozusagen ein Feature der BTS ist. Die müsste das können.
+
+01:20:55.125 --> 01:20:58.105
+<v SPEAKER_1>Diese BTS, die BS-11, die kann nicht mal GPS.
+
+01:20:58.125 --> 01:20:59.045
+<v SPEAKER_2>Ah, okay. Das heißt Daten.
+
+01:20:59.065 --> 01:21:05.265
+<v SPEAKER_1>Die ist so alt. Die kann nur CSD oder ich glaube HS-CSD kann sie auch. Also High Speed Circuit Switch Data.
+
+01:21:05.285 --> 01:21:06.605
+<v SPEAKER_2>Zwei Kanäle irgendwie zusammenmodifieren.
+
+01:21:06.625 --> 01:21:27.745
+<v SPEAKER_1>Zwei oder drei glaube ich, kann man da zusammenlegen. Aber noch verbindungsgebunden. Das ist halt das Problem, dass die meisten modernen Telefone das für Daten-Kommunikation gar nicht mehr können. Zumindest kein vernünftiges UI haben, wo der User das überhaupt benutzen könnte. Also bis vor drei, vier Jahren gibt es das noch. Aber so in dem aktuellen Telefon wüsste ich nicht, wo ich das neu überhaupt einstellen soll.
+
+01:21:27.765 --> 01:21:29.165
+<v SPEAKER_2>Es geht alles auf Paketkommunikation.
+
+01:21:29.185 --> 01:22:17.825
+<v SPEAKER_1>Genau, macht ja auch völlig Sinn. Aber das geht eben mit der alten BS-11 nicht. Die kann das nicht. Du hast auch schon von so einer anderen Wunderwaffe jetzt die sogenannte IP-Access-Nano-BTS, also wir kommen von der Siemens Micro-BTS und gehen jetzt gleich irgendwie in die Nano-Welt. Das spiegelt sich auch so ein bisschen durch Größe und Gewicht und Stromverbrauch wieder. Also diese Siemens Micro-BTS, das ist halt noch so, ich würde jetzt sagen, handgemeißelt, also so gefräste Metallblöcke mit Wärmeleitpaste von Hand hineingeklebt, Dinge mit irgendwie tollen Steckern und interner Verkabelung. Also es ist so richtig eine Manufaktur der BTS. Ein Industrieprodukt. Ein Industrieprodukt, ja.
+
+01:22:17.845 --> 01:22:19.065
+<v SPEAKER_2>Also ein Produkt für die Industrie.
+
+01:22:19.445 --> 01:23:09.605
+<v SPEAKER_1>Ja, von der Industrie, für die Industrie, mit viel Handarbeit. Ich weiß, ich habe keine Ahnung, was die Dinger mal gekostet haben müssen, aber die müssen richtig schweineteuer gewesen sein. Schon alleine, wie viel Material die da verbaut haben. Also jede einzelne Platine ist eingepasst in einen gefrästen Metallblock. Jedes einzelne Bauteil ist über Wärmeleitpaste verbunden mit dem Metallblock. Und die Metallblöcke selbst sind dann mit dem Metallgehäuse von innen verschraubt. Das Metallgehäuse ist auch ein Metalldruckguss. Also nicht so ein dünnes Blech oder so, sondern das ist ein richtig schwerer Metalldruckgusskörper. Und ich meine, das Ding verbraucht 200 Watt Strom und ist komplett passiv gekühlt. Und kann halt auch bei 50 Grad irgendwie in der brennenden Sonne stehen und so. Also da ist schon irgendwie auch Thermal Engineering irgendwie drin.
+
+01:23:09.625 --> 01:23:26.345
+<v SPEAKER_2>Und diese Nanozelle, das ist jetzt eher so IP-Router-Technologie, Plastik mit irgendwie Platine und stellt man sich aber eher ins Regal. Und die sind eher dafür gemacht, dass man so, was weiß ich, in Bürogebäuden sich noch mal so eine lokale Base Station zur Verlängerung hinstellt oder wie?
+
+01:23:26.365 --> 01:24:40.285
+<v SPEAKER_1>Also laut den Marketing-PDFs von der Herstellerfirma, die man irgendwie auch nur auf dem Web-Server der russischen Vertriebsgesellschaft irgendwie findet, weil sonst wären die wieder unter NDA, steht halt so was drin wie ja in Technologie-Parks oder sonst irgendwo, ja, dass man sowas sich irgendwie ins Zimmer hängt. Glaube ich nicht so ganz dran. Also aktuell, was ich persönlich wirklich kenne, ist halt genau diese in Flugzeugen und in Schiffen Geschichte. Ja, dass dort welche verbaut werden. Ja, die sind leicht, die brauchen nur irgendwie, ich weiß gar nicht, 16 Watt oder irgend sowas, ja. Geht über Power-over-Ethernet, wiegt irgendwie, was weiß ich, so 2 Kilo oder so im Verhältnis zu so irgendwie 40 Kilo bei der WS11. Ja, sind klein, leicht, verbrauchen nicht viel Strom. Und kann man da zum Einsatz bringen. So, die können eben bis Edge, also 25G, ja, also deutlich mehr Möglichkeiten als jetzt die BS11. Einfach eine ganz andere Generation von Gerät. Und das Angenehme, wie gesagt, ist, dass sie diese VIP und Ethernet auf der...
+
+01:24:40.305 --> 01:24:41.625
+<v SPEAKER_2>Zusätzlich oder ausschließlich?
+
+01:24:41.645 --> 01:26:40.485
+<v SPEAKER_1>Ausschließlich. Also die können diesen ganzen klassischen Kram nicht mehr. Mit denen kann ich reden. Das war halt so ein bisschen auch eine Herausforderung, die ans Laufen zu bekommen. Ich habe ja nicht mit dem Hersteller selber, also dieser Hersteller dieser Geräte, der hat ja auch seinen eigenen Playstation-Controller und seine ganzen anderen Sachen. Der will ja nicht, dass da irgendjemand hier mit freier Software irgendwie... Also zumindest marktwirtschaftlich, würde ich ihm unterstellen, hat er da keinen Infos dran. Aber es gibt halt Kunden logischerweise, die die Geräte einkaufen und die halt sehen, naja, ich kaufe diese Geräte irgendwie für viel Geld und dann soll ich auch noch noch viel, viel, viel mehr Geld irgendwie für einen Base Station Controller hinlegen. Und dann haben die vielleicht auch Anforderungen, die mit dem fertigen Propeltern-BSC gar nicht gehen, sondern da wollen sie halt selber irgendwie was zu reden. Und da kommt dann OpenBSC ins Spiel und da wurde ich halt am Kongress angesprochen. Da ist jemand extra irgendwie angereist von so einem Kunden und hat sich meinen Vorschlag angehört und war dann sehr interessiert. Und dann habe ich die mal besucht und habe so eine Nano-BTS mitgenommen. Und das waren keine vier Tage Arbeit, das zu integrieren. Obwohl keinerlei Dokumentation für das Protokoll vorlag. Ich habe halt wirklich einfach auch nur hier diese P-Dump-Mitschnitte mir das angeguckt. Und im Grunde tun sie halt nichts weiter als diese Pakete, die auch über E1 geschickt werden. Die kriegen halt noch ein bisschen ein Hatter davor und werden dann über TCP verschickt. Das ist keine schwarze Magie, die sie da treiben. Also für den Steuerkanal. Die eigentlichen Voice-Daten, die werden dann schon über RTP und UDP verschickt. Ich muss sagen, ich bin schwer beeindruckt. Also alles, was ich bisher über das Ding gesehen habe, wo ich mir immer so denke, das ist das technisch Naheliegende, so will man das gelöst haben irgendwie.
+
+01:26:40.505 --> 01:26:47.985
+<v SPEAKER_2>Du hast gesagt, das kostet das Zehnfache. Also ist man dann bei 3500 oder das Zehnfache von dem Originalpreis?
+
+01:26:48.005 --> 01:27:00.625
+<v SPEAKER_1>Ja, also 3500 ist schon eher irgendwie, glaube ich, da ist man dann schon in der Mengenstaffel drin. Also man muss eher noch ein bisschen mehr rechnen. Also das kostet schon, aber jetzt...
+
+01:27:00.645 --> 01:27:01.785
+<v SPEAKER_2>Ist aber noch vierstellig.
+
+01:27:01.805 --> 01:27:03.665
+<v SPEAKER_1>Ist noch vierstellig in jedem Fall, ja.
+
+01:27:03.905 --> 01:27:09.445
+<v SPEAKER_2>Und wie weit reicht dann so ein Nano-Zellchen?
+
+01:27:09.465 --> 01:27:24.085
+<v SPEAKER_1>Die sind auf, ich glaube, 200 oder 300 MW beschränkt. Das heißt, weniger als die BS11 jetzt könnte. Die BS11 kann bis 3 Watt. Aber für die, naja, die Anwendungsszenaren, die mich jetzt interessieren, ist es ja eher angenehm, wenn es nicht so weit geht.
+
+01:27:24.105 --> 01:27:25.805
+<v SPEAKER_2>Ja, 3 Watt ist aber schon richtig viel.
+
+01:27:25.825 --> 01:27:31.665
+<v SPEAKER_1>Bei der BS11, ja, also 3 Watt, da kommt man schon irgendwie, ja, ich hab's nie ausprobiert, ja.
+
+01:27:31.685 --> 01:27:33.685
+<v SPEAKER_2>Aber für ein paar Kilometer könnte das reichen, oder?
+
+01:27:33.705 --> 01:27:45.305
+<v SPEAKER_1>Oh ja, sicher, sicher, sicher. Insbesondere im 900 MHz-Bereich, da ist die Ausbreitung ja noch ein bisschen besser, also auch mit Gebäuden und so. Da kommt man sicher schon ein Stück weiter, wenn man das möchte.
+
+01:27:45.325 --> 01:27:49.565
+<v SPEAKER_2>Okay, aber die neue Base Station, diese Nano-Base Station, wie heißt das Ding nochmal?
+
+01:27:49.585 --> 01:27:50.565
+<v SPEAKER_1>Nano-BTS, ja.
+
+01:27:50.585 --> 01:28:03.325
+<v SPEAKER_2>Nano-BTS, die kann dann halt auch Edge. Das heißt, es wäre jetzt auch vorstellbar, dass man da OpenBSC auch da eingehend erweitert, dass man dann eben auch noch das machen kann. Und dann kann man wie sein iPhone rausholen und hätte dann irgendwie Internet.
+
+01:28:03.345 --> 01:29:18.345
+<v SPEAKER_1>Genau, das ist so dein übernächster Meilenstein. Also jetzt als nächstes habe ich das mit den mehreren BTSen an einem BSC. Ja, überhaupt so Stabilisierungsmaßnahmen. Es gibt halt noch so alle möglichen Fixmesium-Code und so, da muss man jetzt mal ein bisschen aufräumen. Ja, nur weil es mal tut, heißt ja nicht, dass es zuverlässig tut. Ja, so da ist natürlich noch einiges reinzustecken. Aber dann, also der Meilenstein ist dann dieses mehrere Standorte mit dieser IP-Access-BTS an einem BSC. Und man kann dann telefonieren, kreuz und quer und SMSen zustellen und so. Und danach kommt dann diese ganze Pakete, also GPRS und Edge. Also wie gesagt, Edge ist dann kaum mehr ein Mehraufwand, da muss man nur ein paar Bits irgendwo anders setzen. Aber dieses Paket vermitteln. Also das Schwierige meiner Meinung nach daran ist diese ganzen Ressourcenmanagement. Also so wie viele Zeitschlüsse will ich jetzt gerade allozieren, wie lange halte ich die, auch wenn der keine Daten mehr schickt, wann gebe ich die wieder frei? Jetzt nicht mit einem einzelnen Telefon, da geht es natürlich immer. Aber wenn ich jetzt irgendwie 10, 20, 30 Leute habe, die das benutzen wollen, dann muss ich ja irgendwie hier sinnvoll das Teilen zwischen den Leuten und so Bandbreitenmanagement und solche Sachen. Da ist eigentlich der Clou drin, denke ich.
+
+01:29:18.365 --> 01:29:27.205
+<v SPEAKER_2>Und das muss dann auch im normalen GSM-Netzwerk, welches Element macht denn das? Das macht dann auch die BSC, oder ist das etwas, was das BTS in irgendeiner Form selber entscheidet?
+
+01:29:27.225 --> 01:29:28.545
+<v SPEAKER_1>BTS macht sowas gar nicht.
+
+01:29:28.565 --> 01:29:30.465
+<v SPEAKER_2>Genau, also macht nur die BSC.
+
+01:29:30.485 --> 01:29:39.845
+<v SPEAKER_1>BSC und vielleicht noch höhere Ebenen, aber ich würde vermuten im Wesentlichen der BSC, ja. Also da passt es hin so von der logischen...
+
+01:29:39.865 --> 01:30:28.805
+<v SPEAKER_2>Aber SMS geht schon, also nicht ganz ohne Daten. Da könnte man jetzt wieder das alte E-Gate wieder ausgraben, was wir ja auch schon mal erläutert haben, dass wir da so, wie sag ich, also hier vor allem Tobias mit seinem E-Gate ganz maßgeblich daran schuld, weil das SMS Geld kostet. Naja, Quatsch. Auf jeden Fall kann man sich ja darauf dann auch ein paar lustige Services einfallen lassen, dass man halt einfach SMS verschickt, weil kostet da nichts mehr, ist ja das eigene Netzwerk. Was kannst du denn sonst noch so für Anwendungen vorstellen, die man jetzt damit machen könnte? Vorausgesetzt, man betreibt das Gerät an einem Ort, wo die Belegung dieser Frequenzen nicht problematisch ist. Oder man nimmt halt diese Nano-BTS, gibt da ein bisschen mehr Geld aus und geht in diesen freien 1800er-Bereich. Was könnte man denn dann schönes bauen?
+
+01:30:30.365 --> 01:31:02.245
+<v SPEAKER_1>Naja, da habe ich jetzt keine großen Vorstellungen. Mir persönlich geht es halt um diese ganze Sicherheitsschiene. Und da muss man halt einfach viel ausprobieren. Alleine jetzt, was wir schon sehen, auch wie sich die Telefone manchmal falsch verhalten, da habe ich schon so Ansätze für Session-High-Checking-Angriffe und so. Also wo ein Telefon quasi sich ausbucht, aber man dann als dieses Telefon weitermachen kann in dem Netz und so. Da gibt es schon alle möglichen Ansätze, wo man mal einsteigen kann. Bezüglich jetzt echter Anwendungen.
+
+01:31:06.605 --> 01:31:34.445
+<v SPEAKER_2>Na gut, anders gefragt. Also wozu könnte man es einsetzen? Das hast du ja jetzt im Prinzip gesagt. Was dir auch am meisten am Herzen liegt, ist halt die Security-Sache. Also wo sollte man sich jetzt angesprochen fühlen? Wo braucht ihr auch noch Verstärkung bei dem Projekt? Wofür könnte man das Projekt halt nutzen? Was sind sozusagen die Einstiegspunkte, die du empfehlen würdest, wenn jetzt jemand hier zuhört und sagt, oh prima, GSM-Netzwerk selber bauen und dann mal ein bisschen rumgucken? Das könnte ja interessant sein.
+
+01:31:34.785 --> 01:32:11.645
+<v SPEAKER_1>Ja, also wir brauchen in jedem Fall immer Leute. Es sind halt im Moment, naja, eigentlich nur so zwei Leute, die maßgeblich daran entwickeln. Das ist einmal Holger Freiter und ich. Dieter Spahr ist zwar da und gibt auch gerne Rat und hilft, aber er schreibt jetzt selber nicht wirklich viel Code. Und ich meine, wir haben beide alle möglichen anderen Dinge noch zu tun und das dümpelt halt so vor sich hin. Mehr Entwickler sind in jedem Fall immer gerne gesucht, so.
+
+01:32:11.665 --> 01:32:12.965
+<v SPEAKER_2>Das Ganze ist in C geschrieben?
+
+01:32:12.985 --> 01:36:31.585
+<v SPEAKER_1>Das Ganze ist ja, wie ein befreundeter Hacker aus dem Berliner Club sagt, ja, habt ihr das in einer Programmiersprache oder im Makro-Assembler geschrieben? Ja, es ist in C geschrieben. Liegt meiner Meinung nach auch irgendwie so ein bisschen nahe bei so Low-Level-Protokoll-Geschichten. Das ist natürlich immer Geschmackssache, so. Wir haben also keinerlei größere Dependencies, ja. Also da muss man jetzt keine irgendwie D-Bus, Arpi oder GTK oder was auch immer kennen können, sondern das ist einfach, wir haben da Netzwerksockets oder Sockets für die ISDN-Kommunikation. Da kommen irgendwie Datenpakete raus, die werden in irgendwelche Datenstrukturen geparsst. Es gibt ein Konfigurationsinterface über Telnet, also wo man sich wie auf einem Router von bekannten Herstellern irgendwie, kann man da ein Telnet drauf machen, kann das ein bisschen interaktiv exploren und konfigurieren, das Gerät. Und ja, das Einzige, was mir jetzt gerade einfällt als externe Abhängigkeit irgendwie ist libdbi, also für die SQL-Datenbank, also diese Home Location Register, also welches Telefon, mit welcher Telefonnummer und wem gehört das und so weiter. Aber ansonsten, ja, jeder, der sich schon mal irgendwie so ein bisschen mit Netzwerkprotokollen befasst hat und so ein bisschen halt so mit Paketen und Protokollen irgendwie umgehen kann und sie entwickeln kann, ist sehr, sehr stark eingeladen. Es ist ein Open-Source-Projekt. Es liegt alles da. Es ist ein SVN-Server mit dem ganzen Quellcode da. Wir haben einen Wiki, wir haben eine Mailing-Liste, also so das Übliche. Wenn jemand ernsthaft, wo ich einen ernsthaften Eindruck habe, dass jemand irgendwie echt mitentwickeln will, dann können wir da mit der PS11 auch noch irgendwie preislich was machen. Also ich habe da schon auch Leuten noch günstiger welche angeboten. Ich sage ja, das ist irgendwie ein armer Student, aber der will wirklich irgendwie ordentlich mitarbeiten, dann kann ich da auch noch was tun. Ein paar Unis haben jetzt welche gekauft von den PS11. Da hoffe ich mir einiges. Also von Uni Erlangen über TfH Berlin, über eine Uni in Dresden, über TfH Esslingen oder irgendwas. Die Fachhochschule Esslingen. Also da hoffe ich mir, dass die, ich meine, wenn die sowas kaufen, da wollen die ja auch, die haben auch immer gleich mehrere gekauft, damit sie Handover und solche Sachen irgendwie machen können. Da hoffe ich, dass da einiges an Input kommt und so eine Community auch entsteht. Also wenn die das in ihren Labors einsetzen und so. Ja, aber wir sind da sehr begeistert, wenn da jemand sich einbringen möchte mit. Und es gibt genug zu tun. Also man kann auf der einen Seite halt zum Beispiel sich überlegen, wie können so externe Schnittstellen aussehen. Im Moment ist alles sehr monolithisch. Also wie du schon sagst, so SMS-Anwendungen, da muss man ja irgendeine AFI nach außen dann haben, wie man sowas integriert. Also wie wird eine SMS aus diesem BSC heraus an eine andere Anwendung geliefert? Respektive, wie nehmen wir SMS von außen an? Solche Sachen, da gibt es ja auch Standardprotokolle, die man vielleicht hernehmen kann. Oder auch die externe Anbindung, wie verbinde ich sowas mit Asterisk oder mit VoIP-Geschichten. Ja, da kann man was tun. Man kann auch wirklich in die Protokolle einsteigen und zum Beispiel hier an dem Paket, also in GPS und sowas arbeiten. Es ist echt, ich finde eine sehr tolle Spielwiese. Und das ist was, wo man auch, ich sage mal, Qualifikationen irgendwie erarbeiten kann, die man sonst irgendwie sehr schwer nur bekommt. Wie viele Leute auf der Welt kennen sich irgendwie mit GSM-Protokollen aus? Ich sehe das schon, als ich angefangen habe mit dem Projekt, jetzt, was ich für Anfragen kriege, wo Leute einfach mal im Blog oder sonst irgendwo gelesen haben, sind irgendwie so, hey, wir haben da dieses oder jenes Projekt und mit GSM und willst du nicht irgendwie. Also ich denke, ja, irgendwie Leute, die TCP IP coden können, da gibt es irgendwie Hunderttausende, ja. Aber GSM, so auf dem freien Markt, die nicht irgendwie bei Nokia oder sonst irgendwo unter Vertrag sind, glaube ich, sieht es dünn aus, ja.
+
+01:36:31.605 --> 01:36:52.565
+<v SPEAKER_2>Ich hatte ja auch noch eine andere Sendung, die sich hier schon mit GSM ausführlich beschäftigt hat, schon eine Weile her, CRE 56, GSM Hacking. Mit Steve damals hat die gerade so auch ihr Projekt gestartet. Du bist, glaube ich, mit dem Projekt so ein bisschen vertraut. Ja. Lebt das eigentlich noch?
+
+01:36:52.585 --> 01:39:16.605
+<v SPEAKER_1>Das hat sich so ein bisschen verlagert. Also es gab ja dieses THC-GSM-Projekt von der THC-Hackergruppe. Das ist so ein bisschen in den verwaisten Status geraten. Also ich war da ja auch irgendwie ein bisschen aktiver im Umfeld und habe die Software ein bisschen weiterentwickelt und so. Gerade auch im Vorfeld zu dem Base Station Controller. Also bei dem Projekt, um es nochmal vielleicht kurz auszuholen, geht es halt um diese Luftschnittstelle an und für sich. Also was geht über die Funkschnittstelle? Und es geht darum, zum Beispiel Daten mitzuhören. Also einfach die Funkschnittstelle mit abzuhören, dann das Ganze irgendwie so Viashark-ähnlich oder so aufzubereiten, dass man also diese Protocol-Traces hat. Und dann gibt es natürlich noch Leute, die sich jetzt für das Knacken der Verschlüsselungen und solche Sachen irgendwie interessieren. Das ist nochmal so ein Seitenbereich, den ich aber jetzt nicht als Kern des Projekts wirklich auffassen würde. So, ja, und dieses Projekt hat inzwischen, wie gesagt, es hat so ein bisschen einen verwaisten Status erreicht. Über die Details will ich mich jetzt hier nicht auslassen. Ich weiß nicht, wie viel davon irgendwie öffentlich ist oder sein soll oder auch nicht. Letztlich hat der CCC sich ja irgendwie bereit erklärt, das unter seinem Fittichen irgendwie weiterzuführen. Das heißt jetzt AirProbe, das Projekt airprobe.org. Und man hat also den Fokus da dann, da gibt es auch eine neue Mailingliste und so. Das läuft alles auf, glaube ich, so im Rahmen Berliner CCC Server. Dann letztlich Frank Rieger hat das mitten in die Wege geleitet. Und da will man sich jetzt tatsächlich einfach auf Open-Source-Protocol-Analyser konzentrieren erstmal. Also wir wollen einfach irgendwie Daten empfangen und wollen die irgendwie in einen Wireshark oder sonst irgendwas hineinbekommen und so verlässlich und sinnvoll dekodieren. Ja, um das auch mal so ein bisschen einen besseren Anstrich zu geben. Weil die Leute ja immer all dem da, ihr wollt irgendwie nur Telefonie mithören und so weiter und so weiter. Und das ist ja eigentlich, ich meine, manche Leute sind da dann interessiert. Und ja, wenn man tatsächlich Telefongespräche mithören kann, dann hat man mal wieder schön demonstriert, dass irgendwie die Sicherheit nicht so weit hergeholt ist von GSM. Aber ich denke, das sind erstmal zwei getrennte Paar Stiefel. Und so dieser Protocol-Analyser, das ist ja mal ein völlig legitimes Interesse. Da kommt man nicht mehr gleich so in die falsche Schublade gesteckt.
+
+01:39:16.625 --> 01:39:31.145
+<v SPEAKER_2>Aber ein Teil des GSM-Hacking-Projektes war ja auch, diesen A5-Verschlüsselungs-Algorithmus auseinanderzunehmen, was ja soweit auch gelungen ist, wenn ich das richtig mitbekommen habe. Inwieweit ist denn in OpenBSC dieser Verschlüsselungsteil eigentlich mehr drin?
+
+01:39:32.245 --> 01:39:59.705
+<v SPEAKER_1>Also die Verschlüsselung selbst ist ein Feature dieser Luftschnittstelle zwischen Telefon und BTS. Demnach sitzen die Instanzen, die die Fahr- und Entschlüsselung machen, auch in diesen Geräten. Also das Telefon hat einmal in der Hardware den Verschlüsselungsalgorithmus und die Base Transceiver Station hat den. Der Base Station Controller oder höhere Netzelemente haben damit gar nichts zu tun, außer dass sie eben dem Base Station Controller sagen, hier, da, mach mal Verschlüsselung. Und dann...
+
+01:39:59.725 --> 01:40:04.725
+<v SPEAKER_2>Beziehungsweise bekommt auch mit, ob das Telefon das will oder nicht will oder kann oder nicht kann.
+
+01:40:04.745 --> 01:41:31.765
+<v SPEAKER_1>Genau, es gibt da so Capability-Sachen. Also das Telefon in irgendwelchen Paketen, das Telefon schickt, steht dann halt mal drin hier so, ich unterstütze diesen oder jenen Algorithmus. Und dann kann das Netz halt daraufhin reagieren und kann sagen, ja, jetzt machen wir doch hier bitte mal Ciphering mit dem Verschlüsselungsalgorithmus und diesem Schlüssel und so. Das habe ich überhaupt nicht implementiert in OpenBSC, weil ja eben, also erstens mal die Sicherheit sowieso nicht so weit hergeholt ist von dem Verschlüsselungsverfahren, wie er jetzt hinreichend bekannt ist. Zweitens aber auch für die ganze Entwicklung und auch für irgendwelche, sage ich mal Protokollsicherheitsanalysen und so, ist es erst mal sinnvoll, das im Klartext alles zu haben. Wenn ich jetzt Verschlüsselungen anknipse, dann mache ich mir ja selber das Leben schwer, weil dann kann ich überhaupt nicht mehr mitschneiden, so wirklich einfach, was da passiert und so. Das heißt, die Verschlüsselung ist erst mal aus, aber man könnte das mit sehr geringem Aufwand hinzufügen. Also es wäre auch wieder so ein Projekt, wenn jemand da einsteigen will und eher so in die Krypto-Ecke dann Interesse hat. Das kann man wunderbar machen. Also da braucht man auch keine geheimen Informationen. Also dieser Algorithmus selber, der ja geleakt ist und so weiter, aber mal auch davon ausgegangen, er wäre noch unbekannt. Kann man das vollständig implementieren, auch in freier Software, ohne dass man irgendwelche Informationen helfen, weil er fehlen. Weil der Algorithmus ist ja in der Hardware implementiert in beiden.
+
+01:41:34.845 --> 01:41:36.385
+<v SPEAKER_2>Also im Telefon und in der BTS.
+
+01:41:36.405 --> 01:42:25.105
+<v SPEAKER_1>Genau, im Telefon und in der BTS. Da ist das drin und ich kann das jetzt einschalten und sagen, hier ist der Schlüssel. Und dann benutzt er das halt. Also der kann völlig in der Blackbox sein und trotzdem kann ich das auf den höheren Ebenen bedienen. Das heißt, da gibt es auch keine rechtlichen oder was auch immer. Man hat das ja absichtlich, denke ich, auch so gemacht in der Spezifikation. Man sagt so, hier, das ist der, man will ja den Algorithmus auch irgendwie getrennt haben, weil man ja weiß, früher oder später muss man immer austauschen oder jemand hat vielleicht, in irgendeinem komischen Land gibt es irgendwelche komischen Bestimmungen, da darf man halt irgendwie nur einen schlechten Algorithmus verwenden oder so. Dann muss man da ja quasi so Copy und Paste oder Drag and Drop in einen anderen Algorithmus reinziehen können, ohne dass man das halbe Netzwerk irgendwie umdesignen muss.
+
+01:42:25.125 --> 01:42:37.885
+<v SPEAKER_2>Jetzt gibt es ja neben OpenBSC auch noch ein artverwandtes Projekt, OpenBTS, was sich sozusagen auf diese jetzt angesprochene Transceiver-Seite konzentriert. Was steckt da dahinter?
+
+01:42:37.905 --> 01:43:42.725
+<v SPEAKER_1>OpenBTS ist uns quasi ein bisschen mit zuvor gekommen. OpenBTS ist ein Projekt, das BTS, BSC und alles, was sonst im Netz so da ist, letztlich implementieren will. Allerdings mit einem sehr spezifischen Ziel und einer Anwendung. Die Idee ist letztlich, bei OpenBTS, das ist ja auch nicht nur ein freies Software-Projekt, sondern da steht ja auch ein Business dahinter, die Idee ist, günstige Mobiltelefonie in Gegenden zu bringen, wo es bisher keine gab. Man hat bei GSM oder bei Mobiltelefonie im Allgemeinen so dieses perverse Szenario, dass irgendwelche Regierungen Lizenzen vergeben, meistens auf Landesebene oder halt komplette Landkreise oder sowas. Das heißt also, ich habe jetzt eine Lizenz für ganz Indien oder so, und mit den Kosten, die klassisches Equipment kostet, also irgendwie was kostet so eine Base Transceiver Station, da muss ich irgendwie einen Funkturm hinstellen, muss irgendwie Strom hinlegen, muss Kabel hinlegen und so weiter und so weiter.
+
+01:43:42.745 --> 01:43:43.845
+<v SPEAKER_2>Sicherheit, Gewährleistung.
+
+01:43:45.125 --> 01:45:45.185
+<v SPEAKER_1>Genau, also die Betriebskosten einfach, also die Gestehungs- und Betriebskosten von solchen Installationen haben halt eine gewisse Höhe. Und wenn es die Bevölkerungsdichte gering ist in irgendeinem bestimmten Gebiet und oder die Bevölkerung dort sehr arm ist, dann macht es halt wirtschaftlich einfach keinen Sinn, dort irgendwie einen Funkturm hinzustellen und Mobiltelefoniedienste anzubieten. So, irgendein Konkurrent kann aber halt auch nicht da hinein und kann sich diese Lücke suchen, weil die Lizenz geht ja nur für ganz Indien. Der will halt gar keine für Delhi haben oder für Bangalore, weil was mit der da Wettbewerb mit den existierenden Firmen. Aber in irgendeinem Kuhdorf könnte ja jemand an und für sich vordringen wollen und dort einen Dienst anbieten, wenn er denn billigeres Equipment hätte. Und da kommt halt OpenBTS ins Spiel, wo man sagt, naja, wir nehmen hier ein Standard Software Defined Radio, das ist eben diese USLP, Universal Software Radio Peripheral, Plattform, die als Teil des Gnusradio-Projekts entwickelt wurde. Da kostet jetzt irgendwie so die eigentliche Hardware, die ich brauche, unter 2000 Dollar. Also ich brauche das Mainboard und zwei Frontends und so. Das kann man auch noch vergünstigen, aber schon in Einzelstückzahlen bin ich halt irgendwie bei unter 2000 Dollar. Dann mache ich da noch einen kleinen Embedded-PC dran. Und auf der anderen Seite fällt irgendwie Voice-over-IP raus. Das ist quasi deren Ansatz. Also die machen quasi so eine Art Proxy zwischen GSM-Funk-Schnittstelle und SIP, also einem Voice-over-IP-Protokoll, auf der anderen Seite. Und da wäre dann der Ansatz, na ja, da macht man halt irgendwie eine Satelliten- oder eine Richtfunksstrecke oder irgendwas, was halt diese IP transportieren kann in irgendein Dorf. Und dann stellt man ein kleines Kästchen hin mit halt irgendwie so einem Software-defined Radio und einem kleinen Embedded-PC, der letztlich irgendwie, na ja, kleiner vierstelliger Betrag kostet und hat dann ein Netz eben in so einem Ort.
+
+01:45:45.205 --> 01:45:48.365
+<v SPEAKER_2>Wie open ist denn dieses Open-BTS? Also ist das auch?
+
+01:45:48.385 --> 01:46:08.125
+<v SPEAKER_1>Komplett open. Also die Software ist GPL-lizenziert. Man kriegt also jede Seite der Software. Und die Hardware ist ja sowieso offen, also weil das ja diese USAP-Hardware ist. Das heißt, man kann es nicht offener haben wollen. Gar keine Frage. Es gibt natürlich jetzt gewisse Teile, die überlappen, die beide Projekte implementiert haben.
+
+01:46:08.145 --> 01:46:09.965
+<v SPEAKER_2>Ist denn da auch Verschlüsselung mit dabei?
+
+01:46:09.985 --> 01:46:12.385
+<v SPEAKER_1>Da ist auch keine Verschlüsselung bis heute dabei.
+
+01:46:12.405 --> 01:46:14.865
+<v SPEAKER_2>Aber könnte sie sein? Oder ist das schwierig?
+
+01:46:16.045 --> 01:46:21.405
+<v SPEAKER_1>Also ich meine, technisch ist das keine Schwierigkeit. Der Algorithmus ist ja geleakt. Kann man einfach implementieren in Software.
+
+01:46:21.425 --> 01:46:22.705
+<v SPEAKER_2>Aber darf man das dann auch?
+
+01:46:22.725 --> 01:46:32.585
+<v SPEAKER_1>Das ist natürlich wieder eine andere Frage. Das ist sowieso eine sehr interessante Frage, weil GSM ja mit Patenten irgendwie zugekleistert ist, von oben bis unten. Also auch bei OpenBSC ist das natürlich ein Thema.
+
+01:46:32.605 --> 01:46:38.885
+<v SPEAKER_2>Aber es ist ja auch schon auf der Telefonseite, dass man ja nicht so ohne Weiteres mal eben so einen Baseband-Stein selber bauen kann.
+
+01:46:39.165 --> 01:48:50.625
+<v SPEAKER_1>Ja, so da gibt es natürlich schon gewisse Hindernisse, wobei natürlich jetzt in dem Zielmarkt, der jetzt OpenBTS adressiert, also gerade Entwicklungsländer, ländliche Gegenden und so weiter, die Idee ist halt erstmal eine Lösung, eine Technik zu haben. So, das geht. Das kostet wenig. Das können wir da deployen. Wir können auch mal eine Demo-Installation machen. Warum will man da GSM zum Einsatz bringen? Manche sagen, mach doch VoIP oder mach doch DECT oder sonst irgendwas. GSM-Telefone kosten quasi nichts, weil man auf dem Gebrauchtelefonie-Markt wirklich auch noch ein armer mittelloser Bauer irgendwie sich ein Telefon für irgendwie ein Dollar kaufen kann, ein Gebrauchtes. Das ist einfach der Punkt. Deswegen will man GSM-Netz haben, damit die Leute eben diese billigen gebrauchten Telefone irgendwie verwenden können. Und also da kann man jetzt einen Case machen und kann den demonstrieren. Und dann ist halt die Idee, dass man die jeweilige Regierung dazu bringt, sagt so, ja, das ist quasi, das bringt so viel Lebensqualität irgendwie für die Bevölkerung dort. Deswegen machen wir da irgendeine ändernde Lizenzierung oder machen eine Ausnahme, dass ihr das dürft. Also der große Anbieter hat ja die Lizenz gehabt, der hat sie nicht genutzt. Also nehmen wir ihm die wieder weg für dieses Gebiet oder so. Und wenn man halt in dem Bereich mal drin ist, dass man politisch so einen Zug hat, dann denke ich, ist das halt so ein bisschen, hat man da einfach die moralische Seite auf seiner. Und wenn jetzt jemand mit den Patenten kommt und so weiter, ist ja in solchen Ländern dann auch oft schwierig, die durchzusetzen. Respektive kann man dann ja schon auch irgendwie sich überlegen, irgendwie andere Lösungen zu finden. Ich meine, Brasilien zum Beispiel stellt Aids-Medikamente her, ohne irgendwie Patente zu lizenzieren von den Pharmakonzernen oder so. Also wenn ich jetzt in so einem Land was zu sagen hätte, wo irgendwie Leute immer noch, die haben ja auch kein verkabeltes Telefon, die haben ja gar nichts. Die müssen halt irgendwie hier mal zu Fuß irgendwie, was weiß ich, wie viele Kilometer laufen, damit sie mal irgendwie jemanden anrufen können, der woanders wohnt. Wenn ich das irgendwie auf der einen Seite sehe, den Gewinn, den das irgendwie für das Leben dieser Leute bringt, auf der anderen Seite, da will jetzt irgendwie jemand so viel Patentlizenz, und dass es halt nicht mehr geht mit diesem Business-Modell, dann würde ich mir schon mal überlegen, da irgendwie eine Lösung dafür zu finden.
+
+01:48:50.645 --> 01:48:56.845
+<v SPEAKER_2>Das heißt, nur kurz oder lang, kannst du dir auch vorstellen, dass diese Hardware-Entwicklung, die ist dir denn schon abgeschlossen, also funktioniert da schon was bei diesem OpenBTS?
+
+01:48:56.865 --> 01:49:01.965
+<v SPEAKER_1>OpenBTS funktioniert schon länger als OpenBSC.
+
+01:49:01.985 --> 01:49:06.325
+<v SPEAKER_2>Und ist das dann nicht auch eine mögliche Hardware, die man dann mit OpenBSC koppeln könnte?
+
+01:49:06.345 --> 01:49:35.945
+<v SPEAKER_1>Das ist durchaus richtig. Es ist halt die Frage, warum will man das jetzt genau tun? Der Fokus der beiden Projekte ist halt unterschiedlich. OpenBTS hat eine ganz klare, wie soll ich sagen, ganz klares technisches und politisches und so weiter Ziel. Und darauf ist halt auch die ganze Software-Architektur und was ist wichtig für das Projekt und was nicht ausgerichtet. Die versuchen halt vieles erst gar nicht so zu tun, wie das GSM-Netzwerk normalerweise gemacht wird.
+
+01:49:37.105 --> 01:49:40.365
+<v SPEAKER_2>Das heißt, sie sprechen auch nicht dieses BSC-Protokoll?
+
+01:49:40.385 --> 01:49:41.785
+<v SPEAKER_1>Nein, nein.
+
+01:49:41.805 --> 01:49:55.225
+<v SPEAKER_2>Da müsste man sozusagen neu ansetzen. Andererseits, aber hätte man eben auf USRP-Basis sozusagen schon mal die Software, die diesen ganzen Funk-Teil macht, sodass man da selber ansetzen müsste, um sich selber jetzt eine eigene BTS zu bauen, die den eigenen Anforderungen trifft.
+
+01:49:55.785 --> 01:50:13.525
+<v SPEAKER_1>Das wäre wieder für sich so ein bisschen ein eigenes Projekt. Ich persönlich habe da jetzt nicht so das große Interesse, sondern weil wir haben mit den Ivy-Access-BTS und mit den Siemens BS11, die BS11 ist auch noch billiger als jetzt irgendwie dieses USAP, haben wir erstmal irgendwie genug Hardware auch verfügbar.
+
+01:50:13.545 --> 01:50:19.805
+<v SPEAKER_2>Mit dem USAP kann man natürlich auf beliebige Frequenzen gehen. Machen die auch Daten?
+
+01:50:19.825 --> 01:52:56.845
+<v SPEAKER_1>Bisher nicht, bisher nicht, nein. Das ist natürlich richtig, ja. Aber ist jetzt etwas, wo ich sage, das ist für mich gerade nicht wichtig, da müsste man halt auch wieder Zeit investieren. Und der Gewinn ist sozusagen erstmal nicht so wirklich sichtbar, weil man würde ja nur quasi was implementieren, was jetzt mit anderem Equipment auch schon geht. Also man hat zwar mehr Hardware-Plattformen, aber die Funktionalität ist deswegen nicht mehr. Also ich würde erstmal halt diese ganzen GPRS-Sachen machen und alles, was sonst irgendwie so ansteht, und dann könnte man sowas tun. Aber wenn jemand jetzt spezif hat so ein Gerät und möchte gerne das mit OpenBSC betreiben, dann ist es natürlich auch ein schönes Projekt, das zu implementieren. Wie du schon sagst, also alles, was mit dieser Modulation und der Luftschnittstelle usw. zu tun hat, das ist ja eh schon implementiert. Man muss halt jetzt bei OpenBTS, wenn man das wollte, müsste man halt irgendwie das aufdröseln, was ist dieser Low-Level-Teil, der mit der Funkkommunikation spricht und was ist der High-Level-Teil für die ganze Telefonie eigentlich. Man müsste das auseinanderziehen und müsste dann noch zusätzlich halt dieses Management-Protokoll implementieren. Hier stell dich mal auf die Frequenz ein und so. Und dann könnte man das am besten auch über TCP-IP natürlich wieder mit OpenBSC in Verbindung bringen. Das ist ein schönes, eigenständiges Projekt. Wenn jemand die Hardware sowieso daheim hat, wäre das sicher eine interessante Sache. Andererseits ist halt auch wieder die Frage, was will derjenige damit? Wenn er einfach nur mit seiner existierenden Hardware und Telefonie spielen kann, dann kann er auch OpenBTS nehmen und da halt im Code irgendwas rumhacken und das verändern und damit das testen oder ausprobieren, was er jetzt gerade will. Also ich sehe da jetzt nicht so die gigantische Motivation. Ansonsten noch zu OpenBTS, also wir stehen in sehr gutem Kontakt. Beim Kongress im Dezember war der Hauptautor David Burgess auch in Berlin da. Wir haben sehr viel Zeit miteinander gequatscht und haben Abendessen und so weiter und so weiter. Ich stehe seitdem auch viel in E-Mail-Kontakt mit ihm. Und wo es technisch Sinn macht, wo wir unsere Interessen sozusagen gemeinsam irgendwie unterkriegen, da denke ich, werden wir auch sehr viel zusammenarbeiten. Also wir sind gerade bezüglich SMS-Switching-Center in Design-Diskussionen. Dass man sagt, naja, OpenBTS schickt die eben raus, die SMS in einem anderen Prozess, an ein anderes Programm. OpenBSC macht das Gleiche, weil das ist wirklich eigenständig erstmal diese Funktion. Wenn man sich da auf ein Protokoll einigt, dann können wir gemeinsam dieses SMS-Service-Center implementieren. Und beide Projekte können das verwenden. Das ist so die Idee.
+
+01:52:58.405 --> 01:53:12.665
+<v SPEAKER_2>Ja, es wird also in zunehmendem Maße einfacher, sich seine eigene GSM-Infrastruktur zusammenzustöpseln. Haben wir jetzt noch irgendwas vergessen? Mir fällt jetzt nichts mehr ein. Zumindest habe ich hier nichts mehr auf meiner tollen Liste stehen.
+
+01:53:13.545 --> 01:53:16.405
+<v SPEAKER_1>Meine tollen gedanklichen Liste habe ich auch nicht.
+
+01:53:16.425 --> 01:53:47.685
+<v SPEAKER_2>Dann haben wir es wohl jetzt erstmal erschöpft, das Thema. Dann können wir auch hier langsam zum Ende kommen, würde ich sagen. Vielen Dank für die Ausführung. War wie immer sehr interessant. Ich denke, hier ist auch für den anspruchsvollen Nerd wieder mal eine interessante Tätigungsoption. Wer so Lust hat, seine Telefone mal mit anderen Netzwerken reden zu lassen als immer nur T-Mobile und Vodafone und ganz gerne mal in das mysteriöse 00101-Netzwerk einsteigen möchte, das bin ich jetzt.
+
+01:53:47.705 --> 01:53:49.165
+<v SPEAKER_1>Oder auch das 2342-Netz.
+
+01:53:49.185 --> 01:54:00.185
+<v SPEAKER_2>Oder das 2342-Netz, je nach Gusto. Der hätte die Möglichkeit mit OpenBSC. OpenBSC, da geht man wohin, um sich weiter zu informieren?
+
+01:54:00.205 --> 01:54:15.565
+<v SPEAKER_1>Man gibt es wahrscheinlich in die Such-Engine seiner Wahl ein. Ansonsten hat die eigentliche Seite ein bisschen kriptische Urhe. Und zwar ist es BS11, also berta-siegfried-11-abis. Abis ist das Protokoll. Punkt numangs.org.
+
+01:54:15.585 --> 01:54:17.145
+<v SPEAKER_2>Soll ich dir ein Domain schenken?
+
+01:54:17.965 --> 01:54:21.225
+<v SPEAKER_1>Na, das ist nicht der Punkt. Du musst mir eine schenken, die es noch gibt.
+
+01:54:21.245 --> 01:54:23.825
+<v SPEAKER_2>Du meinst, OpenBSC ist schon weg?
+
+01:54:23.845 --> 01:54:29.445
+<v SPEAKER_1>Wusste ich jetzt gar nicht. Aber ich dachte mir irgendwann, ich habe so viele Second-Level-Domains, ich muss jetzt mal irgendwie aufhören damit.
+
+01:54:30.005 --> 01:54:35.945
+<v SPEAKER_2>Also willst du irgendwann mal irgendwas wieder verwenden? Also OpenBSC-Org ist auf jeden Fall schon mal für irgendwas anderes weggegangen.
+
+01:54:35.965 --> 01:54:44.685
+<v SPEAKER_1>Genau, das ist gar nicht so leicht. Nee, aber ich denke mir immer irgendwie so, ich habe jetzt bestimmt irgendwie 30, 40 Second-Level-Domains.
+
+01:54:44.705 --> 01:54:49.705
+<v SPEAKER_2>Du musst einfach kürtische Namen erfinden. Ich würde die Domains noch zuholen.
+
+01:54:49.725 --> 01:54:56.505
+<v SPEAKER_1>BS11-ABS-Org gibt es bestimmt noch, aber dann kann ich auch BS11-ABS-Gnome-Org nehmen. Das ist dann auch nicht viel schlechter.
+
+01:54:56.525 --> 01:54:58.185
+<v SPEAKER_2>Aber wir haben ja den Google auf unserer Seite.
+
+01:54:58.645 --> 01:55:57.005
+<v SPEAKER_1>Ja, und wie auch immer man sonst verwenden will. Was ich jetzt gerade noch anbringen wollte, ist, weil Chaosradio ist ja im Umfeld des CCCs auch irgendwie organisiert. Es ist also so, dass inzwischen der CCC Köln hat zum Beispiel auch eine von den BS11 rumstehen. Jetzt am Easter Hack, ich war selber nicht da, ich hatte leider zu viel zu tun. Aber da haben auch Leute gebastelt und so. Ich glaube, der CCC München hat auch eine. Das heißt also, auch die regionalen Airfarkreise und sonstigen Treffs im CCC haben da inzwischen nicht nur in Berlin, also in Berlin steht natürlich auch eine, solche Geräte stehen. Wer da also mal irgendwie damit spielen will oder sich damit so, also Face-to-Machine vor das Gerät setzen möchte und Spaß damit haben will, das kann man da dann bestimmt auch irgendwie arrangieren.
+
+01:55:57.025 --> 01:55:59.365
+<v SPEAKER_2>Ohne sich gleich seine eigene BTS kaufen zu müssen.
+
+01:55:59.385 --> 01:56:11.745
+<v SPEAKER_1>Genau, kann man einfach mal irgendwie die Leute anfragen und ausprobieren. Und wenn ansonsten irgendwo noch Leute im CCC irgendwo noch welche haben wollen von den Geräten oder so, kann man sicher an mich melden.
+
+01:56:11.765 --> 01:56:23.045
+<v SPEAKER_2>Genau, und falls noch irgendjemand andere lustige BTS-Hardware irgendwo auf dem Dachboden rumstehen hat, die er nicht mehr braucht und die vielleicht für das Projekt ganz interessant sein können, würdest du dich sicherlich auch freuen.
+
+01:56:23.145 --> 01:56:35.805
+<v SPEAKER_1>Ja, vor allem auch über andere. Also BTS-inglaub ich ist gar nicht so spektakulär, aber so ein echter Base Station Controller zum Beispiel wäre halt schon mal was, ja. Also so, wenn da mal irgendwo jemand einen rausqualten sieht.
+
+01:56:35.825 --> 01:56:37.505
+<v SPEAKER_2>Um zu vergleichen.
+
+01:56:37.525 --> 01:56:46.385
+<v SPEAKER_1>Ja, einfach um mal zu sehen, genau, was macht der so, ja. Also, wie gesagt, wir haben das in der Speck, wir haben die Traces, aber so mal ein lebendes Objekt quasi.
+
+01:56:46.405 --> 01:56:51.305
+<v SPEAKER_2>Dann könnte man sozusagen bestimmte Szenarien mal vergleichen, wie verhält er sich eigentlich, wenn das und das passiert.
+
+01:56:51.325 --> 01:56:54.705
+<v SPEAKER_1>Könnte ihn auch mal fassen, ohne dass man irgendwie die Luftschritte dafür bequemen muss.
+
+01:56:54.745 --> 01:56:55.125
+<v SPEAKER_2>Stimmt.
+
+01:56:57.145 --> 01:57:40.365
+<v SPEAKER_1>Und das ist auch nicht unrealistisch, dass so was wo rausfällt, weil die alten Geräte, die können ja alle eben keinen Edge und schon gar kein 3G und so. Und das wird ja unglaublich viel abgelöst in den letzten Jahren. Das heißt, das landet alles am Schrott, ja. Und ich habe auch schon gehört, hier, ich nehme jetzt mal keinen Ort und kein Land und keine Firma, aber zum Beispiel so richtige Base-Transceiver-Stations, also so große Schränke und so. Da könnte ich, wenn ich die Transportkosten zahle, da habe ich einige Leute, die mir da welche irgendwie besorgen könnten. Aber was will ich dann? Also steigt meine Stromrechnung aufs Doppelte und ich brauche irgendwie ein Zimmer wegen dem Lärm und Abwärme und was auch immer. Und dann kann ich irgendwie 20 Watt zählen, so toll. Damit mich auch jeder gleich irgendwie findet in Berlin.
+
+01:57:40.385 --> 01:57:48.585
+<v SPEAKER_2>Tja, eigentlich brauchen wir so eine Hackerinsel irgendwo im Atlantik, wo man mal beliebiges Equipment ausprobieren kann. Also falls jemand noch eine Insel hat.
+
+01:57:49.125 --> 01:57:50.245
+<v SPEAKER_1>Ja, die würde ich auch nehmen, genau.
+
+01:57:51.585 --> 01:58:34.685
+<v SPEAKER_2>Na gut, jetzt haben wir es aber genug gebettet. Das war es. Vielen Dank, Harald. Das war Chaosradio Express, Ausgabe Nummer 120. Und jetzt wisst ihr alle, wie ihr euer eigenes GSM-Netzwerk bauen könnt. Irgendwann bauen wir uns dann auch ein eigenes UMTS-Netzwerk. Aber das machen wir jetzt hier nicht auf. Ich freue mich wie immer über Kommentare und Rückmeldungen, besonders im Blog, zu dieser Sendung. Wenn ihr es mal wieder besser wisst oder noch Fragen habt, Harald wird sicherlich dann ein bisschen mitlesen in den Kommentaren, sodass die Diskussion um diese Sendung noch eine Weile weitergeht, wie das hier immer so ist bei Chaosradio Express. Und ja, ich freue mich, wenn ihr auch das nächste Mal wieder reinschaltet bei der nächsten Sendung. Bis bald bei Chaosradio Express.

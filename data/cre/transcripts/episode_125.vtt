@@ -1,0 +1,1603 @@
+WEBVTT
+
+00:00:00.600 --> 00:00:27.780
+<v SPEAKER_1>Dies ist ein Medienüberfall. Wir halten sie fest in Bild und Ton. Wir sind gegen die Manipulation der Massen. Der Umgang mit Information ist Verantwortung. Wenn der Umgang mit Information in den Medien so weitergeht, werden wir noch alle verblöden. Unsere Generation verarmt an geistig-kulturellen Werten. Information ist wertlos, wenn dir die Zuschauer fehlen. Kein Applaus für Scheiße! Kein Applaus für Scheiße!
+
+00:00:55.021 --> 00:02:05.881
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express Ausgabe Nummer 125. Fast ein kleines Jubiläum, aber da mach ich jetzt keinen großen Aufstand drumherum. Hallo, hier ist Tim Pritlove und wir starten hier wieder eine neue Runde beim Eintauchen in Technologie. Und heute wird es mal wieder schön ins Detail gehen. Hoffe ich zumindest, angemessen wäre es auf jeden Fall, denn das Thema sind im weiteren Sinne Datenbanken, unser aller Freund. Und im Besonderen soll es aber hier um eine ganz spezielle Datenbank und ein da mit sich beschäftigendes Projekt gehen, nämlich CouchDB. Und da ich da noch keine Ahnung von habe, habe ich mir wie gewohnt auch die passenden Experten dazu eingeladen und insofern begrüße ich Alexander Lang zu meiner Rechten, hallo, und Jan Lehnardt zu meiner Linken, hallo. Ja, schön, dass es geklappt hat, nicht ganz so einfach bei euch einen Termin zu finden. Ihr seid ja mal ganz gut unterwegs, insbesondere du Jan, habe ich so den Eindruck, du bist gerade wieder viel geflogen, oder?
+
+00:02:06.121 --> 00:02:15.821
+<v SPEAKER_3>Genau, ich war viel unterwegs. Ich habe so meine Flugpensung für die nächsten zwei Jahre im ersten Quartal 09 erledigt schon. Das geht jetzt erstmal so weiter.
+
+00:02:15.841 --> 00:02:22.861
+<v SPEAKER_2>Ja, du hast gerade auch so eine kleine USA-Reise hinter dir, wenn ich da im Twitter korrekt gefolgt bin.
+
+00:02:22.881 --> 00:02:41.041
+<v SPEAKER_3>Genau, ich war zwei Wochen in den USA und bin zur Ausküste geflogen, war da vier Tage zu einem Couch Hack Camp der Entwickler. Dann bin ich für einen Tag in der Konferenz ins Valley geflogen und dann am nächsten Tag direkt wieder zurück für eine Konferenz in Washington, für die JSConf. Da war ich dann vier Tage und bin dann wieder ins Valley für einen Workshop und eine Konferenz geflogen und dann wieder nach Hause.
+
+00:02:41.061 --> 00:02:46.301
+<v SPEAKER_2>Also in zwei Wochen sozusagen auch auf zwei Konferenzen mit vollkommen unterschiedlichen Promiersprachen.
+
+00:02:46.321 --> 00:02:54.881
+<v SPEAKER_3>Drei sogar. Und es war eine total bescheuerte Reise. Also es war total cool, ich habe viele nette Leute getroffen, aber die ganze Rumreiserei ist wirklich...
+
+00:02:54.941 --> 00:02:55.401
+<v SPEAKER_2>Anstrengend.
+
+00:02:55.421 --> 00:02:56.321
+<v SPEAKER_3>Es war sehr anstrengend.
+
+00:02:56.641 --> 00:02:57.801
+<v SPEAKER_2>Aber es hat vielleicht was gebracht.
+
+00:02:58.821 --> 00:03:00.221
+<v SPEAKER_3>Es hat auf jeden Fall was gebracht.
+
+00:03:01.681 --> 00:03:18.141
+<v SPEAKER_2>Es ist ja auch immer ganz gut, wenn man feststellt, dass Leute das, was man so erzeugt, auch tatsächlich benutzen und ein Stück weit zu schätzen wissen. Also ich habe es ja schon angekündigt, ihr beide seid mit CouchDB beschäftigt. Du, Jan, bist aktiv am entwickeln.
+
+00:03:18.161 --> 00:03:19.961
+<v SPEAKER_3>Genau, ich bin CouchDB-Entwickler.
+
+00:03:19.981 --> 00:03:22.441
+<v SPEAKER_2>Und Alex, du bist Nutzer.
+
+00:03:22.461 --> 00:03:26.861
+<v SPEAKER_4>Ich bin Entwickler, nicht unbedingt von CouchDB selbst, sondern mehr von Applikationen auf CouchDB.
+
+00:03:27.741 --> 00:03:31.761
+<v SPEAKER_2>Ja, genau, aber du benutzt CouchDB-Applikationen.
+
+00:03:32.241 --> 00:03:35.721
+<v SPEAKER_4>Ich schreibe CouchDB-Applikationen auf CouchDB selbst.
+
+00:03:35.741 --> 00:03:40.281
+<v SPEAKER_2>Genau, dazu werden wir auch noch kommen, denke ich mal im Verlauf.
+
+00:03:40.301 --> 00:03:50.881
+<v SPEAKER_3>Sollte nicht unerwähnt bleiben, dass Alex auch beigetragen hat zu einem Feature von CouchDB selber. Also er kann, wenn es sein muss, auch eintauchen und an CouchDB selbst mitarbeiten. Aber hauptsächlich arbeitet er an den Applikationen.
+
+00:03:50.901 --> 00:04:44.981
+<v SPEAKER_2>Na ja klar, ich meine, ein gutes Subsystem braucht auch immer mindestens zwei Kräfte, nämlich einerseits C-treibende Kraft im Motor und dann irgendwie Leute, die auch, sagen wir mal, die Real World mit mit hineintragen. Wie häufig haben wir schon Projekte gesehen, wo jemand einfach mal so in den virtuellen Raum hinein entwickelt hat, weil er der Meinung war, das müsste auch jemand benutzen können. Und dann brauchte es eigentlich niemand. Der typische Tod vieler Projekte, die vor allem von irgendwelchen Komitees und Standardsgremien losgetreten werden, haben wir schon so einiges gesehen. Das ist auch so ein Aspekt, den ich ganz interessant finde. Aber vielleicht sagen wir erstmal ein bisschen, würde mich interessieren, Jan, was ist denn so deine persönliche Vorgeschichte, bis du so zur Datenbankentwicklung gekommen bist? Damit hast du ja wohl nicht angefangen in deinem Leben.
+
+00:04:45.021 --> 00:05:33.141
+<v SPEAKER_3>Nee, ich habe so Ende der 90er, als ich noch ganz klein war, so mit dem Internet angefangen und habe halt irgendwann, keine Ahnung, den View Source-Button im Netscape gesehen und gesagt habe, was heißt denn das wohl? Und dann kamen diese wilden Zeichenwüsten, was HTML war und habe dann gesehen, okay, da ist jetzt irgendwelche Sachen, die ich auf dem Bildschirm sehe, stehen dann in irgendwelchem Code und wenn ich jetzt, keine Ahnung, mache ich das, speichere ich das lokal und ändere jetzt den Titel-Tag und dann ändert sich im Browser der Titel-Tag und ich dachte, oh, das ist total einfach, ich kann das alles lernen und so bin ich ins Web gekommen, habe dann 12 HTML gefunden, bin da in der Community so ein bisschen aktiv gewesen für ein paar Jahre, Ich bin jetzt in den letzten Jahren in den Webseiten gesehen, die mit.php aufhörten und ich kannte nur.html und ich war total verstört, warum jetzt plötzlich kein HTML mehr da steht. Das war keine Ahnung, von so einer Band, die ich gut fand, da der Webmaster war, so Cutting Edge und hatte schon PHP-Webseite und hatte auch schon Ajax da drin.
+
+00:05:33.161 --> 00:05:34.841
+<v SPEAKER_2>Worum reden wir jetzt? Mitte der 90er Jahre?
+
+00:05:34.861 --> 00:06:20.021
+<v SPEAKER_3>Ende der 90er Jahre. Und dann hab ich mich über PHP ganz schlau gemacht und bin dann da in der Community gelandet. Ich war aktiv, PHP-Contributor, hab da am Projekt selber mit, an der Übersetzung des Manuals, am Manual selber, da in ganz vielen Bereichen mit gearbeitet und bin dann irgendwann, keine Ahnung, sobald man so ein bisschen aktiver wird in diesem generellen Skript-Sprachenfeld, kommt man irgendwann um die Datenbank nicht mehr rum und die Standard-Datenbank, die man so verpasst kriegt, wenn man neu ist, ist wohl MySQL, dann hab ich mich da auch sehr aktiv, bin sehr aktiv gewesen. Und ich hab dann seit, keine Ahnung, seit ich aus der Schule raus bin, eigentlich nebenbei immer schon so, so ein Consulting-mäßig was gemacht in diesem Bereich. Also hab halt Leuten geholfen, Projekte auf PHP, MySQL-Basis zu machen.
+
+00:06:21.141 --> 00:06:26.021
+<v SPEAKER_2>Und mit PHP rechts im Arm und MySQL links im Arm ein bisschen in den Sonnenuntergang geschritten und alles so gut.
+
+00:06:26.041 --> 00:07:25.021
+<v SPEAKER_3>Genau, auf meinem Esel. Das hab ich dann ein paar Jahre gemacht und es hat auch Spaß gemacht. Das war halt die Herausforderung, wurden immer größer. Was ich zuletzt bis vor zwei Jahren gemacht hab, war, Leute, die so gewachsene PHP-Anwendungen haben, die so einen riesigen Haufen, keine Ahnung, 100.000 Zeilen Spaghetti-Code waren, dann mal Struktur reinzubringen, dass da Teams dran arbeiten können, dass der Code wartbar wird, dass man das auf mehreren Rechnern laufen lassen kann, dass man Datenbank und Applikation ein bisschen tränen, dass man die Datenbank auf mehrere Rechnern verteilen kann und dass es also so ein bisschen größer wird. Und dann bin ich vor ungefähr zweieinhalb Jahren auf CouchDB gestoßen, so hab ich im Web drüber gelesen, wie man das so macht, und dachte, cool, wenn ich CouchDB jetzt verwenden würde, dann könnte ich einen Tag in der Woche arbeiten und hätte eine Restzeit für coole Sachen. Und da hab ich mich da so ein bisschen eingelesen. Und damals war CouchDB Windows-only, weil Damian, der Mensch, der CouchDB erfunden hat, damals halt seine Entwicklungsumgebung war auf Windows und es gab halt so ein Windows-Binary und ich hab alles außer Windows. Und dann hab ich, okay, nicht weit.
+
+00:07:25.041 --> 00:07:26.321
+<v SPEAKER_2>Damals, das ist jetzt wann, vor?
+
+00:07:26.341 --> 00:08:08.881
+<v SPEAKER_3>Das war vor zweieinhalb Jahren. Und dann hab ich es nicht weiter angeschaut, bis ich wieder drüber gelesen hab, was ich wieder interessant fand. Und mich dann hingesetzt, hab die Sourcen runtergeladen hab, hab das nach Unix portiert, hab ein Makefile geschrieben mit Damians Hilfe so innerhalb von einer Woche, so zwei Stunden abends jeweils, haben wir dann halt so ein Windows-Bild hingekriegt. Und da bin ich eingestiegen in CouchDB und bin seitdem halt so dabei, so Nummer zwei im Team und hab halt seitdem angefangen, also Leuten davon zu erzählen, anderen Leuten. Also versucht, andere Entwickler anzukommen, also ans Projekt zu bekommen und ich kümmere mich da halt um alles neben Entwicklung, Community, was es halt da so gibt.
+
+00:08:09.821 --> 00:08:12.021
+<v SPEAKER_4>Ja, und heißt jetzt Chief Evangelist.
+
+00:08:12.041 --> 00:08:15.221
+<v SPEAKER_3>Ja, das sind diese Titel, die mir Leute gegeben haben.
+
+00:08:15.241 --> 00:08:16.481
+<v SPEAKER_2>Das ist ein toller Titel.
+
+00:08:16.501 --> 00:08:27.661
+<v SPEAKER_3>Den ich nicht mag. Wenn man vor Entwicklern steht und dann präsentiert hat, der Chief Evangelist, dann hört einem keiner mehr zu. Das ist so wie, ich bin Marketing. Da wird man halt nicht ernst genommen. Deswegen bin ich lieber CouchDB-Entwickler.
+
+00:08:27.681 --> 00:08:29.341
+<v SPEAKER_2>Das kann natürlich sein.
+
+00:08:29.361 --> 00:08:36.181
+<v SPEAKER_3>Wo ein Evangelist natürlich technisch versiert sein muss, kommt es halt trotzdem so, okay, da ist der Laberhaini auf der Bühne, dem hören wir jetzt erst mal nicht mehr zu. Oder der hat jetzt keine gute…
+
+00:08:36.201 --> 00:08:38.441
+<v SPEAKER_2>Hast du bei dir die Erfahrung so gemacht?
+
+00:08:38.461 --> 00:08:39.221
+<v SPEAKER_3>Das fühlt sich ein bisschen…
+
+00:08:39.241 --> 00:08:41.401
+<v SPEAKER_2>Oder glaubst du es nur, dass das dem so ist?
+
+00:08:41.421 --> 00:08:51.821
+<v SPEAKER_3>Nein, es fühlt sich ein bisschen so an, dass man sagt, ich bin CouchDB-Entwickler, ich mache Hardcore-Erlang-Programmierung, dass zumindest die Entwicklertypen schon ein bisschen besser zuhören, als wenn man als Evangelist vorgestellt wird.
+
+00:08:51.841 --> 00:08:56.721
+<v SPEAKER_2>Verstehe. Naja, musst du dir vielleicht einen neuen Namen einfallen lassen.
+
+00:08:56.741 --> 00:09:02.561
+<v SPEAKER_3>Ich habe den mir ja nicht gegeben. Ich versuche, ihn immer nur wieder abzukämpfen.
+
+00:09:02.581 --> 00:09:07.821
+<v SPEAKER_2>Ja, und du Alex? Was hat dich so getrieben? Bist du auch so ein Kind des Webs?
+
+00:09:07.841 --> 00:09:34.421
+<v SPEAKER_4>Ja, ich habe, ich weiß gar nicht, angefangen, habe ich wahrscheinlich auch irgendwann mal mit irgendeinem Browser und ich habe auch mal dieses Haus entdeckt und habe dann ganz normal auch über HTML lernen und was ist das überhaupt und dann irgendwann, ich glaube in einer Schule vielleicht, dann die Schul-Website gemacht und dann auch irgendwann mit PHP erstmal angefangen, dann irgendwann Informatik studiert und dann ein bisschen weitergekommen und dann andere Programmiersprachen kennengelernt und...
+
+00:09:34.441 --> 00:09:37.141
+<v SPEAKER_2>Hast du dann auch, wie sich's gehört, dein Informatikstudium abgebrochen?
+
+00:09:37.161 --> 00:10:45.401
+<v SPEAKER_4>Leider nicht, ich kann kein abgebrochenes Studium verweisen. Ich schon. Ah, okay. Ich habe es dummerweise durchgezogen, aber ich habe es trotzdem zu was gebracht, glaube ich. Ich habe halt im Studium dann viel Java machen müssen, dürfen, was auch immer. Ich habe schon nebenbei immer dann auch Web-Zeugs so gemacht, habe eine Firma gegründet, glaube ich so einen Monat vor dem Studium. Und das dann immer nebenbei schon so durchgezogen und kleinere Projekte gemacht, die dann natürlich wuchsen, wuchsen und irgendwann vor drei Jahren vielleicht dann auch mal Ruby entdeckt. Und dann da eigentlich jetzt erst mal hingeblieben und dann viel mit Rails gemacht und so eine Sachen. Und dann vor vielleicht einem Jahr auf CouchDB gestoßen und dann eine Weile mit rumgespielt und immer mal wieder angeguckt und ach, das ist ja nett und schön, aber ich kann es jetzt nicht benutzen, weil XY-Kunde will halt nicht. Und dann kam irgendwann mal Jan, hat irgendwo einen Vortag gehalten, glaube ich, auf einem Web-Montag oder sowas und suchte auch, glaube ich, einen Büro-Arbeitsplatz.
+
+00:10:45.421 --> 00:11:19.741
+<v SPEAKER_3>Genau, das war der Web-Montag, wo ich mich für eine 60-Minuten-Session vorbereitet hatte, die dann auf 10 Minuten runterkürzen musste. Und da das nicht ging, habe ich den Vortrag einfach ganz schnell gehalten. Und Alex hatte da auch einen Vortrag über das Hallen-Projekt, wo es um deutschlandweite Coworking-Spaces ging. Und da hatte ich mich dann direkt für interessiert, was da passiert, weil ich schon ewig von zu Hause gearbeitet habe. Und von zu Hause arbeiten ist ziemlich cool. Also irgendwann hat man davon dann auch genug. Und es wäre schön, die Arbeit woanders zu lassen, nach Hause zu gehen. Nicht, dass das wirklich passiert, aber es ist trotzdem schön, ein Büro zu haben, wo man hingehen kann, wo man sich austauschen kann.
+
+00:11:19.761 --> 00:11:22.221
+<v SPEAKER_2>Weil man da auch auf andere Leute trifft mit anderen Ideen.
+
+00:11:22.301 --> 00:11:26.741
+<v SPEAKER_3>Genau, ganz klar. Und da habe ich dann meine CouchDB-Lobbyarbeit.
+
+00:11:26.761 --> 00:11:32.301
+<v SPEAKER_4>Seitdem sitzt er bei uns im Büro und teilt den CouchDB-Virus aus.
+
+00:11:33.521 --> 00:11:36.241
+<v SPEAKER_2>Ihr habt da so einen kleinen Hacker-Space in Friedrichshain.
+
+00:11:37.301 --> 00:11:40.881
+<v SPEAKER_4>Also Hacker-Space würde ich fast nicht sagen. Also sind es auch durchaus...
+
+00:11:40.901 --> 00:11:47.701
+<v SPEAKER_2>Hacker-Space im Sinne von ein Space für Hacker, weil da ja auch viel gehackt wird. Aber es ist nicht im einigen Sinne Hacker-Space, sondern ihr seid eigentlich mehr so eine Bürogemeinschaft.
+
+00:11:47.721 --> 00:12:11.481
+<v SPEAKER_4>Ja, also wir nennen es sozusagen, glaube ich, wir nennen es offiziell Coworking-Space. Und da ist es einfach, jeder kann halt kommen und da arbeiten, einfach was auch immer. Und es kann halt auch jemand sein, der irgendwie Papierflieger bastelt oder irgendwas anderes macht. Also es muss jetzt kein Programmierer sein. Aber sozusagen schon ein bisschen mit dem Fokus auf, wir gehen dahin arbeiten und verdienen da unser Geld.
+
+00:12:11.501 --> 00:12:13.301
+<v SPEAKER_2>Ja, es ist Upstream.
+
+00:12:13.321 --> 00:12:14.281
+<v SPEAKER_4>Genau.
+
+00:12:14.301 --> 00:12:14.561
+<v SPEAKER_2>Warum?
+
+00:12:16.621 --> 00:12:23.761
+<v SPEAKER_3>Upstream ist deine Firma, nicht genau, der Coworking-Space wird von der Firma Upstream gestellt, bis Alex und Tilo sind.
+
+00:12:23.781 --> 00:12:28.001
+<v SPEAKER_4>Genau, also ihr Filmnamen ist relativ random, wir brauchen einfach einen, das...
+
+00:12:28.021 --> 00:12:43.841
+<v SPEAKER_2>Gut, macht ja auch nichts. Das heißt, ihr seid im Prinzip beide so ein bisschen Kinder des Webbs, so. Für euch ist sozusagen Anwendungsentwicklung im Web schon immer die Normalität gewesen, kann man das so festhalten.
+
+00:12:45.621 --> 00:12:47.921
+<v SPEAKER_3>Also ich hab auch schon mal C gemacht, so.
+
+00:12:49.461 --> 00:12:51.921
+<v SPEAKER_2>Hast du auch einen Treiber programmiert?
+
+00:12:51.941 --> 00:12:53.121
+<v SPEAKER_3>Keinen Treiber.
+
+00:12:53.141 --> 00:13:49.021
+<v SPEAKER_2>Keinen Treiber, oh Mann. Naja, das muss man ja auch heutzutage gar nicht mehr, weil ich denke, die eigentliche Herausforderung liegt auch im Web. Da geschieht eine ganze Menge. Naja, jetzt hast du ja schon gesagt, Jan, dass, nicht wahr, am Anfang ist MySQL, das ist glaube ich etwas, wo jeder dann schon mal gegengelaufen ist. Was hat dich denn da sozusagen, also du hast ja gesagt, du musstest dich quälen mit, jetzt richtig verstehe ich, mit Skalierungsproblematiken, musstest du dich quälen mit Replizierungsproblematiken, sprich, ist der Server zu langsam, dann braucht man eigentlich noch einen zweiten, dann hat man das Problem, dass er einen oder den anderen erstmal nicht kennt, und dann müssen die sich kennenlernen, und was ist, wenn sich in dem einen was geändert hat, aber in dem anderen nicht. Was sind denn so aus deiner Sicht so die Probleme, die jetzt konkret bei MySQL bzw. bei SQL an sich existieren?
+
+00:13:49.041 --> 00:14:54.201
+<v SPEAKER_3>Diese SQL-Datenbanken oder Relationalen Datenbanken sind designt, also die Grundlagen kommen aus den 60ern, 70ern, frühen 80ern vielleicht noch, aber die sind halt schon steinalt. Die grundlegenden Konzepte und Ideen, die sind entwickelt worden für ein Computerzeitalter, was ganz anders ist als das, was wir heute haben. Da gab es richtig dicke Maschinen, die sehr teuer waren zur Benutzung, und es gab hochgeschultes Personal, die daran arbeiten mussten. Das war billiger, wenn ein Forscher zwei Wochen lang geforscht hat, wie kann ich eine Quere effizienter machen, nur damit die Maschine nicht so lange verbraucht wird, weil Leute nach und nach nur seriell an dieser Maschine arbeiten konnten. Es war halt sehr teuer, die zu benutzen, also musste das alles optimiert werden. Und es war billiger, wenn ein Wissenschaftler saß, der das alles schneller gemacht hat, damit die Maschine weniger zu rechnen hat. Wobei wir heute viele kleine Maschinen haben, die im Prinzip infinite oder unendlich Rechenpower haben. Und es ist billiger, mehr Maschinen zu benutzen, anstatt jemanden zwei Wochen lang für irgendeine Optimierung zu bezahlen.
+
+00:14:54.221 --> 00:15:04.101
+<v SPEAKER_2>Aber das relationale Datenbankmodell, so ist ja an sich schon ein hochtheoretisches Modell, was eigentlich wirklich von der Datenmodellierung ausgeht und nicht unbedingt von den Fähigkeiten des Rechners.
+
+00:15:04.121 --> 00:15:16.041
+<v SPEAKER_3>Genau. Da kommt die Anwendungsweise zu der Zeit. Große Maschinen konnten sich halt nur finanzielle Institutionen leisten oder wissenschaftliche Institutionen, die 100.000 oder 100.000 Millionen, ich weiß nicht, wie viele teure Rechner.
+
+00:15:16.061 --> 00:15:16.901
+<v SPEAKER_2>Banken, Industrie.
+
+00:15:16.921 --> 00:15:29.661
+<v SPEAKER_3>Genau. Die Daten, die da auftauchen, passen sehr gut auf das relationale Modell und die Anwendungswelle passen auch sehr gut. Also viel strukturierte Daten, also Versuchsauswertungen in der Wissenschaft oder Versicherungsdaten oder Bankingdaten, die passen alle sehr gut.
+
+00:15:29.681 --> 00:15:32.921
+<v SPEAKER_2>Personalisten, Rechnungen, Accounting.
+
+00:15:32.941 --> 00:16:21.281
+<v SPEAKER_3>Dieses und da haben dieses, ich habe viele Daten und möchte, habe jemanden, der so eine Queriesprache versteht, wie SQL, da dynamische Auswertungen drauf machen zu lassen. Das ist so der typische Anwendungsfall. Dafür sind die gebaut worden und da sind die richtig, richtig gut drin. Das ist aber nicht unbedingt der Anwendungsfall, das gibt es auch immer noch, aber der Anwendungsfall, den wir im Web haben, zumindest heutzutage, ist in diesen Facebooks und Flickers und weiß ich nicht was, dass viele User einfach irgendwelche Daten erzeugen, die ihre persönlichen Informationen, Nachrichten zu anderen Leuten schicken, irgendwelche Beziehungen herstellen zwischen Events und Leuten oder irgendwas. Das ist alles, das hat keine tabularische Struktur mehr oder keine tabularische Struktur mehr. Das passt von den Daten, die anfallen, nicht mehr so gut auf das relationale Modell.
+
+00:16:21.301 --> 00:16:26.381
+<v SPEAKER_2>Was heißt, das hat keine tabularische Struktur mehr? Welche Struktur hat es denn dann?
+
+00:16:26.401 --> 00:16:27.501
+<v SPEAKER_3>Es hat keine Struktur.
+
+00:16:29.081 --> 00:16:37.761
+<v SPEAKER_2>Aber man hat doch schon Relationen zwischen den Daten, ein Kommentar auf einen Beitrag im Blog hat ja eine klare Relation.
+
+00:16:37.781 --> 00:17:16.601
+<v SPEAKER_3>Es gibt Daten, die stehen in Beziehung. Das heißt aber nicht unbedingt, man muss das so weit treiben, wie das das Relationale, die sieben Monate normal formgebrachte SQL-Modell dann vorsieht, was in der Praxis dann wiederum eh nicht angewendet wird, weil die Datenbanken dafür nicht schnell genug sind. Also wenn man alle Daten bis zum Ende durchnormalisiert hat, hat man halt irgendwas, wenn man hier so ein generisches Objekt nimmt aus einer Programmiersprache, und das hat mehrere Verhaltensweisen und Attribute und was, und wenn man das alles generisch auf einer SQL-Datemark abbildet, sind das so irgendwas zwischen 9 und 12 Tabellen, oder sowas wie History und Multilanguage und alles Mögliche abgebildet werden kann.
+
+00:17:17.321 --> 00:17:55.641
+<v SPEAKER_4>So als Beispiel, vielleicht wenn ich zum Beispiel jetzt, sagen wir mal, ein Flickr-Foto habe und da Text drauf mache, wenn ich das in SQL abbildet, dann habe ich teilweise so eine Geschichten, wie ich habe halt mein Foto, dann habe ich halt eine Tagging-Tabelle, da sind einfach nur zwei IDs drin und die zeigen dann auch eine Tag-Tabelle, wo dann jeder Tag noch mal als extra, also in einer extra Tabelle steht, wobei das halt, wenn man es sozusagen natürlich modellieren würde, wäre das einfach eine Liste von Strings sozusagen an meinem Foto dran. Das ist vielleicht so ein Beispiel, wo man sieht, dass, also dieses, ich presse alles in Relation rein, dass das da nicht so schön funktioniert.
+
+00:17:55.661 --> 00:18:00.221
+<v SPEAKER_2>Aber das könnte man ja auch mit SQL machen, dass man sagt, okay, da ist jetzt eine Liste von Strings und so.
+
+00:18:00.241 --> 00:18:19.841
+<v SPEAKER_4>Das ist halt nur wahnsinnig aufwendig. Und das muss ja, wenn ich jetzt die Text in meinem Foto habe, muss ich einen Join über zwei Tabellen machen und so. Und so eine Sachen, die ich vielleicht gar nicht müsste, wenn ich halt sozusagen das irgendwie natürlicher darstellen könnte, wenn ich halt nicht so eine Datenbank Kathedrine oder Tabellen kann, sondern wenn ich eine Datenbank habe, die halt strukturierte Daten sprechen kann.
+
+00:18:20.461 --> 00:18:50.541
+<v SPEAKER_3>Ich glaube, Tims Punkt ist hier, man könnte auch die nicht, also alle Daten, die zu diesem Foto gehören, inklusive Texte in eine Tabelle stecken, ohne mehrere Tabellen. Das geht in eine Relational-Datenbank genauso. Aber da würde man dann eine Relational-Datenbank nicht mehr so benutzen, also die Features einer Relational-Datenbank nicht mehr so ausnutzen, diese Relation abzuballen. Das ist halt eines dieser Kernfeatures dieser Datenbank. Und man würde das einfach nicht mehr benutzen. Und warum kann man sich da nicht auch andere Sachen angucken, wenn man eh nicht das Kernfeature von einer Relational-Datenbank verwendet?
+
+00:18:50.561 --> 00:18:53.381
+<v SPEAKER_2>Was würdest du denn als das Kernfeature bezeichnen?
+
+00:18:54.361 --> 00:19:17.681
+<v SPEAKER_3>Na, zwei Dinge sehr gut mit strukturierten Daten umgehen. Es können die Relation zwischen verschiedenen Daten oder zwischen Teilen eines Datensatzes auf mehrere Tabellen abzubilden. Und dynamische Abfragen auf alle Daten, die man so hat, zu machen. Also diese dynamische Abfrage ist eine Sache, die eine repzionale Datenbank sehr gut kann.
+
+00:19:17.701 --> 00:19:22.261
+<v SPEAKER_2>Aber ist das nicht auch das, was man im Web braucht? Dynamische Abfragen machen?
+
+00:19:22.281 --> 00:20:15.861
+<v SPEAKER_3>Im Web ist es eher andersrum, dass man meistens, eine dynamische Abfrage verstehe ich, jemand, der im Accounting zum Beispiel sitzt, der schreibt tatsächlich sowas wie SQL oder so was Ähnliches, eine kleine Befehlsprache, die ihm sagt, gib mir alles Accounting in diesem Zeitraum. Und das bildet man dann vielleicht intern auf SQL ab. Und diese Abfragen sind enorm einfach zu machen. Dafür sind, wie gesagt, relationale Datenbank gebaut. Im Web hat man meistens eine Anwendung, wo der User keine Queries mehr zusammenbaut, sondern die Anwendung weiß schon, welche Abfragen, ok, ich habe hier eine Liste von meinen Freunden und hier sind alle Nachrichten, die ich geschickt habe, und hier sind alle Fotos, die zu mir gehen, hier die Tags, und der Anwendungsentwickler weiß schon, welche Queries da ungefähr bei rumkommen, und kann die im Vorhinein quasi schon festlegen und es muss deswegen kein Fokus auf dynamische Query-Möglichkeiten gelegt werden.
+
+00:20:16.721 --> 00:21:21.761
+<v SPEAKER_4>Jetzt sollte man das dynamisch nochmal unterscheiden zwischen, also wenn man jetzt in SQL denkt, man kann sozusagen dynamisch den Query zusammenbauen, also sprich, welche Joints mache ich und welche Felder will ich aus meiner Tabelle heraushaben. Das ist sozusagen Teil 1, was dynamisch sein kann, und Teil 2 ist sozusagen das, was ich am Ende als wirkliche Parameter da reingebe, sprich, irgendeine ID oder den Namen. Ich will jetzt alle Daten dazu, diesen Namen haben, sozusagen, das ist dann Teil 2 des Dynamischen. Und Teil 1 ist sozusagen in vielen Web-Anwendungen eher fest. Also die SQL-Queries an sich stehen sozusagen irgendwie in einem Code in der Anwendung drin. Und nur diese Parameter ändern sich ja von Query zu Query. Also wenn ich jetzt die Fotos von User 1 oder User 2 habe, ist ja der gleiche SQL-Query. Aber sozusagen, die User, die ich da reingebe, wäre dann eine andere. Das ist, glaube ich, so ein bisschen der Punkt. Und in der relationalen Datenbahn kann ich halt Teil 1, also sprich, den SQL-Query an sich, dynamisch jederzeit ändern. Und das können die halt besonders gut. Und das brauche ich aber im Web nicht unbedingt.
+
+00:21:23.921 --> 00:21:26.121
+<v SPEAKER_2>Und Teil 2?
+
+00:21:26.141 --> 00:21:46.441
+<v SPEAKER_3>Teil 2 braucht man im Web und alternative Daten, zum Beispiel CouchDB unterstützen. Diese parametrisierte, also ich habe eine feste Query, aber ich kann das parametrisieren. Also ich definiere einmal im Voraus, okay, ich möchte Datensätze für alle Bilder von einem User haben können. Aber ich möchte zur Queryzeit sagen, welcher User das ist. Solche Abfragen, die man...
+
+00:21:46.461 --> 00:21:48.181
+<v SPEAKER_2>Aber das ist doch in der SQL genauso möglich.
+
+00:21:48.921 --> 00:22:15.121
+<v SPEAKER_3>Das ist in der SQL genauso möglich. Aber der erste Teil, den Alex gerade beschrieben hat, das ist, wo Relationale Datenbanken richtig gut drin sind. Und wenn man ein Problem hat, wo Queries tatsächlich dynamisch zusammengebaut werden müssen oder eingegeben werden von einem User, da ist eine Relationale Datenbank definitiv eine bessere Lösung. Also nicht so, dass dieser Datenbankbereich generell, da gibt es sehr viele Überschneidungen, dass man gewisse Probleme in verschiedenen modellieren kann.
+
+00:22:15.701 --> 00:22:40.741
+<v SPEAKER_2>Das heißt, wenn ich euch richtig verstehe, das ist eure Kernaussage, die SQL, die Stärke von SQL liegt darin, dass man mit einem bestehenden Datenmodell jederzeit die Struktur einer Abfrage gut ändern kann, dass SQL es vorsieht, dass man mit immer wieder vollständig anderen Herangehensweisen an dieselben Datenbanken hinangeht. Das aber, wo setzt dann das Problem ein?
+
+00:22:40.761 --> 00:22:53.801
+<v SPEAKER_4>Das Problem glaube ich, das brauche ich im Web sozusagen nicht, diese Dynamik, und immer wenn ich einen Feature habe, was ich nicht brauche, dann muss ich wahrscheinlich an einer anderen Stelle einen Kompromiss eingehen, um dieses Feature haben zu können.
+
+00:22:53.821 --> 00:23:10.221
+<v SPEAKER_2>Ja, aber ich meine, die Anwendungsentwicklung ist doch auch nie abgeschlossen. Die Software entwickelt sich weiter. Nächste Woche stellt man fest, jetzt brauchen wir aber auch noch diese komplexe Darstellung, und dann ergeben sich doch im Prinzip auch wieder neue Queries, wo dann die Struktur anders ist. Insofern ist doch diese Anforderung auch da.
+
+00:23:11.161 --> 00:23:17.461
+<v SPEAKER_3>Aber nicht so in dem Maße wie eine Relationale Datenbank, dass da ihre Kernstärken ausspielt.
+
+00:23:17.481 --> 00:23:27.881
+<v SPEAKER_2>Gut, aber wenn sie jetzt, sagen wir mal, ihre Stärken nicht ausspielt, dann kann man ja sagen, ok, alles klar, Stärke nicht ausgespielt, funktioniert, aber trotzdem, wo setzt denn das Problem ein?
+
+00:23:27.901 --> 00:23:36.721
+<v SPEAKER_3>Ein Problem ist, ich habe schon angesprochen, dass die Relationale Datenbank vor 30 Jahren entwickelt worden für dieses System. Ich habe einen großen Rechner, und wir jetzt aber in der Welt sind, wir haben viele kleine Rechner.
+
+00:23:36.741 --> 00:23:39.101
+<v SPEAKER_2>Das heißt, man ging immer vor allem von einer Datenbank aus?
+
+00:23:40.281 --> 00:23:55.201
+<v SPEAKER_3>Genau. Oder von einem physikalischen System, wo dein Datenbankmanagement-System auf alle Teile jederzeit zugefasst hat. Heutzutage haben wir das nicht mehr. Relationale Datenbank sind aber fundamental dafür gebaut, auf einem Rechner zu laufen.
+
+00:23:55.221 --> 00:23:57.541
+<v SPEAKER_2>Warum haben wir das heute nicht mehr?
+
+00:23:57.561 --> 00:24:29.681
+<v SPEAKER_3>Zum Beispiel das Google-Modell oder jede große Internetseite verwendet. Wir haben jetzt 1.000 Rechner und alle arbeiten an einem Teil des Problems. Wenn man alle 1.000 Rechner fragt, kriegen wir jeweils ein Tausendstel der Antwort. Wir stecken das dann zusammen und haben unser Ergebnis in einem Tausendstel der Zeit, als wenn ein Rechner den ganzen Abfrageraum bearbeiten muss. Das ist eine Sache. Die andere Sache ist Hochverfügbarkeit. Wir haben im Web nicht mehr so etwas wie Wartungsfenster, wo wir nachts zwischen eins und drei unsere Server runterfahren und dann kommt eine gelbe Seite oder ein Stoppschiff.
+
+00:24:29.701 --> 00:24:33.341
+<v SPEAKER_2>Die Online-Banking-Experience, die man heute noch hat teilweise.
+
+00:24:33.361 --> 00:24:47.701
+<v SPEAKER_3>Das gibt es effektiv halt nicht mehr, weil unsere Webseiten international genutzt werden. Leute in Asien, in den USA, überall sind ständig Sachen machen. Selbst hier sind Leute den ganzen Tag rumwachen. Diese Idee von, wir haben Zeit, wo wir offline sein können, das ist einfach nicht mehr gegeben.
+
+00:24:47.721 --> 00:24:51.821
+<v SPEAKER_2>Schon 99 Prozent Verfügbarkeit ist eigentlich zu wenig.
+
+00:24:51.841 --> 00:25:53.421
+<v SPEAKER_3>Genau, und da effektiv kommt man dann nur hin, indem man seinem Daten-Redundant auf mehreren Rechnern in verschiedenen Orten vorhält, an verschiedenen Netzen sind. Und man kommt dann sehr schnell in ein Problem der Datensynchronisation. Und das ist ein Problem, der bei relationalen Datenmarken eigentlich überhaupt gar nicht betrachtet wird, zumindest vom fundamentalen Konzept, wie sie gebaut worden sind. Es gibt Lösungen, die sind darauf gebaut worden. Bei MySQL gibt es das Replikations-Feature, was für Slashdots entwickelt wurde und da auch sehr erfolgreich eingesetzt wird. Aber das ist noch ein sehr spezieller Use-Case. Dann kann ich später noch ein bisschen darüber erzählen. Von Oracle gibt es auch Cluster-Lösungen. Es gibt auch einen MySQL-Cluster. Postgres kommt langsam auch in den Bereich, wo es Replikationen anbieten kann. Aber wenn man mit den Leuten spricht, die das tatsächlich in der Praxis einsetzen, da hört man viel von Kopfschmerzen und suchen nach anderen Lösungen.
+
+00:25:53.441 --> 00:25:56.801
+<v SPEAKER_2>Was ist das Problem? Was erzeugt sozusagen die Kopfschmerzen an der Stelle?
+
+00:26:02.821 --> 00:27:11.721
+<v SPEAKER_3>Eine der Gründer von Sun hat die Seven Fallacies of Network Programming aufgestellt. Also Misskonzeptionen, die man, wenn man in verteilenden Systemen arbeitet, dass man so tun würde. Also das Netzwerk ist immer verfügbar, die Topologie ändert sich nicht, es gibt keine Probleme. Diese Lösung, die eine relationale Datenbank auf mehrere Rechner verteilen möchte, versucht oft zu ignorieren, dass da ein Netzwerk dazwischen liegt. Dass der User das immer noch als eine Maschine betrachten kann. Und das ist ab einer gewissen Größe des Systems nicht mehr wirklich ordentlich machbar. Dass dann, keine Ahnung, wenn wir einen Daten-Data Center in Frankfurt und in New York haben, da dann alle Rechner immer zur gleichen Zeit auf demselben Stand zu haben. Alle müssen mit allen anderen reden, um zu sagen, wir sind jetzt synchronisiert und wir haben die neueste Änderung angenommen. Das sind Operationen, die werden so teuer und machen das ganze System so langsam, dass sich das in der Praxis nicht auszahlt, das so zu lösen.
+
+00:27:18.781 --> 00:27:32.781
+<v SPEAKER_2>Sind aber nicht sieben, sind acht. Heute acht, waren wohl mal sieben und es wurde noch eine dazugekommen. Die muss ich mal aufzählen. Erstens, das Netzwerk ist ausfallsicher. Ich glaube, das kann jeder nachvollziehen.
+
+00:27:32.801 --> 00:27:34.841
+<v SPEAKER_3>Ich sage mal Alice.
+
+00:27:34.861 --> 00:27:48.861
+<v SPEAKER_2>Das ist nicht immer da. Hast du da Probleme mit Alice? Okay, ich glaube, dass ich die Probleme auch habe. Die Latenzzeit ist gleich Null. Das ist auch so eine Annahme. Das bezieht sich jetzt vor allem...
+
+00:27:49.501 --> 00:27:53.801
+<v SPEAKER_3>Na, wenn ich von Rechner A mit Rechner B rede, dass der......
+
+00:27:53.821 --> 00:27:55.741
+<v SPEAKER_2>sofort antwortet, das ist nicht der Fall.
+
+00:27:55.761 --> 00:28:08.121
+<v SPEAKER_3>Der wird sofort antworten, aber der Weg, der die Antwortnachricht braucht, da geht halt Zeit verloren. Wenn man davon ausgeht, das geht sofort, dann programmiert man anders, als wenn man weiß, okay, das kann jetzt mal eine Millisekunde oder zehn Millisekunden oder eine Minute dauern.
+
+00:28:08.141 --> 00:28:17.261
+<v SPEAKER_2>Vor allem, wenn man dann Abhängigkeiten hat und die eine Latenz von der anderen Latenz abhängt und das sich dann entsprechend vergrößert. Dritte Annahme, der Datendurchsatz ist unendlich.
+
+00:28:17.941 --> 00:28:19.581
+<v SPEAKER_3>Genau.
+
+00:28:19.601 --> 00:28:21.681
+<v SPEAKER_2>Schön. Ist auch nicht der Fall.
+
+00:28:21.701 --> 00:28:24.721
+<v SPEAKER_3>Nee, muss man, glaube ich, auch nicht erklären.
+
+00:28:24.741 --> 00:28:27.281
+<v SPEAKER_2>Das Netzwerk ist sicher.
+
+00:28:27.301 --> 00:28:39.481
+<v SPEAKER_3>Also wenn ich dir eine Nachricht schicke, wenn ich dir eine Postkarte schicke, kann jeder lesen. Das Postnetzwerk ist in dem Sinne nicht sicher. Einen Brief kann auch jeder aufmachen. Das Internet an sich ist erstmal nicht sicher. Dann muss man schon aufmachen.
+
+00:28:39.501 --> 00:28:42.101
+<v SPEAKER_2>Fünfte Annahme, die Netzwerk-Topologie wird sich nicht ändern.
+
+00:28:42.641 --> 00:28:44.021
+<v SPEAKER_3>Genau, das ist es.
+
+00:28:44.041 --> 00:30:00.001
+<v SPEAKER_2>Ändert sich aber laufend. Das stimmt. Es gibt immer nur einen Netzwerk-Administrator, ist die sechste Annahme. Das ist wirklich eine Menge Humorpotenzial. Siebtens, die Kosten des Datentransports können mit Null angesetzt werden. Kosten, natürlich auch noch ein wichtiger Punkt. Und das Netzwerk ist homogen. Das ist die achte Demo, die irgendwann mal dazu gekommen ist. Mit vier Trugschlüssen fing es an. Und dann wurde es ergänzt auf sieben. Und dann kam James Gosling, hat dann den achten dazu gepackt. Der ist doch für Java verantwortlich. Ja, das sind interessante Annahmen. Das heißt, dieser Problembereich, aber nicht nur, das führt dazu, dass dieses Single-Server-Modell Schwächen zeigt. Insbesondere, wenn man davon ausgeht, man hätte jetzt mehrere, und sie müssen sich eigentlich abgleichen. Aber das ist natürlich generell ein Problem, wenn ich sage, ich habe eine Datenbank, ich habe so genau einen Datenspeicher, und wenn ich irgendwo etwas ändere, dann möchte ich natürlich, dass alle davon abhängigen Systeme auch ab sofort, ab dem Moment, wo sich was ändert, dann eben mit den richtigen aktuellen Daten arbeiten. Aber wie kann man denn das Problem lösen?
+
+00:30:00.021 --> 00:31:22.221
+<v SPEAKER_3>Es gibt zwei Rangehensweisen. Entweder man macht dieses, na, es gibt dieses Two-Face-Commit-Modell, was man in zwei Phasen commit, oder zweimal schreiben, wo man am Anfang zwei oder beliebig viele Knoten am Ende, also wo man jedem Rechner sagt, schreib diese Information, schreib diese Information, schreib diese Information. Wenn man die individuellen Rechner fragt, hat der immer die letzte Information. Derjenige, der die Schreib-Apportionen macht, muss aber warten, bis diese Schreib-Apportionen bei jedem Rechner angekommen ist. Der muss gucken, wenn da Fehler passiert sind, ob er das wiederholen kann oder wie das gelöst werden kann. Es kann sein, dass Rechner gerade nicht erreichbar sind wegen der Netzwerk-Tropologie, die sich gerade ändert oder weil... Es gibt so viele Gründe, warum so Rechner in diesem Moment gerade nicht miteinander reden können. Dann weiß man, an der Stelle muss man schon irgendwie... Entweder muss man warten, bis der wieder da ist und solange kann derjenige, der den Schreibzugriff macht, muss halt warten, bis das erledigt ist. Das mag Systeme geben, die so funktionieren. In der Praxis will aber, keine Ahnung, wenn jemand sein Foto bei Flickr hochlädt, will der jetzt aber nicht fünf Minuten warten, bis der auf allen 500 Flickr-Servern angekommen ist. Sondern das will einfach, okay, ich hab das Foto angekommen und jetzt kann ich das wenigstens bei mir schon mal sehen. Bei meinen Freunden dauert das jetzt vielleicht noch eine Minute, bis die das auch sehen, aber das ist mir egal. Ich seh halt meine User-Experience oder meine Benutzer-Erfahrung. Ist also eindeutig und für mich in Ordnung.
+
+00:31:22.461 --> 00:31:27.321
+<v SPEAKER_2>Das heißt, man setzt bewusst sozusagen darauf, dass die Datenbestände bei den einzelnen Servern unterschiedlich sind.
+
+00:31:27.341 --> 00:31:44.381
+<v SPEAKER_3>Genau, das ist die andere Herangehensweise, dass man vollkommen akzeptiert, es gibt mehrere Realitäten. Jeder Server lebt in seiner eigenen Realität und man schreibt seine Anwendung etwas intelligenter. Man muss halt ein bisschen schlauer sein, um mit diesen mehreren Realitäten, die parallel existieren, umzugehen.
+
+00:31:45.741 --> 00:31:54.581
+<v SPEAKER_2>Ist das jetzt so die Kerntriebfeder gewesen, dass sich der, wie hieß er, Damien Katz an CouchDB gesetzt hat?
+
+00:31:54.601 --> 00:33:15.101
+<v SPEAKER_3>Ein bisschen schon. Damien hat in den 90ern, vor einigen Jahren für Lotus und für IBM, an Lotus Notes gearbeitet. Lotus Notes ist, viele Leute kennen das und kriegen schnell graue Haare, wenn sie davon hören. Es gibt viel Schlechtes zu sagen über Notes. Die Kerndatenbank, die hinter diesem ganzen Notes-System setzt, ist aber ziemlich gut. Die ist von Grund auf so gebaut, dass sie verteilt arbeiten kann, dass sie auf mehreren Rechner laufen kann, dass bewusst Rechner offline genommen werden können, dass der Business Case war, dass es keine große Consulting-Firma gibt. Die haben einen großen Datenbank-Rechner. In der Firma Consultants konnten sich Teile dieser Datenbank auf den Laptop oder den mobilen Computer replizieren, mit zu einem Kunden gehen, in der Zeit, wo es noch kein mobiles Internet gab. Sie konnten live mit Anwendungen, mit den Kundendaten interagieren, können neue Sachen eintragen, neue Milestones eintragen oder alles mögliche, live mit den Daten arbeiten, ohne dass eine Netzwerkverbindung nötig war. Sie konnten die Daten wieder zurück zur Firma tragen, mit dem zentralen Rechner replizieren und jedem anderen auch Zugriff auf die neuen Daten geben. Das würde der Anwendungsfall, dass tausende von Consultants das gleichzeitig machen können und dass ganz viele verschiedene Realitäten parallel existieren können. Und Damien's Haupt...
+
+00:33:15.121 --> 00:33:19.021
+<v SPEAKER_2>Er war da dabei. Er hat dieses Modell mit oder überhaupt entwickelt?
+
+00:33:19.041 --> 00:34:16.601
+<v SPEAKER_3>Ray Ozzie hat das Modell entwickelt. Der hat jetzt den Job von Bill Gates bei Microsoft. Und hat lotene... Na ja, wie heißt das? Da hat das halt kommentialisiert. Und Damien hat als Programmierer an der Core-Datenbank mitgearbeitet. Und ist über die Anwendungsentwicklung von Notes, Anwendungen, die halt so verteilt arbeiten, da hingekommen, hat dann an der Datenbank selbst mitgearbeitet. Hat da dann wieder mit aufgehört und hat wieder Anwendungen darauf gebaut und hat dann irgendwann da auch keine Lust mehr drauf gehabt und sich dazu entschlossen, okay, diese Kernideen von Notes, die sind richtig, richtig gut, aber da ist halt so viel, keine Ahnung, Enterprise-Scheiße drum herum gebaut worden. Es macht jetzt keinen Spaß mehr damit zu arbeiten. Und außerdem gibt es jetzt noch das Web und Notes hat mit dem Web, da gibt es diesen Domino-Server, der das irgendwie miteinander verbindet, aber das ist auch nicht wirklich gut. Er hat sich hinsetzt und die Kernfeatures von Notes genommen, die in eine neue Datenbank verpackt und mit dem Web verheiratet. Das ist so die Grundidee von CouchDB gewesen.
+
+00:34:16.621 --> 00:34:19.521
+<v SPEAKER_2>Warum heißt das CouchDB?
+
+00:34:19.541 --> 00:34:58.281
+<v SPEAKER_3>Das ist ein Background-Namen, also natürlich nachher erfunden. Das Hauptthema von CouchDB ist Relax. Wenn man CouchDB startet auf der Kommandozeile, steht dann CouchDB has started, it's time to relax. Also man kann sich entspannen, damit arbeiten. Das Programmiermodell, wenn wir da später noch drüber reden, ist sehr einfach. Wenn man Web-Entwickler ist, kennt man im Prinzip schon alles. Es ist halt sehr einfach, damit zu anzufangen. Es ist auch sehr einfach, später zu skalieren, weil man am Anfang keine falschen Entscheidungen machen kann. Das Akronym steht dann für Cluster of Unreliable Commodity Hardware, was wieder dieses Google-Computing-Modell ist. Wir haben einfach 1000 Rechner. Wenn davon einer oder zehn ausfallen, ist uns das egal, weil wir haben noch 990 andere.
+
+00:34:58.301 --> 00:35:08.041
+<v SPEAKER_2>Aber am Anfang stand eigentlich so die Couch, wo man sich entspannen sollte. Oder war das die Couch, weil man dann irgendwann auf der Couch landet beim Psychiater?
+
+00:35:08.061 --> 00:35:37.681
+<v SPEAKER_3>Das ist auch schon ein bisschen in den Nebel der Zeit verschoben. Warum, was genau der Antrieb war, Couch zu nennen. Es ist ein sehr markanter Name. Wir haben im Nachhinein schon gemerkt, es gibt viele alternative Datenbanken. CouchDB ist so eine, die sich alle merken können. Die anderen, die ist so wie CouchDB. Das hat schon ganz gut funktioniert. Das mit dem Acrolym ist auch eher lustig, aber das funktioniert halt auch. Dieses ganze Relax-Thema, das wir halt so durchführen, das kommt da schwingt halt mit.
+
+00:35:37.701 --> 00:35:39.081
+<v SPEAKER_2>Und ihr seid auch sehr entspannt bei der Entwicklung?
+
+00:35:39.101 --> 00:35:40.461
+<v SPEAKER_3>Wir sind total entspannt.
+
+00:35:40.481 --> 00:35:43.961
+<v SPEAKER_2>Das merke ich auch schon. Sag nochmal das Bekronym.
+
+00:35:43.981 --> 00:35:46.641
+<v SPEAKER_3>Cluster of unreliable commodity hardware.
+
+00:35:46.661 --> 00:36:09.961
+<v SPEAKER_2>Okay, also eine Zusammenstellung von irgendwie nicht besonders zuverlässiger Hardware. Sprich, CouchDB hat so den Anspruch, dass man das auf beliebigen Scheiß drauf werfen kann und es erstellt dann trotzdem eine konsistente und zuverlässige Datenbank-Experience. Oder ist das zuverlässig?
+
+00:36:09.981 --> 00:36:27.241
+<v SPEAKER_3>Zuverlässig schon. Mit der Konsistenz ist so eine Frage. Das ist so ein Trade-Off, den man machen kann. Man kann es eher so formulieren. Mit CouchDB kann man Anwendungen bauen, die auf so einem Typ Hardware laufen, wo man sagen kann, Hardware kann ausfallen oder Hardware ist nicht erreichbar. Und das funktioniert trotzdem irgendwie.
+
+00:36:27.641 --> 00:36:32.901
+<v SPEAKER_2>Und dieser Damian hat es dann unter Windows entwickelt, hast du gesagt.
+
+00:36:32.921 --> 00:36:39.761
+<v SPEAKER_3>Ich hatte vorhin schon gesagt, als wir noch nicht on air waren, dass das eine interessante Geschichte ist, wie er dazu gekommen ist, CouchDB zu machen. Deswegen erzähle ich die Geschichte jetzt.
+
+00:36:39.781 --> 00:36:42.581
+<v SPEAKER_2>Ja, mach mal.
+
+00:36:42.601 --> 00:38:15.021
+<v SPEAKER_3>Er hat, nachdem er bei IBM war, für einen Startup gearbeitet. Das war in der Boston Area und war da auch nicht so superglücklich. Und ist dann aber auch irgendwann da dann gefeuert worden im Zuge des ersten Dortcom-Booms. Oder es endet, booms. hat dann überlegt, ja, was mache ich jetzt? Und er hatte so als persönlichen Antrieb, ich möchte an was arbeiten, was richtig cool ist. Das war so die Hauptaussage. Und dann hat er versucht, wie schaffe ich das, dass ich an etwas arbeite, was richtig cool ist. Entweder finde ich einen Job bei einer Firma, wo ich weiß, die machen etwas richtig Cooles und die bezahlen mich auch dafür und ich kann dann daran arbeiten. Oder ich mache irgendwas selber. Und er hat sich dafür entschieden, ich mache was selber. Und dann ist er von Boston nach Charlotte gezogen, in North Carolina. Das ist viel günstiger zu leben, hat sein Haus verkauft, hat sich dann ein Haus gemietet. Der hatte gerade eine neue Tochter und zwar alles sehr, nicht dramatisch, aber schon so, okay, wenn ich gerade ein neues Kind hätte, würde ich keine Ahnung, trotzdem weiter versuchen, meine sicheren Lebens- und Arbeitsverhältnisse beizubehalten, anstatt so ein Risiko einzugehen. Er hat aber das Geld, was er noch übrig hatte, von seinen vorherigen Jobs mitgenommen, ist näher zu seiner Familie gezogen, wo keine Ahnung, Oma und Opa noch mit, ob das Kind aufpassen konnten, ob die Tochter aufpassen konnten. Wo es halt generell einfacher und kostengünstiger zu leben. Und hat sich dann drei Monate hingesetzt, was mache ich jetzt? Und hat dann mit vielen Gedanken rumgespielt, wollte sowas wie ein verteiltes Dateisystem für Windows machen, hat sich dann die Windows-Arpies durchgelesen, wie man Dateisystem Plugins schreibt, und hat dann gesehen, das ist viel zu komplex, das kann ein einzelner Mensch überhaupt gar nicht stemmen, und dachte, da wäre er auch nicht schlau genug für, und hat es dann einfach mal gelassen.
+
+00:38:15.041 --> 00:38:18.401
+<v SPEAKER_2>Microsoft hat das ja auch nicht geschafft.
+
+00:38:18.421 --> 00:40:05.581
+<v SPEAKER_3>Kein Kommentar. Und hat dann so ein bisschen weiter überlegt, und ist dann an dem Punkt angekommen, okay, ich mache die Kernideen von Nodes, die nehme ich mal mit, weil da kenne ich mich mit aus. Und dieses Web-Ding, das baue ich da mal richtig mit ein, so von Grund auf. Und andere Leute, also es ist auch wieder nicht er gewesen, oder einer von uns, die andere Leute haben dann gesagt, CouchDB ist Nodes done right, also mal Nodes richtig gemacht, wie man das jetzt heutzutage entwickeln würde. Nodes selber ist jetzt auch schon 20, 25 Jahre alt, und es geht auch von anderen Sachen aus, als die heute halt aktuell sind, wie zum Beispiel Ignorator's Web, also im Prinzip total. Und hat dann angefangen, das zu programmieren. Hat mit C++ angefangen, weil das konnte er richtig gut. Damien ist so ein sehr beeindruckender Programmierer, von meiner Seite her. Und er hatte halt so eine Storage-Engine geschrieben und eine Query-Engine. Und das Ganze war XML-basiert. Und es hat schon so ein bisschen funktioniert, aber er hatte noch keine Concurrency. Also er hat gesehen, okay, ich arbeite im Web, und es geht nicht, dass, wenn einer irgendeine Änderung macht, dass alle anderen irgendwie ausgesperrt sind. Also wenn irgendetwas passiert, dann müssen mehrere Leute das auch gleichzeitig machen können. Und wollte dieses Feature der Concurrency oder der Gleichzeitigkeit hinzufügen. Und hat dann geguckt, wie macht man in C++ gleichzeitig Programme. Da gibt es Lösungen wie Threading, die ganz gut funktionieren, wenn man sehr schlau ist und sehr vorsichtig ist, die einzusetzen. Aber es ist auch eigentlich sehr schwer, richtig ordentlich zu machen. Und er hat dann diesen Problem-Space, diese Problemgruppen der Gleichzeitigkeit in der Programmierung ein bisschen darum geforscht und ist auf Erlang gestoßen. Das ist eine funktionale Programmiersprache, die auf Gleichzeitigkeit, die im Prinzip Gleichzeitigkeit in der Sprache eingebaut hat.
+
+00:40:06.741 --> 00:40:15.941
+<v SPEAKER_2>Aber übrigens hier auch schon mal ein Thema, gleich mal erwähnen, für den, der es noch nicht gehört hat. Chaosradio Express Nummer 82 stellt Erlang vor.
+
+00:40:15.961 --> 00:40:19.401
+<v SPEAKER_3>Bei Erlang können wir später auch noch ein bisschen erzählen, wenn dann noch so ein Refresher nötig ist.
+
+00:40:19.881 --> 00:40:26.561
+<v SPEAKER_2>Naja, ich meine, du kannst ja die wesentlichen... Ich meine, warum hat er dann... Also er hat Erlang genommen, nur allein wegen dieses Gleichzeitigkeits-Dingens?
+
+00:40:26.581 --> 00:41:03.961
+<v SPEAKER_3>Genau, der hat eine Woche rumgespielt und gesehen, okay, weil er kannte ein Konto, also keine Ahnung, hat natürlich ein bisschen Erfahrung mit funktionaler Programmierung auch gehabt, aber wenn man eher C++ codet, hat man da ja nichts, ist man ja nicht so ganz da drin. Hat in der Woche halt so ein paar Demos geschrieben und mit rumgespielt und gesehen, wie einfach es ist, verteilte Systeme oder parallele Systeme, oder parallel laufende Systeme zu bauen. Also genau das, wofür Erlang gut ist, dass es tatsächlich sehr einfach ist. Dann hat er im Lauf von sechs Wochen einen Großteil des C++ Codes nach Erlang portiert und eine Sprache, die er eine Woche vorher noch nicht kannte. Dann hat er ein lauffähiges System gehabt, was auch diese Parallelität direkt mit eingebaut hat.
+
+00:41:03.981 --> 00:41:36.941
+<v SPEAKER_2>Das ist ganz interessant. Erlang ist eine wirklich wenig verwendete Programmiersprache, die allerdings immer wieder, gerade genau, wenn es in diesen Punkt, der gleichzeitig kommt, von ein paar Programmierern angenommen wird und dann immer wieder so erstaunliche Projekte hervorbringt. Was vielleicht viele kennen, ist E-Jobber-Server, da muss man auch nicht viel darüber nachdenken, dass da Gleichzeitigkeit eine große Rolle spielt. Generell sind Server so eine Sache. Soweit ich weiß, ist auch der Facebook-Chat in Erlang gemacht worden.
+
+00:41:38.001 --> 00:42:12.761
+<v SPEAKER_3>Da kann man mit Zahlen um sich werfen. Von da, wo es noch keinen Facebook-Chat gab, zu wo es den Facebook-Chat gab, sind in einem Schritt auf 80 Millionen User losgelassen worden. Das ist ein System, das Erlang sehr gut verkraftet hat. So etwas in anderen Sprachen zu bauen oder in anderen Systemen zu bauen, ist wahrscheinlich eher nicht ganz so einfach. Nicht, dass die das natürlich auch getestet haben, dass man das so langsam hoch skalieren kann, aber das dann direkt auf alle Facebook-Josern loszulassen, ist halt schon ein sehr großes Projekt. Erlang ist aber genau dafür gebaut und hat deswegen da auch sehr gut funktioniert.
+
+00:42:12.781 --> 00:42:16.961
+<v SPEAKER_2>Und so ist es auch heute noch. CouchDB ist 100% in Erlang geschrieben.
+
+00:42:17.341 --> 00:42:55.581
+<v SPEAKER_3>CouchDB ist hauptsächlich in Erlang geschrieben. Es gibt ein paar Komponenten, die noch in C geschrieben sind, die wir halt nicht in Erlang neu bauen wollen, sowas wie die IBM Components for Unicode. Das ist eine große C-Library, die IBM bereitstellt, um Unicode richtig zu machen, um Sortierung von verschiedenen Sprachen richtig zu machen. Das ist ein riesen Standard, eine riesen Library. Da sind wir sehr froh, dass sie als Open Source gibt, dass IBM das macht, aber das will keiner neu implementieren. Deswegen benutzen wir das einfach. Das linken wir mit rein in unsere Erlang.
+
+00:42:55.601 --> 00:43:06.161
+<v SPEAKER_2>Gut, aber das sind sozusagen externe Libraries, die halt in einer Sprache geschrieben sind, die so mitverwendet werden. Aber alles, was sozusagen generisch CouchDB ausmacht, ist vollständig in Erlang geschrieben.
+
+00:43:06.421 --> 00:43:31.241
+<v SPEAKER_3>Es gibt noch einen zweiten Punkt, das Abfragesystem von CouchDB, das wir Views nennen, lässt den User, den Programmierer in JavaScript eine Abfrage-Definition schreiben. Da benutzen wir von Mozilla das Spider Monkey-Projekt, um dieses JavaScript auszuführen. Das ist die einzige andere Sache, die in C ist, die wir nutzen, die nicht in Erlang ist.
+
+00:43:38.001 --> 00:43:53.761
+<v SPEAKER_2>Das heißt, das, wo ein MySQL in C plus plus ist, das eigentliche Server-System in C plus plus ist und die Abfragesprache ist SQL, ist es hier Erlang als Implementierungssprache und die Abfragesprache ist JavaScript?
+
+00:43:53.781 --> 00:44:41.441
+<v SPEAKER_3>So ungefähr. Es ist nicht, dass zur Abfragezeit viel JavaScript läuft. Aber im Prinzip kann man das so vergleichen. Um etwas genauer zu sein, in einer MySQL-Datenbank hat man einen Tabellendefinitionskonstrukt in SQL, das heißt create table oder alter table. Dann sagt man, hier sind jetzt meine Indizes und so stelle ich mir vor, wer meine Joints später gebraucht. So definiert man in CouchDB In-Java-Skript-Views, die sagen, hier wird jetzt dieser Index zusammengebaut, den ich später dynamisch abfragen kann. Also das ist etwas, was zur Definitionszeit nicht zur Abfragezeit läuft. Aber im Prinzip ist das JavaScript für Abfragen zum Server-Kernsystem in Erlang.
+
+00:44:41.461 --> 00:44:47.761
+<v SPEAKER_2>Also das JavaScript, habe ich das richtig verstanden, wird nur zum Zeitpunkt der Erstellung von Indizes verwendet?
+
+00:44:47.781 --> 00:44:48.381
+<v SPEAKER_3>Genau.
+
+00:44:48.401 --> 00:44:49.901
+<v SPEAKER_2>Aber nicht für die Abfragen selbst?
+
+00:44:49.921 --> 00:44:55.961
+<v SPEAKER_3>Genau, die Abfragen selbst sind nur auf diesen Indizes, die wiederum über Erlang angesprochen werden.
+
+00:44:55.981 --> 00:45:08.241
+<v SPEAKER_2>Aber trotzdem, zwei Sprachen kommen zum Einsatz, die im Prinzip relativ neu sind auf der Bühne. Ich meine, JavaScript ist jetzt nicht im einigen Sinne neu, aber es ist neu als Sprache, die wirklich ernsthaft für Anwendungsentwicklung verwendet wird.
+
+00:45:08.521 --> 00:45:17.281
+<v SPEAKER_3>Erlang ist auch schon sehr alt, aber kommt so aus der Telco-Nische und hat da, ist halt auch noch nicht so viel Nutzung gesehen.
+
+00:45:17.301 --> 00:45:42.601
+<v SPEAKER_2>Genau, von diesen erigsten Leuten. Da kommt man auch mal wieder auf dieses großartige alte Video, was dir ja sicherlich bekannt ist, verweisend, wo dann die, das waren auch die Programmierer, das Kernentwickler-Team in so einem großartigen Demo, die Vorzüge von Erlang-Preisen ganz großartig. Erlang läuft auch immer noch bei Telcos, muss man sagen.
+
+00:45:42.621 --> 00:45:45.741
+<v SPEAKER_3>Die nutzen das auch immer noch mit großem Erfolg, ja.
+
+00:45:45.761 --> 00:45:56.001
+<v SPEAKER_2>Also sozusagen, jeder kann davon ausgehen, dass wenn wir ein Telefongespräch führen, dass das Tippen unserer Tasten eine ganze Menge Erlang-Code zur Ausführung bringt.
+
+00:45:56.941 --> 00:46:10.421
+<v SPEAKER_3>So gut kenne ich mich in dem Bereich nicht aus. Es muss nicht vielleicht sein, dass jedes Telefongespräch durch ein Erlang geht. Aber keine Ahnung. Im Laufe einer Woche, die SMS oder Gespräche, da kommt man auf jeden Fall einem Erlang vorbei, ohne das zu wissen.
+
+00:46:10.441 --> 00:46:41.981
+<v SPEAKER_2>Alex, wie ist denn das so? Du hast ja jetzt auch viel mit SQL entwickelt und Anwendungsgeschichten gemacht. Diese Notwendigkeiten, die wir jetzt eben gehört haben, waren ja sozusagen die Notwendigkeiten der Serverseite. Es repliziert nicht, es skaliert nicht, es lässt sich nicht problemlos beschleunigen. Hast du denn sozusagen aus Sicht der Anwendung auch ein Problem mit SQL oder ist dir das eigentlich wurscht?
+
+00:46:42.001 --> 00:46:42.421
+<v SPEAKER_4>Hab ich, ja.
+
+00:46:44.381 --> 00:46:46.261
+<v SPEAKER_2>Aber du benutzt ja Ruby und Rails.
+
+00:46:46.281 --> 00:46:46.481
+<v SPEAKER_4>Genau.
+
+00:46:46.501 --> 00:46:49.281
+<v SPEAKER_2>Und da ist ja eigentlich von dem SQL gar nicht mehr so viel zu sehen.
+
+00:46:49.901 --> 00:48:13.161
+<v SPEAKER_4>Also genau, ich suche mal vielleicht ein bisschen aus genau. Also Rails, also wir machen viele Projekte mit Rails. Und der Teil von Rails, der sich mit der Datenbank beschäftigt, heißt Active Record. Und Active Record ist ein Projekt, was glaube ich inzwischen so 25.000 Zeilen Code umfasst. Und das kümmert sich darum, aus einem Ruby-Objekt SQL zu generieren. Sprich, wenn ich irgendwie sage, speichere mir mal das Objekt hier in meine Datenbank, dann fängt das halt an, loszulegen und sich anzugucken, wie das Objekt aussieht und was man da für SQL bauen müsste, um das dann in die Datenbank schreiben zu können. Und dann schickt es halt das Ganze in die Datenbank. Und andersrum natürlich, wenn ich ein Objekt laden will, dann muss es halt auch SQL generieren, um das Objekt zu laden oder ganz viele davon, oder Listen und Bäume von Objekten. Und daraus entsprechend viele Ruby-Objekte wieder zu generieren. Das ist so das, was Active Record macht. Und das funktioniert für einfache Sachen relativ okay. Sprich, Active Record macht so ein paar Dinge. Also wenn ich jetzt einfach nur ein Objekt habe, meinetwegen einen User oder so, der halt meinetwegen eine Name und eine E-Mail-Adresse hat, dann kann ich den halt da reinschreiben, wieder rauslesen. Dann ist das halt ganz doll einfach. Wenn ich irgendwas machen will, was ein bisschen komplexer ist, dann ist das auch noch ganz so einfach. Wenn ich irgendwas machen will, was noch komplexer ist, dann fällt das irgendwann alles auseinander. Und dann stehe ich wieder da und schreibe halt SQL per Hand.
+
+00:48:13.181 --> 00:48:18.701
+<v SPEAKER_2>Also was meinst du mit komplexer? Was wäre ein Beispiel für jetzt ist es komplexer als vorher?
+
+00:48:18.721 --> 00:49:03.401
+<v SPEAKER_4>Zum Beispiel so Dinge, um jetzt mal vielleicht bei diesem Fotobeispiel zu bleiben. Ich will jetzt gerne mal alle Fotos von User XY haben, mit deren Kommentaren und wie oft da das Wort Haus drin auftaucht. Also so Sachen, die halt ein bisschen anstrengender sind für so eine Datenbank, wo ich halt einfach komplexes SQL bauen muss. Also Active Record schafft es sozusagen eine ganze Reihe von SQL vor mir zu verstecken und mir vorzugaukeln, da gibt es eigentlich gar kein SQL. Ich speichere einfach mein Objekt und hole wieder raus, aber an irgendeiner Stelle hört es halt auf. Und dann muss ich halt wieder per Hand ran. Und dann baue ich halt mein SQL per Hand zusammen und dann muss ich halt alles von Hand machen.
+
+00:49:04.181 --> 00:49:18.041
+<v SPEAKER_2>Das heißt, die Abstraktion skaliert sozusagen nicht in deine Anwendungsdomäne. Irgendwann hast du einen Komplexitätsgrad in der Abfrage, wo du quasi auf deine Abstraktion verzichten musst und dann doch auf die nackte Maschine gucken musst.
+
+00:49:18.061 --> 00:49:51.341
+<v SPEAKER_4>Genau, das ist mein eines Problem. Mein zweites Problem ist, dass ich natürlich, wenn ich skalieren will mit einem einzelnen, also wenn ich jetzt einen einzelnen Datenbank-Server habe und irgendwann so groß bin, dass ich halt zwei haben möchte, dass ich dann diese ganzen Probleme, die Jan vorhin schon angesprochen hat, habe, sprich ich muss irgendwie gucken, wie die synchronisieren und wie ich das jetzt mit einem Cluster mache oder was auch immer mir dafür Lösungen angeboten werden. Sprich, ich handle mir den ganzen Ärger ein.
+
+00:49:51.361 --> 00:49:57.161
+<v SPEAKER_2>Aber das ist ja eigentlich nichts, was jetzt direkt in der Anwendung durchschlägt, oder? Da sind dann einfach mehrere Server, die sich nach oben verhalten wie einer.
+
+00:49:57.441 --> 00:50:15.281
+<v SPEAKER_4>Na ja, in der Theorie würden sie sich natürlich wie einer verhalten. Aber wenn ich jetzt sozusagen meinetwegen so ein Setup habe, wo ich eine Replikation habe von einem zum anderen, und die dann nicht konsistent sind, oder die Synchrotisation abbricht, weil irgendwas sheetgegangen ist, oder so.
+
+00:50:15.301 --> 00:50:40.781
+<v SPEAKER_3>Oder die einfach noch länger dauert, wo wir bei Punkt 4 oder so, der Fallacies waren, dass das Netzwerkgeschwindigkeit unendlich schnell ist, oder es keine Latenz herrscht, wobei die in Fact oder in Echt dann tatsächlich doch da ist, und so eine replizierte Maschine dann doch vielleicht noch nicht auf demselben Stand ist, wie die Maschine, der ich eine neue Information gebe. Sodass man, wenn man, man schreibt zu einer Maschine und liest von der anderen Maschine, dann kriegt man halt von der zweiten halt noch alte Informationen.
+
+00:50:40.801 --> 00:50:47.281
+<v SPEAKER_2>Das heißt, es ist eigentlich wünschenswert, dass man als Anwendungsprogrammierer schon eine konkrete Vorstellung davon hat, dass es mehrere Server gibt.
+
+00:50:47.801 --> 00:50:48.081
+<v SPEAKER_4>Genau.
+
+00:50:48.101 --> 00:50:52.041
+<v SPEAKER_2>Und an der Stelle ist es sozusagen, eigentlich will man sich nichts vorgaukeln lassen.
+
+00:50:52.321 --> 00:51:06.501
+<v SPEAKER_4>Genau, also die Active-Record-Welt fällt dann sozusagen zusammen in sich. Und mein Denkmodell mit, ich habe eine Datenbank oder ich habe eigentlich nur so eine Art Persistenzlayer, der irgendwie funktioniert und der mir meine Vekte holt, die fällt dann halt zusammen. Und in dem Moment muss ich dann halt alles wieder per Hand machen.
+
+00:51:06.681 --> 00:51:44.341
+<v SPEAKER_3>Und dann kommen so Leute wie, ja, ich habe hier nun mein Blogsystem und mein CMS oder mein Shop für meine, keine Ahnung, Kleintierzubehörhandlung. Und ich habe 1000 oder 100 User am Tag. Und ich brauche nicht 17 Datenbank-Server. Und wenn mein Rechner oder meine Webseite mal eine Stunde down ist oder vielleicht auch mal einen Tag, dann ist das nicht das Ende der Welt. Und ich brauche gar nicht, ich muss gar nicht umdenken. Und ich möchte diese Einfachheit des Active Record weiter benutzen. Und da kann man auch einfach gar nichts gegen sagen. Wenn man die Probleme, die Alex und ich jetzt schon angesprochen haben, wenn man die einfach nicht hat oder die nicht relevant sind für jemanden persönlich oder für eine Firma, dann kann man auch die bestehenden Tools einfach und erfolgreich einsetzen. Das ist jetzt nicht so, dass wir sagen, das ist alles scheiße. Ihr solltet es besser nicht machen.
+
+00:51:44.361 --> 00:52:03.901
+<v SPEAKER_2>Aber was sind denn eure Erfahrungen? Jetzt mal so, vielleicht habt ihr irgendwie ein schönes Beispiel oder irgendwelche Zahlen im Kopf, so was Systeme heute leisten oder wo ein System eine Komplexität hat, wo es schon wünschenswert ist, mit mehr als einem Server zu arbeiten, wenn jetzt die Anführungen und Forderungen über die Kleintierhandlung hinausgehen?
+
+00:52:03.921 --> 00:52:21.641
+<v SPEAKER_3>Ich habe einen Kunden, der ist äquivalent zur Kleintierhaltung. Der vertreibt sehr spezialisierte Fahrräder und hat, keine Ahnung, drei Sales in der Woche. Das ist halt total Low Volume. Aber der Shop muss immer online sein. Falls ein Kunde kommt, der was kaufen möchte, dann soll er vielleicht auch nachts um drei das kaufen können.
+
+00:52:21.661 --> 00:52:22.961
+<v SPEAKER_2>Gerade, weil sie so selten sind?
+
+00:52:22.981 --> 00:53:22.261
+<v SPEAKER_3>Gerade, weil sie so selten sind, sind die umso wichtiger. Das heißt, es ist total einfach, nicht viel Traffic, einfacher abfragen, aber es müssen mindestens zwei Rechner da sein, die an verschiedenen Netzwerken hängen, wo sichergestellt wird, diese Webseite ist immer erreichbar. Das ist schon der einfachste Use-Case oder der einfachste Anwendungsfall, wo diese ganze Sache zum Tragen kommt. Nicht, dass man das nicht auch im Interactive Record bauen kann, dass man einfach sagen kann, ich frage Server X, wenn Server X innerhalb von 10 Millisekunden oder von einer Sekunde nicht antwortet, frage Server Y, dann kriegt man die Daten von da. Und wenn das gerade so gesund, keine Ahnung, so ein Job ändert sich jetzt nicht so super oft. Und wenn man dann gerade neue Produktdaten einspielt, dann kann das mal ein bisschen dauern. User, die ankommen und eine Abfrage machen, während der Einspielprozess läuft, kriegen noch die alten Daten. Erst wenn der abgeschlossen ist, sehen die halt neue Daten. Und das kann man alles auch da bauen. Wenn das alles größer wird, komplexer wird, dann möchte man sich da vielleicht nicht mehr so ganz so viel auseinandersetzen.
+
+00:53:24.241 --> 00:55:12.341
+<v SPEAKER_4>Genau, ich hab noch zwei Probleme. Und zwar das eine ist, dass ich in meiner Modellierung sozusagen in meinem Anwendungsdomain ein bisschen eingeschränkt bin. Also ich hatte vorhin dieses Beispiel mit den Tags, dass ich zum Beispiel, wenn ich jetzt mein Foto taggen will, relativ viel Aufwand treiben muss. Sprich, meinetwegen jetzt eine Tagging-Tabelle und dann noch mal eine Tags-Tabelle anlegen muss und so eine Geschichte. Das ist natürlich klar, das funktioniert alles. Man kann das alles so machen. Aber es ist halt mehr Aufwand, als es vielleicht sein müsste. Das heißt, ich werde in dem Moment teurer als derjenige, der eine Anwendung für den Kunden schreibt. Und irgendwie, man muss das bezahlen. Und ich hätte das natürlich gerne so, dass ich das möglichst einfach machen kann und dann, dass es alles schneller geht. Und ich meine Business Logik so modellieren kann, wie ich sie gerne hätte und nicht so, wie sie die Datenbank sozusagen mir erlaubt zu modellieren. Das ist so ein bisschen der eine Punkt, der natürlich auch nicht sofort zuschlägt, wenn ich jetzt eine ganz einfache Anwendung habe. Aber je komplexer das Ganze wird, desto öfter hätte ich natürlich gerne irgendwas mal anders, als es mir mit so einem flachen Tabellenschema möglich ist, wo ich halt pro Datensatz halt nur einfach eine feste Anzahl von Spalten habe. Und das war es dann. Und ich kann halt nicht irgendwie Fachschachteln oder andere Dinge tun. Und so ein anderer Punkt, der vielleicht so ein bisschen mehr aus Faulheit auch begründet ist, ist so eine Geschichte mit den Indizes. Wenn ich halt so eine relationale Datemang habe, dann kann ich da super Queries drauf machen. Und das funktioniert auch alles, aber es ist halt irgendwann relativ langsam. Und ich muss mich per Hand sozusagen darum kümmern, dass ich da irgendwelche Indizes aufbaue. Und dazu muss ich mich mit MySQL auskennen. Und dazu muss ich halt per Hand nachvollziehen, welche Queries wann laufen und wie langsam die sind. Und ich muss einen hoffen Aufwand treiben, um meine Datenbank schnell zu halten. Und das ist einfach was, was man natürlich machen kann. Aber wenn ich zum Beispiel viel zu faul bin, das mache ich überhaupt nicht gerne. Und das ist so ein Ding, was ich natürlich auch gerne vermeiden würde.
+
+00:55:14.021 --> 00:56:04.881
+<v SPEAKER_2>Indizes, um vielleicht mal ein paar Leute noch mitzunehmen, die vielleicht nicht ganz so im Datenbank-Thema drinstecken, sind halt die Teile der Datenbank, die quasi einen Teil der Daten vorsortiert vorhalten. Irgendwas aktualisiert, wenn die halt immer gleich mitaktualisiert. Sprich, umso mehr Indizes man hat, umso langsamer wird auch diese Aktualisierung. Aber umso mehr man davon hat, umso mehr Möglichkeiten hat man, schnelle Abfragen zu machen. Man kann auch ohne Indizes abfragen, aber dann muss er halt wirklich von A bis Z durch das eigentliche Datenmaterial händisch durchmarschieren. Und das dauert dann in der Regel doch sehr lange. Ich hätte noch... Hab ich das jetzt richtig verstanden? Du möchtest sozusagen mehr Freiheit haben, was alles indizierbar ist. Und du hättest es eigentlich lieber, dass das System, das Subsystem, das Datenbank-Subsystem dir das komplett abnimmt. Dass es sozusagen selber merkt, wann ein Index gebraucht wird?
+
+00:56:06.061 --> 00:56:16.621
+<v SPEAKER_4>Ja, also im Fall der Indizes will ich einfach... Also ich bräuchte sozusagen so eine Art Datenbank-Menschen, der mir das macht, wenn ich es nicht selber machen will. Aber natürlich wäre es noch toller, wenn man es einfach gar nicht machen muss.
+
+00:56:16.641 --> 00:56:19.981
+<v SPEAKER_2>Du brauchst einen Admin. Noch lieber hättest du gar keinen Admin.
+
+00:56:20.001 --> 00:56:23.481
+<v SPEAKER_4>Keinen Admin, das geht einfach. Das wäre doch am schönsten.
+
+00:56:23.501 --> 00:56:24.601
+<v SPEAKER_2>Und das geht jetzt mit CouchDB?
+
+00:56:29.861 --> 00:57:51.901
+<v SPEAKER_3>Na grundsätzlich haben wir natürlich dieselben Beschränken, die alle andere Software auch hat. Wir können das nicht in Magie treiben. Und wenn wir einen Index brauchen, dann muss der Index auch irgendwie definiert und gebaut werden. Und wir machen da auch keine Magie. Das Programmiermodell ist halt nur sehr anders. Das Erstellen so eines Indexes ist in CouchDB explizit nötig. Das Herausfiltern der Daten, die in diesen Index sollen, muss der Datenbankanwender konkret machen. Wo bei einer Relationalen Datenbank sagt, okay, ich habe hier diese Spalte, da stehen die Namen drin. Macht darauf einen Index. Dann macht die Datenbank im Hintergrund diesen Index darauf, umspricht den Trend in den Baum, und dann macht alle Abfragen, können dann darauf laufen. Muss man in CouchDB explizit sagen, okay, ich definiere mir hier jetzt einen Index, mit dem ich folgenden Typ abfrage, zum Beispiel nach Username, vereinfache und schnell mache. Das nimmt Alex nicht, er muss sich darum kümmern, dass es einen Index gibt. Aber es entfernt ihn auch nicht so weit davon, dass er einfach nur gucken muss, wie kann ich das optimieren, wie kann ich das schneller machen. Es gibt so eine Art, wie man so einen Index definiert, und das muss er einfach machen. Und da kann er sich Software schreiben, die das so ein bisschen abnimmt. Aber es gibt nicht so viel Entfernung zwischen, ich programmiere hier mein Objektmodell und hier ist, wie die Daten funktionieren, oder wie die Daten gespeichert werden in meiner Datenbank. Das ist alles etwas näher zusammen.
+
+00:57:51.921 --> 00:58:00.881
+<v SPEAKER_2>Du hast ja am Anfang auch gesagt, dass der Damian im Prinzip die Idee von Lotus Notes genommen hat, und das so in die aktuelle Welt getragen hat. Wann hat er eigentlich damit angefangen?
+
+00:58:00.901 --> 00:58:02.281
+<v SPEAKER_3>Das ist jetzt gut vier Jahre her.
+
+00:58:02.301 --> 00:58:26.841
+<v SPEAKER_2>Vier Jahre, okay. Das heißt, du bist sozusagen zwei Jahre, nachdem das losging, dazu gestoßen. Dass er dann sozusagen einerseits das Done Right gemacht hat, aber eben auch mit dem Web im Hintergrund oder im Hinterkopf. Was bedeutet das jetzt für CouchDB, dass da das Web sozusagen mit eingebaut ist? Wo entsteht da eine Kompatibilität, die es vorher nicht gab?
+
+00:58:26.861 --> 00:58:38.681
+<v SPEAKER_3>Der Hauptpunkt ist, wenn man mit CouchDB sprechen möchte, spricht man HTTP. Das Standardprotokoll, das im Web auch benutzt wird, dass alle Browser können, dass nicht technische Leute wie meine Mutter verstehen.
+
+00:58:38.721 --> 00:58:39.981
+<v SPEAKER_2>Oder HTTPS.
+
+00:58:40.001 --> 00:58:47.841
+<v SPEAKER_3>Oder HTTPS, als Spezialfall. Wobei CouchDB selber HTTPS nicht macht. Aber Details.
+
+00:58:47.861 --> 00:58:49.081
+<v SPEAKER_2>Aber das ist doch ganz wünschenswert, oder?
+
+00:58:49.101 --> 00:58:59.381
+<v SPEAKER_3>Das ist ganz wünschenswert. Aber das ist nicht mein Problem-Ding. Wenn man eine HTTB-Proxy hat, der SSL kann, dann schlägt man den einfach davor. Und schon hat man sein SSL vor der CouchDB fertig.
+
+00:58:59.401 --> 00:59:05.501
+<v SPEAKER_2>Das heißt, man kann an der Stelle auch Web-Mechanismen, die bereits existieren, einfach davor packen.
+
+00:59:05.521 --> 01:00:37.581
+<v SPEAKER_3>Benutzen, genau. Und sich da nicht drum kümmern. Eben noch, warum HTTPS eine gute Sache ist. Der eine Punkt ist dieser Toolsupport. Das ist, die ganzen Leute, die Web-Anwendungen oder die auch Web-Anwendungen in Betrieb halten, die Leute, die Operations machen, die setzen so Sachen ein wie Load Balancer oder Proxies und Caches. Und die sind für HTTPS halt entwickelt worden. Da gibt es Hardware-Lösungen für, die man für viel Geld kaufen kann. Die sind jetzt in den letzten 15 Jahren entwickelt und gereift worden. Das sind halt gute Systeme, womit sich die Leute auskennen. Und diese ganze Infrastruktur kann man einfach jetzt nach CouchDB mitnehmen. Das heißt, Leute, die CouchDB in Betrieb einsetzen wollen, müssen nicht irgendwelche neuen Proxys lernen, nicht neue Software machen, nicht neue Konzepte lernen. Die wissen schon, wie man Web-Server skaliert. Und CouchDB verhält sich für jemanden, der es betreibt wie ein Web-Server. Das ist ziemlich nett. So als Gegenbeispiel, MySQL benutzen, so ein Proprietär ist, nicht Proprietär, aber ein Binär-Protokoll. Jan Knechka hat da den MySQL-Proxy geschrieben. Ein ziemlich, ziemlich cooles Tool, wo man ganz viel Schabernack mit treiben kann, mit der Lua-Scriptsprache, irgendwelche Sachen faken kann. Das ist halt richtig, richtig cool. Man muss dabei einen eigenen Proxy bauen, der dieses Protokoll spricht. Und man konnte nicht einfach alle anderen Proxys benutzen, die es schon gibt. Und wenn wir jetzt jemanden haben, okay, ich finde jetzt Apache richtig toll, der funktioniert als Proxy und ich kenne mich damit aus und meine Operations People kennen sich damit aus, dann ist das alles super. Wenn jetzt jemand sagt, okay, der neue Nginx, der jetzt aus Russland kommt, den finde ich viel geiler, dann kann er den einfach nehmen, weil der auch harte DB spricht. Und wenn man so auf offenen Standards aufbaut, die andere Leute auch benutzen, dann ist das...
+
+01:00:37.601 --> 01:00:41.361
+<v SPEAKER_2>Ist das denn auch in der Realität alles kompatibel genug?
+
+01:00:41.381 --> 01:01:30.301
+<v SPEAKER_3>Wir finden, was ich gemerkt habe, dass HTTP ist überall, jede Sprache unterstützt HTTP, jeder Browser spricht HTTP. Aber was ich gefunden habe, dass so in manchen Details dann das doch nicht alles so ausgereift ist, dass es oft so ist, okay, Browser sind für eine Anwendung gebaut, Webseiten zu lesen, und man kann eventuell noch so Formulare abschicken. Mehr können Browser als HTTP-Client nicht wirklich. Dieses ganze Ajax-Umfeld erfordert aber schon so ein bisschen mehr, und dann mussten sie die Browser ein bisschen erweitern. Die können immer ein paar Sachen immer noch nicht so richtig gut. Manche jüngere Projekte, Engine X ist jetzt verhältnismäßig jung, hat noch so an kleinen Stellen, sind noch etwas inkompatibel mit der HTTP, mit dem HTTP-RFC. Aber das sind so Mini-Sachen, die man halt relativ schnell beheben kann. Also im Prinzip ist das tatsächlich möglich.
+
+01:01:31.401 --> 01:01:34.701
+<v SPEAKER_2>Also Engine X kenne ich jetzt noch nicht, das ist auch einfach ein kommerzielles...
+
+01:01:34.721 --> 01:01:38.881
+<v SPEAKER_3>Nee, es ist ein Open Source Projekt. Ein Open Source Projekt, okay.
+
+01:01:38.901 --> 01:01:40.581
+<v SPEAKER_2>Was als HTTP-Cache?
+
+01:01:40.601 --> 01:02:09.581
+<v SPEAKER_3>Es ist ein Proxy. Per Default erstmal ohne Cache, also man kann sowas wie Rewrite und Authentication und SSL und... verschiedene Backend-Hos und der kümmert sich da also keine Ahnung. Ich habe hier einen Frontend und sieben Backend-Knoten und der Engine X guckt dann, wenn einer davon ausgefallen ist, dann schicke ich dem keine weiteren Queries und kümmere mich darum, wenn er wieder da ist, dann kriegt er wieder ein paar Queries, aber noch nicht alle, weil sonst halt seine Caches von dem Rechner noch nicht aufgewärmt sind. Man kann so sehr schlaue Architekturen damit bauen und er ist extrem schnell.
+
+01:02:09.601 --> 01:02:13.581
+<v SPEAKER_2>Da kann man dann auch schon mehrere CouchDB-Server sozusagen...
+
+01:02:13.601 --> 01:02:15.461
+<v SPEAKER_3>Das wäre eine Möglichkeit, so ein...
+
+01:02:15.481 --> 01:02:23.021
+<v SPEAKER_2>Aber hat dann... wie kann denn dann die Anwendung, die dann darauf zugreift, noch wissen, mit welchem Server sie redet oder ist das ihr dann egal?
+
+01:02:23.041 --> 01:02:25.661
+<v SPEAKER_3>In dem Fall weiß die Anwendung das nicht und ist dann auch egal.
+
+01:02:27.201 --> 01:02:30.621
+<v SPEAKER_2>Das muss dann aber auch so sein für die Anwendung, dass es ihr egal ist?
+
+01:02:30.641 --> 01:03:34.901
+<v SPEAKER_3>Genau. Es gibt viele verschiedene Modelle, wie man CouchDB oder jeden Web-Server einsetzen kann. Die Grundidee ist, dieses verteilte Server verschiedene Realitäten. Ein Spezialfall davon ist, wir tun weiterhin so, als würde es nur eine Realität geben. Wir haben einen Nginx-Proxy davor, der uns Ausfallsicherheit gibt. Das heißt, wenn ein Rechner abschmiert, ist das egal. Aber wir haben immer noch diesen einen Single Point of Failure, wo es einen Nginx-Knoten gibt, der durch den alles durchgeht. Dann kann man das wieder auf zwei Knoten erhöhen, das auch ausfallsicher machen, und dann mit IP-Failover-Sachen machen. Man kann das immer weiterführen, es wird aber auch immer komplexer. Aber das würde fundamental funktionieren, genauso wie MySQL-Replikation zum Beispiel funktioniert, wo ich halt einen zentralen Rechner, wo alle Rights zu hingehen. Und dann habe ich mehrere Read-Server, die halt eine Masse von Leuten bedienen kann, die auch Auswahlsicherheit bieten. Also das ist jetzt nicht, was fundamental anders wäre. Die Systeme, die Leute schon kennen, kann man in CouchDB auch bauen, aber man kann auch Systeme bauen, die von relationalen Datenmanken nicht unterstützt werden oder nur sehr schwer unterstützt sind.
+
+01:03:34.921 --> 01:03:43.041
+<v SPEAKER_2>Und außer HTTP gibt es dann noch irgendein Element, was jetzt sozusagen dem Web abgeguckt ist oder aufs Maul?
+
+01:03:43.061 --> 01:04:20.641
+<v SPEAKER_3>Grundlegend gibt es keine Relationen. Datensätze werden als Dokumente gespeichert. Also CouchDB wie Notes ist eine dokumentbasierte Datenbank, einfach nur um Schlagworte zu haben oder einen Titel zu haben, zu welcher Klasse Datenbanken das gehört, auch wenn es da jetzt nur ein oder zwei von gibt. Wenn du einen Datensatz speicherst wie ein Bild von einem User bei Flickr, dann ist das ein eigenes Dokument in CouchDB. Und wenn das zum User gehört, hat der User vielleicht noch sein eigenes Dokument. Es gibt inneren keine Verbindung zwischen diesen beiden Dokumenten. Jedes Dokument ist unabhängig von einem anderen Dokument.
+
+01:04:20.661 --> 01:04:37.881
+<v SPEAKER_2>Also es gibt nicht so etwas wie eine klar definierte Relation, in der Relationalen Datenbanken, dass man sagt, ok, hier habe ich dieses Objekt, hier habe ich dieses Objekt. Und an diesen beiden kleinen Details, nämlich eine ID oder sonst irgendein Zeiger, der in beiden oder auch nur in einem von den beiden enthalten ist, die gehören dann zusammen. Davon weiß CouchDB sozusagen gar nichts.
+
+01:04:38.141 --> 01:05:41.821
+<v SPEAKER_3>Genau. Nie. Und das ist auch so, wie das Web im Prinzip funktioniert. Wenn ich eine Webseite habe und sage, ok, dieser Text, den Abschnitt, den ich hier habe gerade, dieses Wort bezieht sich auf was anderes und ich mache einen Link dahin, dann ist das Linkziel ja auch nicht Teil des HTML-Dokuments, wo dieser Link drin ist, sondern ist in einem total unabhängigen HTML-Dokument, das unter einer anderen Adresse verfügbar ist. Also man kann sagen, es besteht eine Relation zwischen dem und dem, also zwischen zwei Dokumenten, zwischen zwei HTML-Seiten. Aber die Web-Server oder das ganze System, das muss ja nicht im selben System sein, es können zwei verschiedene Rechner sein, die irgendwo auf der Welt stehen. Es gibt also keine erzwungene Relation, Links können tot sein, das heißt, wenn der andere Rechner nicht verfügbar ist oder die Adresse ändert sich, dann gibt es den Link immer noch, zeigt aber ins Leere. Das ist so, wie das Web funktioniert. Und so funktioniert das auch in CouchDB. Dokumente haben IDs, die sich in URLs übersetzen. Also alles, was es in CouchDB gibt, dem kann man Adresse geben, die kann man im Browser eintippen. Dann kriegt man was auch immer, was unter der Adresse halt verfügbar ist. Eben auch diese Dokumente. Und jedes Dokument hat eine ID.
+
+01:05:41.841 --> 01:05:44.681
+<v SPEAKER_2>Und auch einzelne Elemente in diesem Dokument?
+
+01:05:44.701 --> 01:05:57.161
+<v SPEAKER_3>Erstmal nicht, nein. Die kleinste Einheit ist ein Dokument. Man möchte da nicht weiter runtergehen. Und man kann jetzt in dem Bild-Dokument sagen, das gehört zu dem UserX. Indem ich reinschreibe, gehört zu UserX.
+
+01:05:57.801 --> 01:05:59.961
+<v SPEAKER_2>Indem ich in das Dokument reinschreibe?
+
+01:05:59.981 --> 01:06:16.261
+<v SPEAKER_3>Genau, in das Bild-Dokument schreibe ich, gehört zu UserX. Das sagt CouchDB, aber CouchDB macht nichts mit der Information. Das ist was, was für die Anwendung weiß das jetzt. Die gesagt, okay, ich lese das Bild-Dokument, und dann gucke ich da rein, und dann steht da, ich gehöre zu UserX, und dann weiß die Anwendung, okay, ich muss UserX nachgucken, wenn ich die User-Information haben will.
+
+01:06:16.281 --> 01:06:26.941
+<v SPEAKER_2>Aber CouchDB hat schon eine Vorstellung von einem atomaren Element, was halt diesen Namen enthält, auch wenn es nicht weiß, was es bedeutet, weiß es schon, dass es dieses Feld als solches isoliert gibt.
+
+01:06:26.961 --> 01:06:28.221
+<v SPEAKER_3>Oder auch nicht?
+
+01:06:28.241 --> 01:06:34.081
+<v SPEAKER_2>Also gibt es sowas Vergleichbares wie die Fields in SQL?
+
+01:06:34.101 --> 01:06:34.421
+<v SPEAKER_3>Nein.
+
+01:06:34.441 --> 01:06:38.741
+<v SPEAKER_2>Oder gibt es einfach nur das Dokument und das ist dann irgendein Blob?
+
+01:06:38.761 --> 01:07:05.141
+<v SPEAKER_3>Dokumente in CouchDB sind JSON. Aus der JavaScript-Sprache losgelöste String-Repräsentation von Objekten. Im Prinzip eine Liste von Namen und Werten. Also sowas wie Personendaten lassen sich da gut abbilden. Dann halt Name, dann dein Name, Geburtsdatum, dann Geburtsdatum. So dieses Key-Value-Pairs, wie man das nennt. Und so ein JSON-String ist einfach nur so ein bisschen ASCII.
+
+01:07:05.161 --> 01:07:20.321
+<v SPEAKER_2>Also JSON ist so eine Objektnotation. Das ist im Prinzip so ein Herausrendern von JavaScript- Datenstrukturen. Kann man das so festhalten. So ist es intern gespeichert oder so wird es nach außen hin dargestellt?
+
+01:07:20.341 --> 01:07:29.341
+<v SPEAKER_3>So wird es nach außen hin dargestellt. Aber intern wird eine transformierte Version davon gespeichert. Also im Prinzip wird diese Key-Value-Struktur auch intern gespeichert.
+
+01:07:30.141 --> 01:07:32.641
+<v SPEAKER_2>Und warum ist es JSON?
+
+01:07:32.661 --> 01:08:34.721
+<v SPEAKER_3>Es war, als Jammin angefangen hat und auch schon noch ein Teil von Erlang war, XML. Und vor zwei Jahren haben wir uns entschieden, das mit dem XML sein zu lassen. Weil es schwierig ist, schöne Abfragesprachen auf XML zu bauen, die für unseren Use-Case gut waren. Wir wollten nicht so etwas wie XSLT oder XPath benutzen. Und haben halt JSON gefunden, was zu dem Zeitpunkt schon so ein bisschen im Kommen war und sich jetzt herausgestellt hat, viele Leute benutzen lieber JSON als zum Beispiel XML zum Objektaustausch im Netz, was vorher der Fall war. So eine persönliche Randnote XML ist halt gut für, um Texte zu strukturieren und so strukturierte Daten zu annotieren. Und dafür ist es gebaut worden. Dafür ist es richtig gut. Aber um Objekte zu beschreiben, das ist mehr so ein aufgesetzter Use-Case, der so und so gut nur funktioniert. Und JSON ist direkt kommt halt aus der JavaScript-Welt. Wird da benutzt, um Objekte zu beschreiben. Und man kann das auch einfach nehmen und woanders einsetzen. Das heißt, inzwischen wird jede programmierte Sprache eine Möglichkeit, seine Objekte in JSON darzustellen.
+
+01:08:34.741 --> 01:08:58.801
+<v SPEAKER_2>Was ist denn das Problem mit XML? Wenn ich mich richtig erinnere, waren ja die ersten, also die Idee einer dokumentorientierten Datenbank ist ja insofern nicht unbedingt brandneu, als dass es gerade in der XML-Welt diese Bestrebungen schon länger gibt, XML-Datenbanken zu machen, die ja auf der Idee eines XML-Documents basieren.
+
+01:08:58.821 --> 01:09:33.161
+<v SPEAKER_3>Ich kenne mich damit überhaupt nicht aus. Es gibt Leute, die sagen, es gibt wunderbare Lösungen da drauf, wo man schöne Abfragen über diese XML-Strukturen machen kann. Mit Xpass zum Beispiel. Und das funktioniert bestimmt auch wunderbar. Es ist nicht das, was CouchDB lösen möchte. CouchDB möchte diese Ki-Value-Paare speichern. Und ich kann eine beliebige Liste von Ki-Value-Paaren, die auch unendlich geschachtelt sein kann im Prinzip, Namen geben. Dieser Name ist die ID meines Dokuments. Darunter finde ich meine Sammlungen an Ki-Value-Paaren.
+
+01:09:33.181 --> 01:09:34.901
+<v SPEAKER_2>Und hat das eine Hierarchie?
+
+01:09:38.921 --> 01:09:50.201
+<v SPEAKER_3>In JSON kann man sagen, der Wert, den mein Name Wertpaar annimmt, kann wiederum ein Objekt sein. Oder da kann man weitere JSON-Strukturen reinstecken. Das kann beliebig recursiv werden, wenn man möchte.
+
+01:09:50.221 --> 01:10:06.861
+<v SPEAKER_2>Das heißt, man kann das eigentlich schachteln. Man hat im Prinzip schon einen hierarchischen Datenspeicher, der aber eben auf diesen Property-List, Ki-Value-Pairs, gibt da ja verschiedene Namen dafür, basiert. Und das ist sozusagen die Annahme ist, das ist das, was eine Web-Anwendung heute braucht.
+
+01:10:06.881 --> 01:10:40.041
+<v SPEAKER_3>Im Prinzip schon. Das ist, wo jeder Browser mit klarkommt, weil jeder Browser mit JavaScript kommt. XML verstehen die meisten Browser auch. Der Unterschied zu JSON ist, ich finde persönlich, ein bisschen einfacher zu lesen, weil es halt nicht versucht, mit vielen spitzen Klammern und Closing-Tags und dem ganzen, was XML halt alles hat. Oder anders. XML löst viel mehr Probleme als das, was wir für den Objektaustausch brauchen würden. Also diese Sache wie Validierung oder einfache Transformation mit XSLT, das sind alles Lösungen für Probleme, die wir überhaupt gar nicht lösen wollen.
+
+01:10:40.061 --> 01:11:12.201
+<v SPEAKER_2>Wie ist das, Alex, jetzt bei der Anwendungsentwicklung? Das heißt, wenn du jetzt mit CouchDB arbeitest, verlierst du sozusagen diesen Blick der Relation. Aber du gewinnst sozusagen einen Ort, in dem du Key-Value-Pairs, also Schlüssel-Werte-Kombinationen erhältst. Wie denkst du darüber nach in deiner Anwendung? Warum kommt dir das jetzt mehr entgegen als der SQL-Store oder ein XML-Dokument?
+
+01:11:13.881 --> 01:11:43.621
+<v SPEAKER_4>Also genau, ich wollte gerade auch da mal einsteigen an der Stelle, dass Jason mir als Programmierer einfach relativ lieb ist, weil das, was ich jeden ganzen Tag mache, nämlich Objekte zu speichern, ist in Endeffekt schon Jason. Also wenn ich jetzt zum Beispiel mit JavaScript eine abschreibe, dann ist das, was ich da drin habe, schon Jason. Sprich, wenn ich jetzt mein User habe, dann speichere ich da halt einfach Name, Doppelpunkt, Heinz, und dann noch das Geburtsatum und das ist schon Jason.
+
+01:11:43.641 --> 01:11:46.541
+<v SPEAKER_2>Warum ist das schon Jason?
+
+01:11:46.561 --> 01:11:56.601
+<v SPEAKER_4>Weil Jason nichts anderes ist als ein Subset von JavaScript in dem Fall. Und alle Objekte in JavaScript sind sozusagen einfach schon Jason. Es ist einfach noch nichts weiter als ein Hasht.
+
+01:11:56.621 --> 01:12:01.761
+<v SPEAKER_2>Jetzt gehen wir aber auch von einer Web-Anwendung aus, die wirklich im Browser stattfindet.
+
+01:12:02.221 --> 01:12:04.021
+<v SPEAKER_4>Genau, in dem Fall in dem Beispiel jetzt schon.
+
+01:12:04.041 --> 01:12:16.341
+<v SPEAKER_2>Weil eigentlich die klassische Web-Anwendung, die man bisher immer so im Kopf hat, ist ja eigentlich die, die läuft auf dem Server und die ist dann in irgendeiner Programmiersprache, also gerade bei Ruby on Rails, ist ja eigentlich der wesentliche Teil auf der Server-Seite. Und da...
+
+01:12:16.361 --> 01:12:47.661
+<v SPEAKER_4>Mach ich gleich in zwei Sätzen. Okay. Genau, also wie gesagt, in der JavaScript ist es einfach so, dass mein JSON ist schon das, was ich halt haben will. Und dann ist es natürlich super praktisch, wenn eine Datenbank das hat. Wenn ich jetzt eine Rails-Anwendung schreibe, dann ist mir JSON auch lieb, weil dann hab ich einfach meine kleine Library, die mir aus meinem JSON-Hash einen Ruby-Hash macht. Und ich kann sozusagen JSON eins zu eins in Ruby abbilden. Weil da gibt's auch einen Hash und da gibt's auch einen Array. Und JSON ist ja... Im Wesentlichen gibt's in JSON Hashes, Arrays, Strings und Zahlen.
+
+01:12:47.681 --> 01:12:48.321
+<v SPEAKER_2>Als Datentypen.
+
+01:12:48.721 --> 01:12:57.101
+<v SPEAKER_3>Genau, und Booleans noch. Die Basis-Datentypen, die wir in jeder Sprache im Prinzip haben, werden in JSON halt abgebildet.
+
+01:12:57.121 --> 01:13:00.301
+<v SPEAKER_2>Hashes sind jetzt nicht unbedingt in jeder Sprache Datentypen.
+
+01:13:04.121 --> 01:13:11.421
+<v SPEAKER_4>Also nicht in C und Java. Doch klar, in Java hab ich... Na gut, da gibt es halt eine Klasse, da heißt es dann, glaub ich, Map.
+
+01:13:11.441 --> 01:13:12.161
+<v SPEAKER_3>Sagen wir Skriptsprachen.
+
+01:13:12.301 --> 01:13:20.261
+<v SPEAKER_4>Aber sozusagen, also alle High-Level-Sprachen haben irgendwie einen Konstrukt, was halt im Hasch ähnlich ist. Also in Python ist es, glaub ich, ein Dictionary, in Ruby heißt es halt Hasch.
+
+01:13:20.821 --> 01:13:32.961
+<v SPEAKER_2>Also wie würdest du einen Hasch beschreiben? Also ein Datum, was im Prinzip nichts anderes ist als eine Zahl, die aber auf irgendein eindeutiges Objekt dadurch referenziert.
+
+01:13:32.981 --> 01:13:38.241
+<v SPEAKER_3>Nichts wegen einer Zahl, sondern ein beliebiger String oder eine Zahl.
+
+01:13:38.261 --> 01:13:50.521
+<v SPEAKER_2>Der aber intern dann letzten Endes als Zahl dargestellt wird, das ist ja das, was in dem Hasch sozusagen drin steht, dass man einen String zusammenfasst in eine Zahl, die dann eindeutig ist, um eben schnell einen Index zu haben auf irgendetwas.
+
+01:13:50.541 --> 01:14:26.081
+<v SPEAKER_4>Genau, also einen eindeutigen Key und der zeigt halt auf beliebige Daten, die halt in meinem Hasch drin sind. Jedenfalls, ich als Anwendungsprogrammierer kann sozusagen dieses JSON nehmen und ohne großen Aufwand da relativ einfach das in meine nativen Objekte übersetzen. Und das geht halt sehr einfach damit. Und mit XML ginge das sicherlich auch, aber der Aufwand wäre einfach ein bisschen höher. Weil das ist genau das, was ich habe. In Ruby ist sozusagen, wenn ich da ein bisschen dahinter gucke, das was da ein Objekt ist, ist in Wirklichkeit sozusagen in der Ruby-Implementierung eigentlich auch wieder nur ein Hasch. Also das ist so genau das, was ich am Ende haben will.
+
+01:14:27.481 --> 01:16:55.481
+<v SPEAKER_2>Da würde ich ganz gerne nochmal kurz in die Web-Geschichte einschalten, weil das ist ja alles noch relativ neues Zeug. Es ist ja noch gar nicht so lange her, da hatten wir irgendwie Webseiten, die waren halt HTML. Da war irgendwie kein JavaScript drin. Und wenn, dann war es so ein bisschen Highlighting für die Menübar oder sowas. Ganz einfache Operationen, wo eigentlich nur JavaScript aufgerufen wurde, der halt den internen Documentary, also die interne Repräsentanz des geladenen HTML-Dokuments im Browser an bestimmten Stellen ändert. Aber was dann neu war, was ja so ein bisschen so eine Revolution ausgelöst hat, war, ich glaube es war so eine Erfindung von Microsoft, die XML-HTTP-Request-Geschichte, dass man sozusagen den JavaScript-Code, der im Browser ausgeführt wird, selber erlaubt im Web nachzuschlagen und eben HTTP-Calls zu machen. Was dann eben dazu geführt hat, das hast du vorhin ja auch schon erwähnt, muss man nochmal beitreten, AJAX sozusagen als der gängige Begriff der Straße im Web, wo sich dann alles dran manifestiert hat. Das heißt, man hat asynchrone Kommunikation von intelligenten Webseiten, heutzutage würde man ja schon fast von Applikationen im Browser reden oder redet man sogar auch. Und irgendwann kam dann dieses JSON mit ins Spiel. Das war sozusagen diese Erkenntnis, dass man ja die ganze Zeit irgendwie was wegspeichern will. Man hat da immer so State, den man irgendwie gewinnt und man will den jetzt speichern. Und dann schickt man irgendwo Daten hin. Und dann war, glaube ich, die Grundidee, ach naja, das ist sowieso mit JavaScript zu tun haben und die Daten, die wir jetzt hier speichern wollen, JavaScript-Objekte sind. Warum schreiben wir nicht gleich die Objekte als solche, sogar in JavaScript-Syntax selber? Das heißt, man nimmt einfach sozusagen die Repräsentierung des Objektes, so wie man sie in JavaScript in den Source-Code schreiben würde, und schickt sie als solche irgendwo hin. Und da gehen wir davon aus, dass wir sie speichern. Und wenn ich es jetzt richtig sehe, greift CouchDB sozusagen an der Stelle das sozusagen auf und sagt, ah okay, das ist das, was uns diese Seite sowieso schickt, dann speichern wir das doch auch gleich als solches. Und in die andere Richtung genauso. Das heißt, man hat diesen, keinen Reibungsverlust mehr, dass man das, was sowieso aus den Webseiten kommt, noch in irgendetwas anderes übersetzen muss.
+
+01:16:55.501 --> 01:17:39.101
+<v SPEAKER_3>Genau, wenn man dieses Standard XHR oder XML HTTP Request geht halt davon aus, dass es mit XML passiert. Das heißt, man hat diese Daten im Browser, die müssen nach XML formatiert werden, dann schickt man die zurück an den Server, der muss das XML pasen, schickt das durch einen Robi, Java, irgendwas, schickt das durch einen Active Record oder ein anderes Object Relational Mapper und tut das am Ende in der SQL Datenbank. Und wenn der Browser das wieder anfragt, geht die ganze Maschinerie rückwärts wieder los. Also wir haben ein Datum, was in SQL anfängt und im Browser aufhört und es geht durch Objekte, XML, HTTP, wieder XML pasen. Und das ist dann einfach ganz viel Reibungsverlust, wie du es schon lernst. Da passiert halt ganz viel. Das ist nicht, dass es nicht funktioniert, aber da wird einfach viel Code gebraucht, um das alles möglich zu machen.
+
+01:17:39.201 --> 01:17:42.861
+<v SPEAKER_2>Und das macht es langsam, das macht es viel anfällig und so weiter, das Übliche.
+
+01:17:43.801 --> 01:18:36.121
+<v SPEAKER_3>Da könnte ich vielleicht kurz einsetzen, was Alex vorhin schon meinte, dass Active Record mit 25.000 Zeilen Code daherkommt, um das SQL wegzuabstrahlieren von Ruby-Leuten. Oder das Konzept ist ja nicht, das gehört ja nicht zu Ruby speziell oder zu Rails speziell, sondern Django oder andere Web-Frameworks haben das ja genauso. Normale SQL-Datenbank, Server-Code sind mehr als eine Million Zeilen C++-Code. Wo in CouchDB, was schon mal kein Active Record braucht, mit ungefähr 12.000 bis 13.000 Zeilen Code daherkommt. Das ist halt viel weniger Code, wo viel weniger Bugs drin sein können. Das kann natürlich auch viel weniger. Diese ganzen tollen Features, die man eh nicht braucht, die in einer Relationalen Datenbank sind, die haben wir natürlich auch gar nicht. Deswegen haben wir doch keinen Code, der da tot rumliegt. Aber es ist viel weniger bewegliche Teile, die Probleme machen können.
+
+01:18:36.141 --> 01:18:38.381
+<v SPEAKER_2>Wie groß ist denn CouchDB?
+
+01:18:38.401 --> 01:18:41.641
+<v SPEAKER_3>An Zeilen Code? 13.000, knapp 13.000.
+
+01:18:41.661 --> 01:18:42.701
+<v SPEAKER_2>Die gesamte Datenbank?
+
+01:18:42.721 --> 01:18:43.981
+<v SPEAKER_3>Das komplette Datenbank, denk ich.
+
+01:18:44.001 --> 01:18:49.241
+<v SPEAKER_2>Das heißt, die komplette Datenbank ist in weniger Zeilen Code implementiert als der Teil von...
+
+01:18:49.261 --> 01:18:49.901
+<v SPEAKER_3>Ungefähr in der Hälfte....
+
+01:18:49.921 --> 01:18:59.981
+<v SPEAKER_2>wie der sozusagen nur versucht, das eine mit dem anderen zu verbinden. Also auch wenn man natürlich jetzt nicht bei der Programmiersprache unterschiedliche Programmiersprachen nicht auf Zeilen-Ebene ausdenken kann. Natürlich nicht.
+
+01:19:00.901 --> 01:19:02.101
+<v SPEAKER_3>Es gibt einem schon mal so eine Idee.
+
+01:19:02.121 --> 01:19:08.141
+<v SPEAKER_2>Es gibt schon mal eine Idee. Was wiederum nicht sehr viel ist. Also 13.000 Zeilen.
+
+01:19:08.161 --> 01:19:13.161
+<v SPEAKER_3>Das ist was, was eine Person schon in seinem Kopf haben kann und schreiben kann, was Damian gemacht hat.
+
+01:19:13.181 --> 01:19:16.681
+<v SPEAKER_2>Das heißt, du hast auch so gerade das Gefühl, dass du so die ganze CouchDB im Kopf hast?
+
+01:19:16.701 --> 01:19:17.921
+<v SPEAKER_3>Ich nicht, Damian schon.
+
+01:19:19.441 --> 01:19:20.801
+<v SPEAKER_2>Aber die Hälfte vielleicht.
+
+01:19:20.821 --> 01:19:22.121
+<v SPEAKER_3>Vielleicht.
+
+01:19:22.141 --> 01:19:27.761
+<v SPEAKER_2>Gibt es denn irgendwas, worauf du dich jetzt speziell konzentrierst? Habt ihr da eine Arbeitsteilung oder habt ihr eigentlich beide an einem?
+
+01:19:27.781 --> 01:19:47.661
+<v SPEAKER_3>Wir sind inzwischen sieben Entwickler. Jeder hat so Spezialgebiete. Damians Spezialgebiet ist, er versteht alles von Anfang bis Ende. Und er weiß, wenn wir mit neuen Ideen kommen, die entweder lassen die sich total einfach integrieren oder gar nicht. Oder es ist schwierig. Oder nimmt die rohen Ideen, die wir haben und hilft die dann so zu feilen, dass sie in das CouchDB, in die Architektur passen.
+
+01:19:47.681 --> 01:19:51.601
+<v SPEAKER_2>Das heißt, er ist sozusagen der klassische benevolent Diktator in dem Projekt?
+
+01:19:52.461 --> 01:21:28.421
+<v SPEAKER_3>Ja, wir dürfen das so nicht sagen, weil wir Apache-Projektinnen, da gibt es das Konzept nicht. Wohingegen die Apache-Leute dann sagen, es gibt noch mehrere davon, so was Roy Fee-Ling, ist das für eine HTTP-D zum Beispiel. Das ist schon okay, wenn man das halt sagt. Er hat so den Überblick über die Codebase und weiß, was so konzeptional wirklich reinpasst, weil er schon so einen richtigen Durchblick hat. Aber wir haben halt auch Leute, die sich mit vielen Kernteilen der Datenbank auch auskennen und auch von sich aus einfach schon die richtigen Ideen bringen, die damit dann schon nicht mehr, also wurde das noch abnickt und nicht mehr sagen muss, okay, das muss jetzt anders gemacht werden. Und ich halte mich so ein bisschen aus dem richtigen Hardcore-Zugs raus und mache mich so ein bisschen darum, dass die HTTP-Oberfläche, die API sauber ist, dass Leute damit einfach arbeiten können, dass es halt da keine berühmten WTF-Faktoren drin sind, so warum verhält sich das jetzt so, sondern das ist halt so, okay, das verhält sich so, wie ich das erwarte. Das ist natürlich schön von der API und da habe ich so ein bisschen ein Auge drauf und was CouchDB generell so ein bisschen fehlt, ist so Hilfswerkzeuge. Ich habe jetzt mit Alex im Jahr nur so ein Statistiktool gebaut, was halt intern Statistiken zählt. Das ist einfach im Prinzip total einfach. Ich zähle einfach Integer-Counters hoch für verschiedene Events und das muss dann da getriggert werden und dann wird das so ein bisschen zusammengerechnet und dann weiß ich, wie viele Requests pro Sekunde ich habe oder welche es dann, keine Ahnung, ich kann irgendwelche Averages auch über Zeitspannen ausrechnen. Das ist halt eher langweilig, wenn man jetzt irgendwas cooles coden will, so Statistiken ist das ungefähr das Langweiligste, was man sich so vorstellen kann. Trotzdem braucht man das. Und die ganzen, naja, in diesem nicht Kernspace, da beweg ich mich so ein bisschen.
+
+01:21:29.021 --> 01:22:06.281
+<v SPEAKER_2>Ich wollte nochmal kurz dabei bleiben, ich arbeite jetzt mit einem Dokument. Ich meine, es gibt ja schon, man muss ja hier ganz schön umdenken, wenn man so das gewohnt ist, mit dem ganzen SQL und den Tabellen und so, viele setzen sich ja sozusagen an neue Projekte ran. Ah, jetzt haben wir ein Datenmodell, jetzt müssen wir unsere Tabellen definieren. Das ist ja schon so ein Ritus, irgendwie wie in der Kirche. Und sich davon erstmal zu lösen, könnte ich mir vorstellen, dass es da auch bei den Programmierern eine ganze Menge Widerstand gibt. Nach dem Motto, das haben wir noch nie so gemacht, was soll denn das jetzt, und das hat doch bisher immer funktioniert, da müssen wir noch nur dran fallen.
+
+01:22:06.301 --> 01:22:42.721
+<v SPEAKER_3>Wir nennen das das Unlearning oder die Unlearning-Phase. Das hat bei mir so vier bis sechs Monate gedauert, bis ich meine ganze Relationale Datenbank intuitiv denken verloren hab. Es gab so ganz, nicht verloren, aber bis ich gesehen hab, dass es eine mögliche Realität ist, aber nicht die letzte Antwort. Ich kann mich an bestimmt zehn Situationen erinnern, wo ich so war, Damian, CouchDB ist total scheiße, das kann ja nicht mal das und das. Was versuchst du da zu lösen? Ja, das und das. Warum machst du das so und nicht so? Denk mal ein bisschen anders über das eigentliche Problem und nicht wie löse ich das Problem mit diesem Tool, das ich gerade habe, dieses Hammer-und-Nagel-Problem.
+
+01:22:42.741 --> 01:23:19.841
+<v SPEAKER_2>Gehen wir nochmal in diese Zent-Phase rein. Wir sind jetzt in so einem Podcast, der Hörer hat jetzt den Kopfhörer auf und ist sowieso schon ganz entspannt, relax. Das ist ja auch das große Dogma. Wir setzen uns jetzt auf die Couch, wir sind ganz ruhig, atmen gleichmäßig. Dann geht es jetzt erstmal los. Ich fange jetzt mit meinem neuen Projekt an und jetzt habe ich eine dokumentorientierte Datenbank. Da frage ich mich natürlich erstmal, was ist denn das bitte für ein Dokument? Wo ist denn meine Tabellen hin? Wie viele von diesen Dokumenten brauche ich denn überhaupt? Brauche ich jetzt für jede Tabelle ein Dokument?
+
+01:23:19.861 --> 01:23:33.941
+<v SPEAKER_4>Genau, vielleicht können wir ja so ein kleines Beispiel vielleicht mal durchexerzen, das wäre nochmal ganz von Null an. Wie lege ich überhaupt los, wenn ich jetzt mein neues Blog-System in CouchDB bauen will?
+
+01:23:33.961 --> 01:23:35.401
+<v SPEAKER_2>Blog ist immer ein gutes Beispiel.
+
+01:23:38.121 --> 01:24:37.261
+<v SPEAKER_4>Genau, ganz am Anfang steht halt einfach wie gesagt das Dokument. Nehmen wir mal so ein Beispiel, ich möchte jetzt Blog-Posts in meiner App anlegen können und speichern. Da muss ich zunächst erstmal nichts weiter tun, als einfach irgendwie die da rein schieben als JSON. Sprich, mein Blog-Post hat jetzt meinetwegen ein Titel und ein Text. Und dann kann ich halt einfach JSON-Dokumente anlegen, wo da drin steht Titeldoppelpunkt, das ist der Titel, und Textdoppelpunkt, das ist der Text. So kann ich da anfangen und die da reinlegen. Und dann könnte ich jetzt also... Genau, Datum, meinetwegen Name des Autors noch und was weiß ich, wie viele Felder und Text und alles Mögliche. Und die kann ich erstmal einfach so da reinlegen. Ohne mir über den Schema Gedanken machen zu müssen. Es ist natürlich gut, wenn ich die alle so da reinlege, dass sie alle auch ein Titel vielleicht möglichst haben, dass ich die auch wieder finde, die Titel, und die nicht einmal Titel und einmal Titel 2 heißen. Aber sozusagen, also ich leg die erstmal einfach so da rein ins Dokument.
+
+01:24:37.281 --> 01:24:56.301
+<v SPEAKER_2>Gut, aber jetzt würde ich jetzt... Jetzt hab ich schon mein erstes Unlearning-Problem, weil ich denke mir so, na ja, aber der User... So, was schreib ich denn da rein? Wenn ich jetzt einen Usernamen reinschreibe, dann leg ich mich ja total fest, weil eigentlich würde ich ja eine User-ID haben wollen und das leg ich ja dann üblicherweise in eine andere Tabelle, damit ich den Namen ändern kann.
+
+01:24:56.321 --> 01:25:15.721
+<v SPEAKER_3>Ja, da würde ich jetzt erstmal sagen, entspann dich. Du willst eine Blogpost anzeigen, also sagen wir dir der erste Schritt, ich möchte eine Blogpost rendern, wer möchte ich im Web anzeigen? Am Ende muss da stehen der Name des Autors. Dann schreib den da rein ins Dokument. Mach das erstmal so. Und dann machen wir weiter mit dem Beispiel, das Alex jetzt hier macht.
+
+01:25:16.201 --> 01:25:48.241
+<v SPEAKER_4>Genau, also wir wollen einfach nur den Namen haben, also schreiben wir den Namen da rein. So, und nachdem wir den jetzt gespeichert haben und unseren ersten Post haben, wäre wahrscheinlich der nächste Schritt, dass wir den wieder anzeigen wollen. Dazu gibt's, da müssen wir vielleicht ein bisschen weiter ausholen, erstmal ist es so, dass CouchDB jedem Dokument eine eindeutige ID vergibt. Das heißt, ich könnte jetzt, wenn ich die ID wüsste, könnte ich einfach hingehen und sagen, gib mir mal das Dokument für die ID. Und dann kriege ich halt meinen Blogpost wieder.
+
+01:25:48.261 --> 01:25:51.921
+<v SPEAKER_2>Das heißt, wir haben jetzt nur einen einzigen Blogpost in ein Dokument reingetan?
+
+01:25:54.541 --> 01:27:18.701
+<v SPEAKER_4>Die ID ist natürlich ein Hexcode aus 32 Zeichen, den weiß ich natürlich nicht. Deswegen brauche ich jetzt irgendeine Art von Query, die mir dann meinen Blogpost wiedergibt und wahrscheinlich, wie es in einem Blogcard üblich ist, meinetwegen sortiert nach, erstellt Datum, absteigend alle meine Blogposts. Und da kommen wir dann in den Bereich Views rein, das wir schon mal ein bisschen angeschnitten haben, was wir aber noch nie so richtig erklärt haben, was das eigentlich ist. Und das funktioniert so. Ein View ist sozusagen das, was mir die Möglichkeit gibt, die Datenmarken überhaupt erst abzufragen. Also ich habe dieses Anhand der ID rausholen, das ist das eine, das hilft mir wirklich lange weiter, und alles andere muss ich über den View machen. Und ein View ist sozusagen eine Darstellung meiner Dokumente, die ich halt über diese JavaScript-Funktion erzeuge, wie wir schon angesprochen haben. Und das funktioniert ganz grob so, dass ich eine Funktion schreibe in JavaScript. Und diese Funktion wird von CouchDB ausgeführt für jedes Dokument in der ganzen Datenbank. In dem Fall nur mein eines. Und ich kann in dieser Funktion mit einem sogenannten Emit-Aufruf einen Eintrag in diesem Index erzeugen. Also ich baue mir sozusagen einen Index auf und in dem diese Funktion über meine ganzen Datenbank läuft.
+
+01:27:18.721 --> 01:27:21.601
+<v SPEAKER_2>Das heißt, diese Funktion wird für jedes Dokument einmal aufgerufen.
+
+01:27:21.621 --> 01:27:21.881
+<v SPEAKER_4>Genau.
+
+01:27:21.921 --> 01:27:35.861
+<v SPEAKER_2>Und wenn ich der Meinung bin, dass jetzt auf Basis dieses Dokuments, was mir jetzt gerade vor die Nase geworfen wurde, irgendein Eintrag in ein Index gemacht werden soll, dann ruf ich Emit auf und sage, hier ist mein Exzerpt sozusagen aus der Betrachtung dieses Dokuments.
+
+01:27:36.001 --> 01:28:13.861
+<v SPEAKER_4>Genau, und in dem Fall wäre es halt so, dass ich, wenn ich jetzt nur Blogpost in meiner Datemannkette, dann würde ich halt diese Funktion, die halt in JavaScript normalerweise geschrieben wird, ich kann es auch in Ruby oder irgendwas anderes schreiben, also ich kann diese Sprache austauschen, das ist jetzt aber noch ein Detail. Jedenfalls schreibe ich sozusagen diese Funktion und wurde jetzt, da ich gerne alle Dokumente sortiert hätte nach ihrem Erstellungsdatum, würde ich jetzt, also es gibt zwei Parameter zu diesem Emit, das eine ist der Key und das andere ist der Value. Der Key ist das, nach dem sortiert wird und nach dem ich auch suchen kann. Und ich emite jetzt sozusagen das Datum einfach von diesem Dokument nur.
+
+01:28:13.881 --> 01:28:17.241
+<v SPEAKER_2>Das heißt der Key heißt Date und der Value ist das Datum.
+
+01:28:17.261 --> 01:28:21.381
+<v SPEAKER_4>Der Value ist jetzt in dem Moment erstmal egal, den kann ich leer lassen in dem Fall.
+
+01:28:21.961 --> 01:28:58.181
+<v SPEAKER_3>Der Key aus dem Dokument, also ich gehe davon aus, dass mein Blogpost hat einen Key Datum und da steht dann ein Integer oder ein String drin, das mein Datum anzeigt und ich nehme jetzt für den Emit-Aufruf als ersten Parameter diesen Wert des Datums und tue den dahin als Key des Indexes. Es gibt also mehrere Ebenen des Keys und der Values. Unser Index ist auch wieder eine Liste von Schlüsseln und Werten. Und der Index hat halt die spezielle Eigenschaft, dass es nach Schlüssel sortiert ist. Und wenn ich jetzt irgendwas nach Datum sortiert haben möchte, tue ich den Wert meines Datums da rein.
+
+01:28:58.201 --> 01:29:05.701
+<v SPEAKER_2>Okay, das heißt, da steht dann irgendwie 3. Juni 2009, irgendwie Uhrzeit, und dann nehme ich sozusagen, und das wird dann zu einem Key.
+
+01:29:05.721 --> 01:29:07.401
+<v SPEAKER_4>Genau.
+
+01:29:07.421 --> 01:29:11.661
+<v SPEAKER_2>Das heißt, es darf aber auch nur einen davon geben?
+
+01:29:11.681 --> 01:29:23.961
+<v SPEAKER_3>Keys müssen nicht eindeutig sein. Ich kann mehrere Sachen können, keine Ahnung, wenn ich zum Beispiel nach Usernamen sortieren möchte oder nach Nachnamen sortieren möchte. Wenn es mehrere Dokumente gibt mit dem Nachnamen Schmidt, dann erscheinen die in dem Index alle nebeneinander.
+
+01:29:23.981 --> 01:29:28.341
+<v SPEAKER_2>Das heißt, wenn ich den dann im Index sozusagen nachfrage, dann bekomme ich mehrere Values dafür?
+
+01:29:28.361 --> 01:29:29.061
+<v SPEAKER_4>Genau.
+
+01:29:29.861 --> 01:29:33.961
+<v SPEAKER_2>Die dann wiederum zurück zeigen auf das entsprechende Dokument?
+
+01:29:33.981 --> 01:29:59.581
+<v SPEAKER_3>Der erste Schritt ist, Emit hat wie gesagt ein Schlüssel und ein Wertattribut. Und wenn man den Wert da reinschreibt, es ist egal welchen Wert man da reinschreibt, der aus dem Dokument kommt, dann bekommt man den zurück. Da könnte halt drinstehen, keine Ahnung. Man könnte sich zum Beispiel ein View bauen, wenn wir kurz von dem Blogpost-Beispiel weggehen, eine Personendatenbank, sortiert nach Nachname und dann das Alter der Person. Also kann ich gucken, wie alt ist Herr Schmidt.
+
+01:30:00.881 --> 01:30:13.261
+<v SPEAKER_4>Dann könnte man beim Blog bleiben und einfach sozusagen jetzt erstmal... Na gut.... sozusagen einfach nur die Überschrift meinetwegen nehmen und die anzeigen sozusagen alle Posts, wie gesagt, sortiert nach ihrem Datum und dazu die Überschrift.
+
+01:30:13.381 --> 01:30:19.161
+<v SPEAKER_3>Genau, als Wert würde ich dann, als Wert des Indexes würde ich den Wert des Überschriftfeldes aus dem Dokument nehmen.
+
+01:30:19.181 --> 01:30:27.301
+<v SPEAKER_2>Die Überschrift steht dann mit im Index, sodass ich gar nicht erst in die Dokumente reingehen muss, sondern ich kriege dann sozusagen auch gleich die Überschrift, um das schnell anzeigen zu können.
+
+01:30:27.321 --> 01:30:52.701
+<v SPEAKER_3>Genau, das wäre für die Blogstartseite zum Beispiel interessant, wenn ich halt nur diese Blogposts sind verfügbar in dieser Reihenfolge, dann klickt man auf den Titel, wenn man sich dafür interessiert und dann lädt man erst das ganze Dokument, wo dann der Blogpost angezeigt wird. Man könnte da dann auch soweit gehen, ich möchte nicht nur den Titel, sondern auch die ersten 100 Zeichen mal ins Textes anzeigen, sodass man so einen Teaser hat, wo die Leute anlesen können. Interessiert mich das jetzt gerade wirklich, wenn ich mir den Titel nicht genug sag, dann könnte man da auch in den Index direkt die ersten 100 Zeichen ausnehmen.
+
+01:30:53.001 --> 01:31:05.141
+<v SPEAKER_2>Aber diese JavaScript-Funktion selber, die übergebe ich jetzt einmal der CouchDB. Und in dem Moment, wo dann ein zweiter Blogpost angelegt wird, dann wird die dann zum Zeitpunkt des Erstellens oder des Änderns automatisch wieder ausgeführt?
+
+01:31:05.581 --> 01:33:25.981
+<v SPEAKER_3>Ja, also der erste Punkt ist richtig, man als Programmierer schreibt man diese JavaScript-Funktion und gibt die CouchDB, und CouchDB macht dann seine Arbeiter mit. Also man fasst die dann erstmal nicht wieder an, außer man ändert die, außer zu Entwicklungszwenken. Ausgeführt wird diese JavaScript-Funktion nicht, wenn ein neues Dokument erstellt wird. Also es ist nicht so, wie du vorhin meintest, wie in einer relationalen Datenbank, dass wenn man viele Indexer hat, dass die Schreib-Aparationen teuer werden, weil viele Indexer aktualisiert werden müssen. Das heißt, wenn du ein neues Dokument schreibst, werden nicht alle Funktionen aufgerufen, die man so hat, und das neue Dokument wieder durchgelaufen. Sondern erst, wenn man eine Abfrage auf diesen View macht, das heißt zur Query-Zeit, also da, mit dem, was ich vorhin gesagt hatte, dass das wieder so zusammen... Also das JavaScript läuft dann tatsächlich zur Query-Zeit. Die Idee ist, dass man einen Haufen von Änderungen erst mal machen kann, ohne dass man diese sogenannte Write-Penalty hat. Also man kriegt keine Strafe dafür, dass man viele Indizes gebaut hat, sondern man kann mit konstanter, mit linearer Geschwindigkeit einfach schreiben. Genau, und man kann beliebig viele Indexer haben. Und es ist kostengünstiger und effizienter, mehrere Dokumente oder viele Dokumente gleichzeitig zu evaluieren oder in einem Rutsch zu serialisieren, zum JavaScript zu schicken, diesen Index zu bauen. Das alles ist effizienter, als dass wir jedes Dokument einzeln zu machen, wenn es gerade reinkommt. Stattdessen mache ich die letzten 100 Dokumente, aktualisiere ich schnell, während der User auf seine Abfrage wartet, tue dir meinen Index und dann frage ich den Index erst ab. Das ist im Prinzip Lazy Evaluation, oder die volle Auswertung. Das ist natürlich an dem Punkt, wenn ich richtig viele Dokumente habe, 100.000 oder Millionen von Dokumenten, die noch nicht in meinem Index sind, dann dauert es eine Weile, bis das alles erzeugt worden ist, bis dieser Index erstellt worden ist. Da möchte man dem User natürlich nicht zumuten, dass der da eine Stunde oder 10 Tage wartet, nachdem wie viele Daten man hat. Wenn man so einen großen Import von Daten hat, würde man im Vorhinein immer mal wieder den Index schon aktualisieren, dass zu dem Zeitpunkt, wo der User dann am Ende auf die Daten zugreifen kann, dass dieser Index schon vorrätig ist. Aber im Prinzip im Live-Betrieb, wenn halt mehrere hundert oder tausend neue Dokumente geschrieben worden sind, die man eben schneller integrieren, das ist was CouchDB sehr schnell macht.
+
+01:33:26.001 --> 01:34:03.061
+<v SPEAKER_2>Jedes Dokument hat eine ID, das ist ein 128-Bit-Wert, habe ich mir jetzt richtig ausgerechnet gerade. Das heißt, man kann da ganz viele von haben. Es gibt auch keine nennenswerte Beschränkung sozusagen. Und anders als bei diesem Tabellenmodell kann ja sogar zwei Dokumente, auch wenn sie sozusagen beide einen Blogpost sind, wenn ich das richtig sehe, kann ich ja in jedes Dokument beliebig viele Key-Value-Pairs reinschreiben und die müssen nicht aneinander entsprechen. Es gibt sozusagen keinen Schema, keine Definition, wie das zu sein hat. Sondern wenn ich der Meinung bin, in diesem Blogpost, da gibt es jetzt auch noch einen Untertitel, dann schreibe ich den einfach damit rein. Und der andere hat den dann halt nicht.
+
+01:34:03.481 --> 01:34:07.761
+<v SPEAKER_4>Genau, dann muss halt die Anwendung im Cypher 2 damit klarkommen, dass es den nicht gibt.
+
+01:34:07.781 --> 01:34:15.101
+<v SPEAKER_2>Aber man kann den dann auch später noch reinschreiben. Aber man muss jetzt kein Datenmodell ändern, nur weil man jetzt irgendwie Untertitel macht, sondern man kann es einfach zusatzuschreiben.
+
+01:34:15.941 --> 01:34:58.901
+<v SPEAKER_3>Das ist so sehr gut erkannt. Dann kommen wir zu diesem entspannten, wir schreiben erstmal den Autornamen da rein. Wenn man anfängt, eine Anwendung zu schreiben, dann setzt man sich nicht zwei Wochen hin und baut sein Tabellenmodell, wo man schon weiß, ich muss meine Joints so bauen, damit die später effizient in meinem I-Square laufen. Und wenn sich dann meine Anforderungen an das Programm ändern, also ich muss jetzt auch noch Sachen nach Nachname oder sortiert nach was weiß ich haben, dann muss ich vielleicht nicht das ganze Modell über den Haufen schmeißen, aber schon strukturelle Veränderungen machen, wo ich das auch Auswirkungen auf andere Sachen haben kann, wo ich dann diese kleine Änderung erfordere, viele Änderungen in meinem System, wo ich in CouchDB einfach, okay, ich brauche ein neues Feld in der Blogpost, dann schreibe ich das da einfach rein und mache halt in meine Anzeigelogik, wird dann halt reingeschrieben, falls Untertitel, male Untertitel.
+
+01:34:58.921 --> 01:35:44.781
+<v SPEAKER_2>Und wenn ich jetzt mehrere CouchDB-Server habe, du hast ja vorhin auch von der Situation, es kommt irgendwie ein riesen Import, ja, was weiß ich, da wird dann vielleicht auch tatsächlich wirklich manuell irgendein SQL-Datenbestand übernommen und granatenmäßig in so ein verteiltes System reingeschrieben, dann würde es ja, gerade wenn so ein Proxy davor ist, schon dazu führen, dass dann eben über einen bestimmten Zeitraum diese Daten relativ gleichmäßig verteilt sind, wirklich über mehrere Server und die untereinander fast überhaupt keinerlei nennenswerte Überschneidung und Datenbestand haben. Also wenn ich jetzt ankomme mit einer Million solchen Dokumenten und die werden dann irgendwie gleichmäßig von diesem Proxy hin und her verteilt an verschiedene Datenbank-Server, dann habe ich ja erstmal vollständig inkonsistente Datenbestände in den Servern.
+
+01:35:44.801 --> 01:35:48.921
+<v SPEAKER_3>In dem Fall ja. Wenn du einen Proxy hast, der die Sachen aufteilt entsprechend, dann ja.
+
+01:35:49.221 --> 01:36:00.101
+<v SPEAKER_2>Und was passiert dann? Also was machen dann diese CouchDB-Server? Irgendwas damit? Nehmen die untereinander Kontakt auf und sagen die hier, ich habe etwas, was du nicht hast?
+
+01:36:00.121 --> 01:37:04.501
+<v SPEAKER_3>Per default machen die das erstmal gar nicht. Wenn du mehrere CouchDBs haben möchtest und schreibst verschiedene Daten da rein, dann schreibst du verschiedene Daten da rein. Und wenn du dein Zugriff zu einer CouchDB ist und wenn du dann eine zweite CouchDB fragst, kriegst du in Anführungsstrichen inkonsistente Daten. Wenn du aber durch deinen Proxy gehst, der weiß, ich möchte mein Datum haben für diese UUID, dann geht er zu dem richtigen Server und gibt dir schon das, was du haben willst. Das kommt dann drauf an, von welcher Stelle du in dieses System reinguckst. Worauf du hinaus möchtest, glaube ich, ist das System der Replikation von CouchDB. Nachdem man verschiedene Daten geschrieben hat, sagen wir mindestens zwei Rechner, oder kann man einer dieser beiden Rechner oder CouchDBs sagen, schau dir mal den anderen da an, guck, was für Unterschiede du hast mit dem, also gib mir das Diff, und schiebe alle Änderungen, die ich habe, schiebe die alle zu mir oder in die andere Richtung. Also gib mir alles, was ich habe, was der Replikationspartner noch nicht hat, schiebe alle diese Änderungen zu dem Partner, sodass der auf demselben Stand ist wie ich.
+
+01:37:04.561 --> 01:37:06.881
+<v SPEAKER_2>Das heißt, die Replikation ist Aufgabe der Anwendung?
+
+01:37:07.601 --> 01:37:14.301
+<v SPEAKER_3>Wie genau ist die Frage gestellt?
+
+01:37:14.321 --> 01:37:18.701
+<v SPEAKER_2>Also mir ist nicht ganz klar, wer jetzt diese Replikation wirklich kontrolliert und anstößt.
+
+01:37:20.181 --> 01:37:52.481
+<v SPEAKER_3>Die jetzt anstoßende Replikation ist Aufgabe der Anwendung. Also es ist nicht, dass man sagt, CouchDB A, deine immediate peers, also die Rechner, mit denen du dich replizieren sollst, sind A, B und C, und dann mach mal. So funktioniert das nicht. Sondern die Anwendung sagt, Rechner A replizieren mit Rechner B. Und dann hat man auch nur eine unidirektionale Replizierung von A nach B. Wenn man Änderungen von beiden Rechnern auf beiden Rechnern haben will, muss man zwei Replikationsanfragen stellen, mache von A nach B und von B nach A. Und wenn das fertig ist, dann sagt CouchDB, okay, und meine Daten sind jetzt gerade gleich.
+
+01:37:52.501 --> 01:38:51.321
+<v SPEAKER_2>Okay, also dieses Beispiel mit diesem Box-Serial-Zwischen ist insofern ein bisschen verwirrend, weil es dann sozusagen eigentlich die Intelligenz, mit wem ich rede, rausnimmt. Also müsste man dann eher so sagen, okay, ich weiß, ich hab jetzt hier den Anwendungsfall, dass wenn Daten kommen, dann kommen sie alle ganz schnell und ganz viel, das ist sozusagen eine Anforderung für meine Anwendung, dass wenn da mal was kommt, dann kommt halt viel auf einmal, warum auch immer. Und dann verteile ich das halt einfach auf alle verfügbaren Server, damit es überhaupt erst mal schnell angenommen werden kann und da kein Stau entsteht. Aber danach muss ich schon hingehen und ja, selber dafür sorgen oder selber darüber im Klaren sein, dass ich von jedem andere Daten bekomme. Aber es ist jetzt auch erstmal kein Problem, sagst du, dass ich irgendwie so, da muss ich mich jetzt wieder entspannen oder was muss ich sagen? Who cares? Irgendwie ist halt so, nur in dem Moment, wo ich jetzt meine Anfrage mache und meine Index aufbaue, dann frage ich mich, wo wird denn jetzt dann dieser Index aufgebaut?
+
+01:38:51.341 --> 01:38:55.401
+<v SPEAKER_3>Also wo... Na du, du hast den Use-Case, den du jetzt beschrieben hast, der ist schon jetzt sehr speziell.
+
+01:38:55.421 --> 01:38:55.701
+<v SPEAKER_2>Wirklich?
+
+01:38:57.161 --> 01:39:22.961
+<v SPEAKER_3>Also ist nicht, also keine Ahnung, dieses... Nicht zu kompliziert. Das, was du beschrieben hast, ist halt ein einmaliger Import von Daten. Und von diesem Denken, von wie man neue Systeme in Produktion bringt, ist, wenn Import da steht, ist im Prinzip, egal wie lange der dauert, wir lassen den jetzt mal laufen. Wenn der fertig ist, dann gehen wir live. Und man kann diesen Prozess natürlich schneller laufen lassen, aber das ist halt keine Operation, die ständig im Betrieb... Natürlich gibt es auch...
+
+01:39:22.981 --> 01:39:34.081
+<v SPEAKER_2>Okay, aber was weiß ich, wenn ich jetzt so ein Telefonvoting mache mit, rufen Sie jetzt an und fünf Minuten, und dann habe ich irgendwie komplett Deutschland, die jetzt irgendwie über DSDS abstimmen müssen und so. Das wäre so eine Art Daten-Gewinnung.
+
+01:39:34.101 --> 01:40:16.641
+<v SPEAKER_3>Also es gibt mehrere Möglichkeiten. Also eine, ich kann vielleicht noch was Grundsätzliches dazu sagen. CouchDB ist nicht eine konkrete Lösung für ein spezielles Problem von verteilten Datenbanken, sondern eine Sammlung oder ein Zusammenfassen von generischen Mechanismen, um sich seine spezielle Lösung für ein verteiltes Datenbankproblem zu bauen. Also wenn du ein System brauchst, was in kurzer Zeit viele Schreibzugriffe abfangen muss, dann möchtest du die auf mehrere Rechner verteilen, damit das geht. Und möchtest dann ein bisschen cleverer damit sein, dass die Abfragen darauf relativ zügig, dass diese Daten auswertbar sind, relativ schnell. Und das kann man mit CouchDB bauen, nur man muss halt...
+
+01:40:16.661 --> 01:41:10.261
+<v SPEAKER_2>Man muss es selber bauen. Genau. Es ist jetzt nicht wie so eine Replikationsklasse bei SQL, der ja sozusagen immer verstecken will, dass er mehrere ist, und dann unterhalten die sich untereinander und machen das automatisch, sondern das wird einfach rausgelassen. Und so, wenn ich mit mehreren Servern arbeiten will, dann kann ich das irgendwie tun. Und wenn ich das auch richtig verstehe, ist ja auch dieses Prinzip, dass ich stecke meine Daten erstmal in so ein Dokument, das hat irgendwie eine ID, hat immer den großen Vorteil, dass wenn es irgendwie erstmal drin ist, dann kann ich das aber auch zufällig wiederfinden und auseinanderhalten. Und jetzt mal wieder zurück marschieren zu dem Beispiel mit dem Blog-System. Und jetzt vielleicht auch mal die Replikation rauslassen, das habe ich jetzt verstanden. Jetzt habe ich also ganz viele Blog-Posts da drin. Und ich habe auch immer einmal gesagt, wie daraus ein Index erstellt werden kann. Jetzt habe ich irgendwie so verschiedene Indizes. Wie benutze ich dann diesen Index?
+
+01:41:10.621 --> 01:41:13.281
+<v SPEAKER_4>Genau.
+
+01:41:13.301 --> 01:41:22.821
+<v SPEAKER_2>Also wie komme ich jetzt wieder ran an die Daten? Jetzt sind sie ja erstmal drin und jetzt muss ich ja nun auch wirklich, was weiß ich, so die Haupt-Blog-Seite anzeigen. Wie mache ich das?
+
+01:41:23.621 --> 01:42:03.601
+<v SPEAKER_4>Genau, ich habe jetzt drei Blog-Posts geschrieben und will die jetzt wieder rauslesen. Ich habe jetzt meine Funktion geschrieben, die mir diesen Index generiert. Jetzt kann ich sozusagen losgehen und über einen HTTP-Call, wie man sich ja fast schon denken kann, die wieder rausholen. Das funktioniert so, dass ich eine spezielle URL aufrufe. Dann kriege ich eine Liste der Dokumente zurück bzw. dessen, was ich in den Index reingeschrieben habe.
+
+01:42:03.621 --> 01:42:11.321
+<v SPEAKER_2>Wie sieht so eine URL aus? Ist das so, wie man sich das so denkt? Mein Datenbank-Server?
+
+01:42:11.341 --> 01:42:45.601
+<v SPEAKER_4>Genau, wenn ich jetzt ein einzelnes Dokument laden würde, wäre die URL mein Datenbankname, ID des Dokuments. Diese Views sind wiederum auch in Dokumenten gespeichert. Das heißt, die URL dazu ist im Endeffekt so ähnlich. Das heißt, meine Datenbank, sozusagen mein Dokument, in dem der View drinsteht. Deshalb ein bisschen speziell. Da gibt es einen Unterstrich, Design, Name des Designdokuments. Das ist ein Dokument, wo Views drin sind. Das ist ein Unterstrich, View und dann Name des Views.
+
+01:42:45.621 --> 01:42:51.621
+<v SPEAKER_2>Aber in die View ist dann wirklich nur JavaScript-Sourcecode abgespeichert. Ist das dann nicht nochmal als Key-Value-Perl abgelegt oder so?
+
+01:42:51.641 --> 01:43:00.141
+<v SPEAKER_4>Das ist im Endeffekt ein Dokument, wo dann steht, Map-Funktion, Doppelpunkt. Und dann kommt da ein String mit dem JavaScript dran, wo diese Funktion drinsteht.
+
+01:43:01.261 --> 01:43:02.641
+<v SPEAKER_2>Map-Funktion.
+
+01:43:02.661 --> 01:43:34.361
+<v SPEAKER_4>Genau, das können wir dann später auch noch erklären. Es gibt zwei Funktionen. Das, was wir bis jetzt hatten, ist die Map-Funktion. Dann gibt es auch noch eine Reduce-Funktion. Die brauchen wir jetzt in dem Beispiel aber erstmal nicht. Also ich habe meine Funktion in einem Dokument drin, in einem String und das wird halt automatisch ausgewertet. Und ich kann jetzt meine URL einfach aufrufen. Und dann kriege ich Jason zurück. Und da steht das drin, was ich in diesen Index reingeschrieben habe. Sprich, ich würde jetzt einen Array zurückkriegen. Und da steht dann jeweils drin das Datum, Komma und dann der Titel von meinem Blogpost.
+
+01:43:34.381 --> 01:43:42.421
+<v SPEAKER_2>Beziehungsweise, wenn es halt tatsächlich Blogposts gibt, die selben Datum und Zeit haben, was da jetzt normalerweise nicht vorkommt, aber es könnte ja sein.
+
+01:43:42.441 --> 01:43:47.701
+<v SPEAKER_4>Dann kriege ich halt zwei mit dem Datum. Und die sind jetzt automatisch sortiert nach dem Datum.
+
+01:43:47.721 --> 01:43:53.601
+<v SPEAKER_2>Aber ich habe jetzt da keinerlei Referenz auf die eigentlichen Dokumente, aus denen die Daten herkommen, mit drin, oder doch?
+
+01:43:53.621 --> 01:43:56.861
+<v SPEAKER_4>Doch, ich kriege die Dokument-ID jeweils noch mit dazu.
+
+01:43:56.881 --> 01:44:23.741
+<v SPEAKER_2>Ah, okay. Das heißt, das ist eine implizite, in dem Index abgespeicherte Information, obwohl diese Index-Erstellfunktion, die dieses Emit aufruft, einen Key liefert und ein Value, wird dann immer noch auch implizit nochmal die ID von dem Dokument, aus dem das jetzt hervorging, mit abgespeichert. Sonst wäre es ja auch ein bisschen sinnlos, ne? Aber das war jetzt so noch nicht ganz klar.
+
+01:44:24.001 --> 01:44:34.521
+<v SPEAKER_3>Wenn man zum Beispiel die 27 Schmids hat, die sind alle, das heißt, der ganze View ist nach Schmids sortiert, man hat alle Schmids nebeneinander. Schmids untereinander sind aber danach Dokument-ID sortiert.
+
+01:44:35.241 --> 01:44:43.321
+<v SPEAKER_2>Ah, okay, verstehe. Wobei das eine irgendwie Sortierung ist, die jetzt nichts aussagt. Wie werden denn diese Dokumenten-IDs erzeugt?
+
+01:44:43.881 --> 01:44:58.881
+<v SPEAKER_3>Das sind diese Version 4 YuYu-IDs. Also mit dem Unterschied, dass wir keine, das klappt ja, zwei Bits in Version 4 sind irgendwie feststehend und wir benutzen einfach die ganzen 128 Bits. Das ist einfach eine große random Zahl.
+
+01:45:01.201 --> 01:45:05.001
+<v SPEAKER_2>Eine so große random Zahl, dass man sicher davon ausgehen kann, dass sie nicht zweimal vergeben wird.
+
+01:45:05.041 --> 01:45:08.081
+<v SPEAKER_4>Genau, weltweit, universumsweit.
+
+01:45:08.101 --> 01:45:26.821
+<v SPEAKER_2>Das heißt, man kann auch, aha, das heißt, man kann eigentlich auch mit seinen Daten, die man so anlegt, davon ausgehen, dass wenn ich die jetzt so habe und ich habe irgendeine andere Datenbank, die ganz was anderes macht von einer ganz anderen Anwendung, dass ich die mal eben zusammen in eine Datenbank zusammenmerchen kann.
+
+01:45:26.881 --> 01:45:27.921
+<v SPEAKER_4>Genau, das ist die Idee.
+
+01:45:28.481 --> 01:45:29.401
+<v SPEAKER_3>Das ist die Idee.
+
+01:45:29.421 --> 01:45:30.601
+<v SPEAKER_2>Und das funktioniert auch?
+
+01:45:30.861 --> 01:45:31.561
+<v SPEAKER_4>Klar.
+
+01:45:31.581 --> 01:45:37.421
+<v SPEAKER_2>Und was nochmal genau stellt wirklich so unglaublich sicher, dass zwei IDs nicht doppelt vorkommen?
+
+01:45:37.441 --> 01:45:41.141
+<v SPEAKER_4>Es gibt einfach viele davon, das reicht.
+
+01:45:41.161 --> 01:45:54.401
+<v SPEAKER_3>Die Menge von potenziellen IDs ist so groß, dass eine da rausnehmen, also zwei mal zwei davon rausnehmen, das ist so unwahrscheinlich, dass es dieselben sind, dass man davon ausgeht. Das ist in der Praxis nicht relevant, dass da eine Kollision entsteht.
+
+01:45:54.421 --> 01:45:55.581
+<v SPEAKER_2>Das wird dann auch einfach ignoriert?
+
+01:45:56.321 --> 01:46:25.181
+<v SPEAKER_4>Das geht doch gar nicht anders, weil wenn du halt einfach diesen Fall hast, du hast ja zwei Datenbanken, die haben halt gerade mal kein Netz. Die eine ist in Afrika und die eine ist halt in Alaska. Du baust halt deine Daten drauf und der eine bloggt halt über Afrika und der andere über Alaska und später landen die im gemeinsamen Blog irgendwo, wenn sie wieder Netz haben. Und dann merge man die halt zusammen, dann müssen die einfach verschiedene ID haben und du kannst halt, solange du zwischen Afrika und Alaska gerade kein Netz hast, zu keinem Zeitpunkt herausfinden, was der andere tun kann.
+
+01:46:25.201 --> 01:46:30.361
+<v SPEAKER_2>Aber was macht denn die Software, sollte jetzt tatsächlich da ein Datensatz ankommen, der meint, ich hab jetzt ID sowieso und die gibt es schon?
+
+01:46:30.401 --> 01:46:31.381
+<v SPEAKER_3>Das passiert nicht.
+
+01:46:31.401 --> 01:46:43.621
+<v SPEAKER_2>Ja, aber dann muss das auch so, dass es dann ein Won't Happen Eintrag im South Court. Und was macht der dann? Der berichtet das noch nicht mal der Nachwählte, dass das da jetzt wirklich mal ein unwahrscheinliches Fall aufgetreten ist?
+
+01:46:43.641 --> 01:47:35.241
+<v SPEAKER_3>Also, der Fall, auf den du hinaus möchtest, ist, ich kann natürlich eine Datenbank haben, sondern repliziere ich die auf eine zweite Datenbank. Und dann habe ich dieselben IDs auf beiden Datenbanken, weil die Replikation behält die IDs weiter. Und dann mache ich unabhängig auf beiden, einen in Afrika und einem in Alaska, meine Änderungen. Das heißt, ich nehme ein Dokument, ein Dokument mit der ID A, vereinfacht, und ändere das in verschiedenen Weisen. Also ich trage ein paar Sachen ein, Alex trage ein paar andere Sachen in dieses Dokument. Es hat halt so, wir hatten das mit den Revisionen wahrscheinlich noch nicht gesagt. Wenn man CouchDB-Dokument ändert, dann geht man nicht hin und sagt, diese Name fällt da, schreibt da mal einen anderen Wert rein. Sondern man sagt, hier ist eine komplett neue Repräsentation dieses Dokuments, was die Änderungen enthält, die ich habe, und ich speichere das als neue Version dieses Dokuments. Das heißt, ich mache keinen In-Place-Edit, sondern ich tue mir eine ganze komplett neue Version drauf.
+
+01:47:35.261 --> 01:47:37.241
+<v SPEAKER_2>Und dann kriegt das neue Dokument eine neue ID?
+
+01:47:37.261 --> 01:47:43.981
+<v SPEAKER_3>Die ID bleibt, das Dokument bekommt eine neue Revisions-ID. Das ist eine zweite Randomzahl, die nur 92.
+
+01:47:44.001 --> 01:47:52.921
+<v SPEAKER_2>Das heißt, jedes Dokument ist unter Umständen mehrere Male vorhanden mit unterschiedlichen Revisions-Nummern. Und diese Nummer sagt was aus? Also die aktuelle ist dann immer 0 und die anderen zählen hoch oder andersrum?
+
+01:47:52.941 --> 01:49:37.261
+<v SPEAKER_3>Das ist auch nur 32 mit Randomzahl. Es gibt zwei Sachen, die gespeichert werden. Einmal die letzte ID und dann die Liste von Revisions, die dieses Dokument schon gehabt hat. Das heißt, man kann sehen, wenn ein Dokument unterschiedliche Revisions-Nummer hat, dann weiß man A, das sind unterschiedliche Revisions, natürlich ein No-Brain, aber das muss man halt auch wissen. Und wenn man die Revisions-History dieses Dokuments anguckt, die auch immer mit gespeichert wird, dann weiß man, ok, ich habe, also Dokument B hat, wir fangen an mit, also ein Dokument hat eine Revision 1, dann replizieren wir es auf den zweiten Rechner. Dann hat das Dokument auf zwei Rechnern die Revisions-Nummer 1. Also die Replikation schiebt einfach nur die aktuelle Revision auf den anderen Rechner. Dann auf dem Rechner 2 ändere ich dann, also die Revisions-Nummer wird 2. Wenn ich jetzt die Replikation in die umgekehrte Richtung mache, dann kann ich anhand der Revisions-History sehen, ok, die Version 2 folgt der Version 1 und auf dem Rechner A habe ich noch die Version 1 und wenn ich die neueste Version haben will, dann kann ich einfach Version 2 darüber speichern, weil das ist genau dasselbe, was auf dem anderen Rechner passiert ist. Wenn ich jetzt aber auf das selbe mache, auf Rechner 2 Revision 2 erstelle, und auf Rechner A aber auch Revision 2 erstelle, die aber eine andere Revision 2 ist, dann weiß der, bei der Replikationszeit, ok, ich habe jetzt zweimal Revision 2 erstellt und in Wirklichkeit ist es nicht 2, sondern eine andere random Zahl, weiß, ok, das passt nicht mehr zusammen, da entsteht ein Konflikt. Das ist ein spezieller Status, den ein Dokument haben kann, dass nach einer Replikation ein Dokument mit zwei Realitäten im Prinzip zur Verfügung steht.
+
+01:49:37.281 --> 01:49:50.901
+<v SPEAKER_2>Das ist eine Realität, die dann auch an die Anwendung zurückgereicht wird. Das heißt, die kann dann entsprechend darauf reagieren und sagen, dann vergleiche ich die dann mal und gucke, ob das für mich eine relevante Unterschied ist oder ob ich unter Umständen irgendeinen Benutzer oder Administrator fragen muss, was damit zu tun ist.
+
+01:49:50.921 --> 01:49:52.501
+<v SPEAKER_3>Exakt.
+
+01:49:52.521 --> 01:50:00.161
+<v SPEAKER_2>Das heißt, man hat bei CouchDB sozusagen Veränderungshistorie gleich mit drin? Mit Zeitstempel?
+
+01:50:00.181 --> 01:50:14.721
+<v SPEAKER_3>Nicht mit Zeitstempel. In einem Verteilungssystem gibt es keine Zeit. Man müsste von oben sagen, das ist die Zeit. Und man hätte damit einen Punkt in einem System, zu dem alle jederzeit Zugriff haben können. Das passt nicht mit den ganzen Fallacies des Network Programming zusammen.
+
+01:50:14.741 --> 01:50:15.521
+<v SPEAKER_2>Unter anderem.
+
+01:50:16.381 --> 01:50:39.781
+<v SPEAKER_3>Genau. Wo in der Praxis, die ich dann auch schon gehört habe, von einem Setup, das halt über mehrere Hundert Rechner in mehreren Kontinenten verteilt war, wo der bis zu einer Sicherheit, die er für seine Anwendung braucht, tatsächlich die korrekte Zeit auf allen Systemen sicherstellen konnte. Also man kann das tatsächlich bauen, aber in der Regel möchte man das einfach nicht bauen. Deswegen machen wir da nichts mehr Zeit.
+
+01:50:39.801 --> 01:51:09.641
+<v SPEAKER_2>Zurück zu der Frage. Ich finde das ja ein interessantes Modell. Man braucht ja nur an Wikis zu denken und so. Grundsätzlich haben viele Systeme das Problem, man kann dann zwar leicht Sachen ändern, aber man will auch eine History haben. Dann muss man anfangen, sich das auch wieder zusammen zu programmieren. Was gerade bei SQL dann nochmal so ein richtiger Scheiß ist. Weil das ja dann sozusagen dein ganzes Datenmodell nochmal um eine weitere Indirektion kommt.
+
+01:51:09.661 --> 01:51:12.461
+<v SPEAKER_3>Wenn Join wieder um eine Tabelle erweitert ist, wäre es noch langsamer und komplexer.
+
+01:51:12.481 --> 01:51:21.981
+<v SPEAKER_2>Genau, es wird einfach super komplex. Man muss das explizite Modell vorsehen. Das wäre ja hier jetzt so nicht der Fall. Trotzdem möchte ich ja gerne diese Schritte dann auch irgendwie eine Zeitstrahl bringen.
+
+01:51:21.981 --> 01:51:52.661
+<v SPEAKER_4>Das ist halt gerade nicht. Also diese Visionen sind halt sozusagen eigentlich nicht für die Anwendung da. Die sind halt da, um diese Replikation machen zu können, um halt zu sehen zu können, was ist in der Zwischenzeit passiert, seitdem ich repliziert habe und habe ich jetzt einen Konflikt oder muss ich von links nach rechts oder was muss ich halt sozusagen rüber kopieren. Die können aber verloren gehen. Ich kann halt so eine Datenbank, ich kann sagen, dass sie compacted werden soll. Also ich mache sozusagen sauber und dann gehen die alten Versionen weg.
+
+01:51:52.681 --> 01:51:56.301
+<v SPEAKER_3>Das heißt, es wird garantiert immer nur die letzte Revision erhalten bleiben.
+
+01:51:56.921 --> 01:51:58.621
+<v SPEAKER_4>Ich muss das jetzt immer noch per Hand programmieren.
+
+01:52:02.161 --> 01:54:25.521
+<v SPEAKER_3>Der andere Grund, warum wir das haben, ist das Locking-Modell von CouchDB. Das grundlegende Problem ist, wenn ich eine Ressource habe, die von mehreren Leuten geändert werden kann, dann muss ich damit ein bisschen schlau umgehen. Das geht halt dann dazu, wenn ich halt keine Ahnung, einen Insane-Write-Befehl auf eine Datei von zwei verschiedenen Prozessen mache, dann schreibt der eine über die Sachen des anderen und man kriegt irgendwelchen Müll. Und man weiß nicht mehr, was man hat. Das ist so das grundlegende Problem, was man lösen möchte. Da gibt es mehrere Lösungsansätze. Das eine ist Locking, das heißt, jemand sagt, ich möchte diese Datei jetzt schreiben, also setze ich einen Lock, das im Prinzip diese Ressource sperrt für alle anderen Zugriffe. Also ein Write-Log. Keiner kann irgendwas mit dieser Ressource machen, bis ich meine Schreibaportion vollendet habe und das Write-Log wieder löse. Dann gibt es davon... Das ist eine Optimierung davon. Ich mache nur einen Write-Log, dass wir in Leseroperationen noch gehen. Dann müsste man aber mit der Konsistenz auch gucken, wenn meine Schreibaportion schon halb erledigt ist. Wenn ich dann eine Leseroperation mache, die durch das ganze File geht, dann kriege ich halb das neue und halb das alte. Das will man ja auch nicht wirklich. Man muss auch mit den Read-Logs aufpassen. Die andere Möglichkeit ist, die CouchDB auch anwendet, ist kein Locking zu verwenden, sondern ein System zu verwenden, das sich Multiversion Concurrency Control nennt. Statt irgendwas in einer Datei tatsächlich zu überschreiben, so dass ich zu einem Zeitpunkt, wenn ich lesen würde, halb alt und halt neu bekommen würde, schreibt CouchDB immer neue Daten auf die Platte. Das heißt, wenn ich ein Dokument lesen möchte, dann steht das irgendwo auf der Festplatte und wenn eine neue Version davon geschrieben wird, steht die woanders auf der Festplatte. Das heißt, wenn jemand die alte Version lesen will, steht die immer komplett noch auf der Festplatte und die kann auch weiter rausgelesen werden, während ich schon eine neue Version schreibe. Das heißt, da muss schon mal kein Readlocking passieren. Writelocking brauchen wir nicht, weil wenn man eine Schreiboperation ist, die nicht das Anlegen eines neuen Dokuments ist, sondern das Ändern oder das Löschen, wobei Löschen nur ein Special Case vom Aktualisieren, vom Updaten ist, muss man die aktuelle Revisionsnummer des Dokuments mit angeben. Wenn eine Schreibproportion so reinkommt, sagt sie, sie möchte Dokument X überschreiben mit der Revisionsnummer 2. Ich weiß nicht, wie ich Revisionsnummer 3 einschreibe, aber ich möchte über Revisionsnummer 2 schreiben. Dann muss man dazu sagen, in diesem HTTP-Request schreibe ich über Revisionsnummer 2 rein.
+
+01:54:25.541 --> 01:54:32.021
+<v SPEAKER_2>Wenn man so ein Dokument liest, kriegt man die Revisionsnummer schon immer mit?
+
+01:54:32.101 --> 01:55:02.421
+<v SPEAKER_3>Ja. In der Zwischenzeit, während man das liest, und man hat die Revisionsnummer und macht eine Änderung, möchte man wieder drüber schreiben. Wenn in der Zeit jemand anders schneller ist, in einem Wiki-Beispiel, in dem ich eine Änderung mache, jemand anders ist aber schneller, oder ich schreibe einen neuen Absatz in einem Wiki-Artikel, aber jemand anders macht nur ein Typo. Er braucht also nur eine Minute, während ich zehn Minuten brauche. Der schreibt dann schon mal da rein. Erzeugt also Revision 3. Wenn ich jetzt schreibe, ich möchte Revision 2 überschreiben, dann sieht CouchDB, du möchtest was überschreiben, was gar nicht die letzte Revision ist. Dein Schreibzugriff wird hier nicht erlaubt. Verstehe.
+
+01:55:03.521 --> 01:55:05.981
+<v SPEAKER_2>Das muss dann die Anwendung wieder abfangen?
+
+01:55:06.001 --> 01:55:12.161
+<v SPEAKER_3>Genau, die Anwendung sieht dann, entweder kann das bis zum User gehen, okay, deine Schreibapportion hat nicht funktioniert.
+
+01:55:12.181 --> 01:55:16.061
+<v SPEAKER_2>Oder liest einfach die aktuelle Revision und guckt, ob er damit immer noch klar kommt.
+
+01:55:16.081 --> 01:56:07.061
+<v SPEAKER_3>Genau, wenn man das merging kann, dann machen wir das. Und falls es nicht merge-bar ist, dann muss der User da entscheiden, was passieren muss. Der Vorteil ist, oder das Problem mit Locking-Systemen ist, dass ab einem gewissen Grad von Gleichzeitigkeit, also wenn wir 10.000 parallele Zugriffe haben, dass ein Locking-System sich irgendwann nur noch darum kümmert, wer gerade was macht, was machen darf, anstatt irgendwas wirklich tatsächlich zu machen. Also es managt eigentlich nur noch Locks, anstatt eigentlich nur noch. Aber eine Großzahl der Zeit wird verwendet, Locks zu verwalten, anstatt tatsächlich die Daten zu ändern. Wobei man ein System wie CouchDB oder jedes MVCC-System, wo es keine Locks gibt, kommt mit viel Parallelität viel einfacher klar. Und der Trade-off, Programmieren ist halt immer Trade-off, ist, dass der Client etwas schlauer sein muss und mit diesem Schreibkonflikt halt klarkommen muss.
+
+01:56:07.081 --> 01:56:27.321
+<v SPEAKER_2>Was man aber eigentlich in solchen Multi-User-Umgebungen sowieso haben muss. Weil man hat ja eh immer so seinen State, wenn man irgendwie einen Usergrad, was man aus seiner SQL-Datenbank ausgelesen hat, anzeigt, kann das halt auch sein, dass es sich schon wieder geändert hat. Das ist ja an der Stelle. Und da wird es dann halt richtig schwierig, das eben festzustellen, weil man nämlich eigentlich diesen Kontext der Revision so gar nicht hat.
+
+01:56:28.041 --> 01:56:39.901
+<v SPEAKER_3>Und generell, also keine Ahnung, für MySQL zum Beispiel gibt es das InnoDB, Storage Plugin, das benutzt auch MVCC im Hintergrund, sodass halt der Log geschrieben werden kann. Das versteckt das aber alles hinter diesem ganzen großen Wall von SQL.
+
+01:56:39.921 --> 01:56:44.721
+<v SPEAKER_2>Weil das halt bei SQL so nicht vorgesehen ist, da gibt es eigentlich immer nur einen aktuellen Stand und sonst gar nichts.
+
+01:56:44.741 --> 01:56:53.441
+<v SPEAKER_3>Was schon sehr gut ist, dass es das da auch gibt. Und CouchDB nimmt das dann noch einen Schritt weiter und macht das, gibt das an die Clients direkt weiter und die Anwendung weiter.
+
+01:56:53.801 --> 01:57:12.181
+<v SPEAKER_2>Ich verstehe. Jetzt gibt es ja bei SQL-Datenbanken auch so Features, so wie Stored Procedures. Im Prinzip ist ja diese Indizierungsfunktion, die im eigenen Dokument abgelegt wird, ist ja auch eigentlich so was Ähnliches. Aber das ist jetzt so nicht vergleichbar.
+
+01:57:12.341 --> 01:57:31.921
+<v SPEAKER_3>Nicht so wirklich. Es gibt mehrere Sachen in CouchDB, mit denen man noch coole Sachen machen kann, die in dem CouchDB-Problemspace sind. Aber wir sind nicht eher dahinter so, was können relationale Datenbanken leisten, lass uns das mal passen, nachprogrammieren. Sondern wir machen eher, was unsere User haben wollen, wo wir denken, das ist eine sinnvolle Sache. Wir sind ja auch Anwendungsentwickler, was fehlt uns, was möchten wir noch haben?
+
+01:57:31.941 --> 01:57:43.421
+<v SPEAKER_2>Aber solche Server-seitige Intelligenz wäre ja jetzt rein technisch dadurch relativ einfach zu machen. Aber so vorgesehen ist es jetzt noch nicht, dass man so Code in JavaScript hat, der da so rumschwebt und...
+
+01:57:43.441 --> 01:59:12.101
+<v SPEAKER_3>Es gibt mehrere Sachen, die wir machen können. Zum einen was interessant ist, ist ein Notificationsystem, wo man über so ein... Es gibt zwei Varianten, davon die Details muss ich jetzt vielleicht gerade nicht erklären. Im Prinzip, wo man als Anwendung oder als HTTP-Client sich für Notifications registrieren kann. Also... Sag mir Bescheid. Sag mir Bescheid. Genau, wenn sich was getan hat und daraufhin kann ich dann irgendwelchen Code ausführen. Diesen Code kann man dann einfach... Das muss man in der Installation mitgeben, das ist jetzt nicht was man... Also das ist halt so eine Setup-Sache. Dann kann man halt immer, wenn eine Datenbank geändert wurde, kann ich halt gucken, okay, habe ich schon 100 Änderungen, wenn ich 100 Änderungen habe, dann repliziert nach Server B, weil ich nach jedem 100 Änderungen quasi eine Replikation sicherstellen möchte. Sowas kann man da bauen. Eine andere Sache, die wir haben, sind externe Indizes. Das ist auch nicht, also, wir haben halt dieses View-System, wo wir diese ganzen Eigenschaften haben, die wir gerade erklärt haben. Es gibt aber Suchprobleme, die darauf nicht passen, sowas wie Volltext-Suche. Da gibt es andere Bibliotheken, die das einfacher machen, wie Sphinx oder Lucene oder noch eine, verschiedene Möglichkeiten, Volltextindizes zu erstellen. Und CouchDB hat halt diese Einhackpunkte im System, wo man andere Indizes auch einfach mit einbinden kann. Das heißt, es gibt zum Beispiel ein Plug-In für Lucene, wo man sagen kann, ok, installiere halt dieses kleine Java-Fall.
+
+01:59:12.141 --> 01:59:13.121
+<v SPEAKER_2>Was ist nochmal Lucene?
+
+01:59:14.181 --> 01:59:32.521
+<v SPEAKER_3>Eine Volltext-Such-Library. Also damit kann man einen Volltextindex erstellen und darauf auch suchen. Das ist relativ effizient. Und da gibt es dann ein Plug-In, wo man sagen kann, ok, ich möchte hier diese Daten machen, soll jetzt auch Volltext durchsuchbar sein. Und dann kümmert sich dieses Plug-In dafür, dass es durch Lucene geschrieben wird. Aber das läuft alles, wird von CouchDB verwaltet.
+
+01:59:32.541 --> 01:59:34.721
+<v SPEAKER_2>Ok, das läuft dann im Server sozusagen.
+
+01:59:34.741 --> 02:00:52.081
+<v SPEAKER_3>Genau. Der dritte Punkt sind Transformationsfunktionen. Das wird nochmal interessant, wenn wieder Leute nach XML rufen. Es sind wieder JavaScript-Funktionen, die zur Lestzeit aufgerufen werden. Also wenn ich eine Abfrage mache, kann ich über eine spezielle URL, also jedes Dokument hat seine URL, dann das Dokument bekommen. Oder durch eine Variation dieser URL, die CouchDB sagt, nehme dieses Dokument und lasse es durch meine Funktion laufen, kann ich dieses JSON-Konstrukt, das Dokument beliebig transformieren. Ich kann zum Beispiel sagen, wenn diese URL abgefragt wird, dann nehme ich das JSON und mache das in HTML und render mir direkt meinen Blogpost, gib mir direkt das HTML aus CouchDB. Anstatt das in irgendeiner Middleware zu erledigen oder das in einem Browser umzuformen. Man kann direkt CouchDB fragen, gib mir das HTML. Man kann dann ein bisschen HTTPS-Magie machen. Es gibt diesen Accept-Header in HTTPS, der sagt, ich verstehe folgende Medientypen, gib mir die bitte in der Reihenfolge. Man kann auch sagen, ich verstehe nur diesen einen, gib mir HTML. Ich bin Newsreader, bitte gib mir XML. Ich bin ein Apiklide, bitte gib mir JSON. Und der kann dann entscheiden, anhand von diesem Exapher, da welchen.
+
+02:01:20.461 --> 02:01:22.661
+<v SPEAKER_2>Und dann, welches Format dann zurückgegeben werden soll. Das integriert sich gut mit HTTP Caching.
+
+02:01:32.201 --> 02:01:34.081
+<v SPEAKER_3>Die Revisionsnummer. Ach, die Revisionsnummer ist ja an sich auch schon...
+
+02:01:37.841 --> 02:01:58.361
+<v SPEAKER_2>Ich muss mal kurz in mein langsames Hirn, muss ich daherkommen. Das heißt, da ich ja die Revisionsnummer immer erhalte, sozusagen eine Anwendung, gebe ich sie dann eben mit dem HTTP-Request explizit sozusagen als eTag mit an. Und das ist dann quasi auch für alle HTTP-Subsysteme schon die eindeutige Nachricht, wenn der eTag auf der anderen Seite sich nicht geändert hat, dann nimm einfach das, was in deinem Cache ist.
+
+02:01:58.381 --> 02:01:59.061
+<v SPEAKER_3>Genau.
+
+02:01:59.081 --> 02:02:08.341
+<v SPEAKER_2>Führt aber schon dann doch noch zu einer Anfrage in der Datenbank, die aber dann nicht das ganze Dokument nochmal lesen muss und noch nicht übermitteln muss.
+
+02:02:08.481 --> 02:02:10.641
+<v SPEAKER_3>Das ist eine eher günstige Abfrage.
+
+02:02:10.661 --> 02:02:41.741
+<v SPEAKER_2>Das heißt, da ist schon noch die volle Latenz von vorne nach hinten, aber sie verbraucht nicht so viel Bandbreite und auch nicht so viele Ressourcen auf dem Server. Genau. Das heißt, es ist sehr einfach, Caching-Mechanismen aufzubauen mit CouchDB, weil eben alles einfach mit HTTP abgebildet ist. Was ist denn sonst noch so in dem HTTP-Header, von dem CouchDB Nutzen zieht? Also diese Accept-Geschichte ist ein gutes Beispiel.
+
+02:02:41.761 --> 02:03:25.181
+<v SPEAKER_3>Für manche Sachen, die nicht gecashed werden dürfen, so wie Ergebnisse von... Wir haben einen AP-Endpunkt, der gibt uns UUIDs. Es gibt Clients, die können keine 128-Bit-Krypto-IDs generieren, so wie Browser zum Beispiel, die haben das nicht. Also haben wir einen Request, wo man CouchDB fragt, gib mir mal eine Liste von UUIDs, die ich für meine nächsten Schreiboperationen verbrauchen kann. Das zum Beispiel darf nicht gecashed sein. Da wird dieses Caching halt nicht verwendet. Da muss man halt so ein bisschen aufpassen, dass man halt nicht zweimal dieselben UUIDs zurückbekommt von irgendeinem Proxy. Ich glaube, das waren so die HTTP-Features, die wir nutzen.
+
+02:03:25.201 --> 02:03:40.181
+<v SPEAKER_2>Jetzt vielleicht nochmal auf diese Abfrage-Geschichte. Du hast vorhin erwähnt, wenn man jetzt irgendwie die Daten dann tatsächlich fragen will, dass man da eine Map-Funktion mitgeben muss. Das habe ich noch nicht so ganz verstanden.
+
+02:03:40.201 --> 02:03:43.681
+<v SPEAKER_3>Die Map-Funktion ist die Funktion, über die wir schon gesprochen haben.
+
+02:03:43.801 --> 02:03:45.961
+<v SPEAKER_2>Die, die den Index macht.
+
+02:03:45.981 --> 02:03:47.161
+<v SPEAKER_3>Genau, das ist die Map-Funktion.
+
+02:03:47.181 --> 02:03:50.321
+<v SPEAKER_2>Ah, okay, alles klar. Und dann gibt es aber noch eine andere Funktion.
+
+02:03:50.341 --> 02:03:51.121
+<v SPEAKER_3>Die Reduce-Funktion.
+
+02:03:51.421 --> 02:03:53.541
+<v SPEAKER_2>Und was macht die und wann kommt die zum Tragen?
+
+02:03:53.561 --> 02:03:57.901
+<v SPEAKER_3>Die Reduce-Funktion ist, du kannst es auch erklären, wenn du möchtest.
+
+02:03:57.921 --> 02:04:27.141
+<v SPEAKER_4>Mit Reduce kann ich nochmal, als Rubik-Programmierer, zum Beispiel, kennt man das auch, gibt es die auf Arrays auch, mit Reduce kann ich sozusagen auf meinem Ergebnis nochmal rechnen. Ich kann zum Beispiel, also das ganz simple Beispiel ist immer, ich will irgendwie wissen, wie viele Tags ich von irgendwas habe, zum Beispiel, und kann ich darüber zum Beispiel zählen. Das heißt, ich kriege, ich kann nochmal das Ergebnis der Map-Funktion sozusagen zusammenfassen zu irgendwas anderem.
+
+02:04:27.161 --> 02:04:29.281
+<v SPEAKER_2>Bevor die Antwort eigentlich kommt?
+
+02:04:29.301 --> 02:04:46.101
+<v SPEAKER_4>Bevor ich zurück zum Kleinen gehe, genau. Und das Beispiel wäre zum Beispiel, wenn ich in meiner Emit-Funktion mir zum Beispiel alle Tags für alle meine Blogposts ausgeben, dann kann ich die dann nochmal zusammenzählen für eine Statistik oder sowas.
+
+02:04:46.181 --> 02:04:54.121
+<v SPEAKER_3>Für so eine Tag-Cloud, die man haben möchte, wo Wörter, die häufiger vorkommen, größer dargestellt werden. Dazu muss ich halt wissen, in welchem Fall die Anzahl der Wörter halt stehen.
+
+02:04:55.761 --> 02:05:00.501
+<v SPEAKER_2>Und das ist ein häufiger Fall? Benutzt man das häufig oder ist das eher die Ausnahme?
+
+02:05:00.521 --> 02:05:38.061
+<v SPEAKER_3>Reduce ist erstmal optional, man muss das nicht machen. Und nur, wenn man die auch mit angibt, wird CouchDB das auch ausführen. Und es gibt eine Menge Sachen, die man ohne Reduce erschlagen kann. Da hat man halt nur die Webfunktion und das Sortieren, das Filtert reicht einem. Aber sobald es zu Auswertungen von Daten kommt oder zu etwas, ja, doch zu cleveren Auswertungen, sowas wie Statistiken, einfache Zählstatistiken oder Durchschnittswerte errechnen oder alles andere, was man schön ist, was man mit Zahlen machen kann, lässt sich auf dieses MapReduce-Paradigmal ziemlich gut abbilden.
+
+02:05:38.821 --> 02:05:45.501
+<v SPEAKER_2>Aber diese Reduce-Funktionen, die werden dann mit dem eigentlichen Query immer wieder mitgegeben oder legt man die auch einmal ab?
+
+02:05:45.521 --> 02:06:59.341
+<v SPEAKER_3>Die legt man auch einmal ab, mit der Map-Funktion zusammen. Zur Abfrage ist halt, wie das halt geguckt ist, ist mein Index aktuell? Wenn ja, dann wird einfach aus dem Index gelesen. Falls der Index nicht aktuell ist, dann muss der Index erst aufgebaut werden. Dann wird die Map-Funktion aufgerufen und das Ergebnis der Map-Funktion wird in einen Baum gespeichert. Und das Ergebnis wird dann nochmal in einer Reduce-Funktion vor einem Vorhanden ist durchgeleitet, die wiederum verkleinerte Zwischenergebnisse errechnet und auch in diesem Baum speichert, der hinter meinem Index sitzt. Das heißt, die Zwischenergebnisse innerhalb meines Baums für meinen Index werden auch schon vorkomputet. Wie heißt das denn? Vorberechnet. Und zur Abfragezeit kann das entweder direkt mit ausgelesen werden oder wenn man so eine Range-Query macht, also eine Abfrage über sagen, gib mir alles vom letzten Jahr, dann muss unter Umständen ein paar von diesen Zwischenergebnissen noch einmal zusammengerechnet werden, aber es ist dann halt in einem einzelnen Funktionsaufruf einfach zu machen.
+
+02:06:59.361 --> 02:07:29.081
+<v SPEAKER_2>Könnte man damit vielleicht jetzt auch das, was ich also als wenn wir diesen Blog-Ding angefangen haben, so dann wollte ich ja gleich los sporten und meine User-IDs haben, so dann sollte ich mich ja erstmal entspannen. So jetzt bin ich entspannt genug, jetzt will ich das aber trotzdem haben. Wie würde ich denn da jetzt rangehen? Das heißt, ich habe dann für jeden User wahrscheinlich auch noch mal jeweils ein Dokument, wo sozusagen das Profil mit drin steht und ich würde dann aber schon mit so IDs arbeiten, wie man das so kennt und Zahlen vergeben oder gibt es dann irgendwie?
+
+02:07:30.061 --> 02:08:04.461
+<v SPEAKER_4>Also da gibt es mehrere Möglichkeiten. Der einfachste Fall wäre jetzt wahrscheinlich, dass ich mir einfach für meinen User, der jetzt meinetwegen auch wieder einen Namen hat und eine E-Mail-Adresse vielleicht und ein Passwort, ein extra Dokument anlege, wo der halt drin steht. Und an dem Moment, wo ich jetzt sozusagen Blogpost und User in meiner Datenbank drin habe, muss ich die ja irgendwie unterscheiden können. Und da kann ich jetzt zum Beispiel ganz einfach anschreiben, Typ, Doppelpunkt, das ist ein User oder das ist ein Blogpost. Das ist halt so der einfachste Anlass, wo ich ja kennenzulernen.
+
+02:08:04.481 --> 02:08:07.861
+<v SPEAKER_2>Weil zunächst einmal sind ja alle Dokumente erst mal gleich, egal was da drin ist.
+
+02:08:07.881 --> 02:08:57.121
+<v SPEAKER_4>Es sind alles Dokumente und sie liegen alle in einem Namespace. Das heißt, ich kann jetzt nicht meinen User suchen, sondern ich suche immer in allen Dokumenten. Und was ich halt dann machen kann, wenn ich irgendwas habe, woran ich meine User, meine Blogpost erkenne, sei es jetzt, da steht halt der Typ fest drin, oder ich weiß halt irgendwie, alle Dokumente, die Nachnamen haben, sind User. Das ist natürlich ein bisschen ungünstig. Vielleicht wäre aber daran, könnte man es dann theoretisch auch unterscheiden. Dann kann ich halt meine Map-Funktion ein bisschen umbauen, wenn ich jetzt zum Beispiel eine Blogpost haben will. Und mache dann einfach if type=blogpost, nur dann bitte in diesen Index rein. Und wenn nicht, dann skippen wir einfach und gehen zum nächsten über. Darüber kann ich jetzt sozusagen die Sache unterscheiden und kann mir dann ein Index bauen für meine User und kann mir ein Index bauen für meine Blogpost zum Beispiel.
+
+02:08:57.141 --> 02:09:06.301
+<v SPEAKER_2>Man muss schon ganz schön aufpassen mit seinen Map-Funktionen, dass die der Realität in der Datenbank auch immer gerecht werden, weil sie nicht nur auf ein Subset, sondern immer auf alles angewendet werden.
+
+02:09:08.241 --> 02:10:10.961
+<v SPEAKER_4>So, und jetzt will ich natürlich meinen User dem Blogpost zuordnen, damit ich ihn halt auch entsprechend laden kann. Und das kann ich jetzt auch wieder in verschiedene Arten machen. Wenn man jetzt sozusagen vom SQL herkommt, was man halt kennt, ist sozusagen, man kann eine ganz klassische Fremdschlüsselbeziehung herstellen, in die man einfach die User-ID, also die Dokument-ID, das User-Dokument, sozusagen einfach in den Blogpost mit reinschreibt und unter meinetwegen User-ID sind vollerweise. Und dann weiß man halt, okay, also das ist die ID vom User und dann kann ich halt meinen Blogpost laden und dann kann ich zum Beispiel losgehen und einfach nochmal einen zweiten Query machen mit der ID des Users und den User holen. Das wäre sozusagen die einfachste Variante. Wenn ich jetzt meinetwegen den User gleich mitladen will, dann muss ich halt meine Map-Funktion ein bisschen komplizierter machen und kann sozusagen entscheiden, wenn das ein Blogpost ist, dann emitte den Blogpost und markiere ihn irgendwie als Blogpost und emitte aber User auch noch gleich mit dazu.
+
+02:10:10.981 --> 02:10:14.721
+<v SPEAKER_2>Das heißt, er löst schon die eigentliche Map-Funktion, diese User-ID auf.
+
+02:10:16.061 --> 02:10:30.141
+<v SPEAKER_3>Nein, der Trick ist dabei, dass die Emitt-Funktion in den Index schreibt, der sortiert ist. Man würde sagen, wir möchten Blogposts und alle Kommentare haben als Beispiel. Das ist das Beispiel, das wir gerade haben.
+
+02:10:30.681 --> 02:10:34.221
+<v SPEAKER_2>Na, nee, sozusagen, dass das User-Profil noch separat ist.
+
+02:10:35.161 --> 02:10:41.521
+<v SPEAKER_3>Das heißt, du würdest an dieser Stelle, wenn man das machen?
+
+02:10:41.541 --> 02:10:59.881
+<v SPEAKER_4>Na, du könntest zum Beispiel einfach den Blogpost im Mitten, aber noch irgendwie einen String dazuschreiben, das ist ein Blogpost. Also statt sozusagen nur jetzt das Datum des Blogposts in den Key zu schreiben, in den View, würde ich halt noch hinschreiben, das Wort Blogpost zum Beispiel. Dann kann ich halt später erkennen, das ist ein Blogpost.
+
+02:11:00.841 --> 02:11:25.061
+<v SPEAKER_2>Ja gut, aber jetzt steht ja in diesem Blogpost steht dann halt meine User-ID drin. Das ist halt von Benutzer sowieso, weil ich will halt vermeiden, da einen Namen reinzuschreiben, weil der sich ja ändern kann. Und dann möchte ich natürlich, dass er sich nur an einer Stelle ändert, nämlich in diesem Profil, dass ich nicht jedes Mal 10.000 Blogposts ändern muss, wenn sich halt der Name ändert. Das ist ja eigentlich eine legitime Anfrage, oder entspanne ich mich da jetzt nur auf jeden Fall.
+
+02:11:25.081 --> 02:11:31.821
+<v SPEAKER_3>Das ist definitiv eine legitime Anfrage, obwohl man da auch argumentieren könnte, so oft ändern sich die Namen nicht, und mal eben 10.000 Rekorde.
+
+02:11:31.841 --> 02:11:52.421
+<v SPEAKER_2>Mir würden jetzt auch viele Beispiele einfallen, was sich etwas sehr häufig ändert vielleicht. Deswegen ist ja so eine Indirektion sozusagen schon wünschenswert. Jetzt wüsste ich halt nicht so richtig, wie gehe ich da ran? Wie baue ich mir andere Indizes zusammen? Diese Map-Funktion wird ja immer nur für jedes Dokument einmal aufgerufen. Das heißt, die kann ja jetzt nicht wirklich auf andere Dokumente...
+
+02:11:52.441 --> 02:12:05.841
+<v SPEAKER_3>In dem Fall würde ich es tatsächlich über zwei Queries machen. Das heißt, wenn ich einen Blogpost anzeigen will und in dem Blogpost möchte ich auch User-Informationen anzeigen, dann mache ich einfach zwei Queries. In unserer Denk-So billig sind Queries, dass man da locker zwei machen kann.
+
+02:12:05.961 --> 02:12:14.861
+<v SPEAKER_2>Aber jetzt in SQL würde ich ja für diesen Fall dann vielleicht wirklich mit so einem Join da ran gehen und mir das sozusagen gleich fertig...
+
+02:12:14.881 --> 02:12:47.101
+<v SPEAKER_3>Da kann man das mit mehreren Ebenen vergleichen. Es gibt Indizes, die irgendwie auf der Platte stehen. Das sind Bäume, die schnell durchsucht werden können. Das ist, was man in CouchDB in Views direkt definiert. Und das sind die Indizes, die auf dem Spalten in SQL sind. Dann gibt es da drüber den SQL-Layer in Relational-Datenbank. Der sagt dann, okay, ich kann diese Indizes jetzt irgendwie verbinden. Am Ende sind das aber zwei Anfragen auf zwei Indizes. Oder sogar mehr Indizes. Und CouchDB hat diesen SQL-Layer nicht. Das heißt, wenn ich Anfragen habe, die zwei Indizes betreffen, muss ich zwei Anfragen machen. Das wird nicht von dir weg abstrahiert.
+
+02:12:47.121 --> 02:12:56.041
+<v SPEAKER_2>Das heißt aber, dass ich dann sozusagen auch die Daten dann auch wirklich erst in der Anwendung zusammenführe, wo ich beim SQL das ja schon auf dem Server zusammenführen könnte.
+
+02:12:56.061 --> 02:13:32.861
+<v SPEAKER_3>Genau. Und es gibt einen Use-Case, wo man Parent-Child- oder Eltern-Kind-Beziehungen darstellen möchte. Also im Prinzip einen kleinen Baum oder auch einen großen Baum in diesem flachen Index. Das Beispiel, was man hier jetzt dann gut anbringen könnte, wäre der Blog-Post und die Kommentare dazu. Oder so eine Forum-Diskussion. Man kann das in der Map-Funktion formulieren und einen Blog-Post und alle Kommentare in einem Rutsch auslesen, ohne dass man mehrere Requests machen müsste. Das funktioniert folgendermaßen.
+
+02:13:35.041 --> 02:13:40.081
+<v SPEAKER_2>Also einen Blog-Post und alle Kommentare tatsächlich in einem Dokument abspeichern.
+
+02:13:40.101 --> 02:14:42.741
+<v SPEAKER_3>Das wäre die eine Möglichkeit. Das kommt mit anderen Problemen. Die können wir vielleicht später auch noch diskutieren. Die andere Möglichkeit ist aber, jeden Kommentar auch in einem anderen Dokument unterzubringen. Und in jedem Kommentardokument schreibt man rein, ich bin Kommentar zu Blog-Post A. In deiner Map-Funktion schaut man dann, wenn das aktuelle Dokument, was man evaluiert, bin ich Blog-Post oder bin ich Kommentar? Wenn ich in Blog-Post bin, dann gebe ich einfach meine ID aus, also A in diesem Fall. Wenn ich Kommentar bin, dann gebe ich die ID aus, die ich unter Ich gehöre zu Blog-Post gehöre aus. Das Ergebnis ist, ich bekomme einen Index, der nach Blog-Post ID sortiert ist. Also da stehen halt ganz viele As untereinander. Wenn ich dann eine Range-Abfrage mache, also gebe ich mir alles zum Blog-Post A, dann kriege ich halt diese mehreren Ergebnisse, zum Beispiel meinen Key, wie bei alle Schmids. Wenn ich nach Key Schmids suche, dann kriege ich alle Keys, die zu A gehöre.
+
+02:14:42.761 --> 02:14:48.521
+<v SPEAKER_2>Das heißt, sowohl das Dokument, wo der Blog-Post drin steht, als auch alle Kommentare dazu. Dann muss ich aber selber noch rausgucken, was was ist.
+
+02:14:48.541 --> 02:15:12.821
+<v SPEAKER_3>Ja, da kann man dann diesen Trick einmal weiterführen. Ich tue einfach noch das Datum mit rein. Ich kann komplexe Keys bauen, wo der erste Teil die ID ist und der zweite Teil das Datum. Ich weiß ja, wenn ich einen Blog-Post anlege, passiert der Blog-Post immer vor allen Kommentaren, in der Regel. Wenn ich das so mache, dann weiß ich, von meinem View-Ergebnis ist das, das erste Ergebnis ist mein Blog-Post. Das kann ich direkt anzeigen. Und alle anderen sind die Kommentare sortiert.
+
+02:15:12.841 --> 02:15:16.601
+<v SPEAKER_2>Da könnte man auch gleich das Date, den Typ halt noch mit reinschreiben.
+
+02:15:16.681 --> 02:15:18.481
+<v SPEAKER_3>Das ging auch, da kann man, genau.
+
+02:15:18.501 --> 02:15:26.061
+<v SPEAKER_2>Gut, dann hat man es nicht gleich nach Datum sortiert. Verstehe. Da muss man einfach klug rangehen. Und die Reducerei könnte einem an der Stelle jetzt aber nicht helfen?
+
+02:15:26.921 --> 02:15:33.521
+<v SPEAKER_3>Ähm, da nicht direkt. Da könnte man dann halt so was zusammenzählen, wie der Blog-Post hat so und so viele Kommentare.
+
+02:15:34.361 --> 02:15:44.781
+<v SPEAKER_2>Okay, gut. Also Reduce ist auch wirklich sozusagen im einlichen Wortsinne. Reduzierst du mir halt hier auf irgendeine Essenz, was auch immer jetzt diese Essenz in dem jeweiligen Kontext sein mag.
+
+02:15:44.821 --> 02:15:52.921
+<v SPEAKER_3>Ja, und so, wir haben so eine Users-Main-Liste. Die Leute kommen auf unglaubliche Sachen, an die ich nie gedacht hätte, die sie irgendwie Reduce lösen und haben dann vielleicht kleine Probleme und wir helfen denen dann.
+
+02:15:55.481 --> 02:16:01.441
+<v SPEAKER_2>Wer benutzt denn CouchDB? Also gibt es irgendwie schon so ein paar Leuchtturmprojekte oder ist das alles sehr vertikal?
+
+02:16:02.781 --> 02:17:05.181
+<v SPEAKER_3>Wir haben ein paar coole Sachen dabei. Das eine ist die BBC in London. Die bauen gerade so eine neue Plattform für ihre Webprojekte. Die aktuellen Webprojekte sind viel so, Server-Site includes, Perl, irgendwie alles 1995, alt, crafty, nicht mehr so cool. Und die haben jetzt ein internes Projekt, wo die eine neue Plattform bauen, auf dem man moderne Web-Anwendungen bauen kann. Und Teil dieses Projekts ist ein Key-Value-Store, ein Schlüsselwertespeicher, wie CouchDB einer ist, der redundant sein muss, der schnell sein muss, der über mehrere Rechenzentren verteilt sein muss. Und die haben sich ziemlich viele Key-Value-Stores angeguckt. Es gibt jetzt bestimmt schon zehn davon, die relevant sind und haben sich am Ende für CouchDB entschieden, weil es für deren Anwendungsfall in dem Fall am besten geeignet ist. Das ist jetzt Mitte April live gegangen. Das war jetzt so ein halbes Jahr in Entwicklung gewesen. Und das ist jetzt schon in Produktion. Ich weiß jetzt gerade keine Zahlen von der Größe.
+
+02:17:05.201 --> 02:17:10.241
+<v SPEAKER_2>Was sind denn so die Konkurrenten im Key-Value-Bereich, die jetzt so ähnlich sind?
+
+02:17:10.261 --> 02:18:35.961
+<v SPEAKER_3>Es gibt das Projekt MongoDB, so eine C++-Datenbank, die so auf Geschwindigkeit getrimmt ist. Wir sind halt nicht unbedingt auf Geschwindigkeit, sondern auf verteilt getrimmt. Und dadurch die Geschwindigkeit sozusagen. Es gibt Project Voldemort von LinkedIn, glaube ich. So ein großes Java-Projekt, das auch sehr auf mehrere Rechner verteilen, redundant und schnell durch Parallelität getrimmt ist. Ist halt in Java geschrieben, was für manche Leute gut, für manche Leute schlecht ist. Das ist halt so ein Kriterium, ob man das möchte oder nicht. Und ist auch schon sehr gut. Dann Tokyo Cabinet oder Tokyo Tyrant. Ist auch noch wie so ein Key-Value-Store, der aus Japan kommt, der dafür in Social Network eingesetzt wird. Ist C, glaube ich, geschrieben. Also C oder C++ geschrieben. Ist auch extrem schnell und hat auch eine verteilte Struktur. MemcachedDB. Ist dieses Memcached-Projekt mit BerkeleyDB im Hintergrund. Memcached ist halt so ein Key-Value-Store im Rahmen. Dann haben die da einfach noch so eine BerkeleyDB dahinter geklemmt. Das sind jetzt so die Haupt......Kompetititoren in diesem Konzept. Was noch anders wäre, also was noch ungefähr hinpasst, ist Solar. Das ist so ein Projekt, das dieses Lucene nennt. Das ist ein Volltext-Indexer, der auch so Sachen wie Tagging ganz gut auflösen kann und Indizesser vertriebuten macht. Der auch sehr, sehr komplex ist und da eine HTTP-Schnittstelle verbietet. Das verhält sich in vielen...
+
+02:18:35.981 --> 02:18:37.301
+<v SPEAKER_2>Wie heißt das Ding?
+
+02:18:37.321 --> 02:18:40.261
+<v SPEAKER_3>Solar. S-O-L-R. Also da fehlt halt.
+
+02:18:40.281 --> 02:18:48.081
+<v SPEAKER_2>Ah, okay. So wie Flickr. Gibt es noch andere erwähnenswerte Projekte?
+
+02:18:48.101 --> 02:19:25.181
+<v SPEAKER_3>mebo.com. Die machen Web Instant Messaging, die ziemlich erfolgreich sind. Die benutzen das nicht fürs Instant Messaging. Die haben auf ihrer Webseite noch User-Polls. Die haben hier ihre Chat-Widgets da und haben also Unified-Buddy-Lists und all das. Und haben nebenbei noch so ein Widget, wo denen Fragen gestellt wird. Da werden halt total unschuldige Fragen gestellt, aber auch eher nicht ganz unschuldige Fragen gestellt, wie magst du lieber Cola oder Pepsi? Und drei Aufrufe später wird dann statt dem Poll eine Werbung für Cola oder Pepsi angezeigt. Also das ist sehr direkt-marketingmäßig. Da speichern die die Antworten, die User.
+
+02:19:25.201 --> 02:19:33.921
+<v SPEAKER_2>Aber Polls ein gutes Beispiel für diese Reduce-Funktion, oder? Wenn man dann so eine Million Antworten irgendwie in Dokumenten hat.
+
+02:19:33.941 --> 02:19:38.801
+<v SPEAKER_3>Da kann man dann so Statistiken machen, welche Antwort häufiger gewählt wurde oder die...
+
+02:19:38.821 --> 02:19:43.421
+<v SPEAKER_2>Wie häufig dieser Wert, wie häufig dieser Wert. Und das könnte man dann als gleich mit so einer Reduce-Funktion ausrechnen lassen.
+
+02:19:43.441 --> 02:20:48.941
+<v SPEAKER_3>Genau. Die haben das auch schon in Produktion. Und die haben auch was Schönes gebaut, das sich CouchDB Lounge nennt. Von denen glücklicherweise auch ums Haus das Projekt. Die brauchten CouchDB verteilt, also auf mehreren Rechnern. Die müssen das nach oben skalieren können. Das heißt, die müssen im Prinzip beliebig Rechner hinzufügen können. Und die müssen auswahlsicher sein. Also wenn ein Rechner abstürzt, dann muss ich oder irgendwie unverfügbar wird, dann muss ein anderer Rechner meinen Datensatz immer noch vorhalten. Und die haben mit den Tools, die CouchDB oder diesen Mechanismen, die CouchDB mitbringt, dann so ein sharding Proxy gebaut. Also so ein Proxy in NGINX genommen, ein Plugin dafür geschrieben, was dieses, ich schreibe eine Dokument-ID zu diesem Proxy und der findet dann raus, auf welchem Rechner ich den speicher. Und speichert den dann auf Rechner A. Und dann habe ich aber noch Rechner B, C und D. Und ich weiß aber auch in diesem System, Rechner C spiegelt alles, was Rechner A hat. Das heißt, im Hintergrund wird dann Replikationsmechanismus, also eine Replikation gespartet von A nach C, sodass C halt die Daten redundant verfügbar macht. Sodass wenn A oder C ausfallen, dass man halt immer noch.
+
+02:20:48.961 --> 02:20:55.941
+<v SPEAKER_2>Okay, das heißt, die eigentliche Replikationslogik, die dort, also die automatische Replikationslogik, wird dann sozusagen direkt in diesen Proxy mit eingebaut.
+
+02:20:55.961 --> 02:20:56.361
+<v SPEAKER_3>Genau.
+
+02:20:56.381 --> 02:21:01.341
+<v SPEAKER_2>Und läuft quasi der Datenbank gegenüber wie ein weiterer Datenbank-Line. Das ist für die ein großer Unterschied.
+
+02:21:01.941 --> 02:21:02.861
+<v SPEAKER_3>Genau.
+
+02:21:02.881 --> 02:21:14.441
+<v SPEAKER_2>Und macht das sozusagen, während die eigentlichen Anwendungen von diesem Replikationsteil befreit sind. Genau. Und das auch, sagen wir mal, in einer netzwerktechnisch-strategisch günstigeren Stelle steckt, wo der Umsatz ist und so.
+
+02:21:14.461 --> 02:21:50.661
+<v SPEAKER_3>Es gibt noch eine zweite Komponente, die nennt sich Smart. Also das n-den-next Ding ist Dump-Proxy. Das ist ein Smart-Proxy, der in Python geschrieben ist, mit einem Twisted-Framework, der sich darum kümmert, dass Views auch über mehrere Rechner verteilt werden können. Also dieses Map und Reduce auf mehreren Rechnern läuft. Und dass Zwischenergebnisse zusammengeführt werden können, sodass man halt eine Frage parallel auf mehreren Rechnern ausrechnen kann. Aber das nach außen für die Anwendung immer noch nach einer CouchDB aussieht. Und dem ist halt so weit getrieben, dass sie tatsächlich eine beliebige Anzahl von CouchDBs nehmen können, sie durch diese Proxys schicken und nach außen verhält es sich tatsächlich wie eine CouchDB-Datenbank.
+
+02:21:50.681 --> 02:21:56.381
+<v SPEAKER_2>Jetzt ist der CouchDB recht klein. Das ist auch schnell.
+
+02:21:56.401 --> 02:24:47.461
+<v SPEAKER_3>Schnell ist so eine Sache. Da habe ich letztendlich noch so einen Blogpost geschrieben zu Benchmarks. You're doing it wrong. Es gibt mehrere Punkte hier, dass A-Schnelligkeit nicht unbedingt relevant ist. Wenn ich mir so eine Web-Anwendung angucke, so eine klassische Web-Anwendung, dann habe ich einen HTTP-Server, dann irgendeine Middleware, also Java, PHP, Python, irgendwas dahinter meiner Datenbank. Und alles braucht irgendwie Zeit, um irgendwas auszurechnen. Und sagen wir, jede Komponente braucht ein Drittel der Zeit, um das zu vereinfachen. Und wenn ich jetzt mal eine Datenbank doppelt so schnell mache, oder eine Datenbank, die doppelt so schnell ist, sind meine anderen Teile immer noch so langsam, dass die Verdoppelung der Datenbankzeit nicht unbedingt bei meinem User überhaupt erst ankommt. Dass ich da Sachen auf dem HTTP-Layer, wenn ich das HTTP-Caching ordentlich mache, falls ich das noch nicht mache, dass ich da für meinen User viel mehr Speed, also viel mehr gefühlte Geschwindigkeit erreichen kann. Das andere ist diese Wahrnehmungslatenz, die wir Menschen haben, die so irgendwie zwischen 200 und 500 Millisekunden ist. Also alles, was schneller als 200 Millisekunden ist, das nehmen wir nicht als Änderung wahr, das klappt einfach um. Das sehen wir halt nicht, das ist eine Änderung, da ist einfach jetzt plötzlich das Neue. Wenn ich irgendwas noch schneller mache, oder Ressourcen verbrauche, um irgendwas unter 200 Millisekunden zu bringen, dann hat das keinen Effekt für den User direkt. Da ist halt die Frage, welche Geschwindigkeit ich hier gerade optimiere. Also es gibt nicht einfach nur dieses, okay, ist das jetzt auch schnell? Das ist halt so eine Frage, die man nicht beantworten kann. Da muss man sehr genau gucken. Jetzt rede ich aber schön um den heißen Brei herum. CouchDB ist in den meisten Fällen schnell genug. Es gibt halt Anwendungen, die in CouchDB geschrieben sind, in denen, wenn die halt ihre Profiling gemacht haben, CouchDB nicht als Faktor für langsam aufgekommen. Aber wir optimieren auch nicht dafür. Das heißt, wenn eine Datenbank halt für Geschwindigkeit optimiert ist, wie zum Beispiel MongoDB, dann wird die uns in einzelnen Benchmarks definitiv ausstechen, wird die schneller sein. Aber die machen halt andere Trade-offs als wir für verschiedene andere Attribute oder Eigenschaften unseres Datenspeichers. Es gibt so ein, ich glaube mit dem Stucco-Kabinett, das ist halt richtig, es ist sehr schnell für Lesung und Schreiboperation. Kann irgendwie hunderttausende machen und MemcachedDB ist auch sehr schnell. Der Trick, den die dann einfach benutzen, ist, die speichern die Daten einfach mal eben im Ram-Zwischen und sagen, ich habe es gespeichert, obwohl es nur im Ram vorliegt. Das heißt, die Daten sind gar nicht wirklich auf Platte geschrieben. Während wir sagen, wir schreiben das schon wirklich richtig auf Platte, was natürlich langsamer ist, als ins Ram zu schreiben. Aber die Daten liegen immerhin vor. Und auch sicher auf der Platte vor. Das ist halt so ein, okay, speichere ich das jetzt erst im Speicher zwischen und bin deswegen schnell oder speichere ich sicher auf die Platte und bin deswegen sicher. Und die Entscheidung muss man halt individuell treffen, ob man das jetzt machen möchte oder nicht.
+
+02:24:47.481 --> 02:25:21.741
+<v SPEAKER_2>Auf diesen Benchmarking-Zent wollte ich ja gar nicht erst mal kommen, was ich meinte, auch mit Geschwindigkeit ist jetzt sozusagen, womit verbringt das CouchDB eigentlich so seine Zeit? Also wie viel, wie zeitkritisch ist sozusagen der Erlang-Teil, wie zeitkritisch ist der JavaScript-Teil? Ich meine, da wird JavaScript ausgeführt, da hat da jeder sofort so im Kopf so, oh Gott, JavaScript, das ist doch langsam und so. Ich meine, dass es jetzt mal schneller wird, das weiß man jetzt auch. Noch dazu, wo läuft das sozusagen dann auch? Man muss ja auch einen Erlang-Compiler sozusagen für die Plattform haben.
+
+02:25:22.281 --> 02:25:55.801
+<v SPEAKER_3>Also Erlang lässt sich auf jedem Quatsch kompilieren. Es gibt jemanden, das hat zum Beispiel ein iPhone laufen, das läuft halt auf ARM, auf Solares, auf allen möglichen Prozessen und Prozessor-Architekturen und Proziesystemen, das ist schon sehr weit gefächert. CouchDB selber ist als Projektstatus halt noch nicht komplett fertig oder total optimiert. Im Moment sind wir noch in der Phase, wir wollen es richtig machen, bevor wir es schnell machen. Also wir fallen noch an Systeme, bauen noch Features ein, die wir denken, die wir brauchen, bevor wir Richtung 1.0 gehen. Und bevor wir dann Richtung 1.0 kommen, machen wir dann Optimierung von CouchDB.
+
+02:25:55.821 --> 02:25:57.621
+<v SPEAKER_2>Was ist die aktuelle Version? 0.9.
+
+02:25:57.641 --> 02:26:02.061
+<v SPEAKER_3>Und die nächste wird 0.10. Also wir hören jetzt nicht von 0.9 auf 1, sondern machen da jetzt noch ein bisschen weiter.
+
+02:26:02.761 --> 02:26:04.581
+<v SPEAKER_2>Kann also noch eine Weile dauern.
+
+02:26:04.601 --> 02:26:25.341
+<v SPEAKER_3>Wir wollen es noch dieses Jahr schaffen, aber das haben wir letztes Jahr auch schon gesagt. Okay, gut, really soon now. Aktuell die meiste Zeit, die in so einem Standard-Request-Request-Cycle verbraucht wird, ist im HTTP-Code. Der ist im Vergleich zum eigentlichen Datenspeichercode eher langsam. Da können wir noch...
+
+02:26:25.361 --> 02:26:29.561
+<v SPEAKER_2>Also nur, um das HTTP zu parsen und zu generieren?
+
+02:26:31.861 --> 02:27:31.101
+<v SPEAKER_3>Da müssen wir auf jeden Fall noch ran. Und das Erzeugen der View-Indexe, also wo tatsächlich das JavaScript aufgerufen und ausgeführt wird, ist auch noch verhältnismäßig langsam. Und wir wissen auch schon, dass es da ganz viele Optimierungsmöglichkeiten gibt. Die haben wir einfach nur noch nicht angewendet. Und vielleicht überraschenderweise ist das Ausführen des JavaScripts erstaunlich schnell. Also das letzte Timing, das ich verwendet habe, hatte nur Millisekunden Auflösung. Alle Aufrufe waren so eine Millisekunde lang. Also das ist wirklich sehr kurz. Das, was uns da Zeit kostet, ist die interne Erlang-Repräsentation unseres Dokuments muss für jeden Aufruf unserer Map-Funktion nach JSON konvertiert werden, so im JavaScript geschickt werden. Und das JavaScript deserialisiert das JSON dann wieder in ein JavaScript-Objekt. Und diese beiden Transformationen dauern verhältnismäßig lange. Und da gibt es aber auch schon Bestrebungen, das schneller zu machen. Also da arbeiten wir drum, aber das ist so, das kann noch was dauern.
+
+02:27:32.701 --> 02:27:44.321
+<v SPEAKER_2>Ja, jetzt mal so zum Endspurt. Es gibt da noch zwei Sachen, die muss ich noch mal hinterfragen. Es war noch von CouchDB Applikationen die Rede.
+
+02:27:44.341 --> 02:27:46.001
+<v SPEAKER_3>Genau, die CouchApps.
+
+02:27:46.021 --> 02:27:52.081
+<v SPEAKER_2>Was ist das? Ist das jetzt einfach nur Anwendungen, die das benutzen, oder ist es nochmal was Spezielles?
+
+02:27:52.101 --> 02:28:58.961
+<v SPEAKER_3>Wir haben ein Feature, das Dokumente haben, noch nicht erwähnt. Das sind Attachments oder Anhänge, so wie man Attachments aus E-Mail auch kennt. Also ich kann beliebige Blob-Daten an ein Dokument dranhängen. Die bekommen eigene URLs und die kann CouchDB auch einfach so ausliefern. Und diese Anhänge können zum Beispiel HTML, CSS und JavaScript-Dateien sein, die ich mit einem Browser ausliefer. Und in einem HTML wird dann halt ein anderes JavaScript und CSS-File referenziert, was auch wieder in der CouchDB liegt. Und so kann ich eine komplette AJAX oder eine HTML-JavaScript-Anwendung aus CouchDB hinaus ausliefern. Was im Prinzip genau dasselbe ist wie statische Seiten über einen Webserver ausliefern. Das ist halt wenig revolutionär. Was aber interessant ist, dass man, wenn diese Anwendung ausgeliefert ist, über den AJAX-Mechanismus, über das HTML-HTP-Request, auf die CouchDB API zugreifen kann. Das heißt, man hat eine statische Webseite, die aber die ganze CouchDB-Datenbank zugreifen kann. Das heißt, ich muss keine Middleware mehr dazwischen bauen, wenn ich halt...
+
+02:28:58.981 --> 02:29:01.781
+<v SPEAKER_2>Wie greift denn eine statische Webseite auf eine Datenbank zu?
+
+02:29:01.801 --> 02:29:10.741
+<v SPEAKER_3>Die statische Webseite kann ja Javascript enthalten. Also die Dateien sind statisch. Die werden jetzt nicht dynamisch durch mein Robi zusammengebaut. Aber das ist halt... Im Brose läuft dann halt immer noch Javascript.
+
+02:29:13.481 --> 02:29:20.141
+<v SPEAKER_2>Gut. Das heißt, man nutzt sozusagen die CouchDB auch gleich, um die komplette Webseite auch noch mit abzulegen.
+
+02:29:20.161 --> 02:29:20.401
+<v SPEAKER_3>Genau.
+
+02:29:20.421 --> 02:29:26.021
+<v SPEAKER_2>Und wenn das eh nur Blobs sind, das heißt, man kann auch gleich die Bilder damit reinhauen. Javascript, die ganzen JPEGs und so weiter.
+
+02:29:26.041 --> 02:29:26.581
+<v SPEAKER_3>Genau.
+
+02:29:26.601 --> 02:29:28.121
+<v SPEAKER_2>Und das ist auch so gedacht und gewünscht.
+
+02:29:29.141 --> 02:29:30.021
+<v SPEAKER_3>Und es gibt dieses...
+
+02:29:30.041 --> 02:29:32.561
+<v SPEAKER_2>Das heißt, man braucht dann auch gar kein Apache mehr.
+
+02:29:32.581 --> 02:30:56.661
+<v SPEAKER_3>Braucht man an der Stelle nicht mehr. Und die Motivation ist, so ein bisschen wie Lotus Notes auch wieder funktioniert, Notes-Anwendungen funktionieren konzeptionell genauso. Es ist eine Anwendung, die in der Datenbank lebt. Und Attachments von, oder Anhänge von Dokumenten werden genau wie Dokumente auch repliziert über andere Datenbanken. Das heißt, man kann nicht nur Daten zwischen verschiedenen Rechern replizieren, sondern auch die gesamte Anwendung mit allen Assets, die dazugehören. Das heißt, ich kann meine Anwendung auch über CouchDB verteilen. Und das ist, wo CouchDB richtig interessant wird. Für viele Leute, für mich auch und für Alex auch, hoffe ich. Dass man nicht mehr von diesem kleinen Server-Modell ausgeht, wo ich ein zentralisiertes Facebook-Studio von Z-Flicker habe, wo mein CouchDB-Cluster läuft, wo eine Mittelwehr oder keine Mittelwehr läuft, sondern dass jeder seine persönliche CouchDB hat, auf seinem Laptop, auf seinem Homecomputer, auf seinem Mobiltelefon, auf seinem Smartphone. Dass die CouchDB halt überall verfügbar ist. Mit lokalen Daten, auf die ich immer Zugriff habe, auch wenn gerade mein Netz nicht verfügbar ist, was aus vielen Gründen sein kann. Entweder ist gerade mein Handy flat rate oder ich bin gerade im Hotel, das unendlich teures WLAN hat und möchte das nicht machen. Oder ich sitze gerade im Flieger und fliege nicht Virgin, wo es noch kein WLAN gibt. Ganz viele Möglichkeiten, wo ich gerade kein Netz habe oder wo mein Netz zu langsam ist, wo ich lokale Daten mit wenig Latenz live bearbeiten kann.
+
+02:30:56.681 --> 02:31:03.401
+<v SPEAKER_2>Aber dann auch gleich das User-Interface und das Programm, was mit diesen Daten umgeht, gleich in dieser Datenbank mit drin habe?
+
+02:31:03.421 --> 02:31:03.581
+<v SPEAKER_3>Genau.
+
+02:31:04.221 --> 02:31:09.341
+<v SPEAKER_2>Ohne, dass ich da noch mal einen großen Server brauche und so was. Ich starte einfach nur das CouchDB-Programm.
+
+02:31:09.361 --> 02:31:09.761
+<v SPEAKER_3>Genau.
+
+02:31:09.781 --> 02:31:15.461
+<v SPEAKER_2>Und dann ist das halt einfach da und ich kann mit einem Webbrowser drauf rumwerkeln und habe ein korrektes User-Interface.
+
+02:31:16.141 --> 02:32:02.221
+<v SPEAKER_3>Mit dieser Art von Anwendung und mit dem Replikationsmodell lassen sich halt Peer-to-Peer-Anwendungen bauen, die nicht mehr durch irgendeine zentrale Stelle gehen müssen. Also wenn wir jetzt hier bei dir im Büro sitzen, kann ich von meinem Laptop, den ich nicht dabei habe, auf deinen Laptop eine Anwendung replizieren und ein paar Daten, die du brauchst, oder vielleicht auch nur die Anwendung, und du kannst deine eigenen Daten da reinschreiben, ohne dass jetzt die Telekom davon weiß, dass Amazon davon weiß, weil ich durch irgendeinen Cloud-Service gegangen bin oder ohne dass Apple davon weiß oder irgendwas. Oder ich kann alle Devices, die ich so habe, mein Adressbuch, zum Beispiel in CouchDB, kann von meinem Handy, meinem Notebook und meinen Rechner, die ich halt alle habe, mein Adressbuch synchronisieren, ohne dass ich jetzt durch irgendeinen Cloud-Anbieter oder so einen Wolkenanbieter wieder durchgehen muss, sodass ich halt wirklich Kontrolle über meine Daten habe.
+
+02:32:02.241 --> 02:32:12.021
+<v SPEAKER_2>Aber dass die Anwendungen wirklich dann aber auch in dem Datenbank-Server selber laufen, das ist jetzt so erstmal nicht vorgesehen. Ich brauche ja schon immer noch irgendwie so einen Klein, so einen Browser.
+
+02:32:12.041 --> 02:32:13.561
+<v SPEAKER_3>Genau, der Browser wäre die...
+
+02:32:13.581 --> 02:32:24.241
+<v SPEAKER_2>Ich kann jetzt nicht so einen CouchDB-Prozess in der CouchDB selber starten und sagen, dass da jetzt irgendwie ein Stück JavaScript einfach aktiv wird und die Datenbank selber in sich benutzt.
+
+02:32:24.261 --> 02:32:59.261
+<v SPEAKER_4>Bestimmte Dinge kann ich halt auch in CouchDB tun. Zum Beispiel, was wir vorhin ganz kurz angesprochen haben, glaube ich, dass ich halt sagen kann, CouchDB, gib mir mal jetzt bitte HTML, fertig, schon raus. Und nicht nur JSON. Und nehme ich halt eine Funktionsschraube, die mir das halt macht. Und die läuft dann halt auch auf dem Server. Das heißt, so eine Dinge wie eine RSS-Feed, ich kann ja dem RSS-Feed da nicht sagen, führ mal das Java-Script aus, das baut dir dann schon das XML zusammen. Da brauche ich natürlich dann das XML direkt aus der Datenbank. Das heißt, so eine Dinge kann ich halt in der Datenbank direkt machen.
+
+02:33:01.541 --> 02:33:05.961
+<v SPEAKER_3>Als View und als List-Funktion, als Transformation dieses JSON in der XML.
+
+02:33:05.981 --> 02:33:06.941
+<v SPEAKER_2>Genau, die Transformation.
+
+02:33:06.961 --> 02:33:16.061
+<v SPEAKER_4>Genau, aber jetzt sozusagen Anwendung im Sinne von ich spreche ja das, dann lese das, dann spreche ich ja nochmal das zwischen, dann mache ich einen Redirect-Down dahin. Das geht halt nicht.
+
+02:33:16.381 --> 02:33:22.861
+<v SPEAKER_2>Ja, weil du gerade meintest, so Peer-to-Peer-Anwendung, und ich brauche ja eigentlich nur, meine CouchDB laufen zu lassen.
+
+02:33:23.341 --> 02:33:25.321
+<v SPEAKER_4>Aber das kann ja dann der Browser machen, in dem Fall.
+
+02:33:25.341 --> 02:33:32.801
+<v SPEAKER_2>Okay, aber den muss es dann halt auch immer erst, es muss halt auch immer erst nochmal einen User geben. Man kann nicht einfach so die CouchDB da so vor sich hin werken lassen.
+
+02:33:32.901 --> 02:33:42.041
+<v SPEAKER_3>CouchDB selber ist nur ein HTTP-Interfail, verhält sich wie ein Webserver, der lokal bei dir läuft. Du brauchst immer noch einen Client, der dieses HTTP spricht. Das kann ein Browser sein, das kann Newsreel.
+
+02:33:42.061 --> 02:33:56.581
+<v SPEAKER_2>Aber CouchDB kann man ja auch benutzen, ohne jetzt, sagen wir mal, eine Web-Anwendung im einigen Sinne zu haben, sondern ich kann ja irgendein Programm haben. Genau, irgendwas, was einfach CouchDB redet, halt einfach HTTP spricht. Das kann ein Stück Java-Code sein, indem man halt laufen lässt, und dann hat man im Prinzip schon das selbe Modell.
+
+02:33:56.601 --> 02:33:56.661
+<v SPEAKER_1>Genau.
+
+02:33:58.821 --> 02:34:05.681
+<v SPEAKER_2>Jetzt habt ihr noch so eine Webseite gestartet. couch.io, was steckt da hinter?
+
+02:34:07.001 --> 02:35:52.661
+<v SPEAKER_3>Na, ich hab ja schon gesagt, ich hab so PHP MySQL-Consulting gemacht und hab dann irgendwann CouchDB gefunden und hab dann meinen Arbeitsrhythmus so ein bisschen verändert. So 70% Kleinarbeit, 30% Open-Source-Arbeit, die alles in CouchDB gegangen ist, bis Sommer letzten Jahres, wo ich gefragt worden bin, ob ich nicht mal ein Projekt für CouchDB für Geld machen wollen würde. Und dann bin ich natürlich sofort zugesagt, weil warum sollte ich mich nicht dafür auch noch bezahlen lassen? Hattet also meinen ersten Kunden hier in Deutschland. Die BBC hat relativ bald danach auch angefragt. Für die haben wir auch Arbeit gemacht. Und irgendwann habe ich halt so viele Anfragen gekriegt, die ich alleine nicht geschafft habe. Und habe dann angefangen, Leute zu suchen, mit denen ich eine Firma gründen kann, die diese ganzen Consulting-Support, Trainingsfragen beantworten kann. Das sind jetzt Chris Anderson und ich. Chris Anderson ist das Importnance, ist auch CouchDB-Entwickler. Und wir haben zusammengetan mit der Firma Erlang Training & Consulting. Das ist eine Erlang-Consulting-Firma in London, die dasselbe Consulting-Training-Modell schon entwickelt haben, sich auf Erlang spezialisieren. Und wir können deren Geschäftsinfrastruktur, Nähdung, Trainings, alles, was die halt schon machen, das können wir einfach auch noch benutzen. Wir tun statt den Erlang Inhalten halt CouchDB-Inhalte da rein. Und bieten halt so alle kommentariellen Dienste um CouchDB herum an, die man so braucht. Aber das ist jetzt auch schon genug Werbung. Was wir gestartet haben mit couch.io ist ein Hosting-Service, der im Moment bei Amazon läuft, wo man für umsonst oder für wenig Geld mit mehr Features oder mit Support eine CouchDB mieten kann. Also wenn man jetzt nicht, keine Ahnung, die Leser hier oder die Hörer hier vielleicht eher nicht, aber man gerade nicht Lust hat, sich eine eigene CouchDB-Instanz damit herumzuschlagen, mit der Installation, mit der Wartung, mit den neuesten Security-Patches oder was auch immer, dann machen wir das für dich. Und du kriegst einen coolen Namen, alex.couch.io, wo du halt dann einfach eine CouchDB im Web hast, mit der du rumspielen kannst.
+
+02:35:52.681 --> 02:35:57.381
+<v SPEAKER_2>Okay, also einfach so ein Hosted Service, wo man sozusagen schon seine Reddit-Touraden-Sachen, das läuft bei Amazon.
+
+02:35:57.601 --> 02:36:06.401
+<v SPEAKER_3>Genau, es gibt diesen Amazon EC2 Service, wo man halt im Prinzip virtuelle Rechner mieten kann, und wir haben uns da ein paar gemietet, und da kümmern wir uns darum, dass deine CouchDB da läuft.
+
+02:36:06.841 --> 02:36:10.061
+<v SPEAKER_2>Ah, okay, verstehe. Und da kann man dann beliebig viele...
+
+02:36:10.081 --> 02:36:46.341
+<v SPEAKER_3>Da kann man sich dann, da hat man halt eine volle CouchDB-Instanz, und für die, die umsonst Variante hat, so ein paar Resource-Limits, dass wir halt Leute darin... Na ja, Leute, die sie wirklich richtig schwer benutzen wollen, wo wir auch weiter an Amazon halt mehr Geld zahlen müssen, die müssen uns dann halt ein bisschen Geld dafür geben. Ein Teil der Idee ist aber dann auch, da eine Möglichkeit zu geben, Leute, die sagen, okay, CouchDB ist richtig cool, ich möchte das unterstützen, ich bin aber kein Programmierer, oder ich kann mich jetzt gerade nicht in Erlangen-Armen einarbeiten, aber ich möchte die Jungs irgendwie unterstützen, die das da machen. Die können sich für uns, so ein kleines Paket ist so 10 Dollar im Monat, wo man sagen kann, okay, hier, ich unterstütze dieses Projekt jetzt, indem ich jetzt mal eine hosted Couch kaufe und also, keine Ahnung, meinen Blog drauflaufen lasse.
+
+02:36:46.361 --> 02:36:54.781
+<v SPEAKER_2>Aber wer kommerziellen Angeboten gegenüber resistent ist und sowieso lieber seinen eigenen Scheiß macht, kann sich die Software auch einfach nehmen, weil es open source ist, welcher Lizenz kommt das raus?
+
+02:36:54.801 --> 02:36:56.121
+<v SPEAKER_3>Apache 2.0.
+
+02:36:56.141 --> 02:37:22.561
+<v SPEAKER_2>Apache 2.0, also BSD lizensiert sozusagen, mit kannst du machen, was du willst. Achso, ja genau, da wollte ich nochmal nachfragen. CouchDB ist ja auch ein offizielles Apache-Projekt. Das ist ein Teil des Apache-Universums, was ja nicht klein ist. Wie hat es da so schnell seinen Weg gefunden? Und was bedeutet das irgendetwas? Oder ist das sozusagen jetzt nur ein weiterer Bullet-Point in so einer Liste?
+
+02:37:23.061 --> 02:38:54.301
+<v SPEAKER_3>Na, die kurze Geschichte dahinter ist, dass Damon für zwei Jahre etwa von seinen Ersparnissen gelebt wird, um CouchDB zu entwickeln und das unter GPL freigegeben hat. Also als open source, ohne konventielle Gedanken. Hatte dahinter aber irgendwann halt kein Geld mehr. Und hat einen Job gesucht und hat dann für sechs Monate für MySQL gearbeitet. Hat CouchDB in der Zeit dann nicht weiterentwickelt. Das habe ich und Andres so ein bisschen gemacht. Also er sich aber auf MySQL-Entwicklung gestürzt oder konzentriert. Und dann hat IBM ihn angesprochen. So, hey, Damon, wir möchten, dass du für uns arbeitest Vollzeit an CouchDB. Dann hat er gesagt, ja, das ist ein nettes Angebot und ich kenne IBM ja auch, ich habe ja schon mal für euch gearbeitet, ihr seid alle ganz nett, aber ich habe jetzt schon so viel Zeit und so viel Liebe halt in CouchDB gesteckt, ich kann das IBM nicht verkaufen, also das mache ich einfach nicht. Es bleibt halt open source und das IBM eine Woche später wiederkommt und so ein bisschen, ah schade. Dann haben wir uns das Angebot gemacht, wir wollen, dass du für uns arbeitest Vollzeit an CouchDB und alles, jeden Code, den du schreibst, alles an Code, was du produzierst, das gehört nicht IBM, sondern der Apache Software Foundation, die sich halt darum kümmert, dass Open Source-Projekte weiter verfügbar sind, dass die ordentlich gemanagt werden, dass da ordentlich Releases gemacht werden und alles, was du machst, lizenzieren wir unter Apache 2.0 und das Copyright geht oder eine Lizenz des Copyrights geht an die Apache Software Foundation. Also jeden Code, den du schreibst, der bleibt und wird für immer Open Source sein. Das heißt, wenn wir dich für was anderes verwenden, dann hat das keine Auswirkung auf das Open Source-Projekt oder wenn du bei uns kündigst, kannst du auch an demselben Code weiterarbeiten, ohne irgendwelche kommerziellen Beschränkungen darauf zu haben. Und dann dachte er, ja, das ist schon besser, aber ich weiß nicht so. Dann haben sie ihm noch eine Gehaltserhöhung angeboten und dann hat er dann endlich zugeschlagen.
+
+02:38:55.721 --> 02:38:59.401
+<v SPEAKER_2>Okay, hat schon brauchbaren Hele. Aber jetzt ist sozusagen dann BSD lizenziert dadurch?
+
+02:38:59.621 --> 02:39:54.401
+<v SPEAKER_3>Genau, dadurch sind wir Teil der Apache Software Foundation geworden. Die haben so einen Prozess, das ich Incubation nennt. Also man bekommt ein Incubator-Projekt, was wiederum ein Apache-Projekt ist, was sich darum kümmert, dass andere Software-Projekte, die ins Apache-Universum kommen, lernen, wie es ist, ein Apache-Projekt zu sein. Also es gibt verschiedene Leute in der Community, nehmen verschiedene Rollen an. Releases müssen auf eine spezielle Art gemacht werden. Diskussionen müssen speziell nach gewissen Formalitäten geführt werden. Und das lernt man im Incubator. Und dann gibt es eine Checkliste der Sachen, die man gemacht haben muss innerhalb dieses Projektes, bevor man aus dem Incubator wieder rauskommt und ein sogenanntes Top-Level-Projekt wird. Und wir haben letztes Jahr im Februar 2018 in den Incubator gekommen und im November schon wieder raus. Das heißt, innerhalb von acht Monaten haben wir alle unsere Checkpunkte erledigt. Und sind seit November ein Top-Level-Projekt der Apache Software Foundation.
+
+02:39:55.741 --> 02:40:00.861
+<v SPEAKER_2>Und das heißt, man hat ja auch, so zu sagen, auch schon Pflichten?
+
+02:40:00.881 --> 02:40:59.881
+<v SPEAKER_3>Das hat mehrere Auswirkungen. Einmal die ASF kümmert sich um, stellt sicher, dass das Projekt an sich ordentlich geführt wird. Das heißt, dass Entscheidungen, die das Projekt betreffen, öffentlich in Meldignissen geführt werden, dass da Ababstimmungen gemacht werden, die transparent sind für alle, sodass die Leute sehen können, dass das Projekt ordentlich geführt wird. Da ist nicht einer, der sich hinmuckelt oder der sich interessiert, das in eine bestimmte Richtung schubst. Das ist aber eigentlich gar nicht gut. Das ist ganz gut. Das macht die Stelle sicher, dass wir stabil sind. Nicht zwingend sicher, dass wir stabile Software haben, aber unser ganzer Prozess ist ordentlich. Genau. Es ist ein stabiles Projekt. Das heißt, jemand, der sich der CouchDB evaluiert, kann sehen, die Apache Software Foundation steht dahinter. Die stellt sicher, dass das Projekt wahrscheinlich noch ein bisschen länger gibt und dass es ein gesundes Open-Source-Projekt ist.
+
+02:41:02.141 --> 02:41:22.541
+<v SPEAKER_2>Ja, ich sehe schon, der Apache-Teil, das habe ich auch schon so auf meiner Hinterkopfliste. Das lohnt sich auch nochmal, explored zu werden in einer Ausgabe von Chaosradio Express. Diese hier machen wir jetzt, glaube ich, mal den Deckel drauf. Wir sind schon eine Weile am Schwatzen. Ihr wisst wahrscheinlich noch nicht mal wie lange, aber das war eine längere Sendung.
+
+02:41:22.561 --> 02:41:23.721
+<v SPEAKER_3>Wir haben noch nicht mal die Hälfte.
+
+02:41:23.741 --> 02:41:40.641
+<v SPEAKER_2>Wir haben noch nicht mal die Hälfte erklärt, aber so ist das hier immer. Man kann bestenfalls eine Einführung geben, aber ich denke, wer hier ein bisschen zugehört hat, der dürfte schon eine Menge verstanden haben, dass CouchDB ein neuer, frischer Ansatz ist, um das Problem des Speicherns von Daten zu lösen. Und wer Interesse hat, geht dann wohin, auf welche Webseite?
+
+02:41:40.661 --> 02:41:41.761
+<v SPEAKER_3>couchdb.org.
+
+02:41:41.781 --> 02:41:43.821
+<v SPEAKER_2>couchdb.org, da steht alles.
+
+02:41:44.221 --> 02:41:45.381
+<v SPEAKER_3>Da findet man eigentlich alles.
+
+02:41:46.181 --> 02:41:54.561
+<v SPEAKER_4>Es gibt auch diverse Vorträge und Videos davon im Netz, die wir und andere ständig halten. Also da wird man, finde ich...
+
+02:41:54.601 --> 02:41:57.161
+<v SPEAKER_3>Für verschiedene Details.
+
+02:41:57.281 --> 02:42:00.041
+<v SPEAKER_2>Aber das ist bei couchdb.org dann auch alles verlinkt?
+
+02:42:00.061 --> 02:42:06.341
+<v SPEAKER_3>Verlängt, genau. Da gibt es ein Wiki, da sind Präsentationen verlinkt, da ist die Dokumentation zu finden, da gibt es Mailinglisten, halt diesen ganzen Quatsch, den man so braucht.
+
+02:42:08.841 --> 02:43:16.221
+<v SPEAKER_2>Na super. Dann machen wir hier den Deckel drauf. Vielen Dank Jan, vielen Dank Alex für die Ausführung. Ja, gerne. Und das war's. Ausgabe Nummer 125 von Chaosradio Express. Ich freue mich wie immer über Kommentare im Blog oder sonstige Tipps und Hinweise. Ihr könnt auch gerne über Twitter Kommentare geben, also Kommentare zur Sendung bitte ins Blog. Das ist immer das Beste. Aber wer ansonsten Interesse hat, wie es hier weitergeht, ist immer gern gesehen. Es gibt Chaosradio bei Twitter zum Folgen. Mich persönlich gibt es da auch, Tim Pritlove. Das wollte ich schon immer mal erwähnen. Und ja, ihr seid glaube ich auch in Twitter vertreten. Da schreibe ich dann alles in die Links, wo auch die ganzen anderen Hinweise auf die 1000 Details, die wir jetzt hier runtergerasselt haben, vertreten sind. Wie es so meine Art ist, hier bei Chaosradio Express. Und ich bedanke mich jetzt schön fürs Zuhören. Und sage bis bald und tschüss. Wir hören uns wieder beim nächsten Chaosradio Express.

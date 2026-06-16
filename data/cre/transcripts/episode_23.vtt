@@ -1,0 +1,280 @@
+WEBVTT
+
+00:00:40.860 --> 00:02:56.478
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 23, aber keine Ausgabe für Paranoika, wie ihr das vielleicht zu erwarten gewesen wäre. Aber trotzdem haben wir ein Thema ausgesucht, was vielleicht für angehende Paranoika ganz brauchbar ist, nämlich OpenVPN, Virtuelle Private Netzwerke, und am Mikrofon wie gewohnt Tim Pritlove. So, und das Chaosradio kommt heute aus Wien. Ich bin hier gerade eingetroffen, gestern um genau zu sein, für den Easter Hack 2006. Das ist so eine traditionelle CCC-Veranstaltung und eine der Traditionen ist, dass sie alle zwei Jahre ihren Ort wechselt, sonst findet sie in Hamburg statt. Und dieses Jahr viel die Wahl auf Wien. Ab morgen, also heute Aufnahmezeitpunkt, ob wir das heute auch noch publiziert bekommen, 13. April, morgen ab dem 14. wird das dort gehen. Das ist eher ein gemütliches Treffen und findet in einer brandneuen Location statt, nämlich dem MetaLab. Das MetaLab ist so ein, ja, schwer zu sagen, ein Ort, in dem sich mehrere Gruppen treffen werden, Hacker und andere Völker werden dort ihre neue Heimat finden. Das ist alles sehr spannend und ich hoffe, dass ich da später auch nochmal von berichten kann. So, jetzt soll es aber erstmal um VPN bzw. um OpenVPN gehen. Und dazu habe ich auch noch einen kompetenten Gast eingeladen, nämlich den Angelo. Hallo Angelo.
+
+00:02:56.498 --> 00:02:57.038
+<v SPEAKER_1>Hallo Tim.
+
+00:02:57.058 --> 00:03:38.178
+<v SPEAKER_2>Du bist ja auch nicht das erste Mal dabei. Wir sind neulich schon ein bisschen über Macintosh Security unterhalten. Heute soll es mal nicht so sehr um Macintosh gehen, sondern um OpenVPN. Und OpenVPN ist eine Software, die man einsetzen kann, ja, eigentlich auf ziemlich allen Plattformen. Läuft auf Mac, läuft unter Windows, aber läuft vor allem natürlich auch auf den Unix-Umgebungen. Dafür ist es natürlich primär entwickelt worden und erlaubt einem das Einrichten eines virtuellen, privaten Netzwerks. VPN ist wieder so ein tolles, tolles Buzzword. Ja, aber wozu bräuchte denn das eigentlich?
+
+00:03:38.198 --> 00:04:02.858
+<v SPEAKER_1>Also es gibt eigentlich ziemlich viele Einsatz-Szenarien von VPN generell. Es fängt halt damit an, dass man zum Beispiel, dass eine Firma zum Beispiel zwei Sitze hat, einen in Berlin und einen in Wien, und sie möchten ein virtuelles Lahn generieren, möchten halt irgendwie schön verschlüsselt über das Internet ihre Daten bequem austauschen.
+
+00:04:03.078 --> 00:04:07.798
+<v SPEAKER_2>Also quasi die beiden Firmen Netzstandorte zusammenfassen, so als wären sie an einem Ort.
+
+00:04:08.138 --> 00:04:17.338
+<v SPEAKER_1>Ja genau, das fühlt sich dann so an, als hätte man ein langes Internetkabel irgendwie gespannt und läuft natürlich verschlüsselt alles durch das Internet.
+
+00:04:18.018 --> 00:04:55.918
+<v SPEAKER_2>Wo man ja früher auch mal Standleitungen extra für rangeholt hat und jetzt kann man halt auch das böse Internet benutzen, weil in dem Moment, wo man eben OpenVPN benutzt, ist es verschlüsselt und von daher hoffentlich hinreichend sicher. Hoffentlich hinreichend sicher, genau. Genau. Und was mir gerade auch wieder aufgefallen ist, als ich unterwegs war in Israel, zum Beispiel, wenn man da im Hotel Internetverbindungen sich erkauft, aber so abgesehen davon, dass das bekloppt teuer war, waren halt die Hälfte der Ports gesperrt und man konnte dieses und jenes Protokoll nicht machen. Das kann man damit ja auch umgehen.
+
+00:04:56.558 --> 00:05:35.878
+<v SPEAKER_1>Ja, das Tolle ist halt auch, dass ich mit OpenVPN mir ein kaputtes Netz, wo alle Ports gesperrt sind und so weiter, in ein richtiges Netz verwandeln kann. Das sieht dann so aus, dass ich einen Tunnel aufbaue, zu einem Endpunkt, der irgendwo im Internet liegt, das kann zum Beispiel ein Dedicated Server sein, und dass ich danach meine Default-Route durch den Tunnel setze und ab dann der gesamte Traffic durch diesen Tunnel hindurch geht. Und auf der anderen Seite wird das rausgenattet. Das ist dann so, als hätte ich ein ganz normales, tolles Netz, wo nichts gesperrt ist.
+
+00:05:36.058 --> 00:05:57.858
+<v SPEAKER_2>Man verlegt quasi den Einstiegspunkt, wo man in das Internet gerät, an einen anderen Ort als da, wo man tatsächlich angeschlossen ist. Man umgeht ein oder mehrere Provider und kommt genau da, an dem definierten Ort raus, wo man eben seinen Server eingerichtet. Aber dafür braucht man natürlich auch die entsprechende Serverinfrastruktur, die man ja nicht so ohne Weiteres erstmal kriegt.
+
+00:05:58.518 --> 00:06:12.598
+<v SPEAKER_1>Ja, also man muss natürlich dafür erstmal einen OpenVPN-Server einrichten. Und da braucht man halt irgendwie einen trusted Endpunkt irgendwo mit einer guten Anbindung, damit das halt dann nicht auch elend langsam ist.
+
+00:06:13.458 --> 00:06:37.558
+<v SPEAKER_2>Genau, aber ich meine, so was ist ja auch relativ einfach zu kaufen. Da geht man zu irgendeinem Internet-Provider bzw. einem Internet-Hoster, würde man in dem Moment eher sagen, wo man sich einen kompletten Computer, also entweder seinen eigenen Computer hinstellen kann, wenn man es übertreiben möchte oder man mietet sich quasi ein Gerät oder auch nur einen Teil eines Gerätes, den man sich mit mehreren Leuten teilt und hat quasi nur so ein Dial-In für das eigene VPN, richtig?
+
+00:06:37.578 --> 00:06:38.538
+<v SPEAKER_1>Ja, genau so sieht das aus.
+
+00:06:38.558 --> 00:06:40.078
+<v SPEAKER_2>So machst du das auch wahrscheinlich, ne?
+
+00:06:40.098 --> 00:07:15.778
+<v SPEAKER_1>Ja, also ich habe mir jetzt für den letzten Kongress speziell so ein Setup gebaut, weil der Kongress ist ja natürlich auch immer eine Kriegszone, das Netz auf dem Kongress, da wird ja gesnifft, Arps-Boofing betrieben und Man in the Middle-Attacken und alles hat man da. Und sobald der Tunnel natürlich einmal steht, irgendwie zu seinem sicheren Endpunkt, kann man halt auch seine Firewall irgendwie hochfahren und nur noch diese UDP-Pakete, irgendwie die VPN-Pakete zulassen und ist dann halt für Leute aus dem Laden halt nicht mehr angreifbar. Und gerade halt irgendwie kann man mitzunehmen.
+
+00:07:15.798 --> 00:07:27.818
+<v SPEAKER_2>Aber man ist sicherlich schon noch angreifbar, aber die potenziellen Löcher sind vielfältig geschlossen. Man kann natürlich aber in dem Moment auch nicht so ohne weiteres Dienste im lokalen Netzwerk anbringen, weil man ist ja sozusagen raus.
+
+00:07:28.458 --> 00:07:45.498
+<v SPEAKER_1>Ja, also man kann natürlich noch eine lokale Route, also man kann natürlich noch eine Route für die Server im lokalen Netzwerk natürlich bestehen lassen. Man würde dann nur die Default-Route durch den Tunnel legen, sodass man halt die lokalen Diensthalter noch weiter nutzen kann.
+
+00:07:47.958 --> 00:08:31.158
+<v SPEAKER_2>Ja, also Kongress ist natürlich ein super Beispiel für so ein Szenario. Da haben wir ja vorhin schon mal so ein bisschen drüber nachgedacht, also außer diesen minderbemittelten Orten, wo halt das Internet nicht die notwendige Qualität hat. Also an der Bandbreite, muss man gleich dazu sagen, kann man natürlich nicht drehen. Also die Bandbreite ist halt einfach nach wie vor dieselbe, aber in dem Moment, wo halt irgendein Internetprovider entscheidet, oh nö, du darfst jetzt das nicht, das nicht, das nicht machen. Also im Hotel waren halt die Ports gesperrt, die jetzt benötigt werden, um Internet-Telefonie zu machen. Warum machen sie das? Natürlich, weil sie halt ihr teures Telefon verkaufen wollen und die Leute sind ja nicht so doof und nehmen halt Skype oder ihr SIP-Telefon und umgehen das natürlich auf die Art und Weise.
+
+00:08:31.178 --> 00:08:39.398
+<v SPEAKER_1>Also ich habe halt auch schon über OpenVPN aus Versehen geskypt, ohne es zu merken und ich habe also auch keine Degradation oder so gespürt.
+
+00:08:39.418 --> 00:09:06.498
+<v SPEAKER_2>Es hängt ja auch eher davon ab, wo man seinen Server hat. Und wenn man sich jetzt so bei einem schnellen Internet-Provider seinen Server stehen hat, dann ist man ja nicht so weit weg jetzt von den Servern, mit denen man normalerweise redet, als sonst auch. Also beim Firmenetzwerk ist es natürlich ein bisschen was anderes, aber da macht man ja diesen Tunnel eigentlich auch nur, um in der Firma überhaupt erst mal reinzukommen, weil man eben von außen gar nicht reinkommen würde.
+
+00:09:06.518 --> 00:09:38.018
+<v SPEAKER_1>Ja, ganz genau. Das ist natürlich auch noch ein Punkt für Firmen, dass die Mitarbeiter dann halt von zu Hause auch arbeiten können, gehen dann in das VPN rein. Und man kann das auch so einrichten, dass nur bestimmte Routen in das interne Netz der Firma gesetzt werden, die dann durch den Tunnel gehen. Das heißt, dein normales Internet bleibt so an und bestehen, wie es ist. Es kommen nur ein paar Routen dazu, ein paar spezielle Routen, durch den Tunnel, dass du dich in das Firmennetz reinkonnektest.
+
+00:09:38.738 --> 00:10:32.738
+<v SPEAKER_2>Also, macht man das am besten. Das OpenVPN kann das ja dann nur auf Basis der IP-Adressen diskriminieren. Das heißt, er merkt, ich greife auf IP-Adresse sowieso zu und dann geht es halt das. Das heißt, ich habe keine Ahnung, so einen ungültigen Nummernbereich, wie zum Beispiel 23. irgendwas, das sind ja so reservierte Netzwerkbereiche, die es im offenen Netzwerk nicht gibt. Ich habe da noch mal interessanter Hinweis. Also, alles, was man in der 23 anfängt, ist keine offizielle IP-Adresse, das ist man nur so ganz nebenbei. Und deswegen kann man die eben auch verwenden für seine eigenen Netzwerke. Das wäre die eine Möglichkeit. Oder man biegt halt sogar komplett über DNS ab und weiß auch nicht, nimmt man dann den offiziellen Adressraum raus? Oder sind das dann eigentlich lokale Adressen, die man am besten nennt?
+
+00:10:32.758 --> 00:11:27.738
+<v SPEAKER_1>Also, man kann das halt so machen. Man hat ja in der Firma dann meistens ein internes Netzwerk. Das ist dann so ein 10.0 oder 192.168 oder so was. Und wenn du dann dich in das VPN connectest, dann fährst du ein virtuelles Netzwerkinterface hoch. Das ist dann eben das TUN-Device oder das TAP-Device und kriegst dann dort drauf eine IP-Adresse aus dem internen Netz, dort, wohin du dich rein connectest, wo der VPN-Server steht. Und wenn du halt diesen TAP-Treiber benutzt, dann kannst du auch noch diese Devices, also die Netzwerkinterfaces, bridgen, sodass du halt, dass es halt so ist, als wärst du dort im internen Netz ein Kabel angesteckt. Das heißt, du kannst auch Broadcasts empfangen und kannst also auch...
+
+00:11:27.758 --> 00:14:28.598
+<v SPEAKER_2>Okay, dann sollten wir jetzt vielleicht erst mal noch mal kurz erklären, was eigentlich OpenVPN genau ist. Also VPN als solches ist ja erst mal ein allgemeiner Begriff. VPNs gibt es viele, es gibt da verschiedene Lösungen. Und OpenVPN, wie der Name das schon naheliegt, ist halt eine Open-Source-Software, die unter GPL-Lizenz vertrieben wird. Jeder kann sich das runterladen, jeder kann sich das installieren und benutzen, wie er es möchte, für jeden Zweck. Und wenn man jetzt OpenVPN nimmt, dann ist das zunächst einmal ein nicht besonders benutzerfreundlich gestalteter Satz von Kommandos und einzelnen Skripten, die man dort ausführen muss. Verschiedene Schritte müssen eingeleitet werden, bis man so ein Setup hat. Und wenn dieses Setup dann läuft, dann aktiviert man bei Bedarf, wenn man ins Internet geht und sagt, okay, ab jetzt brauche ich reines Internet oder privates Internet, geheimes Internet. Ich möchte irgendwie in meine Firma Internet. All diese ganzen Fragestellungen, die wir vorhin ja schon angesprochen haben. In dem Moment aktiviert man das OpenVPN und sagt, okay, schlag mal hier eine neue Route auf. Und dann, je nachdem, ist das einfach nur ein Hinzufügen eines weiteren Netzes, wie in deinem Firmenetzwerk Beispiel. Oder ist es sogar dieses, ab sofort möchte ich meinen gesamten Internet-Treffik nur noch dadurch machen und ich benutze nicht den Internet-Provider, über den ich jetzt angeschlossen bin, sondern tatsächlich treffen meine Pakete erst dahinter auf. Und privat ist das Netzwerk halt deshalb, weil der Weg zu meinem Server komplett verschlüsselt ist. Das heißt, von dem Zeitpunkt an, wo die Pakete meinen Rechner verlassen, bis zu dem Server, ist es halt theoretisch zumindest unangreifbar oder zumindest nicht lesbar und im Idealfall auch nicht veränderbar. Und so funktioniert dieses OpenVPN im Prinzip nicht. Ich meine, so funktionieren fast alle VPN-Systeme, aber OpenVPN natürlich auch. Auf dem Computer selber ist das aber im Prinzip nur ein Programm. Das heißt, wenn man so schön sagt, es läuft im User-Space. Und in dem Moment, wo man es aktiviert, baut er eben selber die Verbindung auf und klingt sich dann in das eigene TCP IP Subsystem mit ein. Und dann kann ich eben diese Weiterleitung machen, wie zum Beispiel ab sofort alles über dieses Interface. Das ist ja im Prinzip genauso wie ein Modem. Wenn ich ein Modem in Betrieb nehme, dann baut er ja auch dynamisch eine neue Verbindung auf mit anderen Seiten, authentifiziert sich da mit Login und Passwort in der Regel über PPP. Und dann kann ich halt sagen, okay, das ist jetzt mal eine neue Verbindung, da bitte das Internet drüber machen. Und genauso macht das OpenVPN auch. Ja, das ist richtig zusammengefasst. Habe ich richtig zusammengefasst. Und jetzt können wir ja noch mal kurz auf die technischen Details gehen, weil es gibt natürlich da so ein paar Fragestellungen, wie zum Beispiel, wie authentifiziere ich mich denn eigentlich? Vielleicht gehen wir das mal vom Server aus. Also wenn ich jetzt, weil den brauche ich ja sowieso zunächst einmal, bevor ich irgendwas mache. Wenn ich jetzt mal einen Server einrichte, womit fange ich dann an? Was ist das Erste, was ich tun muss? Also klar, OpenVPN-Software runterladen und installieren, ist das klar und dann?
+
+00:14:28.618 --> 00:14:45.018
+<v SPEAKER_1>Ja klar. Als Erstes würde ich die SSL-Zertifikkarte generieren für den Server, denn OpenVPN ist ein SSL-VPN und benutzt SSL-Zertifikkarte für die Authentifizierung. Und ich würde mir also Server-Zertifikkarte generieren.
+
+00:14:45.038 --> 00:14:48.538
+<v SPEAKER_2>Also unter anderem, es gibt auch andere Möglichkeiten, das zu machen.
+
+00:14:48.558 --> 00:14:58.498
+<v SPEAKER_1>Also ich kann auch noch Pre-Shared Keys benutzen. Dabei gebe ich allerdings einiges an den Sicherheitsvorteilen, die OpenVPN über SSL bietet.
+
+00:14:58.518 --> 00:15:04.978
+<v SPEAKER_2>Also auch den Motto, ich mache mir einen geheimen Schlüssel aus und verteile ihn auf beiden Seiten und benutze ihn halt einfach.
+
+00:15:04.998 --> 00:15:13.838
+<v SPEAKER_1>Da geht mir aber dann diese Perfect Forward-Sqc halt verloren, weil nicht jedes Mal ein Session-Key erzeugt wird, wie man das nennt.
+
+00:15:13.858 --> 00:15:23.158
+<v SPEAKER_2>Das heißt, wenn jemand dann die Verbindung abhört und später irgendwann mal diesen Key rausfindet, weil er mir einen Server reinhackt oder meinen Laptop klaut, dann ist auch die ganze Kommunikation wiederum entschlüsselbar.
+
+00:15:23.178 --> 00:15:24.558
+<v SPEAKER_1>Ja genau, im Nachhinein halt noch.
+
+00:15:25.518 --> 00:15:33.698
+<v SPEAKER_2>Und SSL-basiert heißt also jetzt nicht, dass SSL-Verbindungen gemacht werden, wie man das jetzt in seinem Webbrowser hat, wenn man auf amazon.com geht, sondern...
+
+00:15:33.718 --> 00:15:39.738
+<v SPEAKER_1>Nein, das heißt nur, dass SSL-Algorithmen benutzt werden, um halt die Pakete zu verschlüsseln und zu signieren.
+
+00:15:40.798 --> 00:15:42.878
+<v SPEAKER_2>Die Verschlüsselung auch, bist du sicher?
+
+00:15:42.898 --> 00:15:50.078
+<v SPEAKER_1>Naja, RSA und AES, DESS und Blowfish kann man benutzen. Das wird ja von der OpenSSL-Library provided.
+
+00:15:53.578 --> 00:16:02.278
+<v SPEAKER_2>Also OpenVPN basiert auf dem OpenSSL, was ein weiteres Free-Software-Produkt ist. Und dort sind halt auch diese Verschlüsselungs-Algorithmen.
+
+00:16:02.298 --> 00:16:02.578
+<v SPEAKER_1>Ganz genau.
+
+00:16:02.598 --> 00:16:04.538
+<v SPEAKER_2>Und er benutzt eben sehr viel von dem.
+
+00:16:04.558 --> 00:16:05.198
+<v SPEAKER_1>Ganz genau.
+
+00:16:05.218 --> 00:16:36.038
+<v SPEAKER_2>Aber es ist jetzt nicht dasselbe wie SSL im Browser. Aber er benutzt halt sehr viele Sachen. Und das Wichtigste zunächst einmal ist diese Zertifikatsinfrastruktur. Das heißt, diese digitalen Unterschriften, mit denen man sagen kann, ich bin der und der, und ich kann es beweisen. Und jedes Zertifikat besteht aus einem öffentlichen und einem privaten Teil. Und wenn ich halt den öffentlichen Teil präsentiere und das Ganze mit meinem quasi Unterschreiber, mit meinem privaten Schlüssel, dann kann ich halt nach außen hin sagen, ich bin der auch wirklich.
+
+00:16:36.058 --> 00:16:47.178
+<v SPEAKER_1>Genau. Und das hat halt auch noch den Vorteil, dass ich eben eine verschlüsselte Verbindung aufbauen kann, ohne Private Keys austauschen zu müssen, über dieses Public-Key-Certificate-Signing-Request-Verfahren.
+
+00:16:47.198 --> 00:17:31.578
+<v SPEAKER_2>Genau. Das heißt, da lässt sich auch in dem Sinne über die Over-the-Wire nichts weiter abhören. So und jetzt, gut, das heißt, ich muss mir jetzt erstmal eine eigene, jetzt wird es natürlich knifflig, weil um solche Zertifikate zu machen, braucht man ja eine Zertifikatsinfrastruktur. Also letztlich geht natürlich jedes SSL-Zertifikat, wenn man in seiner Firma sowieso sowas schon hat, könnte man das natürlich verwenden. Man könnte einfach zu seinem Systemadministrator gehen und sagen, hier, ich brauche mal ein paar Zertifikate. So, mach mal. Das wäre das eine. Und wenn man das nicht hat, könnte man natürlich auch sich mit, ist das mit, ja, mit CA zertifizieren? Das ist ein bisschen schwierig jetzt mit so öffentlichen Zertifikatsinstituten.
+
+00:17:31.798 --> 00:17:56.698
+<v SPEAKER_1>Also das wird eigentlich nicht gemacht. Man generiert sich eigentlich seine eigene CA und erzeugt halt dann alle Keys damit. Und man muss natürlich dann die Public CA auf dem Client auch bekannt machen, damit eben die Authentifizierung funktioniert. Du arbeitest also nicht mit irgendwie von 40 oder sowas. Das wäre einfach unnötig, weil du halt...
+
+00:17:57.098 --> 00:18:14.338
+<v SPEAKER_2>Okay, aber man macht das deshalb, weil im Prinzip so das Default Setup, das was man so normalerweise macht, man kann es wahrscheinlich auch beliebig kompliziert machen, aber was man normalerweise macht, ist alle Clients, die ein Zertifikat präsentieren, was von meinem Oberzertifikat unterschrieben ist, dem traue ich.
+
+00:18:14.398 --> 00:18:21.958
+<v SPEAKER_1>Genau, ich muss also die Clients am Server nicht einzeln irgendwie freischalten, sondern alle, die signiert sind, dürfen halt connecten.
+
+00:18:21.978 --> 00:18:23.658
+<v SPEAKER_2>Okay, aber das könnte man wahrscheinlich auch anders machen.
+
+00:18:24.278 --> 00:18:28.138
+<v SPEAKER_1>Ja, ich glaube man kann auch speziell Clients whitelisten sozusagen.
+
+00:18:28.238 --> 00:18:30.358
+<v SPEAKER_2>Dass man sagt nur der und der und der und sonst keiner.
+
+00:18:30.378 --> 00:18:48.878
+<v SPEAKER_1>Und das macht man aber am meisten nicht, weil das einfach noch ein zusätzlicher Aufwand ist. Was ich halt so natürlich auch immer noch machen kann, ist, wenn jetzt irgendwie mir ein Private Key verloren geht, ein Client Key und da war zum Beispiel keine Passphrase drauf oder so, dann kann ich den natürlich auch am Server revoken, den Key.
+
+00:18:48.898 --> 00:19:37.298
+<v SPEAKER_2>Okay, also man kann schon dann noch mal explizit sagen, du darfst nicht rein. Alle, aber der nicht, weil der ist doof. Genau. Das ist ein geklauter Laptop, der darf hier nicht rein. Okay, also wenn Blacklisting geht, geht ja wahrscheinlich auch Whitelisting. Okay, aber das ist sozusagen der einfache Start. Man macht sich erst mal sein Oberzertifikat und damit erzeugt man weitere Unterzertifikate, die verteilt man dann eben auf die Clients und einen kriegt natürlich auch der Server. Und in dem Moment, wo der Client dann versucht, eine Verbindung herzustellen, sagt der Client, hallo ich bin, weil der hat gesagt, ich bin und dann erkennt er, ah, da ist ja mein Oberzertifikat und du darfst hier rein. Und dann ist eine Verbindung hergestellt worden, also eine Assoziation, sagt man ja, glaube ich, weil das ist ja nicht im eigentlichen Sinne eine Verbindung, denn man ist bei OpenVPN sehr frei in der Art und Weise, wie Client und Server miteinander sprechen.
+
+00:19:37.318 --> 00:19:51.078
+<v SPEAKER_1>Ich kann halt eine Verbindung über UDP und oder TCP aufbauen, also nicht uns, sondern oder TCP aufbauen. Und UDP war sogar zuerst da und UDP ist eigentlich auch der Default.
+
+00:19:51.098 --> 00:19:57.158
+<v SPEAKER_2>Macht ja auch Sinn, weil es geht ja hier um Pakete und man kann das irgendwie in UDP sehr viel besser einpacken als in TCP.
+
+00:19:57.178 --> 00:20:02.958
+<v SPEAKER_1>Ja genau und das ist halt auch einfach effizienter, TCP-Verbindung durch UDP zu tunneln.
+
+00:20:02.978 --> 00:20:05.718
+<v SPEAKER_2>Also IP durch UDP zu tunneln?
+
+00:20:06.338 --> 00:20:09.678
+<v SPEAKER_1>Ja, TCP-Verbindung halt.
+
+00:20:09.698 --> 00:20:44.898
+<v SPEAKER_2>Unter anderem, ja. Also ich meine, OpenVPN routet ja quasi IP, also nimmt ja das komplette IP-Paket, egal ob es durch UDP oder durch TCP entstanden ist und verschickt es dann halt durch diesen Tunnel. Und das tut es, indem es halt normalerweise einfach das IP-Paket in ein UDP-Paket verpackt. Normalerweise ist es ja genau andersrum. Und bei TCP hat man halt noch diesen ganzen Overheaden, das braucht man eigentlich in der Regel nicht. Es sei denn, man steckt natürlich hinter böser Provider XY, der einem aus irgendwelchen Gründen ausgerechnet auf dem vorkonfigurierten Port eben UDP nicht erlaubt.
+
+00:20:44.918 --> 00:21:14.738
+<v SPEAKER_1>Wozu aber selten eigentlich, ne? UDP wird eigentlich selten gesperrt. Wo ich halt immer rauskomme, das ist über TCP auf Port 443, das ist eigentlich so gut wie nie gesperrt, weil HTTPS natürlich darüber geht und man muss ja auch irgendwie HTTPS benutzen können und das ist eigentlich auch in den schlimmsten Netzwerken halt noch erlaubt.
+
+00:21:14.758 --> 00:22:24.858
+<v SPEAKER_2>Genau, wenn sie das nämlich sperren würden, dann könnten sie sich keine CDs mehr bei amazon.com kaufen und dann wären die Kunden sicherlich unglücklich. Das heißt, das ist sozusagen der Fallback. Also in dem Moment, wo UDP nicht geht, kann man sich quasi noch ein zweites Setup machen oder man kann natürlich auch gleich sagen, ich mach das sowieso nur über 443, weil besser ist das. Und dann hat man eben einen Port, der üblicherweise nie gesperrt ist, von dem auch, was ja auch ganz interessant ist, von dem auch sowieso alle ausgehen, dass das eh alles verschlüsselt ist. Ja, also da auch keinerlei besondere Mechanismen jetzt greifen. Es gibt ja so Ports wie, was ich, Port 25, wo Mail verschickt wird, da kommen die Hotels ja auch gerne mal dazwischen und sagen so, oh, Mail verschicken und super, das machen wir gerne für euch irgendwie. Wir haben hier unseren eigenen und injecten dann sozusagen ihren SMTP-Server und so ein Kram. Das könnte ja dann auch noch zu Problemen führen, weil man immer so halbe Verbindungsaufbauten hat, die dann aber irgendwie nicht zustande kommen und man weiß gar nicht warum. Okay, also man kann über UDP und über TCP reingehen. Man hat da eine Zertifikate gemacht und da muss man dann noch wahrscheinlich konfigurieren, wie das verschlüsselt werden soll, also welcher Verschlüsselungsalgorithmus zum Einsatz kommt.
+
+00:22:24.878 --> 00:22:30.778
+<v SPEAKER_1>Ja, standardmäßig wird, glaube ich, AIS benutzt. Man kann aber auch halt, wie gesagt, auch noch DES und Blowfish benutzen.
+
+00:22:30.798 --> 00:22:33.818
+<v SPEAKER_2>Falls man es nicht so sicher haben möchte, zum Beispiel.
+
+00:22:33.838 --> 00:22:35.378
+<v SPEAKER_1>Genau.
+
+00:22:37.218 --> 00:23:18.558
+<v SPEAKER_2>Und ich habe gesehen in den Manual-Pages, dass da irgendwie auch noch so, man kann das dann noch mal extra verschlüsseln, man kann auch irgendwie mit TLS nochmal arbeiten, also verschiedene Optionen. Die Liste ist lang, um seine Nächte damit zu verbringen, wie man das noch finaler aufbauen kann. Okay, das heißt, das ist eigentlich in einfachen Strichen alles, was man auf dem Server machen muss. Man braucht halt einen Rechner, unter dem es läuft, also any Linux will do it, oder BSD, je nachdem, je nach Geschmacksrichtung. Und dann installiert man sich OpenSSL und die OpenVPN Software, macht seine Zertifikate und sagt mal, okay, jetzt warte mal, bis die Clients kommen. Und dann kommen die Clients.
+
+00:23:18.578 --> 00:23:37.058
+<v SPEAKER_1>Genau, und da gibt es natürlich den Kommandozeilen-Client, der halt überall läuft, überall kompiliert. Der geht halt unter Windows, Mac, Linux, Sternchen, BSD, alles, was es so gibt, kompiliert überall. Und kann man halt überall, wo es eine Kommandozeile gibt, halt auch ausführen und benutzen.
+
+00:23:37.078 --> 00:23:45.458
+<v SPEAKER_2>Muss man sich aber nicht selber übersetzen. Auf so einem Linus-System macht man das halt häufig, aber man kann sich auch so einen Package-Manager nehmen und es damit installieren.
+
+00:23:45.478 --> 00:24:07.518
+<v SPEAKER_1>Ja, also auf Mac zum Beispiel mit Darin-Ports kann man das halt auch einfach bauen. Und dann gibt es natürlich noch für Windows und Mac grafische Clients. Da gibt es für Windows die OpenVPN-Gui. Die kommt halt mit so einem Installer, wo dann auch ein OpenVPN-Binary und dieser Tab-Treiber.
+
+00:24:07.538 --> 00:24:10.718
+<v SPEAKER_2>Das heißt, man hat eigentlich nur ein Download und dann irgendwie kommt alles.
+
+00:24:10.738 --> 00:24:43.298
+<v SPEAKER_1>Genau, dann kriegt man halt dann meistens vom Administrator oder von demjenigen, der das aufgesetzt hat, dann halt einfach das Config-File und die SSL-Keys. Und dann kann es eigentlich losgehen. Man muss also eigentlich nicht mehr viel einstellen, einfach nur noch das Config-File in die richtige Stelle kopieren und man kann eigentlich schon die Verbindung starten. Wie lange gibt es das schon, dieses Gui? Das weiß ich nicht so genau, aber die Windows-GUI war zuerst da und die Mac-GUI gibt es jetzt schon seit fast zwei Jahren, also schon ziemlich lange.
+
+00:24:43.458 --> 00:25:15.458
+<v SPEAKER_2>Und die Mac-GUI, das ist im Prinzip dein Werk, wie ich das richtig sehe. Tunnelblick heißt die Software und ist im Prinzip nichts anderes als ein Easy Access User Interface zu einem OpenVPN. Das heißt, die eigentliche Konfiguration bleibt gleich. Das ist nach wie vor dieselbe Software, man hat dieselben Setup-Files, die sowieso Cross-Plattform sind. Man kann die nehmen und auf einen anderen Rechner kopieren und dann sollten sie eigentlich genauso funktionieren. Was macht deine Software?
+
+00:25:15.478 --> 00:25:33.098
+<v SPEAKER_1>Was macht Tunnelblick? Tunnelblick erstellt ein Menu-Item rechts oben in die Menüzeile, wo ich einfach einfache Knöpfe habe zum Starten und Stoppen der Verbindung. Ich klappe das auf, das ist ein Menü, kann ich sagen, connecte mich und disconnecte.
+
+00:25:33.098 --> 00:25:47.398
+<v SPEAKER_2>Das heißt, man konfiguriert seine Verbindung, die man normalerweise eben hat, vor und dann erscheint die da drin und sagt einfach zack, bumm, verbinde mich und dann, was heißt das? Dann ist dann sofort mein komplettes Internet darauf umgestellt oder hängt das dann von den Verbindungen ab, wie die konfiguriert sind?
+
+00:25:47.418 --> 00:26:14.218
+<v SPEAKER_1>Das hängt davon ab, wie die konfiguriert sind. Es gibt ja unterschiedliche Setups. Ich kann diese Setups machen, die die ganze Default-Route löscht und neu setzt oder welche, die wie gehabt nur ein Büro-Netz noch hinzufügen und alles andere bleibt bestehen. Deswegen kann ich auch mehrere Verbindungen gleichzeitig haben. Das benutze ich übrigens auch ab und zu. Dann bin ich zum Beispiel in Mac-Hackers, VPN und im Büro-Netz gleichzeitig drin und das beißt sich alles auch gar nicht.
+
+00:26:17.718 --> 00:26:35.178
+<v SPEAKER_2>Tunnelblick gibt es zum Runterladen und ist natürlich auch BSD-Lizenz, also richtig frei. Ja, und der Linux, gibt es da auch schon eine GUI-Integration?
+
+00:26:35.198 --> 00:26:55.718
+<v SPEAKER_1>Ja, da gibt es sogar mehrere GUIs. Irgendeine komische, mit irgendeinem Real Basic-Dirivat und auch irgendwie eine KDE oder sowas ähnlich, weiß ich aber nicht so genau, aber es gibt jedenfalls auch grafische Clients für Linux schon.
+
+00:26:55.738 --> 00:27:55.238
+<v SPEAKER_2>Also wir haben keine Ahnung. Wir haben keine Ahnung. Wenn ihr Ahnung habt, wie immer, könnt ihr uns Feedback schicken, ist immer gern gesehen. chaosradio.ccc.de ist die richtige Adresse. Oder ihr kennt schon unsere tolle Telefonnummer. 01801 99 33 22 99 55. Anrufen, aufzeichnen und dann kommt das hier mit rein. Würde mich sehr freuen über ein bisschen Feedback zu dem Thema OpenVPN unter Linux und GUIs dafür. Denn das ist ja alles nicht so, als wir vorhin uns die Konfigurations-Dateien angeschaut haben. Das versteht man zwar schon irgendwie, aber das ist jetzt auch echt nicht das, was man so zwischen Frühstück und Spazierengehen macht. Von daher ist es eigentlich relativ wichtig, dass solche komplexen Sachen, wenn man letzten ist, es handelt sich ja um eine komplexe Materie. Netzwerkverbindungen, dynamisch aufbauen, Routen ändern, Schnickschnack, Verschlüsselung und so. Es ist wichtig, dass dafür eben auch einfach mal gute User-Interfaces an den Start kommen, damit man das eben auch benutzt.
+
+00:27:55.258 --> 00:28:02.118
+<v SPEAKER_1>Und wenn das halt einmal eingerichtet ist, dann ist es halt für den End-User halt auch total easy. Klick, klick und ich bin drin.
+
+00:28:02.138 --> 00:29:05.298
+<v SPEAKER_2>Was vielleicht noch ganz interessant ist, du hast vorhin erwähnt, diese Devices, also wer ein bisschen mit TCP-IP vertraut ist, weiß ja, man hat da so eben sein IP, das ist so dieser große Kern, wo eben der Rechner mit den anderen Rechnern kommuniziert. Und die Verbindung ins Netzwerk findet eben über Interfaces statt. Und das ist eben üblicherweise das, was man so physikalisch auch dran hat. Also mein Ethernet-Steckdose, mein WLAN-Interface, meinetwegen auch eine serielle, wo ein Modem dran ist oder USB, wo ein Modem dran ist oder auch über Firewire. Also man kann ja eigentlich über alles das machen. Und das sind eben diese Interfaces. Und in dem Moment, wo man aber mit dem OpenVPN arbeitet, kommt ja nicht eine neue Ethernet-Steckdose dazu, sondern das Ganze ist virtuell, da ja auch der Name, Virtuelle Private Network. Man schafft quasi eine Verbindung, die es so vorher gar nicht da gab. Und dazu braucht man aber auch spezielle Interfaces, diese sogenannten Tunnel-Devices. Und da sieht es aber jetzt bei den Betriebssystemen unterschiedlich aus. Also bei Linux gibt es das alles, bei Mac war es schwierig, oder?
+
+00:29:05.318 --> 00:29:52.378
+<v SPEAKER_1>Ja, also OpenVPN setzt halt die Existenz eines Tunn- oder eines Tap-Devices, Pseudo-Devices voraus. Und bei Linux und bei den BSDs ist das schon dabei. Bei Windows und bei Mac sieht das schwieriger aus. Da ist es nicht im Betriebssystem integriert. Es gibt aber natürlich inzwischen oder schon seit längerem auch für beide Betriebssysteme diese Tunn-Tap-Treiber, auch alle Open Source. Und dieser Mac-Treiber hat halt noch so leichte Probleme, er ist noch nicht so ganz total ausgereift, dieser Treiber. Also zum Beispiel geht standardmäßig Bonjour halt darüber nicht.
+
+00:29:52.918 --> 00:29:57.138
+<v SPEAKER_2>Also dieses Multicast DNS, dieses Announcen von Diensten im lokalen Netzwerk.
+
+00:29:57.158 --> 00:30:08.398
+<v SPEAKER_1>Ja genau, es geht darüber nicht, weil der mDNS-Responder, also dieses Stück Software von Mac OS, will halt da keine Pakete drüber verschicken, weigert sich.
+
+00:30:08.418 --> 00:30:12.098
+<v SPEAKER_2>Aus irgendwelchen Gründen, die nicht weiter bekannt sind zum aktuellen Zeitpunkt.
+
+00:30:12.118 --> 00:30:16.078
+<v SPEAKER_1>Ja, beschert sich über eine falsch gesetzte Network, SR-Family und sowas.
+
+00:30:16.098 --> 00:30:16.518
+<v SPEAKER_2>Ahja, ok.
+
+00:30:16.538 --> 00:30:23.638
+<v SPEAKER_1>Also es ist sicher nicht so schwer zu fixen, aber hat sich jetzt noch keiner zu erbarmt.
+
+00:30:23.658 --> 00:30:59.238
+<v SPEAKER_2>Tun und Tab sollte man vielleicht noch erwähnen. Machen im Prinzip beide das Gleiche. Das eine ist bloß, es verhält sich so wie ein Modem, also wie eine Punkt-zu-Punkt-Verbindung. Und das andere verhält sich halt wie ein Internet, also wie ein sogenanntes Broadcast-Interface, wo halt mehrere dahinter auch erreicht werden können. Was auch den Vorteil hat, ist, wenn man jetzt sein Firmen-Netzwerk über so ein Tab-Interface verbindet, dass man eben diese ganzen lokalen Dienste darüber aber auch übertragen kann. Also man ist quasi, wenn man auch diese, was muss man dazu noch einrichten? Diese Bridge auf der Server-Seite.
+
+00:30:59.258 --> 00:31:05.478
+<v SPEAKER_1>Genau, der Server muss natürlich dann dieses virtuelle Interface und das LAN-Interface natürlich noch bridgen.
+
+00:31:05.498 --> 00:31:06.698
+<v SPEAKER_2>Dass das wie eins ist.
+
+00:31:06.718 --> 00:31:06.958
+<v SPEAKER_1>Genau.
+
+00:31:06.978 --> 00:31:21.758
+<v SPEAKER_2>Das heißt, derjenige, der über das Netzwerk von außen kommt, ist auch tatsächlich vom Verhalten des Netzwerks her genauso, als hätte er sich jetzt gerade mit dem Ethernet-Kabel direkt da ins Firmenetzwerk eingesteckt. Das ist fein. Und dann sieht man alles. Dann sieht man halt auch diese ganzen Announcements.
+
+00:31:21.778 --> 00:31:33.898
+<v SPEAKER_1>Und das ist halt für die App, für die Applikation, für die Anwendung natürlich total transparent. Das ist nicht so wie ein Socks-Proxy oder so, wo ich die Anwendungen erst noch dafür konfigurieren müsste, sondern das ist halt total transparent für alle Anwendungen.
+
+00:31:33.918 --> 00:32:04.918
+<v SPEAKER_2>Die merken also einfach gar nichts und benutzen das so. Damit haben wir, glaube ich, alles einmal ganz gut durchgediskutiert, was wir hier gefunden haben zum Thema OpenVPN. Wie gesagt, wenn ihr noch weitere Hinweise habt, dann solltet ihr uns die mal schicken. Vielleicht habt ihr ja noch ein paar coole Ideen für ein paar nette Setups, wie man mit OpenVPN lustige Sachen machen kann. Wo geht man hin, wenn man Infos haben will über OpenVPN?
+
+00:32:04.938 --> 00:32:30.678
+<v SPEAKER_1>Ja, auf der Webseite von OpenVPN, das ist openvpn.net. Dort findet man natürlich alle Man-Pages und auch How-To's, die halt auch beschreiben, wie man die Keys anlegt und einfache Server-Konfigurationen und auch kompliziertere Sachen. Und die Clients gibt es, sind dort auch verlinkt für die einzelnen Betriebssysteme, diese fertigen Pakete. Man muss sich halt auch nichts mehr selber kompilieren.
+
+00:32:30.698 --> 00:32:32.858
+<v SPEAKER_2>Dann ist dein Tunnelblick da auch verlinkt?
+
+00:32:32.878 --> 00:32:40.498
+<v SPEAKER_1>tunnelblick.net ist dort auch verlinkt und auch die Windows-Gui, das ist openvpn.se, das ist ein Schwede, der die gemacht hat.
+
+00:32:40.598 --> 00:33:06.798
+<v SPEAKER_2>Okay, na super, dann würde ich sagen, haben wir alles durchgekaut, oder? Danke, Angelo. Und ja, das war Chaosradio Express 23. Mal gucken, vielleicht vom Easter Egg hier noch ein bisschen mehr. Mal gucken, wie die Veranstaltung dazu zulässt, aber früher oder später, wenn wir uns schon wieder hören. Dann sag ich mal Tschüss.

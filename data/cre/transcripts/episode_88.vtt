@@ -1,0 +1,1201 @@
+WEBVTT
+
+00:00:03.740 --> 00:00:06.140
+<v SPEAKER_1>Ist das der richtige Ort für ein Argument?
+
+00:00:15.780 --> 00:00:19.480
+<v SPEAKER_2>Entschuldigung, ist das ein 5-Minuten-Argument oder die ganze Hälfte?
+
+00:00:28.440 --> 00:00:42.680
+<v SPEAKER_1>Du hast es. Du hast es. Du hast mich gerade kontradiktiert.
+
+00:00:42.700 --> 00:00:43.400
+<v SPEAKER_2>Nein, ich nicht.
+
+00:00:44.200 --> 00:00:45.020
+<v SPEAKER_1>Nein, nein, nein, nein, nein.
+
+00:00:46.380 --> 00:00:51.880
+<v SPEAKER_2>Nein, nein, Nonsens. Oh, das ist futil. Ich kam hier für einen guten Argument. Nein, du hast es nicht. Du kam hier für einen Argument.
+
+00:00:51.900 --> 00:00:54.260
+<v SPEAKER_1>Ein Argument ist nicht das gleiche als eine Kontradiktion.
+
+00:00:54.280 --> 00:01:00.100
+<v SPEAKER_2>Kann sein. Nein, es kann nicht. Ein Argument ist eine konnektive Serie von Statements, um eine bestimmte Proposition zu erwerben.
+
+00:01:00.120 --> 00:01:02.100
+<v SPEAKER_1>Nein, es ist nicht. Es ist nicht nur eine Kontradiktion.
+
+00:01:02.120 --> 00:01:05.500
+<v SPEAKER_2>Schau, wenn ich mit dir antworte, muss ich eine konträre Position nehmen.
+
+00:01:05.520 --> 00:01:06.860
+<v SPEAKER_1>Aber es ist nicht nur eine Kontradiktion. Ja, es ist.
+
+00:01:35.253 --> 00:02:47.113
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 88. Mein Name ist Tim Pritlove und ich begrüße euch zu einer neuen Iteration des Chaosradio Express Podcasts, der sich wieder einmal, wie so häufig in der letzten Zeit, mit Programmiersprachen beschäftigt. Wir haben den Kloß im Hals und schreiben den 21. Wo habe ich denn eigentlich mein Glas Apfelsaft hingestellt? Verdammte Scheiße. Dieser Podcast lässt sich schwierig an, aber das kann nur ein gutes Zeichen sein, denn heute geht es um, naja, vielleicht habe ich keinen Kloß im Hals, sondern ich habe eine Schlange im Hals. Haha, windige Überleitung. Ich habe auch schon mal bessere Einstiege gemacht. Wie auch immer das Thema ist Python und im Besonderen ein vielleicht nicht ganz so bekanntes Projekt aus der Python-Welt, nämlich PyPy und dazu begrüße ich Holger, Holger Krekel. Hallo. Der darüber eine Menge weiß und der rein zufällig gerade in Berlin ist. Nein, zufällig bist du nicht hier, sondern du bist ganz absichtlich hier bei einer Veranstaltung. Was ist das für eine Veranstaltung?
+
+00:02:47.133 --> 00:02:58.073
+<v SPEAKER_1>Wir nennen das Sprint. Das ist so eine Art Treffen von jetzt gerade mal 10, 12 Leuten, die aus Europa zusammenkommen, hier in der Seabase auch zufällig mal und zusammen programmieren und das Ganze weiter tun.
+
+00:02:58.093 --> 00:03:00.453
+<v SPEAKER_2>Und dann sitzt ihr jetzt drei Tage in dunklen Räumen und...
+
+00:03:00.473 --> 00:03:01.203
+<v SPEAKER_1>Sechs Tage...
+
+00:03:01.203 --> 00:03:05.133
+<v SPEAKER_2>.hackt. Sechs Tage. Das ist aber ein echter Sprint, ist schon eher ein Marathon.
+
+00:03:05.713 --> 00:03:10.513
+<v SPEAKER_1>Naja, ich glaube, es gibt auch Sprints, die noch länger dauern. Ich glaube, maximal hatten wir so acht, neun Tage oder so bisher.
+
+00:03:10.533 --> 00:03:13.133
+<v SPEAKER_2>Macht ihr das häufiger? Wie häufig?
+
+00:03:13.153 --> 00:03:14.933
+<v SPEAKER_1>Alle sechs, acht Wochen.
+
+00:03:14.953 --> 00:03:16.113
+<v SPEAKER_2>Alle sechs bis acht Wochen?
+
+00:03:16.133 --> 00:03:35.133
+<v SPEAKER_1>Ja, wobei das stimmt nicht ganz. Ich lüge. Ah, dann werde ich ja beruhigt. Wir haben das bis letztes Jahr alle sechs bis acht Wochen gemacht. Da war das Ganze auch noch teilfinanziert von der Europäischen Union. Und jetzt machen wir das eher so alle drei, vier Monate, würde ich sagen. Das ist so ein bisschen noch nicht so ganz definiert jetzt gerade. Wir finden gerade einen neuen Rhythmus einfach.
+
+00:03:36.373 --> 00:04:20.313
+<v SPEAKER_2>VIA ist die Community des PyPy-Projektes, auf das wir im Anschluss noch ausführlich zu sprechen kommen, aber was einen neuen, so wegzunehmen, im Prinzip eine neue Compiler oder Interpreter-Infrastruktur für Python macht. Aber bevor wir darauf zu sprechen kommen, müssen wir natürlich das eigentliche Thema, worum es hier im Kern auch geht, ansprechen, nämlich die Programmiersprache Python. Vielleicht mal kurz noch zu dir, weil wir kennen uns ja schon wirklich verdammt lange noch so aus den guten alten Tagen, wo wir beide irgendwie angefangen haben mit der ganzen Hackerei, noch mit dem C64 und so, ganz kleine Jungs aus Hannover noch. Wie lange ist das überhaupt her?
+
+00:04:20.333 --> 00:04:21.513
+<v SPEAKER_1>Sollen wir das jetzt sagen?
+
+00:04:21.533 --> 00:04:25.953
+<v SPEAKER_2>Das geht gar nicht, oder? Oh wei!
+
+00:04:25.973 --> 00:04:28.693
+<v SPEAKER_1>20 Jahre ist das schon mindestens her oder so.
+
+00:04:28.713 --> 00:04:28.993
+<v SPEAKER_2>Echt?
+
+00:04:29.553 --> 00:04:31.313
+<v SPEAKER_1>Ja, da kriegen Leute schon Kinder mit laufend.
+
+00:04:31.333 --> 00:04:48.713
+<v SPEAKER_2>Nee, das ist noch länger her. Wie auch immer. Auf jeden Fall ist es verdammt lange her. Was ist denn so dein Zugang zu den Computern gewesen? Wie bist du sozusagen da hingekommen, wo du jetzt bist?
+
+00:04:50.353 --> 00:05:26.153
+<v SPEAKER_1>Das mache ich im Kurzabriss. Als wir uns kannten, haben wir uns bei irgendwelchen Läden rumgetrieben und haben versucht, die Computer zu verstehen, was da eigentlich passiert. Seitdem ging es eigentlich immer ziemlich weiter in diese Richtung. Ich habe dann in der Uni gelandet. Ich habe das eine Weile lang gemacht und auch viele andere Sachen gemacht. Letztendlich habe ich nach der Uni Freelance-Geschichten gemacht. Ja, ich habe schon 3-4 Jahre zwischendurch ganz andere Sachen gemacht.
+
+00:05:26.913 --> 00:05:31.593
+<v SPEAKER_2>Aber wenn du dich mit dem Computer beschäftigt hast, dann ging es um den Kodieren?
+
+00:05:31.613 --> 00:06:30.953
+<v SPEAKER_1>Genau, ich habe damit Geld verdient die ganze Zeit. Insofern habe ich da schon etwas mit zu tun gehabt. Da war alles noch auf C++. Das kam ja alles vom Assembler, also von ganz unten und dann immer die Sprachen mitgemacht, C und C++. Ende der 90er habe ich dann Python entdeckt. Gleichzeitig wollte ich auch aus der ganzen Banken- und Versicherungswelt weg. Ja, und da ist es dann halt so gekommen, dass ich erstmal ein Jahr lang so eine Art Python-Auszeit genommen habe. Ich habe mich nur auf den Mailing-Listen herumgetrieben und da halt viel gelernt. Das hat mich sehr fasziniert. Also auch gerade, wenn man so aus dieser, sage ich mal, C++-Welt kommt und da hatte ich vorher auch so Körbergeschichten und alles Mögliche gemacht. Auch hier Tau, das Adaptive Communication Environment von Blacklist Schmidt, was ja ein ganz schlaues Teil ist, wo man viel mitmachen kann. Auch Flugzeuge mitgesteuert werden und so was. Das ist schon recht spannend, was man damit machen kann.
+
+00:06:30.973 --> 00:06:32.953
+<v SPEAKER_2>Adaptive Communication Environment?
+
+00:06:32.973 --> 00:07:18.373
+<v SPEAKER_1>AES heißt das. Das ist dazu da, das hat alle möglichen Netzwerkprotokolle. Da gibt es auch diese Posa-Bücher, Patterns auf Software-Architecture. Der hat wirklich eine ganze Menge auch so pioniert im Bezug auf Netzwerkprogrammierung. Der hat auch eine Kobra-Geschichte gemacht. Da habe ich damals einen C++-Transaction-Service geschrieben. Das war alles ganz schön mühselig im Verhältnis. Allein schon das Parsen von irgendwelchen Config-Optionen oder sonst irgendwas. Als ich dann auf Python kam und gemerkt habe, ich kann das irgendwie zum Faktor 20, 30 nach einem halben Tag lernen, schneller programmieren und viel besser testen, so ganz direkt ad hoc, interaktiv, da dachte ich mir, was mache ich hier eigentlich?
+
+00:07:18.393 --> 00:07:27.233
+<v SPEAKER_2>Das heißt, du bist zu Python gekommen, weil du das Programmieren dort komfortabler empfandest, produktiver empfandest?
+
+00:07:27.253 --> 00:07:28.593
+<v SPEAKER_1>Genau.
+
+00:07:28.613 --> 00:07:30.953
+<v SPEAKER_2>Und was sind die Gründe dafür?
+
+00:07:36.173 --> 00:08:53.733
+<v SPEAKER_1>Das Hauptding ist, du kannst alles interaktiv ausprobieren. Das heißt, wenn du Python aufrufst von der Kommandezeile, dann kriegst du einen Interpreter, da kannst du sofort loslegen und kannst sofort deine Konstrukte, kannst eine Funktion einhacken, die aufrufen, ein bisschen mit rumprobieren, interaktiv Beispiele ausprobieren. Wenn du auf der Bening-Liste nachfragen, kannst du ihn wirklich, oder so ging es mir halt, dann kann ich etwas erforschen, dann kann man einfach so eine 5-Zeilen-Antwort geben, muss einfach das und das eingeben, dann funktioniert es. Also es war einfach sehr, da ist nicht ein großer Bildprozess oder irgendwas, sondern bei Python hast du halt alles mit drin. Also von der sozusagen, vom Syntax-Pasen bis zu Compilers, läuft alles implizit ab und dein Bytecode wird einfach sofort interpretiert und läuft ab. Und das ergibt halt auch ein sehr flüssiges Arbeiten erstmal, also dieser interaktive Interpreter. Und dann ist das nächste, was mich total fasziniert hat, also wirklich total fasziniert hat, war Introspection. Du hast auf all diesen Geschichten, also Funktionen und Klassen und so weiter, hast du alles Objekte, wo du immer genauer reingucken kannst. Also wenn du eine Funktion definierst, return x plus eins, einen Parameter, bekommt sie und returnt was, dann kannst du dir einfach sofort angucken, wie sieht das Ganze in Bytecode aus. So, dann siehst du halt, was dann die virtuelle Maschine wirklich abarbeitet als Bytecode, aus deinem Sourcecode gemacht hat. Und das kannst du dir einfach interaktiv direkt im Interpreter herumschauen.
+
+00:08:53.753 --> 00:08:56.353
+<v SPEAKER_2>Warum sollte man das sich anschauen wollen?
+
+00:08:56.373 --> 00:09:06.013
+<v SPEAKER_1>Weil das ist die alte Sehnsucht, einfach genauer zu verstehen, was jeweils hinter den Dingen steht. Das hört nicht einfach irgendwo auf, und dann kommt der große Blackbox-Compiler und macht irgendwas.
+
+00:09:06.013 --> 00:09:08.353
+<v SPEAKER_2>Dann bricht der Assembler-Programmierer wieder in dir durch.
+
+00:09:08.373 --> 00:09:10.793
+<v SPEAKER_1>Vermutlich, ja.
+
+00:09:10.813 --> 00:09:13.493
+<v SPEAKER_2>Hast du auch so in Hex geträumt eigentlich damals?
+
+00:09:13.513 --> 00:09:17.713
+<v SPEAKER_1>Nee, nee, ich glaube nicht.
+
+00:09:17.733 --> 00:09:20.233
+<v SPEAKER_2>Aber schon auch mal in Hex programmiert oder?
+
+00:09:20.893 --> 00:10:11.193
+<v SPEAKER_1>Ja, das scheint klar. Ich habe mir so einen Maschinenmonitor geschrieben. Aber das ist, naja. Das ist nicht das, worum es geht. Das ist nicht das, worum es bei Python auf jeden Fall geht. Das ist diese Geschichte. Und was ich ja auch total cool fand, diese Faszination ist bis heute geblieben. Da werde ich das nächste Projekt darauf aufbauen. Das ist das exec-Statement. Das war mein erster Flame War auf der Python-Maining-Liste. Was heißt Flame War? Also eine Auseinandersetzung, die ich hatte mit einem, der jetzt bei Google eingestiegen ist. Wo es darum geht, dass du einfach auch deinen Source Code dynamisch konstruieren kannst. Also einfach per String, machst einfach String-Geschichten, machst dir irgendwelche Templates, was auch immer. Und kannst das dann im exec-Statement, also exec-statement, kannst du auf dem Excel übergeben und kannst das dann wiederum auch ausführen lassen.
+
+00:10:11.213 --> 00:10:19.193
+<v SPEAKER_2>Also man kann sozusagen Source Code zur Laufzeit zusammenstellen und dann parsen und übersetzen und auch ausführen lassen.
+
+00:10:19.493 --> 00:10:23.853
+<v SPEAKER_1>Also die meisten Leute, die irgendwie Python machen und Python lehren, springen ja wahrscheinlich an die Gurgel.
+
+00:10:23.873 --> 00:10:42.333
+<v SPEAKER_2>Das ist eine sehr umstrittene Geschichte. Ich kenne es unter dem Begriff EVAL. Das ist glaube ich so ein bisschen die allgemeinere Formulierung, die man ja auch in anderen Programmiersprachen findet. Ja, also in der Lisp-Gemeinde ist das irgendwie keine große Überraschung. Auch bei Smalltalk ist das ja gängig gewesen.
+
+00:10:43.813 --> 00:11:25.793
+<v SPEAKER_1>Ich fand das, da ich schon eher aus C++-Welten kam, erst mal eine Art von Befreiung, dass ich diese Freiheiten habe, solche Sachen zu machen. Ich habe das dann schon auch gesehen, das ist nicht die Methode, die man ständig anwendet oder so. Aber da steckt so ein bisschen was drin in dieser Exact-Geschichte, die schon spannend ist, indem ich zur Laufzeit mir was selbst zusammenbasteln kann und einfach sagen kann, und jetzt interpretiere ich einfach das. Also nicht nur diese eine Ebene habe, dass ich irgendwie einen statischen Source habe, der wird übersetzt und läuft einfach ab, sondern dann passiert eben immer noch was, sozusagen kann ich auch was auf so einer Meta-Ebene produzieren und kann das dann auch wieder ablaufen lassen, auf derselben Ebene, auf der ich gerade bin. Das ist halt spannend.
+
+00:11:25.853 --> 00:11:31.373
+<v SPEAKER_2>Ist es so ein bisschen, dass man das Gefühl hat, dass man einfach mehr drin ist in dem System?
+
+00:11:31.393 --> 00:11:32.013
+<v SPEAKER_1>Genau, es ist offener.
+
+00:11:32.033 --> 00:11:33.733
+<v SPEAKER_2>Wie sich das aus deinen Worten...
+
+00:11:33.753 --> 00:12:27.653
+<v SPEAKER_1>Genau, das würde ich auch so sagen. Alles ist sehr offen und sehr systematisch konstruiert. Das kommt sicher auch von dem Spracherfinder. Also Guido von Rosso, Mathematiker und so, der hat sehr viel Wert gelegt auf klare Konstrukte auch in der Syntax. Also wie er sie natürlich ganz klar sieht, gibt es viele Diskussionen drum, klar. Aber ich denke schon, dass viele Leute darin, die Python gelernt haben, daran übereinstimmen, dass es schon eine recht eingängige Syntax hat, gerade wenn man so aus dem C- und C++-Umfeld und sowas kommt, dass man das sehr schnell verstehen kann, oder auch Java und anderen Sprachen. Bis auf vielleicht Prolog oder so. Da ist es dann schon ein bisschen was anderes. Funktionale Sprachen sind aber was ganz anderes. Die Syntax allerdings von Python ist eine, die auch auf Indentation aufbaut. Das heißt, dass es nicht mit den berühmten geschweiften Klammern abgeht, sondern mit Indentation. Was heißt das in Deutsch?
+
+00:12:27.653 --> 00:12:28.473
+<v SPEAKER_2>Einrückung.
+
+00:12:28.493 --> 00:12:46.233
+<v SPEAKER_1>Einrückung, danke. Dadurch hast du erzwungenermaßen immer visuelle Blöcke, die wirklich abgesetzt sind. Und das muss so sein, weil so die Sprache wirklich auch gepasst wird. Und ich selbst fand das natürlich erst mal gewöhnungsbedürftig und dann sehr angenehm.
+
+00:12:46.253 --> 00:12:52.633
+<v SPEAKER_2>Warum angenehm? Weil das ist nun wirklich so eine der Sachen, da teilen sich so ein bisschen die Lager auch immer.
+
+00:12:52.653 --> 00:13:33.433
+<v SPEAKER_1>Ja, aber nicht von den Leuten, die tatsächlich das ein bisschen gemacht haben. Das ist so das Ding. Ich glaube, solange man das irgendwie sich von außen betrachtet und so eine Art ästhetische und auch vergleichende Sichtweise einnimmt, dann auf der Ebene passieren viele dieser Diskussionen. Und ich glaube, die allermeisten Leute, kann man auch viel lesen auf Blogs und so was, die dann ein bisschen Python gemacht haben, verschwenden da kein Gedanken mehr dran, weil im Prinzip die visuelle Identierung, also die visuelle Einrückung, auch sonst als eine ganz sinnvolle Sache angesehen wird. Und da ist sie halt erzwungen. Das ist sozusagen der Punkt. Aber es ist in dem Sinne ja nicht irgendwie ein erzwungener schlechter Stil oder so was, sondern eben etwas. Und dann kann man natürlich sagen, okay, ich will diese Freiheit irgendwie haben.
+
+00:13:33.453 --> 00:13:55.993
+<v SPEAKER_2>Was ist denn diese Indication genau? Sind das jetzt Spaces oder Tabs? Ich habe früher eigentlich immer gerne Tabs verwendet, bin jetzt erst vor kurzem auch zu den Spaces konvertiert worden. Weil das ja auch etwas ist, wo einem der Editor helfen muss. Aber was ist denn eine Einrückung bei Design? Ist das jetzt eine bestimmte Anzahl, Lehrzeichen oder was?
+
+00:13:56.013 --> 00:14:25.513
+<v SPEAKER_1>Bei Design ist es so, du kannst, entweder du hast in einem Modul, das ist mal pro Modul, Python hat ja viele, du kannst ja alles in Modulen machen, das ist mal nur alles global pro Modul, entweder du hast an einem Modul nur Tabs oder nur Spaces. Die Mischung wird nicht empfohlen, weil das kann zu blöden Effekten führen, kann man sich leicht vorstellen. Das heißt, solange du nur Tabs hast, zum Beispiel ist kein Problem, solange du nur Spaces verwendest, kannst du die Identitation verwenden, wie du willst.
+
+00:14:25.533 --> 00:14:27.533
+<v SPEAKER_2>Woher weiß er, wer es sich verwendet?
+
+00:14:27.553 --> 00:14:28.633
+<v SPEAKER_1>Das merkt er ja sozusagen.
+
+00:14:28.653 --> 00:14:31.953
+<v SPEAKER_2>Ach, er liest mal so die ersten paar Zeilen und dann sagt er, du hast zwei.
+
+00:14:31.973 --> 00:14:55.913
+<v SPEAKER_1>Du darfst ja nicht einrückend anfangen sozusagen. Du musst ja irgendwie sozusagen auf Null anfangen. Und wenn du dann die erste Funktion hast, dann kommt ein Doppelpunkt, dann muss es danach in dein Tier weitergehen, musst du also mindestens ein Space haben. Und es ist einfach so, der Coding-Style sagt, vier Spaces, und da halten sich eigentlich quasi alle dran. Also du machst dann vier Spaces, und das ist in den ganzen Python-Modes von Vim, Emacs und Eclipse, und frag mich nicht, und so ist es automatisch so.
+
+00:14:56.673 --> 00:15:02.113
+<v SPEAKER_2>Ich fand ja früher gerade, also ich fand ja den Horizontal-Tabulator, die gute alte Neun.
+
+00:15:02.133 --> 00:15:03.093
+<v SPEAKER_1>Das ist eine echte Erfindung.
+
+00:15:03.873 --> 00:16:06.093
+<v SPEAKER_2>Ja, ich fand das geil. Ein Zeichen im Source-Code, einfach mal wirklich speicherarm. Und vor allem, ich kann meinem Editor sagen, wie breit das ist. Und mit diesen Spaces, deswegen habe ich mich auch so schwer getan damit. Dann macht der eine halt zwei, und der andere macht halt vier, und die anderen acht. Und man kann es ja dann nicht so ohne Weiteres ändern, wenn einem der Editor dabei nicht hilft. In den frühen Zeiten gab es einfach, ich meine, Indentation war kein Feature. Da war halt ein Tab, und man hatte halt die Möglichkeit zu sagen, wie viele Spaces so ein Tab sein soll. Und alles ist prima. Und von daher war natürlich der Code auch sehr viel portabler, sozusagen in seiner Ansichtsweise. Weil man hatte dann auch noch kleine Bildschirme und all die ganzen Sachen. Na gut, das sind alte Zeiten. Aber das hat es mir halt ein bisschen schwer gemacht. Also, nur um es festzuhalten, weil ich wusste es nicht bisher. Vierzeichen ist sozusagen the way to go. Aber man könnte auch eins verwenden, und es würde immer noch funktionieren. Nur, dass dann irgendwie der Coding-Pubs ankommt und der Style-Guide-Pubs so sagt...
+
+00:16:06.113 --> 00:16:10.833
+<v SPEAKER_1>Der Coding-Pubs nicht, sondern alle anderen Leute, die Python sonst machen und irgendwie zusammenarbeiten würden...
+
+00:16:10.853 --> 00:16:12.693
+<v SPEAKER_2>Die zeigen dann auf deinen Code und sagen, was bist du denn für einer?
+
+00:16:12.893 --> 00:16:14.493
+<v SPEAKER_1>Ja, also sie würden den Code so nicht übernehmen.
+
+00:16:14.513 --> 00:16:18.253
+<v SPEAKER_2>Du bist so ein Spacetyp.
+
+00:16:18.893 --> 00:16:26.313
+<v SPEAKER_1>Man erkennt schon, wie viel Kontakt Leute tatsächlich zur Python-Community gehabt haben. Weil zwei oder so, ich weiß gar nicht...
+
+00:16:26.333 --> 00:16:33.273
+<v SPEAKER_2>Und wenn jetzt so einer mit fünf Spaces kommt, das wäre so ein total schräger Vogel, mit dem wir gar nichts zu tun haben, oder?
+
+00:16:33.293 --> 00:16:35.873
+<v SPEAKER_1>Ich hab's noch nicht erlebt. Außer wenn das echt nicht.
+
+00:16:36.213 --> 00:16:58.333
+<v SPEAKER_2>Das ist bestimmt unpopulär. Wie auch immer. Also die Syntax ist auf jeden Fall so, dass sie Indentation verwendet. Und dadurch, dass man indentiert, hat natürlich auch den Vorteil, dass man sich diesen Klammerkram nicht braucht. Ich hätte noch so ein bisschen Angst, passiert einem das nicht auch. Ich veridentitiere mich manchmal. Ich meine, da nimmt man mal, da drückt man mal irgendwo Backspace.
+
+00:16:58.353 --> 00:17:00.033
+<v SPEAKER_1>Und dann ist es halt...
+
+00:17:00.053 --> 00:17:15.393
+<v SPEAKER_2>Dann ist es halt ein Indent weniger. Und dann bricht ja in Python das ganze Programm. Und es bricht dann vor allem auch nicht zwingend so, dass ich das unbedingt sofort merke. Ist das nicht ein bisschen doof? Also...
+
+00:17:15.413 --> 00:17:28.773
+<v SPEAKER_1>Ja, im Prinzip schon. Und es ist nicht nur das in Python, sondern in Python ist es ja auch so, dass man... Du hast ja keine statischen Typ-Deklarationen. Das heißt, du hast nicht irgendwie die ganze Zeit, dass du zu jedem variablen Namen irgendwie sagen würdest, was da für ein Typ zugehört, sondern...
+
+00:17:29.413 --> 00:17:31.893
+<v SPEAKER_2>Ich habe erst mal eine Variable, da ist irgendwas drin.
+
+00:17:31.913 --> 00:17:41.893
+<v SPEAKER_1>Irgendwas drin, ist zwar streng typisiert, aber im Prinzip kann das sich auch ändern. Du kannst auch sozusagen einen anderen Typ da reintun. Ist nicht festgehalten für einen Namen. Und da ist es dann so...
+
+00:17:41.913 --> 00:17:45.453
+<v SPEAKER_2>Also nicht die Variable hat einen Typ, sondern der Wert hat einen Typ.
+
+00:17:45.473 --> 00:17:59.393
+<v SPEAKER_1>Und das heißt auch, dass du sozusagen zur Compile-Zeit, also wenn das Ganze in einen Bytecode transformiert wird, erst mal keine besonderen Checks hast. Also du hast erst mal genau jetzt wieder bei der Identation, dass du vielleicht irgendwo einen Space wegnimmst oder eben, dass du irgendwo...
+
+00:17:59.413 --> 00:18:02.133
+<v SPEAKER_2>Man schläft ja auch manchmal ein bisschen auf seiner Tastatur ein.
+
+00:18:02.673 --> 00:19:14.193
+<v SPEAKER_1>Und deswegen ist in der Python-Welt seit vielen, vielen Jahren, ich würde sagen, soweit ich es mitkriege, also bei mir jedenfalls seit sechs Jahren oder sieben Jahren oder so, ist eine Sache ganz klar. Du kannst kein größeres Python-Programm schreiben, kein vernünftiges, ohne dass du automatisiert testest. Also du brauchst einfach Regression-Tests. Das heißt sozusagen, einfach bei allen großen Projekten, die es in der Python-Welt gibt, und es gibt eine ganze Menge, die laufen alle mit Tausenden und teilweise Zehntausenden von automatisierten Tests. Und die testen natürlich nicht nur die Typen. Und die testen nicht nur solche Glitches, wie irgendwo mal ausversehen eine Indentation weggenommen. Das würde auf jeden Fall in dem Test irgendwo gegenrauschen. Ziemlich sicher. Sondern die testen eben auch das ganze Behavior von einem Programm. Auf einer viel tieferen Ebene, als das ein statischer Compiler irgendwie tut, indem er sozusagen überprüft, ob du mit dem Typen richtig umgehst. Und diese Kultur sozusagen, die neutralisiert diese Probleme, die durchaus da sind. Also sowohl jetzt, sag ich mal, so eine Indentation aus Versehen wegnehmen, als auch eben die Typen nicht zu deklarieren zu können. Und das ist ja auch jetzt in der Java-Welt und anderen Premiersprachen ja auch recht üblich, mittlerweile Tests zu schreiben. Also es gibt bei keinem größeren Projekt mehr irgendwie so, dass du keine Tests hast, keine automatisierten.
+
+00:19:14.213 --> 00:19:21.833
+<v SPEAKER_2>Sollte zumindest so sein, sagen wir es mal so. Ich glaube, es gibt in Deutschland ein paar Großprojekte, die haben von noch nichts gehört.
+
+00:19:21.853 --> 00:19:52.333
+<v SPEAKER_1>Das ist wohl wahr. Aber jedenfalls in Python ist das eine ideale Ergänzung. Man braucht es auch, aber sozusagen, dass man gezwungen ist, bei größeren Geschichten sowas zu machen, ist eh auch wieder eine ganz gute Sache. Und ich habe auch selbst, und gerade für PyPy haben wir auch unser eigenes oder eine Testing-Geschichte, uns viel drum gekümmert einfach. Das ist auch eine Sache, die ich viel mache, irgendwie Testing Framework. Das ist mit Verteilen von Tests auf verschiedene Plattformen und und und und. Also das ist einfach sowieso eine sehr spannende Geschichte. Hat auch für PyPy ein ganz wesentlicher, also für unser Projekt ein sehr wesentliches Ding gewesen. Da können wir vielleicht nochmal darüber reden. Das ist...
+
+00:19:52.353 --> 00:20:00.493
+<v SPEAKER_2>Bringt denn die Sprache selbst oder die Entwicklungsumgebung eine explizite Unterstützung für Tests mit? Oder ist es nur so eine Kultur?
+
+00:20:00.513 --> 00:20:45.893
+<v SPEAKER_1>Es ist, sag ich mal, die Sprache bringt... Es hat eine Standard-Library mit irgendwie ein paar hundert Modulen, die immer mitkommen bei jedem C-Python-Release. Und da ist auch das Unit-Test-Modul dabei. So heißt das, das ist eine Abart von J-Unit, was wiederum kommt von S-Unit, also von dem Smalltalk originalen Unit testen. Und das heißt, da kommt Support mit und auch C-Python selbst kommt mit einem Haufen von Tests und viele Programme verwenden das. Und dann gibt es halt mittlerweile viele Projekte auch, die eben Tests verwenden. Wir haben eine einfachere, eine vereinfachte Form von Testen, die sozusagen ein bisschen schneller zu schreiben ist, weniger Verbiss ist und so weiter und bessere Debugging- Informationen gibt. Das werden wir für unser Projekt und auch für viele andere Projekte.
+
+00:20:46.173 --> 00:20:48.373
+<v SPEAKER_2>Wann werden denn diese Tests angeworfen?
+
+00:20:48.393 --> 00:21:12.993
+<v SPEAKER_1>Die werden angeworfen, wenn du irgendwas entwickelst, irgendwas, du willst ein neues Feature haben, dann schreibst du einen Test dafür und lässt den Test laufen, um zu checken, er schlägt fehl. Dann implementierst du das Feature bis der Fehler sozusagen, also bis der Test funktioniert. Das ist Test-Driven-Development. Und dann lässt du das Programm insgesamt ablaufen, weil es zum Beispiel irgendeine Webseite darstellen soll oder irgendwas halt.
+
+00:21:13.013 --> 00:21:14.233
+<v SPEAKER_2>Aber der Test leibt.
+
+00:21:14.253 --> 00:21:15.033
+<v SPEAKER_1>Der Test leibt für immer.
+
+00:21:15.053 --> 00:21:22.333
+<v SPEAKER_2>Wenn ich später dann über meinen Sourcecode einschlafe und irgendwie mir die Leerzeichen rausgeballert habe, dann kommt dieser Tester hoch und sagt, was ist denn das für ein Scheiß?
+
+00:21:22.353 --> 00:21:53.673
+<v SPEAKER_1>Genau. Und das ist auch genau der Grund, warum wir in diesen Sprims, um da den Bogen zu schlagen, wenn wir in diesen Treffen, wenn wir mit vielen Leuten zusammenarbeiten, wir können problemlos in einem, sag ich mal, ziemlich komplexen Projekt, also Compiler sind einfach sozusagen, was auch komplexer, was wir so betreiben, wir können mit Einsteigern problemlos umgehen. Wir haben 12.000 Tests oder 11.500 oder sowas. Und wenn du als Einsteiger da irgendwas machst, irgendwas programmierst und machst irgendwas kaputt sozusagen, wird das sehr schnell gemerkt werden. Weil die Tests schlagen viel, man kann es dann eben zurückführen auf genau einen bestimmten Check-In.
+
+00:21:53.693 --> 00:21:54.853
+<v SPEAKER_2>11.500 Tests.
+
+00:21:54.873 --> 00:21:56.973
+<v SPEAKER_1>Ja, oder 12.000, ich hab gerade die Genauzahl nicht im Kopf.
+
+00:21:56.993 --> 00:22:00.693
+<v SPEAKER_2>Und die werden alle ausgeführt in dem Moment, wo ich irgendwas ändere?
+
+00:22:00.713 --> 00:22:24.653
+<v SPEAKER_1>Die werden neidlich ausgeführt und normalerweise weißt du natürlich ungefähr, wo du was änderst. Bei uns, das bist du in irgendeinem Direktorie. Und die Tests sind immer auch bei uns bei dem selben Direktorie. Dass wenn du da was testest, dann lässt du nur die Tests von dem Direktorie durchlaufen. Du kannst natürlich theoretisch und praktisch kannst du auch andere Stellen im Programm kaputt machen durch das, was du gerade machst. Aber diese Tests werden, die wirst du wahrscheinlich nicht sofort laufen lassen, weil das zu viele sind. Die laufen eben neidlich derzeit.
+
+00:22:24.673 --> 00:22:29.773
+<v SPEAKER_2>Und so ein Setup für so einen Neidli-Test muss man sich selber hacken? Oder gibt es da auch schon so ein Invaliment?
+
+00:22:29.793 --> 00:23:32.833
+<v SPEAKER_1>Ja, das ist halt dann so eine Community-Geschichte, weil du hast, bei so was wie 11.000 Tests hast, hast du ja schon ein ziemlich großes Projekt. Dann hast du auch irgendwie genügend Leute, die sozusagen sich auch um solche Geschichten kümmern, sowas aufzusetzen irgendwo. Das machst du also nicht als Einzelperson in dem Sinne. Wir haben darüber zusätzlich noch eine Sache gemacht, dass wir Tests auch über viele Hosts gleichzeitig ad hoc verteilen können. Du kannst als Entwickler ein bisschen was programmieren. Also ein paar Tests. Und dann kannst du halt einfach mal 1000 Tests irgendwie auf mehrere Hosts über SSH ohne dass irgendwas installiert sein muss auf der entfernten Seite. Einfach brauchst du nur SSH. Also Python muss drauf installiert sein. Und dann kannst du diese Tests gleichzeitig ablaufen lassen. Sodass das ganze also auch ad hoc relativ schnell geht, weil die brauchen schon bei PyPy sind das sowas wie mehrere Stunden auf jeden Fall, drei, vier Stunden. Bis alle Tests durchlaufen. Und wenn du jetzt aber sozusagen einen ganzen Directory-Subtree hast und das wäre vielleicht eine halbe Stunde, dann kommst du halt mit verteilten Testen auf fünf Minuten. Und das ist halt schon akzeptabel, wenn du irgendwie einen Check-In machen willst, noch mal fünf Minuten zu warten, ob du nicht irgendwas anderes kaputt gemacht hast.
+
+00:23:32.853 --> 00:23:38.553
+<v SPEAKER_2>Aber man erzeugt schon so ein ziemliches globales Festplattenrauschen, wenn man da ein bisschen dran rumklappert.
+
+00:23:38.573 --> 00:23:44.073
+<v SPEAKER_1>Genau so ist es. Aber das wird auch von vielen im Projekt als eine extrem coole Sache angesehen.
+
+00:23:44.133 --> 00:24:05.833
+<v SPEAKER_2>Kann ich mir gut vorstellen. Also vor allem gerade dieses Ding, was du angesprochen hast, mit Einsteigern, viele Projekte lahmen ja auch gerade daran, dass sie zwar so ihre verdienten Mitarbeiter haben, und wenn die dann alle irgendwann mal Kinder haben oder vom Bus überfahren sind, dann sieht es halt schlecht aus. Und von daher ist immer wichtig, auch adaptiv neue Leute einbinden zu können.
+
+00:24:05.853 --> 00:24:12.113
+<v SPEAKER_1>Du hast bei so einem Treffen auch, weißt du, du treffst dich, setzt dich zu zweit vor den Computer und überlegst dir, was wollen wir machen?
+
+00:24:12.133 --> 00:24:14.113
+<v SPEAKER_2>Ihr macht das bewusst per Programming?
+
+00:24:14.133 --> 00:24:17.653
+<v SPEAKER_1>Ja, wir machen es sozusagen Hälfte, Hälfte. Also man sitzt auch mal alleine rum. Das ist jetzt nicht total strikt.
+
+00:24:17.673 --> 00:24:21.073
+<v SPEAKER_2>Aber schon auch bewusst, mit zweien mal an was gearbeitet.
+
+00:24:21.153 --> 00:24:25.533
+<v SPEAKER_1>Ich würde sagen, wir sind in allem ziemlich undogmatisch und dabei dogmatisch oder so, ich weiß es nicht.
+
+00:24:25.553 --> 00:24:26.753
+<v SPEAKER_2>Ihr seid offen für Neues.
+
+00:24:30.153 --> 00:24:56.893
+<v SPEAKER_1>Auf jeden Fall. Dann setzt man sich halt davor und schreibt zusammen einen Test und dann implementierst du den auch zusammen mit dem, der neu einsteigt und hast halt auch sozusagen gleich ein Erfolgserlebnis. Du hast wirklich einen trackbaren Progress auf deiner ganzen Geschichte und kannst halt auch schnell irgendwas beitragen. Solange du sozusagen immer diesen Zyklus einhältst, kannst du quasi nichts falsch machen. Dann muss schon irgendjemand kommen und sagen, was du da testest, ist völliger Unsinn oder so.
+
+00:24:58.153 --> 00:25:22.713
+<v SPEAKER_2>Kommen wir vielleicht nochmal kurz zurück zu Python als Sprache. Du hast ja schon angesprochen, es gibt Module. Modularisierung finde ich ein wichtiges Feature bei Programmiersprachen, weil es ja auch gerade diese Multi-User-Development Geschichte ja dann auch fördert. Wie sieht das dann aus bei Python? Du hast gesagt, wenn ich programmiere, muss ich sowieso erstmal mit Modulen anfangen?
+
+00:25:22.713 --> 00:25:23.413
+<v SPEAKER_1>Genau.
+
+00:25:23.433 --> 00:25:24.413
+<v SPEAKER_2>Am Anfang ist das Modul.
+
+00:25:24.693 --> 00:25:35.133
+<v SPEAKER_1>Im Prinzip machst du irgendeinen File, Punkt Py. Das ist sozusagen immer die Endung für ein Python-Programm. Und damit hast du quasi schon mal ein Modul. Das kannst du dann starten und kannst dann Main drin haben.
+
+00:25:35.153 --> 00:25:36.973
+<v SPEAKER_2>Ein File, ein Modul, oder wie?
+
+00:25:36.993 --> 00:25:49.293
+<v SPEAKER_1>Ein File, ein Modul, genau. Und ein Directory kann zu einem Package werden, in dem es ein spezielles File enthält, das heißt unterstrich unterstrich init, unterstrich unterstrich Punkt py.
+
+00:25:50.033 --> 00:25:51.253
+<v SPEAKER_2>Ach ja, die habe ich schon mal gesehen.
+
+00:25:54.353 --> 00:25:57.073
+<v SPEAKER_1>Du siehst das immer so. Ästhetisch gesehen magst du recht haben.
+
+00:25:57.093 --> 00:26:10.173
+<v SPEAKER_2>Ja, sieht aus, als wäre da schon irgendwie bei einer Compiler drüber gelaufen, aber zwischendurch abgestürzt. Naja, so doppelter Unterstrich bitte dich. Ich weiß nicht, ob das die beste Idee war. Okay, also was ist da drin in diesem init?
+
+00:26:10.193 --> 00:27:24.833
+<v SPEAKER_1>Da sollte eigentlich gar nichts drin sein. Das ist einfach nur ein Marker sozusagen. Der macht aus einem Directory einen Package, sodass also der Import-Mechanismus von PyPy, du hast also in PyPy, hast du diese Module, dann nehmen wir mal an, du hättest jetzt einfach einen Directory mit 1000 Modulen. Dann kannst du da einfach in jedem dieser Module, kannst du einfach Import irgendein anderes Modul sagen, irgendeinen anderen Namen in dem selben Directory. Und dann kannst du mit dem Namenpunkt irgendwas darauf zugreifen. Also du kannst immer dein Module Scope, und dann kannst du halt auf die Funktion, die in dem Modul definiert ist, auf die Klasse, die in dem Modul definiert ist, oder auf die Variable, die in dem Modul definiert ist, zugreifen. Und das ist aber jetzt erstmal recht flat, da hast du sozusagen keinerlei Hierarchie drin. Und wenn du aber einen Package haben willst, und dann verschiedene Submodule, um zu sagen, zum Beispiel Soap oder so, ist halt ein recht bekanntes, dann hat das eben verschiedene Untermodule. Also Soap.Adapter, Soap.Interfaces und so weiter. Und das machst du dann eben so, indem du das in ein Directory packst. Dann hast du halt ein Directory Soap, nicht ein Modul, Soap.Py, sondern Soap Slash. Und dann musst du halt dieses Unterstrich init haben und dann hast du eben die ganzen wieder alle möglichen Module. Die erscheinen dann eben automatisch als Soap.Modulname. Oder du machst eben ein weiteres Directory. Das kannst du natürlich beliebig verschachteln.
+
+00:27:24.853 --> 00:27:29.433
+<v SPEAKER_2>Und lass mich raten, jetzt ein Modul heißt auch, dass man dort einen eigenen Namensraum hat.
+
+00:27:29.453 --> 00:27:29.953
+<v SPEAKER_1>Genau.
+
+00:27:29.973 --> 00:27:35.093
+<v SPEAKER_2>Das heißt zwei Files, die Python-Code enthalten und mit irgendwelchen variablen Namen arbeiten oder Funktionsnamen.
+
+00:27:35.113 --> 00:27:36.073
+<v SPEAKER_1>Können nicht clashing.
+
+00:27:36.093 --> 00:27:43.953
+<v SPEAKER_2>Können nicht clashing. Und wenn man jetzt das eine importiert, kann man dabei irgendwelche Umbenennungen vornehmen, wenn Dinge irgendwie gleich heißen.
+
+00:27:43.973 --> 00:28:36.413
+<v SPEAKER_1>Wenn du sozusagen von einem Modul ein anderes Modul importierst, dann können einfach grundsätzlich keine Konflikte auftreten, weil die Namespaces werden nicht gemischt. Jedes Modul hat seinen eigenen Namespace. Und das bedeutet, dass in einem Modul, also Namespace in Python ist ein ganz wichtiges Ding, ist ein Dictionary, das heißt ein Key-Value-Pairing. Und du hast also in einem Modul, kannst du an Unterstrich Unterstrich Dict Unterstrich Unterstrich, also wieder diese wunderbaren Unterstriche, rangehen. Und das ist das Dictionary, das Modul-Dictionary. Und da hast du immer als Keys hast du immer Namen. Und als Values hast du zum Beispiel dann das Funktionsobjekt oder das Klassenobjekt oder den Variablenwert und so weiter. Das heißt, das zieht sich sozusagen durch das gesamte Python durch, dass du immer diese Name-Value-Mappings hast.
+
+00:28:36.553 --> 00:28:48.833
+<v SPEAKER_2>Das habe ich jetzt nicht wirklich verstanden. Also unterstrich, unterstrich, dick, wo taucht das auf? Ist das jetzt wieder so ein Pfeil wie dieses init.y?
+
+00:28:48.993 --> 00:28:56.893
+<v SPEAKER_1>Nein, das ist sozusagen ein spezielles Attribut eines Moduls. Folgendes, du hast ein Modul, das heißt A.
+
+00:28:56.913 --> 00:28:59.673
+<v SPEAKER_2>Genau, jetzt machen wir mal praktische Beispiele, die jeder nachvollziehen kann.
+
+00:28:59.693 --> 00:29:00.773
+<v SPEAKER_1>Das Modul A.
+
+00:29:00.793 --> 00:29:01.913
+<v SPEAKER_2>Das haben ja alle schon mal gesehen.
+
+00:29:01.933 --> 00:29:37.853
+<v SPEAKER_1>Genau, und das Ganze im Audio-Format. Also du hast das Modul A und du sagst von A sagst du Import B. Und B ist auch ein Modul. Beide Files heißen einfach A.py und B.py. Und von A sagst du also Import B. Und in B hast du jetzt eine Funktion definiert. Also def Funktion, kriegt ein Parameter x und returnt x plus 1. Wenn du von A das jetzt aufrufen willst, dann sagst du also Import B und dann B.f in Klammern 41. Und das heißt, du hast dann den Scope angegeben direkt. Das heißt, du hast das Modul-Objekt, Import B.
+
+00:29:37.873 --> 00:29:40.433
+<v SPEAKER_2>Das heißt, der Dateiname ist automatisch auch der Modulname?
+
+00:29:40.453 --> 00:29:41.073
+<v SPEAKER_1>Genau.
+
+00:29:41.093 --> 00:29:42.533
+<v SPEAKER_2>Muss auch identisch sein?
+
+00:29:42.553 --> 00:29:50.493
+<v SPEAKER_1>Genau. Du kannst allerdings auch beim Importieren, das ist eben der Import-Mechanismus, kannst du sagen, Import B, S, C. Wenn du es aus irgendwelchen Gründen willst...
+
+00:29:50.513 --> 00:29:53.153
+<v SPEAKER_2>Okay, das ist das, was ich meinte, dass man da umbenennen kann beim Importieren.
+
+00:29:53.173 --> 00:30:04.933
+<v SPEAKER_1>Das heißt, du kannst es da umbenennen. Und du kannst auch nur ein einzelnes Objekt importieren. Du kannst zum Beispiel sagen, From B, Import Funktion S, Prenzlauer Berg oder so.
+
+00:30:06.653 --> 00:31:04.533
+<v SPEAKER_2>Wo wir jetzt gerade sind und gerade leckeren Biodöner gegessen haben, was ja hier ganz hip ist in Prenzlauer Berg, was uns die Kraft gibt für diesen Podcast, der so unerwartet kam. Aber ich hatte ihn schon lange auf meiner Liste, weil ich hatte ja auch gerade, wo du Soap erwähnt hast, hier vor einiger Zeit einen längeren Podcast zum Thema Soap und Plon. Wo wir natürlich auf Python eher am Rande eingegangen sind. Aber insofern fand ich das jetzt auch ganz gut, dass wir das mal nachreichen können und einfach mal auch klar machen können, was darunter auch werkelt und was es bedeutet, jetzt in Soap irgendwas zu entwickeln. Weil jetzt im Endeffekt muss man ja das Python anfassen. Und ja, deswegen fiel das ganz gut. Also wir haben diese Module. Wir haben dann sozusagen übergeordnet Packages, was quasi nochmal ein Sammelsurium von Modulen ist. In anderen Sprachen heißt das dann Library oder wie auch immer. Gibt es dann noch was da drüber? Gibt es dann irgendwie noch Applications? Gibt es solche Absatzungen auch noch?
+
+00:31:04.553 --> 00:31:08.793
+<v SPEAKER_1>Ja, aber das kommt dann eher von den, sage ich mal, Content-Management-Systemen, Application-Servern und solchen Geschichten.
+
+00:31:08.853 --> 00:31:10.753
+<v SPEAKER_2>Ich meine jetzt nur von der Sprache selbst her.
+
+00:31:10.773 --> 00:31:12.873
+<v SPEAKER_1>Ich würde sagen, die Sprache hat da eigentlich nichts mehr weiter.
+
+00:31:12.893 --> 00:31:13.873
+<v SPEAKER_2>Okay, das heißt...
+
+00:31:13.893 --> 00:31:23.153
+<v SPEAKER_1>Ich bin auch nicht ganz up to date, weil es gibt, glaube ich... Was? Na ja, es gibt da immer so ein paar Sachen, die da sozusagen gerade entwickelt werden. Aber ich glaube, es gibt da nicht... Ich wüsste gerade nicht, dass es noch was drüber gibt.
+
+00:31:23.573 --> 00:31:38.513
+<v SPEAKER_2>Entwickelt wird ja eigentlich viel an Pysen, nicht? Also es hat ja auch diese Sprache, hat Versionsnummern. Ist ja auch nicht unbedingt jetzt... Gut, es ist in letzter Zeit ein bisschen en vogue. Ja, zu sagen so, ah ja, jetzt hier irgendwie Version 2.3.1. Was ist so die aktuelle...
+
+00:31:38.533 --> 00:31:52.613
+<v SPEAKER_1>Aktuell ist 2.6. und 3.0. Jetzt macht gerade Guido, macht gerade einen Sprung, wo er sozusagen nochmal ein bisschen die Sprache aufräumen will. Und tatsächlich jetzt sozusagen 3.0, das ist sozusagen der große Schritt schon seit Jahren irgendwie immer gesagt, wo halt aufgeräumt wird, wo Sachen wirklich rausfliegen.
+
+00:31:53.713 --> 00:31:56.153
+<v SPEAKER_2>Sachen, die jetzt schon deprecated sind.
+
+00:31:56.173 --> 00:32:04.793
+<v SPEAKER_1>Genau, die werden in 2.6 deprecated. Das heißt, man kann in 2.6 schon ganz gut sehen, was in 3.0 nicht mehr gehen wird. Und das wurde sozusagen auch schrittweise dahin entwickelt. Das heißt, wir sind jetzt bei 2.6 und 3.0.
+
+00:32:04.813 --> 00:32:17.853
+<v SPEAKER_2>Also 2.6 ist sozusagen auch noch, ist auch alles noch beta, ne? Also richtig latest release. Also hier, Müllhalde sagt, 2.5.2 ist das letzte Release. Also in 3.0 und 2.6 wird parallel gearbeitet. Genau.
+
+00:32:17.873 --> 00:32:44.573
+<v SPEAKER_1>Das ist alles dann so ein Release-Kandidatstadium. Das ist also sozusagen C-Python und dann gibt es natürlich noch Microsofts Versionen. Die sind eingestiegen letztes Jahr, haben sich einen Entwickler abgegriffen und haben, der auch die Java-Version damals gemacht hat, Jim Hugganen, da haben wir auch mal das gute Draht zu, die haben Iron-Python gemacht. Und die wollen wohl, was wir gehört haben, ist irgendwie, dass sie das Microsoft-Python massiv weiterentwickeln will. Also nicht Python selbst die Sprache, sondern dass die Python wirklich zum Einsatz sind.
+
+00:32:44.593 --> 00:32:45.573
+<v SPEAKER_2>Die Implementierung.
+
+00:32:45.593 --> 00:33:03.613
+<v SPEAKER_1>Genau. Und dass sie Python auch einsetzen wollen in der ganzen.NET-Welt. Wie weit das ist, also es ist auf jeden Fall mittlerweile so, dass man davon alles benutzen kann mit Iron-Python. Aber wie weit das sozusagen Microsoft noch weiter auch marketingmäßig pusht, das weiß ich jetzt gerade nicht. Haben sie auf jeden Fall irgendwie einen Schein vor, wenn wir so hören.
+
+00:33:04.433 --> 00:33:06.513
+<v SPEAKER_2>Ja, das ist natürlich ein...
+
+00:33:06.533 --> 00:33:23.853
+<v SPEAKER_1>Ich sage das einfach nur so am Rande. Und dann gibt es halt noch die Jython. In der Java-Welt wird auch Jython viel benutzt. Das ist die populärste Scriptingsprache, die man in der Java-Welt ist, ob man bei irgendwelchen Umfragen da glauben kann. Das heißt, das ist dann wiederum eine Python-Implementierung, die auf der JVM-App läuft. Und das heißt, man hat sozusagen ein existierendes...
+
+00:33:23.873 --> 00:33:29.893
+<v SPEAKER_2>JVM, also der Java Virtual Machine, also dass man sozusagen Python-Code nimmt, aber ihn so compilert, als wäre es Java.
+
+00:33:29.913 --> 00:33:31.553
+<v SPEAKER_1>Der wird in Java-Bytecode kompiliert.
+
+00:33:31.573 --> 00:33:36.973
+<v SPEAKER_2>Und dann kann der irgendwie auch als Applet laufen, wenn es unbedingt sein muss. Vor allem halt in einem normalen Java-Environment.
+
+00:33:36.993 --> 00:33:45.393
+<v SPEAKER_1>Genau. So das Programmierer das verwenden, um ihre Java-Geschichten zu scripten. Damit kannst du zum Beispiel auch Tests ganz gut schreiben.
+
+00:33:46.813 --> 00:34:17.253
+<v SPEAKER_2>Wir haben ein bisschen vorweg gegriffen, aber lass ich das mal nicht gehen. Um es mal ein bisschen aufzurollen. Python, als solches, wie man es kennt, seit 1991 ist eigentlich in C programmiert. Das heißt, da hat sich mal jemand hingesetzt und hat in C eine neue Programmiersprache gemacht. Das ist ja so eine Sache, dass man eine Programmiersprache nicht in sich selbst schreibt. Da kommen wir gleich zu. Aber es gibt mittlerweile mehrere Implementierungen. Du hast jetzt halt Jython ins Spiel gebracht. In was ist Jython selbst geschrieben? In Java?
+
+00:34:17.273 --> 00:34:18.393
+<v SPEAKER_1>Das ist großartig in Java geschrieben.
+
+00:34:18.413 --> 00:34:22.473
+<v SPEAKER_2>Das heißt, da hat sich jemand hingesetzt und in Java die Pythonsprache auch noch mal implementiert.
+
+00:34:22.493 --> 00:34:31.013
+<v SPEAKER_1>Genau, beziehungsweise auch in sozusagen das programmiert, was ist dann in Java Bytecode, ist es wahrscheinlich teils teils. Ich glaube, es ist ein Teil in Python selbst geschrieben, aber der Großteil müsste in Java geschrieben.
+
+00:34:31.033 --> 00:34:38.993
+<v SPEAKER_2>Okay, aber es gibt sonst keine andere Programmiersprache, die daran beteiligt ist. Und dieses Aran Python, das ist eine Entwicklung von Microsoft selber.
+
+00:34:39.013 --> 00:34:43.293
+<v SPEAKER_1>Das ist eine Entwicklung von Jim Hoganin, der bei Microsoft arbeitet. Der hat also auch schon vorher Release rausgebracht.
+
+00:34:43.313 --> 00:34:45.353
+<v SPEAKER_2>Und der macht das in Zählattenzaun, alles klar.
+
+00:34:45.373 --> 00:34:46.053
+<v SPEAKER_1>Genau.
+
+00:34:46.073 --> 00:34:50.193
+<v SPEAKER_2>Das ist dann auch nicht so dem Jython so unähnlich, oder?
+
+00:34:50.213 --> 00:35:28.993
+<v SPEAKER_1>Genau, der hat sozusagen das selbe Konzept, was er damals auch verwendet hatte, um Jython zu machen, weil der hat das auch begründet, diese Jython-Geschichte. Das heißt, der nimmt sich halt Python her und schreibt von Hand den Code, der das dann irgendwie für eine Standard- Umgebung, wie z.B..NET oder JVM, dorthin den Bytecode produziert. Und dann kannst du den eben ablaufen lassen in dieser Umgebung, und hast dann halt deinen Python-Interpreter. Kannst auf diese Weise sozusagen deinen Python programmieren und kannst auf die Geschichten dieser Umgebung, sprich CLI unter.NET und unter JVM halt die ganzen Class-Libraries und so eben zugreifen von Python aus.
+
+00:35:35.893 --> 00:35:39.033
+<v SPEAKER_2>Ach so, das wo in.NET alle Sprachen zusammenkommen.
+
+00:35:39.053 --> 00:35:41.953
+<v SPEAKER_1>Das ist ja sozusagen eine generalisierte Umgebung und alle Sprachen.
+
+00:35:41.973 --> 00:36:32.673
+<v SPEAKER_2>Wir müssen aufpassen, dass wir hier nicht irgendwie zu basswürdig werden, sondern muss ja dem auch noch folgen können, und das linkt mir bisweilen auch. Also.NET ist vielleicht an der Stelle jetzt nochmal interessant zu sagen, ist ja so die von Microsoft seit längerer Zeit ausgelobte, theoretische neue API von Microsoft. Sie glänzen nicht gerade dadurch, dass sie das selber viel verwenden und auch bei Vista sind die Fortschritte nicht in dem Maße, wie sie das irgendwann mal gesagt haben. Trotz alledem haben sie es geschafft, dort eine Environment zu schaffen, wo eben viele Programmiersprachen drin sind und ich finde es halt ganz interessant zu sehen, welche Sprachen da dann eben auch zum Zuge kommen. Und da sie ja eigentlich mit C Lattenzaun gesagt haben, ok, wir haben jetzt hier so ein bisschen was wie Java, aber es ist ein bisschen besser als Java, ob es das ist, das sei mal dahingestellt, aber sie bemühen sich sozusagen auch noch um andere Programmiersprachen, unter anderem auch um Python.
+
+00:36:32.693 --> 00:37:02.753
+<v SPEAKER_1>Genau, und Microsoft hat das viel eher kapiert als zum Beispiel Sun. Sun hat auch gerade ein Problem diesbezüglich, weil Microsoft hat sehr früh kapiert, wir brauchen dynamische Sprachen. Ist ja seit Jahren so ein bisschen irgendwie so am Kommen. Dynamische Sprachen sind irgendwie sozusagen auf einem höheren Level ablaufen. Und Microsoft hat das früh kapiert und hat sich halt auch die Leute geholt und haben gesagt, wir wollen jetzt irgendwie.NET und CLA so weiterentwickeln, dass wir Python gut ablaufen lassen können. Also sozusagen, das ist ein bisschen her und her. Common Language Runtime. Das ist sozusagen diese...
+
+00:37:02.773 --> 00:37:05.433
+<v SPEAKER_2>Das CD ist das Interface und die Runtime ist das, was es ausführt.
+
+00:37:05.453 --> 00:37:34.053
+<v SPEAKER_1>Genau. Und diese Runtime ist eben dann auch mit Bytecode und einem drum und dran. Und da haben sie eben viele, viele Tools. Und sie wollen halt, dass damit auch dynamische Sprachen ablaufen. Und haben dann eben sich jemanden geholt, der sich da gut auskennt, und haben gesagt, so, jetzt machen wir irgendwie eine Python-Version. Und wollen, dass das.NET sozusagen gut damit interoperiert. So, und das ist sozusagen bei Java nicht so systematisch passiert. Also das haben zwar Leute gemacht, so aus Interesse oder so, es wurde aber nicht wirklich jetzt gepusht.
+
+00:37:34.073 --> 00:37:38.253
+<v SPEAKER_2>Das ist halt immer geglaubt, alle wollen Java programmieren und Java ist überhaupt das Tollste.
+
+00:37:38.273 --> 00:37:50.053
+<v SPEAKER_1>Genau. Aber die sind jetzt auch dabei. Ich meine, die sind da jetzt auch eingestiegen mit Ruby und JRuby und diversen anderen Geschichten. Das ist halt nur ein bisschen später einfach. Das ist halt so, aber nicht so schlimm. Jedenfalls...
+
+00:37:50.073 --> 00:37:52.673
+<v SPEAKER_2>Man hätte ja auch gleich eine dynamische Promi-Sprache machen können.
+
+00:37:52.693 --> 00:37:56.713
+<v SPEAKER_1>Aber das steht auf einem anderen Blatt.
+
+00:37:56.733 --> 00:39:08.433
+<v SPEAKER_2>Woran mich das jetzt erinnert, dass ich es nämlich auch ansprechen wollte, das sagt ja schon mal eine Menge aus. Ich weiß ja jetzt nicht, an welchen Sprachen Microsoft noch so seine Finger dran hat für.NET. Das soll jetzt hier auch eigentlich nicht das Thema sein. Aber es ist ja im Prinzip auch eine Anerkennung, dass Python mittlerweile eine gewisse Reputation und eine Verbreitung gefunden hat, die man nicht so ohne Weiteres ignorieren kann. Es gibt zahlreiche Programme und Systeme und Subsysteme und Frameworks, mir fallen natürlich jetzt so aus dem Stand keine weiteren Einheiten, die wir ja schon erwähnt haben. Aber es hat eine große Bedeutung, also korrigier mich oder sag was dazu, wenn du meine Meinung nach, ist es im akademischen Bereich schon sehr weit fortgeschritten, auch sozusagen als Alternative zu den Einsatzzwecken, wo man sonst Java verwendet hätte, also gerade so Prototypen-Entwicklung, Protokollentwicklung. Gerade auch so im Networking-Bereich. Ich habe bei Python viel gesehen, wie man Computer-Protokolle, Netzwerk-Protokolle ganz gut entwickeln kann. Es gibt viele Subsysteme, mit denen man das auseinandernehmen kann. Wo siehst du denn noch so die Anwendungsschwerpunkte für Python derzeit und wofür denkst du, ist Python besonders gut geeignet und vielleicht auch wofür siehst du, dass es nicht einfach ist?
+
+00:39:08.453 --> 00:40:17.293
+<v SPEAKER_1>Also ganz klar, wo es viel eingesetzt wird, ist es eben als Clue-Sprache, als Klebstoffsprache, die alles Mögliche zusammenbindet. Es gibt sehr, sehr viele C-Libraries, die in Python einfach eingebunden werden, die dann gesteuert werden. Zum Beispiel gibt es deswegen auch eine ziemlich große numerische, numerical computing Community, die also NumPy geschrieben hat. Das ist für Matrix-Berechnungen und alle möglichen anderen Geschichten. Das heißt, wo dann Wissenschaftler einfach nur noch von der High-Level-Sprache aus diese hochperformanten Geschichten ansteuern. Und da eben dann von der High-Level-Sprache viel schneller irgendwie ihre Geschichten machen können, ohne sich mit den ganzen Details zu beschäftigen. dann eine andere Klebstoffgeschichte ist sicherlich die, die Google macht. Also ich glaube, nach dem, was ich weiß, ist es irgendwie so, dass Google, der Großteil ihres Codes, den sie da intern verwenden, für ihre ganzen Serversteuerungen und allem drum und dran, ist auch in Python. Die haben ja dieses Triplet von irgendwie C++, Java und Python, was sie dann über Swic verbinden, sozusagen zwischen diesen Sprachen hin und hergehen. Swic ist was? Swic ist ein Interface-Generator zwischen Sprachen. Und dadurch ist es dann so, dass du zwischen diesen Sprachen...
+
+00:40:17.313 --> 00:40:19.793
+<v SPEAKER_2>Simplified Rapper and Interface Generator.
+
+00:40:21.873 --> 00:40:33.533
+<v SPEAKER_1>Und damit ermöglichen die das, dass man zwischen den verschiedenen Sprachen arbeiten kann, das heißt, soweit ich das weiß. Viele Teams, wahrscheinlich auch als Top Secret, wie bei alles bei Google, aber egal.
+
+00:40:33.553 --> 00:40:35.593
+<v SPEAKER_2>Ja, das ist ja wirklich kein Geheimnis.
+
+00:40:35.613 --> 00:40:56.233
+<v SPEAKER_1>Genau. Also da ist es halt so, dass die das auch so machen, auch wieder als Klebschaftssprache. Das heißt, du kannst dann von Python auch die ganzen anderen Libraries ansteuern und auch andersrum Python-Geschichten aufrufen von C++ und Java. Und da ist eben Python... Da glänzt es so ein bisschen. Da kann man es eben... Sieht man ja auch schon, das ist eben eine JVM, du kannst es auch in.NET und das ist überall sozusagen irgendwie so einbaubar. Und es ist auch bei...
+
+00:40:56.253 --> 00:41:58.793
+<v SPEAKER_2>Das war ja aber auch ein Design-Ziel, wenn ich das richtig erinnere. Python war von Anfang an dafür gedacht, auch embeddable zu sein und eben Scripting zu machen, weil es gab einfach nicht viel im Bereich. Ja, jeder hat da so seinen eigenen Weg gehabt und jeder hat irgendwie teilweise auch noch seine eigene Programmiersprache dafür nochmal erfunden. Aber es gab nichts, was wirklich so universell anwendbar ist. Ist auch irgendwie ein heißes Thema. Bei den Betriebssystemen gab es relativ wenig, was dazu beigetragen wurde. Also, das einzige, was mir jetzt einfällt, ist Apple, die immer schon diese Scripting-Architektur gehabt haben und dann halt so vor allem ihr eigenes Apple-Script gepusht haben, was aber auch nicht unbedingt jetzt immer so gut angenommen wurde. Wie auch immer. Aber das Problem, dass man eben nicht immer wieder alles in Native-Code programmieren will, sondern dass man eigentlich modulare Software machen will, die ihre interne Funktionalität mit Objekten und Funktionen quasi bereitstellt, und dass man dann eben so ein Micromanagement darauf machen kann, das hat eigentlich nach wie vor große Zukunft.
+
+00:41:58.993 --> 00:42:05.773
+<v SPEAKER_1>Genau. Dann gibt's halt einen Webbereich hatten wir, diesen Gloo-Bereich, wo du halt mit Python alles möglich zusammenbinden kannst.
+
+00:42:05.793 --> 00:42:08.173
+<v SPEAKER_2>Web ist aber jetzt eigentlich so ein neues Thema.
+
+00:42:08.193 --> 00:42:08.733
+<v SPEAKER_1>Also wenn du das Soap...
+
+00:42:11.893 --> 00:42:32.013
+<v SPEAKER_2>Soap gibt's lange, aber das hatten wir im Podcast auch schon. Das hatte einen schweren Weg und ist jetzt irgendwie in der Version 3 nochmal komplett neu zusammengewürfelt worden, um eben modularer zu sein. Es gibt ja jetzt auch diese Gegenbewegungen zu Ruby on Rails, das Django Framework, was sich einer gewissen Beliebtheit erfreut. Ich weiß nicht, wie groß diese Beliebtheit ist.
+
+00:42:32.033 --> 00:43:00.893
+<v SPEAKER_1>Ja, frag mich mal. Ich weiß es auch nicht genau. Diese Web-Geschichte ist auch eine Sache, das ist eine ziemlich eigene Welt für sich so auch. Da passiert einfach sehr, sehr viel. Wir haben über Pronax schon geredet und so. Django ist auch ziemlich populär, das weiß ich, und wird auch an einigen Stellen verwendet, eben auch, weil es diesem Ruby-on-Rails-Rezept so ein bisschen folgt irgendwie. Wir haben jetzt auch mit PyPy zu tun gerade, also bringen das auch gerade zum Laufen. Aber letztendlich würde ich jetzt nicht da mir einen Urteil abgeben wollen, was von beiden jetzt irgendwie da interessant ist.
+
+00:43:00.913 --> 00:43:12.553
+<v SPEAKER_2>Ja, nee, das müssen wir jetzt auch nicht beurteilen. Nur ein bisschen mal so zusammenfassen, wo sozusagen auch wirklich Aktivität erkennbar ist in der Python-Community. Gibt es sonst noch irgendwie wichtige Subsysteme?
+
+00:43:12.573 --> 00:43:13.633
+<v SPEAKER_1>Du meinst jetzt so größere Projekte?
+
+00:43:15.753 --> 00:43:23.813
+<v SPEAKER_2>Also mir geht es sozusagen um die Anwendungsbreite. Also ich meine, dass das jetzt im akademischen Bereich verbreitet ist und für Scripting taugt, ist klar. Aber ich habe zum Beispiel jetzt auch...
+
+00:43:23.833 --> 00:43:29.853
+<v SPEAKER_1>Xen zum Beispiel. Was heißt? Xen ist ja hier Virtual Machine Monitor, der ja recht bekannt ist, Virtualisierungssoftware.
+
+00:43:29.993 --> 00:43:30.973
+<v SPEAKER_2>Ja.
+
+00:43:30.993 --> 00:43:44.513
+<v SPEAKER_1>Und die verwenden zum Beispiel Twisted, was ein Python-Networking-Environment ist. Also wo du halt schön Demons und sowas schreiben kannst, alle möglichen Protokolle implementiert sind. Also FTP, HTTP, HTTPS, SSH und so weiter und so weiter.
+
+00:43:44.513 --> 00:43:46.913
+<v SPEAKER_2>Ah, das verwenden viele, dieses Twisted.
+
+00:43:46.933 --> 00:43:47.033
+<v SPEAKER_1>Genau.
+
+00:43:47.053 --> 00:43:51.053
+<v SPEAKER_2>Das ist mir nämlich schon auch sehr oft über den Weg gelaufen. Vielleicht kannst du dazu noch mal kurz was sagen.
+
+00:43:51.073 --> 00:44:41.893
+<v SPEAKER_1>Ja, Twisted ist wiederum auch seit ein paar Jahren. Die bauen auch auf genau diesen Ideen von dem Adaptive Communication Environment auf, von dem Douglas Schmidt, was es damals in C++ gab, und haben sich halt die verschiedenen Patterns hergenommen und haben die einfach in Python implementiert. Und darauf dann, das ist halt, du kriegst halt ein bisschen ein anderes, ich merke es persönlich nicht so gerne, weil du kriegst ein anderes Programmiermodell, nämlich ein asynchrones. Das heißt, du hast event-driven Geschichten, Event-Loops und so was. Das passt sich natürlich auch ganz gut ein in den wirklichen GUI-Geschichten und so weiter. Aber es ist im Verhältnis zu, aber das ist nochmal ein anderes Thema, ich glaube, das wollen wir jetzt auch nicht so vertiefen. Jedenfalls, was Anwendungsgebiete angeht, Twisted wird eben verwendet für Deam-In-Programmierung und wird eben zum Beispiel verwendet, soweit ich das weiß, war das zumindest vor einem Jahr noch so, von Xen, von dem Virtual Machine Monitor, zur Koordination der Virtualisierungsnotes.
+
+00:44:41.913 --> 00:44:53.653
+<v SPEAKER_2>Im Prinzip, habe ich das richtig verstanden, dass Twisted einem so ein bisschen die Nebenläufigkeit, die man ja benötigt eigentlich im Networking, abnimmt, ohne dass man jetzt mehrere Threads verwendet?
+
+00:44:53.673 --> 00:45:18.593
+<v SPEAKER_1>Genau, es ist sozusagen konzeptionell Single Threaded. Und du hast immer, wenn du sozusagen an einer Stelle irgendwie IAO brauchst, dann wird das Ganze deferred. Dann wandert das wieder zurück in die Loop. Und wird dann eben zu einem späteren Zeitpunkt ausgeführt, wenn die IAO bereit steht. Und dadurch brauchst du kein Locking und sowas. Also du hast einfach deine Programmteile. Und immer wenn du sozusagen von IAO abhängst, dann musst du da wieder zurück. Aber du musst nicht irgendwie locken, weil du immer nur in einem Thread abläufst.
+
+00:45:19.653 --> 00:45:28.053
+<v SPEAKER_2>Das erfordert ja auch eine gewisse Nähe zum Betriebssystem, oder? Um solche Sachen sicherzustellen, also so ein Locking-Zugriff und so für IAO?
+
+00:45:28.073 --> 00:45:35.693
+<v SPEAKER_1>Nein, das wird eben alles durch so eine zentrale Event-Loop gemacht, die sozusagen in der, wenn IAO sozusagen bereitsteht, dann werden eben die Sachen aufgerufen.
+
+00:45:35.713 --> 00:45:47.993
+<v SPEAKER_2>Ja gut, aber man kann ja schnell hängen bleiben in so Betriebssystemen. Da ruft man mal den falschen Call auf, der bleibt dann irgendwo im Körner halt hängen und dann hat sich das was mit der Event-Loop, weil die kommt dann eben nicht mehr zum Zuge. Also so ein gewisses Betriebssystem muss ja dann schon da sein.
+
+00:45:48.013 --> 00:45:51.693
+<v SPEAKER_1>Genau, richtig. Das ist eben genau der Punkt, das ist eben alles für dich geregelt.
+
+00:45:51.713 --> 00:45:58.313
+<v SPEAKER_2>Das heißt, es ist sozusagen Schritt für Schritt für verschiedene Betriebssysteme auch so gehärtet worden, dass man das heute schon plattformübergreifend verwenden kann.
+
+00:45:58.333 --> 00:46:06.693
+<v SPEAKER_1>Ich denke schon. Also Windows und hier OS X und Linux und so, da läuft das Problem. Gut, das ist einfach nur jetzt mal so ein weiteres Beispiel einer Geschichte.
+
+00:46:06.713 --> 00:46:14.133
+<v SPEAKER_2>Ja, aber das sind ja nun wirklich auch interessante Sachen. Das löst ja auch richtig, ja, richtig, ah, gutes Thema. Stimmt, hätte ich jetzt fast vergessen. Stimmt, BitTorrent.
+
+00:46:14.153 --> 00:46:30.293
+<v SPEAKER_1>Also es werden einfach viele Sachen, werden da drin einfach gemacht. Also ich habe da überhaupt gar keinen, ich habe da sozusagen, ich habe da keinen Track von all den Sachen, die gemacht werden. Aber wenn ich jetzt länger darüber nachdenke, fangen wir wahrscheinlich noch mehr ein. Also jetzt haben wir jetzt BitTorrent, Twisted und Soap sowieso, Plon, diese Content-Management-Systeme.
+
+00:46:32.153 --> 00:46:36.973
+<v SPEAKER_2>Aber es ist eigentlich schon ab, dass viele, also es löst komplexe Probleme.
+
+00:46:38.653 --> 00:47:04.013
+<v SPEAKER_1>Und da ist sicherlich auch PyPy jetzt, also sozusagen unser Compiler-Framework, was wir da haben, ist sicherlich auch ein Beispiel, was sozusagen in großem Projektbereich fällt. Also die Art von Komplexität, mit der wir da zu tun haben und was wir eigentlich da produzieren, ist auch, das ist sozusagen so, was GCC und JVM und so was machen, das ist so auf der Ebene, hat schon eine ziemliche Komplexität. Und dabei haben wir auch den Anspruch, dass es noch ein bisschen was besser macht als das.
+
+00:47:04.033 --> 00:47:34.653
+<v SPEAKER_2>Gut, jetzt können wir ja nochmal kurz anknüpfen an die Diskussion, die wir vorhin schon losgetreten haben. Also Python ist eigentlich eine NC-implementierte Sprache. Jetzt haben wir gehört, es gibt eine C-Lattenzaunimplementierung von Microsoft, das IronPython. Es gibt eine Java slash Python Mixtur Jython, um eben in Java-Environments zu skripten und um Python-Programme in einer Java Virtual Machine zum Laufen zu bringen. Und dann gibt es noch PyPy.
+
+00:47:34.673 --> 00:47:35.773
+<v SPEAKER_1>Genau.
+
+00:47:35.793 --> 00:47:39.493
+<v SPEAKER_2>PyPy hat wer losgetreten?
+
+00:47:39.513 --> 00:48:14.093
+<v SPEAKER_1>Also ich habe mal irgendwann vor vier Jahren oder so zu einem Sprint, zu einem ersten Treffen eingeladen, zusammen mit Armin Rigo und Christian Tissmer. Wir hatten uns hier auf der deutschen Mainliste mal irgendwie, oder weiß gar nicht mehr, irgendwie ging es auf jeden Fall los. Er hat an Armin gefragt, ob er auch Lust hat. Der hat halt schon mal ein sehr, sehr, sehr, sehr wichtiges, interessantes Projekt gemacht in der Python-Welt bezüglich Beschleunigung von Python-Programmen. Also bis auf Faktor 100 und so, weil er eben auch damit Just-in-Time-Compilation und so Sachen gemacht hat. Und wir haben halt ein Treffen gemacht und haben gesagt, alle, die Lust haben, können kommen. Und wir wollen halt einen neuen Python-Interpreter schreiben.
+
+00:48:15.133 --> 00:48:16.213
+<v SPEAKER_2>Einen neuen Python-Interpreter.
+
+00:48:16.793 --> 00:49:30.993
+<v SPEAKER_1>Genau. Und der soll dann sozusagen, wir wollen ihn in einer hohen Sprache schreiben. Also wenn du jetzt mal anguckst, du schreibst in C Lattenzaun oder du schreibst in Java oder du schreibst in C. In jedem Fall machst du das so, dass du irgendwie in dem Target-Environment, wo du hin willst, implementierst. Und dann sozusagen auf einer höheren Ebene die Sprache bereitstellst. Und wir wollten aber das sozusagen umdrehen. Wir wollten in einer hohen Sprache implementieren, in einer hohen Sprache eine Transformation schreiben, ein Metaprogramm, was diesen Interpreter in alle möglichen Umgebungen transformiert, also kompiliert. Also wir generieren Interpreter. Wir schreiben nicht ein Interpreter. Wir schreiben ein Generationsprogramm, was aus einem Interpreter, den ich in einer hohen Sprache spezifiziere, so nennen wir das auch ganz gerne. Das ist eigentlich eher eine Spezifikation, weil je höher der Level ist, also keine Speichermanagement Details mehr und so weiter, je höher dieser Level ist, umso weniger ist das Ganze eigentlich, weil halt so viele Details fehlen, wirklich ein voller Interpreter in dem Sinn. Das ist bloß die Spezifikation. Und dann habe ich ein Metaprogramm, was mir das an das Target-Environment transformiert.
+
+00:49:31.013 --> 00:49:33.593
+<v SPEAKER_2>Holger, das war zu kompliziert. Wir müssen das einfacher erklären.
+
+00:49:33.613 --> 00:49:34.393
+<v SPEAKER_1>Ich versuche es nochmal.
+
+00:49:34.413 --> 00:49:46.233
+<v SPEAKER_2>Also verstehe ich das erstmal so richtig. Python, also PyPy, ist etwas, was Python-Code liest und versteht. Und es ist selbst in Python geschrieben. Und deswegen heißt es vor allem auch erstmal PyPy.
+
+00:49:46.253 --> 00:49:46.433
+<v SPEAKER_1>Genau.
+
+00:49:47.253 --> 00:50:03.773
+<v SPEAKER_2>Und es liest und versteht es deshalb, weil es das interpretieren kann. Das heißt, es ist in der Lage, Python-Code zu lesen und in dem Moment auszuführen. Und genau dasselbe zu tun, was auch das C-Python tut. Bloß, weiß ich nicht, langsamer? Klingt jetzt erstmal langsamer, oder?
+
+00:50:03.793 --> 00:50:05.333
+<v SPEAKER_1>Genau, das ist wesentlich langsamer erstmal.
+
+00:50:05.353 --> 00:50:09.653
+<v SPEAKER_2>Also ihr wolltet einen langsameren Interpreter schreiben? Das ist euch auch gelungen.
+
+00:50:09.673 --> 00:50:14.793
+<v SPEAKER_1>Genau. Gratuliere. Wir waren zu Anfang zweieinhalbtausendmal langsamer. Das hast du exakt erfasst.
+
+00:50:14.813 --> 00:50:26.713
+<v SPEAKER_2>Zweieinhalbtausendmal langsamer. Okay, gut. Aber was, warum? Okay, was macht ihr dann? Jetzt hast du gesagt, ihr seid aber nicht nur in der Lage zu interpretieren, sondern ihr seid auch in der Lage, Interpreter zu erzeugen.
+
+00:50:26.733 --> 00:50:27.233
+<v SPEAKER_1>Genau.
+
+00:50:27.253 --> 00:50:29.533
+<v SPEAKER_2>In anderen Sprachen dann wiederum, oder was?
+
+00:50:29.693 --> 00:50:35.413
+<v SPEAKER_1>Also ich bin vielleicht mal schrittweise. Jetzt haben wir tatsächlich diesen zweieinhalbtausendmal langsameren Interpreter. Warum sollten wir so etwas machen?
+
+00:50:35.433 --> 00:50:38.753
+<v SPEAKER_2>Das ist eine interessante akademische Frage.
+
+00:50:39.193 --> 00:51:25.173
+<v SPEAKER_1>Nein, weil natürlich von vornherein die Idee dahinter stand, dass wir eine komplette Typ-Inferenz machen. Das heißt, dass wir für jeden, wir haben ja erst mal sozusagen, wir haben nicht zu jeder Variable, das haben wir ja schon gesagt zu Anfang, wir haben nicht zu jeder Variable irgendwie den Typ. Das heißt, erst mal hast du ein Python-Programm und weißt erst mal überhaupt nicht in irgendeiner Funktion, was da alles für Werte drin sein könnten. Bei uns ist das so, dass wir, das gilt das Gleiche erst mal, aber dann haben wir sozusagen ein Entry Point, so eine Art Main, und von da aus wird ja das ganze Programm angestellt, also wird sozusagen der ganze Interpreter gestartet. Und dann lassen wir sozusagen durch das ganze Programm, das war sozusagen die erste Herausforderung im Projekt, die erste große, lassen wir durch das ganze Programm alle möglichen Typen fließen, die potentiell fließen können. Und wir haben den Interpreter in einer Weise programmiert.
+
+00:51:25.193 --> 00:51:26.893
+<v SPEAKER_2>Was heißt das, dass die Typen fließen?
+
+00:51:27.413 --> 00:51:35.993
+<v SPEAKER_1>Das heißt, dass wenn du zum Beispiel eine Funktion hast, wieder, wir lassen den Parameter x rein fließen, also die Funktion hat einen Input, der heißt x.
+
+00:51:36.013 --> 00:51:38.353
+<v SPEAKER_2>Also es gibt ein Programm und das hat eine Funktion.
+
+00:51:38.373 --> 00:51:38.533
+<v SPEAKER_1>Genau.
+
+00:51:38.553 --> 00:51:39.653
+<v SPEAKER_2>Und das hat einen Parameter.
+
+00:51:39.673 --> 00:51:40.013
+<v SPEAKER_1>Genau.
+
+00:51:40.033 --> 00:51:40.373
+<v SPEAKER_2>Und dann?
+
+00:51:40.393 --> 00:51:57.613
+<v SPEAKER_1>Und nehmen wir an, diese Funktion kriegt den Parameter in Input x und returnt x plus 1. Dann macht unsere Analyse, ist ganz schlau, und schaut sich das an und sieht, aha, da kommt jetzt, bei dieser Funktion kommt ein Integer rein und es kommt dann ein Integer zurück.
+
+00:51:57.633 --> 00:51:57.933
+<v SPEAKER_2>Ja.
+
+00:51:57.953 --> 00:52:54.753
+<v SPEAKER_1>Das kann ich rausfinden. Das ist noch ein relativ simpler Fall. Nun sind aber die meisten Interpreter etwas komplizierter. Und das heißt, dann ruft zum Beispiel die Funktion f die Funktion g auf und die macht noch irgendwas und hat eine Schleife und so weiter. Und unser Analyseprogramm schaut sich das alles an und sieht halt, welche Typen an welchen Stellen auftauchen und kann dadurch quasi zu allen Variablen, die auftauchen, ich mache jetzt sozusagen ein bisschen die Kurzversion, findet dann sozusagen unser Programm raus, unser Metaprogramm, welche Typen da überall sind. Und damit habe ich jetzt erstmal festgestellt, in unserem Programm, was wir gerade analysieren, welche, ob das gerade eine Zahl ist oder ein String oder eine Liste von Zahlen und und und, an jeder Stelle des Programms da sind. Und dazu muss ich nicht irgendwo was Statisch deklarieren. Ich muss nur sozusagen irgendwo anfangen und sagen, hier fange ich jetzt das Programm an zu starten. Und von da aus macht unser Analyseprogramm, findet alles raus. Aber warum?
+
+00:52:54.933 --> 00:52:56.473
+<v SPEAKER_2>Ich meine, warum folgt ihr hinaus?
+
+00:52:56.553 --> 00:53:59.293
+<v SPEAKER_1>Der Punkt ist, wenn du das gemacht hast, dann kannst du sozusagen wieder zu den Funktionen zurückgehen. Und kannst, erstmal vereinfacht gesagt, kannst du dann mithilfe dieser Typen zum Beispiel eine C-Version generieren. Von dem Programm? Genau, von dem Programm, von diesen einzelnen Funktionen. Ganz so einfach ist es nicht. Da steckt eine ganze Menge noch zwischen. Aber vom Prinzip her, dadurch, dass du die Typen rausgefunden hast, das sind halt noch High-Level-Typen. Also zum Beispiel Listen und Dictionaries und solche Geschichten, die gibt es ja erstmal in Messemlern nicht. Auch nicht in C, genau. Das heißt sozusagen, das brechen wir dann runter. Das heißt, wir haben intern Graphen von alle möglichen, auch dieselben Graphen, die auch der GCC intern verwendet und so, also so Blöcke und Verzweigungen und alle möglichen Geschichten, wo wir sozusagen dann Algorithmen drauf laufen lassen können, die aus den hochleveligen Typen, die wir da haben, also so was wie Listen, dann bestimmte...
+
+00:53:59.313 --> 00:54:00.313
+<v SPEAKER_2>Atomare Typen.
+
+00:54:00.373 --> 00:54:26.633
+<v SPEAKER_1>Genau, bestimmte Atomare Typen generieren. Und die können wir wiederum, die sind wiederum in PyPhen geschrieben und getestet. Also sozusagen, es hat wirklich mehrere Ebenen, wie wir das dann runterbrechen. Und wir können das eben auf das Typ-System von JVM oder von.NET oder von C runterbrechen. Und C ist ja Low Level. Da hast du sozusagen, da hast du eben viel Integer und Pointer und diese ganzen Geschichten und Mallocks und all diese Geschichten. Bei JVM und.NET hast du das nicht. Die haben zum Beispiel Garbage Collection.
+
+00:54:26.653 --> 00:54:30.653
+<v SPEAKER_2>Aber was genau generiert ihr? Generiert ihr...
+
+00:54:30.673 --> 00:54:34.313
+<v SPEAKER_1>Wir generieren letztendlich den Code, den das Cargo irgendjemand braucht.
+
+00:54:34.333 --> 00:55:07.873
+<v SPEAKER_2>Das heißt, ihr macht aus einem Python-Programm ein C-Latten-Sound-Programm, damit das Python-Programm unter C-Latten-Sound für das System native läuft. Aber trotzdem eigentlich das tut, was man in Python sagt. Man schreibt quasi Python, aber man erzeugt, dass es in PyPy reingeschmissen wird, ein C-Latten-Sound-Programm, als hätte man C-Latten-Sound geschrieben. PyPy ist so eine General... Ja, ein Bubblefish für Programmiersprache.
+
+00:55:08.193 --> 00:55:19.733
+<v SPEAKER_1>Genau, so ist es gedacht. Weil das Programm, was man transformiert in diese verschiedenen Umgebungen, ist nicht irgendein Programm, sondern es ist eine Sprachimplementierung. Es ist nämlich eine Python-Implementierung wieder selbst.
+
+00:55:19.953 --> 00:55:22.633
+<v SPEAKER_2>Welche Sprachen könnt ihr denn so? Also C-Latten-Sound und was noch?
+
+00:55:22.653 --> 00:55:35.673
+<v SPEAKER_1>Also derzeit, was wirklich funktioniert, ist JavaScript ziemlich, also da passt die ECMA-Test-Suite ziemlich weitgehend mittlerweile. Also ein JavaScript-Interpreter.
+
+00:55:35.693 --> 00:55:38.833
+<v SPEAKER_2>Also JavaScript, was ja eigentlich ECMA-Script heißt.
+
+00:55:38.853 --> 00:55:49.093
+<v SPEAKER_1>Genau. Und Smalltalk bzw. Squeak. Smalltalk gibt es ja sehr viele verschiedene Varianten. Und da ist jetzt gerade eine neue Implementierung, die nennen wir dann Spy.
+
+00:55:49.113 --> 00:55:52.453
+<v SPEAKER_2>Das heißt, man kann aus Py's einen Smalltalk machen?
+
+00:55:52.473 --> 00:56:11.133
+<v SPEAKER_1>Ja genau, du kannst einen Smalltalk-Interpreter in dieser Python-Variante schreiben, die etwas restricted ist. Und kannst das dann transformieren in alle möglichen Target-Umgebungen. Wenn man sich jetzt mal an dieser Stelle mal kurz überlegt, was heißt das eigentlich? Wenn ich jetzt aus diesem einen Interpreter, diesem einem Source Code...
+
+00:56:11.153 --> 00:56:12.353
+<v SPEAKER_2>Also mit dem einen Interpreter...
+
+00:56:12.373 --> 00:56:15.633
+<v SPEAKER_1>Nehmen wir zum Beispiel einen Smalltalk-Interpreter, den wir jetzt gerade geschrieben haben.
+
+00:56:15.913 --> 00:56:17.813
+<v SPEAKER_2>Ich habe einen Smalltalk-Interpreter geschrieben?
+
+00:56:17.833 --> 00:56:23.953
+<v SPEAKER_1>Du hast einen Smalltalk-Interpreter geschrieben in Python. Also du nimmst sozusagen Python und kannst in dieser High-Level-Sprache jetzt einen Smalltalk-Interpreter schreiben.
+
+00:56:23.973 --> 00:56:26.573
+<v SPEAKER_2>Jetzt komme ich wieder durcheinander.
+
+00:56:26.593 --> 00:56:30.373
+<v SPEAKER_1>Genau, deswegen mache ich es auch extra, damit das klar wird, um was es da eigentlich geht.
+
+00:56:30.773 --> 00:56:38.813
+<v SPEAKER_2>Aber ich habe trotzdem doof Fragen, weil das mich ja verwirrt. Also ich schreibe jetzt ein Programm und das macht Tic-Tac-Tor. So, und das schmeiße ich jetzt in PyPy.
+
+00:56:38.833 --> 00:56:49.553
+<v SPEAKER_1>Genau, das ist in Python geschrieben auf jeden Fall. Oder in R-Python, wie wir das nennen. Das ist halt eine restricted Form, die wir auf diese Weise analysieren können. Da hast du nicht ganz so viele Freiheiten wie in Python, aber im Wesentlichen viele Sachen sind da.
+
+00:56:49.573 --> 00:56:51.993
+<v SPEAKER_2>Das heißt, manche Python-Programme chokern.
+
+00:56:52.013 --> 00:56:54.253
+<v SPEAKER_1>Das kann nicht alle Python-Programme sein. Das ist auch nicht das, was ich gedacht habe.
+
+00:56:54.273 --> 00:56:56.433
+<v SPEAKER_2>PyPy sagt manchmal irgendwie...
+
+00:56:56.453 --> 00:57:03.433
+<v SPEAKER_1>Zu dynamisch. Sagt es nicht wirklich. Die Fehlermeldungen sind weitaus...
+
+00:57:03.453 --> 00:57:07.853
+<v SPEAKER_2>Elaborierte, komplexer. Klingt intelligenter sozusagen.
+
+00:57:07.873 --> 00:57:21.653
+<v SPEAKER_1>Aber im Prinzip ist es sozusagen... Das Python-Programm, das wir verarbeiten können, ist halt hinreichend komplex, dass du darin so etwas wie Interpreter gut schreiben kannst. Also ohne dich jetzt um den Bein auszureißen oder so. Aber es gibt halt ein paar Sachen...
+
+00:57:21.973 --> 00:57:27.773
+<v SPEAKER_2>Wer muss jetzt einen Interpreter schreiben? Ich will ja keinen Interpreter schreiben. Ich schreibe ja irgendwie irgendwelche Programme.
+
+00:57:27.793 --> 00:58:01.693
+<v SPEAKER_1>Genau, aber du hast als User... Das muss man vielleicht mal klarstellen. Als User, der ein Python-Programm schreiben will... Als User von was? Du willst ein Python-Programm schreiben? Willst du jetzt einen Django oder eine Webseite machen? Willst du ein bisschen gucken, ein paar Videos und irgendwelche Geschichten zu machen? Dann machst du das halt im Python. Und dein Django oder Soap oder was auch immer läuft dann auf einem Python-Interpreter ab. Den haben wir generiert. Das heißt, du hast mit PyPy genau nichts zu tun. Du verwendest einfach einen Interpreter und nimmst z.B. unseren, weil er vielleicht irgendwie schneller ist. Oder irgendwie andere Features hast, die C-Python nicht hat.
+
+00:58:01.713 --> 00:58:05.393
+<v SPEAKER_2>Schneller für das jeweilige Target-Invalid? Genau.
+
+00:58:05.413 --> 00:58:52.573
+<v SPEAKER_1>Oder du nimmst es z.B., weil du aus irgendwelchen Gründen dich jetzt doch entschieden hast, alles auf.NET basieren zu lassen und die ganzen.NET Libraries auch noch verwenden willst. Und deswegen nimmst du halt eine Version, jetzt mal ein bisschen hypothetisch, ne? Nimmst du eine Version, die auf PyPy basiert. Aber dein PyPy-Programm weiß davon gar nichts. Das kann sozusagen genauso gut auf der Microsoft-Variante ablaufen, so vom Prinzip her wie auf unserer Variante. Und wenn es sozusagen unter... Du kannst es auch genauso dann unter CPython ablaufen lassen, von der Idee her wie unter PyPy. Das heißt, das, was PyPy da macht, hat mit dem End-User-Programm, also mit dem, was ein Entwickler an PyPy-Programmen macht, erstmal nichts zu tun. Was wir machen, ist, wir generieren, wir vereinfachen das Leben von Sprachimplementierern. Also die Leute, die Interpreter schreiben.
+
+00:58:52.593 --> 00:58:54.193
+<v SPEAKER_2>Für Python?
+
+00:58:54.213 --> 00:58:55.533
+<v SPEAKER_1>Nicht nur für Python, sondern generell.
+
+00:58:55.553 --> 00:58:55.913
+<v SPEAKER_2>Generell.
+
+00:58:55.933 --> 00:59:14.633
+<v SPEAKER_1>Also sozusagen, die irgendwelche dynamischen Sprachen implementieren wollen. Die können das jetzt machen. Die können sozusagen ihren Smalltalk-Interpreter auch in Python schreiben und können dann unser ganzes Framework benutzen, um damit das, was sozusagen sonst mühsam von Hand geschrieben werden muss, für jedes Target- Environment, automatisch zu generieren.
+
+00:59:14.653 --> 00:59:47.133
+<v SPEAKER_2>Verstehe, das heißt, wenn ich jetzt, sagen wir mal, so eine, wie nach dem das mal so scheint, eine Domainspecific Language generieren will. Also ich habe jetzt irgendwie, keine Ahnung, irgendeine Automatisierungs- Geschichte am Start, die vielleicht viel mit dem Netzwerk macht. Leute sollen in dieser Sprache programmieren und ich möchte aber auch, damit die nicht so viel lernen müssen, sollen die halt in so einer einfachen Sprache das machen, obwohl es etwas Komplexes ist. Jetzt möchte ich aber diese DSL, diese Domainspecific Language, die möchte ich jetzt in den unterschiedlichsten Environments laufen kriegen.
+
+00:59:47.153 --> 00:59:48.373
+<v SPEAKER_1>Damit die entwickelt das, genau.
+
+00:59:48.393 --> 00:59:50.173
+<v SPEAKER_2>Und dafür könnte man PyPy nehmen.
+
+00:59:50.193 --> 00:59:50.873
+<v SPEAKER_1>Genau.
+
+00:59:50.893 --> 01:00:01.393
+<v SPEAKER_2>Also PyPy ist nicht yet another Python-Compiler, wo man Python-Programme laufen lässt, sondern es ist ein Interpreter- Generator.
+
+01:00:01.413 --> 01:00:02.453
+<v SPEAKER_1>Genau.
+
+01:00:02.473 --> 01:00:04.613
+<v SPEAKER_2>Warum heißt er denn dann PyPy?
+
+01:00:04.633 --> 01:01:01.833
+<v SPEAKER_1>Na ja, das ist, irgendwie muss man ja anfangen mit, wir haben halt auf der Meldeliste einfach nachgefragt, was irgendwie interessante Namen sind, und haben es dann auf PyPy geeinigt, weil eben sozusagen erstmal Python in Python geschrieben wird, so als äußerstes Merkmal. Und diese Geschichte, wie ich jetzt beschreibe, dass du sozusagen so ein Metaprogramm hast, was eben alles analysiert, das haben wir ja auch erst am Laufe des Projektes alles so entwickelt und erforscht. Das gab es ja so in der Form nicht. Insbesondere noch einen Aspekt, den wir jetzt noch nicht erwähnt haben. Das Ganze würde so noch nichts richtig Neues sein. Also in der Forschungs-Community jedenfalls gab es das schon. Also einfach in der Scientific-Community gab es sowas schon. Nämlich auf Self und auch im Lisp wurde sowas schon gemacht. Aber was wir halt gemacht haben, ist, dass wir auch das, was in ganz vielen dynamischen Sprachen derzeit, auch in JavaScript, mit Mozilla ist das ein großes Problem, weil immer mehr in JavaScript läuft, oder in CPython, nämlich der fehlende Just-and-Time-Compiler, also die Speed, die du haben willst. Dynamische Sprachen sind wunderbar flexibel, wunderbar produktiv.
+
+01:01:01.853 --> 01:01:02.873
+<v SPEAKER_2>Und wunderbar langsam.
+
+01:01:02.893 --> 01:01:44.813
+<v SPEAKER_1>Genau. Und das ist sozusagen eine Geschichte. Unser Interpreter-Generator hat eben als Ziel, nicht nur für diese verschiedenen Plattformen zu generieren, die Interpreter, für eine Sprache, die du schreibst, also vor allen Dingen unser Python-Interpreter, aber es gibt eben auch andere, sondern auch einen Just-and-Time-Compiler zu generieren. Also auch hier wieder. Sun hat irgendwie so was wie fünf oder acht Jahre gebraucht, um ihren Just-and-Time-Compiler, um Java sozusagen einigermaßen schnell zu kriegen, von Hand. Und das generieren wir. Dann sozusagen wieder auf so einer Metaebene nehmen wir unseren Interpreter und können weitestgehend automatisch einen Just-and-Time-Compiler generieren für zum Beispiel die C-Target-Plattform.
+
+01:01:44.833 --> 01:01:55.013
+<v SPEAKER_2>Das heißt, meine Domainspecific Language, die ich jetzt irgendwie machen will, kann nicht nur interpretiert werden zur Laufzeit, sondern erzeugt auch, man kriegt auch gleich einen Compiler geschenkt.
+
+01:01:55.033 --> 01:02:37.213
+<v SPEAKER_1>Genau. Das heißt, er macht dann zur Laufzeit, während das Programm läuft, stellt es fest, dass irgendeine Schleife sehr oft aufgerufen wird in deinem User-Programm. Also du musst gar nichts wissen. Du lässt es einfach nur auf Interpreter ablaufen, deine Domainspecific Language. Du hast eine Schleife, wo immer dieselben Integers und sowas reinkommen. Dafür wird im Prinzip dann eine Maschinenversion generiert. Automatisch. Und das läuft dann sehr schnell ab. Bis hin zur C-Speed sozusagen. Und das ist eben sozusagen, dass man das zusammenbringt, diese Produktivität, in der ich irgendwie in einer hohen Programmiersprache programmieren kann. Und relativ, relativ, im Verhältnis zu vorher, automatisch einen schnellen Interpreter mit Just-in-Time-Compiler kriege. Das ist sozusagen das, was...
+
+01:02:37.233 --> 01:04:20.273
+<v SPEAKER_2>Ja, Just-in-Time. Also das ist natürlich, es ist ja wirklich, also das ist ja nun wirklich ein Thema weltweit. Alle wollen eigentlich High Level programmieren. Aber alle wollen natürlich auch schnelle Rechner haben, schnelle Programme haben. Gar nicht mal so sehr, dass sie irgendwie an sich schnell laufen, sondern gerade jetzt in Netzwerkzeiten, was wir natürlich jetzt erleben durch diese große Sache, es ist immer so die Skalierbarkeit solcher Systeme. Wie viele Web 2.0 Buden sind schon gegen die Wand gefahren worden, weil in dem Moment, wo sie dann mal wirklich auf irgendeiner populären Blogplattform mal heiß gelobt wurden, dann zehn Minuten später komplett zermarmelt wurden, weil einfach ihr Programm einfach nicht skaliert und einfach nicht mitgehalten hat. Das ist also Speed ist ein echtes Problem für alle. Jeder will natürlich schneller laufen. In dem Zusammenhang fällt mir dann ein interessantes Projekt ein, weil ich auch liebend gerne mal einen Podcast machen würde, wenn ich mal nur jemanden finde, der da wirklich kompetent zur Auskunft machen kann, nämlich die Low Level Virtual Machine, LLVM. Ein recht bemerkenswertes Projekt, wie ich finde, was auch so sehr schwer zu erklären ist, aber auch lange gebraucht, bis ich auch nur erst mal diesen Ansatz von Verständnis hatte, den ich jetzt glaube zu haben. Ich fasse es mal in meinen Worten zusammen. LLVM ersetzt genau dieses Subsystem, über das wir im Prinzip auch gerade gesprochen haben, gerade beim GCC, diese Bytecode-Generierung, dieses Problem, man will ein Programm übersetzen und dann will man es in eine Zwischenversion bringen, aus der man es dann wiederum in eine tatsächliche laufende Version für die jeweilige Architektur bringt, oder welches LVM man auch immer hat.
+
+01:04:20.293 --> 01:04:24.193
+<v SPEAKER_1>Und das dann möglichst optimieren kann anhand der Parameter, die zur Laufzeit wirklich durchfließen.
+
+01:04:24.213 --> 01:05:08.133
+<v SPEAKER_2>Genau, und das auch möglichst viel weiß über das Programm. Und dann haben wir auch schon, du hast ja jetzt schon erwähnt, so ihr analysiert Typen und so weiter. Also ihr versucht ja auch ein sehr hochleveliges Verständnis dessen zu erarbeiten, was dieses Programm macht. Und LLVM ist ja nun im Gegensatz zu dem, wie der GCC bisher funktioniert, sehr high level, weil es hat eine konkrete Vorstellung von Typen und so weiter. Und schafft so eine LLVM Runtime, die nach dem, was ich bisher gehört habe, sehr fix ist. Und dann eben auch sehr leicht adaptieren lässt auf andere Prozessoren. Ist das für euch auch, also wie siehst du jetzt PyPy im Vergleich zu diesem LLVM Ansatz? Und habt ihr da auch schon mal drüber nachgedacht, das zu verwenden?
+
+01:05:08.153 --> 01:06:24.793
+<v SPEAKER_1>Also vor uns ist LLVM einfach eines der interessantesten Target Environments. Also genauso, wir generieren auf der einen Seite ein C-Programm, was wir dann einfach kompilieren mit GCC. Aber wir generieren auch direkt LLVM-Code, LLVM-Assembler. Ah, das macht ihr auch. Genau, das haben wir schon. Also wir haben mit dem Chris Latner, der ist ja, das ist schon ein sehr interessantes Projekt, der ist jetzt gerade bei Apple und macht da auch Sachen. Und wir haben vor zwei, drei Jahren, kurz überlegen, was haben wir jetzt gerade, 2008 haben wir schon, ne? Jaja. Ich glaube 2006 haben wir das LLVM-Backend geschrieben. Dann hatten wir auch schon viel Kontakt mit ihm. Und das ist eigentlich seit her, soweit ich mich entsinne, ist es auch immer das schnellste Backend gewesen, was wir haben. Also das glaube ich immer noch. Und es ist vor uns eben, es hört schon so ein bisschen raus, es ist eben ein Backend. Also wir haben sozusagen, bei uns ist ein Frontend der Interpreter sozusagen, also mit der Schreibe. Dann ist unser ganze Translation-Toolchain. Und die hat eben, hat eben Backends. Eben jvm.net, C ist schon unser wichtigstes. Und LLVM auch. LLVM ist eben, weil sie auch besonders schnell ist. Und das heißt, wir haben auch, wir haben auch übrigens noch einen JavaScript-Backend. Aber das vertiefen wir jetzt mal nicht. Dann kann man dann die AJAX-Applikation generieren. Das ist auch noch ganz lustig.
+
+01:06:24.813 --> 01:06:51.073
+<v SPEAKER_2>Auch interessant, aber jetzt gerade mal, weil du die Performance angesprochen hast. Also ich schreibe jetzt irgendwie meine Domain-Specific-Language in PyPy. Und lasse es mal in C übersetzen. Und lasse es mal in LLVM-Backend machen. Und dieser Code ist ja auch prozessorunabhängig. Das heißt, kann irgendwie auf alle von LLVM unterstützten Plattformen übertragen werden. Wie viel schneller ist das jetzt im Vergleich zu dem C?
+
+01:06:51.193 --> 01:06:58.333
+<v SPEAKER_1>Also das letzte, was ich im Kopf habe, und das ist nicht ganz aktuell, sind, glaube ich, so was wie 10, 15 Prozent. Da kann das schon sein.
+
+01:06:58.353 --> 01:07:02.773
+<v SPEAKER_2>15 Prozent schneller? Das ist ja nicht jetzt Weltbewegung.
+
+01:07:02.793 --> 01:08:19.173
+<v SPEAKER_1>Wir machen auch nicht von LLVM jetzt irgendwie so total massiv. Nicht auf dem High Level. Weil auch die Interfaces, die... Also sozusagen LLVM ist nicht unbedingt dafür gedacht, mit sozusagen etwas zu interoperieren, was PyPy ist. Und für uns ist es eben so, dass wir nicht irgendwie scharf darauf sind, sozusagen auf ein Target-Environment zu gehen, sondern wir haben Interesse daran, auf CLA abzulaufen, auf den Common Language Runtime von Microsoft, um uns mit den ganzen Libraries zu integrieren zum Beispiel. Das heißt, wir werden nicht sozusagen alles jetzt durch LLVM pipen können. Das heißt, vor uns bleibt das erstmal sozusagen nur ein Target-Environment. Und es ist eben dann immer noch mal ein extra Speed-Vorteil, den wir kriegen. Es gibt sicherlich, wenn wir es mal irgendwie hinkriegen würden, es ist halt ein bisschen so, die LLVM Leute sind glaube ich einfach in Europa nicht so. Wir sind ein sehr europäisches Projekt. Also wir haben auch US-Leute dabei, aber wir treffen uns fast immer in Europa. Und es war ja auch ein EU-Projekt, als EU-Projekt gefördert und so weiter. Das heißt, wir haben auch versucht, dann LLVM Leute hier zu finden, die eben auch Interesse haben, um da mehr Integrationsgeschichten zu machen. Und das ist eben bisher nicht passiert. Das heißt, wir haben es bisher immer selbst gemacht, hatten guten Kontakt zu dem Chris Latner und so. Mal gucken, ob da in Zukunft noch irgendwas anderes passieren kann. Wenn es eine LLVM, europäische Community gäbe, wäre es sicherlich ein bisschen einfacher. Das Problem wirst du ja auch, wenn du jemanden suchst und nicht findest.
+
+01:08:19.193 --> 01:08:43.633
+<v SPEAKER_2>Ja klar. Du hast ja eingangs schon erwähnt, und das ist ja auch so eine Besonderheit des Projektes. Du hast dich relativ früh, nachdem das Projekt ein 1,5 Jahr alt war, oder so, um EU-Kohle bemüht. Das war erfolgreich. Du hast ja dazu auch mal einen Vortrag gehalten, zumindest auch auf dem Kongress. Ich muss auch nochmal erwähnen, wann war das jetzt nochmal?
+
+01:08:43.653 --> 01:08:47.353
+<v SPEAKER_1>2005 oder 2006 oder so.
+
+01:08:49.773 --> 01:08:52.453
+<v SPEAKER_2>Kannst du das nochmal kurz zusammenfassen, was du da gemacht habt?
+
+01:08:52.473 --> 01:10:31.953
+<v SPEAKER_1>Also wir haben halt erstmal uns, was wir achtmal getroffen haben, dann kamen wir auf den Gedanken, EU-Projekte zu beantragen, weil die auch gerade nach offenen Plattformen gefragt haben. Dann haben wir uns dann beworben, als eben freies Software-Projekt. Und haben halt eine Forschungs-Proposal vorgelegt. 70 Seiten, wo es eben vor allen Dingen, was sich halt viel dreht um diesen Just-in-Time-Compiler-Generator, weil das ist forschungsmäßig das Neue. Und natürlich auch nebenbei diese ganze Multiplattform-Geschichte, aus einem Source auf mehrere Plattformen zu gehen und die ganzen Implementation Details, Garbage Collection und so alles, erst beim Translation, erst bei dem wirklichen Transformieren zum Target and Viament hin zu bearbeiten, sodass die Sprache wirklich spezifiziert werden kann. Das haben wir sozusagen da alles beschrieben und das hat Zustimmung gefunden. Das heißt, wir kamen dann also in die Auswahlrunde und haben dann ein zweieinhalbjähriges Projekt gemacht. Das war natürlich eine ganz schöne Erfahrung, weil das waren dann acht Firmen, früher waren wir Einzelpersonen und ein EU-Projekt ist eben immer eine Geschichte, was von Organisationen gemacht wird, Universitäten oder Firmen. Das ließ dann zweieinhalb Jahre und in der Zeit ist aber auch die Community ganz gut gewachsen. Also wir haben die ganze Zeit über, es ist auch alles developer-driven gewesen immer. Also es ging immer alles von den Entwicklern aus und wir haben diese Sprints gehabt, das waren so die Rhythmusgeber von dem Projekt. Und das haben wir dann im Juni letzten Jahres erfolgreich abgeschlossen. Erfolgreich heißt, dass die EU das sozusagen per Review abgenommen hat und die Ergebnisse halt sehr gut fand. Und ja, damit haben wir dann sozusagen diese EU-Projektphase von zweieinhalb Jahren, die natürlich ein wesentlicher Katalysator war, weil man kann sich vorstellen, es hat schon eine ganze Menge Komplexität, mit all diesen Plattformen umzugehen und das alles so zu machen. Und dazu mussten wir schon, glaube ich, auch zwei Jahre Fulltime gefundet sein.
+
+01:10:31.973 --> 01:10:33.473
+<v SPEAKER_2>Wie heißt, wie viele Leute haben dann da gearbeitet?
+
+01:10:33.493 --> 01:10:48.633
+<v SPEAKER_1>Das waren, gefundet waren so, würde ich sagen, zu Best-Zeiten so was wie zehn Leute Fulltime und im Kern, ich weiß es nicht genau, sechs, sieben, acht Leute und auf den Sprints immer so was wie zwischen zehn und zwanzig, 25 Leuten, was für so ein Compiler-Projekt ganz gut ist.
+
+01:10:48.653 --> 01:11:12.673
+<v SPEAKER_2>Aber das Projekt lebt ja auch jetzt noch, jetzt wo die EU-Kohle nicht mehr fließt. Da haben die sich sicherlich auch gefreut. Ich kann mir nicht vorstellen, dass das bei vielen anderen Projekten auch so der Fall ist. Was jetzt vielleicht nochmal hinterfragen muss ist, wer nutzt PyPy und was weißt du, was mit PyPy konkret auch gemacht wird?
+
+01:11:13.673 --> 01:12:05.513
+<v SPEAKER_1>Also ich würde sagen, dass jetzt, da raten wir auch, wir haben jetzt einen 1.0-Release gemacht letztes Jahr. Und jetzt ist es so langsam eine Diskussion für einen 1.1-Release. Also relativ langsamer Release-Schedule, wo man immer, man kann immer aus Subversion sich einfach die aktuellen Versionen holen. Der Punkt ist, dass jetzt produktiv wird PyPy nicht eingesetzt. Also sozusagen, es ist kein produktives Firmenprojekt, was es einsetzt. Es gibt halt viele, viele Leute, die sozusagen kommentarierend damit Projekte machen, also Subprojekte von verschiedenen Interpretern auch dem sehr stark folgen. Also es gibt eine große Community, die sehr interessiert ist. Und Guido von Rossum selbst, also der C-Python-Entwickler und der das auch weiterhin maintaint und so, der ist dem halt auch, hält auch eine ganze Menge davon. Und es ist halt so ein bisschen die Frage sozusagen, dass wir auch in die Richtung kommen, tatsächlich von eben auch C-Python wirklich ersetzen zu können, auch mal vielleicht in der Zukunft.
+
+01:12:05.533 --> 01:12:09.193
+<v SPEAKER_2>Also nicht nur dieses Restrikte Python zu fahren, sondern...
+
+01:12:09.213 --> 01:12:30.173
+<v SPEAKER_1>Genau, sondern sozusagen Interpreter zu haben, der sozusagen dann verschiedene Plattformen auch funktioniert, also insbesondere für die C-Plattform. Und sozusagen so gut ist, dass er dann eben als Substitut für C-Python verwendet wird. Und das ist dann halt... Das heißt, wir erwarten eigentlich so, dass wir immer noch eine ganze Weile irgendwie arbeiten müssen. Das tun wir aber auch motiviert. Dazu brauchen wir auch... Wir kriegen auch Funding mittlerweile ein bisschen. Von einer ungenannten Quelle.
+
+01:12:30.193 --> 01:12:32.413
+<v SPEAKER_2>Okay, ich frage nicht.
+
+01:12:32.433 --> 01:15:17.613
+<v SPEAKER_1>Wird aber in den nächsten Wochen wahrscheinlich ein bisschen publik werden. Und das heißt, es geht weiter und dann kommt halt irgendwann so der Point, wo es wirklich praktisch einsetzbar wird. Und dann wird es wahrscheinlich sehr verbreitet werden, in dem Sinne, dass man es dann eben für seine Applikationen tatsächlich... Für seine Python, für seinen Django, zum Beispiel für seine Django-Website oder so, kann man dann PyPy verwenden. Und hat vielleicht noch irgendwelche Vorteile davon. Schneller, was auch immer. Und dieser Punkt, wann der genau kommt, das ist halt noch die Frage. Wir sind gar nicht so scharf drauf, den jetzt allzu bald zu haben. Also es ist immer noch einiges zu tun, auch an Aufräumarbeiten und so. Weil, wenn das erstmal passiert, dann werden das plötzlich sehr viele User. Das ist relativ klar. Und noch ist es einfach so, dass wir an verschiedenen Teilen schauen müssen, dass wir auch in der Lage sind, Angebote zu machen, zum Beispiel, wie Leute, C-Libraries, die sie haben, vernünftig einbinden können. Das waren jetzt gerade die letzten Geschichten, die wir gemacht haben in den letzten Monaten. Dass wir also Methoden, Verfügung stellen, wie man Existierende C-Libraries einbinden kann. Du kannst dir vorstellen, C-Python ist gewachsen über so etwas wie 17 Jahre. Das heißt, da gibt es Tausende von C-Libraries, die Rapper haben, die du direkt in C-Python verwenden kannst. Und das heißt, die allermeisten Applikationen, die es gibt, die brauchen auch solche C-Libraries. Viele von denen verwenden halt irgendwas, weil das ist ja genau der Vorteil auch. Und das heißt, zwar ist unser PyPy-Interpreter kompatibel zu C-Python, was die Sprache angeht. Aber was die ganzen Einbindungen von externen Libraries angeht, da ist immer noch einiges zu tun. Und das ist halt durchaus auch ein Feld, das ist nicht so ganz trivial. Das hat zum Beispiel auch Interferenzen mit Garbage Collection. Also sprich, wenn du zum Beispiel irgendwelche Objekte, wenn du Calls machst an C-Libraries und C-Libraries zum Beispiel einen Callback brauchen, dann ist das plötzlich etwas, was bei uns festgehalten ist, weil es ist ja dann ein Callback, wo die C-Library einfach direkt hincallen will. Und wir haben aber zum Beispiel einen Moving Garbage Collector, das heißt ein Garbage Collector, der auch mal einfach ein Objekt von irgendwo nach irgendwo hin verschiebt, weil es sozusagen optimiert. Das darfst du natürlich da nicht machen. Und da gibt es halt viele Details, wo man noch gucken muss, wie man das genau macht. Das passiert aber gerade. Und dann sozusagen, wir sind jetzt gerade dabei sozusagen so ein Modell zu haben, wie Leute wirklich gut Extension Modules machen können. Und das ist denke ich der entscheidende Faktor. Das heißt, wir haben jetzt momentan noch keine User, sind auch nicht so scharf drauf, solange wir diese Sachen nicht geklärt haben. Weil es einfach, diese Probleme müssen gelöst werden tatsächlich in der praktischen Welt. Das sind forschungsmäßig, also ein MOU Projekt hat das keine Rolle gespielt. Weil die interessiert nicht so sehr. Für die Forschung ist es nicht so wichtig, ob diese Details sozusagen...
+
+01:15:17.633 --> 01:15:19.053
+<v SPEAKER_2>Ob das wirklich benutzt wird.
+
+01:15:22.733 --> 01:15:51.993
+<v SPEAKER_1>Ja, ich denke, das Wichtige ist bei uns einfach, dass wir motiviert dabei bleiben. Also haben wir Lust auf das Projekt, sind wir sozusagen von dem, was da passiert, und finden wir auch Leute, die unsere Reisen ein bisschen finanzieren und solche Geschichten. Und das funktioniert gerade. Wir haben auch gerade noch ein neues Projekt beantragt, bei der EU. Kann sein, dass das auch durchkommt. Das ist noch mal sozusagen eine Weiterentwicklung von diesem Just-in-Time-Compiler. Und noch andere Geschichten auch in Aussicht. Und diese Motivation und sozusagen, dass es genügend Leute gibt, die das weiterentwickeln, ist erstmal für uns das Wichtigste. Nicht die Anzahl der User insgesamt gerade.
+
+01:15:52.013 --> 01:16:20.973
+<v SPEAKER_2>Also ich bin jetzt ein bisschen überrascht, weil einerseits ist es halt noch ein Projekt, was seit kurzem irgendwie eins-null ist. Es ist ja nun auch in seinem eigentlichen Ansatz nämlich jetzt sozusagen für solche eigene Sprachenentwicklung bereitzustehen. Das ist ja nun wirklich nichts, was in der breiten Masse gebraucht wird, auch wenn es da Interesse gibt. Aber wie kommt es, dass dann so auf einmal Leute aus dem dunklen Hintergrund kommen, die das irgendwie fanden? Also was ist sozusagen das Versprechen des Projektes, was sie interessiert?
+
+01:16:21.553 --> 01:16:24.673
+<v SPEAKER_1>Also ich denke, Speed und Maintainability.
+
+01:16:24.693 --> 01:16:25.933
+<v SPEAKER_2>Für Python?
+
+01:16:25.953 --> 01:16:26.793
+<v SPEAKER_1>Erstmal für Python, klar.
+
+01:16:26.813 --> 01:16:33.853
+<v SPEAKER_2>Also das ist sozusagen das Potenzial, was in dem Projekt drin steht, was sich letzten Endes wieder für die gesamte Python-Community auszahlen kann.
+
+01:16:33.873 --> 01:16:53.833
+<v SPEAKER_1>Genau. Aber es gibt natürlich auch andere Geschichten, zum Beispiel der JavaScript-Interpreter ist halt so eine Sache, wo wir sicherlich jetzt auch gerade mal dabei sind, ein bisschen zu gucken bei Mozilla, weil die auch Interesse haben, soweit wir das gehört haben, irgendwie Python einzubinden und auch JavaScript zusammen mit Adobe irgendwie just-in-time-fähig machen wollen. Also das ist nochmal eine eigene Architektur, die sie machen.
+
+01:16:53.853 --> 01:16:57.733
+<v SPEAKER_2>Also Python einbinden im Sinne von, dass man im Browser auch Python verwenden kann.
+
+01:16:57.753 --> 01:17:16.193
+<v SPEAKER_1>Genau. Das ist glaube ich eine Idee. Und dann geht es halt um die Frage sozusagen JavaScript schnell zu kriegen. Und da könnte sich das herausstellen, dass sozusagen unser JavaScript-Interpreter mit der Infrastruktur, die wir haben, die wir generieren können, sozusagen viel performanteres Ding generieren kann einfach.
+
+01:17:16.213 --> 01:17:22.913
+<v SPEAKER_2>Dass man sozusagen in Python einen JavaScript-Interpreter schreibt. Also für JavaScript selber.
+
+01:17:22.933 --> 01:17:23.673
+<v SPEAKER_1>Genau.
+
+01:17:23.693 --> 01:17:26.153
+<v SPEAKER_2>Der dann mit PyPy genau.
+
+01:17:26.173 --> 01:17:27.093
+<v SPEAKER_1>Gebubblefischt wird.
+
+01:17:27.113 --> 01:17:30.733
+<v SPEAKER_2>Gebubblefischt wird und dann in welcher Sprache auch immer rausgespuckt wird.
+
+01:17:30.753 --> 01:17:42.993
+<v SPEAKER_1>Genau. Zum Beispiel in C und C++, wie das halt in... Also sozusagen das wäre halt das ist sozusagen eine Anwendungsgebiet, was jetzt nicht direkt nur für die Python-Welt interessant wäre.
+
+01:17:43.193 --> 01:18:13.133
+<v SPEAKER_2>Okay. Und dieser Ausblick, um es nochmal zusammenzusammeln, und dieser Ausblick, was du erwähnt hast, dass der Guido von Rossum irgendwie meint, okay, das wäre jetzt auch sozusagen für die Zukunft von Python selber als Ersatz für... Das betrifft ja sozusagen nur diesen Interpreter-Teil von PyPy. Nicht das ganze PyPy an sich, sondern eben sozusagen nur diese Fähigkeit, überhaupt die Sprache Python selber zu verstehen und zu analysieren und damit ja dann auch für Python einen effektiveren Code zu erzeugen. Genau. Und nicht für irgendeine andere Sprache, die ich selber erfahre.
+
+01:18:13.153 --> 01:18:40.433
+<v SPEAKER_1>Ja, für unseren Python, also sozusagen der, was interessant ist, sind die generierten Python-Interpreter letztendlich. Der End-User würde PyPy gar nicht sehen, sondern er würde sozusagen, also der End-User in Anführungszeichen, der End-User ist bei uns noch nicht der Developer. Der kriegt sozusagen dann die Binaries auf den verschiedenen Plattformen. Das sind dann Python-Interpreter. Da ist dann kein PyPy dabei mehr. PyPy wurde nur verwendet sozusagen, um das so zu beginnen.
+
+01:18:40.453 --> 01:18:51.553
+<v SPEAKER_2>Eigentlich müsste ich da ja auch gar nichts mehr, ich meine, für PyPy müsste man ja auch gar nichts mehr dazu programmieren. Das ist ja in PyPy eigentlich schon alles drin. Also ich meine, wenn ich jetzt irgendwie JavaScript mache, dann muss ich ja schon noch selber irgendwie Code machen, der sozusagen mit dem JavaScript umgeht.
+
+01:18:51.573 --> 01:19:49.033
+<v SPEAKER_1>Es ist ein großer Unterschied. Also wir haben wirklich im Southcoach, wenn man guckt, haben wir auch in der Dokumentation sozusagen nochmal klar gegliedert, hast du immer den Python-Interpreter. Das ist erstmal eine völlig eigene Geschichte und die ganze Translator Toolchain. Das ist dann im Directory PyPy-Strich-Translator und noch ein paar anderen. Und das sind wirklich völlig separate Geschichten. Also der Interpreter weiß von dem Translator null. Rein gar nichts. Da ist keine einzige Referenz, die darüber geht sozusagen. Der Translator weiß von dem Python-Interpreter natürlich mehr, weil er sich den anguckt, um ihn in die verschiedenen Target Environments zu transformieren. Und das heißt, der Translator ist aber so eine Art Metaprogramm, was sich den Python-Interpreter anguckt und transformiert und auf genau dieselbe Weise auch den JavaScript-Interpreter anguckt, der auch in Python programmiert ist. Also generell guckt sich unser Translator-Toolchain eben ein Python-Programm an. Aber dieses Python-Programm ist nicht irgendein Python-Programm, sondern es ist ein Interpreter.
+
+01:19:49.053 --> 01:19:51.313
+<v SPEAKER_2>Das Python-Programm war es Python-Interpretiert.
+
+01:19:51.333 --> 01:19:51.793
+<v SPEAKER_1>Genau.
+
+01:19:51.813 --> 01:19:55.073
+<v SPEAKER_2>Oh, feier ey. Da kann man sich aber ganz schön die Hirnwindung verdrehen.
+
+01:19:56.353 --> 01:20:08.793
+<v SPEAKER_1>Ich hoffe, dass wir mittlerweile, ich meine, es ist auch immer ein bisschen so, dass man ein bisschen braucht, selbst bei Entwicklern, also ich meine, versucht man, jemandem zu erklären, versucht man jetzt wirklich einen End-User, also der sozusagen gerade mal seinem E-Mail und Webbrowser, versucht man, denen das Projekt zu erklären.
+
+01:20:08.813 --> 01:20:54.913
+<v SPEAKER_2>Ich glaube, bis zu diesem Zeitpunkt sind in diesem Podcast sowieso nur die Programmierer übrig geblieben. Aber jetzt tackert es halt bei mir selber auch. Vor allem, also vielleicht mal so aus meiner Perspektive, was ich jetzt besonders bemerkenswert finde, ist, ihr erzeugt Code auf der Basis des Beobachtens von laufendem anderen Code. Das heißt, ihr lasst Programme einfach laufen, die eben selber Interpreter sind, die irgendeine Sprache interpretieren. Und ihr übersetzt sie in irgendeine beliebige andere Laufzeitumgebung, nur dadurch, dass ihr sie beim Laufen zuschaut. Und nicht, indem ihr den Source Code nimmt und irgendwelche Annahmen macht. Exakt.
+
+01:20:54.913 --> 01:21:02.213
+<v SPEAKER_1>Das ist ein ganz entscheidender, sehr gut zusammengefunden. Hab ich verstanden. Wir gucken eben nicht auf den Source Code.
+
+01:21:02.233 --> 01:21:04.073
+<v SPEAKER_2>Aber das ist ja richtig fancy.
+
+01:21:05.033 --> 01:21:06.673
+<v SPEAKER_1>Ja, das finde ich auch.
+
+01:21:06.693 --> 01:21:08.153
+<v SPEAKER_2>Dass das überhaupt funktioniert?
+
+01:21:08.173 --> 01:21:10.893
+<v SPEAKER_1>Ja, das finden wir auch sehr erstaunlich.
+
+01:21:10.913 --> 01:21:14.973
+<v SPEAKER_2>Ich meine, konntet ihr wirklich von Anfang an davon ausgehen, dass das klappt?
+
+01:21:14.993 --> 01:23:10.433
+<v SPEAKER_1>Nee, es war ein bisschen Experiment auf jeden Fall auch. Aber es gab verschiedene Geschichten, verschiedene Experimente vorher, die darauf hinwiesen, dass es prinzipiell geht. Die Frage ist halt, einzelne von diesen Geschichten wurden ja vorher gemacht, aber Python ist schon auch eine relativ komplexe Sprache, also von Multiple Inheritance und und und. Also viele Geschichten, die sozusagen da ablaufen, ein komplexes Typsystem und so. Und das dann eben alles hinzukriegen und gleichzeitig auch analysieren zu können. Also einerseits den Python-Interpreter zu schreiben, andererseits auch die Toolchain, die das analysieren kann. Das war erstmal nicht so klar. Aber da ist halt dieser Test-driven Ansatz, glaube ich. Der hat das halt gebracht. Wir haben immer erstmal Korrektheit vor Speed gehabt. Also wirklich ganz klar Knuth gefolgt, keine Premature Optimization. Also wir haben immer erst geguckt, dass die Sachen korrekt laufen. Das heißt, wir haben die Tests geschrieben, dass der Python-Interpreter tatsächlich in der Lage ist, Python-Code vernünftig zu interpretieren. Und dann haben wir Fragment für Fragment beim Übersetzen gecheckt, immer kleine Konstrukte, dass wir die korrekt übersetzen. Das heißt, wenn du das anguckst in der History, auch in der Commit-History, dann haben wir im ersten Jahr an allen möglichen kleinen Beispielen gearbeitet. Und dann kam irgendwann die Sprintwoche, nach zwei Jahren oder so was, da wurde dann eine Sprung gemacht von Programmen, die 800 Zeilen generiert sind, auf 1,3 Millionen. Und der Trick war, es lief einfach. Einfach so, zack. Weil die Tests sozusagen, alle Fälle, es war immer so, wir haben es versucht, es kam irgendein Problem, dann wurde das Problem wieder in einem Test gefasst, dann wurde erst mal dieses kleine Problem gefixt und immer so weiter. Bis wir dann sozusagen alle kleinen Probleme, Randprobleme uns so gelöst hatten. Und dann konnte man plötzlich plötzlich ein ganz großes Programm reingeben. Das heißt, der Sprung war dann sehr plötzlich. Und das war eben auch für uns natürlich überraschend, ein toller Durchbruch irgendwie. Und das ist sicherlich durch dieses Test-Driven passiert.
+
+01:23:10.453 --> 01:23:12.133
+<v SPEAKER_2>Könnt ihr denn beweisen, dass es funktioniert?
+
+01:23:12.633 --> 01:23:22.513
+<v SPEAKER_1>Nur in dem Sinne, dass die Tests sozusagen fehlerfrei durchlaufen und insofern nicht beweisen. Also im Sinne von formalen Methoden oder formal irgendwas zu beweisen, ist weit entfernt.
+
+01:23:22.533 --> 01:23:28.353
+<v SPEAKER_2>Was du eben noch gesagt hast, irgendwie, ihr geht mit Herrn Knut. Also gemeint ist der Knut, der auch Tech gemacht hat.
+
+01:23:28.373 --> 01:23:28.733
+<v SPEAKER_1>Genau.
+
+01:23:28.753 --> 01:23:30.553
+<v SPEAKER_2>Was hat der gesagt?
+
+01:23:30.573 --> 01:23:35.073
+<v SPEAKER_1>Premature Optimization is the root of all evil.
+
+01:23:35.093 --> 01:23:38.553
+<v SPEAKER_2>Vorzeitige Optimierung ist böse.
+
+01:23:38.573 --> 01:23:39.693
+<v SPEAKER_1>Die Wurzel allen Bösen.
+
+01:23:41.153 --> 01:23:42.973
+<v SPEAKER_2>Das hat er in welchem Zusammenhang gesagt?
+
+01:23:42.993 --> 01:24:50.753
+<v SPEAKER_1>In Bezug auf das Entwickeln von Algorithmen und Programmen. Also sozusagen, bevor man sich über Speed-Gedanken macht, sollte man erst mal seine Sachen korrekt hinkriegen und sich selbst sicher sein. Und dann, wenn man das sozusagen sicher hat, und das haben wir halt bei uns in Form von automatisierten Tests, dann macht man sich die Optimierung. Weil der Vorteil ist dann, die Optimierung, die ich dann mache, da kann ich durch die Tests immer sicherstellen, dass ich nicht irgendwas kaputt mache. Und ich habe halt erst mal, das Ding ist halt, wenn man vorzeitig Optimierungen macht und dann später feststellt, man muss, um irgendwas korrekt zu machen, doch nochmal irgendwas umstellen, dann kommt dir immer schon die Optimisierung in die Quere. Und wenn du erst mal sozusagen sicher bist, das, was ich jetzt tue, das sollst du tun, und jetzt ist mir das und das und das zu langsam, jetzt mache ich genau das schneller und füge da einen Cache ein, ist das viel gezielter. Und ich habe nicht irgendwie Optimierung überall in meinem Programm, weil ich meine, der Meinung bin, es könnte mal in Zukunft irgendwann vielleicht zu langsam sein. Und das ist halt gerade, wenn man, würde ich mal sagen, aus der C++-Welt kommt, da macht man sich unheimlich viele Gedanken über solche Geschichten, ob man jetzt irgendwie, ob seine Methoden virtual sind oder irgendwas und so, macht sich einfach Gedanken über Geschichten, die in der Realität nachher im Laufzeitprogramm einfach keine...
+
+01:24:50.773 --> 01:25:49.613
+<v SPEAKER_2>Wie der Name der Sprache ja schon sagt, C++, wie also, plus plus als das optimierte Incrementieren, als ob man nicht gleich C gleich C plus eins hätte schreiben können. Jetzt kriege ich wieder Stress irgendwie. Nach dem C++-Podcast wurde ich ja auch schon angeklagt. Ich würde ja C++ nicht mögen und so weiter. Was gar nicht stimmt, was überhaupt nicht wahr ist. Ich hatte nur irgendwie das Bedürfnis auch ein bisschen so. Ja, also es liegt mir nicht so, sagen wir mal so vom... Also für mich persönlich liegt es mir so nicht so. Aber es hat natürlich interessante Sachen. Bevor ich das jetzt vergesse, und dann können wir glaube ich auch die große Klammer um PyPy mal zumachen. Ich weiß nicht, ob wir das schon erwähnt hatten, aber ihr habt ja also innerhalb von PyPy, das ist normal, irgendwie aufzuspalten. Also wir haben diesen Python-Interpreter. Und dann haben wir irgendwie das, was eben dem...
+
+01:25:49.633 --> 01:25:51.353
+<v SPEAKER_1>Die Translation Toolchain, also die ganze Translation...
+
+01:25:51.373 --> 01:26:33.973
+<v SPEAKER_2>Genau, das was sozusagen diesem Ausführen des Programms zuschaut. Aber es gibt ja nicht nur den Python-Interpreter, sondern es gibt auch noch andere Sprachen, denen auch zugeschaut werden kann, dass sozusagen auch schon fertige Interpreter für neue Sprachen macht. Da ist dabei... Was war das? JavaScript. Also es gibt sozusagen einen in Python geschriebenen JavaScript-Interpreter, den sich PyPy zur Laufzeit anschaut und daraus einen Interpreter in beliebigen Environments machen kann, um es nochmal zusammenzufassen, weil es ist so komplex, das muss man echt immer wiederholen. Smalltalk und Prologue. Das ist ja echt eine wilde Mischung. Könnten aber jetzt auch noch beliebig mehr sein. Sind die groß? Wie viel Code ist das? Wie viel Code braucht man, um einen JavaScript-Interpreter zu machen?
+
+01:26:33.993 --> 01:26:39.493
+<v SPEAKER_1>Auf jeden Fall deutlich weniger als einen Python-Interpreter. Da müsste ich einen Count machen. Ich weiß es gerade nicht genau.
+
+01:26:39.513 --> 01:26:45.193
+<v SPEAKER_2>Mach doch mal einen Count, weil ich habe nicht die geringste Vorstellung, wie komplex das sein mag.
+
+01:26:45.293 --> 01:26:47.773
+<v SPEAKER_1>Du meinst zum Beispiel, wie groß der...
+
+01:26:49.053 --> 01:26:54.013
+<v SPEAKER_2>Wie viel Code muss ich erzeugen, um in Python einen JavaScript-Interpreter zu schreiben?
+
+01:26:54.033 --> 01:27:19.453
+<v SPEAKER_1>Wenn ich es nicht völlig falsch sehe, dann ist der JavaScript-Interpreter im Range von 3.000 Zeilen. Du hast sozusagen, weil du eine High-Level-Sprache machst, und du hast hier noch kein DOM drin, also noch keine Browser-Integration in irgendeiner Form. Das schwierigste Problem, das wir, glaube ich, haben, ist irgendwie diese Optional-Semicolon-Insertion. Die ist erstaunlicherweise echt komisch.
+
+01:27:19.473 --> 01:27:32.593
+<v SPEAKER_2>Dann schon lieber Indentation, oder? Sowas hasse ich auch wie die Pest. Dass man irgendwas hinschreiben kann oder nicht, das macht echt keinen Spaß. Dann sind wir wieder bei HTML. Ja, mach das Tag auf.
+
+01:27:32.613 --> 01:27:48.913
+<v SPEAKER_1>JavaScript sind ungefähr 3.000-4.000 Zeilen. Smalltalk sind 6.000 Zeilen. Dann Smalltalk.
+
+01:27:48.933 --> 01:27:50.113
+<v SPEAKER_2>Da bin ich ja jetzt mal gespannt.
+
+01:27:50.133 --> 01:27:58.333
+<v SPEAKER_1>Ich bin aber nicht im Branch. Das weiß ich gerade nicht genau. Das sind hier gerade sowas auch wie 3.000. Aber der Branch ist wesentlich weiter. Da weiß ich nicht genau, wo das ist. Hab ich gerade nicht ausgecheckt.
+
+01:27:58.353 --> 01:28:00.053
+<v SPEAKER_2>Ah, du bist nicht im Branch.
+
+01:28:04.313 --> 01:28:34.253
+<v SPEAKER_1>Wobei, um es ganz klar zu sagen, der Python-Interpreter ist schon der, um den es geht. Genau. Und die anderen Geschichten werden auch weiterentwickelt. Gerade diese Squeak-Geschichte läuft jetzt gerade in Berlin auf dem Sprint. Also Squeak Smalltalk. Und das ist schon auch zu erwarten, dass das auch produktiv werden kann. Aber ich denke, das nächste, was unser Hauptziel ist, ist, diesen Python-Interpreter erstmal wirklich unter die Leute zu bringen.
+
+01:28:34.273 --> 01:28:41.793
+<v SPEAKER_2>Mit dem... also ich meine, was ist so das Tollste, was du dir vorstellen kannst, was aus diesem Projekt mal wird?
+
+01:28:41.813 --> 01:29:48.333
+<v SPEAKER_1>Naja, es ist im Prinzip eine Architektur und sozusagen ein Environment, was in gewisser Hinsicht eine Alternative zu den Ansätzen von JVM und.NET darstellt. Also sprich, es ist eine Infrastruktur, um dynamische Sprachen oder auch Gaming-Engines oder andere Geschichten zu implementieren und eben schnell zu kriegen. Und nur noch einen Source Code zu haben. All diese Sprachen haben das Problem, hat die Ruby genauso, all diese PHP und so weiter. Wenn du das haben willst auf der Java-Plattform oder auf.NET, dann musst du überall verschiedene Implementierungen haben. Das macht dann auch die Sprache weiterzuentwickeln sehr schwierig. Also wir wollen einfach dahin, dass wir eine Infrastruktur haben, um Dynamische Programmiersprachen, also eine offene, Open Source, die keiner Firma gehört oder irgendwas, in der solche Sprachen gemacht werden können und effizient übersetzt werden können in verschiedenen Tageplattformen. Das heißt, wir haben kein Interesse selbst, eine standardisierte Plattform zu sein, wo alle hin müssen. Und alle müssen sich uns durch oder so. Aber natürlich gibt es in dem Sinne eine Standardisierung, dass du halt, das liest es sich aber auch noch mal in Zukunft irgendwann, wenn Leute dazu Lust haben, anders machen, dass man eben sich nicht nur Python-Programme angucken kann, sondern auch andere. Weil wir haben ja sozusagen wirklich, das sind ja auch so ein bisschen Vorhörsergebnisse.
+
+01:29:48.353 --> 01:29:50.413
+<v SPEAKER_2>Aber ihr zwingt alle Python-Programme?
+
+01:29:50.433 --> 01:30:27.453
+<v SPEAKER_1>Genau. Auf der Interpreter-Ebene. Ich meine, dann nachher, was die allermeisten Leute programmieren, sind dann die Sprachen einfach. Und es ist einfach so, wir haben das von einem Professor, der zum Beispiel auch Smalltalk und so was gemacht hat. Der hat gesagt, naja, natürlich würde ich 10-mal das vorziehen, hat auch unser Reviewer bei der EU gesagt, ich würde das natürlich auf jeden Fall vorziehen, in Python meinen Interpreter zu schreiben, als in C. Weil in C habe ich sozusagen eine ganz andere Liga mit Grammage Collection und so, was ich da schreiben muss. Also sprich, nicht gezwungen zu sein, das in C zu machen, sondern in Python. Okay, man ist gezwungen, das in Python zu machen, hat natürlich auch viele Vorteile davon. Man würde es vielleicht lieber in seiner Heimsprache machen.
+
+01:30:28.193 --> 01:30:30.593
+<v SPEAKER_2>Das eigene ist immer das Beste, das ist klar.
+
+01:30:30.613 --> 01:30:48.433
+<v SPEAKER_1>Und es ist auch nicht so, wir haben sozusagen mittlerweile, würde ich sagen, auch eine recht differenzierte Sicht. Also wir sind nicht so die absoluten Python-Freaks, sondern es gibt auch viele andere Sprachen. Das liegt auch an der Natur des ganzen Projektes. Es ist wieder nicht so, wir sind da ziemlich tolerant und so. Es ist nicht einfach, dass wir jetzt meinen, alle müssen Python machen unbedingt. Das ist halt das, was momentan funktioniert.
+
+01:30:50.233 --> 01:30:58.873
+<v SPEAKER_2>Ja, fein. Ich hoffe, dass wir, das war, das war echt ein harter Ritt jetzt. Aber ich habe das Gefühl, dass ich so ein bisschen verstanden habe.
+
+01:30:58.973 --> 01:31:01.193
+<v SPEAKER_1>Ja, du bist der Erste, der das richtig verstanden hat.
+
+01:31:01.213 --> 01:31:02.453
+<v SPEAKER_2>Das ist nicht dein Ernst.
+
+01:31:02.473 --> 01:31:11.593
+<v SPEAKER_1>Nein. Nein, aber zumindest im ersten Gespräch. Das ist nicht so ganz einfach, sozusagen die ganzen Geschichten an verschiedenen Interpretern und so.
+
+01:31:12.013 --> 01:31:14.713
+<v SPEAKER_2>Wer weiß, ob ich es wirklich verstanden habe. Vielleicht tu ich ja nur so.
+
+01:31:15.573 --> 01:31:17.613
+<v SPEAKER_1>Aber darum geht es ja noch.
+
+01:31:17.633 --> 01:32:06.353
+<v SPEAKER_2>Das überlassen wir jetzt mal den Hörern. Habt ihr es verstanden? Das ist eine gute Frage. Und wie immer sollt ihr dazu natürlich auch Feedback geben. Diesmal vielleicht noch gefragter als sonst in unserem Blog. blog.chaos.radio.cc.cde oder auch diskret per E-Mail. E-Mail sollt ihr immer nur benutzen, wenn ihr was habt, was die anderen nicht lesen sollen. Wenn ihr wirklich mal einen produktiven Kommentar habt, dann haut das gleich ins Blog. Das ist immer super, dann können die anderen alle gleich mitlesen. Bevor ich jetzt hier meine Abschlussrede halte, Holger, haben wir noch irgendwas Wichtiges vergessen, was man noch erwähnen sollte. Vielleicht, ah so, Lizenz von dem ganzen Kram? MIT, BSD. Und sucht ihr noch Leute? Und was sollten diese Leute können oder wollen?
+
+01:32:07.373 --> 01:32:32.493
+<v SPEAKER_1>Also so zum Beispiel Leute, die sich irgendwie mit verschiedenen Plattformen auskennen und irgendwie Lust haben, da sozusagen das Für Backends. Genau. Das ist auch ein sehr guter Weg, um da einzusteigen. Das hat man nicht gleich mit der ganzen Komplexität. Fast alle Leute sind bei uns auf diese Weise eingestiegen, über Backends. Und da gibt es immer irgendwie Sachen zu machen. Man kann auch ein neues Backends schreiben, zum Beispiel jetzt für die Tamarin-Plattform von Adobe oder so. Oder da kann man sehr gut einsteigen und Tamarin-Plattform von Adobe?
+
+01:32:32.513 --> 01:32:33.753
+<v SPEAKER_2>Was ist das, dieses R oder was?
+
+01:32:37.653 --> 01:32:46.733
+<v SPEAKER_1>Nee, das ist deren auch Virtual Machine, die Adobe hat für Action-Script und für JavaScript und solche Geschichten. Und das bieten die jetzt ja irgendwie Mozilla an, damit die das einbauen und so.
+
+01:32:46.753 --> 01:32:48.733
+<v SPEAKER_2>Hatten sie sich da nicht darauf geeinigt, dass sie das machen?
+
+01:32:48.753 --> 01:32:52.573
+<v SPEAKER_1>Ja, genau. Aber ich weiß nicht ganz genau, wie weit die wirklich sind. Da gibt es da schon noch diverse...
+
+01:32:52.593 --> 01:32:53.613
+<v SPEAKER_2>Jetzt machen wir nicht noch einen Fass.
+
+01:32:54.753 --> 01:33:03.313
+<v SPEAKER_1>Genau. Also so was zum Beispiel, also Backends zu machen. Ja, ich muss mal überlegen.
+
+01:33:03.333 --> 01:33:07.273
+<v SPEAKER_2>Das ist super für Informatik-Studenten, die sich eigentlich sowieso gerade mit Kontilerbau und Interpreter und so weiter.
+
+01:33:07.293 --> 01:33:25.213
+<v SPEAKER_1>Da kriegen wir auch mal wieder Leute. Wir haben sozusagen auch so ein bisschen so eine, ich will nicht sagen, PhD-Fabrik, aber auf jeden Fall gibt es da beliebig viele Anknüpfungsthemen, wo man halt auf allen möglichen Ebenen bei Prolog irgendwas zu machen, was man vorher nicht machen kann. Man kann eben auch in einer Sprache sozusagen schnell mal irgendwelche Features machen und dadurch an denen halt forschen.
+
+01:33:25.233 --> 01:33:35.593
+<v SPEAKER_2>Und vor allem, man kann mal auch eben schnell ein Interpreter in Python schreiben, für eine ganz neue Sprache, die experimentell ist und hat auch noch gleich den Benefit, dass man eben sofort diverse Runtimes targeten kann.
+
+01:33:35.613 --> 01:33:40.453
+<v SPEAKER_1>Genau. Das ist ungefähr jetzt auch, denke ich, vor Unis wird es auch zunehmend interessanter.
+
+01:33:40.473 --> 01:33:43.173
+<v SPEAKER_2>Haben wir diese Runtimes eigentlich schon alle aufgezählt?
+
+01:33:43.193 --> 01:33:43.833
+<v SPEAKER_1>Ich denke schon.
+
+01:33:43.853 --> 01:33:58.653
+<v SPEAKER_2>Also wir haben sie so ein bisschen erwähnt. Also vielleicht nochmal zusammenfassen. Ihr könnt nach.NET, ihr könnt nach JVM, Java, ihr könnt Zlane C machen und ihr könnt LLVM machen. Und spätestens damit und mit dem C-Teil ist eigentlich sowieso fast alles zu erreichen.
+
+01:33:58.673 --> 01:34:10.253
+<v SPEAKER_1>Genau. Aber wenn du zum Beispiel jetzt konkret irgendwas generieren willst, in so einen Mozilla-Browser rein, hast du natürlich auch ein anderes Problem. Das ist ja auch ein eigenes in Wireman. Mozilla ist ja ein eigenes Betriebssystem.
+
+01:34:10.713 --> 01:34:14.273
+<v SPEAKER_2>Aber da könnte man sich ja dann irgendwie anbringen und dann gleich das Backend erstmal schrauben.
+
+01:34:14.293 --> 01:34:32.333
+<v SPEAKER_1>Genau. Ich glaube, das ist auch eine Sache, was vor uns jetzt auch anliegt, ist einfach zu gucken, dass wir mit verschiedenen Communities ein bisschen in Kontakt kommen. Also da sind wir auch gerne ansprechbar. Weil da brauchst du einfach Expertise. Mit der richtigen Person am Computer machst du sowas an einem Tag und sonst bist du da wochenlang am rumbasteln, um irgendwas hinzukriegen.
+
+01:34:32.353 --> 01:34:38.353
+<v SPEAKER_2>Kann man dann auch irgendwie sich an eures Brinns mit dranhängen? Genau. Das wäre so ein Ort, das heißt, ihr habt permanent wechselnde Orte?
+
+01:34:38.373 --> 01:34:50.253
+<v SPEAKER_1>Genau. Wir sind jetzt das nächste Mal, glaube ich, im Juli in Litauen, in Vilnius. Und dann denke ich, wenn wir wahrscheinlich wieder irgendwie, was haben wir dann Juli, August, September, September, Oktober irgendwann wieder irgendwo ein bisschen mehr in Zentraleuropa sein.
+
+01:34:50.553 --> 01:34:54.653
+<v SPEAKER_2>Wie nimmt man mit euch Kontakt auf? Was ist so eure Webseite?
+
+01:34:54.673 --> 01:35:17.613
+<v SPEAKER_1>Ist pypy.org bzw. ist nicht so gut. Besser ist CodeSpeak, also codesspeak.net/pypyodereinfach in Google PyPy eingeben. CodeSpeak ist so ein Hosting-Site, auch eine freie, wo ich auch mit dabei bin, wo halt verschiedene Projekte, wo auch PyPy sozusagen ist. Im Prinzip ein Subversion-Repository und ein paar andere Sachen, was wir selbst administrieren.
+
+01:35:17.633 --> 01:36:10.033
+<v SPEAKER_2>Und ihr gammelt sicherlich auch in irgendeinem IRC rum? Genau. Wie soll es auch anders sein? Oder kann man in Kontakt treten mit euch? Und vielleicht mitmachen, wenn man Lust hat, auf PyPy, was mal ein wildes Projekt ist. Und ich freue mich sehr, dass wir hier mal die Zeit gefunden haben, das mal ausführlich zu beschreiben. Ich würde sagen, jetzt haben wir es beisammen. Oder? Ich denke auch. Jetzt brauchen wir nämlich mal eine Pause und ein neues Getränk. Und ich muss mal gucken, wo ich meinen Apfelsaft hingebracht habe, den ich am Anfang schon vermisst habe. Okay, vielen Dank, Holger, fürs Dasein und fürs Erklären. Und an euch natürlich vielen Dank fürs Zuhören, wie immer, bei Chaosradio Express. Und das war sie, die Ausgabe Nummer 88. Es wird nicht die letzte bleiben. Ich sage Tschüss, habt noch einen schönen Tag. Und bis bald bei Chaosradio Express.

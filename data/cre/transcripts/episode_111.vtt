@@ -1,0 +1,1054 @@
+WEBVTT
+
+00:00:31.831 --> 00:01:57.231
+<v SPEAKER_1>Hallo, hier ist Chaos Radio Express, Ausgabe Nummer 111. Mein Name ist Tim Pritlove und ich begrüße euch zum CAA, das heute mal wieder auf Reisen ist. Mich hat es heute nach Köln verschlagen und hier in Köln möchte ich ein Thema aufgreifen, was auch schon ganz, ganz, ganz lange auf meiner Liste ist, weil es auch eines meiner Lieblingswerkzeuge ist. Trotzdem möchte ich jetzt hier nicht Auskunft geben, weil das wäre langweilig, sondern ich habe den Raimond Spekking dazu geladen. Hallo Raimond. Ja, du bist, um es mal gleich vorwegzunehmen, einer, der an MediaWiki mitentwickelt. MediaWiki ist eine Wikisoftware, wie der Name schon nahe liegt. Und ich denke mal, dass es auch eine Menge Leuten so bekannt sein dürfte, trotz alledem weiß es vielleicht auch nicht jeder. MediaWiki ist kurz gesagt die Maschine, die die Wikipedia treibt. Aber um die Wikipedia soll es jetzt gar nicht gehen, sondern eben explizit spezifisch um die Software dahinter, nämlich eben MediaWiki. Und bevor wir da vielleicht ins Detail schauen, würde mich natürlich mal ganz interessieren, was so eigentlich dein technischer oder sonst wie technikkultureller Hintergrund ist, der dich zu diesem Projekt geführt hat.
+
+00:01:58.651 --> 00:02:43.551
+<v SPEAKER_2>Also zu dem Projekt bin ich gekommen, also eigentlich bin ich zur Wikipedia gekommen, schon 2003 und im Lauf der Jahre bin ich dann immer weiter Richtung in die Hintergründe eingestiegen und bin seit zweieinhalb Jahren ungefähr dabei, an der, an MediaWiki selber herumzuschrauben. Angefangen mit einfachen Lokalisierungen der deutschen Sprache und mittlerweile bastel ich praktisch an allen Bestandteilen von MediaWiki herum, wo es gerade brennt oder was gerade interessant ist. Und ja, ich glaube, dass ich das einigermaßen kann, weil ich halt schon seit 20 Jahren programmiere.
+
+00:02:43.571 --> 00:02:46.551
+<v SPEAKER_1>20 Jahren? Und womit hast du da losgelegt?
+
+00:02:47.691 --> 00:03:05.011
+<v SPEAKER_2>Na ja, damals noch ganz einfach mit FoxPro, FoxBase, einfache Datenbanken. Und ja, damit habe ich angefangen. Basic, Pascal, aber das waren halt, mein Gott, das war noch länger, 20 Jahre her.
+
+00:03:05.031 --> 00:03:06.731
+<v SPEAKER_1>Du bist sozusagen durch alle Untiefen gegangen.
+
+00:03:06.931 --> 00:03:19.731
+<v SPEAKER_2>Jaja, angefangen habe ich in der Schule beim Commodore PET und mit dem Basic damals. Ja, ein paar Tage ist das jetzt her.
+
+00:03:19.731 --> 00:03:33.271
+<v SPEAKER_1>Und was hat dich denn jetzt sozusagen dann in Richtung MediaWiki geschlagen? Also was war jetzt sozusagen der Grund, dass du das machen wolltest?
+
+00:03:33.291 --> 00:05:00.471
+<v SPEAKER_2>Einfach das Bedürfnis, etwas besser zu machen, Fehler zu bereinigen. MediaWiki ist ja eigentlich genau wie die Wikipedia, eine Software, die nie fertig ist. MediaWiki wird ständig weiterentwickelt. Aktuell kommt die Version 1.14 raus. Und angefangen 2001, die Version kenne ich gar nicht mehr, muss ich gestehen, bin erst seit 2003 dabei und es gibt halt immer wieder Wünsche, die vor allem in der Wikipedia-Community entstehen, dass etwas verbessert wird, Fehler behoben werden, hier kommen Anregungen, dort neue Diskussionen und irgendwann dachte ich mir, ja, das kannst du doch auch programmieren, beziehungsweise irgendwann habe ich Einblick bekommen in die Software und denke mir, ja, okay, das Ganze ändern und dann habe ich erst angefangen, Patches zu schreiben, kleine Sachen, die habe ich dann in den Bacillus reingestellt und dann einfach gesagt, guck mal, das könnte man das so machen und nach einer Zeit, ein paar Wochen, Monate, ich weiß gar nicht mehr genau, habe ich dann von Brian, von dem Chefentwickler, den Zugang bekommen zum SVN, um direkt MediaWiki zu patchen, Das ist schon egal, ob jetzt kleine Sprachlokalisierung oder Extensions zu schreiben oder am Core herumzuarbeiten.
+
+00:05:00.491 --> 00:05:06.591
+<v SPEAKER_1>Wie viele Leute arbeiten denn so an MediaWiki mit?
+
+00:05:06.611 --> 00:05:42.731
+<v SPEAKER_2>Sehr unterschiedlich. Also am Core arbeiten so schätzungsweise konstant 10 bis 15 Leute mit. Dann gibt es noch einige Spezialentwickler, die sich nur für ihre eigenen Extensions verantwortlich fühlen und dort mitprogrammieren. Und dann gibt es noch eine ganze Reihe von Leuten, die Lokalisierung vornehmen. Aber das ist dann mittlerweile auch nicht mehr auf einer Programmierbasis, sondern auf einer Wikibasis. Ich denke, da kommen wir gleich noch mal zu. Also im Schnitt 10 bis 15 Leute, die mitarbeiten.
+
+00:05:42.751 --> 00:05:46.951
+<v SPEAKER_1>Und wie ist da so der Ton? Haben die sich alle lieb?
+
+00:05:48.191 --> 00:06:50.211
+<v SPEAKER_2>Meistens schon, doch. Man muss dazu sagen, die Leute haben sich alle lieb. Es wird auch gerne diskutiert. Aber das, was dann im Core bleibt oder in den Extensions bleibt, das Schlusswort hat Brian Wibber, Angestellter der Foundation. Der sagt, wo es langgeht. Und der sagt, das bleibt drin, das bleibt nicht drin. Oberste Prämisse bei der Entwicklung von MediaWiki ist immer, dass die Projekte der Wikimedia-Foundation, also Wikipedia, Wikisource, Wiktionary und so weiter täglich lauffähig sind. Weil wir haben in der Entwicklung eine kontinuierliche Entwicklung in MediaWiki. Das heißt, es wird laufend, wird weiterentwickelt und einmal die Woche, wenn alles gut geht, manchmal auch nur alle zwei, drei Wochen, wird die aktuelle Software dann auch live auf die Wikimedia-Server hochgespielt. Sodass Wikipedia laufend von den Updates profitiert.
+
+00:06:50.231 --> 00:06:56.511
+<v SPEAKER_1>Das heißt, es gibt regelmäßige Releases. Man kann jetzt schon vorher sagen, wann ein neues Release rauskommt.
+
+00:06:56.531 --> 00:07:20.351
+<v SPEAKER_2>Man muss unterscheiden zwischen dem Release. Das sind die Versionsnummern aktuell. Werd ist Release 1.14, Release Kandidat 1 rausgekommen. Die Wikipedia läuft allerdings selber schon mit Version 1.15 Alpha. Das heißt, wir haben immer für ein Vierteljahr eine Alpha-Version und die wird wöchentlich abgedatet. Das heißt, Wikipedia arbeitet ständig mit einer Alpha-Version.
+
+00:07:20.371 --> 00:07:20.711
+<v SPEAKER_1>Mutig?
+
+00:07:22.371 --> 00:07:33.931
+<v SPEAKER_2>Geht auch manchmal schief. Also jeder von uns hat es schon geschafft, die Wikipedia zum Stillstand zu bringen, weil Code durchgeflutscht ist, der nicht stabil war.
+
+00:07:33.951 --> 00:07:39.711
+<v SPEAKER_1>Aber das Gute ist natürlich, da gibt es viele Augen, die das befolgen und von daher kann man sich das auch trauen.
+
+00:07:40.031 --> 00:08:26.851
+<v SPEAKER_2>Ja. Es gibt innerhalb der Community, der Programmierer-Community, guckt jeder dem anderen auf die Finger, was für Code er einspielt. Und du fragst es gerade nach dem Tonfall, der ist eigentlich sehr freundlich. Wenn einer einen Fehler macht, entweder bügelt man ihn selber aus und sieht, der Fehler macht, korrigiert den einen vor, oder sagt dem anderen, die meisten sind über Chat-Ebeneinander die ganze Zeit verbunden. Du hast einen Fehler gemacht oder versteht das nicht, guck doch mal dahin. Wir haben jetzt seit ein paar Monaten auch eine eigene Extension laufen, die Code Review heißt, mit der jede Änderung noch mal reviewt bzw. Kommentare dazu abgegeben werden können von allen Leuten. Extension von MediaWiki.
+
+00:08:26.871 --> 00:08:36.071
+<v SPEAKER_1>Das heißt, ihr habt auch ein eigenes Wiki für die Entwicklung oder wo läuft das oder in der Wikipedia selbst?
+
+00:08:36.091 --> 00:08:56.711
+<v SPEAKER_2>Nein, kann man sagen, ein eigenes Wiki. Es gibt die Domain mediawiki.org, wo man sich auch die Software solche herunterladen kann. Und dort, das ist aber auch unser Wiki, in der der Code von allen Leuten gegen geprüft wird und angeschaut wird.
+
+00:08:56.731 --> 00:09:02.171
+<v SPEAKER_1>Und da gibt es dann die entsprechenden Extensions, die jetzt den eigentlichen Entwicklungsprozess als solchen begleiten.
+
+00:09:02.331 --> 00:09:03.611
+<v SPEAKER_2>Richtig, genau.
+
+00:09:04.991 --> 00:09:48.591
+<v SPEAKER_1>Ja, vielleicht bevor wir dann nochmal so in die technischen Abgründe der Software selber einsteigen, würde ich ganz gerne nochmal so ein bisschen herausarbeiten, was eigentlich jetzt so MediaWiki für den Anwender so besonders macht. Also ich kann das nicht so ganz verhehlen. Ich habe auch so, ich habe tatsächlich erst MediaWiki kennengelernt und bin dann dadurch eigentlich erst auf die Wikipedia gestoßen, langes Zehr, weil ich MediaWiki als ein System angesehen habe, was relativ stark gebrochen hat mit dem, was man bis dahin eigentlich als Wikisysteme für selbstverständlich erachtet hat.
+
+00:09:48.611 --> 00:10:52.531
+<v SPEAKER_2>Wie siehst du das so? MediaWiki hat den Vorteil, dass es eigentlich eine relativ einfache Syntax hat, mit der man Artikel schreiben kann, egal ob jetzt für Wikipedia oder wenn man in einem Firmenwiki ist. Die Syntax ist eigentlich ganz einfach. Wir haben, um ein Wort zu verlinken auf einen anderen Artikel, hat man zweieckige Klammern auf, Wort, zweieckige Klammern zu und schon hat man den Link erstellt. Danach kann man auch weiterschreiben, wenn ich jetzt als Beispiel das Wort Köln habe, Klammer auf, Klammer auf, Ecke, Klammer, Köln, Ecke, Klammer zu, Ecke, Klammer zu und ergänzen, er, sprich Kölner, das heißt, es wird mir verlinkt, das Wort Kölner wird angezeigt, aber der Link folgt dann nur auf Köln, auf die Stadt selber. Man kann natürlich auch auf Kölner verlinken, wenn man irgendwie die Eigenschaft der Kölner, aber in der Wikipedia ist es halt, dass man immer auf die Substantive verlinkt, in einer Regel.
+
+00:10:52.551 --> 00:11:17.431
+<v SPEAKER_1>Das heißt, es ist sozusagen für Schreibfaule auch, gibt es eine ganze Menge Hooks. Was ich damals als besonders empfunden habe, ist, dass es eigentlich das erste Wiki war, was ich kennengelernt habe, vielleicht gibt es ja auch noch ein anderes, aber bisher wüsste ich jetzt nicht, welches System das sonst gehabt hat. Eigentlich das erste Wiki war, was mit diesem typischen Camel-Case-Syntax Schluss gemacht hat.
+
+00:11:17.931 --> 00:11:22.091
+<v SPEAKER_2>Ja, mir fehlt jetzt auch etwas der Vergleich, muss ich gestehen, mit anderen Wikis.
+
+00:11:22.111 --> 00:11:25.431
+<v SPEAKER_1>Du bist sozusagen mit MediaWiki überhaupt erst gestartet in die Wikiewelt.
+
+00:11:25.611 --> 00:11:34.571
+<v SPEAKER_2>Kann man so sagen, ja. Ich verbringe doch so viel Zeit damit, dass man etwas links und rechts schauen, dann auch schon mal vergisst.
+
+00:11:35.591 --> 00:12:46.871
+<v SPEAKER_1>Ah, also ich will jetzt auch nicht für mich in Anspruch nehmen, dass ich alle Wikis kenne. Ich war bloß extrem glücklich, dass diese Camel-Case-Geschichte da fallen gelassen wurde, weil ich der Auffassung bin, dass so implizites Linken eine verdammt schlechte Idee ist. Insbesondere wenn man eine deutsche Enzyklopädie aufbauen möchte, dann ist das einfach der totale Tod. Aber hier und da sind mir auch ein paar Konzepte in anderen Wikis untergekommen, von denen ich auch meine, dass sie bei MediaWiki mal Berücksichtigung finden sollen. Gut, also die Syntax, das ist etwas, was du hervorstellst. Ich meine, so richtig unterschiedlich zu anderen Wikis, also im Prinzip kochen sie alle mehr oder weniger mit demselben Wasser. Ich meine, man schreibt es vielleicht ein bisschen anders, aber im Kern geht es halt darum, dass man eben die Seite schreibt und man schreibt halt dann den Markup, die Besonderheiten der Seite, wie zum Beispiel die Links oder Hervorhebungen, indem man eben irgendwelche Zeichen hinzufügt. Da sind sie ja alle irgendwie ähnlich. Und da sind dann die Entscheidungen von MediaWiki ebenso, wie MediaWiki das gemacht hat. Dann gibt es ja noch diese Geschichte mit den Namespaces. Was hat es denn damit auf sich?
+
+00:12:47.431 --> 00:14:13.531
+<v SPEAKER_2>Namespaces, auf Deutsch einfach Namensräume, sind unterschiedliche Ablagefächer für Informationen. In der Wikipedia kennt man einfach den Artikel-Namensraum. Das heißt, dort haben wir unsere enzyklopädische Information. Aber alles andere, was nicht direkt damit zu tun hat, wandert in ein anderes Namespace. Wir haben auf der einen Seite den Diskussionsnamensraum, der zum Artikel gehört. Auf der anderen Seite gibt es aber auch die Namensräume für die Benutzer. Jeder Benutzer hat ja seine eigene Benutzerseite. Das ist auch wieder ein Namensraum, Benutzer-Doppelpunkt. Die Namensräume sind dadurch gekennzeichnet, dass sie im Titel einen Doppelpunkt haben. Benutzer-Doppelpunkt, Raimond. Benutzer-Diskussion, Doppelpunkt, Raimond. Das ist wieder ein anderer Namensraum. Ich meine, Diskussionsseite für den Benutzer, Raimond. Projekt-Namensraum für projektspezifische Informationen. Den ganzen Diskussionskram, wie man Wikipedia organisiert. Oder wie man in Firmen irgendwas anderes organisiert. Hilfe gibt es auch noch. Help, einfach Doppelpunkt, Hilfe, Doppelpunkt. Für Hilfseiten. Man kann sich aber auch ganz beliebige Namensräume anlegen. Man kann auch so weit gehen, dass man Namensräume abschottet, dass man sagt, okay, Namensraum XYZ darf nur von bestimmten Benutzern beschrieben werden.
+
+00:14:13.551 --> 00:14:26.611
+<v SPEAKER_1>Ist das jetzt so eine reine Schreibkonvention, dass ich mir einfach irgendeinen Namensraum einfallen lassen kann, dann schreibe ich den da hin und wenn da irgendwie bla Doppelpunkt irgendwas steht, dann habe ich automatisch den Namensraum bla oder muss der explizit eingerichtet werden in irgendeiner Form?
+
+00:14:26.631 --> 00:14:49.951
+<v SPEAKER_2>Man kann bla Doppelpunkt irgendwas schreiben, dann ist es aber erstmal nur einen einfachen Artikel. Wenn man den als Namensraum definiert haben möchte, muss man ihn einrichten durch einen Eintrag in der Local Settings, in der Konfigurationsdatei von MediaWiki. Dort wird er mit dem entsprechenden zugehörigen Diskussionsnamensraum eingetragen. Dann ist er vorhanden. Erst dann ist er als Namensraum vorhanden.
+
+00:14:49.991 --> 00:15:01.451
+<v SPEAKER_1>Das ist aber jetzt, sagen wir mal, so technisch in der Datenbank, wird dann keine Modifikation vorgenommen, sondern es ist sozusagen nur das System weiß, dass es diesen Namensraum gibt und erst dann wird dieser Präfix als solcher auch besonders behandelt.
+
+00:15:01.991 --> 00:15:24.751
+<v SPEAKER_2>In dem Moment, wo der Präfix in der Konfiguration eingerichtet wird, guckt MediaWiki schon danach, dass es ein Namensraum ist und trägt ihn mit der zugänglichen internen Nummer in die Datenbank ein. Also es wird Namensraum, Nummer und dann der Titel von der Seite schon separat gespeichert.
+
+00:15:25.051 --> 00:15:40.891
+<v SPEAKER_1>Ah, ok. Das heißt, wenn ich dann irgendwie bla, doppelt Punkt, tralala schreibe, dann landet tatsächlich ein Artikel mit dem Namen tralala, aber mit einer anderen Namensraumnummer in der Datenbank. Richtig. Das heißt, ich muss den erst einrichten und dann kann ich anfangen zu schreiben?
+
+00:15:40.911 --> 00:15:44.271
+<v SPEAKER_2>Genau. Wenn man es andersrum macht, kann man auch machen.
+
+00:15:44.291 --> 00:17:31.751
+<v SPEAKER_1>Da muss man allerdings einen Skript drüber laufen lassen, der dann guckt, die alle einsammelt und entsprechend dann wieder einträgt in die Datenbank. Das heißt, die Namesräume sind eigentlich ein Vehikel, mit dem man sowohl für den Benutzer als auch für den Benutzer eine Art Metaebene schafft, dass man sagt, wir haben den Inhalt, aber dann haben wir auch noch Inhalt über den Inhalt. Richtig. Davon haben wir wiederum verschiedene Arten von Inhalt. Wir haben Hilfe erläutert, wie man damit umgeht. Der benutzte Benutzer ist die Benutzerin und das ist separat usw. Ja, das ist ja eigentlich eine tolle Sache. Ja, ist es auch. Wenn ich das so sagen darf. Es ist immer so schwierig zu trennen zwischen MediaWiki und Wikipedia. Trotzdem ist das ja mittlerweile mehr oder weniger, wie wohl definiert ist denn diese Trennung? Klar, es gibt ja auch beim Wikimedia-Projekt mehr als nur die Wikipedia. Die Selbststoffe wird ja für die ganze Latte von anderen Wiki-Box, Wiki-Quote, Wiki-Tralala usw. eingesetzt. Was eine besondere Stellung zu haben scheint, ist die Wikipedia Commons. Ist das, also da wo die ganzen Bilder, Töne, ich glaube mittlerweile auch Videos abgelegt werden, ist das auch irgendwie eine andere, also ist an diesem MediaWiki, was da betrieben wird, irgendetwas anders als an den anderen?
+
+00:17:32.691 --> 00:18:16.211
+<v SPEAKER_2>Nein, nein. Das ist eine ganz normale MediaWiki-Installation. Der einzige Unterschied ist darin, dass ein paar Parameter gesetzt sind, dass andere Wikis auf den Inhalt zugreifen können. Dass es also ein Shared-System ist, das seine Inhalte bereitstellt für andere Wikis. Ansonsten von der Konfiguration her ist es weitestgehend identisch. Es gibt ein höheres Limit für Bilder-Upload, Video-Upload, wie du schon gesagt hast. Es können bis zu 100 Megabyte Videos hochgeladen werden. Das kann man auf der deutschen Wikipedia zum Beispiel nicht hochladen. Man kann zwar Videos hochladen, aber nicht so große. Dafür ist definitiv nur Commons gedacht.
+
+00:18:16.231 --> 00:18:25.791
+<v SPEAKER_1>Und wie funktioniert jetzt die Integration zwischen den Wikis? Wie ist jetzt dieses zweite Wiki in ein erstes Wiki eingeblendet?
+
+00:18:26.831 --> 00:18:39.731
+<v SPEAKER_2>Sobald man einen Dateinamen eingibt in der deutschen Wikipedia und versucht ein Bild, das den Namen hat, xz.jpg, dann guckt...
+
+00:18:39.751 --> 00:18:42.171
+<v SPEAKER_1>Also auch hier gibt es erstmal einen neuen Namensraum.
+
+00:18:42.191 --> 00:18:57.431
+<v SPEAKER_2>Stimmt, der Namensraum heißt mittlerweile Datei, im englischen Pfeil Doppelpunkt. Bis vor kurzem hieß er noch Image bzw. Bild. Mittlerweile wurde er umbenannt, weil wir eben nicht nur Bilder haben, sondern eben Videos, Audios, BDFs.
+
+00:18:57.451 --> 00:19:03.731
+<v SPEAKER_1>Also umbenannt im Sinne von alle Artikel wurden umbenannt? Oder wurde nur der Namensraum umbenannt und dann ändert sich...
+
+00:19:03.751 --> 00:19:44.251
+<v SPEAKER_2>Es gibt Alias. Es gibt einen Alias für den Alten. Das heißt, man muss jetzt nicht alles anfassen, ändern. Aber er wurde schon richtig verschoben, das schon. Aber der... genau, da ist der Namensraum Pfeil bzw. Datei. So, und wenn ich jetzt ein Bild oder eine Datei allgemein einbinde in der deutschen Wikipedia, in der deutschsprachigen, dann guckt MediaWiki erst nach, habe ich die Datei lokal hochgeladen. Wenn die lokal vorhanden ist, dann wird diese auch bevorzugt.
+
+00:19:44.271 --> 00:19:46.831
+<v SPEAKER_1>Das heißt, es wird einfach nur nach diesem Dateinamen gesucht?
+
+00:19:46.851 --> 00:20:13.251
+<v SPEAKER_2>Ja, es kann passieren, bei ganz einfachen Dateinamen, hansschmidt.jpg könnte ein üblicher Name sein, dass der mehrfach vorhanden wird, mehrfach verwendet wird und dann wird halt die deutschsprachige Version bevorzugt. Wenn das nicht vorhanden ist, dann guckt die deutschsprachige Wikipedia, also die Installation von der deutschsprachigen Wikipedia in Wikimedia Commons nach, ob die Datei dort vorhanden ist und bindet die dann ein.
+
+00:20:16.371 --> 00:20:25.611
+<v SPEAKER_1>Das heißt, auch hier muss man sozusagen an die Konfiguration des Wikis ran und sagen, wenn eine Datei nicht hier ist, dann ist sie vielleicht in diesem Wiki.
+
+00:20:25.631 --> 00:20:26.311
+<v SPEAKER_2>Richtig.
+
+00:20:26.331 --> 00:20:51.051
+<v SPEAKER_1>Und nachgucken heißt, dass er dann einfach automatisch eine URL generiert. Und dann hat man so Glück. Also ich meine, wie kann denn das eine MediaWiki in dem anderen MediaWiki erfolgreich nachschauen? Also was heißt das? Guckt er da selber erst mal nach, ob die da ist? Und wenn es die gibt, dann blendet er das auch ein oder geht er da einfach von aus?
+
+00:20:51.571 --> 00:21:11.631
+<v SPEAKER_2>Im Wesentlichen schon, wie du sagst. Er guckt nach, ist die dort. Man trägt in der lokalen Konfiguration ein. Hey, ich habe ein Shared-Repositorium, in dem Fall Wikimedia Commons. Das hat eine URL, commons.wikimedia.org. Die trage ich in die Konfiguration ein.
+
+00:21:11.651 --> 00:21:13.831
+<v SPEAKER_1>Was heißt denn Shared-Repositorium?
+
+00:21:13.971 --> 00:21:19.111
+<v SPEAKER_2>Das ist ein gemeinsam genutztes Medienarchiv.
+
+00:21:19.131 --> 00:21:23.911
+<v SPEAKER_1>Aber die Bilddaten sind ja nicht in der Datenbank?
+
+00:21:23.931 --> 00:21:24.631
+<v SPEAKER_2>Nein.
+
+00:21:24.651 --> 00:21:26.411
+<v SPEAKER_1>Sondern das sind so Dateien?
+
+00:21:26.431 --> 00:21:27.531
+<v SPEAKER_2>Das sind nach wie vor Dateien.
+
+00:21:27.551 --> 00:21:37.171
+<v SPEAKER_1>Die werden also separat gespeichert. Der ganze Text, die ganzen Seiten, die befinden sich in der Datenbank. Aber alles, was irgendwie so dicke, fette, schwere Dateien sind, das liegt einfach separat.
+
+00:21:37.291 --> 00:21:37.771
+<v SPEAKER_2>Richtig.
+
+00:21:37.791 --> 00:21:40.011
+<v SPEAKER_1>Das heißt, das liegt auch auf diesem Commons-Server separat.
+
+00:21:40.031 --> 00:21:41.011
+<v SPEAKER_2>Richtig.
+
+00:21:41.031 --> 00:22:15.471
+<v SPEAKER_1>Und wie greift er darauf zu? Also ich meine, heißt das in dem Moment, wo ich sage, was weiß ich, blauer Himmel, Schäfchen, Wolken, Punkt, JPEG, so, bitte mal laden. Und dann ist es so konfiguriert, wenn es das hier nicht gibt, dann guckt doch mal da drüben nach. Dann stellt er fest, das gibt es hier nicht. Wie guckt er denn da drüben nach? Macht er einfach nur so einen Link und naja, gibt es oder gibt es nicht? Oder ist das wirklich so ein Behind-the-Scenes, wo er dann erstmal irgendetwas ausliest und dann, abhängig davon, ob es das gibt oder nicht, macht er was?
+
+00:22:16.131 --> 00:22:32.831
+<v SPEAKER_2>Es wird der Link, nein, es wird nicht der Link, es wird der gewünschte Dateinamen übergeben. Und dort guckt dann die Datenbank nach, also die Commons-Datenbank, habe ich diesen überhaupt? Und wenn ja, auf welchem physikalischen Dateifahrt liegt der?
+
+00:22:32.851 --> 00:22:42.051
+<v SPEAKER_1>Was heißt denn übergeben? Reden dann wirklich die beiden Media-Wikis miteinander und haben die da so ein API, mit dem die sich unterhalten oder ist das einfach nur ein Web-Zugriff?
+
+00:22:42.071 --> 00:23:08.051
+<v SPEAKER_2>Das ist erstmal nur ein Web-Zugriff. Es gibt auch eine API, die man nutzen kann, die man auch mittlerweile sehr intelligent nutzen kann, um ein eigenes Wiki, das völlig unabhängig ist von der Wikimedia-Fundation, den Zugriff auf Wikimedia Commons zu erlauben. Aber die Basis-Installation, also die Konfiguration zwischen Wikipedia und Commons, ist erstmal auf einer Server-Ebene.
+
+00:23:08.071 --> 00:23:11.471
+<v SPEAKER_1>Könnte aber auch sein, dass es irgendwann auf dieses API auch umgestellt wird?
+
+00:23:11.491 --> 00:23:12.991
+<v SPEAKER_2>Denkbar.
+
+00:23:13.011 --> 00:23:14.211
+<v SPEAKER_1>Aber das ist noch ganz frisch, oder wie?
+
+00:23:14.491 --> 00:23:37.831
+<v SPEAKER_2>Ja, die API ist insgesamt relativ frisch. Auch diese Möglichkeit gibt es erst seit der Version 1.13, dass man die WIKI konfigurieren kann zur Inanspruchnahme von Wikimedia Commons. Was auch legal ist. Es kamen schon Befürchtungen auf, ja, aber ich dürfte doch nicht kein Deep Link machen, kein Deep Link setzen von einem Wiki ins andere. Doch, aber das ist erwünscht.
+
+00:23:38.731 --> 00:23:40.151
+<v SPEAKER_1>Ja, ich meine, dafür ist es ja da.
+
+00:23:40.171 --> 00:23:42.231
+<v SPEAKER_2>Genau, dafür ist es da. Wir wollen freie Inhalte.
+
+00:23:42.251 --> 00:24:08.531
+<v SPEAKER_1>Das wäre ja noch schöner. Okay, wenn ich mich richtig erinnere, wurde vor ein, zwei Jahren auch die Art und Weise geändert, wie das so mit den Benutzern funktioniert. Man hatte ja lange Zeit den Fall, dass die Wikipedia-Installation in den verschiedenen Sprachen wirklich vollständig separate Wikis waren.
+
+00:24:08.551 --> 00:24:09.171
+<v SPEAKER_2>Ja.
+
+00:24:09.191 --> 00:24:25.471
+<v SPEAKER_1>Das schloss dann auch die Benutzer mit ein. Das heißt, wenn ich Benutzer Tim Pritlove in der deutschen Wikipedia war, dann musste ich mir in der englischen Wikipedia nochmal einen anlegen, in der französischen nochmal einen und so weiter. Das wurde irgendwann geändert. Was hat sich denn da getan?
+
+00:24:27.231 --> 00:24:57.051
+<v SPEAKER_2>Das, was du ansprichst, nennst dich Sol, Single User Login, war ein uralter Wunsch der Wikipedianer. Und er hat sich immer wieder verzögert. Es hieß immer wieder, kommt bald, kommt bald, kommt bald. Alle haben gelacht. Kommt noch vor DNF und hört, was weiß ich. Das kam dann tatsächlich, wie lange ist das her? Halbes Jahr, ein Vierteljahr, glaube ich, ungefähr.
+
+00:24:57.071 --> 00:24:58.011
+<v SPEAKER_1>Ach, echt erst.
+
+00:24:58.031 --> 00:25:14.071
+<v SPEAKER_2>Ja, könnte nachgucken, aber so prima Daumen. Dass in mehreren Phasen das Sol aktiviert wurde. Erste Phase war, dass Administratoren das machen konnten, einfach um die Anzahl gering zu halten, um Fehler zu finden.
+
+00:25:14.091 --> 00:25:15.611
+<v SPEAKER_1>Klar, erstmal den Test laufen.
+
+00:25:15.631 --> 00:25:53.031
+<v SPEAKER_2>Genau. Was hat das für eine Bedeutung? Das bedeutet, dass man sich wirklich nur einmal in einem Wiki anmelden muss. Wenn ich mich also in meinem Heimat-Wiki, das ist halt die deutschsprachige Wikipedia, anmelde morgens und sage, hey, ich will jetzt mitarbeiten, dann kann ich auf einen Schlag an über 700 Projekten der Wikimedia Foundation angemeldet werden. Und wenn ich jetzt ein ganz einfaches Beispiel Interwiki Link in der niederländischen Wikipedia ändern will, gehe ich einfach auf den Artikel in der niederländischen Wikipedia und bin dort auch schon aus Raimond angemeldet.
+
+00:25:53.331 --> 00:26:06.151
+<v SPEAKER_1>Aber wie funktioniert das? Wie hängen diese Wikis zusammen? Gibt es da jetzt noch mal eine zusätzliche MediaWiki Instanz, die nichts anderes macht, als die Benutzer zu speichern? Also wer speichert das jetzt?
+
+00:26:06.171 --> 00:26:16.691
+<v SPEAKER_2>Gespeichert wird das nicht von einer MediaWiki Instanz, sondern schon von einer zentralen Datenbank, die von allen Wikis angesprochen wird.
+
+00:26:16.711 --> 00:26:19.891
+<v SPEAKER_1>Also eine Datenbank, die sich ausschließlich um Benutzer-Logins kümmert.
+
+00:26:20.491 --> 00:26:39.151
+<v SPEAKER_2>Da wird nachgeguckt, wenn ich mich anmelde, gibt es meinen Benutzernamen in dieser globalen Datenbank, Benutzer-Datenbank, ist dort in Raimond vorhanden. Wenn ja, melde ich ihn überall an. Das ist jetzt keine eigene MediaWiki Installation, sondern einfach nur eine übergeordnete Datenbank.
+
+00:26:39.531 --> 00:26:45.911
+<v SPEAKER_1>Das heißt, okay, das ist also nicht in MediaWiki selber drin, sondern es gibt noch mal ein extra Tool, was genau dieses Tool macht.
+
+00:26:46.071 --> 00:26:56.531
+<v SPEAKER_2>Es ist eine Extension, die in MediaWiki eingebunden wird. Central Authentification oder so ähnlich.
+
+00:26:56.551 --> 00:26:57.691
+<v SPEAKER_1>Central Authentification.
+
+00:27:00.611 --> 00:27:15.851
+<v SPEAKER_2>Und die ist dann in allen Wikis aktiv, sodass man fast alle Wikis befasst. Es gibt ein paar private Wikis, die nicht aktiv sind, wo jetzt Projektarbeit der Foundation stattfindet, aus Sicherheitsgründen.
+
+00:27:16.371 --> 00:27:55.691
+<v SPEAKER_1>Das heißt, es ist ja auch ganz praktisch, so ein Wiki bei Projekten einzusetzen, oder auch in der Firma. Es kann ja auch sein, dass man dann irgendwann nochmal ein zweites haben will. Das wäre dann sozusagen der Zeitpunkt, wo man sich dann vielleicht erstmal ein drittes installiert, was eigentlich das macht. Oder man nimmt das erste Wiki, was man hatte, schaltet da diese Zentrale Authentifizierung ein und dann übernehmen die anderen das sozusagen von da. Richtig, das geht. Okay, das ist ja eigentlich ganz pfiffig. Und wie hat man das Problem gelöst, dass zu dem Zeitpunkt ja schon aber tausende Accounts existierten und da gegebenenfalls auch doppel auftauchten?
+
+00:27:55.711 --> 00:28:28.091
+<v SPEAKER_2>Im Endeffekt hat man es gar nicht gelöst. Wir leben heute mit dem Problem, dass es in vielen Wikis Benutzer gibt mit demselben Benutzernamen, die aber nicht einer Person zuzuordnen sind. Das heißt, man hat bis heute nicht die Möglichkeit, in Wikis zu arbeiten, wo es, also ich zum Beispiel, in der schwedischen Wikipedia, in der japanischen und noch zu anderen, kann ich meinen Benutzernamen nicht verwenden, weil dort gleichnamige Benutzer sind, die mit mir nicht identisch sind.
+
+00:28:28.111 --> 00:28:39.511
+<v SPEAKER_1>Und könntest du jetzt auf einen anderen Namen ausweichen und dann kann man dann sozusagen sich umbenennen und dann irgendwie ein einheitliches Login verwenden?
+
+00:28:39.531 --> 00:29:03.411
+<v SPEAKER_2>Theoretisch, da müsste ich meinen Namen ändern auf einen Namen, der noch in keinem Wiki verwendet wird. Dafür gibt es auch ein Tool, auf dem Tool-Server, wo man das prüfen kann. Aber wollte ich nicht, dafür war mir das jetzt nicht wichtig genug, um in vier kleineren, die Wikis sind nicht kleiner, aber ich spreche weder japanisch noch schwedisch.
+
+00:29:04.991 --> 00:29:18.971
+<v SPEAKER_1>Aber man könnte das machen. Man kann sich sowohl einen neuen Namen rausholen und sagen, den gibt es jetzt noch nicht. Und dann kann man auch sagen, ich habe jetzt in der Wikipedia den Account, der den, der den und dann werden die alle auf diesen neuen Account rübermigriert.
+
+00:29:18.991 --> 00:29:19.691
+<v SPEAKER_2>Das könnte man machen.
+
+00:29:19.711 --> 00:30:20.611
+<v SPEAKER_1>Sodass man auch seine ganze Historie mit hat. Das ist ja ein wichtiger Aspekt, das haben wir jetzt so noch nicht erwähnt. Sollen wir vielleicht auch mal ein bisschen darauf eingehen. Das ist natürlich eine Eigenart jedes Wikisystems, dass man Versionen hat, dass man, dass jede Änderung quasi rückführbar und in gewisser Hinsicht auch wieder herstellbar ist. Da hat sich aber, glaube ich, eine ganze Menge getan bei MediaWiki, was das betrifft. Also einerseits finde ich es ja eine vergleichsweise komfortable Funktionalität. Also man kann ja auch sehr schön ältere Versionen miteinander vergleichen zum Beispiel. Und dann hat man da irgendwie schickes Highlighting, also dass man so wirklich relativ fix da auch eine Information bekommt, was sich da an dem jeweiligen Artikel getan hat. Aber es gibt ja auch seit einiger Zeit das Konzept der stabilen Version. Wie ist denn das technisch realisiert?
+
+00:30:21.251 --> 00:30:24.411
+<v SPEAKER_2>Technisch wurde das realisiert, indem die Datenmark aufgebohrt wurde.
+
+00:30:25.451 --> 00:30:30.951
+<v SPEAKER_1>Jetzt soll ich erstmal erklären, was diese stabilen Versionen sind.
+
+00:30:30.971 --> 00:31:07.431
+<v SPEAKER_2>Stabile Versionen ist ein Verfahren, um Artikel gewissermaßen einzufrieren. Man kann bestimmte Artikelstände sagen, diese Version wurde von vertrauenswürdigen Autoren gesichtet. In Bezug auf die deutschsprachige Wikipedia heißt das, es findet sich kein Vandalismus darin. Also nicht das übliche Heinz ist doof steht da nicht drin. Und es sind keine grob fahrlässigen Verfälschungen drin, bzw. man hat keine gefunden auf Anhieb.
+
+00:31:07.451 --> 00:31:09.311
+<v SPEAKER_1>Irgendjemand war der Meinung, das ist schon okay.
+
+00:31:09.331 --> 00:32:28.631
+<v SPEAKER_2>Das ist schon okay, genau. Es ist natürlich kein Garant für nichts, das ist auch klar. Allerdings, wir haben eben in der Wikipedia das Prinzip, das kann jeder mitarbeiten, das soll jeder mitarbeiten. Allerdings, wenn man sich die Zugriffszahlen anschaut, haben wir in der Wikipedia von Spitzenzeiten bis zu 70.000 Zugriffe pro Sekunde über alle Projekte hinweg. Das sind aber 95% reine Leserzugriffe. Nur 5% aller Zugriffe, je nach Statistik auch noch weniger, sind Autoren, die etwas bearbeiten zwischen komplett neuen Artikeln oder Rechtschreibkorrekturen. Das heißt, 95% sind reine Konsumenten. Das ist voll okay. Ich sehe es allerdings eben so, und das war auch mit ein Grund, warum die stabilen Versionen entwickelt wurden. Wir wollen diesen Lesern, die sich heute immer mehr auf Wikipedia verlassen, auch sagen, hey, auf die Version kannst du dich nicht verlassen. Das wäre jetzt auch wieder falsch gesagt. Aber wir haben eine Version, die eben keinen Vandalismus enthält. Wir wollen nicht den Leuten zeigen, Heinz ist doof. Haben sie nichts von. Erkennen ist wahr, dass es doof ist, aber wir wollen den Leuten vernünftigen Artikel bieten.
+
+00:32:28.651 --> 00:32:59.411
+<v SPEAKER_1>Gut, aber die Bedeutung der stabilen Version ist ja dann sozusagen in Abhängigkeit vom Wiki. Also bei der Wikipedia bezieht sich das jetzt auf Vandalismus. Aber wenn ich jetzt eine MediaWiki Instanz für mein eigenes Dokumentationsprojekt verwende, dann könnte man das ja wirklich so als Meilenstein oder das ist jetzt mal ein Zwischenstand, den könnte man in irgendeine, was weiß ich, Druckproduktion übernehmen oder was auch immer. Also darum geht es eigentlich, dass man bestimmte Änderungen, bestimmte Versionen als besonders markiert.
+
+00:32:59.571 --> 00:33:00.051
+<v SPEAKER_2>Richtig.
+
+00:33:00.071 --> 00:33:10.131
+<v SPEAKER_1>Und wie viele Level von besonders gibt es? Gibt es da nur einen, also es gibt nur so Stable oder nicht? Oder gibt es unterschiedliche Marker, die man da setzen kann?
+
+00:33:10.551 --> 00:34:10.051
+<v SPEAKER_2>Also in der deutschen Wikipedia gibt es eigentlich effektiv nur einen Marker, der heißt gesichtet. Es gibt technisch, wurde bereits eingerichtet, der geprüfte. Das heißt, dort wird auch eine inhaltliche Vollständigkeit oder Gerechtheit attestiert. Nur darüber ist sich die Community noch überhaupt nicht einig, ob man das überhaupt einsetzen will unter welchen Voraussetzungen. Aber das MediaWiki kann das. Genau, um jetzt aber auf die Technik zurückzukommen. MediaWiki selber bzw. die stabilen Versionen sind auch wiederum eine Erweitung, eine Extension für MediaWiki. Die nennen sich Fleckt Revisions. Die können bis zu vier verschiedene Stati erreichen. Oder man kann sie auch konfigurieren. Wie man die dann benennt, ist dann auch wieder Geschmackssache. Und welche Bedeutung sie haben, muss man dann individuell vereinbaren in der Firma oder wo man sie einsetzt.
+
+00:34:10.071 --> 00:34:19.931
+<v SPEAKER_1>Das heißt, man kann sich da beliebig viele verschiedene Arten von Versionen schaffen? Und das macht man dann auch alles in dieser Konfigurationsdatei oder muss man dann an die Datenbank ran?
+
+00:34:19.951 --> 00:34:35.171
+<v SPEAKER_2>Nee, nee, alles in der Konfigurationsdatei. Du hast gesagt, wir haben die und die Stufen. Standardmäßig können bis zu vier vergeben werden. Ob es mehr als vier sind, geben kann, müsste ich gucken. Aber vier denke ich schon eine ganze Menge.
+
+00:34:36.211 --> 00:34:39.011
+<v SPEAKER_1>Ja, aber das ist wahrscheinlich auch eine Zahl in irgendeinem Stück Sausgurt, oder?
+
+00:34:40.831 --> 00:35:03.411
+<v SPEAKER_2>Also ich weiß, dass die Standardkonfiguration eben von vier starte ausgeht und in der Wikipedia wird es einfach auf zwei reduziert. Aber diese Konfiguration, die kann man einfach in der Local Settings in der Konfigurationsdatei angeben. Da braucht man nicht mehr in der Datenbank herumstricken.
+
+00:35:04.751 --> 00:35:22.151
+<v SPEAKER_1>Das ist aber schon ein ganz schönes Monster geworden, diese Local Settings. Von Anfang an war das schon immer so einiges, was man da reinschreiben konnte. Und von Mal zu Mal mit jedem Feature muss man da immer mehr Prosa ablegen, um irgendwie klarzukommen. Jetzt sind da irgendwie Werkzeuge, mit denen man sich sowas zusammenbauen kann.
+
+00:35:22.171 --> 00:35:36.951
+<v SPEAKER_2>Es gibt mittlerweile eine Extension, mit der man die Extensions, nein, mit der man die Konfiguration verwaltet. Gibt es, befindet sich auch in Laufen in der Weiterentwicklung, um Schritt zu halten. Dort kann man die...
+
+00:35:36.971 --> 00:35:40.851
+<v SPEAKER_1>Hat die einen Namen? Vielleicht mal nicht mal so anonym, sondern mal...
+
+00:35:40.871 --> 00:35:41.711
+<v SPEAKER_2>Die heißt Configure.
+
+00:35:41.731 --> 00:35:42.691
+<v SPEAKER_1>Gesicht zeigen, okay.
+
+00:35:45.371 --> 00:35:54.291
+<v SPEAKER_2>Wird auch aktiv weiterentwickelt. Und mit der kann man sich auch verschiedene Konfigurationsstände sichern, wiederherstellen. Ach schön.
+
+00:35:54.311 --> 00:36:03.731
+<v SPEAKER_1>Und das... Damit kann ich dann auch alles konfigurieren? Oder ist es so, geht für das Meister und dann, wenn ich aber was Besonderes machen will, muss ich doch noch mal irgendwie vonhand...
+
+00:36:03.751 --> 00:36:37.671
+<v SPEAKER_2>Nee, alles. Alles. Also ich hab's jetzt wirklich nicht... Ich glaub's dir. Ich durchschwöre es dir nicht, keine Ahnung. Aber das, was ich verfolge dabei, ist wirklich, dass es laufend aktualisiert wird. Kommt ein neues Feature zur MediaWiki dazu, wird es auch innerhalb von ein paar Tagen in die Configure Extension eingebaut. Ob es jetzt wirklich definitiv vollständig ist, gebe ich keine Garantie.
+
+00:36:37.691 --> 00:37:12.211
+<v SPEAKER_1>Okay, nee, war ja auch nur ein Scherz. Aber es ist mir auch neu und finde ich aber auch super, dass es da drin ist, weil das war immer so ein bisschen awkward. Viele dieser Sachen sind ja auch wirklich, wie zum Beispiel Namespaces und so weiter, das ist irgendwie etwas, da sieht man gar nicht ein, warum man das jetzt auf einmal nicht mit dem gewohnten Interface machen kann, weil man ja eigentlich eine ganze Menge Dinge da schon, was weiß ich, Templates werden auch drauf zu sprechen kommen. Also viele technische Details sind im Wiki zugänglich und nur da, an der Stelle, war man halt immer so ein bisschen ausgedrungen.
+
+00:37:12.231 --> 00:37:38.031
+<v SPEAKER_2>Also es ist eine der Standardfragen von Leuten, die im Media-Wiki neu aufsetzen und ich verfolge das im Chat auch immer mit. Ja, wo gibt es denn die Admin-Oberfläche? System-Administrator-Oberfläche? Gibt es nicht. Mit der gerade erwähnten Extension kann man das machen, aber auch die muss man erstmal händisch in die Logo-Settings einbinden, bevor man sie dann per GUI weitermachen kann.
+
+00:37:38.051 --> 00:37:46.411
+<v SPEAKER_1>Aber so ganz stimmt das ja nicht. Es gibt ja schon diese Spezialseiten, die ja auch durchaus administrativen Charakter haben.
+
+00:37:46.431 --> 00:38:40.291
+<v SPEAKER_2>Ja, aber ich meinte System-Administrativen. Die gibt es definitiv sonst nicht. Administrativen, sprich inhaltlich administrativen natürlich, da gibt es schon die Spezialseiten. Zum Sperren von Seiten, wenn man nicht möchte, dass bestimmte Benutzergruppen dort schreiben, beziehungsweise man kann Benutzer sperren, man kann IP-Adressen sperren, IP-Ranges sperren, man kann Seiten vor dem Verschieben schützen, man kann Seiten aus solches verschieben natürlich. Das sind alles administrative Aufgaben. Und die rechte Struktur ist in MediaWiki auch mittlerweile sehr differenziert ausgelegt. Man kann jedes einzelne Recht jedem Benutzer oder Benutzergruppe geben und entziehen. Dafür Dateien hochladen, dafür kannte Dateien hochladen, dafür Dateien verschieben, darf er Dateien überschreiben.
+
+00:38:40.311 --> 00:38:43.211
+<v SPEAKER_1>Wie viele Rechte gibt es? Setzst du jetzt alle auf oder ist das nur Beispiele?
+
+00:38:43.231 --> 00:38:44.411
+<v SPEAKER_2>Das ist nur Beispiele.
+
+00:38:44.431 --> 00:38:51.951
+<v SPEAKER_1>Wenn ich hier aufzählen würde, waren die 100. 100 verschiedene Rechte gibt es?
+
+00:38:51.971 --> 00:38:52.851
+<v SPEAKER_2>Würde ich mal behaupten.
+
+00:38:52.871 --> 00:38:53.071
+<v SPEAKER_1>Echt?
+
+00:38:55.991 --> 00:38:57.071
+<v SPEAKER_2>OP mal Daumen.
+
+00:38:57.091 --> 00:39:09.231
+<v SPEAKER_1>Ja, toll ist ja mehr als das Grundgesetz so hergestellt. Okay, also das bezieht sich dann auf, was man so mit Dateien und Artikeln machen darf.
+
+00:39:09.251 --> 00:39:17.711
+<v SPEAKER_2>Genau. Ob man Artikel schreiben darf, bearbeiten darf, erstellen darf, Diskussionsseiten erstellen darf.
+
+00:39:19.811 --> 00:39:29.771
+<v SPEAKER_1>Aber MediaWiki bringt ja auch schon so eine eigene Sicht einer Benutzer-Hierarchie daher, oder ist das auch alles nur handgestreckt, also mit den Bürokraten?
+
+00:39:29.791 --> 00:39:57.191
+<v SPEAKER_2>Nee, die ist im Prinzip, das ist eine Sicht, die sie mitbringt, allerdings relativ flach von der Basis her. Es gibt von der Basis her erstmal nur den normalen Benutzer, dann gibt es den Administrator, und das war es im Wesentlichen auch schon. Dann gibt es noch den Bürokraten, aber der ist in der Standardinstallation gar nicht weiter relevant.
+
+00:39:57.211 --> 00:40:00.331
+<v SPEAKER_1>Ich dachte, das ist der einzige, der andere zu Administratoren machen darf.
+
+00:40:00.351 --> 00:40:09.171
+<v SPEAKER_2>Ja, stimmt, doch, ja, hast du recht. Also insofern doch. Also wir haben Benutzer, Administrator, Bürokrat, das sind die drei Standard-Benutzer.
+
+00:40:09.331 --> 00:40:13.291
+<v SPEAKER_1>Da ist eigentlich irgendwann noch mal einer dazugekommen.
+
+00:40:13.311 --> 00:40:14.551
+<v SPEAKER_2>In der Standardinstallation?
+
+00:40:14.571 --> 00:40:18.291
+<v SPEAKER_1>Das weiß ich nicht, ich habe da nur so einen Echo im Kopf.
+
+00:40:18.311 --> 00:40:23.991
+<v SPEAKER_2>Es gibt noch den Auto-Confirm-Benutzer, aber das ist eine Konfiguration, ob der greift.
+
+00:40:24.011 --> 00:40:58.051
+<v SPEAKER_1>Nein, das meine ich nicht. Vielleicht täusche ich mich auch. Das heißt, wenn wir vielleicht auch jetzt nicht alle Rechte aufzeichnen können, aber vielleicht kannst du ja mal so ein, zwei typische Szenarios aufzeigen, die man eigentlich mit diesen Benutzerrechten so modellieren kann. Einerseits hat man natürlich das Modell, wie man das jetzt in der Wikipedia macht, ganz klar. Aber da dürfte ja auch noch andere Zugriffsschemater sich draus ableiten lassen.
+
+00:40:59.111 --> 00:41:54.231
+<v SPEAKER_2>Ein Schema könnte oder was oft nachgefragt wird, ist, dass man bestimmte Namensräume nur für bestimmte Benutzergruppen zugänglich macht. Zumindest schreibend. Man musste dazu sagen, MediaWiki ist konzipiert für einen generellen Lesezugriff. Man kann zwar den Lesezug komplett sperren von außen, also das als Wiki erstmal dicht machen. Allerdings, wenn man einmal angemeldet ist, kann man in der Regel alles lesen. Was MediaWiki wohl unterstützt, ist, dass man Namensräume schützt. Das heißt, ich kann sagen, ok, der Namensraum ABC ist für die Abteilung ABC. Der Namensraum XYZ für die Abteilung XYZ. Und nur die Mitarbeiter der Abteilung werden in den Gruppen zugeordnet und können dann auch ihre Abteilungsseiten im Namensraum ABC, XYZ bearbeiten. Lesen können sie dann wiederum alle.
+
+00:41:55.691 --> 00:42:02.731
+<v SPEAKER_1>Das ist schon so eine Feature, die auch explizit jetzt für die Nutzung von MediaWiki für was anderes als Wikipedia gemacht hat.
+
+00:42:02.751 --> 00:42:30.151
+<v SPEAKER_2>Ja, MediaWiki wird ja mittlerweile von Tausenden, Zehntausenden von Firmen eingesetzt. Für alle möglichen Zwecke, oftmals intern, sodass von außen kein Zugriff ist für die autonormalen Internetnutzer. Sondern wirklich nur für die Abteilungen und da sind die Konzepte schon sehr ausgefeilt, was die Firmen damit machen.
+
+00:42:30.171 --> 00:42:39.031
+<v SPEAKER_1>Du hast vorhin diesen Toolserver erwähnt, der so diverse Schnippchen bereithält. Was verbirgt sich denn ein da?
+
+00:42:39.511 --> 00:43:12.951
+<v SPEAKER_2>Toolserver hat eigentlich relativ wenig mit MediaWiki zu tun. Das sind mehrere Server, die vom deutschen Verein WikimediaEV angeschafft wurden in Amsterdam stehen und Entwickler einen Zugang bieten zu den Inhalten der Wikipedia, um dort Abfragen laufen zu lassen, die man live auf den großen Server-Farmen in Amerika nicht laufen lassen kann, weil sonst die Performance runtergeht. Das sind die Toolserver, die haben jetzt relativ wenig mit MediaWiki zu tun.
+
+00:43:14.191 --> 00:43:23.691
+<v SPEAKER_1>Aber das ist dann auch eigentlich alles freies Software, was da läuft? Könnte auch sozusagen für die eigenen Wikis herangezogen werden, wenn man jetzt da irgendeinen Sinn drin sieht?
+
+00:43:23.691 --> 00:43:24.491
+<v SPEAKER_2>Ja, natürlich.
+
+00:43:24.511 --> 00:43:31.171
+<v SPEAKER_1>Zum Beispiel mit dem Migrieren von Benutzern oder so was, wenn man auf so ein Single-User-System umsteigen möchte.
+
+00:43:32.311 --> 00:43:47.571
+<v SPEAKER_2>Wobei da bräuchte ich den Toolserver nicht für. Das ist ein Tool, das greift dann wieder auf die zentrale Benutzerdatenbank zurück und guckt nach, welcher Benutzer ist wo, wann registriert und hat Bearbeitung und und und.
+
+00:43:48.571 --> 00:44:38.591
+<v SPEAKER_1>Naja, deswegen wollte ich das ansprechen. Vielleicht gibt es ja auch noch ein paar Tools auf diesem Toolserver, die jetzt auch außerhalb vom Wikipedia-Projekt interessant sind, die jetzt so, keine Ahnung, einem irgendwie bei Problemen helfen. Naja, vielleicht gehen wir noch auf welche. Ja, eine Eigenschaft von MediaWiki, die ich sehr auffällig finde, weil das ja auch in der Wikipedia heftig benutzt wird, ist die Möglichkeit, so allgemeine Formatvorlagen wiederzuverwenden, die sogenannten Templates, im Deutschen heißt das Vorlage oder Formatvorlage. Wie ist denn das in der Software realisiert? Also wie funktioniert das?
+
+00:44:38.611 --> 00:45:38.171
+<v SPEAKER_2>Die Vorlagen werden technisch auch in einem eigenen Namensraum gespeichert. Da heißt es einfach Vorlage bzw. Englisch Template. Und dort kann man reinschreiben, erstmal was man will. Man kann reinschreiben, ein schönes Beispiel, ein kurzes, knackiges Beispiel für eine Vorlage ist ein Link zur Deutschen Nationalbibliothek. Das heißt, ich schreibe in die Vorlage rein, irgendein HTTP-Link zur Deutschen Nationalbibliothek mit einer Personennummer, zeige mir alle Werke, die von dem Autor veröffentlicht wurden. Das ist ein Link und ich erstelle eine Vorlage und wenn ich dann einen Artikel über den Autor schreibe, muss ich dann nur noch reinschreiben, jetzt mit geschweiften Klammern, doppelte geschweifte Klammern statt eckigen Klammern, PND, ein Pipe, also ein senkrechter Strich und PND Personennahmendatei.
+
+00:45:38.191 --> 00:45:40.291
+<v SPEAKER_1>So nennst du jetzt diese Vorlage?
+
+00:45:40.751 --> 00:45:43.691
+<v SPEAKER_2>Ja, die Vorlage heißt, ich habe sie einfach PND genannt.
+
+00:45:44.111 --> 00:45:55.331
+<v SPEAKER_1>Das heißt, die existiert selber erstmal in dem Namensraum Vorlage und heißt PND. Dann bezieht man sich mit geschweiften Klammern Vorlage doppelpunkt PND da drauf.
+
+00:45:55.351 --> 00:46:04.971
+<v SPEAKER_2>Genau. Und dann kommt die Personennummer des Autors, geschweifte Klammer zu, doppelt nämlich.
+
+00:46:04.991 --> 00:46:07.691
+<v SPEAKER_1>Und dann so getrennt mit senkrechten Strichen die Parameter.
+
+00:46:08.251 --> 00:46:08.711
+<v SPEAKER_2>Genau.
+
+00:46:08.731 --> 00:46:17.331
+<v SPEAKER_1>Das heißt im Prinzip so eine Art Subroutine, man ruft quasi das Template auf und übergibt ihm bestimmte Parameter, die dann dort eingebaut werden.
+
+00:46:17.851 --> 00:46:28.371
+<v SPEAKER_2>Das Beispiel war jetzt ein ganz einfaches Beispiel. Ich übergebe eine Zahl an eine URL, an die Link zur Nationalbibliothek.
+
+00:46:28.391 --> 00:46:44.351
+<v SPEAKER_1>Und so werden diese ganzen Infoboxen zum Beispiel gemacht, was weiß ich. Wenn ich jetzt eine Stadt nachschlage in der Wikipedia, dann hat man dann rechts immer diese einheitlichen Tabellen mit Lalalala, Einwohnerzahl, Schnickes, Gedöns, hier ist die Koordinate und dieser ganze Kram, Landkreis, Zugehörigkeit und so.
+
+00:46:44.891 --> 00:47:45.551
+<v SPEAKER_2>Und man kann mit den Vorlagen auch etwas programmieren. Da braucht man allerdings noch eine weitere Extension für die MediaWiki Pasa Functions, mit denen man IF-Abfragen machen kann, mit denen man Switches programmieren kann. Rechnen kann man damit, sodass man zum Beispiel, ein schönes Beispiel ist, um bei den Orten zu bleiben. Ich übergebe Koordinaten. Der Ort liegt bei 7 Grad 45 Minuten und 58 Grad 16 Minuten Länge und Breite jeweils. Ich übergebe das über die Vorlage, also schreibe das in die Vorlage rein. Die Vorlage rechnet mir dann aus, wo ich einen Punkt setzen muss. Nein, nicht ich, sondern wo das System einen Punkt setzt auf der Deutschlandkarte, um die Lage des Ortes zu symbolisieren.
+
+00:47:45.571 --> 00:47:54.211
+<v SPEAKER_1>Geokoordinaten umrechnen, was in dem Fall wahrscheinlich auch erstmal die Überführung in dezimale Notation der Koordinate auch beinhaltet.
+
+00:47:54.231 --> 00:47:57.611
+<v SPEAKER_2>Gehe ich von aus, habe mir die jetzt im Detail nicht angeschaut, aber ja.
+
+00:47:57.631 --> 00:47:59.591
+<v SPEAKER_1>Damit kann man das ja meistens ein bisschen einfacher machen.
+
+00:47:59.931 --> 00:48:05.311
+<v SPEAKER_2>Ja, natürlich. Ja, Minuten, Sekunden, Notierung.
+
+00:48:05.331 --> 00:48:08.211
+<v SPEAKER_1>Und pfiffig. Wie heißt die Extension?
+
+00:48:08.291 --> 00:48:09.271
+<v SPEAKER_2>Pasa Functions.
+
+00:48:09.291 --> 00:48:19.111
+<v SPEAKER_1>Pasa Functions. Und da ist das alles mit drin. Rechnen, Zusammenbauen, Iften, Schnickes. Das ist halt sozusagen noch mal so eine kleine Programmiersprache mit drin.
+
+00:48:19.131 --> 00:48:27.371
+<v SPEAKER_2>Eine ganz kleine. Man kann keine Schleifen bilden. Es gibt keine Stringfunktionen. Also ein paar Sachen, die......
+
+00:48:28.131 --> 00:48:30.091
+<v SPEAKER_1>kann sich nicht verhaspeln sozusagen.
+
+00:48:30.111 --> 00:48:35.491
+<v SPEAKER_2>Genau. Sehr bewundersch. Es besteht zwar immer wieder, dass man auch mehr machen kann. Allerdings, da haben die...
+
+00:48:35.511 --> 00:48:36.971
+<v SPEAKER_1>Das ist natürlich eine Gefahr.
+
+00:48:36.991 --> 00:48:37.771
+<v SPEAKER_2>Eben.
+
+00:48:37.791 --> 00:48:45.331
+<v SPEAKER_1>Dann können den Vorlagen auch Vorlagen wieder verwenden. Also kann man die auch so ineinander verdiensten. Und wie wird dafür hindert, dass sich die Vorlagen gegenseitig aufrufen?
+
+00:48:47.611 --> 00:48:58.431
+<v SPEAKER_2>Also man kann sie verschachteln. Es gibt Parameter, die hart codiert sind, wird geguckt, wie oft...
+
+00:48:58.451 --> 00:48:59.291
+<v SPEAKER_1>Wurde schon aufgerufen?
+
+00:48:59.311 --> 00:49:05.731
+<v SPEAKER_2>Wurde schon aufgerufen, Verschachtlungstiefe. Und irgendwann sagt der System einfach Stop, Abbruch.
+
+00:49:05.751 --> 00:50:14.751
+<v SPEAKER_1>Verstehe. Einfach, um das so auszuschließen. Was diese Templates so ein bisschen versuchen, ist ja, wie soll ich sagen, Daten, die über mehrere Artikel hinweg immer wieder einen selben Charakter haben, auch auf eine ähnliche Art und Weise darzustellen. Im Prinzip handelt es sich ja hierbei auch um, naja, wie soll ich sagen, generalisierte Datenfelder, die man aber dann vielleicht ja auch maschinell auswerten möchte. Also hier stellt sich sozusagen die Frage nach Metadaten. Also jetzt, dass Wiki quasi selber auch wie so eine Benutzerdatenbank verwenden möchte, sodass man eben mit dem Wiki Daten erfasst und die dann aber später tatsächlich auch mit dem Programm wieder ausliest. Was gibt es da, also wie ist das realisiert worden? Ist das schon realisiert worden? Es gibt ja so ein Metadatenfelder, die bei Personen, zum Beispiel in der Wikipedia, oder anderen kleben. Was steckt dahinter?
+
+00:50:14.771 --> 00:50:36.751
+<v SPEAKER_2>Dahinter steckt auch wieder der Tool-Server in dem Fall. Weil MediaWiki selber bietet keine Auswertungsmöglichkeiten an. Leider. Was uns wirklich noch fehlt im MediaWiki sind vernünftige Möglichkeiten, solche Metadaten zu erfassen und auch getränkt zu erfassen. Es gibt zwar Semantik-MediaWiki, aber das ist eine völlig andere Entwicklungsschiene.
+
+00:50:36.771 --> 00:50:38.431
+<v SPEAKER_1>Das ist ein Spin-off von MediaWiki.
+
+00:50:38.451 --> 00:51:36.831
+<v SPEAKER_2>Ja, genau. Da kann man semantische Daten mit erfassen, was allerdings in der Wikipedia gemacht wird. Die Vorlagen, zum Beispiel über Personen, da wird dann gezielt erfasst, Name, Vorname, Geburtsort, Geburtsdatum, Sterbeort, Sterbedatum, Beruf. Das sind so die Basisdaten. Die werden dann, wie alle anderen Inhalte auch, auf den Toolserver gespiegelt und dort gibt es dann Programmierer, die diese Vorlagen auswerten und gucken, um dann nach Geburtsjahre Listen zu erstellen oder nach Beruf, nach Namen. Wichtig ist ja auch die Sortierung bei Personen. Man kennt es aus dem Normallexikon, dass Personen nach Nachname kommen, um Vorname zu finden. In der Wikipedia finden wir alle Personenartikel über Vorname, Lehr-Nachname.
+
+00:51:36.851 --> 00:51:40.211
+<v SPEAKER_1>Wie auch immer der Name in dem jeweiligen Sprachraum geschrieben wird.
+
+00:51:40.231 --> 00:52:04.351
+<v SPEAKER_2>Ja natürlich, selbstverständlich. Und wenn man sich jetzt anschaut, es gab ja schon verschiedene DVDs mit Wikipedia-Inhalten und die Suchfunktionen sind dann aber immer darauf, oder auch Sortierfunktionen nach Nachname, Vorname, da wird dann auf die Metadaten in den Personendaten zurückgegriffen. Die werden dann speziell ausgelesen und neu sortiert.
+
+00:52:04.791 --> 00:52:42.871
+<v SPEAKER_1>Aber es ist schon noch so eine Krücke. Also man schreibt eigentlich nur jetzt in einer Vorlage, aber dann eben eine Vorlage, die dafür gedacht ist, dass man dann diese Parameter auch in einem spezifischen Format macht, sodass es eben maschinenlesbar ist. Aber das System stellt nicht selber sicher und weiß auch nichts über die Datentypen. Also wenn ich da jetzt ein Datum eintrage, dann ist das für MediaWiki erstmal ein String, wie jeder andere auch. Aber es weiß zu dem Zeitpunkt nicht, dass es ein Datum ist. Es wird erst dadurch ein Datum, dass ein Tool von dem Tool-Server daher kommt, das nimmt und feststellt, ah, Gott sei Dank hat das richtig geschrieben, jetzt weiß ich auch, welches Datum das ist, und dann kann er das so weiter verarbeiten.
+
+00:52:43.751 --> 00:53:20.711
+<v SPEAKER_2>Das, was im MediaWiki immer noch fehlt, ist eine vernünftige Metadatenverwaltung. Das Problem haben wir auch bei Bildern oder Dateien allgemein. Unter welcher Lizenz steht das Bild? Unter welcher, wer ist der Fotograf, wer ist der Urheber? Das wird in die Welt reingeschrieben. Wir haben auch hier eine Information-Vorlage auf Wikimedia Commons, die etwa Struktur versucht reinzubringen. Allerdings eine verbindliche Vorgabe, dass genau hier der Autor reinkommt und dass man auslesen kann, der Fotograf ist, Hans Müller, ist einfach noch nicht gewährleistet.
+
+00:53:23.011 --> 00:54:32.931
+<v SPEAKER_1>Tja, das ist schade eigentlich. Ich würde empfehlen, bei Teviki reinzuschauen. Ansonsten gibt es nicht so viel, was man bei Teviki abgucken kann. Das mit den Widerdaten, das hatten die schon vor langer Zeit ganz interessant gelöst. Da konnte man halt einfach beliebige Felder für einen Artikel oder für eine Gruppe von Artikeln angeben und sagen, hier sind folgende zusätzliche Felder und die haben den Typ sowieso. Das heißt, er wusste auch genau, was er erfragt. Dann hatte man dann so ein Pop-Up zum Auswählen, wo man multiple choice hat. Das war schon ein sehr guter Ansatz und das klebt dann halt auch unten irgendwie dran. Als ich da bei der Wikipedia das auch habe unten dran kleben sehen, hatte ich schon so ein bisschen Hoffnung, aber offensichtlich scheint das noch nicht in die Richtung zu gehen. Aber ich meine, mir ist auch bekannt, dass diese Diskussion so lang geht und ich kann mir etwa vorstellen, wie das abläuft beim Projekt dieser Dimension. Ich meine, wenn man da halt erstmal was einführt, dann wird man es halt auch so schnell nicht wieder los. Richtig. Und bei diesen ganzen Kollateralschäden, wie zum Beispiel mit diesem Single User Login, ist natürlich auch nachvollziehbar, dass man da verhindern möchte, dass man sich eben so ein Ei legt, was dann sozusagen die Sache noch schlimmer macht, weil man irgendwie nicht genug in die Zukunft gedacht hat. Richtig.
+
+00:54:32.951 --> 00:55:10.211
+<v SPEAKER_2>Das ist eines der Probleme heute auch in Wikipedia, dass man Änderungen an der Datenstruktur nur sehr schwer umsetzen kann. Jede Änderung an der Datenstruktur, eine neue Tabelle kann man so einbauen. Also eine bestehende Tabelle, eine bestehende Datenbank erweitern um neue Felder, Konvertierungen, das erfordert immer, dass alle Datenbanken über alle Projekte hinweg konvertiert werden. Das ist ein Prozess, der dauert mehrere Tage. Bei Millionen von Versionen, die wir haben, ein ziemlicher Aufwand.
+
+00:55:10.231 --> 00:56:31.991
+<v SPEAKER_1>Was vielleicht auch noch in diesen Metadatenbereich reinfällt, was ich auch nicht so ganz weiß, es gibt ja in der Wikipedia dieses Konzept einer Begriffsklärungsseite. Das heißt, wenn man einen Artikel hat, der einen Namen trägt, der mehrere Sachen beschreiben könnte, dann löst man das eben mit dieser Konvention, dass man unter diesem Namen eine Übersicht über andere macht. Dann verteilt er dann eben auf Unterseiten mit der Konvention, dass man halt Sachen in Klammern schreibt. Es gibt so einen pfiffigen Modus. Ich weiß nicht, das wird es auch nicht jeder kennen. Da kann man auch nochmal darauf eingehen. Wenn ich in meine Benutzer-Settings gehe, dann kann ich sagen, dass mir solche Begriffsklärungsseiten auch gleich in der Seite, also wenn auf eine Begriffsklärungsseite gelinkt wird, dass mir dann an der Stelle, wo der Link darauf ist, auch schon angezeigt wird, dass ich dort auf einer Begriffsklärungsseite landen werde. So, langer Einstieg. Das ist ja auch so ein bisschen Meta an der Stelle. Wie wird denn eine Seite von MediaWiki als solche Begriffsklärungsseite eingestuft oder erkannt? Ist das ein Wikipedia-Ding oder ist das ein Wikimedia-Wiki-Feature?
+
+00:56:32.011 --> 00:56:52.791
+<v SPEAKER_2>Das ist eine Mischung aus beidem eigentlich. Eine Begriffsklärungsseite wird von MediaWik als Begriffsklärungsseite erkannt, wenn ein bestimmter Baustein drin ist. Dieser Baustein, den kann man auch in der Konfiguration angeben, wie der heißt. Bei uns heißt er, glaube ich, Begriffsklärung.
+
+00:56:56.791 --> 00:56:58.331
+<v SPEAKER_1>Was heißt Baustein?
+
+00:56:58.351 --> 00:56:59.791
+<v SPEAKER_2>Eine Vorlage.
+
+00:56:59.811 --> 00:57:08.611
+<v SPEAKER_1>Das heißt, ich muss da wieder Geschlechtsklammer, Vorlage, Begriffsklärungsseite reinschreiben? Und die hat dann besondere Bedeutung sozusagen? Die wird dann nochmal explizit erkannt?
+
+00:57:08.631 --> 00:58:01.691
+<v SPEAKER_2>Die wird dann nochmal explizit erkannt, allerdings nicht in der Datenbank festgeschrieben. Nein, die wird nicht in der Datenbank reingeschrieben. Leider, weil dadurch fällt es nämlich sehr schwer, die Begriffsklärungsseiten oder Links auf Begriffsklärungsseiten herauszufinden. Die Hervorhebung, von der du gerade sprachst, wird nämlich wiederum über den Toolserver realisiert. Weil man aktiviert sich in Gadget-Insign-Einstellungen. Gadget ist ein kleiner JavaScript- oder CSS-Schnipsel, der die zentral bereitgestellt werden. In dem Fall, die Begriffsklärungsprüfung, guckt wiederum über den Toolserver nach, ist der Link ein, geht der Link auf eine Begriffsklärungsseite. Das stellt MediaWiki selber nicht bereit. Leider.
+
+00:58:02.371 --> 00:58:11.791
+<v SPEAKER_1>Verstehe. Okay. Ich hatte so die milde Hoffnung, dass es so eine Art Seitentyp gibt, dass man sozusagen sagen kann, ich bin nicht nur eine Seite, sondern ich bin eine Begriffsklärungsseite.
+
+00:58:13.371 --> 00:58:18.991
+<v SPEAKER_2>Nein, leider nicht. Der einzige Seitentyp, der im Moment einfällt, ist die Weiterleitung.
+
+00:58:19.011 --> 00:59:33.011
+<v SPEAKER_1>Genau, darauf halte ich eigentlich auch hinaus, weil da gibt es ja auch eine spezielle Syntax. Man schreibt halt Lattenzaun redirect, sozusagen. Also eine Weiterleitungsseite ist eine Seite, die, wenn man auf sie trifft, bei Default weiterleitet. Und zwar sofort weiterleitet. Das heißt, ich springe auf irgendwie einen Artikel und dann ist das aber, sagen wir mal, ein typisches Beispiel Al-Qaida, das schreibt irgendwie jeder anders. Und klar, man weiß, dass das mal so und mal so, mal mit Q, mal mit K, mal mit L, mal mit Al geschrieben wird. Und damit man jetzt nicht immer wieder diesen Stress hat, falsch zu landen, gibt es einfach eine ganze Reihe von Rita weg, eben von all diesen Schreibweisen, auf die eine Schreibweise, die jetzt die Community als die richtige TM auserkurren hat, auf welcher Basis auch immer. Und dann geht das ja automatisch. Und dann kriegt man diesen Hinweis, dass man eben über eine solche Weiterleitungsseite gehüpft ist und dass man dann irgendwie in dem Moment auch wieder zurückmaschieren kann und sagen kann, jetzt will ich aber wirklich auf diese Weiterleitungsseite als solche und nicht wie ein Sprungbrett dann gleich wieder weitermaschieren. Und dann kann man die halt auch entsprechend bearbeiten. Aber sehr viel mehr reinschreiben, als wohin sie weiterleitet, kann man sozusagen nicht nicht.
+
+00:59:33.051 --> 00:59:33.451
+<v SPEAKER_2>Nein, nein.
+
+00:59:33.471 --> 00:59:45.811
+<v SPEAKER_1>Wäre das dann mit so einer Begriffsklärungsseite nicht eigentlich auch ein guter Ansatz, dass man sagt, Lattenzaun, was weiß ich, generischer Begriff und dann macht man gleich all diese ganzen Varianten.
+
+00:59:46.211 --> 00:59:47.551
+<v SPEAKER_2>Ja, wäre ein schöner Ansatz.
+
+00:59:47.571 --> 00:59:48.531
+<v SPEAKER_1>Wäre ein schöner Ansatz.
+
+00:59:48.551 --> 00:59:50.491
+<v SPEAKER_2>Ist aber nicht realisiert bis jetzt.
+
+00:59:50.491 --> 00:59:50.931
+<v SPEAKER_1>Okay.
+
+00:59:50.951 --> 00:59:51.331
+<v SPEAKER_2>Leider.
+
+00:59:51.351 --> 01:00:37.931
+<v SPEAKER_1>Aber ich kriege ein Bier, wenn es dann so eingebaut wird. An sich ist das ja eine sehr schöne Eigenschaft, die man durchaus nochmal hervorheben kann. Ich erinnere mich auch, dass das damals, als ich so ein heftiges Liebeswochenende mit MediaWiki hatte, langes Zehr, 2003, dass es so eine der Sachen ist, die ich wirklich ganz toll gefunden habe, weil die einfach so praktisch ist, wenn man halt etwas falsch benannt hat. Oder eben genau diesen Fall, den ich auch eben mit den Begriffsklärungsseiten schon beschrieben habe, dann benennt man nicht um, sondern man verschiebt. Und dieses Verschieben erzeugt automatisch diesen Fußabdruck der Weiterleitungsseite. Aber mehr auch nicht, das ist ja eigentlich alles.
+
+01:00:37.951 --> 01:00:43.771
+<v SPEAKER_2>Mehr auch nicht, das ist alles. Kann man seit Neuestem übrigens auch unterdrücken.
+
+01:00:45.411 --> 01:01:10.311
+<v SPEAKER_1>Mit den Features ist das so eine Sache, also sehr featurereich ist ja auch diese Tabellen-Funktionalität. Aber da muss man ja ganz schön tippen. Also so eine komplexe Tabelle in Wikisynntags zu schreiben, ist irgendwie kein Spaß.
+
+01:01:10.971 --> 01:01:30.191
+<v SPEAKER_2>Nö, Spaß nicht. Die Frage ist, ob es in HTML Spaß ist, mehr Spaß zu schreiben. Ich kenne Leute, die schreiben so schnell in HTML-Synntags unter als in Wikisynntags. Bei mir ist es andersrum. Vielleicht auch, weil ich etwas in Wikisynntags aufgewachsen bin.
+
+01:01:30.211 --> 01:01:32.671
+<v SPEAKER_1>Kann man denn das auch noch in HTML eintragen?
+
+01:01:32.691 --> 01:01:33.451
+<v SPEAKER_2>Ja.
+
+01:01:33.471 --> 01:01:38.831
+<v SPEAKER_1>Kann man generell HTML in MediaWiki verwenden und dann wird das als solches übernommen oder wird das noch mal gepaarzt?
+
+01:01:39.611 --> 01:02:04.651
+<v SPEAKER_2>Das meiste in HTML kann man einfach reinnehmen. Das wird auch einfach weitergereicht. Es gibt allerdings eine Whitelist an Befehlen, die weitergereicht werden. Alles andere wird ausgefiltert. Man kann schon ein Table, ein Body, die ganze Tabelle-Synntag zum Beispiel. Man kann auch Diffs oder Spans.
+
+01:02:04.671 --> 01:02:08.471
+<v SPEAKER_1>Dann bleibt das aber auch als solches, wird nicht in Wikisynntags überführt?
+
+01:02:09.271 --> 01:02:12.091
+<v SPEAKER_2>Nein, das bleibt dann in HTML-Synntags stehen.
+
+01:02:12.731 --> 01:02:27.471
+<v SPEAKER_1>Das heißt, man hat sozusagen die Möglichkeit, entweder das eine oder das andere zu verwenden, wenn man mit einem von den beiden nicht klarkommt? Ja, richtig. Bezieht sich das nur auf Tabellen oder gibt es da auch noch andere Geschichten? Was für eine Frage.
+
+01:02:27.491 --> 01:02:59.411
+<v SPEAKER_2>Was für eine Frage. Wie gesagt, man kann Farben verwenden, in denen man sagt, ich möchte jetzt diesen Satz im Abschnitt rot färben. Dann setze ich um den Satz, Span, Color, Color, Doppel-Point-Red. Hinter dem Satz Span zu. Geht auch. Okay. Darf man im Artikel, Wikipedia-Artikel nicht machen, aber wenn man auf Benutzerseiten oder in einen fremden Wiki ist, natürlich klar.
+
+01:02:59.431 --> 01:03:39.271
+<v SPEAKER_1>Aber ich muss sagen, diese Tabellengeschichte, ich meine, Wiki sind tags hin, Wiki sind tags her oder auch HTML, eigentlich frage ich mich, gibt es denn eigentlich schon ein Projekt, um dem MediaWiki auch so einen VisiWik-Editor zu geben? Ich meine, heute kann man schon Wörterteilen online editieren. Also die ganzen Editoren im Web werden einfach extrem sophisticated. Man merkt, dass JavaScript und die entsprechenden Frameworks, die dort verwendet werden, einfach einen gewissen Level erreicht haben, wo schon so richtig Application-Software bei rauskommt, die es eigentlich mit normalen Programmen aufnehmen kann.
+
+01:03:39.431 --> 01:03:43.991
+<v SPEAKER_2>Da ist MediaWiki leider noch etwas hinterher. Weil es gibt einen…
+
+01:03:44.011 --> 01:03:47.891
+<v SPEAKER_1>Weil man nicht will oder weil man sich da wieder nicht einigen kann oder weil es niemand, der es macht.
+
+01:03:50.431 --> 01:04:50.971
+<v SPEAKER_2>Was für eine Frage, man will schon, aber bei MediaWiki, ich sagte es schonmal, ist alles darauf basiert, dass es mit Wikipedia läuft, kontinuierlich läuft. Das heißt, jede Weiterentwicklung, die stark eingreift in ein System, braucht Zeit. Viel zu viel Zeit, meiner Meinung nach. Die Usability, schönes Stichwort, schönes Schlagwort, Usability, Benutzerfreundlichkeit leidet schon darunter, gerade in Wikipedia. Oder überhaupt, du sprachst dieser Tabellen-Syntax an. Neue Benutzer, die weder HTML noch Tabellen-Syntax oder Wiki-Syntax kennen, die können keine Tabelle machen. Aber die können mit einem Framework locker eine Tabelle zeichnen und Felder machen, was weiß ich. Es gibt den FCK-Editor als Erweiterung für MediaWiki. Er ist allerdings noch ziemlich alpha oder prä-alpha.
+
+01:04:50.971 --> 01:04:53.791
+<v SPEAKER_1>FCK? Steht da für irgendwas Kluges?
+
+01:04:53.811 --> 01:04:54.911
+<v SPEAKER_2>Das müsste ich nachschlagen.
+
+01:04:54.991 --> 01:05:02.971
+<v SPEAKER_1>Es kommen ja interessante Assoziationen hoch. Aber der ist im Prinzip sowas. Der geht in die Richtung.
+
+01:05:02.991 --> 01:06:11.891
+<v SPEAKER_2>Der geht in die Richtung. Er erzeugt allerdings ziemlich unsauberen Wikicode. Deswegen wird er auch bei uns nicht eingesetzt in der Wikipedia. Um dem aber abzuhelfen, hat dankenswerterweise Ende des letzten Jahres eine amerikanische Stiftung 890.000 Dollar gespendet, die Stanton Foundation, um die Usability wieder voranzubringen, um Benutzer wieder mehr zu Autoren zu machen und nicht zu Code-Hackern. Wenn man sich heute einen komplexen Artikel in der Wikipedia öffnet, ich rede zwar oft von Wikipedia, das ist mein Heimatprojekt, aber es gilt auch für jedes andere Wiki in der Welt. Wenn man die ganzen Vorlagen hat, Tabellen-Syntag und so weiter, bis man erstmal beim eigentlichen Artikel ist, dem Kern einer Seite, kann man schon mal zwei, drei Bildschirmseiten runterscrollen. Und ein normaler Benutzer steigt da nicht mehr durch. In gewissem Sinne haben wir es schwer, mittlerweile neue Autoren zu gewinnen. Und das verständlich zu machen.
+
+01:06:11.911 --> 01:06:18.711
+<v SPEAKER_1>Aber auch nicht nur wegen der Syntags, sondern auch wegen der ganzen Konventionen, die es eigentlich zu berücksichtigen ist.
+
+01:06:18.731 --> 01:06:50.731
+<v SPEAKER_2>Das auch natürlich. Also da kommen viele Faktoren rein und auf Wikipedia bezogen. Konventionen, Relevanzkriterien, Freundlichkeit, der Ansprache. Also da gibt es viele Kritikpunkte auch, keine Frage. Aber um jetzt mal auf der technischen Ebene zu bleiben, sind eben diese Faktoren oder diese Elemente wie Tabellen, Vorlagen einfach nicht mehr anwenderfreundlich. Und dort wird versucht im Laufe der nächsten Monate mit dem 98.000 Dollar schon ordentlich viel Geld.
+
+01:06:50.751 --> 01:06:51.711
+<v SPEAKER_1>Das ist schon ein bisschen was.
+
+01:06:53.251 --> 01:07:13.411
+<v SPEAKER_2>Da wurden jetzt Leute in den USA bei der Foundation für angestellt, die bestehende Erweiterung kontrollieren und prüfen sollen, ob man die einsetzen kann. Zum Beispiel diesen FCK-Editor, ob man den weiterentwickelt, ob man andere Ansätze geht, um eben mehr Visivik zu bringen. Das ist dringend notwendig.
+
+01:07:13.431 --> 01:07:19.231
+<v SPEAKER_1>Also es ist sozusagen ein akzeptiertes Problem. Also man weiß, dass es da brennt.
+
+01:07:19.611 --> 01:07:21.091
+<v SPEAKER_2>Absolut.
+
+01:07:21.111 --> 01:08:13.631
+<v SPEAKER_1>Ja, das wäre natürlich schick, wenn man da so einfach wie in so einer Textverarbeitung rummalen könnte. Und vor allem so für Tabellen gute Tools zu haben. Wobei, da muss ich auch sagen, habe ich jetzt auch, ich weiß gar nicht, hat Google Docs irgendwie so ein Feature? Ich weiß es gar nicht. Wahrscheinlich hat es das. Ich habe bloß noch nicht die Idee, mir das mal anzuschauen. Naja. Hier auch wieder die Gelegenheit, für die Hörer kluge Kommentare abzugeben in unserem Blog. Wie auch sonst immer. Tja, mit der Usability, wie ist denn das mit, also wenn ich jetzt mit einem Nicht-Desktop-Computer auf die Wikipedia zugreife, also so mobile Geräte. Es gibt ja noch nicht, wie das manche Webseiten haben, so ein Mobile Interface für die Wikipedia.
+
+01:08:13.651 --> 01:08:14.351
+<v SPEAKER_2>Doch, gibt es.
+
+01:08:14.371 --> 01:08:14.511
+<v SPEAKER_1>Gibt es?
+
+01:08:14.891 --> 01:08:32.791
+<v SPEAKER_2>Gibt es. Also mobile Version ist verfügbar unter dem, also für die deutschsprachige Wikipedia unter de.mobile.wikipedia.org. Das kann man für alle Sprachen machen, EN.mobile, IT.mobile, was auch immer.
+
+01:08:32.811 --> 01:08:33.731
+<v SPEAKER_1>Ach doch, okay.
+
+01:08:33.751 --> 01:08:34.451
+<v SPEAKER_2>Also gibt es schon.
+
+01:08:34.471 --> 01:08:36.031
+<v SPEAKER_1>Das ist eine relativ frische Geschichte, oder?
+
+01:08:36.051 --> 01:08:41.851
+<v SPEAKER_2>Ja, relativ frisch, wurde von einem Deutschen entwickelt und dann von der Foundation auch ein.
+
+01:09:11.191 --> 01:09:25.871
+<v SPEAKER_1>Bisschen toller, wenn die sozusagen MediaWiki-Ups wären. Also wenn ich jetzt, also es ist kein, ist es jetzt sozusagen ein Feature der Wikipedia-Installation und nicht so sehr ein Feature von MediaWiki?
+
+01:09:25.991 --> 01:09:58.971
+<v SPEAKER_2>Ja, das ist ein Feature von Wikipedia. Es gibt ein anderes Feature von MediaWiki, das ist ein Handheld-Skin. Der wird aber bis jetzt kaum eingesetzt. Der basiert auf einem sehr schlanken Skin. Der ist jetzt nicht auf die kleinen Mobiltelefone ausgerichtet, sondern wirklich auf größere, aber mobile Kommunikation. Sehr schlankes Interface, sehr schlanker Skin.
+
+01:09:58.991 --> 01:10:48.051
+<v SPEAKER_1>Skins haben wir noch gar nicht erwähnt. Das ist die Möglichkeit, die gesamte Präsentation in einer Seite zu steuern. Das ist aber auch wirklich verwirrend mit diesen Begriffen. Wenn man sich ein MediaWiki runterlädt, dann kommt es ja erstmal im Wikipedia-Style. Es sieht halt immer alles ein bisschen Wikipedia-isch aus. Muss ich auch sagen, finde ich es ein bisschen schade. Es wäre eigentlich mal ganz schick, dass wenn ich mir wirklich nur ein MediaWiki runterlade, dass es vielleicht ähnlich ist, aber so ein MediaWiki-Look hat, der nicht unbedingt immer sofort genauso ist wie Wikipedia. Du weißt vielleicht, was ich meine.
+
+01:10:48.071 --> 01:10:48.671
+<v SPEAKER_2>Ich weiß, was du meinst.
+
+01:10:48.691 --> 01:10:56.151
+<v SPEAKER_1>Das ist einfach mal so ein bisschen das Trend, aber das scheint bisher noch nicht stattgefunden zu haben. Das führt auch an diesen Skins. Das sind sie wahrscheinlich auch relativ komplex, oder?
+
+01:10:56.171 --> 01:11:51.751
+<v SPEAKER_2>Ja, das führt oft zu Verwirrung, wenn sich eine Firma ein eigenes MediaWiki aufsetzt, öffentlich Zugängliches und ich arbeite auch beim Support-Team mit, das E-Mails beantwortet. Und dann kommen auch schon mal Nachfragen. Immer, da hat jemand eure Software geklaut. Da hat jemand von Inhalten, jetzt vielleicht ganz zu schweigen, aber da hat euch jemand kopiert. Guckt man sich das an, es ist eine MediaWiki-Installation, lizenzkonform, ist open source, keine Inhalte von uns, alles wunderbar. Ein paar erklärende Zahlen, okay. Wünsche ich mir auch manchmal, dass die Standard-MediaWiki-Installation anders aussieht. Es gibt einen anderen schönen Skin, also ich fange anders an. Das, was wir heute in MediaWiki sehen, in Wikipedia sehen, nennt sich Monobook. Wo der Name herkommt, weiß ich jetzt gar nicht. Der wurde irgendwann mal Monobook getauft. So heißt einfach der Skin das Aussehen.
+
+01:11:52.071 --> 01:12:01.491
+<v SPEAKER_1>Das kam irgendwann mit, ich glaube mit MediaWiki 1.3 oder 1.4, dass das sozusagen eingeführt wurde. Vorher gab es noch diesen ganz altbackenen Look.
+
+01:12:01.511 --> 01:12:08.211
+<v SPEAKER_2>Genau, Cologne Blue, ich ist ja früher, wie auch immer.
+
+01:12:08.251 --> 01:12:09.371
+<v SPEAKER_1>Gibt es was anderes noch?
+
+01:12:09.391 --> 01:12:29.011
+<v SPEAKER_2>Ja, es gibt einen anderen Skin, der auch noch gepflegt wird, der heißt Modern. Modern ist seit dreiviertel Jahren im Jahr, wird auch mit ausgeliefert. Kann man sich in den Einstellungen auch persönlich aktivieren, auch in der Wikipedia. Ist ganz schick.
+
+01:12:29.031 --> 01:12:30.571
+<v SPEAKER_1>Und der kann auch alles?
+
+01:12:30.591 --> 01:12:31.791
+<v SPEAKER_2>Der kann auch alles.
+
+01:12:31.811 --> 01:12:42.011
+<v SPEAKER_1>Ich hatte mal früher mit anderen Skins herumoperiert, da lagen ja noch ein paar ganz alte rum, aber da hatte man irgendwie den Eindruck, das hat schon gar nichts mehr mit der Software zu tun.
+
+01:12:42.171 --> 01:13:26.571
+<v SPEAKER_2>Das Problem ist, der alten Skins gibt heute immer noch drei. Cologne Blue, Chicken und Classic. Die werden aber nicht effektiv gepflegt. Und wir haben aktuell das Problem. In der Wikipedia wurde jetzt eine Erweiterung aktiviert, um PDF zu erstellen, um ganze Bücher per PDF zu erstellen. Diese Extension basiert auf einem Hook in der Software, der mehr seitlich in der Variationsseite noch Punkte einbaut. Dieser Hook in der Software ist allerdings nur für MonoBook und Modern verfügbar. Und es gibt immer noch Benutzer, die schwören auf die alten Skins. Warum auch immer, die mögen irgendwelche Vorteile haben.
+
+01:13:26.591 --> 01:13:28.411
+<v SPEAKER_1>Aber denen fehlt dann einfach diese Funktionalität.
+
+01:13:28.411 --> 01:13:35.951
+<v SPEAKER_2>Richtig, denen fehlt diese Funktionalität. Und ich sage immer, Leute, lasst uns diese alten Skins einstampfen.
+
+01:13:35.971 --> 01:13:39.391
+<v SPEAKER_1>Wenn die nicht die gleiche Funktionalität haben, dann ist das krass.
+
+01:13:39.411 --> 01:14:11.471
+<v SPEAKER_2>Es hat keinen Entwickler und man muss ja dazu sagen, die Entwickler arbeiten ja fast alle auch freiwillig in MediaWiki mit. Es gibt zwei bezahlte Entwickler von der Foundation, die allerdings mehr oder weniger die Server laufen, zu versuchen laufen zu haben. Und noch ein Freiberuflicher, der mitarbeitet, alle anderen arbeiten. Spaß an der Freude. Und dort hat keiner Spaß daran, die alten Skins zu pflegen.
+
+01:14:13.811 --> 01:15:52.351
+<v SPEAKER_1>Aber es ist trotzdem auf jeden Fall einer der Mängel. Das habe ich bisher auch bei keinem Wikibus gesehen, aber MediaWiki wäre natürlich prädestiniert dafür, dass man, das ist mal wieder ein toller Vorschlag von mir, dass man das soweit treibt, dass man eben so ein Skin von vorneherein dahingehend entwickelt, dass es eben leicht sehnbar ist, dass man dem sozusagen schnell und einfach mit CSS einen bestimmten Look verpasst, der eben zum jeweiligen Ding passt. Ich habe diverse MediaWiki-Installationen gesehen, wo sich ein paar Designer echt richtig einen Bein ausgerissen haben. Bloß wenn man es halt schon mit so einer Problematik zu tun hat, dass bestimmte Features auch von einem Skin berücksichtigt werden, dann wird es natürlich schwierig, dann auch mitzuhalten, weil dann kommt irgendeine Änderung und dann bricht das und dann wird es halt irgendwie knifflig. Naja, aber es ist auf jeden Fall auch ein bekanntes Klagelied im Developer-Land, wenn ich das richtig mitbekomme. Tja, ich weiß jetzt nicht inwieweit man noch auf diese ganzen Features, die mehr oder weniger bekannt sind, eingehen sollten. Vielleicht so ein letztes, was ich hier noch notiert hatte. Fußnoten sind ja auch so eine schöne Sache. Da hat sich auch irgendwie einiges verändert, mit so lustigen Späßen, dass man auf die Fußnote klickt, dann springt man nach unten und wenn man da wieder draufklickt, dann springt man wieder zurück. Aber es gibt dann auch noch so eine Funktionalität mit Referenzen, die waren mir auch nicht so ganz klar.
+
+01:15:52.371 --> 01:15:54.791
+<v SPEAKER_2>Ich denke, das ist aber das Gleiche.
+
+01:15:54.811 --> 01:16:04.251
+<v SPEAKER_1>Ja, es funktioniert irgendwie so ähnlich, aber dass man nicht so eine automatische Numerierung hat, sondern so einen bestimmten String, das ist alles nur eine Konvention, wie man diese Fußnote schreibt.
+
+01:16:04.271 --> 01:17:15.411
+<v SPEAKER_2>Wie macht man das? Das ist auch wieder eine Extension zur MediaWiki, die Side-Extension, mit der man mit einem bestimmten Markup, in dem Fall ist es ein Spitzerklammer auf, Ref, Spitzerklammer, und dann steht im Buch von Heinz Mayer, Seite 88, oder eine URL, egal, und dann über den Schließendestag, Spitzerklammer, Schrägstrich, Ref, Spitzerklammer zu. Und so wird dann die Referenz, die Fußnote markiert, ob man das jetzt eine Fußnote nennt, Quellennachweis. Da streiten sich dann die Historiker mit den Naturwissenschaftlern. Das ist jetzt eine Frage der Notation. Und unten baut man dann References ein, auch in so einem Pseudo-HTML-Tech. Und dort wird dann die Fußnote aufgeführt und auch anklickbar zum Hoch- und Runterspringen. Ob man die jetzt mit Buchstaben, mit A, B, C, D, E, F oder mit fortlaufenden Nummern, 1, 2, 3, 4, 5 macht, das ist eine Frage der Einstellung im Wiki selber.
+
+01:17:15.431 --> 01:17:30.011
+<v SPEAKER_1>Verstehe. Das heißt, man hat es aber schon mit einem ziemlichen Syntax-Wildwuchs aufzutun. Man hat irgendwie Wiki-Syntax, dann kann man irgendwie so HTML, aber nur manches. Und dann gibt es aber auch Sachen, die sehen aus wie HTML, sind aber kein HTML, sondern sind eigentlich auch wieder wikispezifische Syntax.
+
+01:17:30.031 --> 01:18:00.851
+<v SPEAKER_2>Richtig, ja. Das sind dann diese Parsatext, dieses Ref, was ich ansprach. Da gibt es noch einen, um Computercode, Sourcecode lesbar darzustellen, zu formatieren. Der wird mit Source angefangen, Source und dann den Sprachcode. Um Gedichte gibt es Symporium. Was haben wir noch? Ja, ein paar noch.
+
+01:18:00.871 --> 01:18:33.871
+<v SPEAKER_1>Okay, also lustige Sachen. Ah ja, wo ich vorher ein bisschen abgekommen bin bei den mobilen Interfaces und den Möglichkeiten da sozusagen auch, was weiß ich, so dedizierte Programme zu machen, die auf Wikipedia-Inhalt zu greifen. Wir haben es vorhin schonmal so ansatzweise erwähnt mit den Commons. Du hast erwähnt, es gibt ein API. Gibt es, also wie viele APIs gibt es? Gibt es nur eins und da ist das jetzt ein Teil davon, diese Commons-Funktionalität, über die wir gesprochen haben? Oder gibt es mehrere verschiedene APIs?
+
+01:18:33.891 --> 01:18:56.451
+<v SPEAKER_2>Es gibt mittlerweile nur noch eine API. Mit der kann man mittlerweile eigentlich alles machen. Man kann mit ihr Artikel, also Seiten lesen, Metadaten zu den Seiten lesen, also ob eine Seite geschützt ist, gesperrt ist, ob es eine Weiterleitung ist, ob es...
+
+01:18:56.471 --> 01:18:57.271
+<v SPEAKER_1>Namensraum....
+
+01:18:57.291 --> 01:19:17.691
+<v SPEAKER_2>ob Namensraum zur Seite. Kann man auslesen. Man kann den Inhalt der Seite auslesen. Man kann aber auch seit der Version 1.13 die Write API einschalten. Das heißt, man kann über die API Artikel Inhalte manipulieren, also bearbeiten im positiven Sinne.
+
+01:19:17.711 --> 01:19:24.571
+<v SPEAKER_1>Was heißt Inhalt der Seite? Kann ich mir den Inhalt der Seite so im Source Code geben lassen, oder kann ich mir den auch fertig gerendert geben lassen?
+
+01:19:24.591 --> 01:19:27.811
+<v SPEAKER_2>Man kann sich auch fertig gerendert geben lassen.
+
+01:19:27.831 --> 01:20:09.471
+<v SPEAKER_1>Als HTML sozusagen. Also wenn ich es richtig verstanden habe, kann man eben auf Inhalte sozusagen zugreifen. Man hat dann entweder, kriegt man eben die normale Webseite, so wie man das kennt, wenn man rumbraucht. Oder wenn man halt über die URL bestimmte Parameter übergibt, kann man dann eben auf diese Inhalte zugreifen. Und man kann jetzt sozusagen lesen und sich den Inhalt aber auch als rohes HTML kommen lassen, sodass man das dann einfach in irgendeinem Programmfenster oder so anzeigt. Also so einen einfachen Reader zu machen, der jetzt auch für das eigene MediaWiki ist, aber Teil eines Programmes ist eigentlich keine besondere Schwierigkeit. Nein.
+
+01:20:09.491 --> 01:20:21.391
+<v SPEAKER_2>Man kann sich auch als XML ausgeben lassen, als JSON, als PHP. Es gibt insgesamt zehn verschiedene Formate, mit denen man sich die Daten ausgeben lassen kann.
+
+01:20:21.411 --> 01:20:27.971
+<v SPEAKER_1>Je nachdem, was sozusagen auf der anderen Seite wartet und gerne die Daten hätte.
+
+01:20:27.991 --> 01:21:17.711
+<v SPEAKER_2>Interessant an der API ist noch eine Funktion, die auch mit der Version 1.13 neu reingekommen ist. Wenn man eine eigene MediaWiki-Installation hat, kann man mit vier Zahlen in der Local Settings auch den Zugriff auf Wikimedia Commons oder auf eine andere zentrale Mediodatenbank einrichten. In dem Fall jetzt auf Wikimedia Commons. Das heißt, wenn ich den Dateinamen weiß, bin ich einfach ein Bild ein, das auf Commons liegt. Das wird dann mit meinem lokalen Wiki angezeigt. Ich brauche keine Dateien rüber kopieren. Ich muss keine Lizenz-Information rüber kopieren. Die werden automatisch transparent mit angezeigt, wenn ich auf das Bild klicke. Eigentlich eine sehr schöne Sache.
+
+01:21:17.731 --> 01:21:24.891
+<v SPEAKER_1>Also entweder man nimmt die Commons oder man baut sich seine eigenen Commons bei, weil man selber irgendwie eine Farm von mehreren Wikis hat. Dann kann man auch seine Sachen hinterlegen.
+
+01:21:24.911 --> 01:21:26.531
+<v SPEAKER_2>Ja, natürlich.
+
+01:21:26.551 --> 01:21:35.171
+<v SPEAKER_1>Wie ist denn das mit Bild und Ton eigentlich? Also Bilder gibt es ja schon lange, aber Ton und Video gibt es ja jetzt auch.
+
+01:21:35.191 --> 01:22:30.891
+<v SPEAKER_2>Gibt es auch. Sie werden auch schon seit einem Jahr rund über einen integrierten Player in Artikel eingebunden und abgespielt werden. Je nachdem, was der Computer für Codex hat, QuickTime oder über einen Java-Player. Oder das sind so Quartado-Player, das sind die wichtigsten. Eine ganz tolle Sache, allerdings auch noch etwas von der Größe beschränkt. Das heißt beschränkt, wir können auf Commons mittlerweile Dateien bis zu 100 MB hochladen. Was noch in der Entwicklung ist, ist einmal die native Darstellung von Videos im Browser. Aktuell hat die Mozilla Foundation 100.000 Dollar gespendet, damit mit dem neuen Firefox 3.1 Videos nativ dargestellt werden können.
+
+01:22:30.911 --> 01:22:32.491
+<v SPEAKER_1>Was meinst du, mit nativ dargestellt werden?
+
+01:22:32.511 --> 01:22:35.271
+<v SPEAKER_2>Das heißt, da gibt es irgendein Video-Tech.
+
+01:22:35.411 --> 01:22:37.871
+<v SPEAKER_1>Ah, mit dem neuen HTML5-Standard.
+
+01:22:37.971 --> 01:23:20.231
+<v SPEAKER_2>Genau, richtig. Was aber auch in der Mache ist, dass die meisten Videos heute im Format AVI oder Container-Format vorliegen, aber in nicht freien Videokodex. Wikipedia, Wikimedia Commons akzeptiert allerdings nur Videoformate, die frei sind, frei von Patentrechten. Konkret OXIORA, OGG, OGV als Endung. Und hier wird gerade entwickelt, dass On-The-Fly das Video umkodiert wird.
+
+01:23:20.251 --> 01:23:26.071
+<v SPEAKER_1>Das heißt, man lädt das irgendwie als AVI Impact 4 oder was auch immer hoch, und dann ist es im Hintergrund einfach umgerechnet.
+
+01:23:26.091 --> 01:23:54.051
+<v SPEAKER_2>Richtig. Während des Hochladens wird umgerechnet und ein patentfreies OGV wird dann gespeichert. Das befindet sich in der Entwicklung. Ich denke, das wird auch im ersten Halbjahr kommen. Und wo einige Leute sehr aktiv dran sind, Videoschnitt. Dass man sich bestimmte Videos zusammenkopieren kann, mit Untertitel versehen kann.
+
+01:23:54.071 --> 01:24:02.591
+<v SPEAKER_1>Also Videoschnitt, dass man sozusagen auch aus Videos, die vorliegen, Bestandteile herausnimmt und auch die dann sozusagen nur zitiert.
+
+01:24:02.611 --> 01:24:06.571
+<v SPEAKER_2>Habe ich jetzt noch nicht gesehen. Ich weiß, es wird sehr aktiv dran entwickelt.
+
+01:24:06.591 --> 01:25:02.871
+<v SPEAKER_1>Demo habe ich jetzt aber noch nicht gesehen. Auch ein nicht ganz unwichtiges Thema, gerade bei dem Wikipedia-Projekt, aber auch jetzt für Leute, die MediaWiki benutzen, ist ja auch die Mehrsprachigkeit. Man merkt ja schon, das greift ja recht tief. Also auch so, dass schon so Templates dann auf einmal Vorlage heißen. Das macht es natürlich in gewisser Hinsicht einfach, aber in gewisser Hinsicht auch immer ein bisschen knifflig, gerade wenn man mal in Wikipedias was editieren möchten, die jetzt vielleicht nicht so die eigene Sprache sind. Auch wenn man da vielleicht eigentlich die Finger davon lassen sollte, aber manchmal traut man sich ja so eine Änderung auch zu. Aber wie ist denn das grundsätzlich mit der Lokalisierung? Also es gibt ja das User-Interface auch natürlich in allen möglichen Sprachen. Man kann das auch umschalten. Geht das eigentlich pro Benutzer mittlerweile? Oder ist das sozusagen eine Einstellung des jeweiligen Wikis?
+
+01:25:03.191 --> 01:26:10.011
+<v SPEAKER_2>Also es gibt zwei Einstellungen. Einmal die Contentsprache. Also das ist pro Wiki. In der Regel bei uns ist das Deutsch. Aber jeder Benutzer kann sich seine eigene Benutzersprache einstellen. Angefangen von AA wie AFA bis hin zu ZU wie Zulu. Wie weit jetzt diese Lokalisierung? Gerade diese sind, weiß ich nicht, aber es stehen über 200 Sprachen zur Auswahl. Und vorgenommen wird die Lokalisierung der Sprachen von auch von einem Team Freiwilliger. Die hat allerdings nichts direkt mit der Wikimedia Foundation zu tun. Das passiert im Translate-Wiki. Ein, wie gesagt, von der Wikimedia Foundation unabhängiges Wiki, das sich auf Übersetzungen, nicht nur vom MediaWiki, auch von anderen Sachen, Open Source-Sachen spezialisiert hat. Und dort arbeiten dann mehrere hundert Leute an alle möglichen Sprachen zusammen.
+
+01:26:11.911 --> 01:26:16.011
+<v SPEAKER_1>Wie viele deutsche Varianten gibt es denn? Eine?
+
+01:26:16.031 --> 01:26:27.351
+<v SPEAKER_2>Es gibt Deutsch, deutsch-schweizerisch, ohne scharfes S, deutsch-österreichisch oder jener drin vorkommt.
+
+01:26:27.371 --> 01:26:31.051
+<v SPEAKER_1>Das war's. Ich vermisse ja noch eine Variante.
+
+01:26:31.071 --> 01:26:31.571
+<v SPEAKER_2>Welche?
+
+01:26:32.731 --> 01:26:36.831
+<v SPEAKER_1>Ich hätte gerne eine Deutsch-du- und eine deutsche-sie-Version. Die gibt es. Tatsächlich?
+
+01:26:36.851 --> 01:26:54.251
+<v SPEAKER_2>Die gibt es, jawohl. Die habe ich vor einem Jahr zusammen mit einem Kollegen, der bei Wikia arbeitet, eingeführt. Man kann sich sein Deutsch, DE Formel heißt die genau genommen, einstellen. Dann wird man vom System mit sie angeredet.
+
+01:26:54.271 --> 01:26:55.191
+<v SPEAKER_1>Ah, kick an.
+
+01:26:56.311 --> 01:27:06.231
+<v SPEAKER_2>Problem dabei, das System redet einen mit sie an, der Wikipedianer redet einen weiter mit du an. Weil er erkennt natürlich nicht, dass du gesiezt werden möchtest.
+
+01:27:06.831 --> 01:28:39.971
+<v SPEAKER_1>Ach so, naja gut, da geht es ja auch weniger um mich. Da geht es mir auch weniger um die Wikipedia, sondern da geht es mir halt wirklich hier auch um das Thema, nämlich MediaWiki. Wenn man in so einer Firma so etwas installiert, dann gibt es ja eine Menge Schlipse, die sich dann auf denselben getreten fühlen. Andererseits, wenn man jetzt für so eine Community da so ein Wiki installiert, dann wird man die ganze Zeit von dieser Software gesiezt. Das nervt natürlich auch maßlos. Ich habe irgendwann mal, glaube ich, angefangen. Ich weiß nicht, was war denn der Standard. Der Standard war, dass es ursprünglich... Ursprünglich war es die... Genau, das hat mich total genervt. Dann habe ich das irgendwie geändert. Und dann kam natürlich die nächste Software-Version. Dann musste man das irgendwie wieder miteinander verheiraten. Und das ging alles hinten und vorne nicht. Okay, super. Das geht jetzt auch. Ja, jetzt komme ich so langsam ein bisschen an das Ende, was ich so hinterfragen wollte. Gibt es denn noch irgendwelche Dinge, die wir unbedingt erwähnen müssen? Jetzt insbesondere zu... Was ist denn... Was ja schon klar geworden ist, es gibt einen extremen Bedarf, MediaWiki zu verbessern. Wir haben jetzt eine ganze Menge Sachen aufgezählt, vieles passiert, eine Menge bleibt offen. Du hast ja schon so ein bisschen beklagt über den mangelnden Zulauf, oder habe ich das nur so verstanden? Also was ist denn nun, wenn jemand beitragen möchte, was ist denn der beste Weg da, Teil der Community, der Entwickler-Community zu werden?
+
+01:28:39.991 --> 01:29:30.091
+<v SPEAKER_2>Der beste Weg ist, sich zu engagieren, indem man Patches schreibt, indem man kurze oder längere Verbesserungen vorschlägt und die konkret mit Code untermauert. Es gibt den Baccilla. In Baccilla werden alle Fehler, nicht nur Fehler, auch Erweiterungswünsche eingetragen. Und wenn man jetzt weint, ich habe jetzt hier für diese Problembeschreibung die Lösung, dann reiche ich einen Patch ein. Der Patch wird dann auch von anderen begutachtet. Je kürzer er ist, je knackiger er ist, desto mehr Chancen hat man auch, dass er angenommen wird. Wenn ich einen Programmteil komplett umschreibe, mit 10.000 Zeilen, dann hat keiner Zeit, sich das anzugucken. Kurze, knackige Korrekturen an der Software werden meistens relativ schnell umgesetzt.
+
+01:29:30.111 --> 01:29:34.331
+<v SPEAKER_1>Wenn man etwas umfangreicheres schreiben will, dann kann man sich ja also Extensions bemühen.
+
+01:29:34.351 --> 01:29:34.891
+<v SPEAKER_2>Richtig.
+
+01:29:34.911 --> 01:29:36.231
+<v SPEAKER_1>Wie viel gibt es da mittlerweile?
+
+01:29:36.671 --> 01:29:37.871
+<v SPEAKER_2>Über 300.
+
+01:29:37.891 --> 01:29:46.091
+<v SPEAKER_1>Über 300? Oha. Dann müssen wir das glaube ich nochmal vertiefen. Was sind denn da so die tollsten? Ein paar haben wir ja schon erwähnt. Waren das schon die tollsten?
+
+01:29:47.271 --> 01:29:51.291
+<v SPEAKER_2>Die tollsten? Sagen wir so. Die wichtigsten.
+
+01:29:51.311 --> 01:29:54.011
+<v SPEAKER_1>Wie viele sind denn bei der Wikipedia aktiviert?
+
+01:29:54.031 --> 01:30:09.151
+<v SPEAKER_2>In der Wikipedia sind aktiviert, kann ich dir sofort sagen. Der Fachmann schaut nach. Ja, der Fachmann schaut nach. Das kann man sich nämlich nachgucken online mit über die Spezialseite specialdoppel.version.
+
+01:30:10.151 --> 01:30:11.411
+<v SPEAKER_1>Ah, da ist das aufgeführt.
+
+01:30:11.431 --> 01:30:35.351
+<v SPEAKER_2>Da ist das aufgeführt für alle offen lesbar. Wenn die Wikipedia läuft, hier, sie läuft wieder, Wahnsinn. Wird einem angezeigt, was aktiviert ist. Man sollte es nicht glauben, aber ein paar Basisfunktionen, die man erwarten würde, zum Beispiel Benutzung unbenennen, ist eine Extension. Die ist nicht im Core mit drin. All Rename User heißt die.
+
+01:30:35.371 --> 01:30:52.771
+<v SPEAKER_1>Ah, das geht jetzt auch. Das ist ja toll. Das sind ja richtig viele, die hier aktiv sind. Okay, dann erwähne noch mal vielleicht diejenigen, die jetzt hier auch erwähnenswert sind. Also wenn ich das normale MediaWiki runterlade, dann ist es erstmal keine aktiv?
+
+01:30:52.791 --> 01:31:08.431
+<v SPEAKER_2>Keine. Okay. Wichtig für Otto Normal-Administrator ist sicherlich der Rename User zum Unbenennen von Benutzern, weil man glaubt es kaum, die Leute vertippen sich immer wieder beim Registrieren.
+
+01:31:10.651 --> 01:31:11.831
+<v SPEAKER_1>Genau, und dann ist es zu spät.
+
+01:31:11.851 --> 01:31:26.931
+<v SPEAKER_2>Dann ist es zu spät. Wichtig oder schön ist auch der Category Tree, mit dem man Kategorien bzw. Kategorie Strukturen und Bäume sich anschauen kann, wenn man extensiv mit Kategorien arbeitet.
+
+01:31:26.951 --> 01:31:27.931
+<v SPEAKER_1>Die wir auch noch nicht erwähnt haben.
+
+01:31:27.951 --> 01:31:31.351
+<v SPEAKER_2>Die haben wir auch noch nicht erwähnt, das stimmt.
+
+01:31:31.371 --> 01:31:36.951
+<v SPEAKER_1>Dann hat sie ja schon erwähnt, es ist Central Auth zum Zusammenführen der Benutzerkonten.
+
+01:31:38.551 --> 01:31:47.451
+<v SPEAKER_2>Der Check-User ist mehr eine interne Geschichte, um Benutzer, die mit Sockenpuppen arbeiten, zu identifizieren.
+
+01:31:49.291 --> 01:31:50.711
+<v SPEAKER_1>Mit Sockenpuppen?
+
+01:31:52.491 --> 01:32:10.371
+<v SPEAKER_2>Denen reicht es nicht, als Einbenutzer zu agieren, sondern sich mit mehreren Benutzernamen zu registrieren und zu argumentieren, zu arbeiten und abzustimmen. Wenn sie gesperrt werden, kommen neue Namen und werden wieder gesperrt. Das kann man mit Check-User.
+
+01:32:10.391 --> 01:32:13.711
+<v SPEAKER_1>Dann kann man versuchen, solchen Leuten auf die Schliche zu kommen?
+
+01:32:14.271 --> 01:32:19.311
+<v SPEAKER_2>Da werden dann die IP-Adressen nachgeguckt. Das ist ein sehr striktes Verfahren.
+
+01:32:19.331 --> 01:32:21.151
+<v SPEAKER_1>Schnüffel-Plugin, sozusagen?
+
+01:32:21.171 --> 01:32:22.711
+<v SPEAKER_2>Ein gewisser Maßen.
+
+01:32:22.731 --> 01:32:26.991
+<v SPEAKER_1>Aber jetzt vielleicht mal von der reinen Funktionalität her.
+
+01:32:27.011 --> 01:32:30.511
+<v SPEAKER_2>Was wir noch haben sind Flector Visions für die stabilen Versionen.
+
+01:32:31.051 --> 01:32:32.811
+<v SPEAKER_1>Auch das ist eine Extension, verstehe ich.
+
+01:32:32.831 --> 01:32:38.751
+<v SPEAKER_2>Genau. Die sind nicht weiter relevant.
+
+01:32:38.771 --> 01:32:41.051
+<v SPEAKER_1>Das Zeit hast du ja auch schon erwähnt.
+
+01:32:41.071 --> 01:32:46.431
+<v SPEAKER_2>Genau, das Zeit habe ich erwähnt. Easy Timeline ist zur Darstellung von Zeitleisten.
+
+01:32:47.431 --> 01:32:52.731
+<v SPEAKER_1>Ah ja, das ist ja auch so eine der Features, die gibt es schon eine Weile.
+
+01:32:52.751 --> 01:32:53.871
+<v SPEAKER_2>Die gibt es schon ecklich lang.
+
+01:32:56.571 --> 01:33:10.151
+<v SPEAKER_1>Das ist ganz praktisch so, wenn man Geschichtsartikel hat und dann eine Zeit leistet. Aber das kann man natürlich auch in seinem Projekt verwenden, für was auch immer, was eine Zeitachse hat. Dann rendert das eine hübsche Grafik.
+
+01:33:10.171 --> 01:33:26.611
+<v SPEAKER_2>Was ich auch in einer sehr schönen Extension finde, ist ImageMap. Mit der kann ich Grafiken mit verschiedenen Hyperlinks unterlegen. Wenn ich mir eine Weltkarte habe mit den sieben Kontinenten, klicke ich auf ein Bild und lande dann auf der Bildbeschreibungsseite.
+
+01:33:26.631 --> 01:33:30.551
+<v SPEAKER_1>Was man nicht will. Man will auf ein Kontinent klicken und dann kommt man auf das andere.
+
+01:33:30.571 --> 01:34:04.831
+<v SPEAKER_2>Genau, ich will auf Amerika klicken, auf Nordamerika, dann will ich auf einen Artikel Nordamerika. Das kann ich mit der ImageMap machen. Dort kann ich wirklich über Polygonzüge sagen. Ich möchte den Kontinent umranden, mehr oder weniger grob. Oder das Meer, den Atlantik, das Nordmeer, was auch immer, kann man beliebig viel mitmachen. Net ist auch Inputbox für Formularfelder, relativ einfache Art. PASA Functions zum Rechnen und für IF-Abfragen.
+
+01:34:04.851 --> 01:34:09.611
+<v SPEAKER_1>Das hat man ja schon erwähnt, aber warte mal, HTML-Formulare, wozu braucht man die denn?
+
+01:34:10.391 --> 01:34:29.091
+<v SPEAKER_2>Zum Beispiel, um ein Suchfeld zu erstellen, ein Suchformular, wo ich dann ein Archiv durchsuchen kann. Die Details verstecke ich alle im HTML-Code und sage, gib mir nur dein Suchwort ein und suche mir das Archiv.
+
+01:34:29.111 --> 01:34:39.831
+<v SPEAKER_1>Dass man sozusagen eine spezielle Suche innerhalb des WGs hat und nicht diese globale Suche durch alles verstehe. Okay, das kann natürlich auch sehr hilfreich sein.
+
+01:34:39.851 --> 01:35:04.511
+<v SPEAKER_2>Synthetizeilite ist für Programmierer sehr wichtig, um eine Hervorhebung von über 50 verschiedenen Programmiersprachen farblicher Art zu bewerkstelligen. Dann der Ork-Händler, auch nett zur Darstellung oder zum Inline-Abspielen von Videos und Audiodateien.
+
+01:35:09.431 --> 01:35:29.691
+<v SPEAKER_1>Der Rest ist vor allem viel Spam, Capture, Schnickes, irgendwie, bitte nicht elitieren und so weiter. Das ist natürlich ein echtes Problem für die Wikipedia. Das braucht man jetzt in seiner normalen Installation nicht unbedingt, aber dass natürlich die Wikipedia ein enormes Spam-Ziel ist, das ist klar. Wobei das eigentlich ganz gut im Griff ist, oder?
+
+01:35:32.531 --> 01:36:08.531
+<v SPEAKER_2>Ja, also es ist schon insofern relativ gut im Griff, dass Spam recht frühzeitig oder vandalismusallgemein recht frühzeitig erkannt wird und ausgefiltert wird bzw. revertiert wird. Aber es rutscht doch immer viel durch. Und das war eben auch mit dem Grund für die stabilen Versionen zu sagen, hey, wir wollen einfach nicht mehr, das kann ich mal anzeigen dem normalen Leser. Man ist manchmal erstaunt, wie viel Blödsinn noch durchrutscht. Offensichtlicher Blödsinn. Ob das nun Link-Spam ist oder irgendwelcher Heinz-Dorf-Vandalismus.
+
+01:36:10.991 --> 01:36:16.171
+<v SPEAKER_1>Ja, das Problem haben wir natürlich nicht nur in Wikipedias, sondern generell im Internet.
+
+01:36:16.191 --> 01:36:17.331
+<v SPEAKER_2>Ja klar.
+
+01:36:17.351 --> 01:36:24.371
+<v SPEAKER_1>Überall kommt dieser ganze Blödsinn rein. Ja, Raimond, jetzt haben wir es aber, oder?
+
+01:36:24.971 --> 01:36:25.151
+<v SPEAKER_2>Ja.
+
+01:36:25.171 --> 01:37:02.131
+<v SPEAKER_1>Gibt es noch irgendwie so einen Blick in die Zukunft? Also was ist denn, abgesehen von den Sachen, die wir so angesprochen haben, wo es halt offensichtlich hakt oder wo man sich überhaupt erstmal einig werden muss, wo ist man sich denn einig, wohin man diese ganze Software hinentwickeln will? Also geht es im Wesentlichen wirklich nur eigentlich um den Bedarf der Wikipedia und das treibt alles an? Oder gibt es auch andere Richtungen, in die man sich da entwickeln möchte? Was ist so der zukünftige Ausblick? Nahe Zukunft, ferne Zukunft?
+
+01:37:02.151 --> 01:37:43.431
+<v SPEAKER_2>Nahe Zukunft, sprich halbes, dreiviertel Jahr, Visibility verbessern. Da sprachen wir drüber, alles mit Blick auf Wikipedia zugegeben. Es gibt, wir sagten es auch über 300 Extensions, viele davon sind wirklich so speziell, dass sie nicht für die Wikipedia geeignet sind, sondern für irgendwelche Firmeninstallationen, Vereinsinstallationen. Aber der Core von MediaWiki, der ist schon auf Wikipedia ausgerichtet. Und ich denke, das wird ja auch in Zukunft bleiben. Muss kein Nachteil sein, weil durch die große Community kommen natürlich auch viele Wünsche.
+
+01:37:46.911 --> 01:37:49.171
+<v SPEAKER_1>Da gibt es mehr Wünsche, als es Programmierer gibt.
+
+01:37:49.191 --> 01:38:13.611
+<v SPEAKER_2>Zum einen das. Und dadurch hat man eben eine große Wunschsammlung, die im Endeffekt für alle gut ist. Es mag natürlich Wünsche geben, die nie erfüllt werden, weil sie keiner, die irgendwo firmenspezifisch sind. Aber da muss man halt selber programmieren, sich Leute raussuchen, die MediaWiki was können und die das dann programmieren können.
+
+01:38:13.631 --> 01:38:24.971
+<v SPEAKER_1>Als Letztes habe ich vergessen, darauf noch mal nachzuhaken. Ist das nur mein Eindruck oder gibt es relativ viele deutsche MediaWiki-Entwickler?
+
+01:38:27.911 --> 01:38:34.551
+<v SPEAKER_2>Ich glaube, du hast recht. Es gibt relativ viele. Auf Ani fallen mir vier, fünf ein.
+
+01:38:35.631 --> 01:38:37.351
+<v SPEAKER_1>Die jetzt auch alle so am Chor mitbasteln.
+
+01:38:37.371 --> 01:38:38.611
+<v SPEAKER_2>Die auch am Chor mitbasteln.
+
+01:38:38.631 --> 01:38:46.131
+<v SPEAKER_1>Das ist ja schon fast ein Drittel oder die Hälfte fast. Hat das einen besonderen Grund?
+
+01:38:46.151 --> 01:38:54.651
+<v SPEAKER_2>Vielleicht weil die deutschsprachige Wikipedia, ich bin schon wieder bei Wikipedia, aber mit die zweitgrößte ist. Und dort entsprechend viele.
+
+01:38:54.671 --> 01:39:05.391
+<v SPEAKER_1>Ja, die Wikipedia scheint in Deutschland wirklich auf einen extrem fruchtbaren Boden gefallen zu haben. Das ist also wirklich ein Projekt, was hier im deutschsprachigen Raum ist. Da sitzt sie ja nicht nur auf Deutschland.
+
+01:39:05.431 --> 01:39:08.731
+<v SPEAKER_2>Ja, ich mich auch gerne immer deutschsprachig.
+
+01:39:12.391 --> 01:40:19.891
+<v SPEAKER_1>Die macht mit. Und wenn ihr auch Lust habt mitzumachen, habt ihr jetzt gehört, wie ihr das machen könnt. MediaWiki ist auf jeden Fall extrem hilfreiches Stück Software. Und man kann es eben für mehr verwenden als nur für Enzyklopedien. Wir setzen es ja auch zum Beispiel beim CCC seit Jahren für die Veranstaltungsorganisation. Auch quasi als Webseite für Veranstaltungen an. Weil es einfach manchmal viel einfacher ist, die Leute das irgendwie alles selber schreiben lassen zu können. Dass man sich dort einfach selbst organisiert. Da sind Wikis nach wie vor ungeschlagen. Und MediaWiki eben auch extrem tauglich. Aber auch für interne Dokumentation aller Art taugt es auf jeden Fall. Wer sich also das noch nicht angeschaut hat und sich immer noch mit gruden Datenbanken rumschlägt, unter Umständen ist ein Wiki die bessere Angelegenheit. Nur wenn man halt zu viel mit Metadaten macht und wirklich programmatisch da sozusagen Maschinen lesbarer Informationen erwartet, denke ich, da ist noch einiges zu machen. Wie auch immer. Ein tolles Projekt. Und ich danke dir, Raimond, für die Ausführung.
+
+01:40:19.911 --> 01:40:21.431
+<v SPEAKER_2>Es war mir eine Freude.
+
+01:40:21.451 --> 01:40:36.791
+<v SPEAKER_1>Um Chaos Radio Express 111 zum Abschluss zu bringen, da sind wir jetzt. Und ich bedanke mich fürs Zuhören. Danke nochmal für Rede und Antwortstellen. Das war's und wir hören uns bald wieder hier bei Chaos Radio Express.

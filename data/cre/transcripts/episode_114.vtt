@@ -1,0 +1,550 @@
+WEBVTT
+
+00:00:09.540 --> 00:00:15.020
+<v SPEAKER_1>Die Blogs sind wie alles andere. Du vergesst jeden, basierend auf seiner eigenen Verwaltungsweite und Intelligenz und all das.
+
+00:00:15.040 --> 00:00:33.740
+<v SPEAKER_2>Und wenn du möchtest, kannst du nur die Dinge von verschiedenen Dingen beherrschen, oder wenn du willst, kannst du versuchen, eine breiter Perspektive zu bekommen, wo du Leute findest, die aus ihrer Erinnerung sind, oder Leute findest, die sehr komplex, interessant und urantiv Journalismus machen.
+
+00:01:01.137 --> 00:01:51.237
+<v SPEAKER_1>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 114. Mein Name ist Tim Pritlove und ich bin immer noch auf Reisen. Heute hat mich der Weg nach Darmstadt geführt, wo es ein neues Thema zu bearbeiten gilt. Ein Thema, was mir schon seit langem auf den Nägeln brennt und in meiner Liste schlummert, wo es bloß schwierig war, jemanden zu finden, der darüber kundig Auskunft geben kann. Das Thema lautet LLVM, die Low Level Virtual Machine, ein Name, der sehr irreführend ist, wie wir sicherlich im Laufe dieses Gesprächs hier noch feststellen werden. Und dieses Gespräch führe ich gleich noch mit einem zweiten Tim, nämlich Tim Sander. Hallo, guten Tag. Ja, vielleicht mal kurz zu dir. Was ist so dein persönlicher Werdegang und Hintergrund, dass du dich mit solchen Themen beschäftigen musst und möchtest?
+
+00:01:52.457 --> 00:01:58.017
+<v SPEAKER_2>Ich möchte, kann man sagen, ich habe an der Uni, bin ich wissenschaftlicher Mitarbeiter gewesen.
+
+00:01:58.037 --> 00:01:59.217
+<v SPEAKER_1>An der Uni in Darmstadt.
+
+00:01:59.237 --> 00:02:58.417
+<v SPEAKER_2>Hier in TU Darmstadt und habe mich mit Hardware-Software-Co-Design beschäftigt. Das ist der Entwurf von, der parallele Entwurf von Software und Hardware, sodass die gut zusammenspielen. Und da ich dann eben, das ist ein sehr weites Feld und da habe ich mich eben damit beschäftigt, dass man eben Algorithmen, die man für Software übersetzt hat oder die man in Software implementiert hat, eben auch auf der Hardware-Seite laufen lassen kann. Sprich, dass man Programme, die quasi in Software normalerweise laufen, auch auf andere Rechenplattformen migrieren kann. Und da brauchte ich irgendeine Plattform, eine Beschreibungssprache, mit der ich eben eine gemeinsame Beschreibungssprache habe, womit ich dann Software, also Binaire-Code, quasi Objekte für Prozessoren herleiten kann, aber eben auch Hardware generieren kann.
+
+00:02:59.597 --> 00:03:18.497
+<v SPEAKER_1>Also Hardware Software Co-Design, interessanter Begriff. Also es geht nicht so sehr generell um die Frage, dass die Hardware gut mit der Software zusammenspielt, weil das will man ja sowieso eigentlich immer haben, sondern es geht explizit um dieses, wenn ich etwas in Software habe, wie kann ich das in die Hardware, also daraus Hardware machen oder in einer Hardware laufen lassen?
+
+00:03:18.517 --> 00:03:31.837
+<v SPEAKER_2>Also die Idee war, dass man, oder ist, dass man quasi den Prozess, wenn man jetzt ein Softwareprogramm zur Laufzeit stoppen kann, sagen kann, ich will den jetzt in der Hardware weiter laufen lassen.
+
+00:03:31.857 --> 00:03:37.097
+<v SPEAKER_1>Tatsächlich so flüssig, also nicht nur, dass man das so produziert, sondern dass man das auch wirklich so groß macht.
+
+00:03:37.117 --> 00:04:00.277
+<v SPEAKER_2>Genau, also das war auch recht schwierig, wie ich dann im Laufe der Arbeit festgestellt habe, habe ich mir am Anfang nicht vorgestellt, dass es so schwierig ist. Aber gut, jedenfalls bin ich im Laufe der Arbeit, ich hatte erst einen anderen Ansatz und dann im Laufe der, der hat leider nicht funktioniert und bin dann eben, habe ich mir verschiedene Compiler angeguckt.
+
+00:04:00.297 --> 00:04:14.537
+<v SPEAKER_1>Was ist denn das eigentliche Problem dabei? Also wenn man sagt, das ist jetzt so schwierig, was ist es so schwierig? Weil Hardware, also weil die Prozessoren, die üblicherweise die Software ausführen, anders gebaut sind oder ist das eher so?
+
+00:04:14.557 --> 00:05:16.677
+<v SPEAKER_2>Also wenn du, wenn du jetzt Hardware entwirfst, dann rollst du eigentlich deinen Algorithmus in der Ebene aus, in der Fläche. Und wenn du das, während die Software das quasi in der Zeit macht, das heißt sie hat einen Bus, da wird gemultiplexed und das wird eigentlich in der Ebene ausgerollt. Und diese Umsetzung von Fläche auf Zeit ist schwierig. Also das hat diverse, bringt diverse Probleme mit sich, weil es halt komplett unterschiedliche Domänen sind. Weil man dann eben auch in der Hardware, im Speziellen, seine Daten in der Fläche verteilt hat. Wenn man jetzt eine CPU hat, die hat ihren Registersatz. Wenn man die stoppt, dann kommt man an alle Register dran. Man hat auf alles Zugriff. Man hat auch auf alle Daten Zugriff, weil man ein Bussystem hat, was es ein erlaubt, auf alle Daten zuzugreifen. Das ist bei der Hardware normalerweise nicht so. Weil da, wenn man die effizient bauen will, baut man eine Pipeline, etc. Und kommt nicht so direkt an die Daten ran.
+
+00:05:16.697 --> 00:05:17.217
+<v SPEAKER_1>Verstehe.
+
+00:05:17.237 --> 00:05:26.417
+<v SPEAKER_2>Und das, ja gut. Und das war halt eben so der Kontext, wie ich dann geguckt habe, wie kriege ich denn jetzt bitte ein System, wo ich drauf aufsetzen kann, damit ich nicht...
+
+00:05:26.437 --> 00:05:29.557
+<v SPEAKER_1>Wo du sozusagen Raum und Zeit in einen Kontext bekommen kannst.
+
+00:05:29.837 --> 00:05:40.037
+<v SPEAKER_2>Genau, ne? Ja, und da habe ich mir halt verschiedene Compiler angeguckt. Ich hatte mir natürlich dann auch den GCC zum Beispiel angeguckt.
+
+00:05:40.057 --> 00:05:57.837
+<v SPEAKER_1>Ist das jetzt primär eine Problematik des Übersetzens von Software? Also ist das sozusagen... Also entsteht dieses Problem, dass man irgendwie ein System, was für Zeit und ein System, das für Platz, ausgelegtes zusammenbringen kann, dadurch wie ein Programm übersetzt wird?
+
+00:05:59.377 --> 00:06:26.597
+<v SPEAKER_2>Zum Teil. Also es ist auch eine Art und Weise, wie es beschrieben wird. Also wenn man jetzt Software entwickelt, zumindest wenn man jetzt von der klassischen Seite her ausgeht, und ich bin eigentlich auch davon überzeugt, dass man im Moment immer noch keine schönen Methoden gefunden hat, parallele Vorgänge schön auszudrücken. Also es gibt natürlich verschiedenste Ansätze und Ideen. Vielleicht ist es auch naturgemäß, dass sobald man Sachen parallel laufen hat, einfach viel mehr schiefgehen kann.
+
+00:06:27.557 --> 00:06:40.637
+<v SPEAKER_1>Ich muss ja auch nochmal hinterfragen, warum wolltest du denn das eigentlich machen? Also ich meine, was ist sozusagen die Intention, das so zusammenzubringen? Warum will man etwas zur Laufzeit in eine Hardware übergehen lassen? Was ist die Anwendung dafür?
+
+00:06:40.657 --> 00:07:10.097
+<v SPEAKER_2>Also ein Szenario wäre gewesen, dass man zum Beispiel sagt, okay, man hat jetzt ein mobiles Computersystem, was eben mal zum Beispiel einen Netzanschluss hat, mal nicht. Mal hat man beliebig viel Strom zur Verfügung, mal hat man ein beschränktes Powerbudget, wo man eben sagen kann, okay, wenn ich an der Steckdose hänge, kann ich beliebige Co-Prezessoren quasi im Sinne von FPGAS, die man dann reconfiguriert, einfach neu reconfigurieren und habe dann halt ein vielfaches an Rechenleistung.
+
+00:07:10.117 --> 00:07:20.157
+<v SPEAKER_1>Aber eben auch ein vielfaches an Stromverbrauch und in dem Moment, wo die Netzversorgung wegfällt, sagt man alles wieder zurück, wir machen das jetzt alles hier in einem Prozessor, dann ist es zwar langsamer, aber verbraucht nicht so viel Strom.
+
+00:07:20.177 --> 00:07:34.537
+<v SPEAKER_2>Das wäre ein Szenario. Ein anderes ist zum Beispiel, dass man sagt, wir wollen zum Beispiel fehlertolerante Systeme entwerfen und wollen zum Beispiel sagen, wenn wir jetzt irgendwo einen Ausfall haben, wollen wir den Prozess migrieren können auf eine andere Rechenplattform. Verstehe.
+
+00:07:34.557 --> 00:07:36.677
+<v SPEAKER_1>Dass man mal so ein Modul rausziehen kann?
+
+00:07:36.697 --> 00:07:49.037
+<v SPEAKER_2>Also es ist jetzt keine sehr anwendungsnahe Forschung gewesen. Es ist Forschung, klar. Ich habe es nur ein bisschen eher als Grundlagenforschung verstanden.
+
+00:07:51.457 --> 00:07:53.477
+<v SPEAKER_1>Das ist ja auch mal nötig.
+
+00:07:53.497 --> 00:07:58.117
+<v SPEAKER_2>Wo man dann direkt in ein Produkt rausfällt, sage ich mal. Oder eine direkte Anwendung.
+
+00:07:58.817 --> 00:08:18.657
+<v SPEAKER_1>Ja, aber es ist ja nachvollziehbar. Ich meine, gerade im mobilen Bereich, das Beispiel, finde ich macht sehr viel Sinn. Zumal Co-Prozessoren auch nichts Seltenes sind. Also gerade Grafikkarten, denke ich mal, das fällt da irgendwie jedem beein. Und da schnell rein, schnell raus. Das ist ein Zweck des Strombedarfs. Nachvollziehbare Forderungen.
+
+00:08:18.797 --> 00:08:51.237
+<v SPEAKER_2>Ja, ich denke auch gerade im Hinblick jetzt auf unsere Prozessorentwicklung, die wir so erleben, dass wir mittlerweile an Grenzen stoßen. Wir können zwar viele, also Moore's Law geht im Moment noch weiter, wir können viele, viele Transistoren auf einen Chip packen. Aber wie wir jetzt die Transistoren so verwenden, dass wir da eine Leistungssteigerung herkriegen. Wir machen, was weiß ich, wir können bald 16 Fachprozessoren kaufen. Aber die Algorithmen, wie man dann eine Software, die jetzt eine Applikation beschleunigt, da drauf abbilden können, das haben wir nicht.
+
+00:08:51.257 --> 00:08:55.257
+<v SPEAKER_1>Also Parallelisierung ist ja auch ein Thema in dem Zusammenhang?
+
+00:08:55.277 --> 00:09:03.217
+<v SPEAKER_2>Naturgemäß, ja. Aber das ist natürlich nur ein kleiner Teil von der Gesamtproblematik, die man sich da betrachten könnte.
+
+00:09:03.237 --> 00:09:05.237
+<v SPEAKER_1>So, und dann hast du dich bei Compilern umgeschaut?
+
+00:09:05.257 --> 00:09:06.157
+<v SPEAKER_2>Genau.
+
+00:09:06.177 --> 00:09:07.337
+<v SPEAKER_1>Beim GCC?
+
+00:09:07.357 --> 00:10:37.757
+<v SPEAKER_2>Ich habe mir erst den GCC angeguckt, weil der halt, denke ich mal, der bekannteste ist. Guck mal rein, der hat mir nicht sehr gut gefallen, weil man merkt, dass er eine gewachsene Struktur ist. Er ist relativ alt und ich habe ihn mir angeguckt und es hat sehr lange gedauert, bis ich mich da ein bisschen reingefitzt hatte und zu verstehen, wie sie damit arbeiten. Und dann habe ich mich noch ein bisschen weiter umgeguckt, habe ein paar andere Systeme angeschaut und bin dann eben auch beim LLVM gelandet. Und was mir sehr schön gefallen hatte, war, dass sie eine eindeutige Beschreibungssprache haben. Das ist die LLVM, also die Low Level Virtual Machine. Das ist eigentlich auch gleich die Beschreibungssprache. Ich weiß nicht, wie man das Deutschen schön fasst, aber das LLVM oder wie auch immer man es mit dann nennt, also als Sprache selbst auffasst. Und dass außerdem der Compiler, also das LLVM-System selbst, sehr schön modular aufgebaut ist. Das heißt, es ist zwar an sich auch ein sehr komplexes System, wie es Compiler naturgemäß sind, aber dadurch, dass es eben in kleine Module aufgeteilt wird und die dann wieder voneinander abhängen und Abhängigkeiten gehen, aber die man genau definiert angeben kann. Es ist eigentlich ein sehr schönes, wartbares System.
+
+00:10:38.417 --> 00:11:11.897
+<v SPEAKER_1>Das heißt, LLVM, GCC, denken wir ja immer, ist der C-Compiler, aber genau genommen, es wurde ja auch irgendwann mal umbenannt, ist ja mittlerweile die GNU Compiler Collection. Das heißt, es ist eigentlich ein System, in dem mehrere Elemente sich befinden, mit dem man eben Source Code aus unterschiedlichen Quellen, also unterschiedlichen Programmiersprachen, auch auf unterschiedliche Architekturen hinübersetzen kann. Und dann baut man sich das so zusammen. Und LLVM, trotz des Namens, ist eigentlich genau etwas Vergleichbares?
+
+00:11:11.917 --> 00:11:26.437
+<v SPEAKER_2>Also der Name selbst, denke ich, der geht darauf zurück, dass es eben ein Forschungsprojekt war. Und eine Sache, wo das Forschungsprojekt auch mit drauf abgezählt hat, war eben Lifelong Optimization.
+
+00:11:26.457 --> 00:11:30.837
+<v SPEAKER_1>Das heißt, dass der Code, solange er läuft, sofort während immer wieder optimiert werden kann.
+
+00:11:30.857 --> 00:12:23.697
+<v SPEAKER_2>Genau, also dass man halt eben der Ansatz war, dass man Optimierungen findet, die man eben auch zur Laufzeit zum Beispiel einsetzen kann. Und da kam eben auch, denke ich, die Idee und der Name her, dass man eben eine virtuelle Maschine hat, als theoretisches Konstrukt gesehen. Jetzt nicht so sehr, wie im Sinne von Java, wo man eben sagt, okay, wir haben eine virtuelle Maschine, auf die bilden wir alles ab. Das ist im Endeffekt so ähnlich. Aber von der Herangehensweise eben anderer, dass man sagt, okay, im Hinblick auf lebenslange Optimierung quasi. Und daher kommt dieser Name mittlerweile, denke ich, gerade auch mit der Entwicklung, ist der Forschungsfokus ein bisschen in den Hintergrund geraten. Eben auch gut, es gibt da noch Ansätze dazu zu dieser lebenslangen Optimierung. Aber ich denke mal, im Moment, es gab auch mal, steht da wirklich das Compiler-System dahinter.
+
+00:12:24.837 --> 00:13:00.317
+<v SPEAKER_1>Das heißt, LLVM ist ein Compiler-Framework, eine Sammlung von Modulen zum Zwecke des Übersetzens von Source-Code in laufenden Code für Prozessoren optimiert, aber eben auch nicht nur eine Optimierung zum Zeitpunkt der Übersetzung, sondern möglichst auch viel Übersetzung zur Laufzeit. Warum will man denn das? Warum will man denn noch zur Laufzeit etwas optimieren? Warum glaubt man nicht, wir haben ja schön Zeit beim Übersetzen, dann machen wir mal den schnellsten Code, den man sich vorstellen kann, und dann haben wir den, und dann läuft er auf den Prozessor ganz fix.
+
+00:13:00.817 --> 00:13:53.837
+<v SPEAKER_2>Also da gibt es verschiedene Stichpunkte. Das eine wäre zum Beispiel dann Just-in-Time-Compile-Läufe, dass man eben sagt, man hat zum Beispiel Skript, Sprache, ähnliche Sachen, die man entweder interpretieren kann, was eben der LLVM auch in gewisser Weise unterstützt, dass man sagt, wir haben einen Interpreter, der direkt den Bytecode interpretiert, aber man kann diesen Bytecode eben nicht nur interpretieren, sondern dann auch direkt in Maschinencode übersetzen. Und je nach Anwendungsfeil hat man beim Start meistens dann einen gewissen Malus für das Kompilieren, aber dann eben doch deutliche Beschleunigung im Vergleich zu interpretieren. Insofern ist das LLVM-System auch im Bereich von Just-In-Time-Compile-Bereichen doch sehr populär, denke ich mal. Da tut sich zumindest ein.
+
+00:13:53.857 --> 00:14:02.657
+<v SPEAKER_1>Das ist sozusagen Teil des Systems. Das heißt, diese Fähigkeit, Just-In-Time-Übersetzungen zu machen, ist eine Eigenschaft von LLVM. Das kriegt man sozusagen for free.
+
+00:14:02.677 --> 00:14:17.637
+<v SPEAKER_2>Das ist genau. Das kommt da mit. Und das, denke ich, geht auch mit darauf zurück, dass eben der Ansatz war, mit dieser lebenslangen Optimierung, dass das mit dem Jitting, wie es umgangssprachlich genannt wird, also Just-In-Time-Compile, sehr gut zusammenpasst.
+
+00:14:17.857 --> 00:14:49.597
+<v SPEAKER_1>Das heißt, es sind sozusagen mit der Live-Long-Optimization vor allem auch Optimierungen für Sprachen möglich, die man sonst nicht optimieren könnte, weil man eben zur Übersetzungszeit eigentlich noch gar nicht weiß, was man optimieren würde, weil eben alles dynamisch ist, Datentypen dynamisch sind zum Beispiel. Dynamische Sprachen gibt es ja nur noch in Nöcher, die gerade auch sehr populär und sehr wichtig sind. Aber Skript ist ja nur ein Beispiel. Und an der Stelle macht dann sozusagen Digit auch extra Sinn, weil man eben auch erstmal überhaupt etwas optimieren kann, was sich sonst der Optimierung entzieht.
+
+00:14:49.617 --> 00:15:06.057
+<v SPEAKER_2>Verstehe ich das richtig? Ja, ich denke mal natürlich mal gerade mehr Informationen für die Optimierung. Irgendwie feiern das dann... Also da bin ich jetzt überfragt, inwieweit das dann ein großer Vorteil ist. Also habe ich mich nicht...
+
+00:15:06.077 --> 00:15:25.817
+<v SPEAKER_1>Es könnte vielleicht ein Vorteil sein. Gut. Woraus besteht denn jetzt LLVM? Also wie muss man sich das... Ist das ein Programm, das man startet und dann hat man das? Oder sind das Bibliotheken, die man selber erst noch zum Leben bringen muss? Was sind so die Komponenten?
+
+00:15:26.237 --> 00:16:15.677
+<v SPEAKER_2>Also das Wichtigste denke ich ist dieser sogenannte Compiler Driver. Das ist quasi das Frontend, womit man den LLVM anspricht. Der sorgt halt dafür, dass er die Kommandozeilen, Parameter interpretiert, etc. Und dann eben die verschiedenen Komponenten anstößt, aus denen der LLVM besteht. Der LLVM selbst kann man eigentlich grob in drei Gruppen eingruppieren. Also er hat den Frontend, das wichtigste Frontend im Moment ist, denke ich, das basiert auch noch auf dem GCC. Das heißt, für den LLVM gibt es einen GCC-Frontend, der dann LLVM-Beschreibungssprache generiert.
+
+00:16:16.317 --> 00:16:20.117
+<v SPEAKER_1>Das heißt, das Frontend ist sozusagen, wo kommt der Code her, den er dann compilert?
+
+00:16:26.257 --> 00:16:41.557
+<v SPEAKER_2>Genau, das Frontend setzt es nicht in Maschinensprache um, sondern alles setzt in LLVM auf die LLVM-Beschreibungssprache um. Das heißt, man kann verschiedene Frontends sich vorstellen, die eben dann auf diese LLVM-Beschreibungssprache abbilden.
+
+00:16:41.577 --> 00:16:44.297
+<v SPEAKER_1>Okay, was wären jetzt andere Beispiele für ein Frontend?
+
+00:16:44.677 --> 00:16:48.317
+<v SPEAKER_2>Mir fällt dummerweise gerade nur Brainfuck rein.
+
+00:16:48.337 --> 00:16:59.037
+<v SPEAKER_1>Also, Programmiersprachen, sozusagen der eigentliche Code, der jetzt erstmal einen Source-Code nimmt und kompilieren will und ersetzt es halt in irgendwas um.
+
+00:16:59.057 --> 00:16:59.337
+<v SPEAKER_2>Genau.
+
+00:16:59.457 --> 00:17:18.117
+<v SPEAKER_1>Das heißt, diese LLVM, diese Beschreibung, die quasi erzielt werden soll, ist vergleichbar mit dem Pseudocode. Heißt das so beim GCC? Weiß nicht genau. Also sozusagen eine Intermediate Form, eine vorübersetzte Form, die dann später auf die jeweilige Prozessorechtiktoe übersetzt wird?
+
+00:17:18.137 --> 00:18:41.797
+<v SPEAKER_2>Nein, da muss man schon sagen. Also die Zwischendarstellung basiert eigentlich auf Single Static Assignments. Also dass man sagt, man hat, wenn man jetzt irgendwelche Befehle oder irgendwelche komplexen Instruktionen hat, und die werden immer heruntergebrochen auf maximal Operationen mit zwei Operanten. Das heißt, was weiß ich, wir haben einen komplexen Ausdruck und der wird immer so lange heruntergebrochen, dass es immer zwei Operanten maximal und ein Zieloperant sozusagen ist. Und das ist eigentlich so, wenn man sagt, im Compiler-Bereich eine relativ neue Entwicklung dieses SSA, ist jetzt auch schon wieder relativ abgehangen. Das ist in den 90er-Jahren, wo das eigentlich so aufgekocht ist. SSA, Single Static Assignments. Der GCC hat auch mit der Version 4a, haben die eben auch auf diese SSA-Form eigentlich umgestellt. Wobei, die haben zwei verschiedene Beschreibungsformen, wo sie dann hin und her konvertieren, was das ganze historisch eigentlich bedingt ist. Auf jeden Fall, das, was man, denke ich, festhalten sollte, die ganze Mittelwehr eigentlich, also die ganzen Optimierungsläufe, auf denen der LLVM arbeitet, das sind alles einzelne modulare Passes, also Durchläufe, die angetriggert werden. Und die arbeiten alle auf diese Zwischendarstellung. Und es gibt quasi nur diese Zwischendarstellung.
+
+00:18:42.177 --> 00:18:46.757
+<v SPEAKER_1>Okay, das heißt, um den LLVM überhaupt erst mal einen Gang zu kriegen, muss man erst mal irgendwas in diese Zwischendarstellung bringen?
+
+00:18:46.777 --> 00:18:48.177
+<v SPEAKER_2>Genau, und das sind dann die Frontends.
+
+00:18:48.197 --> 00:19:01.497
+<v SPEAKER_1>Okay, alles klar. Das heißt, Frontend schaufelt quasi erst mal Daten in das System. Und ein Frontend ist auch ein Plugin in den GCC, sodass man quasi damit alle Programmiersprachen, die GCC übersetzt, auch in LLVM übersetzen kann.
+
+00:19:01.517 --> 00:19:16.637
+<v SPEAKER_2>Fast, ja. Also ich denke mal, die wichtigsten GCC Frontends sind unterstützt. Ich glaube, mit dem Java-Frontend gab es eine Zeit lang Probleme. Also die müssen eigentlich alle einzeln ein bisschen angepasst werden, damit sie halt passen abgehen.
+
+00:19:16.657 --> 00:19:19.057
+<v SPEAKER_1>Aber es geht wahrscheinlich mit C, C++ zum Beispiel.
+
+00:19:19.077 --> 00:19:38.997
+<v SPEAKER_2>Genau. Also C, C++, Fortran und Java geht, glaube ich, auf jeden Fall. Mit den anderen Objective-C geht, glaube ich, auch. Aber ich bin mir da nicht ganz sicher. Aber man kann eigentlich schon sagen, dass ein großes Char, die der GCC unterstützt, eben auch von dem GCC LLVM Frontend unterstützt.
+
+00:19:39.137 --> 00:19:55.277
+<v SPEAKER_1>Okay, das heißt, das ist sozusagen der Shortcut. Man kann sozusagen LLVM schon zum Einsatz bringen mit einer bestehenden Compiler-Architektur. Das heißt, man nimmt halt einfach Source-Code, schmeißt ihn in den GCC. Aber die eigentliche Übersetzung und Maschinencode macht dann der LLVM, anstatt dass es die GCC-Systematik selber macht.
+
+00:19:56.017 --> 00:20:23.097
+<v SPEAKER_2>Ja, und ich denke, der Punkt, weshalb das so entstanden ist, ist, dass es eben gerade, wenn man jetzt einen C++-Parser hat, der ist sehr komplex. Und da haben die LLVM-Entwickler eben gesagt, okay, wir haben schon einen schönen Parser. Und warum setzen wir den nicht einfach ein und verändern den einfach nur so, dass er in unserer Beschreibungssprache quasi ausgibt?
+
+00:20:23.117 --> 00:20:39.917
+<v SPEAKER_1>Aber grundsätzlich ist das Frontend dafür gemacht, sozusagen auch andere, neue Compiler, die mehr oder weniger spezifisch für LLVM arbeiten und die dann sozusagen auch die Vorteile gegebenenfalls auch noch ein bisschen besser nutzen als jetzt dieses GCC-Frontend einbauen?
+
+00:20:39.937 --> 00:21:37.737
+<v SPEAKER_2>Ja, also ich denke mal, das GCC-Frontend ist jetzt nicht irgendwie nur ein Rückstock, der verwendet wird, sondern das ist eigentlich schon ein fester Bestandteil mit vom LLVM. Ich denke mal, also historisch denke ich, wenn ich das richtig verstanden habe, kann man es so sehen, dass der ursprünglich der LLVM auch mal gedacht war, dass man quasi direkt den GCC so verändert, dass er eben nur eine Beschreibungssprache verwendet. Aber das war eben unter anderem auch aus politischen Gründen nicht so gewollt, weil wenn man eben eine einheitliche Beschreibungssprache hat und hat da quasi nach dem Frontend, lässt den Code rausfallen, dann kann man eben an der GPL wieder umgehen. Und das war glaube ich, da gab es einige politische Spannungen zwischen den Entwicklern, weshalb es dann zu dem LLVM kam.
+
+00:21:37.757 --> 00:21:42.397
+<v SPEAKER_1>GCC ist GPL, ganz klar. Und LLVM steht unter welcher Lizenz?
+
+00:21:42.437 --> 00:21:48.077
+<v SPEAKER_2>LLVM ist BSD-Lizenz oder EBSD-ähnlich, denke ich.
+
+00:21:48.097 --> 00:21:50.517
+<v SPEAKER_1>Und hat natürlich von daher ganz andere Dimensionen.
+
+00:21:50.537 --> 00:22:06.417
+<v SPEAKER_2>Ja, das ist klar. Aber eben auch, also ich glaube, da gab es am Anfang schon eine gewisse Zusammenarbeit und aufgrund dieser Tatsache ging es dann auseinander. Ich kann da falsch liegen, dass es so den Eindruck, den ich gewonnen habe.
+
+00:22:06.437 --> 00:22:08.397
+<v SPEAKER_1>Gibt es denn noch andere Frontends?
+
+00:22:08.417 --> 00:22:41.257
+<v SPEAKER_2>Es gibt, also wie gesagt, das Klang-Frontend ist in Arbeit. Also das ist ein eigenes Frontend, was eigentlich aus dem Verlangen der LLVM-Entwickler hervorgegangen ist, dass sie eben nicht nur ein GCC-Frontend haben, was eben Klang ist ein C++-Objective-C-Frontend für LLVM. Das ist relativ jung, das ist jetzt glaube ich zwei, drei Jahre alt.
+
+00:22:41.277 --> 00:22:49.337
+<v SPEAKER_1>Das heißt, wenn man Klang oder C lang, wenn man das mit dem restlichen LLVM kombiniert, hat man im Prinzip einen eigenständigen C-Compiler.
+
+00:22:49.357 --> 00:23:20.837
+<v SPEAKER_2>Dann hat man einen eigenständigen C-Compiler. Also was vielleicht dann noch fehlt, sind Assembler. Also sprich, dass man viele Frontends geben nicht unbedingt direkt Maschinencode aus, sondern Assembler. Also Menschen lesbaren, nicht Maschinen lesbaren Assembler. Und das heißt, da braucht man dann gegebenenfalls noch ein Assembler, der eben den Maschinencode in Maschinensprache, Objektcode übersetzt. Aber ansonsten kann man sagen, ja, das ist ein komplettes, mit dem LLVM vergleichbares Compiler-System.
+
+00:23:20.857 --> 00:23:21.917
+<v SPEAKER_1>Mit dem GCC vergleichbares?
+
+00:23:22.757 --> 00:23:42.097
+<v SPEAKER_2>Ja, mit dem GCC vergleichbares Compiler-System. Und ich denke mal, längerfristig hat der LLVM dadurch, dass er eben sehr modular ist und von der Programmierstruktur her deutlich moderner ist, auch ein, finde ich, sehr großes Potenzial.
+
+00:23:42.117 --> 00:23:56.617
+<v SPEAKER_1>Okay, das heißt, um uns jetzt mal der Struktur zu nähern, wir haben also ein Frontend oder mehrere Frontends, also eine Ebene von Frontends. Was ist da drunter? Worauf trifft dieses Frontend?
+
+00:23:56.637 --> 00:25:06.497
+<v SPEAKER_2>Also alle Frontends bilden, wie gesagt, auf LLVM Zwischenbeschreibungen ab. Dann gibt es die, ich nenne es jetzt mal Middleware, das sind alle Optimierungsläufe. Das heißt, wenn ich jetzt irgendwie sage, ich will, was weiß ich, zum Beispiel, dead code elimination, also dass man sagt, ich will gucken, welche Code-Teile werden überhaupt nicht ausgeführt, weil die Vorbedingungen, die kann man zum Beispiel wegwerfen oder solche Sachen. Dann eben, was auch sehr interessant ist, dadurch, dass die LLVM-Beschreibungssprache von ihr theoretisch auf Single Static Assignments aufbaut und man das immer auf sehr einfache Konstrukte herunterbricht, macht es auch die Optimierungsläufe einfacher, weil man eben keine komplexen Ausdrücke mehr hat, sondern maximal zwei operandige Ausdrücke. Und das macht eigentlich das Schreiben von Optimierungsläufen einfacher. Damit wären wir dann quasi bei der Middleware, wo eben, was weiß ich, alle compilertypischen Optimierungen, die man so kennt, drin.
+
+00:25:06.517 --> 00:25:20.777
+<v SPEAKER_1>Und das LLVM kommt sozusagen schon mit so einer größeren Menge von solchen Optimierungsdingern, die aber alle unabhängig voneinander implementiert sind? Wie viele sind das so, um sich das zu vorstellen? Das sind so 3, 5, 10, 100, eine Milliarde?
+
+00:25:20.797 --> 00:26:58.177
+<v SPEAKER_2>Also irgendwo im höheren zweistelligen Bereich sind es auf jeden Fall. Ich glaube 60, 70 würde ich mal tippen. Ich weiß es nicht genau. Um den Dreh, das ist schon einiges. Also wenn man jetzt sich anguckt, was die Standard-Compile-Options sind, also welche Optimierungen standardmäßig ausgeführt sind, das sind schon mehrere Zeilen, wenn man die als Option hintereinander hinschreibt. Also ich glaube, die Standard-Optionen sind 20, 30 verschiedene Parses, die bei einem Standard-Compiler, also wenn man Standard-Optimierung laufen lässt, ausgeführt werden. Wenn man dann diese Optimierungsstufe verlässt, dann kommt man eben zu dem Backend oder den verschiedenen Backends. Und da ist der LLVM relativ modular gehalten. Das heißt, es gibt eine Maschinenbeschreibung sozusagen, wo man eben festhalten kann, wie die Maschine als Zielsystem aussieht. Ich kenne mich da mit den Backends jetzt nicht so gut aus, weil ich direkt bei meiner Arbeit, direkt aus der LLVM-Beschreibungssprache abgebildet habe, weil ich eben direkt in Hardware abbilden wollte und nicht auf eine generische von Neumann oder Hevert-Architektur, die sich natürlich doch deutlich unterscheidet von der direkten Hardware-Abbildung. Aber auf jeden Fall sieht es so aus, dass die LLVM-Beschreibung dann von dem Backend übersetzt wird. Und da gibt es auch schon eine sehr schöne Infrastruktur, die es eben ermöglicht, dass man relativ schnell, also ich denke mal so einen Zeitraum von, es gibt Berichte, dass was weiß ich, in drei Monaten oder sowas in eine neue Architektur quasi eingeführt wurde von den LLVM.
+
+00:26:58.197 --> 00:27:01.577
+<v SPEAKER_1>Welche Architekturen sind denn sozusagen schon dabei?
+
+00:27:01.957 --> 00:27:16.477
+<v SPEAKER_2>Also der LLVM unterstützt X86, AMD 64, ARM, dann PowerPC natürlich. Ja, ich denke mal, das waren jetzt so die großen ganzen...
+
+00:27:16.497 --> 00:27:31.117
+<v SPEAKER_1>Also nicht alles Mögliche, aber halt schon mal das, was so im Desktop-Bereich vor allem verwendet wird mittlerweile, oder auch so im Laptop-Bereich, man auch ARM, also mobile Telefone usw. ist ja da sehr verbreitet.
+
+00:27:31.477 --> 00:27:42.577
+<v SPEAKER_2>Also was, wo es halt auch noch hingeht im Moment, dass sehr viele Vektor-Rechner-Hersteller eigentlich sehr interessiert sind am LLVM. Also man sieht auch, wenn man auf der Belling-Liste ist, dass immer wieder die Anfragen kommen.
+
+00:27:42.597 --> 00:27:44.097
+<v SPEAKER_1>Es gibt noch Vektor-Rechner?
+
+00:27:44.117 --> 00:27:45.277
+<v SPEAKER_2>Ja, auswendiglich.
+
+00:27:45.577 --> 00:27:49.097
+<v SPEAKER_1>Ja, weiß ich nicht.
+
+00:27:49.117 --> 00:27:54.977
+<v SPEAKER_2>Die dann eben sagen, okay, wir wollen jetzt diese und diese Vektor-Operationen unterstützt haben und könnte man das nicht in LLVM mit integrieren.
+
+00:27:55.577 --> 00:27:57.677
+<v SPEAKER_1>Also Vektor-Rechner im Sinne von...
+
+00:27:57.697 --> 00:28:06.297
+<v SPEAKER_2>Also Vektor-Operationen eben auch, also dass man quasi sagt, okay, wir haben jetzt quasi Daten-Arrays sozusagen.
+
+00:28:06.317 --> 00:28:07.737
+<v SPEAKER_1>Also so SIMD-Achtikuren.
+
+00:28:07.757 --> 00:28:08.837
+<v SPEAKER_2>Genau, in der Richtung.
+
+00:28:08.857 --> 00:28:12.257
+<v SPEAKER_1>Also massiv parallele Abläufe.
+
+00:28:12.277 --> 00:28:12.477
+<v SPEAKER_2>Genau.
+
+00:28:12.497 --> 00:28:14.077
+<v SPEAKER_1>Also Grafikkarten zum Beispiel.
+
+00:28:14.097 --> 00:29:06.257
+<v SPEAKER_2>Genau, Grafikkarten, da habe ich mich jetzt nicht so mit befasst. Ich habe es nur mit verfolgt so ein bisschen. Das ist eben auch für den OpenGL-Software-Stack, der da so auf der Linux-Seite quasi entsteht, auch mit angedacht ist, dass man alle Lücken, die so in der Grafik-Hardware sind, von einem optimierenden Compiler ausgefüllt werden. Also sprich, dass man sagt, wenn wir jetzt irgendwelche Shader-Programme haben, dass man die entweder direkt in den Backend steckt vom LLVM, der dann eben für die Grafikkarte, die entsprechenden Binär-Code rausfällt, das Shader-Programm für eine beliebige Grafikkarte, oder dass man dann eben sagt, okay, wir haben jetzt keinen Hardware-Shader, wir erzeugen Software-Code, der dann auf der CPU ausgeführt wird.
+
+00:29:07.117 --> 00:29:15.117
+<v SPEAKER_1>Sodass man einen Grafikkartentreiber präsentieren kann, der eigentlich alle Features hat und nur das auf der Hardware laufen lässt, was eben auch in dem Moment da ist.
+
+00:29:15.137 --> 00:29:15.477
+<v SPEAKER_2>Genau.
+
+00:29:15.497 --> 00:29:23.057
+<v SPEAKER_1>Und dass die Programme nicht abbrechen müssen oder irgendwas nicht anzeigen, das kostet dann mehr CPU. Und es ist die Frage, ob es dann noch reicht, aber es geht zumindest.
+
+00:29:23.077 --> 00:29:41.177
+<v SPEAKER_2>Genau, und das ist, denke ich, mit einem recht vielversprechenden Ansatz, wo ich eigentlich guten Mutes bin, dass da der freie 3D-beschleunigte Software-Stack einige größere Sprünge vorwärts macht, auch mittels LLVM.
+
+00:29:41.197 --> 00:31:13.657
+<v SPEAKER_1>Interessant. Bevor wir gleich komplett weg sind, zu den Backends nochmal. Also, um es jetzt nochmal zusammenzufassen. Also LLVM ist eine Sammlung von Modulen und es geht darum, oben erstmal etwas einzuspeisen in dieses System über die Frontends. Das kann jetzt entweder das sein, was ein GCC aus seinen Programmiersprachen macht oder eben ein speziell für LLVM gemachter Compiler, wie dieser C-Lang oder Clang-Compiler. Dann kommt das sozusagen in diesem LLVM-Format, in diese Mittelwehr, wo dann irgendwie eine größere Zahl von Bakterien auf dieses System geschossen werden, die dann zahlreiche Optimierungen und Umwandlungen vornehmen, um sozusagen schnelleren Code zu erzeugen. Und wenn man dann sagt, okay, es geht nichts mehr, schneller kriegen wir das jetzt nicht hin, dann bauen wir das dann eben konkret für die Prozessorearchitektur, die jetzt quasi unterstützt werden soll. Diese Zwischendarstellung, also dieses LLVM, was ja sozusagen auch Kern des Projektes war, wenn ich es richtig verstanden habe. Also damit fing es sozusagen an und die Überlegung war, wie wäre es denn, wenn wir das auf Basis einer, der Idee einer Virtual Machine machen und dann eben Low Level im Sinne von nicht so eine Virtual Machine wie jetzt eine JavaVM, die so alles Mögliche tut, sondern die im Prinzip auf genau diesen Bedarf hin zugeschnitten ist. Was macht das jetzt aus? Also was steckt drin in dieser Zwischendarstellung? Was macht das so besonders? Dass das jetzt für all diese Dinge besser geeignet ist, als das, was sich der GCC vorher ausgedacht hat zum Beispiel?
+
+00:31:14.677 --> 00:33:06.057
+<v SPEAKER_2>Ich denke mal, dass im Großen und Ganzen sind die Unterschiede nur gradueller Natur. Also LLVM wie GCC setzen beide eigentlich auf SSA auf. Also insofern sind sie vom theoretischen Modell her, gehen sie in dieselbe Richtung. Die Unterschiede sehe ich hauptsächlich im Praktischen, sprich in der Implementierung. Also ich würde jetzt nicht sagen, dass ich ein schlechter C++-Programmierer bin, aber nachdem ich mir das LLVM-Projekt ein bisschen näher angeguckt habe, würde ich schon sagen, dass ich da noch die eine oder andere Sache gelernt habe. Also das ist von der Code-Basis, finde ich, schon sehr gut. Es ist viel, viel aufgeräumter jetzt als der GCC. Es ist auch wesentlich einfacher, einen Einstieg zu finden, dadurch, dass man sich eben einzelne... Also es ist immer noch schwierig, einen Einstieg zu finden, weil man hat halt am Anfang mit einem riesigen System konfrontiert, wo man viele lose Enden hat, die man erst mal greifen muss und wo man sagen muss, okay, wie kriege ich diese ganzen Sachen jetzt eigentlich zusammen? Aber wenn man jetzt einmal sich da ein bisschen reingefitzt hat, dann hat man einmal eine sehr schöne Dokumentation, die man beim GCC nicht findet. Man hat eine sehr schöne Infrastruktur, auf die man zurückgreifen kann, die auch sehr schön modular und gekapselt ist. Es ist von der Software-Architektur einfach, finde ich, ein schönerer Ansatz. Und dann eben vom theoretischen Modell, dass es eben nur auf eine Beschreibungssprache setzt. Und das dann eben über diese Beschreibungssprache, gut, da komme ich gleich vielleicht nochmal drauf. Es gibt das Gimpel, ich kenne mich mit dem GCC, das ist schon ein paar Jahre her, wo ich mir das angeguckt habe.
+
+00:33:06.077 --> 00:33:07.697
+<v SPEAKER_1>Aber es gibt mehrere, sozusagen.
+
+00:33:07.717 --> 00:33:59.577
+<v SPEAKER_2>Es gibt mehrere und sie konvertieren auch zwischen denen zum Teil hin und her, weil historisch bedingt eben manche Sachen in der alten Beschreibungssprache, auf der arbeiten, manche auf der neuen. Und man sieht eben auch zum Beispiel beim Umstieg von der 3er auf die 4er Version, wo dann eben verstärkt auf SSA gesetzt wurde, dass der Compiler einige Performance-Regressionen hat, also dass er schlechter geworden ist, eben weil sie auf diese alte Optimierung weggeworfen haben, die halt schon sehr ausgereift und sehr im Fein Detailierten optimiert waren und dann eben die auf SSA basierten Sachen dann nicht ganz so optimiert waren, weil sie halt relativ jung waren. Und deshalb dann auch, dass man zum Teil hat, dass der Dreier, die Dreier-Version zum Teil performanteren Code erzeugt als die Vierer, weil es da im GCC quasi auch diese Umstellung gab.
+
+00:33:59.597 --> 00:34:02.637
+<v SPEAKER_1>Also LLVM ist sozusagen der Clean Approach.
+
+00:34:02.657 --> 00:34:43.917
+<v SPEAKER_2>Ich denke mal, das ist die Gnade der späten Geburt, dass er einfach sagen kann, okay, er ist später gekommen, er kannte die ganzen Ideen, die in den GCC mit rein oder den ganzen Compiler, also es ist ja nicht nur GCC in die Compiler-Architekturen hineingewachsen sind, die vielleicht im Nachhinein im GCC hineingebastelt wurden, im Nachhinein konzeptiell vorher quasi schon mit erfasst wurden. Und das ist natürlich ein schöner Ansatz, wenn man das schon im Konzept mit drinne hat, also wenn man sagt, okay, wir biegen unser Konzept jetzt so um, dass wir das neue Konzept auch mit abbilden können, weil es eben uns gewisse Vorteile bietet. Und das ist denke ich einer der Hauptpunkte, was den LLVM so stark macht, aus meiner Sicht.
+
+00:34:43.937 --> 00:34:45.777
+<v SPEAKER_1>Aber trotzdem, wie muss man sich so einen Zwischencode vorstellen?
+
+00:34:46.757 --> 00:34:54.417
+<v SPEAKER_2>Genau, also wenn man jetzt Assembler-Sprache kennt und guckt sich LLVM an, dann denkt man sich, ja, sieht sehr ähnlich aus.
+
+00:34:54.897 --> 00:34:57.537
+<v SPEAKER_1>Also man hat so Register und man hat so Werte.
+
+00:34:57.557 --> 00:35:07.857
+<v SPEAKER_2>Nein, das nicht. Aber man von den ganzen Operationen, die es gibt. Eigentlich kann man sagen, man hat alle Basisoperationen, die eine CPU kann, findet man im LLVM.
+
+00:35:07.877 --> 00:35:10.977
+<v SPEAKER_1>Also so was wie entwilen, subtrahieren, multiplizieren.
+
+00:35:11.277 --> 00:36:04.817
+<v SPEAKER_2>Aber dann eben nicht so was wie Register. Also das geht auch zurück auf SSA. SSA sagt, jeder Register oder jeder Datenplatz ist eineindeutig. Das heißt, wenn ich jetzt eine Zuweisung mache auf einen Wert, dann gibt es den genau ein einziges Mal. Das heißt, wenn ich jetzt eine Addition habe in meinem Programm, dann hat die genau einen eindeutigen Namen. Die finde ich immer wieder. Auch wenn ich fünf verschiedene Additionen hintereinander ausführe, ich habe jetzt zum Beispiel A plus B und C plus D, dann sind das zwei unterschiedliche Ausdrücke. Und die haben in der Zwischendarstellung immer einen eindeutigen Namen. Das heißt, man könnte sich das so vorstellen, man hat einen Assembler-Sprache mit einem unendlich großen Registersatz. Und jedes Ergebnis wird in einen neuen Registersatz geschrieben.
+
+00:36:04.837 --> 00:36:11.597
+<v SPEAKER_1>Und später ist es dann eine Aufgabe der Optimierung, das auf einen kleineren Reel-Bolt-Registersatz zu reduzieren.
+
+00:36:11.657 --> 00:36:34.557
+<v SPEAKER_2>Genau, also das, was dann quasi das Backend macht, ist eben diesen ganzen Boost an Registernamen quasi einzudampfen und dann eben Allokationen, Bindingen zu machen, welche Sachen werden wann auf welchem Hardwareplatz quasi ausgeführt oder gespeichert, je nachdem, was man für, wenn man jetzt von Registern spricht.
+
+00:36:35.597 --> 00:36:42.417
+<v SPEAKER_1>Habe ich da nicht immer noch eine ganze Menge zu tun im Backend oder sind das große Module?
+
+00:36:42.437 --> 00:37:54.377
+<v SPEAKER_2>Also ich denke mal, wo es am meisten zu tun gibt, also ich denke mal, im Backend, das Backend ist eben, wie ich es schon angesprochen hatte, sehr schön generisch, dass man, wenn man jetzt einigermaßen Standard-Architektur hat, relativ gut einfach sagen kann, okay, wir haben so und so viel Register, wir haben die und die Hardware-Einheiten und dann hat man relativ schnell ein Backend zusammen, was eben einem dann Assembler-Code ausspuckt, der dann diese ganzen Operationen macht. Insofern denke ich nicht, dass das auch in den Backends viel tut, außer dass man sagt, wir haben irgendwelche Hardware-Architekturen, wie Shader-Programme oder sowas, die wir haben wollen, die man eben neu von der LLVM-Darstellung auf irgendeine Hardware abbilden will. Aber dass im Backend jetzt so viel passiert, würde ich nicht sagen. Also das Einzige, ja, natürlich Optimierung, dass man sagt, okay, wie können wir es schneller machen? Also das ist auch mit einer der Punkte, wo die LLVM-Leute sehr drauf erpischt sind, effizienten Code zu schreiben. Das heißt, jetzt, wenn man LLVM nimmt, die Kompilzeiten vom LLVM liegen deutlich unter denen vom GCC.
+
+00:37:54.397 --> 00:37:56.377
+<v SPEAKER_1>Die Kompilzeiten vom C oder jetzt?
+
+00:37:56.417 --> 00:38:03.877
+<v SPEAKER_2>Wenn man jetzt sagt, man hat ein C-Programm und will das übersetzen, bis das Objekt hinten rausfällt, die Zeit quasi, die dafür benötigt wird.
+
+00:38:03.897 --> 00:38:13.957
+<v SPEAKER_1>Sprechen Sie jetzt von C lang, also Klängen im Vergleich zu dem GCC-Programm? Oder nur sozusagen ab der Stelle, wo es in die Zwischendarstellung übersetzt wird?
+
+00:38:13.977 --> 00:38:43.617
+<v SPEAKER_2>Auch schon LLVM GCC ist schon schneller als der GCC. Also LLVM GCC Frontend ist schon schneller als der GCC. Wenn man dann noch Klängen dazu nimmt, also ich weiß nicht, die haben behauptet, dass sie Faktor 10 schneller sind. Also ich habe es jetzt selbst nicht ausprobiert bisher, weil die können halt oder konnten nur einen kleinen Teil von C. Mittlerweile können sie den ganzen eigentlich C schon relativ gut übersetzen.
+
+00:38:43.637 --> 00:39:02.637
+<v SPEAKER_1>Also Klängen muss man dazu sagen, ist noch Work in Progress. Also es ist nicht wirklich schon da, dass es alles, was er heute an C-Code da draußen rumgeistert, übersetzen kann. Aber so im Kern im Wesentlichen funktioniert es. Ich habe da auch verschiedene Behauptungen gehört, was sie so an Performance meinen, erreichen zu können. Und das ist auf jeden Fall alles mal zweistellig gewesen.
+
+00:39:02.657 --> 00:40:15.877
+<v SPEAKER_2>Genau, sie sagen Faktor 10 besser als LLVM GCC Frontend, wenn man es mal im Vergleich sieht. Und das ist dann, denke ich, ein Substantiell. Also ob sie das dann, wenn sie komplett auch C++ und Objective C in ihrem Frontend mit drin haben, ob sie dann die Zahlen immer noch halten, das werden wir sehen. Aber auf jeden Fall im Moment schaffen sie das. Und wenn wir jetzt gerade noch mal beim Frontend sind, was da, denke ich, noch interessant ist und was dadurch das Apple, denke ich, als Hersteller, der dahinter steht, auch ein großes Interesse hat, sind die Fehlermeldungen. Wenn man sich eine C++-Fehlermeldung anguckt vom G++, also GCC, C++-Compiler, und man hat irgendwelche Programmieranfänger, die dann C++ programmieren, werden mit so einer, was weiß ich, 160 Zeichen Fehlermeldung konfrontiert, die sie nicht verstehen. Und da ist gerade im Hinblick auf Klänge eine sehr große Anstrengung gemacht worden, dass man eben von der Fehlermeldung das so machen kann, dass ein normalsterblicher sofort sieht, was er falsch gemacht hat.
+
+00:40:15.897 --> 00:40:28.557
+<v SPEAKER_1>Also ein normalsterblicher Programmierer. Okay, das ist sicherlich ein sinnvoller Einsatz. Das Wolfgang von Apple, sollten wir da vielleicht noch kurz erläutern? Was hat Apple damit zu tun?
+
+00:40:28.577 --> 00:40:56.577
+<v SPEAKER_2>Also bei Apple arbeiten mittlerweile ein Großteil der Haupt-LLVM-Programmierer, also vor allem der Chris Letten heißt das natürlich zu nennen, der das Ganze mal losgetreten hat. Und aber auch noch einige andere, also die haben schon, ich weiß nicht, wie groß das Team jetzt ist, aber es sind schon, ich glaube zehn Leute sind es schon auf jeden Fall, die da arbeiten.
+
+00:40:56.597 --> 00:41:00.117
+<v SPEAKER_1>Das heißt, Apple setzt da strategisch drauf?
+
+00:41:00.137 --> 00:41:04.957
+<v SPEAKER_2>Die sehen das als ein strategisches Produkt für sich.
+
+00:41:04.977 --> 00:41:10.477
+<v SPEAKER_1>Was ist so deine Mutmaßung, was da Ihre Strategie ist sozusagen? Wollen die einen schnelleren Compiler haben?
+
+00:41:11.017 --> 00:41:59.717
+<v SPEAKER_2>Ich denke halt, also insbesondere wenn man in Hinblick auf Klängen, dass sie eben einen Compiler haben wollen, der schöne Fehlermeldungen gibt. Das ist denke ich schon eine wichtige Sache, weil sie eben auch quasi merken, dass mit dem GCC die Fehlermeldungen nicht verstanden werden. Und da wird auch sehr viel Energie reingesteckt. Insofern ist das denke ich mit einer der wichtigen Punkte, dass man sagt, okay, von der Benutzerseite, von der Benutzbarkeit her ist es, wollen sie es, benutzerfreundlicher haben. Das ist eine Motivation. Eine andere ist denke ich, dass die Compile-Zeiten halt von LLVM deutlich schneller sind als jetzt GCC. Das heißt, das ist auch...
+
+00:41:59.737 --> 00:42:17.057
+<v SPEAKER_1>Klar, macht die Benutzivität natürlich auch viel besser, die Turn-Around-Zeiten. Es gibt auch Programmierer, die an großen Sachen arbeiten, die sehen sich auch immer nichts sehnlicher herbei als noch ein Laptop mit noch mal der doppelten Menge an Chores, einfach weil sie sonst zwei Stunden am Tag einfach nur Kaffee trinken können und einfach darauf warten, dass ihre Maschine ihren Code übersetzt.
+
+00:42:17.077 --> 00:42:28.817
+<v SPEAKER_2>Ja, genau. Aber ich meine, wenn man so was Großes hat, dann denke ich, kann man ja auch anders herangehen, dass man schneller kompileert spricht, dass man Bibliotheken verwendet, etc.
+
+00:42:28.837 --> 00:42:35.697
+<v SPEAKER_1>Na gut, aber irgendwann ist das Projekt halt so groß, wie es ist. Und wenn man irgendwie dasselbe Thema so schnell machen kann, das ist sicherlich kein Fehler.
+
+00:42:35.717 --> 00:42:57.637
+<v SPEAKER_2>Auf jeden Fall. Und da denke ich mal, ich denke mal, dass die, was weiß ich, LLVM-Leute selbst, weiß ich nicht, ob die das auch so sehen mit dem strategischen Produkt. Weil gut, wenn man jetzt sagt, ist es trotz allem ein Open Source Produkt. Das heißt, eigentlich kann es auch jeder andere mit einsetzen.
+
+00:42:59.917 --> 00:43:22.757
+<v SPEAKER_1>Na gut, ich meine, es ist nachvollziehbar. Ich meine, ein System, das einerseits versucht, schneller in Kurs zu machen und das auch noch schneller hinkriegt, das ist immer gut. Und in Bezug auf Integration, ich meine, dadurch, dass es halt BSD-lizenziert ist, lässt es sich natürlich mit proprietierten Entwicklungssystemen viel besser koppeln, als das jetzt mit einem GPL-lizenzierten System möglich wäre.
+
+00:43:22.777 --> 00:43:26.217
+<v SPEAKER_2>Das ist sicherlich, denke ich, auch noch eine Motivation von Apple. Aber ich kann da nur spekulieren.
+
+00:43:27.557 --> 00:44:13.037
+<v SPEAKER_1>Das ist mir aber nicht so wichtig. Ich wollte noch mal kurz zurückkommen auf diese eigentliche Zwischendarstellung bzw. diesen Middleware-Prozess oder auch, ich weiß nicht ganz genau, wo das jetzt stattfindet. Du hast ja am Anfang gesagt, ein Ziel von LLVM ist eben diese Lifelong-Optimization, also dass man eben auch zur Laufzeit noch optimieren kann. Wie kommt denn das jetzt zum Tragen? Wenn ich diese Chain habe, Frontend, Middleware, Backend, dann müsst ihr ja irgendetwas in dieser Architekturkette sicherstellen, dass der Code auch noch sich selbst optimiert, unabhängig vom Backend, aber eben nachdem das Backend das angefasst hat. Wie geht das? Also was spielt da mit rein?
+
+00:44:13.057 --> 00:45:09.377
+<v SPEAKER_2>Das ist ein ganz guter Punkt, wie ich das jetzt verstanden habe, wie das der LLVM angeht, ist, dass sie gesagt haben, okay, die LLVM-Beschreibung ist sehr kompakt und klein. Das war auch mit einer der Design-Gesichtspunkte, dass man sagen kann, okay, unsere Zwischendarstellung, wenn man sie jetzt rausschreiben, dann ist die sehr kompakt. Und deshalb sind sie dann davon ausgegangen, dass, wenn man lebenslang optimieren will, dass man eben auch die Zwischenbeschreibung mitspeichert. Wenn man jetzt ein Programm optimiert, dann gehen typischerweise Informationen verloren. Und wenn man es jetzt aber wieder optimieren will später, dann braucht man diese Informationen vielleicht später noch. Insofern, daher rührte dann die Idee, dass man sagt, okay, wir können die Zwischendarstellung mit dranhängen und haben dann noch die Ursprungsinformationen mit, um Optimierungen später noch durchführen zu können.
+
+00:45:09.397 --> 00:45:16.597
+<v SPEAKER_1>Das heißt, auch in dem laufenden Binärcode, der für einen Prozessor gemacht ist, treibt sich unter Umständen noch ein Stück weit LLVM-Code?
+
+00:45:17.077 --> 00:45:36.377
+<v SPEAKER_2>Standardmäßig nicht, aber ich denke, man kann es mit anhängen. Ich weiß nicht, inwieweit es jetzt noch weiterverfolgt wird. Aber die Grunddesign-Idee war schon, dass man das mit anhängen kann. Inwieweit es jetzt im praktischen Einsatz verwendet wird, weiß ich nicht.
+
+00:45:36.397 --> 00:46:05.137
+<v SPEAKER_1>Okay, ich quäle dich. Das sind so die Fragen, die aufkommen. Zweite Sache auch in dem Zusammenhang ist, hast du es erwähnt, dieser Aspekt der Parallelisierung. Heutzutage hat man ja so multiple CoAs oder eben auch diese hochparallelen Subsysteme, diese SIMD-Maschinen. Inwieweit hilft denn da LLVM? Was trägt dazu bei, dass man mit solchen Systemen.
+
+00:46:14.517 --> 00:46:44.097
+<v SPEAKER_2>Dadurch, dass man ein modulares Optimierungssystem hat, könnte man sich vorstellen, dass die Module auf verschiedenen CoAs zum Beispiel ausgeführt werden und parallelisiert werden. In der Praxis ist es so, dass es wohl auf Mehrprozessor-Maschinen im Moment noch nicht so viele Vorteile gab. Aber die Verwaltungseinheit, die die verschiedenen Paces anstößt, war ja recht agnostisch darüber, wie viele CoAs im System sind.
+
+00:46:44.117 --> 00:46:45.517
+<v SPEAKER_1>Ist das mehr eine Frage der Mittelwehr?
+
+00:46:45.537 --> 00:47:38.157
+<v SPEAKER_2>Das ist eine Frage der Mittelwehr. Dadurch, dass es so modular ist, kann man zumindest die einzelnen Module, die Optimierungsmodule auf verschiedene CoAs auslagern, so sie denn nicht voneinander abhängig sind. Das heißt, man hat natürlich da auch wieder Datenabhängigkeiten, aber das ist zum Beispiel eine relativ einfache Möglichkeit, wie man Multi-CoAs im LLVM besser verwenden kann. Was dann jetzt Parallelisierung angeht, das eine ist SIMD, also sprich geht in Richtung Vektor-Operation, das man sagt, man fasst da zusammen. Das ist natürlich eine Frage der Backends. Ich denke mal gerade auch im Hinblick, dass eben auch für Grafik-Hardware, ETC, für Supercomputer, da Leute Interesse haben, dass es da auch der LLVM sich in gewisser Weise in diese Richtung, auf der Backend-Seite, hin entwickelt.
+
+00:47:39.277 --> 00:48:44.777
+<v SPEAKER_1>Also SIMD muss man vielleicht mal kurz erläutern, steht für Single Instruction, Multiple Data, das ist so eine kleine Matrix mit Single Data, Multiple Data, Multiple Instruction und so weiter, gibt da verschiedene Subsysteme. Das, was man heute so als Vektor-Beschleunigungsunits, wir haben es ja schon angesprochen, in Prozessoren findet, was weiß ich, so AltiVec beim PowerPC und die SSE-Reihe bei Intel, aber eben jetzt auch was Grafikkarten so bieten, das sind sozusagen die Plattformen für solche Instruktionsmodelle. Und wie sieht das so mit bei dynamischen Sprachen? Also, ich die richtig verstanden habe, ist ja auch eine mögliche Anwendung, gerade Live-Long ist ja sozusagen für Script-Sprachen. Script-Sprachen haben ja dann vor allem auch immer so das Ding, dass sie ja auch so eine eigene Rantime quasi mitbringen müssen. Also, da muss ja sozusagen auch immer irgendein Code laufen, der eben das Konzept dieser Programmiersprache letzten Endes zur Laufzeit auch umsetzt. Gibt es denn da jetzt in LLVM explizit für solche Sachen auch eine Unterstützung oder ist das dann auch eher so ein Abfallprodukt?
+
+00:48:45.737 --> 00:48:46.437
+<v SPEAKER_2>Oh, insofern...
+
+00:48:46.457 --> 00:48:48.157
+<v SPEAKER_1>Dass es das nicht verhindert, dass es das auch gibt.
+
+00:48:48.777 --> 00:49:02.077
+<v SPEAKER_2>Also gerade mit dem JIT-Seite oder sowas, das ist für Hardware-Entwürfe, habe ich mich da sehr wenig auseinandergesetzt, weil das halt zwei Dinge sind, die überhaupt nicht zueinandergehen. Insofern habe ich mich da auch nur sehr peripher mit beschäftigt.
+
+00:49:02.097 --> 00:49:14.377
+<v SPEAKER_1>Okay, dann kümmer ich mich nicht länger. Aber kommen wir doch vielleicht mal so auf die praktische Anwendung. Also jetzt ist das ja, ich weiß gar nicht, wie lange existiert dieses Projekt jetzt? Das ist ja eigentlich so... Also...
+
+00:49:14.397 --> 00:49:16.097
+<v SPEAKER_2>Wie alt ist es? Es ist schon...
+
+00:49:16.917 --> 00:49:30.717
+<v SPEAKER_1>Ich gucke mal gerade. Ah ja, 2000. Also nicht brandneu, aber jetzt auch noch nicht wohl etabliert. Acht Jahre ist ja nun gerade im Technologiebereich nichts. Wo kommt es denn nun wirklich schon zum Einsatz?
+
+00:49:30.737 --> 00:49:45.377
+<v SPEAKER_2>Wo LLVM zum Einsatz kommt, ist natürlich einmal bei Apple, dass sie ihre Sachen intern mit einsetzen. Habe ich auf dem LLVM-Developer-Meeting mitgekriegt. Zum Beispiel bei Adobe setzen sie es ein, um Flash zu beschleunigen intern.
+
+00:49:46.597 --> 00:49:48.297
+<v SPEAKER_1>In dem Flash-Player, in dem Flash-Plugin.
+
+00:49:48.317 --> 00:49:54.197
+<v SPEAKER_2>So wie ich es verstanden habe, mein Vortrag war parallel. Insofern habe ich nur die letzte Hälfte von dem Vortrag mitgekriegt.
+
+00:49:54.217 --> 00:49:55.377
+<v SPEAKER_1>Auf welcher Veranstaltung?
+
+00:49:55.397 --> 00:49:58.417
+<v SPEAKER_2>Da am LLVM-Developer-Meeting 2008.
+
+00:49:58.437 --> 00:49:59.077
+<v SPEAKER_1>Das war wo?
+
+00:49:59.097 --> 00:50:07.717
+<v SPEAKER_2>In Cupertino, zufälligerweise. War da von Apple. Nee, das war direkt bei Apple auf dem Campus.
+
+00:50:07.737 --> 00:50:09.157
+<v SPEAKER_1>Okay, also die sind da involviert.
+
+00:50:09.677 --> 00:50:26.737
+<v SPEAKER_2>Die sind da involviert, ja. Wobei es wohl relativ schwierig war, da Apple fährt wohl relativ schlank die Firma. Also geben wohl nicht so viel zusätzlich extra aus. Das war wohl etwas schwierig da, das auf die Beine zu stehen.
+
+00:50:26.757 --> 00:50:27.597
+<v SPEAKER_1>Um es zusammen zu bekommen.
+
+00:50:27.617 --> 00:50:58.997
+<v SPEAKER_2>Ja, so wie ich es mitgekriegt habe. Na gut. Aber sie haben es ja offensichtlich hingekriegt. Auf jeden Fall der Adobe-Mensch, der hat eben gezeigt, dass sie wohl intern, wenn ich das, ich habe den Anfang dummerweise nicht mitgekriegt, aber man kann sich es im Netz angucken, dass sie Flash sozusagen auch ihren LLVM einsetzen und die Flash-Sprache wohl durch den LLVM optimieren und beschleunigen.
+
+00:50:59.017 --> 00:51:00.197
+<v SPEAKER_1>Dadurch besser reingeben zu erzählen.
+
+00:51:00.217 --> 00:51:48.297
+<v SPEAKER_2>Und er hat dann eben auch demonstriert, wie er dann, ich glaube Quake oder irgendein First-Pace-Shooter war, den er dann als Flash-Applet durch LLVM Designflow kompiliert hatte, sodass das dann als Flash-Applet lief. In sehr akzeptabler Leistung, mit sehr akzeptablen Leistungen. Also da vorne hat gespielt. Hat sich gefreut. Also das ist zum Beispiel ein Einsatz in der Industrie. Gut, da bin ich auf der LLVM-Seite selbst, das ist noch mal verlinkt, welche Projekte das jetzt alle einsetzen. Ich denke mal, das ist so eine Mischung zum Teil aus Forschungsbereich. Also wie ich es jetzt zum Beispiel getan habe, dass man versucht mal neue Ansätze auszuprobieren.
+
+00:51:48.317 --> 00:51:51.177
+<v SPEAKER_1>Oder halt das Beispiel, was du schon gegeben hast, mit dem Grafiktreiber.
+
+00:51:51.197 --> 00:51:54.217
+<v SPEAKER_2>Genau, das ist auch, denke ich, ein sehr interessanter Bereich.
+
+00:51:58.997 --> 00:52:16.757
+<v SPEAKER_1>Ja, jetzt haben wir schon eigentlich alles ganz gut angesprochen. Was gibt es denn so an interessanten Ressourcen zu dem Thema LLVM, die du vielleicht noch empfehlen konntest? Also ich habe mal hier und da ein paar Talks online gesehen.
+
+00:52:16.777 --> 00:52:17.117
+<v SPEAKER_2>Ja, also...
+
+00:52:17.137 --> 00:52:19.317
+<v SPEAKER_1>Würdest du da irgendwas empfehlen?
+
+00:52:19.337 --> 00:52:28.777
+<v SPEAKER_2>Also, wenn man jetzt Videokontent haben will, dann denke ich, es ist auf jeden Fall interessant, sich die LLVM Developer Meeting, die sind auf Video aufgenommen.
+
+00:52:29.277 --> 00:52:30.717
+<v SPEAKER_1>Also genau diese Veranstaltung, wo du warst.
+
+00:52:30.977 --> 00:52:34.317
+<v SPEAKER_2>Genau, das gibt es als... Ja, mich gibt es da auch.
+
+00:52:34.337 --> 00:52:35.387
+<v SPEAKER_1>Okay...
+
+00:52:35.387 --> 00:52:57.777
+<v SPEAKER_2>.gibt es als Video im Netz. Das ist direkt von der LLVM-Seite, wenn man sagt, wenn man da im Moment guckt, steht der Upcoming Meeting und dann steht da irritierenderweise Developer Meeting 2008 drunter. Also ist schon vorbei. Ja. Und darunter verlinkt findet man dann auch die ganzen Videos von den Vorträgen. Wenn man jetzt zu LLVM, gibt es einige Veröffentlichungen von Chris Lettner.
+
+00:52:59.777 --> 00:53:04.017
+<v SPEAKER_1>Ich glaube, da gab es auch mal so ein Talk über Z-Lang bei Google.
+
+00:53:04.037 --> 00:54:51.057
+<v SPEAKER_2>Ja, also bei Google Video gibt es über Z-Lang gibt es einiges. Wobei, ich glaube, das neueste an Videocontent ist wirklich Developer Meeting 2008. Da wird nämlich auch noch mal auf Z-Lang eingegangen. Auch ein sehr interessanter Vortrag. ZB dass man auch die Option hat, HTML-Fehlermeldungen zu kriegen, wo man dann sehr schön grafisch aufbereitet, quasi die Fehlermeldungen auch mit hat. Und welche Anstrengungen sie unternommen haben, um schon bestehende Fehler im C-Code zu finden und auch schön darzustellen über den Makroprozessor hinweg, der ja dann auch den C-Code entsprechend verändern kann. Und wer sich dafür interessiert, ist dieser Talk sehr interessant. Ansonsten natürlich die ganze LLVM-Seite selbst. Da ist natürlich schon einmal eine Doxygen-generierte Dokumentation, die schon im Detail dann eben Objektbeschreibungen und für die internen Strukturen Informationen gibt. Zum anderen dann eben auch noch die ganzen Dokumentationen, die man auf dieser Seite findet. Unter anderem findet man auf der Seite dann auch noch einen direkten Online-Compiler, wo man mal ein bisschen C-Code eintippen kann und dann direkt sieht, was für LLVM-Code dann dabei rausfällt. Ich glaube, man kann auch verschiedene sagen, ich will es optimiert haben, nicht optimiert, und sieht dann schon, was es da für Unterschiede gibt. Wenn man sich einfach mal kurz angucken will, ist das die schnellste Art und Weise.
+
+00:54:51.457 --> 00:55:08.197
+<v SPEAKER_1>Für wen ist denn deiner Meinung nach LLVM interessant? Wer könnte denn von diesem System vor allem profitieren, und wer jetzt vielleicht auch zuhört, wer sollte sich das mal genauer anschauen, weil es im Unterumstein ein bisschen Arbeit ersparen kann?
+
+00:55:08.217 --> 00:56:11.477
+<v SPEAKER_2>Jeder Hardware-Hersteller, der eine neue Architektur hat, für die er einen Compiler braucht, ist auf jeden Fall relativ einfach, da die eigene Architektur zu unterstützen. Wenn man ein bisschen Compilerwissen hat, das ist natürlich eine recht naheliegende Sache. Dann eben was, was ich, irgendwelche Leute, die Skript-Sprachen haben und dafür ein schnelles Backend brauchen. Stichwort Just-in-Time-Compiling und so was, was beim LLVM wohl auch recht stark vertreten ist. Aber ich denke mal, da ist die Infrastruktur schon ganz gut da und man hat auch eine schöne Dokumentation, wie man einsteigen kann. Es gibt auch ein Sample-Frontend, dessen Name mir jetzt auch nicht einfällt, findet man aber auch auf der Dokumentationsseite. Wo man eben über ein einfaches Frontend sehen kann, wie spreche ich denn jetzt, wie baue ich mir ein Frontend letztendlich?
+
+00:56:11.497 --> 00:56:18.057
+<v SPEAKER_1>Also wenn man vor allem eine eigene Poemiersprache entwickeln will oder irgendwie eine hat, die auch noch mehr Hardware-Support braucht.
+
+00:56:18.477 --> 00:58:04.137
+<v SPEAKER_2>Genau, oder dann eben für so Leute wie mich, die eben sagen, okay, ich will mal jetzt was Neues ausprobieren und ich brauche zum Beispiel eine gemeinsame Beschreibungssprache, in der ich mich irgendwie festhalten kann. Da kam mir dieses LLVM zu pass und eben sagen kann, okay, ich will jetzt einfach mal einen neuen Optimierungslauf zum Beispiel implementieren. Wenn man jetzt eine gute Idee hat, was ich jetzt zum Beispiel auf Halde liegen habe, ist ein Optimierungslauf, den wollte ich eigentlich auch schon längst mal veröffentlicht haben auf der Mailing-Liste, dass man beispielsweise erkennt, okay, wir haben ein statisches globales Array, wie man es zum Beispiel bei irgendwelchen Media-Codecs hat. Also dass man sagt, okay, irgendwelche Sachen werden statisch schon mal als Array im C-Code dargestellt. Wenn man diese jetzt aber in Hardware abbilden will, dann sieht man zum Beispiel, okay, ich will es eigentlich nicht als Array dargestellt haben, weil dann müsste ich immer Speicher-Lookups machen. Speicher-Lookups kann ich nicht in eine Pipeline-Art bilden. Insofern wäre es doch viel schöner, wenn ich mir dieses statische Array nehme und als Logikfunktion darstelle. Das heißt, ich habe jetzt zum Beispiel, sagen wir mal, einen 6-bit-Sinus, den ich jetzt zum Beispiel als Funktion habe, als Hardware-Lookup. Und wenn ich mir den jetzt als Funktion optimiere, dann fällt da natürlich was viel kleineres, kompakteres in Hardware raus, weil ich habe da nur noch 6 Logikfunktionen, die ich einfach in Hardware viel schneller und einfacher implementiert habe, als jetzt einen Array-Lookup, wo ich dann Bus-Interface brauche, Speicher, ETC und ich brauche auch den Platz für den Speicher, den ich dann zur Verfügung stelle. Und das fällt alles dann weg.
+
+00:58:08.197 --> 00:58:16.777
+<v SPEAKER_1>Also das ist für die Forschung prima, gerade wenn man sich jetzt mit Compiler-Techniken und Optimierungen zum Beispiel beschäftigt. Das ist sicherlich auch ein Feld in der Informatik.
+
+00:58:16.797 --> 00:58:48.197
+<v SPEAKER_2>Ja, leider nicht. Also wenn ich jetzt aus meinem Informatikstudium, wenn ich da zurückblicke, wo, was weiß ich, die Professoren gesagt haben, wir haben als Fachschaft gefordert, dass wir die grundlegenden Techniken vermittelt bekommen wollen, also Betriebssysteme, Compilerbau, ETC, und da waren eben bei den Neubesetzungen von Professuren diese Fächer nur sehr halbherzig abgedeckt. Und wo dann eben auch die Aussage kam, ja, ein Compilerbau ist doch tot, da entwickelt sich doch nichts mehr. Also da ist doch abgeforscht sozusagen.
+
+00:58:48.217 --> 00:58:48.997
+<v SPEAKER_1>Aber die wissen nicht so.
+
+00:58:50.517 --> 00:59:16.697
+<v SPEAKER_2>Ich persönlich glaube es nicht, aber ja, da gibt es offensichtlich in der Professorenschaft andere Meinungen. Also ich meine, wenn man es jetzt im Vergleich zu dem Alter der Informatik sieht, dann ist Compilerbau natürlich schon ein sehr alter Bereich. Also ich meine, in anderen Wissenschaften lacht man darüber über 30 Jahre oder 40 Jahre.
+
+00:59:16.717 --> 00:59:51.917
+<v SPEAKER_1>Schon antik, ne? Also ich kenne durchaus Leute und ich habe da auch noch einen Plan für Chaosradio Express, da auch in den Bereich Compilerbau nochmal ein bisschen tiefer reinzuschauen. Und ich denke, dass vor allem diese neuen Hardware-Architekturen und insbesondere diese Problematik, die du auch schon angesprochen hast, diese Parallelisierung, und man sagt es ja auch LLVM, okay, alles klar, da könnte man dieser Middleware eigentlich eine Menge reißen, aber es wird jetzt auch noch nicht so viel gerissen, wie man sich das vielleicht wünschen würde. Dann ist das natürlich auch ein Punkt. Und für jemanden, der Informatik studiert und auch ein schönes Diplomthema braucht, wäre das dann vielleicht auch der richtige Sandkasten, in den man sich mal reinsetzt, um da ordentlich mit Sand zu werfen.
+
+00:59:52.517 --> 01:00:09.657
+<v SPEAKER_2>Ich denke mal, es ist auf jeden Fall... Man braucht eine Weile, um sich da zurechtzufinden. Also, da sollte man schon ein bisschen Zeit mitbringen. Aber wenn man sich einmal reingefitzt hat, denke ich, ist es schon eine recht dankbare Umgebung, wo man dann auch relativ schnell mal Ergebnisse sieht.
+
+01:00:11.477 --> 01:01:00.397
+<v SPEAKER_1>Okay, Tim, ich denke, jetzt haben wir es irgendwie ganz gut zusammengerollt. Vielen Dank für die Ausführung zum LLVM. LLVM war hier das Thema bei Chaosradio Express 114. Und ja, wie schon angedeutet, auch diese Low-Level-Abteilung des Computings soll auch hier in der Zukunft noch eine Rolle spielen. Ich denke, man kann den Nerd-Faktor hier schon auch nochmal ein bisschen aufdrehen. Auch wenn ich gerne auch in die andere Richtung nochmal marschiere. Das Programm soll ja, wie von mir schon häufiger angekündigt, breitbandiger werden. Aber von daher nicht weniger Technik, sondern wir gehen in beide Richtungen. Ich bedanke mich jetzt erstmal für deine Ausführung. Sagen wir irgendwie Tschüss zu den Hörern. Und ja, bis bald bei Chaosradio Express.

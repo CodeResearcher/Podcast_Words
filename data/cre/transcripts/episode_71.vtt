@@ -1,0 +1,952 @@
+WEBVTT
+
+00:00:00.520 --> 00:00:44.820
+<v SPEAKER_1>We need to be keenly aware of the startling advances in the sophistication of eavesdropping and surveillance technologies with their capacity to easily sweep up and analyze enormous quantities of information and then mine it for intelligence. And this adds significant vulnerability to the privacy and freedom of enormous numbers of innocent people at the same time as the potential power of those technologies grows. Those technologies do have the potential for shifting the balance of power between the apparatus of the state and the freedom of the individual in ways that are both subtle and profound.
+
+00:01:13.365 --> 00:03:08.105
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express Ausgabe Nr. 71. Mein Name Tim Pritlove und ich begrüße euch am 23. Januar 2008 zu einer neuen Ausgabe. Und auf meiner tollen Podcast-Reise hat mich mein Weg mittlerweile nach Wien geführt, in das MetaLab, das ja auch vor einigen Ausgaben hier auch schon das Thema war. Wer das nicht gehört hat, sollte sich das vielleicht auch noch mal reinziehen. Fand ich ein sehr schönes Gespräch zu den Hintergründen des MetaLabs, dieses Hacker-Spaces hier in Wien. Aber heute möchte ich den Ort lediglich als Aufnahmestudio nutzen und ein Thema ansprechen, was schon seit längerer Zeit in den Nachrichten ist und immer wieder hin und her geht und wo meiner Auffassung nach auch eine ganze Menge Aufklärungsbedarf noch besteht. Und dazu begrüße ich Aaron Kaplan, und Chris Hager, hallo. Ihr seid mit dem OLPC, mit dem One Laptop Per Child, jetzt muss man es auch mal aussprechen, mit dem Projekt beschäftigt auf eine besondere Art und Weise, weil ihr hier in Österreich unter dem Namen OLPC Austria ein Projekt gestartet habt, das wir jetzt noch näher eingehen wollen. Das heißt, ihr beschäftigt euch mit der Maschine, es steht auch so einer von den grünen kleinen Geräten, steht jetzt hier auf dem Tisch und leuchtet mich ganz lieblich an. Ja, vielleicht können wir mal kurz einsteigen. Mich würde mal interessieren, was so euer Hintergrund ist. Vielleicht können wir mal mit dir, Aaron, anfangen, was dich jetzt so in diese Richtung gebracht hat, bist du schon immer mit Computern zugange?
+
+00:03:11.225 --> 00:03:43.065
+<v SPEAKER_3>Ich bin hier schon recht lange im Linux- und Unix-Umfeld tätig. Ich habe hier in Wien ein Freifunk-ähnliches Netzwerk aufgebaut, das Funkfeuer-Netzwerk, gemeinsam mit anderen Kollegen. Und im Laufe der Zeit, also diese Mesh-Thematik und Funkfeuer-Thematik hat mich da sehr beschäftigt und war dann bei einer Konferenz in den Staaten und bin am Weg zurück bei den OLPC Offices vorbeigekommen.
+
+00:03:43.085 --> 00:03:43.905
+<v SPEAKER_2>Wo sind die?
+
+00:03:43.925 --> 00:04:12.165
+<v SPEAKER_3>In Cambridge sind die. In Cambridge, bei Boston, Massachusetts. Und dort quasi mal vorbeigeschaut und gesehen zu meiner Überraschung, das sind nur 30 Leute, die dort aktiv an einem weltweit globalen Projekt arbeiten. Das Projekt ist ja in den Medien unglaublich bekannt. Und man denkt sich, das muss eine riesen Gruppe sein, so einen Laptop zu entwickeln, aber in Wirklichkeit sind es nur die 30 Leute dort.
+
+00:04:12.185 --> 00:04:21.005
+<v SPEAKER_2>Also 30 Leute, die sich komplett um alle Aspekte von der Hardwareplanung, dem Bauen, bis zur Logistik kümmern, alles.
+
+00:04:21.025 --> 00:04:56.065
+<v SPEAKER_3>Es ist wirklich andurchstafft, wie man so schön sagt. Und der erste Gedanke war, das ist an und für sich ein Open-Source-Projekt. Toller möchte ich mitmachen. Das möchte ich irgendwie ein bisschen nach Österreich auch bringen und das sollen wir hier auch irgendwie betreiben können, das Projekt. Und vor allem, indem man es ja sozusagen mitwirkt, lernt man ja extrem viel. Man hat die Chance, quasi was von Grund auf neu zu entwickeln. Und das war eigentlich recht spannend für mich. Plus, es ist natürlich mit der Mesh-Thematik sehr eng verbunden.
+
+00:04:56.365 --> 00:05:18.225
+<v SPEAKER_2>Ja, also du kommst sozusagen, das war sozusagen der Auslöser. Vielleicht sagen wir noch kurz was zu Funkfeuer sagen. Also Freifunk und Mesh-Networking, da ging es auch bei Chaosradio Express schon hier mehrfach das Thema. Da ging es mir um die Protokolle, um das ULSR und jetzt das neue Batman-Protokoll jeweils mit Elektra, die dir sicherlich bekannt ist. Das Funkfeuer-Projekt versucht jetzt in Wien dasselbe zu machen wie Freifunk und Berlin?
+
+00:05:18.905 --> 00:05:55.945
+<v SPEAKER_3>Also wir haben gleichzeitig gestartet, wie den Berlinern. Und es hat eigentlich seit 2002, 2003. Und wir haben quasi die Struktur hier parallel hochgezogen und haben eine leicht andere Struktur aufgebaut. Wir betreiben das gesamte Netz mit einem einzigen Uplink. Also wir versorgen ganz Wien, Funkfeuer mit einem Uplink. Haben einen recht guten hier in der Nähe, direkt gegenüber vom Vienna Internet Exchange, haben Public IPs, aber sonst verwenden wir genau das OLSR-Protokoll und das entwickeln wir jetzt auch im Moment hier sehr aktiv weiter.
+
+00:05:55.965 --> 00:06:17.565
+<v SPEAKER_2>Also im Gegensatz zu der Installation, wie sie in Berlin zu finden ist, die ja wirklich hoch anarchisch ist und wo wirklich an verschiedensten Stellen in dünnen Dosen Internet reingeschleust wird, habt ihr ja schon so ein bisschen mehr den Generalstabs-mäßigen Ansatz. Gab es denn hier auch dasselbe Problem wie jetzt in Berlin mit schlechter Internet-Brandbreitenversorgung an verschiedenen Stellen oder geht es hier wirklich eher darum.
+
+00:06:23.085 --> 00:06:51.305
+<v SPEAKER_3>Eine alternative Netzstruktur aufzubauen? Wir wollten wirklich ein alternatives Netz machen, das wirklich im Eigentum der jeweiligen Benutzer ist. Zusätzlich wollten wir halt quasi einen Uplink den Leuten zur Verfügung stellen. Und wir wollten auch, also ich zumindest wollte auch schauen, wie weit kann man gehen mit einem Uplink? Wie kann man die ganze Stadt damit versorgen? Und es geht sehr gut und man muss einfach nur die Kanäle sehr gut wählen.
+
+00:06:51.325 --> 00:06:53.005
+<v SPEAKER_2>Wie groß ist denn dieser Uplink?
+
+00:06:53.025 --> 00:06:57.705
+<v SPEAKER_3>Der ist nominal 100 MBit. Verwendet wird so in die 6 MBit im Moment.
+
+00:06:57.725 --> 00:06:59.125
+<v SPEAKER_2>Und wer zahlt das?
+
+00:06:59.145 --> 00:07:15.405
+<v SPEAKER_3>Wir zahlen das selber. Parallel dazu haben wir ein kleines Housing aufgebaut, also ein Co-Location. Leute, die ihre Rechner reinstellen, die zahlen sowieso für die Bandbreite. Und es bleibt einfach am Ende des Monats einfach immer so.
+
+00:07:19.525 --> 00:07:21.105
+<v SPEAKER_2>Aber es finanziert sich sozusagen aus dem...
+
+00:07:21.125 --> 00:07:23.565
+<v SPEAKER_3>Es ist selbstragend geworden.
+
+00:07:23.585 --> 00:07:26.185
+<v SPEAKER_2>Also es gibt jetzt keinen Verein, wo dann Mitglieder sind oder doch?
+
+00:07:26.205 --> 00:07:30.845
+<v SPEAKER_3>Es gibt schon einen Verein, aber nur wegen im Prinzip wegen abrechnungstechnischen Zwecken und so.
+
+00:07:30.865 --> 00:07:38.085
+<v SPEAKER_2>Aber man muss jetzt nicht Mitglied in dem Verein werden, um da Netz zu haben. Das heißt, man kann sich einfach, indem man Antenne in die Luft hält, mit einklinken.
+
+00:07:38.105 --> 00:07:40.065
+<v SPEAKER_3>Und man muss ja nicht Public IP von uns abholen.
+
+00:07:40.765 --> 00:07:47.725
+<v SPEAKER_2>Und ihr betreibt das aber noch mit ULSR, mit dem ursprünglichen Autokoll. Habt ihr da Pläne mit Batman voranzumarschieren?
+
+00:07:47.985 --> 00:08:29.505
+<v SPEAKER_3>Also ich nicht, weil ich glaube, durch die Beschäftigung mit dem Thema ist es so, dass für mich zählt nicht mehr das Protokoll. Für mich zählt nur noch die Implementierung, wie gut die Implementierung ist und wie hoch sie skaliert und was die Implementierung hergibt. Und da haben genau Elektro und ich immer regelmäßig Diskussionen. Aber was wir bewiesen haben, ist, dass wir jetzt im letzten dreiviertel Jahr sind wir von durchschnittlich 60 Prozent CPU-Lot. Das war das Frühe, das Problem beim OLSR, dass er einfach zu ineffizient war. Aber es war nur die Implementierung ineffizient. Es war nicht der Algorithmus ineffizient. Und jetzt haben wir die Implementierung verbessert und wir sind auf unter 1 Prozent CPU-Lot. Auf einer Lynxis.
+
+00:08:29.525 --> 00:08:32.205
+<v SPEAKER_2>Auf so einem kleinen Billigrotter.
+
+00:08:32.225 --> 00:08:33.405
+<v SPEAKER_3>Mit 400 Knoten im Netz.
+
+00:08:33.425 --> 00:08:40.785
+<v SPEAKER_2>400 Knoten, das wäre mal eine nächste Frage gewesen. Also schon nicht klein.
+
+00:08:40.805 --> 00:08:40.925
+<v SPEAKER_3>Nein.
+
+00:08:40.945 --> 00:08:42.405
+<v SPEAKER_2>Es gibt verschiedene Pfade.
+
+00:08:42.425 --> 00:08:52.605
+<v SPEAKER_3>Es sind verschiedene Pfade. Das eine ist der Revolutionsweg, wir machen etwas komplett Neues, das ist vollkommen berechtigt. Das andere ist ein Evolutionsweg, das ist auch berechtigt. Ich finde es interessant, was da passiert.
+
+00:08:52.625 --> 00:09:24.085
+<v SPEAKER_2>Man muss sagen, es gibt ja dann auch diesen, also wenn ich das so wie du das beschrieben hast, gibt es natürlich dann auch eine Turboligie, einen grundlegenden Unterschied. Mit einem Internet-Ablink hat man natürlich das Problem nicht, was halt in Berlin extrem ist, was ja Elektro auch herausgearbeitet hat. Diese vielen Internetzugänge und das, man weiß nicht, wohin es raudet und so. Na ja, gut. Wer sich dafür interessiert, da müssen wir jetzt auch nicht ins Detail gehen. Der mag dann die letzten beiden Podcasts vielleicht auch nochmal nachhören. Chris, du bist auch mit bei dem Projekt. Vielleicht kannst du da nochmal was zu deinem Weg dahin sagen.
+
+00:09:24.485 --> 00:10:23.025
+<v SPEAKER_4>Ja, ich kam eigentlich aus der Mikrocontroller und Roboterprogrammierung, was ich auch noch studiere. Das ist wirklich das größte Problem im Moment. Ich bin dann zu OLPC gestoßen und habe zu programmieren begonnen. Das Schöne an diesem Projekt ist, es gibt sehr viele Möglichkeiten, wo man was machen kann. Also so ein Projekt im Wachsen, man kann bei vielen Projekten mit einsteigen, man kann eigene Ideen umsetzen. Es gibt viele, viele Möglichkeiten, was man machen kann. Und dann ist man auch schwuppsdurps einmal drin, dass man seine ganze Freizeit reinsteckt und halt auch große Schritte nach vorne macht. Und das behält einen noch bei der Stange. Und jetzt seit dem CCC Ende Dezember gibt es auch mehr inter-europäische Vernetzungen zwischen den lokalen Gruppen. Jetzt bewegt sich alles in Richtung OLPC Europa, bessere Vernetzung zwischen den lokalen Gruppen, mehr Zusammenarbeiten. Also praktisch auch von dem organisatorischen sind das einige sehr interessante Teams auf der Agenda.
+
+00:10:23.925 --> 00:11:32.125
+<v SPEAKER_2>Ja, das bringt uns vielleicht auch noch jetzt noch mal zu dem Projekt als Seuchen. Ich weiß jetzt gar nicht ganz genau, wann das geboren wurde, die Idee. Also es gibt ja da diese Lichtfigur, Niklas Negroponte, der nicht erst seitdem er sich mit dem OLPC beschäftigt einen Namen hat, sondern eben in den USA, in universitären Kreisen und auch so über die ganze Computerszene hinaus sich einen Namen gemacht hat, der dann eben mit der Idee aufgekommen ist zu sagen, wir müssen den, jetzt weiß ich nicht so ganz genau, wie seine Definition ist, ich sag mal, den sich entwickelnden Nationen einen Einstieg bieten, insbesondere eben den Kindern, daher der Name, One Laptop Per Child, wir müssen einfach Geräte in die Hände der Kinder legen. Und irgendwie traute er wohl der Industrie nicht zu, da passende Angebote zu machen. Das ist jetzt mal so meine Saloppezusammenfassung, aber vielleicht könnt ihr ja nochmal aus eurer Perspektive beschreiben, wie es zu diesem Projekt gekommen ist. Ihr dürft euch auch ergänzen.
+
+00:11:33.985 --> 00:12:13.585
+<v SPEAKER_3>Ich bin wie ein Mischnetwerk. Die Idee gibt es an sich schon lange, in verschiedenen Formen. Es gibt die Idee seit den 60ern, das Dinerbook von Alan Kay. Das ist im Prinzip eine Art, wenn man so will, ein elektronisches Buch, ein Laptop-Buch, wo Kinder interaktiv damit lernen können. Das erhängt sehr stark mit der Programmiersprache Logo zusammen. Die ganzen Ideen von Lego Mindstorm sind da auch drinnen. Es gibt schon lange eine Theorie, wie man Computer eigentlich in einem leeren Umfeld verwenden kann.
+
+00:12:13.605 --> 00:12:30.085
+<v SPEAKER_2>Ist Alan Kay auch in dem OLPC-Projekt involviert? Der hat ja seine große Zeit bei Apple, mit dem User-Interface-Design, aber hat sich später vor allem in diese Small-Talk-Richtung wiederbegeben und dort ja auch Squeak und ähnliche Systeme, die sich auch an Kinder wenden gemacht.
+
+00:12:30.505 --> 00:14:19.345
+<v SPEAKER_3>Also Squeak ist ein integraler Bestandteil von OLPC. Also ich glaube, in der OLPC Foundation ist er als ganz wichtige Figur drinnen. Seymour Papert ebenso. Das ist Seymour Papert ebenfalls. Den kenne ich jetzt nicht. Er hat sehr viel zur Theorie des konstruktivistischen Lernens beigetragen. Die Kernaussage ist sozusagen learning by making. Das, was wir als Hacker alle sehr gut kennen, wir lernen am besten, was werden wir in die Hand nehmen und wirklich etwas machen. Es kann jetzt Quote sein, es können Artmails sein, was auch immer. Und so lernt man generell am besten. Man kann irgendwas sehen, man glaubt das, man hört das und vergisst das wieder. Und wenn man etwas wirklich in der Hand hat und selber formt, was auch immer das ist, das kann auch eine geistige Sache sein, dann hat man es wirklich, wirklich verstanden. Und das ist eigentlich das pädagogische Konzept, was dahinter steht, unter einem groß trafenden Namen konstruktivistisches Lernen zusammengefasst. Und die Idee war eben, dass man mit so einem Notebook, mit einem Laptop, das sehr robust ist, sehr billig ist, einfach diesen, meiner Interpretation nach, diesen 5 bis 15 Prozent von Kindern, die es weltweit, egal in welchem Kulturkreis, gibt, die sich wirklich dafür für Sachen interessieren, wenn man denen das in die Hand gibt, dann gibt man ihnen die Chance, dass sie sich da selber was beibringen können. Vor allem mit Netzzugang. Und da kommen jetzt wieder Ideen wie Freifunk, Funkfunk vor und so weiter zusammen mit Bildungsinhalten oder Bildungsideen.
+
+00:14:19.345 --> 00:14:30.805
+<v SPEAKER_4>Vor allem auch die Aspekte, dass sich die meisten Anwendungen untereinander vernetzen können und man fast alle Anwendungen auf dem Laptop teilen und gemeinsam machen kann. Also schreiben, programmieren, zeichnen.
+
+00:14:30.825 --> 00:14:49.545
+<v SPEAKER_3>Quasi wie Google Documents mit zwei Cursor an einem Dokument arbeiten oder malen gemeinsam. Das sind einfache Beispiele. Aber das Konzept geht weiter. Aus diesem Konzept können wir alle sehr viel rausnehmen und für andere Applikationen auch etwas machen.
+
+00:14:49.565 --> 00:15:09.425
+<v SPEAKER_2>Das heißt, diese Idee, etwas Konkretes folgen zu lassen, diese Theorien, dass man Leute in die Lage versetzen mit konkreten Geräten arbeiten zu können und darüber dann eben diese konstruktivistische Methode auch etwas Produktives zu machen, hat dann dazu geführt, dieses Projekt zu starten. Ich weiß gar nicht, wer finanziert dieses Projekt.
+
+00:15:09.445 --> 00:15:50.505
+<v SPEAKER_3>Also es gibt in den Staaten, es ist sehr leicht, oder gibt es immer eine Tradition, dass Firmen Donations geben für gemeinnützige Vereine. OLPC ist ein gemeinnütziger NGO, Foundation ist das. Das heißt, einige Firmen haben einiges an Geld reingesteckt. Das Zweite ist jetzt von der Finanzierung, das Give-on-Get-on-Programm hat Ihnen vor Weihnachten doch einiges an Umsatz beschert. Dieser Umsatz wird verwendet um Laptops für Länder wie Kambodscha, Haiti, Afghanistan.
+
+00:15:50.525 --> 00:15:55.765
+<v SPEAKER_2>Kannst du das Programm mal kurz erläutern? Also Give-on-Get-on, was heißt das?
+
+00:15:55.785 --> 00:16:04.465
+<v SPEAKER_3>Man zahlt zwei Laptops, kriegt selber einen, und einen zahlt man quasi mit für ein Kind in einem Entwicklungsland.
+
+00:16:04.485 --> 00:16:05.665
+<v SPEAKER_2>Das ist relativ neu?
+
+00:16:05.685 --> 00:16:07.365
+<v SPEAKER_3>Das ist relativ neu.
+
+00:16:07.385 --> 00:16:11.625
+<v SPEAKER_2>Vorher hieß es ja immer, diese Geräte gehen nur dorthin, von wie sie gedacht haben.
+
+00:16:11.645 --> 00:16:17.885
+<v SPEAKER_4>Aber es ist auch schon wieder vorbei, es waren nur Mitte November bis Ende Dezember. Und nur in den USA und Kanada.
+
+00:16:17.905 --> 00:16:46.505
+<v SPEAKER_3>Leider, ja. Also früher gab es die großartige Vision von einem großartigen Visionär, eine Grafonte. Wir verkaufen Millionen Stück direkt an die Regierung und schalten den Cut-Out-the-Middle-Man, wir schalten den Händler dazwischen aus, um den Preis tief und unten zu halten. Weil 50 Prozent des Preises ist Marketing, Händler, Spanien etc. Garantien, Gewährleistung etc. Das ist aber nicht ganz aufgegangen.
+
+00:16:46.525 --> 00:16:57.665
+<v SPEAKER_2>Es gab diese Traumzahl von 100 Dollar, die vielleicht ein taktischer Fehler waren.
+
+00:16:57.685 --> 00:17:34.825
+<v SPEAKER_3>Diese Vision ist nicht aufgegangen. Dann hat man sich überlegt, wie kann man es doch einiges finanzieren. Dann hat man endlich mal darauf gehört, was die Meinungen der Leute, was sie so vorgesagt haben, waren. Macht doch, dass man zwei kauft und einen kriegt man selber. Dieses Konzept liegt sehr auf der Hand. Das haben sie dann auch wirklich gemacht. Ich glaube, 160.000 Stück sind im Prinzip verkauft worden. Das heißt 160.000 Kinder nach Haiti, Afghanistan, Mongolia, Kambodscha.
+
+00:17:35.105 --> 00:17:42.105
+<v SPEAKER_2>Also sind die nur verkauft worden oder sind die auch ausgeliefert worden? Also gibt es diese Geräte schon in diesen Stückzahlen?
+
+00:17:42.125 --> 00:18:05.505
+<v SPEAKER_3>Also es gab leider das Problem, dass sie innerhalb von ganz kurzer Zeit so wirklich eine komplette Umstellung machen mussten mit diesen 30 Leuten, die dazwischen sind. Und die sind, naja, ich sag das mal sehr ehrlich jetzt, die sind ein bisschen auf die Schnauze gefallen, was das für ein Aufwand ist. Es gibt noch immer Laptops, die sind noch nicht ausgeliefert. Das ist leider, leider so.
+
+00:18:05.525 --> 00:18:08.885
+<v SPEAKER_2>Das heißt, sie haben sozusagen gelernt, warum die anderen alle einen Mittelman haben?
+
+00:18:08.905 --> 00:18:09.105
+<v SPEAKER_3>Genau.
+
+00:18:10.965 --> 00:18:17.405
+<v SPEAKER_2>Das spart nicht nur Arbeit, sondern manchmal auch vor allem Arbeit, aber dann eben auch Geld.
+
+00:18:17.425 --> 00:18:19.225
+<v SPEAKER_4>Aber die meisten Laptops sind schon angekommen.
+
+00:18:19.245 --> 00:18:21.205
+<v SPEAKER_3>Genau, die meisten sind angekommen.
+
+00:18:21.225 --> 00:18:40.885
+<v SPEAKER_2>Okay, aber das Gerät ist jetzt wirklich auch erstmal finalisiert. Also diese Version 1 existiert und ist abgeschlossen, nachdem ja über einen längeren Zeitraum da immer wieder verschiedene Prototypen gezeigt wurden, an denen dann viel rumkritisiert wurde, was ja auch verständlich ist. Und mit der Version, wie sie jetzt hier auf dem Tisch steht, geht man jetzt sozusagen an die Öffentlichkeit.
+
+00:18:40.905 --> 00:18:42.885
+<v SPEAKER_3>Genau, das ist Version 1 quasi.
+
+00:18:42.905 --> 00:18:49.205
+<v SPEAKER_2>Aber auch diese Verhandlung mit den Ländern, das hat ja auch nicht unbedingt reibungslos funktioniert, oder?
+
+00:18:50.805 --> 00:19:25.725
+<v SPEAKER_4>Na, der ganz klare Punkt ist, dass Microsoft und andere große Firmen sehr starkes Interesse daran haben, ihren Fuß in die Tür reinzubringen, in die Entwicklungs-Sender. Das sind potenziell Milliarden von Kunden. Und diese Firmen haben natürlich auch viel mehr Erfahrung in aggressiven Marketing, wo OLPC dann als Open-Source-Projekt die kapitalistischen Aspekte dieses Projekts nicht oder vielleicht zu wenig Fokus auf diese Aspekte hat. Und da haben natürlich Microsoft und Co leichte Spiele auch oft, weil die genau wissen, wie sie an Regierungen herantreten.
+
+00:19:26.125 --> 00:19:26.925
+<v SPEAKER_3>Und es gibt einen...
+
+00:19:26.945 --> 00:19:28.845
+<v SPEAKER_2>Wir haben die Kontakte vorher aber auch in der Regel schon.
+
+00:19:30.485 --> 00:21:03.565
+<v SPEAKER_3>Und es gibt bei OLPC einen wirklichen Verkäufer. Das ist ein Negopunter. Er wollte das so haben. Aber das Problem ist, sobald er von einem Land weg ist, fallen dann die Hunde ein. Genau. Und das ist passiert in Nigeria. Da war der damalige Präsident sehr begeistert vom Projekt. Er hätte das wirklich unterstützt. Nur, er ist nicht wiedergewählt worden. Und Intel hat dann ganz groß verkauft. Aber nichtsdestotrotz, ich glaube, was ein wichtiger Fokus ist, was man mitnehmen kann, und auch vor allem, wie wir in Europa mitnehmen können, ist eigentlich die Vision von einem Projekt. Weil die Vision brennt weiterhin lichterloh. Also die Vision ist wirklich begeisternd für viele Leute. Und dadurch, dass es ein Open-Source-Projekt ist, das haben die wenigsten mitgekriegt durch die vielen Medienberichte, dass es immer das OLPC-Projekt ist. Und die machen das. Ist es nicht. Es ist jeder extrem froh drüben, wenn man einfach mal den Code auscheckt und einfach was Tolles damit macht. Also das Feedback, das man kriegt, ist wirklich gut. Und zum Beispiel, es gibt ein Programm drauf, ein Activity, mit dem kann man die Distanz messen zwischen zwei Laptops, indem sie sich regelmäßig akustische Echo schicken. Pings. Akustische Pings.
+
+00:21:03.585 --> 00:21:04.805
+<v SPEAKER_2>Wie das die U-Boote auch machen.
+
+00:21:04.825 --> 00:21:15.465
+<v SPEAKER_3>Genau. Und die Distanz wird dadurch gemessen. Und dieses Programm wird geliebt. Das hat jemand sogar ohne einen Laptop produziert.
+
+00:21:15.525 --> 00:21:32.165
+<v SPEAKER_2>Jetzt müssen wir vielleicht mal ein bisschen erläutern, was eigentlich wirklich drinsteckt in der Maschine. Das ist ja ein vergleichsweise kleines Gerät. Und für meine Finger sind die Tasten dann schon sehr anspruchsvoll. Man merkt, das ist eigentlich auf Kinderhände zugeschnitten.
+
+00:21:32.185 --> 00:21:32.625
+<v SPEAKER_3>Genau.
+
+00:21:32.645 --> 00:21:34.625
+<v SPEAKER_4>Bei den Tasten am deutlichsten.
+
+00:21:34.645 --> 00:21:48.725
+<v SPEAKER_2>Bei den Tasten merkt man das ganz deutlich. Ansonsten ist ja gegen kleine Geräte generell nichts einzubenden. Es gibt ja auch kleine Laptops in dem Sinne. Nur die Tasten fallen mir jetzt als besonders klein auf. Was ist denn dann eigentlich die Zielgruppe?
+
+00:21:50.285 --> 00:21:51.685
+<v SPEAKER_4>Kinder von 6 bis 14.
+
+00:21:52.345 --> 00:21:53.365
+<v SPEAKER_2>Bis 14.
+
+00:21:53.385 --> 00:21:55.265
+<v SPEAKER_4>Bis ungefähr 14, 12, 14.
+
+00:21:55.285 --> 00:21:57.365
+<v SPEAKER_2>Das heißt, daran orientiert sich auch das Hardware-Design.
+
+00:21:57.385 --> 00:22:09.265
+<v SPEAKER_4>Und an der Idee, dass die meisten Kinder, die diese Laptops benutzen werden, zuvor keinen Computer benutzt haben. Und dadurch auch das Geschwindigkeitsempfinden sich ändert von der Maschine.
+
+00:22:09.285 --> 00:22:11.785
+<v SPEAKER_2>Du meinst, das kann auch ein bisschen langsamer sein?
+
+00:22:11.865 --> 00:22:22.905
+<v SPEAKER_3>Das war ein Kompromiss. Preis versus Geschwindigkeit. Und auch mit der Idee, dass man einfach die Software optimieren kann. Das kann man immer.
+
+00:22:22.925 --> 00:22:27.345
+<v SPEAKER_2>Was waren denn so die Design-Anforderungen, als das Gerät entwickelt wurde?
+
+00:22:27.365 --> 00:22:31.165
+<v SPEAKER_3>Extrem robust. Also ich stelle vor, es muss in der Monsoon überleben.
+
+00:22:33.745 --> 00:22:37.565
+<v SPEAKER_4>Also es gibt dann Hitze, Wasser, Staub.
+
+00:22:37.585 --> 00:22:52.665
+<v SPEAKER_3>Genau, und es muss jahrelang halten. Es gibt kein Replacement potentiell, wo du gerade bist. Du musst vielleicht das Alte, musst du eine Neue zusammenbauen können. Das heißt, es gibt ganz wenige Teile drinnen. Es ist alles sehr integriert.
+
+00:22:52.685 --> 00:22:54.025
+<v SPEAKER_4>Es hat keine mechanischen Teile?
+
+00:22:54.045 --> 00:22:55.765
+<v SPEAKER_3>Es hat keine mechanischen Teile, genau.
+
+00:22:55.785 --> 00:22:57.565
+<v SPEAKER_2>Wie ist es halt keine mechanischen Teile?
+
+00:22:57.585 --> 00:23:02.585
+<v SPEAKER_3>Also es ist keine Festplatte. Keine beweglichen mechanischen Teile.
+
+00:23:02.605 --> 00:23:06.005
+<v SPEAKER_2>Ich dachte, der Deckel ist natürlich eine pure Mechanik.
+
+00:23:06.025 --> 00:23:09.385
+<v SPEAKER_3>Aber der ist sehr gut. Wir können es mal aufmachen, wenn du willst.
+
+00:23:09.405 --> 00:23:15.325
+<v SPEAKER_2>Ich habe das schon mal gesehen als so eine relativ massive Metallchanier in der Mitte.
+
+00:23:15.345 --> 00:23:39.425
+<v SPEAKER_3>Man kann es runterfallen lassen von Hüfthöhe locker. Dafür ist es getestet. Und man kann es bei hohen Temperaturen betreiben. Also ist es regelmäßig getestet worden im Backofen bei 50-60 Grad. Das ist eine Berechnung.
+
+00:23:39.445 --> 00:23:43.645
+<v SPEAKER_2>Haben auch handelsübliche Laptops daneben noch weiter laufen lassen?
+
+00:23:43.685 --> 00:23:45.345
+<v SPEAKER_3>Ja, aber die sind eingegangen.
+
+00:23:45.725 --> 00:24:02.025
+<v SPEAKER_2>Ist dich bewusst, dass so ein Rechner eine relativ eng gefasste Betriebstemperaturbreite hat, nach oben und nach unten? Dann ist irgendwann mal Schluss. In der Antarktis kann sich das was mit websurfen.
+
+00:24:02.045 --> 00:24:37.645
+<v SPEAKER_3>Das hat einen witzigen Effekt, dass man regelmäßig auf den Mailinglisten kommt, da kommen Anfragen von Soldaten rein, dass die sowas ganz gerne hätten, weil das so robust ist. Ein gutes Display. Im Freien ist es mit dem reflektierenden Modus besser lesbar, je mehr Sonnenlicht darauf einscheint, weil die Kontraste schärfer werden.
+
+00:24:37.665 --> 00:24:50.765
+<v SPEAKER_2>Wir waren ja mehr bei den Anforderungen, jetzt können wir ja auch mal gucken, was ist jetzt konkret dabei rausgekommen. Das ist eine kleine grün-weiße Kiste, ein Laptop, wie man das eben kennt. Man kann den Deckel aufklappen, unter dem Deckel ist aber noch so ein dickerer Teil. Ist da dann der Akku drin?
+
+00:24:51.665 --> 00:24:58.845
+<v SPEAKER_3>Also hinten am Deckel ist das Mainboard und die ganzen Anschlüsse. Also hinter dem Display, direkt dahinter.
+
+00:24:58.905 --> 00:25:01.185
+<v SPEAKER_2>Achso, das heißt, der Computer ist eigentlich oben?
+
+00:25:01.205 --> 00:25:02.045
+<v SPEAKER_3>Ist eigentlich oben, ja.
+
+00:25:02.065 --> 00:25:02.985
+<v SPEAKER_2>Wie so ein iMac.
+
+00:25:03.005 --> 00:25:03.345
+<v SPEAKER_3>Genau.
+
+00:25:05.285 --> 00:25:06.325
+<v SPEAKER_2>Entschuldige den Vergleich, aber das...
+
+00:25:08.985 --> 00:25:12.225
+<v SPEAKER_3>Und unten haben wir nur Tastatur und Trackpad und Akku, das war's.
+
+00:25:13.845 --> 00:25:24.145
+<v SPEAKER_2>Und dann gibt es noch diese zwei kleinen Teufelchen-Antennen, die man da so rausklappen kann, auch die man rausklappen muss, damit man das Gerät überhaupt erst öffnen kann. Da sind dann Antennen drin, das heißt, es hat zwei Antennen.
+
+00:25:24.165 --> 00:25:29.325
+<v SPEAKER_3>Genau, es hat zwei Antennen, 3D-BI-Antennen. Reichweite ist 1,5 Kilometer Outdoor getestet.
+
+00:25:30.125 --> 00:25:31.585
+<v SPEAKER_2>Das ist recht viel, oder?
+
+00:25:32.265 --> 00:25:35.925
+<v SPEAKER_3>Also dadurch, dass es ein Mesh ist, wird es durchaus eine...
+
+00:25:35.945 --> 00:25:43.765
+<v SPEAKER_2>1,5 Kilometer mit W-Lan? Mit so kleinen Antennen? Was steckt da wundersames drin, dass das so gut funktioniert?
+
+00:25:43.785 --> 00:25:49.805
+<v SPEAKER_3>Einfach gute Antennen. Der Trick bei W-Lan ist meistens gute Antennen und freie Sicht.
+
+00:25:51.925 --> 00:26:03.945
+<v SPEAKER_2>Ja, und dann halt der... Ja, nochmal etwas spürbar kleinere Bildschirm, der so ein bisschen schwarz-weiß rüberkommt, aber nicht schwarz-weiß ist, sondern durchaus Farbe ist. Was hat der für eine Auflösung?
+
+00:26:04.765 --> 00:26:10.225
+<v SPEAKER_4>1200 x 900 Pixel sind auf 12 Zoll.
+
+00:26:10.245 --> 00:26:32.685
+<v SPEAKER_2>Also relativ hoch auflösen, viele Pixel. 200 DPI. Das macht dann schon ein scharfes Bild. Und ihr habt es ja schon gesagt, man kann es halt auch lesen, wenn man die Hintergrundbeleuchtung ausschaltet, also man kann ihn sehr energieintensiv, effektiv betreiben. Und wie funktioniert das mit dieser Beleuchtung, also mit dieser Sonneneinstrahlungsgeschichte?
+
+00:26:33.165 --> 00:27:06.825
+<v SPEAKER_3>Im Prinzip, du hast hinten eine reflektierende Schicht, also du kannst sozusagen die Farbpixels wegblenden können, bis du im schwarz-weißen Modus bist, da hast du eine höhere Auflösung. Und hinten wird das Licht, das Einstrahlen und Licht, reflektiert, um einen höheren, wie alte LCD-Displays sind das eigentlich, so ähnlich wie diese Taschenrechnung. Aber sehr hochauflösend. Dadurch wirkt das dann wie Papier.
+
+00:27:06.845 --> 00:27:10.845
+<v SPEAKER_2>Aber was heißt das? Das habe ich nicht verstanden mit den Farbpixeln, die kann man wegklappen?
+
+00:27:10.865 --> 00:27:17.285
+<v SPEAKER_3>Die Farbpixel, wie ist die Technologie genau? Also die Details kenne ich auch nicht, aber da kann ich dich...
+
+00:27:17.305 --> 00:27:22.085
+<v SPEAKER_2>Dann bleiben wir beim Effekt, aber wenn man Hintergrundbeleuchtung weg hat, dann ist das Ding nicht mehr farbig.
+
+00:27:22.105 --> 00:27:34.065
+<v SPEAKER_3>Es ist nicht mehr farbig. Stattdessen hast du im Prinzip mehr Graupixel, mehr Schwarz-Heiß.
+
+00:27:34.085 --> 00:27:43.085
+<v SPEAKER_2>Den reinen Kontrast sozusagen. Das heißt, das, was Farbe ist, geht an den Graustufen über. Das heißt, das User Interface ist auch so entwickelt, dass es eigentlich auf Graustufen basieren kann.
+
+00:27:43.085 --> 00:27:56.485
+<v SPEAKER_3>Dass du vor allem auch Bücher lesen kannst. Und das mit einer guten Auflösung, mit 200 DPI. Und wenn du es dir anschaust, gegen das Licht mal hältst und deinen Text anschaust, dann schaut das fast aus wie gedruckt.
+
+00:27:56.505 --> 00:28:01.445
+<v SPEAKER_2>Das heißt, das Ding ist auch so ein bisschen ein E-Book sozusagen. Also ein portables Buchlesegerät.
+
+00:28:01.465 --> 00:28:04.805
+<v SPEAKER_3>Du kannst es drehen, genau. Du kannst den Bildschirm drehen und hast einen E-Book-Modus.
+
+00:28:04.825 --> 00:28:08.465
+<v SPEAKER_4>Und du kannst das Display nach 90 Grad nachdrehen, dass es in den Hochmodus schaltet.
+
+00:28:10.625 --> 00:28:22.065
+<v SPEAKER_2>Ja. Und wie kriegt man dann jetzt Daten da rein, wenn man mal davon ausgeht, dass kein Netzwerk und kein Internet verfügbar ist? Also was hat es noch für Schnittstellen, über das man jetzt auch…
+
+00:28:22.085 --> 00:28:27.945
+<v SPEAKER_4>Hauptsächlich USB und SD-Karten, Slot. Der SD-Slot ist unterhalb vom Display.
+
+00:28:27.965 --> 00:28:31.925
+<v SPEAKER_2>Da muss man ein bisschen drehen und dann kann man ihn da reinstecken, aber dann fällt er auch nicht so leicht raus.
+
+00:28:34.285 --> 00:28:45.105
+<v SPEAKER_4>Und drei USB-Slots. Und der Mikrofoneingang hat einen analogen Digital-Converter. Damit kann man praktisch Gleichstrom messen mit einer Software, die einen Oszillator emuliert.
+
+00:28:45.125 --> 00:28:46.045
+<v SPEAKER_2>Das heißt?
+
+00:28:46.065 --> 00:28:51.185
+<v SPEAKER_4>Das heißt, man kann sich die Gleichstrom, die Spannungskurven von dem Gleichstrom anzeigen lassen?
+
+00:28:51.205 --> 00:29:12.605
+<v SPEAKER_3>Du kannst den Mikroeingang umschalten auf Gleichstrom. Du könntest das verwenden als Amperemeter, Voltmeter, wenn du einfach nur das Kabel raussteckst und die Software den Rest interpretiert. Weil der Bereich von dem Mikrofoneingang ist sehr, sehr weit gefasst.
+
+00:29:14.365 --> 00:29:18.745
+<v SPEAKER_2>Es ist auch exquisit so gedacht, es ist nicht nur ein Abfallprodukt. Wo kommt das Kabel dann hier raus?
+
+00:29:18.985 --> 00:29:33.405
+<v SPEAKER_3>Hier, über der Seite. Es ist wirklich gedacht, dass du es als kleines Elektronik-Lebo auch verwenden kannst. Es gibt ein Oszilloskop-Software drauf, die können wir dir noch zeigen. Die ist flott, du kannst sie mit recorden, so wie man es gewohnt ist.
+
+00:29:33.425 --> 00:29:35.725
+<v SPEAKER_2>Und was steckt da jetzt für ein Prozessor drin?
+
+00:29:38.885 --> 00:29:44.085
+<v SPEAKER_4>Ein AMD Geode LX700 mit 433 Mhz.
+
+00:29:44.105 --> 00:29:51.085
+<v SPEAKER_2>Also mit anderen Worten, kein Sportwagen, aber ein Prozessor, der auf niedrigen Energieverbrauch ausgelegt ist.
+
+00:29:51.105 --> 00:29:54.305
+<v SPEAKER_3>Und der keinen Kühler braucht.
+
+00:29:54.325 --> 00:30:05.985
+<v SPEAKER_2>Stimmt, das heißt, da ist auch kein Kühler im Sinne von kein Lüfter oder kein Kühler im Sinne von auch kein Kühlsystem, dass er wirklich so kalt läuft, dass er da noch nicht einmal abkühlt.
+
+00:30:06.005 --> 00:30:07.225
+<v SPEAKER_3>Nur passiv gekühlt.
+
+00:30:07.225 --> 00:30:14.005
+<v SPEAKER_2>Okay, also das ist schon so irgendwie eine kleine Metallschlange drauf, die die Wärme irgendwo hinleitet, aber man muss sich jetzt nicht besonders viel Mühe nehmen.
+
+00:30:14.025 --> 00:30:18.745
+<v SPEAKER_3>Das ist glaube ich nur so, wenn eine Metallplatte drauf ist.
+
+00:30:18.765 --> 00:30:39.685
+<v SPEAKER_2>So, das Besondere, wenn man jetzt das Gerät sieht, ist ja, also man muss ja dazu sagen, wir haben bisher ein bisschen umheißen Brei gerillt, das Betriebssystem ist Linux. Noch immer. Gibt es denn Versuche, noch was? Ich weiß nicht, ich hatte schon mal hier ein Windows zum Laufen bekommen.
+
+00:30:39.705 --> 00:30:41.625
+<v SPEAKER_3>Ja, Windows XP rennt drauf.
+
+00:30:41.645 --> 00:30:43.205
+<v SPEAKER_2>Tatsächlich?
+
+00:30:43.225 --> 00:30:44.745
+<v SPEAKER_3>Es rennt.
+
+00:30:44.765 --> 00:30:46.525
+<v SPEAKER_2>Oder schleicht es?
+
+00:30:46.545 --> 00:30:50.545
+<v SPEAKER_3>Na ja, es ist halbwegs flott, wenn man den Berichten glauben darf. Ich habe es nicht gesehen.
+
+00:30:50.565 --> 00:30:52.405
+<v SPEAKER_4>Ich habe es auch noch nicht gesehen, Leute.
+
+00:30:52.425 --> 00:31:24.005
+<v SPEAKER_2>Okay, aber es ist halt sozusagen nach wie vor PC-Architektur. Also da ist jetzt kein besonderer Voodoo drin, sondern man hat sich eigentlich schon so ein bisschen an den etablierten Standards gemacht. Aber wo es nun wirklich komplett abweicht, auch von dem bisherigen Linux-System, wie man sie eben jetzt kennt, mit KDE oder GNOME-Userinterface oder auch ohne User-Interface, dieses Gerät kommt mit einem vollständigen eigenen User-Interface daher. Und das ist dann im Prinzip auch die Umsetzung von dem, was du vorhin gesagt hast, diesem konstruktivistischen Ansatz. Was ist denn an diesem, hat das einen Namen?
+
+00:31:25.125 --> 00:31:32.605
+<v SPEAKER_4>Sugar heißt das. Und das ist generell ein modifizierter Matchbox-Window-Manager. Eigentlich.
+
+00:31:32.625 --> 00:31:36.685
+<v SPEAKER_2>Matchbox ist mir jetzt nicht bekannt, ist ein X-Window-Manager.
+
+00:31:36.705 --> 00:31:38.905
+<v SPEAKER_4>Genau, ein ganzer Light-White-Window-Manager.
+
+00:31:38.925 --> 00:31:46.285
+<v SPEAKER_2>Okay, also da läuft schon X-Window drauf, wie man es kennt. Aber mit einem sehr viel einfacheren User-Interface.
+
+00:31:46.305 --> 00:31:52.105
+<v SPEAKER_4>Genau, nämlich das Interface ist im Prinzip so angelegt, dass Kinder mit einfachen Rumklicken sehr schnell das Gerät entdecken können.
+
+00:31:53.665 --> 00:31:57.385
+<v SPEAKER_2>Das heißt, man hat hier eigentlich trotz X-Window gar keine Windows in dem Sinne.
+
+00:31:57.405 --> 00:31:58.525
+<v SPEAKER_3>Genau, es gibt keine Fenster.
+
+00:31:58.545 --> 00:32:00.685
+<v SPEAKER_2>Sondern man arbeitet eigentlich im Ervollflächig.
+
+00:32:00.705 --> 00:32:34.985
+<v SPEAKER_4>Genau, es gibt auch keine Einstellungen oder Optionen, die man so brauchen würde. Es rennt alles out of the box. Es gibt ein Journal, das verwaltet praktisch alle Daten. Es gibt keine Verzeichnis, keine sichtbare Verzeichnisstruktur für die Kinder, weil das ein sehr abstraktes Konzept ist, vor allem, wenn man noch nie mit Computern gearbeitet hat. Jetzt wird alles zentral im Journal einfach verwaltet. Wenn man einen USB-Stick reinsteckt, werden die Daten auch in der Liste angezeigt. Und so kommt man im Prinzip zu den Daten. Und der Rest ist im Prinzip nur Anwendungen, die auf dem OLPC Laptop Activities genannt werden.
+
+00:32:35.005 --> 00:32:41.285
+<v SPEAKER_2>Aber kann man den dann auch so hierarchische Ordnungen von Dateien auch erzielen, oder ist das dann alles so eine flache Geschichte?
+
+00:32:41.305 --> 00:33:30.105
+<v SPEAKER_3>Es ist eine sehr flache Geschichte. Die Idee ist da hinterher, dass man im Journal nachschaut, was habe ich gestern oder vorgestern oder vor einer Woche mit diesen und jenen Freunden gemacht gemeinsam. Und das ist so wie ein Tagebuch. Das ist sozusagen das, was man Kindern am ehesten empfunden hat, zumindest die User-Interface-Designer, dass das der natürliche Ansatz wäre. Denn wenn du denkst an Ordner und so Sachen, dann ist das an und für sich aus dem Office-Betrieb. Also wirklich Bürobetrieb Ordner. Es heißt ja Ordner, es heißt Files, es heißt Ablage. Haben sechsjährige Kinder schon mal, die von mir aus in Ecuador, irgendwo sind großartig im Büro in New York gearbeitet?
+
+00:33:30.125 --> 00:33:32.365
+<v SPEAKER_2>Ich glaube auch die Sechsjährigen in Deutschland hätten ihre Probleme damit.
+
+00:33:34.885 --> 00:33:58.085
+<v SPEAKER_3>Und deswegen hat man versucht, einfach Metaphern zu herzunehmen, die sehr natürlich sind. Und wenn man etwas macht, dann ist das eine Activity. Das ist nicht ein Programm, mit dem man eine Datei öffnet, sondern es ist eine Activity. Und die kann man gemeinsam machen. Das klickt man halt aufs Netzwerk und dann sieht man, der Schurm da neben mir macht jetzt gerade, der schreibt gerade.
+
+00:34:03.465 --> 00:34:24.565
+<v SPEAKER_4>Es wird aber nur so ausgeliefert, es ist nicht beschränkt darauf. Es gibt viele mögliche andere Linux-Systeme laufen zu lassen, wie z.B. Debian mit einem Xfc-Window-Manager läuft darauf. Es läuft OpenWrt schon seit Längerem, ich glaube noch ohne Window-Manager mit einem X-Server. Da steht einem im Prinzip die ganze Linux-Welt offen. Man kann alle X-Programme installieren und natürlich auch Konsolenprogramme.
+
+00:34:26.705 --> 00:35:12.685
+<v SPEAKER_2>Ja, wie wir schon erwähnt haben, ist ja ein vollwertiger PC. Also überrascht mich jetzt auch nicht. Aber es ist halt nicht so gedacht. Sondern es ist schon das Konzept hier wirklich einen, wie soll ich sagen, so einen holistischen Ansatz zu finden. Genau, dass man halt einfach die Software auf diese Bedürfnisse anpasst. Jetzt ist es natürlich so, das ist auch so ein bisschen jetzt, ich bin mit dem Projekt bisher nicht so vertraut gewesen. So aus der Ferne habe ich mir halt gedacht, so naja, alles klar, neuer Computer, komplett neues User-Interface, dazu noch in der Linux. Dann gibt es halt noch nicht mal Leute jetzt so in unserer Welt, die ja relativ viel Erfahrung mit den Systemen haben, die dieses User-Interface überhaupt schon mal so in die Finger bekommen haben. Kann denen das was taugen? Also ich meine, was ist denn so eure Erfahrung, wie gut der Ansatz jetzt auch wirklich umgesetzt wurde?
+
+00:35:13.365 --> 00:35:38.125
+<v SPEAKER_3>Also ich glaube, wenn man schaut, kann das was taugen, dann muss man als erstes fragen, dass verstehen das Kinder. Das ist eigentlich die erste Frage. Nicht so, ob wir das verstehen. Und die Erfahrung, die wir so gemacht haben, in einer Schule, wo wir immer wieder mal ausprobiert haben Sachen, ist, dass es den Kindern total klar ist. Die erklären das immer den Erwachsenen sofort.
+
+00:35:38.145 --> 00:35:40.085
+<v SPEAKER_2>Das ist eine Schule hier in Österreich.
+
+00:35:41.045 --> 00:36:22.185
+<v SPEAKER_3>Und obwohl sie hier schon sozusagen die anderen Systeme kennengelernt haben. Und eigentlich, wenn man so will, vorbelastet sind. Oder schon eine fixe Vorstellung haben, wie ein Computer funktioniert. Und trotzdem ist es intuitiv total klar. Weil es gibt einfach recht wenige initiale Einstiegspunkte in die gesamte Bedienung. Ich habe es wirklich erlebt, dass ein 12-Jähriger. Den Erwachsenen sofort erklärt hat, was das ist. Also es war einfach wirklich klar.
+
+00:36:22.205 --> 00:36:28.405
+<v SPEAKER_4>Und das wiederholt sich, dass die Kinder das sehr gut aufnehmen. Schneller als die Erwachsenen regelmäßig.
+
+00:36:28.425 --> 00:36:42.105
+<v SPEAKER_2>Wie ist denn das? Habt ihr da einen Einblick, wie das entwickelt worden ist? Ist da jetzt auch ein großer Usability-Einfluss da gewesen, dass man das von vornherein mit Kindern entwickelt hat? Hat Aaron Kaplan seine ganze Erfahrung da reingegossen?
+
+00:36:44.505 --> 00:36:49.925
+<v SPEAKER_3>Soweit ich weiß. Vielleicht rede ich da jetzt einen Blödsinn, weil das kenne ich im Detail gar nicht so sehr.
+
+00:36:49.945 --> 00:37:19.325
+<v SPEAKER_2>Du hast ja vorhin erwähnt, dass Squeak, diese Entwicklungsumgebung, auch Teil des Systems ist. Ist das dann sozusagen hier auch serienmäßig mit dabei? Das heißt, da ist im Prinzip eine Smalltalk- Entwicklungsumgebung drauf. Das ist ja schon mal ganz interessant. Aber Squeak ist ja mehr als nur Smalltalk, sondern da kommen auch fertige Tools mit, mit denen man irgendwie Zeichnen konstruieren kann. Was machen denn die anderen? Jetzt können wir die Funktionalität ja vielleicht mal komplett umreißen. Also was sind denn noch für Anwendungen mit dabei?
+
+00:37:20.925 --> 00:37:33.305
+<v SPEAKER_3>Na ja, also die wichtigsten sind mal irgendwie gemeinsam irgendwas schreiben, über einen kleinen Bericht schreiben, über was man in der Schule gemacht hat zum Beispiel. Also das Write, dann Paint, Chat.
+
+00:37:34.885 --> 00:37:56.325
+<v SPEAKER_4>Dann ganz wichtig, Record, womit die Kinder die integrierte Webcam benutzen können und Bilder machen, Videos machen. Wir arbeiten gerade an einem XO-TV, wo dann die Kinder auch streamen können. Schauen wir hier. Und das ist ein sehr geliebtes Feature eigentlich. Die Kinder lieben das, wenn sie sich selbst auf einmal bewundern können auf dem Bildschirm. Wir haben das immer sehr gut gemacht.
+
+00:37:56.345 --> 00:38:13.985
+<v SPEAKER_3>Wir können von allen möglichen Sachen das Foto dann übers Mesh-Netzwerk an jemanden schicken. Es wird möglich sein, das ist im Labor schon getestet, aber das ist noch nicht im Software-Release drin, dass man quasi Video chatten kann über das Ganze auch, wenn man viel übers Mesh.
+
+00:38:14.005 --> 00:38:17.345
+<v SPEAKER_2>Also da ist der Rechner schnell genug für. Ja.
+
+00:38:17.365 --> 00:38:22.685
+<v SPEAKER_3>Das geht sich aus mit den 3D-Now-Extensions vom Prozessor.
+
+00:38:22.685 --> 00:38:57.865
+<v SPEAKER_2>Und das ist jetzt auch nochmal ein ganz interessanter Aspekt. Das haben wir ja nun schon mehrfach angesprochen. Das war ja auch so dein initiales Interesse. Die Vernetzung. Das heißt, selbstverständlich kann das Ding normal WLAN, wie man es jetzt erwarten würde. Wenn es hier ein Access Point ist, dann kann man sich da einbuchen und so weiter. Aber zusätzlich gibt es das Mesh Networking. Aber eben nicht das, was jetzt bei Funkfeuer, OLSR im Betrieb ist, auch nicht das neue Batman. Sondern hier kommt der 802.11s Standard. Ist das eigentlich schon ein richtiger Standard oder wird da noch drüber diskutiert?
+
+00:38:57.885 --> 00:39:26.125
+<v SPEAKER_3>Es wird noch drüber diskutiert. Deswegen nenne ich es auch immer Pre-802.11s. Das ist eher zutreffend, das Name. Aber man hat einen Teil des Standards hergenommen und hat ihn jetzt mal implementiert auf die WLAN-Carder. Und in der WLAN-Carder selber rennt der. Die WLAN-Carder hat eine kleine CPU drinnen, ich glaube MIPS oder StrongArm oder sowas, eine kleine und da rennt der ganze Layer 2-Stack unabhängig von der Haupt-CPU.
+
+00:39:27.285 --> 00:40:18.585
+<v SPEAKER_2>Das hat er jetzt vielleicht nochmal erklären. Der Unterschied, also diese OLSR und auch das Batman, das sind ja, wie sagt man so schön, Schicht 3-Anwendungen. Das heißt dort wird der normale WLAN-Zugang, wie man ihn auch sonst technisch nimmt, genommen. Und da drauf läuft dann einfach eine Software, die dann eben die ganzen Routen, die man sonst vielleicht von so einem DACP-Server erzählt bekommt, dynamisch sich zusammensammelt. Dadurch eben dieses Mashing. Aber hier sinkt das sozusagen auf eine Ebene runter, quasi direkt auf die Ethernet-Schnittstelle bzw. eben auf das WLAN. Sprich, die Karte selbst ist unabhängig von Transporten wie TCP-IP, also unabhängig vom Netz, einfach so auf ihrer Vernetzungsebene meshfähig. Wie funktioniert das? Das heißt Software wird auf die Karte geladen und die Karte tut dann was?
+
+00:40:18.905 --> 00:40:34.665
+<v SPEAKER_3>Also die Karte macht das Folgendes. Immer wenn irgendwer ein Paket zu verschicken ist, sie kriegt irgendwie mal ein Paket von jemanden und dann wird sie erstens mal die Route suchen. Ganz am Anfang. Danach casht sie die Route. Das ist ein ADL-Fahrer.
+
+00:40:34.685 --> 00:40:40.785
+<v SPEAKER_2>Was heißt, wenn was zu verschicken ist? Also wenn ich den Rechner jetzt bute, aufklappe, was tut das Gerät dann als erstes?
+
+00:40:40.805 --> 00:40:51.465
+<v SPEAKER_3>Also im ersten Mal wird es zum Beispiel der Networkmanager und der Netzwerk-Software-Stack wieder mal suchen, wo sind meine Freunde.
+
+00:40:52.225 --> 00:40:57.785
+<v SPEAKER_2>Ja, sagen wir mal, es gibt keine Freunde. Also ich packe das Ding jetzt irgendwie in einer Sahara aus und ich bin irgendwie ganz alleine, was macht der Rechner?
+
+00:40:57.805 --> 00:40:59.945
+<v SPEAKER_3>Dann werden regelmäßig Beacons rausgeschickt.
+
+00:40:59.965 --> 00:41:03.385
+<v SPEAKER_2>Okay, das heißt, er sagt, hallo, hier bin ich, gibt es sonst noch jemanden?
+
+00:41:03.405 --> 00:41:03.845
+<v SPEAKER_3>Genau.
+
+00:41:03.865 --> 00:41:10.885
+<v SPEAKER_2>Und diese Beacons, das befindet sich sozusagen auf dieser Schicht 2. Das ist so, als würde eine Ethernet-Schnittstelle nach ihrem Kabel suchen.
+
+00:41:12.185 --> 00:41:17.445
+<v SPEAKER_3>Und sobald da sozusagen andere da sind, haben sie sich kennengelernt.
+
+00:41:17.465 --> 00:41:23.265
+<v SPEAKER_2>Was heißt, die sind da? Das heißt, die anderen schicken auch einen Beacon, ein Funkfeuer.
+
+00:41:23.285 --> 00:41:24.165
+<v SPEAKER_3>Und dann sehen die sich.
+
+00:41:24.185 --> 00:41:24.885
+<v SPEAKER_2>Und was passiert dann?
+
+00:41:25.545 --> 00:41:28.805
+<v SPEAKER_3>Und dann passiert dann mal nichts. Das ist nämlich der AUD-V-Teil.
+
+00:41:28.825 --> 00:41:42.385
+<v SPEAKER_2>Aber hier gibt es auch so eine hübsche Visualisierung. Habt ihr nicht gesagt, hier gibt es nur so eine Tasse, wo keine hübsche Strichmännchen auftauchen? Das heißt, in dem Moment, wo ich so einen Beacon empfange, dann weiß der Rechner das schon oder muss dann auch mehr ausgetauscht werden?
+
+00:41:42.405 --> 00:41:50.465
+<v SPEAKER_3>Da gibt es noch eine ganze Software-Stack drüber auf der CPU. Wir reden jetzt über zwei getrennte Teile. Ich habe jetzt nur mal über den S-Teil geredet.
+
+00:41:50.485 --> 00:41:53.265
+<v SPEAKER_2>Okay, du hast recht. Bleiben wir erstmal auf der technischen Seite.
+
+00:41:53.285 --> 00:42:17.985
+<v SPEAKER_3>Auf Layer 2 ist es so, im Prinzip, da tut sich mal am Anfang nichts. Es ist ein Piece of the Beacons. Und dann, sobald dann wirklich ein Paket zu versenden ist, würde er mal sozusagen die Route rausfinden. Das ist der reaktive Teil bei dem ganzen Protokoll. Da würde er mal fragen, wer den Weg zum Blablabla kennt.
+
+00:42:18.005 --> 00:42:21.185
+<v SPEAKER_2>Und wie adressiert man an der Stelle? Mic-Adressen.
+
+00:42:21.205 --> 00:42:45.385
+<v SPEAKER_3>Ganz normal Mic-Adressen. Wie Internet-Mic-Adressen. Und dann wird das mal ge-ge-broadcasted weiter. Und im Laufe der Zeit wird sich dann jemand finden, oder es wird time-outen. Es wird sich jemand finden, der den Empfänger, den endgültigen Empfänger kennt. Dann geht es einen Weg zurück, da wird es dann ge-cashed, was der Weg ist. Und auf diese Art und Weise wird sozusagen ein Weg gefunden.
+
+00:42:45.745 --> 00:42:50.225
+<v SPEAKER_2>Das heißt, wenn ich jetzt so in der Sahara stehe, und ich sehe erst mal keinen, dann kommt auch irgendwann mal B.
+
+00:42:50.245 --> 00:42:50.745
+<v SPEAKER_3>Genau.
+
+00:42:50.765 --> 00:42:52.305
+<v SPEAKER_2>So, dann sehe ich B.
+
+00:42:52.325 --> 00:42:52.685
+<v SPEAKER_3>Genau.
+
+00:42:52.685 --> 00:43:01.605
+<v SPEAKER_2>Und ich weiß aber, es müsste auch C geben. Und ich habe seine Adresse sozusagen schon irgendwie gespeichert. Und ich möchte C jetzt was schicken. Dann schick ich das B.
+
+00:43:01.625 --> 00:43:02.685
+<v SPEAKER_3>B, wo ist denn C?
+
+00:43:04.045 --> 00:43:07.165
+<v SPEAKER_2>Oder beziehungsweise, wer auch immer mir gerade zuhört, weiß irgendjemand, wo C ist.
+
+00:43:08.005 --> 00:43:14.345
+<v SPEAKER_1>Okay, dann würde B antworten und sagen, ja C ist noch mal einen Kilometer weiter, aber siehst du wahrscheinlich nicht.
+
+00:43:14.365 --> 00:43:15.045
+<v SPEAKER_3>Genau.
+
+00:43:15.065 --> 00:43:16.845
+<v SPEAKER_2>Und bietet sich sozusagen als Transportweg an.
+
+00:43:16.865 --> 00:43:17.105
+<v SPEAKER_3>Genau.
+
+00:43:17.325 --> 00:43:26.785
+<v SPEAKER_2>Und dann kann ich normal an C was schicken, als wäre das so auf meinem Kabel. Und ich vertraue darauf, dass B das quasi dann transparent weiterreicht.
+
+00:43:26.805 --> 00:43:33.665
+<v SPEAKER_3>Genau. Und das funktioniert bei kleineren Netzen recht gut, also sehr gut.
+
+00:43:33.685 --> 00:43:35.005
+<v SPEAKER_2>Klein im Sinne von?
+
+00:43:35.025 --> 00:43:39.865
+<v SPEAKER_3>Von Schule, Umgebung, Dorf, sowas in der Größenordnung.
+
+00:43:39.885 --> 00:43:41.165
+<v SPEAKER_2>So 10 bis 100.
+
+00:43:43.305 --> 00:44:10.985
+<v SPEAKER_3>100 ist so eine gute Größe. Es wird wahrscheinlich auch höher raufgehen, aber 100 ist normalerweise eine gute Größe. Und das Wichtigste war Ihnen beim Entwickeln von Protokoll, dass die Luft möglichst frei ist. Also dass nicht zu viele Pakete durch die Luft gehen und zu viele Kollisionen da sind. Das ist ein sehr grosser Unterschied zu den Freifunk- und Funkfunkfunk-Netzen und so. Wir senden ja dauernd. Hallo, hallo, hallo. Auch bei Batman. Regelmäßig.
+
+00:44:11.085 --> 00:44:12.225
+<v SPEAKER_2>Ich bin wichtig, ich bin wichtig.
+
+00:44:12.245 --> 00:44:16.145
+<v SPEAKER_3>Genau, ja. Das ist ein fundamentaler Unterschied hier.
+
+00:44:16.165 --> 00:44:17.505
+<v SPEAKER_2>Weil Senden kostet ja auch Strom.
+
+00:44:17.525 --> 00:44:34.165
+<v SPEAKER_3>Senden kostet Strom, ja. Und es verstopft ein bisschen die Luft, wenn man so will. Also wenn da genau zum gleichen Zeitpunkt jemand sendet, dann hast du eine Kollision. Und ob die Kollision wirklich tragend wird oder nicht, das ist eine andere Geschichte. Aber prinzipiell hältst du eine Überlagung der Signale.
+
+00:44:34.185 --> 00:44:47.585
+<v SPEAKER_2>Das heißt, auf diesem Gerüst, auf diesem, sogar auf einem Standard basierenden, neuen Mesh-Ansatz, der intelligente WLAN-Karten voraussetzt, darauf basiert dann aber auch nochmal eine andere networking-high-level-Geschichte.
+
+00:44:47.685 --> 00:45:20.165
+<v SPEAKER_3>Das ist doch bestimmt ein schicken Name, oder fällt das dann an der Sugar? Nein, das heißt, Avahi ist ein Standard-Linux-Teil, ist eigentlich der Linux-Name für, sagen wir mal, Bonjour und Rendezvous. Und auf dem setzt sehr viel auf. Und da gibt es noch ein paar andere Frameworks dazu, also Telepathy, wie Distributed-Depots, so Sachen gibt es da. Und mit dem kann man recht schön übers Netzwerk einfach alles machen.
+
+00:45:20.185 --> 00:45:32.925
+<v SPEAKER_2>Also im Prinzip ist das dann eine normale Standard-Service-Discovery. Das heißt, man setzt auf dem Mesh-Networking auf und sagt, hallo, ich bin ein Rechner, ich habe einen Drucker, ich habe einen Server anzubieten.
+
+00:45:32.945 --> 00:45:35.105
+<v SPEAKER_3>Genau, und ich schreibe gerade an dem Text.
+
+00:45:35.125 --> 00:45:42.245
+<v SPEAKER_2>Okay, also nicht anders, als wenn man jetzt so einen Macintosh aufklappt und immer schön alles sieht. Das funktioniert da auch. Okay, das ist doch ein prima Ansatz, finde ich.
+
+00:45:44.285 --> 00:45:48.445
+<v SPEAKER_3>Was ich gesehen habe, ist, die Netzwerkleute dort, die sind wirklich top.
+
+00:45:48.465 --> 00:45:54.205
+<v SPEAKER_2>Aber das wird dann hier aber auch grafisch, oder sogar geografisch aufgearbeitet, oder?
+
+00:45:54.225 --> 00:45:56.205
+<v SPEAKER_4>Geografisch, das ist zufällige Anordnung.
+
+00:45:56.705 --> 00:46:02.605
+<v SPEAKER_2>Okay, aber sagte dir nicht, dass die Geräte auch ihren Abstand messen können?
+
+00:46:02.625 --> 00:46:05.665
+<v SPEAKER_4>Über akustische Signale in den ganzen Tests.
+
+00:46:05.685 --> 00:46:28.485
+<v SPEAKER_3>Du hast schon recht, sie könnten das auch triangulieren, das hat bis jetzt noch niemand wirklich gescheit implementiert, aber es ist bekannt, dass es gehen müsste. Und du könntest die relative Position, du kannst nicht die absolute Position im Sinne von GPS oder wie weit jetzt jemand in Richtung Norden schaut oder so. Du könntest die relative Position von den einzelnen Knoten untereinander relativ gut triangulieren. Hat noch niemand programmiert.
+
+00:46:32.645 --> 00:46:58.725
+<v SPEAKER_2>Da gibt es ja gerade ganz interessante Experimente, auch was Google da macht. Und Apple jetzt auch mit dem iPhone, den Apple Touch, dass sie eben sozusagen vorher abgesammelte WLAN-Beacons einem Ort zuordnen. Und während man sich dann halt hindurch bewegt, dann kann man daraus auch noch den Ort ablesen. Aber das würde hier wahrscheinlich schon wieder ein bisschen zu weit werden. Aber auf jeden Fall, es hat einfach Potenzial. Also dort kann noch eine ganze Menge drauf aufgesetzt werden.
+
+00:46:58.745 --> 00:47:17.305
+<v SPEAKER_4>Was vielleicht noch ganz nett zu erwähnen hier ist, dass bei dieser Ansicht, wo man die anderen XO-Laptops sieht, sieht man gleichzeitig auch die Anwendungen, die freigegeben sind. Also wenn du eine Anwendung freigiebst für die anderen, dann wird das wie dein Symbol visualisiert auf der Netzwerkan-Sicht. Und wenn man auf dieses Symbol klickt, dann steigt man automatisch.
+
+00:47:17.325 --> 00:47:44.765
+<v SPEAKER_2>Was kann man so freigeben? Das heißt, man kann auf den anderen Rechnern rummalen. Oder man kann gemeinsam malen. Darum geht es. Also es ist wirklich eine Plattform für kollaboratives Arbeiten im Sinne von über das Netz gemeinsam an Dokumenten arbeiten. Das heißt, der Text-Editor, der in dem XO eingebaut ist, ist von vornherein out of the box so, dass man mit mehreren Leuten gleichzeitig darin arbeiten kann?
+
+00:47:44.785 --> 00:47:45.325
+<v SPEAKER_3>Genau.
+
+00:47:45.345 --> 00:48:04.825
+<v SPEAKER_4>Ja, eigentlich ist da gleich die Aktivität, das gibt uns so ein kleines Framework, wo man seine eigenen Applikationen einklinken kann und deswegen nimmt das ganze Freigabesystem für einen. Da braucht man nicht, da braucht man ein Dreizeitcode, so Toolbox-Include im Prinzip. Und dann wartet man auf die Events, dass jemand anruft und das geht dann alles ganz leicht.
+
+00:48:04.825 --> 00:48:16.505
+<v SPEAKER_2>Okay, was heißt man? Ah ja, genau. Also Python, das haben wir gleich noch erwähnt, ist auch so eine der, neben dann dem Squeak, eine der Entwicklungssprachen und daran ist dann auch sehr viel dieser Systemfunktionalität implementiert.
+
+00:48:16.525 --> 00:48:56.005
+<v SPEAKER_3>Genau, ja. Die eine Idee dahinter ist auch, dass man einen Show-me-the-code-Button hat, eine kleine Tastenkombination für die, sagen wir mal, ein bisschen älteren, die selber im Code herum tun wollen und, sagen wir mal, vielleicht ein paar Konstanten ändern wollen in ihrem Write-Programm, Write-Activity, das sollen sie können. Und dann, quasi dass man eine Python-Ide hat, hat man dabei auch mit. Kann man es gleich ausprobieren und dann einfach weiter rennen lassen. Das muss man in Verbindung mit dem Backup-Konzept natürlich auch noch sehen. Also man kann immer wieder zurückgehen in den Versionen.
+
+00:48:56.025 --> 00:49:08.525
+<v SPEAKER_2>Ah, durch diese Journal-Funktionalität, die einem zugrunde liegt. Das heißt, man hat eigentlich dann so eine ewige Liste aller Systemfunktionen. Aber das braucht ja eine Menge Platz. Das muss ja auch irgendwo gespeichert werden.
+
+00:49:08.785 --> 00:49:19.205
+<v SPEAKER_3>Dazu hat man sich überlegt, man macht einen School-Server und immer wenn man in die Schule kommt, wird automatisch ein Backup gemacht. Dadurch kannst du auch relativ gut immer die Sachen gleich löschen bei dir.
+
+00:49:22.325 --> 00:49:23.925
+<v SPEAKER_2>Diese Software gibt es auch bereits?
+
+00:49:23.945 --> 00:49:30.805
+<v SPEAKER_3>Die gibt es, ja, ist aber noch in Entwicklung. Es gibt schon, man kann es ausprobieren, man kann es downloaden, den School-Server kann man downloaden und ausprobieren.
+
+00:49:30.825 --> 00:49:35.965
+<v SPEAKER_2>Das heißt, man macht dann sozusagen seine Daten auch gleich verfügbar?
+
+00:49:36.045 --> 00:50:39.505
+<v SPEAKER_3>Nein, macht man nicht. Das ganze Security-System hat man auch sich sehr viel überlegt. Das heißt, BitFrost ist im Prinzip eine Art Mini-Virtualisierung. Also jede Anwendung wird an sich virtualisiert, im Sinn von BSD-Jails auf die Art. Also Linux-V-Server heißt das Ganze, was darunter liegt. Das Ganze ist versehen mit sehr vielen kryptographischen, quasi gegen Signings. Und man braucht für gewisse Dinge einfach einen kryptographischen Key, um einfach gewisse Dinge möglich zu machen. Zum Beispiel ein Developer-Key, der ist für eine spezielle Maschine, mit der kann man dann wirklich alles machen. Sonst, wenn du zum Beispiel nicht die Permissions gekriegt hast, also Permissions sind viel feiner bei dem ganzen System, es ist nicht nur RWX, RWX, RWX, wie in Linux, sondern sind viel feiner. Und du kannst eigentlich auf alle möglichen Dinge Permissions geben, zum Beispiel meine Daten, die kann nur ich sehen.
+
+00:50:39.525 --> 00:50:42.445
+<v SPEAKER_2>Oder Access-Control-List.
+
+00:50:42.465 --> 00:50:47.405
+<v SPEAKER_3>Das ist wie ACLs im Prinzip, aber sehr fein.
+
+00:50:47.425 --> 00:51:01.425
+<v SPEAKER_2>Das heißt, du hast den Eindruck, dass da mehrere Sachen zusammenkommen. Es ist jetzt nicht so, dass das System voll verschlüsselt wäre. Oder, wenn ich jetzt ein Backup mache, dass meine Daten verschlüsselt gesichert werden.
+
+00:51:02.025 --> 00:51:07.425
+<v SPEAKER_3>Du könntest natürlich einen Skool-Server von einem verschlüsselten Fallsystem absetzen, wenn du willst.
+
+00:51:07.445 --> 00:51:28.105
+<v SPEAKER_2>Ich meine jetzt, wenn man jetzt von anderen Leuten die Daten einsammelt, dass dann jeder die Daten auch... Das mag in den Anwendungsfällen, an die jetzt hier gedacht ist, sicherlich nicht das primäre Problem sein. Ich wollte nur verstehen, wie es ist, weil wenn da jetzt so ein Sicherheitssystem mit drinsteckt, geht es mehr so, dass man Zugriff sperren kann, wenn man will.
+
+00:51:30.045 --> 00:51:45.045
+<v SPEAKER_3>Das müsste ich nachschauen, um das jetzt hier genau zu beantworten, weil ich habe mich mit Bitforce noch nicht so sehr beschäftigt. Würde mich nicht wundern, wenn es vorgesehen ist, dass du genau deine Daten mit deinem Key für dich verschlüsselst.
+
+00:51:45.625 --> 00:52:01.145
+<v SPEAKER_2>Aber du sagtest, es gibt eine Python-IDE, die ist gleich mit drin, also die ist dann auch grafisch unterstützt. Und wenn ich ein Programm entwickle, dann unterstützt diese Entwicklungsumgebung auch dieses wenn ich ein User-Interface-Element habe, dann klicke ich da drauf und dann sehe ich auch gleich welcher Code dafür zuständig. Also habe ich das verstanden.
+
+00:52:03.005 --> 00:52:06.525
+<v SPEAKER_4>Bei dem Show Me the Code und der Python-IDE, das sind irgendwie zwei verschiedene Sachen.
+
+00:52:07.005 --> 00:52:16.305
+<v SPEAKER_3>Also Show Me the Code sollte im Lofted Set schon mit dem PP, mit dem Python, dem Python-Ding sichtbar sein, glaube ich. Oder? Habe ich das falsch in Erinnerung?
+
+00:52:16.325 --> 00:52:29.825
+<v SPEAKER_4>Ja, reden wir so das Gleiche. Bei der Python-Interface, wo du so ein kleiner Text-Eingabefeld hast und dann den Run-Button genannt unten. Das ist halt mehr oder weniger geeignet für kurze Code-Programme zum Lernen. Da gibt es allerdings eine Liste mit Beispielen.
+
+00:52:29.845 --> 00:52:31.265
+<v SPEAKER_3>Okay, dann habe ich mich verkehrt, sorry.
+
+00:52:32.025 --> 00:52:35.265
+<v SPEAKER_4>Das wird wahrscheinlich eher mit Nano oder so mit einem Editor geöffnet werden.
+
+00:52:35.285 --> 00:53:13.205
+<v SPEAKER_2>Aber grundsätzlich ist es so, das System soll auch das Programmieren, Fördern, Ermutigen die Kids. Also nicht nur jetzt tumpf, die Anwendungen zu fressen, wie sie kommen, sondern man soll auch ermutigt werden, selber zu entwickeln. Und da ist Python die bevorzugte Sprache, mit der man dann wahrscheinlich auch die Systemfunktionalität dann irgendwann weiter verändern könnte. Aber es gibt auch Sachen wie Squeak, das ist auch immer gleich mit drauf. Das klingt ja alles nach ganz schön viel, mit Videokamera, Networking und so weiter. Wie groß ist denn der Speicher überhaupt in diesem Gerät?
+
+00:53:13.605 --> 00:53:44.285
+<v SPEAKER_3>1 GB Flasch und 256 MB RAM. Und geht sich aus. Und was wir gesehen haben ist, dank der wunderbaren Leute von OpenWRT, dass wenn man es noch ein bisschen kompakter machen möchte, dann wird die Maschine wirklich flott. Wenn wir z.B. OpenWRT draufrennen gesehen haben, haben wir eine Bootzeit mit einem X-Server von 15 Sekunden.
+
+00:53:44.305 --> 00:53:45.405
+<v SPEAKER_2>Was ist da jetzt anders?
+
+00:53:46.105 --> 00:53:57.065
+<v SPEAKER_3>Es ist noch einmal reduzierter. Ich bin mir sicher, dass man bei dem Sugar, so wie es jetzt ist, noch einiges wegstreichen kann, was nicht notwendig ist. Und das noch einmal ein ganzes Stück flotter machen kann.
+
+00:53:58.225 --> 00:54:01.225
+<v SPEAKER_2>Seit wann ist denn die Software überhaupt in einem benutzbaren Zustand?
+
+00:54:01.245 --> 00:54:02.905
+<v SPEAKER_3>Puh, ich würde sagen November.
+
+00:54:04.225 --> 00:54:44.745
+<v SPEAKER_2>Okay, also wir reden jetzt von einer relativ aktuellen Entwicklung sozusagen. Das heißt, die Hardware ist vor einigen Monaten fertig geworden, die Software ist jetzt fertig geworden. Jetzt steht natürlich hinter allem, man sieht, da ist schon eine ganze Menge Aktivität reingeflossen in die Entwicklung. Aber euer Projekt jetzt, speziell olpcaustria.org, ihr seid jetzt, hast du ja schon am Anfang erwähnt, du bist da irgendwie aufgeschlagen, hast gesehen, was, nur 30 Leute, kann ja wohl nie wahr sein. Aber ihr habt euch jetzt auch eines spezifischen anderen Problems angenommen, nämlich dass diese Geräte in Europa, jetzt in unserem Kulturkreis, keinerlei Verbreitung haben. Was ist denn jetzt euer Ansatz, worum kümmert ihr euch?
+
+00:54:44.765 --> 00:55:42.485
+<v SPEAKER_3>Also der Christoph und ich sind mal im Dezember jetzt dann rübergefahren wieder und haben im Prinzip, ich glaube, das kann man so sagen, die OLPC-Leute drüben daran erinnert, dass sie nicht nur sozusagen wie verrückt daran arbeiten sollen, dass es endlich fertig wird, sondern auch die Community, dass sie die Community mehr mit einbinden. Und was wir erreicht haben, ist im Prinzip eine Zusage, dass 200 XO-Laptops an Developer und generell Contributor vergeben werden, weltweit, pro Monat, 200 pro Monat, das ist schon mal nicht so wenig. Und die Idee dahinter ist, dass man einen Projektantrag quasi stellt, also sagt, ich möchte dieses und jenes damit machen. Der Chris programmiert gerade ein wunderbares Startbank-Interface dafür auch, und dass das alles sozusagen trackbar auch ist.
+
+00:55:42.505 --> 00:56:00.565
+<v SPEAKER_4>Und solange man aktiv ist, hat man, man beantragt eine gewisse Anzahl von Monaten den Laptop, zum Beispiel sechs, und wenn man noch aktiv ist, dann wird es verlängert, und wenn man nicht mehr aktiv ist, oder nicht mehr interessiert ist, dann gibt es ein Rotationssystem, ist vorgesehen, wo dann die Laptops einfach an andere Leute in der Gegend weitergegeben werden, die den haben.
+
+00:56:00.585 --> 00:56:12.905
+<v SPEAKER_2>Aber ihr habt das nicht erst noch vor, sondern ihr habt auch schon Geräte und das Volk gebracht. Ihr wart ja jetzt auch zuletzt auf dem 24C3, auf dem Chaos-Communication-Kongress in Berlin. Wie viele Geräte hattet ihr dann so unterm Arm?
+
+00:56:12.925 --> 00:56:29.625
+<v SPEAKER_3>Wir hatten leider weniger als wir wollten. Wir waren, glaube ich, mit so zehn, zwölf Stück dort. Wir hätten noch einige gehabt, die sind nur leider im Flughafengepäck von den USA nach Österreich hängen geblieben. Und die werden jetzt per Post verschickt.
+
+00:56:32.245 --> 00:56:57.965
+<v SPEAKER_2>Was mich interessieren würde, ist, auf dem Kongress gibt es natürlich eine sehr intensive Community, die ja im Prinzip auch eine hervorragende Zielgruppe ist. Ihr habt es ja schon erwähnt, OpenWRT. Ich schätze mal, ihr seid dort auch auf die Gruppe gestoßen. Die ist ja sehr zahlreich vertreten. Würde mich mal interessieren, wie die Reaktionen waren. Was ihr da so eingesammelt habt. Und was da so...
+
+00:56:57.985 --> 00:57:32.545
+<v SPEAKER_4>Die Reaktionen waren, dass die meisten Leute ein sehr starkes Interesse vorhanden war an dem Gerät. Man hat im Prinzip immer erzählen können, und die Leute haben selbst viele Ideen gehabt. Es sind viele Projekte, die noch entstanden dort. Durch die Leute, die sich damit beschäftigt haben. Generell, ich glaube, bis auf das, dass wir den halben Tisch von OpenWRT hier gesquartet haben, war eigentlich total super, wir haben uns recht gut verstanden. Und es gibt auch jetzt einige neue OLPC-Leute, die Interesse haben in Frankreich, zum Beispiel, die mit OpenWRT verknüpft sind, in Frankreich eine Gruppe zu machen.
+
+00:57:32.565 --> 00:57:35.525
+<v SPEAKER_2>Das hat sich dann auf dem Kongress auch ergeben, oder wie?
+
+00:57:37.485 --> 00:57:39.825
+<v SPEAKER_3>Du musst uns ein bisschen Quanten-Krypto erzählen, das ist super gewesen.
+
+00:57:39.885 --> 00:58:22.325
+<v SPEAKER_4>Ah ja, genau, es war eine Physiker-Gruppe von der National University of Singapore, war auf dem CCC auch. Und die arbeiten mit Quanten-Kryptographie, oder besser gesagt Quantum Entangled Key Distribution, was darum geht, über Quanten-Mechanik einen Schlüssel auszutauschen zwischen zwei Geräten. Und die haben ein funktionierendes Gerät mitgenommen, was über USB funktioniert. Und dann haben sie irgendwie einen Gefallen gefunden an den kleinen grünen Geräten und versucht, diesen Quanten-Kryptographie-Mechanismus auf den XO-Laptops zum Laufen zu bringen. Und sind auch ziemlich weit gekommen, so bis zu 80 Prozent. Und da hat das letzte bisschen gefehlt und sie hätten jetzt gerne Laptops und wir hoffen, wir können irgendwie aushelfen.
+
+00:58:22.345 --> 00:58:28.345
+<v SPEAKER_2>Auf dem Kongress sind die auf die Idee gekommen und dann haben sie es dann mal hingesetzt. Das heißt, da wurde die ganze Zeit gehackt und gemacht und getan.
+
+00:58:28.365 --> 00:58:29.025
+<v SPEAKER_3>Genial.
+
+00:58:29.045 --> 00:58:31.685
+<v SPEAKER_2>Aber die Geräte, die ihr dann hattet, die habt ihr dann aber auch in das Volk gebracht.
+
+00:58:32.565 --> 00:58:34.645
+<v SPEAKER_3>Das sind alle losgeworden.
+
+00:58:34.665 --> 00:58:57.425
+<v SPEAKER_2>Kein Zweifel. Bei 4000 Gästen, denke ich, wird man zehn kostenlose Computer immer los. Ja, gab es denn noch so Anregungen? Du hast ja, Christoph, eingangs schon erwähnt, es ergeben sich interessante Projekte. Was sind denn das so für Projekte, die sich da jetzt ergeben?
+
+00:58:57.445 --> 00:59:00.445
+<v SPEAKER_4>Jetzt in dem Sinne konkret, dass...
+
+00:59:00.465 --> 00:59:06.085
+<v SPEAKER_2>Oder auch weniger konkrete Ideen. Was ist hier sozusagen noch zu tun?
+
+00:59:06.285 --> 00:59:42.425
+<v SPEAKER_4>Was sind die Dinge, auf die man sich stützen kann? Zusammenarbeiten, es gibt so viele Projektideen. Und es ist so, dass es in Europa relativ wenig Communitys gegeben hat, bis vor kurzem, weniger Crossroads, Organisationen. Und dass jetzt in den letzten Monaten sehr viel immer entstehen. Und ein großes Projekt von uns allen gemeinsam ist im Prinzip, die Kommunikationskanäle zu bündeln, dass die Kommunikationsstruktur innerhalb von den Gruppen verbessert und gestärkt wird. Und das ist praktisch direkt das Ergebnis von CCC auch.
+
+00:59:45.065 --> 01:00:05.585
+<v SPEAKER_2>Und jetzt, um noch mal ein bisschen konkreter zu werden, was hast du im Sinn gehabt? Auch Techniker gibt es ja hier an diesem Projekt eine ganze Menge noch zu entwickeln. Also wo kann man jetzt hier andocken? Gibt es jetzt schon so ein Ökosystem, was sich um diesen OLPC herum entwickelt?
+
+01:00:06.745 --> 01:00:50.985
+<v SPEAKER_3>Schon ein bisschen, ja. Es gibt zum Beispiel eine Sache, die wir jemandem gleich im Kongress in XO mitgegeben haben. Da war Folgendes, der ist an uns gekommen, da herangetreten und hat gesagt, ich habe mit der CPU schon gearbeitet, ich habe die in der Arbeit verwendet. Und ich weiß, dass man da, der hat einen Video-Decoder drauf. Und ich würde ganz gerne irgendwie einfach ein paar Quellen dranschließen und das Video-Decoding, den Treiber, und dann exportieren auf die aktuelle Linux-Kanal-Version, die da drauf rennt. Und dann müsstest du es eigentlich auch als Fernseher gehen. Und auch als Radioempfänger. Das geht nämlich beides. Das kannst du beides dekodieren auf der CPU. Ich habe jetzt nicht nachgeschaut in den Specksheets von der AMD-CPU, aber ich glaube mir einfach mal, dass es...
+
+01:00:51.005 --> 01:00:56.145
+<v SPEAKER_2>Also als Radioempfänger ohne weitere Antennengeschichten, oder geht man dann an diesen Mikrofoneingang wieder rein?
+
+01:00:56.185 --> 01:01:04.745
+<v SPEAKER_3>Ja, man kann an diesen Mikrofoneingang irgendetwas reinstecken. Aber im Prinzip, du könntest das Signal demodulieren in Prozesse schon.
+
+01:01:04.765 --> 01:01:08.305
+<v SPEAKER_2>Mit GNU Radio zum Beispiel? Oder mit einer speziellen Software, die er hat?
+
+01:01:08.325 --> 01:01:13.605
+<v SPEAKER_3>Genau. Also ich meine, im Prinzip, das Dekodieren müsste auf der CPU gehen.
+
+01:01:13.825 --> 01:01:16.585
+<v SPEAKER_4>Die Ausschüsse sind vorhanden, sind aber unbenutzt bis jetzt.
+
+01:01:16.605 --> 01:01:19.285
+<v SPEAKER_3>Genau. Und...
+
+01:01:19.305 --> 01:01:20.845
+<v SPEAKER_2>Das ist natürlich sehr interessant.
+
+01:01:20.865 --> 01:01:29.045
+<v SPEAKER_3>Das war eine Idee, da haben wir gleich gesagt, toll, mach, hier. Hier ist er, mach. Probier's und wenn nicht, dann gib ihn weiter, den XO.
+
+01:01:29.065 --> 01:01:39.325
+<v SPEAKER_2>Das heißt, ihr seht euch jetzt auch ein bisschen als Basis für neue Projektideen, als Ansprechpartner. Wenn jetzt Leute der Meinung sind, O, X, Euro, das klingt ja alles ganz prima. Wo steht eigentlich XO?
+
+01:01:40.385 --> 01:01:47.525
+<v SPEAKER_3>Das ist dieses Männchen, das X und das O. Das schaut einfach nur grafisch so aus.
+
+01:01:47.545 --> 01:01:49.785
+<v SPEAKER_2>Also das heißt eigentlich nichts oder wie?
+
+01:01:49.805 --> 01:02:01.345
+<v SPEAKER_3>Das ist einfach genau dieses Symbol eines Menschen. Das schaut aus wie die zwei Arme und die zwei Beine und der Kopf, der da oben drauf, der runde Kreis, das schaut aus wie ein O und das andere ist wie ein X.
+
+01:02:01.465 --> 01:02:06.805
+<v SPEAKER_2>Also es ist keine Abkürzung, kein rekursives Akronym oder so.
+
+01:02:06.825 --> 01:02:07.865
+<v SPEAKER_3>Nein, das ist nicht alles genug.
+
+01:02:07.885 --> 01:02:09.805
+<v SPEAKER_2>Bei zwei Buchstaben ist es vielleicht ein bisschen hart.
+
+01:02:15.885 --> 01:02:34.705
+<v SPEAKER_3>Ja, wir haben eine Liste von Ideen, die uns mal eingefallen sind, die Simon von uns auch eingefallen ist. Wir haben eine Liste auf unserer olpc.at-Seite draufgegeben. Und ich meine, die ist schon relativ lang. Und wir kommen nicht dazu, das alles zu realisieren. OLPC ist ein Ideenmotor ohne Gleichen.
+
+01:02:34.725 --> 01:02:47.765
+<v SPEAKER_4>Und es ist auch möglich, ihm bestehende Projekte beizutragen, bei vielen. Zum Beispiel arbeiten wir gerade an einem Paketmanager für den XO-Laptop, wo man Software nachinstallieren kann. Und da gibt es auch jede Menge Möglichkeiten, Zeit zu investieren.
+
+01:02:47.785 --> 01:03:16.485
+<v SPEAKER_2>Also wenn ich mir das jetzt alles so anhöre, würde ich ja vor allem auch sagen, gerade diese Networking-Geschichte fordert ja geradezu daraus, sich interessante Anwendungen einfallen zu lassen, wie man eben auf dieser Basis der dynamischen Discovery von Diensten und überhaupt anderen Rechnern interessante Lösungen finden kann. Die Idee war bestimmt auch schon mal irgendwie auf eurer Liste, da habe ich jetzt gar keinen Zweifel, aber das ist so das, was mir jetzt so...
+
+01:03:16.505 --> 01:03:52.785
+<v SPEAKER_3>Die Idee war gar nicht so sehr, ja, aber das gibt sehr, sehr viel her, was man alles machen kann mit dem Autoservice Discovery. Ich meine, diese Idee kann man genau so hernehmen und sagen wir mal den Freifunknetzen oder so ausprobieren. Und dass man zum Beispiel eine Idee wäre, dass man eine Freifunkbox irgendwo so eine ASUS WL500 oder so mit einer Festplatte irgendwo raufgibt, da aufs Dach, die einfach vermischt und das dann einfach bei Autoservice Discovery ankündigt. Hier gibt es einen Samba-Share mit vielen MP3s. Also solche Dinge, ja.
+
+01:03:52.805 --> 01:04:08.105
+<v SPEAKER_2>Datenquellen, sonstige Sachen. Ja, haben wir denn jetzt eigentlich alles so, gibt es noch irgendetwas, was ihr unbedingt loswerden wollt rund um das Projekt? Also vielleicht nochmal, wenn jetzt Entwickler Interesse haben an dem Gerät, was sollen sie dann tun?
+
+01:04:08.125 --> 01:04:40.685
+<v SPEAKER_3>Also wir schreiben gerade eben, wie gesagt, an dem ganzen Programm, wir entwickeln das weiter, dass es jetzt endlich, hoffentlich sehr bald, mal wirklich live im Einsatz ist. Aber im Prinzip, man kann sich jetzt schon eintragen auf wiki.laptop.org, schrägstrich go, schrägstrich contributors, so wie die Beitragenden. Und da gibt es eine Liste von Ideen, die man sich eintragen kann. Das werden wir nachher noch in die Datenbank geben. Dann wird es im Prinzip beurteilt und dann kommt ein XO per Post an.
+
+01:04:40.705 --> 01:05:07.185
+<v SPEAKER_2>Das heißt, ihr sammelt jetzt erst mal Anfragen von Leuten, die einfach Interesse haben, mit dem Gerät konkret mal zu arbeiten. Und was ihr erwartet an, ist eine halbwegs brauchbare Beschreibung, in welchem Umfeld und in welchem Ausmaß, was einfach die Projektidee ist, wie man sich da jetzt ranmacht. Es geht jetzt nicht nur darum, kostenlose Computer zu verschleudern, sondern ihr sucht schon aktiv Leute, die jetzt einfach auch mal eine Idee haben, wohin die Reise gehen könnte.
+
+01:05:07.205 --> 01:05:12.905
+<v SPEAKER_1>Das macht ihr aber jetzt auch nicht nur in Österreich, sondern ihr adressiert jetzt den europäischen Raum.
+
+01:05:12.925 --> 01:05:27.085
+<v SPEAKER_4>Und darüber hinausgehend. Wir hoffen im Februar möglicherweise erste Laptops hergeben zu können. Es ist nachher ein bisschen unklar, die Einzelheiten, aber wir arbeiten auf Hochdruck.
+
+01:05:27.745 --> 01:05:34.565
+<v SPEAKER_2>Die Geräte, die ihr jetzt schon verteilt habt, sind vor allem auch so in Richtung Hager-Spaces gegangen.
+
+01:05:34.585 --> 01:05:56.245
+<v SPEAKER_3>Genau, also es gibt auch eins der besten Investitionen, zum XO-Laptop irgendwo hinzugehen, oder ein paar gleich, zu Hager-Spaces. Weil dort bleiben sie in der Community, dort können viele Leute damit ausprobieren. Es ist eher eine Frage von, wie viele Stück es insgesamt gibt, zu welchem Zeitpunkt und wie sie hinkommen. Und ein Hager-Space bietet sich dafür echt an.
+
+01:05:56.505 --> 01:06:07.225
+<v SPEAKER_2>Das heißt, wenn jetzt Leute ohnehin schon so eine größere Gruppe vorweisen können, wie hier zum Beispiel im Meta-Lab, natürlich in Wien, aber auch an ganzen anderen Orten, dann ist das für euch auf jeden Fall schon mal ganz interessant.
+
+01:06:07.245 --> 01:06:07.465
+<v SPEAKER_3>Genau.
+
+01:06:08.445 --> 01:06:57.545
+<v SPEAKER_2>Ja, haben wir es? Oder gibt es noch etwas, was ihr nachschieben wollt? Ihr schüttelt mit dem Kopf. Ja, es gibt sicherlich noch eine ganze Menge dazu zu erzählen, aber ich bedanke mich trotzdem, Aaron und Chris, für die ausführliche Darstellung des Projektes. Ich habe jetzt auch selber noch eine ganze Menge dazugelernt und bin auch ein bisschen beeindruckt, dass es sich hier eigentlich ja auch ein sehr, habe ich schon gesagt, so einen holistischen Ansatz handelt. Also dass man jetzt nicht nur sagt, okay, wir machen jetzt einen billigen Computer und dann hauen wir da einfach so das OS, was sonst auch drauf läuft, sondern dass es hier eigentlich eher darum geht, eine vollständige Maschine zu liefern, die eben auch eine ganz klare Zielgruppe hat, nämlich die Kinder oder die Jugendlichen. Kinder ist vielleicht ein bisschen übertrieben oder zu einschränkend. Ja, und damit machen wir die Welt dann wieder ein bisschen besser, als sie vorher war, oder?
+
+01:06:57.565 --> 01:07:00.625
+<v SPEAKER_4>Das ist rechtfertig die Freizeit.
+
+01:07:00.645 --> 01:08:02.325
+<v SPEAKER_3>Also ich glaube schon, dass wenn Leute oder junge Menschen, sagen wir es mal so, genauso wie es unsere Generation gemacht hat, einfach mit Computern und Netzwerken Dinge entdecken können, die sie vorher noch nie gedacht haben und sich so ihren Horizont ein bisschen erweitern. Vor allem auf der anderen Seite des Digital Gaps. Das, glaube ich, bringt sehr, sehr viel. Längerfristig. Weil gerade so Leute, die sich selber etwas erarbeiten können, die es gelernt haben, als Kind schon, weil sie einfach reingekippt sind in das Lesen von Wikipedia zum Beispiel. Ich glaube, solche Leute bauen ein Land auf. Ist die Wikipedia da eigentlich drin? Es ist vorgesehen, eine kleine, mini-Kinderversion der Wikipedia reinzugeben. Ich weiß nicht, wie weit das Status ist von dem Subprojekt.
+
+01:08:02.345 --> 01:08:03.545
+<v SPEAKER_4>Das weiß ich leider auch nicht.
+
+01:08:03.565 --> 01:08:06.605
+<v SPEAKER_2>Ist das hier so etwas für einen USB-Stick?
+
+01:08:06.625 --> 01:08:22.145
+<v SPEAKER_3>Ja, oder am School-Server, klar. Die Wikipedia ist ohne Bilder gar nicht so groß. Es geht sich durchaus auf ein paar GIG aus, die Meeresgold-Datenbank. Ich weiß nicht, wie viel das war, drei oder acht?
+
+01:08:22.345 --> 01:08:31.165
+<v SPEAKER_2>Ich weiß es nicht. Es ist so oder so eine Menge, natürlich, klar. Aber auch Bilder sind ja nicht gerade unnütz.
+
+01:08:31.185 --> 01:08:33.465
+<v SPEAKER_4>Da hört sich nach einer School-Server-Implementierung an.
+
+01:08:34.765 --> 01:08:57.305
+<v SPEAKER_3>Aber eine von unserer Gruppen, Christoph, hat das so schön beschrieben, wie er in der Mongolei war, beim Reisen in Ulaanbaatar im Internet-Café. Er hat einfach gesehen, in diesem Internet-Café sind Windows-Computer, die Kinder spielen Doom oder Counter-Strike. Aber es gibt immer einen oder zwei, die Wikipedia lesen. Und das ist der Punkt.
+
+01:08:57.325 --> 01:08:58.485
+<v SPEAKER_2>Das ist die Zielgruppe.
+
+01:08:59.505 --> 01:09:06.005
+<v SPEAKER_4>Apropos Doom, das hat ja gerade noch ein Leben auf der Debatte entzündet, weil Doom ja praktisch in der offiziellen Downloadliste im Internet drin war.
+
+01:09:06.025 --> 01:09:06.465
+<v SPEAKER_3>Außer dem.
+
+01:09:06.485 --> 01:09:16.105
+<v SPEAKER_4>Weil das halt der Sammelpunkt für alle Activities. Und es war die liebhafte Diskussion, ob Doom dort sein sollte, ob das so leicht zugänglich gemacht werden sollte oder nicht.
+
+01:09:16.125 --> 01:10:39.182
+<v SPEAKER_2>Oh weia. Naja, in dieser Diskussion beteiligen wir uns nicht. Aber wir rufen auf alle Hacker mit Spaces oder mit Kindern, oder am besten vielleicht sogar beides, doch mal darüber nachzudenken, sich das Gerät anzunehmen. Und Aaron und Chris hier von OLPC Austria sind offen und aufgeschlossen für neue Projektideen. Und dann könnte es auch schon ein paar neue Geräte hageln. Im Februar geht es los. Wenn alles klappt, schauen wir mal nochmal. Vielen Dank für das Gespräch. Und das war es wieder bei Chaosradio Express. Ausgabe Nummer 71. Wie immer Rückmeldung erwünscht, Chaosradio lccc.de oder beteiligt euch mit Regeln im Blog unter blog.chaosradio.ccc.de Ich höre wie immer gerne zurück und Anregungen und interessante Links sind natürlich auch immer gerne gesehen, damit wir das hier auch alles schön interaktiv halten. Ja, das war's. Tschüss und viel Spaß noch bei allem, was ihr tut. Das war's mit Chaosradio Express. Wir sehen uns, ab dahin.

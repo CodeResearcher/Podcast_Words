@@ -1,0 +1,1303 @@
+WEBVTT
+
+00:00:04.440 --> 00:01:01.700
+<v SPEAKER_1>Was ist es? Ist es, oh, ich werde Daten auf einem Server auf der Internet accessieren, das ist Cloud Computing? Dann gibt es eine Definition. Das ist eine der Definitionen. Ich meine, es ist der dummste, ich bin durch das gewesen, Open Source. Open Source wird unser Geschäft zerstören, das bedeutet nichts, aber Open Source. Wann wird diese Idiotie stoppen? Es gibt noch Mainframes. Das war die erste Industrie, die zerstört werden würde. Und die Mainframes zerstört werden, ist wie eine Glaciermeldung.
+
+00:01:36.292 --> 00:03:25.492
+<v SPEAKER_3>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 176. Mein Name ist Tim Pritlove und ich begrüße euch endlich dann mal wieder auch zu einer Sendung, wo es um Technik geht. Manche hatten ja schon den Glauben ein wenig dran verloren, dass ich hier überhaupt jemals mal wieder auf Technik zu sprechen komme, nachdem ich jetzt so viel Kultur und Gesellschaft untergebracht habe. Aber keine Angst, hier geht es fleißig weiter. Ja, und die heutige Sendung dreht sich um wieder einmal um die Wolke, aber nicht die Internetwolke, die ich hier vor einigen Ausgaben schon mal besprochen habe. Denn da ging es eigentlich eher um die klassische Internetwolke, nämlich die Infrastruktur des Internets, wie funktioniert das sozusagen alles hinter den Kulissen, um wirklich mal zu verstehen, wieso die IP-Pakete durch die Gegend gehen. Nein, es geht jetzt hier um die etwas modernere Wolke, die ja so viel im Gespräch ist, nämlich Cloud Services, Cloud Technologies, all die Technologie, die heutzutage am Start ist, um naja Dienste im Netz für Dritte anzubieten. Wir kennen ja alle so ein bisschen dieses Google-Phänomen. Immer mehr Dienste kommen quasi direkt von zentralen Servern in den Web-Browser oder auch in speziell angepasste Clients. Und auch nicht nur von Google, sondern auch von vielen anderen auch. Und da so ein wenig den Überblick zu behalten, ist gar nicht so einfach. Und um diesen vielleicht mal zu gewinnen, begrüße ich für die heutige Sendung Tobias, Tobias Rodäbel, hallo.
+
+00:03:25.512 --> 00:03:27.152
+<v SPEAKER_2>Hallihallo.
+
+00:03:27.172 --> 00:03:32.112
+<v SPEAKER_3>Ja, du beschäftigst dich etwas mit diesen Technologien, kann man sagen.
+
+00:03:32.132 --> 00:04:12.092
+<v SPEAKER_2>Ganz genau. Vor einiger Zeit, ich glaube, es ist jetzt anderthalb Jahre her, bin ich auf Spaziergängen zu dem Thema gekommen mit einem sehr guten Freund, der wahrscheinlich auch zuhört und nicht mehr in Berlin wohnt, Florian Glanzner. Und wir haben uns eben angeguckt, was in der ganzen Cloud-Landschaft passiert und haben uns gefragt, wie geht das, was steckt da eigentlich hinter? Bis hin zu dem Punkt, kann man davon lernen und vielleicht sogar was selber nachbauen. Und darüber ging der Einstieg und die Beschäftigung mit dem Thema eigentlich erst richtig los.
+
+00:04:12.112 --> 00:04:19.092
+<v SPEAKER_3>Was ist denn bis dahin in deinem Leben passiert? Wie bist du denn überhaupt auf die Technologie und die Computer gekommen?
+
+00:04:19.112 --> 00:04:50.892
+<v SPEAKER_2>War das schon immer Veranlagung? Ja, das liegt so ein bisschen im Blut, weil mein Vater in dem Bereich auch tätig ist und ich sehr früh schon irgendwelche Steuerungssysteme für Kraftwerke zu Hause stehen hatte. Und bin über das Steuern einer H0-Eisenbahn zum Programmieren gekommen. Während alle anderen in meiner Nachbarschaft schon Summergames spielen durften auf ihrem C64, musste ich meine Eisenbahn steuern.
+
+00:04:52.032 --> 00:05:06.892
+<v SPEAKER_3>Wir reden jetzt wirklich von Mitte der 80er Jahre. Da war aber noch nicht so viel out of the box steuerbar in der H0-Welt, oder? Das war ja alles noch, da hatte man sein Trafo daneben und konnte so ein bisschen Strom in die Schienen geben. Das war es im Wesentlichen, oder?
+
+00:05:07.292 --> 00:05:42.452
+<v SPEAKER_2>Ja, ich habe etwas verwendet, also eigentlich programmierbare Relais, die in einem Rack eingebaut waren und mit denen man Wasserwerke steuern kann. Mein Vater hatte das mit nach Hause geschleppt, das hatte auch nur einen öselegen kleinen grünen Monitor, also noch nichts mit bunten Pixeln. Also saß ich da und wollte trotzdem was damit anstellen und das war meine erste Berührung mit logischen Verknüpfungen.
+
+00:05:42.472 --> 00:05:47.372
+<v SPEAKER_3>Das heißt, du hast dann direkt dieses System als solches verwendet, und jetzt noch nicht über einen Computer?
+
+00:05:47.712 --> 00:05:56.552
+<v SPEAKER_2>Kabel genommen, reingesteckt und Schrauben zugedreht und geguckt, ob die Relais auch die Weichen stellen können.
+
+00:05:57.992 --> 00:06:05.352
+<v SPEAKER_3>Und gab es die schon so zu kaufen, solche H0-Weichen, die sich so über ein Steuersignal umschalten ließen?
+
+00:06:05.372 --> 00:06:08.352
+<v SPEAKER_2>Nee, da musste mir mein Vater helfen.
+
+00:06:08.372 --> 00:06:10.192
+<v SPEAKER_3>Das heißt, das habt ihr euch auch noch selber gebaut?
+
+00:06:10.212 --> 00:06:10.732
+<v SPEAKER_2>Teilweise.
+
+00:06:10.752 --> 00:06:15.412
+<v SPEAKER_3>Aha, und wie groß war das dann am Ende?
+
+00:06:15.432 --> 00:07:06.432
+<v SPEAKER_2>Eigentlich eine ziemlich nackte Spanplatte, auf der Schienen waren, also ich habe mich nicht so sehr für Bäume und Gräser interessiert. Sondern eher für Signale und eventuell Lampen in Häusern und so. Das sind so die einfachen ersten Schritte, bevor du eine Weiche stellst, überlegst du dir, wie kannst du einfach eine Glühbirne in einem Häuschen an und aus machen? Und das geht relativ simpel, weil das ein einfacher Stromkreis ist und du schaltest das Relais auf und zu und es gut ist und dann machst du die Lampe halt blinkend. Also kleine Schritte, man darf sich das nicht so vorstellen, wie heute. Ich weiß gar nicht, wo die da sind in der H0-Technik und die können ja glaube ich einzelne Lokomotiven adressieren und dann steuern und so, das war das alles nicht.
+
+00:07:06.452 --> 00:07:11.112
+<v SPEAKER_3>Du kennst schon die Geschichte so vom MIT Train Model Railroad Club?
+
+00:07:11.132 --> 00:07:12.032
+<v SPEAKER_2>Nein.
+
+00:07:12.052 --> 00:07:13.572
+<v SPEAKER_3>Die Geburtsstunde des Hackens?
+
+00:07:14.612 --> 00:07:15.832
+<v SPEAKER_2>Erzähl.
+
+00:07:15.852 --> 00:08:47.752
+<v SPEAKER_3>Na, es begab sich zu der Zeit, wir reden jetzt so von 60er-Jahre, wo dann halt so die Technikstudenten am MIT so einen Eisenbahn-Bastel-Club hatten, eben den Tech Model Railroad Club. Und der teilte sich im Wesentlichen in zwei Gruppen. Das eine waren halt die mit den Bäumen und den Bräusern, die sich sozusagen eigentlich um alles kümmerten, was oberhalb der Spanplatte stattfand, also die eigentlichen Linien bauen, Schienen verlegen, etc., und dass irgendwie alles hübsch aussieht. Und dann gab es so die andere Gruppe, die Singles and Power-Gruppe, die sich quasi für den Teil unter der Spanplatte zuständig fühlte und die dort eben Kabel zog und sich immer wieder neue Finessen hat einfallen lassen, um das Ganze eben so programmierbar und automatisierbar zu halten, wie es eben auch nur irgendwie technisch vorstellbar war. Und das ist so der Sage nach der Ort, wo eben das Wort To Heck geboren wurde, weil das war quasi deren Slang. Ich begebe mich unter diese Spanplatte und ich komme eigentlich erst dann wieder hervor, wenn ich also so lange alles zusammengestrippt habe, bis ich wieder irgendeine Funktionalität, die man vielleicht bis dahin für unmöglich gehalten hat oder zumindest doch wünschenswert und nicht existent ansehen müssen, bis das eben realisiert war. Und dieser Vorgang, das dann hinzubekommen, das war dann eben der Heck. Das war quasi I hacked it.
+
+00:08:47.772 --> 00:08:49.012
+<v SPEAKER_2>Mist, ich bin ein Hacker.
+
+00:08:49.032 --> 00:08:50.472
+<v SPEAKER_3>Ja, du bist ein Hacker, aber so richtig.
+
+00:08:51.332 --> 00:08:55.972
+<v SPEAKER_2>Ich weiß nicht, ob das das Ziel von meinem Vater war, aber okay.
+
+00:08:55.992 --> 00:09:29.732
+<v SPEAKER_3>Na ja, das sind dann halt die, dann hatten sie irgendwie so ein Spare-Computer in der Uni, für den gerade mal keiner Verwendung hatte. Und der war dann irgendwie in einem Nebenzimmer und den haben sie sich dann irgendwie angeeignet. Und da wurden dann halt Spacewar, das erste Computerspiel der Welt etc. oder das erste interaktive Game auf so einem Computer zumindest gebaut. Und das ist irgendwie so im Prinzip ein wenig die Grundlage dieser ganzen Hacker-Kultur. Na ja, gibt's ein schönes Buch. Steven Levy, Hackers, Heroes of the Computer Revolution. Da ist die Story auch nachzulesen.
+
+00:09:29.992 --> 00:09:30.732
+<v SPEAKER_2>Danke für den Tipp.
+
+00:09:30.912 --> 00:09:38.232
+<v SPEAKER_3>Bitte schön, aber darum soll es ja eigentlich gar nicht gehen. Du bist dann sozusagen auf deinem Programmierer-Pfad geblieben.
+
+00:09:38.252 --> 00:09:51.112
+<v SPEAKER_2>Ja, also auch nicht richtig, weil ich dann nicht irgendwie konsequenterweise studiert habe. Also irgendwie Informatik oder sowas, sondern ein bisschen andere Wege eingeschlagen habe.
+
+00:09:51.132 --> 00:09:53.932
+<v SPEAKER_3>Hast du das auch nicht mal probiert?
+
+00:09:53.952 --> 00:10:06.052
+<v SPEAKER_2>Ich war für eine Woche lang an einem technischen Gymnasium und habe mich dann da selber abgemeldet, weil mir der Weg dahin zu weit war.
+
+00:10:06.072 --> 00:10:10.992
+<v SPEAKER_3>Das kenne ich sehr gut. Na ja, dann kannst du ja auch ein abgebrochenes Informatikstudium vorweisen.
+
+00:10:11.012 --> 00:10:14.452
+<v SPEAKER_2>Das ist ja hier eine wichtige Auszeichnung.
+
+00:10:16.272 --> 00:10:25.232
+<v SPEAKER_3>Gut, also du bist sozusagen ein klassischer Hands-on-Programmierer und ich mache das so, wie es mir gefällt. Und dann fiel dir die Cloud auf die Füße und dann?
+
+00:10:25.252 --> 00:10:42.632
+<v SPEAKER_2>Wie gesagt, die Spaziergänge, meistens hier im Volkspark mit einer Flasche Bier, wenn ich das sagen darf, und meinem Kumpel Florian. Und wir haben gemerkt, okay, immer mehr News, immer mehr Meldungen bei Heise oder sonst wo, Cloud Computing hin oder her.
+
+00:10:42.652 --> 00:10:44.412
+<v SPEAKER_3>Von welchem Zeitraum reden wir jetzt eigentlich?
+
+00:10:44.432 --> 00:11:53.732
+<v SPEAKER_2>Wir reden von vor anderthalb Jahren. Das ging zwar schon ein bisschen früher los, okay, aber spannend für uns wurde es erst vor anderthalb bis zwei Jahren. Wir haben gemerkt, Mensch, wir haben uns damit eigentlich schon ohne es zu wissen vorher auseinandergesetzt. Also ich arbeite als freier Software-Entwickler und bin teilweise in längeren Projekten verankert, wo es auch um skalierbare Systeme geht. Und habe gemerkt, okay, da gibt es eh schon Berührung. Lass uns mal drüber sprechen, was wir da kennengelernt haben und wie das zusammenpasst mit dem, was so die Cloud genannt wird, um da ein bisschen auch die Mystik rauszunehmen. Weil eigentlich ist der Begriff ziemlich, also für uns oder für mich, sehr schwammig gewesen. Das ist aber auch, glaube ich, immer noch. Ja, also die Provider tun sich schwer, Definitionen zu finden. Einige preschen nach vorne, wie ein großer Redmonder Provider, der behauptet, dass die Cloud im Wesentlichen dafür da ist, um Familien hübscher zu machen.
+
+00:11:55.052 --> 00:11:58.032
+<v SPEAKER_3>Sieht sich jetzt auf dieses Microsoft-Video.
+
+00:11:58.052 --> 00:11:58.992
+<v SPEAKER_2>Ja, ganz genau.
+
+00:12:00.452 --> 00:12:05.532
+<v SPEAKER_3>Du hast ja dann auch so ein eigenes Projekt gestartet.
+
+00:12:06.072 --> 00:13:10.292
+<v SPEAKER_2>Ja, das ist so ein bisschen ein Seitenprojekt oder ein Seitenprodukt von diesem, nicht nur darüber reden eben, sondern ich habe mir gedacht, so wie ich es immer gemacht habe, jetzt will ich das selber probieren. Da war nicht das Ziel irgendwie, ich mache jetzt eine Konkurrenz zu Google, Amazon oder sonst was, sondern es ging mir eher darum zu schauen, wie stecke ich Komponenten so zusammen, dass sie skalierbar sind und dass du theoretisch damit so etwas wie eine Computing-Cloud bauen könntest. Das Projekt heißt TyphoonAE und ist ein AP-kompatibler Port der Google App Engine, sodass du eben in der Lage bist, diese Services, die dort angeboten werden, auf einem oder mehreren Rechner zu installieren oder meinetwegen auch gerne bei Amazon EC2 zu installieren und Applikationen von der Google App Engine, ohne sie ändern zu müssen, auf deine eigene Infrastruktur bringen kannst und umgekehrt.
+
+00:13:10.312 --> 00:13:22.712
+<v SPEAKER_3>Das heißt, man könnte quasi gegen Google Apps mal eine Anwendung machen und dann läuft die auch in der Google Infrastruktur, aber man könnte sie dann theoretisch einfach herausziehen und gegen TyphoonAE bauen und dann sollte es im Prinzip genauso funktionieren.
+
+00:13:22.732 --> 00:13:46.072
+<v SPEAKER_2>Du musst sie nicht mal umbauen. Du kannst die Anwendung direkt so deployen auf TyphoonAE, wie du sie auf Google App Engine deployen würdest, mit demselben Kommando. Und wie gesagt, dahinter steckt nicht der Gedanke, dass das Haar genauso performant wird, sondern wie funktioniert das dahinter?
+
+00:13:46.092 --> 00:13:52.372
+<v SPEAKER_3>Also dass die Funktionalität quasi erhalten wird, aber eben auch ohne Google. Und das läuft auch?
+
+00:13:52.392 --> 00:14:49.572
+<v SPEAKER_2>Das läuft. Also bisher wird es noch nicht von vielen eingesetzt, weil der Aufwand, um das Ding zu betreiben, ist eben so groß, dass dieses Argument verschwindet, was in der Cloud häufig verwendet wird. Dieses möglichst einfache und schnelle Deployen. Innerhalb von Minuten oder gar Sekunden möchte ich meine Web-Anwendung oder was auch immer in der Cloud haben. Wenn du da deinen eigenen Stack aufbauen willst oder musst, das ist für Bastler. Man kann immer darüber reden, ob ein Unternehmen Lust hat, das einzusetzen oder so und sich da seine Private Cloud selber zusammenbaut und eben die Infrastruktur im Griff haben will oder nicht. Das war für mich auch ein wichtiges Argument. Ich möchte gerne immer den gesamten Stack in der Hand haben.
+
+00:14:52.492 --> 00:14:53.752
+<v SPEAKER_3>Ja, um einfach autark zu sein.
+
+00:14:53.892 --> 00:15:08.612
+<v SPEAKER_2>Ja, also wenn es abstürzt oder so, dann war es halt meine Schuld. Ich bin nicht so ganz so ausgeliefert der großen Wolke.
+
+00:15:08.732 --> 00:16:14.552
+<v SPEAKER_3>Ja, na gut, es gibt ja auch andere Chancen. Man könnte ja zum Beispiel sowas dann auch erst mal entwickeln, ohne dass es überhaupt irgendjemand bekannt wird, dass man das tut, auch nicht dem Google. Ja, so unter bestimmten Aspekten mag das ja auch interessant sein. Na gut, aber es geht jetzt hier nicht vordergründig um TyphoonAE. Da können wir vielleicht noch mal drauf zu sprechen, wenn wir auch auf Google Apps kommen. Eigentlich wollte ich generell erst mal so ein bisschen beleuchten, was eigentlich heutzutage so zum Einsatz kommt. Du hast ja gesagt, das ist jetzt nicht alles vor anderthalb Jahren erfunden worden, sondern im Prinzip, ich weiß jetzt gar nicht, was man jetzt alles noch mit reinnehmen muss. Also heute ist es halt so, ich habe meine Software, die irgendwelche Ressourcen in der Cloud benutzt. Aber hier geht es ja auch generell auch um die Frage von verteilter Software überhaupt, dass man einfach nicht mehr eben diesen Fokus hat. Software läuft auf meinem Computer und der steht auf meinem Tisch und der hat dann vielleicht auch noch Internet. Ja, und zieht sich das eine oder andere raus, sondern es lebt quasi im Netzwerk. Ein lokales Netzwerk oder eben auch ein internationales Netzwerk.
+
+00:16:14.952 --> 00:16:23.352
+<v SPEAKER_2>Also wenn wir zum Beispiel auf Mail gucken, ich weiß nicht, wann hat GMX angefangen?
+
+00:16:23.692 --> 00:16:24.572
+<v SPEAKER_3>Schon eine Weile her.
+
+00:16:24.592 --> 00:16:40.452
+<v SPEAKER_2>Ja, das ist eine Weile her und das sind eigentlich die ersten Cloud- oder wolkigen Services. Also Software im Netz, fangen wir mal einfach mit den Mail-Providern an. Das geht schon in die Richtung.
+
+00:16:42.152 --> 00:16:54.172
+<v SPEAKER_3>Also Webmail-Dienste meinst du jetzt im Allgemeinen? Hotmail etc. Später dann auch Google-Mail. Ich weiß jetzt gar nicht, wer der erste war, war Hotmail eigentlich der erste, der das gemacht hat? Ich glaube fast, zumindest einer der ersten.
+
+00:16:54.192 --> 00:17:06.572
+<v SPEAKER_2>Mit Sicherheit. Jau, war damals noch groß, haben auch sofort einen Mail-Dienst gebracht. Ich weiß gar nicht, reden wir wahrscheinlich über Mitte 90er?
+
+00:17:07.092 --> 00:17:13.232
+<v SPEAKER_3>Jaja, definitiv, da ging das los. Vorher gab es ja auch noch so richtig kein Internet.
+
+00:17:13.252 --> 00:17:16.832
+<v SPEAKER_2>Eigentlich.
+
+00:17:16.852 --> 00:17:59.752
+<v SPEAKER_3>Aber bei verteilt fallen mir natürlich auch so Sachen ein wie diese verteilten Rechner-Projekte, was weiß ich hier, so distributed.net, der kollektive Versuch RC5 und auch andere Algorithmen mal ganz konkret zu knacken bzw. zu zeigen, nicht nur theoretisch könnte man das mit der und der richtigen Power auch wirklich mal zu einer Lösung bringen, sondern wir machen das jetzt auch einfach mal, um da klar zu sagen, so jetzt hat es auch stattgefunden, jetzt ist es auch offiziell mal unsicher bzw. es lässt sich mal auch konkret belegen, wie unsicher es nun wirklich ist, wenn man eben diese und jene Performance zusammennimmt und dabei eben Clients verteilt über viele Rechner, jeder könnte daran teilnehmen.
+
+00:17:59.772 --> 00:18:01.212
+<v SPEAKER_2>Seht ihr at home?
+
+00:18:01.232 --> 00:18:05.572
+<v SPEAKER_3>Genau, seht ihr at home. Wir haben da so einen Datenbestand und da könnten Aliens sein.
+
+00:18:07.372 --> 00:18:08.712
+<v SPEAKER_2>In den Daten?
+
+00:18:08.732 --> 00:18:14.812
+<v SPEAKER_3>In den Daten suchen wir sie doch mal, aber unsere eigenen Rechner reichen da nicht aus. Haben die denn schon mal irgendwas gefunden?
+
+00:18:14.832 --> 00:19:49.892
+<v SPEAKER_2>Frage ich mich auch immer, ich denke, wir hätten es mitgekriegt, wenn ja. Oder das Schweigen sagt, dass sie was gefunden haben. Wir wollen keine Verschwörung wittern dahinter. Das ist eben verteiltes Rechnen, was es fast schon gibt, seitdem es Rechner gibt. Grid Computing ist ein Thema, wo es darum geht, Ressourcen, vor allen Dingen Rechenpower, zu vernetzen, sodass spezielle Aufgaben in dieser geballten Power schneller gelöst werden können als ein einzelner Rechner. Das könnte also Klimaänderungen ausrechnen oder eben in irgendwelchen Radiosignalen nach Aliens suchen. Ich glaube, Grid Computing ist noch ein bisschen heterogener. Also ein Cluster ist etwas kleineres, wo Server oder Rechner in einem Rechenzentrum zusammengesteckt sind, vernetzt sind, bestimmte Aufgaben erfüllen. Grid Computing geht schon über dieses eine Rechenzentrum hinaus, ist aber noch nicht Cloud Computing.
+
+00:19:50.692 --> 00:19:53.212
+<v SPEAKER_3>Warum nicht?
+
+00:19:53.232 --> 00:21:53.452
+<v SPEAKER_2>Das hat mit der Art, wie skaliert werden kann, und mit der Dynamik zu tun. Also was diese beiden Ansätze gemeinsam haben, ist, dass Ressourcen, sei es Speicher oder CPU, kombiniert werden zu einem größeren Ganzen, was leistungsfähiger ist, robuster ist. Also Ausfälle einzelner Knoten fallen im Idealfall eben nicht ins Gewicht. Beim Cloud Computing ist die Dynamik in der Skalierung, das heißt, dass Komponenten, Ressourcen sehr schnell hinzugeschaltet werden können, wenn sie denn angefragt werden. Und ein wesentlicher Unterschied ist auch die Erreichbarkeit. Ein Grid Computing kann geschlossen stattfinden in einem irgendwie gearteten Netzwerk. Cloud Computing ist in der Regel über das Internet erreichbar, entweder nur für registrierte User oder in Public Clouds, eben für alle, die darauf wollen. Und sobald du das Ganze verfügbar machst über das Internet, hast du ganz andere Anforderungen an die Skalierung. Weil es kann sehr schnell Peaks geben, die ausgeglichen werden müssen. Oder da brauchst du neue Ressourcen. Wenn deine ganzen HTTP-Server nicht weiterkommen mit dem Ausliefern von Responses, dann musst du sehr schnell in der Lage sein, horizontal neue HTTP-Server hinzuzuskalieren. Das Routing muss automatisch passieren. Diese Dynamik ist eine Besonderheit des Cloud Computings. Themen wie Virtualisierung kommen da schnell mit rein. Weil wenn du schnell skalieren willst, willst du dich unabhängig machen von der Hardware.
+
+00:21:56.252 --> 00:22:12.812
+<v SPEAKER_3>Was würdest du denn sagen, ist die erste richtige Cloud-Initiative, die es da so gegeben hat? Womit hat es denn dann eigentlich wirklich begonnen? Man kann jetzt sagen, Webmail ist auch irgendwie in der Cloud.
+
+00:22:13.072 --> 00:24:10.932
+<v SPEAKER_2>Ja, das sind halt Software-Services, die cloudartig funktionieren, aber noch nicht so das sind. Das sind halt unterschiedliche Schichten, aber da können wir gleich nochmal draufkommen. Also meine erste Berührung war Amazon mit dem Thema. Und dadurch, dass plötzlich dieser Moment, dass eigentlich ein Online-Buch und alles mögliche Verkäufer anfängt, Ressourcen, Infrastrukturressourcen anzubieten über das Internet. Das war für mich so der erste Moment, wo ich dachte, was geht denn hier jetzt los? Klar, es gibt so Sachen wie, ich weiß nicht, ob so Virtual-Hosting-Provider nicht fast ein bisschen früher waren. Das ist so ähnlich, da habe ich auch eine virtuelle Infrastruktur, die kann ich zu einem bestimmten Budget einkaufen. Zu der Zeit waren das auch dann Monatspauschalen, meinetwegen, wenn du Glück hattest. Also eben im Gegensatz zum klassischen Hosting, wo du dir einen Server irgendwo in einem Rack oder was kaufst und dann ein Jahr lang bezahlen musst und auch aus dem Vertrag erstmal nicht rauskommst, ist es im Cloud Computing ebenso. Und das war bei Amazon und der Elastic Cloud 2 von Anfang an so, denke ich, dass du bezahlt hast nach wirklich Verbrauch. Das ist ein extrem wichtiger Punkt dabei, nämlich wenn deine Instanzen schlafen, dann willst du dafür auch nicht bezahlen. Und jeder kann einsehen, wenn plötzlich die Requests nach oben gehen, weil du irgendwas sehr, sehr Spannendes in die Cloud gestellt hast, dann bezahlst du dann natürlich auch für.
+
+00:24:16.652 --> 00:24:24.072
+<v SPEAKER_3>Ich erinnere mich auch noch ganz gut daran, EC2 war ja jetzt nicht der erste Dienst, den sie an den Start gebracht hat.
+
+00:24:24.092 --> 00:24:25.752
+<v SPEAKER_2>Mit dem Storage hat es, glaube ich, angefangen.
+
+00:24:25.772 --> 00:25:25.972
+<v SPEAKER_3>Genau, S3. Ich glaube, das war das erste. Aber da war ja im Prinzip auch gleich die Botschaft, okay, alles klar, wir sind ja eigentlich ein Buchhörer. Aber um das eben zu tun, haben wir uns jetzt in den letzten Jahren Technologien entwickelt in-house, um einfach eben denselben Anforderungen zu genügen. Also Ausfallsicherheit, nicht wahr, Skalierbarkeit, was weiß ich, dann kommt Weihnachten vorbei, auf einmal kaufen sie alle ganz viel. Das muss dann irgendwie auch in der Lage sein, schnell neue Ressourcen zur Verfügung zu stellen, damit es eben nicht in die Knie geht, was ja immer so der klassische Tod ist. Da kommt dann irgendjemand Populäres und linkt mal irgendwo hin und hier kauft das zuletzt. Mal Stash-Dot-Effekt. Genau, der Stash-Dot-Effekt. Und dann ist es halt irgendwie braun. Und das ist natürlich genau das, was so ein Dienst dann auch komplett töten kann. Dann hat man eben nicht Erfolg in dem Moment, wo man Erfolg haben könnte, sondern ganz im Gegenteil, man fährt alles gegen die Wand. Und dann haben sie sich wohl so einige Technologien zugelegt und dann irgendwann gesagt, na ja, meistens haben wir da aber auch noch Luft.
+
+00:25:25.992 --> 00:25:26.932
+<v SPEAKER_2>Ja eben.
+
+00:25:26.952 --> 00:25:37.012
+<v SPEAKER_3>Dann könnten wir das ja auch gleich verökern. Ich frage mich, ob die gleich von Anfang an gesehen haben, dass das quasi auch ein eigenständiges Business-Modell sein kann.
+
+00:25:37.032 --> 00:25:37.672
+<v SPEAKER_2>Mit Sicherheit nicht.
+
+00:25:37.692 --> 00:25:43.712
+<v SPEAKER_3>Oder ob das erst mal nur so ein, wir sparen uns Kosten, indem wir das, was wir ohnehin zu viel haben, untervermieten.
+
+00:25:43.732 --> 00:26:57.872
+<v SPEAKER_2>Das ist genau, glaube ich, der springende Punkt. Die haben das aus einer eigenen Anforderung heraus entwickelt. Da haben sich Leute schlaue Gedanken gemacht, wie können wir die Ressourcen bei uns intern so einsetzen, dass es billiger für uns wird, ganz einfach. Also ich muss nicht immer alle Server am Laufen haben. Nur eben in den Peak-Zeiten will ich schnell was dazuschalten können. Und die haben wirklich, wie du sagst, glaube ich, gemerkt, okay, da ist Luft, lass uns doch mal gucken, wenn unsere IT oder wer auch immer das nach draußen gibt und anbietet. Ich glaube, ganz ähnlich hat auch die Entwicklung von Google App Engine stattgefunden. Also das ist auch aus dem eigenen Bedarf heraus entstanden. Also ich denke, dass bei Google intern schon viel länger Anwendungen auf dieser Cloud-Lösung laufen, als dass sie rausgekommen sind mit der App Engine als Produkt. Und ich finde es äußerst faszinierend, wie im Moment, zum Beispiel Amazon postet gerade mindestens zweimal wöchentlich neue Announcements zu ihrer Cloud. Also das brennt eigentlich erst.
+
+00:26:59.152 --> 00:27:01.472
+<v SPEAKER_3>Im Sinne von neuen Features oder?
+
+00:27:01.752 --> 00:27:25.232
+<v SPEAKER_2>Die packen die ganze Zeit neue Services hinzu. Also für mich die spannenden Sachen war, das ist allerdings schon jetzt ein paar Monate her, der neue High-Performance-Computing-Service, den sie eingehängt haben, wo sie GPU-Rechenleistung in der Cloud anbieten. Das kannst du wunderbar dafür verwenden, um Passwörter zu knacken.
+
+00:27:26.692 --> 00:27:29.632
+<v SPEAKER_3>Weil man da eben hohe Parallelität bereitgestellt bekommt.
+
+00:27:29.652 --> 00:28:12.092
+<v SPEAKER_2>Ja, das ist genau das, was du brauchst, um solche Parallelenkalkulationen durchzuziehen. Sehr schicke Sache. Sie erweitern immer mehr die Storage-Varianten. Also da kommen wir auch nochmal wieder zurück zu den Anfängen. Eine der ersten Anwendungen in der Cloud war mit Sicherheit Verteilter Storage. Und deswegen auch bei Amazon, glaube ich, so das erste Angebot. Verteilter Storage hat eben den Riesenvorteil, dass es Sicherheit in der Richtung, dass wenn die Daten repliziert sind, auf verschiedene Partitionen oder so, dass wenn ein Knoten oder mehrere Knoten ausfallen, hast du die Daten immer noch.
+
+00:28:12.372 --> 00:28:37.232
+<v SPEAKER_3>Und natürlich auch Zugriffsgeschwindigkeit. Wenn man jetzt Daten weltweit anbieten möchte, und der ganze Kram repliziert ist, dann ist er natürlich potenziell auch schneller erreichbar, weil er nicht eben erst durch hunderte Knoten, also wir sind es natürlich im Internet nicht, aber es muss unter Umständen noch nicht mal mehr den Atlantik passieren und durch dünne Kabel, sondern es ist im Zweifelsfall schon irgendwo in der Nähe.
+
+00:28:37.252 --> 00:29:48.492
+<v SPEAKER_2>Exakt. Also deswegen bauen sie auch wie verrückt weiter neue Rechenzentren. In Europa ist gerade, Moment, ich weiß gar nicht, ob ich die Mail hier, genau, das Announcement ist vom 8. Februar von gestern, dass sie zur Cloud-Front, also das ist das Content-Delivery-Network von Amazon, dass sie, ich glaube, in der Nähe von Paris jetzt einen weiteren dicken Knoten aufgebaut haben. Die bringen, die wollen das Zeug immer näher bringen an die User. Ja, wie gesagt, Storage ist eben ein Kernthema. Das ist auch das, was, glaube ich, am weitesten verstanden wird von den Leuten draußen, dass ich meine Fotos, meine Urlaubserlebnisse sünden kann mit dieser ominösen Cloud, dass meine Daten plötzlich nicht mehr zu Hause bei mir auf dem Rechner sind, sondern irgendwo und von überall aus zugreifbar, dass ich meine Geräte sünden kann und das Zeug nicht verloren geht, wenn mein Rechner tot ist.
+
+00:29:48.672 --> 00:29:50.132
+<v SPEAKER_3>Oder die Wohnung ausbrennt.
+
+00:29:50.152 --> 00:29:54.212
+<v SPEAKER_2>Oder so. Ein anderer, also das ist sehr...
+
+00:29:54.232 --> 00:29:57.932
+<v SPEAKER_3>Außer natürlich, wenn Amazon vulkanisiert wird, dann...
+
+00:29:57.952 --> 00:30:04.312
+<v SPEAKER_2>Ja, oder ein riesengroßer Meteorit oder die Vogon unseren Planeten.
+
+00:30:07.452 --> 00:30:10.112
+<v SPEAKER_3>Ja, ich treu mich schon über die intergalaktische Cloud nachdenken.
+
+00:30:10.572 --> 00:30:13.352
+<v SPEAKER_2>Ja, jetzt kommen wir in den Bereich, von dem ich träume.
+
+00:30:13.372 --> 00:30:15.332
+<v SPEAKER_3>Co-hosting auf dem Mars?
+
+00:30:15.352 --> 00:30:27.312
+<v SPEAKER_2>Nö, ich dachte erst mal so an Space Computing im Sinne von großen Raumstationen, die solarbetrieben um die Erde kreisen und mit Quantencomputern bestückt sind.
+
+00:30:29.492 --> 00:31:01.892
+<v SPEAKER_3>Bleiben wir doch erst mal auf der Erde. Ich meine, das ist natürlich gerade so diese S3 EC2-Dienste. Ich glaube, davon hat jetzt jeder schon mal so ein bisschen was gehört. Lassen wir uns da mal kurz noch mal dabei bleiben, weil das natürlich Sachen sind, die wir hier eh mal besprechen müssen. Amazon S3, ich kenne das auch nur ein bisschen aus der Ferne, die sind meines Wissens an den Start gegangen mit dieser Idee, man hat da so ein Eimer, so ein Bucket. Das ist so komplett strukturlos. Also eigentlich kann man da nur einzelne Dateien irgendwo ablegen. Mit so einem Key-Value-Storage?
+
+00:31:01.912 --> 00:31:02.332
+<v SPEAKER_2>Ähnlich.
+
+00:31:02.432 --> 00:31:04.592
+<v SPEAKER_3>Man kann auch einfach Files ablegen oder nicht?
+
+00:31:04.612 --> 00:31:06.072
+<v SPEAKER_2>Genau, das sind dann die Keys.
+
+00:31:06.092 --> 00:31:10.492
+<v SPEAKER_3>Ach so, die Keys ist sozusagen der Dateiname und der Value ist dann der Inhalt dieses...
+
+00:31:10.652 --> 00:32:13.192
+<v SPEAKER_2>Du gibst dem eine ID und hast in einem Bucket möglicherweise auch mehrere IDs. Und Amazon garantiert dir, dass das Zeug repliziert wird und verteilt wird auf die Knoten, die sie halt haben und du einen möglichst schnellen Zugriff hast auf deine Lager. Du kannst ja teilweise wählen, zumindest die Region, wo etwas von dir liegt. Du hast zum Beispiel EU West, das mag dann ein Knoten in Irland sein oder in Niederlande, wo die genau alle stehen, weiß ich leider nicht. Oder du nimmst halt US East oder so. Dann hast du das Rechenzentrum in Nordamerika stehen. Das kann Auswirkungen haben, wo du für deine Daten die meisten Zugriffe hast. Wenn du Daten auslagern willst und viele Leute aus Nordamerika hast, die darauf zugreifen wollen, dann wirst du das in die Region US East oder West packen.
+
+00:32:15.792 --> 00:32:21.852
+<v SPEAKER_3>Und der Zugriff darüber funktioniert aber dann auch schon über eine Art Programmierschnittsteller?
+
+00:32:21.872 --> 00:32:41.332
+<v SPEAKER_2>Es gibt für verschiedenste Programmiersprachen APIs und Libraries, die eben auf diese Vereinheitlichte, entweder Storage-API oder EC2-API oder Management-API, auch Routing oder was weiß ich, darauf zugreifen können und du kannst das anprogrammieren.
+
+00:32:41.712 --> 00:32:50.592
+<v SPEAKER_3>Aber der Zugriff letzten Endes geht über HTTP, oder haben die noch andere Methoden? Sind das nicht alles solche HTTP-Restinterfaces?
+
+00:32:50.612 --> 00:33:36.412
+<v SPEAKER_2>Ich denke ja, im Wesentlichen glaube ich schon. Ich bin da ein bisschen überfragt, ob die noch andere Zugriffswege haben, aber ich würde erstmal im Moment annehmen, dass HTTP......the way to go ist. Das ist sowieso im Thema Cloud Computing das Meiste auf HTTP basiert. Webhooks ist ein Thema. Webhooks ist, wenn du, mal sehen, ob mir ein vernünftiges Beispiel einfällt, hast du schon mal von PubSubHubbub gehört?
+
+00:33:36.432 --> 00:33:39.692
+<v SPEAKER_3>Kannst du es aber trotzdem erklären. Ich glaube, das geht nicht jedem so.
+
+00:33:40.932 --> 00:34:11.472
+<v SPEAKER_2>Oh, jetzt hast du mich in eine Ecke gebracht, die ich mich selber gebracht habe. Dieser lange Name PubSubHubbub, das ist wohl so ein 20% Seitenprojekt von ein paar Googlern. Und es geht dabei um eine nahezu real-time Streaming-Kommunikation, vor allen Dingen vergleichbar mit RSS-Feeds und ähnlichen Dingen, zwischen Publishern, Subscribern und Hubs.
+
+00:34:11.492 --> 00:34:17.932
+<v SPEAKER_3>Also sozusagen das voll durchautomatisierte Ho-Perfumante-Vermitteln von RSS-Änderungen. Das ist eigentlich schicker gesagt, als ich es könnte.
+
+00:34:22.072 --> 00:35:51.252
+<v SPEAKER_2>Du hast da ein Publisher stehen, das kann eben RSS-Feed sein. Du hast einen Hub dort stehen oder mehrere. Der Publisher sagt dem Hub hier, das ist mein Feed. Und ich benachrichtige dich, sobald etwas Neues von mir zu kriegen ist. Oder der Hub guckt nach, ob etwas Neues zu kriegen ist. Dann gibt es wiederum Subscriber, die an den Hubs hängen. Das können Blogs sein, die interessiert sind an diesem Feed. Das kann alles möglich sein. Der Trick bei der ganzen Sache ist, dass die Subscriber nicht die ganze Zeit pollen und ständig nachfragen, gibt es da etwas Neues für mich. Sondern dass sie informiert werden, es gibt etwas Neues. In dieser Information, in diesem Push-ähnlichen Datenpaket, was da ankommt, kann entweder nur die Nachricht drinstecken, es gibt etwas, guck mal nach, das findest du da und da. Oder sogar schon diese News-Sales. Die Information selbst. Das ist im Wesentlichen über Webhooks, also HTTP-Calls realisiert worden. Damit umgehen sie das Problem der stehenden Verbindung. Also du kannst in der asynchronen Web-Welt nicht ständig alle Connections offenhalten, oder willst du das auch nicht?
+
+00:35:51.452 --> 00:35:56.032
+<v SPEAKER_3>Ja, weil das einfach Ressourcen fressen würde auf dem Rechner?
+
+00:35:56.052 --> 00:36:20.412
+<v SPEAKER_2>Ja, so ein einzelner Server, ich weiß nicht, irgendwann sind die Connections, die Sockets, vorbei. Dann musst du da zu viel skalieren. Deswegen wird ein Request gemacht, und dann kommt sofort ein Response. Das ist der synchrone Teil im HTTP. Und dann ist vorbei. Dann ist die Connection entweder weg, oder es gibt ein Keepalive oder was auch immer. Das ist jetzt egal.
+
+00:36:20.432 --> 00:36:23.472
+<v SPEAKER_3>Aber grundsätzlich ist es auf Kurzfristigkeit ausgelegt?
+
+00:36:25.012 --> 00:36:35.392
+<v SPEAKER_2>Und bei den Webhooks verabredest du, dass du... Ja.
+
+00:36:35.412 --> 00:36:39.492
+<v SPEAKER_3>Das ist quasi so ein Callback im Web. So eine Uhr, die man da hinterlegt.
+
+00:36:39.512 --> 00:36:40.132
+<v SPEAKER_2>Genau richtig.
+
+00:36:40.152 --> 00:36:42.152
+<v SPEAKER_3>Und die wird dann aufgerufen, wenn was ist.
+
+00:36:42.172 --> 00:36:42.752
+<v SPEAKER_2>Genau richtig.
+
+00:36:42.792 --> 00:36:49.232
+<v SPEAKER_3>Okay. Und inwiefern spielen diese Webhooks jetzt generell eine Rolle?
+
+00:36:50.392 --> 00:38:00.192
+<v SPEAKER_2>Also, weil das die Art und Weise... Also überhaupt HTTP-Calls, Webhooks waren für mich ein Beispiel dafür, sind die Art und Weise, wie Services in der Cloud, auch verteilte Services, miteinander reden können und so reden können, dass... Dass eine gewisse... Also, dahinter steckt eine Dynamik. Du hast halt hinter einer HTTP-URL... Das ist für dich erst mal eine klare Adresse, wo du irgendeine Information erwartest. Aber es ist nie gesagt, ob das jetzt der Server oder der Server, das Rechenzentrum oder jenes beantwortet. Das ist dir auch egal in dem Moment, sondern das wird hinter den Kulissen geroutet für dich. Und dadurch ziehst du eine Abstraktionsschicht rein in die Kommunikation zwischen Services, die ausfallsicherer ist. Also, du hoffst, dass hinter der URL immer was ist. Aber wenn da mal ein Server abschmiert, dann wird das halt geregelt von dem Provider dieser URL.
+
+00:38:00.212 --> 00:38:05.492
+<v SPEAKER_3>Weil da einfach andere hochfährt und dann entsprechende Verteiler hat oder deine App-T-Adressen wechselt oder wie auch immer.
+
+00:38:05.612 --> 00:38:34.732
+<v SPEAKER_2>Und das macht eben... Also, HTTP, du hast eben Rest auch erwähnt, das sind sehr hübsche, relativ einfache Wege, um auf Ressourcen zuzugreifen. Nicht nur lesend, sondern eben auch verändernd. Und mit solchen Sachen wie Rest sind die Möglichkeiten gekommen, dass du Services sehr einfach miteinander reden lassen kannst.
+
+00:38:36.732 --> 00:38:49.572
+<v SPEAKER_3>Also, Storage hat Amazon jetzt mit S3 befördert. Ist da jetzt noch sehr viel mehr weiteres passiert? Oder ist der Dienst doch im Wesentlichen so geblieben? Oder ist da noch eine andere Dynamik mit drin?
+
+00:38:49.892 --> 00:39:02.612
+<v SPEAKER_2>Na ja, also man darf nicht vergessen, ich habe mir hier nämlich einen Zettel ausgedruckt, auch eine relativ spannende Meldung, was die eigentlich da reißen und ausliefern. Eine Sekunde.
+
+00:39:02.632 --> 00:39:05.412
+<v SPEAKER_3>Ja, wir haben ja alle Zeit der Welt. Ist ja ein Podcast.
+
+00:39:05.432 --> 00:39:24.512
+<v SPEAKER_2>Ach so, ja stimmt. Ich habe hier nämlich schöne Grafen. Nein, ich habe es jetzt. Also, vom 30. Januar eine Meldung, nämlich dass Amazon S3 Cloud Stores mittlerweile 262 Billionen Objekte ausliefert.
+
+00:39:24.552 --> 00:39:32.692
+<v SPEAKER_3>262 Billionen. Du redest jetzt von American Billions? Okay, das sind dann Milliarden.
+
+00:39:33.072 --> 00:39:33.952
+<v SPEAKER_2>Ja.
+
+00:39:33.972 --> 00:39:34.432
+<v SPEAKER_3>Du weißt ja.
+
+00:39:34.452 --> 00:39:38.292
+<v SPEAKER_2>Stimmt, ich habe diese Übersetzungsleistung nicht so schnell.
+
+00:39:38.312 --> 00:39:41.812
+<v SPEAKER_3>Du hast ja fast einen Faktor 1000 Vertanen, wobei da sind die bestimmt auch bald.
+
+00:39:42.172 --> 00:39:58.832
+<v SPEAKER_2>Aber deswegen ist es gut, dass, ja da sind sie bald, aber gut, dass du da einhackst. Dass das eigentlich das Signifikante an der ganzen Sache ist, dass sich das innerhalb von einem Jahr mehr als verdoppelt hat. Also die Kurve, wie S3 genutzt wird, geht so fast.
+
+00:39:58.852 --> 00:40:03.252
+<v SPEAKER_3>Mit Objects meinen die sozusagen so ein Key-Value-Par, was irgendjemand da abgelegt hat?
+
+00:40:03.272 --> 00:40:03.592
+<v SPEAKER_2>Würde ich sagen.
+
+00:40:03.612 --> 00:40:17.312
+<v SPEAKER_3>Also wenn ich da jetzt mit irgendeinem S3-unterstützenden Datei hochlade, viele FTP etc. haben ja mittlerweile auch so S3-Support drin und ich lade da so eine Datei hoch, dann ist das genau so ein Ding. Und davon haben sie, was war das?
+
+00:40:17.792 --> 00:40:20.312
+<v SPEAKER_2>262 Milliarden.
+
+00:40:20.332 --> 00:40:22.572
+<v SPEAKER_3>Das sind ja schon ein paar Records.
+
+00:40:22.592 --> 00:40:28.812
+<v SPEAKER_2>Ja, und die liefern im Moment 200.000 Requests pro Sekunde aus in Peak-Zeiten.
+
+00:40:28.832 --> 00:40:30.952
+<v SPEAKER_3>200.000 pro Sekunde.
+
+00:40:30.972 --> 00:40:38.632
+<v SPEAKER_2>Ja, da habe ich mich jetzt nicht mit den Nullen vertan. Das steht hier zumindest. Und die Info ist von Jeff Barr, das ist einer von Amazon.
+
+00:40:41.652 --> 00:40:43.332
+<v SPEAKER_3>Es ist von Amazon, muss wahr sein.
+
+00:40:47.132 --> 00:41:34.912
+<v SPEAKER_2>Naja, aber S3 ist halt nicht das einzige, was du willst, um Daten zu hinterlegen, weil wir kennen alle, glaube ich, Datenbanken wie MySQL und Postgres und andere SQL-Datenbanken. Die dir natürlich wesentlich mehr Möglichkeiten bieten, um Daten irgendwo strukturiert, schemabasiert, schön deiner Anwendung angepasst abzulegen. Und auch an der Stelle wird es spannend, weil sie da nachziehen müssen und auch diverse Produkte natürlich rausgebracht haben. Ich denke, blöderweise weiß ich jetzt nicht, wie das Ding heißt, aber nicht nur Amazon, auch andere fangen an, verteilte SQL-Datenbanken anzubieten.
+
+00:41:34.932 --> 00:41:37.592
+<v SPEAKER_3>Ach so, dieser MySQL-Service, den Amazon angeboten hat.
+
+00:41:37.612 --> 00:41:38.912
+<v SPEAKER_2>Wahrscheinlich heißt der so, ja.
+
+00:41:38.932 --> 00:41:54.992
+<v SPEAKER_3>Ich weiß nicht genau, wie er heißt, aber im Wesentlichen ist es so, wenn du halt mal einen MySQL-Server brauchst, dann kannst du das da genauso mal eben snappy klicken wie sonst irgendwas auch. Das macht ja auch Sinn, weil das basiert ja dann wahrscheinlich wiederum dann auf dem, was wir schon erwähnt, aber noch nicht erklärt haben, diese EC2-Infrastruktur.
+
+00:41:55.392 --> 00:41:57.592
+<v SPEAKER_2>Ja, Elastic Cloud 2, du steckst dir da im Wesen.
+
+00:41:57.612 --> 00:41:58.892
+<v SPEAKER_3>Glaubst du auch eine erste?
+
+00:41:58.912 --> 00:42:04.072
+<v SPEAKER_2>Das frage ich mich auch, ich weiß es nicht. Das wäre jetzt fast schon eine Quizfrage.
+
+00:42:05.472 --> 00:42:12.172
+<v SPEAKER_3>Nee, so weit bin ich noch nicht. Aber vielleicht kommt das ja noch. Da bräuchte man etwas interaktiveres Podcast-Format.
+
+00:42:12.192 --> 00:42:14.732
+<v SPEAKER_2>Ja, ich glaube, es ist...
+
+00:42:14.752 --> 00:42:20.632
+<v SPEAKER_3>Wer in den nächsten zehn Sekunden schon die Antwort hat, bevor der Experte antwortet, kriegt einen Gummipunkt.
+
+00:42:23.612 --> 00:42:34.692
+<v SPEAKER_2>Das Schöne dort ist, du steckst die Images zusammen, also Instanzen, Infrastruktur-Instanzen. Du möchtest meinetwegen eine klassische Web-Anwendung bauen.
+
+00:42:34.712 --> 00:42:36.252
+<v SPEAKER_3>Ich weiß, warum es LC2 heißt.
+
+00:42:36.272 --> 00:42:36.792
+<v SPEAKER_2>Warum?
+
+00:42:36.812 --> 00:42:51.572
+<v SPEAKER_3>Weil es die Abkürzung für Elastic Compute Cloud ist. Das heißt, C2 ist sozusagen die Zusammenfassung von zwei Cs. So wie 27C3 der 27. Chaos Communication Congress ist.
+
+00:42:51.592 --> 00:42:53.992
+<v SPEAKER_2>War das jetzt geschätzt oder hast du das...
+
+00:42:54.012 --> 00:43:12.552
+<v SPEAKER_3>Ich habe in einer Alwisnen Müllhalle nachgeschlagen. Da wird es zwar nicht als solches erklärt, aber da steht jetzt mal der Name, es ist halt Compute Cloud. Das kann ich dann schon selber zusammen... Dann muss man es nicht ECC nennen, sondern es heißt halt EC2. Das ist halt so Nerdism, der sich irgendwie eingetreten hat. Ist ja auch nicht schlecht.
+
+00:43:12.752 --> 00:43:13.352
+<v SPEAKER_2>Kann man so machen.
+
+00:43:13.372 --> 00:43:19.032
+<v SPEAKER_3>Ja, wenn man so viele O's hat oder überhaupt viele Buchstaben, die nicht so weiter wichtig sind, dann ist so einfach abzählen.
+
+00:43:19.732 --> 00:43:20.412
+<v SPEAKER_2>I18N.
+
+00:43:20.412 --> 00:43:38.492
+<v SPEAKER_3>Das ging mir auch gerade als Beispiel ein. Internationalization, die man schon fast nicht ausgesprochen und selten richtig geschrieben bekommt, das ist dann halt kürzer. Vielleicht ist das ja auch der Weg für Sprache in Zukunft sowieso, weil eigentlich nur noch so die Anfangsbuchstaben nennen und dahinter dazwischenschreiben, wie viele sonstige Buchstaben noch drin sind.
+
+00:43:38.512 --> 00:43:39.532
+<v SPEAKER_2>Das reicht häufig.
+
+00:43:39.552 --> 00:43:57.812
+<v SPEAKER_3>Ja, es gibt ja auch diese, ich weiß nicht, ob das irgendeinen Namen hat, aber diese Feststellung, wenn du so irgendeinen beliebigen Text nimmst und du belässt anfangs die Ende Buchstabe gleich und würfelst alle anderen dazwischen zusammen, dann kann man es irgendwie trotzdem noch lesen. Weil das Hirn das irgendwie zusammensetzt. Vielleicht kann man die Buchstaben dann auch irgendwann weglassen und dann irgendwie nur noch so was.
+
+00:43:57.832 --> 00:44:13.972
+<v SPEAKER_2>Und wieder kommen wir zu Cloud Computing, weil das Hirn das natürlich kann, aber ein Rechner schnell überfordert ist mit derselben Aufgabe. Und da brauchst du eben Rechenpower. Und die kannst du dir in der Cloud theoretisch holen.
+
+00:44:14.312 --> 00:44:18.012
+<v SPEAKER_3>Ja. Also was macht denn jetzt dieses ET2?
+
+00:44:18.032 --> 00:44:36.472
+<v SPEAKER_2>Eigentlich kannst du dort Infrastruktur konfigurieren. Also gehen wir mal aus von einem klassischen LAMP-Stack. Linux, Apache, MySQL und PHP.
+
+00:44:36.492 --> 00:44:49.752
+<v SPEAKER_3>Da würde man normalerweise zum Hostel gehen und sagen, guten Tag. Ich hätte gerne hier das aktuelle rechts unten Modell mit irgendwie Intel, Tralala, so und so viel kostet, so und so viel Gigabyte, so und so viel Platte. Und was kostet das im Monat? Nehme ich und dann buchst du das und dann zahlst du schon mal, obwohl da noch nichts läuft.
+
+00:44:49.772 --> 00:45:32.652
+<v SPEAKER_2>Obwohl da gar nichts läuft. Allerhöchstens eine Willkommenseite mit hier ist eine Baustelle oder so. Diese Sachen kannst du dir bei EC2 zusammenstecken. Du kannst vorbereitete Appliances, heißt das glaube ich dort auch, oder Images in den verschiedenen Regionen suchen. Dazu gibt es eine nette Suchmaske, wo auch immer in der kleinen Beschreibung steht, ok, das ist hierfür, dafür. Wenn du jetzt, du kannst auch sagen, ich möchte gerne Ruby-on-Rails-Anwendungen online bringen, dann findest du dort so den passenden Stack dafür. Du kannst dann überlegen, will ich das auf einer Instanz oder in einer Instanz laufen lassen, oder brauche ich weitere?
+
+00:45:32.912 --> 00:45:37.472
+<v SPEAKER_3>Also Instanz im Sinne von so einem Computer, der unter einer IP-Adresse zu erreichen ist, oder?
+
+00:45:37.492 --> 00:47:00.792
+<v SPEAKER_2>Ja, das ist so begreifbar als ein, ich gehe sehr stark davon aus, dass es halt eine virtuelle Instanz ist, ein virtueller Server, aber durchaus ein in sich geschlossenes System. Also da läuft dann halt ein Ubuntu drauf rum, oder ein Debian oder was weiß ich, das kannst du aussuchen. Und da ist eben dieser Stack drauf installiert. Aber du möchtest vielleicht die MySQL nicht auf demselben Ubuntu laufen haben, wo auch dein Apache läuft. Dann kommst du halt an mit zwei Instanzen und sagst, das ist jetzt hier meine Instanz, die einfach sich nur um MySQL kümmert und damit auch dann gut zu tun hat. Und auf der anderen Seite habe ich meine Frontend Delivery Instanz für alle HTTP-Requests. Das versetzt dich in die unglaublich schicke Lage, dass wenn dein Auftritt wahnsinnig erfolgreich wird, dass du dann an verschiedenen Stellen skalieren kannst horizontal. Das bedeutet, meinetwegen du hast eine sehr stark lesende Anwendung, wo immer viele Leute lesend drauf zugreifen. Dann wirst du wahrscheinlich irgendwann in den Engpass kommen, dass dein Apache nicht mehr genug ausliefert. Also brauchst du eine zweite Instanz mit einem zweiten Apache drauf.
+
+00:47:00.812 --> 00:47:02.452
+<v SPEAKER_3>Oder vielleicht mal einen anderen Web-Server nehmen.
+
+00:47:02.472 --> 00:48:01.232
+<v SPEAKER_2>Vielleicht auch mal einen NGINX. Dann wirst du wieder diese andere Instanz ausschalten, weil dir der NGINX reicht. Wenn du viele schreibende Zugriffe hast, dann musst du dir auf der Datenbank, Backend, MySQL, wie auch immer Seite was überlegen, wie du da skalierst. Du kannst in die Richtung gehen, klassische Master-Slave-Konfiguration zu bauen. Man kann mit MySQL sehr große Web-Auftritte machen. Ich glaube, die größten wie Facebook haben unten drunter MySQL. Aber das ist schon echt eine Wissenschaft für sich, das zu konfigurieren. Ich weiß nicht, wie es geht. Auf jeden Fall bietet die EC2 eben Möglichkeiten, solche Sachen relativ einfach hinzuzupacken und zuzustöpseln. Du hast eine Schicht oben drüber, die dir das Routing übernimmt.
+
+00:48:01.252 --> 00:48:23.192
+<v SPEAKER_3>Wie schnell ist denn so ein Computer? Zwei Instanzen ist ja im Prinzip wie zwei Computer. Zumindest wie zwei, wenn man jetzt Virtualisierung benutzt, zwei gleichzeitig installierte laufende Betriebssysteme. Kann ich dann irgendwie sagen, jetzt hätte ich aber gerne einen schnelleren Computer? Und dann ist der schneller oder ist das immer schon so schnell, wie es einfach nur irgendwie...
+
+00:48:23.212 --> 00:49:50.272
+<v SPEAKER_2>Nein, es gibt verschiedene Konfigurationen der virtuellen Hardware. Die sind halt unterschiedlich teuer. Und du kannst dort aufstocken und sagen, ich möchte eine XXL EC2-Irgendwas-Instanz haben. Ja, also ich weiß nicht ganz genau, ob sie da versprechen... Also ich glaube schon, dass sie Versprechungen machen, was die Power angeht, aber ich weiß nicht, ob sich das in dieser dynamischen skalierenden Cloud immer so einhalten lässt. Also ich würde auch, glaube ich, gar nicht so rangehen an der Stelle, wenn ich mich dafür interessiere, was in die Cloud zu bringen. Dann würde ich nicht so rangehen, dass ich immer volle, dickste Performance haben will, weil der Trick bei dem Ganzen ist, das zu verteilen und nicht die Performance eines einzelnen Knotens. Und das ist eben auch der Trick bei Amazon überhaupt und ähnlichen Providern, dass an den Stellen, wo gerade Rechenleistung oder Storageleistung unterfordert ist, kannst du füllen und anfragen, was auch immer darauf auslagern. Und das auch sehr schnell. Und wenn du an einer anderen Stelle Peaks hast, dann schiebst du das da weg, woanders hin. Und das eben komplett hinter einer API.
+
+00:49:50.292 --> 00:50:27.032
+<v SPEAKER_3>Aber letzten Endes sind das ja erstmal so in sich geschlossene Computerinstallationen. Das heißt, da läuft dann letztendlich genau die gleiche Software, wie sie auch auf meinem Computer laufen würde. Wenn ich also Nutzen daraus ziehen möchte, dass ich eben viele Instanzen habe, brauche ich auch erstmal Software, die das auch nutzt. Also da ist mir sozusagen jetzt nur mit EC2 selbst noch gar nicht groß geholfen, außer dass ich eben diese Server nicht alle selber installieren muss und nicht selber betreiben muss oder einen Hoster betreiben muss. Sondern das läuft halt einfach irgendwo da rum und gammelt so vor sich hin. Und wenn ich es überhaupt nicht brauche und es nicht online sein muss, dann kann ich es auch ausschalten und muss es auch nicht bezahlen.
+
+00:50:27.052 --> 00:50:43.452
+<v SPEAKER_2>Dieses ganze Segment nennt man Infrastructure as a Service. Also du hast halt deine Infrastruktur nicht zu Hause stehen oder in deinem Rechenzentrum, in deinem Unternehmen, sondern diese Infrastruktur wird als Service angeboten von Amazon.
+
+00:50:43.472 --> 00:51:01.312
+<v SPEAKER_3>Dass wir jetzt nicht immer nur von Amazon reden, weil das soll ja nur ein Beispiel sein. Gibt es denn da nennenswerte andere Infrastrukturanbieter, die da auch eine Rolle spielen? Weil mir fällt jetzt so aus dem Stand gar nicht so viel ein, was so was Ähnliches tut, aber ich kümpe mich da ja auch nicht aus.
+
+00:51:01.332 --> 00:51:40.532
+<v SPEAKER_2>Unbedingt. Ich habe dir eben eine hübsche Grafik gegeben, die du mir jetzt wiedergegeben hast. Bitte schön. Also natürlich gibt es da so Riesen, auch wie Oracle, die sich in dem Bereich rumtreiben, aber auch, finde ich, viel interessanter kleinere Anbieter wie Rackspace, die ganz ähnliche Lösungen wie Amazon anbieten, eben Infrastrukturknoten skalierend als Service bezahlen nach Verbrauch. Linode ist ein anderes Beispiel, Joint gibt es noch.
+
+00:51:40.552 --> 00:51:47.952
+<v SPEAKER_3>Aber ich meine, machen die jetzt alle dasselbe? Also reden wir jetzt wirklich im Prinzip von genau derselben Geschichte, wie wir sie jetzt eben für EC2 beschrieben haben.
+
+00:51:48.232 --> 00:52:21.072
+<v SPEAKER_2>Sie machen alle was Ähnliches. Wie sie es dann im Einzelnen umsetzen, kann sich unterscheiden, zum Beispiel in der Art, wie sie virtualisieren. Welche Technik sie da verwenden, ob sie KVM-basierte Virtualisierung nehmen oder Xen oder VM. Weiß der Henker was? Das wissen wir nicht unbedingt. Aber ansonsten sind diese Services ähnliches, mal mit einer besseren, mal mit einer schlechteren API, mal mit einem besseren Web-Interface. Oder anderen Preisvorstellungen.
+
+00:52:21.092 --> 00:52:36.472
+<v SPEAKER_3>Das heißt, auch diese Infrastruktur selber hat auch eine API. Das heißt, um das hochzufahren, muss ich jetzt gar nicht ins Admin-Web-Interface gehen und für den Server sagen, lade, sondern ich kann das auch per Programm anstoßen lassen.
+
+00:52:37.072 --> 00:53:20.612
+<v SPEAKER_2>Ja, an der Stelle wird es besonders schick, weil einfach nur einen Server anschalten kann ich auch so. Und der Punkt ist, mal angenommen, ich habe ein Unternehmen mit einem schicken Web-Auftritt und plötzlich habe ich Peaks. Immer mehr Leute kommen drauf. In meinem Rechenzentrum ist es dunkel, weil gerade Feierabend ist. Dann kann ich eine Software bauen, die gegen diese APIs programmiert ist. Und die sagt, wir haben hier einen Peak, fahr mir bitte vier EC2-Instanzen hoch und rute das so, dass das da abgefackelt wird, damit der Web-Auftritt weiter…
+
+00:53:20.632 --> 00:53:53.732
+<v SPEAKER_3>Also rute das so, das heißt, schon der Infrastruktur-Provider kann dann sozusagen unter einer IP-Adresse mehrere Rechner ansprechen, sodass ich da auch jetzt nicht selber noch diese eigentliche Request-Verteilung machen muss, sondern das läuft quasi automatisch. Ich muss nur eine Software haben, die mit der Realität auf mehreren Computern gleichzeitig zu laufen, und der eine Kunde landet auf der, eine andere landet auf der, damit umgehen kann. Das heißt, ich habe dann irgendwie einen Datenbank-Server, der von allen Seiten angesprochen werden kann, der dann auch nicht durcheinander kommt, wenn da mehr als nur einer kommt.
+
+00:53:54.512 --> 00:54:48.212
+<v SPEAKER_2>Dieses ganze DNS-Routing ist ein entscheidender Service von den Infrastruktur-Cloud-Anbietern. Also da haben sie auch alle ihre Lösung. Es ist so, dass das nicht immer ganz einfach ist und dass die APIs auch nicht unbedingt immer ausreichen. Wir reden auch von einem Ding, was echt zwar schon länger in aller Munde ist und wo sich die Meldungen der Analysten überschlagen, wie dick das Thema in Zukunft werden mag. Trotzdem sind das, finde ich, immer noch Kinderschuhe. Es gibt Firmen, die auch erkannt haben, man kann auf diese APIs und diese Management-Schichten noch wieder was draufpacken. Scalarium zum Beispiel in Berlin, die machen sowas. Die haben eine Management-Schicht draufgepackt, ich glaube, spezialisiert auf Ruby on Rails auch. Und darunter hast du dann EC2.
+
+00:54:49.032 --> 00:54:58.112
+<v SPEAKER_3>Das heißt, in dem Moment, wo man gegen das Provider-API programmiert, wird man natürlich auch von diesem Provider ein Stück weit abhängig. Weil standardisiert ist da erst mal gar nichts.
+
+00:54:58.132 --> 00:54:58.472
+<v SPEAKER_2>Ja.
+
+00:54:58.492 --> 00:55:17.172
+<v SPEAKER_3>Sondern habe ich mich jetzt voll auf EC2 zum Beispiel eingeschossen. Und dann mag ich die nicht mehr, weil die böse sind, weil sie irgendwie WikiLeaks-Scheiße finden. Und dann will ich aus politischen Gründen mal umziehen. Dann bin ich quasi gezwungen, diese ganze Anbindung an die Cloud an der Stelle auch wieder neu zu hacken, um auch auf einem anderen Provider lauffähig zu sein.
+
+00:55:17.332 --> 00:55:22.552
+<v SPEAKER_2>Ja, das meine ich auch mit Kinderschuhen. Die Standards haben sich da bei den APIs noch nicht durchgesetzt. Es gibt sehr...
+
+00:55:22.552 --> 00:55:24.192
+<v SPEAKER_3>Es gibt welche, oder wie?
+
+00:55:24.212 --> 00:55:28.852
+<v SPEAKER_2>Es gibt gerade Unternehmungen in die Richtung. Also ein großes, bekanntes Projekt ist OpenStack.
+
+00:55:29.432 --> 00:55:29.912
+<v SPEAKER_3>Ja.
+
+00:55:29.932 --> 00:55:41.892
+<v SPEAKER_2>Das ist ein Open-Source-Projekt. Da hängen aber auch wieder irgendwie NASA, IBM, lass mich lügen, HP, eigentlich alle großen mit drin und unterstützen das sehr stark.
+
+00:55:41.912 --> 00:55:44.192
+<v SPEAKER_3>Weil sie sozusagen keine Lust haben, von Amazon abgehängt zu werden.
+
+00:55:44.752 --> 00:55:46.092
+<v SPEAKER_2>Das weiß ich nicht, was genau die...
+
+00:55:46.112 --> 00:55:48.252
+<v SPEAKER_3>Aber Amazon ist schon der Platzhirsch, oder? Derzeit.
+
+00:55:48.272 --> 00:56:58.272
+<v SPEAKER_2>Eindeutig. Die waren also auch am frühesten dran, was das angeht. Ich glaube eben aus der eigenen Anforderung heraus. Also OpenStack ist geil, weil die eigentlich die ersten Schritte in Richtung Standard und eine Art von Konsortium gehen, eben auch bewusst die anderen mit ins Boot nehmen und fragen, was braucht ihr eigentlich für eine API, um das zu lösen. Man darf nicht vergessen, dass es Klone gibt von EC2 oder von Amazon Cloud Geschichten. Und das ist Eukalyptus, wenn mich nicht alles täuscht. Ich glaube, von Uni Santa Barbara oder irgendwo kommt das her. Und das ist eine Portierung der EC2 API auf ein anderes Backend. Also du kannst Eukalyptus auf deinem Linux-Server selber installieren oder auf deinem Cluster und dann hast du sowas wie Amazon. Aber wie es bei allen Portierungen ist, wie ich leidlich erfahren musste selber, hängen die halt gnadenlos immer hinterher.
+
+00:56:58.292 --> 00:57:23.372
+<v SPEAKER_3>Weil die ja im Prinzip immer jedem Schritt folgen müssen. Wenn Amazon irgendwas ändert, dann müssen sie das darauf anpassen. Und das kann eigentlich nicht zeitgleich stattfinden. Das heißt, man ist dann eigentlich letztendlich immer noch abhängig. Man hat bloß die Möglichkeit unter Umständen vielleicht, die Abhängigkeit etwas zu lockern, ohne jetzt gleich seinen ganzen Kram umstellen zu müssen. Und dass Amazon kurzfristig auf OpenStack geht, ist eher nicht zu erwarten, weil das ist ja sozusagen die Konkurrenz.
+
+00:57:23.392 --> 00:58:01.232
+<v SPEAKER_2>Ich glaube, die laufen auch rum auf den OpenStack-Konferenzen, die relativ regelmäßig sind. Aber ich mag jetzt nicht behaupten, dass die sich da stärker engagieren. Also die hätten natürlich, natürlich hätte Amazon gerne, genauso wie auch Google und alle anderen API-Provider, dass ihre API Standard wird. Also ich meine, gucken wir mal in eine ganz andere proprietäre Ecke, Microsoft mit Azure. Da musste ich im Vorfeld zur Sendung echt nochmal nachgucken, wie man Microsoft Azure ausspricht. Ja, ich habe Videos mir angeguckt. Escher.
+
+00:58:04.532 --> 00:58:11.872
+<v SPEAKER_3>Aha, die haben die Sachsen jetzt übernommen. Ich dachte, die sprechen das Azure aus. Azure, irgendwie französisch oder so.
+
+00:58:11.892 --> 00:58:24.892
+<v SPEAKER_2>Das hätte ich viel schöner gefunden, aber die haben halt leider keinen Style. Jedenfalls wollen die natürlich ihre eigene API zum Standard machen. Und sagen hier, .NET.
+
+00:58:25.112 --> 00:58:30.652
+<v SPEAKER_3>Ja, 32 Forever, sag ich mal.
+
+00:58:30.672 --> 00:58:37.692
+<v SPEAKER_2>Hat alles auch Berechtigung, ist nur so unglaublich schwer mitreden zu dürfen.
+
+00:58:37.752 --> 00:59:09.292
+<v SPEAKER_3>Sag doch noch mal kurz was zu diesen anderen Infrastruktur-Provallen, die du da erwähnt hast. Von Rackspace habe ich schon viel gehört, aber ich kriege das gar nicht so richtig zugeordnet. Inwiefern sind die denn im Wesentlichen das Gleiche wie Amazon EC2 oder Amazon Web Services, wenn man es mal so alles gemeint hat? Aber die anderen machen wahrscheinlich auch so Storage und eben deine Virtualisierung, dass du so deine Instanzen hast. Fällt da noch irgendwas mit rein, was man jetzt in diesen Bereich Infrastructure as a Service noch mit dazu?
+
+00:59:09.312 --> 00:59:10.292
+<v SPEAKER_2>DNS-Rooting.
+
+00:59:10.712 --> 00:59:18.912
+<v SPEAKER_3>Okay, DNS-Rooting. Und immer, ich habe irgendwo.
+
+00:59:18.932 --> 00:59:48.652
+<v SPEAKER_2>Monitoring ist wichtig, verschiedene Datenbanken. Aber eben immer nur in der Form, dass du vorgefertigte Appliances einhängen kannst oder eben nicht. Also ich würde jetzt bei Rackspace oder Linode und so eher so sagen, das sind so klassische, der klassische Ersatz für dein eigenes Rechenzentrum oder für deinen eigenen Server. Ebenso, dass das Zeug skaliert und du nur für das bezahlst, was du auch brauchst.
+
+00:59:49.052 --> 00:59:52.132
+<v SPEAKER_3>Ja, aber inwiefern unterscheidet sich das dann von dem Amazon-Ansatz?
+
+00:59:52.952 --> 00:59:55.272
+<v SPEAKER_2>Nicht großartig.
+
+00:59:55.292 --> 00:59:59.832
+<v SPEAKER_3>Nur, dass es nicht ganz so groß, nicht ganz so verteilt ist und nicht ganz so populär.
+
+00:59:59.852 --> 01:00:02.832
+<v SPEAKER_2>Also es gibt mit Sicherheit Details, die ich jetzt aber nicht weiß.
+
+01:00:02.852 --> 01:00:19.372
+<v SPEAKER_3>Na gut, also ich meine, es gibt ja auch immer noch die Möglichkeit, über den Preis da zu arbeiten. Gut, aber so weit müssen wir jetzt nicht gehen. Also im Prinzip ist das auch Sun, Oracle heißt das jetzt, bieten auch eigentlich genau dasselbe an.
+
+01:00:19.392 --> 01:00:43.932
+<v SPEAKER_2>Ja, die wollen dann natürlich in der Enterprise-Ecke nach vorne preschen. Also die breiten auch ihre White Papers und Proposals und was auch immer aus und sagen, wir bieten euch Private Clouds für eure Oracle DBs. Das geht natürlich alles sehr stark in Richtung Datenbankzeug.
+
+01:00:44.752 --> 01:00:48.192
+<v SPEAKER_3>Ja klar, bei Oracle ist das ja nicht sehr viel anders zu erwarten.
+
+01:00:49.012 --> 01:01:35.192
+<v SPEAKER_2>Also ich habe mich dann auch mal gefragt, was so die Konkurrenz SAP in der Richtung dann unternimmt. Und die sind ganz, ganz woanders. Also die stecken auch in einer anderen Schicht oder in einem anderen Segment von diesem Cloud. Also ich habe ja eben schon Infrastructure as a Service genannt. Dann gibt es aber eben auch Platform as a Service und dann nochmal wieder Software as a Service. So diese drei Dinger kann man unterscheiden. Und dann versucht SAP sich zum Beispiel ein bisschen mehr in der Software as a Service zu verankern. Also dass sie eben ganz klassisch über Web-Services an den Markt da gehen.
+
+01:01:35.212 --> 01:02:03.292
+<v SPEAKER_3>Okay, also Infrastructure as a Service, das ist auch für dich eine absurde Abkürzung, IAA, als wer soll denn das tippen? Und dann, was hattest du? Platform as a Service und Software as a Service. Und in welchem Verhältnis stehen jetzt diese drei Begriffe zueinander? Bauen die irgendwie aufeinander auf? Oder sind das nur andere Ansätze, da Clouds anzubieten? Wie würdest du da Unterscheidungen ziehen?
+
+01:02:03.312 --> 01:03:19.132
+<v SPEAKER_2>Sie können aufeinander aufbauen, müssen es aber nicht zwingend. Also Software as a Service muss nicht gleichzeitig eine wahnsinnig skalierende, automatisch sich ausbreitende Infrastructure as a Service unten drunter haben. Platform as a Service würde ich in der Mitte ansiedeln, wenn man sich das als Pyramide vorstellt. Ganz oben in der Spitze ist Software as a Service und unten drunter die Basis Infrastructure. Bei Platform as a Service würde ich schon sagen, die setzt auf eine Infrastructure as. A Service auf und bietet eine API, um Software zu entwickeln, die du in die Cloud schiebst, wo du dir aber keine Gedanken mehr um die Infrastruktur machen musst. Also wie gesagt bei Infrastructure as a Service EC2, da hast du immer noch in den Händen so Sachen wie LAMPstacks oder bestimmte Linux-Distributionen, was auch immer. Bei Platform as a Service wird dir das auch komplett weg abstrahiert.
+
+01:03:19.152 --> 01:03:29.732
+<v SPEAKER_3>Das heißt du siehst das Betriebssystem nicht mehr, da gibt es keine Kommandozeile, sondern du hast halt irgendwie nur so ein Dienstleistungswesen, was vollständig hinter so einer API weg abstrahiert ist.
+
+01:03:29.752 --> 01:03:45.092
+<v SPEAKER_2>Genau, also es geht ja die ganze Zeit darum, Mühen und teure Dinge von den Usern wegzuholen und so zu verteilen, dass alle davon profitieren. Ich stelle das jetzt einmal so optimistisch dar.
+
+01:03:45.112 --> 01:03:48.932
+<v SPEAKER_3>Jaja, die Probleme können wir ja noch zu sprechen kommen.
+
+01:03:48.952 --> 01:04:07.692
+<v SPEAKER_2>Bei Infrastructure as a Service brauchst du kein eigenes Rechenzentrum mehr und auch keine IT-Menschen, die in den Kellern rumkriechen. Und bei Platform as a Service brauchst du keine Leute mehr, die diese Infrastructure as a Service für dich managen.
+
+01:04:07.712 --> 01:04:09.352
+<v SPEAKER_3>Keine Systemadministratoren mehr.
+
+01:04:09.372 --> 01:04:48.832
+<v SPEAKER_2>Ja, die dann weiß der Henker wo sitzen und dir deine Virtualisierung zusammenstecken oder so. Sondern bei Platform as a Service wird auch das alles weg abstrahiert. Das heißt, nehmen wir ein ganz einfaches Beispiel eines HTTP-Requesthändlers. Der soll eben auf eine bestimmte URL etwas bestimmtes antworten. Das Schicke ist nun, dass bei einer Platform as a Service programmierst du nur diesen Händler. Du musst dich um nichts drum rum kümmern. Was ist vorne dran für einen HTTP-Server oder was ist unten drunter für eine Datenbank.
+
+01:04:48.852 --> 01:04:51.732
+<v SPEAKER_3>Aber du musst es ja immer noch in irgendeiner Programmiersprache machen.
+
+01:04:51.752 --> 01:06:12.152
+<v SPEAKER_2>Genau, und dafür gibt es APIs. Bei unseren Freunden von Microsoft ist das halt irgendwie was.NET ähnliches. Amazon hat sowas noch gar nicht bzw. ist gerade erst ganz, ganz, ganz frisch aus der Taufe gehoben in Java. Und das heißt Beans Talk, Amazon Beans Talk. Und da hast du halt sowas Tomcat-basiertes Java, Surflat-Container-artiges auf der Amazon-Infrastruktur. Aber das ist Platform as a Service. Das heißt, du kümmerst dich nur noch um diese Container, um den Code, der einen Request behandelt. Die Platform as a Service kümmert sich darum, diesen Code sinnvoll zu verteilen auf diese automatisch skalierende Infrastruktur. Das heißt, wenn du plötzlich auf diesem Händler viele, viele, viele, viele Requests registrierst, das wird auch über ein geschicktes Monitoring halt hoffentlich richtig gemacht, werden automatisch weitere Applikations-Server-Instanzen hochgefahren, die sich dann eben ausgestattet mit demselben Code, der verteilt wird, um diese vielen Requests kümmern.
+
+01:06:12.552 --> 01:06:23.152
+<v SPEAKER_3>Also was könnte das zum Beispiel sein, so eine Platform? Könnte das so ein Content-Management-System sein? Also reden wir davon.
+
+01:06:23.172 --> 01:06:36.192
+<v SPEAKER_2>Lass uns doch ein Beispiel nehmen, TweetDeck. Die setzen Google App Engine, Platform as a Service ein für bestimmte Probleme, die sie haben, für bestimmte Services, zum Beispiel...
+
+01:06:36.212 --> 01:06:41.412
+<v SPEAKER_3>Also TweetDeck ist ein Twitter-Client, aber auch eine Twitter-Wolke sozusagen.
+
+01:06:41.652 --> 01:06:48.932
+<v SPEAKER_2>Ja, also das ist dieser dreispaltige Client, den du auf dem Desktop hast.
+
+01:06:49.232 --> 01:06:49.992
+<v SPEAKER_3>Ich benutze ihn nicht.
+
+01:06:50.212 --> 01:06:51.032
+<v SPEAKER_2>Ja, ich auch nicht.
+
+01:06:51.052 --> 01:06:55.112
+<v SPEAKER_3>Ich frage jetzt gerade, ob die mehr sind als nur ein Client. Also ich meine, was machen die dann in der Wolke?
+
+01:06:56.112 --> 01:07:12.992
+<v SPEAKER_2>Das ist eben das Interessante. Was machen die in der Wolke? Die holen sich einen bestimmten Service von einer Platform as a Service. Ich glaube, wir brauchen hier so etwas, wo man Geld reinwirft. Je nachdem, wie oft wir Service sagen, dann werden wir sehr reich.
+
+01:07:13.012 --> 01:07:14.412
+<v SPEAKER_3>Verstehe, so ein Schweinchen.
+
+01:07:15.452 --> 01:07:35.512
+<v SPEAKER_2>Die holen sich einen Image Processing Service von der App Engine ab, wo sie, ich glaube, Icons, Avatars, was auch immer dann in der Cloud rendern. Das ist halt eine gekapselte, in sich eigentlich relativ geschlossene Aufgabe, die du da hinschiebst. Das ist ein Stück Kot.
+
+01:07:35.532 --> 01:07:38.052
+<v SPEAKER_3>Was besser in der Wolke funktioniert als auf dem Rechner selber.
+
+01:07:38.072 --> 01:08:17.092
+<v SPEAKER_2>Weil es da verteilt wird. Und weil du dort eben, wenn eine Zeit lang nicht so viele Bilder gerendert werden müssen, dann bezahlst du diesen Service auch nicht. Und du hast nicht für den Fall, dass mal eins gerendert werden muss, irgendwo ein ganzes Rechenzentrum am Laufen. Im schlimmsten Fall. Und Platform as a Service gibt dir eben die Möglichkeit, so einzelne Teilaspekte einer Anwendung auszulagern in die Cloud.
+
+01:08:17.112 --> 01:08:48.472
+<v SPEAKER_3>Machen wir noch mal kurz auch hier mal so einen kleinen Markteüberblick, weil wir haben ja nun schon ein paar Sachen genannt, also wie Windows, ich nenne es jetzt mal Azure. Du weißt, dass da jedes Mal ein Kätzchen stirbt im Internet, wenn man das ausspricht. Also Google App Engine hast du jetzt auch schon genannt. Das heißt ja im Prinzip, dass Google App Engine dann wiederum aus dem eigenen Bedarf von Googles Internetanwendungen, wie, ich weiß nicht, gilt das für alle, also Gmail etc.?
+
+01:08:48.492 --> 01:08:52.972
+<v SPEAKER_2>Nein, die sind dabei, also die sind selber noch dabei nachzuziehen.
+
+01:08:53.172 --> 01:08:58.432
+<v SPEAKER_3>Ja, aber welche Google Dienste basieren selbst auf ihrer eigenen Plattform?
+
+01:08:59.112 --> 01:09:17.832
+<v SPEAKER_2>Teilweise neuere Angebote von Google Maps. Ja. Lass mich mal kurz überlegen, was so typische... Oh man, ich komme nicht auf Einzelprodukte.
+
+01:09:17.892 --> 01:10:20.292
+<v SPEAKER_3>Ja gut, dann lassen wir es raus. Also auf jeden Fall manche, aber nicht alle ihrer Dienste, aber vielleicht in der Zukunft dann auch mehr oder alle verwenden sozusagen eine Plattform, eine gemeinsame. Also quasi ein API, was eine bestimmte Dienstleistung umfasst. Die können wir ja gleich nochmal vielleicht auch etwas genauer umreißen. Aber erstmal um diese Idee der Plattform zu verstehen. Und das heißt, die Software muss sich jetzt gar nicht mehr um die Realität der Infrastruktur selbst. Da weiß ich nicht, auf welchem Betriebssystem er läuft oder so. Ist völlig alles egal. Und wenn man halt diese App Engine benutzt, dann läuft man eben auf der Google Cloud, dieser Google-Plattform, nutzt diese ganzen Dienste und hat damit irgendwie gar nichts zu tun. Das ist einfach nur da. Und das heißt, dass im Prinzip die Google App Engine ein direkter Konkurrent ist von Endos. Ach, das hast du schon wieder gesagt. Die fallen dann so eine Steilküste runter, die kleinen, flauschigen Kätzchen. Prallen einfach unten auf die Steine.
+
+01:10:20.312 --> 01:10:22.852
+<v SPEAKER_2>Ich versuch das nie wieder zu sagen. Ich bin so schrecklich tierlieb.
+
+01:10:24.592 --> 01:11:02.032
+<v SPEAKER_3>Das ist ja auch mal interessant zu sehen, weil so Konkurrenzsituationen von Google und Microsoft solange Google kein Betriebssystem auf PCs ausliefert, könnte man sich ja sagen, sie stehen ja gar nicht so sehr in direkter Konkurrenz. Und gut, Bing, da probieren sie es halt da, wo Google schon vorher war. Aber im Prinzip haben ja hier beide eine neue Geschichte, die es noch gar nicht so lange gibt und wo, naja, ein gewisser Appeal besteht, das vielleicht zu benutzen. Und stehen an der Stelle aber hoffentlich mal direkt in Bezug zueinander als in Konkurrenz. Weil man kann sich entscheiden, das so zu machen oder so zu machen.
+
+01:11:02.472 --> 01:11:39.972
+<v SPEAKER_2>Ich kann mir vorstellen, dass sie halt ein bisschen auf andere Zielgruppen gehen. Und sich da so ein bisschen auch aus dem Weg gehen dadurch. Also ich bin mir fast sicher, dass Google App Engine mehr so für die Allgemeinheit gedacht ist. Und dann doch vielleicht auf den klassischen Office-IT-Enterprise-Kunden zielt, die gerne feste Verträge machen und einen knallharten, megamäßig tollen Support brauchen.
+
+01:11:39.992 --> 01:11:42.972
+<v SPEAKER_3>Also sozusagen der Mittelstand, der auch heute schon bei Microsoft zu Hause ist.
+
+01:11:42.992 --> 01:11:44.052
+<v SPEAKER_2>Ja, das würde ich sagen.
+
+01:11:44.352 --> 01:11:54.872
+<v SPEAKER_3>Okay, na gut, aber Technik ist zumindest auf der gleichen Ebene. Was siehst du da noch so als Platform, was da als as a Service so verfügbar ist? Wo kann man sich noch alles reinstöpseln?
+
+01:11:54.892 --> 01:12:42.992
+<v SPEAKER_2>Total spannend finde ich Heroku. Das ist auch nordamerikanisch wie fast alles, was wir die ganze Zeit benennen. Es ist ein bisschen traurig, dass da noch nicht viel von woanders kommt, aber egal. Heroku ist, die haben sich richtig schön spezialisiert auf Ruby-Plattform as a Service. Das heißt, du kannst eine Ruby oder eine Ruby on Rails-Anwendung über wenige Kommandos von einer Kommandozeile oder von einem, ich glaube, da gibt es auch irgendwelche Desktop-Applikationen, die dich vielleicht unterstützen. Auf jeden Fall kannst du es einfach ratzfatz deployen. Deine Anwendung, so wie sie in deinem Test-Setup läuft, wird deployed innerhalb von Minuten auf diese Heroku-Plattform as a Service und rennt dann da und die übernehmen den Rest.
+
+01:12:43.012 --> 01:12:47.212
+<v SPEAKER_3>Dann reden wir jetzt von Rails oder von Ruby? Wir reden von Ruby im Allgemeinen.
+
+01:12:47.552 --> 01:12:51.512
+<v SPEAKER_2>Ja, aber ich denke, dass vor allen Dingen Rails-Leute Heroku nutzen.
+
+01:12:51.532 --> 01:13:01.112
+<v SPEAKER_3>Na gut, aber es ist jetzt sozusagen nicht zwingend eine Rails-Plattform, sondern es ist eine Ruby-Plattform. Also jegliche Software, die in Ruby geschrieben ist, könnte trotzdem laufen gebracht werden.
+
+01:13:02.152 --> 01:14:53.812
+<v SPEAKER_2>Jein, das ist eine sehr gute Frage. Danke. Also die Frage kann man auch bei Google App Engine und bei anderen stellen. Meistens ist es so, dass diese Sprachen, die dort unterstützt werden, sei es Ruby, Java, Python, .NET, was auch immer, wesentlich mehr können und dürfen als diese Plattform zulassen dürfen. Das ist ein bisschen schwer zu erklären, weil es geht um Restriktionen, die für alle gut sind. Eine Programmiersprache oder ein Programm kann zum Beispiel in das Filesystem schreiben. Ich mache ein File auf und schreibe da rein und gut ist. Oder ich lese irgendwo eins und gut ist. Das ist das, was wir gewohnt sind, wenn wir so zu Hause programmieren. Das ist nicht erlaubt auf keiner dieser Plattform. Ich darf nicht in Files schreiben. Ich darf nicht ins Filesystem schreiben. Weil das könnte die Performance anderer Anwendung oder anderer User beeinträchtigen. Denn das lässt sich nicht gut skalieren. Nun gibt es dafür natürlich einen Ersatz. Also eben ein persistierendes Datenbank-Backend, was irgendwie geartet ist. Entweder S3 oder Bigtable, was dann bei Google App Engine Data Store heißt, aber oben drauf sitzt auf Bigtable. Was dir eine ähnliche API bietet, um irgendwo Daten hinzupacken. Aber es ist eben nicht mehr dieses Schreiben ins File-System. Du darfst zum Beispiel auch keine Sockets aufmachen nach draußen. Also richtig klassische TCP, IP, was auch immer für Verbindungen, sind dir nicht erlaubt, weil du damit Connections dicht machst und auch die Anwendung nicht mehr automatisch von A nach B geschoben werden kann.
+
+01:14:54.392 --> 01:14:58.172
+<v SPEAKER_3>Das heißt, eigentlich geht alles nur noch über HTTP.
+
+01:14:58.192 --> 01:14:59.572
+<v SPEAKER_2>Deine Verbindung…
+
+01:14:59.592 --> 01:15:14.292
+<v SPEAKER_3>Oder über APIs. Also entweder gibt es ein API, was die Plattform diktiert, und dann kann ich das benutzen, dann ist es prima. Oder ich benutze generell HTTP und bin damit eben auch transferierbar und in der Wolke bewegbar.
+
+01:15:14.312 --> 01:15:43.232
+<v SPEAKER_2>Das ist genau der entscheidende Punkt. Und die Leute jammern oft über diese Restriktion und sagen, das ist doch echt Mist, dass ich hier nicht mal ein Socket aufmachen darf. Ich kann ja meinen eigenen Push-Dienst gar nicht damit realisieren oder so. Dann ist eigentlich die klassische Antwort aus dem Platform as a Service-Konzept, ja, wenn du das dürfen würdest, könntest du nicht mehr skalieren.
+
+01:15:43.252 --> 01:15:46.292
+<v SPEAKER_3>Und du kannst ja dann in die Infrastruktur-Abteilung eintreten.
+
+01:15:47.912 --> 01:15:51.752
+<v SPEAKER_2>Da kannst du dir deine Ecke bauen und deinen eigenen Push-Dienst aufsetzen.
+
+01:15:51.812 --> 01:17:08.372
+<v SPEAKER_3>Der dann sozusagen eine eigene Plattform darstellt und von daher eben nicht in das Konzept der anderen Plattform reinpasst. Das heißt, umso mehr man sich abnehmen lässt, ganz klar, umso weniger Freiheiten hat man. Das, was eben der Kommenzenz ist bzw. das, wofür die Plattform gedacht ist und gebaut wurde, das geht dann wiederum gut und man hat weniger damit zu tun, das überhaupt erst mal am Leben zu erhalten. Und von daher kann man sich auch im Wesentlichen auf das konzentrieren, was man eigentlich kann. Das ist ja eigentlich auch durchaus eine Gelegenheit auch für Prototypenentwicklung. Man würde halt gerne so eine Anwendung mal machen, aber man hat jetzt nicht so die Kenntnisse im Linux aufsetzen oder mit SQL reden etc. Aber eigentlich will man nur mal so ein paar Key-Values irgendwo hin speichern und dann ist das Persistent da. Und wenn man es braucht, holt man sich das wieder und konzentriert sich auf seine eigentliche Anwendung, die mit dem User oder was auch immer irgendwas tut, dann kann man das da einfach sofort deployen, muss sich über sonst keine Gedanken machen. Und wenn der Prototyp wunderbar funktioniert, dann kann man ihn erstens sofort präsentieren, kann sagen, hier gucke mal, ich habe noch mal was gehackt. Das sieht dann schon mal ganz toll und beeindruckend aus, weil es irgendwie schnell da ist und sofort funktioniert und auch ohne Systemadministratoren zum Leben gekommen ist. Ja und dann kann man das dann immer noch anders implementieren, wenn die Freiheiten am Ende nicht ausreichen sollten.
+
+01:17:09.232 --> 01:20:03.112
+<v SPEAKER_2>Ganz exakt und im besten Fall lässt du es da leben, wo es ist und es wird halt automatisch skaliert. Und du baust dir die Sachen, die du zusätzlich baust, brauchst als eigenes Service draußen hinzu. Also es ist immer sehr wichtig, wenn du, du musst schon deinen Use-Case wissen, bevor du irgendwie da anfängst, das zu anderen Providern auszulagern. Es macht einfach Sinn, sich diese Restriktion, Limits, Quotas vorher anzugucken. Wenn du eine Anwendung bauen willst, ein Multiplayer-Game oder so, dann ist das schwierig auf so einer Platform as a Service. Weil es gibt mittlerweile zwar immer mehr Bestrebungen, da auch Real-Time-Kommunikation oder sowas, solche APIs zu bauen. Das fängt aber gerade erst an und ist noch nicht echt stabil oder so. Aber das finde ich, was du angesprochen hast, einen sehr, sehr wichtigen Aspekt, das Downscalen. Also wir reden die ganze Zeit von hoch skalieren und horizontal und in die Richtung und dorthin. Du bist ja mal irgendwann ganz dick und alle wollen deine Inhalte im Netz haben. Das Coole ist eigentlich auch das nach unten gucken. Das klein anfangen. Dass du mal eben, wie du sagst, eine Anwendung zusammenhackst, die da reinschiebst, dich um den ganzen anderen misst, wie Infrastruktur überhaupt nicht mehr kümmern musst. Und dann guckst du, wie es läuft. Und das ist ja genau der Punkt auch, dass diese Platform as a Service nur so dick aufgezogen ist. Oder anders gesagt, da hängen ganz viele Entwickler drauf, die zum Teil, du kannst sagen eigentlich, da sind vielleicht eine Handvoll Anwendungen im Web, die richtig was reißen, die man kennt oder so. Also es gibt, wie gesagt, Tweetdeck setzt ein bisschen was von App Engine ein. Es gibt gerade auch in diesem Web-Games-Bereich viele, die Folder draufsetzen und teilweise oder ganz ihre Auftritte da drauf verlagern. Also ich glaube Bodypoke und Ubisoft machen so Sachen, dass sie teilweise Auftritte eben dort ausliefern. Aber dann gibt es halt diesen ganz, ganz langen Schwanz von Entwicklern und kleinen Unternehmen, Start-ups, wie auch immer, die einfach mit was losrennen wollen und kein Geld ausgeben möchten. nicht viel. Ja, der Punkt ist einfach...
+
+01:20:03.132 --> 01:20:04.812
+<v SPEAKER_3>Oder ist das hier auch noch alles kostenlos?
+
+01:20:04.832 --> 01:20:07.012
+<v SPEAKER_2>Wir reden über kostenlos.
+
+01:20:07.532 --> 01:20:08.552
+<v SPEAKER_3>Bei Google App Engine?
+
+01:20:08.852 --> 01:20:28.912
+<v SPEAKER_2>Ja, nicht nur da. Es gibt im Moment, ich weiß nicht, ob das zeitlich begrenzt ist oder so, bei Amazon sogenannte Free Tiers. Das sind dann Mini-Instanzen, die nichts kosten oder nur minimal. Ich glaube, dass Heroku und alle, die gehen alle in die Richtung, dass sie so Starter-Pakete anbieten wollen.
+
+01:20:28.932 --> 01:20:34.092
+<v SPEAKER_3>Dass man erst mal so ein Minimum kostenlos kriegt. Aber wenn man ein bisschen mehr reißen will, dann kostet es halt.
+
+01:20:34.112 --> 01:20:40.952
+<v SPEAKER_2>Das ist wie klassisch irgendwie bei 1&1 deine 0-Euro-Webvisitenkarte. Nur, dass es viel mehr kann.
+
+01:20:42.952 --> 01:20:54.432
+<v SPEAKER_3>Was gibt es noch außer Azyr und App Engine, was du an Plattformen und Heroku hast du ja noch genannt? Gibt es noch weitere, die da nennenswert sind?
+
+01:20:54.452 --> 01:21:03.832
+<v SPEAKER_2>Also bekannt Salesforce kennt man wahrscheinlich teilweise. Forcecom ist so der Unterbau davon.
+
+01:21:03.852 --> 01:21:05.052
+<v SPEAKER_3>Das ist so Vertriebssoftware.
+
+01:21:05.072 --> 01:21:08.212
+<v SPEAKER_2>Ja, das ist, wie nennt man das, CRM?
+
+01:21:08.532 --> 01:21:10.092
+<v SPEAKER_3>Customer Relationship Management.
+
+01:21:10.112 --> 01:21:12.012
+<v SPEAKER_2>Ja, solche Lösungen kriegt man da.
+
+01:21:12.032 --> 01:21:12.772
+<v SPEAKER_3>So Schleppsoftware halt.
+
+01:21:13.012 --> 01:21:15.812
+<v SPEAKER_2>Ja, ich kenne mich da wirklich nicht aus.
+
+01:21:15.832 --> 01:21:22.392
+<v SPEAKER_3>Aber gut, die sind ja auch ganz gut im Business und haben das sozusagen auch schon lange ins Web getragen.
+
+01:21:22.412 --> 01:22:10.432
+<v SPEAKER_2>Aber Platform as a Service ist relativ neu. Also ist wesentlich neuer als Software as a Service oder das Infrastrukturthema. Und das ist auch erst noch im Kommen, weil da viele Herausforderungen hinterstecken technischer Natur, die auch so viele noch gar nicht geschickt lösen können. Also alle, über die wir jetzt im Moment geredet haben, haben da auch noch ihre Probleme. Das Zeug ist nicht immer stabil. Also wer das so etwas näher verfolgt, kriegt dann so mit wie ein kleines Start-up, da sich eine Seite gebaut hat, die dann plötzlich mal drei Tage futsch ist, nur weil irgendwas in der Cloud nicht funktioniert. Und sie können gar nichts tun dagegen, weil sie die Infrastruktur und alles eben abgegeben haben.
+
+01:22:11.792 --> 01:22:14.912
+<v SPEAKER_3>Was hast du da als wackelig, besonders wackelig kennengelernt?
+
+01:22:14.932 --> 01:22:28.872
+<v SPEAKER_2>Google App Engine Datastore hat über längere Zeiträume große Latenzprobleme gehabt, bis hin zu Komplett-Ausfällen. Also es sind keine Daten verschwunden, aber du kamst nicht mehr ran.
+
+01:22:28.892 --> 01:22:30.372
+<v SPEAKER_3>Das kann ja auch äquivalent sein.
+
+01:22:31.072 --> 01:22:34.832
+<v SPEAKER_2>Ja, wenn du dann irgendwann wieder dran kommst, ist es okay.
+
+01:22:34.852 --> 01:22:37.072
+<v SPEAKER_3>Aber dann ist wahrscheinlich der Aktienkurs schon so weit gefallen.
+
+01:22:37.892 --> 01:22:47.892
+<v SPEAKER_2>Ja, also die haben das ja immer noch so klein aufgezogen, sag ich jetzt mal, dass davon noch kein Unternehmen abhängt. Also deren Unternehmen hängt da auf jeden Fall nicht von ab.
+
+01:22:47.912 --> 01:22:52.352
+<v SPEAKER_3>Ja, ist klar. Na gut, aber andere vielleicht schon. Also das muss man sich auf jeden Fall klar machen.
+
+01:22:52.352 --> 01:22:52.832
+<v SPEAKER_2>Unbedingt.
+
+01:22:52.852 --> 01:23:01.832
+<v SPEAKER_3>Dass das nicht alles failfree ist und es da überhaupt keine Garantie gibt. Und auch wenn das irgendwie 100 Tage Problem ist, gelaufen hat, kann am 100 ersten Tag die Sache anfangen zu brennen.
+
+01:23:01.852 --> 01:23:22.752
+<v SPEAKER_2>Ja, Sicherheit ist echt ein wichtiges Thema und unter zwei Gesichtspunkten einmal eben Ausfallsicherheit. Aber was wir auch jetzt noch gar nicht angesprochen haben, was ist eigentlich mit deinen Daten, die da irgendwo in irgendeinem Rechenzentrum liegen? Das können ja unter Umständen Daten wiederum von deinen Kunden sein.
+
+01:23:22.772 --> 01:23:23.952
+<v SPEAKER_3>Da gibt es Wahrscheinlichkeit sogar.
+
+01:23:24.072 --> 01:23:36.992
+<v SPEAKER_2>Ja, da gibt es natürlich dann die Frage, darf ich die da überhaupt in ein Rechenzentrum in Nordamerika legen, wo ich gar nicht mal genau weiß, ob das da wirklich steht oder nicht? Also was sagen meine Kunden dazu oder irgendwelche Gesetze?
+
+01:23:37.152 --> 01:23:50.252
+<v SPEAKER_3>Ja genau, Datenschutz-Jurisdiktionen, wenn da auf einmal irgendein Government Zugriff hat, wo man nicht traumend daran gedacht hat, dass sie überhaupt die Möglichkeit hätten, darauf zuzugreifen.
+
+01:23:50.272 --> 01:24:35.672
+<v SPEAKER_2>Und an der Stelle gibt es noch keine ordentliche Lösung für das Problem. Du musst dir bewusst darüber sein, diese Daten können maximal weltweit verteilt irgendwo landen. Und zwar so, dass der Provider vollen Zugriff darauf hat. Sie sagen alle, nö, ist so viel, interessiert uns nicht, gucken wir nicht rein. Also auch Google indiziert nicht die Daten, die in der App Engine Datastore liegen, um ihre Suche zu verbessern oder so. Aber die Daten sind nun mal da. Es gibt Entwicklungen, also ich glaube homomorfe Algorithmen, die dir erlauben, Operationen auf verschlüsselten Daten durchzuführen.
+
+01:24:35.692 --> 01:24:37.192
+<v SPEAKER_3>Was meinst du mit homomorph?
+
+01:24:37.212 --> 01:25:15.692
+<v SPEAKER_2>Das sind Algorithmen, also du verschlüsselst Daten. Und eigentlich, um Daten zu ändern, also einen Zähler hoch zu zählen in deiner Tabelle oder so, eigentlich müsstest du sie entschlüsseln, dann die Operation durchführen, verschlüsseln, wieder hinpacken. Da ist aber diese Lücke mit dem Entschlüsseln und Verschlüsseln. Diese homomorphen Algorithmen erlauben es, die Operation auf verschlüsselten Daten durchzuführen, ohne den Schlüssel zu kennen. Das heißt, du veränderst das Verschlüsselte, und wenn du es entschlüsselst, hast du das richtige Ergebnis.
+
+01:25:18.272 --> 01:25:22.532
+<v SPEAKER_3>Da würde man vermuten, dass es nicht richtig verschlüsselt ist, wenn so etwas geht.
+
+01:25:22.552 --> 01:25:28.032
+<v SPEAKER_2>Ja, wie es genau geht, geht über meinen Horizont.
+
+01:25:28.052 --> 01:25:29.112
+<v SPEAKER_3>Aber es gibt solche Ansätze.
+
+01:25:29.132 --> 01:25:49.232
+<v SPEAKER_2>Es gibt solche Ansätze. Ich habe davon gelesen und es gibt bestimmte Tiefen, bis wie weit man das durchziehen kann. Aber das ist im Prinzip der Weg, um deine Daten zu sichern. Oder das wäre ein interessanter Weg, um deine Kundendaten in der Cloud zu sichern.
+
+01:25:49.832 --> 01:27:53.152
+<v SPEAKER_3>Das könnte man sich ja auch so mal vorstellen. Das ist so eine Entwicklung wie Diaspora. Facebook hat so viele Daten. Wir machen das jetzt mal anders. Und Open Source und dralalala. Ob ihnen das dann am Ende gelungen sein wird, das werden wir jetzt mal dahingestellt. Aber das ist natürlich so ein bisschen auch die Idee. Wenn man das jetzt auf diesen Plattformgedanken ausbaut, kann man ja sagen, wir benutzen jetzt hier auch einen Infrastructure as a Service Dienstleister, sei es Amazon, sei es Recspace oder was auch immer, quasi um diese ganze Verlässlichkeit erst mal herzustellen. Aber wir bauen eine Plattform, die irgendwie inherent alles verschlüsselt oder anonymisiert oder was auch immer der Objective ist. Und darauf kann man dann quasi seine Anwendungen laufen lassen. Man hat dann eben eine API, die in jeder Hinsicht sicherstellen kann, wo die Schlüssel gelagert sind etc. Aber eben ohne die Schlüssel. Na gut, irgendwo müssen sie ja sein. Irgendwo muss ja dann auch mal darauf zugegriffen werden. Aber das zumindest so weit zu minimieren, dass es jetzt nicht einfach so ist, dass da jemand so, was weiß ich, das Internetkabel zu dem Data Storage ausschaltet und durchschneidet und dann dahin geht und sich die Daten anguckt und dann sind sie da, sondern dass man eben für solche Fälle das eben auch sich auslässt. Ist gar nichts Konkretes im Sinn, aber Plattform heißt ja letzten Endes, ich erfinde mein neues Betriebssystem, was eben für einen bestimmten Zweck geeignet ist. Und so wie wir bisher Betriebssysteme in der Regel nur kennengelernt haben, die eben für einen bestimmten Computer gedacht waren oder ein Mobiltelefon oder was auch immer, eröffnet sich ja jetzt in dieser Welt eigentlich sehr viel mehr durch eben diesen Begriff Services. Die Anwendung als solche steht eigentlich im Mittelpunkt bzw. es gibt gar nichts anderes als das. Und so dass man eben für bestimmte Anwendungen bestimmte Betriebssysteme schreiben kann, die dann eben in dieser Cloud sind, aber eben dann eben durch bestimmte Kniffe eben auch Anonymität, Pseudonymität, Datensicherheit in irgendeiner Form sicherstellen können oder zumindest das Risiko so weit minimieren, dass man sagen kann, okay, für diese Anwendung ist das irgendwie ausreichend.
+
+01:27:53.252 --> 01:28:23.092
+<v SPEAKER_2>Genau. Also du kannst auch durchaus die Analogie ziehen, dass der P-A-A-S-Gedanke eine Portierung von Unix ins Web ist. Also von dem Prinzip hinter einzelnen Dämon und Services, die eben jetzt mal auf einem Rechner oder auf einem Cluster laufen, das übertragen auf das ganze Web. Aber Kinderschuhe.
+
+01:28:23.112 --> 01:28:26.892
+<v SPEAKER_3>Fängt gerade alles erst an. So ein bisschen so iUnix.
+
+01:28:27.192 --> 01:30:08.632
+<v SPEAKER_2>Ja, ich bin auch gespannt, was sich davon durchsetzt und was vor allen Dingen gnadenlos einfach scheitern muss. Ich kann leider keine Voraussagen dazu machen. Das hat alles seine Haken und Kinken. Dieses Platform as a Service ist eine schicke Sache, um kleine, schnelle Dinge, wie du es eben auch gesagt hast, prototypenartig da reinzustellen. Aber wenn es dann in größere Businesslogik geht und komplexere Anwendungen mit verteilten Entwicklungsteams, die dann gleichzeitig, also die wird nur scheinbar vieles abgenommen und du musst neue Dinge hinzulernen. Also zum Beispiel asynchrone Techniken. Was bedeutet das eigentlich beim Entwickeln von Applikationen, die um diese ganzen Nebenläufigkeiten, die es im Web und in dieser Art von Skalierung eigentlich gibt, da musst du dich erst mal komplett umstellen und darauf einstellen. Und das kann sein, dass Leute das ausprobieren und dann merken, okay, diese komplette stateless Umgebung, das passt mir eigentlich gar nicht in meine Logik, das passt mir gar nicht in meinen Use-Case rein. Ich brauche ein State, ich brauche irgendeine Art von User-Session oder sowas. Ich will nicht drumherum programmieren und Workarounds machen, um eine Session in Memcache zu persistieren und irgendwo mehr Keys zu merken. Sondern warum kann ich nicht einfach bei mir im RAM dieses User-Objekt haben und dann juckele ich da mit rum?
+
+01:30:11.212 --> 01:30:11.692
+<v SPEAKER_3>Ja.
+
+01:30:11.712 --> 01:30:26.292
+<v SPEAKER_2>Das ist immer das Ding bei solchen Hypes auch. Es ist schon erstaunlich, was die Leute darauf zum Rennen kriegen, aber es geht nicht alles.
+
+01:30:26.312 --> 01:30:41.532
+<v SPEAKER_3>Haben wir denn dieses Thema Plattformen, Salesforce hast du genannt, Azure, Google App Engine, Heroku? Haben wir noch andere, die jetzt auch den Status haben, so ein Player zu sein? Oder die für die Hörergemeinde vielleicht noch mal besonders interessant sein könnte?
+
+01:30:41.552 --> 01:30:47.192
+<v SPEAKER_2>Also ich würde nochmal gerne Joint hervorheben. Ich habe die zwar in meiner Karte.
+
+01:30:47.212 --> 01:30:47.872
+<v SPEAKER_3>Die sieht ja keiner.
+
+01:30:48.012 --> 01:31:13.232
+<v SPEAKER_2>Die sieht ja keiner. Joint bieten an einmal dieses ERS-Zeug, also Computing Power oder so heißt das bei denen. Ich weiß es gar nicht. Aber dann bieten sie die Möglichkeit an, Platform as a Service gegen Node.js zu programmieren. Und dieses ganze Node.js-Thema macht auch so ein bisschen die Runde, glaube ich.
+
+01:31:13.252 --> 01:31:17.592
+<v SPEAKER_3>Ja, war auch hier schon bei Chaosradio Express ein Thema vor gar nicht so langer Zeit.
+
+01:31:17.912 --> 01:31:33.372
+<v SPEAKER_2>Und bei Joint hast du eben die Möglichkeiten, deine Node.js-Anwendung auch auf so eine automatisch skalierende Infrastruktur zu packen. Was sehr schick ist. Also ich finde den Ansatz von Joint spitze.
+
+01:31:33.412 --> 01:31:35.792
+<v SPEAKER_3>Das ist nur für Node.js sozusagen?
+
+01:31:35.812 --> 01:31:59.852
+<v SPEAKER_2>Ja, ehrlich gesagt bin ich ein bisschen verwirrt, weil in den letzten Tagen war dieses Angebot wieder weg von der Homepage. Oder ich habe es nicht gefunden, weil sie umdesigned haben oder so. Ich bin mir auch relativ sicher, dass sie das immer noch an irgendeiner Stelle so anbieten. Wie gesagt wieder ein typisches Symptom dafür, dass das nicht einfach zu lösen ist, dieses Problem.
+
+01:32:00.572 --> 01:32:08.412
+<v SPEAKER_3>Okay, aber es geht ja jetzt nicht nur um Node.js bei Joint? Sondern die machen IaaS und die Plattform, die sie anbieten, ist Node.js.
+
+01:32:10.092 --> 01:32:14.052
+<v SPEAKER_2>Da haben sie eine API dagegen und das ist auch ein Alleinstellungsmerkmal von denen.
+
+01:32:14.072 --> 01:32:53.932
+<v SPEAKER_3>Verstehe. Das heißt, es könnte durchaus sein, dass insbesondere die Open Source-Projekte, die eine gewisse Popularität haben, die sich als Server-Anwendungsabstraktionsenvironments positionieren, wie das Node.js zum Beispiel tut, und andere gibt es ja auch, dass sie sich dafür dann eben auch schnell Hoster finden, die das eben dann auch wirklich quasi als PAAs explizit anbieten. Sondern sagt, okay, alles klar, ich brauche jetzt hier mal eine performante Node.js-Instanz, gehe ich da einfach hin und programmiere dann nur ein JavaScript und habe quasi eigentlich nur die Sicht dieser Virtual Engine und wo das jetzt läuft und auf welchem OS das jetzt läuft, ist mir alles egal, Hauptsache ich habe HTTP, Hauptsache ich habe Internet und das habe ich dann da auch.
+
+01:32:54.232 --> 01:33:05.552
+<v SPEAKER_2>Genau. Ja, schick ist halt auch, wenn du dir überlegst, ich möchte jetzt mal eine eigene Firma aufmachen, die eine PAAs anbietet, ist da noch viel Platz.
+
+01:33:05.572 --> 01:33:33.752
+<v SPEAKER_3>NoJS war hier Thema in Chaosradio Express 167. Könnt ihr mal reinhören, wenn ihr das noch nicht getan habt. Das ist nämlich auch eine echt lustige Geschichte. So, können wir ja vielleicht diesen Plattformkapitel auch erstmal abschließen. Jetzt hast du gesagt, es gibt noch einen dritten Weg auf die Sachen zu gucken, die kann oder kann nicht auf diesen anderen beiden Service-Klassen aufbauen. Software as a Service.
+
+01:33:33.772 --> 01:33:55.352
+<v SPEAKER_2>Ja, eigentlich haben wir das auch schon am Anfang genannt, weil das ist der klassische Zugang zu dem Thema. Also das ist auch das, was am längsten schon existiert, wenn du so willst. Nimm irgendwie Google Apps, nimm Mobile Me von Apple. Software as a Service.
+
+01:33:55.372 --> 01:34:03.232
+<v SPEAKER_3>Dass man sich einfach irgendwas kauft, das läuft dann im Web-Browser. Und dann benutzt man das, wie man normalerweise ein Programm auf seinem Rechner benutzen würde.
+
+01:34:03.312 --> 01:34:18.012
+<v SPEAKER_2>Das Versprechen, was dahinter steckt, ist, da ist etwas in deinem Browser, was sich hoffentlich so ähnlich verhält wie eine native Desktop-Anwendung, was meiner Ansicht nach noch nie geglückt ist, aber okay.
+
+01:34:18.032 --> 01:34:21.352
+<v SPEAKER_3>Die Einschätzung teile ich im Übrigen.
+
+01:34:21.372 --> 01:34:22.752
+<v SPEAKER_2>Web-Anwendung ist Mist.
+
+01:34:23.092 --> 01:34:37.472
+<v SPEAKER_3>Ich meine, das ist der alte Traum von Netscape, als sie angetreten sind, mit ihrem ganzen Java und Sun noch hier, mit so The Network is the Computer. Das war halt irgendwie immer so die Idee. Und jetzt kommt es vielleicht langsam da auch mal so dahin.
+
+01:34:37.492 --> 01:35:37.132
+<v SPEAKER_2>Ich finde es auch dramatisch. Also ich bin jetzt erst Mitte 30, sowas, und habe jetzt schon das Gefühl, dass die Techniken sich immer wiederholen, diese Ansätze, irgendwas zu machen. Ich eigentlich dachte, ich wäre jung und würde erst so in 20 Jahren das Gefühl haben, die Dinge wiederholen sich. Nein, die Leute fangen an, Web-Anwendungen so bauen zu wollen, wie Desktop-Anwendungen funktionieren und aussehen, kämpfen mit denselben Problemen, die UI und asynchrone, eventbasierte UI-Programmierung halt so mit sich bringen. Das ganze Zeug ruckelt und stockt. Ich finde das toll, dass da geforscht wird. Ich mag das auch gerne selber ausprobieren. Vielleicht führt das jetzt viel zu weit vom Thema weg. Nimm zum Beispiel OpenGL oder überhaupt...
+
+01:35:37.152 --> 01:35:38.192
+<v SPEAKER_3>3D-Beschleunigung.
+
+01:35:38.212 --> 01:36:35.892
+<v SPEAKER_2>Ja, Grafikbeschleunigung, 3D-Games mit Partikel-System und Call of Duty ab nach vorn. Das sind native Programme, die auf deinem Rechner laufen, die optimiert sind auf deine Hardware, vor allen Dingen auf deine Grafik-Hardware und so. Und das fluppt. Und jetzt kommt WebGL, was aber noch wieder eine Schicht dazwischen hat. Das ist zwar auch der Wunsch, direkt auf die GPU zuzugreifen und eben fette 3D-Animationen im Browser darzustellen. Da gibt es auch diverse Demos. Aber dazwischen hast du plötzlich JavaScript, was interpretiert werden muss. Und an der Stelle frage ich mich, also wenn du dir die ganzen Demos anguckst, das sieht so aus, alles, was da gerade kommt, wie die allerersten 3D-Demos vor Jahren. Also da wird wieder derselbe...
+
+01:36:35.912 --> 01:36:37.792
+<v SPEAKER_3>Drehende Würfe, hüpfende Bälle.
+
+01:36:37.812 --> 01:36:58.432
+<v SPEAKER_2>Ja, derselbe Pfad wird da beschritten. Oder der Versuch, Flash wegzudrängen. Oder durch HTML5 mit Canvas und diesen ganzen Geschichten. Die ganzen Demos, wenn du sie dir anguckst, die machen alle das Gleiche, was Flash am Anfang auch probiert hat. Und das sind diese Wiederholungen, die ich meine.
+
+01:36:58.452 --> 01:38:30.052
+<v SPEAKER_3>Ja gut, aber ich meine, in dem Moment, wo es dann auch ein bisschen gelingt, hat man natürlich einen riesen Vorteil, weil dann muss die Software eben nicht mehr installiert werden. Man kann sie einfach zentral aktualisieren. Und im Prinzip läuft es dann halt auf jedem Rechner sofort. Aber das ist halt das alte Versprechen. Aber für die einfachen Anwendungen, ich meine, als Netscape das noch propagiert hat, und jetzt machen wir das mal so, dann war das der große Gainer. Und es wurde klar, jetzt muss man erstmal 10 Jahre lang Browser Development an den Start kommen, bis man überhaupt in der Lage ist, diesen ganzen HTML-Java-Skript-Mumpet so halbwegs performant abzurocken. Aber wenn man sich jetzt eben so ganz einfache Systeme anschaut, was weiß ich hier, so Buden wie 37Signals, die jetzt so extrem einfache Web-Anwendungen, so To-Do-Apps etc. gemacht haben, die jetzt auch überhaupt nicht mit großem Trara daherkommen, sondern die einfach nur was ganz Einfaches mit einem ganz einfachen, aber dann eben so einem schnuffigen, flutschigen User-Interface machen, was jetzt nicht mehr so an die 90er-Jahre erinnert, was HTML und Optik betrifft. Und das funktioniert dann wiederum schon ganz gut. Das heißt, nur 15 Jahre später ist das Versprechen dann mal gehalten worden, aber eben jetzt noch nicht mit dem, was man von Desktop-Anwendungen heute gewohnt ist. Das dauert jetzt wahrscheinlich nochmal 15 Jahre, bis wir dann Call of Duty dann auch im Webbrowser in derselben Performance haben, während dann aber wahrscheinlich auch die lokalen Installationen wieder ganz worden sind. Das ist ja auch normal.
+
+01:38:30.612 --> 01:38:52.272
+<v SPEAKER_2>Ja, also an der Stelle würde ich echt sagen, werden die Sachen viel stärker verschmelzen. Nimm im App Store und iPhone Anwendungen, die allermeisten benutzen das Internet. Ganz normal zur Kommunikation. Sind aber ein anderer Zugang. Sind eine native App, aber mit denselben Protokollen und Interfaces dahinter.
+
+01:38:52.312 --> 01:39:01.392
+<v SPEAKER_3>Na, dafür verbinden sie ja sozusagen auch irgendwie das Beste mit dem Besten. Man nimmt das Netz für das, wofür das Netz gut taugt, und man nimmt eben die lokale Anwendung für das, wofür das gut taugt.
+
+01:39:01.892 --> 01:39:44.832
+<v SPEAKER_2>Also, ich will mich da, ich wollte auch da gar nicht so irgendwie ablästern über diese Entwicklung. Aber wenn ich, das ist eine Use-Case-Frage, wenn ich, ich möchte keine, also ich finde es dramatisch, wenn du versuchst, einen Photoshop im Web nachzubauen. Oder eine Anwendung, um Filme zu editieren oder Audio zu editieren. Das geht. Und die Browser unterstützen ja mittlerweile vieles, um in der Richtung irgendwie tolle Dinge zu machen, Audiosachen markieren, schneiden, sonst was, Bildbearbeitung und so. Aber an der Stelle frage ich mich doch wirklich, ob das am richtigen Ort aufgehoben ist.
+
+01:39:44.852 --> 01:40:07.652
+<v SPEAKER_3>Na gut, ich meine, das hängt natürlich von der Anwendung ab. Wenn du, wenn das Prinzip ist, dass Video quasi, wenn sozusagen die Source auch von allen möglichen Leuten mehr oder weniger in Echtzeit geliefert wird und du willst dann auch kollaborativ so einen Film zusammenschnippeln, dann wäre es ja nun Quatsch, diese ganzen Videomengen nochmal auf lokale Computer zu übertragen, nur damit sich das ein bisschen schneller zusammeneditieren lässt.
+
+01:40:07.772 --> 01:40:11.032
+<v SPEAKER_2>Na die Videomengen werden sowieso übertragen. Du siehst es ja.
+
+01:40:11.072 --> 01:40:25.752
+<v SPEAKER_3>Ja, aber nur einmal hin und dann können alle gleichzeitig darauf arbeiten. Und das wird dann auch unter Umständen kollaborativ. Wenn man jetzt so sehr einfache Schnittsachen hat, wie ich schneide vorne was ab und hinten was ab und bestimme eigentlich nur die Timeline, dann ist das ja im Web auch problemlos zu machen.
+
+01:40:25.772 --> 01:40:42.312
+<v SPEAKER_2>Aber ich würde dafür trotzdem eine relative Anwendung programmieren, die dieselbe Kommunikation verwendet und auf den Client nur zum Beispiel ein minimales Preview schickt, was ich viel schneller auf meinem Client bearbeiten und schneiden kann und da was zupacken kann.
+
+01:40:42.332 --> 01:40:51.292
+<v SPEAKER_3>Das heißt, die Essenz ist eigentlich mehr die Apis, die sich an dieser Stelle herausbilden und die quasi für so einen neuen Klebstoff zwischen der lokalen und der fernen Seite dienen.
+
+01:40:52.252 --> 01:41:59.032
+<v SPEAKER_2>Also da siehst du auch, glaube ich, ganz stark die Konkurrenz zwischen so Riesen wie Apple und Google. Die Ausrichtung, Google, immer Browser. Immer alles muss im Browser stattfinden. Chrome wird gebaut, Chrome wird ausgebaut, kriegt ein Web App Store. Und Apple, da hast du manchmal, also ich zumindest, fast das Gefühl, dass die den Browser fast links liegen lassen, was nicht stimmt. Sie treiben WebKit und Safari-Entwicklung natürlich weiter voran und haben auch ihr kleines HTML5-Showcase, wo sie so fünf, sechs Beispiele zeigen, was man jetzt alles Tolles mit HTML5 und CSS3 machen kann. Aber der Trick da an der Stelle ist, das ist jetzt nur geraten, aber ich würde mal sagen, so ein App Store, der nativ auf deinem Desktop läuft, hat dahinter HTML. Das, was da gerendert wird, ist wahrscheinlich HTML-like, was auch so übers Netz kommt. Aber es ist kein klassischer Browser mehr. Es ist deine Spezialanwendung auf diesen Use-Case hin angepasst.
+
+01:41:59.052 --> 01:42:08.652
+<v SPEAKER_3>Mit dem API. Also ist so, musst du gar nicht raten. Das ist so iTunes und auch so dieser Mac App Store. Das funktioniert im Prinzip genauso.
+
+01:42:09.312 --> 01:42:15.452
+<v SPEAKER_2>Also Philosophie dahinter, mach das lokal, was du lokal machen kannst am besten.
+
+01:42:15.472 --> 01:42:16.992
+<v SPEAKER_3>Und damit fahren sie ja eigentlich auch ganz gut.
+
+01:42:19.852 --> 01:42:21.332
+<v SPEAKER_2>Wir sind abgedriftet, tut mir leid.
+
+01:42:21.352 --> 01:42:22.272
+<v SPEAKER_3>Das ist ja kein Problem.
+
+01:42:23.272 --> 01:42:57.352
+<v SPEAKER_2>Aber dieses ganze Thema Software as a Service ist relativ schnell abgefackelt auch dadurch, weil das Habit hat aus meiner Sicht technisch gesehen überhaupt nicht so die Herausforderungen wie jetzt Platform as a Service oder Infrastructure as a Service. Du machst bestimmte Versprechen oder garantierst, du kannst deinen Text irgendwie in deiner text-webbasierten Textanwendung bearbeiten. Und wenn dein Rechner einknickt, ist der Text nicht weg. Das ist so halt ein Vorteil.
+
+01:42:57.372 --> 01:42:58.132
+<v SPEAKER_3>Im Idealfall.
+
+01:42:58.212 --> 01:44:30.892
+<v SPEAKER_2>Ja, und du gehst an einen anderen x-beliebigen Rechner und lockst dich da ein und hast da wieder deine Anwendung. Und was du eben genannt hast, also diese 37 Signals, aber auch viele andere Auftritte, das finde ich schon auch sehr schick, was da an kleinen, fixen, hübschen Web-Anwendungen entsteht mit einem klaren UI. Also es gibt ja auch immer diesen Rückkopplungseffekt, dass Entwicklungen, die dort stattfinden, wieder Rückwirkungen haben auf Desktop-Apps und umgekehrt. Oder sogar nehmen irgendwie Print hinein. Jetzt kommen wir dann in ein völlig anderes Thema oder so. Aber wie ein Blog aussieht oder wie in Twitter oder so Nachrichten übers Netz gejagt werden, das hat auch wiederum, glaube ich, Auswirkungen in der Art, wie andere Medien ihre Kommunikation gestalten oder designen. Und deswegen will ich nicht Web-Anwendung als solches verdammen oder so. Sondern da gibt es coole Sachen, die auch genau das erledigen, was ich gerade möchte. Also für mich ist immer die Frage, nehme ich den Twitter Webclient oder nehme ich den Twitter Client jetzt auf meinem Telefon oder so. Und ich ertappe mich oft dabei, den Webclient zu nehmen, weil ich da viel schneller in Links zum Beispiel springen kann.
+
+01:44:30.912 --> 01:44:32.212
+<v SPEAKER_3>Weil dann ist man da schon zu Hause.
+
+01:44:32.372 --> 01:44:44.672
+<v SPEAKER_2>Du bist schon zu Hause. Und das ist wieder dann der Kompromiss, wenn du das in eine native Anwendung packst.
+
+01:44:44.692 --> 01:47:35.492
+<v SPEAKER_3>Da musst du ja noch deinen eigenen Browser dazu aufmachen sozusagen. Ja, das ist immer so ein Abwägen. Ich denke auch, es hat jetzt nicht so den Sinn, jetzt hier alle möglichen Anwendungen, die jetzt als Software as a Service sind, dann nochmal so für sich zu besprechen. Meine Google Apps zum Beispiel, das kennen ja nun auch eh die meisten. Und das ist dann halt einfach so, wie es ist. Aber ich würde jetzt nochmal ganz gerne zum Abschluss nochmal so zurück auf ein konkretes Beispiel, weil ich halt weiß, dass du das gut kennst, nämlich eben die Google App Engine. Ich denke, was jetzt überhaupt erstmal klar geworden ist, ist einfach mit dieser Unterscheidung zwischen Infrastruktur und Software kann man das dann einfach mal besser zuordnen. Bei Google ist es ja auch so, das ist immer alles so fuh, fuh, fuh. Also irgendwie heißt immer alles fast gleich und ist dann aber dann doch wieder was ganz anderes, was schnell zu totaler Verwirrung führen kann. Also Google Apps ist so das beste Beispiel. Da weiß man irgendwie nicht so genau, was ist. Zumal sie es ja auch nochmal doppelt konfus machen, weil es einerseits der Name für alle ihre kleinen Anwendungen, die sie haben, aber dann ist es auch noch für die, aber nicht alle Anwendungen wirklich umfassende, besondere Dinge, wo man dann eben auch noch seine eigene Domain schalten kann. Also mehr Konfusion kann man da, glaube ich, an der Stelle überhaupt nicht aufmachen, als dann auch noch die Google App Engine dazu kam. Da setzt es dann bei mir auch vollkommen aus. Was jetzt klar ist, ist, Google App Engine ist eine Plattform, die bei Google teilweise auch selbst entwickelt wird. Die aber, also entwickelt wird das sowieso da, aber teilweise auch selbst benutzt wird. Und vielleicht, darüber kann man jetzt nur Mutmaßen, ist ihre Strategie, auch alle ihre Software as a Service Anwendungen letzten Endes auf dieser Plattform basieren zu lassen. Wahrscheinlich müssen sie diese Plattform auch selber dann erstmal noch weiter evolvieren und für ihre spezifischen Fälle, die die Anwendungen da benötigen, auch entsprechend anpassen. Aber Tatsache ist, das Ding ist offen und weitgehend auch frei, sodass man da auch heute mal eben dagegen programmieren kann. Um jetzt vielleicht auch mal ein Beispiel konkret zu nennen, was so eine Plattform leisten kann, kannst du mal so ein bisschen auffächern, was eigentlich bei dieser App Engine tatsächlich bereitgestellt wird, aus welchen Komponenten das eigentlich besteht. Vor allem auch, und vielleicht kannst du ja dann auch mal sagen, wenn ich es richtig verstanden habe, dein Projekt TyphoonAE, was das ja nachbildet, hat ja dann im Prinzip für alles das, was Google als Dienstleistung bereitstellt, hast du dann andere Open-Source-Systeme genommen, die im Wesentlichen auch so funktionieren, und das dann quasi in diese Klammer reingenommen, dass es AP-kompatibel ist. Richtig verstanden? Okay. Dann erzähl doch mal, was da so für Komponenten eigentlich drin sind in dieser App Engine.
+
+01:47:35.512 --> 01:47:49.652
+<v SPEAKER_2>Ja, also App Engine bietet innerhalb ihres, man kann sich dort so ein SDK runterladen, damit bekommst du eine simulierte Mini App Engine auf dein Rechner. Aber alle APs sind da drin, damit ich auch gegen die programmieren kann.
+
+01:47:49.792 --> 01:47:51.272
+<v SPEAKER_3>Ja.
+
+01:47:51.292 --> 01:47:54.392
+<v SPEAKER_2>Und daran lässt sich sehr gut sehen, was ist da eigentlich vorhanden.
+
+01:47:54.412 --> 01:47:56.272
+<v SPEAKER_3>In was programmiert man da?
+
+01:47:56.292 --> 01:48:06.592
+<v SPEAKER_2>Python oder Java. Und wenn du Java nimmst, kannst du wieder auf den Java Stack aufsetzen, also in der JVM laufen auch andere Sprachen.
+
+01:48:08.712 --> 01:48:09.632
+<v SPEAKER_3>Scala und so.
+
+01:48:09.652 --> 01:50:03.472
+<v SPEAKER_2>Scala, aber durchaus Ruby, JRuby. Du kannst auch wieder J-Python da drauf machen. Es gibt so Perverse, die das... Ja, ich halte jetzt von dem Ansatz nicht so viel, aber im Wesentlichen Java und Python. Aber beide bieten fast identische Apis an, angepasst an die Spezialitäten der jeweiligen Sprache. Aber wichtig dabei ist, hinter diesen Apis stecken einzelne abgrenzbare Services. Und die lassen sich auch recht einfach aufzählen. Du hast ganz wichtig in der Basis den Datastore-Service. Das ist also deine transaktionale Persistenzschicht, wo du zwar schemalos, aber in eine Art und Weise strukturierte Daten reinpacken kannst. Ein bisschen mehr als nur ein Key-Value-Store. Einer dieser Services ist eben Datastore. Dann hast du vielleicht auch, um noch eine weitere Storage-Option anzusprechen, einen Memcache-Service. Memcache kennen viele aus der Webentwicklung den guten alten Memcache-Dämon, der dir hilft, um Seiten sehr schnell zu machen. Memcache hat die Eigenart, das ist ein Key-Value-Store, der nichts garantiert, der vergisst sehr schnell. Wenn er voll ist, schmeißt er Sachen einfach raus, aber hat den riesen Vorteil, dass er wahnsinnig schnell ist und gut verteilbar ist. Das heißt, Sachen, die du dir kurz merken musst in deiner Anwendung, schiebst du in den Memcache und kannst guter Hoffnung sein, dass du das in den nächsten 30 Sekunden oder in der nächsten Minute oder wie auch da wieder rausfischen kannst.
+
+01:50:03.492 --> 01:50:10.152
+<v SPEAKER_3>Wie halt so ein Cache eben funktioniert. Memcache setzt jetzt nichts voraus, worum es sich dabei handelt. Es kann irgendwas sein.
+
+01:50:11.512 --> 01:50:49.812
+<v SPEAKER_2>Das ist auch ein Service mit einer eigenen API. Dann gibt es die etwas spezielleren Sachen, wie einen XMPP-Service, also Java im Wesentlichen, womit du XMPP-Connections bedienen kannst. Das ist eine ganz fiffige, interessante Sache. Du kannst mit deinem iChat oder was auch immer, Java-Client, mit deiner App Engine-Applikation sprechen. Also hast du da an der Stelle nochmal einen anderen Kanal als HTTP. Deswegen nenne ich das jetzt auch mal so Spezial-Service. Ich selbst weiß nicht genau, wie oft dieser Service überhaupt eingesetzt wird bei App Engine.
+
+01:50:49.832 --> 01:50:51.852
+<v SPEAKER_3>Aber wenn man so Notifications macht?
+
+01:50:51.872 --> 01:50:52.792
+<v SPEAKER_2>Dafür kann das schick sein.
+
+01:50:52.812 --> 01:51:03.952
+<v SPEAKER_3>Notifications und auch so Interaktivität mit der Anwendung? Kann man sich so eine debuggigen Command-Line bauen zum Beispiel?
+
+01:51:03.972 --> 01:52:30.372
+<v SPEAKER_2>Ja, solche Sachen finde ich immer total spannend natürlich, wo dann irgendwelche Logging-Infos auf meinem Chat rauskommen und nicht sonst wo. Dann gibt es die sogenannte Task-Queue. Das ist ein Service, um Tasks Zeit versetzt oder wie auch immer in den Hintergrund zu schieben. Du hast etwas, was erledigt werden soll. Du brauchst das Ergebnis nicht sofort und willst den aktuellen Request-Händler nicht damit belasten, da jetzt diese Operation durchzuführen. Also schiebst du das in die Task-Queue. Wie der Name schon sagt, wird es da eingekue-ed und die Dinger werden sequenziell abgearbeitet. Da gibt es auch so ein paar wichtige Randbedingungen, die man wissen muss, zum Beispiel, dass deine Tasks item-potent sein müssen. Also das heißt, dass die Task-Queue von App Engine garantiert dir nicht viel. Unter anderem muss es möglich sein, dass einer deiner Tasks mehrfach ausgeführt wird und dass dein Ergebnis dadurch nicht kaputt geht. Das ist diese item-potent. Aber das ist jetzt speziell. Also Task-Queue ist gut, um Operationen in den Hintergrund zu schieben und Background-Tasks.
+
+01:52:30.392 --> 01:52:33.312
+<v SPEAKER_3>Mach aber was in zehn Minuten.
+
+01:52:33.332 --> 01:53:02.412
+<v SPEAKER_2>Du hast die Möglichkeit, so eine Zeit anzugeben, wann das ausgeführt wird. Du kannst auch konfigurieren, wie viele Tasks deiner speziellen Queue, die benennst du dann, innerhalb von einer Minute maximal ausgeführt werden dürfen oder sollen, also Frequenzen einstellen. So in der Richtung. Dann gibt es sehr ähnlich noch die sogenannten Scheduled Tasks. Das ist vergleichbar mit einem Kronen, schlicht und ergreifend.
+
+01:53:02.432 --> 01:53:05.972
+<v SPEAKER_3>Also das wäre dann so der Wecker. Das wäre so, mach es in zehn Minuten.
+
+01:53:07.372 --> 01:53:47.952
+<v SPEAKER_2>Also musst du überlegen, was du eben für einen Use-Caster hast und ob dir die Task-Queue besser ist oder nicht. Die Task-Queue hat halt ein anderes Retry-Verhalten. Wenn ein Fehler passiert, dann werden automatisch Retries so gemacht. Auch nicht so, dass dann alle zwei Sekunden nochmal probiert wird, sondern es wird nach hinten raus immer logarithmisch oder wie auch immer verlängert. Also der probiert es dann nach fünf Minuten, dann probiert das nach 30 Minuten, dann nach zwei Stunden. Skeletal tasks oder Cron ist wesentlich einfacher.
+
+01:53:47.972 --> 01:53:50.392
+<v SPEAKER_3>Das war für housekeeping.
+
+01:53:50.412 --> 01:54:13.172
+<v SPEAKER_2>Aber eine coole Sache für eben diese kleinen Sachen. Es gibt eine Images API für klassisches Image-Processing. Leider eben auch limitiert, also du kannst skalieren, du kannst croppen, du kannst ein bisschen an den Farben drehen, du kannst das ganze Bild rotieren oder so. Das ist es aber im Wesentlichen dann auch schon.
+
+01:54:13.172 --> 01:54:15.392
+<v SPEAKER_3>So Avatar-Management.
+
+01:54:15.412 --> 01:54:19.272
+<v SPEAKER_2>Ja, mach dir deine Thumbnails und gut.
+
+01:54:19.292 --> 01:54:20.812
+<v SPEAKER_3>Das bringt einen schon weiter.
+
+01:54:21.832 --> 01:55:26.172
+<v SPEAKER_2>Darauf aufsetzend gibt es dann auch diese High-Performance-Image-Serving API, die gliedert sich so ein bisschen dran an, verwendet aber das Backend von Picasa. Und da hängt wahrscheinlich einfach ein anderes CD-Content-Delivery-Network dahinter oder was. Also es ist wesentlich schneller im Ausliefern. Und ist eine reine Auslieferungs-API und nicht zum Verändern von Bildern. Dann gibt es, hätte ich beinahe vergessen, den Blob Store. Wie der Name sagt, geht es da um Blobs oder besser gesagt größere Mengen von binären Daten. Die kannst du teilweise eben aufgrund von Limits nicht in den Data Store packen, weil da darf eine Entity, glaube ich, nicht größer als ein Megabyte oder so sein. Und im Blob Store kannst du dickere Sachen reinpacken. Und habe ich noch…
+
+01:55:26.192 --> 01:55:26.812
+<v SPEAKER_3>Film oder so.
+
+01:55:27.832 --> 01:55:38.272
+<v SPEAKER_2>Ja, also nicht riesen Größen, das darf man auch nicht vergessen. Also ich glaube, die Limits sind da bei 10 Megabyte.
+
+01:55:38.292 --> 01:55:41.272
+<v SPEAKER_3>10 Megabyte. Ah, das ist ja nicht so viel.
+
+01:55:41.292 --> 01:55:43.172
+<v SPEAKER_2>Nicht so viel.
+
+01:55:43.192 --> 01:55:46.012
+<v SPEAKER_3>Okay, kann man da nicht sein Filmerchief einwerfen.
+
+01:55:46.032 --> 01:56:59.552
+<v SPEAKER_2>Würde ich eher nicht. Wo habe ich noch eine API vergessen? Images habe ich gesagt. Neu ist vielleicht die Channel API noch. Das ist für Real-Time-Messaging nochmal ein anderer Ansatz, aber eben über HTTP, Comet und Long-Polling. Das ist im Wesentlichen eine sehr ähnliche Technik, die Google auch verwendet für den Google Chat, Gmail oder für diese Notifications. Das ist eben angeboten als API, um das in deine eigene Anwendung einzustricken. Dann gibt es natürlich Service APIs, um User zu verwalten, also Zugriff auf deine durchaus auch Google Apps User-Daten zu kriegen. Es gibt eine API, die hat aber nicht direkt was mit Google App Engine zu tun, G-Data, um an Dokumente aus Google Docs zu kommen.
+
+01:56:59.572 --> 01:57:06.032
+<v SPEAKER_3>Also nochmal so ein bisschen Google Glue, um dann auch mit der Welt gleich gut verheiratet zu sein.
+
+01:57:06.052 --> 01:57:25.212
+<v SPEAKER_2>Genau. Aber was ich beinahe vergessen hätte, noch eine Mail-API, damit du auch Mails empfangen und senden kannst. Die wird zum Beispiel auch von Tweetdeck, die ich gelesen habe, verwendet, um Mails rauszuschicken, wenn jemand sein Passwort vergessen hat.
+
+01:57:25.312 --> 01:57:47.332
+<v SPEAKER_3>Jaja, muss ja auch mal sein. Das ist sozusagen der Umfang. Das heißt, das zeichnet sich schon irgendwie ab. Man kann Web-Anwendungen machen, wobei jetzt sozusagen für die Web-Anwendungen selbst ist jetzt hier nichts dabei. Also hier ist jetzt nicht so ein Content-Management-Kram oder sonst so ein Web-Framework, nichts Realsartiges, nichts Django-artiges.
+
+01:57:47.352 --> 01:59:28.592
+<v SPEAKER_2>Django ist mitinstalliert bei Google App Engine. Und zwar mittlerweile in zwei Versionen. Nur 0.9.8 und 1.2.0, irgendwas. Django hat sich wohl so ein bisschen da durchgesetzt als Web-Framework und ist bei Google App Engine mit im Umfang. Ich warne da immer ein bisschen vor, dass einfach so mir nichts zu verwenden, also man darf auch nicht daran glauben, ich kann meine Django-Anwendung einfach eins zu eins dann auf die App Engine schieben. Das wird oft so nicht funktionieren, weil, wie ich eben schon gesagt habe, du andere Regeln befolgst, du hast andere Limitierungen. Google App Engine hat natürlich ein Problem mit lang laufenden Prozessen. Alle Django-Module zu laden, schon allein diese Start-up-Zeit, kann dir dein Limit killen, weil du, bis eine Applikations-Server-Instance bei Google App Engine gestartet ist, mit Django vergehen halt Sekunden unter Umständen. Aber dein Request darf maximal 30 Sekunden dauern. Nun, okay, niemand will an seinem Browser 30 Sekunden auf die Antwort auf ein Request warten. Aber trotzdem kann es mit Django dazu führen, dass dir die Sachen um die Ohren fliegen. Auch das ORM oder Object Relational Model von Django passt nicht auf den Bigtable oder auf den Google App Engine Datastore. Also Relationen, Joints gibt es da gar nicht.
+
+01:59:28.912 --> 01:59:38.972
+<v SPEAKER_3>In der App Engine Welt gibt es keinen SQL Server und da kann ich mir auch keinen installieren. Sondern den müsste ich dann schon über das Netz benutzen und dann schauen, wie ich das mit HTTP hinkriege.
+
+01:59:38.992 --> 01:59:54.692
+<v SPEAKER_2>Also Google verspricht zwar mit Google App Engine for Business, demnächst auch einen SQL-like Server anzubieten. Ich persönlich habe davon noch nichts gesehen. Es gibt anscheinend schon Leute, die das testen. Also die wissen, die müssen da nachziehen, aber an sich.
+
+01:59:54.712 --> 02:00:00.612
+<v SPEAKER_3>Aber so einen normalen SQL-Server kann man nicht benutzen, weil man müsste ja dann so eine TCP-Verbindung aufbauen und das ist nicht erlaubt.
+
+02:00:00.632 --> 02:00:09.952
+<v SPEAKER_2>Du musst ja dann deine eigene Rest-API oder was auch immer, JSON, RPC, um deinen MySQL-Server drum rumbauen, der dann sonst wo steht, und dann fragst du dich auch, warum.
+
+02:00:12.412 --> 02:00:24.152
+<v SPEAKER_3>Das heißt, dann benutzt man schon lieber das, was eingebaut ist. Diese Bigtable-Data-Store-Geschichte, da reden wir aber jetzt im Prinzip von der Datenbank-Infrastruktur von Google, mit der Sie Orient Search machen.
+
+02:00:24.172 --> 02:01:26.992
+<v SPEAKER_2>Exakt. Das ist Ihre riesenverteilte Datenbank, die Daten aufbricht in sehr kleine Tablets und sie maximal repliziert verteilt über diese ganze Welt. Und dahinter stecken viele schlaue Gedanken, die ich gar nicht alle verstehe und auch gar nicht alle kenne. Aber es gibt zum Beispiel ein Projekt namens Hadoop, ein Apache-Projekt, die sich die Papers von Bigtable genommen haben und das nachgebaut haben. Und auf Bigtable sitzt eben die Google App Engine Data Store API. Das heißt, du hast auch nicht irgendwie uneingeschränkten Zugriff auf Googles Persistenzschicht, sondern wirst durch eine abstrahierte Schicht geschleust. An der Stelle wird auch immer, die darf man nicht unterschätzen. Also App Engine Data Store ist nicht gleich, Bigtable setzt aber drauf auf. Und alles, was dazwischen passiert, kann schiefgehen. Und das tut es manchmal.
+
+02:01:29.732 --> 02:01:33.892
+<v SPEAKER_3>Okay, das heißt, man kann damit nicht alles machen, was diese Bigtable geschieht.
+
+02:02:03.432 --> 02:03:29.312
+<v SPEAKER_2>Das ist eine SQL-ähnliche Syntax, wo du select und where und end und sowas machst, so SQL-mäßig, sieht aber nur so aus. Und diese API, um diese Syntax zu unterstützen, ist implementiert in dieser Schicht, die ich eben beschrieben hab. Und macht zum Beispiel, wie erklär ich es am besten, zum Beispiel ein Ordering von Ergebnismengen muss man teilweise im Speicher machen, im Speicher deiner Worker Instance. Und das erledigt diese Schicht dazwischen. Also eigentlich packt Google App Engine Datastore mehr auf Bigtable drauf. Deswegen stimmt das mit dem Subset nicht ganz. Aber es ist eben näher am Applikationsentwickler dran, generalisiert mehr. Deswegen auch der Versuch, so eine SQL-artige Query-Language dazu bauen, die nicht so toll ist. Und glücklicherweise haben sie auch eine andere API und treiben das immer weiter voran, eben näher an deiner Programmiersprache auf die Objekte zuzugreifen, also so ORM-mäßig.
+
+02:03:29.332 --> 02:03:52.552
+<v SPEAKER_3>Um vielleicht mal besser zu verstehen, wie jetzt diese einzelnen Aspekte, die einzelnen API-Teile, was die sozusagen wirklich genau machen, kann man ja auch gleich mal beleuchten, welche anderen Subsysteme du genommen hast, jetzt in TyphoonAE, um das zu ersetzen. Weil das ist ja sozusagen Sinn des Projektes.
+
+02:03:53.012 --> 02:03:53.412
+<v SPEAKER_2>Genau.
+
+02:03:53.432 --> 02:04:02.732
+<v SPEAKER_3>Quasi für alles, was Google einem bereitstellt, eine Alternative zu nehmen. Vermutlich mal jetzt bei diesem Bigtable, bei diesem Datastore hast du dann auch Hadoop genommen, was du schon erwähnt hast?
+
+02:04:03.572 --> 02:05:51.932
+<v SPEAKER_2>Hadoop war mir in dem Fall zu groß, weil TyphoonAE ein bisschen diesen Downscale-Wunsch hat auch. Ich möchte nicht eine zweite Cloud oder so was ähnlich skalierbares programmieren. Setz mal ein Hadoop-Cluster auf, das ist Hack-Mac. Damit das produktiv läuft, brauchst du ein paar Knoten bzw. H-Base. Wenn du das auf einem Single-Note laufen lässt, dann performt das nicht. Verstehe. Zumindest war das so ein bisschen. Das kann auch an mir liegen, aber eigentlich ist das so landläufige Meinung. Jedenfalls wollte ich was für jede Komponente, die Google App Engine groß hat, etwas Kleines, was aber maximal geil performt und auch noch skalierbar ist. Deswegen habe ich mich bei dem Datastore für MongoDB entschieden. Oder Florian und ich haben das alles so ein bisschen durchdiskutiert, immer auf diesen Spaziergängen. MongoDB ist ein Document-Store, der anders ist als Bigtable, aber auf den du fast zu 100% die Google App Engine Datastore API packen kannst. Du musst dann, um diese Dinge zu verbinden, damit die miteinander reden können, musst du einen sogenannten API-Proxy-Stab bauen. Das ist eine Schicht zwischen der eigentlichen API-Implementierung, die du im SDK findest, also wo die Calls drin sind und was auch immer. Diese API-Implementierung benutzt dann ein binäres Protokoll, was mir aus irgendeinem Grunde jetzt entfallen ist. Der Name meinst du, was dir entfallen ist?
+
+02:05:51.952 --> 02:05:53.612
+<v SPEAKER_3>Oder ist das komplette Protokoll entfallen?
+
+02:05:53.632 --> 02:06:58.992
+<v SPEAKER_2>Nee, der Name. Das wäre auch jetzt eine schöne Quizfrage. Macht RPC-Calls auf diesen API-Proxy-Stab, den ich eben genannt habe? Und dieser API-Proxy-Stab implementiert quasi alles das, was nötig ist, um mit dem wirklichen Backend-Service zu reden. Mit der MongoDB in dem Fall. Das heißt, in diesem Modul-Python auch implementiert wird quasi dann die MongoDB API importiert und ich übersetze die RPC-Calls von Google App Engine auf die MongoDB API und das ist es im Wesentlichen. Und diese Technik mit den API-Proxy-Stubs rauszufinden war der entscheidendste und springendste Punkt in der ganzen Entwicklung von Typhoon jetzt in dem Fall, aber überhaupt hat das sehr beeinflusst, wie ich jetzt mittlerweile Software denke und entwickle.
+
+02:06:59.012 --> 02:07:06.872
+<v SPEAKER_3>Heißt das, dass dann jetzt Teile von diesem Original-Google-App-Engine-SDK auch tatsächlich noch zum Einsatz kommen oder bist du dann dasselbe SDK?
+
+02:07:07.792 --> 02:07:16.092
+<v SPEAKER_2>Nein, das ist eben das Schöne. Ich verwende das Original-Google-App-Engine-SDK ungepatcht in Typhoon.
+
+02:07:16.112 --> 02:07:26.392
+<v SPEAKER_3>Aber du klingst dich dann sozusagen dahinter ein, da wo wirklich dann dieses SDK den Google ruft, da ruft es stattdessen TyphoonAE.
+
+02:07:26.412 --> 02:07:26.892
+<v SPEAKER_2>Exakt.
+
+02:07:26.912 --> 02:07:27.572
+<v SPEAKER_3>Ah, verstehe.
+
+02:07:27.592 --> 02:07:58.672
+<v SPEAKER_2>Also beziehungsweise im SDK sind die ganzen Google-Services nachimplementiert, aber ebenso minimalistisch, alles in Python oder auf der Java-Seite eben in Java. Das heißt, auch der HTTP-Server ist im SDK als Python Single-Threaded HTTP-Server, der nur ein Request gleichzeitig beackern kann. Also das SDK kannst du nicht nehmen, um irgendwie deinen eigenen Google-App-Engine-Host aufzusetzen, sei er noch so klein. Das fliegt dir einfach nach so und so viel.
+
+02:07:58.692 --> 02:08:09.232
+<v SPEAKER_3>Das fliegt sich nur zum Development und du hast sozusagen das Development-Kit durch diese Plug-in-Schnittstelle, Backend-Call so gemacht, dass man es eben auch tatsächlich deployen könnte.
+
+02:08:09.252 --> 02:08:10.232
+<v SPEAKER_2>Das ist eben der Punkt.
+
+02:08:10.252 --> 02:08:14.412
+<v SPEAKER_3>Wenn auch jetzt nicht so large scale, wie das bei Google-App-Engine möglich wäre.
+
+02:08:14.432 --> 02:08:52.312
+<v SPEAKER_2>Darum ging es mir. Also produktive Anwendungen, die für die Google-App-Engine programmiert sind, auf eigener Infrastruktur zu hosten und so war so, dass es Sinn macht, dass es wirklich funktioniert. Und also ich habe da verschiedene Benchmarks gemacht, aber schon allein dadurch, dass ich Engine X als HTTP-Server verwende. Und der kommuniziert wiederum mit dem SDK bzw. dem Applikationsserver über Fast CGI. Also das Ding rennt schon ziemlich. Also mir fallen gerade gar nicht richtig aktuelle Zahlen ein.
+
+02:08:53.192 --> 02:08:56.532
+<v SPEAKER_3>Dann machen wir mal den Sack erstmal zu.
+
+02:08:56.552 --> 02:09:06.392
+<v SPEAKER_2>Für Memcache habe ich Memcache-Demon. Das war sehr naheliegend, weil sich die Apis da auch extrem ähneln. Da ist auch nicht so viel dahinter.
+
+02:09:06.412 --> 02:09:09.232
+<v SPEAKER_3>Kann das sein, dass bei Google auch nichts anderes zum Einsatz kommt?
+
+02:09:09.252 --> 02:11:53.292
+<v SPEAKER_2>Kann ich nicht sagen. Google ist dafür bekannt, dass sie alles mindestens anpassen, wenn nicht selber bauen. Da habe ich mich schon immer öfter mal gewohnt. Aber du kannst da auch nicht hintergucken. Du findest keine Informationen darüber, was die exakt da installieren. Ich nicht. Deswegen musste ich raten und mir das zusammensuchen. Für die Task-Que habe ich RabbitMQ genommen, auf Erlang basierender Message-Que-Service, der großartig ist. Also fast alle Einzelprojekte, die ich mir schnorrermäßig zusammengesucht habe für Typhoon, ich konnte das ja alles nicht selber entwickeln, völlig klar, sind alles echte Giganten so, auf ihrem speziellen, in ihrem bestimmten Aufgabenfeld. Also RabbitMQ als Message-Service-Spitze. Für XMPP habe ich einen E-Jabber-Demon genommen, auch in Erlang implementiert. Für bestimmte Experimente habe ich einen Tornado-Webserver drin, das ist wiederum auch eine Python-Implementierung, um alle Services zusammenzuhalten, also so eine Art Orchestrierungsschicht, oder wie du es nennen willst, zu bauen, habe ich den Supervisor-Demon. Mit dem lassen sich diese einzelnen Services steuern und teilweise auch skalieren. Also du hast eine Konfigurationssprache, in der kannst du sagen, ich brauche für die Anwendung fünf Abserver, fahr mir die bitte hoch. Das kannst du im laufenden Betrieb machen. Das ganze Ding ist so gebaut, dass du im laufenden Betrieb Einzel-Services einfach komplett ausschalten kannst, aber die Anwendung als solche lebt weiter. Also wenn du XMPP nicht brauchst, dann brauchst du auch den E-Jabber-Demo nicht, aber das bringt nicht das gesamte System irgendwie durcheinander. Das waren so die wichtigen Punkte, warum ich das auch lernen und bauen wollte, eben dieses Failsafe zu kapieren. Wie haut man dieses Single Point of Failure-Dinger raus, nur weil deine Datenbank jetzt abschmiert, liegt die ganze Anwendung brach. Eigentlich soll es doch so sein, okay, mal angenommen, du hast nur eine Datenbank dahinter, also nur eine Note und replizierst nicht. Soll es trotzdem so sein, dass die Anwendung delivert, auch wenn es nur eine Info ist, im Moment geht das und das nicht, weil die Datenbank nicht geht oder so. Aber du willst nicht, dass das Ganze irgendwie zusammenfällt. Weiß nicht, habe ich irgendeinen Service? Also die Sachen sind so austauschbar teilweise.
+
+02:11:53.312 --> 02:11:56.652
+<v SPEAKER_3>Ja, denn diese Scheduled Tasks, macht man das dann auch mit diesem RapidMQ?
+
+02:12:02.472 --> 02:12:09.592
+<v SPEAKER_2>Ja, genau. Also du meinst jetzt diese Scheduled-Kron-like-Geschichten? Da nehme ich einen Kron.
+
+02:12:10.052 --> 02:12:12.852
+<v SPEAKER_3>Ach so, wie naheliegend.
+
+02:12:12.872 --> 02:12:31.992
+<v SPEAKER_2>Ja, der ist ja schon installiert auf meinem Linux. Und der Kron macht nichts anderes als wieder, da sind sie wieder die Webhooks als ein HTTP-Call auf dasselbe Frontend, auf das auch der User aufschlägt. Der User schlägt auf?
+
+02:12:32.972 --> 02:12:34.652
+<v SPEAKER_3>Der Anwendung meinst du jetzt?
+
+02:12:34.672 --> 02:13:09.452
+<v SPEAKER_2>Ja, der Besucher der Anwendung, der von außen kommt, der klickt halt in seinem Browser auf den URL und kommt da an. Mal angenommen, ich möchte irgendwas erledigen lassen durch ein Kron-Job. Dann ist nicht in diesem Kron-Job wieder irgendwie ein komplexes Python oder sonst wie programmiert, was dann da was erledigt. Sondern da wird nur eine einzige Sache gemacht, nämlich eine bestimmte URL gerufen, die wiederum in meiner Anwendung nichts anderes ist als ein Requesthändler, der dann wieder darauf reagiert.
+
+02:13:09.472 --> 02:13:17.392
+<v SPEAKER_3>Verstehe, das heißt der Kron hat nichts anderes zu tun, als irgendwie URLs auszuspucken bzw. anzuklicken und das war's.
+
+02:13:17.692 --> 02:13:41.992
+<v SPEAKER_2>Genau. Und teilweise sind halt die Kisten, die ich dahinter gesteckt habe, austauschbar, mal mehr, mal weniger. Also zum Beispiel kann man auch eine MySQL nehmen als Datenbank-Backend, wo auch die Google App Engine Data Store API drauf implementiert ist sozusagen, was so ein bisschen müßig ist, weil MySQL kann mehr.
+
+02:13:42.552 --> 02:13:48.952
+<v SPEAKER_3>Ja, aber wenn man mit der Abstraktion eh schon arbeitet, dann ist ja egal, wodurch es implementiert wird, wenn es nicht zu lahmarschig ist.
+
+02:13:49.552 --> 02:14:07.692
+<v SPEAKER_2>Und du musst halt aufpassen, dass du dir nicht die Schwächen an der Stelle, also du gibst einerseits dann die Stärken von MySQL auf und holst dir die Schwächen von MySQL rein. Deswegen ist das, ist so der Charakter auch dieses Projekt so ein bisschen, das Lernen an der Stelle.
+
+02:14:07.712 --> 02:14:30.672
+<v SPEAKER_3>Verstehe. Aber ich finde das mal ganz interessant, einfach zu sehen, was an Open Source-Projekten eigentlich da ist, was sich eben in so eine Real-World-Plattform im Prinzip auch hinein integrieren lässt, beziehungsweise was einfach ähnliche Abstraktionen implementiert. Bleibt noch die Sache mit den Bildern, dieses Cropping und so weiter?
+
+02:14:30.692 --> 02:15:53.032
+<v SPEAKER_2>Dafür nehme ich einfach die Python Imaging Library. Das ist eine relativ mächtige Bibliothek, die auch vom SDK verwendet, um Bilder eben zu modifizieren. Das ist ein schickes Ding. An der Stelle habe ich den Service nicht skalierend gebaut. Normalerweise müsste ich jetzt hingehen und einen eigenen Service bauen, der auch über diese RPC-AP angesprochen wird und den ich dann wieder auslagern könnte auf eine andere Maschine. Aber das ist in dem Fall nicht so. Ich habe erst mal versucht, für die Basisservices die Komponenten zu nehmen, die ich im Notfall auch verteilen kann auf mehrere Maschinen. TyphoonAE läuft eben auch auf EC2. Dafür gibt es eine Appliance, um sich das schnell hochzuziehen. Ich habe VM-Ware und Virtual Box-Images gebaut, die man sich runterladen kann für denjenigen, der jetzt keinen Bock hat, sich das ganze Ding da rauszurollen. Denn das ist genau das Gegenteil von dem Angebot, das Platform as a Service macht. Kümmer dich nicht um die Infrastruktur. Genau das wollte ich eben. Aber mit den Techniken und Methoden, wie skaliert wird.
+
+02:15:55.052 --> 02:17:17.472
+<v SPEAKER_3>Das muss ja langsam mal ein bisschen zum Ende kommen. Aber wenn ich überlege, wo das Netz mir einen praktischen Zugewinn gibt, ich meine klar, da gibt es viele dieser Anwendungen, die sind irgendwie ganz sinnvoll. Aber es sind dann auch vor allem so Basisdienste, die ohne dass ich sie auch bewusst benutze, ganz interessant sind. Vor allem fällt mir da Dropbox ein, so ein Pfeilsynching-Dienst. Da hat man halt einfach so ein Dämonenlaufen auf seinem Computer und alles, was halt unter einem bestimmten Verzeichnis liegt, das wird dann eben auch automatisch in die Wolke hinweg gesynkt und kann dann eben auch auf anderen Computern gleich wieder zurückgeholt werden. Dropbox finde ich jetzt besonders erwähnenswert, weil das ist einfach so ein unfassbar stabiler und zumindest aus meiner bisherigen Erfahrung schneller und zuverlässiger Dienst ist, der einfach Spaß macht. Das kann man ja nicht gerade unbedingt von allen solchen Diensten behaupten. Und ja, es ist die Frage, wo würdest du sowas einsortieren, wo jetzt das Web als solches auch erstmal, da gibt es ja sozusagen nur API, da ist ja, na gut, das stimmt gar nicht, es gibt auch ein Web-Frontend dafür, aber das ist vielleicht nicht unbedingt so der primäre Use-Case, den man da hat. Wie würdest du das einsortieren? Ist das auch Software as a Service einfach?
+
+02:17:17.932 --> 02:19:42.932
+<v SPEAKER_2>Das ist eine Mischung aus Software as a Service auf Infrastructure. Also du hast, wo die jetzt deine ganzen Daten verteilen und wie sie dir möglichst schnell zugänglich machen, das weißt du ja nicht. Das wird irgendwie darunter gemanagt und die haben mit Sicherheit in irgendeiner Weise, ich weiß nicht, wie groß die sind, ob die mehrere Rechenzentren haben oder wieder eine andere Infrastruktur mitbenutzen, sitzen die irgendwo drauf, habe ich keine Ahnung, aber das ist ja jetzt ein relativ spitzes Angebot. Also so ein ganz klarer Dienst, okay, noch mit Syncing und so. Aber würdest du jetzt ja weitläufig nicht als Web-Anwendung in dem Sinne bezeichnen. Es ist halt zum Austausch von Dateien und zum Synken von Dateien. Mir fällt dabei ein in dem Zusammenhang diese Berliner Soundcloud-Truppe da, die extrem gewachsen sind, glaube ich, in letzter Zeit. Ich habe die auf einer MongoDB-Konferenz gesehen und die haben echt schon einiges an Entwicklern jetzt hier in Berlin aufgesaugt. Aber wir haben halt Cloud auch in ihrem Namen. Und warum ich drauf komme, die sind eben von diesen File-Sharing-Gedanken aus losgelaufen. Dass sie eben keine vernünftige Lösung im Wett dafür gefunden haben, wie schicke ich Songs hin und her. Das war deren Use-Case und haben gemerkt, man kann es so und so und so machen. Nutzen eben auch, ich weiß nicht, ob die nicht sogar auch auf Heroku was laufen haben oder so, sind in diesem Ruby-on-Rails-Bereich unterwegs, wenn mich nicht alles täuscht. Und machen da eine schicke Lösung, wo du, ja, da ist eine Cloud-Webanwendung, erfüllt sie genau ihren Zweck und ist sinnig und ist rund. Und deswegen haben die auch Erfolg, glaube ich. Also ist so meine Einschätzung, aber ich merke, dass es innerhalb sehr kurzer Zeit echt ziemlich cool um sich geschlagen hat und die Leute einfach sagen, hey, Soundcloud ist spitze, ich sehe da sogar die Waveform, also die wird im Hintergrund irgendwie auch berechnet. Und das muss man ja auch erst mal alles auf die Beine stellen. Und damit setzen die mit Sicherheit ähnliche Techniken ein.
+
+02:19:42.952 --> 02:19:58.872
+<v SPEAKER_3>Was denkst du denn so generell? Also für wen ist denn die Wolke derzeit eigentlich geeignet? Ein paar Sachen haben wir ja schon so angerissen, so Prototypenentwicklungen, tralala, kleines vertikales Zeug, was nicht viel Geld kosten soll, wo man auch vor allem keinen Bock hat, Infrastruktur aufzubauen, das noch so ein bisschen verallgemeinern.
+
+02:19:59.572 --> 02:20:08.192
+<v SPEAKER_2>Ja, durchaus auch für Unternehmen, die sich an der Stelle die IT sparen wollen und das auslagern möchten.
+
+02:20:08.212 --> 02:20:10.072
+<v SPEAKER_3>Die sich nicht mehr mit Admins rumschlagen wollen.
+
+02:20:10.352 --> 02:20:15.372
+<v SPEAKER_2>Ja, genau, das wollte ich jetzt so nicht sagen, weil ich weiß, dass hier viele Admins zuhören.
+
+02:20:15.392 --> 02:20:20.552
+<v SPEAKER_3>Ja, ja, das gibt böse Kommentare. Ihr seid bald alle arbeitslos.
+
+02:20:20.572 --> 02:20:30.332
+<v SPEAKER_2>Nein, die können dann endlich das machen, was sie am besten können. Ach Unsinn, Verzeihung.
+
+02:20:30.352 --> 02:20:45.372
+<v SPEAKER_3>Es ist bestimmt bald wieder Admin Appreciation Day und dann wird auch appreciated. Es wird auch immer genug zu administrieren geben. Ich glaube nicht so richtig daran, dass die Wolke weniger dazu führt. Ich meine, auch die Wolke will administriert werden. Vielleicht läuft es auch eher dahin.
+
+02:20:45.392 --> 02:21:58.372
+<v SPEAKER_2>Interessant sind dann eben diese Hybrid-Lösungen. Und die ersetzt eben nicht den eigenen Admin. Ganz im Gegenteil. Wo du zum Beispiel personenbezogene Daten möchtest du nicht so gerne rausgeben, aber du möchtest bestimmte Kalkulationen zu diesen Daten in der Cloud haben oder so. Du möchtest Peaks abfangen. Durch, haben wir eben schon genannt, durch solche Services. Und dann hast du eben eine Hybrid-Lösung, wo du in deinem eigenen Rechenzentrum ganz normal deine Infrastruktur weiterpflegst, aber die redet dann im Erfolgsfall mit der Cloud-Infrastruktur und kriegt da auch die Ergebnisse zurückgeliefert. Ich könnte jetzt nicht so was sagen, wie jeder muss auf jeden Fall ab sofort nur noch in die Cloud, ganz im Gegenteil. Ich bin fasziniert von den Techniken, die dahinter sind, aber sehe das jetzt nicht als den ein Weg, wie IT und Infrastruktur und Platform in Zukunft immer gebaut werden muss.
+
+02:21:58.392 --> 02:22:03.572
+<v SPEAKER_3>Es ist nicht unbedingt für alles immer das Richtige.
+
+02:22:03.592 --> 02:22:10.752
+<v SPEAKER_2>Das war auch im Grunde die Geschichte mit den Use-Cases.
+
+02:22:10.772 --> 02:22:16.352
+<v SPEAKER_3>Wer immer in die Wolke will, läuft auch Gefahr, am Ende aus allhillenden Wolken zu fallen.
+
+02:22:16.372 --> 02:22:17.632
+<v SPEAKER_2>Sehr schön.
+
+02:22:17.652 --> 02:22:21.552
+<v SPEAKER_3>Wenn es dann doch mal wieder schief gegangen ist.
+
+02:22:21.572 --> 02:22:53.572
+<v SPEAKER_2>Auf jeden Fall. Auf jeden Fall ist es ein lohnenswertes Ding für Anfänger. Es ist alles gar nicht so mystisch und wolkig und vernebelt, wie man immer denkt, sondern gerade diese Platform as a Service-Dinger sind ein echt simpler Einstieg. Das ist ganz schön.
+
+02:22:53.592 --> 02:23:36.012
+<v SPEAKER_3>Und auch die Infrastrukturgeschichte ist natürlich auch super, weil man muss sich nicht unbedingt immer gleich wieder einen neuen Computer kaufen, um mal ein neues Betriebssystem zu erlernen. Sondern man klickt sich da einfach mal so einen Host und dann kann man damit irgendwie rumspielen und eigentlich auch alles machen und hat auch ordentliches Internet. Man muss den Rechner auch nicht unbedingt immer ausschalten, beziehungsweise im Falle von so Elastic Cloud. Man muss ihn dann auch nicht unbedingt immer anhaben, sondern man kann mal eben das Ding hochfahren, da ein bisschen was ausprobieren. Dann zahlt man quasi für die paar Minuten und dann fährt man ihn wieder runter. Dann hat man sich da weder einen Computer für kaufen müssen, noch viel Zeit mit Installation verbringen müssen oder Hardware tauschen oder so. Und kaputte Festplatten sind dann auch irgendwie kein Thema mehr. Das ist ja auch kein Fehler. Und es ist auch leiser zu Hause.
+
+02:23:36.792 --> 02:24:42.712
+<v SPEAKER_2>Oh, unbedingt. Ja, es lohnt sich dann schon, auf die Preise zu gucken und zu vergleichen. Also einfach besinnungslos deine Amazon-Instanzen weiterlaufen zu lassen, obwohl sie gar nichts zu tun haben. Da kommt mehr zusammen, als du bei einem anderen Standard-Provider bezahlen würdest. Das ist teilweise auch nicht zu unterschätzen. Schlau gucken ist wichtig. Aber ich komme ja auch so ein bisschen vom Band und Musik machen und habe das die letzten zehn Jahre getrieben. Ich war dann natürlich auch derjenige, der die Homepage bauen musste für die Band. Ich musste mich dann halt rumschlagen mit wo man das hostet und diesen ganzen Käse. Jetzt würde ich so ein Ding einfach in irgendeins dieser umsonst Angebote packen und fröhlich sein. Und wenn meine Band skaliert, also weil wir plötzlich unendlich viele Platten verkaufen, skaliert halt der Auftritt mit. Das ist das Schöne an diesem Cloud-Ding. Wenn es dann so gut funktioniert.
+
+02:24:42.732 --> 02:24:53.912
+<v SPEAKER_3>Freue ich mich jetzt nur, wenn man Erfolg hat und dann kann man sich das auch leisten. Ja, Tobias, super. Ich denke jetzt haben wir es irgendwie zusammengeklopft hier.
+
+02:24:53.932 --> 02:24:55.692
+<v SPEAKER_2>Bestimmt haben wir tausend Sachen nicht genannt.
+
+02:24:55.712 --> 02:25:38.992
+<v SPEAKER_3>Ja, so ist das ja immer, aber mir ging es darum, hier überhaupt mal so einen Überblick zu schaffen, was es da eigentlich gibt bzw. was sich da so entwickelt hat und in welche Kategorien man das so stecken muss. Das ist, glaube ich, ganz gut klar geworden. Und da sind natürlich jetzt auch wieder viele einzelne Themen genannt, die man hier auch nochmal in einer eigenen Sendung würdigen kann. Ein paar davon hatte ich auch schon, habe ich sowieso schon auf der Liste, aber wie das immer so ist, man muss erstmal die richtige Gelegenheit finden. Ein paar andere kommen vielleicht noch mit dazu. Ja, dann können wir hier mal den 176. CRE zusammenfalten. Haben wir auch schon hier ein bisschen Zeit verbraucht. Also, vielen Dank.
+
+02:25:39.012 --> 02:25:40.072
+<v SPEAKER_2>Ja, danke auch.
+
+02:25:40.092 --> 02:25:58.332
+<v SPEAKER_3>Und wie immer, vielen Dank auch fürs Zuhören und fürs Dabeibleiben und auch fürs Unterstützen. Und ja, hier geht's bald weiter. Das letzte war Kultur, heute Technik. Mal schauen, was morgen auf dem Plan steht. Vielleicht ist dann die Gesellschaft mal wieder dran.

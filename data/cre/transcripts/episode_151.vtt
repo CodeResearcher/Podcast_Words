@@ -1,0 +1,538 @@
+WEBVTT
+
+00:00:58.370 --> 00:01:21.830
+<v SPEAKER_2>Hallo, hier ist Chaosradio Express, Ausgabe Nummer 151 am Mikrofon, spricht Tim Pritlove. Und heute geht es mal wieder um Technik. Hurra! Gut nachgefragt, diese Sektion, wo es darum geht, mal wieder ein bisschen ins Detail einzusteigen. Und mit wem kann man das besser tun als mit Harald? Harald Welte, hallo.
+
+00:01:21.850 --> 00:01:23.710
+<v SPEAKER_1>Hallo Tim, ich freue mich immer wieder.
+
+00:01:23.730 --> 00:02:15.490
+<v SPEAKER_2>Zu dir muss ich gar nicht mehr so sehr viel sagen. Du warst ja hier schon häufig genug zu Gast und wir haben auch allerlei Themen besprochen. Und vor allem haben wir auch viel geredet über dein aktuelles Meta-Thema rund um Telefonie im weiteren Sinne, also Mobilfunk, GSM und diese ganzen Geschichten, OpenBST. Darum soll es aber heute mal nicht gehen, sondern eher so ein bisschen ein Abfallprodukt der Arbeit nebenbei, auf das wir neulich mal im Gespräch gekommen sind, dass das doch mal ganz interessant wäre, das doch mal aufzurollen, nämlich das Mysterium ARM-Architektur, ein Wort, was viele benutzen. Und ich habe immer so den Eindruck, dass das so eine der verkanntesten Technologiezweige ist überhaupt. Also dass zumindest das Ausmaß der Diskussion nicht ihm gerecht wird, wie es sich in Realität niederschlägt. Würdest du diese Einschätzung teilen?
+
+00:02:16.130 --> 00:02:31.070
+<v SPEAKER_1>Ja, teile ich schon. Viele Leute wissen, was ARM ist und wo ARM eingesetzt wird, oder glauben das zu wissen. Und wie wir sicherlich im Rahmen der Sendung erläutern werden, durchdringt ARM eigentlich so jegliche Art von Technologie heute.
+
+00:02:31.090 --> 00:03:07.370
+<v SPEAKER_2>Mehr als man eben glaubt. Ja, ARM, was heißt das? ARM ist eine Abkürzung, die zunächst einmal eigentlich eine Firma bezeichnet. Und da steckt auch so ein bisschen die Geschichte der Firma schon mit drin. ARM steht kurz für Archon Risk Machines und verweist eigentlich in die guten alten Homecomputer-Zeiten 80er Jahre nach Britannien, als es die Archon Computer noch gab, die in vielerlei Hinsicht bemerkenswerte Rechner waren, wobei ich mich da jetzt sehr zurückhaltend äußern kann, eigentlich nur, weil ich so einen Teil selber nicht in der Hand gehabt habe. Zumindest mal schon mal vor einem gesessen.
+
+00:03:07.810 --> 00:03:30.770
+<v SPEAKER_1>Nein, kann ich auch nur verneinen. Ich kenne auch eigentlich außerhalb UK niemanden, der da wirklich detaillierte Einsichten hat und persönliche Erfahrungen. Aber die Leute, die ARM, also ACORN Computer, verwendet haben damals, die sind alle sehr eingeschworen da drauf. Also es ist wirklich genauso eine Gemeinde wie die C64 oder die Amiga-Gemeinde, das eben irgendwie in anderen Landen war.
+
+00:03:30.790 --> 00:05:16.510
+<v SPEAKER_2>In gewisser Hinsicht waren die sogar noch ein bisschen straighter, weil eins war halt immer das übereinstimmende Merkmal. Bei ARM ging es einfach um Performance. Das war einfach ein System, was irgendwie schnell war. Und das steckt ja auch schon so ein bisschen in dem Namen drin, also dem Namen Archon Risk Machines. Die Archon-Rechner waren so mit die allerersten Rechner, die überhaupt das Modell RISC verfolgt haben. RISC steht für Reduced Instruction Set Computing und stand damals sozusagen in so einem anderen religiösen Kampf neben dem Konzept CISC, was eigentlich alle anderen so verforchten haben. Kurz gesagt steckt da einfach die Philosophie des Instruktionssatzes dahinter. Es hat sich halt einfach über diese Zeit der Bedarf nach zunehmender Komplexität auch in diesen Befehlssätzen der Prozessoren niedergeschlagen, sodass sie dann irgendwann so komplex waren, dass Optimierungen, naja, zumindest nicht trivial waren. Und dann gab es eben so eine unterschiedliche Einschätzung, ob man denn nun sozusagen diesen Befehlssatz vereinfachen müsste, damit man eben die Hardware besser optimieren kann oder ob das eben auch trotzdem geht. Und ja, diese beiden Religionswelten, die haben auch so einige Zeit so nebeneinander hergearbeitet. Sehr viele Prozessorenhersteller sind ja dann auch, haben einen Risspfad eingeschlagen, auch wenn sie sich nicht ausschließlich darauf verstiegen haben, haben sie zumindest eine parallele Sparte aufgemacht. Da ging das los bei Motorola, die ja damals ziemliche Platzhirchen waren mit ihrer 68.000er Technologie, dass sie auch noch diese 88.000er Serie, glaube ich, gehabt haben, die quasi das Rissmodell gemacht hat. Die Einzigen, die da in den Nieren mitgespielt haben, waren Intel.
+
+00:05:16.530 --> 00:05:59.590
+<v SPEAKER_1>Das ist richtig, ja. Also ansonsten alle anderen CPU-Architekturen, die man so kennt, von irgendwie MIPS über Spark über PowerPC, über was auch immer, ist alles Riss gewesen und alle zusammen hatten, naja, immer, sie hatten so irgendwie eine Zeit oder eine bestimmte Marktnische oder bestimmten Bereich, wo sie sehr erfolgreich waren, aber haben eben nie an den Erfolg der CISC Prozessoren von Intel jetzt, also im kommerziellen Sinne, irgendwie rankommen können. Und das sieht man ja bis heute, dass Intel mit CISC-Architektur sicherlich das, ja, wie soll ich sagen, das erfolgreichste oder größte Unternehmen auf der Welt ist.
+
+00:05:59.610 --> 00:06:56.970
+<v SPEAKER_2>Genau, bisher, ja, auf jeden Fall. Wobei, letzten Endes ja eine ganze Menge von diesen Riskerkenntnissen tatsächlich dann auch in die CISC-dominierte Welt eigentlich eingeflochten ist. Also man kann nicht mehr sagen, das ist jetzt RISC und das ist jetzt CISC, sondern so ein Prozessor besteht einfach aus sehr vielen speziellen Komponenten. Und die werden mal so und mal so designt. Und was dann irgendwie auf der Oberfläche noch der komplexe Instruktionssatz ist, ist da drunter dann schon wieder ein Microcode, der dann irgendwie ganz anderen Regeln genügt. Trotz alledem, die Wahrnehmung auf dem Markt ist eigentlich lange Zeit natürlich vor allem über die Desktop-Systeme dominiert gewesen und da gab es halt lange Zeit einfach nur die Intel-Serie, sprich x86. Irgendwann gab es da mal den Versuch, der mittlerweile als gescheitert angesehen werden kann, von Intel da auf eine neue Architektur umzusteigen mit Itanium. Du lachst. War das von Anfang an zu scheitern verurteilt? Ich bin mir nicht so sicher.
+
+00:06:57.390 --> 00:07:21.450
+<v SPEAKER_1>Naja, es war halt schon, ich weiß nicht, ob das eher dann so eine Zweckoptimismus war oder wie auch immer. Auf jeden Fall war es ja schon sehr auf einer High-Performance-Computing- und Server-Schiene ausgelegt. Also ich glaube nicht, dass man so wirklich den großen, also dass man Anfangs, als man Itanium eingeführt hat, dass man da an den Desktop-WC gedacht hat. Das war schon eigentlich eher so ein High-End-Produkt.
+
+00:07:21.470 --> 00:07:23.850
+<v SPEAKER_2>Das war wahrscheinlich dann auch der strategische Fehler, nicht?
+
+00:07:25.450 --> 00:08:30.110
+<v SPEAKER_1>Ich weiß nicht, ob es ein strategischer Fehler ist. Da kommen wir eigentlich zu einem sehr interessanten Punkt auch, warum ARM so attraktiv ist. Es geht ja auch um Kosten. Also wenn ich jetzt irgendeinen Prozessor entwickle, den muss ich verkaufen können. Und die Kosten habe ich einmal Entwicklungskosten von so einem CPU-Design, aber dann auch die tatsächlichen Pro-Stück-Kosten. Und die hängen eben im Wesentlichen davon ab, wie groß, also wie viel Fläche brauche ich auf dem Silizium, also wie viel Quadratmillimeter Silizium brauche ich. Und da ist es einfach so, je mehr Transistoren, also je komplexer die CPU ist, umso mehr Transistoren habe ich, umso mehr Platz brauche ich auf dem Silizium und umso teurer wird die CPU auch schon allein in der Fertigung, ganz abgesehen von irgendwelchen Patent-Lizenzkosten und Entwicklungskosten und solchen Sachen. Und da ist der Ethanium halt schon ein Monster sozusagen in der Größe. Also der braucht unglaublich viel Fläche auf dem Die und dann ist er halt auch entsprechend teuer. Das heißt, er wird nicht in den absoluten Massen, also wird nicht mit billigeren, einfacheren CPUs, die weniger Platz brauchen, konkurrieren können.
+
+00:08:30.170 --> 00:08:30.990
+<v SPEAKER_2>Size matters.
+
+00:08:31.990 --> 00:08:39.290
+<v SPEAKER_1>Ja, das ist so, das ist so. Und man muss ja auch dazu sehen, das ist überhaupt gut, wie wir schweifen jetzt ab, hat das mit ARM direkt nicht so viel zu tun.
+
+00:08:39.310 --> 00:08:41.310
+<v SPEAKER_2>Muss ja auch mal abschweifen können, auch am Anfang.
+
+00:08:42.410 --> 00:09:02.670
+<v SPEAKER_1>Der Platz hat ja auch, gerade wenn wir an heutige Frequenzen denken, gewisse Implikationen. Ich habe Signallaufzeiten in so einer CPU oder in jedem elektronischen Bauteil. Und je größer die physikalische Entfernung ist, die irgendwie so ein Bit zurücklegen muss innerhalb der CPU, umso beschränkter bin ich natürlich auch mit der Geschwindigkeit, also mit der Taktgeschwindigkeit.
+
+00:09:02.690 --> 00:09:04.890
+<v SPEAKER_2>Da treten dann schon richtig Latenzen auf.
+
+00:09:04.910 --> 00:09:24.130
+<v SPEAKER_1>Das ist ein großes Problem. Also ich weiß, dass es ein großes Thema ist bei den IBM-Prozessoren für deren Mainframes und so, diese, was weiß ich, Power 5, Power 7 und so. Da haben die ja teilweise auch sehr große Dice und müssen dann entsprechend sich sehr intelligent ausdenken, wie sie das tun.
+
+00:09:26.310 --> 00:11:13.930
+<v SPEAKER_2>Ja, aber wir wollen gar nicht so sehr über Intel reden, sondern eher über dieses Phänomen, dass ich jetzt so ein bisschen hinter dem Vorhang auf einmal eine Architektur den Weg gebahnt hat, die so lange Zeit keiner so richtig auf dem Zeige hatte, von der zwar jeder irgendwie immer wusste, dass es die gibt, aber was die konkreten Auswirkungen davon sind, glaube ich, nicht so viele. Es hat sich halt immer so alles auf diesen x86 versus PowerPC-Markt konzentriert. Nicht zuletzt auch deshalb, weil ja auch die PowerPC-Architektur immer schon auch versprach, diesen Embedded-Markt mit zu bedienen. Es gab auch sehr viele spezielle PowerPC-Designs, die eben speziell auf stromsparende Lösungen hin optimiert waren und dann eben auch diesen Anforderungen entsprachen, die Lugerasen nennt es, dass sie einfach nicht so viel Platz gebraucht haben. Das dachte man ja auch lange Zeit, dass das auch der strategische Vorteil dann im Desktop ist, dass eben auch diese Desktop PowerPC-Prozessoren da konkurrenzfähiger sein würden, als es Intel eben theoretisch mit ihrer Architektur schaffen kann. Das haben wir gesehen, das hat dann nicht funktioniert. Spätestens beim G5 sind sie dann irgendwie gegen die Wand gelaufen, was auch immer der Grund dafür gewesen sein mag. Aber was halt hier sozusagen mit hochkommt ist, was früher mal ein Nischenmarkt war, wird immer größer und immer wichtiger. Und das ist eben dieser sogenannte Embedded-Markt, wo man also eben nicht irgendwie einen Computer mit einem Bildschirm und einer Tastatur und einer Maus davor hat, sondern eben kleine Geräte, wo der Prozessor eigentlich nur so, naja, einen Bruchteil, den Großteil eigentlich ausmacht, weil das Gerät nicht sehr viel mehr ist als dieser Prozessor und alles muss irgendwie klein und stromsparend sein. Und da hat sich dann irgendwie ARM auf den Weg gemacht, diesen Markt einzusammeln. Wann hat das überhaupt angefangen?
+
+00:11:13.950 --> 00:11:17.870
+<v SPEAKER_1>Puh, kann ich jetzt auch nicht spontan irgendwie sagen.
+
+00:11:17.890 --> 00:11:22.190
+<v SPEAKER_2>Also irgendwann gab es kein Archorn mehr und dann kam ARM. Aber die haben ja auch gar keine Prozessoren gebaut.
+
+00:11:22.870 --> 00:12:29.570
+<v SPEAKER_1>Also ARM ist ein reines Design-Haus und zum Namen auch. Also Acorn Risk Computer war der ursprüngliche Name. Dann haben sie sich umbenannt in Advanced Risk Machines und dann nur noch in ARM Limited. Also Acorn taucht dem Namen nicht mehr auf inzwischen. Und da kann man auch sehen, dass die Firma von einer Computer-Firma zu einer CPU-Firma sich entwickelt hat. Und man hat zusammen mit anderen Firmen wie LSI zum Beispiel damals am Anfang ARM hat CPUs entwickelt und die wurden irgendwo anders gefertigt. Das war damals, denke ich, noch relativ unkonventionell. Heute ist es ja sehr in sogenannte Fabless-Halbleiterfirmen, die also selber keine Produktionskapazitäten besitzen, sind heute eigentlich eher der Standard, dass man eigene Fabriken hat. Das macht ja inzwischen nicht mal mehr AMD so wirklich. Die haben sich ja als erstes von ihrer Herstellungssparte getrennt. Und ich glaube, jetzt außer Intel und vielleicht noch zwei, drei anderen, hat kaum mehr jemand selber Fabriken, sondern man lässt alles überall auftragsfertigen bei entsprechenden Firmen.
+
+00:12:30.750 --> 00:12:35.750
+<v SPEAKER_2>es gibt auch Buden, die eigentlich nichts anderes machen, als Prozessoren zu bauen, aber sie gar nicht designen. Genau.
+
+00:12:35.770 --> 00:14:37.590
+<v SPEAKER_1>Also es müssen jetzt nicht nur Prozessoren sein, das sind einfach Halbleiter-Baufirmen, die haben entsprechende Fabriken, wo sie bestimmte Silizium-basierte Halbleiter fertigen können. Jede Fabrik hat halt so eine Charakteristika, was für eine Strukturgröße die fertigen kann und was für Wafergrößen die haben und solche Aspekte. Und dann kann ich da hingehen zu so einer Firma, kann sagen hier, ich habe hier dieses Design auf der CD, bitte machen sie mir das mal irgendwie in zehn Millionen Stück und dann kriege ich die fertig. Ja, das ist das Standard-Modell eigentlich inzwischen geworden. Und ARM hat das halt sehr früh gemacht, dieser erste ARM-Core, den sie entwickelt haben, der hatte wohl so um die 35.000 Transistoren, das ist weniger als die Hälfte von dem Motorola 68.000er, was ja nun auch kein unglaublich komplexer Prozessor ist. Also schon ganz am Anfang haben sie unglaublich viel darauf geschaut, das zu optimieren auf die Größe. Was da damals die Motivation dafür war, kann man nur spekulieren, wahrscheinlich, ich meine, die Prozesse waren noch größer, also die Zahl der Transistoren, diese Lithium-Größe, war sicherlich damals noch ein kritischerer Punkt. Und dadurch, dass sie halt diese CPU als diesen IP-Core, wie man das heute nennt, entwickelt haben und Auftrags gefertigt haben, hat sich dann auch das Modell angeboten, das sie bis heute fahren. Diese Sachen zu lizenzieren. Das heißt, es ist jetzt nicht wie bei Intel, wo Intel diese CPU entwickelt und selber baut. Ich kann die fertige Hardware kaufen, sondern bei ARM, da kann ich hingehen, kann sagen, hier, ich hätte gerne mal irgendwie diesen oder jenen Core, also dem dann eine ganze Familie. Und dann geben die mir eben das elektronische Design. Und ich muss dann für jedes Stück, was ich fertige oder halt fertigen lasse, entsprechend Gewöhren abdrücken an ARM, Lizenzgewöhren.
+
+00:14:38.370 --> 00:14:45.410
+<v SPEAKER_2>Aber welche Engineering-Leistung ist denn ab der Stelle, wo man so einen Design übernimmt, überhaupt noch zu tun? Also was muss man denn dann noch selber machen?
+
+00:14:45.470 --> 00:16:39.730
+<v SPEAKER_1>Es kommt drauf an, also ARM gibt es, die haben zwei unterschiedliche Modelle. Ich kann sozusagen entweder den Source oder den Object-Code kaufen bei denen oder lizenzieren. Also der Object-Code ist quasi das, was man schon so per Copy und Paste irgendwie auf den Halbleiter packen kann. Da muss ich dann nur noch irgendwie extern eben die Sachen anschließen. Also in der Regel fertigt man nicht so ein ARM-Core alleine, sondern man macht ein sogenanntes System-on-a-Chip draus. Das heißt, da werden Peripherie-Bauteile noch gleich mit auf den gleichen Halbleiter mit drauf gemacht. Das heißt, ich muss dafür sorgen, dass alles, was ich um diesen ARM-Core herum mit drauf packe, sagen wir Interrupt-Controller, DMR-Controller, Keyboard-Controller, vielleicht irgendein Display und so weiter, dass ich das alles sozusagen intern verdrahte mit diesem IP-Core, den ich bekommen habe und dann das Ganze an den Auftragsfertiger rausgebe. Wenn ich allerdings sozusagen diese Source-Code-Lizenz, ich nenne die jetzt mal so, nehme, dann bekomme ich den Verilog-Source-Code, da können wir Chaosradio Express zu FPGAs, da haben wir Verilog, wie HDL und so, also Hardware-Beschreibungssprachen, da bekomme ich das und dann kann ich tatsächlich selber an dem Prozessor Veränderungen vornehmen. Ich nehme also nicht eins zu eins das, was ich von ARM bekomme, mache Copy und Paste, sondern weil ich halt vielleicht spezielle Anforderungen habe oder selber CPU-Designer, die irgendwie vielleicht das noch besser können als ARM in bestimmten Aspekten, dann kann ich an diesem Core selber herum optimieren und optimieren kann jetzt heißen, eine schnellere Ausführungsgeschwindigkeit, höhere Taktrate, weniger Stromverbrauch, was auch immer ich optimieren will und kann den dann übersetzen, also von Verilog eben in den eigentlichen Silizium-Teil dann und da muss ich natürlich dann schon mehr Arbeit reinstecken.
+
+00:16:39.750 --> 00:16:41.830
+<v SPEAKER_2>Also ist den dann teurer?
+
+00:16:41.850 --> 00:17:46.250
+<v SPEAKER_1>Teurer ist natürlich die Source-Lizenz. ARM operiert da mit unterschiedlichen Lizenzen. Das letzte Detail weiß ich es auch nicht, aber es gibt im Wesentlichen eben die zwei Klassen. Einmal nur dieses fertige Design zum Copy und Pasten und das andere ist diese VHDL-Source-Lizenz, die dann auch berechtigt, diese Veränderungen an dem Core vorzunehmen und solche Lizenzen, da gibt es jetzt wahrscheinlich, ich würde mal schätzen, vielleicht 10 Firmen oder vielleicht sind es 15, die so eine Lizenz haben, dass sie tatsächlich diesen Verilog bekommen und dann Veränderungen vornehmen können. Das prominenteste Beispiel dafür ist sicherlich der StrongArm und später X-Scale. Das sind ja so Ausgewurten sozusagen aus ARM, wo anfangs die Digital Equipment Corporation und später dann Intel, heute ist es dann Marvell, hat mehrmals die Hände gewechselt, die den Arm-Core nicht nur einfach genommen und gefertigt haben, sondern tatsächlich diesen Arm-Core extrem verändert und optimiert haben und damit so einen Fork quasi in der Architektur geschaffen haben, der allerdings für die Software transparent ist.
+
+00:17:46.970 --> 00:18:02.430
+<v SPEAKER_2>Das heißt, man muss grundsätzlich erstmal unterscheiden, es gibt in der Armwelt das eigentliche Design, sozusagen die abstrakte Idee, wie dieser Prozessor an sich funktioniert, ohne dass schon eine Arbeit geleistet wäre, wie das dann konkret auf so einem Chip aussieht.
+
+00:18:05.610 --> 00:19:34.870
+<v SPEAKER_1>Es ist schon mehr, es ist schon konkreter. Wenn man das mit, sag ich mal, elektronischen Schaltungsdesign vergleichen würde, dann ist das halt das Schaltbild und das Layout. Das Schaltbild beschreibt mir schon im Detail, wie der ganze Prozessor verdrahtet ist und das VHDL entspricht eben dem Schaltbild. Das heißt, da ist schon bis ins letzte Detail, es ist vollkommen funktional. Aber dann so Dinge wie, was weiß ich, bis zu welcher Taktfrequenz funktioniert die Schaltung, das ist dadurch bedingt, wie das dann auf das Silizium abgebildet wird. Also analog im elektronischen Schaltungsdesign, wie mache ich das Platinenlayout. Das heißt also, es ist jetzt nicht nur die abstrakte Idee. Die abstrakte Idee, würde ich sagen, das ist die Beschreibung des Instructionsets. Ja, wo ARM sagt, hier, das ist unser Befehlssatz. Und es gibt ja durchaus inzwischen auch Firmen, die Befehlssatz-kompatible Cores fertigen, die aber nicht von ARM kommen. Da gibt es in Taiwan eine Firma zum Beispiel, die heißt, jetzt muss ich wieder nachdenken, fällt mir gerade, ist mir entfallen. Aber es gibt auf jeden Fall mindestens eine Firma, die sozusagen das Instructionset manuell genommen hat und dann einen kompatiblen Prozessor entwickelt hat, wie wir das bei Intel mit AMD und VIA und anderen eben auch sehen. Das gibt es schon auch. Da sind dann allenfalls noch Patentlizenzen nötig, ja, weil vielleicht irgendwelche dieser Befehle oder so patentgeschützt sind. Aber man muss nicht diesen eigentlichen Chor lizenzieren, wenn man das machen möchte.
+
+00:19:34.890 --> 00:19:51.530
+<v SPEAKER_2>Okay, na gut, also unterscheiden wir es mal in diesen Kategorien. Es gibt also die abstrakte Idee, die sich im Befehlsaal niederschlägt, aber der ist ja jetzt auch im Fluss. Also auch der hat schon verschiedene Entwicklungsstufen durchgemacht, oder ist das seit Jahr und Tag dasselbe?
+
+00:19:52.050 --> 00:20:55.570
+<v SPEAKER_1>Nein, da hat sich schon auch viel verändert. Allerdings wurde es immer relativ logisch erweitert. Aber so allgemein, dass Befehlssätze sich verändern, kennt man ja auch wieder aus der Intel-Welt. Ja, da gab es zwei 86er, dann drei 86er, neue Befehle, vier 86er, neue Pentium und so weiter, dann MMX-Erweiterungen, dann SSE und so weiter, diese ganzen Befehlsatz-Erweiterungen. Und so ähnlich ist das bei ARM eben auch. Es gibt da sogenannte Instruction-Set-Versionen, die werden dann immer mit ARM-V irgendetwas bezeichnet. Da gibt es dann ARM-V4, ARM-V5, ARM-V6, ARM-V7, sind so die gängigen heutzutage. Und ja, dass es jetzt so sehr im Flux wäre und sich ständig verändern würde, eigentlich nicht. Es kommt halt immer mal wieder was Neues, Optionales dazu, wie jetzt solche Multi-VT-Erweiterungen. Und wenn ich jetzt einen kleinen Controller für eine Waschmaschine irgendwie fertige, der die eben nicht braucht, dann muss ich die ja auch nicht implementieren, brauche ich das ja gar nicht. Kann ich wieder Transistoren sparen.
+
+00:20:56.090 --> 00:21:22.070
+<v SPEAKER_2>Aber dann, um jetzt nochmal bei diesen Lizenzen und den Designs zu bleiben, die eigentlichen Prozessor-Designs haben dann sozusagen auch nochmal ihre eigenen Benennungen. Und je nachdem, wird immer nur aktuell der allerletzte Instruktionssatz eingesetzt, oder kommen da irgendwie mehrere Versionen immer noch zum Zuge davon?
+
+00:21:22.090 --> 00:21:36.310
+<v SPEAKER_1>Da kommen mehrere davon zum Zuge. Man kann also unterscheiden bei ARM die Familie, die Architekturversion und den eigentlichen Core. Die Architekturversion beschreibt das Instructionset.
+
+00:21:36.330 --> 00:21:40.570
+<v SPEAKER_2>Also ARMv4, ARMv5, das gibt es sieben oder was?
+
+00:21:40.590 --> 00:22:23.850
+<v SPEAKER_1>Sieben ist so das aktuelle im Moment, das neueste. Und das beschreibt den Befehlssatz und das Verhalten der CPU. Und dann gibt es Implementationen dieser Architektur, also konkrete Cores, die ich so kaufen oder lizenzieren kann als Design, welche dann eine bestimmte Version dieser Architektur implementieren. Und die waren dann ohne V und die haben meistens längere Bezeichnungen. Also es gibt zum Beispiel einen ARM29T oder einen ARM926EJS oder einen 1176 oder sowas in der Art. Das sind dann die eigentlichen Cores. Und jeder dieser Cores implementiert dann eben eine bestimmte Architekturversion.
+
+00:22:23.870 --> 00:22:27.270
+<v SPEAKER_2>Den ich dann wieder in einem von diesen beiden Lizenzmodellen erwerben kann.
+
+00:22:27.370 --> 00:22:37.530
+<v SPEAKER_1>Den Core kannst du erwerben. Die Architekturversion, also diese Beschreibung des Befehlssatzes und wie die CPU funktioniert, die kann jeder frei herunterladen. Das brauchen ja auch Software-Entwickler, um da Code dafür zu schreiben.
+
+00:22:37.790 --> 00:23:04.110
+<v SPEAKER_2>Auf wen hast du ja gesagt, mit diesem Vergleich Source Code und Object-Version. Also wenn ich jetzt mir nicht eben dieses, wenn ich nicht das Modell, wo ich selber noch bestimmen kann, wie es denn dann konkret zu einer Platine wird, beziehungsweise zu so einem Steinchen, was kriege ich denn sonst? Sonst kriege ich sozusagen eine genaue Vorschrift, wie dieser Prozessor zu machen ist. Und da ist Größe und Dimension und alles ist vorgegeben.
+
+00:23:04.130 --> 00:23:05.370
+<v SPEAKER_1>Richtig, das ist wirklich so...
+
+00:23:05.390 --> 00:23:11.250
+<v SPEAKER_2>Das ist ein reiner Blueprint, mit dem ich direkt zum Chip Lab gehen kann, sagen kann, hier, mach mal.
+
+00:23:11.270 --> 00:23:31.710
+<v SPEAKER_1>Genau, genau, das ist das, was man bekommt. Das heißt, man hat bestimmte Bedürfnisse, bestimmte Spezifikationen, guckt sich das Portfolio von ARM an, sagt dann ja genau diesen Core, also den ARM 926 EOS beispielsweise, den hätte ich gerne und dann sagt ARM gut, kostet so und so viel pro Stück und so und so viel vielleicht irgendwie einmal Zahlung voraus oder so.
+
+00:23:31.730 --> 00:23:33.230
+<v SPEAKER_2>Aber man muss sie selber bauen.
+
+00:23:33.250 --> 00:23:36.390
+<v SPEAKER_1>Und genau, dann geht man wieder irgendwo hin und lässt sie da bauen.
+
+00:23:36.470 --> 00:23:49.650
+<v SPEAKER_2>Das heißt, an der Ebene ist der Unterschied zu Intel eigentlich nur der, dass man sich das selber bauen lässt, aber man kriegt es quasi baufertig von der Firma, während man bei Intel es nicht nur baufertig kriegt, sondern auch noch gebaut.
+
+00:23:50.210 --> 00:24:04.910
+<v SPEAKER_1>Richtig, ja. Also das ist in der Tat genauso. Also man kann das vielleicht, ja gut, man könnte jetzt Analogien finden zum Hausbau. Da gibt es irgendwie einen Bauplan und ein schlüsselfertiges Haus und so.
+
+00:24:04.930 --> 00:24:06.170
+<v SPEAKER_2>Die Bienen müssen wir noch mit einarbeiten.
+
+00:24:08.650 --> 00:24:37.670
+<v SPEAKER_1>Das ist also das Modell. Aber was man schon, wie ich auch am Anfang schon mal sagte, bemerken muss, niemand geht her und baut jetzt einfach nur diesen Core. Was will ich denn nur mit dem CPU-Kern? Also niemand baut ein System, wo er nur einen CPU-Kern braucht, sondern man braucht immer irgendwelche anderen Komponente außen rum. Sei es jetzt, ich möchte irgendwie Grafikausgabe haben, ich möchte Tastatureingabe haben, ich möchte mit externen Peripheriebauteilen reden.
+
+00:24:38.430 --> 00:24:42.350
+<v SPEAKER_2>Also im Embedded-Markt ist das so, oder jetzt im Desktop-Bereich?
+
+00:24:43.830 --> 00:24:51.690
+<v SPEAKER_1>Naja, das möchte eigentlich auch niemand, aber man bekommt das halt nicht so angeboten. Auch wenn du ein PC baust, dann möchtest du in der Regel irgendwie...
+
+00:24:51.710 --> 00:24:52.810
+<v SPEAKER_2>Noch ein Chipset dabei haben.
+
+00:24:52.830 --> 00:26:04.610
+<v SPEAKER_1>Genau, du möchtest irgendwie, also am mindestens einen Speicherkontroller und eine Grafikkarte und irgendwie solche Sachen, oder Tastatureingabe, Festplattencontroller, solche Sachen. Und da sieht man ja auch eine gewisse Verschiebung. Also früher hat man tatsächlich... Also gehen wir mal wirklich in die 80er zurück, da war das alles noch einzeln. Da habe ich meinen CPU-Core gesteckt, da habe ich meinen Cache separat gesteckt auf die Platine, wenn es den einen gab. Ja, oder in den frühen 90ern auch noch. Ja, genau, der Co-Prozessor, der war auch gesockelt extern daneben für Floating-Point-Instruktionen. Ja, ich habe dann meine Steckplätze am lokalen Bus, wo ich irgendwie meinen Festplattencontroller reinstecke und meine Grafikkarte und so weiter. Das wandert halt immer mehr zusammen. Ja, auch im Intel-Bereich, wenn man sich jetzt hier im Atom zum Beispiel anschaut, oder auch AMD mit dem OptoROM, die haben ja auch schon Speicherkontroller mit auf die CPU mit reingezogen. Ja, das ist auch schon mehr als nur der CPU-Core, den man da kauft. Oder Cache war das, was als erstes mit reinwanderte. Dann ist die Speicherkontroller und jetzt dann tatsächlich auch noch mehr Peripherie-Bausteine, Grafikkarten und CPU zusammen. Das ist ja jetzt auch schon zu kaufen bei Intel beispielsweise.
+
+00:26:04.630 --> 00:26:25.110
+<v SPEAKER_2>Und ist ja auch gerade jetzt für solche Märkte wie Netbooks etc. auch sehr wichtig, diese Integrationsdichte auch jetzt für klassische Computer-Modelle. Also zähle jetzt mal den Netbook dazu, weil das ja im Prinzip auch nichts anderes ist, als das Desktop-Modell in sehr kompakt. Auch da ist es halt wichtig, quasi schon so die Vorteile von Embedded-Bedarf mit einzubauen.
+
+00:26:25.410 --> 00:28:01.990
+<v SPEAKER_1>Genau, und das macht eben ARM oder die ARM-Licensees, also diejenigen, die ARM-Cores bei ARM lizenzieren, machen das eben schon länger. Das geht vom kleinen Mikrocontroller, der vielleicht jetzt irgendwo in einem Chipkartenleser sonst steckt oder eine Chipkarte selbst vielleicht sogar, geht das los bis hin zu den ganz großen leistungsstarken System-on-a-Chips, die wir in iPhone oder anderen Mobiltelefonen heute sehen. Da ist dann einer oder jetzt teilweise schon mehrere CPU-Cores da drauf auf dem Silizium und Cache natürlich und irgendwelche I2C-Bus-Controller, Grafikchips und so weiter sind also sehr viele Pellipherie-Bauteile mit drauf. Und das hilft eben nicht nur, den Platz zu sparen, man hat ja kein Platz im Telefon, es muss ja alles klein sein und flach und dünn und so. Das ist ein Aspekt davon, der andere davon ist, dass natürlich Fertigungskosten geringer werden, wenn ich dann nur noch einen Bauteil auf die Platine löte, dann geht das schneller und kostensparender. Es ist unter Umständen stromsparender und das ist natürlich auch weniger fehleranfällig. Also Produktentwicklungszyklen werden ja auch immer kürzer und es ist wichtig, dass man immer irgendwie das Neueste in schnellste und tollste bringt. Und wenn ich jetzt so einen Baustein kaufe, der eben ganz viel schon integriert hat, dann kann ich da gar keine Fehler mehr machen in meinem Routing auf der Platine, wie ich die unterschiedlichen Komponenten miteinander verbinde, wenn ich die schon fertig verbunden so bekomme. Das ist natürlich für einen Hersteller von so einem Gerät eine deutliche Erleichterung. Und dann letztlich Kosten natürlich. Die Integration auf ein Dye, also auf ein Silizium-Flättchen, hilft da.
+
+00:28:02.010 --> 00:28:06.930
+<v SPEAKER_2>Ist denn ARM die einzige Firma, die diese Modell-Lizenzierung so betreibt?
+
+00:28:06.950 --> 00:28:33.150
+<v SPEAKER_1>Nein, das kann man nicht sagen, aber zweifelsohne kann man sagen, die erfolgreichste. Also die Zahl der Cores, wenn man das kurz an der Stelle vielleicht mal erwähnt, um ein Gefühl dafür zu bekommen, alleine im vierten Quartal 2009 hat ARM 1,3 Milliarden Cores lizenziert an Firmen. Das heißt also, in dem vierten Quartal sind 1,3 Milliarden von den Cores irgendwo in Auftrag hergestellt worden.
+
+00:28:33.830 --> 00:28:35.210
+<v SPEAKER_2>1,3 Milliarden?
+
+00:28:35.350 --> 00:29:27.850
+<v SPEAKER_1>Ja, nur in einem Quartal, also mal vier dann in etwa irgendwie der Jahreszahl. Und wo gehen die dann hin? Vielleicht ist das eine interessante Frage. Die meisten Leute, die irgendwie ARM so kennen, denken da jetzt an Mobiltelefone eigentlich. Denkt dann irgendwie, ja, man weiß, da im iPhone ist irgendwie ein ARM drin. Windows Mobile läuft nur auf ARM-Architektur. Android, gut, ist inzwischen fast portiert, aber auch ursprünglich auf ARM. Ganz viel andere hier, Symbian, auch ARM. Also eigentlich alle gängigen Mobiltelefone-Bezibsysteme sind hauptsächlich oder vor und voranig für ARM erhältlich und vertrieben. Aber wenn man sich das anschaut, den Marktanteil, also nur 62% der Cores gehen überhaupt in den Mobiltelefon-Bereich oder im Mobil-Device-Bereich.
+
+00:29:27.870 --> 00:29:31.570
+<v SPEAKER_2>Nur 62%, das ist ja schon zwei Drittel sozusagen.
+
+00:29:31.590 --> 00:31:26.910
+<v SPEAKER_1>Aber wenn man sich dann auch anschaut, die Verteilung, also wenn man in so einem Application-Prozessor, wo das Betriebssystem so aufläuft, von einem modernen Mobiltelefon anschaut, dann ist das in der Regel ein ARM 11 oder inzwischen Cortex A8. Das sind so aktuelle ARM-Generationen. Und die beiden zusammen machen halt nur 7% aller Chores aus, die ARM so vergibt. Es ist tatsächlich nur 7%. Die große Masse in der Stückzahl, also so knapp 60%, ist der gute alte ARM 7. ARM 7, also nur um das so ein bisschen zu erklären, ist ein kleiner 32-Bit-Mikroprozessor, in der Regel ohne Cache, ohne Memory Management Unit, also nichts, worauf man irgendein modernes Prinzip-System laufen lassen könnte. Also kann man kein Linux drauf laufen lassen oder auch nichts anderes. Und das kommt daher, dass diese ARM 7 gerade speziell sehr viel in Bereichen stecken, wo man gar nicht dran denkt. Ja, man denke an Bluetooth-Chips. Eigentlich nahezu jeder Bluetooth-Chip, der irgendwo drin steckt, hat einen ARM 7-Core mit drin. Nahezu jeder GPS-Chip, den man irgendwo findet, hat einen ARM 7-Core mit drin. Und wenn ich mir jetzt ein modernes Mobiltelefon anschaue, da habe ich irgendwie einen Prozessor für den Application-Prozessor, für das Betriebssystem, für das User-Interface, für die Anwendung. Dann habe ich einen weiteren Prozessor für die Kommunikation mit dem Mobilfunknetz. Das Spaceband, genau, da habe ich zwei. Dann habe ich Bluetooth, dann habe ich schon einen dritten. Dann habe ich noch GPS drin, dann habe ich schon vier. Also vier ARM-Cores in einem Telefon. Und deswegen dann wieder die 62%. Wenn jedes Telefon schon vier hat, aber irgendein anderes Gerät nur einen, dann logischerweise die Telefone ganz viel.
+
+00:31:28.550 --> 00:32:03.210
+<v SPEAKER_2>Das heißt, ja, das muss man sich ja überhaupt erst mal klarmachen. Das sind eigentlich diese ganzen Chips, die früher, was weiß ich, die man so unter, naja, die man so salopp eigentlich unter dem Namen Controller jetzt fällen lässt, wo man sich denkt, naja, okay, da ist jetzt so ein bisschen Logik drin, um damit auch noch klarzukommen, sind eigentlich für sich genommen schon vollwertige CPUs. Weil eigentlich die Komplexität der Aufgaben, die sie durchzuführen haben, GPS, permanent irgendwie Kontakt halten, Satelliten nachrechnen und so weiter. Bluetooth, eben die ganze Kommunikation da drüber, das ist ja auch ein kompletter Protokoll-Stack. Das ist schon so komplex, dass man im Prinzip auch volle CPU-Funktionalität schon braucht, um damit auch wirklich gut umgehen zu können.
+
+00:32:03.230 --> 00:32:23.250
+<v SPEAKER_1>Richtig. Wobei, was mir noch einfällt, mir fällt noch einer ein. Wi-Fi-Chips haben auch oft noch so einen ARM 7 drin. Das heißt, da habe ich dann schon meinen fünften ARM Core im Telefon, beim modernen Smartphone. Und wenn jetzt noch das weitergeht mit Multi-Core für den Application-Prozessor, also es werden garantiert nicht weniger, also ja, es gibt auch Ansätze, da weniger zu verbauen, aber in der Regel, es werden viel sein.
+
+00:32:26.250 --> 00:32:31.870
+<v SPEAKER_2>Das heißt, jeder von uns schleppt eigentlich schon mal so mehrere von diesen Dingern die ganzen Tage mit sich rum, das muss man sich mal jetzt mal klar machen.
+
+00:32:32.010 --> 00:32:41.930
+<v SPEAKER_1>Ja, in der Regel tatsächlich wirklich mehrere. Selbst wenn ich jetzt ein billiges Feature-Phone kaufe, so ein 20-Euro-Telefon, hat das oft...
+
+00:32:41.950 --> 00:32:43.050
+<v SPEAKER_2>Mindestens zwei.
+
+00:32:43.070 --> 00:32:54.150
+<v SPEAKER_1>Ja, also alle mindestens eins, aber dann muss ich schon ein sehr altmodisches Telefon haben. Aber Bluetooth und Baseband-Prozessor sind schon zwei, die man so dabei hat, ja.
+
+00:32:54.170 --> 00:32:59.890
+<v SPEAKER_2>Und das heißt, es gibt auch keine andere Prozessorarchitektur, die in diesem Markt überhaupt irgendwas zu sagen hätte?
+
+00:32:59.910 --> 00:34:36.850
+<v SPEAKER_1>Oh, das kommt schon vor, aber eben nicht in dem Umfang. Also immer wieder in bestimmten Nischenmärkten oder durch Firmen verquickt. Also wenn man sich jetzt ein einfaches Feature-Phone herstellt, mit einem Infineon-Chip-Satz zum Beispiel, dann ist da drin halt kein ARM-Core, sondern irgendein Infineon C166 oder irgendein so ein Controller, den die halt mal entwickelt haben. Einfach weil man aus politischen Gründen natürlich gern was aus dem eigenen Hause verbaut, als irgendwie hier extern was zuzukaufen. Aber ansonsten, es ist einfach so unglaublich angenehm. Also die kosten nicht viel im Schnitt. Also klar, die teuren aktuellen High-Performance-Cores sind natürlich teurer, aber im Schnitt verdient ARM so was wie 10 bis 11 US-Cents an so einem Core. Das ist nicht viel. Also wenn ich jetzt irgendwie ein Gerät bauen will oder auch nur einen Controller für eine bestimmte Anwendung, ja, das sind also die gesamte Anwendung oder das gesamte Produkt ist sicherlich deutlich teurer, ob ich da jetzt noch 10 oder 11 Cent irgendwie für den Core ausgebe und dafür was habe, wo es irgendwie unendlich viele Entwickler gibt, die diese Architektur kennen, ganz viele Werkzeuge und so weiter. Das ist halt dann die Macht der Gewohnheit oder das weit verbreiteten auch. Ja, man kann auch heute noch irgendwie jetzt einen PC mit einem anderen Prozessor bauen als mit einem Intel, aber ja, es gibt viel Software dafür, es gibt viele Entwickler, die sich damit auskennen und so weiter. Es gibt viele Hardware-Firmen, die wissen, wie man damit umgeht und da hat ARM halt einfach die Marktführerposition.
+
+00:34:37.410 --> 00:35:03.930
+<v SPEAKER_2>Ja, diese Marktführerschaft haben sie ja im Prinzip dann eben, wie wir es schon angedeutet haben, so in den 90er Jahren dann auch akut erarbeitet. So der Newton von Apple, dieses erste Gerät, das den Namen PDA bekam, war ja im Prinzip so das erste, kann man das sagen, so das erste tragbare computerartige Gerät und das hat ja dann schon mit ARM durchgestartet.
+
+00:35:04.550 --> 00:35:37.270
+<v SPEAKER_1>Ja, Apple war also auch früh mit ARM schon im Boot sozusagen. Ich glaube, da gab es auch ein Investment mal von Apple Richtung ARM. Und der Newton war tatsächlich das erste bekannte oder weit verbreitete Computing Device, das man als solches wahrnimmt. Dann kam Palm. Palm hat, bin ich mir jetzt, muss ich gerade überlegen, ich glaube, die hatten am Anfang Motorola 68000er. Ich weiß nicht, ob die und wann sie dann nach ARM umgestellt haben, aber ich bin mir ziemlich sicher, dass die am Anfang keinen ARM hatten.
+
+00:35:38.670 --> 00:35:43.470
+<v SPEAKER_2>Echt, der Palm-Pilot? Da muss ich doch gleich mal gucken.
+
+00:35:45.090 --> 00:35:45.630
+<v SPEAKER_1>Ja.
+
+00:35:45.650 --> 00:35:57.250
+<v SPEAKER_2>Weil ich meine, es ist ja nun auch so ein Gerät, was vor allem so im Hinblick auf wir sparen Strom hin entwickelt worden ist.
+
+00:35:57.270 --> 00:36:04.690
+<v SPEAKER_1>Ja, aber es gibt ja auch, also jetzt noch kleiner als ARM eigentlich, also jetzt von der Leistungsfähigkeit zu sehen.
+
+00:36:04.710 --> 00:36:07.110
+<v SPEAKER_2>Ah, ja richtig. Dragonball-Prozessoren.
+
+00:36:07.130 --> 00:36:08.070
+<v SPEAKER_1>Das sind die Low-Mode-Prozessoren.
+
+00:36:08.090 --> 00:36:10.570
+<v SPEAKER_2>Genau, also 68.000er Variante, sozusagen.
+
+00:36:10.590 --> 00:37:28.750
+<v SPEAKER_1>Ja, 68.000er, speziell optimiert auf Strom sparen, was sie da verbaut haben. Man muss halt auch sehen, gerade jetzt der Funktionsumfang von so einem Palm-Pilot mit monochromem Display, wie die ersten halt waren, ohne irgendwelche Massenspeicher, alles nur im RAM. Also, wenn die Batterie weg war, dann hat man immer seine Daten verloren damals. Das war besonders irgendwie toll. Und auch die Auflösung des Displays und was man damit tun konnte, war ja alles schon sehr beschränkt. Und bei so einem Anforderungsprofil, wenn ich so ein Gerät entwickle, dann will ich natürlich die billigste Lösung haben auf der Hardware-Seite dafür. Und ich würde fast vermuten, dass ARM da halt ein bisschen leistungsfähiger und teurer gewesen wäre an dem Punkt. Aber jetzt vermutlich im Telefonbereich, also ich denke, die Mobiltelefone haben schon auch sehr dazu beigetragen, dass ARM so gewachsen ist. Gar nicht mal diese Smartphones, an die man heute denkt, aber eben wie gesagt, diese ganzen Feature-Phones. Also egal, was da jetzt für einen Baseband-Controller drin ist und von wem der ist, die allermeisten haben eben letztlich einen ARM-Controller, einen ARM Core. Ja, und für die Geräte darf man eben auch immer nicht vergessen, was ich so um den Computer herum habe angesetzt. Und da steckt halt auch schon oft wieder ein ARM zu.
+
+00:37:28.770 --> 00:37:53.330
+<v SPEAKER_2>Das heißt, sie waren erfolgreich, weil sie einerseits das richtige Lizenzierungsmodell am Start hatten, andererseits aber auch den Anforderungen entsprachen. Das heißt, sie waren sowohl halbwegs schnell als eben auch extrem stromsparend. Da fragt man sich natürlich, was ist denn jetzt sozusagen eigentlich so das Richtige an diesen Geräten? Was hat ARM da vom Design her oder von Implementierung oder beidem her richtig gemacht, dass das so gut funktioniert hat? Was ist das Besondere an so einer ARM-Architektur?
+
+00:37:54.650 --> 00:38:03.330
+<v SPEAKER_1>Ja, es ist eben mit sehr wenigen Transistoren zu realisieren. Und daraus resultiert erstens günstig, weil kleine Silizien...
+
+00:38:03.350 --> 00:38:29.530
+<v SPEAKER_2>Also eigentlich das eigentliche Versprechen von risk. Wir räumen den Befehlssatz auf und stellen von daher nicht so hohe Anforderungen an die Komplexität des eigentlichen Prozessors selbst, der diesen Befehlssatz dann ausführen muss oder sich von ihm sozusagen sagen lassen muss, wohin die Reise geht. Und führen das sozusagen zurück auf das eigentliche Prozessordesign, was dann einfach ist. Aber dadurch wird es ja nicht gleich stromsparend.
+
+00:38:29.550 --> 00:41:33.750
+<v SPEAKER_1>Na doch schon auch. Wenn ich weniger Transistoren habe, die mit jedem Takt irgendwie umschalten müssen, dann braucht es natürlich auch weniger Strom. Ja, der Clou, oder was halt oft die Diskussion an das ist, was das ist, ist quasi, na ja, wie viel Arbeit kriege ich denn in einem Taktzyklus erledigt. Also wenn ich jetzt einfach nur weniger Transistoren schalten lasse, dafür aber die doppelte Zahl an Taktzyklen brauche, dann ist es natürlich nicht sparsam. Aber man hat es eben geschafft, auch das Instructionset so zu definieren, dass man sinnvoll viel Arbeit in einer Taktrate erledigt bekommt, mit trotzdem sehr wenig Logikelementen und Transistoren, die das letztlich dann umsetzen. Der Kompromiss ist offensichtlich sehr gelungen, den man da geschaffen hat. Und klar ist das nicht mehr, ein heutiger ARM-Prozessor hat auch mehr als 35.000 Transistoren. Am Anfang hatte man einfach eine 3-Stage-Pipeline. Heute sind das auch schon, ich glaube, wir sind bei 8 oder so was angekommen. Es sieht schon auch anders aus inzwischen, aber was ich persönlich als jemand, der ARM-Assembler systemnah entwickelt seit einigen Jahren, sehr schön finde, ist auch die Architektur. Es ist alles sehr geradlinig, sehr angenehm, sehr überschaubar. So ein ARM-Instruction-Set, das kann man in ein, zwei Tagen, weiß man irgendwie, wie das alles funktioniert. Das schafft man mit einem Intel-Prozessor einfach nicht, ist alles so unglaublich komplex. Und es gibt ein paar so schöne Sachen, die sie einfach gut gemacht haben in dem Instruction-Set auch. Normalerweise hat man ja in so einem RISK-Prozessor immer nur eine Operation, in einer, was weiß ich, ich lade einen Wert aus dem Arbeitsspeicher, dann addiere ich irgendwas dazu, dann ist das Laden halt ein Vorgang, das Addieren ist der zweite, dann möchte ich vielleicht irgendwie die Bits ein bisschen nach links oder rechts schieben, dann ist es wieder ein Befehl und so und bei ARM haben sie dann so Dinge eingebaut wie, nehm mal diesen Wert und shifte ihn um so und so viel nach rechts und addier das dann zu einem anderen dazu und das ist trotzdem eben noch eine Instruktion, das heißt Quelloperanten der Instruktion können in der gleichen Instruktion noch geschiftet werden, da gibt es eine eigene Shifteinheit in der CPU mit dafür, das spart Es gibt auch Spar-Instruktionen, also einmal Cycles, auf der anderen Seite Spar-Code-Größe. Und ja, dann haben sie Conditional Execution, also dass man ein Befehl, man kann die Zahl der Sprünge verringern dadurch, dass man, ob ein Befehl ausgeführt wird oder nicht davon abhängig macht, ob ein vorhergehender Vergleichsbefehl zum Beispiel erfolgreich war oder nicht. Und ja, dadurch kann man dann, wo man bei einer anderen CPU-Architektur vielleicht eine extra Subroutine anspringen müsste, eine andere Funktion oder so, hat man einfach drei, vier Instruktionen, die eben nur dann ausgeführt werden, wenn der Vergleich obendrüber erfolgreich war, dann spart man sich das Springen und so. Also sie haben da schon...
+
+00:41:33.770 --> 00:41:38.490
+<v SPEAKER_2>Ist das nicht schon wieder so der halbe Weg hin zu einem komplexen Befehlssatz?
+
+00:41:38.510 --> 00:43:52.750
+<v SPEAKER_1>Nein, also ich persönlich finde, die Sendungslinie ist sehr gut, vollzogen, die sie da gemacht haben. Sie haben so ein paar Optimierungen mit einfließen lassen, aber es ist nur Risk und ist alles schön effizient umgesetzt. Und man sieht diese Effizienz dann auch noch später. Man hat neben dem normalen ARM-Instruction Set noch weitere andere Instruction Sets entwickelt. Thump zum Beispiel ist eines davon, wo es nicht um Stromsparen ging, sondern um Sparen bei der Größe des Codes. Bei ARM, wie bei allen Riske-Architekturen, jeder Befehl hat eine fixe Länge. Bei X86 und bei Cisco-Architekturen ist es ja anders. Es gibt Befehle, die sind nur ein Byte groß. Es gibt Befehle, die sind keine Ahnung, wie groß das bei Intel wird, aber so 5-6 habe ich schon gesehen. Bei Riske-Architekturen ist es eben 32-Bit-Riske wie bei ARM 32-Bit. Jeder Befehl braucht also 4 Byte an Programmspeicher. Das kann natürlich dazu führen, dass der Code ein bisschen größer ist, als es bei einem Prozessor, der unterschiedlich lange Befehle hätte. Dann hat man sich überlegt, wir lassen die eigentliche CPU-Architektur gleich, alle Register sind nach wie vor 32-Bit, aber wir machen die Befehle nur noch 16-Bit groß und packen eben die am meisten gebrauchten Befehle da rein in dieses 16-Bit-Instruction-Set. Und so exotischere Dinge, da braucht man halt dann zwei Befehle dafür. Und mit so einem Thumb, man kann dann beim Compiler einfach sagen, will ich jetzt für ARM generieren oder für Thumb. Und wenn ich Thumb auswähle, ist mein Code halt, naja, ich würde sagen, durchschnittlich ein Drittel oder mehr kleiner, ohne dass ich irgendwelche Features nicht mehr hätte. Also wie gesagt, die Register sind alle noch 32-Bit und es macht für mich an und für sich keinen Unterschied. Und ja, das ist schon, also es ist viel, viel Intelligenz, glaube ich, ins Instruction-Set geflossen und auch die Evolution ist deutlich, deutlich logischer als jetzt irgendwie bei x86. Das ist irgendwie so ein bisschen ein Monstrum geworden.
+
+00:43:53.570 --> 00:44:10.950
+<v SPEAKER_2>Das heißt, der Befehlssatz ist so oder so einfach. Das heißt, es gibt, man verzichtet möglichst auf komplexe Sachen. Was sind zum Beispiel so, was ist ein Beispiel für was da nicht drin ist, dass man so in anderen Komplexen findet, wo fängt Komplex an? Was würde nie in einem Armbefehlssatz landen?
+
+00:44:12.590 --> 00:44:52.650
+<v SPEAKER_1>Na ja gut, also es ist jetzt vielleicht ein schlechtes Beispiel, was mir sofort in den Kopf kommt, ist irgendwie Sinus- oder Cosinus-Berechnung. Da gibt es eine Instruktion dafür irgendwie in x86-Befehlssatz. Also sowas gäbe es garantiert nicht bei ARM. Ja, das ist eine ganz komplexe Operation. Und das muss ich halt in Software machen oder in der Lookup-Tafelle oder was auch immer ich irgendwie haben will. Aber das macht nicht der Prozessor. ARM hat eben keinen Microcode. Das unterscheidet halt auch sie von jetzt x86 oder anderen CPUs. Das heißt, die Instruktionen werden so ausgeführt, wie sie da stehen und die werden nicht noch im Prozessor in ein anderes, in Microoperations umgesetzt oder irgendwas derart.
+
+00:44:52.670 --> 00:45:14.470
+<v SPEAKER_2>Das heißt, man kann sagen, es ist schon Microcode sozusagen. Also das, was bei CIS sozusagen noch mal zwei Layern ist. Man hat so einen Riss und da drüber noch mal so eine CISC-Optik. Da fällt einfach hier der CISC-Layer einfach weg. Man ist halt einfach direkt auf der nackten Maschine. Das heißt, man hat es eigentlich auch mehr mit dem Prozessor wieder zu tun. Das ist so ein Zurück zu, wo wir mal hergekommen sind.
+
+00:45:15.110 --> 00:45:41.490
+<v SPEAKER_1>Ja, es liest sich auch gut. Also ich verbringe auch viel in disassemblierten ARM-Object-Code. Ohne dass ich mich jemals hingesetzt hätte und irgendwelche Bücher studiert und mir im letzten Detail jede Instruktion beigebracht oder so, man guckt da hin und das macht einfach Sinn. Da gibt es Load und Store und Add und Subtract und Sprung-Gefehle mit Bedingungen oder nicht und so. Aber es ist alles sehr einfach zu lernen und sehr überschaubar.
+
+00:45:46.050 --> 00:46:07.230
+<v SPEAKER_2>Vielleicht nochmal so zu den Sachen, die bekannt sind. Also ein paar Sachen haben wir jetzt ja schon genannt. Also die ersten ARM-Prozessoren, im Newton dann halt der Strong-ARM. X-Scale ist sicherlich auch ein Begriff, den der eine oder andere schon mal gehört hat. Dabei handelt es sich dann um eine Weiterentwicklung dieser Strong-ARM-Variante, die dann bei Intel gelandet ist.
+
+00:46:07.610 --> 00:48:19.250
+<v SPEAKER_1>Genau, es gab zu ARM 6-Zeiten, also das ist dann ARM Version 4, also Instruction Set 4, hat Digital Equipment Corporation eine Lizenz, also diese Very-Low-Lizenz erworben von ARM, um eben selber daran zu optimieren und diese CPU weiterzuentwickeln. Und das haben sie getan. Und das war eben der Strong-ARM, der ist dann in ein paar, ich glaube drei oder vier Inkarnationen irgendwie auch so verkauft worden. Strong-ARM 110, 1110, 1111 oder irgendwie so hießen die dann. Und dann gab es irgendwie einen Rechtsstreit zwischen Intel und Digital Equipment Corporation und als Teil des Settlements hat dann irgendwie, anstatt Geld zu zahlen, hat dann DEC irgendwie diese Arm-Sparte an Intel übertragen sozusagen als Bezahlung. Ich weiß nicht mehr, worum der Rechtsstreit jetzt im Detail ging. Und Intel hat dann aus dem Strong-ARM den X-Scale gemacht, das ist halt nur irgendwie Marketingname, sonst irgendwie. Und hatten dann dadurch ihre alten Riskprozessoren, so die i960 und so, wer sowas kennt, ersetzt. Also Intel hatte auch noch so ein paar irgendwie Riskprozessoren für bestimmte Aufgaben im Angebot und die waren aber halt irgendwie schwer vernachlässigt und gar nicht mehr irgendwie aktuell oder modern. Sie hatten aber nach wie vor Kunden, die das halt brauchen und durch die X-Scale-Geschichte hatten sie dann da schöne Lösungen dafür bei der Hand. Intel hat diese Prozessoren dann in unterschiedlichen Bereichen eingesetzt, einmal als sogenannte Netzwerkprozessoren, das sind die IXP gewesen, IXP 425 oder auch 2400 und Konsorten. Die sind eben in ganz vielen Routern und irgendwelchen Switches und ähnlichen Netzwerkergeräten verbaut worden. Und was eher bekannt ist, ist dann die PXA-Serie PXA 255, 270 und so, die Mobiltelefonprozessoren, die man kennt.
+
+00:48:19.270 --> 00:48:42.210
+<v SPEAKER_2>Die man so kennt. Genau, die handelsüblichen Mobiltelefonprozessoren. Gibt es denn außer X-Scale noch andere ARM-Designs, die so mit ihrem eigenen Brand bekannt sind, wo man vielleicht auf den ersten Blick gar nicht weiß, dass da ARM dahinter steckt?
+
+00:48:42.230 --> 00:49:38.090
+<v SPEAKER_1>Nicht so in der Art, nein. Also nicht, wo jemand sagen würde, das hier ist eine CPU-Architektur und da steckt letztlich ARM dahinter, weil wir nennen es anders, ist mir nicht bekannt. Es gibt sehr wohl Leute, die ARM-Cores verkaufen, nicht verkaufen, ja das vielleicht auch, aber verbauen und Produkte damit schaffen, die nicht auf den ersten Blick als ARM verkauft werden. Das kommt dadurch zustande, dass man eben lizenziert diesen CPU-Core, baut den irgendwo ein, macht ein System-on-a-Chip und TI sagt jetzt nicht, sie verkaufen einen ARM-Prozessor, sondern sie verkaufen einen OMAP-Prozessor. Der hat aber dann halt einen ARM-Core drin. Oder, was weiß ich, bei Samsung heißen die halt irgendwie kryptischere Namen, also sowas wie S3C, 6410 oder sowas. Und da ist auch ein ARM drin. Und jemand, der jetzt sowas einkauft, der weiß das auch. Aber ob jetzt die allgemeine Fachöffentlichkeit, das Imham, der teilweise, ist natürlich jetzt nicht...
+
+00:49:38.270 --> 00:50:25.750
+<v SPEAKER_2>Na, vielleicht geht der Trend ja jetzt schon langsam wieder so hin. Also wenn man sich so das neueste Google-Phone anschaut, Nexus One, da ist irgendwie ein Snapdragon-Prozessor drin, was letzten Endes auch nur ein ARM ist. Apple ist ja jetzt auch mit dem iPad, was sie angekündigt haben, auch dazu übergegangen. Wohl ein eigenes... Na ja, da kann man jetzt nur drüber rätseln, was das ist. Das Ding heißt dann halt irgendwie A4 und was auch immer da drin ist. Aber da sie ja selber ein eigenes Prozessoren-Team haben, kann man davon ausgehen, dass sie sich auch ein Design genommen haben und dann ihren eigenen Prozessor gebaut haben und auch Grafik mit einbauen. Das ist eine reine Vermutung. Wie auch immer, auf jeden Fall stecken sie da jetzt ein eigenes Branding mit drauf. Darauf halte ich jetzt eigentlich erst mal hinaus.
+
+00:50:26.250 --> 00:51:42.390
+<v SPEAKER_1>Ja, also in der Regel wird das Branding... Ich, Eiffel, kann man nur spekulieren, aber in der Regel ist das Branding tatsächlich eben um das Außenrum. Das heißt, wenn ich jetzt so ein OMAP, das ist ein gutes Beispiel, weil die halt sehr viel außenrum bauen, so ein OMAP-Prozessor von Texas Instruments nehme, dann ist das eben ein ARM-Core, an dem haben sie soweit ich weiß auch nichts verändert. Das ist ein ganz normaler ARM-Core, je nachdem, was man halt kauft jetzt für ein spezielles Produkt. Dann haben sie daneben ein Texas Instrument DSP noch gesetzt. Da gibt es halt ein bisschen irgendwie Shared Memory zwischen den beiden. Dann gibt es alle möglichen Peripherieeinheiten, natürlich irgendwie Grafik, Anbindungen zu externen Bauteilen, also SDIO, SPI, E2C und so weiter und so weiter. Und diese Integrationsleistung darf man jetzt nicht unterbewerten. Gerade was den Stromverbrauch betrifft, ist das auch sehr relevant. Der CPU-Core, das sieht man jetzt bei dem ganzen Atom-System schön, der ist ja nur ein kleiner Teil des Stromverbrauchs. Wie effizient arbeitet der Speicherkontroller, wie effizient arbeitet die Grafik, die daneben steckt und so weiter. Das sind Fragen, die schon auch sehr hohes Differenzierungspotenzial zwischen diesen Herstellern bieten. Der CPU-Core ist dann halt der gleiche gut, aber außen rum hat man ja noch sehr viele, viele andere Dinge.
+
+00:51:44.090 --> 00:51:49.750
+<v SPEAKER_2>Was sieht man da? Atom ist eine neue Low-Power-Prozessoren-Serie von Intel.
+
+00:51:49.770 --> 00:51:50.110
+<v SPEAKER_1>Genau.
+
+00:51:50.130 --> 00:51:59.690
+<v SPEAKER_2>Sozusagen ihr versucht, dieser ARM-Welt auch mal wieder etwas entgegenzuhalten. Ich weiß nicht so ganz genau, wie sie sich da positionieren, aber du meintest gerade, da sieht man irgendwas. Was sieht man da?
+
+00:51:59.710 --> 00:53:37.030
+<v SPEAKER_1>Da sieht man, also der Atom selber, dieser CPU-Core, den könnte man jetzt mit einem ARM-Core vergleichen. Der braucht tatsächlich für Intel-Verhältnisse außerordentlich wenig Strom. Für ARM-Verhältnisse ist es immer noch relativ viel, aber schon deutlich näher, als was man von Intel normalerweise gewöhnt ist. Aber der Prozessor allein bringt mir ja nichts. Ich brauche darum eben ein Chipset. Beim Atom ist das eben nach wie vor noch extern. Also ich kaufe mir da einen separaten Intel-Chipsatz, den löte ich neben dem Prozessor. Und dieses Chipset, das braucht dann gleich mal 4-, 5-, 6-, 10-mal so viel Strom wie der Prozessor selber. Und dann, wenn ich die Gesamtleistungsaufnahme des Systems anschaue, dann ist das halt was anderes. Also ich kriege ARM-basierte System-on-a-Chips, also wo ich CPU und diese ganze Peripherie auf einem Siliziumplättchen habe, die weniger Strom verbrauchen als irgendwie halt das komplette System, das man dann eben von der Intel-Seite her angeboten bekommt. Und daran wollte ich nur eben zeigen, dass man jetzt nicht sagen darf, na gut, die Leute, die machen hier alle nur Copy und Paste. Also diese Integrationsleistung, welche Peripherie-Sachen baue ich da außen rum, wie effizient arbeiten die, wie performant sind die, wie sieht es mit dem Power-Management aus? Man muss ja so eine CPU auch die Taktrate dynamisch einstellen können und das Schlafen legen, aber trotzdem noch aufwachen, wenn ein Anruf vom Telefonnetz reinkommt und solche Sachen. Da steckt schon auch viel Know-how drin. Also wird jetzt nicht diese ARM-Integratoren, die jetzt keine eigene CPU-Core-Entwicklung machen, die machen schon auch viel andere Dinge.
+
+00:53:37.330 --> 00:54:32.630
+<v SPEAKER_2>Ja, ich wollte jetzt auch nur so ein bisschen Orientierung bieten in diesem Begriffewald, weil das ist natürlich schon so verwirrendlich. Es fängt ja schon mit dieser Instruktionssatz- und Prozessor-Core-Bezeichnung irgendwie an, dass viele das halt nicht auseinanderhalten können. Da redet halt der eine von einer ARM V7-Architektur und jetzt wissen wir, aha, das ist jetzt der Befehlssatz und das sagt so jetzt erst mal überhaupt nichts aus, außer dass man jetzt konkret weiß, wie man den Compiler einstellen muss bzw. wenn man jetzt selber da Assembler hackt, was man da eben für Instruktionen verwenden kann und welche nicht. Aber entscheidend für die Performance und für die Integration ist ja letzten Endes die konkrete CPU, die da reinkommt und da gibt es ja dann auch eine ganze Reihe von Begriffen, die derzeit durch die Gegend fliegen. Bleiben wir vielleicht nochmal bei den Begriffen. Also was jetzt derzeit herumgeht, ist irgendwie Cortex A8, A9. Wie hängt das zusammen? Also was ist da jetzt irgendwie relevant, wofür?
+
+00:54:32.850 --> 00:54:41.230
+<v SPEAKER_1>Ja, also der Name Cortex A8 ist zum Beispiel jetzt eben der Name für einen bestimmten CPU-Core. Also die Implementation von so einem Instruction Set.
+
+00:54:41.250 --> 00:54:44.590
+<v SPEAKER_2>Gibt es auch A8 ohne Cortex oder ist das einfach so der zusammengehörende Begriff?
+
+00:54:44.610 --> 00:55:04.550
+<v SPEAKER_1>Nein, das ist der zusammengehörende Begriff. Cortex ist wieder so ein Marketing-Fu-Bar von ARM. Ich persönlich finde das irgendwie sehr daneben. Früher hatten sie immer ganz schöne Bezeichnungen. Also früher gab es sowas, wie ich schon vorhin sagte, ARM 920T, ARM 926EJS, ARM 7TDMI, ARM 1136, ARM 1176 usw.
+
+00:55:04.570 --> 00:55:06.270
+<v SPEAKER_2>Geht einem locker von der Zunge, würde ich sagen.
+
+00:55:06.830 --> 00:55:24.830
+<v SPEAKER_1>Ja, aber da kann man sich konkret was darunter vorstellen, dahingehend, dass die Nummern irgendwie systematisch aufsteigend sind. Die erste Zahl, also ist es ein ARM 7TDMI, da weiß ich halt, aha, ARM 7 ist also irgendwie ein Instruction ZV4, ja. Das sind, ja, du schaust mich an.
+
+00:55:24.850 --> 00:55:27.230
+<v SPEAKER_2>Ja, sehr naheliegend, das kommt man jetzt auch direkt zu.
+
+00:55:27.250 --> 00:57:55.930
+<v SPEAKER_1>Nein, es gab halt, es gab einen korrespondierend. Und dann steht da halt dahinter TDMI, dann weiß ich, aha, T ist für Thumb, das heißt, dieser Prozessor kann irgendwie Thumb-Instruktionen. Dann steht da so was wie, ähm, jetzt muss ich nachdenken, aber die einzelnen, oder bei den, bei den, also jeder Buchstabe bedeutet was. Genau, wenn da ein J da steht, dann hat er so Java-Erweiterungen, dass er so ein Java-Byte-Code ausführen kann und so weiter. Das hat er also irgendwie technischen Sinn gemacht, so wie halt vielleicht auch bei Intel, früher 286 oder 386 und so weiter. Man wusste ungefähr, aha, da ist was damit. Und dann kam irgendwann hier so Pentium und dann hießen alle Pentium und dann heißen sie irgendwann alle Core, aber man weiß halt nicht mehr so wirklich, was dahinter steckt. Und so ähnlich ist es jetzt eben mit den Cortex auch so. Man muss aufpassen, Cortex alleine sagt halt nichts aus. Das ist genauso wie, ich hab da einen Pentium-Prozessor. Ja, was denn? Eins, zwei, drei, vier. Ja, in welcher Inkarnation? Und Cortex A8 ist also eben das, wie soll ich sagen, zweitaktuellste CPU-Core-Implementierung, die es von ARM gibt. Cortex A9 wäre die allernäueste. Cortex A8 implementiert das Instruction-Set V7, also ist eine ARM V7 eine Implementation davon. Und Cortex A8 findet man in ganz vielen High-End-Systems on the Chips im Moment. Das heißt, wenn man sich so ein OMAP 3, z.B. wer von Texas Instruments eine Produktreihe, die das einbaut, wenn man sich Produkte anschaut, hier irgendwie die dritte Generation, Apple iPod Touch hat sowas drin, das Beagle-Pod, iPhone 3GS, Palmpre, ganz viele Samsung-Telefone und so weiter, die haben eben alle diese Generation von Core verbaut. A9 ist im Prinzip der A8 mit einigen kleinen Veränderungen, aber vor allem eben mit Multiprozessor-Fähigkeit. Das heißt, man kann dann endlich, wie man es im x86-Bereich kennt, mit Dual-Core-CPUs einen Dual-Core Cortex A9 erwerben. Das ist aber das, wo... Also ich habe da schon funktionierende Systeme gesehen, weil ich jetzt eben in dem Bereich tätig bin, aber es gibt noch keine End-Benutzervrodukte, die jetzt einen Cortex A9 drin hätten. Also da ist es noch nicht so weit. Das werden wir in diesem Jahr sicherlich sehen, aber da gibt es...
+
+00:57:55.950 --> 00:57:59.190
+<v SPEAKER_2>Das heißt, die A9-Architektur ist jetzt die erste, die überhaupt erst Multi-Core unterstützt?
+
+00:57:59.210 --> 00:58:14.150
+<v SPEAKER_1>Das ist nicht die erste. Es gibt auch einen ARM 11 MP-Core, dem Hörensagen nach. Also man kann den irgendwie kaufen bei ARM. Es gab wohl mal ein paar Hersteller, die sowas verbaut haben, aber es hat sich nie sonderlich durchgesetzt mit den mehreren Cores.
+
+00:58:14.170 --> 00:58:20.170
+<v SPEAKER_2>Ja, was ja nochmal so eine eigene Schwierigkeit für sich ist, weil die Software dann ja auch daraus erst mal Nutzen ziehen muss.
+
+00:58:20.210 --> 00:58:46.510
+<v SPEAKER_1>Richtig, also da habe ich auch meine großen Zweifel oder sagen wir mal, würde ich sehr vorsichtig sein, im x86 Bereich kennen wir jetzt SMP, also Symmetrious Multiprocessing mit mehreren Cores schon länger, erst mit zwei gesündten Prozessoren auf zwei gesündten Sockeln, dann eben mehrere auf einen. Und die ganze Software-Branche ist halt seit vielen Jahren damit beschäftigt, Eskalierung auf mehrere CPUs irgendwie ordentlich gebacken zu kriegen und das hat auch lange gedauert.
+
+00:58:46.530 --> 00:58:51.790
+<v SPEAKER_2>Beziehungsweise ich finde sie ist auch immer noch voll dabei und noch lange nicht am Ziel.
+
+00:58:51.810 --> 00:59:58.010
+<v SPEAKER_1>Das nicht, nein. Aber gleichzeitig steigt halt die Zahl der Chores auch immer. Wir reden jetzt über sechs bis zwölf Choresysteme im Intel-Bereich und das wird sicherlich weniger werden. Im ARM-Bereich allerdings hat halt kein Mensch bisher, wie gesagt es gab diesen ARM 11 MP-Core, den kaum jemand gesehen hat auf diesem Planeten. Aber jetzt, wo tatsächlich die ersten CPU-Samples ausgeliefert werden mit dem Dual-Core A9, die ganze Software-Branche, die eben Software für diese ARM-Prozessoren entwickelt, die hat diese Entwicklung erst noch vor sich. Ich meine, es gibt irgendwelche High-Level-Anwendungen, was weiß ich, irgendeinen Browser, den ich sowohl für ARM als auch für x86 kompilieren kann. Der hat dann vielleicht schon diese Arbeit geleistet, aber gerade jetzt so im Betriebssystembereich und auch überhaupt das alles mal zu testen und so, ich denke, da wird man schon eine Zeit lang warten müssen, bis das so skaliert, wie wir das vielleicht gerne hätten, auf den mehreren CPUs. Also da bin ich noch skeptisch. Das ist natürlich für ARM interessant, weil sie dann nicht nur eines und dann zwei Lizenzen gleich verkaufen, das ist ja klar. Also die sind natürlich dahinterher.
+
+00:59:58.030 --> 01:00:14.810
+<v SPEAKER_2>Ja gut, und ich meine, am Ende des Tages, werden sie wahrscheinlich da auch dasselbe Problem haben wie alle anderen Prozessorbooten auch, dass es einfach sehr viel einfacher ist, die Gesamtperformance des Systems, so die Software mitspielt, dadurch zu steigern, dass man eben einfach mehr Cores zum Einsatz bringt, anstatt jetzt noch schnellere Cores zu machen.
+
+01:00:14.830 --> 01:00:15.470
+<v SPEAKER_1>Richtig, ja.
+
+01:00:15.490 --> 01:00:37.270
+<v SPEAKER_2>Wobei die ja jetzt nicht so mega hoch getaktet werden, üblicherweise, wie man das so vom Desktop gewohnt ist. Man da so kurz vor drei Gigahertz ist jetzt gerade so, naja, so um die drei Gigahertz ist gerade so das, wo es sich so ein bisschen einpendelt. Macht zumindest so den Eindruck, mag einzelne Systeme geben, die ein bisschen schneller sind, aber so eigentlich tut sich da ja nicht so viel.
+
+01:00:37.290 --> 01:01:29.110
+<v SPEAKER_1>Ja, das ist halt wieder eine Frage, wie viel Aufwand stecke ich rein, wie viel Strom braucht es dann, was habe ich für einen Kühlungsbedarf und so. Da kommen halt viele Punkte zusammen. Im ARM-Bereich jetzt mit diesem High-End Cortex-H8, Cortex-A9 sind wir irgendwie bei den besten Implementationen. Davon sind wir irgendwie so, naja, ein bisschen überall ein Gigahertz angekommen. Und das wird vielleicht mal bis auf zwei Gigahertz hochgehen mit dem Cortex-A9. Aber das möchte man eigentlich auch nicht, weil der Stromverbrauch eben nicht linear mit dem Takt ansteigt, sondern in deutlich anderem nicht-linearen Verhältnis. Ich weiß nicht, ob es da eine Daumenriegel dafür gibt, aber es ist schon sehr stark. Also der Stromverbrauch steigt sehr deutlich mit dem höheren Takt. Und das möchte man eigentlich vermeiden, wenn es auf Batterielaufzeit und so geht.
+
+01:01:30.670 --> 01:01:46.570
+<v SPEAKER_2>Jetzt hast du ja auch schon eingangs gesagt, dass es so schon eine kleine Freude ist, mit ARM-Architektur zu arbeiten. Was schätzt du denn generell an der Architektur? Abgesehen davon, dass jetzt der Instruktionsbefehlsatz übersichtlich ist und das leicht zu verstehen ist.
+
+01:01:47.690 --> 01:02:34.210
+<v SPEAKER_1>Ja, ich denke für einen Entwickler auf Systemebene ist die Debug-Fähigkeit der ARM-Prozessoren einfach unglaublich toll. Eigentlich alle ARM-Cores seit ARMv4 aufwärts, also Architekturversion 4 bis 7 jetzt, das ist das, was man heute so findet. Also von einem kleinen PC-Preferiegerät bis hin zum Super-Highend ARM-Netbook oder Smartphone. All die haben eine eingebaute Hardware-Debug-Unit, mit der ich also durch einen externen, also ich schließe das an meinen PC an, auf dem ich meine Entwicklungen mache. Und ich kann dann von dort aus den CPU-Core anhalten, ich kann Single Stepen durch den Code, ich kann mir Register auslesen.
+
+01:02:34.230 --> 01:02:36.290
+<v SPEAKER_2>Nochmal mit einem extra Kabel ran?
+
+01:02:36.310 --> 01:03:32.670
+<v SPEAKER_1>Genau, das wird in der Regel über JTAG gemacht. Also JTAG ist so ein Standard für den Test von integrierten Bausteinen auf Platinen. So sprünglich hat man das mal entwickelt, um zu testen, ob denn alle Lötstellen und alle Verbindungen auf der Platine ordentlich sind. Da kann man quasi über einen 5-poligen Anschluss ohne dass der Schaltkreis, den ich da bearbeite, überhaupt läuft, der kann ausgeschaltet sein, kann ich dann beliebige Werte an den Ein- und Ausgängen anlegen und kann das irgendwo auf der Platine messen, ob das rauskommt, was ich will. Also das ist eine Testfeature für den Elektronikfertigungsprozess. Und darauf aufgedockt oder angedockt haben die bei ARM dann ihre, Gott, Embedded Trace Macrocellen, nennen sie das, glaube ich. Also da gibt es auch wieder ganz furchtbar viele Marketingbegriffe dafür. Letztlich geht es darum...
+
+01:03:32.690 --> 01:03:43.250
+<v SPEAKER_2>Also so ein bisschen das Äquivalent zu diesem Stöpsel im Hirn bei Matrix, ja. Der Mensch kann auch in so einem schlafeinlichen Zustand sein. Man kann dann irgendwie reinladen und runterladen und mal gucken, was so Sachen ist.
+
+01:03:43.270 --> 01:03:56.050
+<v SPEAKER_1>Genau. Also man kann die vollständige Kontrolle über den Prozessor übernehmen von außen, von dem ersten Clock-Zyklus an, nachdem ich den einschalte. Oder ich kann ihn auch gleich irgendwie im Reset lassen und kann so tun, als ob ich der Prozessor wäre, mit der Verlierung.
+
+01:03:56.070 --> 01:03:57.570
+<v SPEAKER_2>Also sind die ARM-Prozessoren die Einzigen, die das machen?
+
+01:03:57.930 --> 01:06:19.610
+<v SPEAKER_1>Nein, nicht die Einzigen, die das machen, aber die Einzigen, die das so konsequent umsetzen und die es so konsequent dokumentieren und wo es so viele Tools dafür gibt. Also es gibt durchaus auch bei anderen Prozessoren sowas, aber dann gibt es halt einen Propertels Tool vom Prozessorhersteller, das man dann verwenden muss und es kostet irgendwie unendlich viel Geld. Und es funktioniert nicht so, wie man sich das vorstellt. Bei ARM ist das halt dokumentiert. Und es gibt irgendwelche Anbieter von kommerziellen Werkzeugen. Es gibt freie Werkzeuge. Und ich kann jetzt so ein ARM-basiertes System mit Hardware im 20-Euro-Bereich debuggen. Und zwar auf Singles. Also ich kann wirklich diese CPU anhalten, kann einzeln durch die Instruktion gehen, kann mir die Register angucken, kann irgendwelche Watchpoints setzen oder Breakpoints. Und kann Hardware debuggen, so wie ich es normalerweise nur mit Software kann. Das ist also ein unglaublicher Komfort, wenn man auf Betriebssystem-Ebene entwickelt auf so einem Gerät. Und das ist in dem Umfang unglaublich komfortabel und möchte man eigentlich nicht mehr missen, wenn man das mal kennengelernt hat. Bei PowerPC gab es das auch zu einem gewissen Maß. Aber das ist etwas, was im x86-Bereich völlig unüblich ist. Man stelle sich vor, man will da einen BIOS oder einen Bootloader für einen Intel-CPU entwickeln. Was macht man denn da? Es gibt überhaupt keine IO-Leitungen mehr, die man wirklich messen könnte, aber entweder sind sie so furchtbar schnell, dass man nur noch im Preis von Einfamilienhäusern irgendwie Messgeräte dafür bekommt. Oder aber die Signale sind alle virtualisiert. Bei AMD kommt ja kein Adress und kein Datenbus mehr raus, wo ich noch sehen kann, was passiert, sondern da fällt Hyper-Transport raus. Das ist ein virtualisiertes Bus-Protokoll. Dann habe ich eben keine Möglichkeit, keinen Hardware-Debugger und nichts. Da kann ich dann nur noch ausprobieren und so lange rumprobieren, bis es dann irgendwann mal tut. Aber es ist halt nicht irgendwie komfortabel. Bei ARM, wenn ich so einen Bootloader debuggen will, da versetze ich die CPU erstmal irgendwie in den Clock-steht-still-Modus, mache ein Reset und dann kann ich von der ersten Instruktion dann irgendwie alles einzeln beobachten.
+
+01:06:19.630 --> 01:07:11.230
+<v SPEAKER_2>Das heißt, der erfolgt nicht mehr seinem eingebauten Takt, sondern man gibt den Takt einfach vor und sagt, jetzt ist mal wieder ein Millionstel Zeit vergangen. Und dann kann man alles auslesen, was steht denn jetzt im Register, Single-Stapping durch das BIOS oder was auch immer gerade als erstes läuft. Das ist natürlich extrem nachvollziehbar, insbesondere bei so Embedded-Geräten, die auch darüber hinaus eigentlich in der Regel mit relativ wenig IO und Ports oder Möglichkeiten Informationen rein oder rauszukriegen. Wenn man da so einen Wecker hat und so, der kann die Uhr anzeigen, aber das war es dann auch. Wenn man nicht die ganze Zeit sein Display für andere Sachen zweckentfremden will. Also, er ist entwicklerfreundlich, er ist extrem stromsparend. Man hat so den Eindruck, er übernimmt so ein bisschen den Prozessormarkt. Siehst du denn da, ist das eigentlich alles 32-Bit, worüber wir was geredet haben?
+
+01:07:11.270 --> 01:07:12.030
+<v SPEAKER_1>Ja, alles.
+
+01:07:12.050 --> 01:07:14.350
+<v SPEAKER_2>Irgend ein 64-Bit-Pfad bei der ganzen Geschichte?
+
+01:07:15.090 --> 01:07:32.230
+<v SPEAKER_1>Also, es gibt Single Instruction, Multiple Data Erweiterungen, also vergleichbar zu diesem MMX-SSE-Vektor. Genau, verahmnet sich das Neon. Ich weiß nicht, wie es darauf kam, weil Neonbeleuchtung auch irgendwas mit Multimedia zu tun hat. Ich weiß es nicht.
+
+01:07:32.250 --> 01:07:35.970
+<v SPEAKER_2>Die Marketing-Abteilung hat wahrscheinlich mittlerweile ein besseres Standing als noch vor ein paar Jahren.
+
+01:07:35.970 --> 01:07:52.730
+<v SPEAKER_1>Ja, so nennen die das da. Und ja, da hat man dann, ich glaube, man kann bis zu 128-Bit mit einer Instruktion irgendwie bearbeiten. Aber jetzt so gewöhnliche, also die ganzen Register sind alle 32-Bit und alle Institutionen arbeiten auf 32-Bit.
+
+01:07:52.750 --> 01:08:04.310
+<v SPEAKER_2>Ich denke, die 4-Gigabyte-Grenze ist jetzt im Embedded-Markt, steht jetzt noch nicht unbedingt unmittelbar vor der Überschreitung. Aber auch das wird ja dann irgendwann stattfinden, nicht?
+
+01:08:05.190 --> 01:08:07.370
+<v SPEAKER_1>Ja, also, wenn man mal die High-End...
+
+01:08:07.390 --> 01:08:21.830
+<v SPEAKER_2>Wenn man ein handliches Gerät hat, was 4-Gigabyte RAM hat, gut, das können wir uns jetzt Frühjahr 2010 vielleicht nicht so richtig live ausmalen, was da wohl das erste Gerät sein wird, was das so macht. Aber das haben wir nicht schon alles geglaubt, was nie erreicht werden würde.
+
+01:08:21.910 --> 01:08:27.290
+<v SPEAKER_1>Nee, ich denke, es wird bestimmt erreicht. Nur, wann das soweit ist, ist natürlich noch mal eine andere Frage.
+
+01:08:27.310 --> 01:08:58.030
+<v SPEAKER_2>Ja, aber denkst du, dass eine Transition auf 64-Bit für ARM problemlos zu machen ist? Also PowerPC zum Beispiel in seiner Zeit, obwohl ja Ende 80er, Anfang 90er Jahre entwickelt, war ja von Anfang an schon ganz klar mit dem Blick auf, wir werden irgendwann 64-Bit sein, entwickelt worden. Da war dann am Anfang erst mal nicht 64-Bit, das waren 32-Bit Prozessoren und so weiter, aber man hatte im Prinzip schon den Plan und man wusste, wie man es dann tun wird. Man wusste bloß irgendwann halt erst mal bauen. Aber das scheint ja jetzt bei ARM so noch nicht der Fall zu sein.
+
+01:08:58.870 --> 01:10:08.590
+<v SPEAKER_1>Nee, ich weiß nicht. Ich meine, ich arbeite nicht für ARM. Ich habe da keine Beziehungen oder keine Informationen, die nicht öffentlich sind. Ich weiß nicht, was sie da vorhaben oder ob sie da was vorhaben. Sicherlich werden sie so intelligent sein, da vorausschauend zu sein. Was mir im Embedded-Bereich, wenn man denn 64-Bit im Embedded-Bereich haben will, eher irgendwie interessant erscheint, wäre wahrscheinlich, sich auf den Adresspreis zu konzentrieren. Ich meine, Intel hat ja auch irgendwann PAE und solche Sachen, also Physical Address Space Extension und so gemacht, wo sie den 32-Bit-Prozessor dann eben die Möglichkeit gaben, mehr als 4 GB RAM zuzugreifen. Ob man jetzt tatsächlich, nur weil man mehr RAM adressieren möchte, unbedingt alle Register und alles 64-Bit haben muss, wage ich zu bezweifeln. Bei PowerPC war das auch echt ein großes Problem, mit dem 64-Bit dahingehend, dass der Code auf einmal doppelt so viel Platz braucht, genauso wie bei Alpha. Bei den RISC-Architekturen ist ein Befehl so groß wie die Wortlänge. Ich habe das ja gerade schon angesprochen, auch mit dem Thumb.
+
+01:10:08.610 --> 01:10:11.310
+<v SPEAKER_2>Ja, wo man explizit nochmal sagt, wir brauchen weniger.
+
+01:10:11.490 --> 01:10:50.930
+<v SPEAKER_1>Ja, das ist so eine Lösung. Und so etwas wäre vielleicht auch eben möglich, dass man unter Umständen sich was ausdenkt, wo man sagt, gut, wir können jetzt 64-Bit-Adressen ansprechen und vielleicht sind unsere Register auch 64-Bit, aber das Instructionset bleibt kleiner. Also gerade im Embedded-Bereich auf einmal die gesamte Code-Größe zu verdoppeln, heißt ja auch, man braucht den doppelten Flash-Speicher, den doppelten Speicherturchsatz, und das heißt auch wieder teurer und mehr Stromverbrauch, wenn ich den Arbeitsspeicher schneller ansprechen muss und so weiter. Habe ich doch große Skepsis, dass wir da diesen normalen 32-64-Bit-Riss gestrungen, dass wir den sehen werden im Embedded-Bereich.
+
+01:10:50.950 --> 01:11:37.850
+<v SPEAKER_2>Glaub ich nicht. Okay, ja, das ist nachvollziehbar. Trotz alledem ein anderer Trend, der sich ja im Prozessormarkt, das haben wir auch schon angesprochen, sich jetzt abzeichnet. Und jetzt gerade für so ein System, so eine Architektur, die ja insbesondere an der Stelle brilliert, wo es so um System-on-a-Chip geht, die Grafikansteuerung kriegt ein zunehmendem Maße Bedeutung. Das heißt, man will mehr Grafikpower haben. Ganz klar, auch in so einem Embedded-Bereich spielt auf einmal 3D OpenGL einfach eine Riesenrolle. Da gibt es ja auch so verschiedenste Anbieter, die dann in dieser Armwelt ganz gut leben. Das Einzige, was mir so einfällt, ist diese PowerVR-Bude, glaube ich auch eine Bude aus Britannien, die da spezielle 3D-Steine macht in dem Bereich. Wie sieht es denn da aus?
+
+01:11:39.510 --> 01:12:11.090
+<v SPEAKER_1>Ja, also das ist so, dass Grafikbeschleuniger für System-on-a-Chips im Embedded-Bereich wichtig sind, also gerade mit den ganzen modernen 3D-User-Interfaces auf den Smartphones. Sicher jetzt nicht bei den ganzen ARM-7-Lizenzen im Bluetooth-Chip, da brauche ich natürlich kein 3D, aber für diese Application-Prozessoren. Die Imagination Technologies stellen also diese PowerVR-Kerne her. Das ist auch eine reine Fabless-Firma, also die bauen auch keine eigene Hardware. Ähnlich wie ARM kauft man sich da eine Lizenz ein.
+
+01:12:11.110 --> 01:12:13.930
+<v SPEAKER_2>Aber die haben mit ARM so nichts zu tun, erstmal?
+
+01:12:13.950 --> 01:12:25.450
+<v SPEAKER_1>Meines Wissens nach nicht, nein. Klar, da gibt es bestimmt irgendwelche strategischen Vermarktungs- und irgendwie sonstige Kooperationen und so, aber jetzt, dass da irgendwie das ein Ableger wäre oder nennenswerte Beteiligungen.
+
+01:12:25.470 --> 01:12:43.130
+<v SPEAKER_2>Es ist erstaunlich, dass es auch wieder Briten sind. Ich war ja eigentlich in Britannien nie so... Ich meine, wer hat die eigentlich auf der Liste? Wenn man heute irgendwie über Prozessoren nachdenkt, dann gibt es vielleicht Leute in Amerika, die denken sich was aus. Und in Asien wird alles gebaut und auf einmal sitzen noch die Briten in der Mitte und haben irgendwie was mitzureden.
+
+01:12:43.350 --> 01:13:12.870
+<v SPEAKER_1>Die haben auch sehr gute Standing. Die ARM-Gründer wurden auch schon mehrfach von der Queen mit sonst irgendwelchen Ehren und Technology Award of the Queen. Die haben schon blaue Flecken auf den Schultern. Genau, ich glaube, mehr Ehrungen kann man gar nicht mehr in der Industrie in England bekommen. Also die wissen schon, was sie da irgendwie haben. Warum jetzt gerade diese Grafik-Leute im Embedded-Bereich auch wieder aus England kommen, kann man nur spekulieren.
+
+01:13:12.890 --> 01:13:16.650
+<v SPEAKER_2>Das haben sie einfach auch früh verstanden.
+
+01:13:16.670 --> 01:16:49.450
+<v SPEAKER_1>Es gibt durchaus noch andere Firmen. Nvidia hatte, was sage ich jetzt, ATI hatte ein System-on-a-Chip- oder Mobiltelefon-Grafik-Sparte. Die ist dann auch an AMD mitverkauft worden, als ATI an AMD verkauft wurde. Inzwischen ist die wieder abverkauft worden. Jetzt ist mir gerade entfallen, wer die gekauft hat. Es ist auf jeden Fall nicht mehr ATI, aber da gibt es eine Firma in dem Bereich. Die haben sich aber nicht, zumindest traditionell, nicht so durch 3D hervorgetan, sondern hauptsächlich durch Videocodec in Hardware-Geschichten und 2D-Beschleunigung. Klar haben die inzwischen auch 3D-Beschleuniger, aber das war jetzt nicht so das Kerngeschäft. Deswegen sind die eher attraktiv für, sagen wir mal, nicht die high end Smartphones, aber in den Features vor uns hat man ja auch immer mehr Features, haha. Ja, und genau. Aber da ist dann halt jetzt nicht unbedingt das 3D-User-Interface, aber zumindest, dass man so ein Video mal irgendwie angucken kann in Briefmarkengröße oder so, und da halt dann so ein Grafikbeschleuniger. Es gibt noch ein paar so kleinere, unbedeutende Firmen. Eine in Taiwan fällt mir gerade ein, die nicht so ganz so glückliche Produkte hat. Es gibt noch zwei, drei andere. Aber ja, der Marktführer ist ganz klar, also Imagination mit dem Power VR. Das könnte sich aber auch ganz schnell verschieben im Moment. Da gibt es nämlich die Entwicklung, dass vor zwei Jahren ARM eine, ich glaube, norwegische oder finnische Firma mit Grafikbeschleuniger-Know-How im Embedded-Bereich gekauft hat, deren Produkte heißen Mali. Gerade jetzt in den letzten Monaten haben mehrere namhafte System-on-a-Chip-Hersteller, die ARM verbauen, angekündigt, dass sie Mali verwenden. Einer davon ist ST Ericsson. ST Ericsson ist ein Merger von NXP, ST Microelectronics und Ericsson Mobile Platforms. Also da haben drei Firmen ihre Telefon-Chip-Satzspaten zusammengeworfen letztlich. Diese Firma hat jetzt angekündigt und auch schon die ersten Produkte schöpfen auch schon, wo ein ARM Core mit irgendwelchen Telefonie-Hardware-Elementen und einer Mali-GPU von ARM verbaut sind. Da gibt es den U8500, glaube ich, den sie da vorgestellt haben. Den konnte ich jetzt auch schon mal so in Live und in Farbe sehen. Samsung hat ganz vor kurzem, also jetzt in den letzten Wochen, ganz groß angekündigt, dass sie nicht nur zusätzlich welche mit Mali anbieten werden, sondern dass sie erstens ihre eigenen 3D, die nicht so furchtbar schnell sind, sondern dass sie ihre eigenen Grafikbeschleuniger auslaufen lassen und auch keinen PowerVR mehr einbauen, sondern nur noch Mali irgendwie in Zukunft. Und Samsung ist ja schon auch einer der größeren im Mobiltelefonprozessormarkt. Also da wird es spannend. Ich gehe davon aus, dass ARM halt einfach dadurch, dass sie... Man kauft ja sowieso den CPU-Kor von ihnen. Und wenn die das vom Business her elegant machen, dass man halt dieses Bundle aus Grafik und CPU günstig bekommt und das gut integriert ist, haben sie auf jeden Fall sehr gute Chancen gegen Imagination da irgendwie anzukommen.
+
+01:16:50.930 --> 01:16:55.170
+<v SPEAKER_2>Also es bleibt spannend, wer da überhaupt die Nase vorn hat.
+
+01:16:55.190 --> 01:17:17.370
+<v SPEAKER_1>Man sieht auch, dass ARM zunehmend versucht, mehr zu verkaufen. Also vom reinen CPU-Kor weg hin zu jetzt Grafik noch zum Beispiel. Aber auch um die CPU herum gibt es eben, was man alles noch dazukaufen kann. Dann muss man das nicht selber entwickeln. Also ich sage, Interrupt-Controller, DMR-Controller, solche Ferverisachen kann man dann alle gleich bei ARM noch mitkaufen.
+
+01:17:17.390 --> 01:17:22.890
+<v SPEAKER_2>Gibt es denn jetzt auch Prozessoren mit eingebauten Signalprozessoren auch noch mit drin, DSPs?
+
+01:17:22.910 --> 01:18:10.990
+<v SPEAKER_1>Es gibt separat DSPs. Das hat jetzt ARM gerade angekündigt, dass ARM selbst eine eigene DSP-Architektur sozusagen vorstellt und verkauft. Ob man die dann auch im Bundle einkaufen kann, ja, ist durchaus denkbar. Aber das ist noch zu früh. Das ist eine ganz neue Entwicklung. Aber man sieht immer mehr Vereinheitlichungen bei den System-on-a-Chips. Also wenn man sich jetzt so ein TIO-Map anschaut und so ein Samsung-System-on-a-Chip, dann verwenden die zum Beispiel die gleichen Interrupt-Controller. Da sieht man halt, da wird mehr vereinheitlicht und mehr standardisiert. Früher haben die halt solche Sachen selber entwickelt. Inzwischen sagen sie halt, ach weiß Gott, dann kaufen wir das halt noch schnell bei ARM mit dazu und spannen uns die Entwicklung.
+
+01:18:11.010 --> 01:19:13.570
+<v SPEAKER_2>Heißt das nicht im Unkehrschluss, dass es sich abzeichnet? Also gut, vielleicht gibt es da jetzt nicht so eine Singularität, dass sie sich jetzt alle auf eine Plattform einigen. Das war wahrscheinlich auf gar keinen Fall allein schon die unterschiedlichen Anforderungen all diesen Bereichen. Aber es gibt ja zumindest jetzt mit den Smartphones, wer weiß, vielleicht jetzt auch so mit dieser Tablett-Geschichte, die jetzt so scheinbar zum Zuge kommt. Also dass quasi diese neuen Formfaktoren auch schnell so ein bisschen auf dem Weg sind, so ihre Plattform zu finden, wo zumindest so viel vereinheitlicht ist, dass es schon so ein bisschen diesen Charakter hat, der PC-Plattform mit x86, wie wir das heute kennen. Dass die Hardware soweit standardisiert ist, da helfen ja auch die modernen Abstraktionen wie OpenGL und so weiter auch mit, dass es eben sehr viel einfacher wird, solche Systeme zu deployen und sich dann quasi neue Industriestandards herausbilden. Vielleicht sogar Industriestandards, die der PC-Plattform Konkurrenz machen?
+
+01:19:13.590 --> 01:23:58.210
+<v SPEAKER_1>Ich würde es mir wünschen. Leider ist die ARM-Welt halt sehr viel fragmentierter als die x86-Welt. Und das liegt jetzt sicher nicht an dem Core. Also die ARM-Cores, die sind alle die gleichen. Ja, daspektiv das Instruction-Set ist immer abwärtskompatibel, genauso wie am PC auch. Ich kann immer noch meinen alten DOS-Code zur Ausführung bringen und so. Das nicht, aber eben im Sinne dieser ganzen Peripherie. Bei Intel war es eben auch so, dass IBM in ihrem PC bestimmte Komponenten verwendet, gerade so banale Dinge wie Interrupt-Controller, Keyboard-Controller und so weiter. Und dann haben andere Firmen das eben nachgebaut, aber halt so, dass die Software kompatibel war. Weil die Software im PC-Bereich war halt in der Regel proprietäre Software, zumindest sehr lange. Und da musste man halt Hardware bauen, die mit der Existenz der Software interoperiert. Im ARM-Bereich ist das halt sehr viel anders. Im Embedded-Bereich, die Leute, die so Geräte herstellen, die haben die Software, die sie darauf ausliefern, im Source-Code in der Regel. Egal ob es proprietär ist oder nicht, Apple hat den Source-Code von ihrem Kram ja sowieso. Aber auch wenn ich jetzt irgendwie, Android- und Linux-basierten Sachen, ist ja sowieso der Quellcode da. Aber auch in sehr viel kleineren Systemen, wenn ich jetzt ein eigenes Embedded-Betriebssystem für ein Telefon habe, dann habe ich das ja auch selber geschrieben. Oder selbst wenn ich das lizenziere, bekomme ich das in der Regel im Source-Code. Das heißt, diese ganzen kleinen Referenzachen, die um diesen CPU-Kern herum sind, können dann anders sein, weil ich ja die Software anpassen kann. Und das führt eben dazu, dass die Hardware sehr viel unterschiedlicher ist. Und dann kommt dazu dieser gemeinsame Nenner des BIOS beim PC oder inzwischen ACPI und solche Sachen. Die gibt es im ARM-Bereich eben auch nicht. Das heißt, schon alleine das Booten von so einem ARM-System, also was der CPU-Quadern macht, ist gleich, aber an welche Stellen im Adressbereich ist welcher Speicher hingemapped? Wie finde ich überhaupt heraus, wie groß der Arbeitsspeicher ist? Lauter solche Sachen. Jeder System on a Chip ist da ganz eigen und ganz anders. Und unter Umständen dann auch noch irgendwie jedes Produkt, was halt mit diesem System on a Chip gebaut wird. Und ich persönlich sehe das als großes Problem der ARM-Branche, sage ich mal, an. Ich glaube auch, dass diese Branche bisher verkennt. Also den direkten Wettbewerb zwischen der X86-Welt und der ARM-Welt, den sieht man im Moment eigentlich im Netbook-Bereich. Es gibt jetzt die ersten paar Netbooks mit ARM-Prozessoren oder ARM-Cores in System on a Chips. Da wird den Firmen, die das jetzt machen, erstmal klar werden, wie einfach das ist. Also angenommen, ich habe jetzt das Ziel, ich will ein Netbook fertigen. Ich bin jetzt HP und ich will ein Netbook bauen. Und ich habe mich festgelegt, das macht die Diskussion ein bisschen leichter, ich will da Linux irgendwo drauf haben, irgendeine Linux-Variante, egal was, auf dem Netbook. So, wenn ich jetzt mich für die Intel Atom-Variante entscheide, dann bestelle ich bei Intel die Bauteile, ich löte die so irgendwie auf die Platine, dass es passt, meine Hardware funktioniert, ich schreibe noch ein paar Zeilen irgendwie im BIOS und lege mein Ubuntu oder was auch immer ein und installiere das so, fertig. Wenn ich das jetzt mit ARM machen will, dann geht es schon los irgendwie. Ich muss mich für ein System-on-a-Chip entscheiden, dann hat der vielleicht mehr oder weniger gut funktionierende Driver für diesen System-on-a-Chip für irgendeine Linux-Version von Anno Dazumal vielleicht. Ich kann nicht einfach eine Distribution verwenden, die diese Hardware unterstützt, sondern ich muss selber quasi eine eigene Linux-Distribution machen oder die zumindest mit einem angepassten veränderten Kernel oder anderen Komponenten bauen. Ich muss schauen, dass das dann alles läuft und das dann vertreiben. Also es ist technologisch auf der Software-Seite sehr, sehr viel mehr Aufwand, weil diese System-on-a-chip-Hersteller sich eben auch nicht darum kümmern, im Gegensatz zu Intel, ihre ganzen Linux-Driver und solche Sachen eben mit aufnehmen zu lassen im Mainline-Kernel. Zumindest deutlich geringer. Auch wenn man von Linux absieht, ist es ähnlich im PC-Bereich. Auch wenn ich jetzt irgendwie Microsoft Windows einsetzen will, gut, das läuft jetzt nicht auf ARM, also zumindest nur die Mobile-Variante. Aber da gibt es dann eben die Driver und diese ganzen im PC-Bereich für jedes System irgendwie, finde ich halt, die Driver letztlich. Nur im ARM-Bereich ist das alles sehr viel mehr custom, also es ist nicht so standardisiert.
+
+01:23:58.230 --> 01:24:13.450
+<v SPEAKER_2>Trotzdem kannst du dir schon vorstellen, dass wenn man jetzt ein ARM-basiertes System hat und das jetzt so im Vergleich zu einem ATOM-basierten System, ich denke, das sind so, glaube ich, so die Fronten, wo man die Geräte miteinander vergleichen kann, ein ARM-System schon doch deutliche Vorteile hat, was so Stromersparnis usw. betrifft, also zumindest potentiell?
+
+01:24:14.110 --> 01:25:34.170
+<v SPEAKER_1>Ja, also es gibt eben, ja, Intel entwickelt sich so ein bisschen nach unten, also mit ihren Low-Power, Low-Performance-Sachen, den ganzen Netbook-Markt. ARM strebt immer weiter zu komplexeren, nicht komplexeren, aber zu performanteren, leistungsfähigeren Systemen hin. Und die treffen sich jetzt eben gerade im Netbook-Bereich, das wird jetzt vielleicht noch ein Jahr oder so in dem gehen. Und vielleicht in zwei, drei Jahren sehen wir da mehr im Telefonbereich, und das wird sich dann verschieben. Intel wird weiter nach unten gehen, ARM wird weiter nach oben gehen. Und die Überlappung wird da größer. Also das ist in jedem Fall interessant. Aber im Moment, man muss das ganz ehrlich sagen, also ich bin jetzt weiß Gott kein Gegner von Intel oder so, aber da müssen sie schon noch viel nachlegen, bis sie jetzt so mal vom Stromverbrauch und der Größe und diesen Sachen wirklich wettbewerbsfähig sind mit den ARM-Sachen. Also wenn man immer diese ganzen Marketing-Styles und was die Journalisten ja auch oft übernehmen, sich anschaut, dann vergleichen sie immer irgendwie den Atom Core mit irgendeinem ARM-System an der Chip. Und das ist halt so, wir vergleichen ein Prozessor mit einem Mainboard, mit Prozessor, so quasi. Und dann kann ich natürlich leicht sagen, ach, unser Prozessor ist jetzt quasi genauso groß wie das Mainboard, so. Okay, gut, da müssen wir aber noch ein bisschen schrumpfen.
+
+01:25:37.550 --> 01:26:19.770
+<v SPEAKER_2>Ja, aber das wird natürlich auch dadurch befördert, dass es einfach so kein, ja, es gibt einfach noch kein etabliertes Breitenwissen so über diese ARM-Architektur. Das ist irgendwie, ja, das haben wir jetzt versucht, ein bisschen zu bekämpfen. Haben wir denn noch irgendwas Wichtiges vergessen? Ich meine, es ist ein bisschen unheimlich. Ich meine, der eine oder andere mag jetzt vielleicht hier auch noch erwarten, dass wir noch in die Untiefen der Befehlssätze absteigen, aber ich glaube, den Ding besuchen im Keller, den werden wir uns jetzt hier nicht mehr geben. Aber was sind denn so interessante, gibt es denn noch interessante Quellen, Referenzen, Sachen, die man mal gelesen haben sollte, wenn man sich der Architektur so ein bisschen nähern möchte? Gibt es denn da so Standardwerke oder liest man einfach nur die Handbücher?
+
+01:26:19.790 --> 01:26:45.470
+<v SPEAKER_1>ARM hat außerordentlich gute Dokumentation. Das liegt halt auch daran, dass sie nicht die Dinge selber fertigen, dass sie einfach nur das Design machen und das dann verkaufen. Und dann muss ich halt auch schon sehr gute Doku haben, damit meine Kunden was damit anfangen können. Und diese Doku ist, ja, was jetzt den CPU-Korbe trifft zumindest, ist das alles öffentlich zugänglich. Man kann einfach auf die ARM-Homepage gehen, kann sich da die PDFs runterladen.
+
+01:26:45.490 --> 01:26:47.690
+<v SPEAKER_2>Zu jedem Prozessor, zu jedem Design, zu jedem Befehlssatz.
+
+01:26:47.710 --> 01:27:02.450
+<v SPEAKER_1>Zu jedem Prozessor, zu jedem Befehlssatz. Das Standardwerk halt jetzt aus der Software-Seite ist das ARM ARM. Das ARM Architecture Reference Manual. Das finde ich ja auch schon wieder cool. Lies das doch mal im ARM ARM nach.
+
+01:27:02.470 --> 01:27:04.230
+<v SPEAKER_2>Zumindest nicht ARM an Ideen.
+
+01:27:07.130 --> 01:27:31.570
+<v SPEAKER_1>Ja, also das ARM ARM ist so wirklich das goldene Buch. Es gibt auch ganz toll irgendwie so eine, ich glaube, sechs- oder achtseitiges Quick-Reference. Die kann man sich ausdrücken auf A4. Da hat man dann jeden Befehl einzeln einmal aufgelistet, wenn man also schnell mal irgendwie was nachschlagen will. Und die Dokumentation, also ich finde die sehr unschlagbar, die da veröffentlicht wird von ARM, die ist schon sehr gut.
+
+01:27:31.590 --> 01:27:53.470
+<v SPEAKER_2>Das ist sozusagen auch eine empfehlenswerte Lektüre, wenn man sich jetzt generell einfach mal dem Thema Prozessoren überhaupt nähern möchte. Ich meine, nicht jeder hat jetzt diesen Level unbedingt schon gemacht. Viele werden wahrscheinlich mit irgendwelchen High-Level-Programmiersprachen gearbeitet haben und manchmal reizt es einen ja auch, den Schritt nach unten zu gehen und ehrlich gesagt, so x86, weiß ich nicht, das mag vielleicht praktisch sein, aber schön ist es nicht.
+
+01:27:56.190 --> 01:29:21.230
+<v SPEAKER_1>Also, wenn ich jetzt mich damit beschäftigen will, dann will ich ja in der Regel nicht einfach nur theoretisch mir jetzt mal so, was weiß ich, vielleicht ein Wissenschaftler ja, aber ich will ja eigentlich irgendwie was tun so. Und dann würde ich halt empfehlen, wenn jemand da einsteigen will, dann soll er sich irgendein billiges ARM-basiertes Entwicklungs-Kit von irgendeinem Mikro-Controller kaufen. Also es gibt da zum Beispiel von Atmel, die AT91-SAM7-Familie, da ist ein ARM-7-TDMI drin. Oder es gibt von Philips LPC 21, irgendwas heißen die, glaube ich. Also NXP heißt es jetzt nicht mehr Philips. Aber es gibt halt ein paar Hersteller, die so ganz kleine ARM-Mikro-Controller für wenig Geld anbieten. Und dann gibt es eben im Mikro-Controller-Bereich auch irgendwie so Development Boards dafür. Da würde ich jetzt mal sagen, gab es nicht ungefähr 100 Euro oder was, muss man da vielleicht mal investieren. Und da gibt es bestimmt auch billiger. Und dann habe ich diesen Mikro-Controller auch mit Dokumentation. Da ist halt im Wesentlichen die Philosophie dokumentiert, aber auch so ein bisschen über den ARM-Core. Und wenn mir das nicht reicht, dann kann ich ja das ARM-ARM oder andere Dinge konsultieren und dann damit spielen. Es gibt also auch, wer ein bisschen größer einsteigen will als jetzt so ein kleiner Mikro-Controller, der kann dann sowas wie Spiegel-Boards sich anschauen zum Beispiel. Das ist sehr populär. Mein fränkischer, wie soll ich sagen, Sprachverstand.
+
+01:29:21.250 --> 01:29:22.250
+<v SPEAKER_2>Ich habe es noch nicht verstanden.
+
+01:29:22.650 --> 01:29:37.390
+<v SPEAKER_1>Ja, das Beagle-Board ist eine Entwicklungsplatine, eine ganz kleine, wo ein Teomap 3530 drauf ist. Das hatten wir vorhin schon kurz. Ein System-on-a-Chip von Texas Instruments.
+
+01:29:37.410 --> 01:29:39.830
+<v SPEAKER_2>Mit Cortex A8, also schon so aktuelle Scheiße.
+
+01:29:39.850 --> 01:30:03.310
+<v SPEAKER_1>Genau, Cortex A8 drauf, dann der DSP, dann ist da auch wieder ein Imagination-Grafikkor mit drauf und alles Mögliche. Da gibt es eine riesige Community drum herum. Das Board wird in der Regel mit U-Boot und Linux betrieben. Dann kann man da Debian installieren oder Ubuntu, oder was auch immer man möchte, sich selber damit tun. Das ist jetzt die High-End-Einstiegsvariante.
+
+01:30:03.330 --> 01:30:30.470
+<v SPEAKER_2>So high-endig ist das ja gar nicht. Das Ding kostet hier gerade 150 Dollar. Wenn man sozusagen was Kleines, Kompaktes, aber Schnelles haben will, bei Microcontrollern, ich hatte ja auch schon meine Sendung dazu, da redet man halt dann, was weiß ich, die paar LEDs, die man steuern will. Da reicht halt so ein Atmel, da muss man jetzt nicht so hoch einsteigen. Aber wenn man jetzt wirklich mal sagt, okay, ich will jetzt hier aber auch Numbercrunching machen und keine Ahnung, wie die Audio-Daten durchballern, dann ist das ja eine interessante Basis. Hat das auch Ethernet das Teil?
+
+01:30:30.490 --> 01:31:57.570
+<v SPEAKER_1>Das hat auch Ethernet meines Wissens nach, ja. Also jetzt dieses Beagle Board, das wäre wirklich so die Einstiegskategorie. Ich möchte mal eine CPU, wie sie in einem modernen Smartphone verbaut ist, also die iPhone oder Palm Free oder beliebiges Android-Modell-Kategorie. Ja, wirklich Highend. Da ist jetzt aber noch kein Display dabei, deswegen ist das Board auch so günstig. Aber da gibt es eine große Community. Ist jetzt aber nicht unbedingt das Idealste, wenn man sich jetzt wirklich mit der ARM-Instruktion und so weiter, also dem Low-Level-Teil beschäftigen will, dann würde ich sagen, lieber mal mit etwas kleinem anfangen und dann weiter Richtung größere, leistungsfähige CPU. Und da gibt es eben, wie gesagt, diese beispielsweise AT-9137-Familie. Das ist dann wirklich so die klassische Mikro-Controller-Schiene. Aber das verhält sich trotzdem genauso wie diese modernen ARMs. Also, was weiß ich, wie dieser Prozessor interrupts macht, wie das Instruction-Set aussieht, was für Register da sind und so weiter, das ist alles genau das Gleiche. Es gibt halt ein paar mehr Instruktionen dann auf dem Beagle Board, als jetzt beim Kleinen. Aber ja, und auch die Art und Weise, wie ich da Hardware-Debugging mache, ist genau das Gleiche. Es ist genau der gleiche 20-folige Stecker, den man dafür verwendet, so die gleichen Tools. Das heißt, wenn ich mir so einen JTAG-Adapter für ARM kaufe, und die billigsten sind halt irgendwo so 20 Euro im Bereich, dann kann ich damit irgendwie vom kleinen Mikrocontroller bis hin zum, selbst zum Multicore-System irgendwie alles...
+
+01:31:57.590 --> 01:32:10.270
+<v SPEAKER_2>Das heißt, man kann im Prinzip jedes Mobiltelefon auch irgendwie aufkicken und dann da direkt ans Hirn. Ist in so einer Endfertigung dann auch dieser JTAG immer da?
+
+01:32:10.290 --> 01:32:16.390
+<v SPEAKER_1>Das kommt darauf an. Also der Stecker selber ist sicherlich physikalisch als solcher Stecker nicht da, weil der einfach zu groß ist für Telefone.
+
+01:32:16.410 --> 01:32:18.870
+<v SPEAKER_2>Aber es gibt so Pins, wo man so ran kann?
+
+01:32:18.890 --> 01:33:25.530
+<v SPEAKER_1>Oft gibt es die Pins, ja. Oft gibt es die Pins, sind natürlich selten dokumentiert, aber öfter steht sowas mal im Service-Manual, wenn man da im Netz mal ein bisschen sucht zu seinem Telefonmodell, und dann findet man das schon. Das ist natürlich etwas, was die Telefonhersteller nicht so gern sehen, oder insbesondere die Operator nicht haben wollen, dass man da irgendwie so viel damit spielt. Deswegen hat ARM da auch schon reagiert, und es gibt jetzt irgendwie Secure JTAG von ARM. Es gibt also die ersten System-on-a-Chips, bei denen man sich cryptografisch authentisieren muss gegenüber dem JTAG. Ich bin wirklich berechtigt, das zu tun. Habe ich aber bisher noch nicht wirklich deployed gesehen. Ich weiß, es gibt System-on-a-Chips, die das unterstützen, und ich weiß, wie das funktioniert, aber ich habe noch kein Endprodukt gesehen, was das macht. Und oft wird dann auch, also bei Firmen, die extrem paranoid sind, wie Apple beispielsweise, die wollen ja gar nicht, dass man da irgendwo ein bisschen unter der Motorhaube schraubt, die lassen dann auch diese Test-Pads weg oft. Also das ist halt noch sicher. Dann haben die halt für sich in der Entwicklung Modelle, wo das zugänglich ist, und das, was sie dann in die Massenfertigung geben, da nehmen sie einfach diese Pads weg und damit hat sich die Sache erledigt.
+
+01:33:28.570 --> 01:35:16.030
+<v SPEAKER_2>Ja, Harald, haben wir es, oder? Das war immerhin eineinhalb Stunden zu dem Thema. Und ich bezeichne das jetzt mal als einen vollständigen Podcast. Ja, das war es. Unsere Ausführungen zur ARM-Architektur. Ich hoffe, euer Blick auf euer Mobiltelefon und sonstige portablen Geräte, die bei euch so herumliegen, hat sich geändert. Überall sehe ich jetzt nur noch ARM-Cores. Ich stelle mal vor, jeder würde leuchten. Fast jedes Jahr werden so viele Prozessor-Cores von denen rausgehauen, wie es Leute gibt auf diesem Planeten. Die sind noch nicht ganz da, aber es scheint auf dem besten Wege dahin zu sein. Das Spannende finde ich auch diese Auseinandersetzung mit Intel. Ich finde, es zeichnet sich ohnehin ab. Das war die vorherrschende Architektur der letzten 20 Jahre. Es geht jetzt einfach hin zum Mobilen. Ob es jetzt immer in eine Hosentasche passen muss oder nur ein bisschen tragbarer geworden ist, wie mit den Netbooks oder Tablets oder was auch jetzt immer da kommen mag. Ich habe es in ein paar Wendikarten auch wieder neu gemischt. Zumal ja eben auch diese schweren Zisk-Maschinen hat man ja schon lange Zeit einfach das Argument Strom vielleicht nicht vollständig ignorieren können, aber es hatte eben nicht so die Bedeutung. Und jetzt ist es eigentlich auf allen Fronten auf einmal ein großes Thema, sowohl was eben muss mit dem Akku laufen betrifft, als auch was kostet mich das, wenn das irgendwie ein Jahr lang im Rack steht. Stromsparen ist jetzt irgendwie ein Thema. Und in dem Moment, wo es eben auch einfach nicht mehr so sehr das OS ist, was einen zwingt, sondern man eigentlich nur noch so die hohe Dienstleistung des Prozessors braucht und dann hat man halt einfach das OS, was man eben haben will, kann ich mir eben auch durchaus vorstellen, dass sich das eben auch noch auf andere Bereiche erstreckt.
+
+01:35:16.750 --> 01:35:44.170
+<v SPEAKER_1>Ja, kann ich nur zustimmen. Also das Buzzword dafür wäre wieder Green Computing. Und das ist ja wirklich in den Rechenzentren. Also ich weiß noch zu Pentium 4 Hochzeiten. Also Pentium 4 ist so, ich glaube, der am übelsten stromverbrochene Prozessor, den Intel hergestellt hat. Und da kenne ich aus Rechenzentren also Leute, die sagen, na, da müssen wir immer mindestens eine Höheneinheit Platz zwischen den Servern lassen, sonst kriegen wir das mit keiner kaufbaren Klimaanlage noch gekühlt.
+
+01:35:46.090 --> 01:35:47.350
+<v SPEAKER_2>Das geht mittlerweile nicht mehr.
+
+01:35:47.650 --> 01:35:49.190
+<v SPEAKER_1>Ja, das kann keiner mehr zahlen.
+
+01:35:50.450 --> 01:35:56.330
+<v SPEAKER_2>Das will auch keiner mehr zahlen. Ja, insofern, wir stellen fest, es bleibt spannend. Vielen Dank, Harald.
+
+01:35:56.350 --> 01:35:57.130
+<v SPEAKER_1>Ja, danke dir.
+
+01:35:57.150 --> 01:36:16.510
+<v SPEAKER_2>Das war's, Chaosradio Express 151. Und mir bleibt nichts weiter als euch noch einen schönen Tag oder Nacht zu wünschen, wie spät es jetzt auch immer sein mag, als ihr jetzt hier an diesem Zeitpunkt angekommen seid. Und ich hoffe, ihr hört auch das nächste Mal wieder zu. Wenn's heiß, Chaosradio Express.
