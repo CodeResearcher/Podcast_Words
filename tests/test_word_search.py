@@ -1,7 +1,7 @@
 from podcast_words.config import PodcastConfig
 from podcast_words.word_search import (
-    active_search_term,
     default_selected_words,
+    extract_query,
     format_selected_display,
     search_vocabulary,
 )
@@ -30,11 +30,13 @@ def test_format_selected_display():
     assert format_selected_display(["eimer", "münze", "cent"]) == "eimer, münze, cent"
 
 
-def test_active_search_term():
-    assert active_search_term("") == ""
-    assert active_search_term("ukraine") == "ukraine"
-    assert active_search_term("eimer, münze, dat") == "dat"
-    assert active_search_term("eimer, ") == ""
+def test_extract_query():
+    assert extract_query("", []) == ""
+    assert extract_query("ukraine", []) == "ukraine"
+    assert extract_query("ukraine", ["ukraine"]) == ""
+    assert extract_query("ukraine dat", ["ukraine"]) == "dat"
+    assert extract_query("eimer, münze, dat", ["eimer", "münze"]) == "dat"
+    assert extract_query("Eimer, MÜNZE", ["eimer", "münze"]) == ""
 
 
 def test_default_selected_words():

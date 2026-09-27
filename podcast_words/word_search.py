@@ -51,11 +51,18 @@ def format_selected_display(words: list[str]) -> str:
     return ", ".join(words)
 
 
-def active_search_term(term: str) -> str:
-    """Last comma-separated segment — supports typing after selected words."""
-    if not term:
-        return ""
-    return term.rsplit(",", 1)[-1].strip().lower()
+def extract_query(term: str, selected: "list[str] | tuple[str, ...]") -> str:
+    """Search text left after removing already-selected words from the box.
+
+    The combobox shows the selection as text, so a user who types to search
+    ends up with e.g. ``"ukraine dat"``. Removing the selected words isolates
+    the part actually being typed (``"dat"``).
+    """
+    text = (term or "").lower().replace(",", " ")
+    for word in sorted(selected, key=len, reverse=True):
+        if word:
+            text = text.replace(word.lower(), " ")
+    return " ".join(text.split()).strip()
 
 
 def default_selected_words(search_words: list[str], vocab: frozenset[str]) -> list[str]:

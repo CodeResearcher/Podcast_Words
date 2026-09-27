@@ -23,8 +23,8 @@ from podcast_words.pipeline.word_counter import (
 )
 from podcast_words.word_search import (
     SEARCH_MIN_LEN,
-    active_search_term,
     default_selected_words,
+    extract_query,
     format_selected_display,
     search_vocabulary,
 )
@@ -280,21 +280,25 @@ def _word_search_picker(
         st.session_state[words_key] = default_selected_words(podcast.search_words, vocab)
 
     selected: list[str] = list(st.session_state[words_key])
-    selected_display = format_selected_display(selected)
 
     def _format_option(word: str) -> tuple[str, str]:
         mark = "✓ " if word in st.session_state[words_key] else ""
         return (f"{mark}{word}", word)
 
-    def _sync_searchbox_display() -> None:
-        display = format_selected_display(st.session_state[words_key])
+    def _refresh_searchbox() -> None:
+        """Remount the combobox with the updated selection and allow re-toggles."""
+        current = list(st.session_state[words_key])
+        options = [_format_option(w) for w in current]
         box = st.session_state[searchbox_key]
-        box["search"] = display
+        box["search"] = format_selected_display(current)
+        box["result"] = None
+        box["options_js"] = [{"label": label, "value": i} for i, (label, _) in enumerate(options)]
+        box["options_py"] = [value for _, value in options]
         box["key_react"] = f"{searchbox_key}_react_{time.time()}"
 
     def search_fn(term: str) -> list[tuple[str, str]]:
-        query = active_search_term(term)
         selected_now = list(st.session_state[words_key])
+        query = extract_query(term, selected_now)
         if len(query) < SEARCH_MIN_LEN:
             return [_format_option(w) for w in selected_now]
         seen: set[str] = set()
@@ -316,7 +320,8 @@ def _word_search_picker(
         else:
             current.append(w)
         if searchbox_key in st.session_state:
-            _sync_searchbox_display()
+            _refresh_searchbox()
+        st.rerun()
 
     st_searchbox(
         search_fn,
@@ -327,7 +332,7 @@ def _word_search_picker(
             "Pick a word to add it; pick a checked word again to remove it."
         ),
         submit_function=toggle_word,
-        default_searchterm=selected_display,
+        default_searchterm=format_selected_display(selected),
         default_options=[_format_option(w) for w in selected],
         rerun_scope="fragment",
         clear_on_submit=False,
