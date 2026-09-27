@@ -304,14 +304,12 @@ def _word_search_picker(
         current = st.session_state[words_key]
         if w not in current:
             current.append(w)
-        st.rerun()
 
     st_searchbox(
         search_fn,
         label="🔍 Search words",
         placeholder=f"Type at least {SEARCH_MIN_LEN} characters to add a word…",
         submit_function=add_word,
-        rerun_scope="fragment",
         clear_on_submit=True,
         key=searchbox_key,
     )
