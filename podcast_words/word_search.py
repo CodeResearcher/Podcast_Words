@@ -46,11 +46,6 @@ def search_vocabulary(
     return results
 
 
-def format_selected_display(words: list[str]) -> str:
-    """Comma-separated label for the searchbox input."""
-    return ", ".join(words)
-
-
 def extract_query(term: str, selected: "list[str] | tuple[str, ...]") -> str:
     """Search text left after removing already-selected words from the box.
 

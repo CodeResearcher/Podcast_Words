@@ -2,7 +2,6 @@ from podcast_words.config import PodcastConfig
 from podcast_words.word_search import (
     default_selected_words,
     extract_query,
-    format_selected_display,
     search_vocabulary,
 )
 
@@ -23,11 +22,6 @@ def test_search_vocabulary_prefix_and_substring():
     assert search_vocabulary(vocab, "n") == []
     assert search_vocabulary(vocab, "net") == ["netz", "netzpolitik"]
     assert search_vocabulary(vocab, "pol") == ["politik", "netzpolitik"]
-
-
-def test_format_selected_display():
-    assert format_selected_display([]) == ""
-    assert format_selected_display(["eimer", "münze", "cent"]) == "eimer, münze, cent"
 
 
 def test_extract_query():

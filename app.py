@@ -1,6 +1,5 @@
 import json
 import re
-import time
 from datetime import datetime, timezone
 
 import pandas as pd
@@ -25,7 +24,6 @@ from podcast_words.word_search import (
     SEARCH_MIN_LEN,
     default_selected_words,
     extract_query,
-    format_selected_display,
     search_vocabulary,
 )
 
@@ -272,7 +270,7 @@ def _word_search_picker(
     podcast,
     sorted_vocab: tuple[str, ...],
 ) -> list[str]:
-    """Single combobox: type to search, pick to add or remove words."""
+    """Search box to add words; selected words shown as removable chips."""
     vocab = frozenset(sorted_vocab)
     words_key = f"words_{podcast_id}"
     searchbox_key = f"word_searchbox_{podcast_id}"
@@ -284,17 +282,6 @@ def _word_search_picker(
     def _format_option(word: str) -> tuple[str, str]:
         mark = "✓ " if word in st.session_state[words_key] else ""
         return (f"{mark}{word}", word)
-
-    def _refresh_searchbox() -> None:
-        """Remount the combobox with the updated selection and allow re-toggles."""
-        current = list(st.session_state[words_key])
-        options = [_format_option(w) for w in current]
-        box = st.session_state[searchbox_key]
-        box["search"] = format_selected_display(current)
-        box["result"] = None
-        box["options_js"] = [{"label": label, "value": i} for i, (label, _) in enumerate(options)]
-        box["options_py"] = [value for _, value in options]
-        box["key_react"] = f"{searchbox_key}_react_{time.time()}"
 
     def search_fn(term: str) -> list[tuple[str, str]]:
         selected_now = list(st.session_state[words_key])
@@ -310,34 +297,42 @@ def _word_search_picker(
             results.append(_format_option(word))
         return results
 
-    def toggle_word(word: str) -> None:
+    def add_word(word: str) -> None:
         w = str(word).strip().lower()
         if w not in vocab:
             return
         current = st.session_state[words_key]
-        if w in current:
-            current.remove(w)
-        else:
+        if w not in current:
             current.append(w)
-        if searchbox_key in st.session_state:
-            _refresh_searchbox()
         st.rerun()
 
     st_searchbox(
         search_fn,
-        label="🔍 Words for charts",
-        placeholder=f"Type at least {SEARCH_MIN_LEN} characters…",
-        help=(
-            f"{len(selected)} selected. "
-            "Pick a word to add it; pick a checked word again to remove it."
-        ),
-        submit_function=toggle_word,
-        default_searchterm=format_selected_display(selected),
-        default_options=[_format_option(w) for w in selected],
+        label="🔍 Search words",
+        placeholder=f"Type at least {SEARCH_MIN_LEN} characters to add a word…",
+        submit_function=add_word,
         rerun_scope="fragment",
-        clear_on_submit=False,
+        clear_on_submit=True,
         key=searchbox_key,
     )
+
+    if selected:
+        pills_key = f"selected_pills_{podcast_id}_{'|'.join(sorted(selected))}"
+        chosen = st.pills(
+            f"Selected words ({len(selected)})",
+            options=selected,
+            selection_mode="multi",
+            default=selected,
+            format_func=lambda w: f"✕ {w}",
+            key=pills_key,
+        )
+        chosen = list(chosen or [])
+        if set(chosen) != set(selected):
+            st.session_state[words_key] = chosen
+            st.rerun()
+        st.caption("Click a word to remove it.")
+    else:
+        st.caption("No words selected yet — search above to add some.")
 
     return list(st.session_state[words_key])
 
